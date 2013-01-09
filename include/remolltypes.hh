@@ -8,4 +8,17 @@
    data around and useful enumerations
 */
 
+struct ev_t {
+};
+
+struct gen_t {
+};
+
+struct tr_t {
+};
+
+struct hit_t {
+};
+
+
 #endif//__REMOLL_TYPES_HH
