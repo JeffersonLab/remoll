@@ -1,0 +1,109 @@
+#ifndef remollMessenger_HH
+#define remollMessenger_HH
+
+#include "globals.hh"
+#include "remolltypes.hh"
+#include "G4UImessenger.hh"
+#include "G4UIcommand.hh"
+
+class remollIO;
+class remollEventGen;
+class remollDetectorConstruction;
+class remollEventAction;
+class remollPrimaryGeneratorAction;
+
+class G4UIcmdWithAnInteger;
+class G4UIcmdWithADoubleAndUnit;
+class G4UIcmdWithAString;
+class G4UIcmdWithABool;
+
+class remollMessenger : public G4UImessenger {
+    public:
+       	remollMessenger();
+       	~remollMessenger();
+
+	void SetIO( remollIO *io ){ fIO = io; }
+	void SetEvGen( remollEventGen *eg ){ fevgen = eg; }
+	void SetPriGen( remollPrimaryGeneratorAction *pg ){ fprigen = pg; }
+	void SetDetCon( remollDetectorConstruction *dc ){ fdetcon= dc; }
+	void SetEvAct( remollEventAction *ev ){ fevact = ev; }
+
+	void SetNewValue(G4UIcommand* cmd, G4String newValue);
+
+    private:
+	remollIO *fIO;
+	remollEventGen *fevgen;
+	remollDetectorConstruction *fdetcon;
+	remollEventAction *fevact;
+	remollPrimaryGeneratorAction *fprigen;
+
+	/*
+	G4UIcmdWithAnInteger *runCmd;
+	G4UIcmdWithAString   *fileCmd;
+	G4UIcmdWithAString   *tgtCmd;
+
+	G4UIcmdWithAString   *sigfileCmd;
+
+	G4UIcmdWithAString   *kineCmd;
+	G4UIcmdWithAString   *expCmd;
+
+	G4UIcmdWithABool *geantinoCmd;
+
+	G4UIcmdWithAnInteger *gemconfigCmd;
+
+	G4UIcmdWithADoubleAndUnit *tgtLenCmd;
+	G4UIcmdWithADoubleAndUnit *tgtDenCmd;
+	G4UIcmdWithADoubleAndUnit *tgtPresCmd;
+	G4UIcmdWithADoubleAndUnit *beamcurCmd;
+	G4UIcmdWithADoubleAndUnit *runtimeCmd;
+	G4UIcmdWithADoubleAndUnit *rasterxCmd;
+	G4UIcmdWithADoubleAndUnit *rasteryCmd;
+
+	G4UIcmdWithADoubleAndUnit *beamECmd;
+
+	G4UIcmdWithADoubleAndUnit *bbangCmd;
+	G4UIcmdWithADoubleAndUnit *bbdistCmd;
+
+	G4UIcmdWithADoubleAndUnit *hcaldistCmd;
+	G4UIcmdWithADoubleAndUnit *hmagdistCmd;
+	G4UIcmdWithADoubleAndUnit *hcalangCmd;
+
+	G4UIcmdWithADoubleAndUnit *thminCmd;
+	G4UIcmdWithADoubleAndUnit *thmaxCmd;
+	G4UIcmdWithADoubleAndUnit *phminCmd;
+	G4UIcmdWithADoubleAndUnit *phmaxCmd;
+
+	G4UIcmdWithADoubleAndUnit *cerDepCmd;
+	G4UIcmdWithADoubleAndUnit *cerDisCmd;
+	G4UIcmdWithADoubleAndUnit *gemSepCmd;
+	G4UIcmdWithADoubleAndUnit *bbCalDistCmd;
+
+	G4UIcmdWithADoubleAndUnit *gemresCmd;
+	*/
+
+};
+
+#endif//remollMessenger_HH
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
