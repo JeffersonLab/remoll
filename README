@@ -1,0 +1,10 @@
+12 GeV Moller simulation
+
+Seamus Riordan
+riordan@jlab.org
+January 9, 2012
+
+Packages needed to build this:
+
+>=Geant4.9.5
+root
