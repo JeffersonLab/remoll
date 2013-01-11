@@ -7,9 +7,7 @@
 
 #include "remollDetectorConstruction.hh"
 #include "remollIO.hh"
-#include "remollEventGen.hh"
 #include "remollEventAction.hh"
-#include "remollBigBiteField.hh"
 #include "remollPrimaryGeneratorAction.hh"
 
 #include "G4UImanager.hh"

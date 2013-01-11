@@ -3,7 +3,7 @@
 
 #include "G4GDMLParser.hh"
 #include "G4VUserDetectorConstruction.hh"
-#include "remollMagneticField.hh"
+#include "remollGlobalField.hh"
 #include <vector>
 
 class G4Tubs;
@@ -13,8 +13,8 @@ class G4VSensitiveDetector;
 class G4Material;
 class G4Element;
 class G4UniformMagField;
+class G4ChordFinder;
 class G4QuadrupoleMagField;
-class MollerDetectorMessenger;
 
 class remollDetectorConstruction : public G4VUserDetectorConstruction
 {
@@ -46,8 +46,6 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   protected:
 
-    //void DefineDipoleFields();
-    void DefineQuadFields();
     void DefineMaterials();
 
   private:
@@ -93,17 +91,14 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     // global magnet section
     //----------------------
     //
-    MollerGlobalMagnetField*      pGlobalMagnetField;
 
     G4FieldManager*         fGlobalFieldManager;
-    G4ChordFinder*          fGlobalChordFinder;
-    G4Mag_UsualEqRhs*       fGlobalEquation;
-    G4MagIntegratorStepper* fGlobalStepper;
+    remollGlobalField*      fGlobalField;
 
     G4double                fMinStep;
 
 
-    MollerDetectorMessenger* detectorMessenger;
+    //MollerDetectorMessenger* detectorMessenger;
     G4String detfileName;
     G4String collimfileName;
     G4double fTargetLength;           // Full length of the target

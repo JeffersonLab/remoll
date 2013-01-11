@@ -1,6 +1,7 @@
 
 
 #include "remollDetectorConstruction.hh"
+#include "remollGlobalField.hh"
 
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
@@ -47,7 +48,7 @@
 
 
 remollDetectorConstruction::remollDetectorConstruction() {
-    DefineMaterials()
+    DefineMaterials();
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
@@ -115,7 +116,7 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
 	//G4cout << " is a " << det_type <<  G4endl << G4endl;
 
 	snprintf(detectorname,200,"/detector%i",k+1);
-	collimatordetector[k] = new MollerDetectorSD(detectorname);
+	//collimatordetector[k] = new MollerDetectorSD(detectorname);
 
         if (collimatordetector[k] != 0)
         {
@@ -233,14 +234,12 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
   G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 
   G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
-  DumpGeometricalTree(worldVolume);
+  //DumpGeometricalTree(worldVolume);
 
   ReadGlobalMagneticField();
 
-  } else {
 
     worldVolume = ConstructDetector();
-  }
 
   G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
 
@@ -429,7 +428,7 @@ G4VPhysicalVolume* remollDetectorConstruction::ConstructDetector()
 		       0,
 		       false));
     snprintf(detectorname,200,"/detector%i",sector+NUM_COLS);
-    collimatordetector[sector-1] = new MollerDetectorSD(SDname=detectorname);
+    //collimatordetector[sector-1] = new MollerDetectorSD(SDname=detectorname);
     SDman->AddNewDetector(collimatordetector[sector-1]);
     trapeziod_logic.back()->SetSensitiveDetector(collimatordetector[sector-1]);
     trapeziod_logic.back()->SetVisAttributes(WVisAtt);
@@ -483,7 +482,7 @@ G4VPhysicalVolume* remollDetectorConstruction::ConstructDetector()
     SDname = "/detector";
     SDname+=G4UIcommand::ConvertToString((i+1));
 
-    detector.push_back (new MollerDetectorSD(SDname));
+    //detector.push_back (new MollerDetectorSD(SDname));
 
     SDman->AddNewDetector(detector[i]);
 
@@ -524,13 +523,10 @@ G4VPhysicalVolume* remollDetectorConstruction::ConstructDetector()
 
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void remollDetectorConstruction::ReadGlobalMagneticField()
 {
-  pGlobalMagnetField->ReadMagneticField();
 }
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void remollDetectorConstruction::CreateGlobalMagneticField()   
 {
 
@@ -539,53 +535,19 @@ void remollDetectorConstruction::CreateGlobalMagneticField()
   //============================================
   //  Define the global magnet field Manager
   //============================================
-  pGlobalMagnetField = new MollerGlobalMagnetField();
+  fGlobalField = new remollGlobalField();
 
   // Get transportation, field, and propagator  managers
   fGlobalFieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
 //  G4TransportationManager::GetTransportationManager()->GetPropagatorInField()->SetLargestAcceptableStep(25*cm);
-  fGlobalFieldManager->SetDetectorField(pGlobalMagnetField);
-  fGlobalFieldManager->CreateChordFinder(pGlobalMagnetField);
+  fGlobalFieldManager->SetDetectorField(fGlobalField);
+  fGlobalFieldManager->CreateChordFinder(fGlobalField);
 
   return;
-  fGlobalEquation = new G4Mag_UsualEqRhs(pGlobalMagnetField);
-  
-  // taken from one of the Geant4 presentation:
-  // - If the field is calculated from a field map, a lower order stepper
-  //   is recommended: the less smooth the field is, the lower the order of the
-  //   stepper that should be used. For very rough fields one should use 1st order
-  //   stepper, for a somewhat smooth field one must choose between 1st and 2nd
-  //   order stepper.
-  
-  //fGlobalStepper  = new G4ClassicalRK4(fGlobalEquation);  // classical 4th order stepper
- // fGlobalStepper  = new G4ExplicitEuler(fGlobalEquation); //           1st order stepper
-  //fGlobalStepper  = new G4ImplicitEuler(fGlobalEquation); //           2nd order stepper
-  fGlobalStepper  = new G4SimpleRunge(fGlobalEquation);   //           2nd order stepper
-
-
-  // Provides a driver that talks to the Integrator Stepper, and insures that 
-  //   the error is within acceptable bounds.
-  G4MagInt_Driver* fGlobalIntgrDriver = new G4MagInt_Driver(1.0e-3*mm, 
-							    fGlobalStepper,
-							    fGlobalStepper->GetNumberOfVariables());
-  
-  fGlobalChordFinder = new G4ChordFinder(fGlobalIntgrDriver);
-  
-  
-  
-  //       G4bool fieldChangesEnergy = false;
-  //       G4FieldManager* pFieldMgr = new G4FieldManager(myField,pChordFinder,FieldChangeEnergy);
-  //       LocalLogicalVolume = new G4LogicalVolume(shape, material,"name",pFieldMgr,0,0);
-  
-  //   // minimal step of 1 mm is default
-  //   fMinStep = 0.01*mm ;
-  //
-  //   fGlobalChordFinder = new G4ChordFinder (pGlobalMagnetField,
-  //                                           fMinStep,
-  //                                           fGlobalStepper);
-  
-  fGlobalFieldManager->SetChordFinder(fGlobalChordFinder);
 } 
+
+
+
 void remollDetectorConstruction::ReadCollimatorGeometry(const char* filename)
 {
   

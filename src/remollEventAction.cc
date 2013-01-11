@@ -1,7 +1,4 @@
 #include "remollEventAction.hh"
-#include "remollEventGen.hh"
-#include "remollCalHit.hh"
-#include "remollGEMHit.hh"
 
 #include "G4Event.hh"
 #include "G4EventManager.hh"
@@ -27,8 +24,8 @@ remollEventAction::~remollEventAction()
 
 
 void remollEventAction::BeginOfEventAction(const G4Event*ev) {
-    if( (anEvent->GetEventID() % 1000) == 0 ){
-	printf("Event %8d\r", anEvent->GetEventID() );
+    if( (ev->GetEventID() % 1000) == 0 ){
+	printf("Event %8d\r", ev->GetEventID() );
 	fflush(stdout);
     }
 

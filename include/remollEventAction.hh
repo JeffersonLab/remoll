@@ -7,7 +7,6 @@
 
 class G4Event;
 class remollIO;
-class remollEventGen;
 
 class remollEventAction : public G4UserEventAction
 {

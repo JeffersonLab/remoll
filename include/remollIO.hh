@@ -4,6 +4,7 @@
 #include "TROOT.h"
 #include "TObject.h"
 #include "G4Run.hh"
+#include "remolltypes.hh"
 
 class TFile;
 class TTree;
@@ -22,7 +23,6 @@ class remollIO {
 	void FillTree();
 	void WriteTree();
 
-	void SetBeamE(double E){ gendata.Ebeam = E/GeV; }
 
 	ev_t GetEventData(){ return evdata; }
 

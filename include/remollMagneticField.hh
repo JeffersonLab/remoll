@@ -3,77 +3,75 @@
 
 #include <vector>
 
+#define __NDIM 3
 
-class remollMagneticField : public G4MagneticField
-{
-public:
+#include "G4String.hh"
+#include "G4MagneticField.hh"
 
-   remollMagneticField();
-  
-  virtual ~remollMagneticField();
+/*!
+    \class remollMagneticField
+    \brief Individual field map manager
+*/
 
-  void GetFieldValue( const   G4double Point[4], G4double *Bfield ) const;  
-  void GetFieldValueFromGridCell( const  G4int GridPoint_R, 
-				  const  G4int GridPoint_Phi, 
-				  const  G4int GridPoint_Z, 
-				  G4double *BFieldGridValue ) const;
+class remollMagneticField : public G4MagneticField {
+    /*! 
+     * Moller spectrometer magnetic field class
+     *
+     * Use trilinear interpolation in cylindrical coordinates
+     * Might be nice to use some kind of spline someday?
+     * Use vectors to store multidimensional arrays
+     *
+     * Units are meters, degrees, and Tesla
+     * Coordinate ordering will be r, phi, z
+     * We will only deal with phi interval [-pi,pi]
+     *
+     * Field maps are of the form
+     *
+     * #Rpoints		rmin	rmax
+     * #Phipoints	phimin	phimax
+     * #Zpoints		zmin	zmax
+     * # xtants (7 for septant form, 1 for full geometry)
+     * r   phi   z    br   bphi   bz
+     * ......
+     *
+     */
 
-  void InitializeGrid();
-  void ReadFieldMap(const char* filename);
-  void PrintFieldCheck(const char* filename);
-  void PrintGridCheck(const char* filename);
+    public:
+	remollMagneticField( G4String );
+	virtual ~remollMagneticField();
 
-  void SetFieldMap_RMin      ( G4double Rmin      ) { rMinFromMap    = Rmin;      }
-  void SetFieldMap_RMax      ( G4double Rmax      ) { rMaxFromMap    = Rmax;      }
-  void SetFieldMap_RStepsize ( G4double Rstepsize ) { gridstepsize_r = Rstepsize; }
+	void GetFieldValue( const   G4double Point[4], G4double *Bfield ) const;  
 
-  void SetFieldMap_ZMin      ( G4double Zmin      ) { zMinFromMap    = Zmin;      }
-  void SetFieldMap_ZMax      ( G4double Zmax      ) { zMaxFromMap    = Zmax;      }
-  void SetFieldMap_ZStepsize ( G4double Zstepsize ) { gridstepsize_z = Zstepsize; }
+	void InitializeGrid();
+	void ReadFieldMap();
 
-  void SetFieldMap_PhiMin      ( G4double Phimin      ) { phiMinFromMap    = Phimin;      }
-  void SetFieldMap_PhiMax      ( G4double Phimax      ) { phiMaxFromMap    = Phimax;      }
-  void SetFieldMap_PhiStepsize ( G4double Phistepsize ) { gridstepsize_phi = Phistepsize; }
+	void SetFieldScale(G4double s){ fFieldScale = s; }
+	void SetZoffset(G4double z){ fZoffset= z; }
 
-private:
-  G4int nGridPointsInR;
-  G4int nGridPointsInPhi;
-  G4int nGridPointsInZ;  
+	G4String GetName();
 
-  G4double rMinFromMap;
-  G4double rMaxFromMap;
-   
-  G4double phiMinFromMap;
-  G4double phiMaxFromMap;
-   
-  G4double zMinFromMap;
-  G4double zMaxFromMap;
-   
-  G4double gridstepsize_r;
-  G4double gridstepsize_phi;
-  G4double gridstepsize_z;
+	enum Coord_t { kR, kPhi, kZ };
 
+	G4bool IsInit(){ return fInit; }
 
-  G4double Unit_Length;
-  G4double Unit_Angle;
-  G4double Unit_Bfield; // units of field map 
+    private:
+	G4String fFilename;
 
-// Storage space for the table
-  std::vector< std::vector< std::vector< G4double > > > BFieldGridData_X;
-  std::vector< std::vector< std::vector< G4double > > > BFieldGridData_Y;
-  std::vector< std::vector< std::vector< G4double > > > BFieldGridData_Z;
+	G4int fN[__NDIM];
+	G4double fMin[__NDIM], fMax[__NDIM];
 
-  G4double fZoffset;
-  G4bool   invertX, invertY, invertZ;
+	G4int fNxtant; // Number of *tants (septants, or whatever)
+	G4double fPhi0, fPhiLow;
 
-  G4ThreeVector* BField_ANSYS;
-  
-  G4double BFieldScalingFactor;
+	// Storage space for the table
+	std::vector< std::vector< std::vector< G4double > > > fBFieldData[__NDIM];
 
-  //  G4double sectorcentrephi;
+	G4double fZoffset;
 
+	G4double fFieldScale; // Scale overall field by this amount
+
+	G4bool fInit;
 };
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 
 #endif//__REMOLLMAGNETICFIELD_HH

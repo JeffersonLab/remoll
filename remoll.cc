@@ -54,7 +54,7 @@ int main(int argc, char** argv){
     G4cout << "RunManager construction starting...." << G4endl;
     G4RunManager * runManager = new G4RunManager;
 
-    remollMessenger *rmmess = new remollMessenger();
+//    remollMessenger *rmmess = new remollMessenger();
 
     // Detector geometry
     G4VUserDetectorConstruction* detector = new remollDetectorConstruction();
@@ -78,7 +78,7 @@ int main(int argc, char** argv){
 
     G4UserEventAction* event_action = new remollEventAction;
     ((remollEventAction *) event_action)->SetIO(io);
-    ((remollEventAction *) event_action)->SetEvGen(((remollPrimaryGeneratorAction *) gen_action)->GetEvGen());
+//    ((remollEventAction *) event_action)->SetEvGen(((remollPrimaryGeneratorAction *) gen_action)->GetEvGen());
     runManager->SetUserAction(event_action);
     G4UserSteppingAction* stepping_action = new remollSteppingAction;
     runManager->SetUserAction(stepping_action);

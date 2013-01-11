@@ -34,7 +34,7 @@ link_directories( ~/lib )
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 #
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/REMOLL*.cc)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
 #----------------------------------------------------------------------------
