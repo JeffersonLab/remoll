@@ -34,7 +34,6 @@
 
 
 remollDetectorConstruction::remollDetectorConstruction() {
-    DefineMaterials();
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
@@ -46,7 +45,7 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
 {
 
     fGDMLParser.SetOverlapCheck(false);
-    fGDMLParser.Read(detfileName);
+    fGDMLParser.Read(fDetFileName);
 
     worldVolume = fGDMLParser.GetWorldVolume();
 
@@ -168,24 +167,12 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
   G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
   //DumpGeometricalTree(worldVolume);
 
-  ReadGlobalMagneticField();
 
   G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
 
   return worldVolume;
 }
 
-void remollDetectorConstruction::WriteGeometryFile(const G4String& filename)
-{
-  G4bool appendPointerAddress = true;
-  // Note: only change to false if all names are unique
-  fGDMLParser.Write(filename,mother_phys,appendPointerAddress);
-}
-
-
-void remollDetectorConstruction::ReadGlobalMagneticField()
-{
-}
 
 void remollDetectorConstruction::CreateGlobalMagneticField()   
 {
