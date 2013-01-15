@@ -31,7 +31,8 @@
 #include "G4VisAttributes.hh"
 #include "G4Colour.hh"
 
-
+#define __DET_STRLEN 200
+#define __DET_MAXDET 100
 
 remollDetectorConstruction::remollDetectorConstruction() {
 }
@@ -79,9 +80,10 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
   // Sensitive detectors
   //==========================
   G4SDManager* SDman = G4SDManager::GetSDMpointer();
-  char detectorname[200];
+  char detectorname[__DET_STRLEN];
+  int retval;
 
-  G4VSensitiveDetector* collimatordetector[100];
+  G4VSensitiveDetector* collimatordetector[__DET_MAXDET];
 
   G4int k=0;
   for(G4GDMLAuxMapType::const_iterator
@@ -100,7 +102,8 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
         G4String det_type = (*vit).value;
 	//G4cout << " is a " << det_type <<  G4endl << G4endl;
 
-	snprintf(detectorname,200,"/detector%i",k+1);
+	retval = snprintf(detectorname, __DET_STRLEN,"/det_%04d",k+1);
+	assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
 	//collimatordetector[k] = new MollerDetectorSD(detectorname);
 
         if (collimatordetector[k] != 0)
