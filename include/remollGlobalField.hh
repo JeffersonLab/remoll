@@ -19,11 +19,10 @@ class remollGlobalField : public G4MagneticField {
 	void AddNewField( G4String file );
 	void SetFieldScale( G4String file, G4double scale  );
 
-	// FIXME
-	void GetFieldValue( const G4double[], G4double *) const { return; };
+	void GetFieldValue( const G4double[], G4double *) const;
 
     private:
-	std::vector <remollMagneticField *> fFields;
+	std::vector<remollMagneticField *> fFields;
 
 
 };

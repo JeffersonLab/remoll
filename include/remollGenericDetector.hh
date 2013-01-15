@@ -36,7 +36,6 @@ class remollGenericDetector : public G4VSensitiveDetector {
 	remollGenericDetectorSumCollection  *fSumColl;
 	G4int fHCID, fSCID;
 
-//	std::map<G4int, (remollGenericDetectorSum*)> fSumMap;
 	std::map<int, remollGenericDetectorSum *> fSumMap;
 
 };

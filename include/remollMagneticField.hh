@@ -9,9 +9,9 @@
 #include "G4MagneticField.hh"
 
 /*!
-    \class remollMagneticField
-    \brief Individual field map manager
-*/
+  \class remollMagneticField
+  \brief Individual field map manager
+  */
 
 class remollMagneticField : public G4MagneticField {
     /*! 

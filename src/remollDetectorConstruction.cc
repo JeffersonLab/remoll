@@ -1,6 +1,7 @@
 
 
 #include "remollDetectorConstruction.hh"
+#include "remollGenericDetector.hh"
 #include "remollGlobalField.hh"
 
 #include "G4FieldManager.hh"
@@ -32,7 +33,6 @@
 #include "G4Colour.hh"
 
 #define __DET_STRLEN 200
-#define __DET_MAXDET 100
 
 remollDetectorConstruction::remollDetectorConstruction() {
 }
@@ -40,10 +40,7 @@ remollDetectorConstruction::remollDetectorConstruction() {
 remollDetectorConstruction::~remollDetectorConstruction() {
 }
 
-
-
-G4VPhysicalVolume*  remollDetectorConstruction::Construct()
-{
+G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 
     fGDMLParser.SetOverlapCheck(false);
     fGDMLParser.Read(fDetFileName);
@@ -58,20 +55,18 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
 
   G4cout << "Found " << auxmap->size()
          << " volume(s) with auxiliary information."
-         << G4endl << G4endl;
+	 << G4endl << G4endl;
   for(G4GDMLAuxMapType::const_iterator
-      iter  = auxmap->begin();
-      iter != auxmap->end(); iter++) 
-  {
-    G4cout << "Volume " << ((*iter).first)->GetName()
-           << " has the following list of auxiliary information: "<< G4endl;
-    for (G4GDMLAuxListType::const_iterator
-         vit  = (*iter).second.begin();
-         vit != (*iter).second.end(); vit++)
-    {
-      G4cout << "--> Type: " << (*vit).type
-             << " Value: "   << (*vit).value << std::endl;
-    }
+	  iter  = auxmap->begin();
+	  iter != auxmap->end(); iter++) {
+      G4cout << "Volume " << ((*iter).first)->GetName()
+	  << " has the following list of auxiliary information: "<< G4endl;
+      for (G4GDMLAuxListType::const_iterator
+	      vit  = (*iter).second.begin();
+	      vit != (*iter).second.end(); vit++) {
+	  G4cout << "--> Type: " << (*vit).type
+	      << " Value: "   << (*vit).value << std::endl;
+      }
   }
   G4cout << G4endl<< G4endl;
 
@@ -83,79 +78,60 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
   char detectorname[__DET_STRLEN];
   int retval;
 
-  G4VSensitiveDetector* collimatordetector[__DET_MAXDET];
+  G4VSensitiveDetector* thisdet;
 
   G4int k=0;
-  for(G4GDMLAuxMapType::const_iterator
-      iter  = auxmap->begin();
-      iter != auxmap->end(); iter++)
-  {
-    G4LogicalVolume* myvol = (*iter).first;
-    G4cout << "Volume " << myvol->GetName();
-    
-    for (G4GDMLAuxListType::const_iterator
-	   vit  = (*iter).second.begin();
-           vit != (*iter).second.end(); vit++)
-    {
-      if ((*vit).type == "SensDet")
-      {
-        G4String det_type = (*vit).value;
-	//G4cout << " is a " << det_type <<  G4endl << G4endl;
 
-	retval = snprintf(detectorname, __DET_STRLEN,"/det_%04d",k+1);
-	assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
-	//collimatordetector[k] = new MollerDetectorSD(detectorname);
+  G4GDMLAuxMapType::const_iterator iter;
+  G4GDMLAuxListType::const_iterator vit, nit;
 
-        if (collimatordetector[k] != 0)
-        {
+  for( iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
+      G4LogicalVolume* myvol = (*iter).first;
+      G4cout << "Volume " << myvol->GetName();
 
-          G4cout << "  Creating sensitive detector " << det_type
-                 << " for volume " << myvol->GetName()
-                 <<  G4endl << G4endl;
+      for( vit  = (*iter).second.begin(); vit != (*iter).second.end(); vit++) {
+	  if ((*vit).type == "SensDet") {
+	      G4String det_type = (*vit).value;
 
-          SDman->AddNewDetector(collimatordetector[k]);
-          myvol->SetSensitiveDetector(collimatordetector[k]);
-        }
-        else
-        {
-          G4cout << det_type << " sensitive detector type not found" << G4endl;
-	}
+	      // Also allow specification of det number ///////////////////
+	      int det_no = -1;
+	      for( nit  = (*iter).second.begin(); nit != (*iter).second.end(); vit++) {
+		  if ((*nit).type == "DetNo") {
+		      det_no= atoi((*nit).value.data());
+		  }
+	      }
+	      if( det_no <= 0 ){
+		  det_no = k+1;
+		  k++;
+	      }
+	      /////////////////////////////////////////////////////////////
+
+	      retval = snprintf(detectorname, __DET_STRLEN,"/det_%d", det_no);
+	      assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
+
+	      thisdet = SDman->FindSensitiveDetector(detectorname);
+
+	      if( thisdet == 0 ) {
+		  thisdet = new remollGenericDetector(detectorname);
+		  G4cout << "  Creating sensitive detector " << det_type
+		      << " for volume " << myvol->GetName()
+		      <<  G4endl << G4endl;
+		  SDman->AddNewDetector(thisdet);
+	      }
+
+	      myvol->SetSensitiveDetector(thisdet);
+	  }
       }
-    }
-    k++;
   }
+
+  CreateGlobalMagneticField();
 
   //==========================
   // Visualization attributes
   //==========================
 
   G4VisAttributes* motherVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  G4VisAttributes* daughterVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  G4VisAttributes* targetVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,0.0));
-  G4VisAttributes* planeDetVisAtt= new G4VisAttributes(G4Colour(0.3,0.8,0.5));
-
-  motherVisAtt->SetVisibility(false);
-
-  targetVisAtt->SetVisibility(true);
-
-  daughterVisAtt->SetVisibility(true);
-  daughterVisAtt->SetForceWireframe (true);
-
-  planeDetVisAtt->SetVisibility(true);
-  planeDetVisAtt->SetForceWireframe (true);
-
-  G4VisAttributes* WVisAtt= new G4VisAttributes(G4Colour(0.7,0.7,0.7));
-  G4VisAttributes* PbVisAtt= new G4VisAttributes(G4Colour(0.6,0.7,0.8));
-  G4VisAttributes* CuVisAtt= new G4VisAttributes(G4Colour(1.0,0.5,0.1));
-  G4VisAttributes* SiVisAtt= new G4VisAttributes(G4Colour(0.4,0.4,0.0));
-
-  WVisAtt->SetVisibility(true);
-  PbVisAtt->SetVisibility(true);
-  CuVisAtt->SetVisibility(true);
-  SiVisAtt->SetVisibility(true);
-
   worldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
-
 
   //==========================
   // Output geometry tree
@@ -168,7 +144,6 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
   G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 
   G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
-  //DumpGeometricalTree(worldVolume);
 
 
   G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
@@ -177,22 +152,13 @@ G4VPhysicalVolume*  remollDetectorConstruction::Construct()
 }
 
 
-void remollDetectorConstruction::CreateGlobalMagneticField()   
-{
+void remollDetectorConstruction::CreateGlobalMagneticField() {
+    fGlobalField = new remollGlobalField();
 
-  //--------- Magnetic Field -------------------------------
-  
-  //============================================
-  //  Define the global magnet field Manager
-  //============================================
-  fGlobalField = new remollGlobalField();
+    fGlobalFieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
+    fGlobalFieldManager->SetDetectorField(fGlobalField);
+    fGlobalFieldManager->CreateChordFinder(fGlobalField);
 
-  // Get transportation, field, and propagator  managers
-  fGlobalFieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
-//  G4TransportationManager::GetTransportationManager()->GetPropagatorInField()->SetLargestAcceptableStep(25*cm);
-  fGlobalFieldManager->SetDetectorField(fGlobalField);
-  fGlobalFieldManager->CreateChordFinder(fGlobalField);
-
-  return;
+    return;
 } 
 
