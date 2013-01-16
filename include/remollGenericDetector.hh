@@ -24,7 +24,7 @@ class G4TouchableHistory;
 
 class remollGenericDetector : public G4VSensitiveDetector {
     public:
-	remollGenericDetector( G4String name );
+	remollGenericDetector( G4String name, G4int detnum );
 	virtual ~remollGenericDetector();
 
 	virtual void Initialize(G4HCofThisEvent*);
@@ -38,6 +38,8 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
 	std::map<int, remollGenericDetectorSum *> fSumMap;
 
+	G4bool fTrackSecondaries;
+	G4int fDetNo;
 };
 
 #endif//__REMOLLGENERICDETECTOR_HH

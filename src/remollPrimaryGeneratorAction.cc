@@ -16,13 +16,12 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
   G4String particleName;
   G4ParticleDefinition* particle;
 
+  // Default generator data
   particle = particleTable->FindParticle(particleName="e-");
-
   particleGun->SetParticleDefinition(particle);
-
-  particleGun->SetParticleMomentumDirection(G4ThreeVector(sin(-40.0*deg),0.0,cos(-40.0*deg)));
+  particleGun->SetParticleMomentumDirection(G4ThreeVector(0.0,0.0,1.0));
   particleGun->SetParticleEnergy(1.0*GeV);
-  particleGun->SetParticlePosition(G4ThreeVector(0.*cm,0.*cm,0.*cm));
+  particleGun->SetParticlePosition(G4ThreeVector(0.*cm,0.*cm,-100.*cm));
 
 }
 
@@ -46,11 +45,13 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
    *   Generate event, set IO data
    */
 
+  /*
   particleGun->SetParticleDefinition(particle);
 
   particleGun->SetParticleMomentumDirection( G4ThreeVector( 0.0, 0.0, 1.0) );
   particleGun->SetParticleEnergy( 1.0*GeV );
   particleGun->SetParticlePosition( G4ThreeVector( 0.0, 0.0, -10.0*m ));
+  */
 	  
   particleGun->GeneratePrimaryVertex(anEvent);
 

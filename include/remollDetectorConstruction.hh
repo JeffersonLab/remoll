@@ -26,7 +26,6 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     void SetDetectorGeomFile(const G4String&);
 
-    void DumpGeometricalTree(G4VPhysicalVolume* aVolume,G4int depth=0);
     G4GDMLParser fGDMLParser;
   
 
@@ -38,9 +37,6 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     G4FieldManager*         fGlobalFieldManager;
     remollGlobalField*      fGlobalField;
     G4String                fDetFileName;
-
-    G4VPhysicalVolume *worldVolume;
-
 };
 
 #endif//__MOLLERDETECTORCONSTRUCTION_HH

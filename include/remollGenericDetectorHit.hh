@@ -4,10 +4,11 @@
 #include "G4VHit.hh"
 #include "G4THitsCollection.hh"
 #include "G4Allocator.hh"
+#include "G4ThreeVector.hh"
 
 class remollGenericDetectorHit : public G4VHit {
     public:
-	remollGenericDetectorHit();
+	remollGenericDetectorHit(G4int, G4int);
 	~remollGenericDetectorHit();
 
 	remollGenericDetectorHit(const remollGenericDetectorHit &right);
@@ -19,7 +20,22 @@ class remollGenericDetectorHit : public G4VHit {
 	void *operator new(size_t,void*p){return p;}
 
     private:
-	/* FIXME data */
+
+    public:
+	G4int fDetID;
+	G4int fCopyID;
+
+	// Position and momentum in lab coordinates
+	G4ThreeVector f3X;
+	G4ThreeVector f3P;
+	// Total momentum, energy, mass
+	G4double fP, fE, fM;
+	// Origin
+	G4ThreeVector f3V;
+	// Geant4 track ID, particle type, and mother ID
+	G4int    fTrID, fPID, fmTrID;
+	// Process generator type
+	G4int    fGen;
 };
 
 

@@ -80,8 +80,8 @@ int main(int argc, char** argv){
     ((remollEventAction *) event_action)->SetIO(io);
 //    ((remollEventAction *) event_action)->SetEvGen(((remollPrimaryGeneratorAction *) gen_action)->GetEvGen());
     runManager->SetUserAction(event_action);
-    G4UserSteppingAction* stepping_action = new remollSteppingAction;
-    runManager->SetUserAction(stepping_action);
+//    G4UserSteppingAction* stepping_action = new remollSteppingAction;
+//    runManager->SetUserAction(stepping_action);
 
     // Initialize Run manager
     runManager->Initialize();

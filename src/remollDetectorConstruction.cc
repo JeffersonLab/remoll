@@ -43,6 +43,7 @@ remollDetectorConstruction::~remollDetectorConstruction() {
 }
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct() {
+    G4VPhysicalVolume *worldVolume;
 
     fGDMLParser.SetOverlapCheck(false);
     fGDMLParser.Read(fDetFileName);
@@ -87,9 +88,11 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
   G4GDMLAuxMapType::const_iterator iter;
   G4GDMLAuxListType::const_iterator vit, nit;
 
+  G4cout << "Beginning sensitive detector assignment" << G4endl;
+
   for( iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
       G4LogicalVolume* myvol = (*iter).first;
-      G4cout << "Volume " << myvol->GetName();
+      G4cout << "Volume " << myvol->GetName() << G4endl;
 
       for( vit  = (*iter).second.begin(); vit != (*iter).second.end(); vit++) {
 	  if ((*vit).type == "SensDet") {
@@ -97,7 +100,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 
 	      // Also allow specification of det number ///////////////////
 	      int det_no = -1;
-	      for( nit  = (*iter).second.begin(); nit != (*iter).second.end(); vit++) {
+	      for( nit  = (*iter).second.begin(); nit != (*iter).second.end(); nit++) {
 		  if ((*nit).type == "DetNo") {
 		      det_no= atoi((*nit).value.data());
 		  }
@@ -108,13 +111,13 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	      }
 	      /////////////////////////////////////////////////////////////
 
-	      retval = snprintf(detectorname, __DET_STRLEN,"/det_%d", det_no);
+	      retval = snprintf(detectorname, __DET_STRLEN,"remoll/det_%d", det_no);
 	      assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
 
 	      thisdet = SDman->FindSensitiveDetector(detectorname);
 
 	      if( thisdet == 0 ) {
-		  thisdet = new remollGenericDetector(detectorname);
+		  thisdet = new remollGenericDetector(detectorname, det_no);
 		  G4cout << "  Creating sensitive detector " << det_type
 		      << " for volume " << myvol->GetName()
 		      <<  G4endl << G4endl;
@@ -125,6 +128,8 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	  }
       }
   }
+
+  G4cout << "Completed sensitive detector assignment" << G4endl;
 
   CreateGlobalMagneticField();
 
@@ -164,3 +169,6 @@ void remollDetectorConstruction::CreateGlobalMagneticField() {
     return;
 } 
 
+void remollDetectorConstruction::SetDetectorGeomFile(const G4String &str){
+    fDetFileName = str;
+}

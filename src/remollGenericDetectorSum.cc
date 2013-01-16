@@ -2,7 +2,10 @@
 
 G4Allocator<remollGenericDetectorSum> remollGenericDetectorSumAllocator;
 
-remollGenericDetectorSum::remollGenericDetectorSum(){
+remollGenericDetectorSum::remollGenericDetectorSum(int detid, int copyid){
+    fDetID  = detid;
+    fCopyID = copyid;
+    fEdep   = 0.0;
 }
 
 remollGenericDetectorSum::~remollGenericDetectorSum(){
@@ -10,6 +13,9 @@ remollGenericDetectorSum::~remollGenericDetectorSum(){
 
 remollGenericDetectorSum::remollGenericDetectorSum(const remollGenericDetectorSum &right) : G4VHit(){
     // copy constructor
+    fDetID  = right.fDetID;
+    fCopyID = right.fCopyID;
+    fEdep   = right.fEdep;
 }
 
 const remollGenericDetectorSum& remollGenericDetectorSum::operator =(const remollGenericDetectorSum &right){

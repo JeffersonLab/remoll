@@ -7,7 +7,7 @@
 
 class remollGenericDetectorSum : public G4VHit {
     public:
-	remollGenericDetectorSum();
+	remollGenericDetectorSum(G4int, G4int);
 	~remollGenericDetectorSum();
 
 	remollGenericDetectorSum(const remollGenericDetectorSum &right);
@@ -18,8 +18,10 @@ class remollGenericDetectorSum : public G4VHit {
 	inline void operator delete(void *aHit);
 	void *operator new(size_t,void*p){return p;}
 
-    private:
-	/* FIXME data */
+    public:
+	G4int    fDetID;
+	G4int    fCopyID;
+	G4double fEdep;
 };
 
 

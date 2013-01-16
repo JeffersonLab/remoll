@@ -4,6 +4,7 @@
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
 
+
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
@@ -25,6 +26,9 @@ include(${Geant4_USE_FILE})
 #ROOT path
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
+
+#debugging symbols, complains
+set(CMAKE_CXX_FLAGS "-g -Wall")
 
 include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ~/include)
 link_directories( ~/lib )
@@ -48,7 +52,23 @@ target_link_libraries(remoll ${Geant4_LIBRARIES} CLHEP-Matrix-2.1.0.1 ${ROOT_LIB
 # build remoll. This is so that we can run the executable directly because it
 # relies on these scripts being in the current working directory.
 #
+
+FILE( GLOB REMOLL_GEO "geometry/*" )
+
 set(REMOLL_SCRIPTS
+    geometry/mollerMother.gdml
+    geometry/detectorDaughter.gdml
+    geometry/hybridDaughter.gdml
+    geometry/targetDaughter.gdml
+    geometry/upstreamDaughter.gdml
+    geometry/schema/gdml.xsd
+    geometry/schema/gdml_core.xsd
+    geometry/schema/gdml_define.xsd
+    geometry/schema/gdml_extensions.xsd
+    geometry/schema/gdml_materials.xsd
+    geometry/schema/gdml_parameterised.xsd
+    geometry/schema/gdml_replicas.xsd
+    geometry/schema/gdml_solids.xsd
   )
 
 foreach(_script ${REMOLL_SCRIPTS})
