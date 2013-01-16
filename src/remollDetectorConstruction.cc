@@ -35,6 +35,8 @@
 #define __DET_STRLEN 200
 
 remollDetectorConstruction::remollDetectorConstruction() {
+    // Default geometry file
+    fDetFileName = "geometry/mollerMother.gdml";
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
