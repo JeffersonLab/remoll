@@ -34,7 +34,6 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
   G4String particleName;
   G4ParticleDefinition* particle;
 
-  ev_t evdata;
 
   // Several different types of scattering
   // Let's start with e'N elastic

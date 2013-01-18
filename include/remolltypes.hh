@@ -8,17 +8,7 @@
    data around and useful enumerations
 */
 
-struct ev_t {
-};
-
-struct gen_t {
-};
-
-struct tr_t {
-};
-
-struct hit_t {
-};
+enum SampType_t { kCryogen, kWalls, kFullTarget };
 
 
 #endif//__REMOLL_TYPES_HH
