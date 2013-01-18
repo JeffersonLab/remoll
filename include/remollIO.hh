@@ -11,6 +11,7 @@ class TTree;
 
 class remollGenericDetectorHit;
 class remollGenericDetectorSum;
+class remollEvent;
 
 #define __IO_MAXHIT 10000
 
@@ -40,6 +41,30 @@ class remollIO {
 
 	//  Interfaces and buffers to the tree
 	//  This is potentially going to get very long...
+
+	// Event data
+    public:
+	void AddEventData(remollEvent *);
+    private:
+	Int_t fNEvPart;
+
+	Double_t fEvRate;
+	Double_t fEvEffXS;
+	Double_t fEvAsym;
+	Double_t fEvmAsym;
+
+	Int_t fEvPID[__IO_MAXHIT];
+
+	Double_t fEvPart_X[__IO_MAXHIT];
+	Double_t fEvPart_Y[__IO_MAXHIT];
+	Double_t fEvPart_Z[__IO_MAXHIT];
+	Double_t fEvPart_Px[__IO_MAXHIT];
+	Double_t fEvPart_Py[__IO_MAXHIT];
+	Double_t fEvPart_Pz[__IO_MAXHIT];
+	Double_t fEvPart_tPx[__IO_MAXHIT];
+	Double_t fEvPart_tPy[__IO_MAXHIT];
+	Double_t fEvPart_tPz[__IO_MAXHIT];
+
 
 	//  GenericDetectorHit
     public:

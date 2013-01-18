@@ -5,58 +5,67 @@
 #include "G4ParticleTable.hh"
 #include "G4ParticleDefinition.hh"
 #include "remollIO.hh"
+#include "remollVEventGen.hh"
+#include "remollEvent.hh"
 #include "remolltypes.hh"
 #include "globals.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
   G4int n_particle = 1;
-  particleGun = new G4ParticleGun(n_particle);
+  fParticleGun = new G4ParticleGun(n_particle);
 
-  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-  G4String particleName;
-  G4ParticleDefinition* particle;
+
+  fDefaultEvent = new remollEvent();
+  fDefaultEvent->ProduceNewParticle( 
+	  G4ThreeVector(0.*cm,0.*cm,-100.*cm),
+	  G4ThreeVector(0.0,0.0,11.0*GeV),
+	  "e-" );
 
   // Default generator data
-  particle = particleTable->FindParticle(particleName="e-");
-  particleGun->SetParticleDefinition(particle);
-  particleGun->SetParticleMomentumDirection(G4ThreeVector(0.0,0.0,1.0));
-  particleGun->SetParticleEnergy(1.0*GeV);
-  particleGun->SetParticlePosition(G4ThreeVector(0.*cm,0.*cm,-100.*cm));
 
+  fParticleGun->SetParticleDefinition(fDefaultEvent->fPartType[0]);
+  fParticleGun->SetParticleMomentumDirection(fDefaultEvent->fPartMom[0].unit());
+  fParticleGun->SetParticleMomentum( fDefaultEvent->fPartMom[0].mag()  );
+  fParticleGun->SetParticlePosition( fDefaultEvent->fPartPos[0] );
+
+  fEventGen = NULL;
 }
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction() {
-  delete particleGun;
+  delete fParticleGun;
+  delete fDefaultEvent;
 }
 
 void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
-  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-  G4String particleName;
-  G4ParticleDefinition* particle;
 
+  /*  Generate event, set IO data */
 
-  // Several different types of scattering
-  // Let's start with e'N elastic
+  remollEvent *thisev;
+  if( fEventGen ){  // Specified our own generator
+      thisev = fEventGen->GenerateEvent();
+      for( unsigned int pidx = 0; pidx < thisev->fPartType.size(); pidx++ ){
+	  fParticleGun->SetParticleDefinition(thisev->fPartType[pidx]);
+	  fParticleGun->SetParticleMomentumDirection(thisev->fPartMom[pidx].unit());
+	  fParticleGun->SetParticleMomentum( thisev->fPartMom[pidx].mag()  );
+	  fParticleGun->SetParticlePosition( thisev->fPartPos[pidx] );
+      }
 
-  //  Roll up random values
-  
-  /* FIXME 
-   *   Generate event, set IO data
-   */
+      fIO->AddEventData(thisev);
+  } else { // Use default, static single generator
+      // Update this just in case things changed
+      fDefaultEvent->Reset();
+      fDefaultEvent->ProduceNewParticle( 
+	      fParticleGun->GetParticlePosition(),
+	      fParticleGun->GetParticleMomentumDirection()*
+	      fParticleGun->GetParticleMomentum(),
+	      fParticleGun->GetParticleDefinition()->GetParticleName() );
+      fIO->AddEventData(fDefaultEvent);
+  }
 
-  /*
-  particleGun->SetParticleDefinition(particle);
-
-  particleGun->SetParticleMomentumDirection( G4ThreeVector( 0.0, 0.0, 1.0) );
-  particleGun->SetParticleEnergy( 1.0*GeV );
-  particleGun->SetParticlePosition( G4ThreeVector( 0.0, 0.0, -10.0*m ));
-  */
-	  
-  particleGun->GeneratePrimaryVertex(anEvent);
-
+  fParticleGun->GeneratePrimaryVertex(anEvent);
 }
 
 G4ParticleGun* remollPrimaryGeneratorAction::GetParticleGun() {
-  return particleGun;
+  return fParticleGun;
 } 
 

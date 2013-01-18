@@ -46,10 +46,11 @@ class remollBeamTarget {
 	remollVertex SampleVertex(SampType_t);
 
 
-    private:
 	G4double fBeamE;
 	G4double fBeamCurr;
+	G4double fBeamPol;
 
+    private:
 	std::vector <G4VPhysicalVolume *> fTargVols;
 	G4VPhysicalVolume *fMother;
 

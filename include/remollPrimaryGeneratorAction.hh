@@ -7,6 +7,8 @@
 class G4ParticleGun;
 class G4Event;
 class remollIO;
+class remollVEventGen;
+class remollEvent;
 
 class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
@@ -20,8 +22,10 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     void SetIO( remollIO *io ){ fIO = io; }
 
   private:
-    G4ParticleGun* particleGun;
+    G4ParticleGun* fParticleGun;
 
+    remollVEventGen *fEventGen;
+    remollEvent *fDefaultEvent;
     remollIO *fIO;
 };
 

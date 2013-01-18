@@ -25,6 +25,8 @@ remollBeamTarget::remollBeamTarget(){
 
     fMS = new remollMultScatt();
 
+    fBeamPol = 0.85;
+
     fEcut = 1e-6*MeV;
 }
 

@@ -1,5 +1,7 @@
 #include "remollVEventGen.hh"
 
+#include "G4RotationMatrix.hh"
+
 #include "remollBeamTarget.hh"
 #include "remollVertex.hh"
 #include "remollEvent.hh"
@@ -20,7 +22,18 @@ remollEvent *remollVEventGen::GenerateEvent(){
     // Set up beam/target vertex
     remollVertex vert   = fBeamTarg->SampleVertex(fSampType);
 
-    remollEvent *thisev = SamplePhysics(&vert);
+    /////////////////////////////////////////////////////////////////////
+    // Create and initialize values for event
+    remollEvent *thisev = new remollEvent();
+    thisev->fVertexPos    = fBeamTarg->fVer;
+    if( fApplyMultScatt ){
+	thisev->fBeamMomentum = fBeamTarg->fSampE*(fBeamTarg->fDir.unit());
+    } else {
+	thisev->fBeamMomentum = fBeamTarg->fSampE*G4ThreeVector(0.0, 0.0, 1.0);
+    }
+    /////////////////////////////////////////////////////////////////////
+   
+    SamplePhysics(&vert, thisev);
 
     PolishEvent(thisev);
 
@@ -34,16 +47,42 @@ void remollVEventGen::PolishEvent(remollEvent *ev){
           Apply multiple scattering effects to the final
 	    products if applicable
 	  Calculate rates from our given luminosity
+	  Calculate measured asymmetry from polarization
      */
 
+    G4ThreeVector rotax      = (fBeamTarg->fDir.cross(G4ThreeVector(0.0, 0.0, 1.0))).unit();
+    G4RotationMatrix msrot;
+    msrot.rotate(fBeamTarg->fDir.theta(), rotax);
+
+    std::vector<G4ThreeVector>::iterator iter;
+
     if( fApplyMultScatt ){
-	// FIXME - rotate direction vectors
-	// based on sampling
-    } else {
-	// FIXME too
+	for( iter = ev->fPartRealMom.begin(); iter != ev->fPartRealMom.end(); iter++ ){
+	    //  rotate direction vectors based on multiple scattering
+	    (*iter) *= msrot;
+	}
     }
 
-    ev->fRate = ev->fEffXs*fBeamTarg->GetEffLumin()/((G4double) fRun->GetNthrown());
+    ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/((G4double) fRun->GetNthrown());
+    ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPol;
 
     return;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

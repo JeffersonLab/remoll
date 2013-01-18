@@ -4,8 +4,11 @@
 #include <TTree.h>
 #include <TClonesArray.h>
 
+#include "G4ParticleDefinition.hh"
+
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
+#include "remollEvent.hh"
 
 remollIO::remollIO(){
     fTree = NULL;
@@ -26,6 +29,24 @@ void remollIO::InitializeTree(){
     if( fTree ){ delete fTree; }
 
     fTree = new TTree("T", "Geant4 Moller Simulation");
+
+    // Event information
+    fTree->Branch("ev.rate",  &fEvRate,   "ev.rate/D");
+    fTree->Branch("ev.A",     &fEvAsym,   "ev.A/D");
+    fTree->Branch("ev.Am",    &fEvmAsym,  "ev.Am/D");
+    fTree->Branch("ev.xs",    &fEvEffXS,  "ev.xs/D");
+
+    fTree->Branch("ev.npart", &fNEvPart   ,     "ev.npart/I");
+    fTree->Branch("ev.pid",   &fEvPID,      "ev.pid[ev.npart]/I");
+    fTree->Branch("ev.vx",    &fEvPart_X,   "ev.vx[ev.npart]/D");
+    fTree->Branch("ev.vy",    &fEvPart_Y,   "ev.vy[ev.npart]/D");
+    fTree->Branch("ev.vz",    &fEvPart_Z,   "ev.vz[ev.npart]/D");
+    fTree->Branch("ev.px",    &fEvPart_Px,  "ev.px[ev.npart]/D");
+    fTree->Branch("ev.py",    &fEvPart_Py,  "ev.py[ev.npart]/D");
+    fTree->Branch("ev.pz",    &fEvPart_Pz,  "ev.pz[ev.npart]/D");
+    fTree->Branch("ev.tpx",    &fEvPart_tPx,  "ev.tpx[ev.npart]/D");
+    fTree->Branch("ev.tpy",    &fEvPart_tPy,  "ev.tpy[ev.npart]/D");
+    fTree->Branch("ev.tpz",    &fEvPart_tPz,  "ev.tpz[ev.npart]/D");
 
     // GenericDetectorHit
     fTree->Branch("hit.n",    &fNGenDetHit,     "hit.n/I");
@@ -90,6 +111,43 @@ void remollIO::WriteTree(){
 
 ///////////////////////////////////////////////////////////////////////////////
 // Interfaces to output section ///////////////////////////////////////////////
+
+// Event Data
+
+void remollIO::AddEventData(remollEvent *ev){
+    int n = ev->fPartType.size();
+    if( n > __IO_MAXHIT ){
+	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+	return;
+    }
+
+    fNEvPart = n;
+
+    fEvRate   = ev->fRate;
+    fEvEffXS  = ev->fEffXs;
+    fEvAsym   = ev->fAsym;
+    fEvmAsym  = ev->fmAsym;
+
+    int idx;
+    for( idx = 0; idx < n; idx++ ){
+	fEvPID[idx] = ev->fPartType[idx]->GetPDGEncoding();
+
+	fEvPart_X[idx] = ev->fPartPos[idx].x();
+	fEvPart_Y[idx] = ev->fPartPos[idx].y();
+	fEvPart_Z[idx] = ev->fPartPos[idx].z();
+
+	fEvPart_Px[idx] = ev->fPartRealMom[idx].x();
+	fEvPart_Py[idx] = ev->fPartRealMom[idx].y();
+	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z();
+
+	fEvPart_tPx[idx] = ev->fPartMom[idx].x();
+	fEvPart_tPy[idx] = ev->fPartMom[idx].y();
+	fEvPart_tPz[idx] = ev->fPartMom[idx].z();
+
+    }
+
+    return;
+}
 
 // GenericDetectorHit
 

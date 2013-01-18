@@ -21,6 +21,9 @@ class remollEvent {
 	void ProduceNewParticle( G4ThreeVector, G4ThreeVector, G4String );
 	void SetEffCrossSection( G4double xs ){ fEffXs = xs; }
 
+	void Reset();
+	void UndoLastParticle();
+
     private:
 
     public:
@@ -30,12 +33,13 @@ class remollEvent {
 
 	// Particles to be produced
 	std::vector<G4ThreeVector>    fPartPos;
-	std::vector<G4ThreeVector>    fPartMom; // Direction to go to Geant4
-	std::vector<G4ThreeVector>    fPartTrueMom;  // Generated direction (no ms)
+	std::vector<G4ThreeVector>    fPartMom;  // Generated direction (no ms)
+	std::vector<G4ThreeVector>    fPartRealMom; // Direction to go to Geant4
 	std::vector<G4ParticleDefinition *> fPartType;
 
 	G4double fRate;
 	G4double fEffXs;
+	G4double fAsym, fmAsym;
 
 };
 
