@@ -19,6 +19,7 @@ class remollEvent;
 #define __E_UNIT GeV
 #define __L_UNIT m
 #define __T_UNIT ns
+#define __ASYMM_SCALE 1e-6 // ppm
 
 class remollIO {
     public:
@@ -44,7 +45,7 @@ class remollIO {
 
 	// Event data
     public:
-	void AddEventData(remollEvent *);
+	void SetEventData(remollEvent *);
     private:
 	Int_t fNEvPart;
 

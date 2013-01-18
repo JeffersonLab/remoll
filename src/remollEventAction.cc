@@ -34,7 +34,7 @@ void remollEventAction::BeginOfEventAction(const G4Event*ev) {
 }
 
 void remollEventAction::EndOfEventAction(const G4Event* evt ) {
-  G4SDManager   *SDman = G4SDManager::GetSDMpointer();
+  //G4SDManager   *SDman = G4SDManager::GetSDMpointer();
   G4HCofThisEvent *HCE = evt->GetHCofThisEvent();
 
   G4VHitsCollection *thiscol;

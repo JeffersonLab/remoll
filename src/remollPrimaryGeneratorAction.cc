@@ -22,7 +22,6 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
 	  "e-" );
 
   // Default generator data
-
   fParticleGun->SetParticleDefinition(fDefaultEvent->fPartType[0]);
   fParticleGun->SetParticleMomentumDirection(fDefaultEvent->fPartMom[0].unit());
   fParticleGun->SetParticleMomentum( fDefaultEvent->fPartMom[0].mag()  );
@@ -50,16 +49,17 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 	  fParticleGun->SetParticlePosition( thisev->fPartPos[pidx] );
       }
 
-      fIO->AddEventData(thisev);
+      fIO->SetEventData(thisev);
   } else { // Use default, static single generator
       // Update this just in case things changed
+      // from the command user interface
       fDefaultEvent->Reset();
       fDefaultEvent->ProduceNewParticle( 
 	      fParticleGun->GetParticlePosition(),
 	      fParticleGun->GetParticleMomentumDirection()*
 	      fParticleGun->GetParticleMomentum(),
 	      fParticleGun->GetParticleDefinition()->GetParticleName() );
-      fIO->AddEventData(fDefaultEvent);
+      fIO->SetEventData(fDefaultEvent);
   }
 
   fParticleGun->GeneratePrimaryVertex(anEvent);

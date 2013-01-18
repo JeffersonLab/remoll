@@ -114,7 +114,7 @@ void remollIO::WriteTree(){
 
 // Event Data
 
-void remollIO::AddEventData(remollEvent *ev){
+void remollIO::SetEventData(remollEvent *ev){
     int n = ev->fPartType.size();
     if( n > __IO_MAXHIT ){
 	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
@@ -124,26 +124,25 @@ void remollIO::AddEventData(remollEvent *ev){
     fNEvPart = n;
 
     fEvRate   = ev->fRate;
-    fEvEffXS  = ev->fEffXs;
-    fEvAsym   = ev->fAsym;
-    fEvmAsym  = ev->fmAsym;
+    fEvEffXS  = ev->fEffXs/nanobarn;
+    fEvAsym   = ev->fAsym/__ASYMM_SCALE;
+    fEvmAsym  = ev->fmAsym/__ASYMM_SCALE;
 
     int idx;
     for( idx = 0; idx < n; idx++ ){
 	fEvPID[idx] = ev->fPartType[idx]->GetPDGEncoding();
 
-	fEvPart_X[idx] = ev->fPartPos[idx].x();
-	fEvPart_Y[idx] = ev->fPartPos[idx].y();
-	fEvPart_Z[idx] = ev->fPartPos[idx].z();
+	fEvPart_X[idx] = ev->fPartPos[idx].x()/__L_UNIT;
+	fEvPart_Y[idx] = ev->fPartPos[idx].y()/__L_UNIT;
+	fEvPart_Z[idx] = ev->fPartPos[idx].z()/__L_UNIT;
 
-	fEvPart_Px[idx] = ev->fPartRealMom[idx].x();
-	fEvPart_Py[idx] = ev->fPartRealMom[idx].y();
-	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z();
+	fEvPart_Px[idx] = ev->fPartRealMom[idx].x()/__E_UNIT;
+	fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
+	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
 
-	fEvPart_tPx[idx] = ev->fPartMom[idx].x();
-	fEvPart_tPy[idx] = ev->fPartMom[idx].y();
-	fEvPart_tPz[idx] = ev->fPartMom[idx].z();
-
+	fEvPart_tPx[idx] = ev->fPartMom[idx].x()/__E_UNIT;
+	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
+	fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
     }
 
     return;

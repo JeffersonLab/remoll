@@ -150,9 +150,9 @@ remollMessenger::~remollMessenger(){
 
 
 void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
-    char cmdstr[255];
 
     /*
+    char cmdstr[255];
     if( cmd == runCmd ){
 	// Save geometry to GDML file
 	G4GDMLParser parser;
