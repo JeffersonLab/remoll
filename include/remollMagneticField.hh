@@ -61,7 +61,7 @@ class remollMagneticField : public G4MagneticField {
 	G4double fMin[__NDIM], fMax[__NDIM];
 
 	G4int fNxtant; // Number of *tants (septants, or whatever)
-	G4double fPhi0, fPhiLow;
+	G4double fPhi0, fPhiLow, fxtantSize;
 
 	// Storage space for the table
 	std::vector< std::vector< std::vector< G4double > > > fBFieldData[__NDIM];

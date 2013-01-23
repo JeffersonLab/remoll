@@ -38,6 +38,9 @@
 remollDetectorConstruction::remollDetectorConstruction() {
     // Default geometry file
     fDetFileName = "geometry/mollerMother.gdml";
+
+
+    CreateGlobalMagneticField();
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
@@ -189,7 +192,6 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 
   G4cout << "Completed sensitive detector assignment" << G4endl;
 
-  CreateGlobalMagneticField();
 
   //==========================
   // Visualization attributes

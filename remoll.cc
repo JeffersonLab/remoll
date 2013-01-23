@@ -54,11 +54,13 @@ int main(int argc, char** argv){
     G4cout << "RunManager construction starting...." << G4endl;
     G4RunManager * runManager = new G4RunManager;
 
-//    remollMessenger *rmmess = new remollMessenger();
+    remollMessenger *rmmess = new remollMessenger();
 
     // Detector geometry
     G4VUserDetectorConstruction* detector = new remollDetectorConstruction();
     runManager->SetUserInitialization(detector);
+
+    rmmess->SetMagField( ((remollDetectorConstruction *) detector)->GetGlobalField() );
 
     // Physics we want to use
     G4VModularPhysicsList* physicsList = new LHEP();

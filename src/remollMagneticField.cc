@@ -51,31 +51,33 @@ void remollMagneticField::InitializeGrid() {
     }
 
     G4cout << "Initializing field map grid for " << fFilename << G4endl;
-
-    G4int cidx;
+    G4int cidx, ridx, pidx, zidx;
 
     for( cidx = kR; cidx <= kZ; cidx++ ){
 	// Set up storage space for table
 	fBFieldData[cidx].clear();
 	fBFieldData[cidx].resize(fN[kR]);
 
-	for (int ridx = 0; ridx < fN[kR]; ridx++) {
+	for( ridx = 0; ridx < fN[kR]; ridx++) {
 	    fBFieldData[cidx][ridx].resize(fN[kPhi]);
 
-	    for (int pidx=0; pidx<fN[kPhi]; pidx++) {
-		fBFieldData[cidx][ridx][pidx].resize(fN[kR]);
+	    for( pidx=0; pidx<fN[kPhi]; pidx++) {
+		fBFieldData[cidx][ridx][pidx].resize(fN[kZ]);
 
-		for (int zidx=0; pidx<fN[kZ]; zidx++) {
+		for( zidx=0; zidx<fN[kZ]; zidx++) {
 		    fBFieldData[cidx][ridx][pidx][zidx] = 0.0;
 		} // end of z
 	    } // end of phi
 	} // end of r
     } // end coordinate index
 
+    G4cout << "Map grid for " << fFilename << " initialized" << G4endl;
+
     return;
 }
 
 void remollMagneticField::ReadFieldMap(){
+    const G4double eps = 1e-6;
 
     G4cout << "--------------------------------------------------------------------------------" << G4endl;
     G4cout << __PRETTY_FUNCTION__ << ": Reading the field grid from " << fFilename << G4endl; 
@@ -118,6 +120,9 @@ void remollMagneticField::ReadFieldMap(){
 	    << ": File " << fFilename << " contains unreadable header.  Aborting" << G4endl;
 	exit(1);
     }
+    G4cout << __PRETTY_FUNCTION__ << ": N xtants = " << fNxtant << G4endl; 
+
+    fxtantSize = 2.0*pi/fNxtant;
 
     // Sanity check on header data
 
@@ -131,6 +136,18 @@ void remollMagneticField::ReadFieldMap(){
 	    << ": File " << fFilename << " contains invalid header data.  Aborting" << G4endl;
 	exit(1);
     }
+    
+    // Get in proper units
+
+    fMin[kR] *= m; 
+    fMax[kR] *= m;
+    fMin[kPhi] *= degree;
+    fMax[kPhi] *= degree; 
+    fMin[kZ] *= m;
+    fMax[kZ] *= m;
+
+    ///////////////////////////////////
+
 
     if( !( fMin[kPhi] >= -pi && fMin[kPhi] <= pi ) ){
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
@@ -138,23 +155,21 @@ void remollMagneticField::ReadFieldMap(){
 	exit(1);
     }
 
-    if( !( fMax[kPhi] - fMin[kPhi] > 2.0*pi/fNxtant   ) ){
-	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
-	    << ": File " << fFilename << " header contains too broad phi range for given xtants.  Aborting" << G4endl;
-	exit(1);
+    if(  fMax[kPhi] - fMin[kPhi] < fxtantSize  ){
+	G4cerr << "Warning " << __FILE__ << " line " << __LINE__ 
+	    << ": File " << fFilename << " header contains too narrow phi range for given xtants." << G4endl <<  "Warning:   Proceeding assuming null field in non-described regions" << G4endl << (fMax[kPhi] - fMin[kPhi])/degree << " deg range < " <<  fxtantSize/degree << " deg xtant" << G4endl;
     }
 
 
     fPhi0   = (fMax[kPhi] + fMin[kPhi])/2.0;
-    fPhiLow = fPhi0 - pi/fNxtant;
+    fPhiLow = fPhi0 - fxtantSize/2.0;
 
     InitializeGrid();
 
-    nread = fscanf(inputfile, "%d", &fNxtant); 
 
-    for( ridx = 0; ridx < fN[kR]; ridx++ ){
+    for( zidx = 0; zidx < fN[kZ]; zidx++ ){
 	for( pidx = 0; pidx < fN[kPhi]; pidx++ ){
-	    for( zidx = 0; zidx < fN[kZ]; zidx++ ){
+	    for( ridx = 0; ridx < fN[kR]; ridx++ ){
 
 		// Read in field values and assign units
 		nread = fscanf(inputfile, "%lf%lf%lf%lf%lf%lf", 
@@ -168,15 +183,68 @@ void remollMagneticField::ReadFieldMap(){
 		    nlines++;
 		}
 
+		////////////////////////////////////////////////////////////////////
+		// This checks that we're reading in properly framed data
+		// This can probably be condensed
+		if( ridx == 0 ){
+		    if( fabs(raw_R_m*m - fMin[kR]) > eps ){
+			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
+			    << ": File " << fFilename << " contains bad data framing in R.  Aborting" << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMin[kR]/m << " read " << raw_R_m << G4endl;
+			exit(1);
+		    }
+		}
+		if( pidx == 0 ){
+		    if( fabs(raw_Phi_deg*deg - fMin[kPhi]) > eps ){
+			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
+			    << ": File " << fFilename << " contains bad data framing in Phi.  Aborting" << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMin[kPhi]/degree << " read " << raw_Phi_deg << G4endl;
+			exit(1);
+		    }
+		}
+		if( zidx == 0 ){
+		    if( fabs(raw_Z_m*m - fMin[kZ]) > eps ){
+			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
+			    << ": File " << fFilename << " contains bad data framing in Z.  Aborting" << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMin[kZ]/m << " read " << raw_Z_m << G4endl;
+			exit(1);
+		    }
+		}
+		if( ridx == fN[kR]-1 ){
+		    if( fabs(raw_R_m*m - fMax[kR]) > eps ){
+			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
+			    << ": File " << fFilename << " contains bad data framing in R.  Aborting" << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMax[kR]/m << " read " << raw_R_m << G4endl;
+			exit(1);
+		    }
+		}
+		if( pidx == fN[kPhi]-1 ){
+		    if( fabs(raw_Phi_deg*deg - fMax[kPhi]) > eps ){
+			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
+			    << ": File " << fFilename << " contains bad data framing in Phi.  Aborting" << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMax[kPhi]/m << " read " << raw_Phi_deg << G4endl;
+			exit(1);
+		    }
+		}
+		if( zidx == fN[kZ]-1 ){
+		    if( fabs(raw_Z_m*m - fMax[kZ]) > eps ){
+			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
+			    << ": File " << fFilename << " contains bad data framing in Z.  Aborting" << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMax[kZ]/m << " read " << raw_Z_m << G4endl;
+			exit(1);
+		    }
+		}
+		////////////////////////////////////////////////////////////////////
+
 		/* convert to proper units */
 		val_R   = raw_R_m*m;
 		val_Z   = raw_Z_m*m;
 		val_Phi = raw_Phi_deg*degree;
 
 		// Set the grid values to the values which have been read-in
-		fBFieldData[kR][zidx][pidx][ridx]   = br*tesla;
-		fBFieldData[kPhi][zidx][pidx][ridx] = bp*tesla;
-		fBFieldData[kZ][zidx][pidx][ridx]   = bz*tesla;
+		fBFieldData[kR][ridx][pidx][zidx]   = br*tesla;
+		fBFieldData[kPhi][ridx][pidx][zidx] = bp*tesla;
+		fBFieldData[kZ][ridx][pidx][zidx]   = bz*tesla;
 
 	    }
 	}
@@ -200,30 +268,34 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
 
     G4double r, phi, z, dxtant;
     G4double   x[__NDIM], didx[__NDIM];
-    G4int    idx[__NDIM], xtant, dphi, lphi; 
+    G4int    idx[__NDIM], xtant;
+    G4double dphi, lphi; 
 
     phi = atan2(Point[1],Point[0]);
     r   = sqrt(Point[0]*Point[0] + Point[1]*Point[1]);
     z   = Point[2] - fZoffset;
 
-    // Get xtant number and xtant phi
-
+    // Get xtant number and fraction into xtant
     dphi = 
-	phi > 0.0 ? modf( (phi - fPhiLow)*fNxtant/(2.0*pi), &dxtant) : 
-	          modf( ( (2.0*pi + phi) - fPhiLow)*fNxtant/(2.0*pi), &dxtant ); // Wrap around
+	phi - fPhiLow >= 0.0 ? modf( (phi - fPhiLow)/fxtantSize, &dxtant ) : 
+	modf( ( (2.0*pi + phi) - fPhiLow)/fxtantSize, &dxtant ); // Wrap around
+
     xtant = (G4int) dxtant;
 
     // Local phi
-    lphi = dphi + fPhiLow;
+    lphi = dphi*fxtantSize + fPhiLow;
 
-    assert( xtant >= 0 && xtant < fNxtant );
+    if( !( xtant >= 0 && xtant < fNxtant ) ){
+	G4cerr << "Error:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":" << G4endl << "  xtant calculation failed. xtant " <<  xtant << " ( " << dxtant << " )  found where " << fNxtant << " is specified.  phi = " << phi/deg << " deg" << G4endl;
+	exit(1);
+    }
 
     // Check that the point is within the defined region
     // before interpolation.  If it is outside, the field is zero
 
-    if( r > fMax[kR] || r < fMin[kR] ||
-	    lphi > fMax[kPhi] || lphi < fMin[kPhi] ||
-	    z    > fMax[kZ]   || z    < fMin[kZ] ) {
+    if( r >= fMax[kR] || r < fMin[kR] ||
+	    lphi >= fMax[kPhi] || lphi < fMin[kPhi] ||
+	    z    >= fMax[kZ]   || z    < fMin[kZ] ) {
 
 	Bfield[0] = 0.0;
 	Bfield[1] = 0.0;
@@ -231,11 +303,11 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
 
 	return;
     }
- 
+
     // Ensure we're going to get our grid indices correct
-    assert( fMin[kR]   < r    &&    r < fMax[kR] );
-    assert( fMin[kPhi] < lphi && lphi < fMax[kPhi] );
-    assert( fMin[kZ]   < z    &&    z < fMax[kZ] );
+    assert( fMin[kR]   <= r    &&    r < fMax[kR] );
+    assert( fMin[kPhi] <= lphi && lphi < fMax[kPhi] );
+    assert( fMin[kZ]   <= z    &&    z < fMax[kZ] );
 
     int cidx;
 
@@ -276,10 +348,10 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     }
 
     G4ThreeVector Bcart = G4ThreeVector(Bint[kR], Bint[kPhi], Bint[kZ]);
-    Bcart.rotateZ(phi);      // this changes coordinates from Br, Bphi to Bx, By
-                              // Now we are cartesian, which is what we need to feed Geant4 (yay)
+    Bcart.rotateZ(lphi);      // this changes coordinates from Br, Bphi to Bx, By
+    // Now we are cartesian, which is what we need to feed Geant4 (yay)
 
-    Bcart.rotateZ(2.0*pi*xtant/fNxtant);  // rotate into our xtant
+    Bcart.rotateZ(xtant*fxtantSize);  // rotate into our xtant
     Bfield[0] = Bcart.x()*fFieldScale;
     Bfield[1] = Bcart.y()*fFieldScale;
     Bfield[2] = Bcart.z()*fFieldScale;

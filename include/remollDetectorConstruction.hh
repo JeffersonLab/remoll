@@ -28,7 +28,9 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     G4GDMLParser fGDMLParser;
   
+    remollGlobalField* GetGlobalField(){ return fGlobalField; }
 
+  private:
     //----------------------
     // global magnet section
     //----------------------

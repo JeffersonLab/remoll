@@ -6,11 +6,16 @@
 #include "G4UImessenger.hh"
 #include "G4UIcommand.hh"
 
+/*!
+ *   Global messenger class
+ */
+
 class remollIO;
 class remollEventGen;
 class remollDetectorConstruction;
 class remollEventAction;
 class remollPrimaryGeneratorAction;
+class remollGlobalField;
 
 class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
@@ -23,6 +28,7 @@ class remollMessenger : public G4UImessenger {
        	~remollMessenger();
 
 	void SetIO( remollIO *io ){ fIO = io; }
+	void SetMagField( remollGlobalField *f ){ fField = f; }
 	void SetEvGen( remollEventGen *eg ){ fevgen = eg; }
 	void SetPriGen( remollPrimaryGeneratorAction *pg ){ fprigen = pg; }
 	void SetDetCon( remollDetectorConstruction *dc ){ fdetcon= dc; }
@@ -36,13 +42,15 @@ class remollMessenger : public G4UImessenger {
 	remollDetectorConstruction *fdetcon;
 	remollEventAction *fevact;
 	remollPrimaryGeneratorAction *fprigen;
+	remollGlobalField *fField;
+
+	G4UIcmdWithAString   *newfieldCmd;
 
 	/*
 	G4UIcmdWithAnInteger *runCmd;
 	G4UIcmdWithAString   *fileCmd;
 	G4UIcmdWithAString   *tgtCmd;
 
-	G4UIcmdWithAString   *sigfileCmd;
 
 	G4UIcmdWithAString   *kineCmd;
 	G4UIcmdWithAString   *expCmd;
