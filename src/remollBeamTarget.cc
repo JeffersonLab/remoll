@@ -4,6 +4,7 @@
 #include "G4VSolid.hh"
 #include "G4Material.hh"
 #include "G4RunManager.hh"
+#include "G4GeometryManager.hh"
 
 #include "CLHEP/Random/RandFlat.h"
 #include "CLHEP/Random/RandGauss.h"
@@ -85,8 +86,10 @@ void remollBeamTarget::UpdateInfo(){
 
 void remollBeamTarget::SetTargetLen(G4double z){
     std::vector<G4VPhysicalVolume *>::iterator it;
+    
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
+	G4GeometryManager::GetInstance()->OpenGeometry((*it));
 	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
 	    // Change the length of the target volume
 	    ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->SetZHalfLength(z/2.0);
@@ -103,6 +106,7 @@ void remollBeamTarget::SetTargetLen(G4double z){
 
 	    (*it)->SetTranslation(pos);
 	}
+	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
     }
 
 
@@ -117,7 +121,9 @@ void remollBeamTarget::SetTargetPos(G4double z){
 
     G4double zshift = z-(fZpos+fLH2pos);
 
+
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
+	G4GeometryManager::GetInstance()->OpenGeometry((*it));
 	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
 	    // Change the length of the target volume
 	    (*it)->SetTranslation( G4ThreeVector(0.0, 0.0, z-fZpos) );
@@ -130,6 +136,7 @@ void remollBeamTarget::SetTargetPos(G4double z){
 
 	    (*it)->SetTranslation(prespos);
 	}
+	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
     }
 
     G4RunManager* runManager = G4RunManager::GetRunManager();

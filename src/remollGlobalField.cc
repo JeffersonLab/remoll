@@ -1,4 +1,6 @@
 #include "remollGlobalField.hh"
+#include "G4TransportationManager.hh"
+#include "G4FieldManager.hh"
 #include "remollMagneticField.hh"
 
 #define __GLOBAL_NDIM 3
@@ -15,6 +17,12 @@ void remollGlobalField::AddNewField( G4String name ){
 
     if( thisfield->IsInit() ){
 	fFields.push_back( thisfield );
+
+	// I don't know why it's necessary to do the following - SPR 1/24/13
+	// Recreating the chord finder makes stepping bearable
+	// in cases where you change the geometry. 
+	G4TransportationManager::GetTransportationManager()->GetFieldManager()->CreateChordFinder(this);
+
 	G4cout << __PRETTY_FUNCTION__ << ": field " << name << " was added." << G4endl;
     } else {
 	G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
