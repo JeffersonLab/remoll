@@ -1,7 +1,6 @@
 #ifndef __REMOLLRUN_HH
 #define __REMOLLRUN_HH
 
-#include "G4UImanager.hh"
 
 /*!
  * All the information on the run
@@ -21,12 +20,12 @@ class remollRun {
 	 static remollRun *GetRun();
 	~remollRun();
 
-	G4int GetNthrown(){ return fNthrown; }
+	int GetNthrown(){ return fNthrown; }
 
     private:
-	G4int    fNthrown;
-	G4double fBeamE;
-	G4String fGenName;
+	int    fNthrown;
+	double fBeamE;
+	char fGenName[255];
 };
 
 #endif//__REMOLLRUN_HH

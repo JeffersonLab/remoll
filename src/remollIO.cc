@@ -103,6 +103,9 @@ void remollIO::WriteTree(){
     fFile->cd();
     fTree->Write("T", TObject::kOverwrite);
     fFile->Close();
+
+    // FIXME:  write out run data
+
     delete fFile;
     fFile = NULL;
 

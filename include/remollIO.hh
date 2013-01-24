@@ -32,8 +32,10 @@ class remollIO {
 	void Flush();
 	void WriteTree();
 
+	void WriteRun();
 
 	void InitializeTree();
+
     private:
 	TFile *fFile;
 	TTree *fTree;

@@ -1,5 +1,7 @@
 #include "remollRun.hh"
 
+#include <string.h>
+
 remollRun *remollRun::gSingleton = NULL;
 
 remollRun::remollRun(){
@@ -7,7 +9,7 @@ remollRun::remollRun(){
 
     fNthrown = -1;
     fBeamE   = -1e9;
-    fGenName = "<none>";
+    strcpy(fGenName, "<none>");
 }
 
 remollRun::~remollRun(){
