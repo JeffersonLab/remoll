@@ -9,6 +9,7 @@
 #include "remollIO.hh"
 #include "remollEventAction.hh"
 #include "remollPrimaryGeneratorAction.hh"
+#include "remollBeamTarget.hh"
 
 #include "G4UImanager.hh"
 #include "G4RunManager.hh"
@@ -16,10 +17,27 @@
 #include "G4GDMLParser.hh"
 #include "G4VPhysicalVolume.hh"
 
+#include <iostream>
+
 remollMessenger::remollMessenger(){
+    // Grab singleton beam/target
+    fBeamTarg = remollBeamTarget::GetBeamTarget();
+
     newfieldCmd = new G4UIcmdWithAString("/remoll/addfield",this);
-    newfieldCmd->SetGuidance("Magnetic field");
+    newfieldCmd->SetGuidance("Add magnetic field");
     newfieldCmd->SetParameterName("filename", false);
+
+    fieldScaleCmd = new G4UIcmdWithAString("/remoll/scalefield",this);
+    fieldScaleCmd->SetGuidance("Scale magnetic field");
+    fieldScaleCmd->SetParameterName("filename", false);
+
+    tgtLenCmd = new G4UIcmdWithADoubleAndUnit("/remoll/targlen",this);
+    tgtLenCmd->SetGuidance("Target length");
+    tgtLenCmd->SetParameterName("targlen", false);
+
+    tgtPosCmd = new G4UIcmdWithADoubleAndUnit("/remoll/targpos",this);
+    tgtPosCmd->SetGuidance("Target length");
+    tgtPosCmd->SetParameterName("targlen", false);
 
     /*
        fExpType = kNeutronExp;
@@ -56,9 +74,6 @@ remollMessenger::remollMessenger(){
        geantinoCmd->SetGuidance("Shoot a geantino instead of e-");
        geantinoCmd->SetParameterName("shootgeantino", false);
 
-       tgtLenCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/targlen",this);
-       tgtLenCmd->SetGuidance("Target length");
-       tgtLenCmd->SetParameterName("targlen", false);
 
        tgtDenCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/targden",this);
        tgtDenCmd->SetGuidance("Target density");
@@ -156,6 +171,29 @@ remollMessenger::~remollMessenger(){
 void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     if( cmd == newfieldCmd ){
 	fField->AddNewField( newValue );
+    }
+
+    if( cmd == fieldScaleCmd ){
+	std::istringstream iss(newValue);
+
+	G4String scalefile, scalestr;
+	G4double scaleval;
+
+	iss >> scalefile;
+	iss >> scalestr;
+
+	scaleval = atof(scalestr.data());
+	fField->SetFieldScale( scalefile, scaleval );
+    }
+
+    if( cmd == tgtLenCmd ){
+	G4double len = tgtLenCmd->GetNewDoubleValue(newValue);
+	fBeamTarg->SetTargetLen(len);
+    }
+
+    if( cmd == tgtPosCmd ){
+	G4double pos = tgtPosCmd->GetNewDoubleValue(newValue);
+	fBeamTarg->SetTargetPos(pos);
     }
 
     /*
@@ -310,11 +348,6 @@ if( cmd == geantinoCmd ){
     fdetcon->GetBBField()->SetUseGeantino(b);
 }
 
-if( cmd == tgtLenCmd ){
-    G4double len = tgtLenCmd->GetNewDoubleValue(newValue);
-    fevgen->SetTargLen(len);
-    fdetcon->SetTargLen(len);
-}
 
 if( cmd == tgtDenCmd ){
     G4double den = tgtDenCmd->GetNewDoubleValue(newValue);

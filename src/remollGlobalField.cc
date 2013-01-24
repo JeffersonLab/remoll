@@ -51,9 +51,13 @@ void remollGlobalField::GetFieldValue( const G4double p[], G4double *resB) const
 void remollGlobalField::SetFieldScale( G4String name, G4double scale ){
     std::vector<remollMagneticField*>::iterator it = fFields.begin();
 
-    while( it != fFields.end() && (*it)->GetName() != name ){ it++; }
+    while( it != fFields.end() ){ 
+	if( (*it)->GetName() == name ) break; 
+	it++; 
+    }
 
-    if( (*it)->GetName() == name ){ 
+    if( it != fFields.end() ){ 
+	G4cout << "Setting field " << name << " scale to " << scale << G4endl;
 	(*it)->SetFieldScale(scale);
     } else {
 	G4cerr << "WARNING " << __FILE__ << " line " << __LINE__

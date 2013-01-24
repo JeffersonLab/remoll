@@ -16,6 +16,7 @@ class remollDetectorConstruction;
 class remollEventAction;
 class remollPrimaryGeneratorAction;
 class remollGlobalField;
+class remollBeamTarget;
 
 class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
@@ -43,8 +44,13 @@ class remollMessenger : public G4UImessenger {
 	remollEventAction *fevact;
 	remollPrimaryGeneratorAction *fprigen;
 	remollGlobalField *fField;
+	remollBeamTarget *fBeamTarg;
 
 	G4UIcmdWithAString   *newfieldCmd;
+	G4UIcmdWithAString   *fieldScaleCmd;
+
+	G4UIcmdWithADoubleAndUnit *tgtLenCmd;
+	G4UIcmdWithADoubleAndUnit *tgtPosCmd;
 
 	/*
 	G4UIcmdWithAnInteger *runCmd;

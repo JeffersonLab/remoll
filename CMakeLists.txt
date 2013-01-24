@@ -69,6 +69,7 @@ set(REMOLL_SCRIPTS
     geometry/schema/gdml_parameterised.xsd
     geometry/schema/gdml_replicas.xsd
     geometry/schema/gdml_solids.xsd
+    macros/runexample.mac
   )
 
 foreach(_script ${REMOLL_SCRIPTS})
