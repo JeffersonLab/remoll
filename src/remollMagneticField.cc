@@ -21,6 +21,7 @@ remollMagneticField::remollMagneticField( G4String filename ){
 
     fZoffset = 0.0;
     fInit = false;
+    fMagCurrent0 = -1e9;
 
     ReadFieldMap();
 }
@@ -37,6 +38,16 @@ G4String remollMagneticField::GetName(){
 
     return fFilename;
 }
+
+void remollMagneticField::SetMagnetCurrent(G4double s){ 
+    if( fMagCurrent0 > 0.0 ){
+       	fFieldScale = s/fMagCurrent0;
+    } else {
+    	G4cerr << "Warning:  " << __FILE__ << " line " << __LINE__ 
+	    << ": Field current not specified in map " << fFilename << " -  Aborting" << G4endl;
+    }
+}
+
 
 void remollMagneticField::InitializeGrid() {
     /*!  
@@ -123,6 +134,15 @@ void remollMagneticField::ReadFieldMap(){
     G4cout << __PRETTY_FUNCTION__ << ": N xtants = " << fNxtant << G4endl; 
 
     fxtantSize = 2.0*pi/fNxtant;
+
+    //////////////////////////////////////////////////////////////////////
+    nread = fscanf(inputfile, "%lf", &fMagCurrent0); 
+    if( nread != 1 ){
+	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
+	    << ": File " << fFilename << " contains unreadable header.  Aborting" << G4endl;
+	exit(1);
+    }
+    G4cout << __PRETTY_FUNCTION__ << ": field current = " << fMagCurrent0 << " A" << G4endl; 
 
     // Sanity check on header data
 
