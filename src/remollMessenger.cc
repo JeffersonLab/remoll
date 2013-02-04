@@ -31,6 +31,10 @@ remollMessenger::remollMessenger(){
     fieldScaleCmd->SetGuidance("Scale magnetic field");
     fieldScaleCmd->SetParameterName("filename", false);
 
+    fieldCurrCmd = new G4UIcmdWithAString("/remoll/magcurrent",this);
+    fieldCurrCmd->SetGuidance("Scale magnetic field by current");
+    fieldCurrCmd->SetParameterName("filename", false);
+
     tgtLenCmd = new G4UIcmdWithADoubleAndUnit("/remoll/targlen",this);
     tgtLenCmd->SetGuidance("Target length");
     tgtLenCmd->SetParameterName("targlen", false);
@@ -184,6 +188,26 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 
 	scaleval = atof(scalestr.data());
 	fField->SetFieldScale( scalefile, scaleval );
+    }
+
+    if( cmd == fieldCurrCmd ){
+	std::istringstream iss(newValue);
+
+	G4String scalefile, scalestr, scaleunit;
+	G4double scaleval;
+
+	iss >> scalefile;
+	iss >> scalestr;
+	iss >> scaleunit;
+
+	if( scaleunit != "A" ){
+	    // FIXME: less snark and more functionality?
+	    G4cerr << __FILE__ << " line " << __LINE__ <<  ":\n\tGraaaah - just put the current for " <<  scalefile <<  " in amps..." << G4endl;
+	    exit(1);
+	}
+
+	scaleval = atof(scalestr.data());
+	fField->SetMagnetCurrent( scalefile, scaleval );
     }
 
     if( cmd == tgtLenCmd ){

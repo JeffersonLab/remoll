@@ -48,6 +48,7 @@ class remollMessenger : public G4UImessenger {
 
 	G4UIcmdWithAString   *newfieldCmd;
 	G4UIcmdWithAString   *fieldScaleCmd;
+	G4UIcmdWithAString   *fieldCurrCmd;
 
 	G4UIcmdWithADoubleAndUnit *tgtLenCmd;
 	G4UIcmdWithADoubleAndUnit *tgtPosCmd;

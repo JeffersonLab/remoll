@@ -39,13 +39,20 @@ G4String remollMagneticField::GetName(){
     return fFilename;
 }
 
+void remollMagneticField::SetFieldScale(G4double s){ 
+    fFieldScale = s;
+    G4cout << fFilename << " scale set to " << s << G4endl;
+    return;
+}
+
 void remollMagneticField::SetMagnetCurrent(G4double s){ 
     if( fMagCurrent0 > 0.0 ){
-       	fFieldScale = s/fMagCurrent0;
+       	SetFieldScale(s/fMagCurrent0);
     } else {
     	G4cerr << "Warning:  " << __FILE__ << " line " << __LINE__ 
-	    << ": Field current not specified in map " << fFilename << " -  Aborting" << G4endl;
+	    << ": Field current not specified in map " << fFilename << " - Ignoring and proceeding " << G4endl;
     }
+    return;
 }
 
 

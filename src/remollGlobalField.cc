@@ -32,6 +32,23 @@ void remollGlobalField::AddNewField( G4String name ){
     return;
 }
 
+remollMagneticField *remollGlobalField::GetFieldByName(G4String name) {
+    std::vector<remollMagneticField*>::iterator it = fFields.begin();
+
+    while( it != fFields.end() ){ 
+	if( (*it)->GetName() == name ) break; 
+	it++; 
+    }
+
+    if( it != fFields.end() ){ 
+	return (*it);
+    } else {
+	G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+	    << ": field " << name << " not found." << G4endl;
+	return NULL;
+    }
+}
+
 void remollGlobalField::GetFieldValue( const G4double p[], G4double *resB) const {
     G4double Bsum [__GLOBAL_NDIM], thisB[__GLOBAL_NDIM];
     int i;
@@ -57,21 +74,25 @@ void remollGlobalField::GetFieldValue( const G4double p[], G4double *resB) const
 
 
 void remollGlobalField::SetFieldScale( G4String name, G4double scale ){
-    std::vector<remollMagneticField*>::iterator it = fFields.begin();
-
-    while( it != fFields.end() ){ 
-	if( (*it)->GetName() == name ) break; 
-	it++; 
-    }
-
-    if( it != fFields.end() ){ 
-	G4cout << "Setting field " << name << " scale to " << scale << G4endl;
-	(*it)->SetFieldScale(scale);
-    } else {
-	G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-	    << ": field " << name << " not found." << G4endl;
-    }
+	remollMagneticField *field = GetFieldByName(name);
+	if( field ){
+	    field->SetFieldScale(scale);
+	} else {
+	    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+		<< ": field " << name << " scaling failed" << G4endl;
+	}
 
     return;
 }
 
+void remollGlobalField::SetMagnetCurrent( G4String name, G4double scale ){
+	remollMagneticField *field = GetFieldByName(name);
+	if( field ){
+	    field->SetMagnetCurrent(scale);
+	} else {
+	    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+		<< ": field " << name << " scaling failed" << G4endl;
+	}
+
+    return;
+}

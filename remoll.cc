@@ -66,6 +66,7 @@ int main(int argc, char** argv){
     G4VModularPhysicsList* physicsList = new LHEP();
     physicsList->RegisterPhysics(new G4StepLimiterBuilder());
     runManager->SetUserInitialization(physicsList);
+    physicsList->SetVerboseLevel(0);
 
     //-------------------------------
     // UserAction classes

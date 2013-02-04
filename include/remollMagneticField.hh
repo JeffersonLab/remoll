@@ -45,7 +45,7 @@ class remollMagneticField : public G4MagneticField {
 	void InitializeGrid();
 	void ReadFieldMap();
 
-	void SetFieldScale(G4double s){ fFieldScale = s; }
+	void SetFieldScale(G4double s);
 	void SetMagnetCurrent(G4double s);
 	    				
 	void SetZoffset(G4double z){ fZoffset= z; }
