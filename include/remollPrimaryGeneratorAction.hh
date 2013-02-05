@@ -3,6 +3,7 @@
 #define remollPrimaryGeneratorAction_h 1
 
 #include "G4VUserPrimaryGeneratorAction.hh"
+#include "G4String.hh"
 
 class G4ParticleGun;
 class G4Event;
@@ -20,6 +21,8 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     void GeneratePrimaries(G4Event* anEvent);
     G4ParticleGun* GetParticleGun();
     void SetIO( remollIO *io ){ fIO = io; }
+
+    void SetGenerator( G4String );
 
   private:
     G4ParticleGun* fParticleGun;

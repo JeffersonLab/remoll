@@ -26,7 +26,10 @@ remollBeamTarget::remollBeamTarget(){
 
     fMS = new remollMultScatt();
 
+    fBeamE   = 11.0*GeV;
     fBeamPol = 0.85;
+
+    fBeamCurr = 50e-6*ampere;
 
     fEcut = 1e-6*MeV;
 }
@@ -43,7 +46,7 @@ remollBeamTarget *remollBeamTarget::GetBeamTarget() {
 
 
 G4double remollBeamTarget::GetEffLumin(){
-    return fEffMatLen*fBeamCurr/(e_SI*ampere*second);
+    return fEffMatLen*fBeamCurr/(-e_SI*ampere*second);
 }
 
 void remollBeamTarget::UpdateInfo(){
@@ -74,6 +77,7 @@ void remollBeamTarget::UpdateInfo(){
 		exit(1);
 	    }
 	    fLH2Length = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+
 	    fLH2pos    = (*it)->GetFrameTranslation().z();
 	}
 
@@ -198,24 +202,24 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	switch( samp ){
 	    case kCryogen: 
 		if( (!isLH2 && samp == kCryogen) ){
-		    radsum += len*mat->GetRadlen()/mat->GetDensity();
+		    radsum += len/mat->GetDensity()/mat->GetRadlen();
 		} else {
 		    foundvol = true;
 		    zinvol = ztrav/mat->GetDensity();
-		    radsum += zinvol*mat->GetRadlen();
+		    radsum += zinvol/mat->GetRadlen();
 		}
 		break;
 
 	    case kWalls:
 		if( isLH2 ){
-		    radsum += len*mat->GetRadlen()/mat->GetDensity();
+		    radsum += len/mat->GetDensity()/mat->GetRadlen();
 		} else {
 		    if( ztrav - cumz < len ){
 			foundvol = true;
 			zinvol = (ztrav - cumz)/mat->GetDensity();
-			radsum += zinvol*mat->GetRadlen();
+			radsum += zinvol/mat->GetRadlen();
 		    } else {
-			radsum += len*mat->GetRadlen()/mat->GetDensity();
+			radsum += len/mat->GetDensity()/mat->GetRadlen();
 			cumz   += len;
 		    }
 		}
@@ -225,9 +229,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 		if( ztrav - cumz < len ){
 		    foundvol = true;
 		    zinvol = (ztrav - cumz)/mat->GetDensity();
-		    radsum += zinvol*mat->GetRadlen();
+		    radsum += zinvol/mat->GetRadlen();
 		} else {
-		    radsum += len*mat->GetRadlen()/mat->GetDensity();
+		    radsum += len/mat->GetDensity()/mat->GetRadlen();
 		    cumz   += len;
 		}
 		break;
@@ -243,12 +247,19 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    fVer    = G4ThreeVector( rasx, rasy, zinvol + (*it)->GetFrameTranslation().z() + fZpos );
 
 	    G4double masssum = 0.0;
-	    const G4int *atomsvec = mat->GetAtomsVector();
+	    const G4int *atomvec = mat->GetAtomsVector();
 	    const G4ElementVector *elvec = mat->GetElementVector();
 	    const G4double *fracvec = mat->GetFractionVector();
-	    for( unsigned int i = 0; i < elvec->size(); i++ ){
-		masssum += (*elvec)[i]->GetA()*atomsvec[i];
 
+	    for( unsigned int i = 0; i < elvec->size(); i++ ){
+		// FIXME:  Not sure why AtomsVector would ever return null
+		// but it does - SPR 2/5/13.  Just going to assume unit
+		// weighting for now if that is the case
+		if( atomvec ){
+		    masssum += (*elvec)[i]->GetA()*atomvec[i];
+		} else {
+		    masssum += (*elvec)[i]->GetA();
+		}
 		msthick[nmsmat] = mat->GetDensity()*zinvol*fracvec[i]*cm*cm/g;
 		msA[nmsmat] = (*elvec)[i]->GetA();
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
@@ -324,14 +335,14 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
 	fSampE = fBeamE - eloss;
 	assert( fSampE > electron_mass_c2 );
-
-	//if( fSampE < electron_mass_c2 ){ fSampE = electron_mass_c2; }
-
     } else {
 	fSampE = fBeamE;
     }
 
+
     thisvert.fBeamE = fSampE;
+
+    assert( fBeamE >= electron_mass_c2 );
 
     return thisvert;
 }

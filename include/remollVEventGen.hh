@@ -47,7 +47,7 @@ class remollVEventGen {
 
 
 	// Pure virtual function that needs to be filled out
-	virtual remollEvent *SamplePhysics(remollVertex *, remollEvent *) = 0;
+	virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
 
 	void PolishEvent(remollEvent *);
 };

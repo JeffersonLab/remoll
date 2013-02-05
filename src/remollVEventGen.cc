@@ -44,11 +44,19 @@ remollEvent *remollVEventGen::GenerateEvent(){
 void remollVEventGen::PolishEvent(remollEvent *ev){
     /*!
        Here it's our job to:
+          Make sure the event is sane
           Apply multiple scattering effects to the final
 	    products if applicable
 	  Calculate rates from our given luminosity
 	  Calculate measured asymmetry from polarization
+	  Calculate vertex offsets
      */
+
+    if( !ev->EventIsSane() ){
+	G4cerr << __FILE__ << " line " << __LINE__ << ":  Event check failed for generator " << fName << ".  Aborting" << G4endl;
+	ev->Print();
+	exit(1);
+    }
 
     G4ThreeVector rotax      = (fBeamTarg->fDir.cross(G4ThreeVector(0.0, 0.0, 1.0))).unit();
     G4RotationMatrix msrot;
@@ -61,6 +69,17 @@ void remollVEventGen::PolishEvent(remollEvent *ev){
 	    //  rotate direction vectors based on multiple scattering
 	    (*iter) *= msrot;
 	}
+
+	// Rotate position offsets due to multiple scattering
+	for( iter = ev->fPartPos.begin(); iter != ev->fPartPos.end(); iter++ ){
+	    //  rotate direction vectors based on multiple scattering
+	    (*iter) *= msrot;
+	}
+    }
+
+    // Add base vertex
+    for( iter = ev->fPartPos.begin(); iter != ev->fPartPos.end(); iter++ ){
+	(*iter) += ev->fVertexPos;
     }
 
     ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/((G4double) fRun->GetNthrown());

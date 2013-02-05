@@ -22,6 +22,7 @@
 
 //  Standard physics list
 #include "LHEP.hh"
+#include "G4PhysListFactory.hh"
 
 #include "G4UImanager.hh"
 #include "G4RunManager.hh"
@@ -63,10 +64,11 @@ int main(int argc, char** argv){
     rmmess->SetMagField( ((remollDetectorConstruction *) detector)->GetGlobalField() );
 
     // Physics we want to use
-    G4VModularPhysicsList* physicsList = new LHEP();
-    physicsList->RegisterPhysics(new G4StepLimiterBuilder());
-    runManager->SetUserInitialization(physicsList);
-    physicsList->SetVerboseLevel(0);
+    G4int verbose = 0;
+    G4PhysListFactory factory;
+    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("LHEP");
+    physlist->SetVerboseLevel(verbose);
+    runManager->SetUserInitialization(physlist);
 
     //-------------------------------
     // UserAction classes
@@ -83,10 +85,11 @@ int main(int argc, char** argv){
     ((remollEventAction *) event_action)->SetIO(io);
 //    ((remollEventAction *) event_action)->SetEvGen(((remollPrimaryGeneratorAction *) gen_action)->GetEvGen());
     runManager->SetUserAction(event_action);
-//    G4UserSteppingAction* stepping_action = new remollSteppingAction;
-//    runManager->SetUserAction(stepping_action);
+    G4UserSteppingAction* stepping_action = new remollSteppingAction;
+    runManager->SetUserAction(stepping_action);
 
     // Initialize Run manager
+    runManager->SetVerboseLevel(0);
     runManager->Initialize();
 
     // New units

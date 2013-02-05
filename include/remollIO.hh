@@ -19,6 +19,7 @@ class remollEvent;
 #define __E_UNIT GeV
 #define __L_UNIT m
 #define __T_UNIT ns
+#define __ANG_UNIT rad
 #define __ASYMM_SCALE 1e-6 // ppm
 
 class remollIO {
@@ -55,6 +56,9 @@ class remollIO {
 	Double_t fEvEffXS;
 	Double_t fEvAsym;
 	Double_t fEvmAsym;
+	Double_t fEvQ2;
+	Double_t fEvW2;
+	Double_t fEvThCoM;
 
 	Int_t fEvPID[__IO_MAXHIT];
 

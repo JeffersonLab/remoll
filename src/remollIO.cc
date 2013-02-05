@@ -31,10 +31,13 @@ void remollIO::InitializeTree(){
     fTree = new TTree("T", "Geant4 Moller Simulation");
 
     // Event information
-    fTree->Branch("ev.rate",  &fEvRate,   "ev.rate/D");
+    fTree->Branch("rate",     &fEvRate,   "rate/D");
     fTree->Branch("ev.A",     &fEvAsym,   "ev.A/D");
     fTree->Branch("ev.Am",    &fEvmAsym,  "ev.Am/D");
     fTree->Branch("ev.xs",    &fEvEffXS,  "ev.xs/D");
+    fTree->Branch("ev.Q2",    &fEvQ2,     "ev.Q2/D");
+    fTree->Branch("ev.W2",    &fEvW2,     "ev.W2/D");
+    fTree->Branch("ev.thcom", &fEvThCoM,  "ev.thcom/D");
 
     fTree->Branch("ev.npart", &fNEvPart   ,     "ev.npart/I");
     fTree->Branch("ev.pid",   &fEvPID,      "ev.pid[ev.npart]/I");
@@ -129,7 +132,10 @@ void remollIO::SetEventData(remollEvent *ev){
     fEvRate   = ev->fRate;
     fEvEffXS  = ev->fEffXs/nanobarn;
     fEvAsym   = ev->fAsym/__ASYMM_SCALE;
-    fEvmAsym  = ev->fmAsym/__ASYMM_SCALE;
+
+    fEvQ2     = ev->fQ2/__E_UNIT/__E_UNIT;
+    fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
+    fEvThCoM  = ev->fThCoM/deg; // specify this in degrees over anything else
 
     int idx;
     for( idx = 0; idx < n; idx++ ){
