@@ -9,8 +9,8 @@
 #include "remolltypes.hh"
 
 remollGenMoller::remollGenMoller(){
-    fThCoM_min =  acos( 0.6);
-    fThCoM_max =  acos(-0.6);
+    fThCoM_min =     0.0*deg;
+    fThCoM_max =   180.0*deg;
 }
 
 remollGenMoller::~remollGenMoller(){

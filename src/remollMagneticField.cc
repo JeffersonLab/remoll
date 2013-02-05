@@ -23,6 +23,8 @@ remollMagneticField::remollMagneticField( G4String filename ){
     fInit = false;
     fMagCurrent0 = -1e9;
 
+    fFieldScale = 1.0;
+
     ReadFieldMap();
 }
 

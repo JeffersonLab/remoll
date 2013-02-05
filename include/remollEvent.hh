@@ -45,6 +45,7 @@ class remollEvent {
 	std::vector<G4ThreeVector>    fPartRealMom; // Direction to go to Geant4
 	std::vector<G4ParticleDefinition *> fPartType;
 
+	G4double fBeamE;
 	G4double fRate;
 	G4double fEffXs;
 	G4double fAsym, fmAsym;

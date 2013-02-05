@@ -56,6 +56,7 @@ class remollIO {
 	Double_t fEvEffXS;
 	Double_t fEvAsym;
 	Double_t fEvmAsym;
+	Double_t fEvBeam;
 	Double_t fEvQ2;
 	Double_t fEvW2;
 	Double_t fEvThCoM;
@@ -68,6 +69,7 @@ class remollIO {
 	Double_t fEvPart_Px[__IO_MAXHIT];
 	Double_t fEvPart_Py[__IO_MAXHIT];
 	Double_t fEvPart_Pz[__IO_MAXHIT];
+	Double_t fEvPart_P[__IO_MAXHIT];
 	Double_t fEvPart_tPx[__IO_MAXHIT];
 	Double_t fEvPart_tPy[__IO_MAXHIT];
 	Double_t fEvPart_tPz[__IO_MAXHIT];
@@ -89,6 +91,7 @@ class remollIO {
 	Double_t fGenDetHit_X[__IO_MAXHIT];
 	Double_t fGenDetHit_Y[__IO_MAXHIT];
 	Double_t fGenDetHit_Z[__IO_MAXHIT];
+	Double_t fGenDetHit_R[__IO_MAXHIT];
 
 	Double_t fGenDetHit_Px[__IO_MAXHIT];
 	Double_t fGenDetHit_Py[__IO_MAXHIT];

@@ -38,12 +38,14 @@ void remollIO::InitializeTree(){
     fTree->Branch("ev.Q2",    &fEvQ2,     "ev.Q2/D");
     fTree->Branch("ev.W2",    &fEvW2,     "ev.W2/D");
     fTree->Branch("ev.thcom", &fEvThCoM,  "ev.thcom/D");
+    fTree->Branch("ev.beam",  &fEvBeam,   "ev.beam/D");
 
     fTree->Branch("ev.npart", &fNEvPart   ,     "ev.npart/I");
     fTree->Branch("ev.pid",   &fEvPID,      "ev.pid[ev.npart]/I");
     fTree->Branch("ev.vx",    &fEvPart_X,   "ev.vx[ev.npart]/D");
     fTree->Branch("ev.vy",    &fEvPart_Y,   "ev.vy[ev.npart]/D");
     fTree->Branch("ev.vz",    &fEvPart_Z,   "ev.vz[ev.npart]/D");
+    fTree->Branch("ev.p",     &fEvPart_P,   "ev.p[ev.npart]/D");
     fTree->Branch("ev.px",    &fEvPart_Px,  "ev.px[ev.npart]/D");
     fTree->Branch("ev.py",    &fEvPart_Py,  "ev.py[ev.npart]/D");
     fTree->Branch("ev.pz",    &fEvPart_Pz,  "ev.pz[ev.npart]/D");
@@ -64,6 +66,7 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.x",    &fGenDetHit_X,   "hit.x[hit.n]/D");
     fTree->Branch("hit.y",    &fGenDetHit_Y,   "hit.y[hit.n]/D");
     fTree->Branch("hit.z",    &fGenDetHit_Z,   "hit.z[hit.n]/D");
+    fTree->Branch("hit.r",    &fGenDetHit_R,   "hit.r[hit.n]/D");
 
     fTree->Branch("hit.px",   &fGenDetHit_Px,   "hit.px[hit.n]/D");
     fTree->Branch("hit.py",   &fGenDetHit_Py,   "hit.py[hit.n]/D");
@@ -132,6 +135,7 @@ void remollIO::SetEventData(remollEvent *ev){
     fEvRate   = ev->fRate;
     fEvEffXS  = ev->fEffXs/nanobarn;
     fEvAsym   = ev->fAsym/__ASYMM_SCALE;
+    fEvBeam   = ev->fBeamMomentum.mag()/__E_UNIT;
 
     fEvQ2     = ev->fQ2/__E_UNIT/__E_UNIT;
     fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
@@ -148,6 +152,8 @@ void remollIO::SetEventData(remollEvent *ev){
 	fEvPart_Px[idx] = ev->fPartRealMom[idx].x()/__E_UNIT;
 	fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
 	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
+
+	fEvPart_P[idx] = ev->fPartRealMom[idx].mag()/__E_UNIT;
 
 	fEvPart_tPx[idx] = ev->fPartMom[idx].x()/__E_UNIT;
 	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
@@ -177,6 +183,7 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     fGenDetHit_X[n]  = hit->f3X.x()/__L_UNIT;
     fGenDetHit_Y[n]  = hit->f3X.y()/__L_UNIT;
     fGenDetHit_Z[n]  = hit->f3X.z()/__L_UNIT;
+    fGenDetHit_R[n]  = sqrt(hit->f3X.x()*hit->f3X.x()+hit->f3X.y()*hit->f3X.y())/__L_UNIT;
 
     fGenDetHit_Px[n]  = hit->f3P.x()/__E_UNIT;
     fGenDetHit_Py[n]  = hit->f3P.y()/__E_UNIT;

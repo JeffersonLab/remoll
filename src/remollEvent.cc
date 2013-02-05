@@ -33,14 +33,14 @@ void remollEvent::Reset(){
     fBeamMomentum = G4ThreeVector(-1e9, -1e9, -1e9);
     fVertexPos    = G4ThreeVector(-1e9, -1e9, -1e9);
 
-    fRate  = -1e9;
-    fEffXs = -1e9;
+    fRate  = -1e9/s;
+    fEffXs = -1e9*nanobarn;
     fAsym  = -1e9;
 
-    fQ2    = -1e9;
+    fQ2    = -1e9*GeV*GeV;
 
     // Only care about for certain processes
-    fW2    = -1e9;
+    fW2    = -1e9*GeV*GeV;
     fThCoM = -1e9;
 }
 
