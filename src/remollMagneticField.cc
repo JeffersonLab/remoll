@@ -134,6 +134,16 @@ void remollMagneticField::ReadFieldMap(){
 	}
     }
 
+    nread = fscanf(inputfile, "%lf%lf", &fPhiMapOffset, &fZMapOffset);
+    if( nread != 2 ){
+	G4cerr << "Error " << __FILE__ << " line " << __LINE__
+	    << ": File " << fFilename << " contains unreadable header.  Aborting" << G4endl;
+	exit(1);
+    }
+
+    fPhiMapOffset *= deg;
+    fZMapOffset   *= m;
+
     nread = fscanf(inputfile, "%d", &fNxtant); 
     if( nread != 1 ){
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
@@ -156,7 +166,10 @@ void remollMagneticField::ReadFieldMap(){
     // Sanity check on header data
 
     if( !( fMin[kR] >= 0.0 && fMin[kR] < fMax[kR] &&
-		fMin[kPhi] < fMax[kPhi] && fMin[kZ] < fMax[kZ] &&
+	 	-180.0 < fMin[kPhi] && fMin[kPhi] < 180.0 && 
+	 	-180.0 < fMax[kPhi] && fMax[kPhi] < 180.0 && 
+	 	fMin[kPhi]  < fMax[kPhi] &&
+		fMin[kZ] < fMax[kZ] &&
 		fN[kR] > 0 && fN[kPhi] > 0 && fN[kZ] > 0 &&
 		fNxtant > 0
        	 )
@@ -175,6 +188,26 @@ void remollMagneticField::ReadFieldMap(){
     fMin[kZ] *= m;
     fMax[kZ] *= m;
 
+    for( cidx = kR; cidx <= kZ; cidx++ ){
+	fFileMin[cidx] = fMin[cidx];
+	fFileMax[cidx] = fMax[cidx];
+    }
+
+    fMin[kPhi] += fPhiMapOffset;
+    fMax[kPhi] += fPhiMapOffset;
+    // Put between -180 and 180
+    fMin[kPhi] = fmodf(fMin[kPhi] + pi/2.0, pi) - pi/2.0;
+    fMax[kPhi] = fmodf(fMax[kPhi] + pi/2.0, pi) - pi/2.0;
+
+    double mapphirange = fMax[kPhi] - fMin[kPhi];
+
+    if( mapphirange < 0.0 ){
+	mapphirange += 2.0*pi;
+    }
+
+    fMin[kZ]   += fZMapOffset;
+    fMax[kZ]   += fZMapOffset;
+
     ///////////////////////////////////
 
 
@@ -184,14 +217,21 @@ void remollMagneticField::ReadFieldMap(){
 	exit(1);
     }
 
-    if(  fMax[kPhi] - fMin[kPhi] < fxtantSize  ){
+    if( mapphirange < fxtantSize ){
 	G4cerr << "Warning " << __FILE__ << " line " << __LINE__ 
 	    << ": File " << fFilename << " header contains too narrow phi range for given xtants." << G4endl <<  "Warning:   Proceeding assuming null field in non-described regions" << G4endl << (fMax[kPhi] - fMin[kPhi])/degree << " deg range < " <<  fxtantSize/degree << " deg xtant" << G4endl;
     }
 
 
     fPhi0   = (fMax[kPhi] + fMin[kPhi])/2.0;
+    if( fMax[kPhi] < fMin[kPhi] ){
+	fPhi0 += pi;
+    }
+
     fPhiLow = fPhi0 - fxtantSize/2.0;
+    if( fPhiLow < -pi ){
+	fPhiLow += 2.0*pi;
+    }
 
     InitializeGrid();
 
@@ -224,18 +264,18 @@ void remollMagneticField::ReadFieldMap(){
 		    }
 		}
 		if( pidx == 0 ){
-		    if( fabs(raw_Phi_deg*deg - fMin[kPhi]) > eps ){
+		    if( fabs(raw_Phi_deg*deg - fFileMin[kPhi]) > eps ){
 			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 			    << ": File " << fFilename << " contains bad data framing in Phi.  Aborting" << G4endl;
-			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMin[kPhi]/degree << " read " << raw_Phi_deg << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fFileMin[kPhi]/degree << " read " << raw_Phi_deg << G4endl;
 			exit(1);
 		    }
 		}
 		if( zidx == 0 ){
-		    if( fabs(raw_Z_m*m - fMin[kZ]) > eps ){
+		    if( fabs(raw_Z_m*m - fFileMin[kZ]) > eps ){
 			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 			    << ": File " << fFilename << " contains bad data framing in Z.  Aborting" << G4endl;
-			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMin[kZ]/m << " read " << raw_Z_m << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fFileMin[kZ]/m << " read " << raw_Z_m << G4endl;
 			exit(1);
 		    }
 		}
@@ -248,18 +288,18 @@ void remollMagneticField::ReadFieldMap(){
 		    }
 		}
 		if( pidx == fN[kPhi]-1 ){
-		    if( fabs(raw_Phi_deg*deg - fMax[kPhi]) > eps ){
+		    if( fabs(raw_Phi_deg*deg - fFileMax[kPhi]) > eps ){
 			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 			    << ": File " << fFilename << " contains bad data framing in Phi.  Aborting" << G4endl;
-			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMax[kPhi]/m << " read " << raw_Phi_deg << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fFileMax[kPhi]/m << " read " << raw_Phi_deg << G4endl;
 			exit(1);
 		    }
 		}
 		if( zidx == fN[kZ]-1 ){
-		    if( fabs(raw_Z_m*m - fMax[kZ]) > eps ){
+		    if( fabs(raw_Z_m*m - fFileMax[kZ]) > eps ){
 			G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 			    << ": File " << fFilename << " contains bad data framing in Z.  Aborting" << G4endl;
-			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fMax[kZ]/m << " read " << raw_Z_m << G4endl;
+			G4cerr << "Index ("<< ridx << ", " << pidx << ", " <<  zidx <<  ")  Expected " << fFileMax[kZ]/m << " read " << raw_Z_m << G4endl;
 			exit(1);
 		    }
 		}
@@ -311,8 +351,10 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
 
     xtant = (G4int) dxtant;
 
-    // Local phi
-    lphi = dphi*fxtantSize + fPhiLow;
+    // Local phi (in file coordinates)
+    lphi = dphi*fxtantSize + fPhiLow - fPhiMapOffset;
+    if( lphi < -pi ){ lphi += 2.0*pi; }
+    if( lphi >  pi ){ lphi -= 2.0*pi; }
 
     if( !( xtant >= 0 && xtant < fNxtant ) ){
 	G4cerr << "Error:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":" << G4endl << "  xtant calculation failed. xtant " <<  xtant << " ( " << dxtant << " )  found where " << fNxtant << " is specified.  phi = " << phi/deg << " deg" << G4endl;
@@ -323,7 +365,7 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     // before interpolation.  If it is outside, the field is zero
 
     if( r >= fMax[kR] || r < fMin[kR] ||
-	    lphi >= fMax[kPhi] || lphi < fMin[kPhi] ||
+	    lphi >= fFileMax[kPhi] || lphi < fFileMin[kPhi] ||
 	    z    >= fMax[kZ]   || z    < fMin[kZ] ) {
 
 	Bfield[0] = 0.0;
@@ -335,7 +377,7 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
 
     // Ensure we're going to get our grid indices correct
     assert( fMin[kR]   <= r    &&    r < fMax[kR] );
-    assert( fMin[kPhi] <= lphi && lphi < fMax[kPhi] );
+    assert( fFileMin[kPhi] <= lphi && lphi < fFileMax[kPhi] );
     assert( fMin[kZ]   <= z    &&    z < fMax[kZ] );
 
     int cidx;
@@ -343,7 +385,7 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     // Get interoplation variables
     // the N-1 here is fencepost problem
     x[kR]   = modf( ( r - fMin[kR] )*(fN[kR]-1)/( fMax[kR] - fMin[kR] ),            &(didx[kR])   );
-    x[kPhi] = modf( ( lphi - fMin[kPhi] )*(fN[kPhi]-1)/( fMax[kPhi] - fMin[kPhi] ), &(didx[kPhi]) );
+    x[kPhi] = modf( ( lphi - fFileMin[kPhi] )*(fN[kPhi]-1)/( fFileMax[kPhi] - fFileMin[kPhi] ), &(didx[kPhi]) );
     x[kZ]   = modf( ( z - fMin[kZ] )*(fN[kZ]-1)/( fMax[kZ] - fMin[kZ] ),            &(didx[kZ])   );
 
     // Cast these to integers for indexing and check
@@ -377,14 +419,13 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     }
 
     G4ThreeVector Bcart = G4ThreeVector(Bint[kR], Bint[kPhi], Bint[kZ]);
-    Bcart.rotateZ(lphi);      // this changes coordinates from Br, Bphi to Bx, By
+    Bcart.rotateZ(lphi + fPhiMapOffset);      // this changes coordinates from Br, Bphi to Bx, By
     // Now we are cartesian, which is what we need to feed Geant4 (yay)
 
     Bcart.rotateZ(xtant*fxtantSize);  // rotate into our xtant
     Bfield[0] = Bcart.x()*fFieldScale;
     Bfield[1] = Bcart.y()*fFieldScale;
     Bfield[2] = Bcart.z()*fFieldScale;
-
 } 
 
 
