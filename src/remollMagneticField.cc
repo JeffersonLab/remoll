@@ -344,6 +344,17 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     r   = sqrt(Point[0]*Point[0] + Point[1]*Point[1]);
     z   = Point[2] - fZoffset;
 
+    if( isnan(phi) || isinf(phi) ||
+	    isnan(r) || isinf(r) ||
+	    isnan(z) || isinf(z) ){
+
+	G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR bad conversion to cylindrical coordinates" << G4endl;
+	G4cerr << "Point  ( " << Point[0]/m << ", " << Point[1]/m << ", " << Point[2]/m << " ) m" << G4endl;
+
+	exit(1);
+    }
+	
+
     // Get xtant number and fraction into xtant
     dphi = 
 	phi - fPhiLow >= 0.0 ? modf( (phi - fPhiLow)/fxtantSize, &dxtant ) : 

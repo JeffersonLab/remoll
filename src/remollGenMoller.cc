@@ -11,6 +11,8 @@
 remollGenMoller::remollGenMoller(){
     fThCoM_min =     0.0*deg;
     fThCoM_max =   180.0*deg;
+
+    fApplyMultScatt = true;
 }
 
 remollGenMoller::~remollGenMoller(){

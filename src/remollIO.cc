@@ -135,6 +135,7 @@ void remollIO::SetEventData(remollEvent *ev){
     fEvRate   = ev->fRate;
     fEvEffXS  = ev->fEffXs/nanobarn;
     fEvAsym   = ev->fAsym/__ASYMM_SCALE;
+    fEvmAsym  = ev->fmAsym/__ASYMM_SCALE;
     fEvBeam   = ev->fBeamMomentum.mag()/__E_UNIT;
 
     fEvQ2     = ev->fQ2/__E_UNIT/__E_UNIT;

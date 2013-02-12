@@ -1,4 +1,5 @@
 #include "remollMultScatt.hh"
+#include <assert.h>
 
 remollMultScatt::remollMultScatt() {
     InitInternal();
@@ -63,9 +64,16 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
 
     fNmat = nmat;
 
+    fReturnZero = false;
+    fInit       = false;
+
     fp = p;
 
     for( i = 0; i < nmat; i++ ){
+	assert( !isnan(t[i]) && !isinf(t[i]) &&
+		!isnan(A[i]) && !isinf(A[i]) &&
+		!isnan(Z[i]) && !isinf(Z[i]) );
+
 	ft[i] = t[i];
 	fA[i] = A[i];
 	fZ[i] = Z[i];
@@ -100,7 +108,30 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
 	bsum += expb_num/expb_den;
     }
 
+    // Check to see if we have a relevant amount of material
+    // otherwise don't bother
+    if( fNmat == 0 || log(bsum) < 1.0 ){
+	fInit = true;
+	fReturnZero = true;
+
+	/*
+	fprintf(stderr, "%s line %d: WARNING sum of b is %f\n", __FILE__, __LINE__, bsum );
+	for( i = 0; i < fNmat; i++ ){
+	    fprintf(stderr, "\tThickness mat %d: %f g/cm2\n", i, ft[i] );
+	}
+	fprintf(stderr, "Too little material - disabling MS for this configuration\n");
+	*/
+
+	return;
+    }
+
     double b = log( bsum );
+    assert( b > 1.0 );
+
+    if( isnan(b) || isinf(b) || b <= 0.0 ){
+	fprintf(stderr, "%s line %d: ERROR  sum of b is %f\n", __FILE__, __LINE__, bsum );
+	exit(1);
+    }
 
     // Need to solve
     // B - log(B) = b
@@ -128,8 +159,7 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
 
 
     // This is the number from Moliere
-    double th  = sqrt(fchi2*fB/2.0);
-    th = th;
+    // double th  = sqrt(fchi2*fB/2.0);
 
     fth = thpdg;
 
@@ -193,7 +223,9 @@ double remollMultScatt::J0(double x) {
     const double q8  = -0.6911147651e-5,  q9  = 0.7621095161e-6;
     const double q10 =  0.934935152e-7,   q11 = 0.636619772;
 
-    if ((ax=fabs(x)) < 8) {
+    ax = fabs(x);
+
+    if (ax < 8) {
 	y=x*x;
 	result1 = p1 + y*(p2 + y*(p3 + y*(p4  + y*(p5  + y*p6))));
 	result2 = p7 + y*(p8 + y*(p9 + y*(p10 + y*(p11 + y))));
@@ -206,12 +238,24 @@ double remollMultScatt::J0(double x) {
 	result2 = q6 + y*(q7 + y*(q8 + y*(q9 - y*q10)));
 	result  = sqrt(q11/ax)*(cos(xx)*result1-z*sin(xx)*result2);
     }
+
+    if( isnan(result) || isinf(result) ){
+	fprintf(stderr, "ERROR %s line %d: %s failed\n", __FILE__, __LINE__, __FUNCTION__ );
+	fprintf(stderr, "Tried to find J0(x) for x = %g\n", x );
+    }
+
+    assert( !isnan(result) && !isinf(result) );
+
     return result;
 }
 
 double remollMultScatt::solvelogeq(double b){
     // Newton's method to solve B - log(B) = b
-    double err = 1e-4;
+    const double err = 1e-4;
+    const int MAX_ITER = 500;
+    const int MAX_CORR = 50;
+
+    assert(b > 0.0);
 
     double thisB = b;
     double lastB = 1e9;
@@ -221,14 +265,34 @@ double remollMultScatt::solvelogeq(double b){
     double f, df;
     
     // Fix at 100 iterations
-    while( n < 100 && fabs(thisB-lastB)>err ){
+    while( n < MAX_ITER && fabs(thisB-lastB)>err ){
+	assert(thisB > 0.0);
+
 	f  = thisB - log(thisB) - b;
 	df = 1.0 - 1.0/thisB;
 
 	lastB  = thisB;
 	thisB -= f/df;
 
+	// Overshot...
+	if( !(thisB > 0.0) ){
+	    /*
+	    fprintf(stderr, "WARNING %s\n\t%s:  Newton's method produced negative value\n", __FILE__, __PRETTY_FUNCTION__);
+	    fprintf(stderr, "\tlastB = %f  thisB = %f   f = %f  df = %f\n", lastB, thisB, f, df);
+	    */
+	    int iter = 1;
+	    while( thisB < 0.0 && iter < MAX_CORR ){
+		thisB = lastB - f/df/pow(2.0, iter);
+		iter++;
+	    }
+	    assert( iter < MAX_CORR );
+	}
+
 	n++;
+    }
+    if( n == MAX_ITER ){
+	fprintf(stderr, "WARNING %s\n\t%s:  Newton's method did not converge\n", __FILE__, __PRETTY_FUNCTION__);
+	fprintf(stderr, "\treturning %f with error %f ( %f - %f ~= %f )\n", thisB, thisB - log(thisB) - b, thisB, log(thisB), b );
     }
 
     return thisB;
@@ -237,16 +301,23 @@ double remollMultScatt::solvelogeq(double b){
 
 double remollMultScatt::fn_integrand( double u, double th, int n ){
     // Check for bad values of logarithm
-    if( log(u) != log(u) || !(log(u) > -1e9) ){ 
-	return 0;
-    }
 
-    return u*J0(u*th)*exp(-0.25*u*u)*pow(0.25*u*u*log(0.25*u*u),n);
+    if( !(u > 0.0) ) return 0.0;
+
+    assert( !isnan(log(u)) && !isinf(log(u)) ); 
+    assert( !isnan(th) && !isinf(th) ); 
+
+    double retval = u*J0(u*th)*exp(-0.25*u*u)*pow(0.25*u*u*log(0.25*u*u),n);
+
+    assert( !isnan(retval) );
+    return retval;
 }
 
 double remollMultScatt::intsimpson_fn( double th, int n ){
     if( n >= 5 ) {fprintf(stderr, "%s %s: %d:  Warning, integrating over integrand terms that are of too large n\n", 
 	    __FILE__, __FUNCTION__, __LINE__ ); }
+
+    assert( !isnan(th) && !isinf(th) );
 
     /* Simpson's method of integration.
        We will choose the integration step
@@ -290,6 +361,10 @@ double remollMultScatt::intsimpson_fn( double th, int n ){
 	fact *= i;
     }
 
+    if( isnan( sum ) || isnan(fact) ){
+	fprintf(stderr, "%s line %d:  %s failed\n", __FILE__, __LINE__, __FUNCTION__ );
+	fprintf(stderr, "sum  = %g\nfact = %g\n", sum, fact );
+    }
     return sum/fact;
 }
 
@@ -312,7 +387,14 @@ double remollMultScatt::CalcMSDistPlane( double theta){
        Z    - Atomic number
        */
 
+    if( fReturnZero ) return 0.0;
+
     double th = fabs(theta)/sqrt(fchi2*fB);
+
+    if( isnan(th) ){
+	fprintf(stderr, "%s line %d: %s failed\n", __FILE__, __LINE__, __FUNCTION__ );
+	fprintf(stderr, "theta = %f\nfchi2 = %f\nfB = %f\n\n", theta, fchi2, fB);
+    }
 
     // Separately, we do three integrals from Moillere
     // Let's use Simpson's rule
@@ -322,7 +404,15 @@ double remollMultScatt::CalcMSDistPlane( double theta){
 //    double f3 = intsimpson_fn( th, 3 );
     double f3 = 0.0;
 
-    return f0 + f1/fB + f2/pow(fB,2.0) + f3/pow(fB,3.0);
+    double retval = f0 + f1/fB + f2/pow(fB,2.0) + f3/pow(fB,3.0);
+
+    if( isnan(retval) ){
+	fprintf(stderr, "%s line %d: %s failed\n", __FILE__, __LINE__, __FUNCTION__ );
+	fprintf(stderr, "f0 = %f\nf1 = %f\nf2 = %f\nf3 = %f\n\n", f0, f1, f2, f3);
+    }
+
+    assert( !isnan(retval) );
+    return retval;
 }
 
 double remollMultScatt::CalcMSDist( double theta, double p, double t, double A, double Z ){
@@ -358,7 +448,7 @@ double remollMultScatt::GenerateMSPlane(){
        in Init()
 
      */
-    if( !fInit ){
+    if( !fInit || fReturnZero ){
 	return 0.0;
     }
 
@@ -374,6 +464,7 @@ double remollMultScatt::GenerateMSPlane(){
 	}
 	while( fabs(trialv) > 2.0 );
 
+	assert( !isnan(trialv*fth) );
 	return trialv*fth;
     } else {
 	//  Now we have our long tail
@@ -396,6 +487,7 @@ double remollMultScatt::GenerateMSPlane(){
 	    trialv *= -1.0;
 	}
 
+	assert( !isnan(trialv) );
 	return trialv;
     }
 

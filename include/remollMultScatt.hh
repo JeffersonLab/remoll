@@ -95,7 +95,7 @@ class remollMultScatt {
 
     private:
 
-	bool   fInit;
+	bool   fInit, fReturnZero;
 	double fErf2sig;
 
 	int    fNmat;

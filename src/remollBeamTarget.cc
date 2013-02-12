@@ -76,12 +76,14 @@ void remollBeamTarget::UpdateInfo(){
 		    ":  Multiply defined LH2 volumes" << G4endl; 
 		exit(1);
 	    }
-	    fLH2Length = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+	    fLH2Length = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
+		         *(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
 
 	    fLH2pos    = (*it)->GetFrameTranslation().z();
 	}
 
-	fTotalLength += ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+	fTotalLength += ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
+	               *(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
     }
 
     return;
@@ -90,7 +92,6 @@ void remollBeamTarget::UpdateInfo(){
 
 void remollBeamTarget::SetTargetLen(G4double z){
     std::vector<G4VPhysicalVolume *>::iterator it;
-    
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
 	G4GeometryManager::GetInstance()->OpenGeometry((*it));
@@ -237,6 +238,13 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 		break;
 	}
 
+	if( mat->GetBaseMaterial() ){
+	    G4cerr << __FILE__ << " " << __PRETTY_FUNCTION__ << ":  The material you're using isn't" <<
+		" defined in a way we can use for multiple scattering calculations" << G4endl;
+	    G4cerr << "Aborting" << G4endl; 
+	    exit(1);
+	}
+
 	if( foundvol ){
 	    // For our vertex
 	    thisvert.fMaterial = mat;
@@ -244,7 +252,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
 	    // For our own info
 	    fRadLen = radsum;
-	    fVer    = G4ThreeVector( rasx, rasy, zinvol + (*it)->GetFrameTranslation().z() + fZpos );
+	    fVer    = G4ThreeVector( rasx, rasy, 
+		      zinvol - (*it)->GetFrameTranslation().z() + fZpos 
+		       - ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength() );
 
 	    G4double masssum = 0.0;
 	    const G4int *atomvec = mat->GetAtomsVector();
@@ -256,13 +266,14 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 		// but it does - SPR 2/5/13.  Just going to assume unit
 		// weighting for now if that is the case
 		if( atomvec ){
-		    masssum += (*elvec)[i]->GetA()*atomvec[i];
+		    masssum += (*elvec)[i]->GetA()*atomvec[i]*mole/g;
 		} else {
-		    masssum += (*elvec)[i]->GetA();
+		    masssum += (*elvec)[i]->GetA()*mole/g;
 		}
 		msthick[nmsmat] = mat->GetDensity()*zinvol*fracvec[i]*cm*cm/g;
-		msA[nmsmat] = (*elvec)[i]->GetA();
+		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
+
 		nmsmat++;
 	    }
 
@@ -273,8 +284,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    const G4ElementVector *elvec = mat->GetElementVector();
 	    const G4double *fracvec = mat->GetFractionVector();
 	    for( unsigned int i = 0; i < elvec->size(); i++ ){
+
 		msthick[nmsmat] = len*fracvec[i]*cm*cm/g;
-		msA[nmsmat] = (*elvec)[i]->GetA();
+		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
 		nmsmat++;
 	    }
@@ -291,9 +303,13 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     G4double msth, msph;
     G4double bmth, bmph;
 
+    assert( nmsmat > 0 );
+
     fMS->Init( fBeamE, nmsmat, msthick, msA, msZ );
     msth = fMS->GenerateMSPlane();
     msph = fMS->GenerateMSPlane();
+
+    assert( !isnan(msth) && !isnan(msph) );
 
     bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
     bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);

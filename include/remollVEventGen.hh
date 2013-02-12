@@ -42,14 +42,17 @@ class remollVEventGen {
 	remollBeamTarget *fBeamTarg;
 	remollRun        *fRun;
 
+	void PolishEvent(remollEvent *);
+	
+	// Pure virtual function that needs to be filled out
+	virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
+
+    protected:
 	SampType_t fSampType;
 	G4bool     fApplyMultScatt;
 
 
-	// Pure virtual function that needs to be filled out
-	virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
 
-	void PolishEvent(remollEvent *);
 };
 
 
