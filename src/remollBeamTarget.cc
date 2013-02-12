@@ -251,6 +251,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    thisvert.fRadLen   = radsum;
 
 	    // For our own info
+	    fTravLen = zinvol;
 	    fRadLen = radsum;
 	    fVer    = G4ThreeVector( rasx, rasy, 
 		      zinvol - (*it)->GetFrameTranslation().z() + fZpos 

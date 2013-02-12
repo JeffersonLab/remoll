@@ -79,11 +79,12 @@ int main(int argc, char** argv){
 
     G4VUserPrimaryGeneratorAction* gen_action = new remollPrimaryGeneratorAction;
     ((remollPrimaryGeneratorAction *) gen_action)->SetIO(io);
+    rmmess->SetPriGen((remollPrimaryGeneratorAction *)gen_action);
     runManager->SetUserAction(gen_action);
 
     G4UserEventAction* event_action = new remollEventAction;
     ((remollEventAction *) event_action)->SetIO(io);
-//    ((remollEventAction *) event_action)->SetEvGen(((remollPrimaryGeneratorAction *) gen_action)->GetEvGen());
+
     runManager->SetUserAction(event_action);
     G4UserSteppingAction* stepping_action = new remollSteppingAction;
     runManager->SetUserAction(stepping_action);

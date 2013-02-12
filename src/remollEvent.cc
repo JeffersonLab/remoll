@@ -33,7 +33,7 @@ void remollEvent::Reset(){
     fBeamMomentum = G4ThreeVector(-1e9, -1e9, -1e9);
     fVertexPos    = G4ThreeVector(-1e9, -1e9, -1e9);
 
-    fRate  = -1e9/s;
+    fRate  = 0.0/s;
     fEffXs = -1e9*nanobarn;
     fAsym  = -1e9;
 
@@ -59,7 +59,7 @@ G4bool remollEvent::EventIsSane(){
 
     if( isnan(fEffXs) || isinf(fEffXs) || fEffXs < 0.0 ) return false;
     if( isnan(fAsym) || isinf(fAsym) || fAsym < -1.0 || fAsym > 1.0 ) return false;
-    if( isnan(fThCoM) || isinf(fThCoM) || fThCoM < -180.0*deg || fThCoM > 180.0*deg ) return false;
+    if( isnan(fThCoM) || isinf(fThCoM) ) return false;
     if( isnan(fQ2) || isinf(fQ2) ) return false;
     if( isnan(fW2) || isinf(fW2) ) return false;
 

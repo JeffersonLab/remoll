@@ -11,7 +11,6 @@
  */
 
 class remollIO;
-class remollEventGen;
 class remollDetectorConstruction;
 class remollEventAction;
 class remollPrimaryGeneratorAction;
@@ -30,7 +29,6 @@ class remollMessenger : public G4UImessenger {
 
 	void SetIO( remollIO *io ){ fIO = io; }
 	void SetMagField( remollGlobalField *f ){ fField = f; }
-	void SetEvGen( remollEventGen *eg ){ fevgen = eg; }
 	void SetPriGen( remollPrimaryGeneratorAction *pg ){ fprigen = pg; }
 	void SetDetCon( remollDetectorConstruction *dc ){ fdetcon= dc; }
 	void SetEvAct( remollEventAction *ev ){ fevact = ev; }
@@ -39,7 +37,6 @@ class remollMessenger : public G4UImessenger {
 
     private:
 	remollIO *fIO;
-	remollEventGen *fevgen;
 	remollDetectorConstruction *fdetcon;
 	remollEventAction *fevact;
 	remollPrimaryGeneratorAction *fprigen;
@@ -49,6 +46,7 @@ class remollMessenger : public G4UImessenger {
 	G4UIcmdWithAString   *newfieldCmd;
 	G4UIcmdWithAString   *fieldScaleCmd;
 	G4UIcmdWithAString   *fieldCurrCmd;
+	G4UIcmdWithAString   *genSelectCmd;
 
 	G4UIcmdWithADoubleAndUnit *tgtLenCmd;
 	G4UIcmdWithADoubleAndUnit *tgtPosCmd;

@@ -43,6 +43,10 @@ remollMessenger::remollMessenger(){
     tgtPosCmd->SetGuidance("Target length");
     tgtPosCmd->SetParameterName("targlen", false);
 
+    genSelectCmd = new G4UIcmdWithAString("/remoll/gen",this);
+    genSelectCmd->SetGuidance("Select physics generator");
+    genSelectCmd->SetParameterName("generator", false);
+
     /*
        fExpType = kNeutronExp;
 
@@ -218,6 +222,10 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     if( cmd == tgtPosCmd ){
 	G4double pos = tgtPosCmd->GetNewDoubleValue(newValue);
 	fBeamTarg->SetTargetPos(pos);
+    }
+
+    if( cmd == genSelectCmd ){
+	fprigen->SetGenerator( newValue );
     }
 
     /*

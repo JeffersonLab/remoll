@@ -45,10 +45,11 @@ class remollBeamTarget {
 
 	remollVertex SampleVertex(SampType_t);
 
-
 	G4double fBeamE;
 	G4double fBeamCurr;
 	G4double fBeamPol;
+
+	std::vector <G4VPhysicalVolume *> GetTargVols(){ return fTargVols; }
 
     private:
 	std::vector <G4VPhysicalVolume *> fTargVols;
@@ -67,12 +68,13 @@ class remollBeamTarget {
 	G4double fTotalLength;
 	G4double fLH2Length, fZpos, fLH2pos;
 
-	G4double fEcut, fEffMatLen;
 	
     public:
 	// Base position, angle *sampled* info
 	G4ThreeVector fVer, fDir;
 	G4double fSampE, fRadLen, fSampLen;
+	G4double fTravLen;
+	G4double fEcut, fEffMatLen;
 
 };
 

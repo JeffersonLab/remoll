@@ -11,6 +11,7 @@
 #include "globals.hh"
 
 #include "remollGenMoller.hh"
+#include "remollGenpElastic.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
   G4int n_particle = 1;
@@ -34,9 +35,6 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
   fParticleGun->SetParticlePosition( fDefaultEvent->fPartPos[0] );
 
   fEventGen = NULL;
-
-  // FIXME:  just for testing
-  SetGenerator(G4String("moller"));
 }
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction() {
@@ -52,9 +50,17 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
 	fEventGen = new remollGenMoller();
     }
 
+    if( genname == "elastic" ){
+	fEventGen = new remollGenpElastic();
+    }
+
     if( !fEventGen ){
 	G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR generator " << genname << " invalid" << G4endl;
+	exit(1);
+    } else {
+	G4cout << "Setting generator to " << genname << G4endl;
     }
+
 
     return;
 }
