@@ -86,7 +86,9 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 	  fParticleGun->GeneratePrimaryVertex(anEvent);
       }
 
-      fIO->SetEventData(thisev);
+      if( thisev->fPartType.size() > 0 ){
+	  fIO->SetEventData(thisev);
+      }
   } else { // Use default, static single generator
       // Update this just in case things changed
       // from the command user interface

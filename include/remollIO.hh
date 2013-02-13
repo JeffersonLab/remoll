@@ -69,6 +69,7 @@ class remollIO {
 	Double_t fEvPart_Px[__IO_MAXHIT];
 	Double_t fEvPart_Py[__IO_MAXHIT];
 	Double_t fEvPart_Pz[__IO_MAXHIT];
+	Double_t fEvPart_Th[__IO_MAXHIT];
 	Double_t fEvPart_P[__IO_MAXHIT];
 	Double_t fEvPart_tPx[__IO_MAXHIT];
 	Double_t fEvPart_tPy[__IO_MAXHIT];

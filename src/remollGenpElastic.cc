@@ -34,8 +34,8 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     //  Crazy weighting for brem because ep cross section blows up at low Q2
 
     // Get initial beam energy instead of using other sampling
-    double beamE = fBeamTarget->fBeamE;;
-    double Ekin  = beamE - electron_mass_c2;;
+    double beamE = fBeamTarget->fBeamE;
+    double Ekin  = beamE - electron_mass_c2;
 
     std::vector <G4VPhysicalVolume *> targVols = fBeamTarget->GetTargVols();
 
@@ -45,7 +45,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
 	G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR could not find target" << G4endl;
-	return;
+	exit(1);
     }
 
     double bremcut = fBeamTarget->fEcut;
@@ -143,7 +143,15 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	beamE = beamE - eloss;
     }
 
-    if( beamE < electron_mass_c2 ) return; 
+    if( beamE < electron_mass_c2 ){ 
+	evt->SetEffCrossSection(0.0);
+	evt->SetAsymmetry(0.0);
+	return; 
+    }
+
+    // Set event information to our new sampling
+    evt->fBeamE = beamE;
+    evt->fBeamMomentum = evt->fBeamMomentum.unit()*sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2);;
 
     ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -197,6 +205,8 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     evt->SetQ2( q2 );
     evt->SetW2( proton_mass_c2*proton_mass_c2 );
+
+    // FIXME REradiate
 
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
 	    G4ThreeVector(ef*cos(ph)*sin(th), ef*sin(ph)*sin(th), ef*cos(th) ), 

@@ -63,7 +63,7 @@ G4bool remollEvent::EventIsSane(){
     if( isnan(fQ2) || isinf(fQ2) ) return false;
     if( isnan(fW2) || isinf(fW2) ) return false;
 
-    if( fPartPos.size() < 1 ){ 
+    if( fPartPos.size() < 1 && fEffXs > 0.0 ){ 
 	return false;
     }
 

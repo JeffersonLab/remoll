@@ -180,10 +180,12 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 		      exit(1);
 		  }
 		  det_no = k;
+		  useddetnums[k] = true;
 	      }
 	      /////////////////////////////////////////////////////////////
 
 	      retval = snprintf(detectorname, __DET_STRLEN,"remoll/det_%d", det_no);
+
 	      assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
 
 	      thisdet = SDman->FindSensitiveDetector(detectorname);
