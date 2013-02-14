@@ -31,13 +31,12 @@ void remollGenpInelastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double efmax = mp*beamE/(mp + beamE*(1.0-cos(th)));;
     double ef = CLHEP::RandFlat::shoot(0.0, beamE);
 
-    double thissigma_p = sigma_p( beamE, th, ef )*microbarn;
-    double thissigma_n = sigma_n( beamE, th, ef )*microbarn;
+    double thissigma_p = sigma_p( beamE/GeV, th, ef/GeV )*microbarn;
+    double thissigma_n = sigma_n( beamE/GeV, th, ef/GeV )*microbarn;
 
     double sigmatot = thissigma_p*vert->GetMaterial()->GetZ() +
-	thissigma_n*(vert->GetMaterial()->GetA()/mole - vert->GetMaterial()->GetZ());
-
-    printf("N eff = %f\n", vert->GetMaterial()->GetA()/mole - vert->GetMaterial()->GetZ() );
+	//  Effective neutron number...  I don't like it either  SPR 2/14/2013
+	thissigma_n*(vert->GetMaterial()->GetA()*mole/g - vert->GetMaterial()->GetZ());
 
     double V = 2.0*pi*(cos(fTh_min) - cos(fTh_max))*efmax;
 
