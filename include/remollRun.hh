@@ -20,10 +20,11 @@ class remollRun {
 	 static remollRun *GetRun();
 	~remollRun();
 
-	int GetNthrown(){ return fNthrown; }
+	unsigned long long int GetNthrown(){ return fNthrown; }
+	void SetNthrown(unsigned long long int n){ fNthrown = n; }
 
     private:
-	int    fNthrown;
+	long int    fNthrown;
 	double fBeamE;
 	char fGenName[255];
 };

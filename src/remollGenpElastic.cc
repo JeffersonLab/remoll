@@ -165,15 +165,15 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double tau = q2/(4.0*proton_mass_c2*proton_mass_c2);
 
     double gd = pow( 1.0 + q2/0.71, -2.0 );
-    double ge = gd;
-    double gm = 2.79*gd;
+    double gep = gd;
+    double gmp = 2.79*gd;
 
     double gen =  1.91*gd/(1.0+5.6*tau); // galster
     double gmn = -1.91*gd;
 
-    double sigma_mott = hbarc*hbarc*pow(alpha*cos(th), 2.0)/pow(2.0*beamE*sin(th)*sin(th), 2.0);
-    double ffpart1 = (ge*ge + tau*gm*gm)/(1.0+tau);
-    double ffpart2 = 2.0*tau*gm*gm*tan(th/2.0)*tan(th/2.0);
+    double sigma_mott = hbarc*hbarc*pow(alpha*cos(th/2.0), 2.0)/pow(2.0*beamE*sin(th/2.0)*sin(th/2.0), 2.0);
+    double ffpart1 = (gep*gep + tau*gmp*gmp)/(1.0+tau);
+    double ffpart2 = 2.0*tau*gmp*gmp*tan(th/2.0)*tan(th/2.0);
 
     double sigma = sigma_mott*(ef/beamE)*(ffpart1 + ffpart2);
 
@@ -196,8 +196,8 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     G4double eps = pow(1.0 + 2.0*(1.0+tau)*tan(th/2.0)*tan(th/2.0), -1.0);
 
-    G4double apvffnum = eps*ge*gen + tau*gm*gmn;
-    G4double apvffden = eps*ge*ge  + tau*gm*gm;
+    G4double apvffnum = eps*gep*gen + tau*gmp*gmn;
+    G4double apvffden = eps*gep*gep  + tau*gmp*gmp;
 
     G4double APV = APV_base*rhop*( (1.0 - 4*kp*sin2thW) - apvffnum/apvffden);
 

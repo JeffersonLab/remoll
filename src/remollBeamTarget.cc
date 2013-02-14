@@ -29,7 +29,7 @@ remollBeamTarget::remollBeamTarget(){
     fBeamE   = 11.0*GeV;
     fBeamPol = 0.85;
 
-    fBeamCurr = 50e-6*ampere;
+    fBeamCurr = 85e-6*ampere;
 
     fEcut = 1e-6*MeV;
 }
@@ -46,7 +46,8 @@ remollBeamTarget *remollBeamTarget::GetBeamTarget() {
 
 
 G4double remollBeamTarget::GetEffLumin(){
-    return fEffMatLen*fBeamCurr/(-e_SI*ampere*second);
+    G4double lumin = fEffMatLen*fBeamCurr/(e_SI*ampere*second);
+    return lumin;
 }
 
 void remollBeamTarget::UpdateInfo(){
@@ -279,8 +280,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    }
 
 	    fEffMatLen = (fSampLen/len)* // Sample weighting
-		mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*mole // material thickness
-		*Avogadro/masssum; // convert to Nparticle units
+		mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0/masssum; // material thickness
 	} else {
 	    const G4ElementVector *elvec = mat->GetElementVector();
 	    const G4double *fracvec = mat->GetFractionVector();
