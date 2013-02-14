@@ -12,6 +12,7 @@
 
 #include "remollGenMoller.hh"
 #include "remollGenpElastic.hh"
+#include "remollGenpInelastic.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
   G4int n_particle = 1;
@@ -52,6 +53,10 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
 
     if( genname == "elastic" ){
 	fEventGen = new remollGenpElastic();
+    }
+
+    if( genname == "inelastic" ){
+	fEventGen = new remollGenpInelastic();
     }
 
     if( !fEventGen ){
