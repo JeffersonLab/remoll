@@ -29,10 +29,10 @@ void remollGenpInelastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
     double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
     double efmax = mp*beamE/(mp + beamE*(1.0-cos(th)));;
-    double ef = CLHEP::RandFlat::shoot(0.0, beamE);
+    double ef = CLHEP::RandFlat::shoot(0.0, efmax);
 
-    double thissigma_p = sigma_p( beamE/GeV, th, ef/GeV )*microbarn;
-    double thissigma_n = sigma_n( beamE/GeV, th, ef/GeV )*microbarn;
+    double thissigma_p = sigma_p( beamE/GeV, th, ef/GeV )*nanobarn;
+    double thissigma_n = sigma_n( beamE/GeV, th, ef/GeV )*nanobarn;
 
     double sigmatot = thissigma_p*vert->GetMaterial()->GetZ() +
 	//  Effective neutron number...  I don't like it either  SPR 2/14/2013

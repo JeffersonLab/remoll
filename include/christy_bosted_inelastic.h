@@ -17,6 +17,8 @@
  October 11, 2012
  */
 
+#include "G4PhysicalConstants.hh"
+
 
 double AT_p( int i, double Q2 ){
     if( i < 0 || i >= 7 ){
@@ -80,7 +82,7 @@ double Gamma_p( int i, int j, double W2 ){
     }
     */
 
-    double Mp = 0.938;
+    double Mp = proton_mass_c2/GeV;
     double M[7] = {1.230, 1.530, 1.506, 1.698, 1.665, 1.433, 1.934};
     double Gamma[7] = {0.136, 0.220, 0.083, 0.096, 0.109, 0.379, 0.380};
     double l[7] = {1.0, 0.0, 2.0, 3.0, 0.0, 1.0, 3.0};
@@ -169,7 +171,7 @@ double BW_p( int i, double W2 ){
     }
 
     int j;
-    double Mp = 0.938;
+    double Mp = proton_mass_c2/GeV;
     double M[7] = {1.230, 1.530, 1.506, 1.698, 1.665, 1.433, 1.934};
     double Gamma[7] = {0.136, 0.220, 0.083, 0.096, 0.109, 0.379, 0.380};
     double beta[7][3] = {
@@ -212,7 +214,7 @@ double BW_d( int i, double W2 ){
     }
 
     int j;
-    double Mp = 0.938;
+    double Mp = proton_mass_c2/GeV;
     double M[7] = {1.230, 1.530, 1.506, 1.698, 1.665, 1.433, 1.934};
     double Gamma[7] = {0.136, 0.220, 0.083, 0.096, 0.109, 0.379, 0.380};
     double beta[7][3] = {
@@ -298,7 +300,7 @@ double sigmaR_T_d( double W2, double Q2 ){
 double sigmaNR_T_p( double W2, double Q2 ){
     // Non resonant transverse term
     int i;
-    double Mp = 0.938;
+    double Mp = proton_mass_c2/GeV;
     double mpi = 0.135;
     double Q02 = 0.05;
     double xp = 1.0/( 1 + (W2 - pow(Mp+mpi,2.0))/(Q2 + Q02) );
@@ -358,7 +360,7 @@ double sigmaNR_T_d( double W2, double Q2 ){
 
 double sigmaNR_L_p( double W2, double Q2 ){
     // Non resonant transverse term
-    double Mp = 0.938;
+    double Mp = proton_mass_c2/GeV;
     double m0 = 4.2802;
     double mpi = 0.140;
     double Q02 = 0.125;
@@ -368,7 +370,8 @@ double sigmaNR_L_p( double W2, double Q2 ){
     double nu = (W2 + Q2 - Mp*Mp)/2.0/Mp;
     double x  = Q2/(2.0*Mp*nu);
 
-    if( xp > 1.0 ){ return 0.0; }
+    // Kinematically allowed?
+    if( xp > 1.0 || xp < 0.0 ){ return 0.0; }
 
     double sigma0 = 86.7;
     double aL = 0.0;
@@ -387,12 +390,18 @@ double sigmaNR_L_p( double W2, double Q2 ){
 }
 
 double sigma_p( double E, double th, double Ep ){
-    double Mp = 0.938;
+    double Mp = proton_mass_c2/GeV;
     double alpha = 1.0/137.0;
     double nu = E-Ep;
 
     double Q2 = 2.0*E*Ep*(1.0-cos(th));
     double W2 = Mp*Mp + 2.0*Mp*nu - Q2;
+
+    if( W2 < Mp*Mp || E < Ep){ 
+	G4cerr << __FILE__ << " line " << __LINE__ << ":  WARNING " << __FUNCTION__ << " passed bad kinematics " << G4endl;
+	G4cerr << "W2 = " << W2 << " GeV2, E = " << E << " GeV, E' = " << Ep << " GeV" << G4endl;
+	return 0.0;
+    }
 
     double sigma_T = sigmaR_T_p(W2, Q2) + sigmaNR_T_p(W2,Q2);
     double sigma_L = sigmaR_L_p(W2, Q2) + sigmaNR_L_p(W2,Q2);
@@ -404,7 +413,14 @@ double sigma_p( double E, double th, double Ep ){
 
     // Everything should come out in ub, 1e-3 puts to nb/GeV/str
 
-    return Gamma*(sigma_T + eps*sigma_L)*1e3;
+    double retval = Gamma*(sigma_T + eps*sigma_L)*1e3;
+
+    if( isinf(retval) || isnan(retval) || retval < 0.0 ){
+	G4cerr << __FILE__ << " line " << __LINE__ << ":  ERROR " << __FUNCTION__ << " returning bad value" << G4endl;
+	G4cerr << Gamma << " " << sigma_T << " " << eps << " " << sigma_L << G4endl;
+    }
+
+    return retval;
 }
 
 double Rp( double E, double th, double Ep ){
@@ -425,12 +441,19 @@ double Rp( double E, double th, double Ep ){
 }
 
 double sigma_d( double E, double th, double Ep ){
-    double Mp = 0.938;
+    double Mp = proton_mass_c2/GeV;
     double alpha = 1.0/137.0;
     double nu = E-Ep;
 
     double Q2 = 2.0*E*Ep*(1.0-cos(th));
     double W2 = Mp*Mp + 2.0*Mp*nu - Q2;
+
+    if( W2 < Mp*Mp || E < Ep){ 
+	G4cerr << __FILE__ << " line " << __LINE__ << ":  WARNING " << __FUNCTION__ << " passed bad kinematics " << G4endl;
+	G4cerr << "W2 = " << W2 << " GeV2, E = " << E << " GeV, E' = " << Ep << " GeV" << G4endl;
+	return 0.0;
+    }
+
 
     double sigma_T = sigmaR_T_d(W2, Q2) + sigmaNR_T_d(W2,Q2);
     double sigma_L = Rp(E,th,Ep)*sigma_T; // Use Rp ~ Rn ~ Rd
@@ -443,7 +466,16 @@ double sigma_d( double E, double th, double Ep ){
     // Everything should come out in ub, 1e-3 puts to nb/GeV/str
     // Note this is averaged between the two nucleons
 
-    return Gamma*(sigma_T + eps*sigma_L)*1e3;
+    double retval = Gamma*(sigma_T + eps*sigma_L)*1e3;
+
+    if( isinf(retval) || isnan(retval) || retval < 0.0 ){
+	G4cerr << __FILE__ << " line " << __LINE__ << ":  ERROR " << __FUNCTION__ << " returning bad value" << G4endl;
+	G4cerr << Gamma << " " << sigma_T << " " << eps << " " << sigma_L << G4endl;
+    }
+
+    return retval;
+
+
 }
 
 double sigma_n( double E, double th, double Ep ){

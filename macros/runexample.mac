@@ -2,8 +2,15 @@
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
 /remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
+#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+
+/remoll/gen moller
+#/remoll/gen elastic 
+#/remoll/gen inelastic 
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
+
+/remoll/beamcurr 85 microampere
 
 /run/beamOn 1000
