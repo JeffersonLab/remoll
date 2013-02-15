@@ -38,7 +38,7 @@ void remollIO::InitializeTree(){
     fTree->Branch("ev.Q2",    &fEvQ2,     "ev.Q2/D");
     fTree->Branch("ev.W2",    &fEvW2,     "ev.W2/D");
     fTree->Branch("ev.thcom", &fEvThCoM,  "ev.thcom/D");
-    fTree->Branch("ev.beam",  &fEvBeam,   "ev.beam/D");
+    fTree->Branch("ev.beamp",  &fEvBeamP,   "ev.beamp/D");
 
     fTree->Branch("ev.npart", &fNEvPart   ,     "ev.npart/I");
     fTree->Branch("ev.pid",   &fEvPID,      "ev.pid[ev.npart]/I");
@@ -137,7 +137,7 @@ void remollIO::SetEventData(remollEvent *ev){
     fEvEffXS  = ev->fEffXs/microbarn;
     fEvAsym   = ev->fAsym/__ASYMM_SCALE;
     fEvmAsym  = ev->fmAsym/__ASYMM_SCALE;
-    fEvBeam   = ev->fBeamMomentum.mag()/__E_UNIT;
+    fEvBeamP  = ev->fBeamMomentum.mag()/__E_UNIT;
 
     fEvQ2     = ev->fQ2/__E_UNIT/__E_UNIT;
     fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
