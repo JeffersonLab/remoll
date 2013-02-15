@@ -411,7 +411,7 @@ double sigma_p( double E, double th, double Ep ){
 
     double Gamma = alpha*Ep*(W2-Mp*Mp)/(pow(2.0*3.14159,2.0)*Q2*Mp*E*(1.0-eps));
 
-    // Everything should come out in ub, 1e-3 puts to nb/GeV/str
+    // Everything should come out in ub, 1e3 puts to nb/GeV/str
 
     double retval = Gamma*(sigma_T + eps*sigma_L)*1e3;
 
@@ -463,7 +463,7 @@ double sigma_d( double E, double th, double Ep ){
 
     double Gamma = alpha*Ep*(W2-Mp*Mp)/(pow(2.0*3.14159,2.0)*Q2*Mp*E*(1.0-eps));
 
-    // Everything should come out in ub, 1e-3 puts to nb/GeV/str
+    // Everything should come out in ub, 1e3 puts to nb/GeV/str
     // Note this is averaged between the two nucleons
 
     double retval = Gamma*(sigma_T + eps*sigma_L)*1e3;
