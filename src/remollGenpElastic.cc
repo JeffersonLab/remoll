@@ -164,7 +164,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double q2  = 2.0*beamE*ef*(1.0-cos(th));
     double tau = q2/(4.0*proton_mass_c2*proton_mass_c2);
 
-    double gd = pow( 1.0 + q2/0.71, -2.0 );
+    double gd = pow( 1.0 + q2/(0.71*GeV*GeV), -2.0 );
     double gep = gd;
     double gmp = 2.79*gd;
 
