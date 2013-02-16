@@ -103,7 +103,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 	thishit->fPID   = track->GetDefinition()->GetPDGEncoding();
 
 	// FIXME - Enumerate encodings
-	thishit->fGen   = (G4int) track->GetCreatorProcess();
+	thishit->fGen   = (long int) track->GetCreatorProcess();
     }
 
     return !badedep && !badhit;
