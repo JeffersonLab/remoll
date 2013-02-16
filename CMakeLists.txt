@@ -56,7 +56,8 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 # Add the executable, and link it to the Geant4 libraries
 #
 add_executable(remoll remoll.cc ${sources} ${headers} remollDict.cxx)
-target_link_libraries(remoll ${Geant4_LIBRARIES} CLHEP-Matrix-2.1.0.1 ${ROOT_LIBRARIES} )
+#target_link_libraries(remoll ${Geant4_LIBRARIES} CLHEP-Matrix-2.1.0.1 ${ROOT_LIBRARIES} )
+target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
