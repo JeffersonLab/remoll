@@ -19,6 +19,7 @@
 
 #include "G4PhysicalConstants.hh"
 
+#include <math.h>
 
 double AT_p( int i, double Q2 ){
     if( i < 0 || i >= 7 ){
@@ -415,7 +416,7 @@ double sigma_p( double E, double th, double Ep ){
 
     double retval = Gamma*(sigma_T + eps*sigma_L)*1e3;
 
-    if( isinf(retval) || isnan(retval) || retval < 0.0 ){
+    if( std::isinf(retval) || std::isnan(retval) || retval < 0.0 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << ":  ERROR " << __FUNCTION__ << " returning bad value" << G4endl;
 	G4cerr << Gamma << " " << sigma_T << " " << eps << " " << sigma_L << G4endl;
     }
@@ -468,7 +469,7 @@ double sigma_d( double E, double th, double Ep ){
 
     double retval = Gamma*(sigma_T + eps*sigma_L)*1e3;
 
-    if( isinf(retval) || isnan(retval) || retval < 0.0 ){
+    if( std::isinf(retval) || std::isnan(retval) || retval < 0.0 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << ":  ERROR " << __FUNCTION__ << " returning bad value" << G4endl;
 	G4cerr << Gamma << " " << sigma_T << " " << eps << " " << sigma_L << G4endl;
     }
