@@ -59,10 +59,6 @@
    -------------------------------------------------
 */
 
-#include "time.h"
-#include "stdio.h"
-#include "math.h"
-#include "stdlib.h"
 #define MAT_MAX 50
 
 class remollMultScatt {

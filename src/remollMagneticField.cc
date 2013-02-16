@@ -4,6 +4,8 @@
 #include <assert.h>
 #include "G4ThreeVector.hh"
 
+#include <math.h>
+
 remollMagneticField::remollMagneticField( G4String filename ){ 
 
     fFilename = filename;
@@ -344,9 +346,9 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     r   = sqrt(Point[0]*Point[0] + Point[1]*Point[1]);
     z   = Point[2] - fZoffset;
 
-    if( isnan(phi) || isinf(phi) ||
-	    isnan(r) || isinf(r) ||
-	    isnan(z) || isinf(z) ){
+    if( std::isnan(phi) || std::isinf(phi) ||
+	    std::isnan(r) || std::isinf(r) ||
+	    std::isnan(z) || std::isinf(z) ){
 
 	G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR bad conversion to cylindrical coordinates" << G4endl;
 	G4cerr << "Point  ( " << Point[0]/m << ", " << Point[1]/m << ", " << Point[2]/m << " ) m" << G4endl;

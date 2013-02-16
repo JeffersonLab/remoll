@@ -12,6 +12,8 @@
 #include "remollBeamTarget.hh"
 #include "remollMultScatt.hh"
 
+#include <math.h>
+
 #define __MAX_MAT 100
 #define Euler 0.5772157
 
@@ -310,7 +312,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     msth = fMS->GenerateMSPlane();
     msph = fMS->GenerateMSPlane();
 
-    assert( !isnan(msth) && !isnan(msph) );
+    assert( !std::isnan(msth) && !std::isnan(msph) );
 
     bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
     bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);

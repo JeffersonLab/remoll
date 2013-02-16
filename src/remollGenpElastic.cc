@@ -13,6 +13,8 @@
 
 #include "remolltypes.hh"
 
+#include <math.h>
+
 #define Euler 0.5772157
 #define NINTERVAL 4
 
@@ -220,7 +222,7 @@ G4double remollGenpElastic::RadProfile(G4double eloss, G4double btt){
      double Ekin = fBeamTarget->fBeamE - electron_mass_c2;
      double retval = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,btt);
 
-     assert( !isnan(retval) && !isinf(retval) );
+     assert( !std::isnan(retval) && !std::isinf(retval) );
 
      return retval;
 }
@@ -248,7 +250,7 @@ G4double remollGenpElastic::EnergNumInt(G4double btt, G4double a0, G4double b0){
 	sum += thissum*(b-a)/90.0;
     }
 
-     assert( !isnan(sum) && !isinf(sum) );
+     assert( !std::isnan(sum) && !std::isinf(sum) );
 
     return sum;
 }

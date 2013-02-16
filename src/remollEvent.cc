@@ -57,11 +57,11 @@ G4bool remollEvent::EventIsSane(){
 
     unsigned int i;
 
-    if( isnan(fEffXs) || isinf(fEffXs) || fEffXs < 0.0 ) return false;
-    if( isnan(fAsym) || isinf(fAsym) || fAsym < -1.0 || fAsym > 1.0 ) return false;
-    if( isnan(fThCoM) || isinf(fThCoM) ) return false;
-    if( isnan(fQ2) || isinf(fQ2) ) return false;
-    if( isnan(fW2) || isinf(fW2) ) return false;
+    if( std::isnan(fEffXs) || std::isinf(fEffXs) || fEffXs < 0.0 ) return false;
+    if( std::isnan(fAsym) || std::isinf(fAsym) || fAsym < -1.0 || fAsym > 1.0 ) return false;
+    if( std::isnan(fThCoM) || std::isinf(fThCoM) ) return false;
+    if( std::isnan(fQ2) || std::isinf(fQ2) ) return false;
+    if( std::isnan(fW2) || std::isinf(fW2) ) return false;
 
     if( fPartPos.size() < 1 && fEffXs > 0.0 ){ 
 	return false;
@@ -70,13 +70,13 @@ G4bool remollEvent::EventIsSane(){
     for( i = 0; i < fPartPos.size(); i++ ){
 	if( !fPartType[i] ){ return false; }
 
-	if( isnan(fPartPos[i].x()) || isinf(fPartPos[i].x()) ) return false;
-	if( isnan(fPartPos[i].y()) || isinf(fPartPos[i].y()) ) return false;
-	if( isnan(fPartPos[i].z()) || isinf(fPartPos[i].z()) ) return false;
+	if( std::isnan(fPartPos[i].x()) || std::isinf(fPartPos[i].x()) ) return false;
+	if( std::isnan(fPartPos[i].y()) || std::isinf(fPartPos[i].y()) ) return false;
+	if( std::isnan(fPartPos[i].z()) || std::isinf(fPartPos[i].z()) ) return false;
 
-	if( isnan(fPartMom[i].x()) || isinf(fPartMom[i].x()) ) return false;
-	if( isnan(fPartMom[i].y()) || isinf(fPartMom[i].y()) ) return false;
-	if( isnan(fPartMom[i].z()) || isinf(fPartMom[i].z()) ) return false;
+	if( std::isnan(fPartMom[i].x()) || std::isinf(fPartMom[i].x()) ) return false;
+	if( std::isnan(fPartMom[i].y()) || std::isinf(fPartMom[i].y()) ) return false;
+	if( std::isnan(fPartMom[i].z()) || std::isinf(fPartMom[i].z()) ) return false;
     }
 
     return true;

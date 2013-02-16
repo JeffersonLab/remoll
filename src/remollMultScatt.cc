@@ -1,5 +1,10 @@
 #include "remollMultScatt.hh"
+
+#include <math.h>
 #include <assert.h>
+#include <stdio.h>
+#include <time.h>
+#include <stdlib.h>
 
 remollMultScatt::remollMultScatt() {
     InitInternal();
