@@ -48,7 +48,7 @@ remollBeamTarget *remollBeamTarget::GetBeamTarget() {
 
 
 G4double remollBeamTarget::GetEffLumin(){
-    G4double lumin = fEffMatLen*fBeamCurr/(e_SI*ampere*second);
+    G4double lumin = fEffMatLen*fBeamCurr/(e_SI*coulomb);
     return lumin;
 }
 
@@ -270,9 +270,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 		// but it does - SPR 2/5/13.  Just going to assume unit
 		// weighting for now if that is the case
 		if( atomvec ){
-		    masssum += (*elvec)[i]->GetA()*atomvec[i]*mole/g;
+		    masssum += (*elvec)[i]->GetA()*atomvec[i];
 		} else {
-		    masssum += (*elvec)[i]->GetA()*mole/g;
+		    masssum += (*elvec)[i]->GetA();
 		}
 		msthick[nmsmat] = mat->GetDensity()*zinvol*fracvec[i]*cm*cm/g;
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
@@ -282,7 +282,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    }
 
 	    fEffMatLen = (fSampLen/len)* // Sample weighting
-		mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0/masssum; // material thickness
+		mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*Avogadro/masssum; // material thickness
 	} else {
 	    const G4ElementVector *elvec = mat->GetElementVector();
 	    const G4double *fracvec = mat->GetFractionVector();
