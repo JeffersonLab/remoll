@@ -77,7 +77,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	(beamE-bremcut)*(beamE-absminE)/(11.0*GeV-bremcut),
     };
 
-    double Eprob[NINTERVAL]  = { 0.62, 0.13, 0.25 };
+    double Eprob[NINTERVAL]  = { 0.40, 0.20, 0.40 };
 
     double Enorm[NINTERVAL];
     // Interval normalization
@@ -102,9 +102,9 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	//  We break this into 4 seperate energy loss intervals
 	//  with total integrals roughly the size of
 	//  what the ep product looks like with 11 GeV beam
-	//   cut  -  2000 MeV, 1/x, 27%
-	//   2000 -  9000 MeV, 1/(E-x), 50%
-	//   9000 - 10990 MeV, 1/(E-x)^2, 43%
+	//   cut  -  2000 MeV, 1/x, 40%
+	//   2000 -  9000 MeV, 1/(E-x), 20%
+	//   9000 - 10990 MeV, 1/(E-x)^2, 40%
 
 	sample = G4UniformRand();
 
