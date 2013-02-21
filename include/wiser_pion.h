@@ -148,7 +148,7 @@ Double_t wiser_all_fit(Double_t *x, Double_t *par){
     
     // Parameters are:
     // par[0]    Beam energy [GeV]
-    Double_t Ebeam = par[0];
+    //Double_t Ebeam = par[0];
     // par[1]    Final particle momentum [GeV/c]
     Double_t pf    = par[1];
     // par[2]    Final particle angle [rad]
