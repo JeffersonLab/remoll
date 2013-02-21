@@ -15,14 +15,14 @@
    what the PrimaryGeneratorAction is going to use and
    contains information that will go in the output.
 
-   It needs to be aware of remollBeamTarget and remollRun,
+   It needs to be aware of remollBeamTarget and remollRunData,
    take a generically generated event assuming ideal beam
    and transform it into what is going to be simulated.
 */
 
 class remollEvent;
 class remollBeamTarget;
-class remollRun;
+class remollRunData;
 
 class remollVEventGen {
     public:
@@ -40,7 +40,7 @@ class remollVEventGen {
 	const G4String fName;
 
 	remollBeamTarget *fBeamTarg;
-	remollRun        *fRun;
+	remollRunData    *fRunData;
 
 	void PolishEvent(remollEvent *);
 	

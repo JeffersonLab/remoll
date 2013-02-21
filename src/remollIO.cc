@@ -9,6 +9,8 @@
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
 #include "remollEvent.hh"
+#include "remollRun.hh"
+#include "remollRunData.hh"
 
 remollIO::remollIO(){
     fTree = NULL;
@@ -112,10 +114,11 @@ void remollIO::Flush(){
 void remollIO::WriteTree(){
     fFile = new TFile(fFilename, "RECREATE");
     fFile->cd();
-    fTree->Write("T", TObject::kOverwrite);
-    fFile->Close();
 
-    // FIXME:  write out run data
+    fTree->Write("T", TObject::kOverwrite);
+    remollRun::GetRun()->GetData()->Write("run_data", TObject::kOverwrite); 
+
+    fFile->Close();
 
     delete fFile;
     fFile = NULL;

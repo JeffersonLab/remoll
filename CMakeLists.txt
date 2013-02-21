@@ -52,10 +52,14 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ~/include)
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
+file(GLOB libsources ${PROJECT_SOURCE_DIR}/src/remollRunData.cc)
+file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh)
+
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
 add_executable(remoll remoll.cc ${sources} ${headers} remollDict.cxx)
+add_library(remollroot SHARED ${libsources} ${libheaders} remollDict.cxx)
 #target_link_libraries(remoll ${Geant4_LIBRARIES} CLHEP-Matrix-2.1.0.1 ${ROOT_LIBRARIES} )
 target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
 
@@ -82,6 +86,7 @@ set(REMOLL_SCRIPTS
     geometry/schema/gdml_replicas.xsd
     geometry/schema/gdml_solids.xsd
     macros/runexample.mac
+    rootlogon.C
   )
 
 foreach(_script ${REMOLL_SCRIPTS})

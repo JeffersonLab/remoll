@@ -1,14 +1,15 @@
 #ifndef __REMOLLRUN_HH
 #define __REMOLLRUN_HH
 
-
 /*!
  * All the information on the run
- * This will get put into the output
+ * The data object will get put into the output
  * stream
   
    This is implemented in the soliton model
  */
+
+#include "remollRunData.hh"
 
 class remollRun {
 
@@ -16,17 +17,13 @@ class remollRun {
 	static remollRun *gSingleton;
 	 remollRun();
 
+	remollRunData *fRunData;
+
     public:
 	 static remollRun *GetRun();
 	~remollRun();
 
-	unsigned long long int GetNthrown(){ return fNthrown; }
-	void SetNthrown(unsigned long long int n){ fNthrown = n; }
-
-    private:
-	long int    fNthrown;
-	double fBeamE;
-	char fGenName[255];
+	remollRunData *GetData(){return fRunData;}
 };
 
 #endif//__REMOLLRUN_HH

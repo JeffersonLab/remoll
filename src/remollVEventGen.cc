@@ -6,10 +6,11 @@
 #include "remollVertex.hh"
 #include "remollEvent.hh"
 #include "remollRun.hh"
+#include "remollRunData.hh"
 
 remollVEventGen::remollVEventGen(){
     fBeamTarg = remollBeamTarget::GetBeamTarget();
-    fRun      = remollRun::GetRun();
+    fRunData  = remollRun::GetRun()->GetData();
 
     fSampType       = kCryogen;
     fApplyMultScatt = false;
@@ -82,7 +83,7 @@ void remollVEventGen::PolishEvent(remollEvent *ev){
 	(*iter) += ev->fVertexPos;
     }
 
-    ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/((G4double) fRun->GetNthrown());
+    ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/((G4double) fRunData->GetNthrown());
     ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPol;
 
     return;
