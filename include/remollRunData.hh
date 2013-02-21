@@ -18,6 +18,10 @@ class remollRunData : public TObject {
 	unsigned long long int GetNthrown(){ return fNthrown; }
 	void SetNthrown(unsigned long long int n){ fNthrown = n; }
 
+	void SetGenName(const char *n){ strcpy(fGenName, n); }
+
+	void SetBeamE(double E){ fBeamE = E; }
+
 	void Print();
 
     private:

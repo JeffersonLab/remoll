@@ -7,6 +7,8 @@
 #include "remollIO.hh"
 #include "remollVEventGen.hh"
 #include "remollEvent.hh"
+#include "remollRun.hh"
+#include "remollRunData.hh"
 #include "remolltypes.hh"
 #include "globals.hh"
 
@@ -23,7 +25,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
   fDefaultEvent = new remollEvent();
   fDefaultEvent->ProduceNewParticle( 
 	  G4ThreeVector(0.*cm,0.*cm,-100.*cm),
-	  G4ThreeVector(0.0,0.0,11.0*GeV),
+	  G4ThreeVector(0.0,0.0, gDefaultBeamE),
 	  "e-" );
 
   double kinE = sqrt(fDefaultEvent->fPartMom[0].mag()*fDefaultEvent->fPartMom[0].mag() 
@@ -71,6 +73,7 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
 	G4cout << "Setting generator to " << genname << G4endl;
     }
 
+    remollRun::GetRun()->GetData()->SetGenName(genname.data());
 
     return;
 }

@@ -19,13 +19,14 @@
 #define NINTERVAL 3
 
 remollGenpElastic::remollGenpElastic(){
-
     fTh_min =     0.1*deg;
     fTh_max =     2.0*deg;
 
-    fApplyMultScatt = true;
+    fE_min = 80.0*MeV; // Absolute minimum of electron energy
+                            // to generate
 
-    fBeamTarget = remollBeamTarget::GetBeamTarget();
+    fApplyMultScatt = true;
+    fBeamTarg = remollBeamTarget::GetBeamTarget();
 }
 
 remollGenpElastic::~remollGenpElastic(){
@@ -37,10 +38,10 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     //  Crazy weighting for brem because ep cross section blows up at low Q2
 
     // Get initial beam energy instead of using other sampling
-    double beamE = fBeamTarget->fBeamE;
+    double beamE = fBeamTarg->fBeamE;
     double Ekin  = beamE - electron_mass_c2;
 
-    std::vector <G4VPhysicalVolume *> targVols = fBeamTarget->GetTargVols();
+    std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargVols();
 
     std::vector<G4VPhysicalVolume *>::iterator it = targVols.begin();
     while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" 
@@ -51,12 +52,10 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	exit(1);
     }
 
-    double bremcut = fBeamTarget->fEcut;
+    double bremcut = fBeamTarg->fEcut;
 
-    double absminE = 80.0*MeV; // Absolute minimum of electron energy
-                            // to generate
 
-    double bt = (4.0/3.0)*fBeamTarget->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen();
+    double bt = (4.0/3.0)*fBeamTarg->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen();
 
     double prob, prob_sample, sample, eloss, value;
     value = 1.0;
@@ -74,7 +73,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double Evhi[NINTERVAL] = {
 	(beamE-bremcut)*2.0*GeV/(11.0*GeV-bremcut),
 	(beamE-bremcut)*9.0*GeV/(11.0*GeV-bremcut),
-	(beamE-bremcut)*(beamE-absminE)/(11.0*GeV-bremcut),
+	(beamE-bremcut)*(beamE-fE_min)/(11.0*GeV-bremcut),
     };
 
     double Eprob[NINTERVAL]  = { 0.40, 0.20, 0.40 };
@@ -245,7 +244,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 }
 
 G4double remollGenpElastic::RadProfile(G4double eloss, G4double btt){
-     double Ekin = fBeamTarget->fBeamE - electron_mass_c2;
+     double Ekin = fBeamTarg->fBeamE - electron_mass_c2;
      double retval = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,btt);
 
      if( std::isnan(retval) || std::isinf(retval) ){
@@ -262,7 +261,7 @@ G4double remollGenpElastic::RadProfile(G4double eloss, G4double btt){
 G4double remollGenpElastic::EnergNumInt(G4double btt, G4double a0, G4double b0){
     const int nbin = 1000;
     double sum = 0.0;
-    double bremcut = fBeamTarget->fEcut;
+    double bremcut = fBeamTarg->fEcut;
 
     int j;
     double boolc[5] = {7.0, 32.0, 12.0, 32.0, 7.0};

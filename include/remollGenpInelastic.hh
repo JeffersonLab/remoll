@@ -19,7 +19,6 @@ class remollGenpInelastic : public remollVEventGen {
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
 
-	G4double fTh_min, fTh_max;
 };
 
 #endif//__REMOLLGENMOLLER_HH 

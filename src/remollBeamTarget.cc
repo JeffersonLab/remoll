@@ -28,10 +28,10 @@ remollBeamTarget::remollBeamTarget(){
 
     fMS = new remollMultScatt();
 
-    fBeamE   = 11.0*GeV;
-    fBeamPol = 0.85;
+    fBeamE   = gDefaultBeamE;
+    fBeamPol = gDefaultBeamPol;
 
-    fBeamCurr = 85e-6*ampere;
+    fBeamCurr = gDefaultBeamCur;
 
     fEcut = 1e-6*MeV;
 }

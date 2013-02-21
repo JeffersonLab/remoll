@@ -13,9 +13,9 @@
 remollGenPion::remollGenPion(){
     fApplyMultScatt = false;
 
-    fThMin = 0.01*deg;
-    fThMax = 5.0*deg;
-    fEmin  = 80*MeV;
+    fTh_min = 0.01*deg;
+    fTh_max = 5.0*deg;
+    fE_min  = 80*MeV;
 
     fPionType = kPiMinus;
 }
@@ -29,11 +29,11 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double beamE   = vert->GetBeamE();
     double rad_len = vert->GetRadLen();
 
-    double th = acos(CLHEP::RandFlat::shoot(cos(fThMax), cos(fThMin)));
+    double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
     double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
     double pf = CLHEP::RandFlat::shoot(0.0, beamE);
 
-    double V = 2.0*pi*(cos(fThMin) - cos(fThMax));
+    double V = 2.0*pi*(cos(fTh_min) - cos(fTh_max));
 
     double sigpip = wiser_sigma(beamE/GeV, pf/GeV, th, rad_len + 0.05, 0)*nanobarn/GeV;
     double sigpim = wiser_sigma(beamE/GeV, pf/GeV, th, rad_len + 0.05, 1)*nanobarn/GeV;

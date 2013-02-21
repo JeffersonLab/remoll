@@ -36,6 +36,10 @@ class remollVEventGen {
 	void SetSampType( SampType_t st ) { fSampType = st; }
 	void SetDoMultScatt( G4bool ms ){ fApplyMultScatt = ms; }
 
+	G4double fThCoM_min, fThCoM_max;
+	G4double fTh_min, fTh_max;
+	G4double fE_min;
+
     private:
 	const G4String fName;
 
@@ -48,10 +52,9 @@ class remollVEventGen {
 	virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
 
     protected:
+
 	SampType_t fSampType;
 	G4bool     fApplyMultScatt;
-
-
 
 };
 

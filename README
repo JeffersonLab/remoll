@@ -9,11 +9,15 @@ http://solid.physics.umass.edu/remoll.html
 
 ---------------------------------------------------
 
+You need to load libremollroot.so if you want to access the classes
+written out to the ROOT files
+
+---------------------------------------------------
+
 Packages needed to build this:
 
 >=Geant4.9.5
 root
-o
 
 Field maps can be found here:
 

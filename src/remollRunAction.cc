@@ -3,6 +3,7 @@
 #include "G4Timer.hh"
 
 #include "remollRunAction.hh"
+#include "remollBeamTarget.hh"
 #include "G4Run.hh"
 #include "G4UImanager.hh"
 #include "G4ios.hh"
@@ -26,6 +27,8 @@ void remollRunAction::BeginOfRunAction(const G4Run* aRun)
   fIO->InitializeTree();
 
   remollRunData *rmrundata = remollRun::GetRun()->GetData();
+
+  rmrundata->SetBeamE( remollBeamTarget::GetBeamTarget()->fBeamE/GeV );
   rmrundata->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );
 }
 

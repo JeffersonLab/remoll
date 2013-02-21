@@ -63,5 +63,4 @@ void remollGenpInelastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 			     "e-" );
 
     return;
-
 }

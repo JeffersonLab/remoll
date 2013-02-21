@@ -19,7 +19,6 @@ class remollGenMoller : public remollVEventGen {
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
 
-	G4double fThCoM_min, fThCoM_max;
 };
 
 #endif//__REMOLLGENMOLLER_HH 

@@ -24,6 +24,8 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 
     void SetGenerator( G4String );
 
+    remollVEventGen *GetGenerator(){ return fEventGen; }
+
   private:
     G4ParticleGun* fParticleGun;
 

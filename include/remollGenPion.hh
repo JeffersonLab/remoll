@@ -22,8 +22,6 @@ class remollGenPion : public remollVEventGen {
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
 
-	double fThMin, fThMax;
-	double fEmin;
 
 	Pion_t fPionType;
 };

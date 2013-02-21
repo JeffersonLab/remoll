@@ -8,6 +8,7 @@
 #include "remollDetectorConstruction.hh"
 #include "remollIO.hh"
 #include "remollEventAction.hh"
+#include "remollVEventGen.hh"
 #include "remollPrimaryGeneratorAction.hh"
 #include "remollBeamTarget.hh"
 
@@ -54,6 +55,26 @@ remollMessenger::remollMessenger(){
     fileCmd = new G4UIcmdWithAString("/remoll/filename",this);
     fileCmd->SetGuidance("Output filename");
     fileCmd->SetParameterName("filename", false);
+
+    thminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thmin",this);
+    thminCmd->SetGuidance("Minimum generation angle");
+    thminCmd->SetParameterName("thmin", false);
+
+    thmaxCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thmax",this);
+    thmaxCmd->SetGuidance("Minimum generation angle");
+    thmaxCmd->SetParameterName("thmax", false);
+
+    thCoMminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thcommin",this);
+    thCoMminCmd->SetGuidance("Minimum CoM generation angle");
+    thCoMminCmd->SetParameterName("thcommin", false);
+
+    thCoMmaxCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thcommax",this);
+    thCoMmaxCmd->SetGuidance("Minimum CoM generation angle");
+    thCoMmaxCmd->SetParameterName("thcommax", false);
+
+    EminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/emin",this);
+    EminCmd->SetGuidance("Minimum generation energy");
+    EminCmd->SetParameterName("emin", false);
 
     /*
        fExpType = kNeutronExp;
@@ -240,6 +261,46 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 
     if( cmd == fileCmd ){
 	fIO->SetFilename(newValue);
+    }
+
+    if( cmd == EminCmd ){
+	G4double en = EminCmd->GetNewDoubleValue(newValue);
+	remollVEventGen *agen = fprigen->GetGenerator();
+	if( agen ){
+	    agen->fE_min = en;
+	}
+    }
+
+    if( cmd == thminCmd ){
+	G4double th = thminCmd->GetNewDoubleValue(newValue);
+	remollVEventGen *agen = fprigen->GetGenerator();
+	if( agen ){
+	    agen->fTh_min = th;
+	}
+    }
+
+    if( cmd == thmaxCmd ){
+	G4double th = thminCmd->GetNewDoubleValue(newValue);
+	remollVEventGen *agen = fprigen->GetGenerator();
+	if( agen ){
+	    agen->fTh_max = th;
+	}
+    }
+
+    if( cmd == thCoMminCmd ){
+	G4double th = thCoMminCmd->GetNewDoubleValue(newValue);
+	remollVEventGen *agen = fprigen->GetGenerator();
+	if( agen ){
+	    agen->fThCoM_min = th;
+	}
+    }
+
+    if( cmd == thCoMmaxCmd ){
+	G4double th = thCoMminCmd->GetNewDoubleValue(newValue);
+	remollVEventGen *agen = fprigen->GetGenerator();
+	if( agen ){
+	    agen->fThCoM_max = th;
+	}
     }
 
     /*

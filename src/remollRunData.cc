@@ -5,12 +5,14 @@
 remollRunData::remollRunData(){
     fNthrown = -1;
     fBeamE   = -1e9;
-    strcpy(fGenName, "oops");
+    strcpy(fGenName, "default");
 }
 
 remollRunData::~remollRunData(){
 }
 
 void remollRunData::Print(){
-    printf("HELLO I AM remollRunData!!!!\n");
+    printf("N generated = %ld\n", fNthrown);
+    printf("Beam Energy = %f GeV\n", fBeamE);
+    printf("Generator = %s\n", fGenName);
 }
