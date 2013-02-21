@@ -56,6 +56,7 @@ int main(int argc, char** argv){
     G4RunManager * runManager = new G4RunManager;
 
     remollMessenger *rmmess = new remollMessenger();
+    rmmess->SetIO(io);
 
     // Detector geometry
     G4VUserDetectorConstruction* detector = new remollDetectorConstruction();

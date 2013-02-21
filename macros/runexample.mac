@@ -7,10 +7,13 @@
 /remoll/gen moller
 #/remoll/gen elastic 
 #/remoll/gen inelastic 
+#/remoll/gen pion
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
 
 /remoll/beamcurr 85 microampere
+
+/remoll/filename remollout.root
 
 /run/beamOn 1000

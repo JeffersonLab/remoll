@@ -6,6 +6,8 @@
 #include "G4Run.hh"
 #include "remolltypes.hh"
 
+#include "G4String.hh"
+
 class TFile;
 class TTree;
 
@@ -14,6 +16,7 @@ class remollGenericDetectorSum;
 class remollEvent;
 
 #define __IO_MAXHIT 10000
+#define __FILENAMELEN 255
 
 // Units for output
 #define __E_UNIT GeV
@@ -27,7 +30,8 @@ class remollIO {
 	 remollIO();
 	~remollIO();
 
-	void SetFilename(const char *fn){strcpy(fFilename, fn);}
+	void SetFilename(G4String  fn);
+	G4String GetFilename(){return fFilename;}
 
 	void FillTree();
 	void Flush();
@@ -41,7 +45,7 @@ class remollIO {
 	TFile *fFile;
 	TTree *fTree;
 
-	char fFilename[255];
+	char fFilename[__FILENAMELEN];
 
 	//  Interfaces and buffers to the tree
 	//  This is potentially going to get very long...

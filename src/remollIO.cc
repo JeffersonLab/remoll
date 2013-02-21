@@ -15,8 +15,8 @@ remollIO::remollIO(){
     InitializeTree();
     // Default filename
     strcpy(fFilename, "remollout.root");
-    fFile = NULL;
 
+    fFile = NULL;
 }
 
 remollIO::~remollIO(){
@@ -24,6 +24,10 @@ remollIO::~remollIO(){
     fTree = NULL;
 }
 
+void remollIO::SetFilename(G4String fn){
+    G4cout << "Setting output file to " << fn << G4endl;
+    strcpy(fFilename, fn.data());
+}
 
 void remollIO::InitializeTree(){
     if( fTree ){ delete fTree; }

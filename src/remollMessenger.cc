@@ -51,6 +51,10 @@ remollMessenger::remollMessenger(){
     genSelectCmd->SetGuidance("Select physics generator");
     genSelectCmd->SetParameterName("generator", false);
 
+    fileCmd = new G4UIcmdWithAString("/remoll/filename",this);
+    fileCmd->SetGuidance("Output filename");
+    fileCmd->SetParameterName("filename", false);
+
     /*
        fExpType = kNeutronExp;
 
@@ -62,9 +66,6 @@ remollMessenger::remollMessenger(){
        gemconfigCmd->SetGuidance("Change between GEM configurations");
        gemconfigCmd->SetParameterName("gemconfig", false);
 
-       fileCmd = new G4UIcmdWithAString("/g4sbs/filename",this);
-       fileCmd->SetGuidance("Output filename");
-       fileCmd->SetParameterName("filename", false);
 
        sigfileCmd = new G4UIcmdWithAString("/g4sbs/sigmafile",this);
        sigfileCmd->SetGuidance("GEM Sigma filename");
@@ -119,12 +120,12 @@ remollMessenger::remollMessenger(){
        bbangCmd->SetGuidance("BigBite angle");
        bbangCmd->SetParameterName("angle", false);
 
-    bbdistCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/bbdist",this);
-    bbdistCmd->SetGuidance("BigBite distance");
-    bbdistCmd->SetParameterName("dist", false);
+       bbdistCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/bbdist",this);
+       bbdistCmd->SetGuidance("BigBite distance");
+       bbdistCmd->SetParameterName("dist", false);
 
-    hcalangCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/hcalang",this);
-    hcalangCmd->SetGuidance("HCAL angle");
+       hcalangCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/hcalang",this);
+       hcalangCmd->SetGuidance("HCAL angle");
     hcalangCmd->SetParameterName("angle", false);
 
     hcaldistCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/hcaldist",this);
@@ -237,79 +238,80 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	fBeamTarg->SetBeamCurrent(cur);
     }
 
+    if( cmd == fileCmd ){
+	fIO->SetFilename(newValue);
+    }
+
     /*
        char cmdstr[255];
        if( cmd == runCmd ){
-    // Save geometry to GDML file
-    G4GDMLParser parser;
-    G4VPhysicalVolume* pWorld;
+// Save geometry to GDML file
+G4GDMLParser parser;
+G4VPhysicalVolume* pWorld;
 
-    G4int nevt = runCmd->GetNewIntValue(newValue);
-    fevgen->SetNevents(nevt);
+G4int nevt = runCmd->GetNewIntValue(newValue);
+fevgen->SetNevents(nevt);
 
-    if( fExpType == kGEp ){
-    G4RunManager::GetRunManager()->DefineWorldVolume(pWorld = fdetcon->ConstructAllGEp());
-    } else {
-    G4RunManager::GetRunManager()->DefineWorldVolume(pWorld = fdetcon->ConstructAll());
-    }
+if( fExpType == kGEp ){
+G4RunManager::GetRunManager()->DefineWorldVolume(pWorld = fdetcon->ConstructAllGEp());
+} else {
+G4RunManager::GetRunManager()->DefineWorldVolume(pWorld = fdetcon->ConstructAll());
+}
 
-    // Clobber old gdml if it exists and write out the
-    // present geometry
-    unlink("g4sbs.gdml");
-    parser.Write("g4sbs.gdml", pWorld);
+// Clobber old gdml if it exists and write out the
+// present geometry
+unlink("g4sbs.gdml");
+parser.Write("g4sbs.gdml", pWorld);
 
-    // Run the simulation
-    G4UImanager * UImanager = G4UImanager::GetUIpointer();
-    sprintf(cmdstr, "/run/beamOn %d", nevt);
-    UImanager->ApplyCommand(cmdstr);
-    }
+// Run the simulation
+G4UImanager * UImanager = G4UImanager::GetUIpointer();
+sprintf(cmdstr, "/run/beamOn %d", nevt);
+UImanager->ApplyCommand(cmdstr);
+}
 
-    if( cmd == fileCmd ){
-    fIO->SetFilename(newValue.data());
-    }
 
-    if( cmd == sigfileCmd ){
-    fevact->LoadSigmas(newValue.data());
-    }
+if( cmd == sigfileCmd ){
+fevact->LoadSigmas(newValue.data());
+}
 
-    if( cmd == gemconfigCmd ){
-    int gemconfval = gemconfigCmd->GetNewIntValue(newValue);
-    fdetcon->SetGEMConfig(gemconfval);
-    }
+if( cmd == gemconfigCmd ){
+int gemconfval = gemconfigCmd->GetNewIntValue(newValue);
+fdetcon->SetGEMConfig(gemconfval);
+}
 
-    if( cmd == kineCmd ){
-    bool validcmd = false;
-    if( newValue.compareTo("elastic") == 0 ){
-    fevgen->SetKine(kElastic);
-    validcmd = true;
-    }
-    if( newValue.compareTo("inelastic") == 0 ){
-    fevgen->SetKine(kInelastic);
-    validcmd = true;
-    }
-    if( newValue.compareTo("flat") == 0 ){
-    fevgen->SetKine(kFlat);
-    validcmd = true;
-    }
-    if( newValue.compareTo("dis") == 0 ){
-    fevgen->SetKine(kDIS);
-    validcmd = true;
-    }
-    if( !validcmd ){
-    fprintf(stderr, "%s: %s line %d - Error: kinematic type %s not valid\n", __PRETTY_FUNCTION__, __FILE__, __LINE__, newValue.data());
-    exit(1);
-    }
-    }
+if( cmd == kineCmd ){
+bool validcmd = false;
+if( newValue.compareTo("elastic") == 0 ){
+fevgen->SetKine(kElastic);
+validcmd = true;
+}
+if( newValue.compareTo("inelastic") == 0 ){
+fevgen->SetKine(kInelastic);
+validcmd = true;
+}
+if( newValue.compareTo("flat") == 0 ){
+fevgen->SetKine(kFlat);
+validcmd = true;
+}
+if( newValue.compareTo("dis") == 0 ){
+fevgen->SetKine(kDIS);
+validcmd = true;
+}
+if( !validcmd ){
+fprintf(stderr, "%s: %s line %d - Error: kinematic type %s not valid\n", __PRETTY_FUNCTION__, __FILE__, __LINE__, newValue.data());
+exit(1);
+}
+}
 
-    if( cmd == expCmd ){
-    bool validcmd = false;
-    if( newValue.compareTo("gep") == 0 ){
-    fExpType = kGEp;
-    validcmd = true;
-    }
-    if( newValue.compareTo("gmn") == 0 ){
-    fExpType = kNeutronExp;
-    validcmd = true;
+if( cmd == expCmd ){
+bool validcmd = false;
+if( newValue.compareTo("gep") == 0 ){
+fExpType = kGEp;
+validcmd = true;
+}
+if( newValue.compareTo("gmn") == 0 ){
+fExpType = kNeutronExp;
+validcmd = true;
 }
 if( newValue.compareTo("gen") == 0 ){
     fExpType = kNeutronExp;

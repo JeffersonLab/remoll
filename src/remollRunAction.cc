@@ -26,7 +26,6 @@ void remollRunAction::BeginOfRunAction(const G4Run* aRun)
   fIO->InitializeTree();
 
   remollRun *rmrun = remollRun::GetRun();
-
   rmrun->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );
 }
 
