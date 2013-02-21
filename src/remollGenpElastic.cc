@@ -16,11 +16,12 @@
 #include <math.h>
 
 #define Euler 0.5772157
-#define NINTERVAL 4
+#define NINTERVAL 3
 
 remollGenpElastic::remollGenpElastic(){
-    fTh_min =    1e-3*deg;
-    fTh_max =     4.0*deg;
+
+    fTh_min =     0.1*deg;
+    fTh_max =     2.0*deg;
 
     fApplyMultScatt = true;
 
@@ -52,6 +53,9 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double bremcut = fBeamTarget->fEcut;
 
+    double absminE = 80.0*MeV; // Absolute minimum of electron energy
+                            // to generate
+
     double bt = (4.0/3.0)*fBeamTarget->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen();
 
     double prob, prob_sample, sample, eloss, value;
@@ -61,22 +65,19 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     prob = prob/(1.- bt*Euler + bt*bt/2.*(Euler*Euler+pi*pi/6.)); /* Gamma function */
     prob_sample = G4UniformRand();        /* Random sampling */
 
-    double colEcut = 0.080*GeV;  // Expected cutoff for collimator
     double Evlo[NINTERVAL] = {
 	bremcut,
-	(beamE-bremcut-colEcut)*1.0*GeV/(11.0*GeV-colEcut-bremcut),
-	(beamE-bremcut-colEcut)*8.0*GeV/(11.0*GeV-colEcut-bremcut),
-	(beamE-bremcut-colEcut)*(beamE-colEcut)/(11.0*GeV-colEcut-bremcut),
+	(beamE-bremcut)*2.0*GeV/(11.0*GeV-bremcut),
+	(beamE-bremcut)*9.0*GeV/(11.0*GeV-bremcut),
     };
 
     double Evhi[NINTERVAL] = {
-	(beamE-bremcut-colEcut)*1.0*GeV/(11.0*GeV-colEcut-bremcut),
-	(beamE-bremcut-colEcut)*8.0*GeV/(11.0*GeV-colEcut-bremcut),
-	(beamE-bremcut-colEcut)*(beamE-colEcut)/(11.0*GeV-colEcut-bremcut),
-	(beamE-bremcut-colEcut)*beamE/(11.0*GeV-colEcut-bremcut)
+	(beamE-bremcut)*2.0*GeV/(11.0*GeV-bremcut),
+	(beamE-bremcut)*9.0*GeV/(11.0*GeV-bremcut),
+	(beamE-bremcut)*(beamE-absminE)/(11.0*GeV-bremcut),
     };
 
-    double Eprob[NINTERVAL]  = { 0.07, 0.05, 0.875, 0.005};
+    double Eprob[NINTERVAL]  = { 0.62, 0.13, 0.25 };
 
     double Enorm[NINTERVAL];
     // Interval normalization
@@ -88,22 +89,22 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     int    Evidx;
     double evsum = 0.0;
     double vweight = 0.0;
+    eloss = 0.0;
 	     
     // Averages over the intervals
-    double vavg[4] = {
+    double vavg[NINTERVAL] = {
 	log(Evhi[0]/Evlo[0])/(Evhi[0]-Evlo[0]),
-	1.0,
-	log((beamE-Evlo[2])/(beamE-Evhi[2]))/(Evhi[2]-Evlo[2]),
-	1.0};
+	log((beamE-Evlo[1])/(beamE-Evhi[1]))/(Evhi[1]-Evlo[1]),
+	(1.0/(beamE-Evhi[2])-1.0/(beamE-Evlo[2]))/(Evhi[2]-Evlo[2])
+    };
 
     if (prob_sample <= prob) {//Bremsstrahlung has taken place!
 	//  We break this into 4 seperate energy loss intervals
 	//  with total integrals roughly the size of
 	//  what the ep product looks like with 11 GeV beam
-	//   cut  -  1000 MeV, 1/x, 7%
-	//   1000 -  8000 MeV, flat 5%
-	//   8000 - 10920 MeV, 1/(E-x), 87.5%
-	//  10920 - 11000 MeV, flat, 0.5%
+	//   cut  -  2000 MeV, 1/x, 27%
+	//   2000 -  9000 MeV, 1/(E-x), 50%
+	//   9000 - 10990 MeV, 1/(E-x)^2, 43%
 
 	sample = G4UniformRand();
 
@@ -118,22 +119,30 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
 	sample = G4UniformRand();
 
-	if( Evidx == 1 || Evidx == 3 ){
-	    // sample energy flat
-	    eloss = (Evhi[Evidx]-Evlo[Evidx])*sample + Evlo[Evidx];
-	    vweight = 1.0;
-	}
-
 	if( Evidx == 0 ){
 	    eloss = Evlo[Evidx]*pow(Evhi[Evidx]/Evlo[Evidx],sample);
 	    vweight = eloss;
 	}
 
-	if( Evidx == 2 ){
+	if( Evidx == 1 ){
 	    eloss = beamE - (beamE-Evhi[Evidx])*
 		pow((beamE-Evlo[Evidx])/(beamE-Evhi[Evidx]),sample);
 	    vweight = (beamE-eloss);
 	}
+
+	if( Evidx == 2 ){
+	    eloss = beamE - pow( (1.0/(beamE-Evhi[Evidx]) - 1.0/(beamE-Evlo[Evidx]))*sample
+		    + 1.0/(beamE-Evlo[Evidx]), -1.0 );
+	    vweight = (beamE-eloss)*(beamE-eloss);
+	}
+
+	if( !(eloss > 0.0 ) ){
+	    printf("idx = %d\n", Evidx );
+	}
+
+	assert( eloss > 0.0 );
+
+	assert( !std::isnan(eloss) && !std::isinf(eloss) );
 
 	vweight *= vavg[Evidx];
 	//  mult by beamE-bremcut for proper normalization
@@ -142,7 +151,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	    *vweight // sampling weighting (flat or ) / average value for normalization
 	    *Enorm[Evidx]; //  Weight given the region
 
-	beamE = beamE - eloss;
+	beamE -= eloss;
     }
 
     if( beamE < electron_mass_c2 ){ 
@@ -158,7 +167,24 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     ////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
+    // sample with 1.0/(1-cos)^2
+
+    double cthmin = cos(fTh_min);
+    double cthmax = cos(fTh_max);
+
+    double icth_b = 1.0/(1.0-cthmax);
+    double icth_a = 1.0/(1.0-cthmin);
+
+    double sampv = 1.0/CLHEP::RandFlat::shoot(icth_b, icth_a);
+
+    assert( -1.0 < sampv && sampv < 1.0 );
+
+    double th = acos(1.0-sampv);
+
+    // Value to reweight cross section by to account for non-uniform
+    // sampling
+    double samp_fact = sampv*sampv*(icth_a-icth_b)/(cthmin-cthmax);
+
     double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
 
     double ef    = proton_mass_c2*beamE/(proton_mass_c2 + beamE*(1.0-cos(th)));;
@@ -179,7 +205,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double sigma = sigma_mott*(ef/beamE)*(ffpart1 + ffpart2);
 
-    double V = 2.0*pi*(cos(fTh_min) - cos(fTh_max));
+    double V = 2.0*pi*(cthmin - cthmax)*samp_fact;
 
     //  Multiply by Z because we have Z protons 
     //  value for uneven weighting
@@ -221,6 +247,12 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 G4double remollGenpElastic::RadProfile(G4double eloss, G4double btt){
      double Ekin = fBeamTarget->fBeamE - electron_mass_c2;
      double retval = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,btt);
+
+     if( std::isnan(retval) || std::isinf(retval) ){
+	 G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR" << G4endl;
+	 G4cerr << "Ekin " << Ekin/GeV << " GeV   btt = " << btt << " retval = " << retval << G4endl;
+	 fprintf(stderr, "eloss = %e GeV\n", eloss/GeV);
+     }
 
      assert( !std::isnan(retval) && !std::isinf(retval) );
 
