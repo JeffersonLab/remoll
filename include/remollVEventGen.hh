@@ -2,6 +2,7 @@
 #define __REMOLLVEVENTGEN_HH
 
 #include "remolltypes.hh"
+#include "remollglobs.hh"
 #include "G4String.hh"
 #include "G4ThreeVector.hh"
 #include "remollVertex.hh"

@@ -2,6 +2,7 @@
 #define __REMOLLBEAMTARGET_HH
 
 #include "remolltypes.hh"
+#include "remollglobs.hh"
 #include "remollVertex.hh"
 #include "G4ThreeVector.hh"
 #include <vector>

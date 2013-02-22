@@ -1,8 +1,6 @@
 #ifndef __REMOLL_TYPES_HH
 #define __REMOLL_TYPES_HH
 
-#include "G4SystemOfUnits.hh"
-
 /*
    remolltypes.hh
 
@@ -10,16 +8,17 @@
    data around and useful enumerations
 */
 
+#define __RUNSTR_LEN 255
+#define __MAXFILE_LEN 1048576 // MB file size limit
+
+#include "TTimeStamp.h"
+
 enum SampType_t { kCryogen, kWalls, kFullTarget };
 
-const double GF = 1.16637e-5/GeV/GeV; 
-const double alpha = 0.007299; 
-const double sin2thW = 0.2312;
-const double QeW = 1.0 - 4.0*sin2thW; 
-
-const double gDefaultBeamE   = 11.0*GeV;
-const double gDefaultBeamPol = 0.85;
-const double gDefaultBeamCur = 85e-6*ampere;
-
+struct filedata_t {
+    char filename[__RUNSTR_LEN];
+    char hashsum[__RUNSTR_LEN];
+    TTimeStamp timestamp;
+};
 
 #endif//__REMOLL_TYPES_HH

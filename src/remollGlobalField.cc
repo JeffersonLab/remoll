@@ -3,6 +3,15 @@
 #include "G4FieldManager.hh"
 #include "remollMagneticField.hh"
 
+#include <remolltypes.hh>
+#include <remollRun.hh>
+#include <remollRunData.hh>
+
+#include <TMD5.h>
+#include <sys/stat.h>
+
+#include <stdio.h>
+
 #define __GLOBAL_NDIM 3
 
 remollGlobalField::remollGlobalField(){
@@ -23,7 +32,31 @@ void remollGlobalField::AddNewField( G4String name ){
 	// in cases where you change the geometry. 
 	G4TransportationManager::GetTransportationManager()->GetFieldManager()->CreateChordFinder(this);
 
-	G4cout << __PRETTY_FUNCTION__ << ": field " << name << " was added." << G4endl;
+	G4cout << __FUNCTION__ << ": field " << name << " was added." << G4endl;
+
+	// Add file data to output data stream
+
+	remollRunData *rd = remollRun::GetRun()->GetData();
+
+	TMD5 *md5 = TMD5::FileChecksum(name.data());
+
+	filedata_t fdata;
+
+	strcpy(fdata.filename, name.data());
+	strcpy(fdata.hashsum, md5->AsString() );
+
+	G4cout << "MD5 checksum " << md5->AsString() << G4endl;
+
+	delete md5;
+
+	struct stat fs;
+	stat(name.data(), &fs);
+	fdata.timestamp = TTimeStamp( fs.st_mtime );
+
+	fdata.timestamp.Print();
+
+	rd->AddMagData(fdata);
+
     } else {
 	G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
 	    << ": field " << name << " was not initialized." << G4endl;

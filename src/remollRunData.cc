@@ -14,5 +14,13 @@ remollRunData::~remollRunData(){
 void remollRunData::Print(){
     printf("N generated = %ld\n", fNthrown);
     printf("Beam Energy = %f GeV\n", fBeamE);
-    printf("Generator = %s\n", fGenName);
+    printf("Generator   = %s\n", fGenName);
+
+    printf("Field maps:\n");
+    unsigned int i;
+    for( i = 0; i < fMagData.size(); i++ ){
+	printf("\t%s\n", fMagData[i].filename);
+	printf("\t%s\n", fMagData[i].hashsum);
+	printf("\t%s\n\n", fMagData[i].timestamp.AsString("ls"));
+    }
 }

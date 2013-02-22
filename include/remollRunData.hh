@@ -2,12 +2,16 @@
 #define __REMOLLRUNDATA_HH
 
 #include "TObject.h"
+#include <vector>
+#include <string>
+#include <remolltypes.hh>
 
 /*!
  * All the information on the run
  * This will get put into the output
  * stream
 */
+
 
 class remollRunData : public TObject {
 
@@ -22,12 +26,20 @@ class remollRunData : public TObject {
 
 	void SetBeamE(double E){ fBeamE = E; }
 
+	void AddMagData(filedata_t d){fMagData.push_back(d);}
+
 	void Print();
 
     private:
+	TTimeStamp fRunTime;
+
 	long int  fNthrown;
 	double fBeamE;
-	char fGenName[255];
+	char fGenName[__RUNSTR_LEN];
+
+	char fMacro[__MAXFILE_LEN];
+
+	std::vector<filedata_t> fMagData;
 
 	ClassDef(remollRunData, 1);
 };
