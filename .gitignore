@@ -2,3 +2,4 @@
 *.swp
 #ignore doxygen files for now
 doc
+include/gitinfo.hh

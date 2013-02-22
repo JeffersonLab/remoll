@@ -60,7 +60,6 @@ file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh)
 #
 add_executable(remoll remoll.cc ${sources} ${headers} remollDict.cxx)
 add_library(remollroot SHARED ${libsources} ${libheaders} remollDict.cxx)
-#target_link_libraries(remoll ${Geant4_LIBRARIES} CLHEP-Matrix-2.1.0.1 ${ROOT_LIBRARIES} )
 target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
 
 #----------------------------------------------------------------------------
@@ -106,6 +105,7 @@ add_custom_target(REMOLL DEPENDS remoll)
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
+execute_process( COMMAND "git log -n 1 && git status" WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} OUTPUT_FILE gitinfo.txt)
 install(TARGETS remoll DESTINATION bin)
 
 
