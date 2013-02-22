@@ -6,10 +6,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
 
 # Update header file
-#execute_process( COMMAND "echo Rebuilding include/gitinfo.hh && ${PROJECT_SOURCE_DIR}/pullgitinfo.py" ${PROJECT_SOURCE_DIR} )
-#add_custom_command( TARGET ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh PRE_BUILD COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
 add_custom_command( OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh always COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
-#add_custom_command( TARGET gitinfo PRE_BUILD COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
 
 add_custom_target( gitinfo ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh )
 
