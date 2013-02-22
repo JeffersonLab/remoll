@@ -12,9 +12,12 @@ execute_process( COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_D
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
 
+
+# this is to ensure we find the header we need
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
+
 ROOT_GENERATE_DICTIONARY(
     remollDict            # path to dictionary to generate
-    #    "${PROJECT_SOURCE_DIR}/include"  # list of includes
     "include/remollRun.hh"       # list of classes to process
     LINKDEF "include/remollLinkDef.h"                    # ROOT linkDef file
 )
@@ -46,7 +49,7 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 
 
 
-include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ~/include ${CMAKE_CURRENT_BINARY_DIR})
+include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 
 #----------------------------------------------------------------------------
@@ -54,10 +57,10 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ~/include 
 # NB: headers are included so they will show up in IDEs
 #
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh gitinfo.hh)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
 
 file(GLOB libsources ${PROJECT_SOURCE_DIR}/src/remollRunData.cc)
-file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh gitinfo.hh)
+file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries

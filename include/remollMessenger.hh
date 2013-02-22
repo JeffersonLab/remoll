@@ -43,6 +43,8 @@ class remollMessenger : public G4UImessenger {
 	remollGlobalField *fField;
 	remollBeamTarget *fBeamTarg;
 
+	G4UIcmdWithAString   *detfilesCmd;
+
 	G4UIcmdWithAString   *newfieldCmd;
 	G4UIcmdWithAString   *fieldScaleCmd;
 	G4UIcmdWithAString   *fieldCurrCmd;

@@ -51,6 +51,10 @@ newheadertext = """#ifndef __GITINFO_HH
 
 os.chdir(presentcwd)
 
-newheader = open( "gitinfo.hh", "w")
+outdir = "include/"
+if not os.path.exists(outdir):
+    os.makedirs(outdir)
+
+newheader = open( outdir + "/gitinfo.hh", "w")
 newheader.write(newheadertext)
 newheader.close()

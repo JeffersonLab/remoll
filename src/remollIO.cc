@@ -56,6 +56,7 @@ void remollIO::InitializeTree(){
     fTree->Branch("ev.py",    &fEvPart_Py,  "ev.py[ev.npart]/D");
     fTree->Branch("ev.pz",    &fEvPart_Pz,  "ev.pz[ev.npart]/D");
     fTree->Branch("ev.th",    &fEvPart_Th,     "ev.th[ev.npart]/D");
+    fTree->Branch("ev.ph",    &fEvPart_Ph,     "ev.ph[ev.npart]/D");
     fTree->Branch("ev.tpx",    &fEvPart_tPx,  "ev.tpx[ev.npart]/D");
     fTree->Branch("ev.tpy",    &fEvPart_tPy,  "ev.tpy[ev.npart]/D");
     fTree->Branch("ev.tpz",    &fEvPart_tPz,  "ev.tpz[ev.npart]/D");
@@ -162,6 +163,7 @@ void remollIO::SetEventData(remollEvent *ev){
 	fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
 	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
 	fEvPart_Th[idx] = ev->fPartRealMom[idx].theta();
+	fEvPart_Ph[idx] = ev->fPartRealMom[idx].phi();
 
 	fEvPart_P[idx] = ev->fPartRealMom[idx].mag()/__E_UNIT;
 

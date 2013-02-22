@@ -61,7 +61,7 @@ int main(int argc, char** argv){
     // Detector geometry
     G4VUserDetectorConstruction* detector = new remollDetectorConstruction();
     runManager->SetUserInitialization(detector);
-
+    rmmess->SetDetCon( ((remollDetectorConstruction *) detector) );
     rmmess->SetMagField( ((remollDetectorConstruction *) detector)->GetGlobalField() );
 
     // Physics we want to use

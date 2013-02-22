@@ -21,8 +21,21 @@
 #include <iostream>
 
 remollMessenger::remollMessenger(){
+    /*  Initialize all the things it talks to to NULL */
+
+    fIO       = NULL;
+    fdetcon   = NULL;
+    fevact    = NULL;
+    fprigen   = NULL;
+    fField    = NULL;
+    fBeamTarg = NULL;
+
     // Grab singleton beam/target
     fBeamTarg = remollBeamTarget::GetBeamTarget();
+
+    detfilesCmd = new G4UIcmdWithAString("/remoll/setgeofile",this);
+    detfilesCmd->SetGuidance("Set geometry GDML files");
+    detfilesCmd->SetParameterName("geofilename", false);
 
     newfieldCmd = new G4UIcmdWithAString("/remoll/addfield",this);
     newfieldCmd->SetGuidance("Add magnetic field");
@@ -203,6 +216,10 @@ remollMessenger::~remollMessenger(){
 
 
 void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
+    if( cmd == detfilesCmd ){
+	fdetcon->SetDetectorGeomFile( newValue );
+    }
+
     if( cmd == newfieldCmd ){
 	fField->AddNewField( newValue );
     }
