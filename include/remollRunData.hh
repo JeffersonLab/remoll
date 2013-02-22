@@ -6,6 +6,8 @@
 #include <string>
 #include <remolltypes.hh>
 
+#include "gitinfo.hh"
+
 /*!
  * All the information on the run
  * This will get put into the output
@@ -36,6 +38,7 @@ class remollRunData : public TObject {
 	long int  fNthrown;
 	double fBeamE;
 	char fGenName[__RUNSTR_LEN];
+	char fGitInfo[__GITMAXINFO_SIZE];
 
 	char fMacro[__MAXFILE_LEN];
 

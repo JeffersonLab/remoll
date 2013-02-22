@@ -105,7 +105,7 @@ add_custom_target(REMOLL DEPENDS remoll)
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-execute_process( COMMAND "git log -n 1 && git status" WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} OUTPUT_FILE gitinfo.txt)
+execute_process( COMMAND "pullgitinfo.py" WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} )
 install(TARGETS remoll DESTINATION bin)
 
 

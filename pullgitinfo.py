@@ -6,17 +6,21 @@ f = os.popen("git log -n 1 && git status -s")
 
 boringstring = "";
 fullstring = "";
-nchar = 1
 
 for line in f:
     boringstring += line
-    thisstring = ""
-    for x in line:
-	thisstring += '\\x'+x.encode('hex')
-	nchar += 1
-#    print thisstring
-    fullstring += thisstring;
 
+maxlen = 2048
+
+if  len(boringstring) > maxlen:
+     print "WARNING:  Truncating info from git";
+     boringstring = boringstring[0:maxlen-1]
+
+for x in boringstring:
+    fullstring += '\\x'+x.encode('hex')
+
+
+     
 
 newheadertext = """#ifndef __GITINFO_HH
 #define __GITINFO_HH
@@ -29,7 +33,9 @@ newheadertext = """#ifndef __GITINFO_HH
 -------------------------------------------------------------
 */
 
-char gGitInfoStr[""" + str(nchar) + "] = \"" + fullstring + '\";' \
+#define __GITMAXINFO_SIZE 2048
+
+#define gGitInfoStr \"""" + fullstring + '\"' \
 + \
 """
 
@@ -37,4 +43,6 @@ char gGitInfoStr[""" + str(nchar) + "] = \"" + fullstring + '\";' \
 
 print newheadertext
 
-#open( "include/gitinfo.hh", 
+#newheader = open( "include/gitinfo.hh", "w")
+#newheader.write(newheadertext)
+#newheader.close()

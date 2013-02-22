@@ -6,6 +6,8 @@
     if this is pulled from a git repository
 */
 
-char gGitInfoStr[255] = "git not installed";
+#define __GITMAXINFO_SIZE 2048
+
+#define gGitInfoStr "git not installed\n"
 
 #endif//__GITINFO_HH
