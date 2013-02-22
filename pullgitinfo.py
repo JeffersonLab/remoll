@@ -1,14 +1,21 @@
 #!/usr/bin/python
 
 import os
+import sys
+
+presentcwd = os.getcwd()
+os.chdir(sys.argv[1])
 
 f = os.popen("git log -n 1 && git status -s")
 
 boringstring = "";
 fullstring = "";
 
-for line in f:
-    boringstring += line
+if( f != 0):
+    for line in f:
+	boringstring += line
+else:
+    boringstring = "git information unavailable"
 
 maxlen = 2048
 
@@ -41,6 +48,9 @@ newheadertext = """#ifndef __GITINFO_HH
 
 #endif//__GITINFO_HH"""
 
-newheader = open( "include/gitinfo.hh", "w")
+
+os.chdir(presentcwd)
+
+newheader = open( "gitinfo.hh", "w")
 newheader.write(newheadertext)
 newheader.close()

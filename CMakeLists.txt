@@ -1,8 +1,12 @@
 #----------------------------------------------------------------------------
+
 # Setup the project
 #
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
+
+# Update header file
+execute_process( COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
 
 #ROOT path
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
@@ -42,7 +46,7 @@ set(CMAKE_CXX_FLAGS "-g -Wall")
 
 
 
-include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ~/include)
+include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ~/include ${CMAKE_CURRENT_BINARY_DIR})
 
 
 #----------------------------------------------------------------------------
@@ -50,10 +54,10 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ~/include)
 # NB: headers are included so they will show up in IDEs
 #
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh gitinfo.hh)
 
 file(GLOB libsources ${PROJECT_SOURCE_DIR}/src/remollRunData.cc)
-file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh)
+file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh gitinfo.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
@@ -105,7 +109,6 @@ add_custom_target(REMOLL DEPENDS remoll)
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-execute_process( COMMAND "pullgitinfo.py" WORKING_DIRECTORY ${PROJECT_SOURCE_DIR} )
 install(TARGETS remoll DESTINATION bin)
 
 
