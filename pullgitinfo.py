@@ -41,8 +41,6 @@ newheadertext = """#ifndef __GITINFO_HH
 
 #endif//__GITINFO_HH"""
 
-print newheadertext
-
-#newheader = open( "include/gitinfo.hh", "w")
-#newheader.write(newheadertext)
-#newheader.close()
+newheader = open( "include/gitinfo.hh", "w")
+newheader.write(newheadertext)
+newheader.close()
