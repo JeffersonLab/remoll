@@ -7,7 +7,6 @@ project(REMOLL)
 
 # Update header file
 add_custom_command( OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh always COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
-
 add_custom_target( gitinfo ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh )
 
 #ROOT path
