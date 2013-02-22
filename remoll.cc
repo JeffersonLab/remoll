@@ -9,6 +9,8 @@
 #include "CLHEP/Random/Random.h"
 
 #include "remollRunAction.hh"
+#include "remollRun.hh"
+#include "remollRunData.hh"
 #include "remollPrimaryGeneratorAction.hh"
 #include "remollEventAction.hh"
 #include "remollSteppingAction.hh"
@@ -37,6 +39,9 @@
 #ifdef G4UI_USE
 #include "G4UIExecutive.hh"
 #endif
+
+#include <sys/types.h>
+#include <sys/stat.h>
 
 int main(int argc, char** argv){
 
@@ -119,6 +124,8 @@ int main(int argc, char** argv){
        UImanager->ApplyCommand("/gun/direction 0 .3 1.");
        */
 
+    remollRunData *rundata = remollRun::GetRun()->GetData();
+
     if(argc==1)
     {
 	//--------------------------
@@ -130,6 +137,8 @@ int main(int argc, char** argv){
 
 	ui->SessionStart();
 
+	strcpy(rundata->GetMacroBuffer(), "Interactive UI Session");
+
 	delete ui;
 #endif
     }
@@ -137,6 +146,32 @@ int main(int argc, char** argv){
     {
 	G4String command = "/control/execute ";
 	G4String fileName = argv[1];
+
+	/* Copy contents of macro into buffer to be written out
+	 * into ROOT file
+	 * */
+
+	struct stat filedata;
+	stat(argv[1], &filedata);
+
+        if( filedata.st_size > rundata->GetMacroBufferSize() ){
+	    G4cerr << __PRETTY_FUNCTION__ << " line " << __LINE__ << " error:  macro " << argv[1] << " is too big." << G4endl;
+	    exit(1);
+	}
+
+	FILE *fmacro = fopen(argv[1], "r");
+	if( fmacro != NULL ){
+	    size_t size = fread(rundata->GetMacroBuffer(), sizeof(char), filedata.st_size, fmacro);
+	    if( (long int) size != filedata.st_size ){
+		G4cerr << __PRETTY_FUNCTION__ << " line " << __LINE__ << " error:  macro " << argv[1] << " could not be fully read - (" << size << " of " << filedata.st_size << " read )" << G4endl;
+		exit(1);
+	    }
+	} else {
+	    G4cerr << __PRETTY_FUNCTION__ << " line " << __LINE__ << " error:  macro " << argv[1] << " not found" << G4endl;
+	    exit(1);
+	}
+	fclose(fmacro);
+
 	UImanager->ApplyCommand(command+fileName);
     }
 

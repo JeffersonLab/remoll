@@ -30,6 +30,8 @@ void remollRunAction::BeginOfRunAction(const G4Run* aRun)
 
   rmrundata->SetBeamE( remollBeamTarget::GetBeamTarget()->fBeamE/GeV );
   rmrundata->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );
+
+  rmrundata->Print();
 }
 
 void remollRunAction::EndOfRunAction(const G4Run* aRun)

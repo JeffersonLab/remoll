@@ -6,6 +6,7 @@ remollRun *remollRun::gSingleton = NULL;
 remollRun::remollRun(){
     gSingleton = this;
     fRunData = new remollRunData();
+    fRunData->Init();
 }
 
 remollRun::~remollRun(){

@@ -6,7 +6,7 @@ import sys
 presentcwd = os.getcwd()
 os.chdir(sys.argv[1])
 
-f = os.popen("git log -n 1 && git status -s")
+f = os.popen("git log -n 1 && git status -s && echo \"\nGenerated at `date`\"")
 
 boringstring = "";
 fullstring = "";

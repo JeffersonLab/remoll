@@ -4,6 +4,10 @@
 #include "remollGenericDetector.hh"
 #include "remollBeamTarget.hh"
 #include "remollGlobalField.hh"
+#include "remollRun.hh"
+#include "remollRunData.hh"
+
+#include "TGeoManager.h"
 
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
@@ -49,6 +53,8 @@ remollDetectorConstruction::~remollDetectorConstruction() {
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct() {
     G4VPhysicalVolume *worldVolume;
+
+    /*FIXME:  Be nice to save the GDML geometry */
 
     fGDMLParser.SetOverlapCheck(false);
     fGDMLParser.Read(fDetFileName);
