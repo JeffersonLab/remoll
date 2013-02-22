@@ -19,6 +19,8 @@ Packages needed to build this:
 >=Geant4.9.5
 root
 
+git is useful to have
+
 Field maps can be found here:
 
 http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/
