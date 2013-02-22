@@ -6,8 +6,9 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
 
 # Update header file
-#execute_process( COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
-add_custom_command( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
+execute_process( COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
+add_custom_command( TARGET ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh PRE_BUILD COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
+#add_custom_command( TARGET gitinfo PRE_BUILD COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
 
 #ROOT path
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
