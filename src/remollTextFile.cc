@@ -155,7 +155,11 @@ void remollTextFile::Recreate(const char *fn, bool clobber ){
 }
 
 void remollTextFile::Print(){
-    printf("Stored file %s (base %s size %lld kb)\n", fFilename, GetBaseFile(), fBufferSize/1024);
+    if( fBufferSize > 1024 ){
+	printf("Stored file %s (size %lld kB)\n", fFilename, fBufferSize/1024);
+    } else {
+	printf("Stored file %s (size %lld bytes)\n", fFilename, fBufferSize);
+    }
     char *tmpbuf = new char[fBufferSize+1];
     memcpy( tmpbuf, fBuffer, fBufferSize );
     tmpbuf[fBufferSize] = NULL;  // Make a string and manually terminate
