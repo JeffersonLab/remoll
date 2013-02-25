@@ -15,6 +15,9 @@ class remollGenericDetectorHit;
 class remollGenericDetectorSum;
 class remollEvent;
 
+#include <xercesc/dom/DOMElement.hpp>
+
+
 #define __IO_MAXHIT 10000
 #define __FILENAMELEN 255
 
@@ -48,6 +51,11 @@ class remollIO {
 	TTree *fTree;
 
 	char fFilename[__FILENAMELEN];
+
+	std::vector<G4String>       fGDMLFileNames;
+
+	void SearchGDMLforFiles(G4String );
+	void TraverseChildren(  xercesc::DOMElement * );
 
 	//  Interfaces and buffers to the tree
 	//  This is potentially going to get very long...

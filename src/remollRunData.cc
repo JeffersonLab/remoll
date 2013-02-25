@@ -38,6 +38,52 @@ void remollRunData::Print(){
 	printf("\t%s\n\n", fMagData[i].timestamp.AsString("ls"));
     }
 
-    printf("Macro run:\n-----------------------------------------------\n%s-----------------------------------------------\n\n", GetMacroBuffer());
+    printf("Macro run:\n-----------------------------------------------\n");
+
+    fMacro.Print();
+    
+    printf("-----------------------------------------------\n\n");
+    printf("Stored GDML Files:\n");
+    for( i = 0; i < fGDMLFiles.size(); i++ ){
+	printf("\t%32s %4lld kb\n", fGDMLFiles[i].GetFilename(), fGDMLFiles[i].GetBufferSize()/1024 );
+    }
+    printf("-----------------------------------------------\n\n");
 
 }
+
+void remollRunData::AddGDMLFile( const char *fn ){
+    // Check for duplicates I guess
+
+    unsigned int i;
+
+    for( i = 0; i < fGDMLFiles.size(); i++ ){
+	if( strcmp(fn, fGDMLFiles[i].GetFilename()) == 0 ){
+	    // Already added
+	    return;
+	}
+    }
+
+    fGDMLFiles.push_back(remollTextFile(fn)); 
+}
+
+void remollRunData::RecreateGDML( const char *adir, bool clobber ){
+    unsigned int idx;
+
+    for( idx = 0; idx < fGDMLFiles.size(); idx++ ){
+	fGDMLFiles[idx].RecreateInDir(adir, clobber);
+    }
+    return;
+}
+
+ClassImp(remollRunData);
+
+
+
+
+
+
+
+
+
+
+

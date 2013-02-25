@@ -12,6 +12,12 @@
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
+#include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/dom/DOMElement.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
+#include <xercesc/dom/DOMNode.hpp>
+
+
 remollIO::remollIO(){
     fTree = NULL;
     InitializeTree();
@@ -232,14 +238,68 @@ void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
 /*---------------------------------------------------------------------------------*/
 
 void remollIO::GrabGDMLFiles(G4String fn){
+    // Reset list
+    fGDMLFileNames.clear();
+
+    SearchGDMLforFiles(fn);
+
+    remollRunData *rundata = remollRun::GetRun()->GetData();
+
+    // Store filename
+
+    unsigned int idx;
+
+    // Copy into buffers
+    for( idx = 0; idx < fGDMLFileNames.size(); idx++ ){
+	G4cout << "Found GDML file " << fGDMLFileNames[idx] << G4endl;
+	rundata->AddGDMLFile(fGDMLFileNames[idx]);
+    }
+
+    return;
+}
+
+void remollIO::SearchGDMLforFiles(G4String fn){
     /*!  Chase down files to be included by GDML.
      *   Mainly look for file tags and perform recursively */
 
-    XercesDOMParser *xmlParser = new XercesDOMParser;
+   xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser;
 
-    xmlParser->parse( fn.data() );
+   // Make sure file exists - otherwise freak out
 
-    return;
+   fGDMLFileNames.push_back(fn.data());
+
+   xmlParser->parse( fn.data() );
+   xercesc::DOMDocument* xmlDoc = xmlParser->getDocument();
+
+   xercesc::DOMElement* elementRoot = xmlDoc->getDocumentElement();
+
+   TraverseChildren( elementRoot );
+   return;
+}
+
+void remollIO::TraverseChildren( xercesc::DOMElement *thisel ){
+
+   xercesc::DOMNodeList*      children = thisel->getChildNodes();
+   const XMLSize_t nodeCount = children->getLength();
+
+   for( XMLSize_t xx = 0; xx < nodeCount; ++xx ){
+       xercesc::DOMNode* currentNode = children->item(xx);
+       if( currentNode->getNodeType() ){   // true is not NULL
+
+	   if( currentNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE ){ // is element 
+	       xercesc::DOMElement* currentElement
+		   = dynamic_cast< xercesc::DOMElement* >( currentNode );
+	       if( xercesc::XMLString::equals(currentElement->getTagName(), xercesc::XMLString::transcode("file"))){
+		   GrabGDMLFiles(G4String(xercesc::XMLString::transcode(currentElement->getAttribute(xercesc::XMLString::transcode("name")))));
+	       }
+
+	       if( currentElement->getChildNodes()->getLength() > 0 ){
+		   TraverseChildren( currentElement );
+	       }
+	   }
+       }
+   }
+
 }
 
 

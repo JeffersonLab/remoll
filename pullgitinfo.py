@@ -6,6 +6,7 @@ import sys
 presentcwd = os.getcwd()
 os.chdir(sys.argv[1])
 
+
 f = os.popen("git log -n 1 && git status -bs && echo \"\nGenerated at `date`\"")
 
 boringstring = "";
@@ -58,3 +59,5 @@ if not os.path.exists(outdir):
 newheader = open( outdir + "/gitinfo.hh", "w")
 newheader.write(newheadertext)
 newheader.close()
+
+print "Repository information\n", boringstring

@@ -8,6 +8,7 @@
 #include <remolltypes.hh>
 
 #include "gitinfo.hh"
+#include "remollTextFile.hh"
 
 /*!
  * All the information on the run
@@ -33,8 +34,12 @@ class remollRunData : public TObject {
 	void SetBeamE(double E){ fBeamE = E; }
 
 	void AddMagData(filedata_t d){fMagData.push_back(d);}
-	char *GetMacroBuffer(){ return fMacro; }
-	long int GetMacroBufferSize(){ return __MAXFILE_LEN; }
+	void SetMacroFile(const char *fn){ fMacro = remollTextFile(fn); }
+	void AddGDMLFile(const char *fn);
+
+	void RecreateGDML(const char *adir = NULL, bool clobber = false);
+
+	remollTextFile GetGDMLFile(int i){ return fGDMLFiles[i]; }
 
 	void Print();
 
@@ -47,7 +52,8 @@ class remollRunData : public TObject {
 
 	char fHostName[__RUNSTR_LEN];
 
-	char fMacro[__MAXFILE_LEN];
+	remollTextFile              fMacro;
+	std::vector<remollTextFile> fGDMLFiles;
 
 	std::vector<filedata_t> fMagData;
 

@@ -19,7 +19,8 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 ROOT_GENERATE_DICTIONARY(
     remollDict                         # path to dictionary to generate
-    "include/remollRun.hh"             # list of classes to process
+    "include/remollRunData.hh"         # list of classes to process
+    "include/remollTextFile.hh"
     LINKDEF "include/remollLinkDef.h"  # ROOT linkDef file
 )
 
@@ -60,7 +61,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
 
-file(GLOB libsources ${PROJECT_SOURCE_DIR}/src/remollRunData.cc)
+file(GLOB libsources ${PROJECT_SOURCE_DIR}/src/remollRunData.cc ${PROJECT_SOURCE_DIR}/src/remollTextFile.cc)
 file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
 
 #----------------------------------------------------------------------------

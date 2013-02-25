@@ -139,8 +139,6 @@ int main(int argc, char** argv){
 
 	ui->SessionStart();
 
-	strcpy(rundata->GetMacroBuffer(), "Interactive UI Session");
-
 	delete ui;
 #endif
     }
@@ -149,9 +147,13 @@ int main(int argc, char** argv){
 	G4String command = "/control/execute ";
 	G4String fileName = argv[1];
 
+
 	/* Copy contents of macro into buffer to be written out
 	 * into ROOT file
 	 * */
+	rundata->SetMacroFile(argv[1]);
+
+	/*
 
 	struct stat filedata;
 	stat(argv[1], &filedata);
@@ -160,6 +162,7 @@ int main(int argc, char** argv){
 	    G4cerr << __PRETTY_FUNCTION__ << " line " << __LINE__ << " error:  macro " << argv[1] << " is too big." << G4endl;
 	    exit(1);
 	}
+
 
 	FILE *fmacro = fopen(argv[1], "r");
 	if( fmacro != NULL ){
@@ -173,6 +176,7 @@ int main(int argc, char** argv){
 	    exit(1);
 	}
 	fclose(fmacro);
+	*/
 
 	UImanager->ApplyCommand(command+fileName);
     }
