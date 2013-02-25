@@ -52,7 +52,11 @@ void remollRunData::Print(){
     printf("-------------------------------------------------\n\n");
     printf("Stored GDML Files:\n");
     for( i = 0; i < fGDMLFiles.size(); i++ ){
-	printf("\t%32s %4lld kB\n", fGDMLFiles[i].GetFilename(), fGDMLFiles[i].GetBufferSize()/1024 );
+	if( fGDMLFiles[i].GetBufferSize() >= 1024 ){
+	    printf("\t%32s %4lld kB\n", fGDMLFiles[i].GetFilename(), fGDMLFiles[i].GetBufferSize()/1024 );
+	} else {
+	    printf("\t%32s   <1 kB\n", fGDMLFiles[i].GetFilename());
+	}
     }
     printf("-------------------------------------------------\n\n");
 
