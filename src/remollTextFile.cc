@@ -96,10 +96,8 @@ void remollTextFile::RecreateInDir(const char *adir, bool clobber ){
 
     char *catpath = new char[dirlen+ strlen(GetBaseFile()) + 2];
     strcpy(catpath, thisdir);
-    catpath[dirlen] = '/'; catpath[dirlen+1] = '\0'; // Add dir slash and null so we can concatenate
+    strcat(catpath, "/"); // Add slash
     strcat(catpath, GetBaseFile());
-
-    //printf("Recreating %s as %s\n", GetBaseFile(), catpath);
 
     int ret = mkdir(thisdir, 0755); // rwx for owner, rx for everyone else
 
