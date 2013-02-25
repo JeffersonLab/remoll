@@ -1,6 +1,7 @@
 #include "remollRunData.hh"
 
 #include <string.h>
+#include <errno.h>
 
 remollRunData::remollRunData(){
     fNthrown = -1;
@@ -20,12 +21,18 @@ void remollRunData::Init(){
     strcpy(fGitInfo, gGitInfoStr);
     if(gethostname(fHostName,__RUNSTR_LEN) == -1){
 	fprintf(stderr, "%s line %d: ERROR could not get hostname\n", __PRETTY_FUNCTION__ ,  __LINE__ );
+	fprintf(stderr, "%s\n",strerror(errno));
+    }
+    if(getcwd(fRunPath,__RUNSTR_LEN) == NULL){
+	fprintf(stderr, "%s line %d: ERROR could not get current working directory\n", __PRETTY_FUNCTION__ ,  __LINE__ );
+	fprintf(stderr, "%s\n",strerror(errno));
     }
 }
 
 void remollRunData::Print(){
-    printf("git repository info\n-----------------------------------------------\n%s-----------------------------------------------\n\n", fGitInfo);
+    printf("git repository info\n-------------------------------------------------\n%s-------------------------------------------------\n\n", fGitInfo);
     printf("Run at %s on %s\n", fRunTime.AsString("ls"), fHostName);
+    printf("Run Path %s\n", fRunPath);
     printf("N generated = %ld\n", fNthrown);
     printf("Beam Energy = %f GeV\n", fBeamE);
     printf("Generator   = %s\n", fGenName);
@@ -38,16 +45,16 @@ void remollRunData::Print(){
 	printf("\t%s\n\n", fMagData[i].timestamp.AsString("ls"));
     }
 
-    printf("Macro run:\n-----------------------------------------------\n");
+    printf("Macro run:\n-------------------------------------------------\n");
 
     fMacro.Print();
     
-    printf("-----------------------------------------------\n\n");
+    printf("-------------------------------------------------\n\n");
     printf("Stored GDML Files:\n");
     for( i = 0; i < fGDMLFiles.size(); i++ ){
-	printf("\t%32s %4lld kb\n", fGDMLFiles[i].GetFilename(), fGDMLFiles[i].GetBufferSize()/1024 );
+	printf("\t%32s %4lld kB\n", fGDMLFiles[i].GetFilename(), fGDMLFiles[i].GetBufferSize()/1024 );
     }
-    printf("-----------------------------------------------\n\n");
+    printf("-------------------------------------------------\n\n");
 
 }
 

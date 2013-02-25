@@ -51,6 +51,7 @@ class remollRunData : public TObject {
 	char fGitInfo[__GITMAXINFO_SIZE];
 
 	char fHostName[__RUNSTR_LEN];
+	char fRunPath[__RUNSTR_LEN];
 
 	remollTextFile              fMacro;
 	std::vector<remollTextFile> fGDMLFiles;
