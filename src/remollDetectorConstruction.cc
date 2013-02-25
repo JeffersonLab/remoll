@@ -6,6 +6,7 @@
 #include "remollGlobalField.hh"
 #include "remollRun.hh"
 #include "remollRunData.hh"
+#include "remollIO.hh"
 
 #include "TGeoManager.h"
 
@@ -46,6 +47,7 @@ remollDetectorConstruction::remollDetectorConstruction() {
 
 
     CreateGlobalMagneticField();
+    fIO = NULL;
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
@@ -54,7 +56,9 @@ remollDetectorConstruction::~remollDetectorConstruction() {
 G4VPhysicalVolume* remollDetectorConstruction::Construct() {
     G4VPhysicalVolume *worldVolume;
 
-    /*FIXME:  Be nice to save the GDML geometry */
+    if( fIO ){
+	fIO->GrabGDMLFiles(fDetFileName);
+    }
 
     fGDMLParser.SetOverlapCheck(false);
     fGDMLParser.Read(fDetFileName);

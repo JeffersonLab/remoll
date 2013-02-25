@@ -229,7 +229,18 @@ void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
     fNGenDetSum++;
 }
 
+/*---------------------------------------------------------------------------------*/
 
+void remollIO::GrabGDMLFiles(G4String fn){
+    /*!  Chase down files to be included by GDML.
+     *   Mainly look for file tags and perform recursively */
+
+    XercesDOMParser *xmlParser = new XercesDOMParser;
+
+    xmlParser->parse( fn.data() );
+
+    return;
+}
 
 
 

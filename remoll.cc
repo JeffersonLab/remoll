@@ -69,6 +69,8 @@ int main(int argc, char** argv){
     rmmess->SetDetCon( ((remollDetectorConstruction *) detector) );
     rmmess->SetMagField( ((remollDetectorConstruction *) detector)->GetGlobalField() );
 
+    ((remollDetectorConstruction *) detector)->SetIO(io);
+
     // Physics we want to use
     G4int verbose = 0;
     G4PhysListFactory factory;

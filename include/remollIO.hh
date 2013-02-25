@@ -41,6 +41,8 @@ class remollIO {
 
 	void InitializeTree();
 
+	void GrabGDMLFiles( G4String fn );
+
     private:
 	TFile *fFile;
 	TTree *fTree;
