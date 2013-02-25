@@ -21,7 +21,7 @@ else:
 maxlen = 2048
 
 boringstring += "Source dir " + os.getcwd()
-boringstring += "\nBuild dir  " + presentcwd + "\n"
+boringstring += "\nBuild  dir " + presentcwd + "\n"
 
 if  len(boringstring) > maxlen:
      print "WARNING:  Truncating info from git";
