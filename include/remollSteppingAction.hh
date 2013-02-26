@@ -13,6 +13,8 @@ class remollSteppingAction : public G4UserSteppingAction
 
     virtual void UserSteppingAction(const G4Step*);
 
+    void SetEnableKryptonite(G4bool k){ fEnableKryptonite = k; }
+
   private:
     G4bool drawFlag;
 

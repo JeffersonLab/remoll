@@ -16,6 +16,7 @@ class remollEventAction;
 class remollPrimaryGeneratorAction;
 class remollGlobalField;
 class remollBeamTarget;
+class remollSteppingAction;
 
 class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
@@ -32,6 +33,7 @@ class remollMessenger : public G4UImessenger {
 	void SetPriGen( remollPrimaryGeneratorAction *pg ){ fprigen = pg; }
 	void SetDetCon( remollDetectorConstruction *dc ){ fdetcon= dc; }
 	void SetEvAct( remollEventAction *ev ){ fevact = ev; }
+	void SetStepAct( remollSteppingAction *st ){ fStepAct = st; }
 
 	void SetNewValue(G4UIcommand* cmd, G4String newValue);
 
@@ -42,8 +44,10 @@ class remollMessenger : public G4UImessenger {
 	remollPrimaryGeneratorAction *fprigen;
 	remollGlobalField *fField;
 	remollBeamTarget *fBeamTarg;
+	remollSteppingAction *fStepAct;
 
 	G4UIcmdWithAnInteger *seedCmd;
+	G4UIcmdWithABool     *kryptCmd;
 
 	G4UIcmdWithAString   *detfilesCmd;
 

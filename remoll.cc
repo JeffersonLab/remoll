@@ -99,6 +99,7 @@ int main(int argc, char** argv){
     runManager->SetUserAction(event_action);
     G4UserSteppingAction* stepping_action = new remollSteppingAction;
     runManager->SetUserAction(stepping_action);
+    rmmess->SetStepAct((remollSteppingAction *) stepping_action);
 
     // Initialize Run manager
     runManager->SetVerboseLevel(0);

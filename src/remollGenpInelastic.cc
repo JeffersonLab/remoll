@@ -48,14 +48,16 @@ void remollGenpInelastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	exit(1);
     }
 
-//    G4double APV = electron_mass_c2*beamE*GF*4.0*sin(thcom)*sin(thcom)*QeW/(sqrt(2.0)*pi*alpha*pow(3.0+cos(thcom)*cos(thcom),2.0));
-//    FIXME
-    G4double APV = 0.0;
-
-    evt->SetAsymmetry(APV);
 
     double Q2 = 2.0*beamE*ef*(1.0-cos(th));
     evt->SetQ2( Q2 );
+
+    G4double APV = Q2*0.8e-4; // Empirical APV value, 
+                              // stolen from mollerClass.C in mollersim
+
+    evt->SetAsymmetry(APV);
+
+
     evt->SetW2( mp*mp + 2.0*mp*(beamE-ef) - Q2 );
 
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 

@@ -13,6 +13,7 @@
 #include "remollBeamTarget.hh"
 #include "remollRun.hh"
 #include "remollRunData.hh"
+#include "remollSteppingAction.hh"
 
 #include "G4UImanager.hh"
 #include "G4RunManager.hh"
@@ -31,6 +32,7 @@ remollMessenger::remollMessenger(){
     fprigen   = NULL;
     fField    = NULL;
     fBeamTarg = NULL;
+    fStepAct  = NULL;
 
     // Grab singleton beam/target
     fBeamTarg = remollBeamTarget::GetBeamTarget();
@@ -42,6 +44,10 @@ remollMessenger::remollMessenger(){
     seedCmd = new G4UIcmdWithAnInteger("/remoll/seed",this);
     seedCmd->SetGuidance("Set random engine seed");
     seedCmd->SetParameterName("seed", false);
+
+    kryptCmd = new G4UIcmdWithABool("/remoll/kryptonite",this);
+    kryptCmd->SetGuidance("Treat W, Pb, Cu as kryptonite");
+    kryptCmd->SetParameterName("krypt", false);
 
     newfieldCmd = new G4UIcmdWithAString("/remoll/addfield",this);
     newfieldCmd->SetGuidance("Add magnetic field");
@@ -230,6 +236,11 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	G4int seed = seedCmd->GetNewIntValue(newValue);
 	CLHEP::HepRandom::setTheSeed(seed);
 	remollRun::GetRun()->GetData()->SetSeed(seed);
+    }
+
+    if( cmd == kryptCmd ){
+	G4bool krypt = kryptCmd->GetNewBoolValue(newValue);
+	fStepAct->SetEnableKryptonite(krypt);
     }
 
     if( cmd == newfieldCmd ){
