@@ -9,18 +9,56 @@ http://solid.physics.umass.edu/remoll.html
 
 ---------------------------------------------------
 
-You need to load libremollroot.so if you want to access the classes
-written out to the ROOT files
+
+Packages to build this:
+
+>=Geant4.9.5
+cmake > 2.6
+root
+python
+git (optional)
 
 ---------------------------------------------------
 
-Packages needed to build this:
+Instructions:
 
->=Geant4.9.5
-root
+To build, create the directory you would like to 
+build in, say build
 
-git is useful to have
+mkdir build
+cd build
+cmake <path to remoll>
+make
 
 Field maps can be found here:
 
 http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/
+
+An example macro will be found in 
+
+macros/
+
+You need to load libremollroot.so if you want to access 
+the classes written out to the ROOT files.  Building
+remoll will create a rootlogon.C which will do this
+automatically.
+
+---------------------------------------------------
+
+Troubleshooting:
+
+if you get errors about missing gitinfo.hh try
+
+cmake <path to remoll>
+make
+
+
+
+
+
+
+
+
+
+
+
