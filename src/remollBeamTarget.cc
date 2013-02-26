@@ -72,21 +72,21 @@ void remollBeamTarget::UpdateInfo(){
 	    exit(1);
 	}
 
-	// Assume anything not LH2 is wall
 	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
 	    if( fLH2Length >= 0.0 ){
 		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		    ":  Multiply defined LH2 volumes" << G4endl; 
 		exit(1);
 	    }
+
 	    fLH2Length = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
-		         *(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
 
 	    fLH2pos    = (*it)->GetFrameTranslation().z();
-	}
 
-	fTotalLength += ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
-	               *(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+	    fTotalLength += ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
+		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+	}
     }
 
     return;
@@ -102,8 +102,12 @@ void remollBeamTarget::SetTargetLen(G4double z){
 	    // Change the length of the target volume
 	    ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->SetZHalfLength(z/2.0);
 	} else {
+
+	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+		": volume other than cryogen has been specified, but handling not implemented" << G4endl;
 	    // Move position of all other volumes based on half length change
 
+	    /*
 	    G4ThreeVector pos = (*it)->GetFrameTranslation();
 
 	    if( pos.z() < fLH2pos ){
@@ -113,6 +117,7 @@ void remollBeamTarget::SetTargetLen(G4double z){
 	    }
 
 	    (*it)->SetTranslation(pos);
+	    */
 	}
 	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
     }
@@ -127,7 +132,7 @@ void remollBeamTarget::SetTargetLen(G4double z){
 void remollBeamTarget::SetTargetPos(G4double z){
     std::vector<G4VPhysicalVolume *>::iterator it;
 
-    G4double zshift = z-(fZpos+fLH2pos);
+    //G4double zshift = z-(fZpos+fLH2pos);
 
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
@@ -136,13 +141,18 @@ void remollBeamTarget::SetTargetPos(G4double z){
 	    // Change the length of the target volume
 	    (*it)->SetTranslation( G4ThreeVector(0.0, 0.0, z-fZpos) );
 	} else {
+	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+		": volume other than cryogen has been specified, but handling not implemented" << G4endl;
+
 	    // Move position of all other volumes based on half length change
 
+	    /*
 	    G4ThreeVector prespos = (*it)->GetFrameTranslation();
 
 	    G4ThreeVector pos = prespos + G4ThreeVector(0.0, 0.0, zshift );
 
 	    (*it)->SetTranslation(prespos);
+	    */
 	}
 	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
     }
@@ -172,9 +182,18 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	case kCryogen: 
 	    fSampLen = fLH2Length;
 	    break;
+
+    case kWalls:
+	    G4cerr << "ERROR" << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+		": scattering from cell walls has been specified, but handling not implemented" << G4endl;
+	    exit(1);
+	    break;
+
+	    /*
 	case kWalls:
 	    fSampLen = fTotalLength-fLH2Length;
 	    break;
+	    */
 	case kFullTarget:
 	    fSampLen = fTotalLength;
 	    break;
@@ -200,21 +219,34 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     std::vector<G4VPhysicalVolume *>::iterator it;
     for(it = fTargVols.begin(); it != fTargVols.end() && !foundvol; it++ ){
 	mat = (*it)->GetLogicalVolume()->GetMaterial();
-	if( mat->GetName() == "LiquidHydrogen" ) { isLH2 = true; } else { isLH2 = false; } 
+	if( mat->GetName() == "LiquidHydrogen" ) { 
+	    isLH2 = true; 
+	} else { 
+	    isLH2 = false;
+	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+		": volume not LH2 has been specified, but handling not implemented" << G4endl;
+
+	} 
 
 	len = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*mat->GetDensity();
 	switch( samp ){
 	    case kCryogen: 
-		if( (!isLH2 && samp == kCryogen) ){
+		/*
+		if( !isLH2 ){
 		    radsum += len/mat->GetDensity()/mat->GetRadlen();
 		} else {
-		    foundvol = true;
-		    zinvol = ztrav/mat->GetDensity();
-		    radsum += zinvol/mat->GetRadlen();
-		}
+		*/
+		foundvol = true;
+		zinvol = ztrav/mat->GetDensity();
+		radsum += zinvol/mat->GetRadlen();
+		//}
 		break;
 
 	    case kWalls:
+
+		G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+		": scattering from cell walls has been specified, but handling not implemented" << G4endl;
+		/*
 		if( isLH2 ){
 		    radsum += len/mat->GetDensity()/mat->GetRadlen();
 		} else {
@@ -227,6 +259,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 			cumz   += len;
 		    }
 		}
+		*/
 		break;
 
 	    case kFullTarget:
