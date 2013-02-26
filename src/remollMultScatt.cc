@@ -6,6 +6,8 @@
 #include <time.h>
 #include <stdlib.h>
 
+#include "Randomize.hh"
+
 remollMultScatt::remollMultScatt() {
     InitInternal();
 
@@ -43,7 +45,6 @@ remollMultScatt::remollMultScatt( double p, double t, double A, double Z ){
 void remollMultScatt::InitInternal(){
     fInit = false;
     fErf2sig = erf(2.0/sqrt(2.0));
-    srand48(time(0));
     fNmat = 0;
 }
 
@@ -461,11 +462,11 @@ double remollMultScatt::GenerateMSPlane(){
 
     // start rolling dice
 
-    if( drand48() > ftailprob ){
+    if( G4UniformRand() > ftailprob ){
 	// Gaussian
 	// Make sure we don't take more than two sigma here
 	do {
-	    trialv = sin(2.0*3.14159*drand48())*sqrt(-2.0*log(drand48()));
+	    trialv = sin(2.0*3.14159*G4UniformRand())*sqrt(-2.0*log(G4UniformRand()));
 	}
 	while( fabs(trialv) > 2.0 );
 
@@ -481,14 +482,14 @@ double remollMultScatt::GenerateMSPlane(){
 	//  This has an efficiency of ~0.5, which is probably 
 	//  pretty good since this are only 5% of the distribution
 	do {
-	    trialv = -log(exp(-fl*2.0*fth) - fDt*drand48()) /fl;
+	    trialv = -log(exp(-fl*2.0*fth) - fDt*G4UniformRand()) /fl;
 	} 
-	while ( drand48() > CalcMSDistPlane( trialv )*
+	while ( G4UniformRand() > CalcMSDistPlane( trialv )*
 		exp(fl*trialv)/fC);
 
 
 	// Choose side
-	if( drand48() < 0.5 ){
+	if( G4UniformRand() < 0.5 ){
 	    trialv *= -1.0;
 	}
 

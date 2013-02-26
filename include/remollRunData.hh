@@ -32,6 +32,7 @@ class remollRunData : public TObject {
 	void SetGenName(const char *n){ strcpy(fGenName, n); }
 
 	void SetBeamE(double E){ fBeamE = E; }
+	void SetSeed(unsigned int seed){ fSeed = seed; }
 
 	void AddMagData(filedata_t d){fMagData.push_back(d);}
 	void SetMacroFile(const char *fn){ fMacro = remollTextFile(fn); }
@@ -46,6 +47,7 @@ class remollRunData : public TObject {
 	TTimeStamp fRunTime;
 
 	long int  fNthrown;
+	unsigned int  fSeed;
 	double fBeamE;
 	char fGenName[__RUNSTR_LEN];
 	char fGitInfo[__GITMAXINFO_SIZE];

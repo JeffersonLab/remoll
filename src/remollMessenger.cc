@@ -11,6 +11,8 @@
 #include "remollVEventGen.hh"
 #include "remollPrimaryGeneratorAction.hh"
 #include "remollBeamTarget.hh"
+#include "remollRun.hh"
+#include "remollRunData.hh"
 
 #include "G4UImanager.hh"
 #include "G4RunManager.hh"
@@ -36,6 +38,10 @@ remollMessenger::remollMessenger(){
     detfilesCmd = new G4UIcmdWithAString("/remoll/setgeofile",this);
     detfilesCmd->SetGuidance("Set geometry GDML files");
     detfilesCmd->SetParameterName("geofilename", false);
+
+    seedCmd = new G4UIcmdWithAnInteger("/remoll/seed",this);
+    seedCmd->SetGuidance("Set random engine seed");
+    seedCmd->SetParameterName("seed", false);
 
     newfieldCmd = new G4UIcmdWithAString("/remoll/addfield",this);
     newfieldCmd->SetGuidance("Add magnetic field");
@@ -218,6 +224,12 @@ remollMessenger::~remollMessenger(){
 void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     if( cmd == detfilesCmd ){
 	fdetcon->SetDetectorGeomFile( newValue );
+    }
+
+    if( cmd == seedCmd ){
+	G4int seed = seedCmd->GetNewIntValue(newValue);
+	CLHEP::HepRandom::setTheSeed(seed);
+	remollRun::GetRun()->GetData()->SetSeed(seed);
     }
 
     if( cmd == newfieldCmd ){

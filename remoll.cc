@@ -48,9 +48,12 @@ int main(int argc, char** argv){
     // Initialize the CLHEP random engine used by
     // "shoot" type functions
 
+    unsigned int seed = time(0);
+
     CLHEP::HepRandom::createInstance();
-    // FIXME:  Be able to set seed in messenger
-    CLHEP::HepRandom::setTheSeed(time(0));
+    CLHEP::HepRandom::setTheSeed(seed);
+
+    remollRun::GetRun()->GetData()->SetSeed(seed);
 
     remollIO *io = new remollIO();
 
