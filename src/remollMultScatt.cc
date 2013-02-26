@@ -344,7 +344,7 @@ double remollMultScatt::intsimpson_fn( double th, int n ){
 
     // Integrate over to 8
     //  This should be good enough for n<3
-    int  maxstep = (int) 8.0/step;
+    int  maxstep = (int) (8.0/step);
     int    nstep = 0;
 
     double stepsum;

@@ -50,7 +50,8 @@ newheadertext = """#ifndef __GITINFO_HH
 + \
 """
 
-#endif//__GITINFO_HH"""
+#endif//__GITINFO_HH
+"""
 
 
 os.chdir(presentcwd)

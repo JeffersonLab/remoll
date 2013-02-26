@@ -160,7 +160,7 @@ void remollTextFile::Print(){
     }
     char *tmpbuf = new char[fBufferSize+1];
     memcpy( tmpbuf, fBuffer, fBufferSize );
-    tmpbuf[fBufferSize] = NULL;  // Make a string and manually terminate
+    tmpbuf[fBufferSize] = '\0';  // Make a string and manually terminate
 
     printf("%s\n", tmpbuf);
 

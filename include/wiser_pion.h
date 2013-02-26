@@ -202,7 +202,7 @@ Double_t wiser_all_fit(Double_t *x, Double_t *par){
 	return ( A1[type] + A2[type]/sqrt(s) )*
 	    pow(1.0 - X_R + A3[type]*A3[type]/s, A4[type])/E_gamma;
     } else {
-	Double_t U_MAN = abs(2.0*mass_p2 - 2.0*mass_p*Ef);
+	Double_t U_MAN = fabs(2.0*mass_p2 - 2.0*mass_p*Ef);
 
 	return ( A1[type] + A2[type]/sqrt(s) )*
 	    pow(1.0 - X_R + A3[type]*A3[type]/s, A4[type])/pow(1.0 + U_MAN,A6+A7*s)/E_gamma;

@@ -6,9 +6,9 @@
 remollRunData::remollRunData(){
     fNthrown = -1;
     fBeamE   = -1e9;
-    fGenName[0]  = NULL;
-    fGitInfo[0]  = NULL;
-    fHostName[0] = NULL;
+    fGenName[0]  = '\0';
+    fGitInfo[0]  = '\0';
+    fHostName[0] = '\0';
 }
 
 remollRunData::~remollRunData(){
