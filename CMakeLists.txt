@@ -70,6 +70,7 @@ file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_D
 add_executable(remoll remoll.cc ${sources} ${headers} remollDict.cxx)
 add_library(remollroot SHARED ${libsources} ${libheaders} remollDict.cxx)
 target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
+target_link_libraries(remollroot ${ROOT_LIBRARIES} )
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
