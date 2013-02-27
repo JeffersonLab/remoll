@@ -1,7 +1,10 @@
+# specify different GDML file - defaults to geometry/mollerMother.gdml
+#/remoll/setgeofile  geometry/mollerMother.gdml
+
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
-/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
+#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
 #/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
 
 /remoll/gen moller
@@ -18,6 +21,16 @@
 /remoll/targlen 150 cm
 
 /remoll/beamcurr 85 microampere
+
+#Enable optical photons and processes
+#/remoll/optical true
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+#/remoll/krypt   true
+
+# Specify random number seed
+#/remoll/seed 123456
 
 /remoll/filename remollout.root
 
