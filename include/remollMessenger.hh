@@ -5,6 +5,7 @@
 #include "remolltypes.hh"
 #include "G4UImessenger.hh"
 #include "G4UIcommand.hh"
+#include "G4VModularPhysicsList.hh"
 
 /*!
  *   Global messenger class
@@ -34,6 +35,7 @@ class remollMessenger : public G4UImessenger {
 	void SetDetCon( remollDetectorConstruction *dc ){ fdetcon= dc; }
 	void SetEvAct( remollEventAction *ev ){ fevact = ev; }
 	void SetStepAct( remollSteppingAction *st ){ fStepAct = st; }
+	void SetPhysList( G4VModularPhysicsList *l ){ fPhysicsList = l; }
 
 	void SetNewValue(G4UIcommand* cmd, G4String newValue);
 
@@ -45,9 +47,11 @@ class remollMessenger : public G4UImessenger {
 	remollGlobalField *fField;
 	remollBeamTarget *fBeamTarg;
 	remollSteppingAction *fStepAct;
+	G4VModularPhysicsList *fPhysicsList;
 
 	G4UIcmdWithAnInteger *seedCmd;
 	G4UIcmdWithABool     *kryptCmd;
+	G4UIcmdWithABool     *opticalCmd;
 
 	G4UIcmdWithAString   *detfilesCmd;
 

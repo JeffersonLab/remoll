@@ -5,6 +5,7 @@
 #include "G4UIcmdWithADoubleAndUnit.hh"
 #include "G4UIcmdWithABool.hh"
 
+#include "remollOpticalPhysics.hh"
 #include "remollDetectorConstruction.hh"
 #include "remollIO.hh"
 #include "remollEventAction.hh"
@@ -26,13 +27,14 @@
 remollMessenger::remollMessenger(){
     /*  Initialize all the things it talks to to NULL */
 
-    fIO       = NULL;
-    fdetcon   = NULL;
-    fevact    = NULL;
-    fprigen   = NULL;
-    fField    = NULL;
-    fBeamTarg = NULL;
-    fStepAct  = NULL;
+    fIO           = NULL;
+    fdetcon       = NULL;
+    fevact        = NULL;
+    fprigen       = NULL;
+    fField        = NULL;
+    fBeamTarg     = NULL;
+    fStepAct      = NULL;
+    fPhysicsList  = NULL;
 
     // Grab singleton beam/target
     fBeamTarg = remollBeamTarget::GetBeamTarget();
@@ -48,6 +50,10 @@ remollMessenger::remollMessenger(){
     kryptCmd = new G4UIcmdWithABool("/remoll/kryptonite",this);
     kryptCmd->SetGuidance("Treat W, Pb, Cu as kryptonite");
     kryptCmd->SetParameterName("krypt", false);
+
+    opticalCmd = new G4UIcmdWithABool("/remoll/optical",this);
+    opticalCmd->SetGuidance("Enable optical physics");
+    opticalCmd->SetParameterName("optical", false);
 
     newfieldCmd = new G4UIcmdWithAString("/remoll/addfield",this);
     newfieldCmd->SetGuidance("Add magnetic field");
@@ -241,6 +247,16 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     if( cmd == kryptCmd ){
 	G4bool krypt = kryptCmd->GetNewBoolValue(newValue);
 	fStepAct->SetEnableKryptonite(krypt);
+    }
+
+    if( cmd == opticalCmd ){
+	G4bool optical = opticalCmd->GetNewBoolValue(newValue);
+	if( optical ){
+	    fPhysicsList->RegisterPhysics( new remollOpticalPhysics() );
+	} else {
+	    fPhysicsList->RemovePhysics( new remollOpticalPhysics() );
+	}
+
     }
 
     if( cmd == newfieldCmd ){
