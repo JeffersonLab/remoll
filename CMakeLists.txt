@@ -94,6 +94,10 @@ set(REMOLL_SCRIPTS
     geometry/schema/gdml_parameterised.xsd
     geometry/schema/gdml_replicas.xsd
     geometry/schema/gdml_solids.xsd
+    vis/OIX.mac
+    vis/Qt.mac
+    vis/vis.mac
+    vis/X.mac
     macros/runexample.mac
     rootlogon.C
   )

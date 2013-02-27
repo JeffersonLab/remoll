@@ -221,7 +221,14 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
   //==========================
 
   G4VisAttributes* motherVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
+  motherVisAtt->SetVisibility(false);
   worldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
+
+  G4VisAttributes* daughterVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
+   daughterVisAtt->SetForceWireframe (true);
+  for(int i=0;i<worldVolume->GetLogicalVolume()->GetNoDaughters();i++){
+      worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
+  }
 
   //==========================
   // Output geometry tree

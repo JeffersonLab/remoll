@@ -254,7 +254,7 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	if( optical ){
 	    fPhysicsList->RegisterPhysics( new remollOpticalPhysics() );
 	} else {
-	    fPhysicsList->RemovePhysics( new remollOpticalPhysics() );
+	    fPhysicsList->RemovePhysics("Optical");
 	}
 
     }

@@ -1,0 +1,66 @@
+#
+# Create a new empty scene
+#
+/vis/scene/create
+
+#
+# Add axis (has to be after /vis/scene/create )
+#
+/vis/scene/add/axes
+
+#
+# Declare that the world volume should be added to the scene
+#
+/vis/scene/add/volume
+
+#
+# Attach scene to scenehandler
+#
+/vis/sceneHandler/attach
+
+#
+# Draw a picture that has just the detector (no trajectories or hits).
+#
+/vis/viewer/flush
+
+#
+# Declare that trajectories and hits should be added to the scene
+#
+/vis/scene/add/trajectories
+/vis/scene/add/hits
+
+#
+# Set camera
+#
+/vis/viewer/reset
+/vis/viewer/set/viewpointThetaPhi 35 15 deg
+/vis/viewer/zoom 2.0
+
+#
+# Set surface
+#
+/vis/viewer/set/style surface
+
+#
+# Create style
+#
+/vis/modeling/trajectories/create/drawByParticleID MollerStyle
+/vis/modeling/trajectories/MollerStyle/set e- red
+/vis/modeling/trajectories/MollerStyle/set e+ blue
+/vis/modeling/trajectories/MollerStyle/set gamma green
+/vis/modeling/trajectories/MollerStyle/set neutron white
+/vis/modeling/trajectories/MollerStyle/set opticalphoton yellow
+/vis/modeling/trajectories/MollerStyle/set proton magenta
+#
+/vis/modeling/trajectories/select MollerStyle
+
+#
+# Event action
+#
+/vis/scene/endOfEventAction accumulate
+
+#
+# Run action
+#
+/vis/scene/endOfRunAction refresh
+
