@@ -26,7 +26,7 @@ class remollEvent;
 #define __L_UNIT m
 #define __T_UNIT ns
 #define __ANG_UNIT rad
-#define __ASYMM_SCALE 1e-6 // ppm
+#define __ASYMM_SCALE 1e-9 // ppb
 
 class remollIO {
     public:

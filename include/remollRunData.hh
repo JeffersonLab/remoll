@@ -30,6 +30,7 @@ class remollRunData : public TObject {
 	void Init();
 
 	void SetGenName(const char *n){ strcpy(fGenName, n); }
+	const char *GetGenName(){ return fGenName; }
 
 	void SetBeamE(double E){ fBeamE = E; }
 	void SetSeed(unsigned int seed){ fSeed = seed; }
