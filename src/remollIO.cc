@@ -11,6 +11,7 @@
 #include "remollEvent.hh"
 #include "remollRun.hh"
 #include "remollRunData.hh"
+#include "remollBeamTarget.hh"
 
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMElement.hpp>
@@ -66,6 +67,13 @@ void remollIO::InitializeTree(){
     fTree->Branch("ev.tpx",    &fEvPart_tPx,  "ev.tpx[ev.npart]/D");
     fTree->Branch("ev.tpy",    &fEvPart_tPy,  "ev.tpy[ev.npart]/D");
     fTree->Branch("ev.tpz",    &fEvPart_tPz,  "ev.tpz[ev.npart]/D");
+
+    fTree->Branch("bm.x",    &fBmX,  "bm.x/D");
+    fTree->Branch("bm.y",    &fBmY,  "bm.y/D");
+    fTree->Branch("bm.z",    &fBmZ,  "bm.z/D");
+    fTree->Branch("bm.dx",    &fBmdX,  "bm.dx/D");
+    fTree->Branch("bm.dy",    &fBmdY,  "bm.dy/D");
+    fTree->Branch("bm.dz",    &fBmdZ,  "bm.dz/D");
 
     // GenericDetectorHit
     fTree->Branch("hit.n",    &fNGenDetHit,     "hit.n/I");
@@ -177,6 +185,19 @@ void remollIO::SetEventData(remollEvent *ev){
 	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
 	fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
     }
+
+    /////////////////////////////////////////////////
+    //  Set beam data as well
+
+    remollBeamTarget *bt = remollBeamTarget::GetBeamTarget();
+
+    fBmX = bt->fVer.x()/__L_UNIT;
+    fBmY = bt->fVer.y()/__L_UNIT;
+    fBmZ = bt->fVer.z()/__L_UNIT;
+    
+    fBmdX = bt->fDir.x();
+    fBmdY = bt->fDir.y();
+    fBmdZ = bt->fDir.z();
 
     return;
 }

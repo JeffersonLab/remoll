@@ -75,6 +75,13 @@ class remollIO {
 	Double_t fEvW2;
 	Double_t fEvThCoM;
 
+	Double_t fBmX;
+	Double_t fBmY;
+	Double_t fBmZ;
+	Double_t fBmdX;
+	Double_t fBmdY;
+	Double_t fBmdZ;
+
 	Int_t fEvPID[__IO_MAXHIT];
 
 	Double_t fEvPart_X[__IO_MAXHIT];

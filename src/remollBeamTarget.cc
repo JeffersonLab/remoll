@@ -353,8 +353,8 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     // Initial direction
     fDir = G4ThreeVector(0.0, 0.0, 1.0);
 
-    fDir.rotateY(bmth);
-    fDir.rotateX(bmph);
+    fDir.rotateY( bmth);
+    fDir.rotateX(-bmph);
 
     fDir.rotateY(msth);
     fDir.rotateX(msph);

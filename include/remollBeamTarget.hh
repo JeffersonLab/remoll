@@ -62,11 +62,6 @@ class remollBeamTarget {
 
 	void UpdateInfo();
 
-	// Base position/angle sampling info
-	G4double fRasterX, fRasterY;
-	G4double fX0, fY0;
-	G4double fTh0, fPh0;
-	G4double fdTh, fdPh;
 
 	G4double fTotalLength;
 	G4double fLH2Length, fZpos, fLH2pos;
@@ -78,6 +73,12 @@ class remollBeamTarget {
 	G4double fSampE, fRadLen, fSampLen;
 	G4double fTravLen;
 	G4double fEcut, fEffMatLen;
+
+	// Base position/angle sampling info
+	G4double fRasterX, fRasterY;
+	G4double fX0, fY0;
+	G4double fTh0, fPh0;
+	G4double fdTh, fdPh;
 
 };
 

@@ -107,6 +107,44 @@ remollMessenger::remollMessenger(){
     EminCmd->SetGuidance("Minimum generation energy");
     EminCmd->SetParameterName("emin", false);
 
+
+    //////////////////////////////////////////////////
+    // beam info
+
+    rasXCmd = new G4UIcmdWithADoubleAndUnit("/remoll/rasx",this);
+    rasXCmd->SetGuidance("Square raster width in x (horizontal)");
+    rasXCmd->SetParameterName("rasx", false);
+
+    rasYCmd = new G4UIcmdWithADoubleAndUnit("/remoll/rasy",this);
+    rasYCmd->SetGuidance("Square raster width y (vertical)");
+    rasYCmd->SetParameterName("rasy", false);
+
+    beamX0Cmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_x0",this);
+    beamX0Cmd->SetGuidance("beam initial position in x (horizontal)");
+    beamX0Cmd->SetParameterName("beamX0", false);
+
+    beamY0Cmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_y0",this);
+    beamY0Cmd->SetGuidance("beam initial position in y (vertical)");
+    beamY0Cmd->SetParameterName("beamY0", false);
+
+    beamth0Cmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_th0",this);
+    beamth0Cmd->SetGuidance("beam initial direction in x (horizontal)");
+    beamth0Cmd->SetParameterName("beamth0", false);
+
+    beamph0Cmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_ph0",this);
+    beamph0Cmd->SetGuidance("beam initial direction in y (vertical)");
+    beamph0Cmd->SetParameterName("beamph0", false);
+
+    beamdthCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_dth",this);
+    beamdthCmd->SetGuidance("beam gaussian spread in direction x (horizontal)");
+    beamdthCmd->SetParameterName("beamdth", false);
+
+    beamdphCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_dph",this);
+    beamdphCmd->SetGuidance("beam gaussian spread in direction y (vertical)");
+    beamdphCmd->SetParameterName("beamdph", false);
+
+
+
     /*
        fExpType = kNeutronExp;
 
@@ -357,6 +395,46 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	if( agen ){
 	    agen->fThCoM_max = th;
 	}
+    }
+
+    if( cmd == rasXCmd ){
+	G4double x = rasXCmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fRasterX = x;
+    }
+
+    if( cmd == rasYCmd ){
+	G4double y = rasYCmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fRasterY = y;
+    }
+
+    if( cmd == beamX0Cmd ){
+	G4double x = beamX0Cmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fX0 = x;
+    }
+
+    if( cmd == beamY0Cmd ){
+	G4double y = beamY0Cmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fY0 = y;
+    }
+
+    if( cmd == beamth0Cmd ){
+	G4double x = beamth0Cmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fTh0 = x;
+    }
+
+    if( cmd == beamph0Cmd ){
+	G4double y = beamph0Cmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fPh0 = y;
+    }
+
+    if( cmd == beamdthCmd ){
+	G4double x = beamdthCmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fdTh = x;
+    }
+
+    if( cmd == beamdphCmd ){
+	G4double y = beamdphCmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fdPh = y;
     }
 
     /*

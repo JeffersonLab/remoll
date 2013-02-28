@@ -7,6 +7,19 @@
 #/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
 #/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
 
+# Raster and initial angle stuff
+#/remoll/rasx 4 mm
+#/remoll/rasy 4 mm
+#/remoll/beam_x0 0 mm
+#/remoll/beam_y0 0 mm
+# initial angle
+#/remoll/beam_th0 0 mrad
+#/remoll/beam_ph0 0 mrad
+# gaussian spread widths
+#/remoll/beam_dth 0 mrad
+#/remoll/beam_dph 0 mrad
+
+
 /remoll/gen moller
 /remoll/thcommin 0.0 deg
 /remoll/thcommax 180.0 deg
