@@ -38,6 +38,7 @@ class remollRunData : public TObject {
 	void AddMagData(filedata_t d){fMagData.push_back(d);}
 	void SetMacroFile(const char *fn){ fMacro = remollTextFile(fn); }
 	void AddGDMLFile(const char *fn);
+	void ClearGDMLFiles(){ fGDMLFiles.clear(); }
 
 	void RecreateGDML(const char *adir = NULL, bool clobber = false);
 

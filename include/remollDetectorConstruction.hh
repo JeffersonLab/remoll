@@ -28,9 +28,9 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     void SetDetectorGeomFile(const G4String&);
 
-    G4GDMLParser fGDMLParser;
-  
     remollGlobalField* GetGlobalField(){ return fGlobalField; }
+
+    G4GDMLParser *fGDMLParser;
 
     void SetIO( remollIO *io ){ fIO = io; }
 

@@ -87,48 +87,6 @@ class remollMessenger : public G4UImessenger {
 	G4UIcmdWithADoubleAndUnit *thCoMmaxCmd;
 	G4UIcmdWithADoubleAndUnit *EminCmd;
 
-	/*
-	G4UIcmdWithAnInteger *runCmd;
-	G4UIcmdWithAString   *tgtCmd;
-
-
-	G4UIcmdWithAString   *kineCmd;
-	G4UIcmdWithAString   *expCmd;
-
-	G4UIcmdWithABool *geantinoCmd;
-
-	G4UIcmdWithAnInteger *gemconfigCmd;
-
-	G4UIcmdWithADoubleAndUnit *tgtLenCmd;
-	G4UIcmdWithADoubleAndUnit *tgtDenCmd;
-	G4UIcmdWithADoubleAndUnit *tgtPresCmd;
-	G4UIcmdWithADoubleAndUnit *beamcurCmd;
-	G4UIcmdWithADoubleAndUnit *runtimeCmd;
-	G4UIcmdWithADoubleAndUnit *rasterxCmd;
-	G4UIcmdWithADoubleAndUnit *rasteryCmd;
-
-	G4UIcmdWithADoubleAndUnit *beamECmd;
-
-	G4UIcmdWithADoubleAndUnit *bbangCmd;
-	G4UIcmdWithADoubleAndUnit *bbdistCmd;
-
-	G4UIcmdWithADoubleAndUnit *hcaldistCmd;
-	G4UIcmdWithADoubleAndUnit *hmagdistCmd;
-	G4UIcmdWithADoubleAndUnit *hcalangCmd;
-
-	G4UIcmdWithADoubleAndUnit *thminCmd;
-	G4UIcmdWithADoubleAndUnit *thmaxCmd;
-	G4UIcmdWithADoubleAndUnit *phminCmd;
-	G4UIcmdWithADoubleAndUnit *phmaxCmd;
-
-	G4UIcmdWithADoubleAndUnit *cerDepCmd;
-	G4UIcmdWithADoubleAndUnit *cerDisCmd;
-	G4UIcmdWithADoubleAndUnit *gemSepCmd;
-	G4UIcmdWithADoubleAndUnit *bbCalDistCmd;
-
-	G4UIcmdWithADoubleAndUnit *gemresCmd;
-	*/
-
 };
 
 #endif//remollMessenger_HH

@@ -262,9 +262,13 @@ void remollIO::GrabGDMLFiles(G4String fn){
     // Reset list
     fGDMLFileNames.clear();
 
-    SearchGDMLforFiles(fn);
-
     remollRunData *rundata = remollRun::GetRun()->GetData();
+    rundata->ClearGDMLFiles();
+
+    xercesc::XMLPlatformUtils::Initialize();
+    SearchGDMLforFiles(fn);
+    xercesc::XMLPlatformUtils::Terminate();
+
 
     // Store filename
 
@@ -283,7 +287,7 @@ void remollIO::SearchGDMLforFiles(G4String fn){
     /*!  Chase down files to be included by GDML.
      *   Mainly look for file tags and perform recursively */
 
-   xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser;
+   xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser();
 
    // Make sure file exists - otherwise freak out
 
@@ -311,7 +315,7 @@ void remollIO::TraverseChildren( xercesc::DOMElement *thisel ){
 	       xercesc::DOMElement* currentElement
 		   = dynamic_cast< xercesc::DOMElement* >( currentNode );
 	       if( xercesc::XMLString::equals(currentElement->getTagName(), xercesc::XMLString::transcode("file"))){
-		   GrabGDMLFiles(G4String(xercesc::XMLString::transcode(currentElement->getAttribute(xercesc::XMLString::transcode("name")))));
+		   SearchGDMLforFiles(G4String(xercesc::XMLString::transcode(currentElement->getAttribute(xercesc::XMLString::transcode("name")))));
 	       }
 
 	       if( currentElement->getChildNodes()->getLength() > 0 ){

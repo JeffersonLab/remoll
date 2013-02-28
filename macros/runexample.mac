@@ -1,5 +1,10 @@
-# specify different GDML file - defaults to geometry/mollerMother.gdml
-#/remoll/setgeofile  geometry/mollerMother.gdml
+#  Example file
+
+# This must be called before initialize
+#/remoll/setgeofile geometry/mollerMother.gdml
+
+# This must be explicitly called
+/run/initialize
 
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt

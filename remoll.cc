@@ -101,10 +101,6 @@ int main(int argc, char** argv){
     runManager->SetUserAction(stepping_action);
     rmmess->SetStepAct((remollSteppingAction *) stepping_action);
 
-    // Initialize Run manager
-    runManager->SetVerboseLevel(0);
-    runManager->Initialize();
-
     // New units
 
 
@@ -132,6 +128,8 @@ int main(int argc, char** argv){
 
     remollRunData *rundata = remollRun::GetRun()->GetData();
 
+    runManager->SetVerboseLevel(0);
+
     if(argc==1)
     {
 	//--------------------------
@@ -157,42 +155,11 @@ int main(int argc, char** argv){
 	 * */
 	rundata->SetMacroFile(argv[1]);
 
-	/*
-
-	struct stat filedata;
-	stat(argv[1], &filedata);
-
-        if( filedata.st_size > rundata->GetMacroBufferSize() ){
-	    G4cerr << __PRETTY_FUNCTION__ << " line " << __LINE__ << " error:  macro " << argv[1] << " is too big." << G4endl;
-	    exit(1);
-	}
-
-
-	FILE *fmacro = fopen(argv[1], "r");
-	if( fmacro != NULL ){
-	    size_t size = fread(rundata->GetMacroBuffer(), sizeof(char), filedata.st_size, fmacro);
-	    if( (long int) size != filedata.st_size ){
-		G4cerr << __PRETTY_FUNCTION__ << " line " << __LINE__ << " error:  macro " << argv[1] << " could not be fully read - (" << size << " of " << filedata.st_size << " read )" << G4endl;
-		exit(1);
-	    }
-	} else {
-	    G4cerr << __PRETTY_FUNCTION__ << " line " << __LINE__ << " error:  macro " << argv[1] << " not found" << G4endl;
-	    exit(1);
-	}
-	fclose(fmacro);
-	*/
-
 	UImanager->ApplyCommand(command+fileName);
     }
 
-    // Free the store: user actions, physics_list and detector_description are
-    //                 owned and deleted by the run manager, so they should not
-    //                 be deleted in the main() program !
-
-#ifdef G4VIS_USE
-    //  delete visManager;
-#endif
-    //  delete runManager;
+    // Initialize Run manager
+    // runManager->Initialize();
 
     return 0;
 }

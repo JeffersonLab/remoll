@@ -232,7 +232,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     G4double apvffnum = eps*gep*gen + tau*gmp*gmn;
     G4double apvffden = eps*gep*gep  + tau*gmp*gmp;
 
-    G4double APV = APV_base*rhop*( (1.0 - 4*kp*sin2thW) - apvffnum/apvffden);
+    G4double APV = APV_base*rhop*( (1.0 - 4*kp*sin2thW_ms) - apvffnum/apvffden);
 
     evt->SetAsymmetry(APV);
 

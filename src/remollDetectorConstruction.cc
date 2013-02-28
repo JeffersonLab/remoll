@@ -12,6 +12,7 @@
 
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
+#include "G4RunManager.hh"
 
 #include "G4Material.hh"
 #include "G4Element.hh"
@@ -48,6 +49,7 @@ remollDetectorConstruction::remollDetectorConstruction() {
 
     CreateGlobalMagneticField();
     fIO = NULL;
+    fGDMLParser = NULL;
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
@@ -56,14 +58,21 @@ remollDetectorConstruction::~remollDetectorConstruction() {
 G4VPhysicalVolume* remollDetectorConstruction::Construct() {
     G4VPhysicalVolume *worldVolume;
 
-    if( fIO ){
-	fIO->GrabGDMLFiles(fDetFileName);
+    fIO->GrabGDMLFiles(fDetFileName);
+
+    if( fGDMLParser ){
+	delete fGDMLParser;
     }
+    fGDMLParser = new G4GDMLParser();
+    fGDMLParser->Clear();
+    fGDMLParser->SetOverlapCheck(false);
 
-    fGDMLParser.SetOverlapCheck(false);
-    fGDMLParser.Read(fDetFileName);
+    fprintf(stderr, "Reading %s\n", fDetFileName.data());
 
-    worldVolume = fGDMLParser.GetWorldVolume();
+
+    fGDMLParser->Read(fDetFileName);
+
+    worldVolume = fGDMLParser->GetWorldVolume();
     
   //====================================================
   // Associate target volumes with beam/target class
@@ -91,6 +100,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
     beamtarg->SetMotherVolume(thislog->GetDaughter(vidx));
 
     thislog = thislog->GetDaughter(vidx)->GetLogicalVolume();
+
 
     ////////////////////////////////////////////////////////////////////////////////
     // List relevant target volumes here terminated by "" //////////////////////////
@@ -126,7 +136,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
   // List auxiliary info
   //==========================
 
-  const G4GDMLAuxMapType* auxmap = fGDMLParser.GetAuxMap();
+  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
 
   G4cout << "Found " << auxmap->size()
          << " volume(s) with auxiliary information."
