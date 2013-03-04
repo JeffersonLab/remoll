@@ -13,6 +13,10 @@
 #include "remollRunData.hh"
 #include "remollBeamTarget.hh"
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
@@ -286,6 +290,15 @@ void remollIO::GrabGDMLFiles(G4String fn){
 void remollIO::SearchGDMLforFiles(G4String fn){
     /*!  Chase down files to be included by GDML.
      *   Mainly look for file tags and perform recursively */
+
+    struct stat thisfile;
+
+    int ret = stat(fn.data(), &thisfile);
+
+    if( ret != 0 ){
+	G4cerr << "ERROR opening file " << fn <<  " in " << __PRETTY_FUNCTION__ << ": " << strerror(errno) << G4endl;
+	exit(1);
+    }
 
    xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser();
 
