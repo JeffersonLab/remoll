@@ -66,9 +66,6 @@ void remollOpticalPhysics::ConstructProcess()
   //pManager->AddDiscreteProcess(theRayleighScattering);
   //pManager->AddDiscreteProcess(theMieHGScatteringProcess);
 
-  theBoundaryProcess->SetModel(glisur);
-  //theBoundaryProcess->SetModel(unified);
-
   pManager->AddDiscreteProcess(theBoundaryProcess);
 
   theWLSProcess->UseTimeProfile("delta");
