@@ -27,6 +27,8 @@ remollGenpElastic::remollGenpElastic(){
 
     fApplyMultScatt = true;
     fBeamTarg = remollBeamTarget::GetBeamTarget();
+
+    fEnableIntRad = true;
 }
 
 remollGenpElastic::~remollGenpElastic(){
@@ -60,8 +62,11 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // About ~1.5%
     double int_bt = 0.75*(alpha/pi)*( log( effQ2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
 
-    double bt = (4.0/3.0)*(fBeamTarg->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
-	    + int_bt);
+    double bt = (4.0/3.0)*fBeamTarg->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen();
+
+    if( fEnableIntRad ){
+	    bt += (4.0/3.0)*int_bt;
+    }
 
     double prob, prob_sample, sample, eloss, value;
     value = 1.0;
@@ -242,28 +247,30 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // REradiate////////////////////////////////////////////////////////////////////////////
     // We're going to use the new kinematics for this guy
 
-    int_bt = (alpha/pi)*( log( q2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
-    Ekin = ef - electron_mass_c2;;
-    double env, ref;
+    if( fEnableIntRad ){
+	int_bt = (alpha/pi)*( log( q2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
+	Ekin = ef - electron_mass_c2;;
+	double env, ref;
 
-    prob = 1.- pow(bremcut/Ekin, int_bt) - int_bt/(int_bt+1.)*(1.- pow(bremcut/Ekin,int_bt+1.))
-	+ 0.75*int_bt/(2.+int_bt)*(1.- pow(bremcut/Ekin,int_bt+2.));
-    prob = prob/(1.- int_bt*Euler + int_bt*int_bt/2.*(Euler*Euler+pi*pi/6.)); /* Gamma function */
-    prob_sample = G4UniformRand();        /* Random sampling */
+	prob = 1.- pow(bremcut/Ekin, int_bt) - int_bt/(int_bt+1.)*(1.- pow(bremcut/Ekin,int_bt+1.))
+	    + 0.75*int_bt/(2.+int_bt)*(1.- pow(bremcut/Ekin,int_bt+2.));
+	prob = prob/(1.- int_bt*Euler + int_bt*int_bt/2.*(Euler*Euler+pi*pi/6.)); /* Gamma function */
+	prob_sample = G4UniformRand();        /* Random sampling */
 
-    if (prob_sample <= prob) {//Bremsstrahlung has taken place!
-	do {
-	    sample = G4UniformRand();
-	    eloss = fBeamTarg->fEcut*pow(Ekin/fBeamTarg->fEcut,sample);
-	    env = 1./eloss;
-	    value = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,bt);
+	if (prob_sample <= prob) {//Bremsstrahlung has taken place!
+	    do {
+		sample = G4UniformRand();
+		eloss = fBeamTarg->fEcut*pow(Ekin/fBeamTarg->fEcut,sample);
+		env = 1./eloss;
+		value = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,bt);
 
-	    sample = G4UniformRand();
-	    ref = value/env;
-	} while (sample > ref);
+		sample = G4UniformRand();
+		ref = value/env;
+	    } while (sample > ref);
 
-	ef = Ekin-eloss+electron_mass_c2;
-	assert( ef > electron_mass_c2 );
+	    ef = Ekin-eloss+electron_mass_c2;
+	    assert( ef > electron_mass_c2 );
+	}
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////
