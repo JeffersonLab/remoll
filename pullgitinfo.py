@@ -7,7 +7,7 @@ presentcwd = os.getcwd()
 os.chdir(sys.argv[1])
 
 
-f = os.popen("git log -n 1 && git status -bs && echo \"\nGenerated at `date`\"")
+f = os.popen("git log -n 1 && git status -bs && echo \"\nGeant4 version\" `geant4-config --version` && echo \"  ROOT version\" `root-config --version` && echo \" `cmake --version`\" && echo \"\nGenerated at `date`\"")
 
 boringstring = "";
 fullstring = "";

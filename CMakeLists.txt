@@ -5,13 +5,14 @@
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
 
-# Update header file
-add_custom_command( OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh always COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
-add_custom_target( gitinfo ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh )
 
 #ROOT path
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
+
+# Update header file
+add_custom_command( OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh always COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
+add_custom_target( gitinfo ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh )
 
 
 # this is to ensure we find the header we need
