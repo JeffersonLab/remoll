@@ -137,8 +137,6 @@ int main(int argc, char** argv){
 	//--------------------------
 #ifdef G4UI_USE
 	G4UIExecutive * ui = new G4UIExecutive(argc,argv);
-
-
 	ui->SessionStart();
 
 	delete ui;
@@ -146,6 +144,7 @@ int main(int argc, char** argv){
     }
     else
     {
+
 	G4String command = "/control/execute ";
 	G4String fileName = argv[1];
 
@@ -156,6 +155,11 @@ int main(int argc, char** argv){
 	rundata->SetMacroFile(argv[1]);
 
 	UImanager->ApplyCommand(command+fileName);
+
+	G4UIExecutive * ui = new G4UIExecutive(argc,argv);
+	ui->SessionStart();
+
+
     }
 
     // Initialize Run manager

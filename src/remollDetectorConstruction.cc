@@ -93,14 +93,12 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	vidx++; 
     }
     if( vidx == thislog->GetNoDaughters() ){
-	G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	G4cout << "Warning:"<< __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 	    ":  target definition structure in GDML not valid" << G4endl;
-	exit(1);
+    } else {
+	beamtarg->SetMotherVolume(thislog->GetDaughter(vidx));
+	thislog = thislog->GetDaughter(vidx)->GetLogicalVolume();
     }
-    beamtarg->SetMotherVolume(thislog->GetDaughter(vidx));
-
-    thislog = thislog->GetDaughter(vidx)->GetLogicalVolume();
-
 
     ////////////////////////////////////////////////////////////////////////////////
     // List relevant target volumes here terminated by "" //////////////////////////
@@ -123,12 +121,11 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	    vidx++; 
 	}
 	if( vidx == thislog->GetNoDaughters() ){
-	    G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	    G4cout << "Warning: " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		":  target definition structure in GDML not valid.  Could not find volume " << targvolnames[nidx] << G4endl;
-	    exit(1);
+	} else {
+	    beamtarg->AddVolume(thislog->GetDaughter(vidx));
 	}
-
-	beamtarg->AddVolume(thislog->GetDaughter(vidx));
 	nidx++;
     }
 
