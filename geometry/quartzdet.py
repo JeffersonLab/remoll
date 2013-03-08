@@ -42,7 +42,7 @@ class quartzdet:
 		"unit = \"m\" "+ \
 		"x=\"" + str(x) + "\" "+ \
 		"y=\"" + str(y) + "\" "+ \
-		"z=\"" + str(self.z) + "\" />"
+		"z=\"" + str(self.z + self.zoff[i]) + "\" />"
     def makeallposition(self):
 	for i in range(self.nsect):
 	    for j in range(self.ntype):
