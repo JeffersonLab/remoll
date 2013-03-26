@@ -529,11 +529,18 @@ double remollMultScatt::GenerateMS(){
     // This returns the polar coordinate
     // theta for a single event
 
-    double x = GenerateMSPlane();
-    double y = GenerateMSPlane();
-    
-    return sqrt(x*x+y*y);
+    // Generate to ten sigma out
+    double thmax = 10.0*fth;
+
+    // Weight by sin(th)
+    double thisth = GenerateMSPlane();
+    while( sin(thisth) < G4UniformRand()*sin(thmax) ){
+	thisth = GenerateMSPlane();
+    }
+
+    return thisth;
 }
+
 
 double remollMultScatt::GenerateMS( double p, int nmat, double t[], double A[], double Z[] ){
     /*
