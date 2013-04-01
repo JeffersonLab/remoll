@@ -59,7 +59,9 @@ void remollGenMoller::SamplePhysics(remollVertex *vert, remollEvent *evt){
     evt->SetAsymmetry(APV);
     evt->SetThCoM(thcom);
 
-    evt->SetQ2( 2.0*e_com*e_com*(1.0-cos(thcom)) );
+    //evt->SetQ2( 2.0*e_com*e_com*(1.0-cos(thcom)) );
+    // Q2 is not actually well defined
+    evt->SetQ2( 0.0 );
 
     double pperp = e_com*sin(thcom);
     double ppar  = e_com*cos(thcom);
