@@ -222,7 +222,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	exit(1);
     }
 
-    G4double APV_base = GF*q2/(4.0*sqrt(2.0)*pi*alpha);
+    G4double APV_base = -GF*q2/(4.0*sqrt(2.0)*pi*alpha);
 
     G4double rhop = 0.9878;
     G4double kp   = 1.0029;
