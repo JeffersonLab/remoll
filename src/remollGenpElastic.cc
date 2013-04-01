@@ -201,7 +201,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double gep = gd;
     double gmp = 2.79*gd;
 
-    double gen =  1.91*gd/(1.0+5.6*tau); // galster
+    double gen =  1.91*gd*tau/(1.0+5.6*tau); // galster
     double gmn = -1.91*gd;
 
     double sigma_mott = hbarc*hbarc*pow(alpha*cos(th/2.0), 2.0)/pow(2.0*beamE*sin(th/2.0)*sin(th/2.0), 2.0);
