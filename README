@@ -60,9 +60,15 @@ To run, execute
 ./remoll 
 
 which should bring up a graphical command interface
-Then you can run
+
+To see the geometry you have to say:
+
+/run/initialize
+
+then 
 
 /control/execute vis/Qt.mac
+
 
 ---------------------------------------------------
 
