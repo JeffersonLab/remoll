@@ -45,7 +45,7 @@ include(${Geant4_USE_FILE})
 
 
 #debugging symbols, complains
-set(CMAKE_CXX_FLAGS "-g -Wall")
+set(CMAKE_CXX_FLAGS "-g -Wall -pg")
 
 #----------------------------------------------------------------------------
 # Generate dictionaries as well (so we can write objects to ROOT files
