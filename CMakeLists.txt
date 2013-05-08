@@ -95,6 +95,19 @@ set(REMOLL_SCRIPTS
     geometry/schema/gdml_parameterised.xsd
     geometry/schema/gdml_replicas.xsd
     geometry/schema/gdml_solids.xsd
+    geometry_sculpt/mollerMother.gdml
+    geometry_sculpt/detectorDaughter.gdml
+    geometry_sculpt/hybridDaughter.gdml
+    geometry_sculpt/targetDaughter.gdml
+    geometry_sculpt/upstreamDaughter.gdml
+    geometry_sculpt/schema/gdml.xsd
+    geometry_sculpt/schema/gdml_core.xsd
+    geometry_sculpt/schema/gdml_define.xsd
+    geometry_sculpt/schema/gdml_extensions.xsd
+    geometry_sculpt/schema/gdml_materials.xsd
+    geometry_sculpt/schema/gdml_parameterised.xsd
+    geometry_sculpt/schema/gdml_replicas.xsd
+    geometry_sculpt/schema/gdml_solids.xsd
     vis/OIX.mac
     vis/Qt.mac
     vis/vis.mac
