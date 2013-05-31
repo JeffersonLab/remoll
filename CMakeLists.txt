@@ -5,13 +5,14 @@
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
 
-# Update header file
-add_custom_command( OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh always COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
-add_custom_target( gitinfo ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh )
 
 #ROOT path
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
+
+# Update header file
+add_custom_command( OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh always COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
+add_custom_target( gitinfo ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh )
 
 
 # this is to ensure we find the header we need
@@ -44,7 +45,7 @@ include(${Geant4_USE_FILE})
 
 
 #debugging symbols, complains
-set(CMAKE_CXX_FLAGS "-g -Wall")
+set(CMAKE_CXX_FLAGS "-g -Wall -pg")
 
 #----------------------------------------------------------------------------
 # Generate dictionaries as well (so we can write objects to ROOT files
@@ -94,6 +95,19 @@ set(REMOLL_SCRIPTS
     geometry/schema/gdml_parameterised.xsd
     geometry/schema/gdml_replicas.xsd
     geometry/schema/gdml_solids.xsd
+    geometry_sculpt/mollerMother.gdml
+    geometry_sculpt/detectorDaughter.gdml
+    geometry_sculpt/hybridDaughter.gdml
+    geometry_sculpt/targetDaughter.gdml
+    geometry_sculpt/upstreamDaughter.gdml
+    geometry_sculpt/schema/gdml.xsd
+    geometry_sculpt/schema/gdml_core.xsd
+    geometry_sculpt/schema/gdml_define.xsd
+    geometry_sculpt/schema/gdml_extensions.xsd
+    geometry_sculpt/schema/gdml_materials.xsd
+    geometry_sculpt/schema/gdml_parameterised.xsd
+    geometry_sculpt/schema/gdml_replicas.xsd
+    geometry_sculpt/schema/gdml_solids.xsd
     vis/OIX.mac
     vis/Qt.mac
     vis/vis.mac

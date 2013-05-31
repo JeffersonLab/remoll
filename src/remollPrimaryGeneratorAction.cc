@@ -82,7 +82,7 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 
   /*  Generate event, set IO data */
 
-  remollEvent *thisev;
+  remollEvent *thisev = NULL;
   if( fEventGen ){  // Specified our own generator
       thisev = fEventGen->GenerateEvent();
       for( unsigned int pidx = 0; pidx < thisev->fPartType.size(); pidx++ ){
@@ -116,6 +116,9 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
       fParticleGun->GeneratePrimaryVertex(anEvent);
   }
 
+  if( thisev != NULL ){
+      delete thisev;
+  }
 }
 
 G4ParticleGun* remollPrimaryGeneratorAction::GetParticleGun() {

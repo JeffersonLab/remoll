@@ -45,7 +45,7 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-#/remoll/krypt   true
+#/remoll/kryptonite   true
 
 # Specify random number seed
 /remoll/seed 123456

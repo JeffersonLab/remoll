@@ -201,7 +201,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double gep = gd;
     double gmp = 2.79*gd;
 
-    double gen =  1.91*gd/(1.0+5.6*tau); // galster
+    double gen =  1.91*gd*tau/(1.0+5.6*tau); // galster
     double gmn = -1.91*gd;
 
     double sigma_mott = hbarc*hbarc*pow(alpha*cos(th/2.0), 2.0)/pow(2.0*beamE*sin(th/2.0)*sin(th/2.0), 2.0);
@@ -222,17 +222,14 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	exit(1);
     }
 
-    G4double APV_base = GF*q2/(4.0*sqrt(2.0)*pi*alpha);
-
-    G4double rhop = 0.9878;
-    G4double kp   = 1.0029;
+    G4double APV_base = -GF*q2/(4.0*sqrt(2.0)*pi*alpha);
 
     G4double eps = pow(1.0 + 2.0*(1.0+tau)*tan(th/2.0)*tan(th/2.0), -1.0);
 
     G4double apvffnum = eps*gep*gen + tau*gmp*gmn;
     G4double apvffden = eps*gep*gep  + tau*gmp*gmp;
 
-    G4double APV = APV_base*rhop*( (1.0 - 4*kp*sin2thW_ms) - apvffnum/apvffden);
+    G4double APV = APV_base*(QWp - apvffnum/apvffden);
 
     evt->SetAsymmetry(APV);
 

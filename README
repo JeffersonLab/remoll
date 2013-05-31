@@ -2,10 +2,18 @@
 
 Seamus Riordan
 riordan@jlab.org
-January 9, 2012
+January 9, 2013
 
 Repository information is here:
 http://solid.physics.umass.edu/remoll.html
+
+Mailing list for repository updates is 
+
+12gevmoller_sim@jlab.org
+
+subscribe at
+
+https://mailman.jlab.org/mailman/listinfo/12gevmoller_sim
 
 ---------------------------------------------------
 
@@ -52,9 +60,15 @@ To run, execute
 ./remoll 
 
 which should bring up a graphical command interface
-Then you can run
+
+To see the geometry you have to say:
+
+/run/initialize
+
+then 
 
 /control/execute vis/Qt.mac
+
 
 ---------------------------------------------------
 
@@ -64,14 +78,5 @@ if you get errors about missing gitinfo.hh try
 
 cmake <path to remoll>
 make
-
-
-
-
-
-
-
-
-
 
 

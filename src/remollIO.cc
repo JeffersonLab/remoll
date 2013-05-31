@@ -13,6 +13,10 @@
 #include "remollRunData.hh"
 #include "remollBeamTarget.hh"
 
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
@@ -29,8 +33,10 @@ remollIO::remollIO(){
 }
 
 remollIO::~remollIO(){
-    delete fTree;
+    if( fTree ){ delete fTree; }
     fTree = NULL;
+    if( fFile ){ delete fFile; }
+    fFile = NULL;
 }
 
 void remollIO::SetFilename(G4String fn){
@@ -39,6 +45,13 @@ void remollIO::SetFilename(G4String fn){
 }
 
 void remollIO::InitializeTree(){
+    if( fFile ){
+	fFile->Close();
+	delete fFile;
+    }
+
+    fFile = new TFile(fFilename, "RECREATE");
+
     if( fTree ){ delete fTree; }
 
     fTree = new TTree("T", "Geant4 Moller Simulation");
@@ -127,16 +140,31 @@ void remollIO::Flush(){
 }
 
 void remollIO::WriteTree(){
-    fFile = new TFile(fFilename, "RECREATE");
+    assert( fFile );
+    assert( fTree );
+
+    if( !fFile->IsOpen() ){
+	G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << ": TFile not open" << G4endl;
+	exit(1);
+    }
+
+    G4cout << "Writing output to " << fFile->GetName() << "... ";
+
     fFile->cd();
 
     fTree->Write("T", TObject::kOverwrite);
     remollRun::GetRun()->GetData()->Write("run_data", TObject::kOverwrite); 
 
+    fTree->ResetBranchAddresses();
+    delete fTree;
+    fTree = NULL;
+
     fFile->Close();
 
     delete fFile;
     fFile = NULL;
+
+    G4cout << "written" << G4endl;
 
     return;
 }
@@ -282,6 +310,15 @@ void remollIO::GrabGDMLFiles(G4String fn){
 void remollIO::SearchGDMLforFiles(G4String fn){
     /*!  Chase down files to be included by GDML.
      *   Mainly look for file tags and perform recursively */
+
+    struct stat thisfile;
+
+    int ret = stat(fn.data(), &thisfile);
+
+    if( ret != 0 ){
+	G4cerr << "ERROR opening file " << fn <<  " in " << __PRETTY_FUNCTION__ << ": " << strerror(errno) << G4endl;
+	exit(1);
+    }
 
    xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser();
 
