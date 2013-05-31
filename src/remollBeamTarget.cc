@@ -65,102 +65,102 @@ void remollBeamTarget::UpdateInfo(){
     fZpos = fMother->GetFrameTranslation().z();
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
-	// Assume everything is non-nested tubes
-	if( !dynamic_cast<G4Tubs *>( (*it)->GetLogicalVolume()->GetSolid() ) ){
-	    G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		":  Target volume not made of G4Tubs" << G4endl; 
-	    exit(1);
+      // Assume everything is non-nested tubes
+      if( !dynamic_cast<G4Tubs *>( (*it)->GetLogicalVolume()->GetSolid() ) ){
+	G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	  ":  Target volume not made of G4Tubs" << G4endl; 
+	exit(1);
+      }
+      
+      if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	if( fLH2Length >= 0.0 ){
+	  G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	    ":  Multiply defined LH2 volumes" << G4endl; 
+	  exit(1);
 	}
-
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
-	    if( fLH2Length >= 0.0 ){
-		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		    ":  Multiply defined LH2 volumes" << G4endl; 
-		exit(1);
-	    }
-
-	    fLH2Length = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
-		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
-
-	    fLH2pos    = (*it)->GetFrameTranslation().z();
-
-	    fTotalLength += ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
-		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
-	}
+	
+	fLH2Length = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
+	  *(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+	
+	fLH2pos    = (*it)->GetFrameTranslation().z();
+	
+	fTotalLength += ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
+	  *(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+      }
     }
-
+    
     return;
 }
 
 
 void remollBeamTarget::SetTargetLen(G4double z){
-    std::vector<G4VPhysicalVolume *>::iterator it;
-
-    for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
-	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
-	    // Change the length of the target volume
-	    ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->SetZHalfLength(z/2.0);
+  std::vector<G4VPhysicalVolume *>::iterator it;
+  
+  for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
+    G4GeometryManager::GetInstance()->OpenGeometry((*it));
+    if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+      // Change the length of the target volume
+      ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->SetZHalfLength(z/2.0);
+    } else {
+      
+      G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	": volume other than cryogen has been specified, but handling not implemented" << G4endl;
+      // Move position of all other volumes based on half length change
+      
+      /*
+	G4ThreeVector pos = (*it)->GetFrameTranslation();
+	
+	if( pos.z() < fLH2pos ){
+	pos = pos + G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
 	} else {
-
-	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": volume other than cryogen has been specified, but handling not implemented" << G4endl;
-	    // Move position of all other volumes based on half length change
-
-	    /*
-	    G4ThreeVector pos = (*it)->GetFrameTranslation();
-
-	    if( pos.z() < fLH2pos ){
-		pos = pos + G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
-	    } else {
-		pos = pos - G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
-	    }
-
-	    (*it)->SetTranslation(pos);
-	    */
+	pos = pos - G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
 	}
-	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
+	
+	(*it)->SetTranslation(pos);
+      */
     }
-
-
-    G4RunManager* runManager = G4RunManager::GetRunManager();
-    runManager->GeometryHasBeenModified();
-
-    UpdateInfo();
+    G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
+  }
+  
+  
+  G4RunManager* runManager = G4RunManager::GetRunManager();
+  runManager->GeometryHasBeenModified();
+  
+  UpdateInfo();
 }
 
 void remollBeamTarget::SetTargetPos(G4double z){
-    std::vector<G4VPhysicalVolume *>::iterator it;
-
-    //G4double zshift = z-(fZpos+fLH2pos);
-
-
-    for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
-	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
-	    // Change the length of the target volume
-	    (*it)->SetTranslation( G4ThreeVector(0.0, 0.0, z-fZpos) );
-	} else {
-	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": volume other than cryogen has been specified, but handling not implemented" << G4endl;
-
-	    // Move position of all other volumes based on half length change
-
-	    /*
-	    G4ThreeVector prespos = (*it)->GetFrameTranslation();
-
-	    G4ThreeVector pos = prespos + G4ThreeVector(0.0, 0.0, zshift );
-
-	    (*it)->SetTranslation(prespos);
-	    */
-	}
-	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
+  std::vector<G4VPhysicalVolume *>::iterator it;
+  
+  //G4double zshift = z-(fZpos+fLH2pos);
+  
+  
+  for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
+    G4GeometryManager::GetInstance()->OpenGeometry((*it));
+    if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+      // Change the length of the target volume
+      (*it)->SetTranslation( G4ThreeVector(0.0, 0.0, z-fZpos) );
+    } else {
+      G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	": volume other than cryogen has been specified, but handling not implemented" << G4endl;
+      
+      // Move position of all other volumes based on half length change
+      
+      /*
+	G4ThreeVector prespos = (*it)->GetFrameTranslation();
+	
+	G4ThreeVector pos = prespos + G4ThreeVector(0.0, 0.0, zshift );
+	
+	(*it)->SetTranslation(prespos);
+      */
     }
-
-    G4RunManager* runManager = G4RunManager::GetRunManager();
-    runManager->GeometryHasBeenModified();
-
-    UpdateInfo();
+    G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
+  }
+  
+  G4RunManager* runManager = G4RunManager::GetRunManager();
+  runManager->GeometryHasBeenModified();
+  
+  UpdateInfo();
 }
 
 

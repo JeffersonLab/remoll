@@ -40,12 +40,12 @@
 #include "G4Colour.hh"
 
 #define __DET_STRLEN 200
-#define __MAX_DETS 500
+#define __MAX_DETS 520
 
 remollDetectorConstruction::remollDetectorConstruction() {
+
     // Default geometry file
     fDetFileName = "geometry/mollerMother.gdml";
-
 
     CreateGlobalMagneticField();
     fIO = NULL;
@@ -56,6 +56,9 @@ remollDetectorConstruction::~remollDetectorConstruction() {
 }
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct() {
+
+    G4cout << G4endl << "###### Calling remollDetectorConstruction::Construct() " << G4endl << G4endl;
+
     G4VPhysicalVolume *worldVolume;
 
     fIO->GrabGDMLFiles(fDetFileName);
@@ -68,7 +71,6 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
     fGDMLParser->SetOverlapCheck(false);
 
     fprintf(stderr, "Reading %s\n", fDetFileName.data());
-
 
     fGDMLParser->Read(fDetFileName);
 
@@ -87,7 +89,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
     G4LogicalVolume *thislog = worldVolume->GetLogicalVolume();
     G4int vidx = 0;
 
-    G4String targetmothername = "logicTarget";
+    G4String targetmothername = "logicTarget"; // declared in targetDaughter.gdml
     while( vidx < thislog->GetNoDaughters() ){
 	if( thislog->GetDaughter(vidx)->GetName() == targetmothername.append("_PV")) break;
 	vidx++; 
@@ -177,50 +179,53 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
   k = 0;
 
   for( iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
-      G4LogicalVolume* myvol = (*iter).first;
-      G4cout << "Volume " << myvol->GetName() << G4endl;
+    G4LogicalVolume* myvol = (*iter).first;
+    G4cout << "Volume " << myvol->GetName() << G4endl;
 
-      for( vit  = (*iter).second.begin(); vit != (*iter).second.end(); vit++) {
-	  if ((*vit).type == "SensDet") {
-	      G4String det_type = (*vit).value;
+    for( vit  = (*iter).second.begin(); vit != (*iter).second.end(); vit++) {
+      if ((*vit).type == "SensDet") {
+	G4String det_type = (*vit).value;
 
-	      // Also allow specification of det number ///////////////////
-	      int det_no = -1;
-	      for( nit  = (*iter).second.begin(); nit != (*iter).second.end(); nit++) {
-		  if ((*nit).type == "DetNo") {
-		      det_no= atoi((*nit).value.data());
-		      useddetnums[det_no] = true;
-		  }
-	      }
-	      if( det_no <= 0 ){
-		  k = 1;
-		  while( useddetnums[k] == true && k < __MAX_DETS ){ k++; }
-		  if( k == __MAX_DETS ){
-		      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR too many detectors" << G4endl;
-		      exit(1);
-		  }
-		  det_no = k;
-		  useddetnums[k] = true;
-	      }
-	      /////////////////////////////////////////////////////////////
-
-	      retval = snprintf(detectorname, __DET_STRLEN,"remoll/det_%d", det_no);
-
-	      assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
-
-	      thisdet = SDman->FindSensitiveDetector(detectorname);
-
-	      if( thisdet == 0 ) {
-		  thisdet = new remollGenericDetector(detectorname, det_no);
-		  G4cout << "  Creating sensitive detector " << det_type
-		      << " for volume " << myvol->GetName()
-		      <<  G4endl << G4endl;
-		  SDman->AddNewDetector(thisdet);
-	      }
-
-	      myvol->SetSensitiveDetector(thisdet);
+	// Also allow specification of det number ///////////////////
+	int det_no = -1;
+	for( nit  = (*iter).second.begin(); nit != (*iter).second.end(); nit++) {
+	  if ((*nit).type == "DetNo") {
+	    det_no= atoi((*nit).value.data());
+	    useddetnums[det_no] = true;
 	  }
+	}
+	if( det_no <= 0 ){
+	  k = 1;
+	  while( useddetnums[k] == true && k < __MAX_DETS ){ k++; }
+	  if( k == __MAX_DETS ){
+	    G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR too many detectors" << G4endl;
+	    exit(1);
+	  }
+	  det_no = k;
+	  useddetnums[k] = true;
+	}
+	/////////////////////////////////////////////////////////////
+
+	retval = snprintf(detectorname, __DET_STRLEN,"remoll/det_%d", det_no);
+
+	assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
+
+	thisdet = SDman->FindSensitiveDetector(detectorname);
+
+	if( thisdet == 0 ) {
+
+	  thisdet = new remollGenericDetector(detectorname, det_no);
+	  G4cout << "  Creating sensitive detector " << det_type
+		 << " for volume " << myvol->GetName()
+		 <<  G4endl;// << G4endl;
+	  G4cout << " Detector name/no : " << detectorname 
+		 << " / " << det_no << G4endl << G4endl;
+	  SDman->AddNewDetector(thisdet);
+	}
+
+	myvol->SetSensitiveDetector(thisdet);
       }
+    }
   }
 
   G4cout << "Completed sensitive detector assignment" << G4endl;
@@ -250,23 +255,27 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
   G4cout << G4endl << "Material table: " << G4endl << G4endl;
   G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 
-  G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
+  //  G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
 
-
-  G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
+  G4cout << G4endl << "###### Leaving remollDetectorConstruction::Construct() " << G4endl << G4endl;
 
   return worldVolume;
 }
 
 
 void remollDetectorConstruction::CreateGlobalMagneticField() {
-    fGlobalField = new remollGlobalField();
 
-    fGlobalFieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
-    fGlobalFieldManager->SetDetectorField(fGlobalField);
-    fGlobalFieldManager->CreateChordFinder(fGlobalField);
+  G4cout << G4endl << "###### Calling remollDetectorConstruction::CreateGlobalMagneticField()" << G4endl << G4endl;
 
-    return;
+  fGlobalField = new remollGlobalField();
+  
+  fGlobalFieldManager = G4TransportationManager::GetTransportationManager()->GetFieldManager();
+  fGlobalFieldManager->SetDetectorField(fGlobalField);
+  fGlobalFieldManager->CreateChordFinder(fGlobalField);
+
+  G4cout << G4endl << "###### Leaving remollDetectorConstruction::CreateGlobalMagneticField()" << G4endl << G4endl;
+  
+  return;
 } 
 
 void remollDetectorConstruction::SetDetectorGeomFile(const G4String &str){

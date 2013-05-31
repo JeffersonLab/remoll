@@ -9,6 +9,7 @@
    Global type stuff
 */
 
+#define VERBOSE 1
 
 const double GF = 1.16637e-5/GeV/GeV; 
 const double alpha = 0.007299; 

@@ -51,3 +51,13 @@ const remollGenericDetectorHit& remollGenericDetectorHit::operator =(const remol
 G4int remollGenericDetectorHit::operator==(const remollGenericDetectorHit &right ) const {
     return (this==&right) ? 1 : 0;
 }
+
+
+void remollGenericDetectorHit::Print(){
+
+  G4cout << "  GEM[" << fDetID << "] : WirePlane[" << fCopyID 
+	 << "] --- local (x,y,z) [mm] " 
+ 	 << f3X.x()/mm << ", " 
+ 	 << f3X.y()/mm << ", " 
+ 	 << f3X.z()/mm << G4endl;
+}
