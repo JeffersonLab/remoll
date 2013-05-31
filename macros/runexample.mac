@@ -6,11 +6,11 @@
 # This must be explicitly called
 /run/initialize
 
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+/remoll/addfield map_dir/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_dir/blockyUpstream_rm_1.1.txt
 
-#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
-#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+#/remoll/scalefield map_dir/blockyHybrid_rm_3.0.txt 1.0
+#/remoll/magcurrent map_dir/blockyHybrid_rm_3.0.txt 1000.0 A
 
 # Raster and initial angle stuff
 #/remoll/rasx 4 mm
@@ -48,8 +48,11 @@
 #/remoll/krypt   true
 
 # Specify random number seed
-#/remoll/seed 123456
+/remoll/seed 123456
 
-/remoll/filename remollout.root
+#/tracking/verbose 2
+#/run/verbose 2
 
-/run/beamOn 1000
+/remoll/filename Rootfiles/remoll.root
+
+#/run/beamOn 100
