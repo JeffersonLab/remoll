@@ -177,7 +177,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
     G4cout << "Entering remollTrackReconstruct::EvaluateTrack(...)" << G4endl;
 
   const G4int dim=2;  
-  G4double matXZ[dim][dim] = {0};
+  G4double matXZ[dim][dim] = {{0}};
 
   // fill the matrix as
   for(G4int iPts=0;iPts<rPosX.size();iPts++){
@@ -217,7 +217,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
     exit (EXIT_FAILURE);
   }
   
-  G4double matXZI[dim][dim] ={0};
+  G4double matXZI[dim][dim] ={{0}};
   // now the inverse of matXZ
   matXZI[0][0] = 1/detXZ * matXZ[1][1];
   matXZI[0][1] = -1/detXZ * matXZ[0][1];
