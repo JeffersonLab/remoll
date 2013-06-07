@@ -53,6 +53,6 @@
 #/tracking/verbose 2
 #/run/verbose 2
 
-/remoll/filename Rootfiles/remoll.root
+/remoll/filename remoll.root
 
-#/run/beamOn 100
+/run/beamOn 100
