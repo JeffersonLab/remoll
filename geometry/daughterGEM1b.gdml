@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
-  <!-- decoy.. without this the GDML parser throws a VALIDATION ERROR-->
-  <define>
-    <position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
-  </define>
-  <!-- .................. -->
-
   <materials>
     <material Z="1" name="Vacuum" state="gas">
       <T unit="K" value="2.73"/>
