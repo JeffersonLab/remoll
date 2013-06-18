@@ -13,8 +13,8 @@
 
     <!--    <position name="posCOLL1" unit="mm" x="0" y="0" z="9600-DOFFSET"/> -->
     <position name="posCOLL1" unit="mm" x="0" y="0" z="9575-DOFFSET"/>
-    <constant name="COLL1_R1_U" value ="34.0"/>
-    <constant name="COLL1_R1_D" value ="34.0"/>
+    <constant name="COLL1_R1_U" value ="26.0"/>
+    <constant name="COLL1_R1_D" value ="26.0"/>
     <constant name="COLL1_R4_U" value ="58."/>
     <constant name="COLL1_R4_D" value ="58."/>
     <constant name="COLL1_THICK" value ="200.0"/>
