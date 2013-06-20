@@ -24,7 +24,8 @@ remollBeamTarget::remollBeamTarget(){
     fMother = NULL;
     UpdateInfo();
 
-    fRasterX = fRasterY = fX0 = fY0 = fTh0 = fPh0 = fdTh = fdPh = 0.0;
+    fRasterX = fRasterY = 4.0*mm;
+    fX0 = fY0 = fTh0 = fPh0 = fdTh = fdPh = 0.0;
 
     fMS = new remollMultScatt();
 
