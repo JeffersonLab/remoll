@@ -13,8 +13,8 @@
 #/remoll/magcurrent map_dir/blockyHybrid_rm_3.0.txt 1000.0 A
 
 # Raster and initial angle stuff
-#/remoll/rasx 4 mm
-#/remoll/rasy 4 mm
+#/remoll/rasx 5 mm
+#/remoll/rasy 5 mm
 #/remoll/beam_x0 0 mm
 #/remoll/beam_y0 0 mm
 # initial angle
