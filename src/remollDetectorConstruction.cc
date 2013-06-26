@@ -93,43 +93,43 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	vidx++; 
     }
     if( vidx == thislog->GetNoDaughters() ){
-	G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 	    ":  target definition structure in GDML not valid" << G4endl;
-	exit(1);
-    }
-    beamtarg->SetMotherVolume(thislog->GetDaughter(vidx));
+    } else {
+	beamtarg->SetMotherVolume(thislog->GetDaughter(vidx));
 
-    thislog = thislog->GetDaughter(vidx)->GetLogicalVolume();
+	thislog = thislog->GetDaughter(vidx)->GetLogicalVolume();
 
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // List relevant target volumes here terminated by "" //////////////////////////
-    // FIXME:  This could probably be done better with auxiliary information
-    //         though that only gives us *logical* volumes and we need the physical
-    //         volumes for placement information
-    //
-    //         *ORDERING IS IMPORTANT - MUST GO UPSTREAM TO DOWNSTREAM*
-    //         FIXME:  can sort that on our own
-    G4String targvolnames[] = {
-	"h2Targ", ""
-    };
-    ////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	// List relevant target volumes here terminated by "" //////////////////////////
+	// FIXME:  This could probably be done better with auxiliary information
+	//         though that only gives us *logical* volumes and we need the physical
+	//         volumes for placement information
+	//
+	//         *ORDERING IS IMPORTANT - MUST GO UPSTREAM TO DOWNSTREAM*
+	//         FIXME:  can sort that on our own
+	G4String targvolnames[] = {
+	    "h2Targ", ""
+	};
+	////////////////////////////////////////////////////////////////////////////////
 
-    int nidx = 0;
-    while( targvolnames[nidx] != "" ){
-	vidx = 0;
-	while( vidx < thislog->GetNoDaughters() ){
-	    if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
-	    vidx++; 
+	int nidx = 0;
+	while( targvolnames[nidx] != "" ){
+	    vidx = 0;
+	    while( vidx < thislog->GetNoDaughters() ){
+		if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
+		vidx++; 
+	    }
+	    if( vidx == thislog->GetNoDaughters() ){
+		G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+		    ":  target definition structure in GDML not valid.  Could not find volume " << targvolnames[nidx] << G4endl;
+		exit(1);
+	    }
+
+	    beamtarg->AddVolume(thislog->GetDaughter(vidx));
+	    nidx++;
 	}
-	if( vidx == thislog->GetNoDaughters() ){
-	    G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		":  target definition structure in GDML not valid.  Could not find volume " << targvolnames[nidx] << G4endl;
-	    exit(1);
-	}
-
-	beamtarg->AddVolume(thislog->GetDaughter(vidx));
-	nidx++;
     }
 
   //==========================

@@ -25,6 +25,7 @@
 */
 
 class G4VPhysicalVolume;
+class G4Material;
 class remollMultScatt;
 
 class remollBeamTarget {
@@ -65,6 +66,10 @@ class remollBeamTarget {
 
 	G4double fTotalLength;
 	G4double fLH2Length, fZpos, fLH2pos;
+
+	G4Material *fDefaultMat;
+
+	bool fAlreadyWarned;
 
 	
     public:

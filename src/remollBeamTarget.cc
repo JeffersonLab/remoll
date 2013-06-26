@@ -35,6 +35,10 @@ remollBeamTarget::remollBeamTarget(){
     fBeamCurr = gDefaultBeamCur;
 
     fEcut = 1e-6*MeV;
+
+    fDefaultMat = new G4Material("Default_proton"   , 1., 1.0, 1e-19*g/mole);
+
+    fAlreadyWarned = false;
 }
 
 remollBeamTarget::~remollBeamTarget(){
@@ -332,19 +336,28 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     }
 
     if( !foundvol ){
-	G4cerr << "ERROR: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": Could not find sampling volume" << G4endl;
-	exit(1);
+	if( !fAlreadyWarned ){
+	    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": Could not find sampling volume" << G4endl;
+	    fAlreadyWarned = true;
+	}
+
+	thisvert.fMaterial = fDefaultMat;
+	thisvert.fRadLen   = 0.0;
     }
     
     // Sample multiple scattering + angles
     G4double msth, msph;
     G4double bmth, bmph;
 
-    assert( nmsmat > 0 );
 
-    fMS->Init( fBeamE, nmsmat, msthick, msA, msZ );
-    msth = fMS->GenerateMSPlane();
-    msph = fMS->GenerateMSPlane();
+    if( nmsmat > 0 ){
+	fMS->Init( fBeamE, nmsmat, msthick, msA, msZ );
+	msth = fMS->GenerateMSPlane();
+	msph = fMS->GenerateMSPlane();
+    } else {
+	msth = 0.0;
+	msph = 0.0;
+    }
 
     assert( !std::isnan(msth) && !std::isnan(msph) );
 

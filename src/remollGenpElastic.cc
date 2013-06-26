@@ -43,13 +43,19 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargVols();
 
-    std::vector<G4VPhysicalVolume *>::iterator it = targVols.begin();
-    while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" 
-	    && it != targVols.end() ){ it++; }
+    bool bypass_target = false;
 
-    if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
-	G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR could not find target" << G4endl;
-	exit(1);
+    std::vector<G4VPhysicalVolume *>::iterator it = targVols.begin();
+    if( targVols.size() > 0 ){
+	while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" 
+		&& it != targVols.end() ){ it++; }
+
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
+	    G4cerr << __FILE__ << " line " << __LINE__ << ": WARNING could not find target" << G4endl;
+	    bypass_target = true;
+	}     
+    } else {
+	bypass_target = true;
     }
 
     double bremcut = fBeamTarg->fEcut;
@@ -60,8 +66,13 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // About ~1.5%
     double int_bt = 0.75*(alpha/pi)*( log( effQ2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
 
-    double bt = (4.0/3.0)*(fBeamTarg->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
-	    + int_bt);
+    double bt;
+    if( !bypass_target ){
+	bt = (4.0/3.0)*(fBeamTarg->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
+		+ int_bt);
+    } else {
+	bt = 0.0;
+    }
 
     double prob, prob_sample, sample, eloss, value;
     value = 1.0;
@@ -214,7 +225,12 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     //  Multiply by Z because we have Z protons 
     //  value for uneven weighting
-    evt->SetEffCrossSection(sigma*V*vert->GetMaterial()->GetZ()*value);
+
+    double thisZ;
+
+    thisZ = vert->GetMaterial()->GetZ();
+
+    evt->SetEffCrossSection(sigma*V*thisZ*value);
 
     if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << 
