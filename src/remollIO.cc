@@ -102,13 +102,14 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.y",    &fGenDetHit_Y,   "hit.y[hit.n]/D");
     fTree->Branch("hit.z",    &fGenDetHit_Z,   "hit.z[hit.n]/D");
     fTree->Branch("hit.r",    &fGenDetHit_R,   "hit.r[hit.n]/D");
-    fTree->Branch("hit.ph",    &fGenDetHit_Ph,   "hit.ph[hit.n]/D");
+    fTree->Branch("hit.ph",   &fGenDetHit_Ph,  "hit.ph[hit.n]/D");
 
-    // direction
+    // direction vectors
     fTree->Branch("hit.dpx",   &fGenDetHit_dPx,   "hit.dpx[hit.n]/D");
     fTree->Branch("hit.dpy",   &fGenDetHit_dPy,   "hit.dpy[hit.n]/D");
     fTree->Branch("hit.dpz",   &fGenDetHit_dPz,   "hit.dpz[hit.n]/D");
-    fTree->Branch("hit.dpr",   &fGenDetHit_dPR,   "hit.dpr[hit.n]/D");
+    fTree->Branch("hit.dr",    &fGenDetHit_dR,    "hit.dr[hit.n]/D");
+    fTree->Branch("hit.dph",   &fGenDetHit_dPh,   "hit.dph[hit.n]/D");
     ////
 
     fTree->Branch("hit.px",   &fGenDetHit_Px,   "hit.px[hit.n]/D");
@@ -259,14 +260,14 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     fGenDetHit_Y[n]  = hit->f3X.y()/__L_UNIT;
     fGenDetHit_Z[n]  = hit->f3X.z()/__L_UNIT;
     fGenDetHit_R[n]  = sqrt(hit->f3X.x()*hit->f3X.x()+hit->f3X.y()*hit->f3X.y())/__L_UNIT;
-    fGenDetHit_Ph[n] = -hit->f3X.phi()/deg;
+    fGenDetHit_Ph[n] = hit->f3X.phi()/deg;
 
     // direction, dp is a unit vector
     fGenDetHit_dPx[n]  = hit->f3dP.x();
     fGenDetHit_dPy[n]  = hit->f3dP.y();
     fGenDetHit_dPz[n]  = hit->f3dP.z();
-
-    fGenDetHit_dPR[n]  = sqrt(hit->f3dP.x()*hit->f3dP.x()+hit->f3dP.y()*hit->f3dP.y());
+    fGenDetHit_dR[n]   = hit->f3dP.rho();
+    fGenDetHit_dPh[n]  = hit->f3dP.phi();
     /////
 
     fGenDetHit_Px[n]  = hit->f3P.x()/__E_UNIT;

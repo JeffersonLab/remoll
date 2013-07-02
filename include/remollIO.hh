@@ -121,7 +121,8 @@ class remollIO {
 	Double_t fGenDetHit_dPx[__IO_MAXHIT];
 	Double_t fGenDetHit_dPy[__IO_MAXHIT];
 	Double_t fGenDetHit_dPz[__IO_MAXHIT];
-	Double_t fGenDetHit_dPR[__IO_MAXHIT];
+	Double_t fGenDetHit_dR[__IO_MAXHIT];
+	Double_t fGenDetHit_dPh[__IO_MAXHIT];
         /////
 
 	Double_t fGenDetHit_Px[__IO_MAXHIT];
