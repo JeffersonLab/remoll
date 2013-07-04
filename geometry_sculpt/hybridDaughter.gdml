@@ -842,97 +842,97 @@
      <volume name="logicDScoil_0">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_1">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_2">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_3">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_4">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_5">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_6">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_7">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_8">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_9">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_10">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_11">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_12">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_13">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
 
     <volume name="logicDScoll_1">
       <materialref ref="Tungsten"/>
       <solidref ref="dscyl_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
     </volume>
 
   <volume name="logicDScoll_5">
       <materialref ref="Tungsten"/>
       <solidref ref="dscoll5union_5"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
     </volume>
 
     <volume name="logicPDScollunion_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="pdscoll_union_6"/> 
-	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> --> 
     </volume>
 
 
