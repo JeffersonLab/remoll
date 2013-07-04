@@ -932,7 +932,7 @@
     <volume name="logicPDScollunion_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="pdscoll_union_6"/> 
-	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> --> 
+	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/>  -->
     </volume>
 
 
