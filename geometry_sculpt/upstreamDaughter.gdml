@@ -300,7 +300,7 @@
     <volume name="logicUScoilunion_6">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/>  -->
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicUpstream">
