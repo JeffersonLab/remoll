@@ -1,9 +1,12 @@
 #include "remollMagneticField.hh"
 #include "G4UImanager.hh"
 
-#include <assert.h>
 #include "G4ThreeVector.hh"
 
+#include <iostream>
+#include <fstream>
+
+#include <assert.h>
 #include <math.h>
 
 remollMagneticField::remollMagneticField( G4String filename ){ 
@@ -116,11 +119,11 @@ void remollMagneticField::ReadFieldMap(){
     int nread;
     G4int cidx;
 
-    FILE *inputfile;
+    std::string inputline;
+    std::ifstream inputfile;
+    inputfile.open(fFilename.data());
 
-    inputfile = fopen(fFilename.data(), "r");
-
-    if( !inputfile ){
+    if (!inputfile.good() ){
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 	    << ": File " << fFilename << " could not open.  Aborting" << G4endl;
 	exit(1);
@@ -128,16 +131,22 @@ void remollMagneticField::ReadFieldMap(){
 
     // Read in data about grid
     for( cidx = kR; cidx <= kZ; cidx++ ){
-	nread = fscanf(inputfile, "%d%lf%lf", &fN[cidx], &fMin[cidx], &fMax[cidx]); 
-	if( nread != __NDIM ){
+        getline(inputfile,inputline);
+        if (std::istringstream(inputline) >> fN[cidx] >> fMin[cidx] >> fMax[cidx]) {
+            G4cout << "N,min,max[" << cidx << "] = " << fN[cidx] << ","
+              << fMin[cidx] << "," << fMax[cidx] << G4endl;
+        } else {
 	    G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 		<< ": File " << fFilename << " contains unreadable header.  Aborting" << G4endl;
 	    exit(1);
 	}
     }
 
-    nread = fscanf(inputfile, "%lf%lf", &fPhiMapOffset, &fZMapOffset);
-    if( nread != 2 ){
+    getline(inputfile,inputline);
+    if (std::istringstream(inputline) >> fPhiMapOffset >> fZMapOffset) {
+        G4cout << "PhiMapOffset,ZMapOffset = " << fPhiMapOffset << ","
+            << fZMapOffset << G4endl;
+    } else {
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__
 	    << ": File " << fFilename << " contains unreadable header.  Aborting" << G4endl;
 	exit(1);
@@ -146,8 +155,10 @@ void remollMagneticField::ReadFieldMap(){
     fPhiMapOffset *= deg;
     fZMapOffset   *= m;
 
-    nread = fscanf(inputfile, "%d", &fNxtant); 
-    if( nread != 1 ){
+    getline(inputfile,inputline);
+    if (std::istringstream(inputline) >> fNxtant) {
+        G4cout << "Nxtant = " << fNxtant << G4endl;
+    } else {
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 	    << ": File " << fFilename << " contains unreadable header.  Aborting" << G4endl;
 	exit(1);
@@ -157,8 +168,10 @@ void remollMagneticField::ReadFieldMap(){
     fxtantSize = 2.0*pi/fNxtant;
 
     //////////////////////////////////////////////////////////////////////
-    nread = fscanf(inputfile, "%lf", &fMagCurrent0); 
-    if( nread != 1 ){
+    getline(inputfile,inputline);
+    if (std::istringstream(inputline) >> fMagCurrent0) {
+        G4cout << "MagCurrent0 = " << fMagCurrent0 << G4endl;
+    } else {
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 	    << ": File " << fFilename << " contains unreadable header.  Aborting" << G4endl;
 	exit(1);
@@ -242,16 +255,15 @@ void remollMagneticField::ReadFieldMap(){
 	for( pidx = 0; pidx < fN[kPhi]; pidx++ ){
 	    for( ridx = 0; ridx < fN[kR]; ridx++ ){
 
-		// Read in field values and assign units
-		nread = fscanf(inputfile, "%lf%lf%lf%lf%lf%lf", 
-			&raw_R_m, &raw_Phi_deg, &raw_Z_m, &br, &bp, &bz); 
+	        getline(inputfile,inputline);
 
-		if( nread != 6 ){
+		// Read in field values and assign units
+		if (std::istringstream(inputline) >> raw_R_m >> raw_Phi_deg >> raw_Z_m >> br >> bp >> bz) {
+                  nlines++;
+		} else {
 		    G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 			<< ": File " << fFilename << " contains invalid data.  Aborting" << G4endl;
 		    exit(1);
-		} else {
-		    nlines++;
 		}
 
 		////////////////////////////////////////////////////////////////////
@@ -320,8 +332,6 @@ void remollMagneticField::ReadFieldMap(){
 	    }
 	}
     }
-
-    fclose(inputfile);
 
     fInit = true;
     G4cout << "... done reading " << nlines << " lines." << G4endl<< G4endl;
