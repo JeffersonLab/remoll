@@ -1,53 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
-<define>
-     <position name="targetCenter" x="0" y="0" z="0"/>
-     <position name="upstreamCenter" x="0" y="0" z="7000."/>
-     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
-     <position name="detectorCenter" x="0" y="0" z="28500."/>
-     <rotation name="identity"/>
-</define>
+  <define>
+    <position name="targetCenter" x="0" y="0" z="0"/>
+    <position name="upstreamCenter" x="0" y="0" z="7000."/>
+    <position name="hybridCenter" x="0" y="0" z="13366.57"/>
+    
+    <position name="GEM1Center" x="0" y="0" z="-0+18000."/> 
+    <position name="GEM2Center" x="0" y="0" z="-0+19000."/> 
+    <position name="GEM3Center" x="0" y="0" z="-0+27000."/> 
+    <position name="GEM4Center" x="0" y="0" z="-0+28000."/> 
 
-<materials>
-     <material Z="1" name="Vacuum" state="gas">
-       <T unit="K" value="2.73"/>
-       <P unit="pascal" value="3e-18"/>
-       <D unit="g/cm3" value="1e-25"/>
-       <atom unit="g/mole" value="1.01"/>
-     </material>
-</materials>
+    <position name="mainDetCenter" x="0" y="0" z="-0+28700."/> 
+    <!-- position name="detectorCenter" x="0" y="0" z="28500."/ -->
 
-<solids>
-     <box lunit="mm" name="boxMother" x="4000" y="4000" z="80000"/>
-</solids>
-
+    <rotation name="identity"/>
+  </define>
+  
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+  </materials>
+  
+  <solids>
+    <box lunit="mm" name="boxMother" x="4000" y="4000" z="80000"/>
+  </solids>
+  
   <structure>
-
+    
     <volume name="logicMother">
       <materialref ref="Vacuum"/>
       <solidref ref="boxMother"/>
-
+      
+      <!-- Target -->
       <physvol>
-      <file name="geometry_sculpt/targetDaughter.gdml"/>
-      <positionref ref="targetCenter"/>
-      <rotationref ref="identity"/>
+	<file name="geometry_sculpt/targetDaughter.gdml"/>
+	<positionref ref="targetCenter"/>
+	<rotationref ref="identity"/>
       </physvol>
+      
+      <!-- These are spectrometers -->
       <physvol>
-      <file name="geometry_sculpt/detectorDaughter.gdml"/>
-      <positionref ref="detectorCenter"/>
-      <rotationref ref="identity"/>
+	<file name="geometry_sculpt/upstreamDaughter.gdml"/>
+	<positionref ref="upstreamCenter"/>
+	<rotationref ref="identity"/>
       </physvol>
+      
       <physvol>
-      <file name="geometry_sculpt/upstreamDaughter.gdml"/>
-      <positionref ref="upstreamCenter"/>
-      <rotationref ref="identity"/>
-      </physvol>
-      <physvol>
-      <file name="geometry_sculpt/hybridDaughter.gdml"/>
-      <positionref ref="hybridCenter"/>
-      <rotationref ref="identity"/>
+	<file name="geometry_sculpt/hybridDaughter.gdml"/>
+	<positionref ref="hybridCenter"/>
+	<rotationref ref="identity"/>
       </physvol> 
+      
+      <!-- Detectors -->
+      <!-- Main Detectors -->
+      
+      <physvol name="PrimaryDets">
+	<file name="geometry_sculpt/detectorDaughter.gdml"/>
+	<positionref ref="mainDetCenter"/>
+	<rotationref ref="identity"/>
+      </physvol>
+      
+      <!-- GEM Detectors -->
+      <physvol name="GEMDet1">
+	<file name="geometry_sculpt/daughterGEM1.gdml"/>
+	<positionref ref="GEM1Center"/>
+	<rotationref ref="identity"/>
+      </physvol>
+
+      <physvol name="GEMDet2">
+	<file name="geometry_sculpt/daughterGEM2.gdml"/>
+	<positionref ref="GEM2Center"/>
+	<rotationref ref="identity"/>
+      </physvol>
+
+      <physvol name="GEMDet3">
+	<file name="geometry_sculpt/daughterGEM3.gdml"/>
+	<positionref ref="GEM3Center"/>
+	<rotationref ref="identity"/>
+      </physvol>
+
+      <physvol name="GEMDet4">
+	<file name="geometry_sculpt/daughterGEM4.gdml"/>
+	<positionref ref="GEM4Center"/>
+	<rotationref ref="identity"/>
+      </physvol>
 
     </volume>
   </structure>

@@ -266,8 +266,8 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     fGenDetHit_dPx[n]  = hit->f3dP.x();
     fGenDetHit_dPy[n]  = hit->f3dP.y();
     fGenDetHit_dPz[n]  = hit->f3dP.z();
-    fGenDetHit_dR[n]   = hit->f3dP.rho();
-    fGenDetHit_dPh[n]  = hit->f3dP.phi();
+    fGenDetHit_dR[n]   = hit->f3dP.perp(); // perp = sqrt(x*x + y*y)
+    fGenDetHit_dPh[n]  = hit->f3dP.phi(); // phi = atan2(y,x)
     /////
 
     fGenDetHit_Px[n]  = hit->f3P.x()/__E_UNIT;

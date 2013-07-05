@@ -19,6 +19,8 @@ class remollGenericDetectorHit : public G4VHit {
 	inline void operator delete(void *aHit);
 	void *operator new(size_t,void*p){return p;}
 
+        void Print();
+
     private:
 
     public:
