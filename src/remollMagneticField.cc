@@ -130,15 +130,37 @@ void remollMagneticField::ReadFieldMap(){
     int nread;
     G4int cidx;
 
-    std::string inputline;
+
+#ifdef __USE_BOOST_IOSTREAMS
+    // Create Boost istream
+    boost::iostreams::filtering_istream inputfile;
+    // If the filename has .gz somewhere (hopefully the end)
+    if (fFilename.find(".gz") != std::string::npos) {
+      // Add gzip decompressor to stream
+      inputfile.push(boost::iostreams::gzip_decompressor());
+    }
+    // Set file as source
+    inputfile.push(boost::iostreams::file_source(fFilename));
+#else
+    // Create STL ifstream
     std::ifstream inputfile;
+    // If the filename has .gz somewhere, fail ungracefully
+    if (fFilename.find(".gz") != std::string::npos) {
+      G4cerr << "Compressed input files not supported!" << G4endl;
+      exit(1);
+    }
+    // Set file as source
     inputfile.open(fFilename.data());
+#endif
 
     if (!inputfile.good() ){
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 	    << ": File " << fFilename << " could not open.  Aborting" << G4endl;
 	exit(1);
     }
+
+    // Variable that will contain single lines
+    std::string inputline;
 
     // Read in data about grid
     for( cidx = kR; cidx <= kZ; cidx++ ){
