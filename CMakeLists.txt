@@ -26,6 +26,14 @@ ROOT_GENERATE_DICTIONARY(
 )
 
 #----------------------------------------------------------------------------
+# Find Boost libraries, in particular iostreams
+
+find_package(Boost COMPONENTS iostreams REQUIRED)
+find_package(Boost REQUIRED)
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIR})
+
+#----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
 # to build a batch mode only executable

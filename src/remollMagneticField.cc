@@ -9,6 +9,17 @@
 #include <assert.h>
 #include <math.h>
 
+// Boost headers
+#ifdef __USE_BOOST_IOSTREAMS
+// This supports gzipped iostreams as magnetic field maps.
+// Compile with -D __USE_BOOST_IOSTREAMS to use.
+#include <boost/iostreams/filtering_stream.hpp>
+#include <boost/iostreams/filtering_streambuf.hpp>
+#include <boost/iostreams/copy.hpp>
+#include <boost/iostreams/filter/gzip.hpp>
+#include <boost/iostreams/device/file.hpp>
+#endif
+
 remollMagneticField::remollMagneticField( G4String filename ){ 
 
     fFilename = filename;
