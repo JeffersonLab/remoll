@@ -11,45 +11,15 @@
     <constant name="DELTAT" value ="1.0"/>
     <constant name="DELTAZ" value ="1.0"/>
 
-    <!--    <position name="posCOLL1" unit="mm" x="0" y="0" z="9600-DOFFSET"/> -->
     <position name="posCOLL1" unit="mm" x="0" y="0" z="9575-DOFFSET"/>
-    <constant name="COLL1_R1_U" value ="26.0"/>
-    <constant name="COLL1_R1_D" value ="26.0"/>
+    <constant name="COLL1_R1_U" value ="26.4"/>
+    <constant name="COLL1_R1_D" value ="26.4"/>
     <constant name="COLL1_R4_U" value ="58."/>
     <constant name="COLL1_R4_D" value ="58."/>
     <constant name="COLL1_THICK" value ="200.0"/>
 
-    <position name="posCOLL2" unit="mm" x="0" y="0" z="9950-DOFFSET"/>
-    <position name="posCOLL2b" unit="mm" x="0" y="0" z="-(9950-DOFFSET-DELTAZ)"/>
-    <constant name="COLL2_R1_U" value ="33"/>
-    <constant name="COLL2_R1_D" value ="33"/>
-    <constant name="COLL2_R4_U" value ="67.5"/>
-    <constant name="COLL2_R4_D" value ="67.5"/>
-    <constant name="COLL2_THICK" value ="100.0"/>
-
-    <position name="posCOLL3" unit="mm" x="0" y="0" z="11050-DOFFSET"/>
-    <position name="posCOLL3b" unit="mm" x="0" y="0" z="-(11050-DOFFSET+DELTAZ)"/>
-    <constant name="COLL3_R1_U" value ="37"/>
-    <constant name="COLL3_R1_D" value ="37"/>
-    <constant name="COLL3_R4_U" value ="65.5"/>
-    <constant name="COLL3_R4_D" value ="65.5"/>
-    <constant name="COLL3_THICK" value ="100.0"/>
-
-    <position name="posCOLL4" unit="mm" x="0" y="0" z="11950-DOFFSET"/>
-    <position name="posCOLL4b" unit="mm" x="0" y="0" z="-(11950-DOFFSET-DELTAZ)"/>
-    <constant name="COLL4_R1_U" value ="41"/>
-    <constant name="COLL4_R1_D" value ="41"/>
-    <constant name="COLL4_R4_U" value ="71.3"/>
-    <constant name="COLL4_R4_D" value ="71.3"/>
-    <constant name="COLL4_THICK" value ="100.0"/>
-
-    <position name="posCOLL5" unit="mm" x="0" y="0" z="12950-DOFFSET"/>
-    <position name="posCOLL5b" unit="mm" x="0" y="0" z="-(12950-DOFFSET-DELTAZ)"/>
-    <constant name="COLL5_R1_U" value ="71.3"/>
-    <constant name="COLL5_R1_D" value ="71.3"/>
-    <constant name="COLL5_R4_U" value ="92.4"/>
-    <constant name="COLL5_R4_D" value ="92.4"/>
-    <constant name="COLL5_THICK" value ="100.0"/>
+    <position name="posCOLL5" unit="mm" x="0" y="0" z="12835-DOFFSET"/>
+    <constant name="COLL5_THICK" value ="70.0"/>
 
     <position name="posPCOLL2" unit="mm" x="0" y="0" z="9825-DOFFSET"/> -->
     <constant name="PCOLL2_R1_U" value ="38.0"/>
@@ -62,14 +32,14 @@
     <constant name="PCOLL2_R4_D" value ="300"/>
     <constant name="PCOLL2_THICK" value ="100.0"/>
 
-    <constant name="PCOLL2_SCULPT_P1_X" value ="64.442"/>
-    <constant name="PCOLL2_SCULPT_P1_Y" value ="8.5"/>
-    <constant name="PCOLL2_SCULPT_P2_X" value ="112.0"/>
-    <constant name="PCOLL2_SCULPT_P2_Y" value ="18.0"/>
+    <constant name="PCOLL2_SCULPT_P1_X" value ="63.0"/>
+    <constant name="PCOLL2_SCULPT_P1_Y" value ="10.0"/>
+    <constant name="PCOLL2_SCULPT_P2_X" value ="106.5"/>
+    <constant name="PCOLL2_SCULPT_P2_Y" value ="19.0"/>
     <constant name="PCOLL2_SCULPT_P3_X" value ="158.0"/>
     <constant name="PCOLL2_SCULPT_P3_Y" value ="36.0"/>
-    <constant name="PCOLL2_SCULPT_P4_X" value ="215.25"/>
-    <constant name="PCOLL2_SCULPT_P4_Y" value ="50.095"/>
+    <constant name="PCOLL2_SCULPT_P4_X" value ="228.55"/>
+    <constant name="PCOLL2_SCULPT_P4_Y" value ="55.0"/>
 
     <position name="PCOLL2_lcut1" unit="mm" x="PCOLL2_SCULPT_P1_X" y="-PCOLL2_SCULPT_P1_Y" z="-PCOLL2_THICK/2-5"/> 
     <position name="PCOLL2_lcut2" unit="mm" x="PCOLL2_SCULPT_P2_X" y="-PCOLL2_SCULPT_P2_Y" z="-PCOLL2_THICK/2-5"/> 
@@ -103,6 +73,33 @@
     <constant name="TRAPOUTERR" value ="(PCOLL2_R4_U+PCOLL2_R3_D)/2"/>
     <constant name="TRAPINNERR" value ="(PCOLL2_R2_D+PCOLL2_R1_U)/2"/>
     <constant name="TRAPRADIUS" value ="TRAPOUTERR/2+TRAPINNERR/2"/>
+
+    <constant name="COLL5_P1_X" value ="105.5"/>
+    <constant name="COLL5_P1_Y" value ="8.5"/>
+    <constant name="COLL5_P2_X" value ="178.0"/>
+    <constant name="COLL5_P2_Y" value ="30.0"/>
+    <constant name="COLL5_P3_X" value ="178.0"/>
+    <constant name="COLL5_P3_Y" value ="55.0"/>
+    <constant name="COLL5_P4_X" value ="72"/>
+    <constant name="COLL5_P4_Y" value ="13.0"/>
+
+    <position name="COLL5_1" unit="mm" x="COLL5_P1_X" y="COLL5_P1_Y" z="-COLL5_THICK/2"/> 
+    <position name="COLL5_2" unit="mm" x="COLL5_P2_X" y="COLL5_P2_Y" z="-COLL5_THICK/2"/> 
+    <position name="COLL5_3" unit="mm" x="COLL5_P3_X" y="COLL5_P3_Y" z="-COLL5_THICK/2"/> 
+    <position name="COLL5_4" unit="mm" x="COLL5_P4_X" y="COLL5_P4_Y" z="-COLL5_THICK/2"/> 
+    <position name="COLL5_5" unit="mm" x="COLL5_P4_X" y="-COLL5_P4_Y" z="-COLL5_THICK/2"/> 
+    <position name="COLL5_6" unit="mm" x="COLL5_P3_X" y="-COLL5_P3_Y" z="-COLL5_THICK/2"/> 
+    <position name="COLL5_7" unit="mm" x="COLL5_P2_X" y="-COLL5_P2_Y" z="-COLL5_THICK/2"/> 
+    <position name="COLL5_8" unit="mm" x="COLL5_P1_X" y="-COLL5_P1_Y" z="-COLL5_THICK/2"/> 
+
+    <position name="COLL5_9" unit="mm" x="COLL5_P1_X" y="COLL5_P1_Y" z="COLL5_THICK/2"/> 
+    <position name="COLL5_10" unit="mm" x="COLL5_P2_X" y="COLL5_P2_Y" z="COLL5_THICK/2"/> 
+    <position name="COLL5_11" unit="mm" x="COLL5_P3_X" y="COLL5_P3_Y" z="COLL5_THICK/2"/> 
+    <position name="COLL5_12" unit="mm" x="COLL5_P4_X" y="COLL5_P4_Y" z="COLL5_THICK/2"/> 
+    <position name="COLL5_13" unit="mm" x="COLL5_P4_X" y="-COLL5_P4_Y" z="COLL5_THICK/2"/> 
+    <position name="COLL5_14" unit="mm" x="COLL5_P3_X" y="-COLL5_P3_Y" z="COLL5_THICK/2"/> 
+    <position name="COLL5_15" unit="mm" x="COLL5_P2_X" y="-COLL5_P2_Y" z="COLL5_THICK/2"/> 
+    <position name="COLL5_16" unit="mm" x="COLL5_P1_X" y="-COLL5_P1_Y" z="COLL5_THICK/2"/> 
 
 
 
@@ -406,6 +403,13 @@
     <rotation name="PRotateZ_5" x="90" y="SEPTANT*5.+90" z="0" unit="deg"/>
     <rotation name="PRotateZ_6" x="90" y="SEPTANT*6.+90" z="0" unit="deg"/>
 
+    <rotation name="ARotateZ_0" x="0" z="SEPTANT*0.+180" y="0" unit="deg"/>
+    <rotation name="ARotateZ_1" x="0" z="SEPTANT*1." y="0" unit="deg"/>
+    <rotation name="ARotateZ_2" x="0" z="SEPTANT*2." y="0" unit="deg"/>
+    <rotation name="ARotateZ_3" x="0" z="SEPTANT*3." y="0" unit="deg"/>
+    <rotation name="ARotateZ_4" x="0" z="SEPTANT*4." y="0" unit="deg"/>
+    <rotation name="ARotateZ_5" x="0" z="SEPTANT*5." y="0" unit="deg"/>
+    <rotation name="ARotateZ_6" x="0" z="SEPTANT*6." y="0" unit="deg"/>
 </define>
 
   <materials>
@@ -427,11 +431,6 @@
 
 <solids>
     <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_1" rmax1="COLL1_R4_U" rmax2="COLL1_R4_D" rmin1="COLL1_R1_U" rmin2="COLL1_R1_D" startphi="0" z="COLL1_THICK"/>
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_3" rmax1="COLL3_R4_U" rmax2="COLL3_R4_D" rmin1="COLL3_R1_U" rmin2="COLL3_R1_D" startphi="0" z="COLL3_THICK"/>
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_4" rmax1="COLL4_R4_U" rmax2="COLL4_R4_D" rmin1="COLL4_R1_U" rmin2="COLL4_R1_D" startphi="0" z="COLL4_THICK"/>
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_5" rmax1="COLL5_R4_U" rmax2="COLL5_R4_D" rmin1="COLL5_R1_U" rmin2="COLL5_R1_D" startphi="0" z="COLL5_THICK"/>
-
     <box lunit="mm" name="COIL_BOX"  x="1000/sqrt(2)" y="1000/sqrt(2)" z="7865.68"/>
     <box lunit="mm" name="COIL_BOX_2"  x="1000/sqrt(2)" y="1000/sqrt(2)" z="7865.68"/>
 
@@ -696,190 +695,7 @@
 
 
 
-    <subtraction name ="ds_coll_2_0">
-        <first ref="dscyl_2"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL2b"/>
-        <rotationref ref="RotateZ_0"/>
-    </subtraction>
-    <subtraction name ="ds_coll_2_1">
-        <first ref="ds_coll_2_0"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL2b"/>
-        <rotationref ref="RotateZ_1"/>
-    </subtraction>
-    <subtraction name ="ds_coll_2_2">
-        <first ref="ds_coll_2_1"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL2b"/>
-        <rotationref ref="RotateZ_2"/>
-    </subtraction>
-    <subtraction name ="ds_coll_2_3">
-        <first ref="ds_coll_2_2"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL2b"/>
-        <rotationref ref="RotateZ_3"/>
-    </subtraction>
-    <subtraction name ="ds_coll_2_4">
-        <first ref="ds_coll_2_3"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL2b"/>
-        <rotationref ref="RotateZ_4"/>
-    </subtraction>
-    <subtraction name ="ds_coll_2_5">
-        <first ref="ds_coll_2_4"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL2b"/>
-        <rotationref ref="RotateZ_5"/>
-    </subtraction>
-    <subtraction name ="ds_coll_2">
-        <first ref="ds_coll_2_5"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL2b"/>
-        <rotationref ref="RotateZ_6"/>
-    </subtraction>
-
-    <subtraction name ="ds_coll_3_0">
-        <first ref="dscyl_3"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL3b"/>
-        <rotationref ref="RotateZ_0"/>
-    </subtraction>
-    <subtraction name ="ds_coll_3_1">
-        <first ref="ds_coll_3_0"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL3b"/>
-        <rotationref ref="RotateZ_1"/>
-    </subtraction>
-    <subtraction name ="ds_coll_3_2">
-        <first ref="ds_coll_3_1"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL3b"/>
-        <rotationref ref="RotateZ_2"/>
-    </subtraction>
-    <subtraction name ="ds_coll_3_3">
-        <first ref="ds_coll_3_2"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL3b"/>
-        <rotationref ref="RotateZ_3"/>
-    </subtraction>
-    <subtraction name ="ds_coll_3_4">
-        <first ref="ds_coll_3_3"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL3b"/>
-        <rotationref ref="RotateZ_4"/>
-    </subtraction>
-    <subtraction name ="ds_coll_3_5">
-        <first ref="ds_coll_3_4"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL3b"/>
-        <rotationref ref="RotateZ_5"/>
-    </subtraction>
-    <subtraction name ="ds_coll_3">
-        <first ref="ds_coll_3_5"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL3b"/>
-        <rotationref ref="RotateZ_6"/>
-    </subtraction>
-
-    <subtraction name ="ds_coll_4_0">
-        <first ref="dscyl_4"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL4b"/>
-        <rotationref ref="RotateZ_0"/>
-    </subtraction>
-    <subtraction name ="ds_coll_4_1">
-        <first ref="ds_coll_4_0"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL4b"/>
-        <rotationref ref="RotateZ_1"/>
-    </subtraction>
-    <subtraction name ="ds_coll_4_2">
-        <first ref="ds_coll_4_1"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL4b"/>
-        <rotationref ref="RotateZ_2"/>
-    </subtraction>
-    <subtraction name ="ds_coll_4_3">
-        <first ref="ds_coll_4_2"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL4b"/>
-        <rotationref ref="RotateZ_3"/>
-    </subtraction>
-    <subtraction name ="ds_coll_4_4">
-        <first ref="ds_coll_4_3"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL4b"/>
-        <rotationref ref="RotateZ_4"/>
-    </subtraction>
-    <subtraction name ="ds_coll_4_5">
-        <first ref="ds_coll_4_4"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL4b"/>
-        <rotationref ref="RotateZ_5"/>
-    </subtraction>
-    <subtraction name ="ds_coll_4">
-        <first ref="ds_coll_4_5"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL4b"/>
-        <rotationref ref="RotateZ_6"/>
-    </subtraction>
-
-   <subtraction name ="ds_coll_5_0">
-        <first ref="dscyl_5"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL5b"/>
-        <rotationref ref="RotateZ_0"/>
-    </subtraction>
-    <subtraction name ="ds_coll_5_1">
-        <first ref="ds_coll_5_0"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL5b"/>
-        <rotationref ref="RotateZ_1"/>
-    </subtraction>
-    <subtraction name ="ds_coll_5_2">
-        <first ref="ds_coll_5_1"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL5b"/>
-        <rotationref ref="RotateZ_2"/>
-    </subtraction>
-    <subtraction name ="ds_coll_5_3">
-        <first ref="ds_coll_5_2"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL5b"/>
-        <rotationref ref="RotateZ_3"/>
-    </subtraction>
-    <subtraction name ="ds_coll_5_4">
-        <first ref="ds_coll_5_3"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL5b"/>
-        <rotationref ref="RotateZ_4"/>
-    </subtraction>
-    <subtraction name ="ds_coll_5_5">
-        <first ref="ds_coll_5_4"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL5b"/>
-        <rotationref ref="RotateZ_5"/>
-    </subtraction>
-    <subtraction name ="ds_coll_5">
-        <first ref="ds_coll_5_5"/>
-        <second ref="dscoilunion_10"/>
-        <positionref ref="posCOLL5b"/>
-        <rotationref ref="RotateZ_6"/>
-    </subtraction>
-
-
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="1000" rmin="0" startphi="0" z="7865.68"/>
-
-    <!--
-    <tessellated name="leftpcolcut">
-	<triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
-	<quadrangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut6" vertex3="PCOLL2_lcut12" vertex4="PCOLL2_lcut7" type="ABSOLUTE"/>
-	<quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut8" vertex4="PCOLL2_lcut12" type="ABSOLUTE"/>
-	<quadrangular vertex1="PCOLL2_lcut2" vertex2="PCOLL2_lcut1" vertex3="PCOLL2_lcut7" vertex4="PCOLL2_lcut8" type="ABSOLUTE"/>
-	<triangular vertex1="PCOLL2_lcut7" vertex2="PCOLL2_lcut12" vertex3="PCOLL2_lcut8" type="ABSOLUTE"/>
-    </tessellated>
-    -->
 
     <tessellated name="leftpcolcut">
 	<triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
@@ -920,6 +736,25 @@
 	rmax2="PCOLL2_R3_D+DELTAT*((PCOLL2_R3_D-PCOLL2_R3_U)/PCOLL2_THICK)" 
 	rmin1="PCOLL2_R2_U-DELTAT*((PCOLL2_R2_D-PCOLL2_R2_U)/PCOLL2_THICK)" 
 	rmin2="PCOLL2_R2_D+DELTAT*((PCOLL2_R2_D-PCOLL2_R2_U)/PCOLL2_THICK)" startphi="-SEPTANT/4" z="PCOLL2_THICK+DELTAT*2"/>
+
+    <tessellated name="col5sol">
+	<quadrangular vertex1="COLL5_1" vertex2="COLL5_4" vertex3="COLL5_3" vertex4="COLL5_2" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_2" vertex2="COLL5_3" vertex3="COLL5_11" vertex4="COLL5_10" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_1" vertex2="COLL5_2" vertex3="COLL5_10" vertex4="COLL5_9" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_3" vertex2="COLL5_4" vertex3="COLL5_12" vertex4="COLL5_11" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_9" vertex2="COLL5_10" vertex3="COLL5_11" vertex4="COLL5_12" type="ABSOLUTE"/>
+
+	<quadrangular vertex1="COLL5_13" vertex2="COLL5_16" vertex3="COLL5_9" vertex4="COLL5_12" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_1" vertex2="COLL5_9" vertex3="COLL5_16" vertex4="COLL5_8" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_1" vertex2="COLL5_8" vertex3="COLL5_5" vertex4="COLL5_4" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_4" vertex2="COLL5_5" vertex3="COLL5_13" vertex4="COLL5_12" type="ABSOLUTE"/>
+
+	<quadrangular vertex1="COLL5_5" vertex2="COLL5_6" vertex3="COLL5_14" vertex4="COLL5_13" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_6" vertex2="COLL5_5" vertex3="COLL5_8" vertex4="COLL5_7" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_7" vertex2="COLL5_8" vertex3="COLL5_16" vertex4="COLL5_15" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_13" vertex2="COLL5_14" vertex3="COLL5_15" vertex4="COLL5_16" type="ABSOLUTE"/>
+	<quadrangular vertex1="COLL5_6" vertex2="COLL5_7" vertex3="COLL5_15" vertex4="COLL5_14" type="ABSOLUTE"/>
+    </tessellated>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/>
 
@@ -970,117 +805,134 @@
 	<rotation name="pdscoll_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
     </subtraction>
 
+    <union name ="dscoll5union_0">
+        <first ref="col5sol"/>
+        <second ref="col5sol"/>
+        <rotationref ref="ARotateZ_1"/>
+    </union>
+    <union name ="dscoll5union_1">
+        <first ref="dscoll5union_0"/>
+        <second ref="col5sol"/>
+        <rotationref ref="ARotateZ_2"/>
+    </union>
+    <union name ="dscoll5union_2">
+        <first ref="dscoll5union_1"/>
+        <second ref="col5sol"/>
+        <rotationref ref="ARotateZ_3"/>
+    </union>
+    <union name ="dscoll5union_3">
+        <first ref="dscoll5union_2"/>
+        <second ref="col5sol"/>
+        <rotationref ref="ARotateZ_4"/>
+    </union>
+    <union name ="dscoll5union_4">
+        <first ref="dscoll5union_3"/>
+        <second ref="col5sol"/>
+        <rotationref ref="ARotateZ_5"/>
+    </union>
+    <union name ="dscoll5union_5">
+        <first ref="dscoll5union_4"/>
+        <second ref="col5sol"/>
+        <rotationref ref="ARotateZ_6"/>
+    </union>
+
 </solids>
 
 <structure>
      <volume name="logicDScoil_0">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_1">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_2">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_3">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_4">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_5">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_6">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_7">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_8">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_9">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_10">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_11">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_12">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicDScoil_13">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
 
     <volume name="logicDScoll_1">
       <materialref ref="Tungsten"/>
       <solidref ref="dscyl_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
     </volume>
-    <volume name="logicDScoll_2">
+
+  <volume name="logicDScoll_5">
       <materialref ref="Tungsten"/>
-      <solidref ref="ds_coll_2"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-    <volume name="logicDScoll_3">
-      <materialref ref="Tungsten"/>
-      <solidref ref="ds_coll_3"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-    <volume name="logicDScoll_4">
-      <materialref ref="Tungsten"/>
-      <solidref ref="ds_coll_4"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-    <volume name="logicDScoll_5">
-      <materialref ref="Tungsten"/>
-      <solidref ref="ds_coll_5"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <solidref ref="dscoll5union_5"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
     </volume>
 
     <volume name="logicPDScollunion_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="pdscoll_union_6"/> 
-	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> --> 
     </volume>
 
 
@@ -1165,22 +1017,13 @@
         <volumeref ref="logicDScoll_1"/>
         <positionref ref="posCOLL1"/>
       </physvol>
-      <physvol name="DScoll_2">
-        <volumeref ref="logicDScoll_2"/>
-        <positionref ref="posCOLL2"/>
-      </physvol>
-      <physvol name="DScoll_3">
-        <volumeref ref="logicDScoll_3"/>
-        <positionref ref="posCOLL3"/>
-      </physvol>
-      <physvol name="DScoll_4">
-        <volumeref ref="logicDScoll_4"/>
-        <positionref ref="posCOLL4"/>
-      </physvol>
+
       <physvol name="DScoll_5">
         <volumeref ref="logicDScoll_5"/>
         <positionref ref="posCOLL5"/>
+	<rotationref ref="ARotateZ_0"/> 
       </physvol>
+
       <physvol name="DScoll_6">
 	<volumeref ref="logicPDScollunion_1"/>
         <positionref ref="posPCOLL2"/>
