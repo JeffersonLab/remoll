@@ -93,43 +93,43 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	vidx++; 
     }
     if( vidx == thislog->GetNoDaughters() ){
-	G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 	    ":  target definition structure in GDML not valid" << G4endl;
-	exit(1);
-    }
-    beamtarg->SetMotherVolume(thislog->GetDaughter(vidx));
+    } else {
+	beamtarg->SetMotherVolume(thislog->GetDaughter(vidx));
 
-    thislog = thislog->GetDaughter(vidx)->GetLogicalVolume();
+	thislog = thislog->GetDaughter(vidx)->GetLogicalVolume();
 
 
-    ////////////////////////////////////////////////////////////////////////////////
-    // List relevant target volumes here terminated by "" //////////////////////////
-    // FIXME:  This could probably be done better with auxiliary information
-    //         though that only gives us *logical* volumes and we need the physical
-    //         volumes for placement information
-    //
-    //         *ORDERING IS IMPORTANT - MUST GO UPSTREAM TO DOWNSTREAM*
-    //         FIXME:  can sort that on our own
-    G4String targvolnames[] = {
-	"h2Targ", ""
-    };
-    ////////////////////////////////////////////////////////////////////////////////
+	////////////////////////////////////////////////////////////////////////////////
+	// List relevant target volumes here terminated by "" //////////////////////////
+	// FIXME:  This could probably be done better with auxiliary information
+	//         though that only gives us *logical* volumes and we need the physical
+	//         volumes for placement information
+	//
+	//         *ORDERING IS IMPORTANT - MUST GO UPSTREAM TO DOWNSTREAM*
+	//         FIXME:  can sort that on our own
+	G4String targvolnames[] = {
+	    "h2Targ", ""
+	};
+	////////////////////////////////////////////////////////////////////////////////
 
-    int nidx = 0;
-    while( targvolnames[nidx] != "" ){
-	vidx = 0;
-	while( vidx < thislog->GetNoDaughters() ){
-	    if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
-	    vidx++; 
+	int nidx = 0;
+	while( targvolnames[nidx] != "" ){
+	    vidx = 0;
+	    while( vidx < thislog->GetNoDaughters() ){
+		if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
+		vidx++; 
+	    }
+	    if( vidx == thislog->GetNoDaughters() ){
+		G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+		    ":  target definition structure in GDML not valid.  Could not find volume " << targvolnames[nidx] << G4endl;
+		exit(1);
+	    }
+
+	    beamtarg->AddVolume(thislog->GetDaughter(vidx));
+	    nidx++;
 	}
-	if( vidx == thislog->GetNoDaughters() ){
-	    G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		":  target definition structure in GDML not valid.  Could not find volume " << targvolnames[nidx] << G4endl;
-	    exit(1);
-	}
-
-	beamtarg->AddVolume(thislog->GetDaughter(vidx));
-	nidx++;
     }
 
   //==========================
@@ -145,12 +145,52 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	  iter  = auxmap->begin();
 	  iter != auxmap->end(); iter++) {
       G4cout << "Volume " << ((*iter).first)->GetName()
-	  << " has the following list of auxiliary information: "<< G4endl;
+	     << " has the following list of auxiliary information: "<< G4endl;
       for (G4GDMLAuxListType::const_iterator
 	      vit  = (*iter).second.begin();
 	      vit != (*iter).second.end(); vit++) {
-	  G4cout << "--> Type: " << (*vit).type
-	      << " Value: "   << (*vit).value << std::endl;
+	G4cout << "--> Type: " << (*vit).type
+	       << " Value: "   << (*vit).value << std::endl;
+
+        if ((*vit).type == "Visibility") {
+          G4Colour colour(1.0,1.0,1.0);
+          const G4VisAttributes* visAttribute_old = ((*iter).first)->GetVisAttributes();
+          if (visAttribute_old)
+            colour = visAttribute_old->GetColour();
+          G4VisAttributes visAttribute_new(colour);
+          if ((*vit).value == "true")
+            visAttribute_new.SetVisibility(true);
+          if ((*vit).value == "false")
+            visAttribute_new.SetVisibility(false);
+          if ((*vit).value == "wireframe")
+            visAttribute_new.SetForceWireframe(false);
+          ((*iter).first)->SetVisAttributes(visAttribute_new);
+        }
+
+        if ((*vit).type == "Color") {
+          G4Colour colour(1.0,1.0,1.0);
+          if (G4Colour::GetColour((*vit).value, colour)) {
+            G4cout << "Setting color to " << (*vit).value << "." << G4endl;
+            G4VisAttributes visAttribute(colour);
+            ((*iter).first)->SetVisAttributes(visAttribute);
+          } else {
+            G4cout << "Colour " << (*vit).value << " is not known." << G4endl;
+          }
+        }
+
+        if ((*vit).type == "Alpha") {
+          G4Colour colour(1.0,1.0,1.0);
+          const G4VisAttributes* visAttribute_old = ((*iter).first)->GetVisAttributes();
+          if (visAttribute_old)
+            colour = visAttribute_old->GetColour();
+          G4Colour colour_new(
+              colour.GetRed(), 
+              colour.GetGreen(),
+              colour.GetBlue(),
+              std::atof((*vit).value.c_str()));
+          G4VisAttributes visAttribute_new(colour_new);
+          ((*iter).first)->SetVisAttributes(visAttribute_new);
+        }
       }
   }
   G4cout << G4endl<< G4endl;
@@ -235,7 +275,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
   worldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
 
   G4VisAttributes* daughterVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-   daughterVisAtt->SetForceWireframe (true);
+  daughterVisAtt->SetForceWireframe (true);
   for(int i=0;i<worldVolume->GetLogicalVolume()->GetNoDaughters();i++){
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
   }

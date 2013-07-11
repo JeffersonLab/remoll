@@ -11,10 +11,10 @@
     <constant name="DELTAT" value ="1.0"/>
 
     <position name="posCOLL1" unit="mm" x="0" y="0" z="5575-UOFFSET"/> -->
-    <constant name="COLL1_R1_U" value ="23.0"/>
-    <constant name="COLL1_R1_D" value ="23.0"/>
-    <constant name="COLL1_R4_U" value ="30"/>
-    <constant name="COLL1_R4_D" value ="30"/>
+    <constant name="COLL1_R1_U" value ="17.8"/>
+    <constant name="COLL1_R1_D" value ="17.8"/>
+    <constant name="COLL1_R4_U" value ="29.5"/>
+    <constant name="COLL1_R4_D" value ="29.5"/>
 
     <constant name="COLL1_THICK" value ="200.0"/>
 
@@ -22,10 +22,10 @@
     <position name="posCOLL2" unit="mm" x="0" y="0" z="5925-UOFFSET"/> -->
     <constant name="COLL2_R1_U" value ="26.0"/>
     <constant name="COLL2_R1_D" value ="26.0"/>
-    <constant name="COLL2_R2_U" value ="34"/>
-    <constant name="COLL2_R2_D" value ="34"/>
-    <constant name="COLL2_R3_U" value ="110"/>
-    <constant name="COLL2_R3_D" value ="110"/>
+    <constant name="COLL2_R2_U" value ="35.3"/>
+    <constant name="COLL2_R2_D" value ="35.3"/>
+    <constant name="COLL2_R3_U" value ="106.1"/>
+    <constant name="COLL2_R3_D" value ="106.1"/>
     <constant name="COLL2_R4_U" value ="300"/>
     <constant name="COLL2_R4_D" value ="300"/>
 
@@ -250,57 +250,57 @@
     <volume name="logicUScoll_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="uscyl_1"/>
-	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
     </volume>
 
 
    <volume name="logicUScollunion_1">
       <materialref ref="Tungsten"/>
       <solidref ref="uscoll2_union_6"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
     </volume>
 
 
    <volume name="logicUScoilunion_0">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicUScoilunion_1">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicUScoilunion_2">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicUScoilunion_3">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicUScoilunion_4">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicUScoilunion_5">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicUScoilunion_6">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
     <volume name="logicUpstream">

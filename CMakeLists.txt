@@ -26,6 +26,18 @@ ROOT_GENERATE_DICTIONARY(
 )
 
 #----------------------------------------------------------------------------
+# Find Boost libraries, in particular iostreams
+
+find_package(Boost REQUIRED)
+find_package(Boost COMPONENTS iostreams)
+include_directories(${Boost_INCLUDE_DIRS})
+link_directories(${Boost_LIBRARY_DIR})
+if(Boost_IOSTREAMS_FOUND)
+    ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+endif()
+
+
+#----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
 # to build a batch mode only executable
@@ -70,8 +82,8 @@ file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_D
 #
 add_executable(remoll remoll.cc ${sources} ${headers} remollDict.cxx)
 add_library(remollroot SHARED ${libsources} ${libheaders} remollDict.cxx)
-target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
-target_link_libraries(remollroot ${ROOT_LIBRARIES} )
+target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
