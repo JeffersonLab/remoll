@@ -1,0 +1,57 @@
+#/***********************************************************
+#Programmer: Valerie Gray
+#Purpose:
+#
+# This sets up the file bar on the Geant4 gui.  Feel free to add what you need
+# to make things easier for everyone on the Geant4 GUI
+#
+#Entry Conditions:
+#Date:06-19-2013
+#Modified: 
+#Assisted By: Qweak
+#*********************************************************/
+
+# This file permits to customize, with commands,
+# the menu bar of the G4UIXm, G4UIWin32 sessions.
+# It has no effect with G4UIterminal.
+#
+# File :
+/gui/addMenu   file File
+/gui/addButton file Initialize "/run/initialize"
+/gui/addButton file Exit "exit"
+#
+# Run menu :
+/gui/addMenu   run Run
+/gui/addButton run "beamOn 1"    "/run/beamOn 1"
+/gui/addButton run "beamOn 2"    "/run/beamOn 2"
+/gui/addButton run "beamOn 5"    "/run/beamOn 5"
+/gui/addButton run "beamOn 10"   "/run/beamOn 10"
+/gui/addButton run "beamOn 15"   "/run/beamOn 15"
+/gui/addButton run "beamOn 20"   "/run/beamOn 20"
+/gui/addButton run "beamOn 25"   "/run/beamOn 25"
+/gui/addButton run "beamOn 50"   "/run/beamOn 50"
+/gui/addButton run "beamOn 100"  "/run/beamOn 100"
+/gui/addButton run "beamOn 200"  "/run/beamOn 200"
+/gui/addButton run "beamOn 1000" "/run/beamOn 1000"
+/gui/addButton run "beamOn 2000" "/run/beamOn 2000"
+
+#
+# Viewer menu :
+/gui/addMenu   viewer Viewer
+#/gui/addButton viewer "My viewer"            "/control/execute vis/myVis.mac"
+#/gui/addButton viewer "OIX viewer"           "/control/execute vis/OIX.mac"
+#/gui/addButton viewer "X viewer"             "/control/execute vis/X.mac"
+/gui/addButton viewer "Qt viewer"            "/control/execute vis/Qt.mac"
+/gui/addButton viewer "Set style solid"      "/vis/viewer/set/style solid"
+/gui/addButton viewer "Set style wire"       "/vis/viewer/set/style wire"
+/gui/addButton viewer "Hide tracks behind objects" "/vis/viewer/set/hiddenMarker true"
+/gui/addButton viewer "Show tracks behind objects" "/vis/viewer/set/hiddenMarker false"
+/gui/addButton viewer "Front view"           "/vis/viewer/set/viewpointThetaPhi 180 0 deg"
+/gui/addButton viewer "Back view"            "/vis/viewer/set/viewpointThetaPhi 0 0 deg"
+/gui/addButton viewer "Side 1 view"            "/vis/viewer/set/viewpointThetaPhi 90 180 deg"
+/gui/addButton viewer "Side 2 view"            "/vis/viewer/set/viewpointThetaPhi -90 180 deg"
+/gui/addButton viewer "Top view"             "/vis/viewer/set/viewpointThetaPhi 90 89 deg"
+/gui/addButton viewer "Update viewer"        "/vis/viewer/update"
+/gui/addButton viewer "Update scene"         "/vis/scene/notifyHandlers"
+/gui/addButton viewer "Reset scene"          "/control/execute vis/vis.mac"
+#
