@@ -265,7 +265,7 @@
     </volume>
 
    <volume name="logiccoll2trap">
-      <materialref ref="Tungsten"/>
+      <materialref ref="VacuumColl"/>
       <solidref ref="coll2trap"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
       <auxiliary auxtype="DetNo" auxvalue="200"/>

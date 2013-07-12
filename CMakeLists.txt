@@ -11,8 +11,12 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
 
 # Update header file
-add_custom_command( OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh always COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
-add_custom_target( gitinfo ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh )
+#execute_process( COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
+#add_custom_command( OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
+#add_custom_command( OUTPUT PRE_BUILD  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
+#add_custom_command( OUTPUT POST_BUILD ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh  COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh_build  )
+
+add_custom_target( gitinfo ALL ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" )
 
 
 # this is to ensure we find the header we need
@@ -63,8 +67,6 @@ set(CMAKE_CXX_FLAGS "-g -Wall -pg")
 
 #----------------------------------------------------------------------------
 # Generate dictionaries as well (so we can write objects to ROOT files
-
-
 
 include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
 
@@ -144,6 +146,15 @@ endforeach()
 # example standalone
 #
 add_custom_target(REMOLL DEPENDS remoll)
+
+#add_dependencies( remoll gitinfo )
+#add_dependencies( remollroot gitinfo )
+
+#add_custom_command( OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
+#add_custom_command( TARGET remollDict PRE_BUILD COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR})
+#add_custom_command( TARGET remollroot POST_BUILD COMMAND mv ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh_build COMMAND echo "Removing gitinfo.hh")
+
+
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
