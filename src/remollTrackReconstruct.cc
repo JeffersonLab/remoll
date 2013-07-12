@@ -13,18 +13,15 @@
 //
 //   -- rupesh, 28 Nov, 2012
 //
-//  -- adopted from  track.C in moller/tracking
-//  -- rupesh, Jan4, 2012
 
 #include "CLHEP/Random/RandFlat.h"
+#include "TMath.h"
 
 #include "remollTrackReconstruct.hh"
 #include "remollGenericDetectorHit.hh"
 
-#define TrackingVerbose 1
-#define EvalTrackVerbose 1
-
-//#include "RootAnalysis.hh"
+#define TrackingVerbose 0
+#define EvalTrackVerbose 0
 
 remollTrackReconstruct::remollTrackReconstruct(){
   ClearTrack();
@@ -40,13 +37,8 @@ void remollTrackReconstruct::AddHit(remollGenericDetectorHit* aHit){
       aHit->fCopyID += 1;
   }
 
-  // original track vector
   aTrackHit.push_back(aHit);
-
   rTrackHitSize = aTrackHit.size();
-
-  // reconstructed track vector
-  aRecTrackHit.resize(rTrackHitSize);
 };
 
 void remollTrackReconstruct::ClearTrack(){
@@ -59,8 +51,6 @@ void remollTrackReconstruct::ClearTrack(){
 
   recTrackXZ.clear(); // reconstructed track vector, holds (a,b) of chisq minimization
   recTrackYZ.clear(); // reconstructed track vector, holds (a,b) of chisq minimization
-
-  aRecTrackHit.clear(); // reconstructed GEM wire plane tracks
 };
 
 
@@ -82,7 +72,6 @@ G4int remollTrackReconstruct::ReconstructTrack(){
   // return if no tracks
   if(rTrackHitSize==0) return 0;
 
-  //  G4float dataXZ[5][2] = {{2,1},{1,2},{2,3},{1,4},{3,5}};
   G4int copyID=0;
   G4int maxCopyID=0;
 
@@ -96,7 +85,7 @@ G4int remollTrackReconstruct::ReconstructTrack(){
 
     hitPos[copyID].push_back(aTrackHit[i]->f3X);
     
-    G4double GEMRES=50; // 500 um GEM res
+    G4double GEMRES=0.5; // 500 um GEM res
     G4double GEMRES_x = CLHEP::RandFlat::shoot(GEMRES); // 0 to GEMRES
     G4double GEMRES_y = CLHEP::RandFlat::shoot(GEMRES);// 0 to GEMRES
 
@@ -122,7 +111,7 @@ G4int remollTrackReconstruct::ReconstructTrack(){
     G4cout << " " <<G4endl;
   }
   
-  FillRecTrackHit();
+  FillRecTrackHit(); // fills x,y,x
   
   if(TrackingVerbose)
     G4cout << "\n***** Leaving remollTrackReconstruct::ReconstructTrack() *****\n" << G4endl;
@@ -150,10 +139,10 @@ G4int remollTrackReconstruct::EvaluateTrack(std::vector <G4ThreeVector> Pos,
     rGEMResX.push_back(Res[i].x()/mm);
     rGEMResY.push_back(Res[i].y()/mm);
     
-    G4cout << rPosX[i] <<"\t" << rPosY[i] <<"\t" << rPosZ[i] << "\t" << rGEMResX[i] << "\t" << rGEMResY[i] << G4endl;
+    //    G4cout << rPosX[i] <<"\t" << rPosY[i] <<"\t" << rPosZ[i] << "\t" << rGEMResX[i] << "\t" << rGEMResY[i] << G4endl;
   }
-  
-  // theta is defined along the XZ plane, see remollWirePlaneSD.cc
+ 
+  // theta is defined along the XZ plane
   // phi is defined along the YZ plane
   
   recTrackXZ.push_back((G4ThreeVector)EvaluateTrack(rPosX,rPosZ,rGEMResX));// evaluate the track variables (a,b) along XZ plane
@@ -230,10 +219,8 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
 
   if(!detXZ){
     G4cerr << "** Can't invert the matrix because determinant is ZERO **" << G4endl;
-    return G4ThreeVector(-1000,-1000,0); // in mm
-
-    //    exit (EXIT_FAILURE);
-  }
+    return G4ThreeVector(-1000/m,-1000/m,0); // in m
+   }
   
   G4double matXZI[dim][dim] ={{0}};
   // now the inverse of matXZ
@@ -271,20 +258,6 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
 
 void remollTrackReconstruct::FillRecTrackHit(){
 
-  // first copy aTrackHit into aRecTrackHit
-  for(size_t i =0; i<rTrackHitSize;i++){
-
-    aRecTrackHit[i] = aTrackHit[i];
-
-    // assign unique detID for reconstructed tracks
-    aRecTrackHit[i]->fDetID = aRecTrackHit[i]->fDetID + 100; 
-  }
-
-  // now rewrite relevant variables in aRecTrackHit
-  // if(TrackingVerbose){
-  //   G4cout << "\tXpos(mm)\tYpos(mm)\tZpos(mm)" << G4endl;
-  // }
-
   for(size_t i=0; i<rTrackHitSize;i++){
 
     G4int copyID=aTrackHit[i]->fCopyID;
@@ -302,25 +275,72 @@ void remollTrackReconstruct::FillRecTrackHit(){
     G4ThreeVector tmp3vec = G4ThreeVector(tmpx,tmpy,tmpz);
     
     // store reconstructed positions
-    //    aRecTrackHit[i]->StorePreStepLocalPos(tmp3vec);
-    aRecTrackHit[i]->f3X = tmp3vec;
-    
-    // // reconstuct angles
-    // G4float tmpTh = EvalTrackAng(tmpz,recTrack[0]);
-    // G4float tmpPh = EvalTrackAng(tmpz,recTrack[1]);
-    
-    // G4cout << "Reconstructed angles (th,ph): (" << tmpTh << ", " << tmpPh << ") rad" << G4endl;
-    
-    // // store reconstructed angles
-    // aRecTrackHit[i]->StoreLocalTheta(tmpTh);
-    // aRecTrackHit[i]->StoreLocalPhi(tmpPh);
+    aTrackHit[i]->f3XRec = tmp3vec;    
   }
   
-  // store reconstructed angles
-  //     aRecTrackHit[i]->StoreWorldTheta(G4double th);
+  EvalTheta(); // eval & record theta
   
   if(TrackingVerbose)
-    PrintHitInfo(aRecTrackHit);
+    PrintHitInfo(aTrackHit);
+}
+
+// evaluate th from each GEM rec vars,
+// and average them
+void remollTrackReconstruct::EvalTheta(){
+  
+  if(EvalTrackVerbose) 
+    G4cout << "Entering remollTrackReconstruct::EvalTheta() ..." << G4endl;
+
+  std:: vector <G4double> theta;
+  std:: vector <G4double> rec_r;
+  std:: vector <G4double> rec_dr;
+  std:: vector <G4double> rec_ph;
+
+  G4bool region[]={0,0,0};
+
+  theta.resize(rTrackHitSize);
+  
+  // evaluate th from individual GEM rec vars
+  for(G4int i=0;i<rTrackHitSize;i++){
+    rec_r.push_back(aTrackHit[i]->f3XRec.perp()/m);
+    rec_ph.push_back(aTrackHit[i]->f3XRec.phi()/deg);
+    rec_dr.push_back(aTrackHit[i]->f3dP.perp()); // FIX ME -- using org mom dir
+    
+    region[0]=0; region[1]=0; region[2]=0;
+
+    // ep centroid
+    if(TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.)) - 180/7.)<=3 ){
+       //       &&TMath::Abs(rec_r[i]-0.75)<0.04){ 
+      if(rec_dr[i] > 0.039){
+	theta[i] = 1.10-2.99*rec_r[i]+2.05*TMath::Power(rec_r[i],2);
+	region[0]=1;
+      }
+      else{
+	theta[i] = 0.05-1.02*rec_dr[i];
+	region[1]=1;
+      }
+    }
+    // ep wings
+    else if((TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.))-180/7.)>3)
+	    &&(TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.))-180/7.)<9)){
+      theta[i] = 0.05-0.98*rec_dr[i];
+      region[2]=1;
+    } else 
+      theta[i] = -1.0;
+
+    if(EvalTrackVerbose)
+      if(region[0]==1 || region[1]==1 || region[2]==1){
+	G4cout << region[0] << region[1] << region[2] << G4endl;
+	G4cout << "Org:: " << aTrackHit[i]->f3X.perp()/m << "\t" << aTrackHit[i]->f3X.phi()/deg << "\t" << aTrackHit[i]->f3dP.perp() << "\t" << aTrackHit[i]->fTh << G4endl;
+	G4cout << "Rec:: " << rec_r[i] << "\t" << rec_ph[i] << "\t" << rec_dr[i] << "\t" << theta[i] << G4endl;
+      }
+  }
+  
+  for(G4int i=0;i<rTrackHitSize;i++)
+    aTrackHit[i]->fThRec = theta[i];
+
+  if(EvalTrackVerbose)
+    G4cout << "Leaving remollTrackReconstruct::EvalTheta() ..." << G4endl;
 }
 
 // return y = a + bx

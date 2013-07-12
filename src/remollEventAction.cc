@@ -56,18 +56,12 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 	  remollGenericDetectorHit *currentHit = 
 	    (remollGenericDetectorHit *) thiscast->GetHit(hidx);
 
-	  fIO->AddGenericDetectorHit(currentHit);
-	  //   (remollGenericDetectorHit *) thiscast->GetHit(hidx) );
-
-	  ///////////////////////////////////
-	  ////  store GEM tracks for track reconstruction
+	  ////  store GEM hits for track reconstruction
 	  if(currentHit->fDetID >= 501 && currentHit->fDetID <= 505){
-	    //  G4cout << "Det ID for hit: " <<currentHit->fDetID << G4endl;
 	    rTrack->AddHit(currentHit);
-	    // currentHit->Print();
-	  }
-	  ///////////////////////////////////
-	  
+	  } 
+	  // non-GEM hits
+	  else fIO->AddGenericDetectorHit(currentHit);
 	}
       }
       
@@ -83,27 +77,17 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
     }
   }
 
-  //////////////////////////////////////////////
   ////  reconstruct tracks, and store them into rootfile
   if(rTrack->GetTrackHitSize()>0){ 
       
-    G4cout <<"\n rTrack.size(): "<< rTrack->GetTrackHitSize() << G4endl;    
-    
-    rTrack->PrintOriginalTrackHitInfo();
-      
     rTrack->ReconstructTrack();
-      
-    rTrack->PrintReconstructedTrackHitInfo();
-      
-    // now get the recontructed track vars to store it into rootfile
-    std::vector<remollGenericDetectorHit*> rRecHit = rTrack->GetReconstructedTrack();
+
+    std::vector<remollGenericDetectorHit*> rRecHit = rTrack->GetTrack();
       
     for(G4int j=0;j<rRecHit.size();j++)
       fIO->AddGenericDetectorHit((remollGenericDetectorHit *) rRecHit[j]);
   }
   
-  //////////////////////////////////////////////
-
   delete rTrack;  
 
   // Fill tree and reset buffers

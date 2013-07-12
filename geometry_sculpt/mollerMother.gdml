@@ -6,8 +6,8 @@
     <position name="upstreamCenter" x="0" y="0" z="7000."/>
     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
     
-    <position name="GEM1Center" x="0" y="0" z="-0+18000."/> 
-    <position name="GEM2Center" x="0" y="0" z="-0+19000."/> 
+    <position name="GEM1Center" x="0" y="0" z="-0+23000."/> 
+    <position name="GEM2Center" x="0" y="0" z="-0+24000."/> 
     <position name="GEM3Center" x="0" y="0" z="-0+27000."/> 
     <position name="GEM4Center" x="0" y="0" z="-0+28000."/> 
 

@@ -34,18 +34,13 @@ public:
   void AddHit(remollGenericDetectorHit* aHit);
 
   G4int GetTrackHitSize(){return rTrackHitSize;};
-  void  PrintOriginalTrackHitInfo(){
+  void  PrintTrackInfo(){
     PrintHitInfo(aTrackHit);
-  };
-  void  PrintReconstructedTrackHitInfo(){
-    PrintHitInfo(aRecTrackHit);
   };
   void  PrintHitInfo(std::vector<remollGenericDetectorHit*> aHitVec);
   G4int ReconstructTrack();
 
-  std::vector <remollGenericDetectorHit*> GetOriginalTrack(){return aTrackHit;};
-
-  std::vector <remollGenericDetectorHit*> GetReconstructedTrack(){return aRecTrackHit;};
+  std::vector <remollGenericDetectorHit*> GetTrack(){return aTrackHit;};
 
 private:
 
@@ -57,15 +52,13 @@ private:
 
   void FillRecTrackHit();
 
+  void EvalTheta();
+
   G4float EvalTrackPos(G4float z,G4ThreeVector &ab);
   G4float EvalTrackAng(G4float z,G4ThreeVector &ab);
 
-  // original GEM wire plane tracks
+  // GEM wire plane tracks
   std::vector<remollGenericDetectorHit*> aTrackHit;
-
-  // reconstucted tracks
-  std::vector<remollGenericDetectorHit*> aRecTrackHit;
-
   G4int rTrackHitSize; // size of the aTrackHit vector
 
   std:: vector <std::vector <G4ThreeVector> > hitPos;
