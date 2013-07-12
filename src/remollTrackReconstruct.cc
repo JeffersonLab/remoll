@@ -220,7 +220,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
   if(!detXZ){
     G4cerr << "** Can't invert the matrix because determinant is ZERO **" << G4endl;
     return G4ThreeVector(-1000/m,-1000/m,0); // in m
-   }
+  }
   
   G4double matXZI[dim][dim] ={{0}};
   // now the inverse of matXZ
@@ -238,10 +238,10 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
 
   // now evaluate vecAB
   // a (vecAB[0]) is in units of mm
-  // b (vecAB[1]) is in units of 1/mm
-  G4float vecAB[dim] = {0};
+  // b (vecAB[1]) is in units of rad
+  G4double vecAB[dim] = {0};
   for(G4int imat=0;imat<dim;imat++){
-    vecAB[imat] = (G4float)(matXZI[imat][0]*vecXZ[0] + matXZI[imat][1]*vecXZ[1]);
+    vecAB[imat] = (G4double)(matXZI[imat][0]*vecXZ[0] + matXZI[imat][1]*vecXZ[1]);
   }
 
   if(TrackingVerbose>0 && EvalTrackVerbose>0){
@@ -252,7 +252,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
   if(EvalTrackVerbose)
     G4cout << "Leaving remollTrackReconstruct::EvaluateTrack(...)" << G4endl;
 
-  return G4ThreeVector(vecAB[0],vecAB[1],0); // in mm
+  return G4ThreeVector(vecAB[0]/mm,vecAB[1]/rad,0);
 }
 
 
@@ -262,20 +262,25 @@ void remollTrackReconstruct::FillRecTrackHit(){
 
     G4int copyID=aTrackHit[i]->fCopyID;
 
-    G4float tmpz = aTrackHit[i]->f3X.z()/mm; // tmpz does not have to be chained to fCopyID because FillRecTrackHit only fills the tracks for 1 GEM box at a time.
+    G4double tmpz = aTrackHit[i]->f3X.z()/mm; // tmpz does not have to be chained to fCopyID because FillRecTrackHit only fills the tracks for 1 GEM box at a time.
       
     // reconstuct positions, recTrackXZ[j] hold (a,b)
-    G4float tmpx = EvalTrackPos(tmpz,recTrackXZ[copyID]);
-    G4float tmpy = EvalTrackPos(tmpz,recTrackYZ[copyID]);
-      
+    G4double tmpx = EvalTrackPos(tmpz,recTrackXZ[copyID])/mm;
+    G4double tmpy = EvalTrackPos(tmpz,recTrackYZ[copyID])/mm;
+
+    G4double tmpxp = EvalTrackAng(tmpz,recTrackXZ[copyID])/rad;
+    G4double tmpyp = EvalTrackAng(tmpz,recTrackYZ[copyID])/rad;
+
     // if(TrackingVerbose)
     //   G4cout << "Reconstructed pos (x,y,z): (" <<tmpx << ", " << tmpy << ", "<< tmpz << ") mm" << G4endl;
 
     // all the tmp vars are in mm
     G4ThreeVector tmp3vec = G4ThreeVector(tmpx,tmpy,tmpz);
+    G4ThreeVector tmp3vecp = G4ThreeVector(tmpxp,tmpyp,0);
     
-    // store reconstructed positions
+    // store reconstructed position/angle
     aTrackHit[i]->f3XRec = tmp3vec;    
+    aTrackHit[i]->f3dPRec = tmp3vecp;
   }
   
   EvalTheta(); // eval & record theta
@@ -304,7 +309,7 @@ void remollTrackReconstruct::EvalTheta(){
   for(G4int i=0;i<rTrackHitSize;i++){
     rec_r.push_back(aTrackHit[i]->f3XRec.perp()/m);
     rec_ph.push_back(aTrackHit[i]->f3XRec.phi()/deg);
-    rec_dr.push_back(aTrackHit[i]->f3dP.perp()); // FIX ME -- using org mom dir
+    rec_dr.push_back(aTrackHit[i]->f3dPRec.perp());
     
     region[0]=0; region[1]=0; region[2]=0;
 
@@ -344,20 +349,20 @@ void remollTrackReconstruct::EvalTheta(){
 }
 
 // return y = a + bx
-G4float remollTrackReconstruct::EvalTrackPos(G4float z,G4ThreeVector &ab){
+G4double remollTrackReconstruct::EvalTrackPos(G4double z,G4ThreeVector &ab){
 
-  G4float aVal = ab.x()/mm; 
-  G4float bVal = ab.y()/mm;
+  G4double aVal = ab.x()/mm; 
+  G4double bVal = ab.y()/rad;
 
-  // z in mm
-  return aVal + bVal*z;
+  G4double yVal = aVal + bVal*z;   // z is in mm
+
+  return yVal/mm;
 }
 
-// evaluate the angles, which are just slopes
-G4float remollTrackReconstruct::EvalTrackAng(G4float z,G4ThreeVector &ab){
+// return the direction angle, which is just the slope
+G4double remollTrackReconstruct::EvalTrackAng(G4double z,G4ThreeVector &ab){
 
-  //  G4float aVal = ab.x(); 
-  G4float bVal = ab.y()/mm; // in 1/mm
+  G4double bVal = ab.y()/rad; 
 
-  return bVal;
+  return bVal/rad;
 }

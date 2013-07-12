@@ -54,8 +54,8 @@ private:
 
   void EvalTheta();
 
-  G4float EvalTrackPos(G4float z,G4ThreeVector &ab);
-  G4float EvalTrackAng(G4float z,G4ThreeVector &ab);
+  G4double EvalTrackPos(G4double z,G4ThreeVector &ab);
+  G4double EvalTrackAng(G4double z,G4ThreeVector &ab);
 
   // GEM wire plane tracks
   std::vector<remollGenericDetectorHit*> aTrackHit;
