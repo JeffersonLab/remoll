@@ -32,6 +32,8 @@
     <constant name="PCOLL2_R4_D" value ="300"/>
     <constant name="PCOLL2_THICK" value ="100.0"/>
 
+    <position name="posPCOLL2TRAP" unit="mm" x="0" y="0" z="9825-DOFFSET+PCOLL2_THICK/2.0+0.5"/> -->
+
     <constant name="PCOLL2_SCULPT_P1_X" value ="63.0"/>
     <constant name="PCOLL2_SCULPT_P1_Y" value ="10.0"/>
     <constant name="PCOLL2_SCULPT_P2_X" value ="106.5"/>
@@ -70,9 +72,6 @@
     <position name="PCOLL2_rcut11" unit="mm" x="PCOLL2_SCULPT_P4_X" y="70" z="PCOLL2_THICK/2+5"/> 
     <position name="PCOLL2_rcut12" unit="mm" x="20" y="70" z="PCOLL2_THICK/2+5"/> 
 
-    <constant name="TRAPOUTERR" value ="(PCOLL2_R4_U+PCOLL2_R3_D)/2"/>
-    <constant name="TRAPINNERR" value ="(PCOLL2_R2_D+PCOLL2_R1_U)/2"/>
-    <constant name="TRAPRADIUS" value ="TRAPOUTERR/2+TRAPINNERR/2"/>
 
     <constant name="COLL5_P1_X" value ="105.5"/>
     <constant name="COLL5_P1_Y" value ="8.5"/>
@@ -758,6 +757,8 @@
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/>
 
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="pcoll2trap" rmax1="PCOLL2_R4_U+1000" rmax2="PCOLL2_R4_D+1000" rmin1="0" rmin2="0" startphi="0" z="1.0"/>
+
     <subtraction name ="pcons_sculpt_1">
 	<first ref="pcons_1"/> 
 	<second ref="leftpcolcut"/> 
@@ -935,6 +936,12 @@
 	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> --> 
     </volume>
 
+    <volume name="logicpcoll2trap">
+	<materialref ref="VacuumColl"/>
+	<solidref ref="pcoll2trap"/> 
+	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+	<auxiliary auxtype="DetNo" auxvalue="201"/>
+    </volume>
 
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
@@ -1027,6 +1034,11 @@
       <physvol name="DScoll_6">
 	<volumeref ref="logicPDScollunion_1"/>
         <positionref ref="posPCOLL2"/>
+      </physvol>
+
+      <physvol name="pcoll2trap_phys">
+	<volumeref ref="logicpcoll2trap"/>
+        <positionref ref="posPCOLL2TRAP"/>
       </physvol>
 
    </volume>

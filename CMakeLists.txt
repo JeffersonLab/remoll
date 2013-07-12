@@ -127,6 +127,7 @@ set(REMOLL_SCRIPTS
     vis/vis.mac
     vis/X.mac
     macros/runexample.mac
+    macros/gui.mac
     rootlogon.C
   )
 

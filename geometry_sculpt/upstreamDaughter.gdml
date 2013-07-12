@@ -34,6 +34,8 @@
     <constant name="TRAPINNERR" value ="(COLL2_R2_D+COLL2_R1_U)/2"/>
     <constant name="TRAPRADIUS" value ="TRAPOUTERR/2+TRAPINNERR/2"/>
 
+    <position name="posCOLL2TRAP" unit="mm" x="0" y="0" z="5925-UOFFSET+COLL2_THICK/2.0+0.5"/> 
+
     <constant name="COIL_ANGLE" value="0.14754"/>
     <constant name="COIL_STRAIGHT_L" value="1840.952"/>
     <constant name="COIL_STRAIGHT_H" value="57.341"/>
@@ -121,6 +123,8 @@
           rmin2="COLL2_R2_D+DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" startphi="-SEPTANT/4" z="COLL2_THICK+DELTAT*2"/>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>
+
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="coll2trap" rmax1="COLL2_R4_U+1000" rmax2="COLL2_R4_D+1000" rmin1="0.0" rmin2="0.0" startphi="0" z="1"/>
 
 
     <box lunit="mm" name="COIL_BOX"  x="XS_W1+100." y="COIL_STRAIGHT_L+100." z="COIL_STRAIGHT_L+100."/>
@@ -260,6 +264,13 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
     </volume>
 
+   <volume name="logiccoll2trap">
+      <materialref ref="Tungsten"/>
+      <solidref ref="coll2trap"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="200"/>
+    </volume>
+
 
    <volume name="logicUScoilunion_0">
       <materialref ref="Copper"/>
@@ -315,6 +326,11 @@
       <physvol name="UScoll_1">
         <volumeref ref="logicUScollunion_1"/>
         <positionref ref="posCOLL2"/>
+      </physvol>
+
+      <physvol name="coll2trap_phys">
+        <volumeref ref="logiccoll2trap"/>
+        <positionref ref="posCOLL2TRAP"/>
       </physvol>
 
       <physvol name="UScoil_0">

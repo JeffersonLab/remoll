@@ -110,80 +110,89 @@ int main(int argc, char** argv){
 
     // New units
 
-G4UIsession* session = 0;
+    G4UIsession* session = 0;
 
-//----------------
-// Visualization:
-//----------------
+    //----------------
+    // Visualization:
+    //----------------
 
-if (argc==1)   // Define UI session for interactive mode.
-{
+    if (argc==1)   // Define UI session for interactive mode.
+    {
 
-  // G4UIterminal is a (dumb) terminal.
+	// G4UIterminal is a (dumb) terminal.
 
 #if defined(G4UI_USE_XM)
-  session = new G4UIXm(argc,argv);
+	session = new G4UIXm(argc,argv);
 #elif defined(G4UI_USE_WIN32)
-  session = new G4UIWin32();
+	session = new G4UIWin32();
 #elif defined(G4UI_USE_QT)
-  session = new G4UIQt(argc,argv);
+	session = new G4UIQt(argc,argv);
 #elif defined(G4UI_USE_TCSH)
-  session = new G4UIterminal(new G4UItcsh);
+	session = new G4UIterminal(new G4UItcsh);
 #else
-  session = new G4UIterminal();
+	session = new G4UIterminal();
 #endif
 
-}
+    }
+
+    remollRunData *rundata = remollRun::GetRun()->GetData();
 
 #ifdef G4VIS_USE
-// Visualization, if you choose to have it!
-//
-// Simple graded message scheme - give first letter or a digit:
-//  0) quiet,         // Nothing is printed.
-//  1) startup,       // Startup and endup messages are printed...
-//  2) errors,        // ...and errors...
-//  3) warnings,      // ...and warnings...
-//  4) confirmations, // ...and confirming messages...
-//  5) parameters,    // ...and parameters of scenes and views...
-//  6) all            // ...and everything available.
+    // Visualization, if you choose to have it!
+    //
+    // Simple graded message scheme - give first letter or a digit:
+    //  0) quiet,         // Nothing is printed.
+    //  1) startup,       // Startup and endup messages are printed...
+    //  2) errors,        // ...and errors...
+    //  3) warnings,      // ...and warnings...
+    //  4) confirmations, // ...and confirming messages...
+    //  5) parameters,    // ...and parameters of scenes and views...
+    //  6) all            // ...and everything available.
 
-//this is the initializing the run manager?? Right?
-G4VisManager* visManager = new G4VisExecutive;
-//visManager -> SetVerboseLevel (1);
-visManager ->Initialize();
+    //this is the initializing the run manager?? Right?
+    G4VisManager* visManager = new G4VisExecutive;
+    //visManager -> SetVerboseLevel (1);
+    visManager ->Initialize();
 #endif
 
-//get the pointer to the User Interface manager
-G4UImanager * UI = G4UImanager::GetUIpointer();
+    //get the pointer to the User Interface manager
+    G4UImanager * UI = G4UImanager::GetUIpointer();
 
-if (session)   // Define UI session for interactive mode.
-{
-  // G4UIterminal is a (dumb) terminal.
-  //UI->ApplyCommand("/control/execute myVis.mac");
+    if (session)   // Define UI session for interactive mode.
+    {
+	// G4UIterminal is a (dumb) terminal.
+	//UI->ApplyCommand("/control/execute myVis.mac");
 
 #if defined(G4UI_USE_XM) || defined(G4UI_USE_WIN32) || defined(G4UI_USE_QT)
-  // Customize the G4UIXm,Win32 menubar with a macro file :
-  UI->ApplyCommand("/control/execute gui.mac");
+	// Customize the G4UIXm,Win32 menubar with a macro file :
+	UI->ApplyCommand("/control/execute macros/gui.mac");
 #endif
 
-  session->SessionStart();
-  delete session;
-}
-else           // Batch mode - not using the GUI
-{
+	session->SessionStart();
+	delete session;
+    }
+    else           // Batch mode - not using the GUI
+    {
 #ifdef G4VIS_USE
-  visManager->SetVerboseLevel("quiet");
+	visManager->SetVerboseLevel("quiet");
 #endif
-  //these line will execute a macro without the GUI
-  //in GEANT4 a macro is executed when it is passed to the command, /control/execute
-  G4String command = "/control/execute ";
-  G4String fileName = argv[1];
-  UI->ApplyCommand(command+fileName);
-}
+	//these line will execute a macro without the GUI
+	//in GEANT4 a macro is executed when it is passed to the command, /control/execute
+	G4String command = "/control/execute ";
+	G4String fileName = argv[1];
 
-//if one used the GUI then delete it
+	/* Copy contents of macro into buffer to be written out
+	 * into ROOT file
+	 * */
+	rundata->SetMacroFile(argv[1]);
+
+
+	UI->ApplyCommand(command+fileName);
+    }
+
+    //if one used the GUI then delete it
 #ifdef G4VIS_USE
-delete visManager;
+    delete visManager;
 #endif
 
     // Initialize Run manager
