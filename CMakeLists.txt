@@ -28,12 +28,14 @@ ROOT_GENERATE_DICTIONARY(
 #----------------------------------------------------------------------------
 # Find Boost libraries, in particular iostreams
 
-find_package(Boost REQUIRED)
-find_package(Boost COMPONENTS iostreams)
-include_directories(${Boost_INCLUDE_DIRS})
-link_directories(${Boost_LIBRARY_DIR})
-if(Boost_IOSTREAMS_FOUND)
-    ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+if(USE_BOOST)
+    find_package(Boost COMPONENTS iostreams)
+    include_directories(${Boost_INCLUDE_DIRS})
+    link_directories(${Boost_LIBRARY_DIR})
+    ADD_DEFINITIONS(-D__USE_BOOST)
+    if(Boost_IOSTREAMS_FOUND)
+        ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+    endif()
 endif()
 
 
