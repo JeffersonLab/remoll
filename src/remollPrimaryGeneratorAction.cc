@@ -16,6 +16,7 @@
 #include "remollGenpElastic.hh"
 #include "remollGenpInelastic.hh"
 #include "remollGenPion.hh"
+#include "remollGenBeam.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
   G4int n_particle = 1;
@@ -66,6 +67,10 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
 	fEventGen = new remollGenPion();
     }
 
+    if( genname == "beam" ){
+	fEventGen = new remollGenBeam();
+    }
+
     if( !fEventGen ){
 	G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR generator " << genname << " invalid" << G4endl;
 	exit(1);
@@ -82,7 +87,7 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 
   /*  Generate event, set IO data */
 
-  remollEvent *thisev;
+  remollEvent *thisev = NULL;
   if( fEventGen ){  // Specified our own generator
       thisev = fEventGen->GenerateEvent();
       for( unsigned int pidx = 0; pidx < thisev->fPartType.size(); pidx++ ){
@@ -116,6 +121,9 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
       fParticleGun->GeneratePrimaryVertex(anEvent);
   }
 
+  if( thisev != NULL ){
+      delete thisev;
+  }
 }
 
 G4ParticleGun* remollPrimaryGeneratorAction::GetParticleGun() {

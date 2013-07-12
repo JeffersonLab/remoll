@@ -5,6 +5,7 @@
 #include "remollEvent.hh"
 #include "remollVertex.hh"
 #include "remollBeamTarget.hh"
+#include "remollMultScatt.hh"
 
 #include "G4Material.hh"
 #include "G4VPhysicalVolume.hh"
@@ -27,8 +28,6 @@ remollGenpElastic::remollGenpElastic(){
 
     fApplyMultScatt = true;
     fBeamTarg = remollBeamTarget::GetBeamTarget();
-
-    fEnableIntRad = true;
 }
 
 remollGenpElastic::~remollGenpElastic(){
@@ -45,13 +44,19 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargVols();
 
-    std::vector<G4VPhysicalVolume *>::iterator it = targVols.begin();
-    while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" 
-	    && it != targVols.end() ){ it++; }
+    bool bypass_target = false;
 
-    if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
-	G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR could not find target" << G4endl;
-	exit(1);
+    std::vector<G4VPhysicalVolume *>::iterator it = targVols.begin();
+    if( targVols.size() > 0 ){
+	while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" 
+		&& it != targVols.end() ){ it++; }
+
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
+	    G4cerr << __FILE__ << " line " << __LINE__ << ": WARNING could not find target" << G4endl;
+	    bypass_target = true;
+	}     
+    } else {
+	bypass_target = true;
     }
 
     double bremcut = fBeamTarg->fEcut;
@@ -62,10 +67,12 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // About ~1.5%
     double int_bt = 0.75*(alpha/pi)*( log( effQ2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
 
-    double bt = (4.0/3.0)*fBeamTarg->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen();
-
-    if( fEnableIntRad ){
-	    bt += (4.0/3.0)*int_bt;
+    double bt;
+    if( !bypass_target ){
+	bt = (4.0/3.0)*(fBeamTarg->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
+		+ int_bt);
+    } else {
+	bt = 0.0;
     }
 
     double prob, prob_sample, sample, eloss, value;
@@ -206,7 +213,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double gep = gd;
     double gmp = 2.79*gd;
 
-    double gen =  1.91*gd/(1.0+5.6*tau); // galster
+    double gen =  1.91*gd*tau/(1.0+5.6*tau); // galster
     double gmn = -1.91*gd;
 
     double sigma_mott = hbarc*hbarc*pow(alpha*cos(th/2.0), 2.0)/pow(2.0*beamE*sin(th/2.0)*sin(th/2.0), 2.0);
@@ -217,9 +224,24 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double V = 2.0*pi*(cthmin - cthmax)*samp_fact;
 
+    // Suppress too low angles from being generated
+    // If we're in the multiple-scattering regime
+    // the cross sections are senseless.  We'll define this 
+    // as anything less than three sigma of the characteristic
+    // width
+    
+    if( th < 3.0*fBeamTarg->fMS->GetPDGTh() ){
+	sigma = 0.0;
+    }
+
     //  Multiply by Z because we have Z protons 
     //  value for uneven weighting
-    evt->SetEffCrossSection(sigma*V*vert->GetMaterial()->GetZ()*value);
+
+    double thisZ;
+
+    thisZ = vert->GetMaterial()->GetZ();
+
+    evt->SetEffCrossSection(sigma*V*thisZ*value);
 
     if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << 
@@ -227,17 +249,14 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	exit(1);
     }
 
-    G4double APV_base = GF*q2/(4.0*sqrt(2.0)*pi*alpha);
-
-    G4double rhop = 0.9878;
-    G4double kp   = 1.0029;
+    G4double APV_base = -GF*q2/(4.0*sqrt(2.0)*pi*alpha);
 
     G4double eps = pow(1.0 + 2.0*(1.0+tau)*tan(th/2.0)*tan(th/2.0), -1.0);
 
     G4double apvffnum = eps*gep*gen + tau*gmp*gmn;
     G4double apvffden = eps*gep*gep  + tau*gmp*gmp;
 
-    G4double APV = APV_base*rhop*( (1.0 - 4*kp*sin2thW_ms) - apvffnum/apvffden);
+    G4double APV = APV_base*(QWp - apvffnum/apvffden);
 
     evt->SetAsymmetry(APV);
 
@@ -247,30 +266,28 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // REradiate////////////////////////////////////////////////////////////////////////////
     // We're going to use the new kinematics for this guy
 
-    if( fEnableIntRad ){
-	int_bt = (alpha/pi)*( log( q2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
-	Ekin = ef - electron_mass_c2;;
-	double env, ref;
+    int_bt = (alpha/pi)*( log( q2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
+    Ekin = ef - electron_mass_c2;;
+    double env, ref;
 
-	prob = 1.- pow(bremcut/Ekin, int_bt) - int_bt/(int_bt+1.)*(1.- pow(bremcut/Ekin,int_bt+1.))
-	    + 0.75*int_bt/(2.+int_bt)*(1.- pow(bremcut/Ekin,int_bt+2.));
-	prob = prob/(1.- int_bt*Euler + int_bt*int_bt/2.*(Euler*Euler+pi*pi/6.)); /* Gamma function */
-	prob_sample = G4UniformRand();        /* Random sampling */
+    prob = 1.- pow(bremcut/Ekin, int_bt) - int_bt/(int_bt+1.)*(1.- pow(bremcut/Ekin,int_bt+1.))
+	+ 0.75*int_bt/(2.+int_bt)*(1.- pow(bremcut/Ekin,int_bt+2.));
+    prob = prob/(1.- int_bt*Euler + int_bt*int_bt/2.*(Euler*Euler+pi*pi/6.)); /* Gamma function */
+    prob_sample = G4UniformRand();        /* Random sampling */
 
-	if (prob_sample <= prob) {//Bremsstrahlung has taken place!
-	    do {
-		sample = G4UniformRand();
-		eloss = fBeamTarg->fEcut*pow(Ekin/fBeamTarg->fEcut,sample);
-		env = 1./eloss;
-		value = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,bt);
+    if (prob_sample <= prob) {//Bremsstrahlung has taken place!
+	do {
+	    sample = G4UniformRand();
+	    eloss = fBeamTarg->fEcut*pow(Ekin/fBeamTarg->fEcut,sample);
+	    env = 1./eloss;
+	    value = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,bt);
 
-		sample = G4UniformRand();
-		ref = value/env;
-	    } while (sample > ref);
+	    sample = G4UniformRand();
+	    ref = value/env;
+	} while (sample > ref);
 
-	    ef = Ekin-eloss+electron_mass_c2;
-	    assert( ef > electron_mass_c2 );
-	}
+	ef = Ekin-eloss+electron_mass_c2;
+	assert( ef > electron_mass_c2 );
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////

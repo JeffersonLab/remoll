@@ -33,8 +33,10 @@ remollIO::remollIO(){
 }
 
 remollIO::~remollIO(){
-    delete fTree;
+    if( fTree ){ delete fTree; }
     fTree = NULL;
+    if( fFile ){ delete fFile; }
+    fFile = NULL;
 }
 
 void remollIO::SetFilename(G4String fn){
@@ -43,6 +45,13 @@ void remollIO::SetFilename(G4String fn){
 }
 
 void remollIO::InitializeTree(){
+    if( fFile ){
+	fFile->Close();
+	delete fFile;
+    }
+
+    fFile = new TFile(fFilename, "RECREATE");
+
     if( fTree ){ delete fTree; }
 
     fTree = new TTree("T", "Geant4 Moller Simulation");
@@ -131,16 +140,31 @@ void remollIO::Flush(){
 }
 
 void remollIO::WriteTree(){
-    fFile = new TFile(fFilename, "RECREATE");
+    assert( fFile );
+    assert( fTree );
+
+    if( !fFile->IsOpen() ){
+	G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << ": TFile not open" << G4endl;
+	exit(1);
+    }
+
+    G4cout << "Writing output to " << fFile->GetName() << "... ";
+
     fFile->cd();
 
     fTree->Write("T", TObject::kOverwrite);
     remollRun::GetRun()->GetData()->Write("run_data", TObject::kOverwrite); 
 
+    fTree->ResetBranchAddresses();
+    delete fTree;
+    fTree = NULL;
+
     fFile->Close();
 
     delete fFile;
     fFile = NULL;
+
+    G4cout << "written" << G4endl;
 
     return;
 }

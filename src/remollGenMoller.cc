@@ -47,19 +47,14 @@ void remollGenMoller::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	exit(1);
     }
 
-    //  PDG values, gives effective sin2thW of ~0.2383
-    G4double rho_e    = 1.0006;
-    G4double khat_e   = 1.0299;
-    G4double lambda_e = -0.0002;
-
-    G4double QeW = 2.0*( rho_e*(0.5 - 2.0*khat_e*sin2thW_ms) + lambda_e );
-
-    G4double APV = electron_mass_c2*beamE*GF*4.0*sin(thcom)*sin(thcom)*QeW/(sqrt(2.0)*pi*alpha*pow(3.0+cos(thcom)*cos(thcom),2.0));
+    G4double APV = electron_mass_c2*beamE*GF*4.0*sin(thcom)*sin(thcom)*QWe/(sqrt(2.0)*pi*alpha*pow(3.0+cos(thcom)*cos(thcom),2.0));
 
     evt->SetAsymmetry(APV);
     evt->SetThCoM(thcom);
 
-    evt->SetQ2( 2.0*e_com*e_com*(1.0-cos(thcom)) );
+    //evt->SetQ2( 2.0*e_com*e_com*(1.0-cos(thcom)) );
+    // Q2 is not actually well defined
+    evt->SetQ2( 0.0 );
 
     double pperp = e_com*sin(thcom);
     double ppar  = e_com*cos(thcom);

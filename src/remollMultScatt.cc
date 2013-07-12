@@ -76,9 +76,9 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
     fp = p;
 
     for( i = 0; i < nmat; i++ ){
-	assert( !isnan(t[i]) && !isinf(t[i]) &&
-		!isnan(A[i]) && !isinf(A[i]) &&
-		!isnan(Z[i]) && !isinf(Z[i]) );
+	assert( !std::isnan(t[i]) && !std::isinf(t[i]) &&
+		!std::isnan(A[i]) && !std::isinf(A[i]) &&
+		!std::isnan(Z[i]) && !std::isinf(Z[i]) );
 
 	ft[i] = t[i];
 	fA[i] = A[i];
@@ -134,7 +134,7 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
     double b = log( bsum );
     assert( b > 1.0 );
 
-    if( isnan(b) || isinf(b) || b <= 0.0 ){
+    if( std::isnan(b) || std::isinf(b) || b <= 0.0 ){
 	fprintf(stderr, "%s line %d: ERROR  sum of b is %f\n", __FILE__, __LINE__, bsum );
 	exit(1);
     }
@@ -245,12 +245,12 @@ double remollMultScatt::J0(double x) {
 	result  = sqrt(q11/ax)*(cos(xx)*result1-z*sin(xx)*result2);
     }
 
-    if( isnan(result) || isinf(result) ){
+    if( std::isnan(result) || std::isinf(result) ){
 	fprintf(stderr, "ERROR %s line %d: %s failed\n", __FILE__, __LINE__, __FUNCTION__ );
 	fprintf(stderr, "Tried to find J0(x) for x = %g\n", x );
     }
 
-    assert( !isnan(result) && !isinf(result) );
+    assert( !std::isnan(result) && !std::isinf(result) );
 
     return result;
 }
@@ -310,12 +310,12 @@ double remollMultScatt::fn_integrand( double u, double th, int n ){
 
     if( !(u > 0.0) ) return 0.0;
 
-    assert( !isnan(log(u)) && !isinf(log(u)) ); 
-    assert( !isnan(th) && !isinf(th) ); 
+    assert( !std::isnan(log(u)) && !std::isinf(log(u)) ); 
+    assert( !std::isnan(th) && !std::isinf(th) ); 
 
     double retval = u*J0(u*th)*exp(-0.25*u*u)*pow(0.25*u*u*log(0.25*u*u),n);
 
-    assert( !isnan(retval) );
+    assert( !std::isnan(retval) );
     return retval;
 }
 
@@ -323,7 +323,7 @@ double remollMultScatt::intsimpson_fn( double th, int n ){
     if( n >= 5 ) {fprintf(stderr, "%s %s: %d:  Warning, integrating over integrand terms that are of too large n\n", 
 	    __FILE__, __FUNCTION__, __LINE__ ); }
 
-    assert( !isnan(th) && !isinf(th) );
+    assert( !std::isnan(th) && !std::isinf(th) );
 
     /* Simpson's method of integration.
        We will choose the integration step
@@ -367,7 +367,7 @@ double remollMultScatt::intsimpson_fn( double th, int n ){
 	fact *= i;
     }
 
-    if( isnan( sum ) || isnan(fact) ){
+    if( std::isnan( sum ) || std::isnan(fact) ){
 	fprintf(stderr, "%s line %d:  %s failed\n", __FILE__, __LINE__, __FUNCTION__ );
 	fprintf(stderr, "sum  = %g\nfact = %g\n", sum, fact );
     }
@@ -397,7 +397,7 @@ double remollMultScatt::CalcMSDistPlane( double theta){
 
     double th = fabs(theta)/sqrt(fchi2*fB);
 
-    if( isnan(th) ){
+    if( std::isnan(th) ){
 	fprintf(stderr, "%s line %d: %s failed\n", __FILE__, __LINE__, __FUNCTION__ );
 	fprintf(stderr, "theta = %f\nfchi2 = %f\nfB = %f\n\n", theta, fchi2, fB);
     }
@@ -412,12 +412,12 @@ double remollMultScatt::CalcMSDistPlane( double theta){
 
     double retval = f0 + f1/fB + f2/pow(fB,2.0) + f3/pow(fB,3.0);
 
-    if( isnan(retval) ){
+    if( std::isnan(retval) ){
 	fprintf(stderr, "%s line %d: %s failed\n", __FILE__, __LINE__, __FUNCTION__ );
 	fprintf(stderr, "f0 = %f\nf1 = %f\nf2 = %f\nf3 = %f\n\n", f0, f1, f2, f3);
     }
 
-    assert( !isnan(retval) );
+    assert( !std::isnan(retval) );
     return retval;
 }
 
@@ -470,7 +470,7 @@ double remollMultScatt::GenerateMSPlane(){
 	}
 	while( fabs(trialv) > 2.0 );
 
-	assert( !isnan(trialv*fth) );
+	assert( !std::isnan(trialv*fth) );
 	return trialv*fth;
     } else {
 	//  Now we have our long tail
@@ -493,7 +493,7 @@ double remollMultScatt::GenerateMSPlane(){
 	    trialv *= -1.0;
 	}
 
-	assert( !isnan(trialv) );
+	assert( !std::isnan(trialv) );
 	return trialv;
     }
 
@@ -534,13 +534,12 @@ double remollMultScatt::GenerateMS(){
 
     // Weight by sin(th)
     double thisth = GenerateMSPlane();
-    while( sin(thisth) < G4UniformRand()*sin(thmax) ){
+    while( sin(thisth) < drand48()*sin(thmax) ){
 	thisth = GenerateMSPlane();
     }
 
     return thisth;
 }
-
 
 double remollMultScatt::GenerateMS( double p, int nmat, double t[], double A[], double Z[] ){
     /*
