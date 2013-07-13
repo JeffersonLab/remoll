@@ -5,6 +5,7 @@
 #include "remollEvent.hh"
 #include "remollVertex.hh"
 #include "remollBeamTarget.hh"
+#include "remollMultScatt.hh"
 
 #include "G4Material.hh"
 #include "G4VPhysicalVolume.hh"
@@ -222,6 +223,16 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double sigma = sigma_mott*(ef/beamE)*(ffpart1 + ffpart2);
 
     double V = 2.0*pi*(cthmin - cthmax)*samp_fact;
+
+    // Suppress too low angles from being generated
+    // If we're in the multiple-scattering regime
+    // the cross sections are senseless.  We'll define this 
+    // as anything less than three sigma of the characteristic
+    // width
+    
+    if( th < 3.0*fBeamTarg->fMS->GetPDGTh() ){
+	sigma = 0.0;
+    }
 
     //  Multiply by Z because we have Z protons 
     //  value for uneven weighting

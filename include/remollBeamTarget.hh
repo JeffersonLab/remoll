@@ -55,11 +55,11 @@ class remollBeamTarget {
 
 	std::vector <G4VPhysicalVolume *> GetTargVols(){ return fTargVols; }
 
+	remollMultScatt *fMS;
+
     private:
 	std::vector <G4VPhysicalVolume *> fTargVols;
 	G4VPhysicalVolume *fMother;
-
-	remollMultScatt *fMS;
 
 	void UpdateInfo();
 
