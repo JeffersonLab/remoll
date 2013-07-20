@@ -11,8 +11,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
 
 # Update header file
-add_custom_command( OUTPUT  ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh always COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} )
-add_custom_target( gitinfo ALL DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh )
+add_custom_target( gitinfo ALL COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" )
 
 
 # this is to ensure we find the header we need
@@ -24,6 +23,20 @@ ROOT_GENERATE_DICTIONARY(
     "include/remollTextFile.hh"
     LINKDEF "include/remollLinkDef.h"  # ROOT linkDef file
 )
+
+#----------------------------------------------------------------------------
+# Find Boost libraries, in particular iostreams
+
+if(USE_BOOST)
+    find_package(Boost COMPONENTS iostreams)
+    include_directories(${Boost_INCLUDE_DIRS})
+    link_directories(${Boost_LIBRARY_DIR})
+    ADD_DEFINITIONS(-D__USE_BOOST)
+    if(Boost_IOSTREAMS_FOUND)
+        ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+    endif()
+endif()
+
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -50,8 +63,6 @@ set(CMAKE_CXX_FLAGS "-g -Wall -pg")
 #----------------------------------------------------------------------------
 # Generate dictionaries as well (so we can write objects to ROOT files
 
-
-
 include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 
@@ -70,8 +81,8 @@ file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_D
 #
 add_executable(remoll remoll.cc ${sources} ${headers} remollDict.cxx)
 add_library(remollroot SHARED ${libsources} ${libheaders} remollDict.cxx)
-target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} )
-target_link_libraries(remollroot ${ROOT_LIBRARIES} )
+target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -113,6 +124,7 @@ set(REMOLL_SCRIPTS
     vis/vis.mac
     vis/X.mac
     macros/runexample.mac
+    macros/gui.mac
     rootlogon.C
   )
 

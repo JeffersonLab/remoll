@@ -25,6 +25,7 @@
 */
 
 class G4VPhysicalVolume;
+class G4Material;
 class remollMultScatt;
 
 class remollBeamTarget {
@@ -54,17 +55,21 @@ class remollBeamTarget {
 
 	std::vector <G4VPhysicalVolume *> GetTargVols(){ return fTargVols; }
 
+	remollMultScatt *fMS;
+
     private:
 	std::vector <G4VPhysicalVolume *> fTargVols;
 	G4VPhysicalVolume *fMother;
-
-	remollMultScatt *fMS;
 
 	void UpdateInfo();
 
 
 	G4double fTotalLength;
 	G4double fLH2Length, fZpos, fLH2pos;
+
+	G4Material *fDefaultMat;
+
+	bool fAlreadyWarned;
 
 	
     public:

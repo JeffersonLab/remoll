@@ -10,6 +10,12 @@ remollGenericDetectorHit::remollGenericDetectorHit(G4int det, G4int copy){
     f3P = G4ThreeVector(-1e9, -1e9, -1e9);
     f3V = G4ThreeVector(-1e9, -1e9, -1e9);
 
+    f3XRec = G4ThreeVector(-1e9, -1e9, -1e9);
+    f3dPRec = G4ThreeVector(-1e9, -1e9, -1e9);
+    fThRec = -1.0;
+
+    f3dP = G4ThreeVector(-1e9, -1e9, -1e9); // direction
+
     fP  = -1.0;
     fE  = -1.0;
     fM  = -1.0;
@@ -33,6 +39,12 @@ remollGenericDetectorHit::remollGenericDetectorHit(const remollGenericDetectorHi
     f3P     = right.f3P;
     f3V     = right.f3V;
 
+    f3XRec  = right.f3XRec;
+    f3dPRec = right.f3dPRec;
+    fThRec  = right.fThRec;
+
+    f3dP     = right.f3dP; //direction
+
     fP      = right.fP;
     fE      = right.fE;
     fM      = right.fM;
@@ -55,9 +67,9 @@ G4int remollGenericDetectorHit::operator==(const remollGenericDetectorHit &right
 
 void remollGenericDetectorHit::Print(){
 
-  G4cout << "  GEM[" << fDetID << "] : WirePlane[" << fCopyID 
-	 << "] --- local (x,y,z) [mm] " 
- 	 << f3X.x()/mm << ", " 
- 	 << f3X.y()/mm << ", " 
- 	 << f3X.z()/mm << G4endl;
+  G4cout << "  det[" << fDetID << "] : Hit[" << fCopyID 
+         << "] --- global (x,y,z) [mm] " 
+         << f3X.x()/mm << ", " 
+         << f3X.y()/mm << ", " 
+         << f3X.z()/mm << G4endl;
 }

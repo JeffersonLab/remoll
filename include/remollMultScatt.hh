@@ -89,6 +89,8 @@ class remollMultScatt {
 	double GenerateMSPlane( double p, double t, double A, double Z );
 	double GenerateMSPlane( double p, int nmat, double t[], double A[], double Z[] );
 
+	double GetPDGTh(){ return fthpdg; }
+
     private:
 
 	bool   fInit, fReturnZero;

@@ -13,16 +13,15 @@
 //
 //   -- rupesh, 28 Nov, 2012
 //
-//  -- adopted from  track.C in moller/tracking
-//  -- rupesh, Jan4, 2012
+
+#include "CLHEP/Random/RandFlat.h"
+#include "TMath.h"
 
 #include "remollTrackReconstruct.hh"
 #include "remollGenericDetectorHit.hh"
 
 #define TrackingVerbose 0
 #define EvalTrackVerbose 0
-
-//#include "RootAnalysis.hh"
 
 remollTrackReconstruct::remollTrackReconstruct(){
   ClearTrack();
@@ -38,27 +37,20 @@ void remollTrackReconstruct::AddHit(remollGenericDetectorHit* aHit){
       aHit->fCopyID += 1;
   }
 
-  // original track vector
   aTrackHit.push_back(aHit);
-
   rTrackHitSize = aTrackHit.size();
-
-  // reconstructed track vector
-  aRecTrackHit.resize(rTrackHitSize);
 };
 
 void remollTrackReconstruct::ClearTrack(){
 
   aTrackHit.clear(); // GEM wire plane track hits
-  rTrackHitSize = 0;
+  rTrackHitSize=0;
 
   hitPos.clear();
   GEMRes.clear();
 
   recTrackXZ.clear(); // reconstructed track vector, holds (a,b) of chisq minimization
   recTrackYZ.clear(); // reconstructed track vector, holds (a,b) of chisq minimization
-
-  aRecTrackHit.clear(); // reconstructed GEM wire plane tracks
 };
 
 
@@ -80,7 +72,6 @@ G4int remollTrackReconstruct::ReconstructTrack(){
   // return if no tracks
   if(rTrackHitSize==0) return 0;
 
-  //  G4float dataXZ[5][2] = {{2,1},{1,2},{2,3},{1,4},{3,5}};
   G4int copyID=0;
   G4int maxCopyID=0;
 
@@ -93,7 +84,14 @@ G4int remollTrackReconstruct::ReconstructTrack(){
     if(copyID>maxCopyID) maxCopyID = copyID;
 
     hitPos[copyID].push_back(aTrackHit[i]->f3X);
-    GEMRes[copyID].push_back(G4ThreeVector(0.5*mm,0.5*mm,0));
+    
+    G4double GEMRES=0.5; // 500 um GEM res
+    G4double GEMRES_x = CLHEP::RandFlat::shoot(GEMRES); // 0 to GEMRES
+    G4double GEMRES_y = CLHEP::RandFlat::shoot(GEMRES);// 0 to GEMRES
+
+    //    G4cout << "GEMRES:: " << GEMRES_x << "\t" << GEMRES_y << G4endl;
+
+    GEMRes[copyID].push_back(G4ThreeVector(GEMRES_x*mm,GEMRES_y*mm,0));
   }
 
   if(TrackingVerbose)
@@ -104,15 +102,16 @@ G4int remollTrackReconstruct::ReconstructTrack(){
   }
 
   if(TrackingVerbose){
-    G4cout << "\tXpos(mm)\tYpos(mm)\tZpos(mm)\tGEMXZres(mm)\tGEMYZres(mm)" << G4endl;
+    G4cout << "\nXpos(mm)\tYpos(mm)\tZpos(mm)\tGEMXZres(mm)\tGEMYZres(mm)" << G4endl;
     for(size_t i=0;i<=maxCopyID;i++){
       for(size_t j=0;j<hitPos[i].size();j++){
 	G4cout << hitPos[i][j].x()/mm <<"\t" << hitPos[i][j].y()/mm <<"\t" << hitPos[i][j].z()/mm << "\t" << GEMRes[i][j].x()/mm << "\t" << GEMRes[i][j].y()/mm << G4endl;
       }
     }
+    G4cout << " " <<G4endl;
   }
   
-  FillRecTrackHit();
+  FillRecTrackHit(); // fills x,y,x
   
   if(TrackingVerbose)
     G4cout << "\n***** Leaving remollTrackReconstruct::ReconstructTrack() *****\n" << G4endl;
@@ -125,10 +124,11 @@ G4int remollTrackReconstruct::ReconstructTrack(){
 //     EvaluateTrack(YVec,ZVec,YResVec,ZResVec)
 G4int remollTrackReconstruct::EvaluateTrack(std::vector <G4ThreeVector> Pos, 
 					    std::vector <G4ThreeVector> Res){
-  std::vector <G4double> rPosX;
-  std::vector <G4double> rPosY;
-  std::vector <G4double> rPosZ;
-  std::vector <G4double> rGEMRes;
+  std::vector <G4double> rPosX;	  
+  std::vector <G4double> rPosY;	  
+  std::vector <G4double> rPosZ;	  
+  std::vector <G4double> rGEMResX;
+  std::vector <G4double> rGEMResY;
   
   for(size_t i=0;i<Pos.size();i++){
     
@@ -136,16 +136,17 @@ G4int remollTrackReconstruct::EvaluateTrack(std::vector <G4ThreeVector> Pos,
     rPosY.push_back(Pos[i].y()/mm);
     rPosZ.push_back(Pos[i].z()/mm);
     
-    rGEMRes.push_back(Res[i].x()/mm);
+    rGEMResX.push_back(Res[i].x()/mm);
+    rGEMResY.push_back(Res[i].y()/mm);
     
-    //    G4cout << rPosX[i] <<"\t" << rPosY[i] <<"\t" << rPosZ[i] << "\t" << rGEMRes[i] << G4endl;
+    //    G4cout << rPosX[i] <<"\t" << rPosY[i] <<"\t" << rPosZ[i] << "\t" << rGEMResX[i] << "\t" << rGEMResY[i] << G4endl;
   }
-  
-  // theta is defined along the XZ plane, see remollWirePlaneSD.cc
+ 
+  // theta is defined along the XZ plane
   // phi is defined along the YZ plane
   
-  recTrackXZ.push_back((G4ThreeVector)EvaluateTrack(rPosX,rPosZ,rGEMRes));// evaluate the track variables (a,b) along XZ plane
-  recTrackYZ.push_back((G4ThreeVector)EvaluateTrack(rPosY,rPosZ,rGEMRes));// evaluate the track variables (a,b) along YZ plane
+  recTrackXZ.push_back((G4ThreeVector)EvaluateTrack(rPosX,rPosZ,rGEMResX));// evaluate the track variables (a,b) along XZ plane
+  recTrackYZ.push_back((G4ThreeVector)EvaluateTrack(rPosY,rPosZ,rGEMResY));// evaluate the track variables (a,b) along YZ plane
   
   return 1;
 }
@@ -172,19 +173,23 @@ G4int remollTrackReconstruct::EvaluateTrack(std::vector <G4ThreeVector> Pos,
   // x,y,res are all in mm, see above
 G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX,
 						    std::vector <G4double> rPosZ, 
-						    std::vector <G4double> rGEMRes){
-  if(EvalTrackVerbose)
+						    std::vector <G4double> rGEMResX){
+  if(EvalTrackVerbose){
     G4cout << "Entering remollTrackReconstruct::EvaluateTrack(...)" << G4endl;
+
+    for(G4int iPts=0;iPts<rPosX.size();iPts++)
+      G4cout << rPosX[iPts] <<"\t" << rPosZ[iPts] << "\t" << rGEMResX[iPts] << G4endl;
+  }
 
   const G4int dim=2;  
   G4double matXZ[dim][dim] = {{0}};
 
   // fill the matrix as
   for(G4int iPts=0;iPts<rPosX.size();iPts++){
-    matXZ[0][0] += 1/pow(rGEMRes[iPts],2);
-    matXZ[0][1] += rPosZ[iPts]/pow(rGEMRes[iPts],2);
-    matXZ[1][0] += rPosZ[iPts]/pow(rGEMRes[iPts],2);
-    matXZ[1][1] += pow(rPosZ[iPts],2)/pow(rGEMRes[iPts],2);
+    matXZ[0][0] += 1/pow(rGEMResX[iPts],2);
+    matXZ[0][1] += rPosZ[iPts]/pow(rGEMResX[iPts],2);
+    matXZ[1][0] += rPosZ[iPts]/pow(rGEMResX[iPts],2);
+    matXZ[1][1] += pow(rPosZ[iPts],2)/pow(rGEMResX[iPts],2);
   }
 
   if(TrackingVerbose>0 && EvalTrackVerbose>0){
@@ -197,8 +202,8 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
   // create and fill a vector as
   G4double vecXZ[dim] = {0};
   for(G4int iPts=0;iPts<rPosX.size();iPts++){
-    vecXZ[0] += rPosX[iPts]/pow(rGEMRes[iPts],2);
-    vecXZ[1] += rPosX[iPts]*rPosZ[iPts]/pow(rGEMRes[iPts],2);
+    vecXZ[0] += rPosX[iPts]/pow(rGEMResX[iPts],2);
+    vecXZ[1] += rPosX[iPts]*rPosZ[iPts]/pow(rGEMResX[iPts],2);
   }
 
   if(TrackingVerbose>0 && EvalTrackVerbose>0){
@@ -214,7 +219,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
 
   if(!detXZ){
     G4cerr << "** Can't invert the matrix because determinant is ZERO **" << G4endl;
-    exit (EXIT_FAILURE);
+    return G4ThreeVector(-1000/m,-1000/m,0); // in m
   }
   
   G4double matXZI[dim][dim] ={{0}};
@@ -233,10 +238,10 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
 
   // now evaluate vecAB
   // a (vecAB[0]) is in units of mm
-  // b (vecAB[1]) is in units of 1/mm
-  G4float vecAB[dim] = {0};
+  // b (vecAB[1]) is in units of rad
+  G4double vecAB[dim] = {0};
   for(G4int imat=0;imat<dim;imat++){
-    vecAB[imat] = (G4float)(matXZI[imat][0]*vecXZ[0] + matXZI[imat][1]*vecXZ[1]);
+    vecAB[imat] = (G4double)(matXZI[imat][0]*vecXZ[0] + matXZI[imat][1]*vecXZ[1]);
   }
 
   if(TrackingVerbose>0 && EvalTrackVerbose>0){
@@ -247,80 +252,117 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
   if(EvalTrackVerbose)
     G4cout << "Leaving remollTrackReconstruct::EvaluateTrack(...)" << G4endl;
 
-  return G4ThreeVector(vecAB[0],vecAB[1],0); // in mm
+  return G4ThreeVector(vecAB[0]/mm,vecAB[1]/rad,0);
 }
 
 
 void remollTrackReconstruct::FillRecTrackHit(){
 
-  // first copy aTrackHit into aRecTrackHit
-  for(size_t i =0; i<rTrackHitSize;i++){
-
-    aRecTrackHit[i] = aTrackHit[i];
-
-    // assign unique detID for reconstructed tracks
-    aRecTrackHit[i]->fDetID = aRecTrackHit[i]->fDetID + 100; 
-  }
-
-  // now rewrite relevant variables in aRecTrackHit
-  // if(TrackingVerbose){
-  //   G4cout << "\tXpos(mm)\tYpos(mm)\tZpos(mm)" << G4endl;
-  // }
-
-
   for(size_t i=0; i<rTrackHitSize;i++){
 
     G4int copyID=aTrackHit[i]->fCopyID;
 
-    G4float tmpz = aTrackHit[i]->f3X.z()/mm; // tmpz does not have to be chained to fCopyID because FillRecTrackHit only fills the tracks for 1 GEM box at a time.
+    G4double tmpz = aTrackHit[i]->f3X.z()/mm; // tmpz does not have to be chained to fCopyID because FillRecTrackHit only fills the tracks for 1 GEM box at a time.
       
     // reconstuct positions, recTrackXZ[j] hold (a,b)
-    G4float tmpx = EvalTrackPos(tmpz,recTrackXZ[copyID]);
-    G4float tmpy = EvalTrackPos(tmpz,recTrackYZ[copyID]);
-      
-    if(TrackingVerbose)
-      G4cout << "Reconstructed pos (x,y,z): (" <<tmpx << ", " << tmpy << ", "<< tmpz << ") mm" << G4endl;
+    G4double tmpx = EvalTrackPos(tmpz,recTrackXZ[copyID])/mm;
+    G4double tmpy = EvalTrackPos(tmpz,recTrackYZ[copyID])/mm;
+
+    G4double tmpxp = EvalTrackAng(tmpz,recTrackXZ[copyID])/rad;
+    G4double tmpyp = EvalTrackAng(tmpz,recTrackYZ[copyID])/rad;
+
+    // if(TrackingVerbose)
+    //   G4cout << "Reconstructed pos (x,y,z): (" <<tmpx << ", " << tmpy << ", "<< tmpz << ") mm" << G4endl;
 
     // all the tmp vars are in mm
     G4ThreeVector tmp3vec = G4ThreeVector(tmpx,tmpy,tmpz);
+    G4ThreeVector tmp3vecp = G4ThreeVector(tmpxp,tmpyp,0);
     
-    // store reconstructed positions
-    //    aRecTrackHit[i]->StorePreStepLocalPos(tmp3vec);
-    aRecTrackHit[i]->f3X = tmp3vec;
-    
-    // // reconstuct angles
-    // G4float tmpTh = EvalTrackAng(tmpz,recTrack[0]);
-    // G4float tmpPh = EvalTrackAng(tmpz,recTrack[1]);
-    
-    // G4cout << "Reconstructed angles (th,ph): (" << tmpTh << ", " << tmpPh << ") rad" << G4endl;
-    
-    // // store reconstructed angles
-    // aRecTrackHit[i]->StoreLocalTheta(tmpTh);
-    // aRecTrackHit[i]->StoreLocalPhi(tmpPh);
+    // store reconstructed position/angle
+    aTrackHit[i]->f3XRec = tmp3vec;    
+    aTrackHit[i]->f3dPRec = tmp3vecp;
   }
   
-  // store reconstructed angles
-  //     aRecTrackHit[i]->StoreWorldTheta(G4double th);
+  EvalTheta(); // eval & record theta
   
   if(TrackingVerbose)
-    PrintHitInfo(aRecTrackHit);
+    PrintHitInfo(aTrackHit);
+}
+
+// evaluate th from each GEM rec vars,
+// and average them
+void remollTrackReconstruct::EvalTheta(){
+  
+  if(EvalTrackVerbose) 
+    G4cout << "Entering remollTrackReconstruct::EvalTheta() ..." << G4endl;
+
+  std:: vector <G4double> theta;
+  std:: vector <G4double> rec_r;
+  std:: vector <G4double> rec_dr;
+  std:: vector <G4double> rec_ph;
+
+  G4bool region[]={0,0,0};
+
+  theta.resize(rTrackHitSize);
+  
+  // evaluate th from individual GEM rec vars
+  for(G4int i=0;i<rTrackHitSize;i++){
+    rec_r.push_back(aTrackHit[i]->f3XRec.perp()/m);
+    rec_ph.push_back(aTrackHit[i]->f3XRec.phi()/deg);
+    rec_dr.push_back(aTrackHit[i]->f3dPRec.perp());
+    
+    region[0]=0; region[1]=0; region[2]=0;
+
+    // ep centroid
+    if(TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.)) - 180/7.)<=3 ){
+       //       &&TMath::Abs(rec_r[i]-0.75)<0.04){ 
+      if(rec_dr[i] > 0.039){
+	theta[i] = 1.10-2.99*rec_r[i]+2.05*TMath::Power(rec_r[i],2);
+	region[0]=1;
+      }
+      else{
+	theta[i] = 0.05-1.02*rec_dr[i];
+	region[1]=1;
+      }
+    }
+    // ep wings
+    else if((TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.))-180/7.)>3)
+	    &&(TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.))-180/7.)<9)){
+      theta[i] = 0.05-0.98*rec_dr[i];
+      region[2]=1;
+    } else 
+      theta[i] = -1.0;
+
+    if(EvalTrackVerbose)
+      if(region[0]==1 || region[1]==1 || region[2]==1){
+	G4cout << region[0] << region[1] << region[2] << G4endl;
+	G4cout << "Org:: " << aTrackHit[i]->f3X.perp()/m << "\t" << aTrackHit[i]->f3X.phi()/deg << "\t" << aTrackHit[i]->f3dP.perp() << "\t" << aTrackHit[i]->fTh << G4endl;
+	G4cout << "Rec:: " << rec_r[i] << "\t" << rec_ph[i] << "\t" << rec_dr[i] << "\t" << theta[i] << G4endl;
+      }
+  }
+  
+  for(G4int i=0;i<rTrackHitSize;i++)
+    aTrackHit[i]->fThRec = theta[i];
+
+  if(EvalTrackVerbose)
+    G4cout << "Leaving remollTrackReconstruct::EvalTheta() ..." << G4endl;
 }
 
 // return y = a + bx
-G4float remollTrackReconstruct::EvalTrackPos(G4float z,G4ThreeVector &ab){
+G4double remollTrackReconstruct::EvalTrackPos(G4double z,G4ThreeVector &ab){
 
-  G4float aVal = ab.x()/mm; 
-  G4float bVal = ab.y()/mm;
+  G4double aVal = ab.x()/mm; 
+  G4double bVal = ab.y()/rad;
 
-  // z in mm
-  return aVal + bVal*z;
+  G4double yVal = aVal + bVal*z;   // z is in mm
+
+  return yVal/mm;
 }
 
-// evaluate the angles, which are just slopes
-G4float remollTrackReconstruct::EvalTrackAng(G4float z,G4ThreeVector &ab){
+// return the direction angle, which is just the slope
+G4double remollTrackReconstruct::EvalTrackAng(G4double z,G4ThreeVector &ab){
 
-  //  G4float aVal = ab.x(); 
-  G4float bVal = ab.y()/mm; // in 1/mm
+  G4double bVal = ab.y()/rad; 
 
-  return bVal;
+  return bVal/rad;
 }

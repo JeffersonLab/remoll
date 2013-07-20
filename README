@@ -25,6 +25,7 @@ cmake > 2.6
 root
 python
 git (optional)
+boost (optional)
 
 ---------------------------------------------------
 

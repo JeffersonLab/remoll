@@ -102,6 +102,31 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.y",    &fGenDetHit_Y,   "hit.y[hit.n]/D");
     fTree->Branch("hit.z",    &fGenDetHit_Z,   "hit.z[hit.n]/D");
     fTree->Branch("hit.r",    &fGenDetHit_R,   "hit.r[hit.n]/D");
+    fTree->Branch("hit.ph",   &fGenDetHit_Ph,  "hit.ph[hit.n]/D");
+    fTree->Branch("hit.th",   &fGenDetHit_Th,  "hit.th[hit.n]/D");
+
+    // direction vectors
+    fTree->Branch("hit.dpx",   &fGenDetHit_dPx,   "hit.dpx[hit.n]/D");
+    fTree->Branch("hit.dpy",   &fGenDetHit_dPy,   "hit.dpy[hit.n]/D");
+    fTree->Branch("hit.dpz",   &fGenDetHit_dPz,   "hit.dpz[hit.n]/D");
+    fTree->Branch("hit.dr",    &fGenDetHit_dR,    "hit.dr[hit.n]/D");
+    fTree->Branch("hit.dph",   &fGenDetHit_dPh,   "hit.dph[hit.n]/D");
+    ////
+
+    // reconstructed vars for GEMS
+    fTree->Branch("hit.x_rec",  &fGenDetHit_XRec,  "hit.x_rec[hit.n]/D");
+    fTree->Branch("hit.y_rec",  &fGenDetHit_YRec,  "hit.y_rec[hit.n]/D");
+    fTree->Branch("hit.r_rec",  &fGenDetHit_RRec,  "hit.r_rec[hit.n]/D");
+    fTree->Branch("hit.ph_rec", &fGenDetHit_PhRec, "hit.ph_rec[hit.n]/D");
+    fTree->Branch("hit.thtgt_rec", &fGenDetHit_ThRec, "hit.thtgt_rec[hit.n]/D");
+
+    // direction vectors
+    fTree->Branch("hit.dpx_rec", &fGenDetHit_dPxRec, "hit.dpx_rec[hit.n]/D");
+    fTree->Branch("hit.dpy_rec", &fGenDetHit_dPyRec, "hit.dpy_rec[hit.n]/D");
+    fTree->Branch("hit.dpz_rec", &fGenDetHit_dPzRec, "hit.dpz_rec[hit.n]/D");
+    fTree->Branch("hit.dr_rec",  &fGenDetHit_dRRec,  "hit.dr_rec[hit.n]/D");
+    fTree->Branch("hit.dph_rec", &fGenDetHit_dPhRec, "hit.dph_rec[hit.n]/D");
+    ////
 
     fTree->Branch("hit.px",   &fGenDetHit_Px,   "hit.px[hit.n]/D");
     fTree->Branch("hit.py",   &fGenDetHit_Py,   "hit.py[hit.n]/D");
@@ -175,136 +200,165 @@ void remollIO::WriteTree(){
 // Event Data
 
 void remollIO::SetEventData(remollEvent *ev){
-  int n = ev->fPartType.size();
-  if( n > __IO_MAXHIT ){
-    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+    int n = ev->fPartType.size();
+    if( n > __IO_MAXHIT ){
+	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
 	return;
-  }
+    }
 
-  fNEvPart = n;
-  
-  fEvRate   = ev->fRate*s;
-  fEvEffXS  = ev->fEffXs/microbarn;
-  fEvAsym   = ev->fAsym/__ASYMM_SCALE;
-  fEvmAsym  = ev->fmAsym/__ASYMM_SCALE;
-  fEvBeamP  = ev->fBeamMomentum.mag()/__E_UNIT;
-  
-  fEvQ2     = ev->fQ2/__E_UNIT/__E_UNIT;
-  fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
-  fEvThCoM  = ev->fThCoM/deg; // specify this in degrees over anything else
-  
-  int idx;
-  for( idx = 0; idx < n; idx++ ){
-    fEvPID[idx] = ev->fPartType[idx]->GetPDGEncoding();
+    fNEvPart = n;
+
+    fEvRate   = ev->fRate*s;
+    fEvEffXS  = ev->fEffXs/microbarn;
+    fEvAsym   = ev->fAsym/__ASYMM_SCALE;
+    fEvmAsym  = ev->fmAsym/__ASYMM_SCALE;
+    fEvBeamP  = ev->fBeamMomentum.mag()/__E_UNIT;
+
+    fEvQ2     = ev->fQ2/__E_UNIT/__E_UNIT;
+    fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
+    fEvThCoM  = ev->fThCoM/deg; // specify this in degrees over anything else
+
+    int idx;
+    for( idx = 0; idx < n; idx++ ){
+	fEvPID[idx] = ev->fPartType[idx]->GetPDGEncoding();
+
+	fEvPart_X[idx] = ev->fPartPos[idx].x()/__L_UNIT;
+	fEvPart_Y[idx] = ev->fPartPos[idx].y()/__L_UNIT;
+	fEvPart_Z[idx] = ev->fPartPos[idx].z()/__L_UNIT;
+
+	fEvPart_Px[idx] = ev->fPartRealMom[idx].x()/__E_UNIT;
+	fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
+	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
+	fEvPart_Th[idx] = ev->fPartRealMom[idx].theta();
+	fEvPart_Ph[idx] = ev->fPartRealMom[idx].phi()/deg;
+
+	fEvPart_P[idx] = ev->fPartRealMom[idx].mag()/__E_UNIT;
+
+	fEvPart_tPx[idx] = ev->fPartMom[idx].x()/__E_UNIT;
+	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
+	fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
+    }
+
+    /////////////////////////////////////////////////
+    //  Set beam data as well
+
+    remollBeamTarget *bt = remollBeamTarget::GetBeamTarget();
+
+    fBmX = bt->fVer.x()/__L_UNIT;
+    fBmY = bt->fVer.y()/__L_UNIT;
+    fBmZ = bt->fVer.z()/__L_UNIT;
     
-    fEvPart_X[idx] = ev->fPartPos[idx].x()/__L_UNIT;
-    fEvPart_Y[idx] = ev->fPartPos[idx].y()/__L_UNIT;
-    fEvPart_Z[idx] = ev->fPartPos[idx].z()/__L_UNIT;
-    
-    fEvPart_Px[idx] = ev->fPartRealMom[idx].x()/__E_UNIT;
-    fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
-    fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
-    fEvPart_Th[idx] = ev->fPartRealMom[idx].theta();
-    fEvPart_Ph[idx] = ev->fPartRealMom[idx].phi();
-    
-    fEvPart_P[idx] = ev->fPartRealMom[idx].mag()/__E_UNIT;
-    
-    fEvPart_tPx[idx] = ev->fPartMom[idx].x()/__E_UNIT;
-    fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
-    fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
-  }
-  
-  /////////////////////////////////////////////////
-  //  Set beam data as well
-  
-  remollBeamTarget *bt = remollBeamTarget::GetBeamTarget();
-  
-  fBmX = bt->fVer.x()/__L_UNIT;
-  fBmY = bt->fVer.y()/__L_UNIT;
-  fBmZ = bt->fVer.z()/__L_UNIT;
-  
-  fBmdX = bt->fDir.x();
-  fBmdY = bt->fDir.y();
-  fBmdZ = bt->fDir.z();
-  
-  return;
+    fBmdX = bt->fDir.x();
+    fBmdY = bt->fDir.y();
+    fBmdZ = bt->fDir.z();
+
+    return;
 }
 
 // GenericDetectorHit
-void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
-  int n = fNGenDetHit;
-  if( n > __IO_MAXHIT ){
-    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
-    return;
-  }
 
-  fGenDetHit_det[n]  = hit->fDetID;
-  fGenDetHit_id[n]   = hit->fCopyID;
-  
-  fGenDetHit_trid[n] = hit->fTrID;
-  fGenDetHit_mtrid[n]= hit->fmTrID;
-  fGenDetHit_pid[n]  = hit->fPID;
-  fGenDetHit_gen[n]  = hit->fGen;
-  
-  fGenDetHit_X[n]  = hit->f3X.x()/__L_UNIT;
-  fGenDetHit_Y[n]  = hit->f3X.y()/__L_UNIT;
-  fGenDetHit_Z[n]  = hit->f3X.z()/__L_UNIT;
-  fGenDetHit_R[n]  = sqrt(hit->f3X.x()*hit->f3X.x()+hit->f3X.y()*hit->f3X.y())/__L_UNIT;
-  
-  fGenDetHit_Px[n]  = hit->f3P.x()/__E_UNIT;
-  fGenDetHit_Py[n]  = hit->f3P.y()/__E_UNIT;
-  fGenDetHit_Pz[n]  = hit->f3P.z()/__E_UNIT;
-  
-  fGenDetHit_Vx[n]  = hit->f3V.x()/__L_UNIT;
-  fGenDetHit_Vy[n]  = hit->f3V.y()/__L_UNIT;
-  fGenDetHit_Vz[n]  = hit->f3V.z()/__L_UNIT;
-  
-  fGenDetHit_P[n]  = hit->fP/__E_UNIT;
-  fGenDetHit_E[n]  = hit->fE/__E_UNIT;
-  fGenDetHit_M[n]  = hit->fM/__E_UNIT;
-  
-  fNGenDetHit++;
+void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
+    int n = fNGenDetHit;
+    if( n > __IO_MAXHIT ){
+	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+	return;
+    }
+
+    fGenDetHit_det[n]  = hit->fDetID;
+    fGenDetHit_id[n]   = hit->fCopyID;
+
+    fGenDetHit_trid[n] = hit->fTrID;
+    fGenDetHit_mtrid[n]= hit->fmTrID;
+    fGenDetHit_pid[n]  = hit->fPID;
+    fGenDetHit_gen[n]  = hit->fGen;
+
+    fGenDetHit_X[n]  = hit->f3X.x()/__L_UNIT;
+    fGenDetHit_Y[n]  = hit->f3X.y()/__L_UNIT;
+    fGenDetHit_Z[n]  = hit->f3X.z()/__L_UNIT;
+    fGenDetHit_R[n]  = sqrt(hit->f3X.x()*hit->f3X.x()+hit->f3X.y()*hit->f3X.y())/__L_UNIT;
+    fGenDetHit_Ph[n] = hit->f3X.phi()/deg;
+    fGenDetHit_Th[n] = hit->fTh;
+
+    // direction, dp is a unit vector
+    fGenDetHit_dPx[n]  = hit->f3dP.x();
+    fGenDetHit_dPy[n]  = hit->f3dP.y();
+    fGenDetHit_dPz[n]  = hit->f3dP.z();
+    fGenDetHit_dR[n]   = hit->f3dP.perp(); // perp = sqrt(x*x + y*y)
+    fGenDetHit_dPh[n]  = hit->f3dP.phi()/deg; // phi = atan2(y,x)
+    /////
+
+    // resonstructed vars for GEM
+    fGenDetHit_XRec[n]  = hit->f3XRec.x()/__L_UNIT;
+    fGenDetHit_YRec[n]  = hit->f3XRec.y()/__L_UNIT;
+    fGenDetHit_RRec[n]  = sqrt(hit->f3XRec.x()*hit->f3XRec.x()+hit->f3XRec.y()*hit->f3XRec.y())/__L_UNIT;
+    fGenDetHit_PhRec[n] = hit->f3XRec.phi()/deg;
+    fGenDetHit_ThRec[n] = hit->fThRec;
+
+    // direction vecs
+    fGenDetHit_dPxRec[n]  = hit->f3dPRec.x();
+    fGenDetHit_dPyRec[n]  = hit->f3dPRec.y();
+    fGenDetHit_dPzRec[n]  = hit->f3dPRec.z();
+    fGenDetHit_dRRec[n]   = hit->f3dPRec.perp(); // perp = sqrt(x*x + y*y)
+    fGenDetHit_dPhRec[n]  = hit->f3dPRec.phi()/deg; // phi = atan2(y,x)
+    ///////
+
+    fGenDetHit_Px[n]  = hit->f3P.x()/__E_UNIT;
+    fGenDetHit_Py[n]  = hit->f3P.y()/__E_UNIT;
+    fGenDetHit_Pz[n]  = hit->f3P.z()/__E_UNIT;
+
+    fGenDetHit_Vx[n]  = hit->f3V.x()/__L_UNIT;
+    fGenDetHit_Vy[n]  = hit->f3V.y()/__L_UNIT;
+    fGenDetHit_Vz[n]  = hit->f3V.z()/__L_UNIT;
+
+    fGenDetHit_P[n]  = hit->fP/__E_UNIT;
+    fGenDetHit_E[n]  = hit->fE/__E_UNIT;
+    fGenDetHit_M[n]  = hit->fM/__E_UNIT;
+
+    fNGenDetHit++;
 }
 
+
 // GenericDetectorSum
+
 void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
-  int n = fNGenDetSum;
-  if( n > __IO_MAXHIT ){
-    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
-    return;
-  }
-  
-  fGenDetSum_edep[n] = hit->fEdep/__E_UNIT;
-  fGenDetSum_det[n]  = hit->fDetID;
-  fGenDetSum_id[n]   = hit->fCopyID;
-  
-  fNGenDetSum++;
+    int n = fNGenDetSum;
+    if( n > __IO_MAXHIT ){
+	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+	return;
+    }
+
+    fGenDetSum_edep[n] = hit->fEdep/__E_UNIT;
+    fGenDetSum_det[n]  = hit->fDetID;
+    fGenDetSum_id[n]   = hit->fCopyID;
+
+    fNGenDetSum++;
 }
 
 /*---------------------------------------------------------------------------------*/
+
 void remollIO::GrabGDMLFiles(G4String fn){
-  // Reset list
-  fGDMLFileNames.clear();
-  
-  remollRunData *rundata = remollRun::GetRun()->GetData();
-  rundata->ClearGDMLFiles();
-  
-  xercesc::XMLPlatformUtils::Initialize();
-  SearchGDMLforFiles(fn);
-  xercesc::XMLPlatformUtils::Terminate();
-  
-  
-  // Store filename
-  
-  unsigned int idx;
-  
-  // Copy into buffers
-  for( idx = 0; idx < fGDMLFileNames.size(); idx++ ){
-    G4cout << "Found GDML file " << fGDMLFileNames[idx] << G4endl;
-    rundata->AddGDMLFile(fGDMLFileNames[idx]);
-  }
-  
-  return;
+    // Reset list
+    fGDMLFileNames.clear();
+
+    remollRunData *rundata = remollRun::GetRun()->GetData();
+    rundata->ClearGDMLFiles();
+
+    xercesc::XMLPlatformUtils::Initialize();
+    SearchGDMLforFiles(fn);
+    xercesc::XMLPlatformUtils::Terminate();
+
+
+    // Store filename
+
+    unsigned int idx;
+
+    // Copy into buffers
+    for( idx = 0; idx < fGDMLFileNames.size(); idx++ ){
+	G4cout << "Found GDML file " << fGDMLFileNames[idx] << G4endl;
+	rundata->AddGDMLFile(fGDMLFileNames[idx]);
+    }
+
+    return;
 }
 
 void remollIO::SearchGDMLforFiles(G4String fn){
