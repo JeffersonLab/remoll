@@ -118,7 +118,7 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.y_rec",  &fGenDetHit_YRec,  "hit.y_rec[hit.n]/D");
     fTree->Branch("hit.r_rec",  &fGenDetHit_RRec,  "hit.r_rec[hit.n]/D");
     fTree->Branch("hit.ph_rec", &fGenDetHit_PhRec, "hit.ph_rec[hit.n]/D");
-    fTree->Branch("hit.thtgt_rec", &fGenDetHit_ThRec, "hit.thtgt_rec[hit.n]/D");
+    fTree->Branch("hit.th_rec", &fGenDetHit_ThRec, "hit.th_rec[hit.n]/D");
 
     // direction vectors
     fTree->Branch("hit.dpx_rec", &fGenDetHit_dPxRec, "hit.dpx_rec[hit.n]/D");

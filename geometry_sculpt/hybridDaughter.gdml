@@ -11,6 +11,7 @@
     <constant name="DELTAT" value ="1.0"/>
     <constant name="DELTAZ" value ="1.0"/>
 
+    <!-- petal -->
     <position name="posCOLL1" unit="mm" x="0" y="0" z="9575-DOFFSET"/>
     <constant name="COLL1_R1_U" value ="26.4"/>
     <constant name="COLL1_R1_D" value ="26.4"/>
@@ -18,9 +19,11 @@
     <constant name="COLL1_R4_D" value ="58."/>
     <constant name="COLL1_THICK" value ="200.0"/>
 
+    <!-- coll at the center of hybrid toriod -->
     <position name="posCOLL5" unit="mm" x="0" y="0" z="12835-DOFFSET"/>
     <constant name="COLL5_THICK" value ="70.0"/>
 
+    <!-- main coll, adjust this -->
     <position name="posPCOLL2" unit="mm" x="0" y="0" z="9825-DOFFSET"/> -->
     <constant name="PCOLL2_R1_U" value ="38.0"/>
     <constant name="PCOLL2_R1_D" value ="38.0"/>

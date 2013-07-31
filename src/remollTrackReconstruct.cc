@@ -21,7 +21,7 @@
 #include "remollGenericDetectorHit.hh"
 
 #define TrackingVerbose 0
-#define EvalTrackVerbose 0
+#define EvalTrackVerbose 1
 
 remollTrackReconstruct::remollTrackReconstruct(){
   ClearTrack();
@@ -218,7 +218,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
   G4double detXZ = matXZ[0][0]*matXZ[1][1] - matXZ[0][1]*matXZ[1][0];
 
   if(!detXZ){
-    G4cerr << "** Can't invert the matrix because determinant is ZERO **" << G4endl;
+    //    G4cerr << "** Can't invert the matrix because determinant is ZERO **" << G4endl;
     return G4ThreeVector(-1000/m,-1000/m,0); // in m
   }
   
@@ -292,7 +292,7 @@ void remollTrackReconstruct::FillRecTrackHit(){
 // evaluate th from each GEM rec vars,
 // and average them
 void remollTrackReconstruct::EvalTheta(){
-  
+
   if(EvalTrackVerbose) 
     G4cout << "Entering remollTrackReconstruct::EvalTheta() ..." << G4endl;
 
@@ -300,6 +300,11 @@ void remollTrackReconstruct::EvalTheta(){
   std:: vector <G4double> rec_r;
   std:: vector <G4double> rec_dr;
   std:: vector <G4double> rec_ph;
+
+  Double_t det_peak_cntr = 0.78;
+  Double_t open_cntr = atan(0.084/2/det_peak_cntr)*180/3.14159;
+  Double_t GEM_peak_cntr = 0.78;
+  Double_t GEM_open_cntr = open_cntr*GEM_peak_cntr/open_cntr;
 
   G4bool region[]={0,0,0};
 
@@ -313,32 +318,121 @@ void remollTrackReconstruct::EvalTheta(){
     
     region[0]=0; region[1]=0; region[2]=0;
 
-    // ep centroid
-    if(TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.)) - 180/7.)<=3 ){
-       //       &&TMath::Abs(rec_r[i]-0.75)<0.04){ 
-      if(rec_dr[i] > 0.039){
-	theta[i] = 1.10-2.99*rec_r[i]+2.05*TMath::Power(rec_r[i],2);
-	region[0]=1;
+    // det quartz is 16.0x8.4x1.5cm
+    // ep distribution is centered at r~0.8m in the quartz
+    // center: phi at quartz center ~ atan(0.084/2/0.8)*180/3.14159 = 3.00 deg
+    // wings: center phi~ atan((0.084+0.042)/0.8)*180/3.14159 = 8.95 deg
+    // the fit eqs below are only good for the center & wings of ep
+    // use ep to get reconstructed ee th distribution -- how well does this work??
+
+    G4bool cut[] = {
+    // center_r
+      rec_dr[i]>=0.0395&& TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395&& TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395&& TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395&& TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395&& TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395&& TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395&& TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr,
+      // center_dr
+      rec_dr[i]<0.0395&& TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395&& TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395&& TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395&& TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395&& TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395&& TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395&& TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr,
+      // Open_1
+      TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180-2*open_cntr))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*-1))<open_cntr,
+      // Open_2
+      TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180-2*open_cntr))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*1))<open_cntr};
+
+    G4double eqn[] = {
+      // center_r
+      (1*-0.209584+1*0.544233*rec_r[i]+1*-0.342036*rec_r[i]*rec_r[i])-(1*-0.000257+1*-0.000088*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
+      (1*-0.209584+1*0.544233*rec_r[i]+1*-0.342036*rec_r[i]*rec_r[i])-(1*-0.000428+1*-0.000142*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
+      (1*-0.209584+1*0.544233*rec_r[i]+1*-0.342036*rec_r[i]*rec_r[i])-(1*0.000501+1*0.000022*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
+      (1*-0.209584+1*0.544233*rec_r[i]+1*-0.342036*rec_r[i]*rec_r[i])-(1*0.000239+1*0.000347*(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))),
+      (1*-0.209584+1*0.544233*rec_r[i]+1*-0.342036*rec_r[i]*rec_r[i])-(1*0.000451+1*0.000195*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
+      (1*-0.209584+1*0.544233*rec_r[i]+1*-0.342036*rec_r[i]*rec_r[i])-(1*-0.000150+1*-0.000336*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
+      (1*-0.209584+1*0.544233*rec_r[i]+1*-0.342036*rec_r[i]*rec_r[i])-(1*0.000401+1*-0.000153*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
+      // center_dr
+      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*-0.000041+1*0.000069*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
+      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000089+1*0.000119*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
+      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000467+1*0.000010*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
+      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000195+1*0.000154*(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))),
+      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*-0.000348+1*0.000059*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
+      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*-0.000065+1*-0.000174*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
+      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*-0.000196+1*0.000017*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
+      // Open_1
+      (1*0.035580+1*-0.632203*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000114+1*0.000146*(rec_ph[i]-(180/7.*1-2*open_cntr*-1))),
+      (1*0.035580+1*-0.632203*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*-0.000149+1*0.000044*(rec_ph[i]-(180/7.*3-2*open_cntr*-1))),
+      (1*0.035580+1*-0.632203*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000001+1*0.000150*(rec_ph[i]-(180/7.*5-2*open_cntr*-1))),
+      (1*0.035580+1*-0.632203*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000064+1*0.000225*(rec_ph[i]+(180-2*open_cntr))),
+      (1*0.035580+1*-0.632203*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000066+1*0.000297*(rec_ph[i]+(180/7.*1+2*open_cntr*-1))),
+      (1*0.035580+1*-0.632203*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000107+1*0.000215*(rec_ph[i]+(180/7.*3+2*open_cntr*-1))),
+      (1*0.035580+1*-0.632203*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000112+1*0.000119*(rec_ph[i]+(180/7.*5+2*open_cntr*-1))),
+    // Open_2
+      (1*0.035223+1*-0.624901*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000122+1*-0.000070*(rec_ph[i]-(180/7.*1-2*open_cntr*1))),
+      (1*0.035223+1*-0.624901*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000239+1*-0.000291*(rec_ph[i]-(180/7.*3-2*open_cntr*1))),
+      (1*0.035223+1*-0.624901*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000109+1*-0.000153*(rec_ph[i]-(180/7.*5-2*open_cntr*1))),
+      (1*0.035223+1*-0.624901*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000173+1*-0.000150*(rec_ph[i]-(180-2*open_cntr))),
+      (1*0.035223+1*-0.624901*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000137+1*-0.000131*(rec_ph[i]+(180/7.*1+2*open_cntr*1))),
+      (1*0.035223+1*-0.624901*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*0.000281+1*-0.000308*(rec_ph[i]+(180/7.*3+2*open_cntr*1))),
+      (1*0.035223+1*-0.624901*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])-(1*-0.000019+1*-0.000160*(rec_ph[i]+(180/7.*5+2*open_cntr*1)))};
+    
+    for(int ii=0;ii<28;ii++){
+      if(cut[ii]){
+	theta[i] = eqn[ii];
+
+	// G4cout <<"cut[ii]:: " << cut[ii] << G4endl;
+	// G4cout <<"eqn[ii]:: " << eqn[ii] << G4endl;
+	// G4cout <<"rec_ph[i]:: " << rec_ph[i] << G4endl;
+	break;
       }
-      else{
-	theta[i] = 0.05-1.02*rec_dr[i];
-	region[1]=1;
-      }
+      else 
+	theta[i] = -1.0;
     }
-    // ep wings
-    else if((TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.))-180/7.)>3)
-	    &&(TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.))-180/7.)<9)){
-      theta[i] = 0.05-0.98*rec_dr[i];
-      region[2]=1;
-    } else 
-      theta[i] = -1.0;
+
+
+    // //  // C->th:r, C->th:dr, W1->th:dr, W2->th:dr
+    // // ep centroid (open sector)
+    // if(TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.)) - 180/7.)<=3.00){
+    //   if(rec_dr[i] > 0.039){
+    // 	theta[i] = 1.10-2.99*rec_r[i]+2.05*TMath::Power(rec_r[i],2);
+    // 	region[0]=1;
+    //   }
+    //   else{
+    // 	theta[i] = 0.05-1.02*rec_dr[i];
+    // 	region[1]=1;
+    //   }
+    // }
+    // // ep wings (closed sector)
+    // else if((TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.))-180/7.)>3.00)
+    // 	    &&(TMath::Abs(TMath::Abs(std::fmod(rec_ph[i],360/7.))-180/7.)<8.95)){
+    //   theta[i] = 0.05-0.98*rec_dr[i];
+    //   region[2]=1;
+    // } else 
+    //   theta[i] = -1.0;
 
     if(EvalTrackVerbose)
-      if(region[0]==1 || region[1]==1 || region[2]==1){
+      //      if(region[0]==1 || region[1]==1 || region[2]==1){
 	G4cout << region[0] << region[1] << region[2] << G4endl;
 	G4cout << "Org:: " << aTrackHit[i]->f3X.perp()/m << "\t" << aTrackHit[i]->f3X.phi()/deg << "\t" << aTrackHit[i]->f3dP.perp() << "\t" << aTrackHit[i]->fTh << G4endl;
 	G4cout << "Rec:: " << rec_r[i] << "\t" << rec_ph[i] << "\t" << rec_dr[i] << "\t" << theta[i] << G4endl;
-      }
+	//      }
   }
   
   for(G4int i=0;i<rTrackHitSize;i++)
