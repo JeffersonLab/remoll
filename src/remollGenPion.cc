@@ -38,8 +38,8 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double sigpip = wiser_sigma(beamE/GeV, pf/GeV, th, rad_len + 0.05, 0)*nanobarn/GeV;
     double sigpim = wiser_sigma(beamE/GeV, pf/GeV, th, rad_len + 0.05, 1)*nanobarn/GeV;
 
-    evt->SetEffCrossSection(V*(vert->GetMaterial()->GetZ()*sigpip + 
-		(vert->GetMaterial()->GetA()*mole/g-vert->GetMaterial()->GetZ())*sigpim));
+    evt->SetEffCrossSection(V*(vert->GetMaterial()->GetZ()*sigpim + 
+		(vert->GetMaterial()->GetA()*mole/g-vert->GetMaterial()->GetZ())*sigpip));
 
     if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << 
