@@ -302,11 +302,8 @@ void remollTrackReconstruct::EvalTheta(){
   std:: vector <G4double> rec_ph;
 
   Double_t det_peak_cntr = 0.78;
-  Double_t open_cntr = atan(0.084/2/det_peak_cntr)*180/3.14159;
-  // Double_t GEM_peak_cntr = 0.78;
-  // Double_t GEM_open_cntr = open_cntr*GEM_peak_cntr/open_cntr;
-
-  //  G4bool region[]={0,0,0};
+  Double_t open_cntr = 180./7/5;
+  //  Double_t open_cntr = atan(0.084/2/det_peak_cntr)*180/3.14159;
 
   theta.resize(rTrackHitSize);
   
@@ -324,97 +321,206 @@ void remollTrackReconstruct::EvalTheta(){
     // use ep to get reconstructed ee th distribution -- how well does this work??
 
     G4bool cut[] = {
-      //Cuts for Open sec (dr>=0.0395 && r<0.765):
-      (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr),
+      //Cuts for Open sec1 R1:
+      (rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
+      (rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr,
 
-      //Cuts for Open sec (dr>=0.0395 && r>=0.765):
-      (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr),
-      (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr),
+      //Cuts for Open sec1 R2:
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr,
 
-      //Cuts for Open sec (dr<0.0395):
-      (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]<0.0395 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr),
-      (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr),
-      (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr),
-      (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr),
+      //Cuts for Open sec2 R1:
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr,
+      rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr,
 
-      //Cuts for Closed sec 1:
-      (TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*-1))<open_cntr),
-      (TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*-1))<open_cntr),
-      (TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*-1))<open_cntr),
-      (TMath::Abs(rec_ph[i]-(180-2*open_cntr)*-1)<open_cntr),
-      (TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*-1))<open_cntr),
-      (TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*-1))<open_cntr),
-      (TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*-1))<open_cntr),
+      //Cuts for Open sec2 R2:
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr,
+      rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr,
 
-      //Cuts for Closed sec 2:
-      (TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*1))<open_cntr),
-      (TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*1))<open_cntr),
-      (TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*1))<open_cntr),
-      (TMath::Abs(rec_ph[i]-(180-2*open_cntr)*1)<open_cntr),
-      (TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*1))<open_cntr),
-      (TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*1))<open_cntr),
-      (TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*1))<open_cntr)};
+      //Cuts for Tran sec 1:
+      TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180-2*open_cntr)*-1)<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*-1))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*-1))<open_cntr,
+
+      //Cuts for Tran sec 2:
+      TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]-(180-2*open_cntr)*1)<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*1))<open_cntr,
+      TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*1))<open_cntr};
+
+
+      // //Cuts for Open sec (dr>=0.0395 && r<0.765):
+      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr),
+
+      // //Cuts for Open sec (dr>=0.0395 && r>=0.765):
+      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr),
+
+      // //Cuts for Open sec (dr<0.0395):
+      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]<0.0395 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr),
+      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr),
+
+      // //Cuts for Closed sec 1:
+      // (TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*-1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*-1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*-1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]-(180-2*open_cntr)*-1)<open_cntr),
+      // (TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*-1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*-1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*-1))<open_cntr),
+
+      // //Cuts for Closed sec 2:
+      // (TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]-(180-2*open_cntr)*1)<open_cntr),
+      // (TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*1))<open_cntr),
+      // (TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*1))<open_cntr)};
 
 
     G4double eqn[] = {
-    //Eqs for Open sec (dr>=0.0395 && r<0.765):
-      (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000019+1*0.000014*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
-      (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000034+1*0.000045*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
-      (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*-0.000051+1*-0.000060*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
-      (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000018+1*-0.000030*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))),
-      (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*-0.000004+1*0.000005*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
-      (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*-0.000049+1*-0.000018*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
-      (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000046+1*0.000026*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
+      //Eqs for Open sec1 R1:
+      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000039+1*0.000005*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*-0.000011*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
+      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000043+1*-0.000007*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*-0.000008*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
+      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000061+1*-0.000016*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*-0.000012*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
+      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000037+1*-0.000012*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*-0.000008*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
+      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000034+1*0.000004*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*-0.000007*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
+      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000029+1*0.000000*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*-0.000010*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
+      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000059+1*0.000011*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*-0.000012*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
 
-      //Eqs for Open sec (dr>=0.0395 && r>=0.765):
-      (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000218+1*0.000016*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
-      (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*0.000057+1*-0.000018*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
-      (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*0.000230+1*0.000038*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
-      (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000121+1*-0.000047*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))),
-      (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000011+1*-0.000006*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
-      (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*0.000078+1*-0.000020*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
-      (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000070+1*-0.000060*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
+      //Eqs for Open sec1 R2:
+      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000048+1*-0.000003*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*0.000005*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
+      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000067+1*-0.000000*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
+      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000071+1*-0.000001*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
+      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000061+1*-0.000003*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*0.000007*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
+      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000063+1*0.000002*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
+      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000071+1*-0.000001*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
+      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000065+1*-0.000002*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
 
-      //Eqs for Open sec (dr<0.0395):
-      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000041+1*0.000069*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
-      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*0.000089+1*0.000119*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
-      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*0.000467+1*0.000010*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
-      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000039+1*0.000144*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))),
-      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000348+1*0.000059*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
-      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000065+1*-0.000174*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
-      (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000195+1*0.000017*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
+      //Eqs for Open sec2 R1:
+      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000036+1*0.000004*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*-0.000010*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
+      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000042+1*-0.000007*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*-0.000007*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
+      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000061+1*-0.000016*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*-0.000011*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
+      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000035+1*-0.000012*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*-0.000007*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
+      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000035+1*0.000004*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*-0.000006*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
+      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000029+1*0.000001*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*-0.000009*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
+      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000058+1*0.000012*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*-0.000011*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
 
-      //Eqs for Closed sec 1:
-      (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000185+1*0.000185*(rec_ph[i]-(180/7.*1-2*open_cntr*-1))),
-      (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*-0.000010+1*0.000115*(rec_ph[i]-(180/7.*3-2*open_cntr*-1))),
-      (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000025+1*0.000195*(rec_ph[i]-(180/7.*5-2*open_cntr*-1))),
-      (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000119+1*0.000231*(rec_ph[i]-(180-2*open_cntr)*-1)),
-      (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000134+1*0.000276*(rec_ph[i]+(180/7.*1+2*open_cntr*-1))),
-      (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000195+1*0.000285*(rec_ph[i]+(180/7.*3+2*open_cntr*-1))),
-      (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000178+1*0.000144*(rec_ph[i]+(180/7.*5+2*open_cntr*-1))),
+      //Eqs for Open sec2 R2:
+      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000045+1*-0.000003*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*0.000005*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
+      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000064+1*-0.000000*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
+      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000067+1*-0.000002*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
+      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000056+1*-0.000003*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*0.000007*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
+      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000058+1*0.000002*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
+      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000068+1*-0.000001*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
+      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000059+1*-0.000003*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
 
-      //Eqs for Closed sec 2:
-      (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000081+1*-0.000045*(rec_ph[i]-(180/7.*1-2*open_cntr*1))),
-      (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000207+1*-0.000315*(rec_ph[i]-(180/7.*3-2*open_cntr*1))),
-      (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000036+1*-0.000185*(rec_ph[i]-(180/7.*5-2*open_cntr*1))),
-      (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000181+1*-0.000207*(rec_ph[i]-(180-2*open_cntr)*1)),
-      (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000088+1*-0.000123*(rec_ph[i]+(180/7.*1+2*open_cntr*1))),
-      (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000260+1*-0.000329*(rec_ph[i]+(180/7.*3+2*open_cntr*1))),
-      (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*-0.000087+1*-0.000190*(rec_ph[i]+(180/7.*5+2*open_cntr*1)))};
+      //Eqs for Tran sec 1:
+      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000186+1*0.000086*(rec_ph[i]-(180/7.*1-2*open_cntr*-1))+1*-0.000005*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*-1)),2)),
+      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000186+1*0.000094*(rec_ph[i]-(180/7.*3-2*open_cntr*-1))+1*-0.000003*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*-1)),2)),
+      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000195+1*0.000087*(rec_ph[i]-(180/7.*5-2*open_cntr*-1))+1*-0.000006*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*-1)),2)),
+      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000187+1*0.000087*(rec_ph[i]-(180-2*open_cntr)*-1)+1*-0.000004*TMath::Power((rec_ph[i]-(180-2*open_cntr)*-1),2)),
+      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000186+1*0.000085*(rec_ph[i]+(180/7.*1+2*open_cntr*-1))+1*-0.000006*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*-1)),2)),
+      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000186+1*0.000095*(rec_ph[i]+(180/7.*3+2*open_cntr*-1))+1*-0.000005*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*-1)),2)),
+      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000194+1*0.000086*(rec_ph[i]+(180/7.*5+2*open_cntr*-1))+1*-0.000003*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*-1)),2)),
+
+      //Eqs for Tran sec 2:
+      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000193+1*-0.000087*(rec_ph[i]-(180/7.*1-2*open_cntr*1))+1*-0.000004*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*1)),2)),
+      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000212+1*-0.000095*(rec_ph[i]-(180/7.*3-2*open_cntr*1))+1*-0.000005*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*1)),2)),
+      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000153+1*-0.000095*(rec_ph[i]-(180/7.*5-2*open_cntr*1))+1*0.000000*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*1)),2)),
+      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000161+1*-0.000086*(rec_ph[i]-(180-2*open_cntr)*1)+1*-0.000004*TMath::Power((rec_ph[i]-(180-2*open_cntr)*1),2)),
+      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000191+1*-0.000093*(rec_ph[i]+(180/7.*1+2*open_cntr*1))+1*-0.000003*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*1)),2)),
+      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000172+1*-0.000099*(rec_ph[i]+(180/7.*3+2*open_cntr*1))+1*-0.000001*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*1)),2)),
+      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000188+1*-0.000097*(rec_ph[i]+(180/7.*5+2*open_cntr*1))+1*-0.000002*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*1)),2))};
+
+    // //Eqs for Open sec (dr>=0.0395 && r<0.765):
+    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000019+1*0.000014*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
+    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000034+1*0.000045*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
+    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*-0.000051+1*-0.000060*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
+    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000018+1*-0.000030*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))),
+    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*-0.000004+1*0.000005*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
+    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*-0.000049+1*-0.000018*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
+    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000046+1*0.000026*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
+
+    //   //Eqs for Open sec (dr>=0.0395 && r>=0.765):
+    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000218+1*0.000016*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
+    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*0.000057+1*-0.000018*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
+    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*0.000230+1*0.000038*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
+    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000121+1*-0.000047*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))),
+    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000011+1*-0.000006*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
+    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*0.000078+1*-0.000020*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
+    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000070+1*-0.000060*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
+
+    //   //Eqs for Open sec (dr<0.0395):
+    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000041+1*0.000069*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
+    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*0.000089+1*0.000119*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
+    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*0.000467+1*0.000010*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
+    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000039+1*0.000144*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))),
+    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000348+1*0.000059*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
+    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000065+1*-0.000174*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
+    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000195+1*0.000017*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
+
+    //   //Eqs for Closed sec 1:
+    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000185+1*0.000185*(rec_ph[i]-(180/7.*1-2*open_cntr*-1))),
+    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*-0.000010+1*0.000115*(rec_ph[i]-(180/7.*3-2*open_cntr*-1))),
+    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000025+1*0.000195*(rec_ph[i]-(180/7.*5-2*open_cntr*-1))),
+    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000119+1*0.000231*(rec_ph[i]-(180-2*open_cntr)*-1)),
+    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000134+1*0.000276*(rec_ph[i]+(180/7.*1+2*open_cntr*-1))),
+    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000195+1*0.000285*(rec_ph[i]+(180/7.*3+2*open_cntr*-1))),
+    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000178+1*0.000144*(rec_ph[i]+(180/7.*5+2*open_cntr*-1))),
+
+    //   //Eqs for Closed sec 2:
+    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000081+1*-0.000045*(rec_ph[i]-(180/7.*1-2*open_cntr*1))),
+    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000207+1*-0.000315*(rec_ph[i]-(180/7.*3-2*open_cntr*1))),
+    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000036+1*-0.000185*(rec_ph[i]-(180/7.*5-2*open_cntr*1))),
+    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000181+1*-0.000207*(rec_ph[i]-(180-2*open_cntr)*1)),
+    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000088+1*-0.000123*(rec_ph[i]+(180/7.*1+2*open_cntr*1))),
+    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000260+1*-0.000329*(rec_ph[i]+(180/7.*3+2*open_cntr*1))),
+    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*-0.000087+1*-0.000190*(rec_ph[i]+(180/7.*5+2*open_cntr*1)))};
     
     for(int ii=0;ii<35;ii++){
       if(cut[ii]){
