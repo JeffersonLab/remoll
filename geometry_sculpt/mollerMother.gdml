@@ -38,7 +38,8 @@
       
       <!-- Target -->
       <physvol>
-	<file name="geometry_sculpt/targetDaughter.gdml"/>
+	<!-- file name="geometry_sculpt/targetDaughter.gdml"/ -->
+	<file name="geometry_sculpt/target12C.gdml"/>
 	<positionref ref="targetCenter"/>
 	<rotationref ref="identity"/>
       </physvol>
@@ -54,7 +55,7 @@
 	<file name="geometry_sculpt/hybridDaughter.gdml"/>
 	<positionref ref="hybridCenter"/>
 	<rotationref ref="identity"/>
-      </physvol> 
+      </physvol>
       
       <!-- Detectors -->
       <!-- Main Detectors -->
