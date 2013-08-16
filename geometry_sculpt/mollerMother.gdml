@@ -7,9 +7,9 @@
     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
     
     <position name="GEM1Center" x="0" y="0" z="-0+23000."/> 
-    <position name="GEM2Center" x="0" y="0" z="-0+24000."/> 
-    <position name="GEM3Center" x="0" y="0" z="-0+27000."/> 
-    <position name="GEM4Center" x="0" y="0" z="-0+28000."/> 
+    <!-- position name="GEM2Center" x="0" y="0" z="-0+24000."/ --> 
+    <position name="GEM2Center" x="0" y="0" z="-0+27000."/> 
+    <position name="GEM3Center" x="0" y="0" z="-0+28000."/> 
 
     <position name="mainDetCenter" x="0" y="0" z="-0+28700."/> 
     <!-- position name="detectorCenter" x="0" y="0" z="28500."/ -->
@@ -84,11 +84,11 @@
 	<rotationref ref="identity"/>
       </physvol>
 
-      <physvol name="GEMDet4">
+      <!-- physvol name="GEMDet4">
 	<file name="geometry_sculpt/daughterGEM4.gdml"/>
 	<positionref ref="GEM4Center"/>
 	<rotationref ref="identity"/>
-      </physvol>
+      </physvol -->
 
     </volume>
   </structure>
