@@ -319,7 +319,7 @@ void remollTrackReconstruct::EvalTheta(){
     // wings: center phi~ atan((0.084+0.042)/0.8)*180/3.14159 = 8.95 deg
     // the fit eqs below are only good for the center & wings of ep
     // use ep to get reconstructed ee th distribution -- how well does this work??
-
+    // 4GEM setup
     G4bool cut[] = {
       //Cuts for Open sec1 R1:
       (rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
@@ -421,7 +421,7 @@ void remollTrackReconstruct::EvalTheta(){
       // (TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*1))<open_cntr),
       // (TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*1))<open_cntr)};
 
-
+    // 4GEM setup
     G4double eqn[] = {
       //Eqs for Open sec1 R1:
       (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000039+1*0.000005*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*-0.000011*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),

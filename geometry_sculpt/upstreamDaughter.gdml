@@ -10,7 +10,7 @@
 
     <constant name="DELTAT" value ="1.0"/>
     <!-- petal -->
-    <position name="posCOLL1" unit="mm" x="0" y="0" z="5575-UOFFSET"/> -->
+    <position name="posCOLL1" unit="mm" x="0" y="0" z="5575-UOFFSET"/>
     <constant name="COLL1_R1_U" value ="17.8"/>
     <constant name="COLL1_R1_D" value ="17.8"/>
     <constant name="COLL1_R4_U" value ="29.5"/>
@@ -20,7 +20,7 @@
 
     <!--    <position name="posCOLL2" unit="mm" x="0" y="0" z="5600-UOFFSET"/> -->
     <!-- main coll, adjust this -->
-    <position name="posCOLL2" unit="mm" x="0" y="0" z="5925-UOFFSET"/> -->
+    <position name="posCOLL2" unit="mm" x="0" y="0" z="5925-UOFFSET"/>
     <constant name="COLL2_R1_U" value ="26.0"/>
     <constant name="COLL2_R1_D" value ="26.0"/>
     <constant name="COLL2_R2_U" value ="35.3"/>
@@ -324,7 +324,7 @@
         <positionref ref="posCOLL1"/>
       </physvol>
 
-      <physvol name="UScoll_1">
+      <physvol name="UScollunion_1">
         <volumeref ref="logicUScollunion_1"/>
         <positionref ref="posCOLL2"/>
       </physvol>

@@ -77,7 +77,8 @@ void remollBeamTarget::UpdateInfo(){
 	    exit(1);
 	}
 
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	//	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "C12" ){
 	    if( fLH2Length >= 0.0 ){
 		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		    ":  Multiply defined LH2 volumes" << G4endl; 
@@ -91,6 +92,13 @@ void remollBeamTarget::UpdateInfo(){
 
 	    fTotalLength += ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
 		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+
+	    G4cout << "\nvoid remollBeamTarget::UpdateInfo()" << G4endl;
+	    G4cout << "ZHalfLen:: "<<((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength() << G4endl;
+	    G4cout << "ZDen:: "<<(*it)->GetLogicalVolume()->GetMaterial()->GetDensity() << G4endl;
+	    G4cout << "fLen:: " << fLH2Length << G4endl;
+	    G4cout << "fPos:: " << fLH2pos << G4endl;
+	    G4cout << "fTLen:: " << fTotalLength << G4endl << G4endl;
 	}
     }
 
@@ -99,11 +107,15 @@ void remollBeamTarget::UpdateInfo(){
 
 
 void remollBeamTarget::SetTargetLen(G4double z){
+
+  //  G4cout << "\nEntering remollBeamTarget::SetTargetLen(z)" << G4endl;
+
     std::vector<G4VPhysicalVolume *>::iterator it;
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
 	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	//	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "C12" ){
 	    // Change the length of the target volume
 	    ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->SetZHalfLength(z/2.0);
 	} else {
@@ -132,9 +144,14 @@ void remollBeamTarget::SetTargetLen(G4double z){
     runManager->GeometryHasBeenModified();
 
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetLen(z)" << G4endl;
 }
 
 void remollBeamTarget::SetTargetPos(G4double z){
+
+  //  G4cout << "\nEntering remollBeamTarget::SetTargetPos(z)" << G4endl;
+
     std::vector<G4VPhysicalVolume *>::iterator it;
 
     //G4double zshift = z-(fZpos+fLH2pos);
@@ -142,7 +159,8 @@ void remollBeamTarget::SetTargetPos(G4double z){
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
 	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	//	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "C12" ){
 	    // Change the length of the target volume
 	    (*it)->SetTranslation( G4ThreeVector(0.0, 0.0, z-fZpos) );
 	} else {
@@ -166,6 +184,8 @@ void remollBeamTarget::SetTargetPos(G4double z){
     runManager->GeometryHasBeenModified();
 
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetPos(z)" << G4endl;
 }
 
 
@@ -224,7 +244,8 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     std::vector<G4VPhysicalVolume *>::iterator it;
     for(it = fTargVols.begin(); it != fTargVols.end() && !foundvol; it++ ){
 	mat = (*it)->GetLogicalVolume()->GetMaterial();
-	if( mat->GetName() == "LiquidHydrogen" ) { 
+	//	if( mat->GetName() == "LiquidHydrogen" ) { 
+	if( mat->GetName() == "C12" ) { 
 	    isLH2 = true; 
 	} else { 
 	    isLH2 = false;
