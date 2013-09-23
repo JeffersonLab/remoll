@@ -24,7 +24,7 @@
     <constant name="COLL5_THICK" value ="70.0"/>
 
     <!-- main coll, adjust this -->
-    <position name="posPCOLL2" unit="mm" x="0" y="0" z="9825-DOFFSET"/> -->
+    <position name="posPCOLL2" unit="mm" x="0" y="0" z="9825-DOFFSET"/>
     <constant name="PCOLL2_R1_U" value ="38.0"/>
     <constant name="PCOLL2_R1_D" value ="38.0"/>
     <constant name="PCOLL2_R2_U" value ="64"/>
@@ -35,7 +35,7 @@
     <constant name="PCOLL2_R4_D" value ="300"/>
     <constant name="PCOLL2_THICK" value ="100.0"/>
 
-    <position name="posPCOLL2TRAP" unit="mm" x="0" y="0" z="9825-DOFFSET+PCOLL2_THICK/2.0+0.5"/> -->
+    <position name="posPCOLL2TRAP" unit="mm" x="0" y="0" z="9825-DOFFSET+PCOLL2_THICK/2.0+0.5"/>
 
     <constant name="PCOLL2_SCULPT_P1_X" value ="63.0"/>
     <constant name="PCOLL2_SCULPT_P1_Y" value ="10.0"/>
