@@ -6,10 +6,9 @@
     <position name="upstreamCenter" x="0" y="0" z="7000."/>
     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
     
-    <position name="GEM1Center" x="0" y="0" z="-0+23000."/> 
-    <!-- position name="GEM2Center" x="0" y="0" z="-0+24000."/ --> 
-    <position name="GEM2Center" x="0" y="0" z="-0+27000."/> 
-    <position name="GEM3Center" x="0" y="0" z="-0+28000."/> 
+    <position name="GEM1Center" x="0" y="0" z="-0+23700.-230.-10."/> 
+    <position name="GEM2Center" x="0" y="0" z="-0+27700.-230.-10."/> 
+    <position name="GEM3Center" x="0" y="0" z="-0+28700.-230.-10."/> 
 
     <position name="mainDetCenter" x="0" y="0" z="-0+28700."/> 
     <!-- position name="detectorCenter" x="0" y="0" z="28500."/ -->
@@ -38,7 +37,8 @@
       
       <!-- Target -->
       <physvol>
-	<file name="geometry_sculpt/targetDaughter.gdml"/>
+	<!-- file name="geometry_sculpt/targetDaughter.gdml"/ -->
+	<file name="geometry_sculpt/target12C.gdml"/>
 	<positionref ref="targetCenter"/>
 	<rotationref ref="identity"/>
       </physvol>

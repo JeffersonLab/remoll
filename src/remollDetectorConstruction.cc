@@ -110,7 +110,8 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	//         *ORDERING IS IMPORTANT - MUST GO UPSTREAM TO DOWNSTREAM*
 	//         FIXME:  can sort that on our own
 	G4String targvolnames[] = {
-	    "h2Targ", ""
+	  //	    "h2Targ", ""
+	    "C12Targ", ""
 	};
 	////////////////////////////////////////////////////////////////////////////////
 

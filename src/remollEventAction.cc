@@ -47,7 +47,10 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
     thiscol = HCE->GetHC(hcidx);
     if(thiscol){ // This is NULL if nothing is stored
       // Dyanmic cast to test types, process however see fit and feed to IO
-      
+
+      Bool_t det200cut=1;      
+      Bool_t det201cut=1;
+
       ////  Generic Detector Hits ///////////////////////////////////
       if( remollGenericDetectorHitsCollection *thiscast = 
 	  dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
@@ -56,12 +59,33 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 	  remollGenericDetectorHit *currentHit = 
 	    (remollGenericDetectorHit *) thiscast->GetHit(hidx);
 
-	  ////  store GEM hits for track reconstruction
-	  if(currentHit->fDetID >= 501 && currentHit->fDetID <= 505){
-	    rTrack->AddHit(currentHit);
-	  } 
-	  // non-GEM hits
-	  else fIO->AddGenericDetectorHit(currentHit);
+	  //// flag hits from inside the inner radius of coll
+	  //   these events need to be discarded
+	  //   these could potentially end up in det, and contaminate data
+	  if(currentHit->fDetID >= 200 && currentHit->f3X.perp()/m < 0.03)
+	    det200cut=0;
+	  
+	  if(currentHit->fDetID >= 201 && currentHit->f3X.perp()/m < 0.05)
+	    det201cut=0;
+	}
+      }
+
+      ////  Generic Detector Hits ///////////////////////////////////
+      if( remollGenericDetectorHitsCollection *thiscast = 
+	  dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
+	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
+
+	  remollGenericDetectorHit *currentHit = 
+	    (remollGenericDetectorHit *) thiscast->GetHit(hidx);
+
+	  if(det200cut && det201cut){
+	    ////  store GEM hits for track reconstruction
+	    if(currentHit->fDetID >= 501 && currentHit->fDetID <= 505){
+	      rTrack->AddHit(currentHit);
+	    }
+	    // non-GEM hits
+	    else fIO->AddGenericDetectorHit(currentHit);
+	  }
 	}
       }
       
@@ -69,7 +93,8 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
       if( remollGenericDetectorSumCollection *thiscast = 
 	  dynamic_cast<remollGenericDetectorSumCollection *>(thiscol)){
 	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorSum(
+	  if(det200cut && det201cut)
+	    fIO->AddGenericDetectorSum(
 				     (remollGenericDetectorSum *) thiscast->GetHit(hidx) );
 	}
       }

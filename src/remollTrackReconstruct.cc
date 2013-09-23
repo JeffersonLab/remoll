@@ -15,6 +15,7 @@
 //
 
 #include "CLHEP/Random/RandFlat.h"
+#include "CLHEP/Random/RandGauss.h"
 #include "TMath.h"
 
 #include "remollTrackReconstruct.hh"
@@ -85,13 +86,15 @@ G4int remollTrackReconstruct::ReconstructTrack(){
 
     hitPos[copyID].push_back(aTrackHit[i]->f3X);
     
-    G4double GEMRES=0.5; // 500 um GEM res
-    G4double GEMRES_x = CLHEP::RandFlat::shoot(GEMRES*0.8,GEMRES); 
-    G4double GEMRES_y = CLHEP::RandFlat::shoot(GEMRES*0.8,GEMRES); 
+    G4double GEMRES=0.075*mm; // 75 um GEM res
+    // G4double GEMRES_x = CLHEP::RandFlat::shoot(GEMRES*0.8,GEMRES); 
+    // G4double GEMRES_y = CLHEP::RandFlat::shoot(GEMRES*0.8,GEMRES); 
+    G4double GEMRES_x = GEMRES; // dont need RandFlat when using RandGauss in EvaluateTrack 
+    G4double GEMRES_y = GEMRES;
 
     //    G4cout << "GEMRES:: " << GEMRES_x << "\t" << GEMRES_y << G4endl;
 
-    GEMRes[copyID].push_back(G4ThreeVector(GEMRES_x*mm,GEMRES_y*mm,0));
+    GEMRes[copyID].push_back(G4ThreeVector(GEMRES_x,GEMRES_y,0));
   }
 
   if(TrackingVerbose)
@@ -132,8 +135,14 @@ G4int remollTrackReconstruct::EvaluateTrack(std::vector <G4ThreeVector> Pos,
   
   for(size_t i=0;i<Pos.size();i++){
     
-    rPosX.push_back(Pos[i].x()/mm);
-    rPosY.push_back(Pos[i].y()/mm);
+    // need to smear rPosX & rPosY -> have finite width
+    //  TRandom *r1 = new TRandom(123456);
+    //r2->Gaus(rPosY,rGEMResY)
+    
+    rPosX.push_back(CLHEP::RandGauss::shoot(Pos[i].x()/mm,(Res[i].x()/mm)/2.));
+    //    rPosX.push_back(Pos[i].x()/mm);
+    rPosY.push_back(CLHEP::RandGauss::shoot(Pos[i].y()/mm,(Res[i].y()/mm)/2.));
+    //    rPosY.push_back(Pos[i].y()/mm);
     rPosZ.push_back(Pos[i].z()/mm);
     
     rGEMResX.push_back(Res[i].x()/mm);
@@ -158,7 +167,7 @@ G4int remollTrackReconstruct::EvaluateTrack(std::vector <G4ThreeVector> Pos,
   // for a linear fit
   //    f(a,b) = a + bx
   //
-  //   R^2(a,b) = sum_i[y_i -(a+b x_i)]^2
+  //   R^2(a,b) = sum_i[y_i - (a+b x_i)]^2
   // R is the residual
   // minimize R^2, and extract a,b to get the best fit line
   //   f(a,b)
@@ -181,7 +190,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
       G4cout << rPosX[iPts] <<"\t" << rPosZ[iPts] << "\t" << rGEMResX[iPts] << G4endl;
   }
 
-  const G4int dim=2;  
+  const G4int dim=2;
   G4double matXZ[dim][dim] = {{0}};
 
   // fill the matrix as
@@ -279,7 +288,7 @@ void remollTrackReconstruct::FillRecTrackHit(){
     G4ThreeVector tmp3vecp = G4ThreeVector(tmpxp,tmpyp,0);
     
     // store reconstructed position/angle
-    aTrackHit[i]->f3XRec = tmp3vec;    
+    aTrackHit[i]->f3XRec = tmp3vec;
     aTrackHit[i]->f3dPRec = tmp3vecp;
   }
   
@@ -301,25 +310,33 @@ void remollTrackReconstruct::EvalTheta(){
   std:: vector <G4double> rec_dr;
   std:: vector <G4double> rec_ph;
 
-  Double_t det_peak_cntr = 0.78;
-  Double_t open_cntr = 180./7/5;
+  //  Double_t det_peak_cntr = 0.78;
   //  Double_t open_cntr = atan(0.084/2/det_peak_cntr)*180/3.14159;
+  Double_t open_cntr = 180./7/5;
 
   theta.resize(rTrackHitSize);
   
   // evaluate th from individual GEM rec vars
   for(G4int i=0;i<rTrackHitSize;i++){
+    // // use the original det vars for comparision -- need to be changed back
+    // rec_r.push_back(aTrackHit[i]->f3X.perp()/m);
+    // rec_ph.push_back(aTrackHit[i]->f3X.phi()/deg);
+    // rec_dr.push_back(aTrackHit[i]->f3dP.perp());
+
     rec_r.push_back(aTrackHit[i]->f3XRec.perp()/m);
     rec_ph.push_back(aTrackHit[i]->f3XRec.phi()/deg);
     rec_dr.push_back(aTrackHit[i]->f3dPRec.perp());
-    
-    // det quartz is 16.0x8.4x1.5cm
-    // ep distribution is centered at r~0.8m in the quartz
-    // center: phi at quartz center ~ atan(0.084/2/0.8)*180/3.14159 = 3.00 deg
-    // wings: center phi~ atan((0.084+0.042)/0.8)*180/3.14159 = 8.95 deg
-    // the fit eqs below are only good for the center & wings of ep
-    // use ep to get reconstructed ee th distribution -- how well does this work??
-
+  }
+  // det quartz is 16.0x8.4x1.5cm
+  // ep distribution is centered at r~0.8m in the quartz
+  // center: phi at quartz center ~ atan(0.084/2/0.8)*180/3.14159 = 3.00 deg
+  // wings: center phi~ atan((0.084+0.042)/0.8)*180/3.14159 = 8.95 deg
+  // the fit eqs below are only good for the center & wings of ep
+  // use ep to get reconstructed ee th distribution -- how well does this work??
+  for(G4int i=0;i<rTrackHitSize;i++){
+    // need GEM closest to det because phi changes with z
+    // if(aTrackHit[i]->fDetID == 503){ 
+    // }
     G4bool cut[] = {
       //Cuts for Open sec1 R1:
       (rec_dr[i]>=0.0395 && rec_r[i]<0.77&& TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
@@ -375,154 +392,62 @@ void remollTrackReconstruct::EvalTheta(){
       TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*1))<open_cntr,
       TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*1))<open_cntr};
 
-
-      // //Cuts for Open sec (dr>=0.0395 && r<0.765):
-      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]<0.765 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr),
-
-      // //Cuts for Open sec (dr>=0.0395 && r>=0.765):
-      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]>=0.0395 && rec_r[i]>=0.765 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr),
-
-      // //Cuts for Open sec (dr<0.0395):
-      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]<0.0395 && TMath::Abs(TMath::Abs(rec_ph[i])-(180-2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*0))<open_cntr),
-      // (rec_dr[i]<0.0395 && TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*0))<open_cntr),
-
-      // //Cuts for Closed sec 1:
-      // (TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*-1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*-1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*-1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]-(180-2*open_cntr)*-1)<open_cntr),
-      // (TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*-1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*-1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*-1))<open_cntr),
-
-      // //Cuts for Closed sec 2:
-      // (TMath::Abs(rec_ph[i]-(180/7.*1-2*open_cntr*1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]-(180/7.*3-2*open_cntr*1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]-(180/7.*5-2*open_cntr*1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]-(180-2*open_cntr)*1)<open_cntr),
-      // (TMath::Abs(rec_ph[i]+(180/7.*1+2*open_cntr*1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]+(180/7.*3+2*open_cntr*1))<open_cntr),
-      // (TMath::Abs(rec_ph[i]+(180/7.*5+2*open_cntr*1))<open_cntr)};
-
-
     G4double eqn[] = {
       //Eqs for Open sec1 R1:
-      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000039+1*0.000005*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*-0.000011*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
-      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000043+1*-0.000007*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*-0.000008*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
-      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000061+1*-0.000016*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*-0.000012*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
-      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000037+1*-0.000012*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*-0.000008*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
-      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000034+1*0.000004*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*-0.000007*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
-      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000029+1*0.000000*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*-0.000010*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
-      (1*0.401275+1*-1.111574*rec_r[i]+1*0.781783*rec_r[i]*rec_r[i])+(1*0.000059+1*0.000011*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*-0.000012*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
-
+      (1*0.427416+1*-1.182831*rec_r[i]+1*0.830332*rec_r[i]*rec_r[i])+(1*0.000056+1*-0.000008*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*-0.000012*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
+      (1*0.427416+1*-1.182831*rec_r[i]+1*0.830332*rec_r[i]*rec_r[i])+(1*0.000039+1*-0.000001*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*-0.000011*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
+      (1*0.427416+1*-1.182831*rec_r[i]+1*0.830332*rec_r[i]*rec_r[i])+(1*0.000037+1*-0.000006*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*-0.000009*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
+      (1*0.427416+1*-1.182831*rec_r[i]+1*0.830332*rec_r[i]*rec_r[i])+(1*0.000035+1*0.000007*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*-0.000011*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
+      (1*0.427416+1*-1.182831*rec_r[i]+1*0.830332*rec_r[i]*rec_r[i])+(1*0.000047+1*-0.000005*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*-0.000011*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
+      (1*0.427416+1*-1.182831*rec_r[i]+1*0.830332*rec_r[i]*rec_r[i])+(1*0.000040+1*0.000003*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*-0.000009*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
+      (1*0.427416+1*-1.182831*rec_r[i]+1*0.830332*rec_r[i]*rec_r[i])+(1*0.000048+1*-0.000003*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*-0.000009*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
+      
       //Eqs for Open sec1 R2:
-      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000048+1*-0.000003*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*0.000005*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
-      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000067+1*-0.000000*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
-      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000071+1*-0.000001*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
-      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000061+1*-0.000003*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*0.000007*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
-      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000063+1*0.000002*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
-      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000071+1*-0.000001*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
-      (1*0.066694+1*-2.183012*rec_dr[i]+1*18.595203*rec_dr[i]*rec_dr[i])+(1*-0.000065+1*-0.000002*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
+      (1*0.066894+1*-2.197356*rec_dr[i]+1*18.830722*rec_dr[i]*rec_dr[i])+(1*-0.000060+1*-0.000001*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
+      (1*0.066894+1*-2.197356*rec_dr[i]+1*18.830722*rec_dr[i]*rec_dr[i])+(1*-0.000063+1*-0.000001*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
+      (1*0.066894+1*-2.197356*rec_dr[i]+1*18.830722*rec_dr[i]*rec_dr[i])+(1*-0.000060+1*-0.000001*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
+      (1*0.066894+1*-2.197356*rec_dr[i]+1*18.830722*rec_dr[i]*rec_dr[i])+(1*-0.000052+1*-0.000001*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*0.000006*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
+      (1*0.066894+1*-2.197356*rec_dr[i]+1*18.830722*rec_dr[i]*rec_dr[i])+(1*-0.000062+1*0.000000*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
+      (1*0.066894+1*-2.197356*rec_dr[i]+1*18.830722*rec_dr[i]*rec_dr[i])+(1*-0.000060+1*0.000000*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
+      (1*0.066894+1*-2.197356*rec_dr[i]+1*18.830722*rec_dr[i]*rec_dr[i])+(1*-0.000060+1*-0.000001*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
 
       //Eqs for Open sec2 R1:
-      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000036+1*0.000004*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*-0.000010*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
-      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000042+1*-0.000007*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*-0.000007*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
-      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000061+1*-0.000016*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*-0.000011*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
-      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000035+1*-0.000012*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*-0.000007*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
-      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000035+1*0.000004*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*-0.000006*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
-      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000029+1*0.000001*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*-0.000009*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
-      (1*0.383826+1*-1.063975*rec_r[i]+1*0.749337*rec_r[i]*rec_r[i])+(1*0.000058+1*0.000012*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*-0.000011*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
+      (1*0.408455+1*-1.130969*rec_r[i]+1*0.794879*rec_r[i]*rec_r[i])+(1*0.000061+1*-0.000008*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*-0.000010*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
+      (1*0.408455+1*-1.130969*rec_r[i]+1*0.794879*rec_r[i]*rec_r[i])+(1*0.000045+1*-0.000001*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*-0.000010*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
+      (1*0.408455+1*-1.130969*rec_r[i]+1*0.794879*rec_r[i]*rec_r[i])+(1*0.000039+1*-0.000006*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*-0.000008*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
+      (1*0.408455+1*-1.130969*rec_r[i]+1*0.794879*rec_r[i]*rec_r[i])+(1*0.000039+1*0.000007*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*-0.000010*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
+      (1*0.408455+1*-1.130969*rec_r[i]+1*0.794879*rec_r[i]*rec_r[i])+(1*0.000052+1*-0.000005*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*-0.000010*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
+      (1*0.408455+1*-1.130969*rec_r[i]+1*0.794879*rec_r[i]*rec_r[i])+(1*0.000043+1*0.000003*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*-0.000008*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
+      (1*0.408455+1*-1.130969*rec_r[i]+1*0.794879*rec_r[i]*rec_r[i])+(1*0.000050+1*-0.000003*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*-0.000007*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
 
       //Eqs for Open sec2 R2:
-      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000045+1*-0.000003*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*0.000005*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
-      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000064+1*-0.000000*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
-      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000067+1*-0.000002*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
-      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000056+1*-0.000003*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*0.000007*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
-      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000058+1*0.000002*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
-      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000068+1*-0.000001*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
-      (1*0.068187+1*-2.269357*rec_dr[i]+1*19.830923*rec_dr[i]*rec_dr[i])+(1*-0.000059+1*-0.000003*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*0.000008*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
+      (1*0.066230+1*-2.160846*rec_dr[i]+1*18.326784*rec_dr[i]*rec_dr[i])+(1*-0.000054+1*-0.000001*(rec_ph[i]-(180/7.*1-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*0)),2)),
+      (1*0.066230+1*-2.160846*rec_dr[i]+1*18.326784*rec_dr[i]*rec_dr[i])+(1*-0.000057+1*-0.000001*(rec_ph[i]-(180/7.*3-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*0)),2)),
+      (1*0.066230+1*-2.160846*rec_dr[i]+1*18.326784*rec_dr[i]*rec_dr[i])+(1*-0.000054+1*-0.000001*(rec_ph[i]-(180/7.*5-2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*0)),2)),
+      (1*0.066230+1*-2.160846*rec_dr[i]+1*18.326784*rec_dr[i]*rec_dr[i])+(1*-0.000046+1*-0.000001*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))+1*0.000006*TMath::Power((rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180)),2)),
+      (1*0.066230+1*-2.160846*rec_dr[i]+1*18.326784*rec_dr[i]*rec_dr[i])+(1*-0.000056+1*0.000000*(rec_ph[i]+(180/7.*1+2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*0)),2)),
+      (1*0.066230+1*-2.160846*rec_dr[i]+1*18.326784*rec_dr[i]*rec_dr[i])+(1*-0.000055+1*0.000000*(rec_ph[i]+(180/7.*3+2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*0)),2)),
+      (1*0.066230+1*-2.160846*rec_dr[i]+1*18.326784*rec_dr[i]*rec_dr[i])+(1*-0.000055+1*-0.000001*(rec_ph[i]+(180/7.*5+2*open_cntr*0))+1*0.000007*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*0)),2)),
 
       //Eqs for Tran sec 1:
-      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000186+1*0.000086*(rec_ph[i]-(180/7.*1-2*open_cntr*-1))+1*-0.000005*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*-1)),2)),
-      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000186+1*0.000094*(rec_ph[i]-(180/7.*3-2*open_cntr*-1))+1*-0.000003*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*-1)),2)),
-      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000195+1*0.000087*(rec_ph[i]-(180/7.*5-2*open_cntr*-1))+1*-0.000006*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*-1)),2)),
-      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000187+1*0.000087*(rec_ph[i]-(180-2*open_cntr)*-1)+1*-0.000004*TMath::Power((rec_ph[i]-(180-2*open_cntr)*-1),2)),
-      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000186+1*0.000085*(rec_ph[i]+(180/7.*1+2*open_cntr*-1))+1*-0.000006*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*-1)),2)),
-      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000186+1*0.000095*(rec_ph[i]+(180/7.*3+2*open_cntr*-1))+1*-0.000005*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*-1)),2)),
-      (1*0.053657+1*-1.457588*rec_dr[i]+1*8.922227*rec_dr[i]*rec_dr[i])+(1*0.000194+1*0.000086*(rec_ph[i]+(180/7.*5+2*open_cntr*-1))+1*-0.000003*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*-1)),2)),
+      (1*0.045577+1*-1.010685*rec_dr[i]+1*2.779333*rec_dr[i]*rec_dr[i])+(1*0.000184+1*0.000082*(rec_ph[i]-(180/7.*1-2*open_cntr*-1))+1*-0.000003*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*-1)),2)),
+      (1*0.045577+1*-1.010685*rec_dr[i]+1*2.779333*rec_dr[i]*rec_dr[i])+(1*0.000177+1*0.000079*(rec_ph[i]-(180/7.*3-2*open_cntr*-1))+1*-0.000003*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*-1)),2)),
+      (1*0.045577+1*-1.010685*rec_dr[i]+1*2.779333*rec_dr[i]*rec_dr[i])+(1*0.000183+1*0.000087*(rec_ph[i]-(180/7.*5-2*open_cntr*-1))+1*-0.000003*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*-1)),2)),
+      (1*0.045577+1*-1.010685*rec_dr[i]+1*2.779333*rec_dr[i]*rec_dr[i])+(1*0.000175+1*0.000083*(rec_ph[i]-(180-2*open_cntr)*-1)+1*-0.000003*TMath::Power((rec_ph[i]-(180-2*open_cntr)*-1),2)),
+      (1*0.045577+1*-1.010685*rec_dr[i]+1*2.779333*rec_dr[i]*rec_dr[i])+(1*0.000165+1*0.000086*(rec_ph[i]+(180/7.*1+2*open_cntr*-1))+1*-0.000002*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*-1)),2)),
+      (1*0.045577+1*-1.010685*rec_dr[i]+1*2.779333*rec_dr[i]*rec_dr[i])+(1*0.000159+1*0.000081*(rec_ph[i]+(180/7.*3+2*open_cntr*-1))+1*-0.000003*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*-1)),2)),
+      (1*0.045577+1*-1.010685*rec_dr[i]+1*2.779333*rec_dr[i]*rec_dr[i])+(1*0.000156+1*0.000080*(rec_ph[i]+(180/7.*5+2*open_cntr*-1))+1*-0.000003*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*-1)),2)),
 
       //Eqs for Tran sec 2:
-      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000193+1*-0.000087*(rec_ph[i]-(180/7.*1-2*open_cntr*1))+1*-0.000004*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*1)),2)),
-      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000212+1*-0.000095*(rec_ph[i]-(180/7.*3-2*open_cntr*1))+1*-0.000005*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*1)),2)),
-      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000153+1*-0.000095*(rec_ph[i]-(180/7.*5-2*open_cntr*1))+1*0.000000*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*1)),2)),
-      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000161+1*-0.000086*(rec_ph[i]-(180-2*open_cntr)*1)+1*-0.000004*TMath::Power((rec_ph[i]-(180-2*open_cntr)*1),2)),
-      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000191+1*-0.000093*(rec_ph[i]+(180/7.*1+2*open_cntr*1))+1*-0.000003*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*1)),2)),
-      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000172+1*-0.000099*(rec_ph[i]+(180/7.*3+2*open_cntr*1))+1*-0.000001*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*1)),2)),
-      (1*0.049919+1*-1.253788*rec_dr[i]+1*6.158067*rec_dr[i]*rec_dr[i])+(1*0.000188+1*-0.000097*(rec_ph[i]+(180/7.*5+2*open_cntr*1))+1*-0.000002*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*1)),2))};
-
-    // //Eqs for Open sec (dr>=0.0395 && r<0.765):
-    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000019+1*0.000014*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
-    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000034+1*0.000045*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
-    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*-0.000051+1*-0.000060*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
-    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000018+1*-0.000030*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))),
-    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*-0.000004+1*0.000005*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
-    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*-0.000049+1*-0.000018*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
-    //   (1*0.398820+1*-1.099818*rec_r[i]+1*0.769735*rec_r[i]*rec_r[i])+(1*0.000046+1*0.000026*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
-
-    //   //Eqs for Open sec (dr>=0.0395 && r>=0.765):
-    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000218+1*0.000016*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
-    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*0.000057+1*-0.000018*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
-    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*0.000230+1*0.000038*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
-    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000121+1*-0.000047*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))),
-    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000011+1*-0.000006*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
-    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*0.000078+1*-0.000020*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
-    //   (1*0.127163+1*-4.989350*rec_dr[i]+1*51.500748*rec_dr[i]*rec_dr[i])+(1*-0.000070+1*-0.000060*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
-
-    //   //Eqs for Open sec (dr<0.0395):
-    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000041+1*0.000069*(rec_ph[i]-(180/7.*1-2*open_cntr*0))),
-    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*0.000089+1*0.000119*(rec_ph[i]-(180/7.*3-2*open_cntr*0))),
-    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*0.000467+1*0.000010*(rec_ph[i]-(180/7.*5-2*open_cntr*0))),
-    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000039+1*0.000144*(rec_ph[i]>1?(rec_ph[i]-180):(rec_ph[i]+180))),
-    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000348+1*0.000059*(rec_ph[i]+(180/7.*1+2*open_cntr*0))),
-    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000065+1*-0.000174*(rec_ph[i]+(180/7.*3+2*open_cntr*0))),
-    //   (1*0.042981+1*-0.832476*rec_dr[i]+1*0.000000*rec_dr[i]*rec_dr[i])+(1*-0.000195+1*0.000017*(rec_ph[i]+(180/7.*5+2*open_cntr*0))),
-
-    //   //Eqs for Closed sec 1:
-    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000185+1*0.000185*(rec_ph[i]-(180/7.*1-2*open_cntr*-1))),
-    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*-0.000010+1*0.000115*(rec_ph[i]-(180/7.*3-2*open_cntr*-1))),
-    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000025+1*0.000195*(rec_ph[i]-(180/7.*5-2*open_cntr*-1))),
-    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000119+1*0.000231*(rec_ph[i]-(180-2*open_cntr)*-1)),
-    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000134+1*0.000276*(rec_ph[i]+(180/7.*1+2*open_cntr*-1))),
-    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000195+1*0.000285*(rec_ph[i]+(180/7.*3+2*open_cntr*-1))),
-    //   (1*0.094772+1*-3.658849*rec_dr[i]+1*38.356179*rec_dr[i]*rec_dr[i])+(1*0.000178+1*0.000144*(rec_ph[i]+(180/7.*5+2*open_cntr*-1))),
-
-    //   //Eqs for Closed sec 2:
-    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000081+1*-0.000045*(rec_ph[i]-(180/7.*1-2*open_cntr*1))),
-    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000207+1*-0.000315*(rec_ph[i]-(180/7.*3-2*open_cntr*1))),
-    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000036+1*-0.000185*(rec_ph[i]-(180/7.*5-2*open_cntr*1))),
-    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000181+1*-0.000207*(rec_ph[i]-(180-2*open_cntr)*1)),
-    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000088+1*-0.000123*(rec_ph[i]+(180/7.*1+2*open_cntr*1))),
-    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*0.000260+1*-0.000329*(rec_ph[i]+(180/7.*3+2*open_cntr*1))),
-    //   (1*0.090725+1*-3.435000*rec_dr[i]+1*35.353838*rec_dr[i]*rec_dr[i])+(1*-0.000087+1*-0.000190*(rec_ph[i]+(180/7.*5+2*open_cntr*1)))};
+      (1*0.045586+1*-1.014343*rec_dr[i]+1*2.868409*rec_dr[i]*rec_dr[i])+(1*0.000174+1*-0.000085*(rec_ph[i]-(180/7.*1-2*open_cntr*1))+1*-0.000003*TMath::Power((rec_ph[i]-(180/7.*1-2*open_cntr*1)),2)),
+      (1*0.045586+1*-1.014343*rec_dr[i]+1*2.868409*rec_dr[i]*rec_dr[i])+(1*0.000168+1*-0.000084*(rec_ph[i]-(180/7.*3-2*open_cntr*1))+1*-0.000003*TMath::Power((rec_ph[i]-(180/7.*3-2*open_cntr*1)),2)),
+      (1*0.045586+1*-1.014343*rec_dr[i]+1*2.868409*rec_dr[i]*rec_dr[i])+(1*0.000179+1*-0.000083*(rec_ph[i]-(180/7.*5-2*open_cntr*1))+1*-0.000003*TMath::Power((rec_ph[i]-(180/7.*5-2*open_cntr*1)),2)),
+      (1*0.045586+1*-1.014343*rec_dr[i]+1*2.868409*rec_dr[i]*rec_dr[i])+(1*0.000167+1*-0.000078*(rec_ph[i]-(180-2*open_cntr)*1)+1*-0.000003*TMath::Power((rec_ph[i]-(180-2*open_cntr)*1),2)),
+      (1*0.045586+1*-1.014343*rec_dr[i]+1*2.868409*rec_dr[i]*rec_dr[i])+(1*0.000180+1*-0.000090*(rec_ph[i]+(180/7.*1+2*open_cntr*1))+1*-0.000002*TMath::Power((rec_ph[i]+(180/7.*1+2*open_cntr*1)),2)),
+      (1*0.045586+1*-1.014343*rec_dr[i]+1*2.868409*rec_dr[i]*rec_dr[i])+(1*0.000179+1*-0.000083*(rec_ph[i]+(180/7.*3+2*open_cntr*1))+1*-0.000004*TMath::Power((rec_ph[i]+(180/7.*3+2*open_cntr*1)),2)),
+      (1*0.045586+1*-1.014343*rec_dr[i]+1*2.868409*rec_dr[i]*rec_dr[i])+(1*0.000175+1*-0.000082*(rec_ph[i]+(180/7.*5+2*open_cntr*1))+1*-0.000004*TMath::Power((rec_ph[i]+(180/7.*5+2*open_cntr*1)),2))};
     
-    for(int ii=0;ii<35;ii++){
+    for(int ii=0;ii<42;ii++){
       if(cut[ii]){
 	theta[i] = eqn[ii];
 
@@ -538,7 +463,7 @@ void remollTrackReconstruct::EvalTheta(){
     if(EvalTrackVerbose){
       G4cout << "Org:: " << aTrackHit[i]->f3X.perp()/m << "\t" << aTrackHit[i]->f3X.phi()/deg << "\t" << aTrackHit[i]->f3dP.perp() << "\t" << aTrackHit[i]->fTh << G4endl;
       G4cout << "Rec:: " << rec_r[i] << "\t" << rec_ph[i] << "\t" << rec_dr[i] << "\t" << theta[i] << G4endl;
-    }    
+    }
   }
   for(G4int i=0;i<rTrackHitSize;i++)
     aTrackHit[i]->fThRec = theta[i];
