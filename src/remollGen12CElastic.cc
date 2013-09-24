@@ -27,7 +27,8 @@ remollGen12CElastic::remollGen12CElastic(){
 
     fE_min = 80.0*MeV; // Absolute minimum of electron energy
                             // to generate
-    fApplyMultScatt = true; 
+    //    fApplyMultScatt = true; 
+    fApplyMultScatt = false; 
     fBeamTarg = remollBeamTarget::GetBeamTarget();
 }
 
