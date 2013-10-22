@@ -139,6 +139,14 @@ remollMessenger::remollMessenger(){
     beamph0Cmd->SetGuidance("beam initial direction in y (vertical)");
     beamph0Cmd->SetParameterName("beamph0", false);
 
+    beamCorrThCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_corrth",this);
+    beamCorrThCmd->SetGuidance("beam correlated angle (horizontal)");
+    beamCorrThCmd->SetParameterName("beam_corrth", false);
+
+    beamCorrPhCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_corrph",this);
+    beamCorrPhCmd->SetGuidance("beam correlated angle (vertical)");
+    beamCorrPhCmd->SetParameterName("beam_corrph", false);
+
     beamdthCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_dth",this);
     beamdthCmd->SetGuidance("beam gaussian spread in direction x (horizontal)");
     beamdthCmd->SetParameterName("beamdth", false);
@@ -429,6 +437,16 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     if( cmd == beamph0Cmd ){
 	G4double y = beamph0Cmd->GetNewDoubleValue(newValue);
 	fBeamTarg->fPh0 = y;
+    }
+
+    if( cmd == beamCorrThCmd ){
+	G4double x = beamCorrThCmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fCorrTh = tan(x);
+    }
+
+    if( cmd == beamCorrPhCmd ){
+	G4double y = beamCorrPhCmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fCorrPh = tan(y);
     }
 
     if( cmd == beamdthCmd ){
