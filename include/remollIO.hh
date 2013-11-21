@@ -129,6 +129,7 @@ class remollIO {
         // reconstructed vars for GEMs
 	Double_t fGenDetHit_XRec[__IO_MAXHIT];
 	Double_t fGenDetHit_YRec[__IO_MAXHIT];
+	Double_t fGenDetHit_ZRec[__IO_MAXHIT];
 	Double_t fGenDetHit_RRec[__IO_MAXHIT];
 	Double_t fGenDetHit_PhRec[__IO_MAXHIT];
 	Double_t fGenDetHit_ThRec[__IO_MAXHIT];

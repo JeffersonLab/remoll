@@ -116,6 +116,7 @@ void remollIO::InitializeTree(){
     // reconstructed vars for GEMS
     fTree->Branch("hit.x_rec",  &fGenDetHit_XRec,  "hit.x_rec[hit.n]/D");
     fTree->Branch("hit.y_rec",  &fGenDetHit_YRec,  "hit.y_rec[hit.n]/D");
+    fTree->Branch("hit.z_rec",  &fGenDetHit_ZRec,  "hit.z_rec[hit.n]/D"); // redundant, but useful for check
     fTree->Branch("hit.r_rec",  &fGenDetHit_RRec,  "hit.r_rec[hit.n]/D");
     fTree->Branch("hit.ph_rec", &fGenDetHit_PhRec, "hit.ph_rec[hit.n]/D");
     fTree->Branch("hit.th_rec", &fGenDetHit_ThRec, "hit.th_rec[hit.n]/D");
@@ -229,7 +230,7 @@ void remollIO::SetEventData(remollEvent *ev){
 	fEvPart_Px[idx] = ev->fPartRealMom[idx].x()/__E_UNIT;
 	fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
 	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
-	fEvPart_Th[idx] = ev->fPartRealMom[idx].theta();
+	fEvPart_Th[idx] = ev->fPartRealMom[idx].theta(); // in rad by default
 	fEvPart_Ph[idx] = ev->fPartRealMom[idx].phi()/deg;
 
 	fEvPart_P[idx] = ev->fPartRealMom[idx].mag()/__E_UNIT;
@@ -290,6 +291,7 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     // resonstructed vars for GEM
     fGenDetHit_XRec[n]  = hit->f3XRec.x()/__L_UNIT;
     fGenDetHit_YRec[n]  = hit->f3XRec.y()/__L_UNIT;
+    fGenDetHit_ZRec[n]  = hit->f3XRec.z()/__L_UNIT;
     fGenDetHit_RRec[n]  = sqrt(hit->f3XRec.x()*hit->f3XRec.x()+hit->f3XRec.y()*hit->f3XRec.y())/__L_UNIT;
     fGenDetHit_PhRec[n] = hit->f3XRec.phi()/deg;
     fGenDetHit_ThRec[n] = hit->fThRec;

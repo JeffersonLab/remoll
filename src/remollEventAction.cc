@@ -48,7 +48,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
     if(thiscol){ // This is NULL if nothing is stored
       // Dyanmic cast to test types, process however see fit and feed to IO
 
-      Bool_t det200cut=1;      
+      Bool_t det200cut=1;
       Bool_t det201cut=1;
 
       ////  Generic Detector Hits ///////////////////////////////////
@@ -62,10 +62,10 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 	  //// flag hits from inside the inner radius of coll
 	  //   these events need to be discarded
 	  //   these could potentially end up in det, and contaminate data
-	  if(currentHit->fDetID >= 200 && currentHit->f3X.perp()/m < 0.03)
+	  if(currentHit->fDetID == 200 && currentHit->f3X.perp()/m < 0.03)
 	    det200cut=0;
 	  
-	  if(currentHit->fDetID >= 201 && currentHit->f3X.perp()/m < 0.05)
+	  if(currentHit->fDetID == 201 && currentHit->f3X.perp()/m < 0.05)
 	    det201cut=0;
 	}
       }
