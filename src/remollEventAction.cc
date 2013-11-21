@@ -80,7 +80,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 
 	  if(det200cut && det201cut){
 	    ////  store GEM hits for track reconstruction
-	    if(currentHit->fDetID >= 501 && currentHit->fDetID <= 505){
+	    if(currentHit->fDetID >= 501 && currentHit->fDetID <= 504){
 	      rTrack->AddHit(currentHit);
 	    }
 	    // non-GEM hits

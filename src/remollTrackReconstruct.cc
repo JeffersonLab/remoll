@@ -92,8 +92,7 @@ G4int remollTrackReconstruct::ReconstructTrack(){
 
     hitPos[copyID].push_back(aTrackHit[i]->f3X*mm);  // in mm already -- default unit
     
-    //    G4double GEMRES=0.075*mm; // 75 um GEM res
-    G4double GEMRES=0.5*mm; // 75 um GEM res
+    G4double GEMRES=0.075*mm; // 75 um GEM res
     G4double GEMRES_x = GEMRES;
     G4double GEMRES_y = GEMRES;
 
