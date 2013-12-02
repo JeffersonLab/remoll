@@ -75,8 +75,8 @@ remollMessenger::remollMessenger(){
     tgtLenCmd->AvailableForStates(G4State_Idle); // Only have this AFTER we've initalized geometry
 
     tgtPosCmd = new G4UIcmdWithADoubleAndUnit("/remoll/targpos",this);
-    tgtPosCmd->SetGuidance("Target length");
-    tgtPosCmd->SetParameterName("targlen", false);
+    tgtPosCmd->SetGuidance("Target position");
+    tgtPosCmd->SetParameterName("targpos", false);
     tgtPosCmd->AvailableForStates(G4State_Idle); // Only have this AFTER we've initalized geometry
 
     beamCurrCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beamcurr",this);
