@@ -34,8 +34,8 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-	<!-- file name="geometry_sculpt/targetDaughter.gdml"/ -->
-	<file name="geometry_sculpt/target12C.gdml"/>
+	<file name="geometry_sculpt/targetDaughter.gdml"/>
+	<!-- file name="geometry_sculpt/target12C.gdml"/ -->
 	<positionref ref="targetCenter"/>
 	<rotationref ref="identity"/>
       </physvol>

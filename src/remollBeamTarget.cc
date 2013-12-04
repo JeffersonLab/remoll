@@ -79,8 +79,8 @@ void remollBeamTarget::UpdateInfo(){
 	    exit(1);
 	}
 
-	//	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "C12" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	//	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "C12" ){
 	    if( fLH2Length >= 0.0 ){
 		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		    ":  Multiply defined LH2 volumes" << G4endl; 
@@ -106,8 +106,8 @@ void remollBeamTarget::SetTargetLen(G4double z){
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
 	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	//	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "C12" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	  //if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "C12" ){
 	    // Change the length of the target volume
 	    ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->SetZHalfLength(z/2.0);
 	} else {
@@ -146,8 +146,8 @@ void remollBeamTarget::SetTargetPos(G4double z){
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
 	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	//	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "C12" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	  //if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "C12" ){
 	    // Change the length of the target volume
 	    (*it)->SetTranslation( G4ThreeVector(0.0, 0.0, z-fZpos) );
 	} else {
@@ -229,8 +229,8 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     std::vector<G4VPhysicalVolume *>::iterator it;
     for(it = fTargVols.begin(); it != fTargVols.end() && !foundvol; it++ ){
 	mat = (*it)->GetLogicalVolume()->GetMaterial();
-	//	if( mat->GetName() == "LiquidHydrogen" ) { 
-	if( mat->GetName() == "C12" ) { 
+	if( mat->GetName() == "LiquidHydrogen" ) { 
+	  //	if( mat->GetName() == "C12" ) { 
 	    isLH2 = true; 
 	} else { 
 	    isLH2 = false;
