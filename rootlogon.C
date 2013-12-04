@@ -1,3 +1,3 @@
 void rootlogon(){
-    gSystem->Load("libremollroot.dylib");
+    gSystem->Load("libremollroot.so");
 }
