@@ -34,6 +34,7 @@
 //to make gui.mac work
 #include <G4UImanager.hh>
 #include <G4UIExecutive.hh>
+#include <G4UIterminal.hh>
 
 #ifdef G4UI_USE_QT
 #include "G4UIQt.hh"
@@ -41,6 +42,10 @@
 
 #ifdef G4UI_USE_XM
 #include "G4UIXm.hh"
+#endif
+
+#ifdef G4UI_USE_TCSH
+#include "G4UItcsh.hh"
 #endif
 
 #ifdef G4VIS_USE
