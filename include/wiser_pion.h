@@ -6,6 +6,9 @@
 #define me 0.511E-3 //electron restmass (GeV)
 #define alpha 0.007299
 
+#define __WISER_EPS 1e-4
+#define __WISER_N_LEG_PTS 100
+
 
 Double_t wiser_all_fit(Double_t *x, Double_t *par);
 
@@ -109,6 +112,10 @@ Double_t wiser_sigma(Double_t Ebeam, Double_t pf, Double_t thf, Double_t rad_len
 
 
     if( E_gamma_min > 0.0 && E_gamma_min < Ebeam ){
+	int np = __WISER_N_LEG_PTS;
+
+	double *x=new double[np];
+	double *w=new double[np];
 
 	TF1 *wiserfit = new TF1("wiserfit", wiser_all_fit, E_gamma_min, Ebeam, 5);
 	wiserfit->SetParameter(0, Ebeam);
@@ -117,9 +124,13 @@ Double_t wiser_sigma(Double_t Ebeam, Double_t pf, Double_t thf, Double_t rad_len
 	wiserfit->SetParameter(3, (Double_t) type);
 	wiserfit->SetParameter(4, M_X);
 
-	fitres = wiserfit->Integral(E_gamma_min, Ebeam);
+
+	wiserfit->CalcGaussLegendreSamplingPoints(np, x, w, __WISER_EPS);
+	fitres = wiserfit->IntegralFast(np, x, w, E_gamma_min, Ebeam);
 
 	delete wiserfit;
+	delete x;
+	delete w;
 
 	if( type != 4 ){
 	    sig_e = fitres*exp(A5[type]*ML)*exp(A6[type]*pT*pT/Ef);

@@ -38,7 +38,7 @@
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
 
-/remoll/beamcurr 85 microampere
+/remoll/beamcurr 75 microampere
 
 #Enable optical photons and processes
 #/remoll/optical true

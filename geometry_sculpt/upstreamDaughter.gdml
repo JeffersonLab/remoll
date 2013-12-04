@@ -25,8 +25,8 @@
     <constant name="COLL2_R1_D" value ="26.0"/>
     <constant name="COLL2_R2_U" value ="35.3"/>
     <constant name="COLL2_R2_D" value ="35.3"/>
-    <constant name="COLL2_R3_U" value ="106.1"/>
-    <constant name="COLL2_R3_D" value ="106.1"/>
+    <constant name="COLL2_R3_U" value ="98.0"/>
+    <constant name="COLL2_R3_D" value ="98.0"/>
     <constant name="COLL2_R4_U" value ="300"/>
     <constant name="COLL2_R4_D" value ="300"/>
 

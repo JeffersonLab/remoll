@@ -83,7 +83,7 @@ class remollBeamTarget {
 	G4double fRasterX, fRasterY;
 	G4double fX0, fY0;
 	G4double fTh0, fPh0;
-	G4double fdTh, fdPh;
+	G4double fdTh, fdPh, fCorrTh, fCorrPh;
 
 };
 

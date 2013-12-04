@@ -33,13 +33,15 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
     double pf = CLHEP::RandFlat::shoot(0.0, beamE);
 
-    double V = 2.0*pi*(cos(fTh_min) - cos(fTh_max));
+    double V = 2.0*pi*(cos(fTh_min) - cos(fTh_max))*beamE;
 
-    double sigpip = wiser_sigma(beamE/GeV, pf/GeV, th, rad_len + 0.05, 0)*nanobarn/GeV;
-    double sigpim = wiser_sigma(beamE/GeV, pf/GeV, th, rad_len + 0.05, 1)*nanobarn/GeV;
+    double intrad = 2.0*alpha*log(beamE/electron_mass_c2)/pi;
 
-    evt->SetEffCrossSection(V*(vert->GetMaterial()->GetZ()*sigpip + 
-		(vert->GetMaterial()->GetA()*mole/g-vert->GetMaterial()->GetZ())*sigpim));
+    double sigpip = wiser_sigma(beamE/GeV, pf/GeV, th, rad_len*4.0/3.0 + intrad, 0)*nanobarn/GeV;
+    double sigpim = wiser_sigma(beamE/GeV, pf/GeV, th, rad_len*4.0/3.0 + intrad, 1)*nanobarn/GeV;
+
+    evt->SetEffCrossSection(V*(vert->GetMaterial()->GetZ()*sigpim + 
+		(vert->GetMaterial()->GetA()*mole/g-vert->GetMaterial()->GetZ())*sigpip));
 
     if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << 
