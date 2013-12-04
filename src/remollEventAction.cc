@@ -16,7 +16,6 @@
 #include "remollIO.hh"
 #include "remollTrackReconstruct.hh"
 
-
 remollEventAction::remollEventAction() {
 }
 
@@ -41,7 +40,6 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
   G4VHitsCollection *thiscol;
 
   rTrack = new remollTrackReconstruct();
-
   // Traverse all hit collections, sort by output type
   for( int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++ ){
     thiscol = HCE->GetHC(hcidx);
@@ -52,10 +50,10 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
       if( remollGenericDetectorHitsCollection *thiscast = 
 	  dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
 	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  
+
 	  remollGenericDetectorHit *currentHit = 
 	    (remollGenericDetectorHit *) thiscast->GetHit(hidx);
-	  
+
 	  ////  store GEM hits for track reconstruction
 	  if(currentHit->fDetID >= 501 && currentHit->fDetID <= 504){
 	    rTrack->AddHit(currentHit);
@@ -73,9 +71,22 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 				     thiscast->GetHit(hidx) );
 	}
       }
-      
+     
     }
   }
+
+  ////  reconstruct tracks, and store them into rootfile
+  if(rTrack->GetTrackHitSize()>0){ 
+      
+    rTrack->ReconstructTrack();
+
+    std::vector<remollGenericDetectorHit*> rRecHit = rTrack->GetTrack();
+      
+    for(G4int j=0;j<rRecHit.size();j++)
+      fIO->AddGenericDetectorHit((remollGenericDetectorHit *) rRecHit[j]);
+  }
+  
+  delete rTrack;
 
   // Fill tree and reset buffers
   fIO->FillTree();
