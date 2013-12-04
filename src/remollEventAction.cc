@@ -14,7 +14,7 @@
 #include "G4ios.hh"
 
 #include "remollIO.hh"
-
+#include "remollTrackReconstruct.hh"
 
 remollEventAction::remollEventAction() {
 }
@@ -39,12 +39,14 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 
   G4VHitsCollection *thiscol;
 
+  rTrack = new remollTrackReconstruct();
+  
   // Traverse all hit collections, sort by output type
   for( int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++ ){
     thiscol = HCE->GetHC(hcidx);
     if(thiscol){ // This is NULL if nothing is stored
       // Dyanmic cast to test types, process however see fit and feed to IO
-
+      
       ////  Generic Detector Hits ///////////////////////////////////
       if( remollGenericDetectorHitsCollection *thiscast = 
 	  dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
@@ -54,9 +56,9 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 	    (remollGenericDetectorHit *) thiscast->GetHit(hidx);
 
 	  ////  store GEM hits for track reconstruction
-	  if(currentHit->fDetID >= 501 && currentHit->fDetID <= 504){
+	  if(currentHit->fDetID >= 501 && currentHit->fDetID <= 505){
 	    rTrack->AddHit(currentHit);
-	  }
+	  } 
 	  // non-GEM hits
 	  else fIO->AddGenericDetectorHit(currentHit);
 	}
@@ -66,13 +68,26 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
       if( remollGenericDetectorSumCollection *thiscast = 
 	  dynamic_cast<remollGenericDetectorSumCollection *>(thiscol)){
 	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorSum((remollGenericDetectorSum *) 
-				     thiscast->GetHit(hidx) );
+	  fIO->AddGenericDetectorSum( (remollGenericDetectorSum *) 
+				      thiscast->GetHit(hidx) );
 	}
       }
-      
+     
     }
   }
+
+  ////  reconstruct tracks, and store them into rootfile
+  if(rTrack->GetTrackHitSize()>0){ 
+      
+    rTrack->ReconstructTrack();
+
+    std::vector<remollGenericDetectorHit*> rRecHit = rTrack->GetTrack();
+      
+    for(G4int j=0;j<rRecHit.size();j++)
+      fIO->AddGenericDetectorHit((remollGenericDetectorHit *) rRecHit[j]);
+  }
+  
+  delete rTrack;
 
   // Fill tree and reset buffers
   fIO->FillTree();
