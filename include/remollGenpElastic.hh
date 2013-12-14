@@ -25,9 +25,6 @@ class remollGenpElastic : public remollVEventGen {
 	G4double EnergNumInt(G4double,G4double,G4double);
 
 	remollBeamTarget *fBeamTarg;
-
-
-	bool fEnableIntRad;
 };
 
 #endif//__REMOLLGENPELASTIC_HH 
