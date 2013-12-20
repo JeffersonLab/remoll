@@ -27,7 +27,8 @@ remollGen12CElastic::remollGen12CElastic(){
 
     fE_min = 80.0*MeV; // Absolute minimum of electron energy
                             // to generate
-    fApplyMultScatt = true; 
+    //    fApplyMultScatt = true; 
+    fApplyMultScatt = false; 
     fBeamTarg = remollBeamTarget::GetBeamTarget();
 }
 
@@ -208,20 +209,21 @@ void remollGen12CElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double ef    = Al_A*proton_mass_c2*beamE/(Al_A*proton_mass_c2 + beamE*(1.0-cos(th)));
 
     double q2  = 2.0*beamE*ef*(1.0-cos(th));
-    double tau = q2/(4.0*Al_A*proton_mass_c2*Al_A*proton_mass_c2);
+    //    double tau = q2/(4.0*Al_A*proton_mass_c2*Al_A*proton_mass_c2);
 
-    double gd = pow( 1.0 + q2/(0.71*GeV*GeV), -2.0 );
-    double gep = gd;
-    double gmp = 2.79*gd;
+    // double gd = pow( 1.0 + q2/(0.71*GeV*GeV), -2.0 );
+    // double gep = gd;
+    // double gmp = 2.79*gd;
 
-    double gen =  1.91*gd*tau/(1.0+5.6*tau); // galster
-    double gmn = -1.91*gd;
+    // double gen =  1.91*gd*tau/(1.0+5.6*tau); // galster
+    // double gmn = -1.91*gd;
 
     double sigma_mott = hbarc*hbarc*pow(alpha*cos(th/2.0), 2.0)/pow(2.0*beamE*sin(th/2.0)*sin(th/2.0), 2.0);
-    double ffpart1 = (gep*gep + tau*gmp*gmp)/(1.0+tau);
-    double ffpart2 = 2.0*tau*gmp*gmp*tan(th/2.0)*tan(th/2.0);
+    // double ffpart1 = (gep*gep + tau*gmp*gmp)/(1.0+tau);
+    // double ffpart2 = 2.0*tau*gmp*gmp*tan(th/2.0)*tan(th/2.0);
 
-    double sigma = sigma_mott*(ef/beamE)*(ffpart1 + ffpart2);
+    //    double sigma = sigma_mott*(ef/beamE)*(ffpart1 + ffpart2);
+    double sigma = sigma_mott*(ef/beamE);
 
     double V = 2.0*pi*(cthmin - cthmax)*samp_fact;
 
@@ -251,19 +253,20 @@ void remollGen12CElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	exit(1);
     }
 
-    G4double APV_base = -GF*q2/(4.0*sqrt(2.0)*pi*alpha);
+    // G4double APV_base = -GF*q2/(4.0*sqrt(2.0)*pi*alpha);
 
-    G4double eps = pow(1.0 + 2.0*(1.0+tau)*tan(th/2.0)*tan(th/2.0), -1.0);
+    // G4double eps = pow(1.0 + 2.0*(1.0+tau)*tan(th/2.0)*tan(th/2.0), -1.0);
 
-    G4double apvffnum = eps*gep*gen + tau*gmp*gmn;
-    G4double apvffden = eps*gep*gep  + tau*gmp*gmp;
+    // G4double apvffnum = eps*gep*gen + tau*gmp*gmn;
+    // G4double apvffden = eps*gep*gep  + tau*gmp*gmp;
 
-    G4double APV = APV_base*(QWp - apvffnum/apvffden);
+    // G4double APV = APV_base*(QWp - apvffnum/apvffden);
 
-    evt->SetAsymmetry(APV);
+    //    evt->SetAsymmetry(APV);
+    evt->SetAsymmetry(0);
 
     evt->SetQ2( q2 );
-    evt->SetW2( Al_A*proton_mass_c2*Al_A*proton_mass_c2 );
+    evt->SetW2( Al_A*Al_A*proton_mass_c2*Al_A*proton_mass_c2 );
 
     // // REradiate////////////////////////////////////////////////////////////////////////////
     // // We're going to use the new kinematics for this guy

@@ -27,6 +27,8 @@ remollBeamTarget::remollBeamTarget(){
     fRasterX = fRasterY = 5.0*mm;
     fX0 = fY0 = fTh0 = fPh0 = fdTh = fdPh = 0.0;
 
+    fCorrTh = fCorrPh = 0.0;
+
     fMS = new remollMultScatt();
 
     fBeamE   = gDefaultBeamE;
@@ -382,14 +384,14 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
     assert( !std::isnan(msth) && !std::isnan(msph) );
 
-    bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
-    bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);
+    bmth = CLHEP::RandGauss::shoot(fTh0, fdTh) + fCorrTh*(rasx-fX0)/fRasterX/2;
+    bmph = CLHEP::RandGauss::shoot(fPh0, fdPh) + fCorrPh*(rasy-fY0)/fRasterY/2;
 
     // Initial direction
     fDir = G4ThreeVector(0.0, 0.0, 1.0);
 
-    fDir.rotateY( bmth);
-    fDir.rotateX(-bmph);
+    fDir.rotateY( bmth); // Positive th pushes to positive X
+    fDir.rotateX(-bmph); // Positive ph pushes to positive Y
 
     fDir.rotateY(msth);
     fDir.rotateX(msph);

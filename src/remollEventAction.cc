@@ -16,7 +16,6 @@
 #include "remollIO.hh"
 #include "remollTrackReconstruct.hh"
 
-
 remollEventAction::remollEventAction() {
 }
 
@@ -37,7 +36,7 @@ void remollEventAction::BeginOfEventAction(const G4Event*ev) {
 void remollEventAction::EndOfEventAction(const G4Event* evt ) {
   //G4SDManager   *SDman = G4SDManager::GetSDMpointer();
   G4HCofThisEvent *HCE = evt->GetHCofThisEvent();
-  
+
   G4VHitsCollection *thiscol;
 
   rTrack = new remollTrackReconstruct();
@@ -69,8 +68,8 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
       if( remollGenericDetectorSumCollection *thiscast = 
 	  dynamic_cast<remollGenericDetectorSumCollection *>(thiscol)){
 	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorSum(
-				     (remollGenericDetectorSum *) thiscast->GetHit(hidx) );
+	  fIO->AddGenericDetectorSum( (remollGenericDetectorSum *) 
+				      thiscast->GetHit(hidx) );
 	}
       }
      
@@ -88,7 +87,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
       fIO->AddGenericDetectorHit((remollGenericDetectorHit *) rRecHit[j]);
   }
   
-  delete rTrack;  
+  delete rTrack;
 
   // Fill tree and reset buffers
   fIO->FillTree();

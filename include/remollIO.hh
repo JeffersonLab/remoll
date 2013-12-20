@@ -116,7 +116,6 @@ class remollIO {
 	Double_t fGenDetHit_Z[__IO_MAXHIT];
 	Double_t fGenDetHit_R[__IO_MAXHIT];
 	Double_t fGenDetHit_Ph[__IO_MAXHIT];
-        Double_t fGenDetHit_Th[__IO_MAXHIT]; // rupesh
 
         // directions
 	Double_t fGenDetHit_dPx[__IO_MAXHIT];
@@ -129,6 +128,7 @@ class remollIO {
         // reconstructed vars for GEMs
 	Double_t fGenDetHit_XRec[__IO_MAXHIT];
 	Double_t fGenDetHit_YRec[__IO_MAXHIT];
+	Double_t fGenDetHit_ZRec[__IO_MAXHIT];
 	Double_t fGenDetHit_RRec[__IO_MAXHIT];
 	Double_t fGenDetHit_PhRec[__IO_MAXHIT];
 	Double_t fGenDetHit_ThRec[__IO_MAXHIT];
@@ -151,6 +151,8 @@ class remollIO {
 	Double_t fGenDetHit_Vx[__IO_MAXHIT];
 	Double_t fGenDetHit_Vy[__IO_MAXHIT];
 	Double_t fGenDetHit_Vz[__IO_MAXHIT];
+
+	Int_t fCollCut;
 
 	//  GenericDetectorSum
     public:

@@ -30,7 +30,6 @@ class remollGenericDetectorHit : public G4VHit {
 	// Position and momentum in lab coordinates
 	G4ThreeVector f3X;
 	G4ThreeVector f3P;
-        G4double fTh; // rupesh
         // direction
         G4ThreeVector f3dP; 
 
