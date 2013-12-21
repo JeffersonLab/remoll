@@ -19,7 +19,7 @@
 #define Euler 0.5772157
 #define NINTERVAL 3
 //#define mAl (27*931.5*MeV)
-#define Al_A 27
+#define C12_A 12
 
 remollGen12CElastic::remollGen12CElastic(){
     fTh_min =     0.1*deg;
@@ -27,7 +27,6 @@ remollGen12CElastic::remollGen12CElastic(){
 
     fE_min = 80.0*MeV; // Absolute minimum of electron energy
                             // to generate
-    //    fApplyMultScatt = true; 
     fApplyMultScatt = false; 
     fBeamTarg = remollBeamTarget::GetBeamTarget();
 }
@@ -206,10 +205,10 @@ void remollGen12CElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
 
-    double ef    = Al_A*proton_mass_c2*beamE/(Al_A*proton_mass_c2 + beamE*(1.0-cos(th)));
+    double ef    = C12_A*proton_mass_c2*beamE/(C12_A*proton_mass_c2 + beamE*(1.0-cos(th)));
 
     double q2  = 2.0*beamE*ef*(1.0-cos(th));
-    //    double tau = q2/(4.0*Al_A*proton_mass_c2*Al_A*proton_mass_c2);
+    //    double tau = q2/(4.0*C12_A*proton_mass_c2*C12_A*proton_mass_c2);
 
     // double gd = pow( 1.0 + q2/(0.71*GeV*GeV), -2.0 );
     // double gep = gd;
@@ -266,7 +265,7 @@ void remollGen12CElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     evt->SetAsymmetry(0);
 
     evt->SetQ2( q2 );
-    evt->SetW2( Al_A*Al_A*proton_mass_c2*Al_A*proton_mass_c2 );
+    evt->SetW2( C12_A*proton_mass_c2*C12_A*proton_mass_c2 );
 
     // // REradiate////////////////////////////////////////////////////////////////////////////
     // // We're going to use the new kinematics for this guy
