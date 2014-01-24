@@ -56,6 +56,8 @@ void remollIO::InitializeTree(){
 
     fTree = new TTree("T", "Geant4 Moller Simulation");
 
+    fTree->SetMaxTreeSize(1900000000); // 1.9GB
+
     // Event information
     fTree->Branch("rate",     &fEvRate,   "rate/D");
     fTree->Branch("ev.A",     &fEvAsym,   "ev.A/D");
@@ -134,6 +136,7 @@ void remollIO::FillTree(){
     }
 
     fTree->Fill();
+    fTree->GetCurrentFile();
 }
 
 void remollIO::Flush(){
