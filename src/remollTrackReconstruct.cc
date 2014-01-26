@@ -63,7 +63,7 @@ void remollTrackReconstruct::PrintHitInfo(std::vector<remollGenericDetectorHit*>
 
   G4int aHitVecSize = aHitVec.size();
 
-  for(size_t i =0; i<aHitVecSize;i++){
+  for(G4int i =0; i<aHitVecSize;i++){
     G4cout << "Info for Hit# " << i+1 << G4endl;
     aHitVec[i]->Print();
   }
@@ -82,7 +82,7 @@ G4int remollTrackReconstruct::ReconstructTrack(){
 
   //  G4cout << "aTrackHit.size():: " << rTrackHitSize << G4endl;
 
-  for(size_t i =0; i<rTrackHitSize;i++){
+  for(G4int i =0; i<rTrackHitSize;i++){
 
     hitPos.push_back(std::vector <G4ThreeVector>());
     GEMRes.push_back(std::vector <G4ThreeVector>());
@@ -108,15 +108,15 @@ G4int remollTrackReconstruct::ReconstructTrack(){
   if(TrackingVerbose)
     G4cout << "--** Number of Hits per Plane :: " << maxCopyID << " ** --"<< G4endl;
   
-  for(size_t i=0;i<maxCopyID;i++){
+  for(G4int i=0;i<maxCopyID;i++){
     // G4cout << "hitPos["<<i<< "].size():: " << hitPos[copyID].size() << G4endl;
     EvaluateTrack(hitPos[i],GEMRes[i]); // fills recTrackXZ/YZ for each copyID
   }
 
   if(TrackingVerbose){
     G4cout << "\nXpos(mm)\tYpos(mm)\tZpos(mm)\tGEMXZres(mm)\tGEMYZres(mm)" << G4endl;
-    for(size_t i=0;i<maxCopyID;i++){
-      for(size_t j=0;j<hitPos[i].size();j++){
+    for(G4int i=0;i<maxCopyID;i++){
+      for(G4int j=0;j<hitPos[i].size();j++){
 	G4cout << hitPos[i][j].x()/mm <<"\t" << hitPos[i][j].y()/mm <<"\t" << hitPos[i][j].z()/mm << "\t" << GEMRes[i][j].x()/mm << "\t" << GEMRes[i][j].y()/mm << G4endl;
       }
     }
@@ -144,7 +144,7 @@ G4int remollTrackReconstruct::EvaluateTrack(std::vector <G4ThreeVector> Pos,
   
   //  G4cout << "Pos.size():: " << Pos.size() << G4endl;
 
-  for(size_t i=0;i<Pos.size();i++){
+  for(G4int i=0;i<Pos.size();i++){
     
     // need to smear rPosX & rPosY -> have finite width
     //  TRandom *r1 = new TRandom(123456);
@@ -285,7 +285,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
 
 void remollTrackReconstruct::FillRecTrackHit(){
 
-  for(size_t i=0; i<rTrackHitSize;i++){
+  for(G4int i=0; i<rTrackHitSize;i++){
 
     G4int copyID=aTrackHit[i]->fCopyID;
 
