@@ -111,6 +111,10 @@ remollMessenger::remollMessenger(){
     EminCmd->SetGuidance("Minimum generation energy");
     EminCmd->SetParameterName("emin", false);
 
+    EmaxCmd = new G4UIcmdWithADoubleAndUnit("/remoll/emax",this);
+    EmaxCmd->SetGuidance("Maximum generation energy");
+    EmaxCmd->SetParameterName("emax", false);
+
 
     //////////////////////////////////////////////////
     // beam info
@@ -374,6 +378,14 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	remollVEventGen *agen = fprigen->GetGenerator();
 	if( agen ){
 	    agen->fE_min = en;
+	}
+    }
+
+    if( cmd == EmaxCmd ){
+	G4double en = EmaxCmd->GetNewDoubleValue(newValue);
+	remollGenFlat *agen = dynamic_cast<remollGenFlat *>(fprigen->GetGenerator());
+	if( agen ){
+	    agen->fE_max = en;
 	}
     }
 

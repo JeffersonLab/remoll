@@ -71,6 +71,10 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
 	fEventGen = new remollGenBeam();
     }
 
+    if( genname == "flat" ){
+	fEventGen = new remollGenFlat();
+    }
+
     if( !fEventGen ){
 	G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR generator " << genname << " invalid" << G4endl;
 	exit(1);

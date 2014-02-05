@@ -89,6 +89,7 @@ class remollMessenger : public G4UImessenger {
 	G4UIcmdWithADoubleAndUnit *thCoMminCmd;
 	G4UIcmdWithADoubleAndUnit *thCoMmaxCmd;
 	G4UIcmdWithADoubleAndUnit *EminCmd;
+	G4UIcmdWithADoubleAndUnit *EmaxCmd;
 
 };
 
