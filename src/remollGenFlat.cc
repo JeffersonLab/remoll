@@ -23,6 +23,8 @@ void remollGenFlat::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double beamE = vert->GetBeamE();
 
+    double mp = 0.938*GeV;
+
     double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
     double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
     double ef = CLHEP::RandFlat::shoot(fE_min, fE_max);

@@ -15,6 +15,7 @@
 #include "remollRun.hh"
 #include "remollRunData.hh"
 #include "remollSteppingAction.hh"
+#include "remollGenFlat.hh"
 
 #include "G4UImanager.hh"
 #include "G4RunManager.hh"
