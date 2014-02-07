@@ -94,7 +94,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	(beamE-bremcut)*(11.0*GeV-fE_min)/(11.0*GeV-bremcut),
     };
 
-    assert( Evhi[idx]-Evlo[idx] > 0.0 );
+    assert( Evhi[NINTERVAL-1]-Evlo[NINTERVAL-1] > 0.0 );
 
     double Eprob[NINTERVAL]  = { 0.40, 0.20, 0.40 };
 
