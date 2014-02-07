@@ -91,7 +91,6 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double Evhi[NINTERVAL] = {
 	(beamE-bremcut)*2.0*GeV/(11.0*GeV-bremcut),
 	(beamE-bremcut)*9.0*GeV/(11.0*GeV-bremcut),
-//	(beamE-bremcut)*(beamE-fE_min)/(11.0*GeV-bremcut),
 	(beamE-bremcut)*(11.0*GeV-fE_min)/(11.0*GeV-bremcut),
     };
 
