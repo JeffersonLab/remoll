@@ -84,6 +84,10 @@ remollMessenger::remollMessenger(){
     beamCurrCmd->SetGuidance("Beam current");
     beamCurrCmd->SetParameterName("beamcurr", false);
 
+    beamECmd = new G4UIcmdWithADoubleAndUnit("/remoll/beamene",this);
+    beamECmd->SetGuidance("Beam energy");
+    beamECmd->SetParameterName("beamene", false);
+
     genSelectCmd = new G4UIcmdWithAString("/remoll/gen",this);
     genSelectCmd->SetGuidance("Select physics generator");
     genSelectCmd->SetParameterName("generator", false);
@@ -368,6 +372,11 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     if( cmd == beamCurrCmd ){
 	G4double cur = beamCurrCmd->GetNewDoubleValue(newValue);
 	fBeamTarg->SetBeamCurrent(cur);
+    }
+
+    if( cmd == beamECmd ){
+	G4double ene = beamECmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fBeamE = ene;
     }
 
     if( cmd == fileCmd ){
