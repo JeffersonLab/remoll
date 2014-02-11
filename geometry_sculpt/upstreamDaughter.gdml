@@ -23,8 +23,10 @@
     <position name="posCOLL2" unit="mm" x="0" y="0" z="5925-UOFFSET"/>
     <constant name="COLL2_R1_U" value ="26.0"/>
     <constant name="COLL2_R1_D" value ="26.0"/>
+    <!-- coll sep, inner rad, adjust this -->
     <constant name="COLL2_R2_U" value ="35.3"/>
     <constant name="COLL2_R2_D" value ="35.3"/>
+    <!-- coll sep, outer rad, adjust this -->
     <constant name="COLL2_R3_U" value ="98.0"/>
     <constant name="COLL2_R3_D" value ="98.0"/>
     <constant name="COLL2_R4_U" value ="300"/>
@@ -324,7 +326,7 @@
         <positionref ref="posCOLL1"/>
       </physvol>
 
-      <physvol name="UScoll_1">
+      <physvol name="UScollunion_1">
         <volumeref ref="logicUScollunion_1"/>
         <positionref ref="posCOLL2"/>
       </physvol>

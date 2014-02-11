@@ -158,6 +158,7 @@ void remollIO::FillTree(){
     }
 
     fTree->Fill();
+    fTree->GetCurrentFile();
 }
 
 void remollIO::Flush(){

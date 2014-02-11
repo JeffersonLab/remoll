@@ -27,8 +27,10 @@
     <position name="posPCOLL2" unit="mm" x="0" y="0" z="9825-DOFFSET"/>
     <constant name="PCOLL2_R1_U" value ="38.0"/>
     <constant name="PCOLL2_R1_D" value ="38.0"/>
+    <!-- coll sep, inner rad, adjust this -->
     <constant name="PCOLL2_R2_U" value ="64"/>
     <constant name="PCOLL2_R2_D" value ="64"/>
+    <!-- coll sep, outer rad, adjust this -->
     <constant name="PCOLL2_R3_U" value ="221"/>
     <constant name="PCOLL2_R3_D" value ="221"/>
     <constant name="PCOLL2_R4_U" value ="300"/>
