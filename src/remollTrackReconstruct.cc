@@ -291,9 +291,9 @@ void remollTrackReconstruct::FillRecTrackHit(){
     G4int copyID=aTrackHit[i]->fCopyID;
 
     // in mm by default
-    //    G4double tmpz = aTrackHit[i]->f3X.z(); // tmpz does not have to be chained to fCopyID because FillRecTrackHit only fills the tracks for 1 GEM box at a time.
+    G4double tmpz = aTrackHit[i]->f3X.z(); // tmpz does not have to be chained to fCopyID because FillRecTrackHit only fills the tracks for 1 GEM box at a time.
 
-    G4double tmpz = 28695.0*mm; // maindet z ** COMMENT ME ** 
+    //G4double tmpz = 28695.0*mm; // maindet z ** COMMENT ME ** 
       
     // reconstuct positions, recTrackXZ[j] hold (a,b)
     // tmpx/y in mm
