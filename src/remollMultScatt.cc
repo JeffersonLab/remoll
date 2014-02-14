@@ -55,9 +55,9 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
        Load materials and calculate necessary
        variables to generate distributions
 
-       p    - electron momentum, [GeV]
+       p    - electron momentum
        nmat - number of materials
-       t    - Thickness [g/cm2]
+       t    - Thickness
        A    - Mass number
        Z    - Atomic number
     */
@@ -156,10 +156,8 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
     chi2 = 0.0;
 
     for( i = 0; i < fNmat; i++ ){
-	// Use units of p of GeV
-	// hbar.c = 0.197*1e-13 GeV.cm
-	chi2_num = 4.0*3.14159*pow(0.197*1e-13, 2.0)*ft[i]*fZ[i]*(fZ[i]+1.0)*6.022e23;
-	chi2_den = fp*fp*fA[i]*137.0*137.0;
+	chi2_num = 4.0*3.14159*e_squared*e_squared*ft[i]*fZ[i]*(fZ[i]+1.0);
+	chi2_den = fp*fp*(A[i]*g/mole);
 	chi2  += chi2_num/chi2_den;
     }
 
@@ -388,9 +386,9 @@ double remollMultScatt::CalcMSDistPlane( double theta, double p, int nmat, doubl
 
 double remollMultScatt::CalcMSDistPlane( double theta){
     /*
-       p    - electron momentum, [GeV]
+       p    - electron momentum
        nmat - number of materials
-       t    - Thickness [g/cm2]
+       t    - Thickness
        A    - Mass number
        Z    - Atomic number
        */
@@ -516,9 +514,9 @@ double remollMultScatt::GenerateMSPlane( double p, int nmat, double t[], double 
 
 double remollMultScatt::GenerateMSPlane( double p, double t, double A, double Z ){
     /*
-       p    - electron momentum, [GeV]
+       p    - electron momentum
        nmat - number of materials
-       t    - Thickness [g/cm2]
+       t    - Thickness
        A    - Mass number
        Z    - Atomic number
        */
@@ -545,9 +543,9 @@ double remollMultScatt::GenerateMS(){
 
 double remollMultScatt::GenerateMS( double p, int nmat, double t[], double A[], double Z[] ){
     /*
-       p    - electron momentum, [GeV]
+       p    - electron momentum
        nmat - number of materials
-       t    - Thickness [g/cm2]
+       t    - Thickness 
        A    - Mass number
        Z    - Atomic number
        */
@@ -557,9 +555,9 @@ double remollMultScatt::GenerateMS( double p, int nmat, double t[], double A[], 
 
 double remollMultScatt::GenerateMS( double p, double t, double A, double Z ){
     /*
-       p    - electron momentum, [GeV]
+       p    - electron momentum
        nmat - number of materials
-       t    - Thickness [g/cm2]
+       t    - Thickness
        A    - Mass number
        Z    - Atomic number
        */
