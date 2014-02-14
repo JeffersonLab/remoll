@@ -1,5 +1,7 @@
 #include "remollMultScatt.hh"
 
+#include "globals.hh"
+
 #include <math.h>
 #include <assert.h>
 #include <stdio.h>
@@ -16,9 +18,9 @@ remollMultScatt::remollMultScatt() {
 
 remollMultScatt::remollMultScatt( double p, int nmat, double t[], double A[], double Z[] ){
     /*
-       p    - electron momentum, [GeV]
+       p    - electron momentum
        nmat - number of materials
-       t    - Thickness [g/cm2]
+       t    - Thickness
        A    - Mass number
        Z    - Atomic number
        */
@@ -30,9 +32,9 @@ remollMultScatt::remollMultScatt( double p, int nmat, double t[], double A[], do
 
 remollMultScatt::remollMultScatt( double p, double t, double A, double Z ){
     /*
-       p    - electron momentum, [GeV]
+       p    - electron momentum
        nmat - number of materials
-       t    - Thickness [g/cm2]
+       t    - Thickness
        A    - Mass number
        Z    - Atomic number
        */
@@ -89,7 +91,7 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
     double X0;
 
     for( i = 0; i < nmat; i++ ){
-	X0  = 716.4*A[i]/(Z[i]*(Z[i]+1.0)*log(287.0/sqrt(Z[i])));
+	X0  = (716.4*g/cm2)*A[i]/(Z[i]*(Z[i]+1.0)*log(287.0/sqrt(Z[i])));
 	radsum += t[i]/X0;
     }
 
@@ -98,7 +100,7 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
     // the Moliere f0 width.  I think this number
     // accounts for the higher order terms in the sum,
     // so it's what we should use.
-    double thpdg  = 13.6e-3*sqrt(radsum)*(1.0 + 0.038*log(radsum))/p;
+    double thpdg  = 13.6*MeV*sqrt(radsum)*(1.0 + 0.038*log(radsum))/p;
     fthpdg = thpdg;
 
     // First calculate b
@@ -108,7 +110,7 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
     double bsum = 0.0;
 
     for( i = 0; i < fNmat; i++ ){
-	expb_num = 6680.0*ft[i]*(fZ[i]+1.0)*pow(fZ[i],1.0/3.0);
+	expb_num = (6680.0*cm2/g)*ft[i]*(fZ[i]+1.0)*pow(fZ[i],1.0/3.0);
 	expb_den = fA[i]*(1.0+3.34*pow(fZ[i]/137.0,2.0));
 
 	bsum += expb_num/expb_den;

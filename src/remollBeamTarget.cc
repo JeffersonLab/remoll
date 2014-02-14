@@ -314,7 +314,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 		} else {
 		    masssum += (*elvec)[i]->GetA();
 		}
-		msthick[nmsmat] = mat->GetDensity()*zinvol*fracvec[i]*cm*cm/g;
+		msthick[nmsmat] = mat->GetDensity()*zinvol*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
 
@@ -328,7 +328,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    const G4double *fracvec = mat->GetFractionVector();
 	    for( unsigned int i = 0; i < elvec->size(); i++ ){
 
-		msthick[nmsmat] = len*fracvec[i]*cm*cm/g;
+		msthick[nmsmat] = len*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
 		nmsmat++;
