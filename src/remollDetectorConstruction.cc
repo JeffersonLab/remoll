@@ -40,7 +40,7 @@
 #include "G4Colour.hh"
 
 #define __DET_STRLEN 200
-#define __MAX_DETS 500
+#define __MAX_DETS 5000
 
 remollDetectorConstruction::remollDetectorConstruction() {
     // Default geometry file
@@ -229,13 +229,17 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	      for( nit  = (*iter).second.begin(); nit != (*iter).second.end(); nit++) {
 		  if ((*nit).type == "DetNo") {
 		      det_no= atoi((*nit).value.data());
+		      if( det_no >= __MAX_DETS ){
+			  G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR detector number too high" << G4endl;
+			  exit(1);
+		      }
 		      useddetnums[det_no] = true;
 		  }
 	      }
 	      if( det_no <= 0 ){
 		  k = 1;
 		  while( useddetnums[k] == true && k < __MAX_DETS ){ k++; }
-		  if( k == __MAX_DETS ){
+		  if( k >= __MAX_DETS ){
 		      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR too many detectors" << G4endl;
 		      exit(1);
 		  }
