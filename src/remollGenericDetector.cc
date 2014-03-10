@@ -85,7 +85,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     if( !badedep ){
 	// This is all we need to do for the sum
-	thissum->fEdep += edep;
+	thissum->AddEDep( track->GetDefinition()->GetPDGEncoding(), prestep->GetPosition(), edep );
     }
 
     if( !badhit ){

@@ -30,6 +30,8 @@ remollIO::remollIO(){
     strcpy(fFilename, "remollout.root");
 
     fFile = NULL;
+
+
 }
 
 remollIO::~remollIO(){
@@ -123,6 +125,10 @@ void remollIO::InitializeTree(){
     fTree->Branch("sum.det",  &fGenDetSum_det,  "sum.det[sum.n]/I");
     fTree->Branch("sum.vid",  &fGenDetSum_id,   "sum.vid[sum.n]/I");
     fTree->Branch("sum.edep", &fGenDetSum_edep, "sum.edep[sum.n]/D");
+    fTree->Branch("sum.pid",  &fGenDetSum_pid, "sum.pid[sum.n]/I");
+    fTree->Branch("sum.x", &fGenDetSum_x, "sum.x[sum.n]/D");
+    fTree->Branch("sum.y", &fGenDetSum_y, "sum.y[sum.n]/D");
+    fTree->Branch("sum.z", &fGenDetSum_z, "sum.z[sum.n]/D");
 
     return;
 }
@@ -282,17 +288,35 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
 // GenericDetectorSum
 
 void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
+    // Particles that are payed attention to in our sums, 0 means all types
+    int particle_to_track[N_PART_DIVISIONS] = {0, -11, 11, 22, 2112, 2122, -211, 211};
+
+
     int n = fNGenDetSum;
     if( n > __IO_MAXHIT ){
 	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
 	return;
     }
 
-    fGenDetSum_edep[n] = hit->fEdep/__E_UNIT;
-    fGenDetSum_det[n]  = hit->fDetID;
-    fGenDetSum_id[n]   = hit->fCopyID;
+    int j;
 
-    fNGenDetSum++;
+    for( j = 0; j < N_PART_DIVISIONS; j++ ){
+	fGenDetSum_edep[n] = hit->GetEdep(particle_to_track[j])/__E_UNIT;
+	fGenDetSum_pid[n]  = particle_to_track[j];
+
+	G4ThreeVector pos  = hit->GetPos(particle_to_track[j]);
+
+	fGenDetSum_x[n]    = pos.x()/__L_UNIT;
+	fGenDetSum_y[n]    = pos.y()/__L_UNIT;
+	fGenDetSum_z[n]    = pos.z()/__L_UNIT;
+
+	fGenDetSum_det[n]  = hit->fDetID;
+	fGenDetSum_id[n]   = hit->fCopyID;
+	fGenDetSum_id[n]   = hit->fCopyID;
+
+	n++;
+	fNGenDetSum++;
+    }
 }
 
 /*---------------------------------------------------------------------------------*/

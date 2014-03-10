@@ -28,6 +28,7 @@ class remollEvent;
 #define __ANG_UNIT rad
 #define __ASYMM_SCALE 1e-9 // ppb
 
+
 class remollIO {
     public:
 	 remollIO();
@@ -138,6 +139,10 @@ class remollIO {
 	Int_t fGenDetSum_det[__IO_MAXHIT];
 	Int_t fGenDetSum_id[__IO_MAXHIT];
 	Double_t fGenDetSum_edep[__IO_MAXHIT];
+	Int_t fGenDetSum_pid[__IO_MAXHIT];
+	Double_t fGenDetSum_x[__IO_MAXHIT];
+	Double_t fGenDetSum_y[__IO_MAXHIT];
+	Double_t fGenDetSum_z[__IO_MAXHIT];
 };
 
 #endif//remollIO_HH
