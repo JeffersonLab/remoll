@@ -187,7 +187,7 @@ void remollIO::WriteTree(){
 
 void remollIO::SetEventData(remollEvent *ev){
     int n = ev->fPartType.size();
-    if( n > __IO_MAXHIT ){
+    if( n >= __IO_MAXHIT ){
 	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
 	return;
     }
@@ -245,7 +245,7 @@ void remollIO::SetEventData(remollEvent *ev){
 
 void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     int n = fNGenDetHit;
-    if( n > __IO_MAXHIT ){
+    if( n >= __IO_MAXHIT ){
 	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
 	return;
     }
@@ -293,7 +293,7 @@ void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
 
 
     int n = fNGenDetSum;
-    if( n > __IO_MAXHIT ){
+    if( n >= __IO_MAXHIT ){
 	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
 	return;
     }
@@ -316,6 +316,11 @@ void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
 
 	n++;
 	fNGenDetSum++;
+
+	if( n >= __IO_MAXHIT ){
+	    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+	    return;
+	}
     }
 }
 
