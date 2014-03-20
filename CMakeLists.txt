@@ -119,6 +119,21 @@ set(REMOLL_SCRIPTS
     geometry_sculpt/schema/gdml_parameterised.xsd
     geometry_sculpt/schema/gdml_replicas.xsd
     geometry_sculpt/schema/gdml_solids.xsd
+    geometry_sculpt_wshield/mollerMother.gdml
+    geometry_sculpt_wshield/detectorDaughter.gdml
+    geometry_sculpt_wshield/hybridDaughter.gdml
+    geometry_sculpt_wshield/targetDaughter.gdml
+    geometry_sculpt_wshield/upstreamDaughter.gdml
+    geometry_sculpt_wshield/shieldDaughter.gdml
+    geometry_sculpt_wshield/schema/gdml.xsd
+    geometry_sculpt_wshield/schema/gdml_core.xsd
+    geometry_sculpt_wshield/schema/gdml_define.xsd
+    geometry_sculpt_wshield/schema/gdml_extensions.xsd
+    geometry_sculpt_wshield/schema/gdml_materials.xsd
+    geometry_sculpt_wshield/schema/gdml_parameterised.xsd
+    geometry_sculpt_wshield/schema/gdml_replicas.xsd
+    geometry_sculpt_wshield/schema/gdml_solids.xsd
+
     vis/OIX.mac
     vis/Qt.mac
     vis/vis.mac
