@@ -289,7 +289,7 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
 
 void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
     // Particles that are payed attention to in our sums, 0 means all types
-    int particle_to_track[N_PART_DIVISIONS] = {0, -11, 11, 22, 2112, 2122, -211, 211};
+    int particle_to_track[N_PART_DIVISIONS] = {0, -11, 11, 22, 2112, 2212, -211, 211};
 
 
     int n = fNGenDetSum;
