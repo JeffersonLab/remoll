@@ -1,7 +1,7 @@
 #  Example file
 
 # This must be called before initialize
-#/remoll/setgeofile geometry/mollerMother.gdml
+/remoll/setgeofile geometry_sculpt/mollerMother.gdml
 
 # This must be explicitly called
 /run/initialize
@@ -38,7 +38,7 @@
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
 
-/remoll/beamcurr 85 microampere
+/remoll/beamcurr 75 microampere
 
 #Enable optical photons and processes
 #/remoll/optical true

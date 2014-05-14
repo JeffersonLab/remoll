@@ -314,7 +314,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 		} else {
 		    masssum += (*elvec)[i]->GetA();
 		}
-		msthick[nmsmat] = mat->GetDensity()*zinvol*fracvec[i]*cm*cm/g;
+		msthick[nmsmat] = mat->GetDensity()*zinvol*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
 
@@ -328,7 +328,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    const G4double *fracvec = mat->GetFractionVector();
 	    for( unsigned int i = 0; i < elvec->size(); i++ ){
 
-		msthick[nmsmat] = len*fracvec[i]*cm*cm/g;
+		msthick[nmsmat] = len*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
 		nmsmat++;
@@ -363,8 +363,11 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
     assert( !std::isnan(msth) && !std::isnan(msph) );
 
-    bmth = CLHEP::RandGauss::shoot(fTh0, fdTh) + fCorrTh*(rasx-fX0)/fRasterX/2;
-    bmph = CLHEP::RandGauss::shoot(fPh0, fdPh) + fCorrPh*(rasy-fY0)/fRasterY/2;
+    bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
+    bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);
+
+    if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
+    if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
 
     // Initial direction
     fDir = G4ThreeVector(0.0, 0.0, 1.0);

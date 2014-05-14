@@ -15,6 +15,7 @@
 #include "remollRun.hh"
 #include "remollRunData.hh"
 #include "remollSteppingAction.hh"
+#include "remollGenFlat.hh"
 
 #include "G4UImanager.hh"
 #include "G4RunManager.hh"
@@ -75,13 +76,17 @@ remollMessenger::remollMessenger(){
     tgtLenCmd->AvailableForStates(G4State_Idle); // Only have this AFTER we've initalized geometry
 
     tgtPosCmd = new G4UIcmdWithADoubleAndUnit("/remoll/targpos",this);
-    tgtPosCmd->SetGuidance("Target length");
-    tgtPosCmd->SetParameterName("targlen", false);
+    tgtPosCmd->SetGuidance("Target position");
+    tgtPosCmd->SetParameterName("targpos", false);
     tgtPosCmd->AvailableForStates(G4State_Idle); // Only have this AFTER we've initalized geometry
 
     beamCurrCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beamcurr",this);
     beamCurrCmd->SetGuidance("Beam current");
     beamCurrCmd->SetParameterName("beamcurr", false);
+
+    beamECmd = new G4UIcmdWithADoubleAndUnit("/remoll/beamene",this);
+    beamECmd->SetGuidance("Beam energy");
+    beamECmd->SetParameterName("beamene", false);
 
     genSelectCmd = new G4UIcmdWithAString("/remoll/gen",this);
     genSelectCmd->SetGuidance("Select physics generator");
@@ -110,6 +115,10 @@ remollMessenger::remollMessenger(){
     EminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/emin",this);
     EminCmd->SetGuidance("Minimum generation energy");
     EminCmd->SetParameterName("emin", false);
+
+    EmaxCmd = new G4UIcmdWithADoubleAndUnit("/remoll/emax",this);
+    EmaxCmd->SetGuidance("Maximum generation energy");
+    EmaxCmd->SetParameterName("emax", false);
 
 
     //////////////////////////////////////////////////
@@ -365,6 +374,11 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	fBeamTarg->SetBeamCurrent(cur);
     }
 
+    if( cmd == beamECmd ){
+	G4double ene = beamECmd->GetNewDoubleValue(newValue);
+	fBeamTarg->fBeamE = ene;
+    }
+
     if( cmd == fileCmd ){
 	fIO->SetFilename(newValue);
     }
@@ -374,6 +388,14 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	remollVEventGen *agen = fprigen->GetGenerator();
 	if( agen ){
 	    agen->fE_min = en;
+	}
+    }
+
+    if( cmd == EmaxCmd ){
+	G4double en = EmaxCmd->GetNewDoubleValue(newValue);
+	remollGenFlat *agen = dynamic_cast<remollGenFlat *>(fprigen->GetGenerator());
+	if( agen ){
+	    agen->fE_max = en;
 	}
     }
 

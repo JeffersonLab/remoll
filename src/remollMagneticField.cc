@@ -127,7 +127,7 @@ void remollMagneticField::ReadFieldMap(){
 
     // open the field map file
     G4int nlines = 0;
-    int nread;
+    // int nread;
     G4int cidx;
 
 

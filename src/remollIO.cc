@@ -104,6 +104,7 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.y",    &fGenDetHit_Y,   "hit.y[hit.n]/D");
     fTree->Branch("hit.z",    &fGenDetHit_Z,   "hit.z[hit.n]/D");
     fTree->Branch("hit.r",    &fGenDetHit_R,   "hit.r[hit.n]/D");
+    fTree->Branch("hit.ph",   &fGenDetHit_Ph,  "hit.ph[hit.n]/D");
 
     fTree->Branch("hit.px",   &fGenDetHit_Px,   "hit.px[hit.n]/D");
     fTree->Branch("hit.py",   &fGenDetHit_Py,   "hit.py[hit.n]/D");
@@ -116,7 +117,9 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.p",    &fGenDetHit_P,   "hit.p[hit.n]/D");
     fTree->Branch("hit.e",    &fGenDetHit_E,   "hit.e[hit.n]/D");
     fTree->Branch("hit.m",    &fGenDetHit_M,   "hit.m[hit.n]/D");
-    
+
+    fTree->Branch("hit.colCut",    &fCollCut,     "hit.colCut/I");
+
     // GenericDetectorSum
     fTree->Branch("sum.n",    &fNGenDetSum,     "sum.n/I");
     fTree->Branch("sum.det",  &fGenDetSum_det,  "sum.det[sum.n]/I");
@@ -140,6 +143,7 @@ void remollIO::Flush(){
     //  Set arrays to 0
     fNGenDetHit = 0;
     fNGenDetSum = 0;
+    fCollCut = 1; // default
 }
 
 void remollIO::WriteTree(){
@@ -254,6 +258,7 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     fGenDetHit_Y[n]  = hit->f3X.y()/__L_UNIT;
     fGenDetHit_Z[n]  = hit->f3X.z()/__L_UNIT;
     fGenDetHit_R[n]  = sqrt(hit->f3X.x()*hit->f3X.x()+hit->f3X.y()*hit->f3X.y())/__L_UNIT;
+    fGenDetHit_Ph[n] = hit->f3X.phi()/deg;
 
     fGenDetHit_Px[n]  = hit->f3P.x()/__E_UNIT;
     fGenDetHit_Py[n]  = hit->f3P.y()/__E_UNIT;
@@ -268,6 +273,11 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     fGenDetHit_M[n]  = hit->fM/__E_UNIT;
 
     fNGenDetHit++;
+
+    // for collimator cut
+    if( (hit->fDetID==200 && hit->f3X.perp()/__L_UNIT < 0.03) || 
+      	(hit->fDetID==201 && hit->f3X.perp()/__L_UNIT < 0.05) )
+      fCollCut=0;
 }
 
 

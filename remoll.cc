@@ -34,6 +34,7 @@
 //to make gui.mac work
 #include <G4UImanager.hh>
 #include <G4UIExecutive.hh>
+#include <G4UIterminal.hh>
 
 #ifdef G4UI_USE_QT
 #include "G4UIQt.hh"
@@ -41,6 +42,10 @@
 
 #ifdef G4UI_USE_XM
 #include "G4UIXm.hh"
+#endif
+
+#ifdef G4UI_USE_TCSH
+#include "G4UItcsh.hh"
 #endif
 
 #ifdef G4VIS_USE
@@ -55,7 +60,16 @@ int main(int argc, char** argv){
     // Initialize the CLHEP random engine used by
     // "shoot" type functions
 
-    unsigned int seed = time(0);
+    unsigned int seed = time(0) + (int) getpid();
+
+    unsigned int devrandseed = 0;
+    //  /dev/urandom doens't block
+    FILE *fdrand = fopen("/dev/urandom", "r");
+    if( fdrand ){
+	fread(&devrandseed, sizeof(int), 1, fdrand);
+	seed += devrandseed;
+	fclose(fdrand);
+    }
 
     CLHEP::HepRandom::createInstance();
     CLHEP::HepRandom::setTheSeed(seed);
