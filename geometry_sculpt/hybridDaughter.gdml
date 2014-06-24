@@ -926,7 +926,8 @@
     <volume name="logicDScoll_1">
       <materialref ref="Tungsten"/>
       <solidref ref="dscyl_1"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="2004"/>
     </volume>
 
   <volume name="logicDScoll_5">
@@ -938,7 +939,8 @@
     <volume name="logicPDScollunion_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="pdscoll_union_6"/> 
-	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> --> 
+	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+	<auxiliary auxtype="DetNo" auxvalue="2003"/>
     </volume>
 
     <volume name="logicpcoll2trap">
