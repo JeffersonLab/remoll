@@ -301,7 +301,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
     
   G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
   //commented out the below dump geometry routine to save terminal output length 
-  DumpGeometricalTree(worldVolume);   
+  //DumpGeometricalTree(worldVolume);    
   
   G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
   
