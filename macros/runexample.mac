@@ -25,9 +25,9 @@
 #/remoll/beam_dph 0 mrad
 
 
-/remoll/gen moller
-/remoll/thcommin 30.0 deg
-/remoll/thcommax 150.0 deg
+#/remoll/gen moller
+#/remoll/thcommin 30.0 deg
+#/remoll/thcommax 150.0 deg
 #/remoll/gen elastic 
 #/remoll/thmin 0.1 deg
 #/remoll/thmax 2.0 deg
@@ -35,7 +35,7 @@
 #/remoll/gen inelastic 
 #/remoll/gen pion
 
-#/remoll/gen beam
+/remoll/gen beam
 /remoll/beamene 11.0 GeV
 
 
