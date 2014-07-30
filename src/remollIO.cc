@@ -31,8 +31,8 @@ remollIO::remollIO(){
 
     fFile = NULL;
 
+} 
 
-}
 
 remollIO::~remollIO(){
     if( fTree ){ delete fTree; }

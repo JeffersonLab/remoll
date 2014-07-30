@@ -4,6 +4,8 @@
 #/vis/open OGLIQt 1200x800
 /remoll/setgeofile geometry_sculpt_wshield_cor/mollerMother.gdml
 
+
+
 #/remoll/likekryptonite  true
 
 #Below the this energy, the tracks are killed
@@ -20,8 +22,9 @@
 #/gun/momentum 0.5 1.0 2.0 GeV
 
 # Raster is on by default with 5x5mm
-/remoll/rasx 5 mm
-/remoll/rasy 5 mm 
+
+/remoll/rasx 0 mm
+/remoll/rasy 0 mm 
 
 
 #/remoll/gen dis

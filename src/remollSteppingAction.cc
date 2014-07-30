@@ -26,7 +26,7 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
 	||  material->GetName()=="Copper" )
 	    && fEnableKryptonite
 	){
-	fTrack->SetTrackStatus(fKillTrackAndSecondaries);
+	fTrack->SetTrackStatus(fStopAndKill);
     }
 
 

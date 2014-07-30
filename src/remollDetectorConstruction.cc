@@ -32,6 +32,8 @@
 
 #include "G4ios.hh"
 
+#include "G4UnitsTable.hh"
+
 // GDML export
 #include "G4GDMLParser.hh"
 
@@ -294,14 +296,51 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
   G4cout << G4endl << "Material table: " << G4endl << G4endl;
   G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 
+  UpdateCopyNo(worldVolume,1); 
+    
+    
   G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
-
-
+  //commented out the below dump geometry routine to save terminal output length 
+  DumpGeometricalTree(worldVolume);   
+  
   G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
-
+  
   return worldVolume;
 }
 
+G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int index){  
+
+  //if (aVolume->GetLogicalVolume()->GetNoDaughters()==0 ){
+      aVolume->SetCopyNo(index);
+      index++;
+      //}else {
+    for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++){
+      index = UpdateCopyNo(aVolume->GetLogicalVolume()->GetDaughter(i),index);
+    }
+    //}
+
+  return index;
+};
+
+void remollDetectorConstruction::DumpGeometricalTree(G4VPhysicalVolume* aVolume,G4int depth)
+{
+  for(int isp=0;isp<depth;isp++)
+  { G4cout << "  "; }
+  //aVolume->SetCopyNo(1);
+  G4cout << aVolume->GetName() << "[" << aVolume->GetCopyNo() << "] "
+         << aVolume->GetLogicalVolume()->GetName() << " "
+         << aVolume->GetLogicalVolume()->GetNoDaughters() << " "
+         << aVolume->GetLogicalVolume()->GetMaterial()->GetName() << " "
+	 << G4BestUnit(aVolume->GetLogicalVolume()->GetMass(true),"Mass");
+  if(aVolume->GetLogicalVolume()->GetSensitiveDetector())
+  {
+    G4cout << " " << aVolume->GetLogicalVolume()->GetSensitiveDetector()
+                            ->GetFullPathName();
+  }
+  G4cout << G4endl;
+  for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++)
+  { DumpGeometricalTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1); }
+}
 
 void remollDetectorConstruction::CreateGlobalMagneticField() {
     fGlobalField = new remollGlobalField();
