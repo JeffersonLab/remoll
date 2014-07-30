@@ -30,7 +30,7 @@ remollIO::remollIO(){
     strcpy(fFilename, "remollout.root");
 
     fFile = NULL;
-}
+} 
 
 remollIO::~remollIO(){
     if( fTree ){ delete fTree; }

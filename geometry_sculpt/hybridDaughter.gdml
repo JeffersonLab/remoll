@@ -857,7 +857,7 @@
     </volume>
     <volume name="logicDScoil_2">
       <materialref ref="Copper"/>
-      <solidref ref="dscoilunion_10"/>
+      <solidref ref="dscoilunion_10"/> 
       <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
     <volume name="logicDScoil_3">
