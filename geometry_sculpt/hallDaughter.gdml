@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <constant name="width_mother" value="60000."/>
+  <constant name="height_mother" value="60000."/>
+  <constant name="length_mother" value="70000."/>
+  <constant name="radius_of_cylwall" value="25460."/>
+  <constant name="thick_cylwall" value="1487."/> 
+  <constant name="height_cylwall" value="17770."/>
+  <constant name="bottom_cylwall" value="-4470."/>  
+
+  <position name="cylHallDet_center" unit="mm" x="0" y="0" z="0"/>
+  <position name="cylHallDet_1_center" x="0" y="0" z="4000" unit="mm"/>
+  <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/>
+</define>
+
+  <materials>
+    <material Z="1" name="VacuumTarg" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+  </materials>
+
+<solids>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallWall" rmax="radius_of_cylwall" rmin="radius_of_cylwall - 1." startphi="0" z="height_cylwall"/>
+    <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
+    <box lunit="mm" name="boxHallMother_in" x="width_mother - 10." y="height_mother - 10." z="length_mother - 10."/>
+    <subtraction name ="boxHallMother">
+      <first ref="boxHallMother_out"/>
+      <second ref="boxHallMother_in"/>
+      <positionref ref="cylHallDet_center" />
+  </subtraction> 
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_of_cylwall - 10." rmin="0" startphi="0" z="height_cylwall - thick_cylwall"/>
+</solids>
+
+<structure>
+
+    <volume name="cylHallDet_1_logic">
+      <materialref ref="VacuumTarg"/>
+      <solidref ref="cylHallDet_1"/>
+      <auxiliary auxtype="SensDet" auxvalue="HallDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="4001"/>
+    </volume>
+
+    <volume name="logicHall">
+      <materialref ref="VacuumTarg"/>
+      <solidref ref="boxHallMother"/>
+
+      <physvol>
+        <volumeref ref="cylHallDet_1_logic"/>
+        <positionref ref="cylHallDet_1_center"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+
+    </volume>
+
+</structure>
+
+<setup name="Hall" version="1.0">
+	<world ref="logicHall"/>
+</setup>
+
+</gdml>
