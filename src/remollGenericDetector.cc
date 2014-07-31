@@ -40,13 +40,16 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // Get touchable volume info
     G4TouchableHistory *hist = 
 	(G4TouchableHistory*)(step->GetPreStepPoint()->GetTouchable());
-    G4int  copyID = hist->GetReplicaNumber();
+    //G4int  copyID = hist->GetVolume(1)->GetCopyNo();//return the copy id of the parent volume
+    G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
 
     G4StepPoint *prestep = step->GetPreStepPoint();
     G4Track     *track   = step->GetTrack();
 
     G4double edep = step->GetTotalEnergyDeposit();
 
+    //DEBUG print
+    //printf("[%i,%i] \n",copyID,fDetNo);
 
     // We're just going to record primary particles and things
     // that have just entered our boundary
@@ -78,7 +81,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 	}
     } else {
 	thissum = fSumMap[copyID];
-    }
+    } 
     /////////////////////////////////////////////////////
 
     // Do the actual data grabbing
