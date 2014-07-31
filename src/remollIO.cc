@@ -116,9 +116,10 @@ void remollIO::InitializeTree(){
 
     fTree->Branch("hit.p",    &fGenDetHit_P,   "hit.p[hit.n]/D");
     fTree->Branch("hit.e",    &fGenDetHit_E,   "hit.e[hit.n]/D");
-    fTree->Branch("hit.m",    &fGenDetHit_M,   "hit.m[hit.n]/D");
+    fTree->Branch("hit.m",    &fGenDetHit_M,   "hit.m[hit.n]/D"); 
 
     fTree->Branch("hit.colCut",    &fCollCut,     "hit.colCut/I");
+    fTree->Branch("hit.edep",    &fGenDetHit_Edep,   "hit.edep[hit.n]/D");
 
     // GenericDetectorSum
     fTree->Branch("sum.n",    &fNGenDetSum,     "sum.n/I");
@@ -275,6 +276,8 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     fGenDetHit_P[n]  = hit->fP/__E_UNIT;
     fGenDetHit_E[n]  = hit->fE/__E_UNIT;
     fGenDetHit_M[n]  = hit->fM/__E_UNIT;
+
+    fGenDetHit_Edep[n]  = hit->fEdep/__E_UNIT;
 
     fNGenDetHit++;
 
