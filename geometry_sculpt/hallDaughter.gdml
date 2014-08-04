@@ -43,7 +43,7 @@
       <materialref ref="VacuumTarg"/>
       <solidref ref="cylHallDet_1"/>
       <auxiliary auxtype="SensDet" auxvalue="HallDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="4001"/>
+      <auxiliary auxtype="DetNo" auxvalue="400"/>
     </volume>
 
     <volume name="logicHall">
