@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
+<!--Used to resolve why hall detector missing any hits and how to include the detector+hall mother volume without making any volume overlaps or encapsulations -->
 <define>
-  <constant name="width_mother" value="60000."/>
-  <constant name="height_mother" value="60000."/>
-  <constant name="length_mother" value="70000."/>
+  <constant name="width_mother" value="52000."/>
+  <constant name="height_mother" value="18000."/>
+  <constant name="length_mother" value="52000."/>
   <constant name="radius_of_cylwall" value="25460."/>
   <constant name="thick_cylwall" value="1487."/> 
   <constant name="height_cylwall" value="17770."/>
   <constant name="bottom_cylwall" value="-4470."/>  
 
   <position name="cylHallDet_center" unit="mm" x="0" y="0" z="0"/>
-  <position name="cylHallDet_1_center" x="0" y="0" z="4000" unit="mm"/>
+  <position name="cylHallDet_1_center" x="0" y="0" z="0" unit="mm"/>
+  <position name="cylHallDet_2_center" x="0" y="height_cylwall/2 - thick_cylwall/2" z="0" unit="mm"/>
+  <position name="cylHallDet_3_center" x="0" y="-1 * height_cylwall/2 + thick_cylwall/2" z="0" unit="mm"/>
   <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/>
 </define>
 
@@ -25,16 +28,20 @@
   </materials>
 
 <solids>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallWall" rmax="radius_of_cylwall" rmin="radius_of_cylwall - 1." startphi="0" z="height_cylwall"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallWall" rmax="radius_of_cylwall" rmin="radius_of_cylwall - 10." startphi="0" z="height_cylwall"/>
     <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
-    <box lunit="mm" name="boxHallMother_in" x="width_mother - 10." y="height_mother - 10." z="length_mother - 10."/>
+    <box lunit="mm" name="boxHallMother_in" x="width_mother - 2500." y="height_mother - 2500." z="length_mother - 2000."/>
+<!--
     <subtraction name ="boxHallMother">
       <first ref="boxHallMother_out"/>
       <second ref="boxHallMother_in"/>
       <positionref ref="cylHallDet_center" />
   </subtraction> 
+-->
 
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_of_cylwall - 10." rmin="0" startphi="0" z="height_cylwall - thick_cylwall"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_of_cylwall - 10." rmin="radius_of_cylwall - 20" startphi="0" z="height_cylwall - thick_cylwall"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_2" rmax="radius_of_cylwall - 9.9" rmin="0" startphi="0" z="10."/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_3" rmax="radius_of_cylwall - 9.9" rmin="0" startphi="0" z="10."/>
 </solids>
 
 <structure>
@@ -42,17 +49,44 @@
     <volume name="cylHallDet_1_logic">
       <materialref ref="VacuumTarg"/>
       <solidref ref="cylHallDet_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="HallDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="4001"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="99"/>
     </volume>
+
+    <volume name="cylHallDet_2_logic">
+      <materialref ref="VacuumTarg"/>
+      <solidref ref="cylHallDet_2"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="101"/>
+    </volume>
+
+    <volume name="cylHallDet_3_logic">
+      <materialref ref="VacuumTarg"/>
+      <solidref ref="cylHallDet_3"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="103"/>
+    </volume>
+
 
     <volume name="logicHall">
       <materialref ref="VacuumTarg"/>
-      <solidref ref="boxHallMother"/>
+      <!-- <solidref ref="boxHallMother"/> -->
+      <solidref ref="boxHallMother_out"/>
 
       <physvol>
         <volumeref ref="cylHallDet_1_logic"/>
         <positionref ref="cylHallDet_1_center"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="cylHallDet_2_logic"/>
+        <positionref ref="cylHallDet_2_center"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="cylHallDet_3_logic"/>
+        <positionref ref="cylHallDet_3_center"/>
 	<rotationref ref="scRot_1"/>
       </physvol>
 
