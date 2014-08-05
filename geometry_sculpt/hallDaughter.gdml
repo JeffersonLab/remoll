@@ -28,16 +28,18 @@
   </materials>
 
 <solids>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallWall" rmax="radius_of_cylwall" rmin="radius_of_cylwall - 10." startphi="0" z="height_cylwall"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallWall" rmax="radius_of_cylwall" rmin="radius_of_cylwall - thick_cylwall" startphi="0" z="height_cylwall"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallMother_1" rmax="radius_of_cylwall - 50." rmin="0" startphi="0" z="height_cylwall - thick_cylwall*2"/>
     <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
     <box lunit="mm" name="boxHallMother_in" x="width_mother - 2500." y="height_mother - 2500." z="length_mother - 2000."/>
-<!--
+
     <subtraction name ="boxHallMother">
       <first ref="boxHallMother_out"/>
-      <second ref="boxHallMother_in"/>
+      <second ref="cylHallMother_1"/>
       <positionref ref="cylHallDet_center" />
+      <rotationref ref="scRot_1"/>
   </subtraction> 
--->
+
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_of_cylwall - 10." rmin="radius_of_cylwall - 20" startphi="0" z="height_cylwall - thick_cylwall"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_2" rmax="radius_of_cylwall - 9.9" rmin="0" startphi="0" z="10."/>
@@ -70,8 +72,8 @@
 
     <volume name="logicHall">
       <materialref ref="VacuumTarg"/>
-      <!-- <solidref ref="boxHallMother"/> -->
-      <solidref ref="boxHallMother_out"/>
+      <solidref ref="boxHallMother"/>
+      <!-- <solidref ref="boxHallMother_out"/> -->
 
       <physvol>
         <volumeref ref="cylHallDet_1_logic"/>

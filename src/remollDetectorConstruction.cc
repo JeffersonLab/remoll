@@ -258,9 +258,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 
 	      if( thisdet == 0 ) {
 		  thisdet = new remollGenericDetector(detectorname, det_no);
-		  G4cout << "  Creating sensitive detector " << det_type
-		      << " for volume " << myvol->GetName()
-		      <<  G4endl << G4endl;
+		  G4cout << "  Creating sensitive detector " << det_type << " detectorname " << detectorname << " det_no "<<det_no << " for volume " << myvol->GetName()  <<  G4endl << G4endl;
 		  SDman->AddNewDetector(thisdet);
 	      }
 
