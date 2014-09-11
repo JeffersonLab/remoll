@@ -2,26 +2,260 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-	<position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
+  <constant name="tubeTarget_rmax" value="40"/>
+  <constant name="tubeTarget_length" value="1500"/>
+  <constant name="tubeShield_rmin" value="tubeTarget_rmax+0.1"/>
+  <constant name="tubeShield_rmax" value="400"/>
+  <constant name="tubeShield_length" value="tubeTarget_length"/>
+  <position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
 </define>
 
-  <materials>
-    <material Z="1" name="VacuumTarg" state="gas">
-      <T unit="K" value="2.73"/>
-      <P unit="pascal" value="3e-18"/>
-      <D unit="g/cm3" value="1e-25"/>
-      <atom unit="g/mole" value="1.01"/>
-    </material>
-    <material Z="1" name="LiquidHydrogen" state="liquid">
-      <T unit="K" value="20.27"/>
-      <D unit="g/cm3" value="0.0708"/>
-      <atom unit="g/mole" value="1.00794"/>
-    </material>
-  </materials>
+
+<materials>
+  <!--
+     Adding shielding materials
+    -->
+  <isotope name="H1" Z="1" N="1">
+    <atom type="A" value="1.01"/>
+  </isotope>
+  <isotope name="H2" Z="1" N="2">
+    <atom type="A" value="2.01"/>
+  </isotope>
+  
+  <element Z="1" formula="H" name="Hydrogen" >
+    <fraction ref="H1" n="0.9999" />
+    <fraction ref="H2" n="0.0001" />
+  </element>
+  
+  <isotope name="C12" Z="6" N="12">
+    <atom type="A" value="12.00"/>
+  </isotope>
+  <isotope name="C13" Z="6" N="13">
+    <atom type="A" value="13.00"/>
+  </isotope>
+  
+  <element Z="12" formula="C" name="Carbon" >
+    <fraction ref="C12" n="0.9893" />
+    <fraction ref="C13" n="0.0107" />
+  </element>
+  
+  <isotope name="B10" Z="5" N="10">
+    <atom type="A" value="10.01"/>
+  </isotope>
+  <isotope name="B11" Z="5" N="11">
+    <atom type="A" value="11.01"/>
+  </isotope> 
+  
+  <element Z="5" formula="B" name="Boron" >
+    <fraction ref="B10" n="0.1990" />
+    <fraction ref="B11" n="0.8010" />
+  </element>
+  
+  <isotope name="O16" Z="8" N="16">
+    <atom type="A" value="15.99"/>
+  </isotope>
+  <isotope name="O17" Z="8" N="17">
+    <atom type="A" value="17.00"/>
+  </isotope>
+  <isotope name="O18" Z="8" N="18">
+    <atom type="A" value="18.00"/>
+  </isotope>
+  
+  <element Z="8" formula="O" name="Oxygen" >
+    <fraction ref="O16" n="0.9976" />
+    <fraction ref="O17" n="0.0004" />
+    <fraction ref="O18" n="0.0020" />
+  </element>
+  
+  <element Z="11" formula="Na" name="Sodium" >
+    <atom value="22.99" />
+  </element>
+  
+  <isotope name="Mg24" Z="12" N="24">
+    <atom type="A" value="23.98"/>
+  </isotope>
+  <isotope name="Mg25" Z="12" N="25">
+    <atom type="A" value="24.99"/>
+  </isotope>
+  <isotope name="Mg26" Z="12" N="26">
+    <atom type="A" value="25.98"/>
+  </isotope>
+  
+  <element Z="8" formula="Mg" name="Magnesium" >
+    <fraction ref="Mg24" n="0.7899" />
+    <fraction ref="Mg25" n="0.1000" />
+    <fraction ref="Mg26" n="0.1101" />
+  </element>
+  
+  <element Z="13" formula="Al" name="Aluminium" >
+    <atom value="26.98" />
+  </element>
+
+  <isotope name="Si28" Z="14" N="28">
+    <atom type="A" value="27.98"/>
+  </isotope>
+  <isotope name="Si29" Z="14" N="29">
+    <atom type="A" value="28.98"/>
+  </isotope>
+  <isotope name="Si30" Z="14" N="30">
+    <atom type="A" value="29.97"/>
+  </isotope>
+  <element Z="14" formula="Si" name="Silicon" >
+    <fraction ref="Si28" n="0.9223" />
+    <fraction ref="Si29" n="0.0468" />
+    <fraction ref="Si30" n="0.0309" />
+  </element>
+  
+  <isotope name="K39" Z="19" N="39">
+    <atom type="A" value="38.96"/>
+  </isotope>
+  <isotope name="K40" Z="19" N="40">
+    <atom type="A" value="39.96"/>
+  </isotope>
+  <isotope name="K41" Z="19" N="41">
+    <atom type="A" value="40.96"/>
+  </isotope>
+  <element Z="19" formula="K" name="Potassium" >
+    <fraction ref="K39" n="0.9326" />
+    <fraction ref="K40" n="0.0001" />
+    <fraction ref="K41" n="0.0673" />
+  </element>
+  
+  <isotope name="Ca40" Z="20" N="40">
+    <atom type="A" value="39.96"/>
+  </isotope>
+  <isotope name="Ca42" Z="20" N="42">
+    <atom type="A" value="41.96"/>
+  </isotope>
+  <isotope name="Ca43" Z="20" N="43">
+    <atom type="A" value="42.96"/>
+  </isotope>
+  <isotope name="Ca44" Z="20" N="44">
+    <atom type="A" value="43.96"/>
+  </isotope>
+  <isotope name="Ca46" Z="20" N="46">
+    <atom type="A" value="45.95"/>
+  </isotope>
+  <isotope name="Ca48" Z="20" N="48">
+    <atom type="A" value="47.95"/>
+  </isotope>
+  <element Z="20" formula="Ca" name="Calcium" >
+    <fraction ref="Ca40" n="0.9694" />
+      <fraction ref="Ca42" n="0.0065" />
+      <fraction ref="Ca43" n="0.0014" />
+      <fraction ref="Ca44" n="0.0209" />
+      <fraction ref="Ca46" n="0.00001" />
+      <fraction ref="Ca48" n="0.0019" />
+  </element>
+    
+  <isotope name="Fe54" Z="26" N="54">
+    <atom type="A" value="53.94"/>
+  </isotope>
+  <isotope name="Fe56" Z="26" N="56">
+    <atom type="A" value="55.93"/>
+  </isotope>
+  <isotope name="Fe57" Z="26" N="57">
+    <atom type="A" value="56.94"/>
+  </isotope>
+  <isotope name="Fe58" Z="26" N="58">
+    <atom type="A" value="57.93"/>
+  </isotope>
+  <element Z="20" formula="Fe" name="Iron" >
+    <fraction ref="Fe54" n="0.0584" />
+    <fraction ref="Fe56" n="0.9175" />
+    <fraction ref="Fe54" n="0.0212" />
+    <fraction ref="Fe54" n="0.0028" />
+  </element>
+  
+  <material Z="1" name="VacuumTarg" state="gas">
+    <T unit="K" value="2.73"/>
+    <P unit="pascal" value="3e-18"/>
+    <D unit="g/cm3" value="1e-25"/>
+    <atom unit="g/mole" value="1.01"/>
+  </material>
+  <material Z="1" name="LiquidHydrogen" state="liquid">
+    <T unit="K" value="20.27"/>
+    <D unit="g/cm3" value="0.0708"/>
+    <atom unit="g/mole" value="1.00794"/>
+  </material>
+
+<!--
+   Based on Material: G4_CONCRETE    density:  2.300 g/cm3   RadL:  11.553 cm   Nucl.Int.Length:  41.247 cm   Imean: 135.200 eV 
+-->
+  <material name="Concrete" state="solid">
+	<D value="2.3" unit="g/cm3"/>
+	<fraction n="0.0100" ref="Hydrogen"/>
+	<fraction n="0.0010" ref="Carbon"/>
+	<fraction n="0.5291" ref="Oxygen"/>
+	<fraction n="0.0160" ref="Sodium"/>
+	<fraction n="0.0020" ref="Magnesium"/>
+	<fraction n="0.0339" ref="Aluminium"/>
+	<fraction n="0.3370" ref="Silicon"/>
+	<fraction n="0.0130" ref="Potassium"/>
+	<fraction n="0.0440" ref="Calcium"/>	
+	<fraction n="0.0140" ref="Iron"/>
+  </material>
+  
+  <!--
+     Based on Material: G4_POLYETHYLENE (C_2H_4)_N-Polyethylene   density: 940.000 mg/cm3  RadL:  47.632 cm   Nucl.Int.Length:  72.122 cm   Imean:  57.400 eV 
+    -->
+  <material name="Polythene" state="solid">
+    <D value="0.940" unit="g/cm3"/>
+    <fraction n="0.1437" ref="Hydrogen"/>
+    <fraction n="0.8563" ref="Carbon"/>
+  </material>
+  <!--
+     Based on Material:  Borated_Polyethylene    density:  1.190 g/cm3   RadL:  39.400 cm   Nucl.Int.Length:  58.984 cm   Imean:  61.005 eV from PREX geometry
+    -->
+  <material name="Borated_Polythene" state="solid">
+    <D value="1.190" unit="g/cm3"/>
+    <fraction n="0.3000" ref="Boron"/>
+    <fraction n="0.1006" ref="Hydrogen"/>
+    <fraction n="0.5994" ref="Carbon"/>
+  </material>
+
+<!--
+   Based on Material:  Borated_Concrete    density:  2.420 g/cm3   RadL:  15.095 cm   Nucl.Int.Length:  34.629 cm   Imean:  94.872 eV from PREX geometry
+  -->
+  <material name="Borated_Concrete" state="solid">
+	<D value="2.42" unit="g/cm3"/>
+	<fraction n="0.5500" ref="Boron"/>
+	<fraction n="0.0045" ref="Hydrogen"/>
+	<fraction n="0.0005" ref="Carbon"/>
+	<fraction n="0.2381" ref="Oxygen"/>
+	<fraction n="0.0072" ref="Sodium"/>
+	<fraction n="0.0009" ref="Magnesium"/>
+	<fraction n="0.0152" ref="Aluminium"/>
+	<fraction n="0.1517" ref="Silicon"/>
+	<fraction n="0.0058" ref="Potassium"/>
+	<fraction n="0.0198" ref="Calcium"/>	
+	<fraction n="0.0063" ref="Iron"/>
+  </material>
+
+  <!--
+     Based on Material:  Polycrete    density:  3.750 g/cm3   RadL:   8.462 cm   Nucl.Int.Length:  21.814 cm   Imean:  87.486 eV from PREX geometry
+    -->
+  <material name="Poly_Concrete" state="solid">
+	<D value="2.42" unit="g/cm3"/>
+	<fraction n="0.0635" ref="Hydrogen"/>
+	<fraction n="0.3431" ref="Carbon"/>
+	<fraction n="0.3175" ref="Oxygen"/>
+	<fraction n="0.0096" ref="Sodium"/>
+	<fraction n="0.0012" ref="Magnesium"/>
+	<fraction n="0.0203" ref="Aluminium"/>
+	<fraction n="0.2022" ref="Silicon"/>
+	<fraction n="0.0078" ref="Potassium"/>
+	<fraction n="0.0264" ref="Calcium"/>	
+	<fraction n="0.0084" ref="Iron"/>
+  </material>
+
+
+</materials>
 
 <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1000" rmin="0" startphi="0" z="2000"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="40" rmin="0" startphi="0" z="1500"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="tubeTarget_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_solid" rmax="tubeShield_rmax" rmin="40.5" startphi="0" z="tubeShield_length"/>
 </solids>
 
 <structure>
@@ -30,7 +264,12 @@
       <materialref ref="LiquidHydrogen"/>
       <solidref ref="tubeTarget"/>
     </volume>
-
+    
+    <volume name="TargShield_logic">
+      <materialref ref="Borated_Concrete"/>
+      <solidref ref="TargShield_solid"/>
+    </volume>
+ 
     <volume name="logicTarget">
       <materialref ref="VacuumTarg"/>
       <solidref ref="tubeTargetMother"/>
@@ -40,12 +279,17 @@
         <position name="targ_center" unit="mm" x="0" y="0" z="0"/>
       </physvol>
 
+      <physvol>
+        <volumeref ref="TargShield_logic"/>
+        <position name="targ_center" unit="mm" x="0" y="0" z="0"/>
+      </physvol>
+
     </volume>
 
 </structure>
 
 <setup name="Target" version="1.0">
 	<world ref="logicTarget"/>
-</setup>
+</setup> 
 
 </gdml>
