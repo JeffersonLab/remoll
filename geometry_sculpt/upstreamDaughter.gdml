@@ -49,6 +49,14 @@
     <constant name="INNER_R" value="30.66321"/>
     <constant name="INCOILRADIUS" value="INNER_R+XS_H/2+tan(COIL_ANGLE*DEGRAD)*COIL_STRAIGHT_L/2"/>
 
+    <!--
+       Shielding collimators dimensions
+      -->
+    <constant name="boxUSShieldColl1_inner_rmax" value="140"/>
+    <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET"/>
+    <constant name="boxUSShieldColl2_inner_rmax" value="335"/>
+    <position name="USshieldcoll_center_2" unit="mm" x="0" y="0" z="6400-UOFFSET"/>
+
     <constant name="X_ARC" value="COIL_STRAIGHT_L/2"/>
     <constant name="Y1_ARC" value="-INCOILRADIUS-(COIL_ARC_R+XS_H/2)"/>
     <constant name="Y2_ARC" value="-INCOILRADIUS-(COIL_ARC_R+XS_H/2+COIL_STRAIGHT_H)"/>
@@ -75,6 +83,17 @@
     <position name="COIL_STRAIGHT_4" unit="mm" x="0" y="X2_STRAIGHT*cos(COIL_ANGLE*DEGRAD)-Y2_STRAIGHT*sin(COIL_ANGLE*DEGRAD)" 
                                                      z="X2_STRAIGHT*sin(COIL_ANGLE*DEGRAD)+Y2_STRAIGHT*cos(COIL_ANGLE*DEGRAD)"/>
 
+    <!--
+       To have optimized US mother volume use these numbers
+      -->
+    <constant name="USTubemother_rmax" value="1500"/>
+    <constant name="USTubemother_length" value="4500"/>
+    <constant name="USTubemothersubtract_length" value="1000"/>
+    <position name="USmothersubtract_center_1" unit="mm" x="0" y="0" z="USTubemother_length/2 - USTubemothersubtract_length/2"/>
+
+    <!--Rotation about x axis -->
+    <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/> 
+
     <rotation name="RotateIN"   x="0+COIL_ANGLE"  y="0" z="0" unit="deg"/>
     <rotation name="RotateDS"    x="270+COIL_ANGLE"  y="0" z="0" unit="deg"/>
     <rotation name="RotateOUT"   x="0-COIL_ANGLE"  y="180" z="0" unit="deg"/>
@@ -93,7 +112,7 @@
     <rotation name="RotateZ_6" x="90" y="SEPTANT*6.+90" z="0" unit="deg"/>
     <rotation name="identity"/>
 
-</define>
+</define> 
 
 <materials>
     <material Z="1" name="VacuumColl" state="gas">
@@ -113,7 +132,14 @@
 </materials>
 
 <solids>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream" rmax="1000" rmin="0" startphi="0" z="3000"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_1" rmax="USTubemother_rmax" rmin="0" startphi="0" z="USTubemother_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_2" rmax="USTubemother_rmax + 1" rmin="0" startphi="0" z="USTubemothersubtract_length"/>
+    <subtraction name ="tubeUpstream">
+      <first ref="tubeUpstream_1"/>
+      <second ref="tubeUpstream_2"/>
+      <positionref ref="USmothersubtract_center_1" />
+      <!-- <rotationref ref="scRot_1"/> -->
+    </subtraction>
 
     <box lunit="mm" name="COLL_BOX"  x="1000" y="1000" z="1000"/>
 
@@ -250,6 +276,27 @@
         <rotationref ref="RotateUSIN"/>
     </union>
 
+    <!--
+       Shielding collimators
+      -->
+    <box lunit="mm" name="boxUSShieldColl1_solid_1" x="2270" y="2270" z="1000"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_1" rmax="boxUSShieldColl1_inner_rmax" rmin="0" startphi="0" z="1050"/>
+
+    <subtraction name ="boxUSShieldColl1_solid">
+      <first ref="boxUSShieldColl1_solid_1"/>
+      <second ref="USShield_subTube_solid_1"/>
+      <positionref ref="CENTER" />
+    </subtraction> 
+
+    <box lunit="mm" name="boxUSShieldColl2_solid_1" x="2660" y="2660" z="1000"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_2" rmax="boxUSShieldColl2_inner_rmax" rmin="0" startphi="0" z="1050"/>
+
+    <subtraction name ="boxUSShieldColl2_solid">
+      <first ref="boxUSShieldColl2_solid_1"/>
+      <second ref="USShield_subTube_solid_2"/>
+      <positionref ref="CENTER" />
+    </subtraction> 
+
 </solids>
 
 
@@ -318,6 +365,16 @@
       <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
     </volume>
 
+    <volume name="boxUSShieldColl1_logic">
+      <materialref ref="Borated_Concrete"/>
+      <solidref ref="boxUSShieldColl1_solid"/>
+    </volume>
+
+    <volume name="boxUSShieldColl2_logic">
+      <materialref ref="Borated_Concrete"/>
+      <solidref ref="boxUSShieldColl2_solid"/>
+    </volume>
+
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
       <solidref ref="tubeUpstream"/>
@@ -364,7 +421,7 @@
       <physvol name="UScoil_4">
         <volumeref ref="logicUScoilunion_4"/>
         <positionref ref="CENTER"/>
-        <rotationref ref="RotateZ_4"/>
+        <rotationref ref="RotateZ_4"/> 
       </physvol>
 
       <physvol name="UScoil_5">
@@ -373,11 +430,26 @@
         <rotationref ref="RotateZ_5"/>
       </physvol>
 
+
       <physvol name="UScoil_6">
         <volumeref ref="logicUScoilunion_6"/>
         <positionref ref="CENTER"/>
         <rotationref ref="RotateZ_6"/>
       </physvol>
+
+    <!--
+       Shielding collimators
+      -->
+
+      <physvol>
+        <volumeref ref="boxUSShieldColl1_logic"/>
+        <positionref ref="USshieldcoll_center_1"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="boxUSShieldColl2_logic"/>
+        <positionref ref="USshieldcoll_center_2"/>
+      </physvol>
+
 
    </volume>
 </structure>

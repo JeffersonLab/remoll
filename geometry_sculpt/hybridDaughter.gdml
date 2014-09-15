@@ -39,6 +39,20 @@
 
     <position name="posPCOLL2TRAP" unit="mm" x="0" y="0" z="9825-DOFFSET+PCOLL2_THICK/2.0+0.5"/>
 
+    <!--
+       Shielding collimators dimensions
+      -->
+    <constant name="boxDSShieldColl1_inner_rmax" value="335"/>
+    <constant name="boxDSShieldColl1_width" value="5715"/>
+    <constant name="boxDSShieldColl1_width_xminus" value="2246.6"/>
+    <constant name="boxDSShieldColl1_maxwidth" value="2*3468.4"/>
+    <constant name="boxDSShieldCollSubstract1_width" value="boxDSShieldColl1_maxwidth/2 - boxDSShieldColl1_width/2"/>
+    <position name="DSshieldcoll_center_1" unit="mm" x="0" y="0" z="9020-DOFFSET"/>
+    <position name="DSshieldcollSubstract_CENTER_1" unit="mm" x="0" y="0" z="0"/> 
+    <position name="DSshieldcollSubstract_CENTER_2" unit="mm" x="boxDSShieldCollSubstract1_width/2 - boxDSShieldColl1_width/2" y="0" z="0"/> 
+    <!--  -->
+
+
     <constant name="PCOLL2_SCULPT_P1_X" value ="63.0"/>
     <constant name="PCOLL2_SCULPT_P1_Y" value ="10.0"/>
     <constant name="PCOLL2_SCULPT_P2_X" value ="106.5"/>
@@ -431,7 +445,7 @@
       <D unit="g/cm3" value="8.96"/>
       <atom unit="g/mole" value="63.54"/>
     </material>
-  </materials>
+  </materials> 
 
 <solids>
     <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_1" rmax1="COLL1_R4_U" rmax2="COLL1_R4_D" rmin1="COLL1_R1_U" rmin2="COLL1_R1_D" startphi="0" z="COLL1_THICK"/>
@@ -699,7 +713,7 @@
 
 
 
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="1000" rmin="0" startphi="0" z="7865.68"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="3000" rmin="0" startphi="0" z="7865.68 + 2*950"/>
 
     <tessellated name="leftpcolcut">
 	<triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
@@ -842,6 +856,26 @@
         <rotationref ref="ARotateZ_6"/>
     </union>
 
+    <!--
+       Shielding collimators
+      -->
+    <box lunit="mm" name="boxDSShieldColl1_solid_1" x="boxDSShieldColl1_maxwidth" y="5000" z="1000"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_subTube_solid_1" rmax="boxDSShieldColl1_inner_rmax" rmin="0" startphi="0" z="1050"/>
+
+    <subtraction name ="boxDSShieldColl1_solid_2">
+      <first ref="boxDSShieldColl1_solid_1"/>
+      <second ref="DSShield_subTube_solid_1"/>
+      <positionref ref="DSshieldcollSubstract_CENTER_1" />
+    </subtraction> 
+
+    <box lunit="mm" name="boxDSShieldColl1_solid_3" x="boxDSShieldCollSubstract1_width" y="5050" z="1050"/>
+
+    <subtraction name ="boxDSShieldColl1_solid">
+      <first ref="boxDSShieldColl1_solid_2"/>
+      <second ref="boxDSShieldColl1_solid_3"/>
+      <positionref ref="DSshieldcollSubstract_CENTER_2" />
+    </subtraction> 
+
 </solids>
 
 <structure>
@@ -950,6 +984,15 @@
 	<auxiliary auxtype="DetNo" auxvalue="201"/>
     </volume>
 
+    <!--
+       Shielding collimator
+      -->
+    <volume name="boxDSShieldColl1_logic">
+      <materialref ref="Borated_Concrete"/>
+      <solidref ref="boxDSShieldColl1_solid"/>
+    </volume>
+
+
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
       <solidref ref="tubeDownstream"/>
@@ -1047,6 +1090,16 @@
 	<volumeref ref="logicpcoll2trap"/>
         <positionref ref="posPCOLL2TRAP"/>
       </physvol>
+
+    <!--
+       Shielding collimators
+      -->
+
+      <physvol>
+        <volumeref ref="boxDSShieldColl1_logic"/>
+        <positionref ref="DSshieldcoll_center_1"/>
+      </physvol>
+       
 
    </volume>
 </structure>

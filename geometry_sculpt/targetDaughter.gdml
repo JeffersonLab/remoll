@@ -16,11 +16,13 @@
   <constant name="tubeShield_disk_thickness" value="400"/>
   <constant name="tubeShield_disk_rmax" value="tubeShield_rmax"/>
 
+  <constant name="boxShield_inner_rmax" value="91.7"/>
 
   <position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
   <position name="tubeShield_topdisk_center" unit="mm" x="0" y="tubeShield_height/2+tubeShield_disk_thickness/2" z="0"/>
   <position name="tubeShield_bottomdisk_center" unit="mm" x="0" y="-1*tubeShield_height/2 - tubeShield_disk_thickness/2" z="0"/>
   <position name="tgt_center" unit="mm" x="0" y="0" z="0"/>
+  <position name="shieldcoll_center_1" unit="mm" x="0" y="0" z="2853"/>
   <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/> 
 </define>
 
@@ -267,18 +269,27 @@
 </materials>
 
 <solids>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1000" rmin="0" startphi="0" z="2000"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1000" rmin="0" startphi="0" z="6000"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="tubeTarget_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_solid_1" rmax="tubeShield_rmax" rmin="tubeShield_rmin" startphi="0" z="tubeShield_height"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget_solid_1" rmax="tubeShield_beam_rmax" rmin="0" startphi="0" z="2*tubeTarget_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_topdisk_solid" rmax="tubeShield_disk_rmax" rmin="0" startphi="0" z="tubeShield_disk_thickness"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_bottomdisk_solid" rmax="tubeShield_disk_rmax" rmin="0" startphi="0" z="tubeShield_disk_thickness"/>
 
+    <box lunit="mm" name="boxShieldColl1_solid_1" x="700" y="700" z="200"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_subTube_solid" rmax="boxShield_inner_rmax" rmin="0" startphi="0" z="210"/>
+
     <subtraction name ="TargShield_solid">
       <first ref="TargShield_solid_1"/>
       <second ref="tubeTarget_solid_1"/>
       <positionref ref="tgt_center" />
       <rotationref ref="scRot_1"/>      
+    </subtraction> 
+
+    <subtraction name ="boxShieldColl1_solid">
+      <first ref="boxShieldColl1_solid_1"/>
+      <second ref="TargShield_subTube_solid"/>
+      <positionref ref="tgt_center" />
     </subtraction> 
 
 </solids>
@@ -305,6 +316,10 @@
       <solidref ref="TargShield_solid"/>
     </volume>
  
+    <volume name="boxShieldColl1_logic">
+      <materialref ref="Borated_Concrete"/>
+      <solidref ref="boxShieldColl1_solid"/>
+    </volume>
 
     <volume name="logicTarget">
       <materialref ref="VacuumTarg"/>
@@ -333,6 +348,10 @@
 	<rotationref ref="scRot_1"/>
       </physvol>
 
+      <physvol>
+        <volumeref ref="boxShieldColl1_logic"/>
+        <positionref ref="shieldcoll_center_1"/>
+      </physvol>
 
     </volume>
 
