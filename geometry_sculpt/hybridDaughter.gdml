@@ -848,78 +848,92 @@
      <volume name="logicDScoil_0">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3001"/>
     </volume>
     <volume name="logicDScoil_1">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3002"/>
     </volume>
     <volume name="logicDScoil_2">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/> 
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3003"/>
     </volume>
     <volume name="logicDScoil_3">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3004"/>
     </volume>
     <volume name="logicDScoil_4">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3005"/>
     </volume>
     <volume name="logicDScoil_5">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3006"/>
     </volume>
     <volume name="logicDScoil_6">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3007"/>
     </volume>
 
     <volume name="logicDScoil_7">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3008"/>
     </volume>
     <volume name="logicDScoil_8">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3009"/>
     </volume>
 
     <volume name="logicDScoil_9">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3010"/>
     </volume>
 
     <volume name="logicDScoil_10">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3011"/>
     </volume>
 
     <volume name="logicDScoil_11">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3012"/>
     </volume>
 
     <volume name="logicDScoil_12">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3013"/>
     </volume>
 
     <volume name="logicDScoil_13">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="3014"/>
     </volume>
 
 
@@ -927,20 +941,21 @@
       <materialref ref="Tungsten"/>
       <solidref ref="dscyl_1"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2004"/>
+      <auxiliary auxtype="DetNo" auxvalue="2003"/>
     </volume>
 
   <volume name="logicDScoll_5">
       <materialref ref="Tungsten"/>
       <solidref ref="dscoll5union_5"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="2005"/>
     </volume>
 
     <volume name="logicPDScollunion_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="pdscoll_union_6"/> 
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-	<auxiliary auxtype="DetNo" auxvalue="2003"/>
+	<auxiliary auxtype="DetNo" auxvalue="2004"/>
     </volume>
 
     <volume name="logicpcoll2trap">
