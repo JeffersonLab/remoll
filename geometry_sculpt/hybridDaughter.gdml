@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
@@ -430,22 +435,7 @@
     <rotation name="ARotateZ_6" x="0" z="SEPTANT*6." y="0" unit="deg"/>
 </define>
 
-  <materials>
-    <material Z="1" name="VacuumColl" state="gas">
-      <T unit="K" value="2.73"/>
-      <P unit="pascal" value="3e-18"/>
-      <D unit="g/cm3" value="1e-25"/>
-      <atom unit="g/mole" value="1.01"/>
-    </material>
-   <material Z="74" name="Tungsten" state="solid">
-      <D unit="g/cm3" value="19.3"/>
-      <atom unit="g/mole" value="183.85"/>
-    </material>
-    <material Z="11" name="Copper" state="solid">
-      <D unit="g/cm3" value="8.96"/>
-      <atom unit="g/mole" value="63.54"/>
-    </material>
-  </materials> 
+&materials;
 
 <solids>
     <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_1" rmax1="COLL1_R4_U" rmax2="COLL1_R4_D" rmin1="COLL1_R1_U" rmin2="COLL1_R1_D" startphi="0" z="COLL1_THICK"/>
