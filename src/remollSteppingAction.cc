@@ -28,6 +28,10 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
 	){
 	fTrack->SetTrackStatus(fStopAndKill);
     }
+    //stop and kill in Kryptonite materials : Rakitha Wed Sep 17 10:21:58 EDT 2014
+    if (material->GetName()=="Kryptonite" ){
+      fTrack->SetTrackStatus(fStopAndKill);
+    }
 
 
 }
