@@ -256,4 +256,10 @@
     <atom unit="g/mole" value="63.54"/>
   </material>
   
+  <material Z="82" name="Kryptonite" state="solid">
+    <D unit="g/cm3" value="11.350"/>
+    <atom unit="g/mole" value="207.2"/>
+  </material>
+
+
 </materials>
