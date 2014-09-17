@@ -321,7 +321,7 @@
 <!--  <materialref ref="Concrete"/> -->
 <!--  <materialref ref="Tungsten"/> -->
       <materialref ref="Borated_Concrete"/>
-      <solidref ref="TargShield_solid"/>
+      <solidref ref="TargShield_solid"/> 
     </volume>
  
     <volume name="boxShieldColl1_logic">
