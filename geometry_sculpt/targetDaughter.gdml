@@ -335,12 +335,12 @@
 
       <physvol>
         <volumeref ref="h2Targ"/>
-        <position name="targ_center" unit="mm" x="0" y="0" z="0"/>
+        <position name="targ_center1" unit="mm" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol>
         <volumeref ref="TargShield_logic"/>
-        <position name="targ_center" unit="mm" x="0" y="0" z="0"/>
+        <position name="targ_center2" unit="mm" x="0" y="0" z="0"/>
 	<rotationref ref="scRot_1"/>
       </physvol>
 
