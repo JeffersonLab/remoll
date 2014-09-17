@@ -387,11 +387,13 @@
         <positionref ref="posCOLL2"/>
       </physvol>
 
+   <!--Overlaps with the shielding block 3 -->
+<!--
       <physvol name="coll2trap_phys">
         <volumeref ref="logiccoll2trap"/>
         <positionref ref="posCOLL2TRAP"/>
       </physvol>
-
+-->
       <physvol name="UScoil_0">
         <volumeref ref="logicUScoilunion_0"/>
         <positionref ref="CENTER"/>

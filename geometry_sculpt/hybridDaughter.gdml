@@ -1091,6 +1091,7 @@
         <positionref ref="posPCOLL2"/>
       </physvol>
 
+
       <physvol name="pcoll2trap_phys">
 	<volumeref ref="logicpcoll2trap"/>
         <positionref ref="posPCOLL2TRAP"/>
