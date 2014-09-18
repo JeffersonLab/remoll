@@ -133,11 +133,20 @@
 <constant name="increase_C_arc" value="0.0"/>
 <constant name="lengthen_B" value="0"/>
 <constant name="lengthen_D" value="-6.9+lengthen_B"/>
+
+<!--
 <constant name="decrease_EF_arc" value="3.2"/>
+-->
+<constant name="decrease_EF_arc" value="0.2"/>
 
 <constant name="coil_angle" value="0.14754"/>
 <constant name="tail_angle" value="5.7106"/>
+
+<!--
 <constant name="wire_width" value="0.5827"/>
+-->
+<constant name="wire_width" value="0.6000"/>
+
 <constant name="coat_thick" value="0.04"/>
 <constant name="min_radius" value="4.068-(wire_width+2*coat_thick)/2"/>
 <constant name="bend_radius" value="5*(wire_width+2*coat_thick)"/>
@@ -204,8 +213,11 @@
 <constant name="HEIGHT_C_3" value="5*(wire_width+2*coat_thick)"/>
 <constant name="seg_C_radius" value="seg_B_radius+(seg_length_B/2)*tan(seg_B_angle*DEGRAD)+HEIGHT_B_1/2+RADIUS_C_1"/>
 
-
+<!--
 <constant name="seg_length_D" value="198.8+lengthen_D"/>
+-->
+<constant name="seg_length_D" value="210.0"/>
+
 <constant name="seg_D_angle" value="2.560+increase_B_ang"/>
 <constant name="seg_D_z" value="seg_C_z-seg_length_D/2"/>
 <constant name="WIDTH_D_1" value="4*(wire_width+2*coat_thick)"/>
@@ -229,9 +241,12 @@
 
 
 
-
+<!--
 <constant name="seg_E_arc_angle" value="45-decrease_EF_arc"/>
 <constant name="seg_E_arc_mult" value="30"/>
+-->
+<constant name="seg_E_arc_angle" value="90-decrease_EF_arc"/>
+<constant name="seg_E_arc_mult" value="0"/>
 <constant name="seg_E_z" value="seg_D_z-seg_length_D/2"/>
 <constant name="RADIUS_E_1" value="(seg_E_arc_mult+5)*(wire_width+2*coat_thick)"/>
 <constant name="RADIUS_E_2" value="(seg_E_arc_mult+7)*(wire_width+2*coat_thick)"/>
@@ -244,8 +259,12 @@
 <constant name="HEIGHT_E_3" value="5*(wire_width+2*coat_thick)"/>
 <constant name="seg_E_radius" value="seg_D_radius-(seg_length_D/2)*tan(seg_D_angle*DEGRAD)+RADIUS_E_3"/>
 
+<!--
 <constant name="seg_F_arc_angle" value="45 - decrease_EF_arc"/>
 <constant name="seg_F_arc_mult" value="30"/>
+-->
+<constant name="seg_F_arc_angle" value="90 - decrease_EF_arc"/>
+<constant name="seg_F_arc_mult" value="7"/>
 <constant name="seg_F_z" value="seg_G_z+seg_length_G/2"/>
 <constant name="RADIUS_F_1" value="(seg_F_arc_mult+8)*(wire_width+2*coat_thick)"/>
 <constant name="RADIUS_F_2" value="(seg_F_arc_mult+5)*(wire_width+2*coat_thick)"/>
@@ -439,7 +458,7 @@
 
 <solids>
     <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_1" rmax1="COLL1_R4_U" rmax2="COLL1_R4_D" rmin1="COLL1_R1_U" rmin2="COLL1_R1_D" startphi="0" z="COLL1_THICK"/>
-    <box lunit="mm" name="COIL_BOX"  x="1000/sqrt(2)" y="1000/sqrt(2)" z="7865.68"/>
+    <box lunit="mm" name="COIL_BOX_1"  x="1000/sqrt(2)" y="1000/sqrt(2)" z="9865.68"/>
     <box lunit="mm" name="COIL_BOX_2"  x="1000/sqrt(2)" y="1000/sqrt(2)" z="7865.68"/>
 
     <box lunit="cm" name="SEGMENT_X"  x="HEIGHT_X" y="WIDTH_X" z="seg_length_X"/>
@@ -488,72 +507,73 @@
     <tube lunit="cm" aunit="deg" name="SEGMENT_IJ_2" rmin="RADIUS_IJ_2" rmax="RADIUS_IJ_2+HEIGHT_IJ_2" z="WIDTH_IJ_2" deltaphi="180" startphi="0" />
 
 
-    <intersection name ="dscoilunion_0">
-        <first ref="COIL_BOX"/>
-        <second ref="SEGMENT_X"/>
-        <positionref ref="posCOIL_X"/>
-        <rotationref ref="RotateCOIL_X"/>
-    </intersection>
-    <union name ="dscoilunion_1">
-        <first ref="dscoilunion_0"/>
-        <second ref="SEGMENT_Y"/>
-        <positionref ref="posCOIL_Y"/>
-        <rotationref ref="RotateCOIL_Y"/>
-    </union>
-    <union name ="dscoilunion_2">
-        <first ref="dscoilunion_1"/>
-        <second ref="SEGMENT_Z"/>
-        <positionref ref="posCOIL_Z"/>
-        <rotationref ref="RotateCOIL_Z"/>
-    </union>
-    <union name ="dscoilunion_3">
-        <first ref="dscoilunion_2"/>
-        <second ref="SEGMENT_RS"/>
-        <positionref ref="posCOIL_RS"/>
-        <rotationref ref="RotateCOIL_RS"/>
-    </union>
-    <union name ="dscoilunion_4">
-        <first ref="dscoilunion_3"/>
-        <second ref="SEGMENT_Q"/>
-        <positionref ref="posCOIL_Q"/>
-        <rotationref ref="RotateCOIL_Q"/>
-    </union>
-    <union name ="dscoilunion_5">
-        <first ref="dscoilunion_4"/>
-        <second ref="SEGMENT_N"/>
-        <positionref ref="posCOIL_N"/>
-        <rotationref ref="RotateCOIL_N"/>
-    </union>
-    <union name ="dscoilunion_6">
-        <first ref="dscoilunion_5"/>
-        <second ref="SEGMENT_OP"/>
-        <positionref ref="posCOIL_OP"/>
-        <rotationref ref="RotateCOIL_OP"/>
-    </union>
-    <union name ="dscoilunion_7">
-        <first ref="dscoilunion_6"/>
-        <second ref="SEGMENT_K"/>
-        <positionref ref="posCOIL_K"/>
-        <rotationref ref="RotateCOIL_K"/>
-    </union>
-    <union name ="dscoilunion_8">
-        <first ref="dscoilunion_7"/>
-        <second ref="SEGMENT_LM"/>
-        <positionref ref="posCOIL_LM"/>
-        <rotationref ref="RotateCOIL_LM"/>
-    </union>
-    <union name ="dscoilunion_9">
-        <first ref="dscoilunion_8"/>
-        <second ref="SEGMENT_IJ_1"/>
-        <positionref ref="posCOIL_IJ_1"/>
-        <rotationref ref="RotateCOIL_IJ_1"/>
-    </union>
-    <union name ="dscoilunion_10">
-        <first ref="dscoilunion_9"/>
-        <second ref="SEGMENT_IJ_2"/>
-        <positionref ref="posCOIL_IJ_2"/>
-        <rotationref ref="RotateCOIL_IJ_2"/>
-    </union>
+   <intersection name ="dscoilunion_0">
+    <first ref="COIL_BOX_1"/>
+    <second ref="SEGMENT_X"/>
+    <positionref ref="posCOIL_X"/>
+    <rotationref ref="RotateCOIL_X"/>
+  </intersection>
+  <union name ="dscoilunion_1">
+    <first ref="dscoilunion_0"/>
+    <second ref="SEGMENT_K"/>
+    <positionref ref="posCOIL_K"/>
+    <rotationref ref="RotateCOIL_K"/>
+  </union>
+  <union name ="dscoilunion_2">
+    <first ref="dscoilunion_1"/>
+    <second ref="SEGMENT_Y"/>
+    <positionref ref="posCOIL_Y"/>
+    <rotationref ref="RotateCOIL_Y"/>
+  </union>
+  <union name ="dscoilunion_3">
+    <first ref="dscoilunion_2"/>
+    <second ref="SEGMENT_Z"/>
+    <positionref ref="posCOIL_Z"/>
+    <rotationref ref="RotateCOIL_Z"/>
+  </union>
+  <union name ="dscoilunion_4">
+    <first ref="dscoilunion_3"/>
+    <second ref="SEGMENT_RS"/>
+    <positionref ref="posCOIL_RS"/>
+    <rotationref ref="RotateCOIL_RS"/>
+  </union>
+  <union name ="dscoilunion_5">
+    <first ref="dscoilunion_4"/>
+    <second ref="SEGMENT_Q"/>
+    <positionref ref="posCOIL_Q"/>
+    <rotationref ref="RotateCOIL_Q"/>
+  </union>
+  <union name ="dscoilunion_6">
+    <first ref="dscoilunion_5"/>
+    <second ref="SEGMENT_N"/>
+    <positionref ref="posCOIL_N"/>
+    <rotationref ref="RotateCOIL_N"/>
+  </union>
+  <union name ="dscoilunion_7">
+    <first ref="dscoilunion_6"/>
+    <second ref="SEGMENT_OP"/>
+    <positionref ref="posCOIL_OP"/>
+    <rotationref ref="RotateCOIL_OP"/>
+  </union>
+  <union name ="dscoilunion_8">
+    <first ref="dscoilunion_7"/>
+    <second ref="SEGMENT_LM"/>
+    <positionref ref="posCOIL_LM"/>
+    <rotationref ref="RotateCOIL_LM"/>
+  </union>
+  <union name ="dscoilunion_9">
+    <first ref="dscoilunion_8"/>
+    <second ref="SEGMENT_IJ_1"/>
+    <positionref ref="posCOIL_IJ_1"/>
+    <rotationref ref="RotateCOIL_IJ_1"/>
+  </union>
+  <union name ="dscoilunion_10">
+    <first ref="dscoilunion_9"/>
+    <second ref="SEGMENT_IJ_2"/>
+    <positionref ref="posCOIL_IJ_2"/>
+    <rotationref ref="RotateCOIL_IJ_2"/>
+  </union>
+
 
 
     <intersection name ="dscoilunion_101">
