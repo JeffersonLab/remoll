@@ -92,7 +92,7 @@
     <!--
        To have optimized US mother volume use these numbers
       -->
-    <constant name="USTubemother_rmax" value="1500"/>
+    <constant name="USTubemother_rmax" value="1900"/>
     <constant name="USTubemother_length" value="4500"/>
     <constant name="USTubemothersubtract_length" value="1000"/>
     <position name="USmothersubtract_center_1" unit="mm" x="0" y="0" z="USTubemother_length/2 - USTubemothersubtract_length/2"/>
