@@ -84,7 +84,8 @@
     </volume>
  
     <volume name="boxShieldColl1_logic">
-      <materialref ref="Borated_Concrete"/>
+      <!-- <materialref ref="Borated_Concrete"/> -->
+      <materialref ref="Lead"/>
       <solidref ref="boxShieldColl1_solid"/>
     </volume>
 

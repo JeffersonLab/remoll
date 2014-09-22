@@ -15,11 +15,12 @@
 
     <constant name="DELTAT" value ="1.0"/>
     <!-- petal -->
+    <!-- Col-1 is now conical with bore and surface with same angles as inner and outer angles at the upstream face  -->
     <position name="posCOLL1" unit="mm" x="0" y="0" z="5575-UOFFSET"/>
-    <constant name="COLL1_R1_U" value ="17.8"/>
-    <constant name="COLL1_R1_D" value ="17.8"/>
-    <constant name="COLL1_R4_U" value ="29.5"/>
-    <constant name="COLL1_R4_D" value ="29.5"/>
+    <constant name="COLL1_R1_U" value ="17.774"/>
+    <constant name="COLL1_R1_D" value ="18.423"/>
+    <constant name="COLL1_R4_U" value ="29.527"/>
+    <constant name="COLL1_R4_D" value ="30.606"/>
 
     <constant name="COLL1_THICK" value ="200.0"/>
 
