@@ -173,6 +173,14 @@
       <atom unit="g/mole" value="183.85"/>
    </material>
 
+<!--Better definition would be to start from isotopes and build natural lead -->
+    <material Z="82" name="Lead" state="solid">
+      <MEE unit="eV" value="823"/>
+      <D unit="g/cm3" value="11.35"/>
+      <atom unit="g/mole" value="207.19"/>
+    </material>
+
+
 
 <!--
    Based on Material: G4_CONCRETE    density:  2.300 g/cm3   RadL:  11.553 cm   Nucl.Int.Length:  41.247 cm   Imean: 135.200 eV 
