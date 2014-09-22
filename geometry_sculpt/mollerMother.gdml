@@ -66,5 +66,5 @@
   <setup name="Default" version="1.0">
     <world ref="logicMother"/>
   </setup>
-
-</gdml>
+ 
+</gdml> 
