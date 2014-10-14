@@ -19,6 +19,11 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
     G4Track* fTrack = aStep->GetTrack();
     G4Material* material = fTrack->GetMaterial();
 
+    /*
+    //Now the stepping length is set to zero for Kryptonite metrial and have introduced a new mechanism to properly kill track by depositing the energy into the volume. 
+    //Therefore we no longer needs to artificially kill tracks in the UserSteppingAction : Rakitha Tue Oct 14 10:32:32 EDT 2014
+
+    /////////////////////////No Longer in Use//////////////////////////////
 
     // Don't continue in these materials
     if( (   material->GetName()=="Tungsten" 
@@ -33,6 +38,8 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
       fTrack->SetTrackStatus(fStopAndKill);
     }
 
+
+    */
 
 }
 

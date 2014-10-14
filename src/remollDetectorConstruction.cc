@@ -280,8 +280,14 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 
   G4VisAttributes* daughterVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   daughterVisAtt->SetForceWireframe (true);
+  G4Material* material;
   for(int i=0;i<worldVolume->GetLogicalVolume()->GetNoDaughters();i++){
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
+      //set user limits for Kryptonite materials. When tracks are killed inside Kryptonite materials, energy will be properly deposited
+      material=(G4Material*)worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->GetMaterial();
+      if(material->GetName()=="Kryptonite" ){
+	worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetUserLimits( new G4UserLimits(0.0, 0.0, 0.0, DBL_MAX, DBL_MAX) );
+      }
   }
 
   //==========================

@@ -100,6 +100,7 @@ int main(int argc, char** argv){
     G4PhysListFactory factory;
     G4VModularPhysicsList* physlist = factory.GetReferencePhysList("LHEP");
     physlist->SetVerboseLevel(verbose);
+    physlist->RegisterPhysics( new G4StepLimiterBuilder(verbose) );
     runManager->SetUserInitialization(physlist);
 
     //-------------------------------
