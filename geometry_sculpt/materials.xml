@@ -182,22 +182,6 @@
 
 
 
-<!--
-   Based on Material: G4_CONCRETE    density:  2.300 g/cm3   RadL:  11.553 cm   Nucl.Int.Length:  41.247 cm   Imean: 135.200 eV 
--->
-  <material name="Concrete" state="solid">
-	<D value="2.3" unit="g/cm3"/>
-	<fraction n="0.0100" ref="Hydrogen"/>
-	<fraction n="0.0010" ref="Carbon"/>
-	<fraction n="0.5291" ref="Oxygen"/>
-	<fraction n="0.0160" ref="Sodium"/>
-	<fraction n="0.0020" ref="Magnesium"/>
-	<fraction n="0.0339" ref="Aluminium"/>
-	<fraction n="0.3370" ref="Silicon"/>
-	<fraction n="0.0130" ref="Potassium"/>
-	<fraction n="0.0440" ref="Calcium"/>	
-	<fraction n="0.0140" ref="Iron"/>
-  </material>
   
   <!--
      Based on Material: G4_POLYETHYLENE (C_2H_4)_N-Polyethylene   density: 940.000 mg/cm3  RadL:  47.632 cm   Nucl.Int.Length:  72.122 cm   Imean:  57.400 eV 
@@ -252,12 +236,46 @@
 	<fraction n="0.0084" ref="Iron"/>
   </material>
 
+  <!--
+     Based on Material:  G4_CONCRETE    density:  2.3 g/cm3   RadL:   11.553 cm   Nucl.Int.Length:  41.247 cm   Imean:  135.200 eV from PREX geometry
+    -->
+  <material name="Concrete" state="solid">
+    <D value="2.3" unit="g/cm3"/>
+    <fraction n="0.010" ref="Hydrogen"/>
+    <fraction n="0.001" ref="Carbon"/>
+    <fraction n="0.529" ref="Oxygen"/>
+    <fraction n="0.016" ref="Sodium"/>
+    <fraction n="0.002" ref="Magnesium"/>
+    <fraction n="0.034" ref="Aluminium"/>
+    <fraction n="0.337" ref="Silicon"/>
+    <fraction n="0.013" ref="Potassium"/>
+    <fraction n="0.044" ref="Calcium"/>
+    <fraction n="0.014" ref="Iron"/>
+  </material>
+
+
   <material Z="1" name="VacuumColl" state="gas">
     <T unit="K" value="2.73"/>
     <P unit="pascal" value="3e-18"/>
     <D unit="g/cm3" value="1e-25"/>
     <atom unit="g/mole" value="1.01"/>
   </material>
+
+  <material Z="1" name="Vacuum" state="gas">
+    <T unit="K" value="2.73"/>
+    <P unit="pascal" value="3e-18"/>
+    <D unit="g/cm3" value="1e-25"/>
+    <atom unit="g/mole" value="1.01"/>
+  </material>
+
+  <material Z="1" name="VacuumDet" state="gas">
+    <T unit="K" value="2.73"/>
+    <P unit="pascal" value="3e-18"/>
+    <D unit="g/cm3" value="1e-25"/>
+    <atom unit="g/mole" value="1.01"/>
+  </material>
+
+
 
   <material Z="11" name="Copper" state="solid">
     <D unit="g/cm3" value="8.96"/>
