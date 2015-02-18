@@ -19,7 +19,7 @@
 class TGeoManager;
 
 class remollRunData : public TObject {
-
+  using TObject::Print;
     public:
 	 remollRunData();
 	~remollRunData();
