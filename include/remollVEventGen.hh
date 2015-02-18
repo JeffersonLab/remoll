@@ -26,36 +26,42 @@ class remollBeamTarget;
 class remollRunData;
 
 class remollVEventGen {
-    public:
-	remollVEventGen();
-	virtual ~remollVEventGen();
+public:
+    remollVEventGen();
+    virtual ~remollVEventGen();
 
-	remollEvent *GenerateEvent();
+    remollEvent *GenerateEvent();
 
-	G4String GetName(){ return fName; }
+    G4String GetName() {
+        return fName;
+    }
 
-	void SetSampType( SampType_t st ) { fSampType = st; }
-	void SetDoMultScatt( G4bool ms ){ fApplyMultScatt = ms; }
+    void SetSampType( SampType_t st ) {
+        fSampType = st;
+    }
+    void SetDoMultScatt( G4bool ms ) {
+        fApplyMultScatt = ms;
+    }
 
-	G4double fThCoM_min, fThCoM_max;
-	G4double fTh_min, fTh_max;
-	G4double fE_min;
+    G4double fThCoM_min, fThCoM_max;
+    G4double fTh_min, fTh_max;
+    G4double fE_min;
 
-    private:
-	const G4String fName;
+private:
+    const G4String fName;
 
-	remollBeamTarget *fBeamTarg;
-	remollRunData    *fRunData;
+    remollBeamTarget *fBeamTarg;
+    remollRunData    *fRunData;
 
-	void PolishEvent(remollEvent *);
-	
-	// Pure virtual function that needs to be filled out
-	virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
+    void PolishEvent(remollEvent *);
 
-    protected:
+    // Pure virtual function that needs to be filled out
+    virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
 
-	SampType_t fSampType;
-	G4bool     fApplyMultScatt;
+protected:
+
+    SampType_t fSampType;
+    G4bool     fApplyMultScatt;
 
 };
 
