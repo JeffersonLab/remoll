@@ -6,7 +6,7 @@
 #include "TObject.h"
 
 class remollTextFile : public TObject {
-    public:
+     public:
 	 remollTextFile();
 	 remollTextFile(const remollTextFile &);
 	 const remollTextFile& operator=(const remollTextFile &);
