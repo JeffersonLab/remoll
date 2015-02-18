@@ -3,6 +3,10 @@
 #include <string.h>
 #include <errno.h>
 
+#ifdef __APPLE__
+#include <unistd.h>
+#endif
+
 remollRunData::remollRunData(){
     fNthrown = -1;
     fBeamE   = -1e9;
