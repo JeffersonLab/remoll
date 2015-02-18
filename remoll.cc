@@ -55,6 +55,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#ifdef __APPLE__
+#include <unistd.h>
+#endif
+
 int main(int argc, char** argv){
 
     // Initialize the CLHEP random engine used by
