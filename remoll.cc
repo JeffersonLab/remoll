@@ -59,11 +59,13 @@
 #include <unistd.h>
 #endif
 
+#include <time.h>
+
 int main(int argc, char** argv){
 
+    clock_t tStart=clock();
     // Initialize the CLHEP random engine used by
     // "shoot" type functions
-
     unsigned int seed = time(0) + (int) getpid();
 
     unsigned int devrandseed = 0;
@@ -215,6 +217,6 @@ int main(int argc, char** argv){
 
     // Initialize Run manager
     // runManager->Initialize();
-
+    G4cout<<" Running time[s]: "<< (double) ((clock() - tStart)/CLOCKS_PER_SEC)<<G4endl;
     return 0;
 }
