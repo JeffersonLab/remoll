@@ -57,7 +57,7 @@
     <constant name="DSShield_Tube_solid_1_length" value="100"/>
     <position name="DSshieldcoll_center_1" unit="mm" x="0" y="0" z="9020-DOFFSET"/>
     <position name="DSshieldcollSubstract_CENTER_1" unit="mm" x="0" y="0" z="0"/> 
-    <position name="DSshieldcollSubstract_CENTER_2" unit="mm" x="boxDSShieldCollSubstract1_width/2 - boxDSShieldColl1_width/2" y="0" z="0"/> 
+    <position name="DSshieldcollSubstract_CENTER_2" unit="mm" x="-boxDSShieldCollSubstract1_width/2 - boxDSShieldColl1_width/2" y="0" z="0"/> 
     <position name="DSshieldcollSubstract_CENTER_3" unit="mm" x="0" y="0" z="500 - DSShield_Tube_solid_1_length/2"/> 
     <position name="DSshieldcollSubstract_CENTER_4" unit="mm" x="0" y="0" z="9020 - DOFFSET + 500 - DSShield_Tube_solid_1_length/2"/> 
 
