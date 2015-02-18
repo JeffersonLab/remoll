@@ -15,5 +15,6 @@ include/gitinfo.hh
 #ignore kdev files
 *.kdev4
 
-#ignore build directory
+#ignore build and map directory
 build
+map_directory
