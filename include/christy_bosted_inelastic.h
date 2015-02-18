@@ -1225,7 +1225,7 @@ G4double MEC2009(G4double q2,G4double w2, G4int A)//checked
     return f1;
 }
 
-G4double fitemc(G4double X, G4int A)//FIXME
+G4double fitemc(G4double X, G4int A)
 {
     /*!---------------------------------------------------------------------
       ! Fit to EMC effect.  Steve Rock 8/3/94
