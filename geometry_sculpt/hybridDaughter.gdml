@@ -53,10 +53,31 @@
     <constant name="boxDSShieldColl1_width_xminus" value="2246.6"/>
     <constant name="boxDSShieldColl1_maxwidth" value="2*3468.4"/>
     <constant name="boxDSShieldCollSubstract1_width" value="boxDSShieldColl1_maxwidth/2 - boxDSShieldColl1_width/2"/>
+    <constant name="DSShield_Tube_solid_1_thickness" value="40"/>
+    <constant name="DSShield_Tube_solid_1_length" value="100"/>
     <position name="DSshieldcoll_center_1" unit="mm" x="0" y="0" z="9020-DOFFSET"/>
     <position name="DSshieldcollSubstract_CENTER_1" unit="mm" x="0" y="0" z="0"/> 
     <position name="DSshieldcollSubstract_CENTER_2" unit="mm" x="boxDSShieldCollSubstract1_width/2 - boxDSShieldColl1_width/2" y="0" z="0"/> 
-    <!--  -->
+    <position name="DSshieldcollSubstract_CENTER_3" unit="mm" x="0" y="0" z="500 - DSShield_Tube_solid_1_length/2"/> 
+    <position name="DSshieldcollSubstract_CENTER_4" unit="mm" x="0" y="0" z="9020 - DOFFSET + 500 - DSShield_Tube_solid_1_length/2"/> 
+
+
+    <!--Shielding hut dimensions -->
+   <constant name="DSShield_length" value="8293.6"/>
+   <constant name="DSShield_width" value="5715"/>
+   <constant name="DSShield_height" value="5000"/>
+   <constant name="DSShield_side_thickness" value="305"/>
+   <constant name="DSShield_top_thickness" value="305"/>
+   <constant name="DSShield_y_offset" value="-400"/>
+   <constant name="DSShield_x_offset" value="915"/>
+   <!--DS beam bore is an rough estimation based on the beam pipe size on CAD design but this could be different from this value-->
+   <constant name="boxShield_DS_beam_bore" value="686"/>
+   
+   <!-- Shielding hut positions -->
+   <position name="boxDSShield_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="-1*DSShield_side_thickness/2"/>
+   <position name="boxDSShield_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSShield_y_offset" z="0"/>
+   <position name="boxDSShield1_center" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSShield_side_thickness"/>
+   
 
 
     <constant name="PCOLL2_SCULPT_P1_X" value ="63.0"/>
@@ -725,7 +746,8 @@
 
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="4500" rmin="0" startphi="0" z="7865.68 + 2*950"/>
-    <box lunit="mm" name="boxDownstream" x="2*4500" y="5200" z="7865.68 + 2*950"/>
+    <!--100 mm offset to prevent target mother volume overlapping with hall mother volume -->
+    <box lunit="mm" name="boxDownstream" x="2*4500" y="6000 - 100" z="7865.68 + 2*950"/>
 
     <tessellated name="leftpcolcut">
 	<triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
@@ -873,6 +895,9 @@
       -->
     <box lunit="mm" name="boxDSShieldColl1_solid_1" x="boxDSShieldColl1_maxwidth" y="5000" z="1000"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_subTube_solid_1" rmax="boxDSShieldColl1_inner_rmax" rmin="0" startphi="0" z="1050"/>
+    <!--subtract 40 mm thick 100 mm long cylinder from DS edge of the DS shield box -->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_subTube_solid_2" rmax="boxDSShieldColl1_inner_rmax + DSShield_Tube_solid_1_thickness + 0.1" rmin="0" startphi="0" z="DSShield_Tube_solid_1_length + 0.1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_Tube_solid_1" rmax="boxDSShieldColl1_inner_rmax + DSShield_Tube_solid_1_thickness" rmin="boxDSShieldColl1_inner_rmax" startphi="0" z="DSShield_Tube_solid_1_length"/>
 
     <subtraction name ="boxDSShieldColl1_solid_2">
       <first ref="boxDSShieldColl1_solid_1"/>
@@ -887,6 +912,32 @@
       <second ref="boxDSShieldColl1_solid_3"/>
       <positionref ref="DSshieldcollSubstract_CENTER_2" />
     </subtraction> 
+
+    <subtraction name ="boxDSShieldColl1_sub_solid">
+      <first ref="boxDSShieldColl1_solid"/>
+      <second ref="DSShield_subTube_solid_2"/>
+      <positionref ref="DSshieldcollSubstract_CENTER_3" />
+    </subtraction> 
+
+
+    <!--DS Shielding hut solids-->
+    <box lunit="mm" name="boxDSShield_solid_1" x="DSShield_width" y="DSShield_height" z="DSShield_length"/>
+    <box lunit="mm" name="boxDSShield_solid_2" x="DSShield_width - 2*DSShield_side_thickness" y="DSShield_height - DSShield_top_thickness" z="DSShield_length - DSShield_side_thickness"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_beamTube_solid" rmax="boxShield_DS_beam_bore" rmin="0" startphi="0" z="DSShield_length+10"/>
+
+    <subtraction name ="boxDSShield1_solid_3">
+      <first ref="boxDSShield_solid_1"/>
+      <second ref="boxDSShield_solid_2"/>
+      <positionref ref="boxDSShield_trans1" />
+    </subtraction>    
+ 
+    <subtraction name ="boxDSShield1_solid">
+      <first ref="boxDSShield1_solid_3"/>
+      <second ref="DSShield_beamTube_solid"/>
+      <positionref ref="boxDSShield_trans2" />
+    </subtraction>     
+    
+
 
 </solids>
 
@@ -1019,9 +1070,19 @@
       -->
     <volume name="boxDSShieldColl1_logic">
       <materialref ref="Borated_Concrete"/>
-      <solidref ref="boxDSShieldColl1_solid"/>
+      <!-- <solidref ref="boxDSShieldColl1_solid"/> -->
+      <solidref ref="boxDSShieldColl1_sub_solid"/>
     </volume>
 
+    <volume name="boxDSShield1_logic">
+      <materialref ref="Borated_Concrete"/>
+      <solidref ref="boxDSShield1_solid"/>
+    </volume>
+
+    <volume name="DSShield_Tube_logic">
+      <materialref ref="Lead"/>
+      <solidref ref="DSShield_Tube_solid_1"/>
+    </volume>
 
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
@@ -1130,8 +1191,19 @@
       <physvol>
         <volumeref ref="boxDSShieldColl1_logic"/>
         <positionref ref="DSshieldcoll_center_1"/>
+      </physvol>       
+
+
+      <physvol>
+        <volumeref ref="DSShield_Tube_logic"/>
+        <positionref ref="DSshieldcollSubstract_CENTER_4"/>
       </physvol>
-       
+
+      <physvol>
+        <volumeref ref="boxDSShield1_logic"/>
+        <positionref ref="boxDSShield1_center"/>
+      </physvol>
+
 
    </volume>
 </structure>
