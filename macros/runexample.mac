@@ -34,6 +34,7 @@
 #/remoll/emin 80.0 MeV
 #/remoll/gen inelastic 
 #/remoll/gen pion
+#/remoll/gen inelasticAl
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
