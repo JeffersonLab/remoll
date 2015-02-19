@@ -513,7 +513,7 @@ G4double fitemc(G4double X, G4int A);
 //returns -1 for failure of resmodd
 //returns -2 for A < 3
 int F1F2IN09(int Z, int IA, double qsq,
-              double wsq, double &F1, double &F2)//checked FIXME talk to Rupesh about it
+              double wsq, double &F1, double &F2)//checked TODO talk to Rupesh about it
 {
     /*--------------------------------------------------------------------
      Fit to inelastic cross sections for A(e,e')X
@@ -595,12 +595,12 @@ int F1F2IN09(int Z, int IA, double qsq,
     qv = sqrt(nu*nu + qsq);
 
     if (wsq <= 0.0) {
-        W = 0.0;
-    } else {
-        W  = sqrt(wsq);
-        x  = qsq / (2.0 * PM * nu);
+      W = 0.0;
+      x = 0.0;
+    }else{
+      W  = sqrt(wsq);
+      x  = qsq / (2.0 * PM * nu);
     }
-    if (wsq <= 0.0) x = 0.0;
 
     if (IA <= 2) return -2;
 
@@ -688,19 +688,20 @@ int F1F2IN09(int Z, int IA, double qsq,
 //         }
 //     }//FIXMED the close of this if statment in the og prog is from the if(ia>2)
 
-
+    
     if(W > 0.0)  W1=W1*pow((1.0+(P[20]*W+P[21]*pow(W,2))/(1.0+P[22]*qsq)),2);
     F1M = MEC2009(qsq,wsq,IA);
     W1 = W1 + F1M;
-
     if(wsq > 0.0 ) Rc = Rc * ( 1.0 + P[6] + P[23]*IA );
     W2 = W1 * (1. + Rc) / (1. + nu*nu / qsq);
-
     x4 = qsq / 2. / PM / nu;
     emcfac = fitemc(x4, IA);
     F1 = PM * W1 * emcfac;
     F2 = nu * W2 * emcfac;
-
+    if(std::isnan(F1) || std::isnan(F2)){
+      G4cerr << "Error! nans "<<__FILE__ << " line " << __LINE__ <<" "<<G4endl;
+      G4cerr <<" "<< F1 <<" "<<F2<<" "<< W1 <<" "<<W2<<" "<<PM<<" "<<nu<<" "<<emcfac<<G4endl;
+    }
     return 0;
 }
 
@@ -757,7 +758,7 @@ void christy507(G4double w2,G4double q2,G4double &F1,
 
     F1 = sigT*(w2-mp2)/8./pi/pi/alpha/0.3894e3;
 //     G4double xb = q2/(w2+q2-mp2);
-    //G4double FL = sigL*2.*xb*(w2-mp2)/8./pi/pi/alpha/0.3894e3;
+    //G4double FL = sigL*2.*xb*(w2-mp2)/8./pi/pi/alpha/0.3894e3;//seems to be not needed for anything
     R = sigL/sigT;
 
     return;
@@ -766,14 +767,15 @@ void christy507(G4double w2,G4double q2,G4double &F1,
 // -------------------------------------------------------------------------//
 //on q2 or w2 out of range it returns -1
 int resmodd(G4double w2, G4double q2,
-             G4double xval[50], G4double &sig) //checked FIXME talk to Rupesh
+             G4double xval[50], G4double &sig) //fixed TODO: report bug in Qweak meeting and talk to Rupesh
 {
     //! returns F1 for average of free proton and neutron
     //! for given W2, Q2
 
     G4double W,mp,mp2,mass[7],width[7];
     G4double height[7],rescoef[6][4];
-    G4double nr_coef[3][4],sigr[5000][7],wdif,sig_nr;
+    G4double nr_coef[3][4],wdif,sig_nr;
+    G4double sigr[7];
     G4double mpi,meta,intwidth[7],k,kcm,kr[7],kcmr[7],ppicm,ppi2cm;
     G4double petacm,ppicmr[7],ppi2cmr[7],petacmr[7],epicmr[7],epi2cmr[7];
     G4double eetacmr[7],epicm,epi2cm,eetacm,br[7][2],ang[7],sigrsv[7];
@@ -787,8 +789,7 @@ int resmodd(G4double w2, G4double q2,
         0.10936E+00,0.37944E+00
     };
 
-    G4double xvalold[50],w2sv;
-    G4bool first = true;
+    G4double w2sv;
 
     mp = 0.9382727;
     mpi = 0.135;
@@ -798,118 +799,101 @@ int resmodd(G4double w2, G4double q2,
     alpha = 1./137.036;
 
     sig = 0.;
-//FIXME why the extra q2 checks?
+
     if(w2 < 1.07327*1.07327 || w2 > 25 || q2 < 0.0 || q2 > 11.0) {
 	G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << G4endl;	
-	G4cerr << "W2/Q2 check failed: should be 1.07327^2<W2<25 and 0 < Q2 < 11" << G4endl;
-	G4cerr << "but are w2 q2: " << w2 << " " << q2 << G4endl;
+	G4cerr << " W2/Q2 check failed: should be 1.07327^2<W2<25 and 0 < Q2 < 11" << G4endl;
+	G4cerr << "   but are w2 q2: " << w2 << " " << q2 << G4endl;
 	return -1;
     }
+    
+    // ! branching ratios
+    br[0][0] = 1.0;
+    br[1][0] = 0.5;
+    br[2][0] = 0.65;
+    br[3][0] = 0.65;
+    br[4][0] = 0.4;
+    br[5][0] = 0.65;
+    br[6][0] = 0.6;
 
-    // do this if fitting masses or widths, else set first true in above
-    first = false;
-    if (xvalold[0] != xval[0] || xvalold[6] != xval[6]) first = true;
-    xvalold[0]=xval[0];
-    xvalold[6]=xval[6];
+    // ! angular momenta
+    ang[0] = 1.;      // !!!  P33(1232)
+    ang[1] = 0.;      // !!!  S11(1535)
+    ang[2] = 2.;      // !!!  D13(1520)
+    ang[3] = 3.;      // !!!  F15(1680)
+    ang[4] = 0.;      // !!!  S15(1650)
+    ang[5] = 1.;      // !!!  P11(1440) roper
+    ang[6] = 3.;      // !!!  ? 4th resonance region
 
-    if (first) {
+    // ! x0 parameter
+    for (i = 0; i < 7; i++) x0[i] = 0.215;
+    x0[0] = 0.1446;
 
-        // ! branching ratios
-        br[0][0] = 1.0;
-        br[1][0] = 0.5;
-        br[2][0] = 0.65;
-        br[3][0] = 0.65;
-        br[4][0] = 0.4;
-        br[5][0] = 0.65;
-        br[6][0] = 0.6;
+    // ! out branching ratio
+    for (i = 0; i < 7; i++) br[i][1] = 1.-br[i][0];
 
-        // ! angular momenta
-        ang[0] = 1.;      // !!!  P33(1232)
-        ang[1] = 0.;      // !!!  S11(1535)
-        ang[2] = 2.;      // !!!  D13(1520)
-        ang[3] = 3.;      // !!!  F15(1680)
-        ang[4] = 0.;      // !!!  S15(1650)
-        ang[5] = 1.;      // !!!  P11(1440) roper
-        ang[6] = 3.;      // !!!  ? 4th resonance region
+    // ! remember w2
+    w2sv = w2;
 
-        // ! x0 parameter
-        for (i = 0; i < 7; i++) {
-            x0[i] = 0.215;
-        }
-        x0[0] = 0.1446;
-
-        // ! out branching ratio
-        for (i = 0; i < 7; i++) {
-            br[i][1] = 1.-br[i][0];
-        }
-
-        // ! remember w2
-        w2sv = w2;
-
-        // ! uses xvals of 1-12, 47, and 48
-        // ! move masses, wdiths into local variables
-        // ! pyb changed to be fixed
-        num = 0;
-        for (i = 0; i < 6; i++) {
-            num = num + 1;
-            mass[i] = xval0[i];
-        }
-        for (i = 0; i < 6; i++) {
-            num = num + 1;
-            intwidth[i] = xval0[num-1];
-        }
-        //! changed to allow delta width, mass to vary
-        //! taken out again since xval[1] used in MEC
-        mass[6] = 1.9341;
-        intwidth[6] = 0.380;
-
-        // ! precalculate w-dependent quantites in 0.1 MeV bins
-        for (iw = 1073; iw <= 5000; iw++) {
-            W = 0.001 * (iw+0.5);
-            w2 = W*W;
-            wdif = W - (mp + mpi);
-
-            // ! Calculate kinematics needed for threshold Relativistic B-W
-            k = (w2 - mp2) / 2. / mp;
-            kcm = (w2 - mp2) / 2. / W;
-            epicm = (w2 + mpi*mpi -mp2 ) / 2. / W;
-            ppicm = pow(std::max(0.0,(epicm*epicm - mpi*mpi)),0.5);
-            epi2cm = (w2 + pow((2.*mpi),2) -mp2 ) / 2. / W;
-            ppi2cm = pow(std::max(0.0,(epi2cm*epi2cm - pow((2.*mpi),2))),0.5);
-            eetacm = (w2 + meta*meta -mp2 ) / 2. / W;
-            petacm =  pow(std::max(0.0,(eetacm*eetacm - meta*meta)),0.5);
-            for (i = 0; i < 7; i++) {
-                kr[i] = (mass[i]*mass[i]-mp2)/2./mp;
-                kcmr[i] = (mass[i]*mass[i]-mp2)/2./mass[i];
-                epicmr[i] = (mass[i]*mass[i] + mpi*mpi -mp2 )/2./mass[i];
-                ppicmr[i] = pow(std::max(0.0,(epicmr[i]*epicmr[i] - mpi*mpi)),0.5);
-                epi2cmr[i] = (mass[i]*mass[i] + pow(2.*mpi,2) -mp2 )/2./mass[i];
-                ppi2cmr[i] = pow(std::max(0.0,(epi2cmr[i]*epi2cmr[i] - pow((2.*mpi),2))),0.5);
-                eetacmr[i] = (mass[i]*mass[i] + meta*meta -mp2 )/2./mass[i];
-                petacmr[i] =  pow(std::max(0.0,(eetacmr[i]*eetacmr[i] - meta*meta)),0.5);
-
-                // ! Calculate partial widths
-                pwid[i][0] = intwidth[i]*pow((ppicm/ppicmr[i]),(2.*ang[i]+1.))*pow(((ppicmr[i]*ppicmr[i]+x0[i]*x0[i])/(ppicm*ppicm+x0[i]*x0[i])),ang[i]);
-
-                if(i != 1) {
-                    pwid[i][1] = intwidth[i]*pow((ppi2cm/ppi2cmr[i]),(2.*ang[i]+4.))*pow(((ppi2cmr[i]*ppi2cmr[i]+x0[i]*x0[i])/(ppi2cm*ppi2cm+x0[i]*x0[i])),(ang[i]+2.))* W / mass[i];
-                } else {
-                    pwid[i][1] =  intwidth[1]*pow((petacm/petacmr[i]),(2.*ang[i]+1.))*pow(((petacmr[i]*petacmr[i]+x0[i]*x0[i])/(petacm*petacm+x0[i]*x0[i])),ang[i]);
-                }
-
-                pgam[i] = pow((kcm/kcmr[i]),2)*(kcmr[i]*kcmr[i]+x0[i]*x0[i])/(kcm*kcm+x0[i]*x0[i]);
-                pgam[i] = intwidth[i]*pgam[i];
-                width[i] = br[i][0]*pwid[i][0]+br[i][1]*pwid[i][1];
-                sigr[iw][i] = width[i] * pgam[i] / (pow(w2 - mass[i]*mass[i],2) + pow(mass[i]*width[i],2)) * kr[i] / k * kcmr[i] / kcm / intwidth[i];
-            }
-        }
-        w2 = w2sv;
-        first = false;
-        for (i = 0; i < 50; i++) {
-            xvalold[i] = xval[i];
-        }
-
+    // ! uses xvals of 1-12, 47, and 48
+    // ! move masses, wdiths into local variables
+    // ! pyb changed to be fixed
+    num = 0;
+    for (i = 0; i < 6; i++) {
+        num = num + 1;
+        mass[i] = xval0[i];
     }
+    for (i = 0; i < 6; i++) {
+        num = num + 1;
+        intwidth[i] = xval0[num-1];
+    }
+    
+    //! changed to allow delta width, mass to vary
+    //! taken out again since xval[1] used in MEC
+    mass[6] = 1.9341;
+    intwidth[6] = 0.380;
+
+    iw = G4int(1000.*sqrt(w2));
+    W = 0.001 * (iw+0.5);        
+    w2 = W*W;
+    wdif = W - (mp + mpi);
+        
+    // ! Calculate kinematics needed for threshold Relativistic B-W        
+    k = (w2 - mp2) / 2. / mp;            
+    kcm = (w2 - mp2) / 2. / W;    
+    epicm = (w2 + mpi*mpi -mp2 ) / 2. / W;    
+    ppicm = pow(std::max(0.0,(epicm*epicm - mpi*mpi)),0.5);    
+    epi2cm = (w2 + pow((2.*mpi),2) -mp2 ) / 2. / W;    
+    ppi2cm = pow(std::max(0.0,(epi2cm*epi2cm - pow((2.*mpi),2))),0.5);    
+    eetacm = (w2 + meta*meta -mp2 ) / 2. / W;   
+    petacm =  pow(std::max(0.0,(eetacm*eetacm - meta*meta)),0.5);            
+    for (i = 0; i < 7; i++) {    
+      kr[i] = (mass[i]*mass[i]-mp2)/2./mp;      
+      kcmr[i] = (mass[i]*mass[i]-mp2)/2./mass[i];      
+      epicmr[i] = (mass[i]*mass[i] + mpi*mpi -mp2 )/2./mass[i];      
+      ppicmr[i] = pow(std::max(0.0,(epicmr[i]*epicmr[i] - mpi*mpi)),0.5);      
+      epi2cmr[i] = (mass[i]*mass[i] + pow(2.*mpi,2) -mp2 )/2./mass[i];      
+      ppi2cmr[i] = pow(std::max(0.0,(epi2cmr[i]*epi2cmr[i] - pow((2.*mpi),2))),0.5);      
+      eetacmr[i] = (mass[i]*mass[i] + meta*meta -mp2 )/2./mass[i];      
+      petacmr[i] =  pow(std::max(0.0,(eetacmr[i]*eetacmr[i] - meta*meta)),0.5);
+            
+      // ! Calculate partial widths      
+      pwid[i][0] = intwidth[i]*pow((ppicm/ppicmr[i]),(2.*ang[i]+1.))*pow(((ppicmr[i]*ppicmr[i]+x0[i]*x0[i])/(ppicm*ppicm+x0[i]*x0[i])),ang[i]);            
+
+      if(i != 1)       
+	pwid[i][1] = intwidth[i]*pow((ppi2cm/ppi2cmr[i]),(2.*ang[i]+4.))*
+		     pow(((ppi2cmr[i]*ppi2cmr[i]+x0[i]*x0[i])/(ppi2cm*ppi2cm+x0[i]*x0[i])),(ang[i]+2.))* W / mass[i];        	
+      else  
+	pwid[i][1] =  intwidth[1]*pow((petacm/petacmr[i]),(2.*ang[i]+1.))*
+		      pow(((petacmr[i]*petacmr[i]+x0[i]*x0[i])/(petacm*petacm+x0[i]*x0[i])),ang[i]);        	
+    
+      pgam[i] = pow((kcm/kcmr[i]),2)*(kcmr[i]*kcmr[i]+x0[i]*x0[i])/(kcm*kcm+x0[i]*x0[i]);        	
+      pgam[i] = intwidth[i]*pgam[i];        	
+      width[i] = br[i][0]*pwid[i][0]+br[i][1]*pwid[i][1];        	
+      sigr[i] = width[i] * pgam[i] / (pow(w2 - mass[i]*mass[i],2) + pow(mass[i]*width[i],2)) * kr[i] / k * kcmr[i] / kcm / intwidth[i];      
+    }
+    
+    w2 = w2sv;
 
     // ! get parameters into local variables
     num = 12;
@@ -935,15 +919,13 @@ int resmodd(G4double w2, G4double q2,
     }
     dip = 1./pow((1. + q2 / 0.91),2);
     height[6] = xval[48]*dip;
-    iw = G4int(1000.*pow(w2,0.5));
-    sig_res = 0.;
-
+    sig_res = 0.;    
     for (i = 0; i < 7; i++) {
-        sigrsv[i] =  height[i]*height[i] * sigr[iw][i];
+        sigrsv[i] =  height[i]*height[i] * sigr[i];
         sig_res = sig_res + sigrsv[i];
     }
-
-    sig_res = sig_res * pow(w2,0.5);
+    
+    sig_res = sig_res * sqrt(w2);
 
     //! Begin non-resonant part uses xvals 45, 46, 50
     //! Depends on both W2 and Q2 so can't easily precalculate
@@ -958,7 +940,6 @@ int resmodd(G4double w2, G4double q2,
     sig_nr = sig_nr * xpr;
     sig = sig_res + sig_nr;
 
-    // ! changed to use F1 instead of sigt
     F1 = sig * (w2-mp2)/8./pi/pi/alpha/0.3894e3;
     sig = F1;
 
@@ -1308,3 +1289,11 @@ G4double fitemc(G4double X, G4int A)
 }
 
 #endif//__CHRISTY_BOSTED_INELASTIC_HH
+
+
+
+
+
+
+
+
