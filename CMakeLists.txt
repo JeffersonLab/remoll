@@ -71,8 +71,8 @@ include(${Geant4_USE_FILE})
 
 #debugging symbols, complains
 #set(CMAKE_CXX_FLAGS "-g -Wall -pg")
-set(CMAKE_CXX_FLAGS "-g -Wall -g -Woverloaded-virtual")
-#set(CMAKE_CXX_FLAGS "-g -Wall -g")
+#set(CMAKE_CXX_FLAGS "-g -Wall -g -Woverloaded-virtual")
+set(CMAKE_CXX_FLAGS "-g -Wall -g")
 
 #----------------------------------------------------------------------------
 # Generate dictionaries as well (so we can write objects to ROOT files
@@ -139,6 +139,7 @@ set(REMOLL_SCRIPTS
     vis/X.mac
     macros/runexample.mac
     macros/gui.mac
+    macros/vis.mac
     rootlogon.C
   )
 
