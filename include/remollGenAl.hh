@@ -10,6 +10,7 @@
 */
 
 #include "remollVEventGen.hh"
+#include "Randomize.hh"
 
 class remollGenAl : public remollVEventGen {
 public:
