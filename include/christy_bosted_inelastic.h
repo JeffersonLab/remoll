@@ -498,6 +498,10 @@ double sigma_n( double E, double th, double Ep ) {
 // resmod507_v2 -- calculates sigma T or L
 // MEC2009 -- fit to low q2 dip region (purely empirical)
 // fitemc -- take into account the EMC effect
+// based on:
+//    http://arxiv.org/pdf/1203.2262v2.pdf --> Empirical fit to e-nucleus scattering.
+//    http://arxiv.org/pdf/0712.3731v4.pdf --> e-proton cross sections and resonance fit
+//    http://arxiv.org/pdf/0711.0159v4.pdf --> e-D and e-n fits
 //ooooooooooooooo0000000000000oooooooooooooooo
 
 void christy507(G4double w2,G4double q2,G4double &F1,
