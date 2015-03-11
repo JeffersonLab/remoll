@@ -1,8 +1,8 @@
 #ifndef __WISER_PION_HH
 #define __WISER_PION_HH
+
 #include "TF1.h"
 
-#define pi 3.14159
 #define me 0.511E-3 //electron restmass (GeV)
 #define alpha 0.007299
 

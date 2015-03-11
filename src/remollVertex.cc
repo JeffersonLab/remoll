@@ -1,6 +1,7 @@
 #include "remollVertex.hh"
 
 #include "G4Material.hh"
+#include "G4SystemOfUnits.hh"
 
 remollVertex::remollVertex(){
     // Some default material

@@ -10,6 +10,9 @@
 
 #include "Randomize.hh"
 
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+
 remollMultScatt::remollMultScatt() {
     InitInternal();
 

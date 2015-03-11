@@ -9,6 +9,7 @@
 #include "G4Material.hh"
 #include "G4VPhysicalVolume.hh"
 #include "G4LogicalVolume.hh"
+#include "G4PhysicalConstants.hh"
 #include "Randomize.hh"
 
 #include "remolltypes.hh"
