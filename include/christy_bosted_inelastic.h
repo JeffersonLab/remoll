@@ -502,6 +502,9 @@ double sigma_n( double E, double th, double Ep ) {
 //    http://arxiv.org/pdf/1203.2262v2.pdf --> Empirical fit to e-nucleus scattering.
 //    http://arxiv.org/pdf/0712.3731v4.pdf --> e-proton cross sections and resonance fit
 //    http://arxiv.org/pdf/0711.0159v4.pdf --> e-D and e-n fits
+//  data can be found at:
+//   http://arxiv.org/pdf/1202.1457v1.pdf -> thesis of V. Mamyan (tables at the back)
+//   http://faculty.virginia.edu/qes-archive/QES-data.php --> for QE data
 //ooooooooooooooo0000000000000oooooooooooooooo
 
 void christy507(G4double w2,G4double q2,G4double &F1,
@@ -517,7 +520,7 @@ G4double fitemc(G4double X, G4int A);
 //returns -1 for failure of resmodd
 //returns -2 for A < 3
 int F1F2IN09(int Z, int IA, double qsq,
-              double wsq, double &F1, double &F2)//checked TODO talk to Rupesh about it
+              double wsq, double &F1, double &F2)
 {
     /*--------------------------------------------------------------------
      Fit to inelastic cross sections for A(e,e')X
@@ -678,20 +681,6 @@ int F1F2IN09(int Z, int IA, double qsq,
 
     W1 = (2. * Z * F1d + (IA - 2. * Z) * (2. * F1d - F1p)) / PM;
     W1= W1*(1.0+P[13]*x+P[14]*pow(x,2)+P[15]*pow(x,3)+P[16]*pow(x,4)+P[17]*pow(x,5));
-
-    //FIXMED ... not what is in the original program
-//             if(W .GT. 0.0)
-//      >       W1=W1*(1.0+(P(20)*W+P(21)*W**2)/(1.0+P(22)*QSQ))**2
-//     if(W > 0.0) {
-//         W1=W1*pow((1.0+(P[20]*W+P[21]*pow(W,2))/(1.0+P[22]*qsq)),2);//FIXMED what is this ?!?! why is it redifined again
-//         F1M = MEC2009(qsq,wsq,IA);
-//         W1 = W1 + F1M;
-//         if(wsq > 0.0 ) {//FIXMED same mistake as above
-//             Rc = Rc * ( 1.0 + P[6] + P[23]*IA );
-//             W2 = W1 * (1. + Rc) / (1. + nu*nu / qsq);
-//         }
-//     }//FIXMED the close of this if statment in the og prog is from the if(ia>2)
-
     
     if(W > 0.0)  W1=W1*pow((1.0+(P[20]*W+P[21]*pow(W,2))/(1.0+P[22]*qsq)),2);
     F1M = MEC2009(qsq,wsq,IA);
@@ -771,7 +760,7 @@ void christy507(G4double w2,G4double q2,G4double &F1,
 // -------------------------------------------------------------------------//
 //on q2 or w2 out of range it returns -1
 int resmodd(G4double w2, G4double q2,
-             G4double xval[50], G4double &sig) //fixed TODO: report bug in Qweak meeting and talk to Rupesh
+             G4double xval[50], G4double &sig) 
 {
     //! returns F1 for average of free proton and neutron
     //! for given W2, Q2
@@ -952,8 +941,7 @@ int resmodd(G4double w2, G4double q2,
 
 //------------------------------------------------------------------//
 // Used for Aluminum inelastic...
-// not in the original Bosted code (need to ask Rupesh about it FIXME)
-// always returns a calculated value
+// always returns a calculated value (called resmod507 in the fortran code)
 G4double resmod507_v2(G4double sf,G4double w2,
                       G4double q2,G4double xval[50])
 {
