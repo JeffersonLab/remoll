@@ -55,6 +55,7 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
         exit(1);
     }
 
+    evt->SetThCoM(th);  //wasn't in the GenpInelastic ... should it be there FIXME
     evt->SetEffCrossSection(effectiveXsection);
     evt->SetQ2( Q2 );
     evt->SetAsymmetry(asym);
