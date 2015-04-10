@@ -13,16 +13,18 @@
     <constant name="SEPTANT" value ="360./7"/>
     <position name="CENTER" unit="mm" x="0" y="0" z="0"/>
 
+    <position name="DSmothersubtract_center_1" unit="mm" x="0" y="-1*6100/2 + 100/2" z="0"/>
+
     <constant name="DELTAT" value ="1.0"/>
     <constant name="DELTAZ" value ="1.0"/>
 
     <!-- petal -->
-    <!--Collimator 3 old position  9575. Moved US by 30 cm and new position 9275 -->
-    <position name="posCOLL1" unit="mm" x="0" y="0" z="9275-DOFFSET"/>
-    <constant name="COLL1_R1_U" value ="25.557"/> 
-    <constant name="COLL1_R1_D" value ="26.115"/>
-    <constant name="COLL1_R4_U" value ="56.208"/>
-    <constant name="COLL1_R4_D" value ="57.433"/>
+    <!--Collimator 3 old position  9575. Moved US by 30 cm and new position 9175 -->
+    <position name="posCOLL1" unit="mm" x="0" y="0" z="9175-DOFFSET"/>
+    <constant name="COLL1_R1_U" value ="25.279"/> 
+    <constant name="COLL1_R1_D" value ="25.836"/>
+    <constant name="COLL1_R4_U" value ="55.595"/>
+    <constant name="COLL1_R4_D" value ="56.820"/>
     <constant name="COLL1_THICK" value ="200.0"/>
 
     <!-- coll at the center of hybrid toriod -->
@@ -51,12 +53,66 @@
     <constant name="boxDSShieldColl1_inner_rmax" value="335"/>
     <constant name="boxDSShieldColl1_width" value="5715"/>
     <constant name="boxDSShieldColl1_width_xminus" value="2246.6"/>
+    <constant name="boxDSShieldColl1_height" value="5000"/>
+    <constant name="boxDSShieldColl1_length" value="1000"/>
     <constant name="boxDSShieldColl1_maxwidth" value="2*3468.4"/>
     <constant name="boxDSShieldCollSubstract1_width" value="boxDSShieldColl1_maxwidth/2 - boxDSShieldColl1_width/2"/>
+    <constant name="DSShield_Tube_solid_1_thickness" value="40"/>
+    <constant name="DSShield_Tube_solid_1_length" value="100"/>
     <position name="DSshieldcoll_center_1" unit="mm" x="0" y="0" z="9020-DOFFSET"/>
     <position name="DSshieldcollSubstract_CENTER_1" unit="mm" x="0" y="0" z="0"/> 
-    <position name="DSshieldcollSubstract_CENTER_2" unit="mm" x="boxDSShieldCollSubstract1_width/2 - boxDSShieldColl1_width/2" y="0" z="0"/> 
-    <!--  -->
+    <position name="DSshieldcollSubstract_CENTER_2" unit="mm" x="-boxDSShieldCollSubstract1_width/2 - boxDSShieldColl1_width/2" y="0" z="0"/> 
+    <position name="DSshieldcollSubstract_CENTER_3" unit="mm" x="0" y="0" z="500 - DSShield_Tube_solid_1_length/2"/> 
+    <position name="DSshieldcollSubstract_CENTER_4" unit="mm" x="0" y="0" z="9020 - DOFFSET + 500 - DSShield_Tube_solid_1_length/2"/> 
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding block 4 -->
+    <constant name="DSPolyShield1_side_thickness" value="400"/>
+    <constant name="DSPolyShield1_top_thickness" value="400"/>
+    <constant name="DSPolyShield1_bottom_thickness" value="400"/>
+    <constant name="DSPolyShield1_length" value="boxDSShieldColl1_length + 1 + 2*DSPolyShield1_side_thickness"/>
+    <constant name="DSPolyShield1_width" value="boxDSShieldColl1_maxwidth + 1 + 2*DSPolyShield1_side_thickness"/>
+    <constant name="DSPolyShield1_height" value="boxDSShieldColl1_height + 1 + DSPolyShield1_top_thickness + DSPolyShield1_bottom_thickness"/>
+    <constant name="DSPolyShieldSub1_space" value="1"/>
+    <constant name="DSPolyShieldSub1_length" value="400"/>
+    <position name="boxDSPolyShield1_trans1" unit="mm" x="0" y="0" z="0"/>
+    <position name="boxDSPolyShield1_trans2" unit="mm" x="0" y="0" z="0"/>
+    <position name="boxDSPolyShield1_center" unit="mm" x="0" y="0" z="9020-DOFFSET"/>
+
+    <!--Shielding hut dimensions -->
+    <constant name="DSShield_length" value="8293.6"/>
+    <constant name="DSShield_width" value="5715"/>
+    <constant name="DSShield_height" value="5000"/>
+    <constant name="DSShield_side_thickness" value="305"/>
+    <constant name="DSShield_top_thickness" value="305"/>
+    <constant name="DSShield_y_offset" value="-400"/>
+    <constant name="DSShield_x_offset" value="915"/>
+    <!--DS beam bore is an rough estimation based on the beam pipe size on CAD design but this could be different from this value-->
+    <constant name="boxShield_DS_beam_bore" value="686"/>
+    
+    <!-- Shielding hut positions -->
+    <position name="boxDSShield_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="-1*DSShield_side_thickness/2-1"/>
+    <position name="boxDSShield_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSShield_y_offset" z="0"/>
+    <position name="boxDSShield1_center" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSShield_side_thickness"/>
+    
+    <!-- Neutron Poly Shielding subtracting volume positions -->
+    <position name="boxDSPolyShieldSub1_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="0"/>
+    <position name="boxDSPolyShieldSub1_trans2" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSPolyShield1_length/2 - DSPolyShield1_side_thickness/2"/>
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding hut -->
+    <constant name="DSPolyShield2_side_thickness" value="400"/>
+    <constant name="DSPolyShield2_top_thickness" value="400"/>
+    <constant name="DSPolyShield2_bottom_thickness" value="0"/>
+    <constant name="DSPolyShieldSub2_thickness" value="800"/>
+    <constant name="DSPolyShield2_length" value="DSShield_length + 1 + 2*DSPolyShield2_side_thickness"/>
+    <constant name="DSPolyShield2_width" value="DSShield_width + 1 + 2*DSPolyShield2_side_thickness"/>
+    <constant name="DSPolyShield2_height" value="DSShield_height + 1 + DSPolyShield2_top_thickness + DSPolyShield2_bottom_thickness"/>
+    <constant name="DSPolyShield2_y_offset" value="-1*(DSPolyShield2_top_thickness - DSPolyShield2_bottom_thickness)/2"/>
+    <position name="boxDSPolyShield2_trans1" unit="mm" x="0" y="-1*DSPolyShield2_top_thickness/2 + DSPolyShield2_bottom_thickness/2" z="0"/>
+    <position name="boxDSPolyShield2_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSPolyShield2_y_offset" z="0"/>
+    <position name="boxDSPolyShield2_trans3" unit="mm" x="0" y="0" z="-1*DSPolyShield2_length/2 + DSPolyShieldSub2_thickness/2"/>
+    <position name="boxDSPolyShield2_center" unit="mm" x="DSShield_x_offset" y="DSPolyShield2_y_offset" z="DSShield_side_thickness"/>
 
 
     <constant name="PCOLL2_SCULPT_P1_X" value ="63.0"/>
@@ -725,6 +781,16 @@
 
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="4500" rmin="0" startphi="0" z="7865.68 + 2*950"/>
+    <!--100 mm offset to prevent target mother volume overlapping with hall mother volume lenght is increased by 900 at the end to include poly shielding-->
+    <!-- <box lunit="mm" name="boxDownstream" x="2*4500" y="6000 - 100" z="7865.68 + 2*950 + 900"/> -->
+    <box lunit="mm" name="boxDownstream_1" x="2*4500" y="6100" z="7865.68 + 2*950 + 900"/>
+    <box lunit="mm" name="boxDownstream_sub" x="2*4500+1" y="100+1" z="7865.68 + 2*950 + 900 + 1"/>
+    <subtraction name ="boxDownstream">
+      <first ref="boxDownstream_1"/>
+      <second ref="boxDownstream_sub"/>
+      <positionref ref="DSmothersubtract_center_1" />
+    </subtraction>
+   
 
     <tessellated name="leftpcolcut">
 	<triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
@@ -870,8 +936,11 @@
     <!--
        Shielding collimators
       -->
-    <box lunit="mm" name="boxDSShieldColl1_solid_1" x="boxDSShieldColl1_maxwidth" y="5000" z="1000"/>
+    <box lunit="mm" name="boxDSShieldColl1_solid_1" x="boxDSShieldColl1_maxwidth" y="boxDSShieldColl1_height" z="boxDSShieldColl1_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_subTube_solid_1" rmax="boxDSShieldColl1_inner_rmax" rmin="0" startphi="0" z="1050"/>
+    <!--subtract 40 mm thick 100 mm long cylinder from DS edge of the DS shield box -->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_subTube_solid_2" rmax="boxDSShieldColl1_inner_rmax + DSShield_Tube_solid_1_thickness + 0.1" rmin="0" startphi="0" z="DSShield_Tube_solid_1_length + 0.1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_Tube_solid_1" rmax="boxDSShieldColl1_inner_rmax + DSShield_Tube_solid_1_thickness" rmin="boxDSShieldColl1_inner_rmax" startphi="0" z="DSShield_Tube_solid_1_length"/>
 
     <subtraction name ="boxDSShieldColl1_solid_2">
       <first ref="boxDSShieldColl1_solid_1"/>
@@ -879,13 +948,96 @@
       <positionref ref="DSshieldcollSubstract_CENTER_1" />
     </subtraction> 
 
-    <box lunit="mm" name="boxDSShieldColl1_solid_3" x="boxDSShieldCollSubstract1_width" y="5050" z="1050"/>
+    <box lunit="mm" name="boxDSShieldColl1_solid_3" x="boxDSShieldCollSubstract1_width" y="boxDSShieldColl1_height + 50" z="boxDSShieldColl1_length + 50"/>
 
     <subtraction name ="boxDSShieldColl1_solid">
       <first ref="boxDSShieldColl1_solid_2"/>
       <second ref="boxDSShieldColl1_solid_3"/>
       <positionref ref="DSshieldcollSubstract_CENTER_2" />
     </subtraction> 
+
+    <subtraction name ="boxDSShieldColl1_sub_solid">
+      <first ref="boxDSShieldColl1_solid"/>
+      <second ref="DSShield_subTube_solid_2"/>
+      <positionref ref="DSshieldcollSubstract_CENTER_3" />
+    </subtraction> 
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding block 4 -->
+    <box lunit="mm" name="boxDSPolyShield1_solid_1" x="DSPolyShield1_width" y="DSPolyShield1_height" z="DSPolyShield1_length"/>
+    <box lunit="mm" name="boxDSPolyShield1_solid_2" x="DSPolyShield1_width - 2*DSPolyShield1_side_thickness + 1" y="DSPolyShield1_height - DSPolyShield1_top_thickness - DSPolyShield1_bottom_thickness + 1" z="DSPolyShield1_length - 2*DSPolyShield1_side_thickness + 1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSPolyShield1_beamTube_solid" rmax="boxDSShieldColl1_inner_rmax" rmin="0" startphi="0" z="DSPolyShield1_length+10"/>
+
+    <subtraction name ="boxDSPolyShield1_solid_3">
+      <first ref="boxDSPolyShield1_solid_1"/>
+      <second ref="boxDSPolyShield1_solid_2"/>
+      <positionref ref="boxDSPolyShield1_trans1" />
+    </subtraction> 
+
+    <subtraction name ="boxDSPolyShield1_solid_4">
+      <first ref="boxDSPolyShield1_solid_3"/>
+      <second ref="DSPolyShield1_beamTube_solid"/>
+      <positionref ref="boxDSPolyShield1_trans2" />
+    </subtraction>    
+
+    <box lunit="mm" name="boxDSPolyShieldSub_solid_1" x="DSShield_width + DSPolyShieldSub1_space" y="DSShield_height + DSPolyShieldSub1_space" z="DSPolyShieldSub1_length"/>
+    <box lunit="mm" name="boxDSPolyShieldSub_solid_2" x="DSShield_width - 2*DSShield_side_thickness - DSPolyShieldSub1_space " y="DSShield_height - DSShield_top_thickness - DSPolyShieldSub1_space" z="DSPolyShieldSub1_length + 1"/>
+    <subtraction name ="boxDSPolyShieldSub_solid_3">
+      <first ref="boxDSPolyShieldSub_solid_1"/>
+      <second ref="boxDSPolyShieldSub_solid_2"/>
+      <positionref ref="boxDSPolyShieldSub1_trans1"/>
+    </subtraction>   
+
+    <subtraction name ="boxDSPolyShield1_solid">
+      <first ref="boxDSPolyShield1_solid_4"/>
+      <second ref="boxDSPolyShieldSub_solid_3"/>
+      <positionref ref="boxDSPolyShieldSub1_trans2" />
+    </subtraction>   
+
+    <!-- PolyShield1 will be outside shielding hut -->
+    <box lunit="mm" name="boxDSPolyShield2_solid_1" x="DSPolyShield2_width" y="DSPolyShield2_height" z="DSPolyShield2_length"/>
+    <box lunit="mm" name="boxDSPolyShield2_solid_2" x="DSPolyShield2_width - 2*DSPolyShield2_side_thickness + 1" y="DSPolyShield2_height - DSPolyShield2_top_thickness - DSPolyShield2_bottom_thickness + 1" z="DSPolyShield2_length - 2*DSPolyShield2_side_thickness + 1"/>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSPolyShield2_beamTube_solid" rmax="boxShield_DS_beam_bore + 10" rmin="0" startphi="0" z="DSPolyShield2_length+10"/>
+
+    <subtraction name ="boxDSPolyShield2_solid_3">
+      <first ref="boxDSPolyShield2_solid_1"/>
+      <second ref="boxDSPolyShield2_solid_2"/>
+      <positionref ref="boxDSPolyShield2_trans1" />
+    </subtraction> 
+
+    <subtraction name ="boxDSPolyShield2_solid_4">
+      <first ref="boxDSPolyShield2_solid_3"/>
+      <second ref="DSPolyShield2_beamTube_solid"/>
+      <positionref ref="boxDSPolyShield2_trans2" />
+    </subtraction>     
+
+    <box lunit="mm" name="boxDSPolyShieldSub2_solid_1" x="DSPolyShield2_width+1" y="DSPolyShield2_height+1" z="DSPolyShieldSub2_thickness+1"/>
+    <subtraction name ="boxDSPolyShield2_solid">
+      <first ref="boxDSPolyShield2_solid_4"/>
+      <second ref="boxDSPolyShieldSub2_solid_1"/>
+      <positionref ref="boxDSPolyShield2_trans3" />
+    </subtraction>     
+    
+
+    <!--DS Shielding hut solids-->
+    <box lunit="mm" name="boxDSShield_solid_1" x="DSShield_width" y="DSShield_height" z="DSShield_length"/>
+    <box lunit="mm" name="boxDSShield_solid_2" x="DSShield_width - 2*DSShield_side_thickness" y="DSShield_height - DSShield_top_thickness" z="DSShield_length - DSShield_side_thickness"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_beamTube_solid" rmax="boxShield_DS_beam_bore" rmin="0" startphi="0" z="DSShield_length+10"/>
+
+    <subtraction name ="boxDSShield1_solid_3">
+      <first ref="boxDSShield_solid_1"/>
+      <second ref="boxDSShield_solid_2"/>
+      <positionref ref="boxDSShield_trans1" />
+    </subtraction>    
+ 
+    <subtraction name ="boxDSShield1_solid">
+      <first ref="boxDSShield1_solid_3"/>
+      <second ref="DSShield_beamTube_solid"/>
+      <positionref ref="boxDSShield_trans2" />
+    </subtraction>     
+    
+
 
 </solids>
 
@@ -984,6 +1136,7 @@
 
     <volume name="logicDScoll_1">
       <materialref ref="Tungsten"/>
+<!--      <materialref ref="Kryptonite"/> -->
       <solidref ref="dscyl_1"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
       <auxiliary auxtype="DetNo" auxvalue="2003"/>
@@ -991,6 +1144,7 @@
 
   <volume name="logicDScoll_5">
       <materialref ref="Tungsten"/>
+<!--      <materialref ref="Kryptonite"/> -->
       <solidref ref="dscoll5union_5"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
       <auxiliary auxtype="DetNo" auxvalue="2005"/>
@@ -998,6 +1152,7 @@
 
     <volume name="logicPDScollunion_1">
 	<materialref ref="Tungsten"/>
+<!--	<materialref ref="Kryptonite"/> -->
 	<solidref ref="pdscoll_union_6"/> 
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
 	<auxiliary auxtype="DetNo" auxvalue="2004"/>
@@ -1014,14 +1169,49 @@
        Shielding collimator
       -->
     <volume name="boxDSShieldColl1_logic">
-      <materialref ref="Borated_Concrete"/>
-      <solidref ref="boxDSShieldColl1_solid"/>
+<!--      <materialref ref="Borated_Concrete"/> -->
+      <materialref ref="Concrete"/>
+      <!-- <solidref ref="boxDSShieldColl1_solid"/> -->
+      <solidref ref="boxDSShieldColl1_sub_solid"/>
     </volume>
 
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding block 4 -->
+    <volume name="boxDSPolyShield1_logic">
+<!--  <materialref ref="Concrete"/> -->
+<!--  <materialref ref="Tungsten"/> -->
+<!--      <materialref ref="Polythene"/> -->
+      <materialref ref="Kryptonite"/>
+      <solidref ref="boxDSPolyShield1_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+    </volume>
+
+<!-- PolyShield1 will be outside shielding hut -->
+    <volume name="boxDSPolyShield2_logic">
+<!--  <materialref ref="Concrete"/> -->
+<!--  <materialref ref="Tungsten"/> -->
+<!-- <materialref ref="Borated_Concrete"/ -->
+<!--      <materialref ref="Polythene"/> -->
+      <materialref ref="Kryptonite"/>
+      <solidref ref="boxDSPolyShield2_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+    </volume>
+
+    <volume name="boxDSShield1_logic">
+<!--      <materialref ref="Borated_Concrete"/> -->
+      <materialref ref="Concrete"/>
+      <solidref ref="boxDSShield1_solid"/>
+    </volume>
+
+    <volume name="DSShield_Tube_logic">
+      <materialref ref="Lead"/>
+      <solidref ref="DSShield_Tube_solid_1"/>
+    </volume>
 
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
-      <solidref ref="tubeDownstream"/>
+      <!-- <solidref ref="tubeDownstream"/> -->
+      <solidref ref="boxDownstream"/>
 
       <physvol name="DScoil_0">
         <volumeref ref="logicDScoil_0"/>
@@ -1112,12 +1302,14 @@
         <positionref ref="posPCOLL2"/>
       </physvol>
 
+<!--pcoll2trap_phys is removed since this is overlapping with shblk 4 poly shielding -->
+<!--
 
       <physvol name="pcoll2trap_phys">
 	<volumeref ref="logicpcoll2trap"/>
         <positionref ref="posPCOLL2TRAP"/>
       </physvol>
-
+-->
     <!--
        Shielding collimators
       -->
@@ -1125,8 +1317,31 @@
       <physvol>
         <volumeref ref="boxDSShieldColl1_logic"/>
         <positionref ref="DSshieldcoll_center_1"/>
+      </physvol>       
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding block 4 -->
+      <physvol>
+        <volumeref ref="boxDSPolyShield1_logic"/>
+        <positionref ref="boxDSPolyShield1_center"/>
       </physvol>
-       
+
+      <!-- PolyShield1 will be outside shielding hut -->
+      <physvol>
+        <volumeref ref="boxDSPolyShield2_logic"/>
+        <positionref ref="boxDSPolyShield2_center"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="DSShield_Tube_logic"/>
+        <positionref ref="DSshieldcollSubstract_CENTER_4"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="boxDSShield1_logic"/>
+        <positionref ref="boxDSShield1_center"/>
+      </physvol>
+
 
    </volume>
 </structure>

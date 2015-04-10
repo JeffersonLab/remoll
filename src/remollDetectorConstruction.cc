@@ -280,6 +280,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 
   G4VisAttributes* daughterVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   daughterVisAtt->SetForceWireframe (true);
+  G4cout << G4endl << "NoDaughters: " <<worldVolume->GetLogicalVolume()->GetNoDaughters() << G4endl << G4endl;
   for(int i=0;i<worldVolume->GetLogicalVolume()->GetNoDaughters();i++){
       worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
   }
@@ -294,6 +295,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
   G4cout << G4endl << "Material table: " << G4endl << G4endl;
   G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 
+  //following routine update the copy number as well as the proper settings for kryptonite volumes : Rakitha Tue Oct 14 11:17:10 EDT 2014
   UpdateCopyNo(worldVolume,1); 
     
     
@@ -310,6 +312,14 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
 
   //if (aVolume->GetLogicalVolume()->GetNoDaughters()==0 ){
       aVolume->SetCopyNo(index);
+      G4Material* material;
+      G4VisAttributes* kryptoVisAtt= new G4VisAttributes(G4Colour(0.7,0.0,0.0));
+      //set user limits for Kryptonite materials. When tracks are killed inside Kryptonite materials, energy will be properly deposited
+      material = aVolume->GetLogicalVolume()->GetMaterial();
+      if(material->GetName()=="Kryptonite" ){
+	aVolume->GetLogicalVolume()->SetUserLimits( new G4UserLimits(0.0, 0.0, 0.0, DBL_MAX, DBL_MAX) );
+	aVolume->GetLogicalVolume()->SetVisAttributes(kryptoVisAtt);
+      }
       index++;
       //}else {
     for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++){

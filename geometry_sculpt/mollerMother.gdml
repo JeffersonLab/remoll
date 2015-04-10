@@ -21,7 +21,8 @@
 
 <solids>
      <!-- <box lunit="mm" name="boxMother" x="80000" y="80000" z="80000"/> --> 
-     <box lunit="mm" name="boxMother" x="100000" y="100000" z="100000"/>
+     <!-- <box lunit="mm" name="boxMother" x="100000" y="100000" z="100000"/> -->
+     <box lunit="mm" name="boxMother" x="200000" y="200000" z="200000"/>
 </solids>
 
   <structure>
@@ -35,6 +36,7 @@
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
+
 
       <physvol>
       <file name="geometry_sculpt/hallDaughter.gdml"/>
@@ -53,6 +55,7 @@
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>
       </physvol>
+
       <physvol>
       <file name="geometry_sculpt/hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
