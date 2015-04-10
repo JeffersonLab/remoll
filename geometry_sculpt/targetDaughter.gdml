@@ -162,13 +162,8 @@
     <volume name="TargShield_logic">
       <materialref ref="Concrete"/>
 <!--  <materialref ref="Tungsten"/> -->
-<<<<<<< HEAD
-      <materialref ref="Borated_Concrete"/>
-      <solidref ref="TargShield_solid"/> 
-=======
 <!--  <materialref ref="Borated_Concrete"/> -->
       <solidref ref="TargShield_solid"/>
->>>>>>> 572bfa021da168a285838a8ef40a4abdd50a453f
     </volume>
 
     <volume name="boxtgtShield1_logic">
