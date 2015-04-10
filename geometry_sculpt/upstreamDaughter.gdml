@@ -62,6 +62,27 @@
     <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET"/>
     <constant name="boxUSShieldColl2_inner_rmax" value="335"/>
     <position name="USshieldcoll_center_2" unit="mm" x="0" y="0" z="6400-UOFFSET"/>
+    <constant name="USShield1_width" value="2270"/>
+    <constant name="USShield2_width" value="2660"/>
+    <constant name="USShield1_height" value="2270"/>
+    <constant name="USShield2_height" value="2660"/>
+    <constant name="USShield1_length" value="1000"/>
+    <constant name="USShield2_length" value="1000"/>
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
+    <constant name="USPolyShield1_side_thickness" value="400"/>
+    <constant name="USPolyShield1_top_thickness" value="400"/>
+    <constant name="USPolyShield1_bottom_thickness" value="400"/>
+    <constant name="USPolyShield1_length" value="USShield1_length + USShield2_length + 1 + 2*USPolyShield1_side_thickness + 100"/>
+    <constant name="USPolyShield1_width" value="USShield2_width + 1 + 2*USPolyShield1_side_thickness"/>
+    <constant name="USPolyShield1_height" value="USShield2_height + 1 + USPolyShield1_top_thickness + USPolyShield1_bottom_thickness"/>
+    <constant name="boxPolyShield1_beam_bore" value="boxUSShieldColl2_inner_rmax + 15"/>
+    <!--offeset when no bottom shield (USPolyShield1_top_thickness + USPolyShield1_bottom_thickness)/2 -->
+    <constant name="USPolyShield1_y_offset" value="(USPolyShield1_top_thickness - USPolyShield1_bottom_thickness)/2"/>
+    <position name="boxUSPolyShield1_trans1" unit="mm" x="0" y="-1*USPolyShield1_top_thickness/2 + USPolyShield1_bottom_thickness/2" z="0"/>
+    <position name="boxUSPolyShield1_trans2" unit="mm" x="0" y="-1*USPolyShield1_y_offset" z="0"/>
+    <position name="boxUSPolyShield1_center" unit="mm" x="0" y="USPolyShield1_y_offset" z="5865-UOFFSET"/>
 
     <constant name="X_ARC" value="COIL_STRAIGHT_L/2"/>
     <constant name="Y1_ARC" value="-INCOILRADIUS-(COIL_ARC_R+XS_H/2)"/>
@@ -93,9 +114,24 @@
        To have optimized US mother volume use these numbers
       -->
     <constant name="USTubemother_rmax" value="1900"/>
+    <constant name="USBoxmother_width" value="4200"/>
+    <constant name="USBoxmother_height" value="4000"/>
     <constant name="USTubemother_length" value="4500"/>
+    <!--Original lenght was 4500 and 1000 from DS was subtracted to prevent overlapping 
+		 Now length is increased to 6500 and 2000 from DS was subtracted to prevent overlapping 
+		 Doing so length is increased by 1000 in the US of the BoxMother volume
+      -->
+    <constant name="USBoxmother_length" value="6500"/>
+
     <constant name="USTubemothersubtract_length" value="1000"/>
+    <constant name="USBoxmothersubtract_length" value="2225"/>
+    <constant name="USBoxmotherunion_length" value="1000"/>
     <position name="USmothersubtract_center_1" unit="mm" x="0" y="0" z="USTubemother_length/2 - USTubemothersubtract_length/2"/>
+    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2"/>
+    <position name="USmotherunion_center_1" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - USBoxmotherunion_length/2"/>
+
+    <!-- Neutron Shielding -->
+    <!-- Insert constant and position parameters for neutron shielding here -->   
 
     <!--Rotation about x axis -->
     <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/> 
@@ -125,12 +161,24 @@
 <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_1" rmax="USTubemother_rmax" rmin="0" startphi="0" z="USTubemother_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_2" rmax="USTubemother_rmax + 1" rmin="0" startphi="0" z="USTubemothersubtract_length"/>
+    <!--tubeUpstream is not used anymore -->
     <subtraction name ="tubeUpstream">
       <first ref="tubeUpstream_1"/>
       <second ref="tubeUpstream_2"/>
       <positionref ref="USmothersubtract_center_1" />
       <!-- <rotationref ref="scRot_1"/> -->
     </subtraction>
+
+    <box lunit="mm" name="boxUpstream_1" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmother_length"/>
+    <box lunit="mm" name="boxUpstream_2" x="USBoxmother_width + 1" y="USBoxmother_height + 1" z="USBoxmothersubtract_length"/>
+    <box lunit="mm" name="boxUpstream_3" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmotherunion_length"/>
+    <subtraction name ="boxUpstream">
+      <first ref="boxUpstream_1"/>
+      <second ref="boxUpstream_2"/>
+      <positionref ref="USmothersubtract_center_2" />
+    </subtraction>
+
+
 
     <box lunit="mm" name="COLL_BOX"  x="1000" y="1000" z="1000"/>
 
@@ -270,7 +318,7 @@
     <!--
        Shielding collimators
       -->
-    <box lunit="mm" name="boxUSShieldColl1_solid_1" x="2270" y="2270" z="1000"/>
+    <box lunit="mm" name="boxUSShieldColl1_solid_1" x="USShield1_width" y="USShield1_height" z="USShield1_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_1" rmax="boxUSShieldColl1_inner_rmax" rmin="0" startphi="0" z="1050"/>
 
     <subtraction name ="boxUSShieldColl1_solid">
@@ -279,7 +327,7 @@
       <positionref ref="CENTER" />
     </subtraction> 
 
-    <box lunit="mm" name="boxUSShieldColl2_solid_1" x="2660" y="2660" z="1000"/>
+    <box lunit="mm" name="boxUSShieldColl2_solid_1" x="USShield2_width" y="USShield2_height" z="USShield2_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_2" rmax="boxUSShieldColl2_inner_rmax" rmin="0" startphi="0" z="1050"/>
 
     <subtraction name ="boxUSShieldColl2_solid">
@@ -287,6 +335,24 @@
       <second ref="USShield_subTube_solid_2"/>
       <positionref ref="CENTER" />
     </subtraction> 
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
+    <box lunit="mm" name="boxUSPolyShield1_solid_1" x="USPolyShield1_width" y="USPolyShield1_height" z="USPolyShield1_length"/>
+    <box lunit="mm" name="boxUSPolyShield1_solid_2" x="USPolyShield1_width - 2*USPolyShield1_side_thickness + 1" y="USPolyShield1_height - USPolyShield1_top_thickness - USPolyShield1_bottom_thickness + 1" z="USPolyShield1_length - 2*USPolyShield1_side_thickness + 1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="USPolyShield1_beamTube_solid" rmax="boxPolyShield1_beam_bore" rmin="0" startphi="0" z="USPolyShield1_length+10"/>
+
+    <subtraction name ="boxUSPolyShield1_solid_3">
+      <first ref="boxUSPolyShield1_solid_1"/>
+      <second ref="boxUSPolyShield1_solid_2"/>
+      <positionref ref="boxUSPolyShield1_trans1" />
+    </subtraction> 
+
+    <subtraction name ="boxUSPolyShield1_solid">
+      <first ref="boxUSPolyShield1_solid_3"/>
+      <second ref="USPolyShield1_beamTube_solid"/>
+      <positionref ref="boxUSPolyShield1_trans2" />
+    </subtraction>
 
 </solids>
 
@@ -365,18 +431,34 @@
     </volume>
 
     <volume name="boxUSShieldColl1_logic">
-      <materialref ref="Borated_Concrete"/>
+<!--      <materialref ref="Borated_Concrete"/> 
+      <materialref ref="HD_Concrete"/> -->
+      <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl1_solid"/>
     </volume>
 
     <volume name="boxUSShieldColl2_logic">
-      <materialref ref="Borated_Concrete"/>
+<!--      <materialref ref="Borated_Concrete"/>
+      <materialref ref="HD_Concrete"/> -->
+      <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl2_solid"/>
+    </volume>
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
+    <volume name="boxUSPolyShield1_logic">
+<!--  <materialref ref="Concrete"/> -->
+<!--  <materialref ref="Tungsten"/> -->
+<!--      <materialref ref="Polythene"/> -->
+      <materialref ref="Kryptonite"/>
+      <solidref ref="boxUSPolyShield1_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
     </volume>
 
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
-      <solidref ref="tubeUpstream"/>
+      <!-- <solidref ref="tubeUpstream"/> -->
+      <solidref ref="boxUpstream"/>
 
       <physvol name="UScoll_1">
         <volumeref ref="logicUScoll_1"/>
@@ -451,6 +533,12 @@
         <positionref ref="USshieldcoll_center_2"/>
       </physvol>
 
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
+      <physvol>
+        <volumeref ref="boxUSPolyShield1_logic"/>
+        <positionref ref="boxUSPolyShield1_center"/>
+      </physvol>
 
    </volume>
 </structure>

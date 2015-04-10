@@ -54,7 +54,7 @@
   <position name="cylHallDet_center" unit="mm" x="0" y="0" z="0"/>
   <position name="cylHallDet_1_center" x="0" y="1.*center_cylwall + thick_cylwall/2" z="0" unit="mm"/>
   <position name="cylHallDet_2_center" x="0" y="center_cylwall + height_cylwall/2" z="0" unit="mm"/>
-  <position name="cylHallDet_3_center" x="0" y="center_cylwall - height_cylwall/2 + thick_cylwall+0.1" z="0" unit="mm"/>
+  <position name="cylHallDet_3_center" x="0" y="center_cylwall - height_cylwall/2 + thick_cylwall + 1" z="0" unit="mm"/>
 
   <position unit="mm" name="cylwallTrans_1"    x="0" y="0"     z="thick_cylwall/2"/>
   <position unit="mm" name="cylwallTrans_2"    x="0" y="-1.0*radius_of_cylwall-0.5*thick_cylwall" z="dump_hole_y_center - center_cylwall"/>
@@ -71,7 +71,7 @@
 
 <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallWall" rmax="radius_of_cylwall" rmin="radius_of_cylwall - thick_cylwall" startphi="0" z="height_cylwall"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallMother_1" rmax="radius_of_cylwall - 50." rmin="0" startphi="0" z="height_cylwall - thick_cylwall*2"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallMother_1" rmax="radius_of_cylwall - 110." rmin="0" startphi="0" z="height_cylwall - thick_cylwall*2"/>
     <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
     <box lunit="mm" name="boxHallMother_in" x="width_mother - 2500." y="height_mother - 2500." z="length_mother - 2000."/>
 
@@ -86,6 +86,7 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_2" rmax="radius_max_cylHallDet" rmin="0" startphi="0" z="0.1"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_3" rmax="radius_max_cylHallDet" rmin="0" startphi="0" z="0.1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_4" rmax="radius_max_cylHallDet - 5000" rmin="radius_max_cylHallDet - 5000 - 0.1" startphi="0" z="height_cylHallDet"/>
 
     <!--Hall A top wall -->
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  rmin="radius_topwall_in" rmax="radius_topwall_out"/>
@@ -139,6 +140,13 @@
       <auxiliary auxtype="DetNo" auxvalue="103"/>
     </volume>
 
+    <volume name="cylHallDet_4_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="cylHallDet_4"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="105"/>
+    </volume>
+
     <volume name="topwall_logic">
       <materialref ref="Concrete"/>
       <solidref ref="topwall_solid"/>
@@ -167,11 +175,23 @@
 	<rotationref ref="scRot_1"/>
       </physvol>
 
+<!-- The concrete floor is added to simulation and cylHallDet_3 is no longer used -->
+<!--
       <physvol>
         <volumeref ref="cylHallDet_3_logic"/>
         <positionref ref="cylHallDet_3_center"/>
 	<rotationref ref="scRot_1"/>
       </physvol>
+-->
+
+<!--This detector needs hall mother volume setup in very complecated way so that detector volume is not overlapped by the hall volume -->
+<!--
+      <physvol>
+        <volumeref ref="cylHallDet_4_logic"/>
+        <positionref ref="cylHallDet_1_center"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+-->
 
       <physvol name="topwall">
         <volumeref ref="topwall_logic"/>
@@ -184,7 +204,6 @@
         <positionref ref="cylwall_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
-
 
     </volume>
 

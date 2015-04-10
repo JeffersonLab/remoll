@@ -25,11 +25,28 @@
   <constant name="tgtShield_length" value="4700"/>
   <constant name="tgtShield_width" value="5920"/>
   <constant name="tgtShield_height" value="5000"/>
-  <constant name="tgtShield_side_thickness" value="305"/>
-  <constant name="tgtShield_top_thickness" value="305"/>
+  <!--Default thickness is  305. Increased to 500 now -->
+  <constant name="tgtShield_side_thickness" value="500"/>
+  <constant name="tgtShield_top_thickness" value="500"/>
   <constant name="tgtShield_y_offset" value="-400"/>
   <constant name="tgtShield_x_offset" value="915"/>
   <constant name="boxShield_beam_bore" value="100"/>
+
+  <!-- Neutron Poly Shielding -->
+  <!-- PolyShield1 will be outside shielding -->
+  <constant name="tgtPolyShield1_side_thickness" value="400"/>
+  <constant name="tgtPolyShield1_top_thickness" value="400"/>
+  <constant name="tgtPolyShield1_length" value="tgtShield_length + 1 + 2*tgtPolyShield1_side_thickness"/>
+  <constant name="tgtPolyShield1_width" value="tgtShield_width + 1 + 2*tgtPolyShield1_side_thickness"/>
+  <constant name="tgtPolyShield1_height" value="tgtShield_height + 1 + 1*tgtPolyShield1_top_thickness"/>
+  <constant name="boxPolyShield1_beam_bore" value="200"/>
+  <constant name="tgtPolyShield1_y_offset" value="-400 + tgtPolyShield1_top_thickness/2"/>
+
+  <!--Sens box detector  -->
+  <constant name="tgtBoxDet_length" value="tgtPolyShield1_length + 10"/>
+  <constant name="tgtBoxDet_width" value="tgtPolyShield1_width + 10"/>
+  <constant name="tgtBoxDet_height" value="tgtPolyShield1_height + 10"/>
+
 
   <!--opened bore so that missing power will incident on shielding block 2 default radius was 91.7-->
   <constant name="boxShield_inner_rmax" value="100"/>
@@ -44,6 +61,11 @@
   <position name="boxtgtShield_trans2" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset" z="0"/>
   <position name="boxtgtShield1_center" unit="mm" x="tgtShield_x_offset" y="tgtShield_y_offset" z="0"/>
 
+  <position name="boxtgtPolyShield1_trans1" unit="mm" x="0" y="-1*tgtPolyShield1_top_thickness/2" z="0"/>
+  <position name="boxtgtPolyShield1_trans2" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtPolyShield1_y_offset" z="0"/>
+  <position name="boxtgtPolyShield1_center" unit="mm" x="tgtShield_x_offset" y="tgtPolyShield1_y_offset" z="0"/>
+
+
   <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/> 
 
 
@@ -54,7 +76,7 @@
 <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1400" rmin="0" startphi="0" z="6000"/>
     <!--100 mm offset to prevent target mother volume overlapping with hall mother volume -->
-    <box lunit="mm" name="boxTargetMother" x="8000" y="6000 - 100" z="6000"/>
+    <box lunit="mm" name="boxTargetMother" x="8600" y="6000 - 100" z="6000"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="tubeTarget_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget_solid_1" rmax="tubeShield_beam_rmax" rmin="0" startphi="0" z="2*tubeTarget_length"/>
 
@@ -95,7 +117,28 @@
       <second ref="tgtShield_beamTube_solid"/>
       <positionref ref="boxtgtShield_trans2" />
     </subtraction>     
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding -->
+    <box lunit="mm" name="boxtgtPolyShield1_solid_1" x="tgtPolyShield1_width" y="tgtPolyShield1_height" z="tgtPolyShield1_length"/>
+    <box lunit="mm" name="boxtgtPolyShield1_solid_2" x="tgtPolyShield1_width - 2*tgtPolyShield1_side_thickness + 1" y="tgtPolyShield1_height - tgtPolyShield1_top_thickness + 1" z="tgtPolyShield1_length - 2*tgtPolyShield1_side_thickness + 1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tgtPolyShield1_beamTube_solid" rmax="boxPolyShield1_beam_bore" rmin="0" startphi="0" z="tgtPolyShield1_length+10"/>
+
+    <subtraction name ="boxtgtPolyShield1_solid_3">
+      <first ref="boxtgtPolyShield1_solid_1"/>
+      <second ref="boxtgtPolyShield1_solid_2"/>
+      <positionref ref="boxtgtPolyShield1_trans1" />
+    </subtraction> 
+
+    <subtraction name ="boxtgtPolyShield1_solid">
+      <first ref="boxtgtPolyShield1_solid_3"/>
+      <second ref="tgtPolyShield1_beamTube_solid"/>
+      <!--Use same positioning as target shield hut hole subtraction -->
+      <positionref ref="boxtgtPolyShield1_trans2" />
+    </subtraction>     
     
+    <!--Sens box detector Still working on adding a cubic sens detector -->
+    <box lunit="mm" name="boxDet1_solid_1" x="tgtBoxDet_width" y="tgtBoxDet_height" z="tgtBoxDet_width"/>
 
 </solids>
 
@@ -117,19 +160,30 @@
     </volume>
 
     <volume name="TargShield_logic">
-<!--  <materialref ref="Concrete"/> -->
+      <materialref ref="Concrete"/>
 <!--  <materialref ref="Tungsten"/> -->
-      <materialref ref="Borated_Concrete"/>
+<!--  <materialref ref="Borated_Concrete"/> -->
       <solidref ref="TargShield_solid"/>
     </volume>
 
     <volume name="boxtgtShield1_logic">
-<!--  <materialref ref="Concrete"/> -->
+      <materialref ref="Concrete"/>
+<!--  <materialref ref=HD_"Concrete"/> -->
+<!--  <auxiliary auxtype="Color" auxvalue="Blue"/> -->
 <!--  <materialref ref="Tungsten"/> -->
-      <materialref ref="Borated_Concrete"/>
+<!--  <materialref ref="Borated_Concrete"/> -->
       <solidref ref="boxtgtShield1_solid"/>
     </volume>
 
+  <!-- Neutron Poly Shielding -->
+  <!-- PolyShield1 will be outside shielding -->
+    <volume name="boxtgtPolyShield1_logic">
+<!--  <materialref ref="Tungsten"/> -->
+<!--      <materialref ref="Polythene"/> -->
+      <materialref ref="Kryptonite"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <solidref ref="boxtgtPolyShield1_solid"/>
+    </volume>
  
     <volume name="boxShieldColl1_logic">
       <!-- <materialref ref="Borated_Concrete"/> -->
@@ -171,6 +225,14 @@
       <physvol>
         <volumeref ref="boxtgtShield1_logic"/>
         <positionref ref="boxtgtShield1_center"/>
+      </physvol>
+
+      <!-- Neutron Poly Shielding -->
+      <!-- PolyShield1 will be outside shielding -->
+
+      <physvol>
+        <volumeref ref="boxtgtPolyShield1_logic"/>
+        <positionref ref="boxtgtPolyShield1_center"/>
       </physvol>
 
       <physvol>

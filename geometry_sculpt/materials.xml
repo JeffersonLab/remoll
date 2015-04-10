@@ -23,7 +23,7 @@
     <atom type="A" value="13.00"/>
   </isotope>
   
-  <element Z="12" formula="C" name="Carbon" >
+  <element Z="6" formula="C" name="Carbon" >
     <fraction ref="C12" n="0.9893" />
     <fraction ref="C13" n="0.0107" />
   </element>
@@ -70,7 +70,7 @@
     <atom type="A" value="25.98"/>
   </isotope>
   
-  <element Z="8" formula="Mg" name="Magnesium" >
+  <element Z="12" formula="Mg" name="Magnesium" >
     <fraction ref="Mg24" n="0.7899" />
     <fraction ref="Mg25" n="0.1000" />
     <fraction ref="Mg26" n="0.1101" />
@@ -149,12 +149,86 @@
   <isotope name="Fe58" Z="26" N="58">
     <atom type="A" value="57.93"/>
   </isotope>
-  <element Z="20" formula="Fe" name="Iron" >
+  <element Z="26" formula="Fe" name="Iron" >
     <fraction ref="Fe54" n="0.0584" />
     <fraction ref="Fe56" n="0.9175" />
     <fraction ref="Fe54" n="0.0212" />
     <fraction ref="Fe54" n="0.0028" />
   </element>
+
+
+  <element Z="15" formula="P" name="Phosphorus" >
+    <atom value="30.97" />
+  </element>
+
+  <isotope name="Ti46" Z="22" N="46">
+    <atom type="A" value="45.95"/>
+  </isotope>
+  <isotope name="Ti47" Z="22" N="47">
+    <atom type="A" value="46.95"/>
+  </isotope>
+  <isotope name="Ti48" Z="22" N="48">
+    <atom type="A" value="47.95"/>
+  </isotope>
+  <isotope name="Ti49" Z="22" N="49">
+    <atom type="A" value="48.95"/>
+  </isotope>
+  <isotope name="Ti50" Z="22" N="50">
+    <atom type="A" value="49.94"/>
+  </isotope>
+  <element Z="22" formula="Ti" name="Titanium" >
+    <fraction ref="Ti46" n="0.0825" />
+    <fraction ref="Ti47" n="0.0744" />
+    <fraction ref="Ti48" n="0.7372" />
+    <fraction ref="Ti49" n="0.0541" />
+    <fraction ref="Ti50" n="0.0518" />
+  </element>
+
+  <element Z="25" formula="P" name="Manganese" >
+    <atom value="54.94" />
+  </element>
+
+  <isotope name="V50" Z="23" N="50">
+    <atom type="A" value="49.95"/>
+  </isotope>
+  <isotope name="V51" Z="23" N="51">
+    <atom type="A" value="50.94"/>
+  </isotope>
+  <element Z="23" formula="V" name="Vanadium" >
+    <fraction ref="V50" n="0.0025" />
+    <fraction ref="V51" n="0.9975" />
+  </element>
+
+  <isotope name="S32" Z="16" N="32">
+    <atom type="A" value="31.97"/>
+  </isotope>
+  <isotope name="S33" Z="16" N="33">
+    <atom type="A" value="32.97"/>
+  </isotope>
+  <isotope name="S34" Z="16" N="34">
+    <atom type="A" value="33.97"/>
+  </isotope>
+  <isotope name="S36" Z="16" N="36">
+    <atom type="A" value="35.97"/>
+  </isotope>
+  <element Z="16" formula="S" name="Sulfur" >
+    <fraction ref="S32" n="0.9493" />
+    <fraction ref="S33" n="0.0076" />
+    <fraction ref="S34" n="0.0429" />
+    <fraction ref="S36" n="0.0002" />
+  </element>
+
+  <isotope name="N14" Z="7" N="14">
+    <atom type="A" value="14.00"/>
+  </isotope>
+  <isotope name="N15" Z="7" N="15">
+    <atom type="A" value="15.00"/>
+  </isotope>
+  <element Z="7" formula="N" name="Nitrogen" >
+    <fraction ref="N14" n="0.9963" />
+    <fraction ref="N15" n="0.0037" />
+  </element>
+
   
   <material Z="1" name="VacuumTarg" state="gas">
     <T unit="K" value="2.73"/>
@@ -253,6 +327,27 @@
     <fraction n="0.014" ref="Iron"/>
   </material>
 
+  <!--
+     Based on Material:  HD CONCRETE   using "Neutron Shielding Properties of a New High-Density Concrete A. Lorente et. al." density:  3.9 g/cm3   
+    -->
+  <material name="HD_Concrete" state="solid">
+    <D value="3.9" unit="g/cm3"/>
+    <fraction n="0.608" ref="Iron"/>
+    <fraction n="0.313" ref="Oxygen"/>
+    <fraction n="0.044" ref="Calcium"/>
+    <fraction n="0.019" ref="Silicon"/>
+    <fraction n="0.004" ref="Hydrogen"/>
+    <fraction n="0.004" ref="Magnesium"/>
+    <fraction n="0.003" ref="Phosphorus"/>
+    <fraction n="0.002" ref="Titanium"/>
+    <fraction n="0.0017" ref="Aluminium"/>
+    <fraction n="0.0006" ref="Potassium"/>
+    <fraction n="0.0006" ref="Manganese"/>
+    <fraction n="0.0005" ref="Vanadium"/>
+    <fraction n="0.0004" ref="Carbon"/>
+    <fraction n="0.0001" ref="Sulfur"/>
+    <fraction n="0.00003" ref="Nitrogen"/>
+  </material>
 
   <material Z="1" name="VacuumColl" state="gas">
     <T unit="K" value="2.73"/>
@@ -277,12 +372,12 @@
 
 
 
-  <material Z="11" name="Copper" state="solid">
+  <material Z="29" name="Copper" formula="Cu" state="solid">
     <D unit="g/cm3" value="8.96"/>
     <atom unit="g/mole" value="63.54"/>
   </material>
   
-  <material Z="82" name="Kryptonite" state="solid">
+  <material Z="82" name="Kryptonite" formula="Kry" state="solid">
     <D unit="g/cm3" value="11.350"/>
     <atom unit="g/mole" value="207.2"/>
   </material>
