@@ -114,6 +114,16 @@
       <rotationref ref="scRot_1"/>
   </subtraction>
 
+  <!--Hall A top wall detector -->
+  <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="halldet_top_shell"  rmin="radius_topwall_out+10" rmax="radius_topwall_out+10+1"/>
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="halldet_top_sub" rmin="0.0" rmax="radius_topwall_out+1" z="2*radius_topwall_out" />
+ 
+  <subtraction name ="topwalldet_solid">
+      <first ref="halldet_top_shell"/>
+      <second ref="halldet_top_sub"/>
+      <positionref ref="topwallTrans_1"/>
+  </subtraction>
+
 
 </solids>
 
@@ -147,6 +157,14 @@
       <auxiliary auxtype="DetNo" auxvalue="105"/>
     </volume>
 
+    <volume name="topwalldet_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="topwalldet_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="107"/>
+    </volume>
+
+
     <volume name="topwall_logic">
       <materialref ref="Concrete"/>
       <solidref ref="topwall_solid"/>
@@ -174,6 +192,13 @@
         <positionref ref="cylHallDet_2_center"/>
 	<rotationref ref="scRot_1"/>
       </physvol>
+
+      <physvol name="topwalldet">
+        <volumeref ref="topwalldet_logic"/>
+        <positionref ref="topwall_center"/>
+        <rotationref ref="scRot_1"/>
+      </physvol>
+
 
 <!-- The concrete floor is added to simulation and cylHallDet_3 is no longer used -->
 <!--
