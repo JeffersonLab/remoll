@@ -58,6 +58,7 @@
 
   <position unit="mm" name="cylwallTrans_1"    x="0" y="0"     z="thick_cylwall/2"/>
   <position unit="mm" name="cylwallTrans_2"    x="0" y="-1.0*radius_of_cylwall-0.5*thick_cylwall" z="dump_hole_y_center - center_cylwall"/>
+  <position unit="mm" name="cylwallTrans_3"    x="0" y="0" z="0"/>
   <position unit="mm" name="cylwall_center"    x="0" y="1.*center_cylwall" z="0"/>
 
   <position unit="mm" name="topwallTrans_1"    x="0" y="0"     z="-trans_topwall"/>
@@ -90,7 +91,7 @@
 
     <!--Hall A top wall -->
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  rmin="radius_topwall_in" rmax="radius_topwall_out"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="hall_top_sub" rmin="0.0" rmax="radius_topwall_out+1" z="2*radius_topwall_out" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="hall_top_sub" rmin="0.0" rmax="radius_topwall_out+10" z="2*radius_topwall_out" />
  
   <subtraction name ="topwall_solid">
       <first ref="hall_top_shell"/>
@@ -116,13 +117,31 @@
 
   <!--Hall A top wall detector -->
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="halldet_top_shell"  rmin="radius_topwall_out+10" rmax="radius_topwall_out+10+1"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="halldet_top_sub" rmin="0.0" rmax="radius_topwall_out+1" z="2*radius_topwall_out" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="halldet_top_sub" rmin="0.0" rmax="radius_topwall_out+11" z="2*(radius_topwall_out+10+1)" />
  
   <subtraction name ="topwalldet_solid">
       <first ref="halldet_top_shell"/>
       <second ref="halldet_top_sub"/>
       <positionref ref="topwallTrans_1"/>
   </subtraction>
+
+  <!--Hall A side wall detector -->
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="out_cylwalldet" rmin="0.0" rmax="radius_of_cylwall + 1.*thick_cylwall +  10 + 3" z="height_cylwall" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="in_cylwalldet" rmin="0.0" rmax="radius_of_cylwall + 1.*thick_cylwall + 10" z="height_cylwall+10" />
+  <box lunit="mm" name="wall_cylholedet" x="width_dump_hole" y="height_dump_hole" z="3.0*thick_cylwall"/>
+
+  <subtraction name ="cylwalldet_full">
+      <first ref="out_cylwalldet"/>
+      <second ref="in_cylwalldet"/>
+      <positionref ref="cylwallTrans_3"/>
+  </subtraction>
+  <subtraction name ="cylwalldet_hole">
+      <first ref="cylwalldet_full"/>
+      <second ref="wall_cylholedet"/>
+      <positionref ref="cylwallTrans_2"/>
+      <rotationref ref="scRot_1"/>
+  </subtraction>
+
 
 
 </solids>
@@ -163,6 +182,12 @@
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="107"/>
     </volume>
+    <volume name="cylwalldet_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="cylwalldet_hole"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="109"/>
+    </volume>
 
 
     <volume name="topwall_logic">
@@ -196,6 +221,12 @@
       <physvol name="topwalldet">
         <volumeref ref="topwalldet_logic"/>
         <positionref ref="topwall_center"/>
+        <rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="cylwalldet">
+        <volumeref ref="cylwalldet_logic"/>
+        <positionref ref="cylwall_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
 
