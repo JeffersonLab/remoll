@@ -18,6 +18,6 @@ include/gitinfo.hh
 *.kdev4
 
 #ignore build and map directory
-build
+build*
 bldXcode
 map_directory
