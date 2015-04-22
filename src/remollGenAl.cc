@@ -22,8 +22,7 @@ remollGenAl::~remollGenAl() {
 
 void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
 
-
-    double beamE = vert->GetBeamE(); // in GeV
+    double beamE = vert->GetBeamE(); // in MeV (it can be modified by beam loss)
     double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min))); // radians
     double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
     double eOut=0;
@@ -86,7 +85,7 @@ void remollGenAl::GenInelastic(double beamE,double th,
       Nu     = beamE - eOut;
       Q2     = 4.0*beamE*eOut*STH*STH;
       W2     = pow(proton_mass_c2,2) + 2.0*proton_mass_c2*Nu - Q2;
-    }while(W2/GeV/GeV<0 || W2/GeV/GeV>9 || Q2/GeV/GeV<0 || Q2/GeV/GeV>10); //this is because F1F2IN09 won't work for W>3 and Q2>10
+    }while(W2/GeV/GeV<0 || W2/GeV/GeV>9 || Q2/GeV/GeV<0.0 || Q2/GeV/GeV>10); //this is because F1F2IN09 won't work for W>3 and Q2>10
     
     // Mott scattering
     double MOTT = pow((0.00072/beamE*CTH/STH/STH),2);
@@ -97,11 +96,12 @@ void remollGenAl::GenInelastic(double beamE,double th,
     int bad=F1F2IN09(Z, A, Q2/GeV/GeV, W2/GeV/GeV, F1, F2);  
     if(bad){
       G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << G4endl;	
-      G4cerr << "  result was (-1 = Q2,W2 out of range in resmodd | -2 = A<3) : " << bad <<G4endl;
+      G4cerr << "  result was (-1 = Q2,W2 out of range in resmodd | -2 = A<3 | 1 inf/nan F1/F2) : " << bad <<G4endl;
       G4cerr << "     Q2 W2 A "<<Q2/GeV/GeV<<" "<<W2/GeV/GeV<<" "<<A<< G4endl;
+      G4cerr << "     STH eOut beamE "<<STH<<" "<<eOut<<" "<<beamE<<G4endl;
       asym=0.99999;
       effectiveXsection=0;
-      return;
+      exit(1);
     }
     W1 = F1/proton_mass_c2;
  
