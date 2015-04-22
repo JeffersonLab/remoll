@@ -1,5 +1,6 @@
 *~
 *.swp
+*.DS_Store
 #ignore doxygen files for now
 doc
 include/gitinfo.hh
@@ -11,10 +12,12 @@ include/gitinfo.hh
 #ignore output files
 *.root
 *.out
+*.pdf
 
 #ignore kdev files
 *.kdev4
 
 #ignore build and map directory
 build
+bldXcode
 map_directory
