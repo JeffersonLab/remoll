@@ -519,6 +519,7 @@ G4double fitemc(G4double X, G4int A);
 //returns 0 on success
 //returns -1 for failure of resmodd
 //returns -2 for A < 3
+//returns 1 for nan/inf F1/F2
 int F1F2IN09(int Z, int IA, double qsq,
               double wsq, double &F1, double &F2)
 {
@@ -543,7 +544,7 @@ int F1F2IN09(int Z, int IA, double qsq,
     G4double DW2DPF,Wsqp,pf,kf,Es,dw2des,Fyuse;
     G4double x4, emcfac;
     G4int ism;
-    G4double PM = 0.93828;
+    G4double PM = proton_mass_c2/GeV;
 
     // This is for exp(-xx**2/2.), from teste.f
     G4double XXp[99] = {
@@ -678,10 +679,8 @@ int F1F2IN09(int Z, int IA, double qsq,
 
     Rc = 0.;
     if(sigt > 0.) Rc = sigl / sigt;
-
     W1 = (2. * Z * F1d + (IA - 2. * Z) * (2. * F1d - F1p)) / PM;
     W1= W1*(1.0+P[13]*x+P[14]*pow(x,2)+P[15]*pow(x,3)+P[16]*pow(x,4)+P[17]*pow(x,5));
-    
     if(W > 0.0)  W1=W1*pow((1.0+(P[20]*W+P[21]*pow(W,2))/(1.0+P[22]*qsq)),2);
     F1M = MEC2009(qsq,wsq,IA);
     W1 = W1 + F1M;
@@ -691,9 +690,10 @@ int F1F2IN09(int Z, int IA, double qsq,
     emcfac = fitemc(x4, IA);
     F1 = PM * W1 * emcfac;
     F2 = nu * W2 * emcfac;
-    if(std::isnan(F1) || std::isnan(F2)){
-      G4cerr << "Error! nans "<<__FILE__ << " line " << __LINE__ <<" "<<G4endl;
-      G4cerr <<" "<< F1 <<" "<<F2<<" "<< W1 <<" "<<W2<<" "<<PM<<" "<<nu<<" "<<emcfac<<G4endl;
+    if(std::isnan(F1) || std::isinf(F1) || std::isnan(F2) || std::isinf(F2)){
+      G4cerr << "Error! nan/inf "<<__FILE__ << " line " << __LINE__ <<" "<<G4endl;
+      G4cerr <<" "<< F1 <<" "<<F2<<" "<< W1 <<" "<<W2<<" "<<F1M<<" "<<PM<<" "<<nu<<" "<<emcfac<<G4endl;
+      return 1;
     }
     return 0;
 }
@@ -709,7 +709,7 @@ void christy507(G4double w2,G4double q2,G4double &F1,
 
     G4double xval1[50],xvalL[50];
 
-    G4double mp = .9382727;
+    G4double mp = proton_mass_c2/GeV;
     G4double mp2 = mp*mp;
     G4double pi = 3.141593;
     G4double alpha = 1./137.036;
@@ -784,7 +784,7 @@ int resmodd(G4double w2, G4double q2,
 
     G4double w2sv;
 
-    mp = 0.9382727;
+    mp = proton_mass_c2/GeV;
     mpi = 0.135;
     meta = 0.547;
     mp2 = mp*mp;
@@ -960,7 +960,7 @@ G4double resmod507_v2(G4double sf,G4double w2,
     G4double sig_res,t,xpr[2],m0,sig;
     G4int i,j,num;
 
-    mp = 0.9382727;
+    mp = proton_mass_c2/GeV;
     mpi = 0.135;
     meta = 0.547;
     mp2 = mp*mp;
@@ -1157,7 +1157,7 @@ G4double MEC2009(G4double q2,G4double w2, G4int A)//checked
     //returns 0 on A<2.5 and W2<=0, otherwise returns calculated value
     //propagated to F1F2IN09 into W1 as W1+=MEC2009
     G4double f1 = 0.0;
-    G4double am = 0.9383;
+    G4double am = proton_mass_c2/GeV;
     G4double w,nu;
 
     G4double P[24] = {
@@ -1172,7 +1172,7 @@ G4double MEC2009(G4double q2,G4double w2, G4int A)//checked
     G4double p18, x, f1corr;
 
     if (w2 <= 0.0) return 0;
-    w  = pow(w2,0.5);
+    w  = sqrt(w2);
     nu = (w2 - am*am + q2) / 2. / am;
     x  = q2 / (2.0 * am * nu );
 
@@ -1195,6 +1195,12 @@ G4double MEC2009(G4double q2,G4double w2, G4int A)//checked
 
     if (f1 <= 1.0E-9 ) f1 = 0.0;
 
+    if(isnan(f1)){
+      G4cerr << "Error! nans "<<__FILE__ << " line " << __LINE__ <<" "<<G4endl;
+      G4cerr <<" "<< f1 <<" "<<x<<" "<< nu <<" "<<w2<<" "<<p18<<" "<<q2<<" "<<G4endl;
+      G4cerr <<"  "<< exp(-pow(w-P[1],2)/P[2]) << " " << (pow(1.0 + std::max(0.3,q2)/P[3],P[4])) <<" "<< pow(nu,P[5]) 
+	     << " " << (1.0 + p18 * pow(A,(1.0 + P[19] * x)))<< G4endl;
+    }
     return f1;
 }
 
