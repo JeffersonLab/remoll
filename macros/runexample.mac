@@ -1,5 +1,8 @@
 #  Example file
 
+# store tracks
+#/tracking/storeTrajectory 1
+
 # This must be called before initialize
 /remoll/setgeofile geometry_sculpt/mollerMother.gdml
 
@@ -13,8 +16,8 @@
 #/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
 
 # Raster and initial angle stuff
-#/remoll/rasx 5 mm
-#/remoll/rasy 5 mm
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
 #/remoll/beam_x0 0 mm
 #/remoll/beam_y0 0 mm
 # initial angle
@@ -24,6 +27,7 @@
 #/remoll/beam_dth 0 mrad
 #/remoll/beam_dph 0 mrad
 
+/remoll/beamene 11 GeV
 
 #/remoll/gen moller
 #/remoll/thcommin 30.0 deg
@@ -38,7 +42,6 @@
 /remoll/gen beam
 /remoll/beamene 11.0 GeV
 
-
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
 
@@ -52,9 +55,13 @@
 #/remoll/kryptonite   true
 /remoll/kryptonite   false
 
+/process/list
+
 # Specify random number seed
 #/remoll/seed 123456
 
 /remoll/filename remoller_moller_1.root
 
-/run/beamOn 10000
+#/tracking/verbose 2
+/run/beamOn 5000
+
