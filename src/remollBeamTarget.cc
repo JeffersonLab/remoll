@@ -11,6 +11,8 @@
 #include "CLHEP/Random/RandFlat.h"
 #include "CLHEP/Random/RandGauss.h"
 
+#include "CLHEP/Units/PhysicalConstants.h"
+
 #include "remollBeamTarget.hh"
 #include "remollMultScatt.hh"
 
@@ -324,7 +326,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    }
 
 	    fEffMatLen = (fSampLen/len)* // Sample weighting
-		mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*Avogadro/masssum; // material thickness
+	      mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*CLHEP::Avogadro/masssum; // material thickness
 	} else {
 	    const G4ElementVector *elvec = mat->GetElementVector();
 	    const G4double *fracvec = mat->GetFractionVector();
@@ -336,7 +338,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 		nmsmat++;
 	    }
 	}
-
     }
 
     if( !foundvol ){
@@ -353,7 +354,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     G4double msth, msph;
     G4double bmth, bmph;
 
-
     if( nmsmat > 0 ){
 	fMS->Init( fBeamE, nmsmat, msthick, msA, msZ );
 	msth = fMS->GenerateMSPlane();
@@ -365,17 +365,24 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
     assert( !std::isnan(msth) && !std::isnan(msph) );
 
-    bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
-    bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);
+     //-----------///--------
+      bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
+      bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);
 
-    if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
-    if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
+      if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
+      if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
 
-    // Initial direction
-    fDir = G4ThreeVector(0.0, 0.0, 1.0);
+      // Initial direction
+      fDir = G4ThreeVector(0.0, 0.0, 1.0);
 
-    fDir.rotateY( bmth); // Positive th pushes to positive X
-    fDir.rotateX(-bmph); // Positive ph pushes to positive Y
+      fDir.rotateY( bmth); // Positive th pushes to positive X (around Y-axis)
+      fDir.rotateX(-bmph); // Positive ph pushes to positive Y (around X-axis)
+     //-----------///--------
+    //    G4ThreeVector bmVec = G4ThreeVector(fVer.x(),fVer.y(),8000.0*mm-fVer.z()); // in mm
+    // if( (bmVec.z()-8000)>700)
+    //   G4cout << "** bmVec(z):: " << bmVec.z()/mm << "  " << fVer.z()/mm << "  " << bmVec.theta()/deg << G4endl;
+    //    fDir = G4ThreeVector(bmVec.unit());
+     //-----------///--------
 
     fDir.rotateY(msth);
     fDir.rotateX(msph);
@@ -385,13 +392,13 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     //
     // This can be ignored and done in a generator by itself
 
-    G4double  Ekin = fBeamE - electron_mass_c2;
+    G4double  Ekin = fBeamE - CLHEP::electron_mass_c2;
     G4double  bt   = fRadLen*4.0/3.0;
     G4double  prob_sample, eloss, sample, env, value, ref;
 
     G4double prob = 1.- pow(fEcut/Ekin,bt) - bt/(bt+1.)*(1.- pow(fEcut/Ekin,bt+1.))
 	+ 0.75*bt/(2.+bt)*(1.- pow(fEcut/Ekin,bt+2.));
-    prob = prob/(1.- bt*Euler + bt*bt/2.*(Euler*Euler+pi*pi/6.)); /* Gamma function */
+    prob = prob/(1.- bt*Euler + bt*bt/2.*(Euler*Euler+CLHEP::pi*CLHEP::pi/6.)); /* Gamma function */
 
     prob_sample = G4UniformRand();
 
@@ -407,7 +414,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	} while (sample > ref);
 
 	fSampE = fBeamE - eloss;
-	assert( fSampE > electron_mass_c2 );
+	assert( fSampE > CLHEP::electron_mass_c2 );
     } else {
 	fSampE = fBeamE;
     }
@@ -415,7 +422,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
     thisvert.fBeamE = fSampE;
 
-    assert( fBeamE >= electron_mass_c2 );
+    assert( fBeamE >= CLHEP::electron_mass_c2 );
 
     return thisvert;
 }
