@@ -87,6 +87,8 @@ void remollIO::InitializeTree(){
     fTree->Branch("bm.dx",    &fBmdX,  "bm.dx/D");
     fTree->Branch("bm.dy",    &fBmdY,  "bm.dy/D");
     fTree->Branch("bm.dz",    &fBmdZ,  "bm.dz/D");
+    fTree->Branch("bm.th",    &fBmth,  "bm.th/D");
+    fTree->Branch("bm.ph",    &fBmph,  "bm.ph/D");
 
     // GenericDetectorHit
     fTree->Branch("hit.n",    &fNGenDetHit,     "hit.n/I");
@@ -115,6 +117,8 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.p",    &fGenDetHit_P,   "hit.p[hit.n]/D");
     fTree->Branch("hit.e",    &fGenDetHit_E,   "hit.e[hit.n]/D");
     fTree->Branch("hit.m",    &fGenDetHit_M,   "hit.m[hit.n]/D");
+
+    fTree->Branch("hit.edep", &fGenDetHit_Edep, "hit.edep[hit.n]/D");
 
     fTree->Branch("hit.colCut",    &fCollCut,     "hit.colCut/I");
 
@@ -231,6 +235,10 @@ void remollIO::SetEventData(remollEvent *ev){
     fBmdX = bt->fDir.x();
     fBmdY = bt->fDir.y();
     fBmdZ = bt->fDir.z();
+    fBmth = bt->fDir.theta();
+    fBmph = bt->fDir.phi()/deg;
+
+    //    G4cout << "** fDir:: " << bt->fDir.x()/deg << "  " << bt->fDir.y()/deg << "  " << bt->fVer.z()/mm << G4endl;
 
     return;
 }
@@ -269,6 +277,8 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     fGenDetHit_P[n]  = hit->fP/__E_UNIT;
     fGenDetHit_E[n]  = hit->fE/__E_UNIT;
     fGenDetHit_M[n]  = hit->fM/__E_UNIT;
+
+    fGenDetHit_Edep[n]  = hit->fEdep/__E_UNIT;
 
     fNGenDetHit++;
 
