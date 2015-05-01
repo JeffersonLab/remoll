@@ -19,7 +19,7 @@
 #include <math.h>
 
 remollGenBeam::remollGenBeam(){
-    fApplyMultScatt = false;
+    fApplyMultScatt = true;
     fBeamTarg = remollBeamTarget::GetBeamTarget();
 
     fZpos = -5.0*m;
