@@ -16,6 +16,7 @@
 #/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
 
 # Raster and initial angle stuff
+/remoll/oldras true
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
 #/remoll/beam_x0 0 mm
@@ -29,6 +30,7 @@
 
 /remoll/beamene 11 GeV
 
+/remoll/gen beam
 #/remoll/gen moller
 #/remoll/thcommin 30.0 deg
 #/remoll/thcommax 150.0 deg
@@ -38,9 +40,6 @@
 #/remoll/emin 80.0 MeV
 #/remoll/gen inelastic 
 #/remoll/gen pion
-
-/remoll/gen beam
-/remoll/beamene 11.0 GeV
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
@@ -52,7 +51,6 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-#/remoll/kryptonite   true
 /remoll/kryptonite   false
 
 /process/list
@@ -63,5 +61,4 @@
 /remoll/filename remoller_moller_1.root
 
 #/tracking/verbose 2
-/run/beamOn 5000
-
+/run/beamOn 500

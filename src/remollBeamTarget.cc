@@ -28,6 +28,7 @@ remollBeamTarget::remollBeamTarget(){
     fMother = NULL;
     UpdateInfo();
 
+    fOldRaster = true;
     fRasterX = fRasterY = 5.0*mm;
     fX0 = fY0 = fTh0 = fPh0 = fdTh = fdPh = 0.0;
 
@@ -365,24 +366,22 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
     assert( !std::isnan(msth) && !std::isnan(msph) );
 
-     //-----------///--------
-      // bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
-      // bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);
-
-      // if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
-      // if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
-
-      // // Initial direction
-      // fDir = G4ThreeVector(0.0, 0.0, 1.0);
-
-      // fDir.rotateY( bmth); // Positive th pushes to positive X (around Y-axis)
-      // fDir.rotateX(-bmph); // Positive ph pushes to positive Y (around X-axis)
-     //-----------///--------
-    G4ThreeVector bmVec = G4ThreeVector(fVer.x(),fVer.y(),8000.0*mm-fVer.z()); // in mm
-    // if( (bmVec.z()-8000)>700)
-    //   G4cout << "** bmVec(z):: " << bmVec.z()/mm << "  " << fVer.z()/mm << "  " << bmVec.theta()/deg << G4endl;
-    fDir = G4ThreeVector(bmVec.unit());
-     //-----------///--------
+    if(fOldRaster){
+      bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
+      bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);
+      
+      if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
+      if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
+      
+      // Initial direction
+      fDir = G4ThreeVector(0.0, 0.0, 1.0);
+      
+      fDir.rotateY( bmth); // Positive th pushes to positive X (around Y-axis)
+      fDir.rotateX(-bmph); // Positive ph pushes to positive Y (around X-axis)
+    } else{
+      G4ThreeVector bmVec = G4ThreeVector(fVer.x(),fVer.y(),8000.0*mm-fVer.z()); // in mm
+      fDir = G4ThreeVector(bmVec.unit());
+    }
 
     fDir.rotateY(msth);
     fDir.rotateX(msph);

@@ -66,6 +66,8 @@ class remollMessenger : public G4UImessenger {
 	G4UIcmdWithADoubleAndUnit *beamCurrCmd;
 	G4UIcmdWithADoubleAndUnit *beamECmd;
 
+	G4UIcmdWithABool       *rasTypeCmd;
+
 	G4UIcmdWithADoubleAndUnit *rasXCmd;
 	G4UIcmdWithADoubleAndUnit *rasYCmd;
 
