@@ -11,8 +11,6 @@
 #include "CLHEP/Random/RandFlat.h"
 #include "CLHEP/Random/RandGauss.h"
 
-#include "CLHEP/Units/PhysicalConstants.h"
-
 #include "remollBeamTarget.hh"
 #include "remollMultScatt.hh"
 
@@ -327,7 +325,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    }
 
 	    fEffMatLen = (fSampLen/len)* // Sample weighting
-	      mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*CLHEP::Avogadro/masssum; // material thickness
+	      mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*Avogadro/masssum; // material thickness
 	} else {
 	    const G4ElementVector *elvec = mat->GetElementVector();
 	    const G4double *fracvec = mat->GetFractionVector();
@@ -391,13 +389,13 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     //
     // This can be ignored and done in a generator by itself
 
-    G4double  Ekin = fBeamE - CLHEP::electron_mass_c2;
+    G4double  Ekin = fBeamE - electron_mass_c2;
     G4double  bt   = fRadLen*4.0/3.0;
     G4double  prob_sample, eloss, sample, env, value, ref;
 
     G4double prob = 1.- pow(fEcut/Ekin,bt) - bt/(bt+1.)*(1.- pow(fEcut/Ekin,bt+1.))
 	+ 0.75*bt/(2.+bt)*(1.- pow(fEcut/Ekin,bt+2.));
-    prob = prob/(1.- bt*Euler + bt*bt/2.*(Euler*Euler+CLHEP::pi*CLHEP::pi/6.)); /* Gamma function */
+    prob = prob/(1.- bt*Euler + bt*bt/2.*(Euler*Euler+pi*pi/6.)); /* Gamma function */
 
     prob_sample = G4UniformRand();
 
@@ -413,7 +411,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	} while (sample > ref);
 
 	fSampE = fBeamE - eloss;
-	assert( fSampE > CLHEP::electron_mass_c2 );
+	assert( fSampE > electron_mass_c2 );
     } else {
 	fSampE = fBeamE;
     }
@@ -421,7 +419,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
     thisvert.fBeamE = fSampE;
 
-    assert( fBeamE >= CLHEP::electron_mass_c2 );
+    assert( fBeamE >= electron_mass_c2 );
 
     return thisvert;
 }
