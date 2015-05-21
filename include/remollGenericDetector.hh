@@ -42,7 +42,6 @@ class remollGenericDetector : public G4VSensitiveDetector {
 	G4bool fTrackSecondaries;
 	G4int fDetNo;
 
-        remollSteppingAction *rStep;
 };
 
 #endif//__REMOLLGENERICDETECTOR_HH
