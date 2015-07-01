@@ -509,8 +509,8 @@ double sigma_n( double E, double th, double Ep ) {
 
 void christy507(G4double w2,G4double q2,G4double &F1,
                 G4double &R, G4double &sigT, G4double &sigL);
-int resmodd(G4double w2, G4double q2,
-             G4double xval[50], G4double &sig);
+G4int resmodd(G4double w2, G4double q2,
+	      G4double xval[50], G4double &sig);
 G4double resmod507_v2(G4double sf,G4double w2,
                       G4double q2,G4double xval[50]);
 G4double MEC2009(G4double q2,G4double w2, G4int A);
@@ -520,8 +520,8 @@ G4double fitemc(G4double X, G4int A);
 //returns -1 for failure of resmodd
 //returns -2 for A < 3
 //returns 1 for nan/inf F1/F2
-int F1F2IN09(int Z, int IA, double qsq,
-              double wsq, double &F1, double &F2)
+G4int F1F2IN09(G4int Z, G4int IA, G4double qsq,
+	       G4double wsq, G4double &F1, G4double &F2)
 {
     /*--------------------------------------------------------------------
      Fit to inelastic cross sections for A(e,e')X
@@ -759,8 +759,8 @@ void christy507(G4double w2,G4double q2,G4double &F1,
 
 // -------------------------------------------------------------------------//
 //on q2 or w2 out of range it returns -1
-int resmodd(G4double w2, G4double q2,
-             G4double xval[50], G4double &sig) 
+G4int resmodd(G4double w2, G4double q2,
+	      G4double xval[50], G4double &sig) 
 {
     //! returns F1 for average of free proton and neutron
     //! for given W2, Q2
@@ -1285,6 +1285,324 @@ G4double fitemc(G4double X, G4int A)
     fitval = C*pow(A,ALPHA);
     return fitval;
 }
+
+//oooooooooooooooooooooo000ooooooooooooooooooooooooo
+// Qweak Quasi Elastic part of the code
+//oooooooooooooooooooooo000ooooooooooooooooooooooooo
+
+void F1F2QE09(G4int Z, G4int IA, G4double QSQ,
+	      G4double wsq, G4double &F1, G4double &F2)
+{
+//=======================================================================
+//      SUBROUTINE F1F2QE09(Z, A, QSQ, wsq, F1, F2)
+//
+// Calculates quasielastic A(e,e')X structure functions F1 and F2 PER NUCLEUS
+// for A>2 uses superscaling from Sick, Donnelly, Maieron, nucl-th/0109032
+// for A=2 uses pre-integrated Paris wave function (see ~bosted/smear.f)
+// coded by P. Bosted August to October, 2006
+//
+// input: Z, A  (real*8) Z and A of nucleus (shoud be 2.0D0 for deueron)
+//        Qsq (real*8) is 4-vector momentum transfer squared (positive in
+//                     chosen metric)
+//        Wsq (real*8) is invarinat mass squared of final state calculated
+//                     assuming electron scattered from a free proton
+//                 
+// outputs: F1, F2 (real*8) are structure functions per nucleus
+//
+// Note: Deuteron agrees well with Laget (see ~bosted/eg1b/laget.f) for
+// a) Q2<1 gev**2 and dsig > 1% of peak: doesnt describe tail at high W
+// b) Q2>1 gev**2 on wings of q.e. peak. But, this model is up
+//    to 50% too big at top of q.e. peak. BUT, F2 DOES agree very
+//    nicely with Osipenko et al data from CLAS, up to 5 GeV**2
+  
+//  G4cout << "Z, A, Q2, W2: " << Z << ", " << IA << ", " << QSQ << ", " << wsq << G4endl;
+
+  G4double avgN, Pauli_sup1, Pauli_sup2, GEP, GEN, GMP, GMN, Q, Q3, Q4;
+  G4double amp = 0.93828;
+  G4double amd = 1.8756;
+  G4double RMUP = 2.792782;
+  G4double RMUN = -1.913148;
+  G4double pz, Nu, dpz, pznom, pzmin;
+  G4double QV, TAU, FY, dwmin, w2p;
+  G4double kappa, lam, lamp, taup, squigglef, psi, psip, nuL, nuT;
+  G4double kf, Es, GM2bar, GE2bar, W2bar, Delta, GL, GT;
+  G4int izz, izzmin, izp, izznom, izdif;
+
+  // Look up tables for deuteron case
+  G4double fyd[200] = {
+    0.00001,0.00002,0.00003,0.00005,0.00006,0.00009,0.00010,0.00013,
+    0.00015,0.00019,0.00021,0.00026,0.00029,0.00034,0.00038,0.00044,
+    0.00049,0.00057,0.00062,0.00071,0.00078,0.00089,0.00097,0.00109,
+    0.00119,0.00134,0.00146,0.00161,0.00176,0.00195,0.00211,0.00232,
+    0.00252,0.00276,0.00299,0.00326,0.00352,0.00383,0.00412,0.00447,
+    0.00482,0.00521,0.00560,0.00603,0.00648,0.00698,0.00747,0.00803,
+    0.00859,0.00921,0.00985,0.01056,0.01126,0.01205,0.01286,0.01376,
+    0.01467,0.01569,0.01671,0.01793,0.01912,0.02049,0.02196,0.02356,
+    0.02525,0.02723,0.02939,0.03179,0.03453,0.03764,0.04116,0.04533,
+    0.05004,0.05565,0.06232,0.07015,0.07965,0.09093,0.10486,0.12185,
+    0.14268,0.16860,0.20074,0.24129,0.29201,0.35713,0.44012,0.54757,
+    0.68665,0.86965,1.11199,1.43242,1.86532,2.44703,3.22681,4.24972,
+    5.54382,7.04016,8.48123,9.40627,9.40627,8.48123,7.04016,5.54382,
+    4.24972,3.22681,2.44703,1.86532,1.43242,1.11199,0.86965,0.68665,
+    0.54757,0.44012,0.35713,0.29201,0.24129,0.20074,0.16860,0.14268,
+    0.12185,0.10486,0.09093,0.07965,0.07015,0.06232,0.05565,0.05004,
+    0.04533,0.04116,0.03764,0.03453,0.03179,0.02939,0.02723,0.02525,
+    0.02356,0.02196,0.02049,0.01912,0.01793,0.01671,0.01569,0.01467,
+    0.01376,0.01286,0.01205,0.01126,0.01056,0.00985,0.00921,0.00859,
+    0.00803,0.00747,0.00698,0.00648,0.00603,0.00560,0.00521,0.00482,
+    0.00447,0.00412,0.00383,0.00352,0.00326,0.00299,0.00276,0.00252,
+    0.00232,0.00211,0.00195,0.00176,0.00161,0.00146,0.00134,0.00119,
+    0.00109,0.00097,0.00089,0.00078,0.00071,0.00062,0.00057,0.00049,
+    0.00044,0.00038,0.00034,0.00029,0.00026,0.00021,0.00019,0.00015,
+    0.00013,0.00010,0.00009,0.00006,0.00005,0.00003,0.00002,0.00001};
+
+  G4double avp2[200] = {
+    1.0,0.98974,0.96975,0.96768,0.94782,0.94450,0.92494,0.92047,
+    0.90090,0.89563,0.87644,0.87018,0.85145,0.84434,0.82593,0.81841,
+    0.80021,0.79212,0.77444,0.76553,0.74866,0.73945,0.72264,0.71343,
+    0.69703,0.68740,0.67149,0.66182,0.64631,0.63630,0.62125,0.61154,
+    0.59671,0.58686,0.57241,0.56283,0.54866,0.53889,0.52528,0.51581,
+    0.50236,0.49291,0.47997,0.47063,0.45803,0.44867,0.43665,0.42744,
+    0.41554,0.40656,0.39511,0.38589,0.37488,0.36611,0.35516,0.34647,
+    0.33571,0.32704,0.31656,0.30783,0.29741,0.28870,0.27820,0.26945,
+    0.25898,0.25010,0.23945,0.23023,0.21943,0.20999,0.19891,0.18911,
+    0.17795,0.16793,0.15669,0.14667,0.13553,0.12569,0.11504,0.10550,
+    0.09557,0.08674,0.07774,0.06974,0.06184,0.05484,0.04802,0.04203,
+    0.03629,0.03129,0.02654,0.02247,0.01867,0.01545,0.01251,0.01015,
+    0.00810,0.00664,0.00541,0.00512,0.00512,0.00541,0.00664,0.00810,
+    0.01015,0.01251,0.01545,0.01867,0.02247,0.02654,0.03129,0.03629,
+    0.04203,0.04802,0.05484,0.06184,0.06974,0.07774,0.08674,0.09557,
+    0.10550,0.11504,0.12569,0.13553,0.14667,0.15669,0.16793,0.17795,
+    0.18911,0.19891,0.20999,0.21943,0.23023,0.23945,0.25010,0.25898,
+    0.26945,0.27820,0.28870,0.29741,0.30783,0.31656,0.32704,0.33571,
+    0.34647,0.35516,0.36611,0.37488,0.38589,0.39511,0.40656,0.41554,
+    0.42744,0.43665,0.44867,0.45803,0.47063,0.47997,0.49291,0.50236,
+    0.51581,0.52528,0.53889,0.54866,0.56283,0.57241,0.58686,0.59671,
+    0.61154,0.62125,0.63630,0.64631,0.66182,0.67149,0.68740,0.69703,
+    0.71343,0.72264,0.73945,0.74866,0.76553,0.77444,0.79212,0.80021,
+    0.81841,0.82593,0.84434,0.85145,0.87018,0.87644,0.89563,0.90090,
+    0.92047,0.92494,0.94450,0.94782,0.96768,0.96975,0.98974,1.0};
+
+  // Peter Bosted's correction params
+  /*
+  G4double pb[20] = {
+    0.1023E+02, 0.1052E+01, 0.2485E-01, 0.1455E+01,
+    0.5650E+01,-0.2889E+00, 0.4943E-01,-0.8183E-01,
+    -0.7495E+00, 0.8426E+00,-0.2829E+01, 0.1607E+01,
+    0.1733E+00, 0.0000E+00, 0.0000E+00, 0.0000E+00,
+    0.0000E+00, 0.0000E+00, 0.0000E+00, 0.0000E+00};
+  */
+  G4double y,R;
+
+  G4double P[24] = {
+     5.1377e-03,   9.8071e-01,   4.6379e-02,   1.6433e+00,
+     6.9826e+00,  -2.2655e-01,   1.1095e-01,   2.7945e-02,
+     4.0643e-01,   1.6076e+00,  -7.5460e+00,   4.4418e+00,
+     -3.7464e-01,   1.0414e-01,  -2.6852e-01,   9.6653e-01,
+     -1.9055e+00,   9.8965e-01,   2.0613e+02,  -4.5536e-02,
+     2.4902e-01,  -1.3728e-01,   2.9201e+01,   4.9280e-03};
+
+  // return if proton: future change this to allow for
+  // equivalent W resolution
+  F1 = 0.;
+  F2 = 0.;
+  avgN = IA - Z;
+  if (IA==1) return;
+
+  // some kinematic factors. Return if Nu or QSQ is negative
+  Nu = (wsq - amp*amp + QSQ) / 2. / amp;
+
+  //G4cout << "In call... IA, Nu, QSQ = " << IA << ", " << Nu << ", " << QSQ << G4endl;
+  if(Nu <= 0.0 || QSQ < 0.) return;
+  TAU   = QSQ / 4.0 / amp / amp;                                 
+  QV = sqrt(Nu*Nu + QSQ);
+
+  // Bosted fit for nucleon form factors Phys. Rev. C 51, p. 409 (1995)
+  Q = sqrt(QSQ);
+  Q3 = QSQ * Q;
+  Q4 = QSQ*QSQ;
+  GEP = 1./  (1. + 0.14 * Q + 3.01 * QSQ + 0.02 * Q3 + 1.20 * Q4 + 0.32 * pow(Q,5));
+  GMP = RMUP * GEP;
+  GMN = RMUN / (1.- 1.74 * Q + 9.29 * QSQ - 7.63 * Q3 + 4.63 * Q4);
+  GEN = 1.25 * RMUN * TAU / (1. + 18.3 * TAU) / pow((1. + QSQ / 0.71),2);
+
+  //G4cout << "Form Factors: " << GEP << ", " << GMP << ", " << GEN << ", " << GMN << G4endl;
+
+  // Get kf and Es from superscaling from Sick, Donnelly, Maieron,
+    // nucl-th/0109032
+    if(IA==2) kf=0.085;
+    if(IA==2) Es=0.0022;
+    // changed 4/09
+    if(IA==3) kf=0.115;
+    if(IA==3) Es=0.001 ;
+    // changed 4/09
+    if(IA>3) kf=0.19;
+    if(IA>3) Es=0.017; 
+    if(IA>7) kf=0.228;
+    if(IA>7) Es=0.020;
+    // changed 5/09
+    if(IA>7) Es=0.0165;
+    if(IA>16) kf=0.230;
+    if(IA>16) Es=0.025;
+    if(IA>25) kf=0.236;
+    if(IA>25) Es=0.018;
+    if(IA>38) kf=0.241;
+    if(IA>38) Es=0.028;
+    if(IA>55) kf=0.241;
+    if(IA>55) Es=0.023;
+    if(IA>60) kf=0.245;
+    if(IA>60) Es=0.028;
+    // changed 5/09 
+    if(IA>55) Es=0.018;
+
+  // Pauli suppression model from Tsai RMP 46,816(74) eq.B54
+  if ((QV > 2.* kf) || (IA == 1)) {
+    Pauli_sup2 =1.0;
+  } else {
+    Pauli_sup2 = 0.75 * (QV / kf) * (1.0 - (pow((QV / kf),2))/12.);
+  }
+  Pauli_sup1 = Pauli_sup2;
+
+  //G4cout << "kf, Es, Paulisup1,2: " << kf << ", " << Es << ", " << Pauli_sup1 << ", " << Pauli_sup2 << G4endl;
+  
+  // structure functions with off shell factors
+  kappa = QV / 2. / amp;
+  lam = Nu / 2. / amp;
+  lamp = lam - Es / 2. / amp;
+  taup = kappa*kappa - lamp*lamp;
+  squigglef = sqrt(1. + pow((kf/amp),2)) -1.;
+
+  // Very close to treshold, could have a problem
+  if(1.+lamp <= 0.) return;
+  if(taup * (1. + taup) <= 0.) return;
+
+  psi =  (lam  - TAU ) / sqrt(squigglef) / sqrt((1.+lam )* TAU + kappa * sqrt(TAU * (1. + TAU)));
+  psip = (lamp - taup) / sqrt(squigglef) / sqrt((1.+lamp)*taup + kappa * sqrt(taup * (1. + taup)));
+  nuL = pow((TAU / kappa / kappa),2);
+
+  // changed definition of nuT from
+  // nuT = TAU / 2. / kappa**2 + tan(thr/2.)**2
+  // to this, in order to separate out F1 and F2 (F1 prop. to tan2 term)
+  nuT = TAU / 2. / kappa / kappa;
+
+  GM2bar = Pauli_sup1 * (Z * GMP*GMP + avgN * GMN*GMN);
+  GE2bar = Pauli_sup2 * (Z * GEP*GEP + avgN * GEN*GEN);
+  //G4double W1bar = TAU * GM2bar;
+  W2bar = (GE2bar + TAU * GM2bar) / (1. + TAU);
+
+  Delta = squigglef * (1. - psi*psi) * (sqrt(TAU * (1.+TAU)) / kappa + squigglef/3. *
+     (1. - psi*psi) * TAU / kappa / kappa);
+  GL = kappa*kappa / TAU * (GE2bar + Delta * W2bar) / 2. / kappa / (1. + squigglef * 
+     (1. + psi*psi) / 2.);
+  GT = (2. * TAU * GM2bar + Delta * W2bar) / 2. / kappa / (1. + squigglef * 
+     (1. + psi*psi) / 2.);
+
+  //G4cout << "nuL, nuT, GL, GT: " << nuL << ", " << nuT << ", " << GL << ", " << GT << G4endl;
+
+  // added to prevent negative xsections:
+  if (GT < 0) {
+    GT = 0;
+    //G4cout << "Reset GT to zero" << G4endl;
+  }
+
+  // from Maria Barbaro: see Amaro et al., PRC71,015501(2005).
+  FY = 1.5576 / (1. + 1.7720*1.7720 * pow((psip + 0.3014),2)) / (1. + exp(-2.4291 * psip)) / kf;
+
+// == Note: Below is for deuteron and haven't == //
+// == verified if code conversion is correct  == //
+  // Use PWIA and Paris W.F. for deuteron to get better FY
+  if (IA == 2) {
+    // value assuming average p2=0.
+    pz = (QSQ - 2. * amp * Nu ) / 2. / QV;
+    izz = int((pz + 1.0) / 0.01) + 1;
+    if (izz < 1) izz = 1;
+    if (izz > 200) izz = 200;
+    izznom = izz;
+
+    // ignoring energy term, estimate change in pz to compensate
+    //! for avp2 term
+    dpz = avp2[izznom] / 2. / QV;
+    izdif = dpz * 150.;
+    dwmin=1.E6;
+    izzmin=0;  
+
+    G4int izpmax;
+    if ((izznom + izdif) < 1) izpmax = 1;
+    if (izpmax > 200) izpmax = 200;
+    for (izp = izznom; izp <= izpmax; izp++) {
+      pz = -1. + 0.01 * (izp-0.5);
+      // *** this version gives worse agreement with laget than
+      //         w2p = (amd + Nu - sqrt(amp**2 + avp2(izp)))**2 - 
+      //    >      QV**2 + 2. * QV * pz - avp2(izp)
+      // this version!
+      w2p = pow((amd + Nu - amp ),2) - QV*QV + 2. * QV * pz - avp2[izp];
+
+      // if passed first minimum, quit looking so don't find second one
+      if (abs(w2p - amp*amp) > dwmin) {
+        if (izzmin < 2) izzmin = 2;
+        if (izzmin > 199) izzmin = 199;
+        izz = izzmin;
+      } else if (abs(w2p - amp*amp) < dwmin) {
+          dwmin = abs(w2p - amp*amp);
+          izzmin = izp;
+      }
+    }
+
+    // search for minimum in 1/10th bins locally
+    pznom = -1. + 0.01 * (izz-0.5);
+    dwmin=1.E6;
+    for (izp = 1; izp <= 19; izp++) {
+      pz = pznom - 0.01 + 0.001 * izp;
+      // *** this version gives worse agreement with laget than
+      //        w2p = (amd + Nu - sqrt(amp**2 + avp2(izz)))**2 - 
+      //   >      QV**2 + 2. * QV * pz - avp2(izz)
+      // this version!
+      w2p = pow((amd + Nu - amp ),2) - QV*QV + 2. * QV * pz - avp2[izz];
+      if (abs(w2p - amp*amp) < dwmin) {
+        dwmin = abs(w2p - amp*amp);
+        pzmin = pz;
+      }
+    }
+
+    if (dwmin >= 1.e6 || abs(pznom-pzmin) > 0.01) { 
+      //     >     write(6,'(1x,''error in dwmin,pzmin'',3i4,6f7.3)')
+      //     >     izznom,izzmin,izz,QSQ,wsq,w2p,dwmin/1.e6,pzmin,pznom
+      if (pzmin < pznom) FY = fyd[izz] - (fyd[izz-1] - fyd[izz]) * (pzmin - pznom) / 0.01;
+      else FY = fyd[izz] + (fyd[izz+1] - fyd[izz]) * (pzmin - pznom) / 0.01;
+    }
+  }
+// == To here == //
+
+  // final results
+  F2 = Nu * FY * (nuL * GL + nuT * GT);
+  F1 = amp * FY * GT / 2.;
+
+  //G4cout << "nu, Fy, nuL, GL, nuT, GT, amp: " << G4endl;
+  //G4cout << Nu << ", " << FY << ", " << nuL << ", " << GL << ", " << nuT << ", " << GT << ", " << amp << G4endl;
+
+  if (F1 < 0.0) F1 = 0.;
+  if (Nu > 0. && F1 > 0.) R = (F2 / Nu) / (F1 / amp) * (1. + Nu*Nu / QSQ) - 1.0;
+  else R = 0.4/QSQ;
+
+
+  // apply correction factors
+  if ( IA > 2 ) {
+    y = (wsq -amp*amp) / QV;
+    //         F1 = F1 * (1. + pb(8) + pb(9) * y +
+    //     >        pb(10)*y**2 + pb(11)*y**3 + pb(12)*y**4 )
+    //         R = R * (1. + pb(13))
+    //         F2 = Nu * F1/amp * (1. + R) / (1. + Nu**2/QSQ)
+
+    // correction to correction Vahe
+    if (wsq > 0.0) {
+      F1=F1*(1.0+P[7]+P[8]*y+P[9]*y*y +P[10]*pow(y,3) +P[11]*pow(y,4));
+      R = R * ( 1.0 + P[12] );
+      F2 = Nu * F1/amp * (1. + R) / (1. + Nu*Nu/QSQ);
+      if (F1 < 0.0) F1=0.0;
+    }
+  }
+}
+
 
 #endif//__CHRISTY_BOSTED_INELASTIC_HH
 
