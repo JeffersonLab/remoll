@@ -14,15 +14,21 @@
 
 class remollGenAl : public remollVEventGen {
 public:
-    remollGenAl(int physicsType);
-    virtual ~remollGenAl();
-
+  remollGenAl(G4int physicsType);
+  virtual ~remollGenAl();
+  
 private:
-    int type;
-    void SamplePhysics(remollVertex *, remollEvent *);
-    void GenInelastic(double beamE,double th,
-		      double &Q2,double &W2,double &effectiveXsection,
-		      double &fWeight,double &eOut,double &asym);
+  G4int type;
+  void SamplePhysics(remollVertex *, remollEvent *);
+
+  void GenInelastic(G4double beamE,G4double th,
+		    G4double &Q2,G4double &W2,G4double &effectiveXsection,
+		    G4double &fWeight,G4double &eOut,G4double &asym);
+
+  void GenQuasiElastic(G4double beamE,G4double theta,
+		       G4double &Q2,G4double &W2,G4double &effectiveXsection,
+		       G4double &fWeight,G4double &eOut);
+
 
 };
 
