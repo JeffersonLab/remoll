@@ -91,7 +91,7 @@ void remollGenAl::GenInelastic(G4double beamE,G4double theta,
     }while(W2/GeV/GeV<0 || W2/GeV/GeV>9 || Q2/GeV/GeV<0.0 || Q2/GeV/GeV>10); //this is because F1F2IN09 won't work for W>3 and Q2>10
     
     // Mott scattering
-    G4double MOTT = pow((0.00072/beamE*CTH/STH/STH),2);
+    G4double MOTT = pow((0.00072/(beamE/GeV)*CTH/STH/STH),2);
     MOTT = MOTT*1.0E4; // Units: ub/sr/GeV
 
     G4int A=27;
