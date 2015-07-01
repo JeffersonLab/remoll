@@ -7,10 +7,13 @@
 #include "G4Material.hh"
 #include "remolltypes.hh"
 
-extern int F1F2IN09(int Z, int IA, double qsq,
-                     double wsq, double &F1, double &F2);
+extern G4int F1F2IN09(G4int Z, G4int IA, G4double qsq,
+		      G4double wsq, G4double &F1, G4double &F2);
 
-remollGenAl::remollGenAl(int physicsType) {
+extern G4int F1F2QE09(G4int Z, G4int IA, G4double qsq,
+		      G4double wsq, G4double &F1, G4double &F2);
+
+remollGenAl::remollGenAl(G4int physicsType) {
     type=physicsType;
     fTh_min =     0.1*deg;
     fTh_max =     5.0*deg;
@@ -22,15 +25,15 @@ remollGenAl::~remollGenAl() {
 
 void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
 
-    double beamE = vert->GetBeamE(); // in MeV (it can be modified by beam loss)
-    double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min))); // radians
-    double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
-    double eOut=0;
-    double fWeight=0;
-    double Q2=0;
-    double effectiveXsection=0;
-    double W2=0;
-    double asym=0;
+    G4double beamE = vert->GetBeamE(); // in MeV (it can be modified by beam loss)
+    G4double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min))); // radians
+    G4double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
+    G4double eOut=0;
+    G4double fWeight=0;
+    G4double Q2=0;
+    G4double effectiveXsection=0;
+    G4double W2=0;
+    G4double asym=0;
 
     switch (type) {
     case 0:
@@ -66,21 +69,21 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
     return;
 }
 
-void remollGenAl::GenInelastic(double beamE,double th,
-                               double &Q2,double &W2,double &effectiveXsection,
-                               double &fWeight,double &eOut, double &asym) {
+void remollGenAl::GenInelastic(G4double beamE,G4double theta,
+                               G4double &Q2,G4double &W2,G4double &effectiveXsection,
+                               G4double &fWeight,G4double &eOut, G4double &asym) {
 
-    double F1 = 0.0;
-    double F2 = 0.0;
-    double W1 = 0.0;
-    double xsect = 0.0;
+    G4double F1 = 0.0;
+    G4double F2 = 0.0;
+    G4double W1 = 0.0;
+    G4double xsect = 0.0;
 
-    double CTH,STH,T2THE,Nu;
+    G4double CTH,STH,T2THE,Nu;
     
     do{
       eOut   =  electron_mass_c2 + G4UniformRand()*(beamE - electron_mass_c2);// Generate flat energy distribution of outgoing electron
-      CTH    = cos(th/2.0);
-      STH    = sin(th/2.0);
+      CTH    = cos(theta/2.0);
+      STH    = sin(theta/2.0);
       T2THE  = STH*STH/CTH/CTH;
       Nu     = beamE - eOut;
       Q2     = 4.0*beamE*eOut*STH*STH;
@@ -88,12 +91,12 @@ void remollGenAl::GenInelastic(double beamE,double th,
     }while(W2/GeV/GeV<0 || W2/GeV/GeV>9 || Q2/GeV/GeV<0.0 || Q2/GeV/GeV>10); //this is because F1F2IN09 won't work for W>3 and Q2>10
     
     // Mott scattering
-    double MOTT = pow((0.00072/beamE*CTH/STH/STH),2);
+    G4double MOTT = pow((0.00072/beamE*CTH/STH/STH),2);
     MOTT = MOTT*1.0E4; // Units: ub/sr/GeV
 
-    int A=27;
-    int Z=13;
-    int bad=F1F2IN09(Z, A, Q2/GeV/GeV, W2/GeV/GeV, F1, F2);  
+    G4int A=27;
+    G4int Z=13;
+    G4int bad=F1F2IN09(Z, A, Q2/GeV/GeV, W2/GeV/GeV, F1, F2);  
     if(bad){
       G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << G4endl;	
       G4cerr << "  result was (-1 = Q2,W2 out of range in resmodd | -2 = A<3 | 1 inf/nan F1/F2) : " << bad <<G4endl;
@@ -110,13 +113,60 @@ void remollGenAl::GenInelastic(double beamE,double th,
     if (xsect < 0 || std::isnan(xsect) ) {
         G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << G4endl;	
         G4cerr<<"Inelatic xsection problem: "<<xsect<<" "<<F1<<" "<<F2
-              <<" "<<th<<" "<<Q2/GeV/GeV<<" "<<W2/GeV/GeV<<" "<<G4endl;
+              <<" "<<theta<<" "<<Q2/GeV/GeV<<" "<<W2/GeV/GeV<<" "<<G4endl;
         asym=0.99999;
         effectiveXsection=0;
         exit(1);
     }
 
     asym=Q2*0.8e-4/GeV/GeV;
-    fWeight = xsect*sin(th);
+    fWeight = xsect*sin(theta);
     effectiveXsection=xsect;
+}
+
+
+
+
+void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
+				  G4double &Q2,G4double &W2,G4double &effectiveXsection,
+				  G4double &fWeight,G4double &eOut) {
+  
+  G4double F1 = 0.0;
+  G4double F2 = 0.0;
+  G4double w1 = 0.0;
+  G4double w2 = 0.0;  
+  G4double xsect = 0.0;
+
+  G4double thetaMin = 1.745329E-4; // not sure where this is from FIXME (CG 150622)
+  if ( theta < thetaMin )
+    theta = thetaMin;
+  
+  // Generate flat energy distribution of outgoing electron
+  eOut =  electron_mass_c2 + G4UniformRand()*(beamE - electron_mass_c2);
+  
+  G4double CTH = cos(theta/2.0);
+  G4double STH = sin(theta/2.0);
+  G4double T2THE = STH*STH/CTH/CTH;
+  G4double Nu = beamE - eOut;
+  Q2 = 4.0*beamE*eOut*STH*STH;
+  W2 = proton_mass_c2*proton_mass_c2 + 2.0*proton_mass_c2*Nu - Q2;
+  
+  // Mott scattering
+  G4double MOTT = pow((0.00072/(beamE/GeV)*CTH/STH/STH),2);
+  MOTT = MOTT*1.0E4; // Units: ub/sr/GeV
+  
+  G4int A=27;
+  G4int Z=13;
+  F1F2QE09(Z, A, Q2, W2, F1, F2);
+  
+  w1 = F1/proton_mass_c2;
+  w2 = F2/Nu;
+  
+  xsect = MOTT*(w2 + 2.0*T2THE*w1)*(beamE/GeV - electron_mass_c2/GeV);
+  
+  // In some cases a negative F2 is returned giving a negative cross section
+  if (xsect <= 0) xsect = 0.0;
+  
+  fWeight = xsect*sin(theta);
+  effectiveXsection = xsect;
 }
