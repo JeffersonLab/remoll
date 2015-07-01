@@ -157,7 +157,7 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   
   G4int A=27;
   G4int Z=13;
-  F1F2QE09(Z, A, Q2, W2, F1, F2);
+  F1F2QE09(Z, A, Q2/GeV/GeV, W2/GeV/GeV, F1, F2);
   
   w1 = F1/proton_mass_c2;
   w2 = F2/Nu;
