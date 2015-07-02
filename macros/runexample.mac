@@ -35,6 +35,7 @@
 #/remoll/gen inelastic 
 #/remoll/gen pion
 #/remoll/gen inelasticAl
+#/remoll/gen quasielasticAl
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
@@ -53,4 +54,4 @@
 
 /remoll/filename remollout.root
 
-/run/beamOn 1000
+/run/beamOn 100000
