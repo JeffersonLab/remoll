@@ -42,7 +42,8 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
         break;
     case 1:
         G4cout<<"You should really do something about the quasi elastic"<<G4endl;
-// 	GenQuasiElastic(beamE);//implement something
+	GenQuasiElastic(beamE,th, Q2, W2, effectiveXsection, fWeight, eOut);
+	//FIXME do i need to put in something for the asymmetry?
         break;
     case 2:
         GenInelastic(beamE,th,Q2,W2,effectiveXsection,fWeight,eOut,asym);
