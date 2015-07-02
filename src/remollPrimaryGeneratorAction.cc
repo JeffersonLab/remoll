@@ -80,6 +80,9 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
     if( genname == "inelasticAl" ) {
         fEventGen = new remollGenAl(2);
     }
+    if( genname == "quasielasticAl" ) {
+        fEventGen = new remollGenAl(1);
+    }
 
     if( !fEventGen ) {
         G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR generator " << genname << " invalid" << G4endl;
