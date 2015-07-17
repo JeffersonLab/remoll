@@ -169,6 +169,7 @@
       <auxiliary auxtype="DetNo" auxvalue="103"/>
     </volume>
 
+    <!--Not in use due to volume overlap -->
     <volume name="cylHallDet_4_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cylHallDet_4"/>
@@ -192,12 +193,14 @@
 
     <volume name="topwall_logic">
       <materialref ref="Concrete"/>
+      <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="topwall_solid"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5010"/> -->
     </volume>
 
     <volume name="cylwall_logic">
       <materialref ref="Concrete"/>
+      <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="cylwall_hole"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5009"/> -->
     </volume>

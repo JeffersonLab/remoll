@@ -51,13 +51,15 @@
       </physvol>
 
       <physvol>
-      <file name="geometry_sculpt/upstreamDaughter.gdml"/>
+      <!-- <file name="geometry_sculpt/upstreamDaughter.gdml"/> -->
+      <file name="geometry_sculpt/upstreamDaughter_merged.gdml"/>
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-      <file name="geometry_sculpt/hybridDaughter.gdml"/>
+      <!-- <file name="geometry_sculpt/hybridDaughter.gdml"/> -->
+      <file name="geometry_sculpt/hybridDaughter_merged.gdml"/>
       <positionref ref="hybridCenter"/>
       <rotationref ref="identity"/>
       </physvol>    
