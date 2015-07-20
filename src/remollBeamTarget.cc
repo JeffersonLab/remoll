@@ -5,6 +5,8 @@
 #include "G4Material.hh"
 #include "G4RunManager.hh"
 #include "G4GeometryManager.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
 
 #include "CLHEP/Random/RandFlat.h"
 #include "CLHEP/Random/RandGauss.h"

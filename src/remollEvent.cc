@@ -1,6 +1,9 @@
 #include "remollEvent.hh"
 #include <math.h>
 
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "G4ParticleTable.hh"
 
 remollEvent::remollEvent(){
