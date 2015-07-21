@@ -179,8 +179,8 @@
   <!-- PolyShield1 will be outside shielding -->
     <volume name="boxtgtPolyShield1_logic">
 <!--  <materialref ref="Tungsten"/> -->
-<!--      <materialref ref="Polythene"/> -->
-      <materialref ref="Kryptonite"/>
+      <materialref ref="Polythene"/>
+<!--        <materialref ref="Kryptonite"/> -->
       <auxiliary auxtype="Color" auxvalue="Brown"/>
       <solidref ref="boxtgtPolyShield1_solid"/>
     </volume>

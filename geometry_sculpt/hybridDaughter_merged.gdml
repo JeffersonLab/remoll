@@ -19,10 +19,17 @@
     <constant name="DELTAZ" value ="1.0"/>
 
     <!-- petal -->
-    <!--Collimator 3 old position  9575. Moved US by 30 cm and new position 9175 -->
+    <!--Collimator 3 old position  9575. Moved US by 40 cm and new position 9175 -->
     <position name="posCOLL1" unit="mm" x="0" y="0" z="9175-DOFFSET"/>
+    <!-- Standard bore for col-3 before merge  -->
+    <!--
     <constant name="COLL1_R1_U" value ="25.279"/> 
     <constant name="COLL1_R1_D" value ="25.836"/>
+    -->
+    <!-- Opened bore for col-3 to accomodate the merge  -->
+    <!--Note R1 numbers are arbitrary selected to be large enough not to make more interactions with the beam -->
+    <constant name="COLL1_R1_U" value ="35"/> 
+    <constant name="COLL1_R1_D" value ="36"/>
     <constant name="COLL1_R4_U" value ="55.595"/>
     <constant name="COLL1_R4_D" value ="56.820"/>
     <constant name="COLL1_THICK" value ="200.0"/>

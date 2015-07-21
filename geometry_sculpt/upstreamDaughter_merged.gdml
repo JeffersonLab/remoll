@@ -16,13 +16,27 @@
     <constant name="DELTAT" value ="1.0"/>
     <!-- petal -->
     <!-- Col-1 is now conical with bore and surface with same angles as inner and outer angles at the upstream face  -->
-    <position name="posCOLL1" unit="mm" x="0" y="0" z="5575-UOFFSET"/>
+    <!--Add an offset to move the merged col-1 US-->
+    <constant name="MERGE_OFFSET" value="150.00"/>
+    <position name="posCOLL1" unit="mm" x="0" y="0" z="5575 - UOFFSET - MERGE_OFFSET"/>
+    <!--Col-1 std. Radii -->
+    <!--
     <constant name="COLL1_R1_U" value ="17.774"/>
     <constant name="COLL1_R1_D" value ="18.423"/>
     <constant name="COLL1_R4_U" value ="29.527"/>
     <constant name="COLL1_R4_D" value ="30.606"/>
+    -->
+    <!--Merged Col-1  Radii for reversed tapered design -->
+    <!--R1_U is front face inner R4_U is front face outer -->
+    <!--R1_D is back face inner R4_D is back face outer -->
+    <constant name="COLL1_R1_U" value ="16.7997"/>
+    <constant name="COLL1_R1_D" value ="15.808"/>
+    <!--to keep 0.3060 deg use 27.638 -->
+    <!--to keep 0.3510 deg use 31.703 -->
+    <constant name="COLL1_R4_U" value ="31.703"/>
+    <constant name="COLL1_R4_D" value ="31.703"/>
 
-    <constant name="COLL1_THICK" value ="200.0"/>
+    <constant name="COLL1_THICK" value ="500.0"/>
 
     <!--    <position name="posCOLL2" unit="mm" x="0" y="0" z="5600-UOFFSET"/> -->
     <!-- main coll, adjust this -->
@@ -61,13 +75,15 @@
     <constant name="boxUSShieldColl1_inner_rmax" value="140"/>
     <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET"/>
     <constant name="boxUSShieldColl2_inner_rmax" value="335"/>
-    <position name="USshieldcoll_center_2" unit="mm" x="0" y="0" z="6400-UOFFSET"/>
+    <!-- There is a gap between shld-2 and shld-3 and offset is a temp. fix to close it -->
+    <constant name="boxUSShieldColl2_gapOffset" value="70"/>
+    <position name="USshieldcoll_center_2" unit="mm" x="0" y="0" z="6400-UOFFSET - boxUSShieldColl2_gapOffset/2"/>
     <constant name="USShield1_width" value="2270"/>
     <constant name="USShield2_width" value="2660"/>
     <constant name="USShield1_height" value="2270"/>
     <constant name="USShield2_height" value="2660"/>
     <constant name="USShield1_length" value="1000"/>
-    <constant name="USShield2_length" value="1000"/>
+    <constant name="USShield2_length" value="1000 + boxUSShieldColl2_gapOffset"/>
 
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
@@ -328,7 +344,7 @@
     </subtraction> 
 
     <box lunit="mm" name="boxUSShieldColl2_solid_1" x="USShield2_width" y="USShield2_height" z="USShield2_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_2" rmax="boxUSShieldColl2_inner_rmax" rmin="0" startphi="0" z="1050"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_2" rmax="boxUSShieldColl2_inner_rmax" rmin="0" startphi="0" z="1050 + boxUSShieldColl2_gapOffset"/>
 
     <subtraction name ="boxUSShieldColl2_solid">
       <first ref="boxUSShieldColl2_solid_1"/>
