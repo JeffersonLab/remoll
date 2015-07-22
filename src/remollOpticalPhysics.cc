@@ -82,10 +82,10 @@ void remollOpticalPhysics::ConstructProcess()
   G4EmSaturation* emSaturation = G4LossTableManager::Instance()->EmSaturation();
   theScintProcess->AddSaturation(emSaturation);
 
-  aParticleIterator->reset();
-  while ( (*aParticleIterator)() ){
+  theParticleIterator->reset();
+  while ( (*theParticleIterator)() ){
 
-    G4ParticleDefinition* particle = aParticleIterator->value();
+    G4ParticleDefinition* particle = theParticleIterator->value();
     G4String particleName = particle->GetParticleName();
 
     pManager = particle->GetProcessManager();
