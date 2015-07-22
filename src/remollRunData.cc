@@ -3,8 +3,6 @@
 #include <string.h>
 #include <errno.h>
 
-#include <unistd.h>
-
 remollRunData::remollRunData(){
     fNthrown = -1;
     fBeamE   = -1e9;
