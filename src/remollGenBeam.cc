@@ -11,9 +11,6 @@
 #include "G4LogicalVolume.hh"
 #include "Randomize.hh"
 
-#include "G4SystemOfUnits.hh"
-#include "G4PhysicalConstants.hh"
-
 #include "remolltypes.hh"
 
 #include <math.h>
