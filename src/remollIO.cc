@@ -123,7 +123,6 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.edep", &fGenDetHit_Edep, "hit.edep[hit.n]/D");
 
     fTree->Branch("hit.colCut",    &fCollCut,     "hit.colCut/I");
-    fTree->Branch("hit.edep",    &fGenDetHit_Edep,   "hit.edep[hit.n]/D");
 
     // GenericDetectorSum
     fTree->Branch("sum.n",    &fNGenDetSum,     "sum.n/I");

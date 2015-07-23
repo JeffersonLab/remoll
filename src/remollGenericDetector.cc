@@ -29,8 +29,6 @@ void remollGenericDetector::Initialize(G4HCofThisEvent *){
     fSumColl = new remollGenericDetectorSumCollection ( SensitiveDetectorName, collectionName[1] );
 
     fSumMap.clear();
-
-    rStep = new remollSteppingAction();
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -49,18 +47,6 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4Track     *track   = step->GetTrack();
 
     G4double edep = step->GetTotalEnergyDeposit();
-
-    G4Material* material = track->GetMaterial();
-
-    // from remollSteppingAction.cc
-    // Add etot to edep before the track is killed
-    if( (   material->GetName()=="Tungsten" 
-        ||  material->GetName()=="Pb"
-	||  material->GetName()=="Copper" )
-	&& rStep->GetKryptoniteStatus() ){
-      edep += track->GetTotalEnergy();
-    }
-    //    G4cout << "remollGenericDetector edep:: "<< edep << "\t etot:: "<< track->GetTotalEnergy() << G4endl;
 
     // We're just going to record primary particles and things
     // that have just entered our boundary
@@ -119,8 +105,6 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 	thishit->fEdep  = edep; 
 	// FIXME - Enumerate encodings
 	thishit->fGen   = (long int) track->GetCreatorProcess();
-
-	thishit->fEdep = edep;
     }
 
     return !badedep && !badhit;

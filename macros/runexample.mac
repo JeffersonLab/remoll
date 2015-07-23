@@ -16,7 +16,7 @@
 #/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
 
 # Raster and initial angle stuff
-/remoll/oldras true
+/remoll/oldras false
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
 #/remoll/beam_x0 0 mm
@@ -58,7 +58,7 @@
 # Specify random number seed
 #/remoll/seed 123456
 
-/remoll/filename remoller_moller_1.root
+/remoll/filename remoll_beam.root
 
 #/tracking/verbose 2
-/run/beamOn 500
+/run/beamOn 10000

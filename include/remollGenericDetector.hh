@@ -4,7 +4,6 @@
 #include "G4VSensitiveDetector.hh"
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
-#include "remollSteppingAction.hh"
 
 #include <map>
 
@@ -41,8 +40,6 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
 	G4bool fTrackSecondaries;
 	G4int fDetNo;
-
-        remollSteppingAction *rStep;
 };
 
 #endif//__REMOLLGENERICDETECTOR_HH
