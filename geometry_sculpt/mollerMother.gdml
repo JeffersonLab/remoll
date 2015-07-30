@@ -52,7 +52,7 @@
 
       <physvol>
       <!-- <file name="geometry_sculpt/upstreamDaughter.gdml"/> -->
-      <file name="geometry_sculpt/upstreamDaughter_merged.gdml"/>
+      <file name="geometry_sculpt/upstreamDaughter_merged_design1.gdml"/>
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>
       </physvol>
