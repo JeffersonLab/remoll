@@ -26,11 +26,12 @@
   <constant name="tgtShield_width" value="5920"/>
   <constant name="tgtShield_height" value="5000"/>
   <!--Default thickness is  305. Increased to 500 now -->
-  <constant name="tgtShield_side_thickness" value="500"/>
+  <constant name="tgtShield_side_thickness" value="750"/>
   <constant name="tgtShield_top_thickness" value="500"/>
   <constant name="tgtShield_y_offset" value="-400"/>
   <constant name="tgtShield_x_offset" value="915"/>
-  <constant name="boxShield_beam_bore" value="100"/>
+  <!--Default value is 100 before check2 in merge col-1 update1 -->
+  <constant name="boxShield_beam_bore" value="200"/>
 
   <!-- Neutron Poly Shielding -->
   <!-- PolyShield1 will be outside shielding -->
@@ -49,7 +50,8 @@
 
 
   <!--opened bore so that missing power will incident on shielding block 2 default radius was 91.7-->
-  <constant name="boxShield_inner_rmax" value="100"/>
+  <!--Default value is 100 before check2 in merge col-1 update1 -->  
+  <constant name="boxShield_inner_rmax" value="200"/>
 
   <position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
   <position name="tubeShield_topdisk_center" unit="mm" x="0" y="tubeShield_height/2+tubeShield_disk_thickness/2" z="0"/>
@@ -167,10 +169,10 @@
     </volume>
 
     <volume name="boxtgtShield1_logic">
-      <materialref ref="Concrete"/>
+      <materialref ref="Tungsten"/>
 <!--  <materialref ref=HD_"Concrete"/> -->
 <!--  <auxiliary auxtype="Color" auxvalue="Blue"/> -->
-<!--  <materialref ref="Tungsten"/> -->
+<!--  <materialref ref="Concrete"/> -->
 <!--  <materialref ref="Borated_Concrete"/> -->
       <solidref ref="boxtgtShield1_solid"/>
     </volume>
@@ -187,6 +189,7 @@
  
     <volume name="boxShieldColl1_logic">
       <!-- <materialref ref="Borated_Concrete"/> -->
+      <!--  <materialref ref="Tungsten"/> -->
       <materialref ref="Lead"/>
       <solidref ref="boxShieldColl1_solid"/>
     </volume>
@@ -234,12 +237,12 @@
         <volumeref ref="boxtgtPolyShield1_logic"/>
         <positionref ref="boxtgtPolyShield1_center"/>
       </physvol>
-
+<!--
       <physvol>
         <volumeref ref="boxShieldColl1_logic"/>
         <positionref ref="shieldcoll_center_1"/>
       </physvol>
-
+-->
     </volume>
 
 </structure>

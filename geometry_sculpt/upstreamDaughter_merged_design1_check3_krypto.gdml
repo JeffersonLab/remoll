@@ -108,7 +108,9 @@
     <!--
        Shielding collimators dimensions
       -->
-    <constant name="boxUSShieldColl1_inner_rmax" value="140"/>
+    <!-- Default value before check3 -->
+    <!-- <constant name="boxUSShieldColl1_inner_rmax" value="140"/>  -->
+    <constant name="boxUSShieldColl1_inner_rmax" value="100"/>
     <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET"/>
     <constant name="boxUSShieldColl2_inner_rmax" value="335"/>
     <!-- There is a gap between shld-2 and shld-3 and offset is a temp. fix to close it -->
@@ -116,7 +118,9 @@
     <position name="USshieldcoll_center_2" unit="mm" x="0" y="0" z="6400-UOFFSET - boxUSShieldColl2_gapOffset/2"/>
     <constant name="USShield1_width" value="2270"/>
     <constant name="USShield2_width" value="2660"/>
-    <constant name="USShield1_height" value="2270"/>
+    <!--Default value before check3 -->
+    <!-- <constant name="USShield1_height" value="2270"/> -->
+    <constant name="USShield1_height" value="2660"/>
     <constant name="USShield2_height" value="2660"/>
     <constant name="USShield1_length" value="1000"/>
     <constant name="USShield2_length" value="1000 + boxUSShieldColl2_gapOffset"/>
@@ -551,15 +555,17 @@
 
     <volume name="boxUSShieldColl1_logic">
 <!--      <materialref ref="Borated_Concrete"/> 
-      <materialref ref="HD_Concrete"/> -->
-      <materialref ref="Concrete"/>
+      <materialref ref="HD_Concrete"/>
+      <materialref ref="Concrete"/> -->
+      <materialref ref="Tungsten"/>
       <solidref ref="boxUSShieldColl1_solid"/>
     </volume>
 
     <volume name="boxUSShieldColl2_logic">
-<!--      <materialref ref="Borated_Concrete"/>
-      <materialref ref="HD_Concrete"/> -->
-      <materialref ref="Concrete"/>
+      <!--      <materialref ref="Borated_Concrete"/>
+      <materialref ref="HD_Concrete"/> 
+      <materialref ref="Concrete"/>  -->
+      <materialref ref="Tungsten"/>
       <solidref ref="boxUSShieldColl2_solid"/>
     </volume>
 

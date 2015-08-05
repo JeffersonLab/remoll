@@ -1135,24 +1135,21 @@
 
 
     <volume name="logicDScoll_1">
-      <materialref ref="Tungsten"/>
-<!--      <materialref ref="Kryptonite"/> -->
+      <materialref ref="Kryptonite"/>
       <solidref ref="dscyl_1"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
       <auxiliary auxtype="DetNo" auxvalue="2003"/>
     </volume>
 
-  <volume name="logicDScoll_5">
-      <materialref ref="Tungsten"/>
-<!--      <materialref ref="Kryptonite"/> -->
+    <volume name="logicDScoll_5">
+      <materialref ref="Kryptonite"/>
       <solidref ref="dscoll5union_5"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
       <auxiliary auxtype="DetNo" auxvalue="2005"/>
     </volume>
 
     <volume name="logicPDScollunion_1">
-	<materialref ref="Tungsten"/>
-<!--	<materialref ref="Kryptonite"/> -->
+	<materialref ref="Kryptonite"/>
 	<solidref ref="pdscoll_union_6"/> 
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
 	<auxiliary auxtype="DetNo" auxvalue="2004"/>

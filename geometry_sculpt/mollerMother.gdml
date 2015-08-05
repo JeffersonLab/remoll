@@ -52,14 +52,13 @@
 
       <physvol>
       <!-- <file name="geometry_sculpt/upstreamDaughter.gdml"/> -->
-      <file name="geometry_sculpt/upstreamDaughter_merged_design1.gdml"/>
+      <file name="geometry_sculpt/upstreamDaughter_merged_design1_check3_krypto.gdml"/>
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-      <!-- <file name="geometry_sculpt/hybridDaughter.gdml"/> -->
-      <file name="geometry_sculpt/hybridDaughter_merged.gdml"/>
+      <file name="geometry_sculpt/hybridDaughter_krypto.gdml"/>
       <positionref ref="hybridCenter"/>
       <rotationref ref="identity"/>
       </physvol>    
