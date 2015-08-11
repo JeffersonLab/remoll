@@ -29,6 +29,7 @@ void remollGenericDetector::Initialize(G4HCofThisEvent *){
     fSumColl = new remollGenericDetectorSumCollection ( SensitiveDetectorName, collectionName[1] );
 
     fSumMap.clear();
+
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -47,9 +48,6 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4Track     *track   = step->GetTrack();
 
     G4double edep = step->GetTotalEnergyDeposit();
-
-    //DEBUG print
-    //printf("[%i,%i] \n",copyID,fDetNo);
 
     // We're just going to record primary particles and things
     // that have just entered our boundary
@@ -107,6 +105,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
 	// FIXME - Enumerate encodings
 	thishit->fGen   = (long int) track->GetCreatorProcess();
+
     }
 
     return !badedep && !badhit;

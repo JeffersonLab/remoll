@@ -124,6 +124,10 @@ remollMessenger::remollMessenger(){
     //////////////////////////////////////////////////
     // beam info
 
+    rasTypeCmd = new G4UIcmdWithABool("/remoll/oldras", this);
+    rasTypeCmd->SetGuidance("Old (no ang corln) or new (ang corl) raster");
+    rasTypeCmd->SetParameterName("oldras", true);
+
     rasXCmd = new G4UIcmdWithADoubleAndUnit("/remoll/rasx",this);
     rasXCmd->SetGuidance("Square raster width in x (horizontal)");
     rasXCmd->SetParameterName("rasx", false);
@@ -429,6 +433,11 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	if( agen ){
 	    agen->fThCoM_max = th;
 	}
+    }
+
+    if( cmd == rasTypeCmd ){
+	G4bool rasType = rasTypeCmd->GetNewBoolValue(newValue);
+	fBeamTarg->fOldRaster = rasType;
     }
 
     if( cmd == rasXCmd ){

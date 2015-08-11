@@ -6,6 +6,8 @@
 #include "remollVertex.hh"
 #include "G4Material.hh"
 #include "remolltypes.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
 
 extern G4int F1F2IN09(G4int Z, G4int IA, G4double qsq,
 		      G4double wsq, G4double &F1, G4double &F2);
