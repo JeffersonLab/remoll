@@ -60,8 +60,9 @@
 # Specify random number seed
 #/remoll/seed 123456
 
-/remoll/filename remollout.root
+/remoll/filename remoll_beam_oldras_krypto_col_des3_rnd8.root
 
 #/tracking/verbose 2
 
-/run/beamOn 100
+/run/beamOn 50000
+

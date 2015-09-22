@@ -27,11 +27,11 @@ remollEvent *remollVEventGen::GenerateEvent() {
     // Create and initialize values for event
     remollEvent *thisev = new remollEvent();
     thisev->fVertexPos    = fBeamTarg->fVer;
-    if( fApplyMultScatt ) {
-        thisev->fBeamMomentum = fBeamTarg->fSampE*(fBeamTarg->fDir.unit());
-    } else {
-        thisev->fBeamMomentum = fBeamTarg->fSampE*G4ThreeVector(0.0, 0.0, 1.0);
-    }
+    //    if( fApplyMultScatt ){
+    //    thisev->fBeamMomentum = fBeamTarg->fSampE*(fBeamTarg->fDir.unit());
+	//    } else {
+    thisev->fBeamMomentum = fBeamTarg->fSampE*G4ThreeVector(0.0, 0.0, 1.0);
+	//    }
     /////////////////////////////////////////////////////////////////////
 
     SamplePhysics(&vert, thisev);
