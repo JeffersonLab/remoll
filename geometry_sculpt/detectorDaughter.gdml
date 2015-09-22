@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "materials.xml">
-]>
-
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
 	<position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
 </define>
 
-&materials;
-
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+    <material Z="1" name="VacuumDet" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+  </materials>
 
 <solids>
     <box lunit="mm" name="boxDetectors" x="4000" y="4000" z="500"/>
@@ -21,8 +28,7 @@
 <structure>
 
     <volume name="logicWasher_0">
-      <!-- <materialref ref="VacuumDet"/> -->
-      <materialref ref="Kryptonite"/>
+      <materialref ref="VacuumDet"/>
       <solidref ref="solWasher1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="28"/>

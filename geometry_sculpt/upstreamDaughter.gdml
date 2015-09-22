@@ -16,8 +16,7 @@
     <constant name="COLL1_R4_U" value ="29.5"/>
     <constant name="COLL1_R4_D" value ="29.5"/>
 
-    <!-- constant name="COLL1_THICK" value ="200.0"/ -->
-    <constant name="COLL1_THICK" value ="500.0"/>
+    <constant name="COLL1_THICK" value ="200.0"/>
 
     <!--    <position name="posCOLL2" unit="mm" x="0" y="0" z="5600-UOFFSET"/> -->
     <!-- main coll, adjust this -->
@@ -258,16 +257,16 @@
     <volume name="logicUScoll_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="uscyl_1"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2001"/>
+	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+	<auxiliary auxtype="DetNo" auxvalue="2002"/>
     </volume>
 
 
    <volume name="logicUScollunion_1">
       <materialref ref="Tungsten"/>
       <solidref ref="uscoll2_union_6"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2002"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="2001"/>
     </volume>
 
    <volume name="logiccoll2trap">
