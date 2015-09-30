@@ -92,8 +92,8 @@
     <constant name="TRAPOUTERR" value ="(COLL2_R4_U+COLL2_R3_D)/2"/>
     <constant name="TRAPINNERR" value ="(COLL2_R2_D+COLL2_R1_U)/2"/>
     <constant name="TRAPRADIUS" value ="TRAPOUTERR/2+TRAPINNERR/2"/>
-
-    <position name="posCOLL2TRAP" unit="mm" x="0" y="0" z="5925-UOFFSET+COLL2_THICK/2.0+0.5"/> 
+    <constant name="posCOLL2TRAP_Z" value ="5925-UOFFSET+COLL2_THICK/2.0+0.5"/>
+    <position name="posCOLL2TRAP" unit="mm" x="0" y="0" z="posCOLL2TRAP_Z"/> 
 
     <constant name="COIL_ANGLE" value="0.14754"/>
     <constant name="COIL_STRAIGHT_L" value="1840.952"/>
@@ -173,6 +173,12 @@
     <constant name="USBoxmother_width" value="4200"/>
     <constant name="USBoxmother_height" value="4000"/>
     <constant name="USTubemother_length" value="4500"/>
+    <constant name="tubeBeampipeMother_1_union_rmax" value="200-1"/>
+    <constant name="tubeBeampipeMother_1_union_length" value="975"/>
+    <!--radius is determined from DS mother volume boxDSShieldColl1_inner_rmax -->
+    <constant name="tubeBeampipeMother_2_union_rmax" value="335 - 0.9"/>
+    <!--length is determined from DS mother volume DSmothertubeBeampipeMother_sub_length -->
+    <constant name="tubeBeampipeMother_2_union_length" value="1000 + 1 + 2*400 - 100 - 0.5"/>
     <!--Original lenght was 4500 and 1000 from DS was subtracted to prevent overlapping 
 		 Now length is increased to 6500 and 2000 from DS was subtracted to prevent overlapping 
 		 Doing so length is increased by 1000 in the US of the BoxMother volume
@@ -185,6 +191,26 @@
     <position name="USmothersubtract_center_1" unit="mm" x="0" y="0" z="USTubemother_length/2 - USTubemothersubtract_length/2"/>
     <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2"/>
     <position name="USmotherunion_center_1" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - USBoxmotherunion_length/2"/>
+
+    <position name="beampipe_union_1_center" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - tubeBeampipeMother_1_union_length/2 + 0.1"/>
+    <position name="beampipe_union_2_center" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length + tubeBeampipeMother_2_union_length/2"/>
+    <constant name="beampipe_1_part1_length" value="100"/>
+    <constant name="beampipe_1_thickness" value="10"/>
+    <constant name="beampipe_1_part1_rmax" value="190"/>
+    <constant name="beampipe_1_part1_rmin" value="beampipe_1_part1_rmax - beampipe_1_thickness"/>
+    <constant name="beampipe_1_part2_length" value="3000"/>
+    <constant name="beampipe_1_part2_rmax" value="99.9"/>
+    <constant name="beampipe_1_part2_rmin" value="beampipe_1_part2_rmax - beampipe_1_thickness"/>
+    <constant name="beampipe_1_length" value="beampipe_1_part1_length + beampipe_1_part2_length"/>
+    <position name="beampipe_1_center" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - tubeBeampipeMother_1_union_length"/>
+
+    <constant name="beampipe_2_part1_length" value="2000 + tubeBeampipeMother_2_union_length - 0.1"/>
+    <constant name="beampipe_2_thickness" value="10"/>
+    <constant name="beampipe_2_part1_rmax" value="334.0"/>
+    <constant name="beampipe_2_part1_rmin" value="beampipe_2_part1_rmax - beampipe_2_thickness"/>
+    <position name="beampipe_2_center" unit="mm" x="0" y="0" z="posCOLL2TRAP_Z"/>
+
+    
 
     <!-- Neutron Shielding -->
     <!-- Insert constant and position parameters for neutron shielding here -->   
@@ -228,11 +254,39 @@
     <box lunit="mm" name="boxUpstream_1" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmother_length"/>
     <box lunit="mm" name="boxUpstream_2" x="USBoxmother_width + 1" y="USBoxmother_height + 1" z="USBoxmothersubtract_length"/>
     <box lunit="mm" name="boxUpstream_3" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmotherunion_length"/>
-    <subtraction name ="boxUpstream">
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_1_union" rmax="tubeBeampipeMother_1_union_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_1_union_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_2_union" rmax="tubeBeampipeMother_2_union_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_2_union_length"/>
+    <subtraction name ="boxUpstream_4">
       <first ref="boxUpstream_1"/>
       <second ref="boxUpstream_2"/>
       <positionref ref="USmothersubtract_center_2" />
     </subtraction>
+    <union name ="boxUpstream_5">
+      <first ref="boxUpstream_4"/>
+      <second ref="tubeBeampipe_1_union"/>
+      <positionref ref="beampipe_union_1_center" />
+    </union>
+    <union name ="boxUpstream">
+      <first ref="boxUpstream_5"/>
+      <second ref="tubeBeampipe_2_union"/>
+      <positionref ref="beampipe_union_2_center" />
+    </union>
+
+    <!--Beam pipe 1 for a polycone center coordinate is at the front face-->
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="beampipe_1"> 
+      <zplane rmin="beampipe_1_part1_rmin" rmax="beampipe_1_part1_rmax" z="0"/> 
+      <zplane rmin="beampipe_1_part1_rmin" rmax="beampipe_1_part1_rmax" z="beampipe_1_part1_length"/> 
+      <!--interface between two different radii -->
+      <zplane rmin="beampipe_1_part2_rmin" rmax="beampipe_1_part2_rmax" z="beampipe_1_part1_length + 0.1"/> 
+      <zplane rmin="beampipe_1_part2_rmin" rmax="beampipe_1_part2_rmax" z="beampipe_1_part2_length"/> 
+    </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="beampipe_2"> 
+      <zplane rmin="beampipe_2_part1_rmin" rmax="beampipe_2_part1_rmax" z="0"/> 
+      <zplane rmin="beampipe_2_part1_rmin" rmax="beampipe_2_part1_rmax" z="beampipe_2_part1_length"/> 
+    </polycone>
+      
+
 
     <!-- New merged col-1 -->
     <!--R max will be same as before, I'm starting with bore radius of the exit bore for whole col-1 and then subtract appropriately -->
@@ -564,7 +618,7 @@
     <volume name="boxUSShieldColl2_logic">
       <!--      <materialref ref="Borated_Concrete"/>
       <materialref ref="HD_Concrete"/> 
-      <materialref ref="Concrete"/>  -->
+      <materialref ref="Concrete"/> --> 
       <materialref ref="Tungsten"/>
       <solidref ref="boxUSShieldColl2_solid"/>
     </volume>
@@ -579,6 +633,19 @@
       <solidref ref="boxUSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
     </volume>
+
+    <volume name="beampipe_1_logic">
+      <!-- <materialref ref="Aluminum"/> -->
+      <materialref ref="Tungsten"/>
+      <solidref ref="beampipe_1"/>
+    </volume>
+
+    <volume name="beampipe_2_logic">
+      <!-- <materialref ref="Aluminum"/> -->
+      <materialref ref="Tungsten"/>
+      <solidref ref="beampipe_2"/>
+    </volume>
+
 
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
@@ -663,6 +730,17 @@
       <physvol>
         <volumeref ref="boxUSPolyShield1_logic"/>
         <positionref ref="boxUSPolyShield1_center"/>
+      </physvol>
+
+
+      <physvol>
+        <volumeref ref="beampipe_1_logic"/>
+        <positionref ref="beampipe_1_center"/>
+      </physvol>
+ 
+     <physvol>
+        <volumeref ref="beampipe_2_logic"/>
+        <positionref ref="beampipe_2_center"/>
       </physvol>
 
    </volume>

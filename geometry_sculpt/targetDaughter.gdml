@@ -11,6 +11,13 @@
   <constant name="tubeTarget_rmax" value="40"/>
   <constant name="tubeTarget_length" value="1500"/>
 
+  <!-- Mother volume parameters -->
+  <constant name="boxTargetMother_width" value="8600"/>
+  <constant name="boxTargetMother_height" value="6000 - 100"/>
+  <constant name="boxTargetMother_length" value="6000"/>
+  <constant name="tubeBeampipeMother_sub_rmax" value="200"/>
+  <constant name="tubeBeampipeMother_sub_length" value="250"/>
+
   <!--Following dimensions used for initial target shielding cylinder - Rakitha -->
   <constant name="tubeShield_tgtseparation" value="10"/>
   <constant name="tubeShield_thickness" value="400"/>
@@ -58,6 +65,7 @@
   <position name="tubeShield_bottomdisk_center" unit="mm" x="0" y="-1*tubeShield_height/2 - tubeShield_disk_thickness/2" z="0"/>
   <position name="tgt_center" unit="mm" x="0" y="0" z="0"/>
   <position name="shieldcoll_center_1" unit="mm" x="0" y="0" z="2853"/>
+  <position name="beampipe_sub_center" unit="mm" x="0" y="0" z="boxTargetMother_length/2 - tubeBeampipeMother_sub_length/2"/>
 
   <position name="boxtgtShield_trans1" unit="mm" x="0" y="-1*tgtShield_top_thickness/2" z="0"/>
   <position name="boxtgtShield_trans2" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset" z="0"/>
@@ -78,7 +86,16 @@
 <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1400" rmin="0" startphi="0" z="6000"/>
     <!--100 mm offset to prevent target mother volume overlapping with hall mother volume -->
-    <box lunit="mm" name="boxTargetMother" x="8600" y="6000 - 100" z="6000"/>
+    <box lunit="mm" name="boxTargetMother_1" x="boxTargetMother_width" y="boxTargetMother_height" z="boxTargetMother_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_sub" rmax="tubeBeampipeMother_sub_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_sub_length"/>
+    <subtraction name ="boxTargetMother">
+      <first ref="boxTargetMother_1"/>
+      <second ref="tubeBeampipe_sub"/>
+      <positionref ref="beampipe_sub_center" />
+    </subtraction> 
+
+    
+
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="tubeTarget_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget_solid_1" rmax="tubeShield_beam_rmax" rmin="0" startphi="0" z="2*tubeTarget_length"/>
 

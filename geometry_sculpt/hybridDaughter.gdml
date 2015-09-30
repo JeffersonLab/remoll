@@ -13,10 +13,11 @@
     <constant name="SEPTANT" value ="360./7"/>
     <position name="CENTER" unit="mm" x="0" y="0" z="0"/>
 
-    <position name="DSmothersubtract_center_1" unit="mm" x="0" y="-1*6100/2 + 100/2" z="0"/>
 
     <constant name="DELTAT" value ="1.0"/>
     <constant name="DELTAZ" value ="1.0"/>
+
+  
 
     <!-- petal -->
     <!--Collimator 3 old position  9575. Moved US by 30 cm and new position 9175 -->
@@ -79,6 +80,7 @@
     <position name="boxDSPolyShield1_trans2" unit="mm" x="0" y="0" z="0"/>
     <position name="boxDSPolyShield1_center" unit="mm" x="0" y="0" z="9020-DOFFSET"/>
 
+
     <!--Shielding hut dimensions -->
     <constant name="DSShield_length" value="8293.6"/>
     <constant name="DSShield_width" value="5715"/>
@@ -94,6 +96,27 @@
     <position name="boxDSShield_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="-1*DSShield_side_thickness/2-1"/>
     <position name="boxDSShield_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSShield_y_offset" z="0"/>
     <position name="boxDSShield1_center" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSShield_side_thickness"/>
+
+    <!--Mother volume -->
+    <constant name="boxDSMother_width" value="2*4500"/>
+    <constant name="boxDSMother_height" value="6100"/>
+    <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900"/>
+    <constant name="DSmothertubeBeampipeMother_sub_rmax" value="boxDSShieldColl1_inner_rmax - 0.1"/>
+    <constant name="DSmothertubeBeampipeMother_sub_length" value="DSPolyShield1_length - PCOLL2_THICK - 1"/>
+    <position name="DSmothersubtract_center_1" unit="mm" x="0" y="-1*boxDSMother_height/2 + 100/2" z="0"/>
+    <position name="DSmotherbeampipe_sub_center" unit="mm" x="0" y="0" z="-1*boxDSMother_length/2 + DSmothertubeBeampipeMother_sub_length/2"/>
+
+    <constant name="DSbeampipe_union_1_part1_length" value="4000"/>
+    <constant name="DSbeampipe_union_1_thickness" value="10"/>
+    <constant name="DSbeampipe_union_1_part1_rmax" value="boxShield_DS_beam_bore + 10"/>
+    <constant name="DSbeampipe_union_1_part1_rmin" value="0"/>
+    <constant name="DSbeampipe_union_1_part2_length" value="6000"/>
+    <constant name="DSbeampipe_union_1_part2_rmax" value="498"/>
+    <constant name="DSbeampipe_union_1_part2_rmin" value="0"/>
+    <constant name="DSbeampipe_union_1_length" value="DSbeampipe_union_1_part1_length + DSbeampipe_union_1_part2_length"/>
+    <position name="DSbeampipe_union_1_center" unit="mm" x="0" y="0" z="boxDSMother_length/2 - 0.1"/>
+    <position name="DSbeampipe_union_2_center" unit="mm" x="0" y="0" z="boxDSMother_length/2 + DSbeampipe_union_1_part1_length - 0.1"/>
+
     
     <!-- Neutron Poly Shielding subtracting volume positions -->
     <position name="boxDSPolyShieldSub1_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="0"/>
@@ -783,14 +806,41 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="4500" rmin="0" startphi="0" z="7865.68 + 2*950"/>
     <!--100 mm offset to prevent target mother volume overlapping with hall mother volume lenght is increased by 900 at the end to include poly shielding-->
     <!-- <box lunit="mm" name="boxDownstream" x="2*4500" y="6000 - 100" z="7865.68 + 2*950 + 900"/> -->
-    <box lunit="mm" name="boxDownstream_1" x="2*4500" y="6100" z="7865.68 + 2*950 + 900"/>
-    <box lunit="mm" name="boxDownstream_sub" x="2*4500+1" y="100+1" z="7865.68 + 2*950 + 900 + 1"/>
-    <subtraction name ="boxDownstream">
+    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/>
+    <box lunit="mm" name="boxDownstream_sub" x="boxDSMother_width" y="100+1" z="boxDSMother_length + 1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSmothertubeBeampipe_sub" rmax="DSmothertubeBeampipeMother_sub_rmax" rmin="0" startphi="0" z="DSmothertubeBeampipeMother_sub_length"/>    
+    <subtraction name ="boxDownstream_2">
       <first ref="boxDownstream_1"/>
       <second ref="boxDownstream_sub"/>
       <positionref ref="DSmothersubtract_center_1" />
     </subtraction>
-   
+    <subtraction name ="boxDownstream_3">
+      <first ref="boxDownstream_2"/>
+      <second ref="DSmothertubeBeampipe_sub"/>
+      <positionref ref="DSmotherbeampipe_sub_center" />
+    </subtraction>   
+
+    <!--Add mother volume to keep the beam pipe -->
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSbeampipe_union_1"> 
+      <zplane rmin="DSbeampipe_union_1_part1_rmin" rmax="DSbeampipe_union_1_part1_rmax" z="0"/> 
+      <zplane rmin="DSbeampipe_union_1_part1_rmin" rmax="DSbeampipe_union_1_part1_rmax" z="DSbeampipe_union_1_part1_length"/> 
+    </polycone>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSbeampipe_union_2"> 
+      <zplane rmin="DSbeampipe_union_1_part2_rmin" rmax="DSbeampipe_union_1_part2_rmax" z="0"/> 
+      <zplane rmin="DSbeampipe_union_1_part2_rmin" rmax="DSbeampipe_union_1_part2_rmax" z="DSbeampipe_union_1_part2_length"/> 
+    </polycone>
+
+    <union name ="boxDownstream_4">
+      <first ref="boxDownstream_3"/>
+      <second ref="DSbeampipe_union_1"/>
+      <positionref ref="DSbeampipe_union_1_center" />
+    </union>     
+    <union name ="boxDownstream">
+      <first ref="boxDownstream_4"/>
+      <second ref="DSbeampipe_union_2"/>
+      <positionref ref="DSbeampipe_union_2_center" />
+    </union>     
+
 
     <tessellated name="leftpcolcut">
 	<triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
