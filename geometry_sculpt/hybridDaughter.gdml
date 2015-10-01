@@ -117,7 +117,19 @@
     <position name="DSbeampipe_union_1_center" unit="mm" x="0" y="0" z="boxDSMother_length/2 - 0.1"/>
     <position name="DSbeampipe_union_2_center" unit="mm" x="0" y="0" z="boxDSMother_length/2 + DSbeampipe_union_1_part1_length - 0.1"/>
 
-    
+    <!--beam pipe -->
+    <constant name="DSbeampipe_1_part1_length" value="4000"/>
+    <constant name="DSbeampipe_1_thickness" value="10"/>
+    <constant name="DSbeampipe_1_part1_rmax" value="boxShield_DS_beam_bore - 0.1"/>
+    <constant name="DSbeampipe_1_part1_rmin" value="DSbeampipe_1_part1_rmax - DSbeampipe_1_thickness"/>
+    <constant name="DSbeampipe_1_part2_length" value="6750"/>
+    <constant name="DSbeampipe_1_part2_rmax" value="400"/>
+    <constant name="DSbeampipe_1_part2_rmin" value="DSbeampipe_1_part2_rmax - DSbeampipe_1_thickness"/>
+    <constant name="DSbeampipe_1_length" value="DSbeampipe_1_part1_length + DSbeampipe_1_part2_length"/>
+    <constant name="DS_mothervolume_center_z" value="9020-DOFFSET"/>
+    <position name="DSbeampipe_1_center" unit="mm" x="0" y="0" z="DSShield_length/2 + DSShield_side_thickness"/>
+    <position name="DSbeampipe_2_center" unit="mm" x="0" y="0" z="DSShield_length/2 + DSShield_side_thickness + DSbeampipe_1_part1_length"/>
+     
     <!-- Neutron Poly Shielding subtracting volume positions -->
     <position name="boxDSPolyShieldSub1_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="0"/>
     <position name="boxDSPolyShieldSub1_trans2" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSPolyShield1_length/2 - DSPolyShield1_side_thickness/2"/>
@@ -842,6 +854,19 @@
     </union>     
 
 
+    <!--Beam pipe 1 for a polycone center coordinate is at the front face-->
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSbeampipe_1"> 
+      <zplane rmin="DSbeampipe_1_part1_rmin" rmax="DSbeampipe_1_part1_rmax" z="0"/> 
+      <zplane rmin="DSbeampipe_1_part1_rmin" rmax="DSbeampipe_1_part1_rmax" z="DSbeampipe_1_part1_length"/> 
+    </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSbeampipe_2"> 
+      <zplane rmin="DSbeampipe_1_part2_rmin" rmax="DSbeampipe_1_part2_rmax" z="0"/> 
+      <zplane rmin="DSbeampipe_1_part2_rmin" rmax="DSbeampipe_1_part2_rmax" z="DSbeampipe_1_part2_length"/> 
+    </polycone>
+
+
+
     <tessellated name="leftpcolcut">
 	<triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
 	<quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut3" vertex4="PCOLL2_lcut5" type="ABSOLUTE"/>
@@ -1258,10 +1283,33 @@
       <solidref ref="DSShield_Tube_solid_1"/>
     </volume>
 
+    <!-- beam pipe -->
+    <volume name="DSbeampipe_1_logic">
+      <!-- <materialref ref="Aluminum"/> -->
+      <materialref ref="Tungsten"/>
+      <solidref ref="DSbeampipe_1"/>
+    </volume>
+    <volume name="DSbeampipe_2_logic">
+      <!-- <materialref ref="Aluminum"/> -->
+      <materialref ref="Tungsten"/>
+      <solidref ref="DSbeampipe_2"/>
+    </volume>
+
+
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
       <solidref ref="boxDownstream"/>
+
+      <physvol>
+        <volumeref ref="DSbeampipe_1_logic"/>
+        <positionref ref="DSbeampipe_1_center"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="DSbeampipe_2_logic"/>
+        <positionref ref="DSbeampipe_2_center"/>
+      </physvol>
+
 
       <physvol name="DScoil_0">
         <volumeref ref="logicDScoil_0"/>

@@ -174,7 +174,7 @@
     <constant name="USBoxmother_height" value="4000"/>
     <constant name="USTubemother_length" value="4500"/>
     <constant name="tubeBeampipeMother_1_union_rmax" value="200-1"/>
-    <constant name="tubeBeampipeMother_1_union_length" value="975"/>
+    <constant name="tubeBeampipeMother_1_union_length" value="976"/>
     <!--radius is determined from DS mother volume boxDSShieldColl1_inner_rmax -->
     <constant name="tubeBeampipeMother_2_union_rmax" value="335 - 0.9"/>
     <!--length is determined from DS mother volume DSmothertubeBeampipeMother_sub_length -->
@@ -202,7 +202,7 @@
     <constant name="beampipe_1_part2_rmax" value="99.9"/>
     <constant name="beampipe_1_part2_rmin" value="beampipe_1_part2_rmax - beampipe_1_thickness"/>
     <constant name="beampipe_1_length" value="beampipe_1_part1_length + beampipe_1_part2_length"/>
-    <position name="beampipe_1_center" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - tubeBeampipeMother_1_union_length"/>
+    <position name="beampipe_1_center" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - tubeBeampipeMother_1_union_length + 1"/>
 
     <constant name="beampipe_2_part1_length" value="2000 + tubeBeampipeMother_2_union_length - 0.1"/>
     <constant name="beampipe_2_thickness" value="10"/>
