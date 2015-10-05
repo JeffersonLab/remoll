@@ -40,11 +40,10 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
     switch (type) {
     case 0:
       G4cout<<"You should really implement the elastic Al first"<<G4endl;
-      // 	GenElastic(beamE);//implement something
+      GenElastic(beamE,th,Q2,W2,effectiveXsection,fWeight,eOut,asym);
       break;
     case 1:
       GenQuasiElastic(beamE,th,Q2,W2,effectiveXsection,fWeight,eOut,asym);
-      //FIXME do i need to put in something for the asymmetry?
       break;
     case 2:
       GenInelastic(beamE,th,Q2,W2,effectiveXsection,fWeight,eOut,asym);
@@ -60,7 +59,7 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
         exit(1);
     }
 
-    evt->SetThCoM(th);  //wasn't in the GenpInelastic ... should it be there FIXME
+    evt->SetThCoM(th);  //wasn't in the GenpInelastic ... should it be there?! FIXME
     evt->SetEffCrossSection(effectiveXsection);
     evt->SetQ2( Q2 ); //MeV^2
     evt->SetAsymmetry(asym);
