@@ -55,33 +55,22 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
 
     if( genname == "moller" ) {
         fEventGen = new remollGenMoller();
-    }
-
-    if( genname == "elastic" ) {
+    }else if( genname == "elastic" ) {
         fEventGen = new remollGenpElastic();
-    }
-
-    if( genname == "inelastic" ) {
+    }else if( genname == "inelastic" ) {
         fEventGen = new remollGenpInelastic();
-    }
-
-    if( genname == "pion" ) {
+    }else if( genname == "pion" ) {
         fEventGen = new remollGenPion();
-    }
-
-    if( genname == "beam" ) {
+    }else if( genname == "beam" ) {
         fEventGen = new remollGenBeam();
-    }
-
-    if( genname == "flat" ) {
+    }else if( genname == "flat" ) {
         fEventGen = new remollGenFlat();
-    }
-
-    if( genname == "inelasticAl" ) {
+    }else if( genname == "inelasticAl" ) {
         fEventGen = new remollGenAl(2);
-    }
-    if( genname == "quasielasticAl" ) {
+    }else if( genname == "quasielasticAl" ) {
         fEventGen = new remollGenAl(1);
+    }else if( genname == "elasticAl" ) {
+        fEventGen = new remollGenAl(0);
     }
 
     if( !fEventGen ) {
