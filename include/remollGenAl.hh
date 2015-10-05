@@ -1,13 +1,5 @@
 #ifndef __REMOLLGENAL_HH
 #define __REMOLLGENAL_HH
-/*!
- * Aluminium event generator
- *
- * Ciprian Gal
- * November 29, 2014
- *
- * Uses Christy/Bosted parameterization
-*/
 
 #include "remollVEventGen.hh"
 #include "Randomize.hh"
@@ -21,14 +13,19 @@ private:
   G4int type;
   void SamplePhysics(remollVertex *, remollEvent *);
 
-  void GenInelastic(G4double beamE,G4double th,
+  ///Christy Bosted fit 
+  void GenInelastic(G4double beamE,G4double theta,
 		    G4double &Q2,G4double &W2,G4double &effectiveXsection,
 		    G4double &fWeight,G4double &eOut,G4double &asym);
 
+  ///Christy Bosted fit 
   void GenQuasiElastic(G4double beamE,G4double theta,
 		       G4double &Q2,G4double &W2,G4double &effectiveXsection,
-		       G4double &fWeight,G4double &eOut);
-
+		       G4double &fWeight,G4double &eOut,G4double &asym);
+  
+  void GetElastic(G4double beamE, G4double theta,
+		  G4double &Q2,G4double &W2,G4double &effectiveXsection,
+		  G4double &fWeight,G4double &eOut,G4double &asym);
 
 };
 
