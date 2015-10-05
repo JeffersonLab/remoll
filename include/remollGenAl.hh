@@ -23,7 +23,7 @@ private:
 		       G4double &Q2,G4double &W2,G4double &effectiveXsection,
 		       G4double &fWeight,G4double &eOut,G4double &asym);
   
-  void GetElastic(G4double beamE, G4double theta,
+  void GenElastic(G4double beamE, G4double theta,
 		  G4double &Q2,G4double &W2,G4double &effectiveXsection,
 		  G4double &fWeight,G4double &eOut,G4double &asym);
 
