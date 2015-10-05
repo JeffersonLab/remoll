@@ -213,5 +213,5 @@ void remollGenAl::GenElastic(G4double beamE,G4double theta,
   const G4double qwp=0.0713;
   const G4double qwn=-0.988;
   
-  asym= -gf/(4.*pi*fine_structure_const*sqrt(2.)) * 1e6 * Q2/GeV/GeV * (qwp+qwn*(A-Z)/Z);
+  asym= -gf/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (qwp+qwn*(A-Z)/Z);
 }
