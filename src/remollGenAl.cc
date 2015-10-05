@@ -8,6 +8,7 @@
 #include "remolltypes.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
+#include "G4Exp.hh"
 
 extern G4int F1F2IN09(G4int Z, G4int IA, G4double qsq,
 		      G4double wsq, G4double &F1, G4double &F2);
@@ -62,7 +63,7 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
 
     evt->SetThCoM(th);  //wasn't in the GenpInelastic ... should it be there FIXME
     evt->SetEffCrossSection(effectiveXsection);
-    evt->SetQ2( Q2 );
+    evt->SetQ2( Q2 ); //MeV^2
     evt->SetAsymmetry(asym);
     evt->SetW2( W2 );
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0),
@@ -132,7 +133,7 @@ void remollGenAl::GenInelastic(G4double beamE,G4double theta,
 
 void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
 				  G4double &Q2,G4double &W2,G4double &effectiveXsection,
-				  G4double &fWeight,G4double &eOut, G4double &asym) {
+				  G4double &fWeight,G4double &eOut,G4double &asym) {
   
   G4double F1 = 0.0;
   G4double F2 = 0.0;
@@ -169,4 +170,50 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   asym=Q2*0.8e-4/GeV/GeV;//FIXME same as inelastic 
   fWeight = xsect*sin(theta);
   effectiveXsection = xsect;
+}
+
+void remollGenAl::GenElastic(G4double beamE,G4double theta,
+			     G4double &Q2,G4double &W2,G4double &effectiveXsection,
+			     G4double &fWeight,G4double &eOut,G4double &asym) {
+
+
+
+  ///~~~~ X-section calculation
+  const G4double Z = 13.0;
+  const G4double A = 27.0;
+  const G4double M = proton_mass_c2*A;
+  const G4double CTH = cos(theta/2.0);
+  const G4double STH = sin(theta/2.0);
+  const G4double ETA = 1.0+2.0*beamE*STH*STH/M;
+  
+  eOut = beamE/ETA;   
+  Q2 = 4*beamE*eOut*STH*STH;//[MeV^2]
+  W2 = proton_mass_c2*proton_mass_c2 + 2.0*proton_mass_c2*(beamE-eOut) - Q2;//[MeV^2]
+  
+  //harmonic oscillator well parameter a0 ~1.76 fm 
+  const G4double a = 2.98; //[fm]
+  const G4double ap = sqrt(0.427);//[fm] 
+  const G4double a0 = sqrt((a*a-1.5*ap*ap)/(3.5-10/Z-1.5/A)); 
+  const G4double q2 = Q2/GeV/GeV*(1.0/0.197)*(1.0/0.197);//convert MeV^2 into fm^(-2)
+  const G4double x = (1.0/4.0)*q2*a0*a0;
+  
+  const G4double F0 = (1.0/Z)*( Z-4.0/3.0*(Z-5.0)*x+4.0/15.0*(Z-8.0)*x*x)*G4Exp(-x);
+  const G4double F2 = (1.0-2.0/7.0*x)*G4Exp(-x);
+  const G4double Q = 14.6;  //[fm^(-2)]
+  G4double Fe = sqrt( F0*F0+(7.0/450.0)*q2*q2*(Q*Q/Z/Z)*F2*F2 );
+  Fe=Fe*G4Exp(-0.25*q2*ap*ap); //correction for finite proton size
+  Fe=Fe*G4Exp(x/A); //correction for center-of-well motion
+  const G4double F_2 = Fe*Fe;
+
+  G4double SigmaMott = pow(((0.72/beamE)*CTH/(STH*STH)),2)/(1+2*beamE/M*STH*STH)*10000 ;
+  SigmaMott *= (Z*Z);
+  effectiveXsection = SigmaMott*F_2;
+  fWeight = effectiveXsection*sin(theta);  
+  
+  ///~~~ Aymmetry calculation
+  const G4double gf=1.16637e-5;//fermi coupling [GeV^-2]
+  const G4double qwp=0.0713;
+  const G4double qwn=-0.988;
+  
+  asym= -gf/(4.*pi*fine_structure_const*sqrt(2.)) * 1e6 * Q2/GeV/GeV * (qwp+qwn*(A-Z)/Z);
 }
