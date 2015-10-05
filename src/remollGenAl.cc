@@ -185,7 +185,7 @@ void remollGenAl::GenElastic(G4double beamE,G4double theta,
   
   eOut = beamE/ETA;   
   Q2 = 4*beamE*eOut*STH*STH;//[MeV^2]
-  W2 = proton_mass_c2*proton_mass_c2 + 2.0*proton_mass_c2*(beamE-eOut) - Q2;//[MeV^2]
+  W2 = M*M;//[MeV^2]
   
   //harmonic oscillator well parameter a0 ~1.76 fm 
   const G4double a = 2.98; //[fm]
