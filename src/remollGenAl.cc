@@ -138,10 +138,6 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   G4double w1 = 0.0;
   G4double w2 = 0.0;  
   G4double xsect = 0.0;
-
-  G4double thetaMin = 1.745329E-4; // not sure where this is from FIXME (CG 150622)
-  if ( theta < thetaMin )
-    theta = thetaMin;
   
   // Generate flat energy distribution of outgoing electron
   eOut =  electron_mass_c2 + G4UniformRand()*(beamE - electron_mass_c2);
