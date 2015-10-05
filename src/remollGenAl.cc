@@ -39,20 +39,21 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
 
     switch (type) {
     case 0:
-        G4cout<<"You should really implement the elastic Al first"<<G4endl;
-// 	GenElastic(beamE);//implement something
-        break;
+      G4cout<<"You should really implement the elastic Al first"<<G4endl;
+      // 	GenElastic(beamE);//implement something
+      break;
     case 1:
-	GenQuasiElastic(beamE,th, Q2, W2, effectiveXsection, fWeight, eOut);
-	//FIXME do i need to put in something for the asymmetry?
-        break;
+      GenQuasiElastic(beamE,th,Q2,W2,effectiveXsection,fWeight,eOut,asym);
+      //FIXME do i need to put in something for the asymmetry?
+      break;
     case 2:
-        GenInelastic(beamE,th,Q2,W2,effectiveXsection,fWeight,eOut,asym);
-        break;
+      GenInelastic(beamE,th,Q2,W2,effectiveXsection,fWeight,eOut,asym);
+      break;
     default:
-        G4cerr<<"Unknown aluminum event type"<<G4endl;
+      G4cerr<<"Unknown aluminum event type"<<G4endl;
+      exit(1);
     }
-
+    
     if( vert->GetMaterial()->GetNumberOfElements() != 1 ) {
         G4cerr << __FILE__ << " line " << __LINE__ <<
                "  : Error!  Some lazy programmer didn't account for complex materials in the moller process!" << G4endl;
@@ -131,7 +132,7 @@ void remollGenAl::GenInelastic(G4double beamE,G4double theta,
 
 void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
 				  G4double &Q2,G4double &W2,G4double &effectiveXsection,
-				  G4double &fWeight,G4double &eOut) {
+				  G4double &fWeight,G4double &eOut, G4double &asym) {
   
   G4double F1 = 0.0;
   G4double F2 = 0.0;
@@ -164,7 +165,8 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   
   // In some cases a negative F2 is returned giving a negative cross section
   if (xsect <= 0) xsect = 0.0;
-  
+
+  asym=Q2*0.8e-4/GeV/GeV;//FIXME same as inelastic 
   fWeight = xsect*sin(theta);
   effectiveXsection = xsect;
 }
