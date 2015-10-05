@@ -8,7 +8,6 @@
 #include "remolltypes.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
-#include "G4Exp.hh"
 
 extern G4int F1F2IN09(G4int Z, G4int IA, G4double qsq,
 		      G4double wsq, G4double &F1, G4double &F2);
@@ -197,12 +196,12 @@ void remollGenAl::GenElastic(G4double beamE,G4double theta,
   const G4double q2 = Q2/GeV/GeV*(1.0/0.197)*(1.0/0.197);//convert MeV^2 into fm^(-2)
   const G4double x = (1.0/4.0)*q2*a0*a0;
   
-  const G4double F0 = (1.0/Z)*( Z-4.0/3.0*(Z-5.0)*x+4.0/15.0*(Z-8.0)*x*x)*G4Exp(-x);
-  const G4double F2 = (1.0-2.0/7.0*x)*G4Exp(-x);
+  const G4double F0 = (1.0/Z)*( Z-4.0/3.0*(Z-5.0)*x+4.0/15.0*(Z-8.0)*x*x)*exp(-x);
+  const G4double F2 = (1.0-2.0/7.0*x)*exp(-x);
   const G4double Q = 14.6;  //[fm^(-2)]
   G4double Fe = sqrt( F0*F0+(7.0/450.0)*q2*q2*(Q*Q/Z/Z)*F2*F2 );
-  Fe=Fe*G4Exp(-0.25*q2*ap*ap); //correction for finite proton size
-  Fe=Fe*G4Exp(x/A); //correction for center-of-well motion
+  Fe=Fe*exp(-0.25*q2*ap*ap); //correction for finite proton size
+  Fe=Fe*exp(x/A); //correction for center-of-well motion
   const G4double F_2 = Fe*Fe;
 
   G4double SigmaMott = pow(((0.72/beamE)*CTH/(STH*STH)),2)/(1+2*beamE/M*STH*STH)*10000 ;
