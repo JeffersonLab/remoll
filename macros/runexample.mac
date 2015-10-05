@@ -42,6 +42,7 @@
 #/remoll/gen pion
 #/remoll/gen inelasticAl
 #/remoll/gen quasielasticAl
+#/remoll/gen elasticAl
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
