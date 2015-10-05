@@ -39,7 +39,6 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
 
     switch (type) {
     case 0:
-      G4cout<<"You should really implement the elastic Al first"<<G4endl;
       GenElastic(beamE,th,Q2,W2,effectiveXsection,fWeight,eOut,asym);
       break;
     case 1:
