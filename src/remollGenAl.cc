@@ -130,8 +130,7 @@ void remollGenAl::GenInelastic(G4double beamE,G4double theta,
 
 void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
 				  G4double &Q2,G4double &W2,G4double &effectiveXsection,
-				  G4double &fWeight,G4double &eOut,G4double &asym) {
-  
+				  G4double &fWeight,G4double &eOut,G4double &asym) {  
   G4double F1 = 0.0;
   G4double F2 = 0.0;
   G4double w1 = 0.0;
@@ -172,9 +171,6 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
 void remollGenAl::GenElastic(G4double beamE,G4double theta,
 			     G4double &Q2,G4double &W2,G4double &effectiveXsection,
 			     G4double &fWeight,G4double &eOut,G4double &asym) {
-
-
-
   ///~~~~ X-section calculation
   const G4double Z = 13.0;
   const G4double A = 27.0;
@@ -205,6 +201,12 @@ void remollGenAl::GenElastic(G4double beamE,G4double theta,
   G4double SigmaMott = pow(((0.72/beamE)*CTH/(STH*STH)),2)/(1+2*beamE/M*STH*STH)*10000 ;
   SigmaMott *= (Z*Z);
   effectiveXsection = SigmaMott*F_2;
+
+  G4double functionOfTheta = log (STH*STH) * log (CTH*CTH);
+  G4double deltaSchwinger = (-2.0*fine_structure_const/pi)*
+    ((log(beamE/15.0) - 13.0/12.0) * (log(Q2/(electron_mass_c2*electron_mass_c2)) - 1.0) + 17.0/36.0 + functionOfTheta/2.0);
+  effectiveXsection *=(1. + deltaSchwinger);
+  
   fWeight = effectiveXsection*sin(theta);  
   
   ///~~~ Aymmetry calculation
