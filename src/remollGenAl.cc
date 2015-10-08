@@ -163,9 +163,15 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   // In some cases a negative F2 is returned giving a negative cross section
   if (xsect <= 0) xsect = 0.0;
 
-  asym=Q2*0.8e-4/GeV/GeV;//FIXME same as inelastic 
   fWeight = xsect*sin(theta);
   effectiveXsection = xsect;
+
+  ///~~~ Aymmetry calculation //FIXME -- this is just a copy of the elastic for now
+  const G4double gf=1.16637e-5;//fermi coupling [GeV^-2]
+  const G4double qwp=0.0713;
+  const G4double qwn=-0.988;
+  
+  asym= -gf/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (qwp+qwn*(A-Z)/Z);
 }
 
 void remollGenAl::GenElastic(G4double beamE,G4double theta,
