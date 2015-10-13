@@ -143,7 +143,7 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   G4double CTH = cos(theta/2.0);
   G4double STH = sin(theta/2.0);
   G4double T2THE = STH*STH/CTH/CTH;
-  G4double Nu = beamE - eOut;
+  G4double Nu = beamE - eOut;//[MeV]
   Q2 = 4.0*beamE*eOut*STH*STH;
   W2 = proton_mass_c2*proton_mass_c2 + 2.0*proton_mass_c2*Nu - Q2;
   
@@ -155,8 +155,8 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   G4int Z=13;
   F1F2QE09(Z, A, Q2/GeV/GeV, W2/GeV/GeV, F1, F2);
   
-  w1 = F1/proton_mass_c2;
-  w2 = F2/Nu;
+  w1 = F1/(proton_mass_c2/GeV);
+  w2 = F2/(Nu/GeV);
   
   xsect = MOTT*(w2 + 2.0*T2THE*w1)*(beamE/GeV - electron_mass_c2/GeV);
   
