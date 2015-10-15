@@ -29,6 +29,7 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
 
     G4double beamE = vert->GetBeamE(); // in MeV (it can be modified by beam loss)
     G4double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min))); // radians
+    G4double phaseSpaceFactor = 2.0*pi*(cos(fTh_min) - cos(fTh_max));
     G4double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
     G4double eOut=0;
     G4double fWeight=0;
@@ -59,7 +60,7 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
     }
 
     evt->SetThCoM(th);
-    evt->SetEffCrossSection(effectiveXsection*microbarn);
+    evt->SetEffCrossSection(phaseSpaceFactor*effectiveXsection*microbarn);
     evt->SetQ2( Q2 ); //MeV^2
     evt->SetAsymmetry(asym);
     evt->SetW2( W2 );
