@@ -70,6 +70,7 @@ class remollBeamTarget {
 	G4Material *fDefaultMat;
 
 	bool fAlreadyWarned;
+        bool fAlreadyWarned_LH2;
 
 	
     public:

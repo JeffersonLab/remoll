@@ -41,6 +41,7 @@ remollBeamTarget::remollBeamTarget(){
     fDefaultMat = new G4Material("Default_proton"   , 1., 1.0, 1e-19*g/mole);
 
     fAlreadyWarned = false;
+    fAlreadyWarned_LH2 = false;
 }
 
 remollBeamTarget::~remollBeamTarget(){
@@ -230,8 +231,11 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    isLH2 = true; 
 	} else { 
 	    isLH2 = false;
-	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	    if (!fAlreadyWarned_LH2){
+	      G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		": volume not LH2 has been specified, but handling not implemented" << G4endl;
+	      fAlreadyWarned_LH2 = true;
+	    }
 
 	} 
 
@@ -349,7 +353,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     
     // Sample multiple scattering + angles
     G4double msth, msph;
-    G4double bmth, bmph;
+    G4double bmth, bmph; 
 
 
     if( nmsmat > 0 ){

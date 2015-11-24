@@ -247,7 +247,7 @@ void remollIO::SetEventData(remollEvent *ev){
 void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     int n = fNGenDetHit;
     if( n >= __IO_MAXHIT ){
-	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+      G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << ": detid "<< hit->fDetID << G4endl; 
 	return;
     }
 
@@ -297,7 +297,7 @@ void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
 
     int n = fNGenDetSum;
     if( n >= __IO_MAXHIT ){
-	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!"  << ": detid "<< hit->fDetID << G4endl;
 	return;
     }
 
@@ -310,7 +310,7 @@ void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
 	G4ThreeVector pos  = hit->GetPos(particle_to_track[j]);
 
 	fGenDetSum_x[n]    = pos.x()/__L_UNIT;
-	fGenDetSum_y[n]    = pos.y()/__L_UNIT;
+	fGenDetSum_y[n]    = pos.y()/__L_UNIT; 
 	fGenDetSum_z[n]    = pos.z()/__L_UNIT;
 
 	fGenDetSum_det[n]  = hit->fDetID;
@@ -321,7 +321,7 @@ void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
 	fNGenDetSum++;
 
 	if( n >= __IO_MAXHIT ){
-	    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+	  G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << ": detid "<< hit->fDetID <<": pid " <<j << G4endl;
 	    return;
 	}
     }

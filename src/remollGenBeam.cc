@@ -15,7 +15,7 @@
 
 #include <math.h>
 
-remollGenBeam::remollGenBeam(){
+remollGenBeam::remollGenBeam(){  
     fApplyMultScatt = false;
     fBeamTarg = remollBeamTarget::GetBeamTarget();
 

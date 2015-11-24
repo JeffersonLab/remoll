@@ -98,7 +98,8 @@ int main(int argc, char** argv){
     // Physics we want to use
     G4int verbose = 0;
     G4PhysListFactory factory;
-    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("LHEP");
+    //G4VModularPhysicsList* physlist = factory.GetReferencePhysList("LHEP");
+    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
     physlist->SetVerboseLevel(verbose);
     physlist->RegisterPhysics( new G4StepLimiterBuilder(verbose) );
     runManager->SetUserInitialization(physlist);
