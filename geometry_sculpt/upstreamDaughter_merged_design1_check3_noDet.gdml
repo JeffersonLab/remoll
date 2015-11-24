@@ -625,79 +625,57 @@
     <volume name="logicUScoll_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="col1_7"/>
-	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-	<auxiliary auxtype="DetNo" auxvalue="2001"/>
     </volume>
 
 
     <volume name="logicUScol1fin_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="col1fin_7"/>
-	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-	<auxiliary auxtype="DetNo" auxvalue="2003"/>
     </volume>
    <volume name="logicUScollunion_1">
       <materialref ref="Tungsten"/>
       <solidref ref="uscoll2_union_6"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2002"/>
     </volume>
 
    <volume name="logiccoll2trap">
       <materialref ref="VacuumColl"/>
       <solidref ref="coll2trap"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="200"/>
     </volume>
 
 
    <volume name="logicUScoilunion_0">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="4001"/>
     </volume>
 
     <volume name="logicUScoilunion_1">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="4002"/>
     </volume>
 
     <volume name="logicUScoilunion_2">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/> 
-      <auxiliary auxtype="DetNo" auxvalue="4003"/>
     </volume>
 
     <volume name="logicUScoilunion_3">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="4004"/>
     </volume>
 
     <volume name="logicUScoilunion_4">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="4005"/>
     </volume>
 
     <volume name="logicUScoilunion_5">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="4006"/>
     </volume>
 
     <volume name="logicUScoilunion_6">
       <materialref ref="Copper"/>
       <solidref ref="uscoilunion_7"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="4007"/>
     </volume>
 
     <volume name="boxUSShieldColl1_logic">
