@@ -494,8 +494,8 @@
     <volume name="logicUScoll_test_tube_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="col1_test_tube"/>
-	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-	<auxiliary auxtype="DetNo" auxvalue="2011"/>
+	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+	 <auxiliary auxtype="DetNo" auxvalue="2011"/> -->
     </volume>
 
    <volume name="logicUScollunion_1">

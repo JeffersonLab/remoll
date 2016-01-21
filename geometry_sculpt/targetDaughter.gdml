@@ -186,10 +186,10 @@
     </volume>
 
     <volume name="boxtgtShield1_logic">
-      <materialref ref="Tungsten"/>
+      <materialref ref="Concrete"/>
 <!--  <materialref ref=HD_"Concrete"/> -->
 <!--  <auxiliary auxtype="Color" auxvalue="Blue"/> -->
-<!--  <materialref ref="Concrete"/> -->
+<!--  <materialref ref="Tungsten"/> -->
 <!--  <materialref ref="Borated_Concrete"/> -->
       <solidref ref="boxtgtShield1_solid"/>
     </volume>

@@ -634,7 +634,7 @@
 	<materialref ref="Tungsten"/>
 	<solidref ref="col1fin_7"/>
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-	<auxiliary auxtype="DetNo" auxvalue="2003"/>
+	<auxiliary auxtype="DetNo" auxvalue="2006"/>
     </volume>
    <volume name="logicUScollunion_1">
       <materialref ref="Tungsten"/>

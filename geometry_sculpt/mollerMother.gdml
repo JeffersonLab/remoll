@@ -51,16 +51,20 @@
       </physvol>
 
       <physvol>
-      <!-- <file name="geometry_sculpt/upstreamDaughter.gdml"/> -->
-      <file name="geometry_sculpt/upstreamDaughter_merged_design1_check3.gdml"/>
-      <positionref ref="upstreamCenter"/>
-      <rotationref ref="identity"/>
+	<!-- <file name="geometry_sculpt/upstreamDaughter.gdml"/> -->
+	<file name="geometry_sculpt/upstreamDaughter_merged_design1_check3.gdml"/>
+	<!-- no sens detectors -->
+	<!--<file name="geometry_sculpt/upstreamDaughter_merged_design1_check3_noDet.gdml"/> -->
+	<positionref ref="upstreamCenter"/>
+	<rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-      <file name="geometry_sculpt/hybridDaughter.gdml"/>
-      <positionref ref="hybridCenter"/>
-      <rotationref ref="identity"/>
+	<!-- no sens detectors -->
+	<!-- <file name="geometry_sculpt/hybridDaughter_noDet.gdml"/> -->
+	<file name="geometry_sculpt/hybridDaughter.gdml"/>
+	<positionref ref="hybridCenter"/>
+	<rotationref ref="identity"/>
       </physvol>    
 
 

@@ -165,8 +165,8 @@
     <constant name="shield_DS_beampipe_p2_DS_rmin" value="36.6"/>
     <constant name="shield_DS_beampipe_p2_US_rmax" value="shield_DS_beampipe_p2_US_rmin + shield_DS_beampipe_thickness"/>
     <constant name="shield_DS_beampipe_p2_DS_rmax" value="shield_DS_beampipe_p2_DS_rmin + shield_DS_beampipe_thickness"/>
-    <constant name="shield_DS_beampipe_p3_length" value="1400"/>
-    <constant name="shield_DS_beampipe_p3_US_rmin" value="33"/>
+    <constant name="shield_DS_beampipe_p3_length" value="50"/>
+    <constant name="shield_DS_beampipe_p3_US_rmin" value="36.6"/>
     <constant name="shield_DS_beampipe_p3_DS_rmin" value="36.6"/>
     <constant name="shield_DS_beampipe_p3_US_rmax" value="shield_DS_beampipe_p3_US_rmin + shield_DS_beampipe_thickness"/>
     <constant name="shield_DS_beampipe_p3_DS_rmax" value="shield_DS_beampipe_p3_DS_rmin + shield_DS_beampipe_thickness"/>
