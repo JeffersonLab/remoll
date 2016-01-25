@@ -65,13 +65,19 @@
     <constant name="COLL1_THICK" value ="500.0"/>
 
     <!--Fins for col-1 -->
-    <constant name="col1fin_DeltaR" value ="20.0"/>
+    <constant name="col1fin_DeltaR" value ="25.0"/>
     <constant name="col1fin_Length" value ="COLL1_Ring1_Length"/>
     <constant name="col1fin_RMax" value ="COLL1_R4_U+col1fin_DeltaR"/>
+    <constant name="sub_col1fin_RMax" value ="3.2"/>
     <constant name="col1fin_RMin" value ="COLL1_R4_U+0.0001"/>
-    <constant name="col1fin_Delta_SEPTANT" value ="30.0"/>
+<!--    <constant name="col1fin_Delta_SEPTANT" value ="30.0"/> --> <!--for theta_fin = 21.4 -->
+    <constant name="col1fin_Delta_SEPTANT" value ="17.4"/> <!--for theta_fin = 17 -->
+    <!--col1fin_SEPTANT is the angular area to be removed -->
     <constant name="col1fin_SEPTANT" value ="SEPTANT + col1fin_Delta_SEPTANT"/>
     <position name="poscol1fin" unit="mm" x="0" y="0" z="COLL1_z - COLL1_THICK/2 + col1fin_Length/2"/>
+    <position name="poscol1fin_test" unit="mm" x="0" y="0" z="COLL1_z - COLL1_THICK/2 + col1fin_Length/2"/>
+    <position name="trans_col1fin" unit="mm" x="col1fin_RMax" y="0" z="0"/>
+    <position name="trans_col1fin_1" unit="mm" x="0" y="0" z="0"/>
     <!--Col-1 positions -->
     <position name="trans_COL1_1" unit="mm" x="0" y="0" z="COLL1_sub_Length/2 - COLL1_THICK/2"/>
     <position name="trans_COL1_2" unit="mm" x="0" y="0" z="-1*COLL1_Ring4_Length/2 + COLL1_THICK/2"/>
@@ -82,6 +88,7 @@
     <!--Remove/leave space from outer radius of merged col-1 for water cooling -->
     <position name="trans_COL1_7" unit="mm" x="0" y="0" z="COLL1_remove_Ring1_Length/2 - COLL1_THICK/2 + 100"/>
     <position name="trans_COL1_8" unit="mm" x="0" y="0" z="COLL1_remove_Ring2_Length/2 - COLL1_THICK/2 + 200"/>
+    
 
     <!--    <position name="posCOLL2" unit="mm" x="0" y="0" z="5600-UOFFSET"/> -->
     <!-- main coll, adjust this -->
@@ -400,12 +407,14 @@
 
      <!--Fins for col-1 -->
      <tube aunit="deg" deltaphi="360" lunit="mm" name="col1fin_0" rmax="col1fin_RMax" rmin="col1fin_RMin" startphi="0" z="col1fin_Length"/>
+
      <cone aunit="deg" deltaphi="col1fin_SEPTANT/2" lunit="mm" name="col1fin_cons_1" 
           rmax1="COLL2_R3_U-DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
           rmax2="COLL2_R3_D+DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
           rmin1="0" 
           rmin2="0" startphi="-col1fin_SEPTANT/4" z="col1fin_Length*2"/>
 
+     
     <subtraction name ="col1fin_1">
         <first ref="col1fin_0"/>
         <second ref="col1fin_cons_1"/>
@@ -442,6 +451,80 @@
         <rotation name="uscollfin_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
     </subtraction>
 
+     <cone aunit="deg" deltaphi="col1fin_SEPTANT/2" lunit="mm" name="sub_col1fin_cons_1" 
+           rmin1="col1fin_RMax" 
+           rmin2="col1fin_RMax" 
+           rmax1="col1fin_RMax+4.0" 
+           rmax2="col1fin_RMax+4.0" 
+	   startphi="-col1fin_SEPTANT/4" z="col1fin_Length*2"
+	   />
+
+
+     <tube aunit="deg" deltaphi="360" lunit="mm" name="sub_col1fin_0" rmax="sub_col1fin_RMax" rmin="0" startphi="0" z="col1fin_Length*2"/>
+
+     <union name ="sub_col1fin_cons_2">
+        <first ref="sub_col1fin_cons_1"/>
+        <second ref="sub_col1fin_0"/>
+	<positionref ref="trans_col1fin"/>
+     </union>
+
+
+
+    <subtraction name ="col1fin_8">
+        <first ref="col1fin_7"/>
+        <second ref="sub_col1fin_cons_2"/>
+        <rotation name="uscollfin_rot8" x="0" y="0" z="SEPTANT*(0 + 0.0)" unit="deg"/>
+    </subtraction>
+
+    <subtraction name ="col1fin_9">
+        <first ref="col1fin_8"/>
+        <second ref="sub_col1fin_cons_2"/>
+        <rotation name="uscollfin_rot9" x="0" y="0" z="SEPTANT*(1 + 0.0)" unit="deg"/>
+    </subtraction>
+
+    <subtraction name ="col1fin_10">
+        <first ref="col1fin_9"/>
+        <second ref="sub_col1fin_cons_2"/>
+        <rotation name="uscollfin_rot10" x="0" y="0" z="SEPTANT*(2 + 0.0)" unit="deg"/>
+    </subtraction>
+
+    <subtraction name ="col1fin_11">
+        <first ref="col1fin_10"/>
+        <second ref="sub_col1fin_cons_2"/>
+        <rotation name="uscollfin_rot11" x="0" y="0" z="SEPTANT*(3 + 0.0)" unit="deg"/>
+    </subtraction>
+
+    <subtraction name ="col1fin_12">
+        <first ref="col1fin_11"/>
+        <second ref="sub_col1fin_cons_2"/>
+        <rotation name="uscollfin_rot12" x="0" y="0" z="SEPTANT*(4 + 0.0)" unit="deg"/>
+    </subtraction>
+
+    <subtraction name ="col1fin_13">
+        <first ref="col1fin_12"/>
+        <second ref="sub_col1fin_cons_2"/>
+        <rotation name="uscollfin_rot13" x="0" y="0" z="SEPTANT*(5 + 0.0)" unit="deg"/>
+    </subtraction>
+
+    <subtraction name ="col1fin_14">
+        <first ref="col1fin_13"/>
+        <second ref="sub_col1fin_cons_2"/>
+        <rotation name="uscollfin_rot14" x="0" y="0" z="SEPTANT*(6 + 0.0)" unit="deg"/>
+    </subtraction>
+
+     <cone aunit="deg" deltaphi="360" lunit="mm" name="sub_col1fin_cons_3" 
+           rmin1="col1fin_RMin" 
+           rmin2="col1fin_RMin+17.3" 
+           rmax1="col1fin_RMax+2" 
+           rmax2="col1fin_RMax+2" 
+	   startphi="0" z="31"
+	   />
+
+     <subtraction name ="col1fin_15">
+        <first ref="col1fin_14"/>
+        <second ref="sub_col1fin_cons_3"/>
+	<position name="col1fin_15_pos" x="0" y="0" z="-1/2*col1fin_Length + 30/2" unit="mm"/>
+    </subtraction>
 
 
     <box lunit="mm" name="COLL_BOX"  x="1000" y="1000" z="1000"/>
@@ -632,10 +715,12 @@
 
     <volume name="logicUScol1fin_1">
 	<materialref ref="Tungsten"/>
-	<solidref ref="col1fin_7"/>
+	<solidref ref="col1fin_15"/>
+	<auxiliary auxtype="Color" auxvalue="red"/>
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
 	<auxiliary auxtype="DetNo" auxvalue="2006"/>
     </volume>
+
    <volume name="logicUScollunion_1">
       <materialref ref="Tungsten"/>
       <solidref ref="uscoll2_union_6"/>
@@ -766,7 +851,6 @@
         <volumeref ref="logicUScol1fin_1"/>
         <positionref ref="poscol1fin"/>
       </physvol>
-
 
       <physvol name="UScollunion_1">
         <volumeref ref="logicUScollunion_1"/>
