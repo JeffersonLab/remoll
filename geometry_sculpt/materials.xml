@@ -229,6 +229,7 @@
     <fraction ref="N15" n="0.0037" />
   </element>
 
+
   
   <material Z="1" name="VacuumTarg" state="gas">
     <T unit="K" value="2.73"/>
@@ -370,6 +371,29 @@
     <atom unit="g/mole" value="1.01"/>
   </material>
 
+  <isotope name="Ni58" Z="28" N="58">
+    <atom type="A" value="57.94"/>
+  </isotope>
+  <isotope name="Ni60" Z="28" N="60">
+    <atom type="A" value="59.93"/>
+  </isotope>
+  <isotope name="Ni61" Z="28" N="61">
+    <atom type="A" value="60.93"/>
+  </isotope>
+  <isotope name="Ni62" Z="28" N="62">
+    <atom type="A" value="61.93"/>
+  </isotope>
+  <isotope name="Ni64" Z="28" N="64">
+    <atom type="A" value="63.93"/>
+  </isotope>
+
+  <element Z="28" formula="Ni" name="Nickel" >
+    <fraction ref="Ni58" n="0.6808" />
+    <fraction ref="Ni60" n="0.2622" />
+    <fraction ref="Ni61" n="0.0114" />
+    <fraction ref="Ni62" n="0.0363" />
+    <fraction ref="Ni64" n="0.0093" />
+  </element>
 
 
   <material Z="29" name="Copper" formula="Cu" state="solid">
@@ -382,5 +406,11 @@
     <atom unit="g/mole" value="207.2"/>
   </material>
 
+  <material name="CW95" state="solid">
+    <D value="18.0" unit="g/cm3"/>
+    <fraction n="0.9500" ref="Tungsten"/>
+    <fraction n="0.015" ref="Copper"/>
+    <fraction n="0.035" ref="Nickel"/>
+  </material>
 
 </materials>
