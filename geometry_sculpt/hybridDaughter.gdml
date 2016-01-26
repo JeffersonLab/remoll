@@ -1194,42 +1194,49 @@
       <solidref ref="dscoilunion_10"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3001"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
     <volume name="logicDScoil_1">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3002"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
     <volume name="logicDScoil_2">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/> 
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3003"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
     <volume name="logicDScoil_3">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3004"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
     <volume name="logicDScoil_4">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3005"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
     <volume name="logicDScoil_5">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3006"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
     <volume name="logicDScoil_6">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_10"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3007"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
 
     <volume name="logicDScoil_7">
@@ -1237,12 +1244,14 @@
       <solidref ref="dscoilunion_124"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3008"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
     <volume name="logicDScoil_8">
       <materialref ref="Copper"/>
       <solidref ref="dscoilunion_124"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3009"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
 
     <volume name="logicDScoil_9">
@@ -1250,6 +1259,7 @@
       <solidref ref="dscoilunion_124"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3010"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
 
     <volume name="logicDScoil_10">
@@ -1257,6 +1267,7 @@
       <solidref ref="dscoilunion_124"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3011"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
 
     <volume name="logicDScoil_11">
@@ -1264,6 +1275,7 @@
       <solidref ref="dscoilunion_124"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3012"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
 
     <volume name="logicDScoil_12">
@@ -1271,6 +1283,7 @@
       <solidref ref="dscoilunion_124"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3013"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
 
     <volume name="logicDScoil_13">
@@ -1278,6 +1291,7 @@
       <solidref ref="dscoilunion_124"/>
       <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
       <auxiliary auxtype="DetNo" auxvalue="3014"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
     </volume>
 
 
@@ -1320,6 +1334,7 @@
       <materialref ref="Concrete"/>
       <!-- <solidref ref="boxDSShieldColl1_solid"/> -->
       <solidref ref="boxDSShieldColl1_sub_solid"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
     </volume>
 
     <!-- Neutron Poly Shielding -->
@@ -1348,7 +1363,8 @@
 <!--      <materialref ref="Borated_Concrete"/> -->
       <materialref ref="Concrete"/>
       <solidref ref="boxDSShield1_solid"/>
-    </volume>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+   </volume>
 
     <volume name="DSShield_Tube_logic">
       <materialref ref="Lead"/>
@@ -1360,22 +1376,26 @@
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="DSbeampipe_1"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>
     <volume name="DSbeampipe_2_logic">
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="DSbeampipe_2"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>
     <volume name="DSbeampipe_3_logic">
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="DSbeampipe_3"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>
 
     <volume name="shield_DS_beampipe_logic">
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="shield_DS_beampipe_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>
 
 

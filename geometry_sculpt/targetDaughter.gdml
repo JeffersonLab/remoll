@@ -192,6 +192,7 @@
 <!--  <materialref ref="Tungsten"/> -->
 <!--  <materialref ref="Borated_Concrete"/> -->
       <solidref ref="boxtgtShield1_solid"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
     </volume>
 
   <!-- Neutron Poly Shielding -->
@@ -209,6 +210,7 @@
       <!--  <materialref ref="Tungsten"/> -->
       <materialref ref="Lead"/>
       <solidref ref="boxShieldColl1_solid"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
     </volume>
 
     <volume name="logicTarget">
