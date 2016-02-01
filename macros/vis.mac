@@ -2,7 +2,8 @@
 /vis/open OGL 600x600-0+0  
 
 #/vis/open OGLIQt 1200x800
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+#/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+/remoll/setgeofile geometry_dose/mollerMother.gdml
 
 #/remoll/likekryptonite  true
 
