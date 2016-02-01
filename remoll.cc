@@ -108,7 +108,8 @@ int main(int argc, char** argv){
     #if G4VERSION_NUMBER < 1000
     G4VModularPhysicsList* physlist = factory.GetReferencePhysList("LHEP");
     #else
-    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("FTFP_BERT_LIV");
+    //G4VModularPhysicsList* physlist = factory.GetReferencePhysList("FTFP_BERT_LIV");
+    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
     #endif
     physlist->SetVerboseLevel(verbose);
     runManager->SetUserInitialization(physlist);
