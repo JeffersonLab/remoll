@@ -8,6 +8,7 @@
 
 <define>
 	<position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
+	<position name="coneMother_sub_1_center" x="0" y="0" z="0.0000" unit="mm"/>
 </define>
 
 &materials;
@@ -15,7 +16,15 @@
 
 <solids>
     <box lunit="mm" name="boxDetectors" x="4000" y="4000" z="500"/>
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="coneMother_sub_1" rmax1="499" rmax2="499" rmin1="0" rmin2="0" startphi="0" z="1000"/>
+    <subtraction name ="boxMotherDetector">
+	<first ref="boxDetectors"/> 
+	<second ref="coneMother_sub_1"/> 
+	<positionref ref="coneMother_sub_1_center"/>
+    </subtraction>
+
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax1="1900" rmax2="1900" rmin1="500" rmin2="500" startphi="0" z="10"/>
+    
 </solids>
 
 <structure>
@@ -30,7 +39,7 @@
 
     <volume name="logicDetector">
       <materialref ref="Vacuum"/>
-      <solidref ref="boxDetectors"/>
+      <solidref ref="boxMotherDetector"/>
 
       <physvol name="planeDet_0">
         <volumeref ref="logicWasher_0"/>
