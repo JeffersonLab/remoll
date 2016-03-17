@@ -26,42 +26,46 @@ class remollBeamTarget;
 class remollRunData;
 
 class remollVEventGen {
-public:
-    remollVEventGen();
-    virtual ~remollVEventGen();
+    public:
+	remollVEventGen();
+	virtual ~remollVEventGen();
 
-    remollEvent *GenerateEvent();
+	remollEvent *GenerateEvent();
 
-    G4String GetName() {
-        return fName;
-    }
+	G4String GetName(){ return fName; }
 
-    void SetSampType( SampType_t st ) {
-        fSampType = st;
-    }
-    void SetDoMultScatt( G4bool ms ) {
-        fApplyMultScatt = ms;
-    }
+	void SetSampType( SampType_t st ) { fSampType = st; }
+	void SetDoMultScatt( G4bool ms ){ fApplyMultScatt = ms; }
 
-    G4double fThCoM_min, fThCoM_max;
-    G4double fTh_min, fTh_max;
-    G4double fE_min;
+	virtual void SetThMin( double th ){ fTh_min = th; }
+	virtual void SetThMax( double th ){ fTh_max = th; }
+	virtual void SetPhMin( double ph ){ fPh_min = ph; }
+	virtual void SetPhMax( double ph ){ fPh_max = ph; }
+	virtual void SetEmin( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
+	virtual void SetEmax( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
+	virtual void SetThCoM_min( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
+	virtual void SetThCoM_max( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
 
-private:
-    const G4String fName;
+	G4double fThCoM_min, fThCoM_max;
+	G4double fTh_min, fTh_max;
+	G4double fPh_min, fPh_max;
+	G4double fE_min, fE_max;
 
-    remollBeamTarget *fBeamTarg;
-    remollRunData    *fRunData;
+    private:
+	const G4String fName;
 
-    void PolishEvent(remollEvent *);
+	remollBeamTarget *fBeamTarg;
+	remollRunData    *fRunData;
 
-    // Pure virtual function that needs to be filled out
-    virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
+	void PolishEvent(remollEvent *);
+	
+	// Pure virtual function that needs to be filled out
+	virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
 
-protected:
+    protected:
 
-    SampType_t fSampType;
-    G4bool     fApplyMultScatt;
+	SampType_t fSampType;
+	G4bool     fApplyMultScatt;
 
 };
 
