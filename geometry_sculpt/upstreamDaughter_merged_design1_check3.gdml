@@ -144,9 +144,9 @@
 
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
-    <constant name="USPolyShield1_side_thickness" value="400"/>
-    <constant name="USPolyShield1_top_thickness" value="400"/>
-    <constant name="USPolyShield1_bottom_thickness" value="400"/>
+    <constant name="USPolyShield1_side_thickness" value="400 + 400"/>
+    <constant name="USPolyShield1_top_thickness" value="400 + 400"/>
+    <constant name="USPolyShield1_bottom_thickness" value="400 + 400"/>
     <constant name="USPolyShield1_length" value="USShield1_length + USShield2_length + 1 + 2*USPolyShield1_side_thickness + 100"/>
     <constant name="USPolyShield1_width" value="USShield2_width + 1 + 2*USPolyShield1_side_thickness"/>
     <constant name="USPolyShield1_height" value="USShield2_height + 1 + USPolyShield1_top_thickness + USPolyShield1_bottom_thickness"/>
@@ -187,8 +187,8 @@
        To have optimized US mother volume use these numbers
       -->
     <constant name="USTubemother_rmax" value="1900"/>
-    <constant name="USBoxmother_width" value="4200"/>
-    <constant name="USBoxmother_height" value="4000"/>
+    <constant name="USBoxmother_width" value="4200 + 300"/>
+    <constant name="USBoxmother_height" value="4000 + 300"/>
     <constant name="USTubemother_length" value="4500"/>
     <constant name="tubeBeampipeMother_1_union_rmax" value="200-1"/>
     <!--500 subtracted to have space for lead coller + potential poly shielding -->
