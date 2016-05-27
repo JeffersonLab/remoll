@@ -11,10 +11,10 @@ This generator will produce paw ntuple called bggen.nt that will contain the gen
 
 In the macro file fort.15 modify the random number and no.of events to be generated 
 
-Once the  bggen.nt file is generated ntuple can be converted to a root TTree using h2root executable provided by the root software package.
+Once the  bggen.nt file is generated ntuple can be converted to a root TTree using h2root executable provided by the root software package. Once converted use the script scripts/HallD_LH_xs.cc to generate LUND files and kinematics plots
 
 
-List of files modfied to enable electro-production
+List of files modfied in bggen to enable electro-production
 
 
 A       code/bremsbeam_ini.F
