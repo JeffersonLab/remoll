@@ -130,9 +130,10 @@ C
             ptmp2(4,i)=SQRT(ptmp2(1,i)**2+ptmp2(2,i)**2+ptmp2(3,i)**2
      +                     +AMTRA(i)**2)
          ENDDO
-         CALL WRITE_HDDM_EVENT(RUNNO, IEVENT,IEVPROC
-     +                        ,ifl1(1,1),ptmp1(1,1)
-     +                        ,NTRA,ifl2(1,1),ptmp2(1,1))
+         WRITE(6,*) ' WARNING: HDDM output disabled in this version!'
+C         CALL WRITE_HDDM_EVENT(RUNNO, IEVENT,IEVPROC
+C     +                        ,ifl1(1,1),ptmp1(1,1)
+C     +                        ,NTRA,ifl2(1,1),ptmp2(1,1))
 C         write(6,1010) (i,(ifl1(j,i),j=1,6),(ptmp1(j,i),j=1,4),i=1,2)
 C         write(6,1010) (i,(ifl2(j,i),j=1,6),(ptmp2(j,i),j=1,4),i=1,NTRA)
       ENDIF

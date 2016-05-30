@@ -219,7 +219,8 @@ C
 C---   Output file for HDDM
 C
       IF(IWROUT(1).NE.0) THEN
-         CALL OPEN_HDDM_OUTPUT('bggen.hddm')
+         WRITE(6,*) ' WARNING: HDDM output disabled in this version!'
+C         CALL OPEN_HDDM_OUTPUT('bggen.hddm')
       ENDIF
 C
 C---   Sequential output file

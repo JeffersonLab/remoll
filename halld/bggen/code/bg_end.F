@@ -9,7 +9,8 @@ C
       INTEGER icycle,lun,lrec,idnt,iost
 C
       IF(IWROUT(1).NE.0) THEN
-         CALL CLOSE_HDDM_OUTPUT
+        WRITE(6,*) ' WARNING: HDDM output disabled in this version!'
+C         CALL CLOSE_HDDM_OUTPUT
       ENDIF
 C
       IF(IWROUT(2).NE.0) THEN
