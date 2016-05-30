@@ -1,1 +1,0 @@
-gpxsecp.o: gpxsecp.F

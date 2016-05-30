@@ -1,1 +1,0 @@
-gpxcosthr.o: gpxcosthr.F

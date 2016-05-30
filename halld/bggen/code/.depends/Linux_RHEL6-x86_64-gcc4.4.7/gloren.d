@@ -1,1 +1,0 @@
-gloren.o: gloren.F

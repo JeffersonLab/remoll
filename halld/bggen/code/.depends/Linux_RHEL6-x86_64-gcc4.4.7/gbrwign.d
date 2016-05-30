@@ -1,1 +1,0 @@
-gbrwign.o: gbrwign.F

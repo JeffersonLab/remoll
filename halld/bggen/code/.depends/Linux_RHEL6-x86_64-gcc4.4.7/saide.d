@@ -1,1 +1,0 @@
-saide.o: saide.F

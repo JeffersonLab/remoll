@@ -1,1 +1,0 @@
-gpxsect.o: gpxsect.F

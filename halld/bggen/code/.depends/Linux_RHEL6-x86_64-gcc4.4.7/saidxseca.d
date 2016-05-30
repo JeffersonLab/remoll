@@ -1,1 +1,0 @@
-saidxseca.o: saidxseca.F

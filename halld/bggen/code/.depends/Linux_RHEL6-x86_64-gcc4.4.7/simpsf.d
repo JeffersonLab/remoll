@@ -1,1 +1,0 @@
-simpsf.o: simpsf.F

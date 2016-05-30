@@ -1,1 +1,0 @@
-omrotv.o: omrotv.F

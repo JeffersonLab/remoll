@@ -1,1 +1,0 @@
-rndm.o: rndm.F

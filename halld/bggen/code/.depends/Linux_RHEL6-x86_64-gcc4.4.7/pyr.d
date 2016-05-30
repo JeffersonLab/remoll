@@ -1,1 +1,0 @@
-pyr.o: pyr.F

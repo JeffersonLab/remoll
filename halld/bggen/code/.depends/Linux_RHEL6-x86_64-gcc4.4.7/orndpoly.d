@@ -1,1 +1,0 @@
-orndpoly.o: orndpoly.F

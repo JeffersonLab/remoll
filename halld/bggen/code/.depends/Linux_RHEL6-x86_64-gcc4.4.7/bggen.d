@@ -1,1 +1,0 @@
-bggen.o: bggen.cc

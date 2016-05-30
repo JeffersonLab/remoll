@@ -1,1 +1,0 @@
-omrots.o: omrots.F

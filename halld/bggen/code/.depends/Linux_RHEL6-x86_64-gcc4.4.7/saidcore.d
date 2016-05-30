@@ -1,1 +1,0 @@
-saidcore.o: saidcore.F

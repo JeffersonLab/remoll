@@ -1,6 +1,0 @@
-
-
-Import('*')
-
-SConscript(dirs=['code'], exports='env osname', duplicate=0)
-

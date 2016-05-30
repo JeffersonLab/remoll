@@ -1,1 +1,0 @@
-gdecan.o: gdecan.F
