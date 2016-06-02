@@ -37,6 +37,22 @@ Once you have installed these packages you can navigate to bggen/ and run the fo
 
 This will create the executable bggen in the directory build.
 
+## Compiling on the JLab ifarm (by Wouter Deconinck, wdconinc@jlab.org)
+
+Setup the cernlib environment for the 32-bit libraries (possibly add this to your .login file):
+
+    export CERN=/site/cernlib/i386_rhel6
+    export CERN_LEVEL=2005
+
+or for you tcsh users:
+
+    setenv CERN /site/cernlib/i386_rhel6
+    setenv CERN_LEVEL 2005
+
+The command `cernlib` will allow you to check whether these settings have taken effect correctly.
+
+Proceed as per my insturctions above. The cmake command will call the cernlib command and all will
+be good.
 
 ## Running the code
 Once the code is running there modify beam current and target length for the proton target by 
