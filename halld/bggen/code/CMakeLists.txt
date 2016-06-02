@@ -41,8 +41,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # source files
 file(GLOB libsources ${PROJECT_SOURCE_DIR}/*.F)
-file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.inc)
-add_library(bggen_object OBJECT ${libsources} ${libheaders})
+add_library(bggen_object OBJECT ${libsources})
 set_target_properties(bggen_object PROPERTIES POSITION_INDEPENDENT_CODE 1)
 add_library(bggen_static STATIC $<TARGET_OBJECTS:bggen_object>)
 set_target_properties(bggen_static PROPERTIES OUTPUT_NAME libbggen)
