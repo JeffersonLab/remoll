@@ -41,14 +41,26 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # source files
 file(GLOB libsources ${PROJECT_SOURCE_DIR}/*.F)
+
+# object library
 add_library(bggen_object OBJECT ${libsources})
 set_target_properties(bggen_object PROPERTIES POSITION_INDEPENDENT_CODE 1)
+set_target_properties(bggen_object PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+
+# static library
 add_library(bggen_static STATIC $<TARGET_OBJECTS:bggen_object>)
 set_target_properties(bggen_static PROPERTIES OUTPUT_NAME libbggen)
+set_target_properties(bggen_static PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
 target_link_libraries(bggen_static ${CERNLIB})
+
+# shared library
 add_library(bggen_shared SHARED $<TARGET_OBJECTS:bggen_object>)
 set_target_properties(bggen_shared PROPERTIES OUTPUT_NAME libbggen)
+set_target_properties(bggen_shared PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
 target_link_libraries(bggen_shared ${CERNLIB})
 
-add_executable(bggen.exe bggen.cc)
-target_link_libraries(bggen.exe bggen_shared ${CERNLIB})
+# executable
+add_executable(bggen bggen.cc)
+target_link_libraries(bggen bggen_shared ${CERNLIB})
+set_target_properties(bggen PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+
