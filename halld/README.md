@@ -19,17 +19,17 @@ have a 64-bit workstation, you will need to install the 32-bit libraries and com
 32-bit binary since the cernlib packlib library does not support writing HBOOK files on 64-bit machines.
 
 On RHEL 6.8 (JLab CUE level 2 machines) you should install the following 32-bit packages:
-  yum install cernlib.i686 cernlib-devel.i686 cernlib-static.i686 cernlib-utils.i686
+    yum install cernlib.i686 cernlib-devel.i686 cernlib-static.i686 cernlib-utils.i686
 You will need to find the cernlib-utils package online on rpmfind.net. It is the package that provides
 the helper script 'cernlib' that is required for this process.
 
 Similarly you will need to install 32-bit system libraries:
-  yum install lapack.i686 blas.i686 glibc.i686 glibc-devel.i686
+    yum install lapack.i686 blas.i686 glibc.i686 glibc-devel.i686
 
 Once you have installed these packages you can navigate to bggen/ and run the following commands
-  mkdir build && cd build
-  cmake ../code
-  make
+    mkdir build && cd build
+    cmake ../code
+    make
 
 This will create the executable bggen in the directory build.
 
@@ -38,7 +38,7 @@ This will create the executable bggen in the directory build.
 Once the code is running there modify beam current and target length for the proton target by 
 modifying the FORTRAN file,
 
-     bggen/code/bremsbeam_ini.F
+    bggen/code/bremsbeam_ini.F
 
 This generator will produce paw ntuple called bggen.nt that will contain the generated events
 
