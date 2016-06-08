@@ -1195,7 +1195,7 @@ G4double MEC2009(G4double q2,G4double w2, G4int A)//checked
 
     if (f1 <= 1.0E-9 ) f1 = 0.0;
 
-    if(isnan(f1)){
+    if(std::isnan(f1)){
       G4cerr << "Error! nans "<<__FILE__ << " line " << __LINE__ <<" "<<G4endl;
       G4cerr <<" "<< f1 <<" "<<x<<" "<< nu <<" "<<w2<<" "<<p18<<" "<<q2<<" "<<G4endl;
       G4cerr <<"  "<< exp(-pow(w-P[1],2)/P[2]) << " " << (pow(1.0 + std::max(0.3,q2)/P[3],P[4])) <<" "<< pow(nu,P[5]) 
