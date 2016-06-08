@@ -38,9 +38,6 @@ remollGenLUND::~remollGenLUND()
 
 void remollGenLUND::SamplePhysics(remollVertex *vert, remollEvent *evt)
 {
-  Int_t pid;
-
-
   fRunData = remollRun::GetRun()->GetData();
 
   if(!bLUND){//to make sure no.of events thrown out by G4 is same as lund file. 
@@ -68,9 +65,9 @@ void remollGenLUND::SamplePhysics(remollVertex *vert, remollEvent *evt)
     LUNDfile.seekg(0, std::ios::beg);
 
     //this simple trick only works for when there are one particle per event as input in the lund file
-    //Int_t linecount = std::count(std::istreambuf_iterator<char>(LUND_in2),std::istreambuf_iterator<char>(), '\n')/2;
+    //size_t linecount = std::count(std::istreambuf_iterator<char>(LUND_in2),std::istreambuf_iterator<char>(), '\n')/2;
     //count no.of lines in LUND file with the ratefactor
-    Int_t linecount = std::count(std::istream_iterator<std::string>(LUNDfile), std::istream_iterator<std::string>(),words[9]);
+    size_t linecount = std::count(std::istream_iterator<std::string>(LUNDfile), std::istream_iterator<std::string>(),words[9]);
 
     if (linecount != fRunData->GetNthrown()) {
       G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR : LUND file events " << linecount << " mis-match with G4,fRunData->GetNthrown() " <<  fRunData->GetNthrown()<< G4endl;
@@ -80,7 +77,6 @@ void remollGenLUND::SamplePhysics(remollVertex *vert, remollEvent *evt)
     //reset the file back to first line
     LUNDfile.clear();
     LUNDfile.seekg(0, std::ios::beg);
-
   }
 
   //read two lines from the LUND file
@@ -108,7 +104,7 @@ void remollGenLUND::SamplePhysics(remollVertex *vert, remollEvent *evt)
 void remollGenLUND::SetLUNDFile(G4String filename)
 {
   // open the LUND file
-  LUNDfile.open(filename, ios::in);
+  LUNDfile.open(filename, std::ios::in);
 
   if (!LUNDfile.good()) {
     G4cerr << "LUND file does not exist."<< G4endl;
