@@ -80,10 +80,13 @@ void remollGenLUND::SetLUNDFile(G4String filename)
   // check if LUND file is open
   if (!LUNDfile.good()) {
     G4cerr << "LUND file " << filename << " does not exist." << G4endl;
+    bLUND = false;
     return;
-  } else
+  } else {
     // print file name
     G4cout << "LUND file " << filename << " opened successfully." << G4endl;
+    bLUND = true;
+  }
 
   // Make sure that number of events thrown out by G4 is less or equal to that in LUND file
   std::string line;
