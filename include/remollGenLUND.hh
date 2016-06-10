@@ -26,21 +26,19 @@ class remollGenLUND : public remollVEventGen {
     // virtual destructor
     virtual ~remollGenLUND();
 
-    void SetParticleType(G4String t) { fParticleType = t; }
     void SetLUNDFile(G4String f);
 
   private:
     void SamplePhysics(remollVertex *, remollEvent *);
 
-    G4String fParticleType;
-
     remollRunData *fRunData;
 
     std::ifstream LUNDfile;
+    size_t LUNDfile_linecount;
 
     G4bool bLUND;
-    std::map<int,G4String> pidname;
 
+    std::map<int,G4String> pidname;
 };
 
 #endif//__REMOLLGENLUND_HH 
