@@ -24,8 +24,15 @@
 #include "remollMessenger.hh"
 
 //  Standard physics list
-//#include "LHEP.hh"
+#include "G4Version.hh"
 #include "G4PhysListFactory.hh"
+#include "G4OpticalPhysics.hh"
+#if G4VERSION_NUMBER < 1000
+#include "G4StepLimiterBuilder.hh"
+#else
+#include "G4StepLimiterPhysics.hh"
+#endif
+
 #include "G4RunManager.hh"
 
 #include "G4UnitsTable.hh"
@@ -100,11 +107,14 @@ int main(int argc, char** argv){
     // Physics we want to use
     G4int verbose = 0;
     G4PhysListFactory factory;
-//    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("LHEP");
-    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT");
-    physlist->SetVerboseLevel(verbose);
-//    physlist->RegisterPhysics( new G4StepLimiterBuilder(verbose) );
+    #if G4VERSION_NUMBER < 1000
+    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("LHEP");
+    physlist->RegisterPhysics( new G4StepLimiterBuilder(verbose) );
+    #else
+    //G4VModularPhysicsList* physlist = factory.GetReferencePhysList("FTFP_BERT_LIV");
+    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
     physlist->RegisterPhysics( new G4StepLimiterPhysics(verbose) );
+    #endif
     runManager->SetUserInitialization(physlist);
 
     //-------------------------------
