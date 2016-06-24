@@ -1,13 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
-  <define>    
-    <matrix coldim="2" name="ABSLENGTH_1" values="1.54986e-06 263160 1.77127e-06 250000 2.06648e-06 227270 2.47978e-06 200000 3.09973e-06 131580 4.13297e-6 16130 4.95956e-6 740 5.51063e-6 125 5.90424e-6 10"/>
-    <matrix coldim="2" name="RINDEX_1" values="1.54986e-06 1.45338 1.77127e-06 1.45536 2.06648e-06 1.4581 2.47978e-06 1.46239 3.09973e-06 1.47018 4.13297e-6  1.48786 4.95956e-6  1.50751 5.51063e-6 1.52422 5.90424e-6 1.53842"/>
-    <matrix coldim="2" name="ABSLENGTH_2" values="1.54986e-06 1e+06 1.77127e-06 1e+06 2.06648e-06 1e+06 2.47978e-06 1e+06 3.09973e-06 1e+06 4.13297e-6 1e+06 4.95956e-6 1e+06 5.51063e-6 1e+06 5.90424e-6 1e+06"/>
-    <matrix coldim="2" name="FASTCOMPONENT" values="1.54986e-06 0.1 1.77127e-06 0.1 2.06648e-06 0.1 2.47978e-06 0.1 3.09973e-06 0.1 4.13297e-06 0.1 4.95956e-06 0.1 5.51063e-6 0.1 5.90424e-6 0.1"/>
-    <matrix coldim="2" name="RINDEX_2" values="1.54986e-06 1.000292 1.77127e-06 1 2.06648e-06 1.000292 2.47978e-06 1.000292 3.09973e-06 1.000292 4.13297e-06 1.000292 4.95956e-06 1.000292 5.51063e-6 1.000292 5.90424e-6 1.000292"/>
-    <matrix coldim="2" name="SLOWCOMPONENT" values="1.54986e-06 0.1 1.77127e-06 0.1 2.06648e-06 0.1 2.47978e-06 0.1 3.09973e-06 0.1 4.13297e-06 0.1 4.95956e-06 0.1 5.51063e-6 0.1 5.90424e-6 0.1"/>    
+  <define>
+
+    <!-- Tables are at photon energies corresponding with the following wavelengths
+      800*nm
+      700*nm
+      600*nm
+      500*nm
+      400*nm
+      300*nm
+      250*nm
+      225*nm
+      210*nm
+    -->
+
+    <matrix coldim="2" name="REFLECTIVITY_CATHODE" values="
+      1.54986*eV 0.25
+      1.77127*eV 0.25
+      2.06648*eV 0.25
+      2.47978*eV 0.25
+      3.09973*eV 0.25
+      4.13297*eV 0.25
+      4.95956*eV 0.25
+      5.51063*eV 0.25
+      5.90424*eV 0.25"/>
+    <matrix coldim="2" name="EFFICIENCY_CATHODE" values="
+      1.54986*eV 0.0080
+      1.77127*eV 0.0298
+      2.06648*eV 0.0638
+      2.47978*eV 0.1240
+      3.09973*eV 0.1770
+      4.13297*eV 0.2110
+      4.95956*eV 0.1780
+      5.51063*eV 0.0890
+      5.90424*eV 0.0355"/>
+
+    <matrix coldim="2" name="ABSLENGTH_QUARTZ" values="1.54986*eV 263160 1.77127*eV 250000 2.06648*eV 227270 2.47978*eV 200000 3.09973*eV 131580 4.13297*eV 16130 4.95956*eV 740 5.51063*eV 125 5.90424*eV 10"/>
+    <matrix coldim="2" name="RINDEX_QUARTZ" values="1.54986*eV 1.45338 1.77127*eV 1.45536 2.06648*eV 1.4581 2.47978*eV 1.46239 3.09973*eV 1.47018 4.13297*eV  1.48786 4.95956*eV  1.50751 5.51063*eV 1.52422 5.90424*eV 1.53842"/>
+
+    <matrix coldim="2" name="ABSLENGTH_AIR" values="1.54986*eV 1e+06 1.77127*eV 1e+06 2.06648*eV 1e+06 2.47978*eV 1e+06 3.09973*eV 1e+06 4.13297*eV 1e+06 4.95956*eV 1e+06 5.51063*eV 1e+06 5.90424*eV 1e+06"/>
+    <matrix coldim="2" name="RINDEX_AIR" values="1.54986*eV 1.000292 1.77127*eV 1 2.06648*eV 1.000292 2.47978*eV 1.000292 3.09973*eV 1.000292 4.13297*eV 1.000292 4.95956*eV 1.000292 5.51063*eV 1.000292 5.90424*eV 1.000292"/>
+
+    <matrix coldim="2" name="FASTCOMPONENT_AIR" values="1.54986*eV 0.1 1.77127*eV 0.1 2.06648*eV 0.1 2.47978*eV 0.1 3.09973*eV 0.1 4.13297*eV 0.1 4.95956*eV 0.1 5.51063*eV 0.1 5.90424*eV 0.1"/>
+    <matrix coldim="2" name="SLOWCOMPONENT_AIR" values="1.54986*eV 0.1 1.77127*eV 0.1 2.06648*eV 0.1 2.47978*eV 0.1 3.09973*eV 0.1 4.13297*eV 0.1 4.95956*eV 0.1 5.51063*eV 0.1 5.90424*eV 0.1"/>    
+
+    <!-- doi:10.1016/j.nima.2004.02.015 -->
+    <matrix coldim="1" name="SCINTILLATIONYIELD_AIR" values="25/MeV"/>
+
+    <!-- no references for the following -->
+    <matrix coldim="1" name="TRANSMITTANCE_AIR" values="1.0"/>
+    <matrix coldim="1" name="FASTTIMECONSTANT_AIR" values="10*ns"/>
+    <matrix coldim="1" name="SLOWTIMECONSTANT_AIR" values="30*ns"/>
+    <matrix coldim="1" name="YIELDRATIO_AIR" values="1.0"/>
+    <matrix coldim="1" name="RESOLUTIONSCALE_AIR" values="1.0"/>
+    <matrix coldim="1" name="FASTSCINTILLATIONRISETIME_AIR" values="0.01*ns"/>
+    <matrix coldim="1" name="SLOWSCINTILLATIONRISETIME_AIR" values="0.01*ns"/>
 
     <variable name="i" value="0"/> <!-- loop variable for solids -->
     <variable name="j" value="0"/> <!-- loop variable for component volumes -->
@@ -33,7 +81,7 @@
     <quantity name="ProbeThickness" type="length" value="15" unit="mm"/>
     <matrix coldim="1" name="ProbeWidthTop" values="(2.0*3.1415927*QuartzInnerRadius[1])/NUMDET+overlap (2.0*3.1415927*QuartzInnerRadius[2])/NUMDET+overlap (2.0*3.1415927*QuartzInnerRadius[3])/NUMDET+overlap (2.0*3.1415927*QuartzInnerRadius[4])/NUMDET+overlap (2.0*3.1415927*QuartzInnerRadius[5])/(3*NUMDET)+overlap (2.0*3.1415927*QuartzInnerRadius[6])/NUMDET+overlap (2.0*3.1415927*QuartzInnerRadius[7])/(3*NUMDET)+overlap"/>
     <matrix coldim="1" name="ProbeCoatPrismWidth" values="ProbeWidthBottom[1]+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm ProbeWidthBottom[2]+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm ProbeWidthBottom[3]+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm ProbeWidthBottom[4]+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm ProbeWidthBottom[5]+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm ProbeWidthBottom[6]+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm ProbeWidthBottom[7]+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm"/>
-    <variable name="ProbeCoatPrismHeight" value="sqrt(2.0)*ProbeThickness+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm"/>	
+    <variable name="ProbeCoatPrismHeight" value="sqrt(2.0)*ProbeThickness+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm"/>
     <variable name="ProbeCoatPrismThickness" value="10.0*sqrt(2.0)*ProbeThickness+2.0*AirLayerThickness+2.0*ProbeCoatThickness+0.1*mm"/>
     <matrix coldim="1" name="ProbeCoatPrismTrans_y" values="-(0.5*ProbeHeight[1]+AirLayerThickness+ProbeCoatThickness)+0.5*ProbeThickness-0.5*ProbeCoatPrismHeight*cos(-QuartzTiltAngle) -(0.5*ProbeHeight[2]+AirLayerThickness+ProbeCoatThickness)+0.5*ProbeThickness-0.5*ProbeCoatPrismHeight*cos(-QuartzTiltAngle) -(0.5*ProbeHeight[3]+AirLayerThickness+ProbeCoatThickness)+0.5*ProbeThickness-0.5*ProbeCoatPrismHeight*cos(-QuartzTiltAngle) -(0.5*ProbeHeight[4]+AirLayerThickness+ProbeCoatThickness)+0.5*ProbeThickness-0.5*ProbeCoatPrismHeight*cos(-QuartzTiltAngle) -(0.5*ProbeHeight[5]+AirLayerThickness+ProbeCoatThickness)+0.5*ProbeThickness-0.5*ProbeCoatPrismHeight*cos(-QuartzTiltAngle) -(0.5*ProbeHeight[6]+AirLayerThickness+ProbeCoatThickness)+0.5*ProbeThickness-0.5*ProbeCoatPrismHeight*cos(-QuartzTiltAngle) -(0.5*ProbeHeight[7]+AirLayerThickness+ProbeCoatThickness)+0.5*ProbeThickness-0.5*ProbeCoatPrismHeight*cos(-QuartzTiltAngle)"/>
     <variable name="ProbeCoatPrismTrans_z" value="0.5*ProbeThickness+AirLayerThickness+ProbeCoatThickness-0.5*ProbeCoatPrismHeight*sin(-QuartzTiltAngle)"/>
@@ -129,8 +177,8 @@
       <atom unit="g/mole" value="16"/>
     </element>
     <material name="Quartz" state="solid">
-      <property name="ABSLENGTH" ref="ABSLENGTH_1"/>
-      <property name="RINDEX" ref="RINDEX_1"/>
+      <property name="ABSLENGTH" ref="ABSLENGTH_QUARTZ"/>
+      <property name="RINDEX" ref="RINDEX_QUARTZ"/>
       <MEE unit="eV" value="125.663004061076"/>
       <D unit="g/cm3" value="2.2"/>
       <fraction n="0.467465468463971" ref="Silicon"/>
@@ -140,10 +188,18 @@
       <atom unit="g/mole" value="14.01"/>
     </element>
     <material name="Air" state="gas">
-      <property name="ABSLENGTH" ref="ABSLENGTH_2"/>
-      <property name="FASTCOMPONENT" ref="FASTCOMPONENT"/>
-      <property name="RINDEX" ref="RINDEX_2"/>
-      <property name="SLOWCOMPONENT" ref="SLOWCOMPONENT"/>
+      <property name="ABSLENGTH" ref="ABSLENGTH_AIR"/>
+      <property name="RINDEX" ref="RINDEX_AIR"/>
+      <property name="FASTCOMPONENT" ref="FASTCOMPONENT_AIR"/>
+      <property name="SLOWCOMPONENT" ref="SLOWCOMPONENT_AIR"/>
+      <property name="SCINTILLATIONYIELD" ref="SCINTILLATIONYIELD_AIR"/>
+      <property name="TRANSMITTANCE" ref="TRANSMITTANCE_AIR"/>
+      <property name="FASTTIMECONSTANT" ref="FASTTIMECONSTANT_AIR"/>
+      <property name="SLOWTIMECONSTANT" ref="SLOWTIMECONSTANT_AIR"/>
+      <property name="YIELDRATIO" ref="YIELDRATIO_AIR"/>
+      <property name="RESOLUTIONSCALE" ref="RESOLUTIONSCALE_AIR"/>
+      <property name="FASTSCINTILLATIONRISETIME" ref="FASTSCINTILLATIONRISETIME_AIR"/>
+      <property name="SLOWSCINTILLATIONRISETIME" ref="SLOWSCINTILLATIONRISETIME_AIR"/>
       <MEE unit="eV" value="85.7030667332999"/>
       <D unit="g/cm3" value="0.00129"/>
       <fraction n="0.7" ref="Nitrogen"/>
@@ -155,6 +211,8 @@
       <atom unit="g/mole" value="26.98"/>
     </material>
     <material Z="19" name="Photocathode" state="solid">
+      <property name="REFLECTIVITY" ref="REFLECTIVITY_CATHODE"/>
+      <property name="EFFICIENCY" ref="EFFICIENCY_CATHODE"/>
       <MEE unit="eV" value="190"/>
       <D unit="g/cm3" value="5"/>
       <atom unit="g/mole" value="39.0983"/>
@@ -304,6 +362,7 @@
         <materialref ref="Quartz"/>
         <solidref ref="Probe[j]"/>              
         <auxiliary auxtype="Color" auxvalue="gray"/>
+        <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       </volume>
       <volume name="ProbeContainerLogical[j]">
         <materialref ref="Air"/>
@@ -326,6 +385,7 @@
         <materialref ref="Aluminium"/>
         <solidref ref="LightGuideOuterSurface-InnerSurfaceSolid[j]"/>
         <auxiliary auxtype="Color" auxvalue="cyan"/>
+        <!--<auxiliary auxtype="SensDet" auxvalue="planeDet"/>-->
       </volume>
       <volume name="EndcapLogical[j]">
         <materialref ref="Aluminium"/>
@@ -336,7 +396,7 @@
         <materialref ref="Quartz"/>
         <solidref ref="PhotonDetectorEntranceWindowSolid[j]"/>
         <auxiliary auxtype="Color" auxvalue="magenta"/>
-	<auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+                <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       </volume>
       <volume name="PhotonDetectorLogical[j]">
         <materialref ref="Photocathode"/>
@@ -384,7 +444,7 @@
           <rotation name="PhotonDetectorContainerPhysical_rot[j]" unit="deg" x="-90" y="0" z="0"/>
         </physvol>
         <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-        <auxiliary auxtype="Visibility" auxvalue="false"/>
+        <auxiliary auxtype="Visibility" auxvalue="true"/>
       </volume>
     </loop>
     
@@ -511,8 +571,8 @@
             <position name="ContainerPhysical_even_pos[k][p]" unit="mm" x="-RadialPosition[k]*cos(p*MasterContainerPhi[k])" y="RadialPosition[k]*sin(p*MasterContainerPhi[k])" z="Z_Position[k]-DetectorShiftInZ"/>
             <rotation name="ContainerPhysical_even_rot[k][p]" unit="1" x="0" y="0" z="90*degree+(p*MasterContainerPhi[k])"/>
           </physvol>
-        </loop>
-	<loop for="q" from="1" to="MaxNumDet[k]" step="2">
+         </loop>
+          <loop for="q" from="1" to="MaxNumDet[k]" step="2">
           <physvol name="ContainerPhysical[k][q]">
             <volumeref ref="ContainerLogical[k]"/>
             <position name="ContainerPhysical_odd_pos[k][q]" unit="mm" x="-RadialPosition[k]*cos(q*MasterContainerPhi[k])" y="RadialPosition[k]*sin(q*MasterContainerPhi[k])" z="Z_Position[k]+DetectorShiftInZ"/>
@@ -554,7 +614,7 @@
     <skinsurface name="ProbeCoatSkinSurface_2" surfaceproperty="ProbeCoatOpticalSurface">
       <volumeref ref="ProbeCoatLogical_2"/>
     </skinsurface>
-	<skinsurface name="DetectorOpticalSurface_2" surfaceproperty="OpticalSurface">
+        <skinsurface name="DetectorOpticalSurface_2" surfaceproperty="OpticalSurface">
       <volumeref ref="DetectorLogical_2"/>
     </skinsurface>
     <skinsurface name="ReflectorSurface_2" surfaceproperty="GuideOpticalSurface">
@@ -653,3 +713,4 @@
   </setup>
 
 </gdml>
+

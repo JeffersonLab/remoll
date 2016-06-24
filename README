@@ -68,7 +68,7 @@ To see the geometry you have to say:
 
 then 
 
-/control/execute vis/Qt.mac
+/control/execute macros/vis.mac
 
 
 ---------------------------------------------------

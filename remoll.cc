@@ -14,17 +14,19 @@
 #include "remollPrimaryGeneratorAction.hh"
 #include "remollEventAction.hh"
 #include "remollSteppingAction.hh"
-
-#include "G4StepLimiterBuilder.hh"
-
 #include "remollDetectorConstruction.hh"
 
 #include "remollIO.hh"
 #include "remollMessenger.hh"
 
 //  Standard physics list
-#include "LHEP.hh"
+#include "G4Version.hh"
 #include "G4PhysListFactory.hh"
+#include "G4OpticalPhysics.hh"
+#if G4VERSION_NUMBER < 1000
+#include "LHEP.hh"
+#endif
+
 #include "G4RunManager.hh"
 
 #include "G4UnitsTable.hh"
@@ -55,11 +57,17 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
+#ifdef __APPLE__
+#include <unistd.h>
+#endif
+
+#include <time.h>
+
 int main(int argc, char** argv){
 
+    clock_t tStart=clock();
     // Initialize the CLHEP random engine used by
     // "shoot" type functions
-
     unsigned int seed = time(0) + (int) getpid();
 
     unsigned int devrandseed = 0;
@@ -98,7 +106,13 @@ int main(int argc, char** argv){
     // Physics we want to use
     G4int verbose = 0;
     G4PhysListFactory factory;
+    #if G4VERSION_NUMBER < 1000
     G4VModularPhysicsList* physlist = factory.GetReferencePhysList("LHEP");
+    #else
+    //G4VModularPhysicsList* physlist = factory.GetReferencePhysList("FTFP_BERT_LIV");
+    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
+    #endif
+    physlist->RegisterPhysics(new G4OpticalPhysics());
     physlist->SetVerboseLevel(verbose);
     runManager->SetUserInitialization(physlist);
 
@@ -211,6 +225,6 @@ int main(int argc, char** argv){
 
     // Initialize Run manager
     // runManager->Initialize();
-
+    G4cout<<" Running time[s]: "<< (double) ((clock() - tStart)/CLOCKS_PER_SEC)<<G4endl;
     return 0;
 }

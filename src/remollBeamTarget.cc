@@ -5,6 +5,8 @@
 #include "G4Material.hh"
 #include "G4RunManager.hh"
 #include "G4GeometryManager.hh"
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
 
 #include "CLHEP/Random/RandFlat.h"
 #include "CLHEP/Random/RandGauss.h"
@@ -24,6 +26,7 @@ remollBeamTarget::remollBeamTarget(){
     fMother = NULL;
     UpdateInfo();
 
+    fOldRaster = true;
     fRasterX = fRasterY = 5.0*mm;
     fX0 = fY0 = fTh0 = fPh0 = fdTh = fdPh = 0.0;
 
@@ -322,7 +325,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    }
 
 	    fEffMatLen = (fSampLen/len)* // Sample weighting
-		mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*Avogadro/masssum; // material thickness
+	      mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*Avogadro/masssum; // material thickness
 	} else {
 	    const G4ElementVector *elvec = mat->GetElementVector();
 	    const G4double *fracvec = mat->GetFractionVector();
@@ -334,7 +337,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 		nmsmat++;
 	    }
 	}
-
     }
 
     if( !foundvol ){
@@ -351,7 +353,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     G4double msth, msph;
     G4double bmth, bmph;
 
-
     if( nmsmat > 0 ){
 	fMS->Init( fBeamE, nmsmat, msthick, msA, msZ );
 	msth = fMS->GenerateMSPlane();
@@ -363,17 +364,22 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
     assert( !std::isnan(msth) && !std::isnan(msph) );
 
-    bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
-    bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);
-
-    if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
-    if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
-
-    // Initial direction
-    fDir = G4ThreeVector(0.0, 0.0, 1.0);
-
-    fDir.rotateY( bmth); // Positive th pushes to positive X
-    fDir.rotateX(-bmph); // Positive ph pushes to positive Y
+    if(fOldRaster){
+      bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
+      bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);
+      
+      if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
+      if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
+      
+      // Initial direction
+      fDir = G4ThreeVector(0.0, 0.0, 1.0);
+      
+      fDir.rotateY( bmth); // Positive th pushes to positive X (around Y-axis)
+      fDir.rotateX(-bmph); // Positive ph pushes to positive Y (around X-axis)
+    } else{
+      G4ThreeVector bmVec = G4ThreeVector(fVer.x(),fVer.y(),-1*(-8000.0*mm-fVer.z())); // in mm
+      fDir = G4ThreeVector(bmVec.unit());
+    }
 
     fDir.rotateY(msth);
     fDir.rotateX(msph);
