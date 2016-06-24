@@ -48,9 +48,6 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     G4double edep = step->GetTotalEnergyDeposit();
 
-    //DEBUG print
-    //printf("[%i,%i] \n",copyID,fDetNo);
-
     // We're just going to record primary particles and things
     // that have just entered our boundary
     //the following condition ensure that not all the hits are recorded. This will reflect in the energy deposit sum from the hits compared to the energy deposit from the hit sum detectors.

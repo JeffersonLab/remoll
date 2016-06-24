@@ -1,5 +1,8 @@
 #include "remollMultScatt.hh"
 
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "globals.hh"
 
 #include <math.h>

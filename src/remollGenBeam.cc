@@ -11,12 +11,15 @@
 #include "G4LogicalVolume.hh"
 #include "Randomize.hh"
 
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "remolltypes.hh"
 
 #include <math.h>
 
-remollGenBeam::remollGenBeam(){  
-    fApplyMultScatt = false;
+remollGenBeam::remollGenBeam(){
+    fApplyMultScatt = true;
     fBeamTarg = remollBeamTarget::GetBeamTarget();
 
     fZpos = -5.0*m;

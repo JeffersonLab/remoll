@@ -82,6 +82,8 @@ class remollIO {
 	Double_t fBmdX;
 	Double_t fBmdY;
 	Double_t fBmdZ;
+	Double_t fBmth;
+	Double_t fBmph;
 
 	Int_t fEvPID[__IO_MAXHIT];
 

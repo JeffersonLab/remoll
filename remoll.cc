@@ -15,7 +15,8 @@
 #include "remollEventAction.hh"
 #include "remollSteppingAction.hh"
 
-#include "G4StepLimiterBuilder.hh"
+//#include "G4StepLimiterBuilder.hh"
+#include "G4StepLimiterPhysics.hh"
 
 #include "remollDetectorConstruction.hh"
 
@@ -23,7 +24,7 @@
 #include "remollMessenger.hh"
 
 //  Standard physics list
-#include "LHEP.hh"
+//#include "LHEP.hh"
 #include "G4PhysListFactory.hh"
 #include "G4RunManager.hh"
 
@@ -54,6 +55,7 @@
 
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 
 int main(int argc, char** argv){
 
@@ -101,7 +103,8 @@ int main(int argc, char** argv){
     //G4VModularPhysicsList* physlist = factory.GetReferencePhysList("LHEP");
     G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
     physlist->SetVerboseLevel(verbose);
-    physlist->RegisterPhysics( new G4StepLimiterBuilder(verbose) );
+//    physlist->RegisterPhysics( new G4StepLimiterBuilder(verbose) );
+    physlist->RegisterPhysics( new G4StepLimiterPhysics(verbose) );
     runManager->SetUserInitialization(physlist);
 
     //-------------------------------
