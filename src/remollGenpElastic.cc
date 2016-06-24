@@ -2,16 +2,16 @@
 
 #include "CLHEP/Random/RandFlat.h"
 
+#include "Randomize.hh"
+#include "G4Material.hh"
+#include "G4VPhysicalVolume.hh"
+#include "G4LogicalVolume.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "remollEvent.hh"
 #include "remollVertex.hh"
 #include "remollBeamTarget.hh"
 #include "remollMultScatt.hh"
-
-#include "G4Material.hh"
-#include "G4VPhysicalVolume.hh"
-#include "G4LogicalVolume.hh"
-#include "Randomize.hh"
-
 #include "remolltypes.hh"
 
 #include <math.h>
@@ -91,8 +91,10 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double Evhi[NINTERVAL] = {
 	(beamE-bremcut)*2.0*GeV/(11.0*GeV-bremcut),
 	(beamE-bremcut)*9.0*GeV/(11.0*GeV-bremcut),
-	(beamE-bremcut)*(beamE-fE_min)/(11.0*GeV-bremcut),
+	(beamE-bremcut)*(11.0*GeV-fE_min)/(11.0*GeV-bremcut),
     };
+
+    assert( Evhi[NINTERVAL-1]-Evlo[NINTERVAL-1] > 0.0 );
 
     double Eprob[NINTERVAL]  = { 0.40, 0.20, 0.40 };
 

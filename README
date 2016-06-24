@@ -2,10 +2,10 @@
 
 Seamus Riordan
 riordan@jlab.org
-January 9, 2013
+January 7, 2014
 
 Repository information is here:
-http://solid.physics.umass.edu/remoll.html
+https://github.com/JeffersonLab/remoll
 
 Mailing list for repository updates is 
 
@@ -20,7 +20,7 @@ https://mailman.jlab.org/mailman/listinfo/12gevmoller_sim
 
 Packages to build this:
 
->=Geant4.9.5
+>=Geant4.9.6
 cmake > 2.6
 root
 python
@@ -68,7 +68,7 @@ To see the geometry you have to say:
 
 then 
 
-/control/execute vis/Qt.mac
+/control/execute macros/vis.mac
 
 
 ---------------------------------------------------

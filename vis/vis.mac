@@ -34,13 +34,29 @@
 # Set camera
 #
 /vis/viewer/reset
-/vis/viewer/set/viewpointThetaPhi 35 15 deg
-/vis/viewer/zoom 2.0
+# Specify view angle:
+#updated setting
+/vis/viewer/set/viewpointThetaPhi 90. 0.
+#old value
+#/vis/viewer/set/viewpointThetaPhi 35 15 deg
+#/vis/viewer/zoom 2.0
 
 #
 # Set surface
 #
 /vis/viewer/set/style surface
+
+#updated setting from PREX vis.mac
+/vis/viewer/set/viewpointThetaPhi 90 180 deg
+#/vis/viewer/panTo 100 3000 cm				  
+/vis/viewer/zoom 5.0
+/vis/viewer/set/lightsThetaPhi 40 50
+#New cutaway plane setting
+/vis/viewer/set/cutawayMode intersection
+/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 1.0 0.0 0.0
+#old value
+#/vis/viewer/set/lightsMove with-camera
+#
 
 #
 # Create style
