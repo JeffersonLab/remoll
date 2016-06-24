@@ -1,5 +1,7 @@
 #include "remollGenericDetectorHit.hh"
 
+#include <G4SystemOfUnits.hh>
+
 G4Allocator<remollGenericDetectorHit> remollGenericDetectorHitAllocator;
 
 remollGenericDetectorHit::remollGenericDetectorHit(G4int det, G4int copy){
