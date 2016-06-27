@@ -82,7 +82,7 @@ void remollBeamTarget::UpdateInfo(){
 	    exit(1);
 	}
 
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "Aluminum" ){
 	    if( fLH2Length >= 0.0 ){
 		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		    ":  Multiply defined LH2 volumes" << G4endl; 
@@ -108,7 +108,7 @@ void remollBeamTarget::SetTargetLen(G4double z){
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
 	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "Aluminum" ){
 	    // Change the length of the target volume
 	    ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->SetZHalfLength(z/2.0);
 	} else {
@@ -147,7 +147,7 @@ void remollBeamTarget::SetTargetPos(G4double z){
 
     for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
 	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "Aluminum" ){
 	    // Change the length of the target volume
 	    (*it)->SetTranslation( G4ThreeVector(0.0, 0.0, z-fZpos) );
 	} else {
@@ -225,11 +225,24 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     double   msA[__MAX_MAT];
     double   msZ[__MAX_MAT];
 
+    //upstream window multiple scattering
+    msthick[nmsmat]=0.0127*cm*2.7*g/cm/cm/cm;
+    msA[nmsmat]=27;
+    msZ[nmsmat]=13;
+    nmsmat++;
+
+    // LH2 multiple scattering
+    msthick[nmsmat]=150*cm*0.0708*g/cm/cm/cm;
+    msA[nmsmat]=1;
+    msZ[nmsmat]=1;
+    nmsmat++;
+
+
     // Figure out the material we are in and the radiation length we traversed
     std::vector<G4VPhysicalVolume *>::iterator it;
     for(it = fTargVols.begin(); it != fTargVols.end() && !foundvol; it++ ){
 	mat = (*it)->GetLogicalVolume()->GetMaterial();
-	if( mat->GetName() == "LiquidHydrogen" ) { 
+/*	if( mat->GetName() == "Aluminum" ) { 
 	    isLH2 = true; 
 	} else { 
 	    isLH2 = false;
@@ -237,6 +250,8 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 		": volume not LH2 has been specified, but handling not implemented" << G4endl;
 
 	} 
+*/
+	isLH2=true;
 
 	len = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*mat->GetDensity();
 	switch( samp ){
@@ -353,6 +368,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     G4double msth, msph;
     G4double bmth, bmph;
 
+
+
+
     if( nmsmat > 0 ){
 	fMS->Init( fBeamE, nmsmat, msthick, msA, msZ );
 	msth = fMS->GenerateMSPlane();
@@ -390,7 +408,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     // This can be ignored and done in a generator by itself
 
     G4double  Ekin = fBeamE - electron_mass_c2;
-    G4double  bt   = fRadLen*4.0/3.0;
+    G4double  bt   = (fRadLen + 0.18)*4.0/3.0; //additional radlength added for downstream window
     G4double  prob_sample, eloss, sample, env, value, ref;
 
     G4double prob = 1.- pow(fEcut/Ekin,bt) - bt/(bt+1.)*(1.- pow(fEcut/Ekin,bt+1.))
