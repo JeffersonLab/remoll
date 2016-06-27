@@ -6,6 +6,12 @@
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
 #include "G4SteppingManager.hh"
+#include "G4Event.hh"
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+ofstream myfile;
 
 remollSteppingAction::remollSteppingAction()
 :drawFlag(false)
@@ -15,22 +21,41 @@ remollSteppingAction::remollSteppingAction()
     fEnableKryptonite = true;
 }
 
+
 void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
+    
     G4Track* fTrack = aStep->GetTrack();
     G4Material* material = fTrack->GetMaterial();
 
+    myfile.open ("position_output.txt", ios::app);
+  
+
+    if (fTrack->GetTrackID() == 1) {
+    	G4ThreeVector pos = fTrack->GetPosition();
+	double xPos = pos.getX();
+	double yPos = pos.getY();
+	double zPos = pos.getZ();
+//	double magP = fTrack->GetMomentum().mag()/GeV;
+//	double ke = fTrack->GetKineticEnergy()/GeV;
+//	myfile << xPos << "     \t" << yPos << "     \t" << zPos << "     \t" <<  magP << "     \t" << ke << " \n"; // evNum << std::endl;  
+	myfile << xPos << "\t" << yPos << "\t" << zPos << " \n"; // evNum << std::endl;
+  
+  }
 
     // Don't continue in these materials
-    if( (   material->GetName()=="Tungsten" 
+    
+
+   if( (   material->GetName()=="Tungsten" 
         ||  material->GetName()=="Pb"
 	||  material->GetName()=="Copper" )
 	    && fEnableKryptonite
 	){
-      fTrack->SetTrackStatus(fStopAndKill); // kill the current track
-      // fTrack->SetTrackStatus(fKillTrackAndSecondaries); // kill the current track and also associated secondaries
+	fTrack->SetTrackStatus(fKillTrackAndSecondaries);
     }
 
 
+   myfile.close();
 }
+
 
 
