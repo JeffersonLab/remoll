@@ -17,11 +17,17 @@
       <D unit="g/cm3" value="0.0708"/>
       <atom unit="g/mole" value="1.00794"/>
     </material>
+   <material Z="13" name="Aluminum" state="solid">
+      <T unit="K" value="20.27"/>
+      <D unit="g/cm3" value="2.7"/>
+      <atom unit="g/mole" value="26.98"/>
+    </material>
   </materials>
 
 <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1000" rmin="0" startphi="0" z="2000"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="40" rmin="0" startphi="0" z="1500"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlWindow" rmax="40" rmin="0" startphi="0" z="0.127"/>
 </solids>
 
 <structure>
@@ -30,6 +36,12 @@
       <materialref ref="LiquidHydrogen"/>
       <solidref ref="tubeTarget"/>
     </volume>
+ 
+   <volume name="AlTarg">
+      <materialref ref="Aluminum"/>
+      <solidref ref="AlWindow"/>
+    </volume>
+
 
     <volume name="logicTarget">
       <materialref ref="VacuumTarg"/>
@@ -39,6 +51,12 @@
         <volumeref ref="h2Targ"/>
         <position name="targ_center" unit="mm" x="0" y="0" z="0"/>
       </physvol>
+      
+      <physvol>
+        <volumeref ref="AlTarg"/>
+        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="750"/>
+      </physvol>
+
 
     </volume>
 
