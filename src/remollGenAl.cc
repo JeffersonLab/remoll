@@ -28,7 +28,31 @@ remollGenAl::~remollGenAl() {
 void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
 
     G4double beamE = vert->GetBeamE(); // in MeV (it can be modified by beam loss)
+    
     G4double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min))); // radians
+    
+    /////////////////////////////////////////
+    // sample with 1.0/(1-cos)^2
+    ////////////////////////////////////////
+ /*   double cthmin = cos(fTh_min);
+    double cthmax = cos(fTh_max);
+    
+    double icth_b = 1.0/(1.0-cthmax);
+    double icth_a = 1.0/(1.0-cthmin);
+
+    double sampv = 1.0/CLHEP::RandFlat::shoot(icth_b, icth_a);
+
+    assert( -1.0 < sampv && sampv < 1.0 );
+
+    double th = acos(1.0-sampv);
+    // Value to reweight cross section by to account for non-uniform
+    // sampling
+    double samp_fact = sampv*sampv*(icth_a-icth_b)/(cthmin-cthmax);
+
+    G4double phaseSpaceFactor = 2.0*pi*(cos(fTh_min) - cos(fTh_max))*samp_fact;
+   */ 
+//////////////---end modification
+
     G4double phaseSpaceFactor = 2.0*pi*(cos(fTh_min) - cos(fTh_max));
     G4double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
     G4double eOut=0;
@@ -120,8 +144,8 @@ void remollGenAl::GenInelastic(G4double beamE,G4double theta,
         effectiveXsection=0;
         exit(1);
     }
-
-    asym=Q2*0.8e-4/GeV/GeV;
+//---Yuxiang Zhao, R-L asymmetry is negative
+    asym=-1.0*Q2*0.8e-4/GeV/GeV;
     fWeight = xsect*sin(theta);
     effectiveXsection=xsect;
 }
@@ -167,12 +191,13 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   fWeight = xsect*sin(theta);
   effectiveXsection = xsect;
 
-  ///~~~ Aymmetry calculation //FIXME -- this is just a copy of the elastic for now
+  ///~~~ Aymmetry calculation 
   const G4double gf=1.16637e-5;//fermi coupling [GeV^-2]
   const G4double qwp=0.0713;
   const G4double qwn=-0.988;
-  
-  asym= -gf/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (qwp+qwn*(A-Z)/Z);
+ //----modified by Yuxiang Zhao
+ // use qwp as weak charge
+  asym= -gf/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (qwp);
 }
 
 void remollGenAl::GenElastic(G4double beamE,G4double theta,
