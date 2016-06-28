@@ -90,7 +90,9 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 //			if(thisHit->fTrID == 1 && thisHit->fDetID == 28 && thisHit->fP/__E_UNIT > 2.) {
 
 //                      Detector number 28 is the placeholder moller ring. See Geometry folder for dimensions.
-			if(thisHit->fTrID == 1 && thisHit->fDetID == 28) {
+			// fTrID == 1 refers to the original parent particle. Peripheral tracking needs more.
+			// if(thisHit->fTrID == 1 && thisHit->fDetID == 28) {
+			if(thisHit->fDetID == 28) {
 					goodParticle = 1;
 					finalEnergy = thisHit->fE/__E_UNIT;
 					finalMomentum = thisHit->fP/__E_UNIT;
@@ -99,8 +101,9 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 //					myfile2.close();  
 				
       			}
-			
-			if(thisHit->fTrID == 1 && thisHit->fDetID == 200) {
+			// fTrID == 1 refers to the original parent particle. Peripheral tracking needs more.
+			// if(thisHit->fTrID == 1 && thisHit->fDetID == 200) {
+			if(thisHit->fDetID == 200) {
 					collimatorHit = 1;
 			}
 			
@@ -139,6 +142,3 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 
   return;
 }
-
-
-
