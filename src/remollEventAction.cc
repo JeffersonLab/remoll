@@ -35,12 +35,29 @@ remollEventAction::~remollEventAction(){
 void remollEventAction::BeginOfEventAction(const G4Event*ev) {
     // Pretty ongoing status with flush
 
-	myfile2.open ("position_output.txt", ios::app);
-	myfile2 << ev->GetEventID()+1 << " \n";
+    // Start timer at event 0
+    if (ev->GetEventID() == 0) fTimer.Start();
+    // Pretty ongoing status
+
+    myfile2.open ("position_output.txt", ios::app);
+    myfile2 << ev->GetEventID()+1 << " \n";
      
-     if( (ev->GetEventID() % 1000) == 0 ){
+    if( (ev->GetEventID() % 1000) == 0 ){
 	printf("Event %8d\r", ev->GetEventID() );
 	fflush(stdout);
+ 
+        // Stop timer (running timer cannot be read)
+        fTimer.Stop();
+        // Print event number
+        G4cout << "Event " << ev->GetEventID();
+        // Only print duration per event when meaningful (avoid division by zero)
+        if (ev->GetEventID() > 0)
+             G4cout << " (" << std::setprecision(3) << std::fixed
+             << 1000.*fTimer.GetRealElapsed()/1000.0 << " ms/event)";
+        // Carriage return without newline
+        G4cout << "\r" << std::flush;
+        // Start timer again
+        fTimer.Start();
     }
 
     myfile2.close();

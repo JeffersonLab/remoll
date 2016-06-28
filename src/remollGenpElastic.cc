@@ -243,7 +243,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     thisZ = vert->GetMaterial()->GetZ();
 
-    evt->SetEffCrossSection(sigma*V*thisZ*value);
+    evt->SetEffCrossSection(sigma*V*thisZ*thisZ*value);
 
     if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << 

@@ -3,6 +3,8 @@
 #define remollEventAction_h 1
 
 #include "G4UserEventAction.hh"
+#include "G4Timer.hh"
+
 #include "globals.hh"
 
 class G4Event;
@@ -26,6 +28,9 @@ class remollEventAction : public G4UserEventAction
     double fGEMres;
 
     remollIO *fIO;
+
+    // Timer for benchmarking of simulation time per event
+    G4Timer fTimer;
 
   public:
 };
