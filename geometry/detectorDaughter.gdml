@@ -40,7 +40,8 @@
 
       <physvol name="planeDet_0">
         <volumeref ref="logicWasher_0"/>
-        <position name="wash_phys_0_pos" unit="mm" x="0" y="0" z="0"/>
+	<!-- z=0 refers to exactly where the moller ring detectors should be centered. negative is upstream. -->
+	<position name="wash_phys_0_pos" unit="mm" x="0" y="0" z="0"/>
       </physvol>	
 
    </volume>

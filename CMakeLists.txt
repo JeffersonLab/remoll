@@ -121,6 +121,9 @@ target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 FILE( GLOB REMOLL_GEO "geometry/*" )
 
 set(REMOLL_SCRIPTS
+    map_directory/blockyHybrid_rm_3.0.txt
+    map_directory/blockyUpstream_rm_1.1.txt
+    map_directory/blockyUpstream_rm_1.1_noscale.txt
     geometry/mollerMother.gdml
     geometry/detectorDaughter.gdml
     geometry/hybridDaughter.gdml
@@ -154,6 +157,7 @@ set(REMOLL_SCRIPTS
     macros/runexample.mac
     macros/gui.mac
     macros/vis.mac
+    macros/tracking.mac
     rootlogon.C
   )
 

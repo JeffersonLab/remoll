@@ -13,6 +13,10 @@
 #include "G4UImanager.hh"
 #include "G4ios.hh"
 
+
+#include "G4ParticleTable.hh"
+#include "G4SystemOfUnits.hh"
+
 #include "remollIO.hh"
 
 #include <iostream>
@@ -67,6 +71,8 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 				     thiscast->GetHit(hidx) );	  
 			thisHit = dynamic_cast<remollGenericDetectorHit *>(thiscast->GetHit(hidx));
 //			if(thisHit->fTrID == 1 && thisHit->fDetID == 28 && thisHit->fP/__E_UNIT > 2.) {
+
+//                      Detector number 28 is the placeholder moller ring. See Geometry folder for dimensions.
 			if(thisHit->fTrID == 1 && thisHit->fDetID == 28) {
 					goodParticle = 1;
 					finalEnergy = thisHit->fE/__E_UNIT;
@@ -101,7 +107,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
   fIO->Flush();
 
 	myfile2.open ("position_output.txt", ios::app);
-	if (goodParticle == 1 && collimatorHit == 1) {
+	if (goodParticle == 1) {  // && collimatorHit == 1) {  // Use collimatorHit==1 if we want to ensure that Moller scattered particles going through the acceptance defining collimator are the only things getting through.
 	//if (detectorHit == 1) {
 //		myfile2 << -29 << "     \t" << -29 << "     \t" << -29 << "     \t" << -29 << "     \t" << -29 << "\n";
 		myfile2 << -29 << "\t" << -29 << "\t" << -29 << "\n";
@@ -110,6 +116,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 //		myfile2 << -37 << "     \t" << -37 << "     \t" << -37 << "     \t" << -37 << "     \t" << -37 << "\n";
 		myfile2 << -37 << "\t" << -37 << "\t" << -37 << "\n";
 //		myfile2 << finalEnergy << "     \t" << finalMomentum << "     \t" << " \n";
+//		-37 means bad: -29 means good particle.
 	}
 	myfile2.close();
 

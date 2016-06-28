@@ -22,15 +22,24 @@
 
 <solids>
     <box lunit="mm" name="boxDetectors" x="4000" y="4000" z="500"/>
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax1="1200" rmax2="1200" rmin1="690" rmin2="690" startphi="0" z="10"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher2" rmax1="1900" rmax2="1900" rmin1="1200" rmin2="1200" startphi="0" z="10"/>
 </solids>
 
 <structure>
 
+
     <volume name="logicWasher_0">
       <materialref ref="VacuumDet"/>
       <solidref ref="solWasher1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDetInner"/>
+      <auxiliary auxtype="DetNo" auxvalue="29"/>
+    </volume>
+
+    <volume name="logicWasher_2">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="solWasher2"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDetOuter"/>
       <auxiliary auxtype="DetNo" auxvalue="28"/>
     </volume>
 
@@ -38,9 +47,15 @@
       <materialref ref="Vacuum"/>
       <solidref ref="boxDetectors"/>
 
+
       <physvol name="planeDet_0">
         <volumeref ref="logicWasher_0"/>
         <position name="wash_phys_0_pos" unit="mm" x="0" y="0" z="0"/>
+      </physvol>	
+
+      <physvol name="planeDet_2">
+        <volumeref ref="logicWasher_2"/>
+        <position name="wash_phys_2_pos" unit="mm" x="0" y="0" z="0"/>
       </physvol>	
 
    </volume>

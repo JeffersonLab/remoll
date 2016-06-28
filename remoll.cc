@@ -149,12 +149,12 @@ int main(int argc, char** argv){
 
 	// G4UIterminal is a (dumb) terminal.
 
-#if defined(G4UI_USE_XM)
-	session = new G4UIXm(argc,argv);
+#if defined(G4UI_USE_QT)
+	session = new G4UIQt(argc,argv);
 #elif defined(G4UI_USE_WIN32)
 	session = new G4UIWin32();
-#elif defined(G4UI_USE_QT)
-	session = new G4UIQt(argc,argv);
+#elif defined(G4UI_USE_XM)
+	session = new G4UIXm(argc,argv);
 #elif defined(G4UI_USE_TCSH)
 	session = new G4UIterminal(new G4UItcsh);
 #else

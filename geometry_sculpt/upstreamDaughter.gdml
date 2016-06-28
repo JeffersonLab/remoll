@@ -269,7 +269,9 @@
       <auxiliary auxtype="DetNo" auxvalue="2001"/>
     </volume>
 
-   <volume name="logiccoll2trap">
+    <!-- Logical volume defining acceptance defining collimator: hits this and no tungsten around it, then it is a good accepted particle for the moller detector -->
+ 
+    <volume name="logiccoll2trap">
       <materialref ref="VacuumColl"/>
       <solidref ref="coll2trap"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
