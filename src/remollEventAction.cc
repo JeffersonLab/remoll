@@ -23,7 +23,15 @@
 #include <fstream>
 using namespace std;
 
-ofstream myfile2;
+ofstream Secondmyfile1;
+ofstream Secondmyfile2;
+ofstream Secondmyfile3;
+ofstream Secondmyfile4;
+ofstream Secondmyfile5;
+ofstream Secondmyfile6;
+ofstream Secondmyfile7;
+ofstream Secondmyfile8;
+ofstream Secondmyfile9;
 
 remollEventAction::remollEventAction() {
 }
@@ -39,8 +47,33 @@ void remollEventAction::BeginOfEventAction(const G4Event*ev) {
     if (ev->GetEventID() == 0) fTimer.Start();
     // Pretty ongoing status
 
-    myfile2.open ("position_output.txt", ios::app);
-    myfile2 << ev->GetEventID()+1 << " \n";
+    Secondmyfile1.open ("parent_position_output.txt", ios::app);
+    Secondmyfile1 << ev->GetEventID()+1 << " \n";
+    Secondmyfile1.close();
+    Secondmyfile2.open ("1st_daughter_position_output.txt", ios::app);
+    Secondmyfile2 << ev->GetEventID()+1 << " \n";
+    Secondmyfile2.close();
+    Secondmyfile3.open ("2nd_daughter_position_output.txt", ios::app);
+    Secondmyfile3 << ev->GetEventID()+1 << " \n";
+    Secondmyfile3.close();
+    Secondmyfile4.open ("3rd_daughter_position_output.txt", ios::app);
+    Secondmyfile4 << ev->GetEventID()+1 << " \n";
+    Secondmyfile4.close();
+    Secondmyfile5.open ("4th_daughter_position_output.txt", ios::app);
+    Secondmyfile5 << ev->GetEventID()+1 << " \n";
+    Secondmyfile5.close();
+    Secondmyfile6.open ("5th_daughter_position_output.txt", ios::app);
+    Secondmyfile6 << ev->GetEventID()+1 << " \n";
+    Secondmyfile6.close();
+    Secondmyfile7.open ("6th_daughter_position_output.txt", ios::app);
+    Secondmyfile7 << ev->GetEventID()+1 << " \n";
+    Secondmyfile7.close();
+    Secondmyfile8.open ("7th_daughter_position_output.txt", ios::app);
+    Secondmyfile8 << ev->GetEventID()+1 << " \n";
+    Secondmyfile8.close();
+    Secondmyfile9.open ("8th_daughter_position_output.txt", ios::app);
+    Secondmyfile9 << ev->GetEventID()+1 << " \n";
+    Secondmyfile9.close();
      
     if( (ev->GetEventID() % 1000) == 0 ){
 	printf("Event %8d\r", ev->GetEventID() );
@@ -60,7 +93,6 @@ void remollEventAction::BeginOfEventAction(const G4Event*ev) {
         fTimer.Start();
     }
 
-    myfile2.close();
     return;
 }
 
@@ -69,6 +101,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
   G4HCofThisEvent *HCE = evt->GetHCofThisEvent();
   int goodParticle = 0;	
   int collimatorHit = 0;
+  int generation = 0;
   double finalEnergy, finalMomentum;
   
   remollGenericDetectorHit *thisHit;
@@ -92,6 +125,8 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 //                      Detector number 28 is the placeholder moller ring. See Geometry folder for dimensions.
 			// fTrID == 1 refers to the original parent particle. Peripheral tracking needs more.
 			// if(thisHit->fTrID == 1 && thisHit->fDetID == 28) {
+			
+			generation = thisHit->fTrID; //store the number corresponding to the generation of the particle. 1 = parent, 2 = 1st daughter particle, etc.
 			if(thisHit->fDetID == 28) {
 					goodParticle = 1;
 					finalEnergy = thisHit->fE/__E_UNIT;
@@ -126,19 +161,93 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
   fIO->FillTree();
   fIO->Flush();
 
-	myfile2.open ("position_output.txt", ios::app);
-	if (goodParticle == 1) {  // && collimatorHit == 1) {  // Use collimatorHit==1 if we want to ensure that Moller scattered particles going through the acceptance defining collimator are the only things getting through.
+	Secondmyfile1.open ("parent_position_output.txt", ios::app);
+	// if (goodParticle == 1 && collimatorHit == 1) {  // Use collimatorHit==1 if we want to ensure that Moller scattered particles going through the acceptance defining collimator are the only things getting through.
+	if (goodParticle == 1 && generation == 1 ) {  
 	//if (detectorHit == 1) {
-//		myfile2 << -29 << "     \t" << -29 << "     \t" << -29 << "     \t" << -29 << "     \t" << -29 << "\n";
-		myfile2 << -29 << "\t" << -29 << "\t" << -29 << "\n";
-		myfile2 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
+//		Secondmyfile1 << -29 << "     \t" << -29 << "     \t" << -29 << "     \t" << -29 << "     \t" << -29 << "\n";
+		Secondmyfile1 << -29 << "\t" << -29 << "\t" << -29 << "\n";
+		Secondmyfile1 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
 	} else {
-//		myfile2 << -37 << "     \t" << -37 << "     \t" << -37 << "     \t" << -37 << "     \t" << -37 << "\n";
-		myfile2 << -37 << "\t" << -37 << "\t" << -37 << "\n";
-//		myfile2 << finalEnergy << "     \t" << finalMomentum << "     \t" << " \n";
+//		Secondmyfile1 << -37 << "     \t" << -37 << "     \t" << -37 << "     \t" << -37 << "     \t" << -37 << "\n";
+		Secondmyfile1 << -37 << "\t" << -37 << "\t" << -37 << "\n";
+//		Secondmyfile1 << finalEnergy << "     \t" << finalMomentum << "     \t" << " \n";
 //		-37 means bad: -29 means good particle.
 	}
-	myfile2.close();
+	Secondmyfile1.close();
+
+	Secondmyfile2.open ("1st_daughter_position_output.txt", ios::app);
+	if (goodParticle == 1 && generation == 2) {  
+		Secondmyfile2 << -29 << "\t" << -29 << "\t" << -29 << "\n";
+		Secondmyfile2 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
+	} else {
+		Secondmyfile2 << -37 << "\t" << -37 << "\t" << -37 << "\n";
+	}
+	Secondmyfile2.close();
+
+	Secondmyfile3.open ("2nd_daughter_position_output.txt", ios::app);
+	if (goodParticle == 1 && generation == 3) {  
+		Secondmyfile3 << -29 << "\t" << -29 << "\t" << -29 << "\n";
+		Secondmyfile3 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
+	} else {
+		Secondmyfile3 << -37 << "\t" << -37 << "\t" << -37 << "\n";
+	}
+	Secondmyfile3.close();
+	
+	Secondmyfile4.open ("3rd_daughter_position_output.txt", ios::app);
+	if (goodParticle == 1 && generation == 4) {  
+		Secondmyfile4 << -29 << "\t" << -29 << "\t" << -29 << "\n";
+		Secondmyfile4 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
+	} else {
+		Secondmyfile4 << -37 << "\t" << -37 << "\t" << -37 << "\n";
+	}
+	Secondmyfile4.close();
+
+	Secondmyfile5.open ("4th_daughter_position_output.txt", ios::app);
+	if (goodParticle == 1 && generation == 5) {  
+		Secondmyfile5 << -29 << "\t" << -29 << "\t" << -29 << "\n";
+		Secondmyfile5 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
+	} else {
+		Secondmyfile5 << -37 << "\t" << -37 << "\t" << -37 << "\n";
+	}
+	Secondmyfile5.close();
+
+	Secondmyfile6.open ("5th_daughter_position_output.txt", ios::app);
+	if (goodParticle == 1 && generation == 6) {  
+		Secondmyfile6 << -29 << "\t" << -29 << "\t" << -29 << "\n";
+		Secondmyfile6 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
+	} else {
+		Secondmyfile6 << -37 << "\t" << -37 << "\t" << -37 << "\n";
+	}
+	Secondmyfile6.close();
+
+	Secondmyfile7.open ("6th_daughter_position_output.txt", ios::app);
+	if (goodParticle == 1 && generation == 7) {  
+		Secondmyfile7 << -29 << "\t" << -29 << "\t" << -29 << "\n";
+		Secondmyfile7 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
+	} else {
+		Secondmyfile7 << -37 << "\t" << -37 << "\t" << -37 << "\n";
+	}
+	Secondmyfile7.close();
+
+	Secondmyfile8.open ("7th_daughter_position_output.txt", ios::app);
+	if (goodParticle == 1 && generation == 8) {  
+		Secondmyfile8 << -29 << "\t" << -29 << "\t" << -29 << "\n";
+		Secondmyfile8 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
+	} else {
+		Secondmyfile8 << -37 << "\t" << -37 << "\t" << -37 << "\n";
+	}
+	Secondmyfile8.close();
+
+	Secondmyfile9.open ("8th_daughter_position_output.txt", ios::app);
+	if (goodParticle == 1 && generation == 9) {  
+		Secondmyfile9 << -29 << "\t" << -29 << "\t" << -29 << "\n";
+		Secondmyfile9 << finalEnergy << "\t" << finalMomentum << "\t" << " \n";
+	} else {
+		Secondmyfile9 << -37 << "\t" << -37 << "\t" << -37 << "\n";
+	}
+	Secondmyfile9.close();
+
 
   return;
 }
