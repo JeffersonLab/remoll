@@ -162,7 +162,7 @@ Double_t ecurr[__TARGETS]={50.0,50.0,15.0,3.0,0.1,85.0};
 Double_t targ_density[__TARGETS]={0.071,0.169,1.345e-3,0.071,0.917,0.071};
 Double_t xlum[__TARGETS]; 
 Double_t rate_LD_correction[__TARGETS];//={1.0,(0.169/2) / 0.071,(1.345e-3/3) / 0.071,1.0,0.0}; 
-Double_t hd_total_rate[__TARGETS]={26261326.0,26261326.0,26261326.0,590879.81,0.0,167415952.00}; //in kHz for half target length for bremss rad length rate from 1M events 26261326.00 for J/Psi and MOLLER total rates are different since target lengths are different. The total interaction rate is computed in the hall D code given the target lenght and density
+Double_t hd_total_rate[__TARGETS]={26261326.0,26261326.0,7878398.00,590879.81,0.0,167415952.00}; //in kHz for half target length for bremss rad length rate from 1M events 26261326.00 for J/Psi and MOLLER total rates are different since target lengths are different. The total interaction rate is computed in the hall D code given the target lenght and density
 Int_t hd_tot_events[__TARGETS]={1e6,1e6,1e6,1e6,1e6,1e6}; //not in use, event size is accessed from the no. of entries in the ntuple
 Double_t weight_rate[__TARGETS];//no. of pid is 5
 Double_t weight_xs[__TARGETS];//no. of pid is 5
