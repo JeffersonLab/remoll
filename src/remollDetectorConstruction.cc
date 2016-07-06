@@ -48,10 +48,11 @@ remollDetectorConstruction::remollDetectorConstruction() {
     // Default geometry file
     fDetFileName = "geometry_sculpt/mollerMother.gdml";
 
-
     CreateGlobalMagneticField();
+
     fIO = NULL;
     fGDMLParser = NULL;
+    fWorldVolume = NULL;
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
@@ -298,14 +299,15 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 
   UpdateCopyNo(worldVolume,1); 
     
-    
-  G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
+  fWorldVolume = worldVolume;
+
   //commented out the below dump geometry routine to save terminal output length 
-  DumpGeometricalTree(worldVolume);   
+  //G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
+  //DumpGeometricalTree(worldVolume);
   
   G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
-  
-  return worldVolume;
+
+  return fWorldVolume;
 }
 
 G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int index){  
@@ -322,24 +324,37 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
   return index;
 };
 
-void remollDetectorConstruction::DumpGeometricalTree(G4VPhysicalVolume* aVolume,G4int depth)
+void remollDetectorConstruction::DumpGeometricalTree(
+    G4VPhysicalVolume* aVolume,
+    G4int depth,
+    G4bool surfchk)
 {
+  // Null volume
+  if (aVolume == 0) aVolume = fWorldVolume;
+
+  // Print spaces
   for(int isp=0;isp<depth;isp++)
   { G4cout << "  "; }
-  //aVolume->SetCopyNo(1);
+  // Print name
   G4cout << aVolume->GetName() << "[" << aVolume->GetCopyNo() << "] "
          << aVolume->GetLogicalVolume()->GetName() << " "
          << aVolume->GetLogicalVolume()->GetNoDaughters() << " "
          << aVolume->GetLogicalVolume()->GetMaterial()->GetName() << " "
 	 << G4BestUnit(aVolume->GetLogicalVolume()->GetMass(true),"Mass");
-  if(aVolume->GetLogicalVolume()->GetSensitiveDetector())
+  // Print sensitive detector
+  if (aVolume->GetLogicalVolume()->GetSensitiveDetector())
   {
     G4cout << " " << aVolume->GetLogicalVolume()->GetSensitiveDetector()
                             ->GetFullPathName();
   }
   G4cout << G4endl;
+
+  // Check overlapping volumes
+  if (surfchk) aVolume->CheckOverlaps();
+
+  // Descend down the tree
   for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++)
-  { DumpGeometricalTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1); }
+  { DumpGeometricalTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk); }
 }
 
 void remollDetectorConstruction::CreateGlobalMagneticField() {
