@@ -50,8 +50,8 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   public:
 
-    void DumpGeometricalTree(G4VPhysicalVolume* aVolume,
-      G4int depth = 0,G4bool surfchk = true);
+    void DumpGeometricalTree(G4VPhysicalVolume* aVolume = NULL,
+      G4int depth = 0,G4bool surfchk = false);
 
   private:
 
