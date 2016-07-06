@@ -52,6 +52,7 @@ class remollMessenger : public G4UImessenger {
 	G4UIcmdWithAnInteger *seedCmd;
 	G4UIcmdWithABool     *kryptCmd;
 	G4UIcmdWithABool     *opticalCmd;
+        G4UIcmdWithABool     *dumpGeometryCmd;
 
 	G4UIcmdWithAString   *detfilesCmd;
 
