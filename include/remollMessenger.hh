@@ -84,6 +84,8 @@ class remollMessenger : public G4UImessenger {
 	G4UIcmdWithADoubleAndUnit *beamdphCmd;
 
 	G4UIcmdWithAString   *fileCmd;
+	G4UIcmdWithAString   *pionCmd;
+	G4UIcmdWithAString   *LUNDFileCmd;//Dominic Lunde linking GenLUND
 
 	////////////////////////////////////////////////
 	// To general event generators
