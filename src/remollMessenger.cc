@@ -60,6 +60,12 @@ remollMessenger::remollMessenger(){
     opticalCmd->SetParameterName("optical", false);
     opticalCmd->AvailableForStates(G4State_Idle); // Only have this AFTER we've initalized geometry
 
+    dumpGeometryCmd = new G4UIcmdWithABool("/remoll/dumpgeometry",this);
+    dumpGeometryCmd->SetGuidance("Dump the geometry tree");
+    dumpGeometryCmd->SetParameterName("overlap_check", true);
+    dumpGeometryCmd->SetDefaultValue(false);
+    dumpGeometryCmd->AvailableForStates(G4State_Idle); // Only have this AFTER we've initalized geometry
+
     newfieldCmd = new G4UIcmdWithAString("/remoll/addfield",this);
     newfieldCmd->SetGuidance("Add magnetic field");
     newfieldCmd->SetParameterName("filename", false);
@@ -329,7 +335,11 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	} else {
 	    fPhysicsList->RemovePhysics("Optical");
 	}
+    }
 
+    if( cmd == dumpGeometryCmd ){
+        G4bool overlap_check = dumpGeometryCmd->GetNewBoolValue(newValue);
+        fdetcon->DumpGeometricalTree(0,0,overlap_check);
     }
 
     if( cmd == newfieldCmd ){

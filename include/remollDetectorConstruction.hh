@@ -46,8 +46,16 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     remollIO *fIO;
 
-  void DumpGeometricalTree(G4VPhysicalVolume* aVolume,G4int depth=0);
-  G4int UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int index=0);
+    G4VPhysicalVolume*      fWorldVolume;
+
+  public:
+
+    void DumpGeometricalTree(G4VPhysicalVolume* aVolume = NULL,
+      G4int depth = 0,G4bool surfchk = false);
+
+  private:
+
+    G4int UpdateCopyNo(G4VPhysicalVolume* aVolume, G4int index = 0);
 
 };
 
