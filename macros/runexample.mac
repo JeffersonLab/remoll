@@ -40,6 +40,7 @@
 #/remoll/emin 80.0 MeV
 #/remoll/gen inelastic 
 #/remoll/gen pion
+#/remoll/gen pion_LUND
 #/remoll/gen inelasticAl
 #/remoll/gen quasielasticAl
 #/remoll/gen elasticAl
@@ -59,10 +60,11 @@
 /process/list
 
 # Specify random number seed
-#/remoll/seed 123456
+/remoll/seed 123456
 
 /remoll/filename remollout.root
+#/remoll/LUND_filename hallD_pion_p_MOLLER_1M_1.lund
 
 #/tracking/verbose 2
 
-/run/beamOn 100
+/run/beamOn 10000
