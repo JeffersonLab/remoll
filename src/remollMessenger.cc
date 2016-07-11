@@ -15,7 +15,9 @@
 #include "remollRun.hh"
 #include "remollRunData.hh"
 #include "remollSteppingAction.hh"
+#include "remollGenPion.hh"
 #include "remollGenFlat.hh"
+#include "remollGenLUND.hh" //Dominic Lunde linking GenLUND
 
 #include "G4UImanager.hh"
 #include "G4RunManager.hh"
@@ -95,6 +97,14 @@ remollMessenger::remollMessenger(){
     fileCmd = new G4UIcmdWithAString("/remoll/filename",this);
     fileCmd->SetGuidance("Output filename");
     fileCmd->SetParameterName("filename", false);
+
+    LUNDFileCmd = new G4UIcmdWithAString("/remoll/LUND_filename",this); //Dominic Lunde - creating LUND generator inputfile command "LUND_filename" 
+    LUNDFileCmd->SetGuidance("LUND Input filename");
+    LUNDFileCmd->SetParameterName("filename", false);
+
+    pionCmd = new G4UIcmdWithAString("/remoll/piontype", this);
+    pionCmd->SetGuidance("Generate pion type");
+    pionCmd->SetParameterName("piontype", false);
 
     thminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thmin",this);
     thminCmd->SetGuidance("Minimum generation angle");
@@ -385,6 +395,32 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 
     if( cmd == fileCmd ){
 	fIO->SetFilename(newValue);
+    }
+    
+    if( cmd == LUNDFileCmd ){//Dominic Lunde - linking LUND generator
+	remollVEventGen *agen = fprigen->GetGenerator();
+	remollGenLUND *aLUND = dynamic_cast<remollGenLUND*>(agen);
+	if (aLUND) aLUND->SetLUNDFile(newValue);
+    }
+
+
+    if( cmd == pionCmd ){ 
+	remollVEventGen *agen = fprigen->GetGenerator();
+	remollGenPion *apion = dynamic_cast<remollGenPion *>(agen);
+	if( apion ){
+		if( newValue.compareTo("pi-") == 0 ){
+			apion->SetPionType(remollGenPion::kPiMinus);
+			
+		}
+		if( newValue.compareTo("pi+") == 0 ){
+			apion->SetPionType(remollGenPion::kPiPlus);
+		}
+		if( newValue.compareTo("pi0") == 0 ){
+			apion->SetPionType(remollGenPion::kPi0);
+		}
+	} else{
+		G4cerr << __FILE__ <<  "line" << __LINE__ << ": Can't set pion type for non-pion generator" << G4endl;
+	}
     }
 
     if( cmd == EminCmd ){
