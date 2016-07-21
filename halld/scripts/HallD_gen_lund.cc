@@ -26,7 +26,7 @@ ex.
 
 where arg 1 is hall d rootfile, default is /home/rakithab/Simulation_Analysis/Generators/HallD/ElectroProduction/bggen_output_1M_\*.root
 arg 2 is target choose from {"LH","LD","3He","JPsi","SIDIS_LH","MOLLER"} using array index, default is 1
-arg 3 is no.of lund file entires choose from {1e3,1e4,1e5,1e5} using array index, default is 0
+arg 3 is no.of lund file entires choose from {1e3,1e4,1e5,1e6} using array index, default is 0
 arg 4 is file index, where multiple sets of lund files generated file index can be changed. default is 1
 
 Set of generated lund files are available at,
