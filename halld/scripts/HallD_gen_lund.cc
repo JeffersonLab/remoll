@@ -584,7 +584,7 @@ int main(Int_t argc,Char_t* argv[]) {
     //lund file with multi particle states
     if (bWriteLund){
       if (nEvent[pid[1]] < nLundEntries){//pid=1 is used for multi-track events
-	myfile[pid[1]]<< track_index.size() << " \t " << Wprate  << " \t " << Wmrate  << " \t " << "0"  << " \t " << "0" << " \t "  << fEvXbj << " \t " << y  << " \t " << fEvW2  << " \t " << fEvQ2  << " \t " << hd_total_rate[targ_index]/nLundEntries << endl;
+	myfile[pid[1]]<< track_index.size() << " \t " << Wprate  << " \t " << Wmrate  << " \t " << "0"  << " \t " << "0" << " \t "  << fEvXbj << " \t " << y  << " \t " << fEvW2  << " \t " << fEvQ2  << " \t " << hd_total_rate[targ_index]*1e3/nLundEntries << endl;
 	Int_t j=0;//track id
 	for(Int_t k=0;k<track_index.size();k++){
 	  j=track_index[k];
