@@ -197,6 +197,8 @@ std::vector<int> track_index;
 void set_plot_style();
 
 int main(Int_t argc,Char_t* argv[]) { 
+
+  
   gROOT->SetStyle("Plain");
   //gStyle->SetOptStat(0); 
   //gStyle->SetOptStat("eMr");
@@ -272,7 +274,8 @@ int main(Int_t argc,Char_t* argv[]) {
 
 
   compute4Target();
-  targ_index=5;
+  //exit(1);
+  targ_index=1;
   printf("Generating events for %s \n",stgt[targ_index].Data());
 
   //momentum bins
@@ -305,7 +308,7 @@ int main(Int_t argc,Char_t* argv[]) {
   TChain * halld_main = new TChain("h9");
   //halld_main->Add("/home/rakithab/Simulation_Analysis/Generators/HallD/ElectroProduction/bggen_output_hlf.root");//with 100k event
   //needs about 4M hall D events to generate 1M pions in forward angles (< 90 deg.)
-  //halld_main->Add("/home/rakithab/Simulation_Analysis/Generators/HallD/ElectroProduction/bggen_output_1M_*.root");//with 1M event with half target length used to compute bramss contribution  
+  halld_main->Add("/home/rakithab/Simulation_Analysis/Generators/HallD/ElectroProduction/bggen_output_1M_*.root");//with 1M event with half target length used to compute bramss contribution  
   //halld_main->Add("/home/rakithab/Simulation_Analysis/Generators/HallD/ElectroProduction/bggen_output_Jpsi_1M.root");
   //halld_main->Add("/home/rakithab/Simulation_Analysis/Generators/HallD/ElectroProduction/bggen_output_Jpsi_1M_*.root");
   //for JPsi set 2 to 5
@@ -313,7 +316,7 @@ int main(Int_t argc,Char_t* argv[]) {
   //for PVDIS and SIDIS set 2 to 5
   //halld_main->Add("/home/rakithab/Simulation_Analysis/Generators/HallD/ElectroProduction/bggen_set5_output_1M_*.root");//with 1M event with half target length used to compute bramss contribution  
   //for MOLLER set 1
-  halld_main->Add("/home/rakithab/Simulation_Analysis/Generators/HallD/ElectroProduction/bggen_set1_output_MOLLER_1M_*.root");
+  //halld_main->Add("/home/rakithab/Simulation_Analysis/Generators/HallD/ElectroProduction/bggen_set1_output_MOLLER_1M_*.root");
 
   halld_main->SetBranchAddress("ieve", &ieve, &b_ieve); //event no
   halld_main->SetBranchAddress("irun", &irun, &b_irun);
@@ -454,12 +457,12 @@ int main(Int_t argc,Char_t* argv[]) {
   
   if (bWriteLund){//for LUND format each event has the rate factor included. Therefore we need to know the total rate beforehand 
     //create LUND files
-    myfile[0].open("hallD_pion_p_MOLLER_1M_1.lund",ios::out);
-    myfile[1].open("hallD_pion_0_MOLLER_1M_1.lund",ios::out);
-    myfile[2].open("hallD_pion_m_MOLLER_1M_1.lund",ios::out);
-    myfile[3].open("hallD_proton_MOLLER_1M_1.lund",ios::out);
-    myfile[4].open("hallD_neutron_MOLLER_1M_1.lund",ios::out);
-    myfile[5].open("hallD_MOLLER_all_tracks_1M_1.lund",ios::out);
+    myfile[0].open("hallD_pion_p_LD_1M_1.lund",ios::out);
+    myfile[1].open("hallD_pion_0_LD_1M_1.lund",ios::out);
+    myfile[2].open("hallD_pion_m_LD_1M_1.lund",ios::out);
+    myfile[3].open("hallD_proton_LD_1M_1.lund",ios::out);
+    myfile[4].open("hallD_neutron_LD_1M_1.lund",ios::out);
+    myfile[5].open("hallD_LD_all_tracks_1M_1.lund",ios::out);
 
     r3[0] = new TRandom3(1);// for vertex x distribution
     r3[1] = new TRandom3(2);// for vertex y distribution
@@ -682,7 +685,7 @@ int main(Int_t argc,Char_t* argv[]) {
     //lund file with multi particle states
     if (bWriteLund){
       if (nEvent[pid[1]] < nLundEntries){//pid=1 is used for multi-track events
-	myfile[pid[1]]<< track_index.size() << " \t " << Wprate  << " \t " << Wmrate  << " \t " << "0"  << " \t " << "0" << " \t "  << fEvXbj << " \t " << y  << " \t " << fEvW2  << " \t " << fEvQ2  << " \t " << hd_total_rate[targ_index]*1e3/nLundEntries << endl;
+	myfile[pid[1]]<< track_index.size() << " \t " << Wprate  << " \t " << Wmrate  << " \t " << "0"  << " \t " << "0" << " \t "  << fEvXbj << " \t " << y  << " \t " << fEvW2  << " \t " << fEvQ2  << " \t " << targ_A[targ_index]*hd_total_rate[targ_index]*1e3/nLundEntries << endl;
 	Int_t j=0;//track id
 	for(Int_t k=0;k<track_index.size();k++){
 	  j=track_index[k];
@@ -835,7 +838,7 @@ void compute4Target(){
     rate_LD_correction[i] = targ_density[i]/targ_A[i]/targ_density[0];
     hd_total_rate[i]*=rate_LD_correction[i];
     xlum[i] = ecurr[i]/1.6E-19*targth[i]*targ_density[i]/targ_A[i]*0.6022*1e-6;
-    //printf(" %f \t %f \t %f \n", xlum[i], hd_total_rate[i], hd_total_rate[i]/xlum[i]);
+    printf(" %f \t %f \t %f \n", xlum[i], hd_total_rate[i], hd_total_rate[i]/xlum[i]);
     //weight_rate[i] = hd_total_rate[i]/hd_tot_events[i]*targ_A[i];
     //weight_xs[i] = hd_total_rate[i]*1e3/hd_tot_events[i]/xlum[i]*1e6*targ_A[i];//weighted by xs
   }
