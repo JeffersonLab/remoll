@@ -82,27 +82,18 @@ void remollVEventGen::PolishEvent(remollEvent *ev) {
     for( iter = ev->fPartPos.begin(); iter != ev->fPartPos.end(); iter++ ) {
         (*iter) += ev->fVertexPos;
     }
+    
 
-    ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/((G4double) fRunData->GetNthrown());
+    if ( ev->fRate == 0 ){// If the rate is set to 0 then calculate it using the cross section
+    	ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/((G4double) fRunData->GetNthrown());
+    }
+    else { // For LUND - calculate rate and cross section	
+    	ev->fEffXs = ev->fRate*((G4double) fRunData->GetNthrown())/(fBeamTarg->GetEffLumin());
+    	ev->fRate = ev->fRate/((G4double) fRunData->GetNthrown());
+    }
+
     ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPol;
 
     return;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
