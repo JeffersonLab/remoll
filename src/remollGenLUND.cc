@@ -20,6 +20,7 @@
 #include <iterator>
 #include <string>
 
+
 remollGenLUND::remollGenLUND()
 {
   // Initialize fRunData
@@ -35,6 +36,7 @@ remollGenLUND::remollGenLUND()
   // Start up with initialization flag to false
   bLUND = false;
   LUNDfile_linecount = 0;
+
 }
 
 remollGenLUND::~remollGenLUND()
@@ -46,7 +48,7 @@ void remollGenLUND::SamplePhysics(remollVertex *vert, remollEvent *evt)
 {
   // check if valid LUND file loaded and number of thrown events is less than file length
   if (bLUND &&
-      fRunData->GetNthrown() < LUNDfile_linecount) {
+      fRunData->GetNthrown() <= LUNDfile_linecount) {
 
     //read two lines from the LUND file
     G4double line1[10];
@@ -63,6 +65,7 @@ void remollGenLUND::SamplePhysics(remollVertex *vert, remollEvent *evt)
 
     G4int pid = (Int_t) line2[3];
 
+
     evt->SetRate(ratefactor);
     evt->SetAsymmetry(0.0);
     evt->SetEffCrossSection(1.0);
@@ -77,8 +80,8 @@ void remollGenLUND::SetLUNDFile(G4String filename)
   // open the LUND file by name
   LUNDfile.open(filename, std::ios::in);
 
-  // check if LUND file is open
-  if (!LUNDfile.good()) {
+    // check if LUND file is open
+  if (!LUNDfile.good()) { 
     G4cerr << "LUND file " << filename << " does not exist." << G4endl;
     bLUND = false;
     return;
@@ -104,7 +107,7 @@ void remollGenLUND::SetLUNDFile(G4String filename)
       std::copy(std::istream_iterator<std::string>(stream2),std::istream_iterator<std::string>(),std::back_inserter(words));
       break;
     }//else
-    //G4cerr << " line len "<<line_len<< G4endl;
+    G4cerr << " line len "<<line_len<< G4endl;
   }
 
   // reset the file back to first line
@@ -120,3 +123,5 @@ void remollGenLUND::SetLUNDFile(G4String filename)
   LUNDfile.clear();
   LUNDfile.seekg(0, std::ios::beg);
 }
+
+
