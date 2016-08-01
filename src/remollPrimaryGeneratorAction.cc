@@ -19,6 +19,7 @@
 #include "remollGenBeam.hh"
 #include "remollGenFlat.hh"
 #include "remollGenAl.hh"
+#include "remollGenLUND.hh" //Dominic Lunde adding the LUND generator command
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
     G4int n_particle = 1;
@@ -71,6 +72,8 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
         fEventGen = new remollGenAl(1);
     }else if( genname == "elasticAl" ) {
         fEventGen = new remollGenAl(0);
+    }else if( genname == "pion_LUND" ) { //Dominic Lunde - adding GenLUND into the generators
+        fEventGen = new remollGenLUND();  
     }
 
     if( !fEventGen ) {
