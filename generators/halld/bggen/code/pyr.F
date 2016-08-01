@@ -1,0 +1,11 @@
+C
+      DOUBLE PRECISION FUNCTION PYR(IX)
+      IMPLICIT NONE
+      INTEGER IX
+      REAL a
+C
+      CALL RANLUX(a,1)
+      PYR=DBLE(a)
+      RETURN
+      END
+
