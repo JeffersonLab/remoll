@@ -9,6 +9,8 @@
 # This must be explicitly called
 /run/initialize
 
+/remoll/dumpgeometry true
+
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
@@ -49,8 +51,8 @@
 
 /remoll/beamcurr 85 microampere
 
-#Enable optical photons and processes
-#/remoll/optical true
+# Enable optical photons and processes
+/remoll/optical true
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
