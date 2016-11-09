@@ -139,6 +139,7 @@ set(REMOLL_SCRIPTS
     geometry_sculpt/hybridDaughter.gdml
     geometry_sculpt/targetDaughter.gdml
     geometry_sculpt/upstreamDaughter.gdml
+    geometry_sculpt/pionDaughter.gdml
     geometry_sculpt/schema/gdml.xsd
     geometry_sculpt/schema/gdml_core.xsd
     geometry_sculpt/schema/gdml_define.xsd

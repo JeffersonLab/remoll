@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+	<position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
+	
+	<variable name="i_pi" value="0"/>
+	<variable name="j_pi" value="0"/>
+	<variable name="k_pi" value="0"/>
+	<variable name="l_pi" value="1"/>
+</define>
+
+  <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+    <material Z="1" name="VacuumDet" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+    <material Z ="82" name="Lead" state="solid">
+	<MEE unit="eV" value="823"/>
+	<D unit="g/cm3" value="11.35"/>
+	<atom unit="g/mole" value="207.19"/>
+    </material>
+  </materials>
+
+<solids>
+    <box lunit="mm" name="boxPion" x="4000" y="4000" z="2000"/>
+   
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="Lead_wall" rmax="1900" rmin="600" startphi="0" z="350"/>
+
+   
+  <loop for="i_pi" from="0" to="34" step="1">
+    <!-- deltaphi was 180.0/7 for some reason -->   
+    <tube aunit="deg" deltaphi="360.0/35" lunit="mm" name="PionDet[i_pi]" rmax="1220" rmin="1040" startphi="0" z="300"/>
+  </loop>
+</solids>
+
+<structure>
+
+    
+
+    <volume name="lead_wall_logical">
+      <materialref ref="Lead"/>
+      <solidref ref="Lead_wall"/>
+      <auxiliary auxtype="Color" auxvalue="brown"/>
+    </volume>
+  
+    
+    <loop for="j_pi" to="34" step="2">
+	
+    <volume name="PionDetLogical[j_pi]">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="PionDet[j_pi]"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="29"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+    </loop>
+    <loop for="l_pi" from="1" to="33" step="2">
+    <volume name="PionDetLogical[l_pi]">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="PionDet[l_pi]"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="29"/>
+      <auxiliary auxtype="Color" auxvalue="cyan"/>
+    </volume>
+    </loop>
+   <volume name="logicPion">
+    <materialref ref="Vacuum"/>
+    <solidref ref="boxPion"/>
+   
+    <physvol name="lead_wall_physical">
+    <volumeref ref="lead_wall_logical"/>
+<!-- z position set to 250 mm, so that a 500 mm wall would go from 30 to 30.5 m, since the z position should be the center of the object -->
+     <position name="lead_phys_0_pos" unit="mm" x="0" y="0" z="250"/>
+    </physvol>	
+    
+    <loop for="k_pi" to="34" step="1">    
+
+      <physvol name="PionDetPhysical[k_pi]">
+        <volumeref ref="PionDetLogical[k_pi]"/>
+        <position name="wash_phys_1_pos" unit="mm" x="0" y="0" z="1150"/>
+     	<rotation name="Rotate_Wedge" unit="deg" x="0" y="0" z="(360/35)*k_pi"/>
+ 	
+       </physvol>
+    </loop>	
+      </volume> 
+
+</structure>
+
+<setup name="Default" version="1.0">
+	<world ref="logicPion"/>
+</setup>
+
+</gdml>
+      <materialref ref="VacuumDet"/>
+      <solidref ref="PionDet[j_pi]"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="29"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
