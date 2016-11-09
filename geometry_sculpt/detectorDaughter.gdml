@@ -32,6 +32,7 @@
       <solidref ref="solWasher1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="28"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     </volume>
 
     <volume name="logicDetector">
