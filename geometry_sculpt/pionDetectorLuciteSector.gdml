@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <constant name="N_S" value="7"/>
+  <constant name="PHI" value="360.0/2.0/N_S"/>
+
+  <constant name="pionDetectorLuciteRadialPosition" value="105.0"/> <!-- cm -->
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <tube name="pionDetectorLuciteSector_solid" lunit="m" aunit="deg" rmin="0" rmax="1.5" z="0.25" startphi="-PHI/2.0" deltaphi="PHI"/>
+</solids>
+
+<structure>
+
+  <volume name="pionDetectorLuciteSector_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorLuciteSector_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+    <physvol name="pionDetectorLucite_physical">
+      <file name="geometry_sculpt/pionDetectorLucite.gdml"/>
+      <position name="pionDetectorLucite_position" unit="cm" x="pionDetectorLuciteRadialPosition" z="0.0"/>
+      <rotation name="pionDetectorLucite_rotation" unit="deg" y="-90.0" z="90"/>
+    </physvol>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorLuciteSector_logical"/>
+</setup>
+
+</gdml>

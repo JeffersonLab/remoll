@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <constant name="N_P" value="7"/>
+  <variable name="i_p" value="1"/>
+  <quantity name="pionDetectorLuciteThickness" type="length" value="2.54" unit="cm"/>
+  <quantity name="pionDetectorLuciteInsideWidth" type="length" value="41.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteOutsideWidth" type="length" value="51.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteHeight" type="length" value="25.0" unit="cm"/>
+  <matrix coldim="2" name="ABSLENGTH_LUCITE" values="1.54986*eV 263160 1.77127*eV 250000 2.06648*eV 227270 2.47978*eV 200000 3.09973*eV 131580 4.13297*eV 16130 4.95956*eV 740 5.51063*eV 125 5.90424*eV 10"/>
+  <matrix coldim="2" name="RINDEX_LUCITE" values="1.54986*eV 1.45338 1.77127*eV 1.45536 2.06648*eV 1.4581 2.47978*eV 1.46239 3.09973*eV 1.47018 4.13297*eV  1.48786 4.95956*eV  1.50751 5.51063*eV 1.52422 5.90424*eV 1.53842"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <!-- x in azimuthal direction -->
+  <!-- y in downstream beam direction -->
+  <!-- z in radial outward direction -->
+  <trd  name="pionDetectorLuciteAllPlanes_solid"   y1="N_P*pionDetectorLuciteThickness" y2="N_P*pionDetectorLuciteThickness" x1="pionDetectorLuciteInsideWidth" x2="pionDetectorLuciteOutsideWidth" z="pionDetectorLuciteHeight"/>
+  <trd  name="pionDetectorLuciteSinglePlane_solid" y1="1.0*pionDetectorLuciteThickness" y2="1.0*pionDetectorLuciteThickness" x1="pionDetectorLuciteInsideWidth" x2="pionDetectorLuciteOutsideWidth" z="pionDetectorLuciteHeight"/>
+</solids>
+
+<structure>
+
+  <volume name="pionDetectorLuciteSinglePlane_logical">
+    <materialref ref="G4_PLEXIGLASS"/>
+    <solidref ref="pionDetectorLuciteSinglePlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLuciteDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4001"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
+  <volume name="pionDetectorLucite_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorLuciteAllPlanes_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+    <loop for="i_p" to="N_P" step="1">
+      <physvol name="pioneDetectorLuciteTrd[i_p]_physical">
+        <volumeref ref="pionDetectorLuciteSinglePlane_logical"/>
+        <position name="pionDetectorLuciteTrd[i_p]_position" y="(2.0*(i_p-1.0)-N_P+1.0)/2.0*pionDetectorLuciteThickness"/>
+      </physvol>
+    </loop>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorLucite_logical"/>
+</setup>
+
+</gdml>

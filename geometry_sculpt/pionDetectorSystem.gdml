@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+   <constant name="N_S" value="7"/>
+   <variable name="i_s" value="1"/>
+   <constant name="PHI" value="360.0/N_S"/>
+
+   <constant name="pionDetectorRadius" value="1.5"/> <!-- m -->
+   <constant name="pionDetectorLength" value="2.0"/> <!-- m -->
+
+   <constant name="pionDetectorLeadDonutThickness" value="0.25"/> <!-- m -->
+   <constant name="pionDetectorLeadDonutInnerRadius" value="0.90"/> <!-- m -->
+   <constant name="pionDetectorLeadDonutOuterRadius" value="1.15"/> <!-- m -->
+
+   <position name="pionDetectorLeadDonutPosition" unit="m" x="0" y="0" z="-0.85"/>
+   <position name="pionDetectorGEMFrontPosition" unit="m" x="0" y="0" z="-0.50"/>
+   <position name="pionDetectorTSFrontPosition"  unit="m" x="0" y="0" z="-0.25"/>
+   <position name="pionDetectorLucitePosition"   unit="m" x="0" y="0" z="0.0"/>
+   <position name="pionDetectorTSBackPosition"   unit="m" x="0" y="0" z="+0.25"/>
+   <position name="pionDetectorGEMBackPosition"  unit="m" x="0" y="0" z="+0.50"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+    <tube lunit="m" aunit="deg" name="pionDetectorLeadDonut_solid" rmin="pionDetectorLeadDonutInnerRadius" rmax="pionDetectorLeadDonutOuterRadius" z="pionDetectorLeadDonutThickness" deltaphi="360.0"/>
+    <tube lunit="m" aunit="deg" name="pionDetectorSystem_solid" rmin="0" rmax="pionDetectorRadius" z="pionDetectorLength" deltaphi="360.0"/>
+</solids>
+
+<structure>
+
+    <volume name="pionDetectorLeadDonut_logical">
+      <!-- for testing with electron: disable lead and turn into G4_Galactic -->
+      <!-- <materialref ref="G4_Pb"/> -->
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="pionDetectorLeadDonut_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+
+    <volume name="pionDetectorSystem_logical">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="pionDetectorSystem_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+      <physvol>
+      <volumeref ref="pionDetectorLeadDonut_logical"/>
+      <positionref ref="pionDetectorLeadDonutPosition"/>
+      </physvol>
+
+      <loop for="i_s" to="N_S" step="1">
+
+        <physvol>
+        <file name="geometry_sculpt/pionDetectorGEMOpenSector.gdml"/>
+        <positionref ref="pionDetectorGEMFrontPosition"/>
+        <rotation name="pionDetectorGEMFrontOpenSector_rotation" unit="deg" z="(i_s-1.0)*PHI"/>
+        </physvol>
+
+        <physvol>
+        <file name="geometry_sculpt/pionDetectorTSOpenSector.gdml"/>
+        <positionref ref="pionDetectorTSFrontPosition"/>
+        <rotation name="pionDetectorTSFrontOpenSector_rotation" unit="deg" z="(i_s-1.0)*PHI"/>
+        </physvol>
+
+        <physvol>
+        <file name="geometry_sculpt/pionDetectorLuciteSector.gdml"/>
+        <positionref ref="pionDetectorLucitePosition"/>
+        <rotation name="pionDetectorLuciteOpenSector_rotation" unit="deg" z="(i_s-1.0)*PHI"/>
+        </physvol>
+
+        <physvol>
+        <file name="geometry_sculpt/pionDetectorLuciteSector.gdml"/>
+        <positionref ref="pionDetectorLucitePosition"/>
+        <rotation name="pionDetectorLuciteClosedSector_rotation" unit="deg" z="PHI/2.0+(i_s-1.0)*PHI"/>
+        </physvol>
+
+        <physvol>
+        <file name="geometry_sculpt/pionDetectorTSOpenSector.gdml"/>
+        <positionref ref="pionDetectorTSBackPosition"/>
+        <rotation name="pionDetectorTSBackOpenSector_rotation" unit="deg" z="(i_s-1.0)*PHI"/>
+        </physvol>
+
+        <physvol>
+        <file name="geometry_sculpt/pionDetectorGEMOpenSector.gdml"/>
+        <positionref ref="pionDetectorGEMBackPosition"/>
+        <rotation name="pionDetectorGEMBackOpenSector_rotation" unit="deg" z="(i_s-1.0)*PHI"/>
+        </physvol>
+
+      </loop>
+   </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorSystem_logical"/>
+</setup>
+
+</gdml>
