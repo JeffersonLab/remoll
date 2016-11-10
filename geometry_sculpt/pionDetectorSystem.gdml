@@ -6,7 +6,7 @@
    <variable name="i_s" value="1"/>
    <constant name="PHI" value="360.0/N_S"/>
 
-   <constant name="pionDetectorRadius" value="1.5"/> <!-- m -->
+   <constant name="pionDetectorRadius" value="2.0"/> <!-- m -->
    <constant name="pionDetectorLength" value="2.0"/> <!-- m -->
 
    <constant name="pionDetectorLeadDonutThickness" value="0.25"/> <!-- m -->
@@ -42,11 +42,10 @@
     <volume name="pionDetectorSystem_logical">
       <materialref ref="G4_Galactic"/>
       <solidref ref="pionDetectorSystem_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol>
-      <volumeref ref="pionDetectorLeadDonut_logical"/>
-      <positionref ref="pionDetectorLeadDonutPosition"/>
+        <volumeref ref="pionDetectorLeadDonut_logical"/>
+        <positionref ref="pionDetectorLeadDonutPosition"/>
       </physvol>
 
       <loop for="i_s" to="N_S" step="1">
@@ -88,6 +87,9 @@
         </physvol>
 
       </loop>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
    </volume>
 
 </structure>

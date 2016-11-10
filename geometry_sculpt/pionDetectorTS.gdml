@@ -31,11 +31,12 @@
   <volume name="pionDetectorTS_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorTSPlane_solid"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
     <physvol name="pionDetectorTS_physical">
       <volumeref ref="pionDetectorTSPlane_logical"/>
     </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
 </structure>

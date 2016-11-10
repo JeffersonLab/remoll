@@ -10,7 +10,9 @@
 <materials>
   <!-- TODO: GEM gas mixture -->
   <material name="GEMGasMixture">
-    <D value="1.290" unit="mg/cm3"/>
+    <!-- density CO2 at STP = 1.98 kg/m3 -->
+    <!-- density Ar at STP = 1.784 kg/m3 -->
+    <D value="1.882" unit="mg/cm3"/>
     <fraction n="0.5" ref="G4_CARBON_DIOXIDE"/>
     <fraction n="0.5" ref="G4_Ar"/>
   </material>
@@ -36,11 +38,12 @@
   <volume name="pionDetectorGEM_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorGEMPlane_solid"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
     <physvol name="pionDetectorGEM_physical">
       <volumeref ref="pionDetectorGEMSinglePlane_logical"/>
     </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
 </structure>

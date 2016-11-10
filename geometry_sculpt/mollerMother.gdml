@@ -6,9 +6,10 @@
      <position name="upstreamCenter" x="0" y="0" z="7000."/>
      <position name="hybridCenter" x="0" y="0" z="13366.57"/>
      <position name="detectorCenter" x="0" y="0" z="28500."/>
-     <!-- pionDetectorCenter should be around 31-32000 mm -->
+     <!-- full pion detector system pionDetectorCenter should be around 31-32000 mm -->
      <position name="pionDetectorCenter" x="0" y="0" z="32000."/>
-     <position name="pionCenter" x="0" y="0" z = "32000."/>
+     <!-- straw man pion detector system pionDetectorCenter should be around 31-32000 mm -->
+     <position name="pionStrawmanCenter" x="0" y="0" z = "32000."/>
      <rotation name="identity"/>
 </define>
 
@@ -68,11 +69,13 @@
       </physvol>
       
       <!-- Separate file for lead wall + pion detector-->
+<!--
       <physvol>
       <file name="geometry_sculpt/pionDaughter.gdml"/>
-      <positionref ref="pionCenter"/>
+      <positionref ref="pionStrawmanCenter"/>
       <rotationref ref="identity"/> 
       </physvol>
+ -->
     </volume>
   </structure>
 

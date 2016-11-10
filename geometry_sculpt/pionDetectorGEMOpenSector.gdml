@@ -23,13 +23,14 @@
   <volume name="pionDetectorGEMOpenSector_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorGEMOpenSector_solid"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
     <physvol name="pionDetectorGEM_physical">
       <file name="geometry_sculpt/pionDetectorGEM.gdml"/>
       <position name="pionDetectorGEM_position" unit="cm" x="pionDetectorGEMRadialPosition"/>
       <rotation name="pionDetectorGEM_rotation" unit="deg" y="-90.0" z="90"/>
     </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
   </volume>
 
