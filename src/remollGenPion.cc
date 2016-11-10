@@ -19,14 +19,16 @@
 remollGenPion::remollGenPion(){
     fApplyMultScatt = false;
 
-    fTh_min = 20*deg;
-    fTh_max = 70*deg;
+    fTh_min = 0.0*deg;
+    fTh_max = 2.0*deg;
 
-    
-    fE_min = 0.0*deg;
-    fE_max = -1e9;
+    // Scott Mundy 4/14/2016, attempting to solve cross section issue by defining fPh_max and fPh_min
+    fPh_min = 0.0*deg;
+    fPh_max = 359.9*deg;
 
-    fPionType = kPiMinus;
+    fE_min = 0.0*MeV;
+    fE_max = -1.0*GeV; // negative to automatically pick beam energy
+
 }
 
 remollGenPion::~remollGenPion(){
@@ -56,6 +58,8 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     assert( pf > 0.0 );
     assert( pf < beamE );
     //solid angle in steradians times the integral of pion energies from 0 to beamE -> int dE from 0 to beamE: rakitha Tue Sep 24 14:11:36 EDT 2013
+   
+   
     double V = (fPh_max-fPh_min)*(cos(fTh_min) - cos(fTh_max))*true_emax;
 
     double intrad = 2.0*alpha*log(beamE/electron_mass_c2)/pi;
@@ -70,6 +74,7 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     switch(fPionType){
 	case kPiMinus:
+	    
 	    piontypestr = G4String("pi-");
 	    thisxs = vert->GetMaterial()->GetZ()*sigpim + (vert->GetMaterial()->GetA()*mole/g-vert->GetMaterial()->GetZ())*sigpip;
 	    break;
@@ -93,9 +98,10 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     //to get effective cross section in nanobarns, EffCrossSection = V*thisxs where V is in str.GeV 
     //also see main.f rate calculation in original fortran code  (main.f lines 209 - 211)
     //rakitha  Tue Sep 24 11:06:41 EDT 2013
+    // G4cout << "V: " << V << " thisxs: " << thisxs <<  G4endl;	   
     evt->SetEffCrossSection(V*thisxs);
     //printf("DEBUG:  xs %f \n ",V*thisxs); 
-
+    
     if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << 
 	    ": Error!  Some lazy programmer didn't account for complex materials in the moller process!" << G4endl;

@@ -38,6 +38,13 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4bool badedep = false;
     G4bool badhit  = false;
 
+    // Ignore optical photons as hits (but still simulate them
+    // so they can knock out electrons of the photocathode)
+    if (step->GetTrack()->GetDefinition()->GetParticleName() == "opticalphoton") {
+      //std::cout << "Return on optical photon" << std::endl;
+      return false;
+    }
+
     // Get touchable volume info
     G4TouchableHistory *hist = 
 	(G4TouchableHistory*)(step->GetPreStepPoint()->GetTouchable());
