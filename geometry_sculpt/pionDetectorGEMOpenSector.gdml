@@ -7,7 +7,7 @@
   <constant name="pionDetectorGEMRadius" value="1.5"/> <!-- m -->
   <constant name="pionDetectorGEMLength" value="0.1"/> <!-- m -->
 
-  <constant name="pionDetectorGEMRadialPosition" value="95.0"/> <!-- cm -->
+  <constant name="pionDetectorGEMRadialPosition" value="105.0"/> <!-- cm -->
 </define>
 
 <materials>
@@ -23,7 +23,7 @@
     rmin="0"
     rmax="pionDetectorGEMRadius"
     z="pionDetectorGEMLength" lunit="m"
-    startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
+    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
 <structure>
