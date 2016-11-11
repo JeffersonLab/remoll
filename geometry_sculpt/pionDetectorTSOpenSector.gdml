@@ -2,10 +2,9 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <constant name="N_S" value="7"/>
-  <constant name="PHI" value="360.0/N_S"/> <!-- only in open sector: use up the closed sector for enclosing volume -->
+  <constant name="PHI" value="360.0/7.0"/> <!-- only in open sector: use up the closed sector for enclosing volume -->
 
-  <constant name="pionDetectorTSRadius" value="1.5"/> <!-- m -->
+  <constant name="pionDetectorTSRadius" value="1.7"/> <!-- m -->
   <constant name="pionDetectorTSLength" value="0.1"/> <!-- m -->
 
   <constant name="pionDetectorTSRadialPosition" value="105.0"/> <!-- cm -->
@@ -15,7 +14,16 @@
 </materials>
 
 <solids>
-  <tube name="pionDetectorTSOpenSector_solid" lunit="m" aunit="deg" rmin="0" rmax="pionDetectorTSRadius" z="pionDetectorTSLength" startphi="-PHI/2.0" deltaphi="PHI"/>
+  <tube name="pionDetectorTSOpenSector_solid"
+    rmin="0"
+    rmax="pionDetectorTSRadius"
+    z="pionDetectorTSLength" lunit="m"
+    startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
+  <tube name="pionDetectorTSAllSectors_solid"
+    rmin="0"
+    rmax="pionDetectorTSRadius"
+    z="pionDetectorTSLength" lunit="m"
+    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
 <structure>
@@ -23,21 +31,32 @@
   <volume name="pionDetectorTSOpenSector_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorTSOpenSector_solid"/>
-
     <physvol name="pionDetectorTS_physical">
       <file name="geometry_sculpt/pionDetectorTS.gdml"/>
       <position name="pionDetectorTS_position" unit="cm" x="pionDetectorTSRadialPosition"/>
       <rotation name="pionDetectorTS_rotation" unit="deg" y="-90.0" z="90"/>
     </physvol>
-
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
 
+  <volume name="pionDetectorTSAllSectors_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorTSAllSectors_solid"/>
+    <replicavol number="7">
+      <volumeref ref="pionDetectorTSOpenSector_logical"/>
+      <replicate_along_axis>
+        <direction phi="1"/>
+        <width value="2.0*pi/7.0" unit="mm"/> <!-- bug geant4.10.02.p02: unit must be a length, but mm == 1 -->
+        <offset value="0.0" unit="mm"/>
+      </replicate_along_axis>
+    </replicavol>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
 </structure>
 
 <setup name="Default" version="1.0">
-  <world ref="pionDetectorTSOpenSector_logical"/>
+  <world ref="pionDetectorTSAllSectors_logical"/>
 </setup>
 
 </gdml>

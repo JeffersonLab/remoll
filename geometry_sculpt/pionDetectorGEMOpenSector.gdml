@@ -2,8 +2,7 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <constant name="N_S" value="7"/>
-  <constant name="PHI" value="360.0/N_S"/> <!-- only in open sector: use up the closed sector for enclosing volume -->
+  <constant name="PHI" value="360.0/7.0"/> <!-- only in open sector: use up the closed sector for enclosing volume -->
 
   <constant name="pionDetectorGEMRadius" value="1.5"/> <!-- m -->
   <constant name="pionDetectorGEMLength" value="0.1"/> <!-- m -->
@@ -15,7 +14,16 @@
 </materials>
 
 <solids>
-  <tube name="pionDetectorGEMOpenSector_solid" lunit="m" aunit="deg" rmin="0" rmax="pionDetectorGEMRadius" z="pionDetectorGEMLength" startphi="-PHI/2.0" deltaphi="PHI"/>
+  <tube name="pionDetectorGEMOpenSector_solid"
+    rmin="0"
+    rmax="pionDetectorGEMRadius"
+    z="pionDetectorGEMLength" lunit="m"
+    startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
+  <tube name="pionDetectorGEMAllSectors_solid"
+    rmin="0"
+    rmax="pionDetectorGEMRadius"
+    z="pionDetectorGEMLength" lunit="m"
+    startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
 </solids>
 
 <structure>
@@ -23,21 +31,32 @@
   <volume name="pionDetectorGEMOpenSector_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorGEMOpenSector_solid"/>
-
     <physvol name="pionDetectorGEM_physical">
       <file name="geometry_sculpt/pionDetectorGEM.gdml"/>
       <position name="pionDetectorGEM_position" unit="cm" x="pionDetectorGEMRadialPosition"/>
       <rotation name="pionDetectorGEM_rotation" unit="deg" y="-90.0" z="90"/>
     </physvol>
-
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
 
+  <volume name="pionDetectorGEMAllSectors_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorGEMAllSectors_solid"/>
+    <replicavol number="7">
+      <volumeref ref="pionDetectorGEMOpenSector_logical"/>
+      <replicate_along_axis>
+        <direction phi="1"/>
+        <width value="2.0*pi/7.0" unit="mm"/> <!-- bug geant4.10.02.p02: unit must be a length, but mm == 1 -->
+        <offset value="0.0" unit="mm"/>
+      </replicate_along_axis>
+    </replicavol>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
 </structure>
 
 <setup name="Default" version="1.0">
-  <world ref="pionDetectorGEMOpenSector_logical"/>
+  <world ref="pionDetectorGEMAllSectors_logical"/>
 </setup>
 
 </gdml>

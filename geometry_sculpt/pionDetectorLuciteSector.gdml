@@ -2,8 +2,10 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <constant name="N_S" value="7"/>
-  <constant name="PHI" value="360.0/2.0/N_S"/>
+  <constant name="PHI" value="360.0/7.0"/>
+
+  <constant name="pionDetectorLuciteRadius" value="1.9"/> <!-- m -->
+  <constant name="pionDetectorLuciteLength" value="0.3"/> <!-- m -->
 
   <constant name="pionDetectorLuciteInnerEdgeRadialPosition" value="95.0+12.5"/> <!-- cm -->
 </define>
@@ -12,7 +14,16 @@
 </materials>
 
 <solids>
-  <tube name="pionDetectorLuciteSector_solid" lunit="m" aunit="deg" rmin="0" rmax="2.0" z="0.3" startphi="-PHI/2.0" deltaphi="PHI"/>
+  <tube name="pionDetectorLuciteSector_solid"
+    rmin="0"
+    rmax="pionDetectorLuciteRadius"
+    z="pionDetectorLuciteLength" lunit="m"
+    startphi="-PHI/4.0" deltaphi="PHI/2.0" aunit="deg"/>
+  <tube name="pionDetectorLuciteAllSectors_solid"
+    rmin="0"
+    rmax="pionDetectorLuciteRadius"
+    z="pionDetectorLuciteLength" lunit="m"
+    startphi="-PHI/4.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
 <structure>
@@ -20,20 +31,32 @@
   <volume name="pionDetectorLuciteSector_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
-
     <physvol name="pionDetectorLucite_physical">
       <file name="geometry_sculpt/pionDetectorLucite.gdml"/>
       <position name="pionDetectorLucite_position" unit="cm" x="pionDetectorLuciteInnerEdgeRadialPosition" z="0.0"/>
       <rotation name="pionDetectorLucite_rotation" unit="deg" y="-90.0" z="90"/>
     </physvol>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
 
+  <volume name="pionDetectorLuciteAllSectors_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorLuciteAllSectors_solid"/>
+    <replicavol number="14">
+      <volumeref ref="pionDetectorLuciteSector_logical"/>
+      <replicate_along_axis>
+        <direction phi="1"/>
+        <width value="2.0*pi/14.0" unit="mm"/> <!-- bug geant4.10.02.p02: unit must be a length, but mm == 1 -->
+        <offset value="-pi/14.0" unit="mm"/>
+      </replicate_along_axis>
+    </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
 </structure>
 
 <setup name="Default" version="1.0">
-  <world ref="pionDetectorLuciteSector_logical"/>
+  <world ref="pionDetectorLuciteAllSectors_logical"/>
 </setup>
 
 </gdml>
