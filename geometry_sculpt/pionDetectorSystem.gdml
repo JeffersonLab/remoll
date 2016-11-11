@@ -15,9 +15,9 @@
 
    <position name="pionDetectorLeadDonutPosition" unit="m" x="0" y="0" z="-0.85"/>
    <position name="pionDetectorGEMFrontPosition"  unit="m" x="0" y="0" z="-0.50"/>
-   <position name="pionDetectorTSFrontPosition"   unit="m" x="0" y="0" z="-0.25"/>
+   <position name="pionDetectorTSFrontPosition"   unit="m" x="0" y="0" z="-0.35"/>
    <position name="pionDetectorLucitePosition"    unit="m" x="0" y="0" z="0.0"/>
-   <position name="pionDetectorTSBackPosition"    unit="m" x="0" y="0" z="+0.25"/>
+   <position name="pionDetectorTSBackPosition"    unit="m" x="0" y="0" z="+0.35"/>
    <position name="pionDetectorGEMBackPosition"   unit="m" x="0" y="0" z="+0.50"/>
 
    <position name="pionDetectorCalorimeterPosition" unit="m" x="-1.0" y="0" z="+0.75"/>
