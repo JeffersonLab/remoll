@@ -42,7 +42,7 @@
   <volume name="pionDetectorGEMAllSectors_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorGEMAllSectors_solid"/>
-    <replicavol number="7">
+    <replicavol number="2">
       <volumeref ref="pionDetectorGEMOpenSector_logical"/>
       <replicate_along_axis>
         <direction phi="1"/>
