@@ -41,7 +41,14 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // Ignore optical photons as hits (but still simulate them
     // so they can knock out electrons of the photocathode)
     if (step->GetTrack()->GetDefinition()->GetParticleName() == "opticalphoton") {
-      //std::cout << "Return on optical photon" << std::endl;
+      //G4cout << "Return on optical photon" << G4endl;
+      return false;
+    }
+
+    // Ignore neutral particles below 0.1 MeV
+    G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
+    if (charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*MeV) {
+      //G4cout << "Return on charge == 0 and low energy " << G4endl;
       return false;
     }
 
