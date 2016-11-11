@@ -47,7 +47,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     // Ignore neutral particles below 0.1 MeV
     G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
-    if (charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*MeV) {
+    if (charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
       //G4cout << "Return on charge == 0 and low energy " << G4endl;
       return false;
     }
