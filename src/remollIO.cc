@@ -26,9 +26,11 @@
 remollIO::remollIO(){
     fTree = NULL;
     fFile = NULL;
-    InitializeTree();
+
     // Default filename
     strcpy(fFilename, "remollout.root");
+
+    InitializeTree();
 }
 
 remollIO::~remollIO(){
