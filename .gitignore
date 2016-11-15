@@ -25,3 +25,6 @@ map_directory
 #ignore project files for eclipse
 .cproject
 .project
+
+#ignore dot files
+*.dot
