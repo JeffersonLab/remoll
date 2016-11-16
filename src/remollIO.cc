@@ -34,10 +34,14 @@ remollIO::remollIO(){
 }
 
 remollIO::~remollIO(){
-    if( fTree ){ delete fTree; }
-    fTree = NULL;
-    if( fFile ){ delete fFile; }
-    fFile = NULL;
+    if (fTree) {
+	delete fTree;
+	fTree = NULL;
+    }
+    if (fFile) {
+	delete fFile;
+	fFile = NULL;
+    }
 }
 
 void remollIO::SetFilename(G4String fn){
@@ -46,14 +50,19 @@ void remollIO::SetFilename(G4String fn){
 }
 
 void remollIO::InitializeTree(){
-    if( fFile ){
+    if (fFile) {
 	fFile->Close();
 	delete fFile;
+	fFile = NULL;
+	fTree = NULL;
+    }
+
+    if (fTree) {
+	delete fTree;
+	fTree = NULL;
     }
 
     fFile = new TFile(fFilename, "RECREATE");
-
-    if( fTree ){ delete fTree; }
 
     fTree = new TTree("T", "Geant4 Moller Simulation");
 
