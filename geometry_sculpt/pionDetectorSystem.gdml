@@ -2,25 +2,22 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-   <constant name="N_S" value="7"/>
-   <variable name="i_s" value="1"/>
-   <constant name="PHI" value="360.0/N_S"/>
-
-   <constant name="pionDetectorRadius" value="2.0"/> <!-- m -->
-   <constant name="pionDetectorLength" value="2.0"/> <!-- m -->
-
-   <constant name="pionDetectorLeadDonutThickness" value="0.25"/> <!-- m -->
+   <constant name="pionDetectorLeadDonutThickness"   value="0.25"/> <!-- m -->
    <constant name="pionDetectorLeadDonutInnerRadius" value="0.90"/> <!-- m -->
    <constant name="pionDetectorLeadDonutOuterRadius" value="1.15"/> <!-- m -->
 
-   <position name="pionDetectorLeadDonutPosition" unit="m" x="0" y="0" z="-0.85"/>
-   <position name="pionDetectorGEMFrontPosition"  unit="m" x="0" y="0" z="-0.50"/>
-   <position name="pionDetectorTSFrontPosition"   unit="m" x="0" y="0" z="-0.35"/>
-   <position name="pionDetectorLucitePosition"    unit="m" x="0" y="0" z="0.0"/>
-   <position name="pionDetectorTSBackPosition"    unit="m" x="0" y="0" z="+0.35"/>
-   <position name="pionDetectorGEMBackPosition"   unit="m" x="0" y="0" z="+0.50"/>
+   <constant name="pionDetectorSystemRadius" value="2.0"/> <!-- m -->
+   <constant name="pionDetectorSystemLength" value="1.7"/> <!-- m -->
 
-   <position name="pionDetectorCalorimeterPosition" unit="m" x="-1.0" y="0" z="+0.75"/>
+   <position name="pionDetectorLeadDonutPosition"  unit="m" x="0" y="0" z="-pionDetectorSystemLength/2.0+pionDetectorLeadDonutThickness/2.0"/>
+   <position name="pionDetectorVirtualDetPosition" unit="m" x="0" y="0" z="-0.595"/>
+   <position name="pionDetectorGEMFrontPosition"   unit="m" x="0" y="0" z="-0.50"/>
+   <position name="pionDetectorTSFrontPosition"    unit="m" x="0" y="0" z="-0.40"/>
+   <position name="pionDetectorLucitePosition"     unit="m" x="0" y="0" z="+0.00"/>
+   <position name="pionDetectorTSBackPosition"     unit="m" x="0" y="0" z="+0.40"/>
+   <position name="pionDetectorGEMBackPosition"    unit="m" x="0" y="0" z="+0.50"/>
+
+   <position name="pionDetectorCalorimeterPosition" unit="m" x="-1.10" y="0" z="+0.66"/>
 </define>
 
 <materials>
@@ -34,8 +31,8 @@
       deltaphi="360.0" aunit="deg"/>
     <tube name="pionDetectorSystem_solid"
       rmin="0"
-      rmax="pionDetectorRadius"
-      z="pionDetectorLength" lunit="m"
+      rmax="pionDetectorSystemRadius"
+      z="pionDetectorSystemLength" lunit="m"
       deltaphi="360.0" aunit="deg"/>
 </solids>
 
@@ -56,6 +53,11 @@
       <physvol>
         <volumeref ref="pionDetectorLeadDonut_logical"/>
         <positionref ref="pionDetectorLeadDonutPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry_sculpt/pionDetectorVirtualDet.gdml"/>
+        <positionref ref="pionDetectorVirtualDetPosition"/>
       </physvol>
 
       <physvol>

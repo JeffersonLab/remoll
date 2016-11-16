@@ -15,15 +15,15 @@
   <quantity name="pionDetectorLucitePMTThickness" type="length" value="1.0" unit="mm"/>
 
   <matrix coldim="2" name="ABSLENGTH_AIR" values="
-    1.54986*eV 10*m
-    1.77127*eV 10*m
-    2.06648*eV 10*m
-    2.47978*eV 10*m
-    3.09973*eV 10*m
-    4.13297*eV 10*m
-    4.95956*eV 10*m
-    5.51063*eV 10*m
-    5.90424*eV 10*m"/>
+    1.54986*eV 1000*m
+    1.77127*eV 1000*m
+    2.06648*eV 1000*m
+    2.47978*eV 1000*m
+    3.09973*eV 1000*m
+    4.13297*eV 1000*m
+    4.95956*eV 1000*m
+    5.51063*eV 1000*m
+    5.90424*eV 1000*m"/>
 
   <matrix coldim="2" name="RINDEX_AIR" values="
     1.54986*eV 1.000292
@@ -182,17 +182,17 @@
     finish="polished"
     model="glisur"
     type="dielectric_dielectric"
-    value="1.0"/>
+    value="0.97"/>
   <opticalsurface name="pionDetectorLuciteLightGuideOpticalSurface"
     finish="polished"
     model="glisur"
     type="dielectric_dielectric"
-    value="1.0"/>
+    value="0.97"/>
   <opticalsurface name="pionDetectorLucitePMTOpticalSurface"
     finish="polished"
     model="glisur"
     type="dielectric_dielectric"
-    value="1.0"/>
+    value="0.97"/>
 
 </solids>
 
@@ -227,7 +227,7 @@
   </volume>
 
   <volume name="pionDetectorLuciteLightGuide_logical">
-    <materialref ref="G4_Al"/>
+    <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuide_solid"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
@@ -241,7 +241,7 @@
   </volume>
 
   <volume name="pionDetectorLucite_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteAllPlanesAndLightGuide_solid"/>
 
     <physvol name="pionDetectorLuciteAllPlanes_physical">

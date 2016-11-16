@@ -15,15 +15,15 @@
 
 <solids>
   <tube name="pionDetectorTSOpenSector_solid"
-    rmin="0"
+    rmin="0.0"
     rmax="pionDetectorTSRadius"
     z="pionDetectorTSLength" lunit="m"
     startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
   <tube name="pionDetectorTSAllSectors_solid"
-    rmin="0"
+    rmin="0.0"
     rmax="pionDetectorTSRadius"
     z="pionDetectorTSLength" lunit="m"
-    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
+    startphi="0.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
 <structure>
@@ -46,8 +46,9 @@
       <volumeref ref="pionDetectorTSOpenSector_logical"/>
       <replicate_along_axis>
         <direction phi="1"/>
-        <width value="2.0*pi/7.0" unit="mm"/> <!-- bug geant4.10.02.p02: unit must be a length, but mm == 1 -->
-        <offset value="0.0" unit="mm"/>
+        <!-- bug geant4.10.02.p02: unit must be a length, but mm == 1 -->
+        <width value="pi" unit="mm"/>
+        <offset value="pi/2.0" unit="mm"/>
       </replicate_along_axis>
     </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>

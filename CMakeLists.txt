@@ -139,7 +139,15 @@ set(REMOLL_SCRIPTS
     geometry_sculpt/hybridDaughter.gdml
     geometry_sculpt/targetDaughter.gdml
     geometry_sculpt/upstreamDaughter.gdml
-    geometry_sculpt/pionDaughter.gdml
+    geometry_sculpt/pionDetectorCalorimeter.gdml
+    geometry_sculpt/pionDetectorGEM.gdml
+    geometry_sculpt/pionDetectorGEMOpenSector.gdml
+    geometry_sculpt/pionDetectorLucite.gdml
+    geometry_sculpt/pionDetectorLuciteSector.gdml
+    geometry_sculpt/pionDetectorSystem.gdml
+    geometry_sculpt/pionDetectorTS.gdml
+    geometry_sculpt/pionDetectorTSOpenSector.gdml
+    geometry_sculpt/pionDetectorVirtualDet.gdml
     geometry_sculpt/schema/gdml.xsd
     geometry_sculpt/schema/gdml_core.xsd
     geometry_sculpt/schema/gdml_define.xsd
