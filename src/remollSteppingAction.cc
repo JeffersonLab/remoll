@@ -23,7 +23,8 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
     // Don't continue in these materials
     if( (   material->GetName()=="Tungsten" 
         ||  material->GetName()=="Pb"
-	||  material->GetName()=="Copper" )
+	||  material->GetName()=="Copper"
+        ||  material->GetName()=="VacuumKryptonite" )
 	    && fEnableKryptonite
 	){
       fTrack->SetTrackStatus(fStopAndKill); // kill the current track
