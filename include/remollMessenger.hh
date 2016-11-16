@@ -92,6 +92,8 @@ class remollMessenger : public G4UImessenger {
 	// To general event generators
 	G4UIcmdWithADoubleAndUnit *thminCmd;
 	G4UIcmdWithADoubleAndUnit *thmaxCmd;
+        G4UIcmdWithADoubleAndUnit *phminCmd;
+        G4UIcmdWithADoubleAndUnit *phmaxCmd;
 	G4UIcmdWithADoubleAndUnit *thCoMminCmd;
 	G4UIcmdWithADoubleAndUnit *thCoMmaxCmd;
 	G4UIcmdWithADoubleAndUnit *EminCmd;

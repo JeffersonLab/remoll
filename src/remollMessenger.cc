@@ -120,6 +120,14 @@ remollMessenger::remollMessenger(){
     thmaxCmd->SetGuidance("Minimum generation angle");
     thmaxCmd->SetParameterName("thmax", false);
 
+    phminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/phmin",this);
+    phminCmd->SetGuidance("Minimum generation angle");
+    phminCmd->SetParameterName("phmin", false);
+
+    phmaxCmd = new G4UIcmdWithADoubleAndUnit("/remoll/phmax",this);
+    phmaxCmd->SetGuidance("Minimum generation angle");
+    phmaxCmd->SetParameterName("phmax", false);
+
     thCoMminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thcommin",this);
     thCoMminCmd->SetGuidance("Minimum CoM generation angle");
     thCoMminCmd->SetParameterName("thcommin", false);
@@ -450,18 +458,34 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     }
 
     if( cmd == thminCmd ){
-	G4double th = thminCmd->GetNewDoubleValue(newValue);
-	remollVEventGen *agen = fprigen->GetGenerator();
-	if( agen ){
-	    agen->fTh_min = th;
-	}
+        G4double th = thminCmd->GetNewDoubleValue(newValue);
+        remollVEventGen *agen = fprigen->GetGenerator();
+        if( agen ){
+            agen->fTh_min = th;
+        }
     }
 
     if( cmd == thmaxCmd ){
-	G4double th = thminCmd->GetNewDoubleValue(newValue);
+        G4double th = thminCmd->GetNewDoubleValue(newValue);
+        remollVEventGen *agen = fprigen->GetGenerator();
+        if( agen ){
+            agen->fTh_max = th;
+        }
+    }
+
+    if( cmd == phminCmd ){
+	G4double ph = phminCmd->GetNewDoubleValue(newValue);
 	remollVEventGen *agen = fprigen->GetGenerator();
 	if( agen ){
-	    agen->fTh_max = th;
+	    agen->fPh_min = ph;
+	}
+    }
+
+    if( cmd == phmaxCmd ){
+	G4double ph = phminCmd->GetNewDoubleValue(newValue);
+	remollVEventGen *agen = fprigen->GetGenerator();
+	if( agen ){
+	    agen->fPh_max = ph;
 	}
     }
 
