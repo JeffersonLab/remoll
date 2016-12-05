@@ -27,52 +27,17 @@
 
 <solids>
   <tube aunit="deg" deltaphi="360.0" lunit="mm" name="pionDetectorVirtualDet" rmax="1220" rmin="1040" startphi="0" z="pionDetectorVirtualDetThickness"/>
-  <loop for="i_pi" from="0" to="34" step="1">
-    <!-- deltaphi was 180.0/7 for some reason -->   
-    <tube aunit="deg" deltaphi="360.0/35" lunit="mm" name="PionDet[i_pi]" rmax="1220" rmin="1040" startphi="0" z="pionDetectorVirtualDetThickness"/>
-  </loop>
 </solids>
 
 <structure>
 
   <volume name="pionDetectorVirtualDet">
-    <materialref ref="Vacuum"/>
+    <materialref ref="VacuumKryptonite"/>
     <solidref ref="pionDetectorVirtualDet"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="29"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
   </volume>
-
-  <loop for="j_pi" to="34" step="2">	
-    <volume name="PionDetLogical[j_pi]">
-      <materialref ref="VacuumKryptonite"/>
-      <solidref ref="PionDet[j_pi]"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="29"/>
-      <auxiliary auxtype="Color" auxvalue="blue"/>
-    </volume>
-  </loop>
-  <loop for="l_pi" from="1" to="33" step="2">
-    <volume name="PionDetLogical[l_pi]">
-      <materialref ref="VacuumKryptonite"/>
-      <solidref ref="PionDet[l_pi]"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="29"/>
-      <auxiliary auxtype="Color" auxvalue="cyan"/>
-    </volume>
-  </loop>
-
-  <volume name="pionDetectorVirtualDet">
-    <materialref ref="Vacuum"/>
-    <solidref ref="pionDetectorVirtualDet"/>
-   
-    <loop for="k_pi" to="34" step="1">    
-      <physvol name="PionDetPhysical[k_pi]">
-        <volumeref ref="PionDetLogical[k_pi]"/>
-        <position name="wash_phys_1_pos" unit="mm" x="0" y="0" z="1150"/>
-        <rotation name="Rotate_Wedge" unit="deg" x="0" y="0" z="(360/35)*k_pi"/>
-      </physvol>
-    </loop>	
-
-  </volume> 
 
 </structure>
 
