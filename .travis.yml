@@ -14,7 +14,7 @@ script:
 - mkdir map_directory
 - wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyHybrid_rm_3.0.txt
 - wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyUpstream_rm_1.1.txt
-- build/remoll macros/runexample.mac
+- build/remoll macros/runexample.mac 2>&1 > remollout.log
 
 deploy:
   provider: releases
@@ -24,5 +24,6 @@ deploy:
   - build/remoll
   - build/libremollroot.so
   - remollout.root
+  - remollout.log
   on:
     repo: JeffersonLab/remoll
