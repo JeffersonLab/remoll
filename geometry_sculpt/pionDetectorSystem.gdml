@@ -10,7 +10,7 @@
    <constant name="pionDetectorSystemLength" value="1.7"/> <!-- m -->
 
    <position name="pionDetectorLeadDonutPosition"  unit="m" x="0" y="0" z="-pionDetectorSystemLength/2.0+pionDetectorLeadDonutThickness/2.0"/>
-   <position name="pionDetectorVirtualDetPosition" unit="m" x="0" y="0" z="-0.595"/>
+   <position name="pionDetectorVirtualDetPosition" unit="m" x="0" y="0" z="-0.59"/>
    <position name="pionDetectorGEMFrontPosition"   unit="m" x="0" y="0" z="-0.50"/>
    <position name="pionDetectorTSFrontPosition"    unit="m" x="0" y="0" z="-0.40"/>
    <position name="pionDetectorLucitePosition"     unit="m" x="0" y="0" z="+0.00"/>
