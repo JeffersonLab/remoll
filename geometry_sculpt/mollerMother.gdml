@@ -8,8 +8,6 @@
      <position name="detectorCenter" x="0" y="0" z="28500."/>
      <!-- full pion detector system pionDetectorCenter should be around 31-32000 mm -->
      <position name="pionDetectorCenter" x="0" y="0" z="32000."/>
-     <!-- straw man pion detector system pionDetectorCenter should be around 31-32000 mm -->
-     <position name="pionStrawmanCenter" x="0" y="0" z = "32000."/>
      <rotation name="identity"/>
 </define>
 
