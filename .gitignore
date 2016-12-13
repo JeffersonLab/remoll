@@ -1,8 +1,8 @@
 *~
 *.swp
 *.DS_Store
+
 #ignore doxygen files for now
-doc
 include/gitinfo.hh
 
 #ignore libraries and helper files
