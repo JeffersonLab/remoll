@@ -6,12 +6,6 @@
 </define>
 
 <materials>
-  <material Z="1" name="Vacuum" state="gas">
-    <T unit="K" value="2.73"/>
-    <P unit="pascal" value="3e-18"/>
-    <D unit="g/cm3" value="1e-25"/>
-    <atom unit="g/mole" value="1.01"/>
-  </material>
   <material Z="1" name="VacuumKryptonite" state="gas">
     <T unit="K" value="2.73"/>
     <P unit="pascal" value="3e-18"/>
