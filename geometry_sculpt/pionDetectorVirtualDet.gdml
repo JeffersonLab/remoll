@@ -15,12 +15,19 @@
 </materials>
 
 <solids>
-  <tube aunit="deg" deltaphi="360.0" lunit="mm" name="pionDetectorVirtualDet_solid"     rmin="0"    rmax="1220" startphi="0" z="pionDetectorVirtualDetThickness"/>
+  <tube aunit="deg" deltaphi="360.0" lunit="mm" name="pionDetectorVirtualDet_solid"     rmin="0"    rmax="1900" startphi="0" z="pionDetectorVirtualDetThickness"/>
   <tube aunit="deg" deltaphi="360.0" lunit="mm" name="pionDetectorVirtualDetPlug_solid" rmin="0"    rmax="1040" startphi="0" z="pionDetectorVirtualDetThickness"/>
   <tube aunit="deg" deltaphi="360.0" lunit="mm" name="pionDetectorVirtualDetRing_solid" rmin="1040" rmax="1220" startphi="0" z="pionDetectorVirtualDetThickness"/>
+  <tube aunit="deg" deltaphi="360.0" lunit="mm" name="pionDetectorVirtualDetColl_solid" rmin="1220" rmax="1900" startphi="0" z="pionDetectorVirtualDetThickness"/>
 </solids>
 
 <structure>
+
+  <volume name="pionDetectorVirtualDetPlug_logical">
+    <materialref ref="VacuumKryptonite"/>
+    <solidref ref="pionDetectorVirtualDetPlug_solid"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+  </volume>
 
   <volume name="pionDetectorVirtualDetRing_logical">
     <materialref ref="VacuumKryptonite"/>
@@ -30,9 +37,9 @@
     <auxiliary auxtype="Color" auxvalue="blue"/>
   </volume>
 
-  <volume name="pionDetectorVirtualDetPlug_logical">
+  <volume name="pionDetectorVirtualDetColl_logical">
     <materialref ref="VacuumKryptonite"/>
-    <solidref ref="pionDetectorVirtualDetPlug_solid"/>
+    <solidref ref="pionDetectorVirtualDetColl_solid"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
   </volume>
 
@@ -46,6 +53,10 @@
 
     <physvol name="pionDetectorVirtualDetRing_physical">
       <volumeref ref="pionDetectorVirtualDetRing_logical"/>
+    </physvol>
+
+    <physvol name="pionDetectorVirtualDetColl_physical">
+      <volumeref ref="pionDetectorVirtualDetColl_logical"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
