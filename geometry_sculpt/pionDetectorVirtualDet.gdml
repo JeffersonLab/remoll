@@ -3,11 +3,6 @@
 
 <define>
   <constant name="pionDetectorVirtualDetThickness" value="10"/> <!-- mm -->
-
-  <variable name="i_pi" value="0"/>
-  <variable name="j_pi" value="0"/>
-  <variable name="k_pi" value="0"/>
-  <variable name="l_pi" value="1"/>
 </define>
 
 <materials>
