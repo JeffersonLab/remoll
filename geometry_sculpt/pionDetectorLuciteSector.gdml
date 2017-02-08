@@ -8,7 +8,7 @@
   <constant name="pionDetectorLuciteRadius" value="1.90"/> <!-- m -->
   <constant name="pionDetectorLuciteLength" value="0.29"/> <!-- m -->
 
-  <constant name="pionDetectorLuciteAngle" value="10.0"/> <!-- deg -->
+  <constant name="pionDetectorLuciteAngle" value="0.0"/> <!-- deg -->
 
   <constant name="pionDetectorLuciteInnerEdgeRadialPosition" value="95.0+12.5"/> <!-- cm -->
 </define>
