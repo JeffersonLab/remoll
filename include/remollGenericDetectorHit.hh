@@ -6,6 +6,8 @@
 #include "G4Allocator.hh"
 #include "G4ThreeVector.hh"
 
+#include "remolltypes.hh"
+
 class remollGenericDetectorHit : public G4VHit {
     public:
 	remollGenericDetectorHit(G4int, G4int);
@@ -37,6 +39,31 @@ class remollGenericDetectorHit : public G4VHit {
 	// Process generator type
 	G4int    fGen;
 
+    public:
+      const remollGenericDetectorHit_t GetIO() const {
+        remollGenericDetectorHit_t hit;
+        hit.det  = fDetID;
+        hit.id   = fCopyID;
+        hit.trid = fTrID;
+        hit.mtrid= fmTrID;
+        hit.pid  = fPID;
+        hit.gen  = fGen;
+        hit.x  = f3X.x();
+        hit.y  = f3X.y();
+        hit.z  = f3X.z();
+        hit.r  = sqrt(f3X.x()*f3X.x()+f3X.y()*f3X.y());
+        hit.ph = f3X.phi();
+        hit.px  = f3P.x();
+        hit.py  = f3P.y();
+        hit.pz  = f3P.z();
+        hit.vx  = f3V.x();
+        hit.vy  = f3V.y();
+        hit.vz  = f3V.z();
+        hit.p  = fP;
+        hit.e  = fE;
+        hit.m  = fM;
+        return hit;
+      };
 };
 
 
