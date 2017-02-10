@@ -8,6 +8,8 @@
 
 #include "G4String.hh"
 
+#include <vector>
+
 class TFile;
 class TTree;
 
@@ -105,30 +107,7 @@ class remollIO {
 	void AddGenericDetectorHit(remollGenericDetectorHit *);
     private:
 	Int_t fNGenDetHit;
-	Int_t fGenDetHit_det[__IO_MAXHIT];
-	Int_t fGenDetHit_id[__IO_MAXHIT];
-
-	Int_t fGenDetHit_trid[__IO_MAXHIT];
-	Int_t fGenDetHit_pid[__IO_MAXHIT];
-	Int_t fGenDetHit_gen[__IO_MAXHIT];
-	Int_t fGenDetHit_mtrid[__IO_MAXHIT];
-
-	Double_t fGenDetHit_X[__IO_MAXHIT];
-	Double_t fGenDetHit_Y[__IO_MAXHIT];
-	Double_t fGenDetHit_Z[__IO_MAXHIT];
-	Double_t fGenDetHit_R[__IO_MAXHIT];
-	Double_t fGenDetHit_Ph[__IO_MAXHIT];
-
-	Double_t fGenDetHit_Px[__IO_MAXHIT];
-	Double_t fGenDetHit_Py[__IO_MAXHIT];
-	Double_t fGenDetHit_Pz[__IO_MAXHIT];
-	Double_t fGenDetHit_P[__IO_MAXHIT];
-	Double_t fGenDetHit_E[__IO_MAXHIT];
-	Double_t fGenDetHit_M[__IO_MAXHIT];
-
-	Double_t fGenDetHit_Vx[__IO_MAXHIT];
-	Double_t fGenDetHit_Vy[__IO_MAXHIT];
-	Double_t fGenDetHit_Vz[__IO_MAXHIT];
+	std::vector<remollGenericDetectorHit_t> fGenDetHit;
 
 	Int_t fCollCut;
 
@@ -137,9 +116,7 @@ class remollIO {
 	void AddGenericDetectorSum(remollGenericDetectorSum *);
     private:
 	Int_t fNGenDetSum;
-	Int_t fGenDetSum_det[__IO_MAXHIT];
-	Int_t fGenDetSum_id[__IO_MAXHIT];
-	Double_t fGenDetSum_edep[__IO_MAXHIT];
+        std::vector<remollGenericDetectorSum_t> fGenDetSum;
 };
 
 #endif//remollIO_HH
