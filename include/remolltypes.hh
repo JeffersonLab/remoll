@@ -21,4 +21,24 @@ struct filedata_t {
     TTimeStamp timestamp;
 };
 
+struct remollGenericDetectorSum_t {
+  int det;
+  int vid;
+  double edep;
+};
+
+struct remollGenericDetectorHit_t {
+  int det;
+  int id;
+  int trid;
+  int pid;
+  int gen;
+  int mtrid;
+  double x, y, z;
+  double r, ph;
+  double px, py, pz;
+  double p, e, m;
+  double vx, vy, vz;
+};
+
 #endif//__REMOLL_TYPES_HH
