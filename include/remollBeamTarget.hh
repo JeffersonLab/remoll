@@ -4,6 +4,7 @@
 #include "remolltypes.hh"
 #include "remollglobs.hh"
 #include "remollVertex.hh"
+
 #include "G4ThreeVector.hh"
 #include <vector>
 
@@ -86,6 +87,19 @@ class remollBeamTarget {
 	G4double fTh0, fPh0;
 	G4double fdTh, fdPh, fCorrTh, fCorrPh;
 
+    public:
+        remollBeamTarget_t GetBeamTargetIO() const {
+          remollBeamTarget_t bm;
+          bm.x = fVer.x();
+          bm.y = fVer.y();
+          bm.z = fVer.z();
+          bm.dx = fDir.x();
+          bm.dy = fDir.y();
+          bm.dz = fDir.z();
+          bm.th = fDir.theta();
+          bm.ph = fDir.phi();
+          return bm;
+        }
 };
 
 

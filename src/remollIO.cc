@@ -70,24 +70,9 @@ void remollIO::InitializeTree(){
 
     // Event information
     fTree->Branch("rate",     &fEvRate,   "rate/D");
-    fTree->Branch("ev.A",     &fEvAsym,   "ev.A/D");
-    fTree->Branch("ev.Am",    &fEvmAsym,  "ev.Am/D");
-    fTree->Branch("ev.xs",    &fEvEffXS,  "ev.xs/D");
-    fTree->Branch("ev.Q2",    &fEvQ2,     "ev.Q2/D");
-    fTree->Branch("ev.W2",    &fEvW2,     "ev.W2/D");
-    fTree->Branch("ev.thcom", &fEvThCoM,  "ev.thcom/D");
-    fTree->Branch("ev.beamp", &fEvBeamP,   "ev.beamp/D");
-
+    fTree->Branch("ev",       &fEv);
+    fTree->Branch("bm",       &fBm);
     fTree->Branch("part",     &fEvPart);
-
-    fTree->Branch("bm.x",    &fBmX,  "bm.x/D");
-    fTree->Branch("bm.y",    &fBmY,  "bm.y/D");
-    fTree->Branch("bm.z",    &fBmZ,  "bm.z/D");
-    fTree->Branch("bm.dx",    &fBmdX,  "bm.dx/D");
-    fTree->Branch("bm.dy",    &fBmdY,  "bm.dy/D");
-    fTree->Branch("bm.dz",    &fBmdZ,  "bm.dz/D");
-    fTree->Branch("bm.th",    &fBmth,  "bm.th/D");
-    fTree->Branch("bm.ph",    &fBmph,  "bm.ph/D");
 
     // GenericDetectorHit
     fTree->Branch("hit",      &fGenDetHit);
@@ -111,10 +96,17 @@ void remollIO::FillTree(){
 }
 
 void remollIO::Flush(){
-    //  Set arrays to 0
+    // Set individual structs to zero
+    static remollEvent_t ev0 = {0};
+    fEv = ev0;
+    static remollBeamTarget_t bm0 = {0};
+    fBm = bm0;
+
+    // Set arrays to 0
     fEvPart.clear();
     fGenDetHit.clear();
     fGenDetSum.clear();
+
     fCollCut = 1; // default
 }
 
@@ -155,41 +147,20 @@ void remollIO::WriteTree(){
 
 void remollIO::SetEventData(remollEvent *ev){
     fEvRate   = ev->fRate*s;
-    fEvEffXS  = ev->fEffXs/microbarn;
-    fEvAsym   = ev->fAsym/__ASYMM_SCALE;
-    fEvmAsym  = ev->fmAsym/__ASYMM_SCALE;
-    fEvBeamP  = ev->fBeamMomentum.mag()/__E_UNIT;
 
-    fEvQ2     = ev->fQ2/__E_UNIT/__E_UNIT;
-    fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
-    fEvThCoM  = ev->fThCoM/deg; // specify this in degrees over anything else
+    // Event variables
+    fEv     = ev->GetEventIO();
+    // Primary particles
+    fEvPart = ev->GetEventParticleIO();
 
-    fEvPart = ev->GetIO();
-
-    /////////////////////////////////////////////////
-    //  Set beam data as well
-
+    // Beam data
     remollBeamTarget *bt = remollBeamTarget::GetBeamTarget();
-
-    fBmX = bt->fVer.x()/__L_UNIT;
-    fBmY = bt->fVer.y()/__L_UNIT;
-    fBmZ = bt->fVer.z()/__L_UNIT;
-    
-    fBmdX = bt->fDir.x();
-    fBmdY = bt->fDir.y();
-    fBmdZ = bt->fDir.z();
-    fBmth = bt->fDir.theta();
-    fBmph = bt->fDir.phi()/deg;
-
-    //    G4cout << "** fDir:: " << bt->fDir.x()/deg << "  " << bt->fDir.y()/deg << "  " << bt->fVer.z()/mm << G4endl;
-
-    return;
+    fBm = bt->GetBeamTargetIO();
 }
 
 // GenericDetectorHit
-
 void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
-    fGenDetHit.push_back(hit->GetIO());
+    fGenDetHit.push_back(hit->GetGenericDetectorHitIO());
 
     // for collimator cut
     if( (hit->fDetID==200 && hit->f3X.perp()/__L_UNIT < 0.03) || 
@@ -197,11 +168,9 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
       fCollCut=0;
 }
 
-
 // GenericDetectorSum
-
 void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
-    fGenDetSum.push_back(hit->GetIO());
+    fGenDetSum.push_back(hit->GetGenericDetectorSumIO());
 }
 
 /*---------------------------------------------------------------------------------*/

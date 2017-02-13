@@ -26,7 +26,7 @@ class remollGenericDetectorSum : public G4VHit {
 	G4double fEdep;
 
     public:
-      const remollGenericDetectorSum_t GetIO() const {
+      const remollGenericDetectorSum_t GetGenericDetectorSumIO() const {
         remollGenericDetectorSum_t sum;
         sum.det = fDetID;
         sum.vid = fCopyID;

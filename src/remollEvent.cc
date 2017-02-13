@@ -16,26 +16,41 @@ remollEvent::~remollEvent(){
 /**
  * Fill the event particle structure for writing to IO.
  */
-std::vector<remollEventParticle_t> remollEvent::GetIO() const {
-  std::vector<remollEventParticle_t> evs;
+std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
+  std::vector<remollEventParticle_t> parts;
   for (size_t idx = 0; idx < fPartType.size(); idx++) {
-    remollEventParticle_t ev;
-    ev.pid = fPartType[idx]->GetPDGEncoding();
-    ev.x = fPartPos[idx].x();
-    ev.y = fPartPos[idx].y();
-    ev.z = fPartPos[idx].z();
-    ev.px = fPartRealMom[idx].x();
-    ev.py = fPartRealMom[idx].y();
-    ev.pz = fPartRealMom[idx].z();
-    ev.th = fPartRealMom[idx].theta();
-    ev.ph = fPartRealMom[idx].phi();
-    ev.p  = fPartRealMom[idx].mag();
-    ev.tpx = fPartMom[idx].x();
-    ev.tpy = fPartMom[idx].y();
-    ev.tpz = fPartMom[idx].z();
-    evs.push_back(ev);
+    remollEventParticle_t part;
+    part.pid = fPartType[idx]->GetPDGEncoding();
+    part.x = fPartPos[idx].x();
+    part.y = fPartPos[idx].y();
+    part.z = fPartPos[idx].z();
+    part.px = fPartRealMom[idx].x();
+    part.py = fPartRealMom[idx].y();
+    part.pz = fPartRealMom[idx].z();
+    part.th = fPartRealMom[idx].theta();
+    part.ph = fPartRealMom[idx].phi();
+    part.p  = fPartRealMom[idx].mag();
+    part.tpx = fPartMom[idx].x();
+    part.tpy = fPartMom[idx].y();
+    part.tpz = fPartMom[idx].z();
+    parts.push_back(part);
   }
-  return evs;
+  return parts;
+}
+
+/**
+ * Fill the event structure for writing to IO.
+ */
+remollEvent_t remollEvent::GetEventIO() const {
+  remollEvent_t ev;
+  ev.xs = fEffXs/microbarn;
+  ev.A  = fAsym/1e-9;
+  ev.Am = fmAsym/1e-9;
+  ev.Q2 = fQ2;
+  ev.W2 = fW2;
+  ev.thcom = fThCoM;
+  ev.beamp = fBeamMomentum.mag();
+  return ev;
 }
 
 void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name ){

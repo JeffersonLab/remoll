@@ -63,22 +63,8 @@ class remollIO {
 
 	// Event data
 	Double_t fEvRate;
-	Double_t fEvEffXS;
-	Double_t fEvAsym;
-	Double_t fEvmAsym;
-	Double_t fEvBeamP;
-	Double_t fEvQ2;
-	Double_t fEvW2;
-	Double_t fEvThCoM;
-
-	Double_t fBmX;
-	Double_t fBmY;
-	Double_t fBmZ;
-	Double_t fBmdX;
-	Double_t fBmdY;
-	Double_t fBmdZ;
-	Double_t fBmth;
-	Double_t fBmph;
+	remollEvent_t fEv;
+	remollBeamTarget_t fBm;
 
         // Event particles
     public:

@@ -62,7 +62,8 @@ class remollEvent {
 	G4double fThCoM;
 
     public:
-        std::vector<remollEventParticle_t> GetIO() const;
+        remollEvent_t GetEventIO() const;
+        std::vector<remollEventParticle_t> GetEventParticleIO() const;
 };
 
 #endif//__REMOLLEVENT_HH

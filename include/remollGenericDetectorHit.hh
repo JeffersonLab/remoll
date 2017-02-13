@@ -40,7 +40,7 @@ class remollGenericDetectorHit : public G4VHit {
 	G4int    fGen;
 
     public:
-      const remollGenericDetectorHit_t GetIO() const {
+      const remollGenericDetectorHit_t GetGenericDetectorHitIO() const {
         remollGenericDetectorHit_t hit;
         hit.det  = fDetID;
         hit.id   = fCopyID;
