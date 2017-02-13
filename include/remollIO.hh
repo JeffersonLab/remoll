@@ -4,7 +4,9 @@
 #include "TROOT.h"
 #include "TObject.h"
 #include "G4Run.hh"
+
 #include "remolltypes.hh"
+#include "remollSystemOfUnits.hh"
 
 #include "G4String.hh"
 
@@ -60,6 +62,9 @@ class remollIO {
 
 	//  Interfaces and buffers to the tree
 	//  This is potentially going to get very long...
+
+	// Units
+	remollUnits_t fUnits;
 
 	// Event data
 	Double_t fEvRate;

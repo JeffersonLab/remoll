@@ -68,6 +68,9 @@ void remollIO::InitializeTree(){
 
     fTree->SetMaxTreeSize(1900000000); // 1.9GB
 
+    // Units
+    fTree->Branch("units",    &fUnits);
+
     // Event information
     fTree->Branch("rate",     &fEvRate,   "rate/D");
     fTree->Branch("ev",       &fEv);
