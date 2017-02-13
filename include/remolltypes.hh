@@ -21,6 +21,20 @@ struct filedata_t {
     TTimeStamp timestamp;
 };
 
+struct remollBeamTarget_t {
+  double x, y, z;
+  double dx, dy, dz;
+  double th, ph;
+};
+
+struct remollEvent_t {
+  double A, Am;
+  double xs;
+  double Q2, W2;
+  double thcom;
+  double beamp;
+};
+
 struct remollEventParticle_t {
   int pid;
   double x, y, z;
