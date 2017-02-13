@@ -18,6 +18,7 @@ remollUnits_t::remollUnits_t():
     cm3 (CLHEP::cm3),
     m3  (CLHEP::m3),
     // Energy
+    eV (CLHEP::eV),
     keV (CLHEP::keV),
     MeV (CLHEP::MeV),
     GeV (CLHEP::GeV),

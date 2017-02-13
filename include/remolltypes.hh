@@ -93,6 +93,7 @@ struct remollUnits_t
   const double cm3;
   const double m3;
   // Energy
+  const double eV;
   const double keV;
   const double MeV;
   const double GeV;
