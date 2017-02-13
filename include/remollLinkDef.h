@@ -8,6 +8,9 @@
 #pragma link C++ class remollTextFile+;
 #pragma link C++ struct filedata_t+;
 
+#pragma link C++ struct remollEventParticle_t+;
+#pragma link C++ class vector<remollEventParticle_t>+;
+
 #pragma link C++ struct remollGenericDetectorHit_t+;
 #pragma link C++ class vector<remollGenericDetectorHit_t>+;
 
