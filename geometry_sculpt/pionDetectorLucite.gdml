@@ -93,6 +93,28 @@
     5.90424*eV 1.45"/>
 
 
+  <matrix coldim="2" name="ABSLENGTH_CATHODE" values="
+    1.54986*eV 263160
+    1.77127*eV 250000
+    2.06648*eV 227270
+    2.47978*eV 200000
+    3.09973*eV 131580
+    4.13297*eV 16130
+    4.95956*eV 740
+    5.51063*eV 125
+    5.90424*eV 10"/>
+
+  <matrix coldim="2" name="RINDEX_CATHODE" values="
+    1.54986*eV 1.45
+    1.77127*eV 1.45
+    2.06648*eV 1.45
+    2.47978*eV 1.45
+    3.09973*eV 1.45
+    4.13297*eV 1.45
+    4.95956*eV 1.45
+    5.51063*eV 1.45
+    5.90424*eV 1.45"/>
+
   <matrix coldim="2" name="REFLECTIVITY_CATHODE" values="
     1.54986*eV 0.25
     1.77127*eV 0.25
@@ -120,6 +142,8 @@
 <materials>
 
   <material name="CsPhotocathode" state="solid" Z="39">
+    <property name="ABSLENGTH" ref="ABSLENGTH_CATHODE"/>
+    <property name="RINDEX" ref="RINDEX_CATHODE"/>
     <property name="REFLECTIVITY" ref="REFLECTIVITY_CATHODE"/>
     <property name="EFFICIENCY" ref="EFFICIENCY_CATHODE"/>
     <MEE value="190" unit="eV"/>
@@ -165,7 +189,7 @@
   <material name="Air" state="gas">
     <property name="ABSLENGTH" ref="ABSLENGTH_AIR"/>
     <property name="RINDEX" ref="RINDEX_AIR"/>
-    <MEE value="85.7030667332999" unit="eV"/>
+    <MEE value="85.703" unit="eV"/>
     <D value="0.00129" unit="g/cm3"/>
     <fraction n="0.7" ref="Nitrogen"/>
     <fraction n="0.3" ref="Oxygen"/>
@@ -173,7 +197,7 @@
 
   <material name="Mylar" state="solid">
     <T unit="K" value="293.15"/>
-    <MEE unit="eV" value="75.9672951304696"/>
+    <MEE unit="eV" value="75.9673"/>
     <D unit="g/cm3" value="1.397"/>
     <fraction n="0.042" ref="Hydrogen"/>
     <fraction n="0.625" ref="Carbon"/>
@@ -345,9 +369,9 @@
   </volume>
 
   <volume name="pionDetectorLuciteLightGuideInside_logical">
-    <materialref ref="Air"/>
+    <materialref ref="Lucite"/>
     <solidref ref="pionDetectorLuciteLightGuideInside_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="pionLightGuideDet"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLightGuideInsideDet"/>
     <auxiliary auxtype="DetNo" auxvalue="4006"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
@@ -355,6 +379,8 @@
   <volume name="pionDetectorLuciteLightGuideShell_logical">
     <materialref ref="Mylar"/>
     <solidref ref="pionDetectorLuciteLightGuideShell_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLightGuideShellDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4007"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
 
