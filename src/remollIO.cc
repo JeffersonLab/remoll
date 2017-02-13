@@ -68,77 +68,22 @@ void remollIO::InitializeTree(){
 
     fTree->SetMaxTreeSize(1900000000); // 1.9GB
 
+    // Units
+    fTree->Branch("units",    &fUnits);
+
     // Event information
     fTree->Branch("rate",     &fEvRate,   "rate/D");
-    fTree->Branch("ev.A",     &fEvAsym,   "ev.A/D");
-    fTree->Branch("ev.Am",    &fEvmAsym,  "ev.Am/D");
-    fTree->Branch("ev.xs",    &fEvEffXS,  "ev.xs/D");
-    fTree->Branch("ev.Q2",    &fEvQ2,     "ev.Q2/D");
-    fTree->Branch("ev.W2",    &fEvW2,     "ev.W2/D");
-    fTree->Branch("ev.thcom", &fEvThCoM,  "ev.thcom/D");
-    fTree->Branch("ev.beamp",  &fEvBeamP,   "ev.beamp/D");
-
-    fTree->Branch("ev.npart", &fNEvPart   ,     "ev.npart/I");
-    fTree->Branch("ev.pid",   &fEvPID,      "ev.pid[ev.npart]/I");
-    fTree->Branch("ev.vx",    &fEvPart_X,   "ev.vx[ev.npart]/D");
-    fTree->Branch("ev.vy",    &fEvPart_Y,   "ev.vy[ev.npart]/D");
-    fTree->Branch("ev.vz",    &fEvPart_Z,   "ev.vz[ev.npart]/D");
-    fTree->Branch("ev.p",     &fEvPart_P,   "ev.p[ev.npart]/D");
-    fTree->Branch("ev.px",    &fEvPart_Px,  "ev.px[ev.npart]/D");
-    fTree->Branch("ev.py",    &fEvPart_Py,  "ev.py[ev.npart]/D");
-    fTree->Branch("ev.pz",    &fEvPart_Pz,  "ev.pz[ev.npart]/D");
-    fTree->Branch("ev.th",    &fEvPart_Th,     "ev.th[ev.npart]/D");
-    fTree->Branch("ev.ph",    &fEvPart_Ph,     "ev.ph[ev.npart]/D");
-    fTree->Branch("ev.tpx",    &fEvPart_tPx,  "ev.tpx[ev.npart]/D");
-    fTree->Branch("ev.tpy",    &fEvPart_tPy,  "ev.tpy[ev.npart]/D");
-    fTree->Branch("ev.tpz",    &fEvPart_tPz,  "ev.tpz[ev.npart]/D");
-
-    fTree->Branch("bm.x",    &fBmX,  "bm.x/D");
-    fTree->Branch("bm.y",    &fBmY,  "bm.y/D");
-    fTree->Branch("bm.z",    &fBmZ,  "bm.z/D");
-    fTree->Branch("bm.dx",    &fBmdX,  "bm.dx/D");
-    fTree->Branch("bm.dy",    &fBmdY,  "bm.dy/D");
-    fTree->Branch("bm.dz",    &fBmdZ,  "bm.dz/D");
-    fTree->Branch("bm.th",    &fBmth,  "bm.th/D");
-    fTree->Branch("bm.ph",    &fBmph,  "bm.ph/D");
+    fTree->Branch("ev",       &fEv);
+    fTree->Branch("bm",       &fBm);
+    fTree->Branch("part",     &fEvPart);
 
     // GenericDetectorHit
-    fTree->Branch("hit.n",    &fNGenDetHit,     "hit.n/I");
-    fTree->Branch("hit.det",  &fGenDetHit_det,  "hit.det[hit.n]/I");
-    fTree->Branch("hit.vid",  &fGenDetHit_id,   "hit.vid[hit.n]/I");
-
-    fTree->Branch("hit.pid",  &fGenDetHit_pid,   "hit.pid[hit.n]/I");
-    fTree->Branch("hit.trid", &fGenDetHit_trid,  "hit.trid[hit.n]/I");
-    fTree->Branch("hit.mtrid",&fGenDetHit_mtrid, "hit.mtrid[hit.n]/I");
-    fTree->Branch("hit.gen",  &fGenDetHit_gen,   "hit.gen[hit.n]/I");
-
-    fTree->Branch("hit.x",    &fGenDetHit_X,   "hit.x[hit.n]/D");
-    fTree->Branch("hit.y",    &fGenDetHit_Y,   "hit.y[hit.n]/D");
-    fTree->Branch("hit.z",    &fGenDetHit_Z,   "hit.z[hit.n]/D");
-    fTree->Branch("hit.r",    &fGenDetHit_R,   "hit.r[hit.n]/D");
-    fTree->Branch("hit.ph",   &fGenDetHit_Ph,  "hit.ph[hit.n]/D");
-
-    fTree->Branch("hit.px",   &fGenDetHit_Px,   "hit.px[hit.n]/D");
-    fTree->Branch("hit.py",   &fGenDetHit_Py,   "hit.py[hit.n]/D");
-    fTree->Branch("hit.pz",   &fGenDetHit_Pz,   "hit.pz[hit.n]/D");
-
-    fTree->Branch("hit.vx",   &fGenDetHit_Vx,   "hit.vx[hit.n]/D");
-    fTree->Branch("hit.vy",   &fGenDetHit_Vy,   "hit.vy[hit.n]/D");
-    fTree->Branch("hit.vz",   &fGenDetHit_Vz,   "hit.vz[hit.n]/D");
-
-    fTree->Branch("hit.p",    &fGenDetHit_P,   "hit.p[hit.n]/D");
-    fTree->Branch("hit.e",    &fGenDetHit_E,   "hit.e[hit.n]/D");
-    fTree->Branch("hit.m",    &fGenDetHit_M,   "hit.m[hit.n]/D");
-
-    fTree->Branch("hit.colCut",    &fCollCut,     "hit.colCut/I");
-
+    fTree->Branch("hit",      &fGenDetHit);
     // GenericDetectorSum
-    fTree->Branch("sum.n",    &fNGenDetSum,     "sum.n/I");
-    fTree->Branch("sum.det",  &fGenDetSum_det,  "sum.det[sum.n]/I");
-    fTree->Branch("sum.vid",  &fGenDetSum_id,   "sum.vid[sum.n]/I");
-    fTree->Branch("sum.edep", &fGenDetSum_edep, "sum.edep[sum.n]/D");
+    fTree->Branch("sum",      &fGenDetSum);
 
-    return;
+    // Cut variables derived from hit information
+    fTree->Branch("colCut",    &fCollCut,     "colCut/I");
 }
 
 void remollIO::FillTree(){
@@ -152,9 +97,17 @@ void remollIO::FillTree(){
 }
 
 void remollIO::Flush(){
-    //  Set arrays to 0
-    fNGenDetHit = 0;
-    fNGenDetSum = 0;
+    // Set individual structs to zero
+    static remollEvent_t ev0 = {0};
+    fEv = ev0;
+    static remollBeamTarget_t bm0 = {0};
+    fBm = bm0;
+
+    // Set arrays to 0
+    fEvPart.clear();
+    fGenDetHit.clear();
+    fGenDetSum.clear();
+
     fCollCut = 1; // default
 }
 
@@ -194,101 +147,21 @@ void remollIO::WriteTree(){
 // Event Data
 
 void remollIO::SetEventData(remollEvent *ev){
-    int n = ev->fPartType.size();
-    if( n > __IO_MAXHIT ){
-	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
-	return;
-    }
-
-    fNEvPart = n;
-
     fEvRate   = ev->fRate*s;
-    fEvEffXS  = ev->fEffXs/microbarn;
-    fEvAsym   = ev->fAsym/__ASYMM_SCALE;
-    fEvmAsym  = ev->fmAsym/__ASYMM_SCALE;
-    fEvBeamP  = ev->fBeamMomentum.mag()/__E_UNIT;
 
-    fEvQ2     = ev->fQ2/__E_UNIT/__E_UNIT;
-    fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
-    fEvThCoM  = ev->fThCoM/deg; // specify this in degrees over anything else
+    // Event variables
+    fEv     = ev->GetEventIO();
+    // Primary particles
+    fEvPart = ev->GetEventParticleIO();
 
-    int idx;
-    for( idx = 0; idx < n; idx++ ){
-	fEvPID[idx] = ev->fPartType[idx]->GetPDGEncoding();
-
-	fEvPart_X[idx] = ev->fPartPos[idx].x()/__L_UNIT;
-	fEvPart_Y[idx] = ev->fPartPos[idx].y()/__L_UNIT;
-	fEvPart_Z[idx] = ev->fPartPos[idx].z()/__L_UNIT;
-
-	fEvPart_Px[idx] = ev->fPartRealMom[idx].x()/__E_UNIT;
-	fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
-	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
-	fEvPart_Th[idx] = ev->fPartRealMom[idx].theta();
-	fEvPart_Ph[idx] = ev->fPartRealMom[idx].phi();
-
-	fEvPart_P[idx] = ev->fPartRealMom[idx].mag()/__E_UNIT;
-
-	fEvPart_tPx[idx] = ev->fPartMom[idx].x()/__E_UNIT;
-	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
-	fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
-    }
-
-    /////////////////////////////////////////////////
-    //  Set beam data as well
-
+    // Beam data
     remollBeamTarget *bt = remollBeamTarget::GetBeamTarget();
-
-    fBmX = bt->fVer.x()/__L_UNIT;
-    fBmY = bt->fVer.y()/__L_UNIT;
-    fBmZ = bt->fVer.z()/__L_UNIT;
-    
-    fBmdX = bt->fDir.x();
-    fBmdY = bt->fDir.y();
-    fBmdZ = bt->fDir.z();
-    fBmth = bt->fDir.theta();
-    fBmph = bt->fDir.phi()/deg;
-
-    //    G4cout << "** fDir:: " << bt->fDir.x()/deg << "  " << bt->fDir.y()/deg << "  " << bt->fVer.z()/mm << G4endl;
-
-    return;
+    fBm = bt->GetBeamTargetIO();
 }
 
 // GenericDetectorHit
-
 void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
-    int n = fNGenDetHit;
-    if( n > __IO_MAXHIT ){
-	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
-	return;
-    }
-
-    fGenDetHit_det[n]  = hit->fDetID;
-    fGenDetHit_id[n]   = hit->fCopyID;
-
-    fGenDetHit_trid[n] = hit->fTrID;
-    fGenDetHit_mtrid[n]= hit->fmTrID;
-    fGenDetHit_pid[n]  = hit->fPID;
-    fGenDetHit_gen[n]  = hit->fGen;
-
-    fGenDetHit_X[n]  = hit->f3X.x()/__L_UNIT;
-    fGenDetHit_Y[n]  = hit->f3X.y()/__L_UNIT;
-    fGenDetHit_Z[n]  = hit->f3X.z()/__L_UNIT;
-    fGenDetHit_R[n]  = sqrt(hit->f3X.x()*hit->f3X.x()+hit->f3X.y()*hit->f3X.y())/__L_UNIT;
-    fGenDetHit_Ph[n] = hit->f3X.phi()/deg;
-
-    fGenDetHit_Px[n]  = hit->f3P.x()/__E_UNIT;
-    fGenDetHit_Py[n]  = hit->f3P.y()/__E_UNIT;
-    fGenDetHit_Pz[n]  = hit->f3P.z()/__E_UNIT;
-
-    fGenDetHit_Vx[n]  = hit->f3V.x()/__L_UNIT;
-    fGenDetHit_Vy[n]  = hit->f3V.y()/__L_UNIT;
-    fGenDetHit_Vz[n]  = hit->f3V.z()/__L_UNIT;
-
-    fGenDetHit_P[n]  = hit->fP/__E_UNIT;
-    fGenDetHit_E[n]  = hit->fE/__E_UNIT;
-    fGenDetHit_M[n]  = hit->fM/__E_UNIT;
-
-    fNGenDetHit++;
+    fGenDetHit.push_back(hit->GetGenericDetectorHitIO());
 
     // for collimator cut
     if( (hit->fDetID==200 && hit->f3X.perp()/__L_UNIT < 0.03) || 
@@ -296,21 +169,9 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
       fCollCut=0;
 }
 
-
 // GenericDetectorSum
-
 void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
-    int n = fNGenDetSum;
-    if( n > __IO_MAXHIT ){
-	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
-	return;
-    }
-
-    fGenDetSum_edep[n] = hit->fEdep/__E_UNIT;
-    fGenDetSum_det[n]  = hit->fDetID;
-    fGenDetSum_id[n]   = hit->fCopyID;
-
-    fNGenDetSum++;
+    fGenDetSum.push_back(hit->GetGenericDetectorSumIO());
 }
 
 /*---------------------------------------------------------------------------------*/
