@@ -8,6 +8,8 @@
 #pragma link C++ class remollTextFile+;
 #pragma link C++ struct filedata_t+;
 
+#pragma link C++ struct remollUnits_t+;
+
 #pragma link C++ struct remollEvent_t+;
 #pragma link C++ struct remollBeamTarget_t+;
 #pragma link C++ struct remollEventParticle_t+;
