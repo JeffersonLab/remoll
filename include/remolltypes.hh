@@ -21,6 +21,14 @@ struct filedata_t {
     TTimeStamp timestamp;
 };
 
+struct remollEventParticle_t {
+  int pid;
+  double x, y, z;
+  double px, py, pz;
+  double th, ph, p;
+  double tpx, tpy, tpz;
+};
+
 struct remollGenericDetectorSum_t {
   int det;
   int vid;
