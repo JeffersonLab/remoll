@@ -17,15 +17,15 @@
   <quantity name="pionDetectorLucitePMTThickness" type="length" value="1.0" unit="mm"/>
 
   <matrix coldim="2" name="ABSLENGTH_AIR" values="
-    1.54986*eV 1000*m
-    1.77127*eV 1000*m
-    2.06648*eV 1000*m
-    2.47978*eV 1000*m
-    3.09973*eV 1000*m
-    4.13297*eV 1000*m
-    4.95956*eV 1000*m
-    5.51063*eV 1000*m
-    5.90424*eV 1000*m"/>
+    1.54986*eV 1*m
+    1.77127*eV 1*m
+    2.06648*eV 1*m
+    2.47978*eV 1*m
+    3.09973*eV 1*m
+    4.13297*eV 1*m
+    4.95956*eV 1*m
+    5.51063*eV 1*m
+    5.90424*eV 1*m"/>
 
   <matrix coldim="2" name="RINDEX_AIR" values="
     1.54986*eV 1.000292
@@ -39,6 +39,16 @@
     5.90424*eV 1.000292"/>
 
   <matrix coldim="2" name="ABSLENGTH_LUCITE" values="
+    1.54986*eV 1*m
+    1.77127*eV 1*m
+    2.06648*eV 1*m
+    2.47978*eV 1*m
+    3.09973*eV 1*m
+    4.13297*eV 1*m
+    4.95956*eV 1*m
+    5.51063*eV 1*m
+    5.90424*eV 1*m"/>
+<!--
     1.54986*eV 263160
     1.77127*eV 250000
     2.06648*eV 227270
@@ -47,7 +57,7 @@
     4.13297*eV 16130
     4.95956*eV 740
     5.51063*eV 125
-    5.90424*eV 10"/>
+    5.90424*eV 10"/> -->
 
   <matrix coldim="2" name="RINDEX_LUCITE" values="
     1.54986*eV 1.45338
@@ -337,6 +347,8 @@
   <volume name="pionDetectorLuciteLightGuideInside_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuideInside_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLightGuideDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4004"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
 
