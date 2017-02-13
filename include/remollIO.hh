@@ -63,11 +63,6 @@ class remollIO {
 	//  This is potentially going to get very long...
 
 	// Event data
-    public:
-	void SetEventData(remollEvent *);
-    private:
-	Int_t fNEvPart;
-
 	Double_t fEvRate;
 	Double_t fEvEffXS;
 	Double_t fEvAsym;
@@ -86,21 +81,11 @@ class remollIO {
 	Double_t fBmth;
 	Double_t fBmph;
 
-	Int_t fEvPID[__IO_MAXHIT];
-
-	Double_t fEvPart_X[__IO_MAXHIT];
-	Double_t fEvPart_Y[__IO_MAXHIT];
-	Double_t fEvPart_Z[__IO_MAXHIT];
-	Double_t fEvPart_Px[__IO_MAXHIT];
-	Double_t fEvPart_Py[__IO_MAXHIT];
-	Double_t fEvPart_Pz[__IO_MAXHIT];
-	Double_t fEvPart_Th[__IO_MAXHIT];
-	Double_t fEvPart_Ph[__IO_MAXHIT];
-	Double_t fEvPart_P[__IO_MAXHIT];
-	Double_t fEvPart_tPx[__IO_MAXHIT];
-	Double_t fEvPart_tPy[__IO_MAXHIT];
-	Double_t fEvPart_tPz[__IO_MAXHIT];
-
+        // Event particles
+    public:
+        void SetEventData(remollEvent *);
+    private:
+        std::vector<remollEventParticle_t> fEvPart;
 
 	//  GenericDetectorHit
     public:

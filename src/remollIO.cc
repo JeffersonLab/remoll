@@ -76,22 +76,9 @@ void remollIO::InitializeTree(){
     fTree->Branch("ev.Q2",    &fEvQ2,     "ev.Q2/D");
     fTree->Branch("ev.W2",    &fEvW2,     "ev.W2/D");
     fTree->Branch("ev.thcom", &fEvThCoM,  "ev.thcom/D");
-    fTree->Branch("ev.beamp",  &fEvBeamP,   "ev.beamp/D");
+    fTree->Branch("ev.beamp", &fEvBeamP,   "ev.beamp/D");
 
-    fTree->Branch("ev.npart", &fNEvPart   ,     "ev.npart/I");
-    fTree->Branch("ev.pid",   &fEvPID,      "ev.pid[ev.npart]/I");
-    fTree->Branch("ev.vx",    &fEvPart_X,   "ev.vx[ev.npart]/D");
-    fTree->Branch("ev.vy",    &fEvPart_Y,   "ev.vy[ev.npart]/D");
-    fTree->Branch("ev.vz",    &fEvPart_Z,   "ev.vz[ev.npart]/D");
-    fTree->Branch("ev.p",     &fEvPart_P,   "ev.p[ev.npart]/D");
-    fTree->Branch("ev.px",    &fEvPart_Px,  "ev.px[ev.npart]/D");
-    fTree->Branch("ev.py",    &fEvPart_Py,  "ev.py[ev.npart]/D");
-    fTree->Branch("ev.pz",    &fEvPart_Pz,  "ev.pz[ev.npart]/D");
-    fTree->Branch("ev.th",    &fEvPart_Th,     "ev.th[ev.npart]/D");
-    fTree->Branch("ev.ph",    &fEvPart_Ph,     "ev.ph[ev.npart]/D");
-    fTree->Branch("ev.tpx",    &fEvPart_tPx,  "ev.tpx[ev.npart]/D");
-    fTree->Branch("ev.tpy",    &fEvPart_tPy,  "ev.tpy[ev.npart]/D");
-    fTree->Branch("ev.tpz",    &fEvPart_tPz,  "ev.tpz[ev.npart]/D");
+    fTree->Branch("part",     &fEvPart);
 
     fTree->Branch("bm.x",    &fBmX,  "bm.x/D");
     fTree->Branch("bm.y",    &fBmY,  "bm.y/D");
@@ -125,6 +112,7 @@ void remollIO::FillTree(){
 
 void remollIO::Flush(){
     //  Set arrays to 0
+    fEvPart.clear();
     fGenDetHit.clear();
     fGenDetSum.clear();
     fCollCut = 1; // default
@@ -166,14 +154,6 @@ void remollIO::WriteTree(){
 // Event Data
 
 void remollIO::SetEventData(remollEvent *ev){
-    int n = ev->fPartType.size();
-    if( n > __IO_MAXHIT ){
-	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
-	return;
-    }
-
-    fNEvPart = n;
-
     fEvRate   = ev->fRate*s;
     fEvEffXS  = ev->fEffXs/microbarn;
     fEvAsym   = ev->fAsym/__ASYMM_SCALE;
@@ -184,26 +164,7 @@ void remollIO::SetEventData(remollEvent *ev){
     fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
     fEvThCoM  = ev->fThCoM/deg; // specify this in degrees over anything else
 
-    int idx;
-    for( idx = 0; idx < n; idx++ ){
-	fEvPID[idx] = ev->fPartType[idx]->GetPDGEncoding();
-
-	fEvPart_X[idx] = ev->fPartPos[idx].x()/__L_UNIT;
-	fEvPart_Y[idx] = ev->fPartPos[idx].y()/__L_UNIT;
-	fEvPart_Z[idx] = ev->fPartPos[idx].z()/__L_UNIT;
-
-	fEvPart_Px[idx] = ev->fPartRealMom[idx].x()/__E_UNIT;
-	fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
-	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
-	fEvPart_Th[idx] = ev->fPartRealMom[idx].theta();
-	fEvPart_Ph[idx] = ev->fPartRealMom[idx].phi();
-
-	fEvPart_P[idx] = ev->fPartRealMom[idx].mag()/__E_UNIT;
-
-	fEvPart_tPx[idx] = ev->fPartMom[idx].x()/__E_UNIT;
-	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
-	fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
-    }
+    fEvPart = ev->GetIO();
 
     /////////////////////////////////////////////////
     //  Set beam data as well
