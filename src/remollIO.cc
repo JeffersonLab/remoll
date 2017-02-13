@@ -79,13 +79,11 @@ void remollIO::InitializeTree(){
 
     // GenericDetectorHit
     fTree->Branch("hit",      &fGenDetHit);
-
-    fTree->Branch("hit.colCut",    &fCollCut,     "hit.colCut/I");
-
     // GenericDetectorSum
     fTree->Branch("sum",      &fGenDetSum);
 
-    return;
+    // Cut variables derived from hit information
+    fTree->Branch("colCut",    &fCollCut,     "colCut/I");
 }
 
 void remollIO::FillTree(){
