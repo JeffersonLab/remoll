@@ -106,7 +106,6 @@ class remollIO {
     public:
 	void AddGenericDetectorHit(remollGenericDetectorHit *);
     private:
-	Int_t fNGenDetHit;
 	std::vector<remollGenericDetectorHit_t> fGenDetHit;
 
 	Int_t fCollCut;
@@ -115,7 +114,6 @@ class remollIO {
     public:
 	void AddGenericDetectorSum(remollGenericDetectorSum *);
     private:
-	Int_t fNGenDetSum;
         std::vector<remollGenericDetectorSum_t> fGenDetSum;
 };
 
