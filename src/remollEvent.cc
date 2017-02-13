@@ -1,4 +1,6 @@
 #include "remollEvent.hh"
+#include "remolltypes.hh"
+
 #include <math.h>
 
 #include "G4ParticleTable.hh"
@@ -9,6 +11,31 @@ remollEvent::remollEvent(){
 }
 
 remollEvent::~remollEvent(){
+}
+
+/**
+ * Fill the event particle structure for writing to IO.
+ */
+std::vector<remollEventParticle_t> remollEvent::GetIO() const {
+  std::vector<remollEventParticle_t> evs;
+  for (size_t idx = 0; idx < fPartType.size(); idx++) {
+    remollEventParticle_t ev;
+    ev.pid = fPartType[idx]->GetPDGEncoding();
+    ev.x = fPartPos[idx].x();
+    ev.y = fPartPos[idx].y();
+    ev.z = fPartPos[idx].z();
+    ev.px = fPartRealMom[idx].x();
+    ev.py = fPartRealMom[idx].y();
+    ev.pz = fPartRealMom[idx].z();
+    ev.th = fPartRealMom[idx].theta();
+    ev.ph = fPartRealMom[idx].phi();
+    ev.p  = fPartRealMom[idx].mag();
+    ev.tpx = fPartMom[idx].x();
+    ev.tpy = fPartMom[idx].y();
+    ev.tpz = fPartMom[idx].z();
+    evs.push_back(ev);
+  }
+  return evs;
 }
 
 void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name ){

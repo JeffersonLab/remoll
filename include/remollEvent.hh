@@ -9,7 +9,10 @@
 */
 
 #include <vector>
+
 #include "G4ThreeVector.hh"
+
+#include "remolltypes.hh"
 
 class G4ParticleDefinition;
 
@@ -57,6 +60,9 @@ class remollEvent {
 	G4double fW2;
 	G4double fXbj;
 	G4double fThCoM;
+
+    public:
+        std::vector<remollEventParticle_t> GetIO() const;
 };
 
 #endif//__REMOLLEVENT_HH
