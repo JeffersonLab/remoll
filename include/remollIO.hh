@@ -20,7 +20,6 @@ class remollEvent;
 #include <xercesc/dom/DOMElement.hpp>
 
 
-#define __IO_MAXHIT 10000
 #define __FILENAMELEN 255
 
 // Units for output
