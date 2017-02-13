@@ -348,7 +348,7 @@
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuideInside_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLightGuideDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4004"/>
+    <auxiliary auxtype="DetNo" auxvalue="4006"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
 
