@@ -39,6 +39,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
 	std::map<int, remollGenericDetectorSum *> fSumMap;
 
+	G4bool fTrackOpticalPhotons;
 	G4bool fTrackSecondaries;
 	G4int fDetNo;
 

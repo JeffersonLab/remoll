@@ -7,8 +7,8 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum ) : G4
     fDetNo = detnum;
     assert( fDetNo > 0 );
 
-//    fTrackSecondaries = false;
     fTrackSecondaries = true;
+    fTrackOpticalPhotons = false;
 
     sprintf(colname, "genhit_%d", detnum);
     collectionName.insert(G4String(colname));
@@ -40,14 +40,14 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     // Ignore optical photons as hits (but still simulate them
     // so they can knock out electrons of the photocathode)
-    if (step->GetTrack()->GetDefinition()->GetParticleName() == "opticalphoton") {
+    if (!fTrackOpticalPhotons && step->GetTrack()->GetDefinition()->GetParticleName() == "opticalphoton") {
       //G4cout << "Return on optical photon" << G4endl;
       return false;
     }
 
     // Ignore neutral particles below 0.1 MeV
     G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
-    if (charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
+    if (!fTrackOpticalPhotons && charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
       //G4cout << "Return on charge == 0 and low energy " << G4endl;
       return false;
     }
@@ -67,7 +67,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // that have just entered our boundary
     badhit = true;
     if( track->GetCreatorProcess() == 0 ||
-	    (prestep->GetStepStatus() == fGeomBoundary && fTrackSecondaries)
+	(fTrackSecondaries && prestep->GetStepStatus() == fGeomBoundary)
       ){
 	badhit = false;
     }
