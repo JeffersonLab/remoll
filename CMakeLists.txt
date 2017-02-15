@@ -109,8 +109,10 @@ file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_D
 # Add the executable, and link it to the Geant4 libraries
 #
 add_executable(remoll remoll.cc ${sources} ${headers} remollDict.cxx)
+add_executable(reroot reroot.cc ${sources} ${headers} remollDict.cxx)
 add_library(remollroot SHARED ${libsources} ${libheaders} remollDict.cxx)
 target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries(reroot ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 
 #----------------------------------------------------------------------------
