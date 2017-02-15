@@ -8,9 +8,9 @@
    data around and useful enumerations
 */
 
-#if !defined(__CINT__) && !defined(__CLING__)
-#include <G4Types.hh>
-#endif
+//#if !defined(__CINT__) && !defined(__CLING__)
+//#include <G4Types.hh>
+//#endif
 
 #define __RUNSTR_LEN 255
 #define __MAXFILE_LEN 1048576 // MB file size limit
