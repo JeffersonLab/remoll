@@ -45,7 +45,7 @@ void remoll::Loop()
       // if (Cut(ientry) < 0) continue;
 
       // USER CODE: Fill histograms
-      h_hit_n->Fill(hit_n);
+      h_hit_n->Fill(hit->size());
 
    }
 }
