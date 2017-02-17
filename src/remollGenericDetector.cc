@@ -8,7 +8,7 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum ) : G4
     assert( fDetNo > 0 );
 
     fTrackSecondaries = true;
-    fTrackOpticalPhotons = false;
+    fTrackOpticalPhotons = true;
 
     sprintf(colname, "genhit_%d", detnum);
     collectionName.insert(G4String(colname));
