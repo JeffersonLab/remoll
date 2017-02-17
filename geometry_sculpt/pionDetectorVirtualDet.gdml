@@ -38,14 +38,14 @@
     <materialref ref="Vacuum"/>
     <solidref ref="pionDetectorVirtualDetRing_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="-29"/>
+    <auxiliary auxtype="DetNo" auxvalue="4050"/>
     <auxiliary auxtype="Color" auxvalue="red"/>
   </volume>
   <volume name="pionDetectorVirtualDetRingVacuumKryptonite_logical">
     <materialref ref="VacuumKryptonite"/>
     <solidref ref="pionDetectorVirtualDetRing_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="29"/>
+    <auxiliary auxtype="DetNo" auxvalue="4051"/>
     <auxiliary auxtype="Color" auxvalue="red"/>
   </volume>
 
