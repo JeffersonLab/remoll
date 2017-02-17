@@ -5,7 +5,6 @@
 #include "G4UIcmdWithADoubleAndUnit.hh"
 #include "G4UIcmdWithABool.hh"
 
-#include "remollOpticalPhysics.hh"
 #include "remollDetectorConstruction.hh"
 #include "remollIO.hh"
 #include "remollEventAction.hh"
@@ -54,11 +53,6 @@ remollMessenger::remollMessenger(){
     kryptCmd = new G4UIcmdWithABool("/remoll/kryptonite",this);
     kryptCmd->SetGuidance("Treat W, Pb, Cu as kryptonite");
     kryptCmd->SetParameterName("krypt", false);
-
-    opticalCmd = new G4UIcmdWithABool("/remoll/optical",this);
-    opticalCmd->SetGuidance("Enable optical physics");
-    opticalCmd->SetParameterName("optical", false);
-    opticalCmd->AvailableForStates(G4State_Idle); // Only have this AFTER we've initalized geometry
 
     dumpGeometryCmd = new G4UIcmdWithABool("/remoll/dumpgeometry",this);
     dumpGeometryCmd->SetGuidance("Dump the geometry tree");
@@ -334,15 +328,6 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     if( cmd == kryptCmd ){
 	G4bool krypt = kryptCmd->GetNewBoolValue(newValue);
 	fStepAct->SetEnableKryptonite(krypt);
-    }
-
-    if( cmd == opticalCmd ){
-	G4bool optical = opticalCmd->GetNewBoolValue(newValue);
-	if( optical ){
-	    fPhysicsList->RegisterPhysics( new remollOpticalPhysics() );
-	} else {
-	    fPhysicsList->RemovePhysics("Optical");
-	}
     }
 
     if( cmd == dumpGeometryCmd ){

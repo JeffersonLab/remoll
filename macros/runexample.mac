@@ -53,9 +53,6 @@
 
 /remoll/beamcurr 85 microampere
 
-# Enable optical photons and processes
-/remoll/optical true
-
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
 /remoll/kryptonite true

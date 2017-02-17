@@ -6,6 +6,7 @@
 
 // USER CODE: Add histograms
 TH1D* h_hit_n = new TH1D("h_hit_n","h_hit_n",100,0,100);
+TH1D* h_hit_pid = new TH1D("h_hit_pid","h_hit_pi",2300,0,2300);
 
 
 void remoll::Loop()
@@ -45,7 +46,10 @@ void remoll::Loop()
       // if (Cut(ientry) < 0) continue;
 
       // USER CODE: Fill histograms
-      h_hit_n->Fill(hit_n);
+      h_hit_n->Fill(hit->size());
+      for (size_t i = 0; i < hit->size(); i++) {
+        h_hit_pid->Fill(hit->at(i).pid);
+      }
 
    }
 }

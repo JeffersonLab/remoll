@@ -6,11 +6,23 @@
    <constant name="pionDetectorLeadDonutInnerRadius" value="0.90"/> <!-- m -->
    <constant name="pionDetectorLeadDonutOuterRadius" value="1.15"/> <!-- m -->
 
+   <constant name="pionDetectorVirtualDetThickness"   value="0.01"/> <!-- m -->
+
    <constant name="pionDetectorSystemRadius" value="2.0"/> <!-- m -->
    <constant name="pionDetectorSystemLength" value="1.7"/> <!-- m -->
 
-   <position name="pionDetectorLeadDonutPosition"  unit="m" x="0" y="0" z="-pionDetectorSystemLength/2.0+pionDetectorLeadDonutThickness/2.0"/>
-   <position name="pionDetectorVirtualDetPosition" unit="m" x="0" y="0" z="-0.59"/>
+   <position name="pionDetectorVirtualDetPositionFront" unit="m" x="0" y="0"
+      z="-pionDetectorSystemLength/2.0
+         +pionDetectorVirtualDetThickness/2.0"/>
+   <position name="pionDetectorLeadDonutPosition"       unit="m" x="0" y="0"
+      z="-pionDetectorSystemLength/2.0
+         +pionDetectorVirtualDetThickness
+         +pionDetectorLeadDonutThickness/2.0"/>
+   <position name="pionDetectorVirtualDetPositionBack"  unit="m" x="0" y="0"
+      z="-pionDetectorSystemLength/2.0
+         +pionDetectorVirtualDetThickness
+         +pionDetectorLeadDonutThickness
+         +pionDetectorVirtualDetThickness/2.0"/>
    <position name="pionDetectorGEMFrontPosition"   unit="m" x="0" y="0" z="-0.50"/>
    <position name="pionDetectorTSFrontPosition"    unit="m" x="0" y="0" z="-0.40"/>
    <position name="pionDetectorLucitePosition"     unit="m" x="0" y="0" z="+0.00"/>
@@ -51,13 +63,20 @@
       <solidref ref="pionDetectorSystem_solid"/>
 
       <physvol>
+        <file name="geometry_sculpt/pionDetectorVirtualDet.gdml"
+           volname="pionDetectorVirtualDetVacuum_logical"/>
+        <positionref ref="pionDetectorVirtualDetPositionFront"/>
+      </physvol>
+
+      <physvol>
         <volumeref ref="pionDetectorLeadDonut_logical"/>
         <positionref ref="pionDetectorLeadDonutPosition"/>
       </physvol>
 
       <physvol>
-        <file name="geometry_sculpt/pionDetectorVirtualDet.gdml"/>
-        <positionref ref="pionDetectorVirtualDetPosition"/>
+        <file name="geometry_sculpt/pionDetectorVirtualDet.gdml"
+           volname="pionDetectorVirtualDetVacuumKryptonite_logical"/>
+        <positionref ref="pionDetectorVirtualDetPositionBack"/>
       </physvol>
 
       <physvol>
