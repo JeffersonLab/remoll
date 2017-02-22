@@ -8,6 +8,7 @@ int main(int argc, char** argv)
 {
   // Start Root command prompt
   TRint* rint = new TRint("remoll ROOT Analyzer", &argc, argv);
+  rint->SetPrompt("re-root [%d] ");
 
   // Setup include path
   gROOT->ProcessLine(".include include");
