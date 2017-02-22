@@ -94,7 +94,6 @@ endif()
 
 include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
 
-
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
@@ -102,18 +101,20 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
 
-file(GLOB libsources ${PROJECT_SOURCE_DIR}/src/remollRunData.cc ${PROJECT_SOURCE_DIR}/src/remollTextFile.cc)
-file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
-
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(remoll remoll.cc ${sources} ${headers} remollDict.cxx)
-add_executable(reroot reroot.cc ${sources} ${headers} remollDict.cxx)
-add_library(remollroot SHARED ${libsources} ${libheaders} remollDict.cxx)
-target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
-target_link_libraries(reroot ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
-target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+add_library(remoll-lib SHARED ${sources} ${headers} remollDict.cxx)
+set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
+target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+
+add_executable(remoll-bin remoll.cc)
+set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
+target_link_libraries(remoll-bin ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} remoll-lib)
+
+add_executable(reroot-bin reroot.cc)
+set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
+target_link_libraries(reroot-bin ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} remoll-lib)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -181,11 +182,12 @@ endforeach()
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
 #
-add_custom_target(REMOLL DEPENDS remoll)
+add_custom_target(REMOLL DEPENDS remoll-bin)
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS remoll DESTINATION bin)
+install(TARGETS remoll-bin reroot-bin DESTINATION bin)
+install(TARGETS remoll-lib DESTINATION lib)
 
 
