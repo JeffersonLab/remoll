@@ -35,6 +35,7 @@ ROOT_GENERATE_DICTIONARY(
     "include/remollRunData.hh"
     "include/remollTextFile.hh"
     LINKDEF "include/remollLinkDef.h"  # ROOT linkDef file
+    OPTIONS -p
 )
 
 #----------------------------------------------------------------------------
@@ -110,11 +111,11 @@ target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_L
 
 add_executable(remoll-bin remoll.cc)
 set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-bin ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} remoll-lib)
+target_link_libraries(remoll-bin remoll-lib)
 
 add_executable(reroot-bin reroot.cc)
 set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
-target_link_libraries(reroot-bin ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} remoll-lib)
+target_link_libraries(reroot-bin remoll-lib)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we

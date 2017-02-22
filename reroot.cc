@@ -4,11 +4,12 @@
 #include <TSystem.h>
 #include <TString.h>
 
+#include "remollRint.hh"
+
 int main(int argc, char** argv)
 {
   // Start Root command prompt
-  TRint* rint = new TRint("remoll ROOT Analyzer", &argc, argv);
-  rint->SetPrompt("re-root [%d] ");
+  remollRint* rint = new remollRint("remoll ROOT Analyzer", &argc, argv);
 
   // Setup include path
   gROOT->ProcessLine(".include include");
