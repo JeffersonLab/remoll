@@ -39,15 +39,17 @@ This will create the executable bggen in the directory build.
 
 ## Compiling on the JLab ifarm (by Wouter Deconinck, wdconinc@jlab.org)
 
-Setup the cernlib environment for the 32-bit libraries (possibly add this to your .login file):
+Setup the cernlib environment for the cernlib libraries (possibly add this to your .login file):
 
-    export CERN=/site/cernlib/i386_rhel6
+    export CERN=/site/cernlib/x86_64_rhel7
     export CERN_LEVEL=2005
+    export PATH=$CERN/$CERN_LEVEL/bin:$PATH
 
 or for you tcsh users:
 
-    setenv CERN /site/cernlib/i386_rhel6
+    setenv CERN /site/cernlib/x86_64_rhel7
     setenv CERN_LEVEL 2005
+    set path = ( $path $CERN/$CERN_LEVEL/bin)
 
 The command `cernlib` will allow you to check whether these settings have taken effect correctly.
 
