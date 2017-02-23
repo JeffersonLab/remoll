@@ -125,6 +125,12 @@ set(REMOLL_SCRIPTS
     geometry_sculpt/hybridDaughter.gdml
     geometry_sculpt/targetDaughter.gdml
     geometry_sculpt/upstreamDaughter.gdml
+    geometry_sculpt/hallDaughter.gdml
+    geometry_sculpt/mollerdet.gdml
+    geometry_sculpt/materials.xml
+    geometry_sculpt/upstreamDaughter_merged_design1.gdml
+    geometry_sculpt/upstreamDaughter_merged_design1_krypto.gdml
+    geometry_sculpt/upstreamDaughter_merged_design1_check3.gdml
     geometry_sculpt/schema/gdml.xsd
     geometry_sculpt/schema/gdml_core.xsd
     geometry_sculpt/schema/gdml_define.xsd
@@ -133,6 +139,52 @@ set(REMOLL_SCRIPTS
     geometry_sculpt/schema/gdml_parameterised.xsd
     geometry_sculpt/schema/gdml_replicas.xsd
     geometry_sculpt/schema/gdml_solids.xsd
+
+    geometry_sculpt_less_hybshld/mollerMother.gdml
+    geometry_sculpt_less_hybshld/detectorDaughter.gdml
+    geometry_sculpt_less_hybshld/hybridDaughter.gdml
+    geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld.gdml
+    geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld_roof.gdml
+    geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld_roof_less_1.gdml
+    geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld_roof_less_2.gdml
+    geometry_sculpt_less_hybshld/targetDaughter.gdml
+    geometry_sculpt_less_hybshld/upstreamDaughter.gdml
+    geometry_sculpt_less_hybshld/hallDaughter.gdml
+    geometry_sculpt_less_hybshld/mollerdet.gdml
+    geometry_sculpt_less_hybshld/materials.xml
+    geometry_sculpt_less_hybshld/upstreamDaughter_merged_design1.gdml
+    geometry_sculpt_less_hybshld/upstreamDaughter_merged_design1_krypto.gdml
+    geometry_sculpt_less_hybshld/upstreamDaughter_merged_design1_check3.gdml
+    geometry_sculpt_less_hybshld/schema/gdml.xsd
+    geometry_sculpt_less_hybshld/schema/gdml_core.xsd
+    geometry_sculpt_less_hybshld/schema/gdml_define.xsd
+    geometry_sculpt_less_hybshld/schema/gdml_extensions.xsd
+    geometry_sculpt_less_hybshld/schema/gdml_materials.xsd
+    geometry_sculpt_less_hybshld/schema/gdml_parameterised.xsd
+    geometry_sculpt_less_hybshld/schema/gdml_replicas.xsd
+    geometry_sculpt_less_hybshld/schema/gdml_solids.xsd
+
+    geometry_sculpt_less_targshld/mollerMother.gdml
+    geometry_sculpt_less_targshld/detectorDaughter.gdml
+    geometry_sculpt_less_targshld/hybridDaughter.gdml
+    geometry_sculpt_less_targshld/targetDaughter.gdml
+    geometry_sculpt_less_targshld/targetDaughter_less_targshld.gdml
+    geometry_sculpt_less_targshld/upstreamDaughter.gdml
+    geometry_sculpt_less_targshld/hallDaughter.gdml
+    geometry_sculpt_less_targshld/mollerdet.gdml
+    geometry_sculpt_less_targshld/materials.xml
+    geometry_sculpt_less_targshld/upstreamDaughter_merged_design1.gdml
+    geometry_sculpt_less_targshld/upstreamDaughter_merged_design1_krypto.gdml
+    geometry_sculpt_less_targshld/upstreamDaughter_merged_design1_check3.gdml
+    geometry_sculpt_less_targshld/schema/gdml.xsd
+    geometry_sculpt_less_targshld/schema/gdml_core.xsd
+    geometry_sculpt_less_targshld/schema/gdml_define.xsd
+    geometry_sculpt_less_targshld/schema/gdml_extensions.xsd
+    geometry_sculpt_less_targshld/schema/gdml_materials.xsd
+    geometry_sculpt_less_targshld/schema/gdml_parameterised.xsd
+    geometry_sculpt_less_targshld/schema/gdml_replicas.xsd
+    geometry_sculpt_less_targshld/schema/gdml_solids.xsd
+ 
     geometry_sculpt_wshield/mollerMother.gdml
     geometry_sculpt_wshield/detectorDaughter.gdml
     geometry_sculpt_wshield/hybridDaughter.gdml
@@ -147,6 +199,21 @@ set(REMOLL_SCRIPTS
     geometry_sculpt_wshield/schema/gdml_parameterised.xsd
     geometry_sculpt_wshield/schema/gdml_replicas.xsd
     geometry_sculpt_wshield/schema/gdml_solids.xsd
+    geometry_sculpt_wshield_cor/mollerMother.gdml
+    geometry_sculpt_wshield_cor/detectorDaughter.gdml
+    geometry_sculpt_wshield_cor/hybridDaughter.gdml
+    geometry_sculpt_wshield_cor/targetDaughter.gdml
+    geometry_sculpt_wshield_cor/upstreamDaughter.gdml
+    geometry_sculpt_wshield_cor/shieldDaughter.gdml
+    geometry_sculpt_wshield_cor/schema/gdml.xsd
+    geometry_sculpt_wshield_cor/schema/gdml_core.xsd
+    geometry_sculpt_wshield_cor/schema/gdml_define.xsd
+    geometry_sculpt_wshield_cor/schema/gdml_extensions.xsd
+    geometry_sculpt_wshield_cor/schema/gdml_materials.xsd
+    geometry_sculpt_wshield_cor/schema/gdml_parameterised.xsd
+    geometry_sculpt_wshield_cor/schema/gdml_replicas.xsd
+    geometry_sculpt_wshield_cor/schema/gdml_solids.xsd
+
 
     vis/OIX.mac
     vis/Qt.mac
@@ -154,6 +221,8 @@ set(REMOLL_SCRIPTS
     vis/X.mac
     macros/runexample.mac
     macros/gui.mac
+    macros/moller_dose.mac
+    macros/vis.mac
     rootlogon.C
   )
 

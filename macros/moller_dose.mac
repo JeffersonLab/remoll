@@ -1,6 +1,6 @@
 #  Example file
 
-/remoll/setgeofile geometry_sculpt_wshield/mollerMother.gdml
+/remoll/setgeofile geometry_sculpt_less_hybshld/mollerMother.gdml
 
 # This must be explicitly called
 /run/initialize
@@ -20,9 +20,9 @@
 # realistic rather than pure absorbers
 /remoll/kryptonite   false
 
-/remoll/filename output.root
+/remoll/filename dose_output.root
 
 # run for ~4 hours
-/run/beamOn 500000
+/run/beamOn 1000000
 #/run/beamOn 1000
 

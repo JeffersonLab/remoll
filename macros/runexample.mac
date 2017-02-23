@@ -55,7 +55,7 @@
 
 /process/list
 
-# Specify random number seed
+# Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
 
 /remoll/filename remoll_beam.root

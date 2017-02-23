@@ -3,7 +3,9 @@
 
 #/vis/open OGLIQt 1200x800
 #/remoll/setgeofile geometry_sculpt_wshield/mollerMother.gdml
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+#/remoll/setgeofile geometry_sculpt_less_tgtshld/mollerMother.gdml
+#/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+/remoll/setgeofile geometry_sculpt_less_hybshld/mollerMother.gdml
 #/remoll/setgeofile geometry_sculpt/mollerMother_noShld.gdml
 #/remoll/setgeofile geometry_sculpt/mollerMother_krypto_cols.gdml
 #/remoll/setgeofile geometry_sculpt/mollerMother_krypto_Coils.gdml

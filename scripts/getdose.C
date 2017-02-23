@@ -5,7 +5,7 @@ void getdose(){
     T->Add("output/*dose*.root");
 //    T->Add("output/output_moller_dose_20140310_204406_1.root");
 
-    double curr = 70e-6;
+    double curr = 75e-6; // Originally 70 microamps
     double nelec_s = curr/1.6e-19;
     double scale = nelec_s/T->GetEntries();
 
