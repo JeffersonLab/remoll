@@ -6,7 +6,7 @@
 
   <quantity name="pionDetectorLuciteGlueThickness" type="length" value="1.0" unit="mm"/>
 
-  <quantity name="pionDetectorLucitePlaneThickness" type="length" value="25.4" unit="mm"/>
+  <quantity name="pionDetectorLucitePlaneThickness" type="length" value="2.54" unit="cm"/>
   <quantity name="pionDetectorLuciteInsideWidth" type="length" value="41.0" unit="cm"/>
   <quantity name="pionDetectorLuciteOutsideWidth" type="length" value="51.0" unit="cm"/>
   <quantity name="pionDetectorLuciteHeight" type="length" value="25.0" unit="cm"/>
@@ -384,11 +384,13 @@
       <position name="pionDetectorLuciteLightGuideInside_position"
         z="pionDetectorLuciteHeight/2.0+pionDetectorLuciteLightGuideHeight/2.0"/>
     </physvol>
+    <!-- Disabled shell, only use light guide inside, due to issues propagating photons
     <physvol name="pionDetectorLuciteLightGuideShell_physical">
       <volumeref ref="pionDetectorLuciteLightGuideShell_logical"/>
       <position name="pionDetectorLuciteLightGuideShell_position"
         z="pionDetectorLuciteHeight/2.0+pionDetectorLuciteLightGuideHeight/2.0"/>
     </physvol>
+    -->
     <physvol name="pionDetectorLucitePMT_physical">
       <volumeref ref="pionDetectorLucitePMT_logical"/>
       <position name="pionDetectorLucitePMT_position"
