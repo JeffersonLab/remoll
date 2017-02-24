@@ -297,27 +297,6 @@
     <second ref="pionDetectorLuciteLightGuideInside_solid"/>
   </subtraction>
 
-  <opticalsurface name="pionDetectorLuciteSinglePlaneOpticalSurface" 
-    finish="polished"
-    model="glisur"
-    type="dielectric_dielectric"
-    value="0.997"/>
-  <opticalsurface name="pionDetectorGlueSinglePlaneOpticalSurface" 
-    finish="polished"
-    model="glisur"
-    type="dielectric_dielectric"
-    value="0.997"/>
-  <opticalsurface name="pionDetectorLuciteLightGuideOpticalSurface"
-    finish="polished"
-    model="glisur"
-    type="dielectric_dielectric"
-    value="0.997"/>
-  <opticalsurface name="pionDetectorLucitePMTOpticalSurface"
-    finish="polished"
-    model="glisur"
-    type="dielectric_dielectric"
-    value="0.997"/>
-
 </solids>
 
 <structure>
@@ -417,37 +396,6 @@
     </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
-
-  <skinsurface name="pionDetectorLuciteSinglePlane_skinsurface" surfaceproperty="pionDetectorLuciteSinglePlaneOpticalSurface">
-    <volumeref ref="pionDetectorLuciteSinglePlane_logical"/>
-  </skinsurface>
-
-  <skinsurface name="pionDetectorLuciteAllPlanesGlue_skinsurface" surfaceproperty="pionDetectorGlueSinglePlaneOpticalSurface">
-    <volumeref ref="pionDetectorLuciteAllPlanesGlue_logical"/>
-  </skinsurface>
-
-  <skinsurface name="pionDetectorLuciteLightGuideShell_skinsurface" surfaceproperty="pionDetectorLuciteLightGuideOpticalSurface">
-    <volumeref ref="pionDetectorLuciteLightGuideShell_logical"/>
-  </skinsurface>
-
-  <skinsurface name="pionDetectorLucitePMT_skinsurface" surfaceproperty="pionDetectorLucitePMTOpticalSurface">
-    <volumeref ref="pionDetectorLucitePMT_logical"/>
-  </skinsurface>
-
-  <bordersurface name="pionDetectorLuciteAllPlanesLightGuide_bordersurface" surfaceproperty="pionDetectorLuciteSinglePlaneOpticalSurface">
-    <physvolref ref="pionDetectorLuciteAllPlanesGlue_physical"/>
-    <physvolref ref="pionDetectorLuciteLightGuideInside_physical"/>
-  </bordersurface>
-
-  <bordersurface name="pionDetectorLuciteLightGuideShell_bordersurface" surfaceproperty="pionDetectorLuciteLightGuideOpticalSurface">
-    <physvolref ref="pionDetectorLuciteLightGuideShell_physical"/>
-    <physvolref ref="pionDetectorLuciteLightGuideInside_physical"/>
-  </bordersurface>
-
-  <bordersurface name="pionDetectorLuciteLightGuidePMT_bordersurface" surfaceproperty="pionDetectorLucitePMTOpticalSurface">
-    <physvolref ref="pionDetectorLuciteLightGuideInside_physical"/>
-    <physvolref ref="pionDetectorLucitePMT_physical"/>
-  </bordersurface>
 
 </structure>
 
