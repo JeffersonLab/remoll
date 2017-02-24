@@ -356,7 +356,7 @@
   </volume>
 
   <volume name="pionDetectorLuciteLightGuideShell_logical">
-    <materialref ref="Mylar"/>
+    <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuideShell_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLightGuideShellDet"/>
     <auxiliary auxtype="DetNo" auxvalue="4007"/>
