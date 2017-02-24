@@ -38,5 +38,5 @@ string(STRIP ${CERNLIB} CERNLIB)
 
 # executable
 add_executable(bgg_read.exe bgg_read.f)
-set_target_properties(bgg_read.exe PROPERTIES COMPILE_FLAGS "-m32" LINK_FLAGS "-m32")
+
 
