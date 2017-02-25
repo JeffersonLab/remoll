@@ -112,7 +112,7 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     evt->SetRate(0);
 
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
-	    G4ThreeVector(pf*sin(ph)*sin(th), pf*cos(ph)*sin(th), pf*cos(th)), 
+	    G4ThreeVector(pf*cos(ph)*sin(th), pf*sin(ph)*sin(th), pf*cos(th)), 
 	    piontypestr );
     return;
 
