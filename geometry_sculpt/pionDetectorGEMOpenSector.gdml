@@ -3,7 +3,7 @@
 
 <define>
   <constant name="N_P" value="2"/> <!-- also change in replicavol below -->
-  <constant name="PHI" value="360.0/N_P"/>
+  <constant name="PHI" value="360.0/2.0"/>
 
   <constant name="pionDetectorGEMRadius" value="1.5"/> <!-- m -->
   <constant name="pionDetectorGEMLength" value="0.1"/> <!-- m -->
@@ -48,8 +48,8 @@
       <replicate_along_axis>
         <direction phi="1"/>
         <!-- bug geant4.10.02.p02: unit must be a length, but mm == 1 -->
-        <width value="2.0*pi/N_P" unit="mm"/>
-        <offset value="-2.0*pi/N_P/2.0" unit="mm"/>
+        <width value="2.0*pi/2.0" unit="mm"/>
+        <offset value="-pi/2.0" unit="mm"/>
       </replicate_along_axis>
     </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>

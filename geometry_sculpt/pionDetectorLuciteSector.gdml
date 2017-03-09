@@ -8,7 +8,8 @@
   <constant name="pionDetectorLuciteRadius" value="1.90"/> <!-- m -->
   <constant name="pionDetectorLuciteLength" value="0.29"/> <!-- m -->
 
-  <constant name="pionDetectorLuciteAngle" value="0.0"/> <!-- deg -->
+<!--  <constant name="pionDetectorLuciteAngle" value="45.0"/> -->
+  <constant name="pionDetectorLuciteAngle" value="0.0"/>
 
   <constant name="pionDetectorLuciteInnerEdgeRadialPosition" value="95.0+12.5"/> <!-- cm -->
 </define>
@@ -36,8 +37,8 @@
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
       <file name="geometry_sculpt/pionDetectorLucite.gdml"/>
-      <position name="pionDetectorLucite_position" unit="cm" x="pionDetectorLuciteInnerEdgeRadialPosition" z="0.0"/>
-      <rotation name="pionDetectorLucite_rotation" unit="deg" y="-90.0+pionDetectorLuciteAngle" z="90" x="0"/>
+      <position name="pionDetectorLucite_position" unit="cm" x="pionDetectorLuciteInnerEdgeRadialPosition"/>
+      <rotation name="pionDetectorLucite_rotation" unit="deg" y="-90.0+pionDetectorLuciteAngle" z="90"/>
     </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
@@ -50,7 +51,7 @@
       <replicate_along_axis>
         <direction phi="1"/>
         <!-- bug geant4.10.02.p02: unit must be a length, but mm == 1 -->
-        <width value="2.0*pi/N_P" unit="mm"/>
+        <width value="2.0*pi/14.0" unit="mm"/>
         <offset value="-pi/14.0" unit="mm"/>
       </replicate_along_axis>
     </replicavol>
