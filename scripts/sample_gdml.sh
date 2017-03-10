@@ -20,8 +20,8 @@ sample_stream ()
     if [[ "$line" =~ $thisre ]] ; then
       mean=${BASH_REMATCH[1]}
       sigma=${BASH_REMATCH[2]}
-
       value=`perl -e "use Math::Random; print Math::Random::random_normal(1,$mean,$sigma);"`
+      echo "$value" 1>&2
       echo "$line" | sed -r "s/$thisre/$value/"
       continue
     fi
@@ -31,8 +31,8 @@ sample_stream ()
     if [[ "$line" =~ $thisre ]] ; then
       mean=${BASH_REMATCH[1]}
       half=${BASH_REMATCH[2]}
-
       value=`perl -e "use Math::Random; print Math::Random::random_uniform(1,$mean-$half,$mean+$half);"`
+      echo "$value" 1>&2
       echo "$line" | sed -r "s/$thisre/$value/"
       continue
     fi
@@ -66,7 +66,7 @@ sample_files () {
       # Sample arg as stream
       echo "sampling $arg..."
       mkdir -p `dirname $DIR/$arg`
-      cat $arg | sample_stream > $DIR/$arg
+      cat $arg | sample_stream > $DIR/$arg 2>> $DIR/sample_gdml.vars
       continue
     fi
 
