@@ -109,6 +109,8 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 	thishit->f3V = track->GetVertexPosition();
 	thishit->f3P = track->GetMomentum();
 
+        thishit->fTime = prestep->GetGlobalTime();
+
 	thishit->fP = track->GetMomentum().mag();
 	thishit->fE = track->GetTotalEnergy();
 	thishit->fM = track->GetDefinition()->GetPDGMass();
