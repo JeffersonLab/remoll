@@ -30,6 +30,8 @@ class remollGenericDetectorHit : public G4VHit {
 	// Position and momentum in lab coordinates
 	G4ThreeVector f3X;
 	G4ThreeVector f3P;
+        // Global time
+        G4double fTime;
 	// Total momentum, energy, mass
 	G4double fP, fE, fM;
 	// Origin
@@ -48,6 +50,7 @@ class remollGenericDetectorHit : public G4VHit {
         hit.mtrid= fmTrID;
         hit.pid  = fPID;
         hit.gen  = fGen;
+        hit.t  = fTime;
         hit.x  = f3X.x();
         hit.y  = f3X.y();
         hit.z  = f3X.z();
