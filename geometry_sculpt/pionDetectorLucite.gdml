@@ -2,7 +2,8 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <constant name="N_P" value="5"/> <!-- also change in replicavol below -->
+  <constant name="N_P" value="5"/> <!-- also change in replicavol or loop below -->
+  <variable name="i_p" value="1"/>
 
   <!--
     For enclosing volumes we merely scale up the actual volume by a small factor.
@@ -22,11 +23,11 @@
   <quantity name="pionDetectorLuciteInsideWidth"  type="length" value="31.0" unit="cm"/>
   <quantity name="pionDetectorLuciteOutsideWidth" type="length" value="41.0" unit="cm"/>
   <quantity name="pionDetectorLuciteHeight" type="length" value="25.0" unit="cm"/>
-  <quantity name="pionDetectorLuciteAngle" type="angle" value="-0.0" unit="deg"/>
+  <quantity name="pionDetectorLuciteAngle" type="angle" value="-22.5" unit="deg"/>
 
   <quantity name="pionDetectorLuciteLightGuideThickness" type="length" value="1.0" unit="mm"/>
-  <quantity name="pionDetectorLuciteLightGuideHeight" type="length" value="45.0" unit="cm"/>
-  <quantity name="pionDetectorLuciteLightGuideAngle" type="angle" value="-22.5" unit="deg"/>
+  <quantity name="pionDetectorLuciteLightGuideHeight" type="length" value="25.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteLightGuideAngle" type="angle" value="-45.0" unit="deg"/>
 
   <quantity name="pionDetectorLucitePMTThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLucitePMTDiameter" type="length" value="5.0*2.54" unit="cm"/>
@@ -385,6 +386,27 @@
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
+<!-- FIXME
+  Due to bug in geant4.10.03 it is not possible to have a mitered set of lucite
+  planes in a replicavol (also true in G4ReplicaVol, not restricted to gdml).
+  To get around the restriction we define AllPlanesGlue as a loop, not as a
+  replicavol for the time being. The original replicavol code is below for
+  future reference (and, hopefully, use).
+-->
+  <volume name="pionDetectorLuciteAllPlanesGlue_logical">
+    <materialref ref="Air"/>
+    <solidref ref="pionDetectorLuciteAllPlanesGlue_solid"/>
+    <loop for="i_p" to="N_P" step="1">
+      <physvol>
+        <volumeref ref="pionDetectorLuciteSinglePlaneGlue_logical"/>
+        <position name="pionDetectorLuciteSinglePlaneGlue_position[i_p]"
+               y="-(N_P-1)*(pionDetectorLuciteGlueThickness+pionDetectorLucitePlaneThickness)/2.0
+                  +(i_p-1)*(pionDetectorLuciteGlueThickness+pionDetectorLucitePlaneThickness)"/>
+      </physvol>
+    </loop>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+<!--
   <volume name="pionDetectorLuciteAllPlanesGlue_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteAllPlanesGlue_solid"/>
@@ -392,12 +414,13 @@
       <volumeref ref="pionDetectorLuciteSinglePlaneGlue_logical"/>
       <replicate_along_axis>
         <direction y="1"/>
-        <width value="pionDetectorLucitePlaneThickness+pionDetectorLuciteGlueThickness" unit="mm"/>
-        <offset value="(pionDetectorLuciteGlueThickness+pionDetectorLucitePlaneThickness)/2.0" unit="mm"/>
+        <width  value="(pionDetectorLucitePlaneThickness+pionDetectorLuciteGlueThickness)" unit="mm"/>
+        <offset value="(pionDetectorLucitePlaneThickness+pionDetectorLuciteGlueThickness)/2.0" unit="mm"/>
       </replicate_along_axis>
     </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
+-->
 
   <volume name="pionDetectorLuciteMylar_logical">
     <materialref ref="G4_MYLAR"/>
