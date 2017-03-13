@@ -21,7 +21,7 @@ sample_stream ()
       mean=${BASH_REMATCH[1]}
       sigma=${BASH_REMATCH[2]}
       value=`perl -e "use Math::Random; print Math::Random::random_normal(1,$mean,$sigma);"`
-      echo "$value" 1>&2
+      echo "$value # $line" 1>&2
       echo "$line" | sed -r "s/$thisre/$value/"
       continue
     fi
@@ -32,7 +32,7 @@ sample_stream ()
       mean=${BASH_REMATCH[1]}
       half=${BASH_REMATCH[2]}
       value=`perl -e "use Math::Random; print Math::Random::random_uniform(1,$mean-$half,$mean+$half);"`
-      echo "$value" 1>&2
+      echo "$value # $line" 1>&2
       echo "$line" | sed -r "s/$thisre/$value/"
       continue
     fi
