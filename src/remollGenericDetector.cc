@@ -1,4 +1,6 @@
 #include "remollGenericDetector.hh"
+
+#include "G4OpticalPhoton.hh"
 #include "G4SDManager.hh"
 
 remollGenericDetector::remollGenericDetector( G4String name, G4int detnum ) : G4VSensitiveDetector(name){
@@ -40,7 +42,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     // Ignore optical photons as hits (but still simulate them
     // so they can knock out electrons of the photocathode)
-    if (step->GetTrack()->GetDefinition()->GetParticleName() == "opticalphoton") {
+    if (step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) {
       //std::cout << "Return on optical photon" << std::endl;
       return false;
     }
