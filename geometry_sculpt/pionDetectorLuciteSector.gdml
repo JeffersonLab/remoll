@@ -34,7 +34,7 @@
     assembly. There are also angles that can be set independently for lucite and
     for lightguide.
   -->
-  <quantity name="pionDetectorLuciteAngle" type="angle" value="0.0" unit="deg"/>
+  <quantity name="pionDetectorLuciteSectorAngle" type="angle" value="0.0" unit="deg"/>
 
   <!--
     The lucite detector is placed radially in reference to the the center of the
@@ -51,12 +51,12 @@
   <tube name="pionDetectorLuciteSector_solid"
     rmin="0"
     rmax="1.00*pionDetectorLuciteRadius"
-    z="1.00*pionDetectorLuciteLength+0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteAngle)"
+    z="1.00*pionDetectorLuciteLength+0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"
     startphi="-PHI/4.0" deltaphi="PHI/2.0" aunit="deg"/>
   <tube name="pionDetectorLuciteAllSectors_solid"
     rmin="0"
     rmax="1.01*pionDetectorLuciteRadius"
-    z="1.01*pionDetectorLuciteLength+0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteAngle)"
+    z="1.01*pionDetectorLuciteLength+0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"
     startphi="-PHI/4.0" deltaphi="N_P*PHI/2.0" aunit="deg"/>
 </solids>
 
@@ -69,8 +69,8 @@
       <file name="geometry_sculpt/pionDetectorLucite.gdml"/>
       <position name="pionDetectorLucite_position"
         x="pionDetectorLuciteInnerEdgeRadialPosition"
-        z="-0.2*pionDetectorLuciteLength-0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteAngle)"/>
-      <rotation name="pionDetectorLucite_rotation" unit="deg" y="-90.0+pionDetectorLuciteAngle" z="90"/>
+        z="-0.2*pionDetectorLuciteLength-0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"/>
+      <rotation name="pionDetectorLucite_rotation" unit="deg" y="-90.0+pionDetectorLuciteSectorAngle" z="90"/>
     </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
