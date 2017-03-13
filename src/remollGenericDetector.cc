@@ -47,7 +47,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // Ignore optical photons as hits (but still simulate them
     // so they can knock out electrons of the photocathode)
     if (! fDetectOpticalPhotons
-        && step->GetTrack()->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition()) {
+        && step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) {
       return false;
     }
 
@@ -58,14 +58,14 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
       return false;
     }
 
+    // Get the step point and track
+    G4StepPoint *point = step->GetPreStepPoint();
+    G4Track     *track = step->GetTrack();
+
     // Get touchable volume info
-    G4TouchableHistory *hist = 
-	(G4TouchableHistory*)(step->GetPostStepPoint()->GetTouchable());
+    G4TouchableHistory *hist = (G4TouchableHistory*)(point->GetTouchable());
     //G4int  copyID = hist->GetVolume(1)->GetCopyNo();//return the copy id of the parent volume
     G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
-
-    G4StepPoint *point = step->GetPostStepPoint();
-    G4Track     *track = step->GetTrack();
 
     G4double edep = step->GetTotalEnergyDeposit();
 
