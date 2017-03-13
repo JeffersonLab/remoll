@@ -47,14 +47,14 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
       return false;
     }
 
+    // Get the step point and track
+    G4StepPoint *point = step->GetPreStepPoint();
+    G4Track     *track = step->GetTrack();
+
     // Get touchable volume info
-    G4TouchableHistory *hist = 
-	(G4TouchableHistory*)(step->GetPreStepPoint()->GetTouchable());
+    G4TouchableHistory *hist = (G4TouchableHistory*)(point->GetTouchable());
     //G4int  copyID = hist->GetVolume(1)->GetCopyNo();//return the copy id of the parent volume
     G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
-
-    G4StepPoint *prestep = step->GetPreStepPoint();
-    G4Track     *track   = step->GetTrack();
 
     G4double edep = step->GetTotalEnergyDeposit();
 
@@ -62,7 +62,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // that have just entered our boundary
     badhit = true;
     if( track->GetCreatorProcess() == 0 ||
-	    (prestep->GetStepStatus() == fGeomBoundary && fTrackSecondaries)
+	    (point->GetStepStatus() == fGeomBoundary && fTrackSecondaries)
       ){
 	badhit = false;
     }
@@ -100,7 +100,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     if( !badhit ){
 	// Hit
-	thishit->f3X = prestep->GetPosition();
+	thishit->f3X = point->GetPosition();
 	thishit->f3V = track->GetVertexPosition();
 	thishit->f3P = track->GetMomentum();
 
