@@ -28,3 +28,6 @@ map_directory
 
 #ignore dot files
 *.dot
+
+#sample_gdml output
+sample_gdml.*
