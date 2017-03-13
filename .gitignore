@@ -31,3 +31,6 @@ map_directory
 
 #sample_gdml output
 sample_gdml.*
+
+#ignore log files
+*.log
