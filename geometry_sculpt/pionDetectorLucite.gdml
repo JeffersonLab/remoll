@@ -208,6 +208,7 @@
     deltaphi="360.0" aunit="deg"/>
 
   <trap name="pionDetectorLuciteGlue_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteAngle" phi="90.0*deg"
     x1="pionDetectorLuciteInsideWidth"
     x2="pionDetectorLuciteInsideWidth"
@@ -217,6 +218,7 @@
     y2="pionDetectorLuciteGlueThickness"
     z="pionDetectorLuciteHeight"/>
   <trap name="pionDetectorLuciteSinglePlane_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteAngle" phi="90.0*deg"
     x1="pionDetectorLuciteInsideWidth"
     x2="pionDetectorLuciteInsideWidth"
@@ -226,6 +228,7 @@
     y2="pionDetectorLucitePlaneThickness"
      z="pionDetectorLuciteHeight"/>
   <trap name="pionDetectorLuciteSinglePlaneGlue_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteAngle" phi="90.0*deg"
     x1="pionDetectorLuciteInsideWidth"
     x2="pionDetectorLuciteInsideWidth"
@@ -236,6 +239,7 @@
      z="pionDetectorLuciteHeight"/>
 
   <trap name="pionDetectorLuciteAllPlanesGlue_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteAngle" phi="90.0*deg"
     x1="pionDetectorLuciteInsideWidth"
     x2="pionDetectorLuciteInsideWidth"
@@ -245,6 +249,7 @@
     y2="N_P*pionDetectorLucitePlaneThickness+N_P*pionDetectorLuciteGlueThickness"
      z="pionDetectorLuciteHeight"/>
   <trap name="pionDetectorLuciteAllPlanesGlueMylar_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteAngle" phi="90.0*deg"
     x1="pionDetectorLuciteInsideWidth+2.0*pionDetectorLuciteMylarThickness"
     x2="pionDetectorLuciteInsideWidth+2.0*pionDetectorLuciteMylarThickness"
@@ -254,6 +259,7 @@
     y2="N_P*pionDetectorLucitePlaneThickness+N_P*pionDetectorLuciteGlueThickness+2.0*pionDetectorLuciteMylarThickness"
      z="pionDetectorLuciteHeight+pionDetectorLuciteMylarThickness"/>
   <trap name="pionDetectorLuciteAllPlanesGlueMylarScaled_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteAngle" phi="90.0*deg"
     x1="SCALE*(pionDetectorLuciteInsideWidth+2.0*pionDetectorLuciteMylarThickness)"
     x2="SCALE*(pionDetectorLuciteInsideWidth+2.0*pionDetectorLuciteMylarThickness)"
@@ -272,6 +278,7 @@
   </subtraction>
 
   <trap name="pionDetectorLuciteLightGuideInside_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteLightGuideAngle" phi="90.0*deg"
     x1="pionDetectorLuciteOutsideWidth"
     x2="pionDetectorLuciteOutsideWidth"
@@ -281,6 +288,7 @@
     y2="pionDetectorLucitePMTDiameter"
      z="pionDetectorLuciteLightGuideHeight"/>
   <trap name="pionDetectorLuciteLightGuideOutside_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteLightGuideAngle" phi="90.0*deg"
     x1="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness"
     x2="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness"
@@ -291,6 +299,7 @@
      z="pionDetectorLuciteLightGuideHeight"/>
 
   <trap name="pionDetectorLuciteLightGuideOutsidePMT_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteLightGuideAngle" phi="90.0*deg"
     x1="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness"
     x2="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness"
@@ -300,6 +309,7 @@
     y2="pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
      z="pionDetectorLuciteLightGuideHeight+pionDetectorLucitePMTThickness"/>
   <trap name="pionDetectorLuciteLightGuideOutsidePMTScaled_solid"
+    alpha1="0" alpha2="0"
     theta="pionDetectorLuciteLightGuideAngle" phi="90.0*deg"
     x1="SCALE*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness)"
     x2="SCALE*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness)"
