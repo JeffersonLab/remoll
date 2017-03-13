@@ -32,6 +32,19 @@ class remollGenericDetector : public G4VSensitiveDetector {
 	virtual G4bool ProcessHits(G4Step*,G4TouchableHistory*);
 	virtual void EndOfEvent(G4HCofThisEvent*);
 
+	virtual void SetDetectorType(G4String det_type) {
+          if (det_type.compareTo("charged",G4String::ignoreCase) == 0) {
+            fDetectOpticalPhotons = false;
+            fDetectLowEnergyNeutrals = false;
+          }
+	  if (det_type.compareTo("opticalphoton",G4String::ignoreCase) == 0) {
+	    fDetectOpticalPhotons = true;
+	  }
+	  if (det_type.compareTo("lowenergyneutral",G4String::ignoreCase) == 0) {
+	    fDetectLowEnergyNeutrals = true;
+	  }
+	}
+
     private:
 	remollGenericDetectorHitsCollection *fHitColl;
 	remollGenericDetectorSumCollection  *fSumColl;
@@ -39,8 +52,10 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
 	std::map<int, remollGenericDetectorSum *> fSumMap;
 
-	G4bool fTrackOpticalPhotons;
-	G4bool fTrackSecondaries;
+        G4bool fDetectSecondaries;
+	G4bool fDetectOpticalPhotons;
+        G4bool fDetectLowEnergyNeutrals;
+
 	G4int fDetNo;
 
 };

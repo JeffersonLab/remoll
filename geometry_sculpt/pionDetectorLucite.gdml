@@ -447,6 +447,8 @@
     <solidref ref="pionDetectorLucitePMT_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLucitePMT"/>
     <auxiliary auxtype="DetNo" auxvalue="4000"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     <auxiliary auxtype="Color" auxvalue="White"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>

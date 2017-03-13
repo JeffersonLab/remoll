@@ -225,7 +225,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 
       for( vit  = (*iter).second.begin(); vit != (*iter).second.end(); vit++) {
 	  if ((*vit).type == "SensDet") {
-	      G4String det_type = (*vit).value;
+	      G4String det_name = (*vit).value;
 
 	      // Also allow specification of det number ///////////////////
 	      int det_no = -1;
@@ -249,6 +249,14 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 		  det_no = k;
 		  useddetnums[k] = true;
 	      }
+
+	      // Also allow specification of det type ///////////////////
+              G4String det_type = -1;
+              for( nit  = (*iter).second.begin(); nit != (*iter).second.end(); nit++) {
+                  if ((*nit).type == "DetType") {
+                      det_type = (*nit).value;
+                  }
+              }
 	      /////////////////////////////////////////////////////////////
 
 	      retval = snprintf(detectorname, __DET_STRLEN,"remoll/det_%d", det_no);
@@ -258,11 +266,14 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	      thisdet = SDman->FindSensitiveDetector(detectorname);
 
 	      if( thisdet == 0 ) {
-		  thisdet = new remollGenericDetector(detectorname, det_no);
-		  G4cout << "  Creating sensitive detector " << det_type
+	          remollGenericDetector* newdet
+	              = new remollGenericDetector(detectorname, det_no);
+		  newdet->SetDetectorType(det_type);
+                  thisdet = newdet;
+		  G4cout << "  Creating sensitive detector " << det_name
 		      << " for volume " << myvol->GetName()
 		      <<  G4endl << G4endl;
-		  SDman->AddNewDetector(thisdet);
+		  SDman->AddNewDetector(newdet);
 	      }
 
 	      myvol->SetSensitiveDetector(thisdet);

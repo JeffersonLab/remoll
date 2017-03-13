@@ -1,4 +1,6 @@
 #include "remollGenericDetector.hh"
+
+#include "G4OpticalPhoton.hh"
 #include "G4SDManager.hh"
 
 remollGenericDetector::remollGenericDetector( G4String name, G4int detnum ) : G4VSensitiveDetector(name){
@@ -7,8 +9,9 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum ) : G4
     fDetNo = detnum;
     assert( fDetNo > 0 );
 
-    fTrackSecondaries = true;
-    fTrackOpticalPhotons = true;
+    fDetectSecondaries = true;
+    fDetectOpticalPhotons = false;
+    fDetectLowEnergyNeutrals = false;
 
     sprintf(colname, "genhit_%d", detnum);
     collectionName.insert(G4String(colname));
@@ -18,6 +21,9 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum ) : G4
 
     fHCID = -1;
     fSCID = -1;
+
+    fHitColl = 0;
+    fSumColl = 0;
 }
 
 remollGenericDetector::~remollGenericDetector(){
@@ -40,26 +46,26 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     // Ignore optical photons as hits (but still simulate them
     // so they can knock out electrons of the photocathode)
-    if (!fTrackOpticalPhotons && step->GetTrack()->GetDefinition()->GetParticleName() == "opticalphoton") {
-      //G4cout << "Return on optical photon" << G4endl;
+    if (! fDetectOpticalPhotons
+        && step->GetTrack()->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition()) {
       return false;
     }
 
     // Ignore neutral particles below 0.1 MeV
     G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
-    if (!fTrackOpticalPhotons && charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
-      //G4cout << "Return on charge == 0 and low energy " << G4endl;
+    if (! fDetectLowEnergyNeutrals
+        && charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
       return false;
     }
 
     // Get touchable volume info
     G4TouchableHistory *hist = 
-	(G4TouchableHistory*)(step->GetPreStepPoint()->GetTouchable());
+	(G4TouchableHistory*)(step->GetPostStepPoint()->GetTouchable());
     //G4int  copyID = hist->GetVolume(1)->GetCopyNo();//return the copy id of the parent volume
     G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
 
-    G4StepPoint *prestep = step->GetPreStepPoint();
-    G4Track     *track   = step->GetTrack();
+    G4StepPoint *point = step->GetPostStepPoint();
+    G4Track     *track = step->GetTrack();
 
     G4double edep = step->GetTotalEnergyDeposit();
 
@@ -67,7 +73,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // that have just entered our boundary
     badhit = true;
     if( track->GetCreatorProcess() == 0 ||
-	(fTrackSecondaries && prestep->GetStepStatus() == fGeomBoundary)
+	(fDetectSecondaries && point->GetStepStatus() == fGeomBoundary)
       ){
 	badhit = false;
     }
@@ -105,11 +111,11 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     if( !badhit ){
 	// Hit
-	thishit->f3X = prestep->GetPosition();
+	thishit->f3X = point->GetPosition();
 	thishit->f3V = track->GetVertexPosition();
 	thishit->f3P = track->GetMomentum();
 
-        thishit->fTime = prestep->GetGlobalTime();
+        thishit->fTime = point->GetGlobalTime();
 
 	thishit->fP = track->GetMomentum().mag();
 	thishit->fE = track->GetTotalEnergy();
