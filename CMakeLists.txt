@@ -23,8 +23,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
 
 # Update header file
-add_custom_target( gitinfo ALL COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" )
-
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" )
 
 # this is to ensure we find the header we need
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
@@ -99,16 +98,16 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 # NB: headers are included so they will show up in IDEs
 #
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
 file(GLOB libsources ${PROJECT_SOURCE_DIR}/src/remollRunData.cc ${PROJECT_SOURCE_DIR}/src/remollTextFile.cc)
-file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
+file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(remoll remoll.cc ${sources} ${headers} remollDict.cxx)
-add_library(remollroot SHARED ${libsources} ${libheaders} remollDict.cxx)
+add_executable(remoll remoll.cc ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh ${sources} ${headers} remollDict.cxx)
+add_library(remollroot SHARED ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh ${libsources} ${libheaders} remollDict.cxx)
 target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 
