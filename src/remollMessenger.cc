@@ -16,6 +16,7 @@
 #include "remollSteppingAction.hh"
 #include "remollGenPion.hh"
 #include "remollGenFlat.hh"
+#include "remollGenExternal.hh"
 #include "remollGenLUND.hh" //Dominic Lunde linking GenLUND
 
 #include "G4UImanager.hh"
@@ -105,6 +106,14 @@ remollMessenger::remollMessenger(){
     pionCmd = new G4UIcmdWithAString("/remoll/piontype", this);
     pionCmd->SetGuidance("Generate pion type");
     pionCmd->SetParameterName("piontype", false);
+
+    genExternalFileCmd = new G4UIcmdWithAString("/remoll/externalfile",this);
+    genExternalFileCmd->SetGuidance("External generator event filename");
+    genExternalFileCmd->SetParameterName("filename", false);
+
+    genExternalDetIDCmd = new G4UIcmdWithAnInteger("/remoll/externaldetid",this);
+    genExternalDetIDCmd->SetGuidance("External generator detector ID");
+    genExternalDetIDCmd->SetParameterName("ID", false);
 
     thminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thmin",this);
     thminCmd->SetGuidance("Minimum generation angle");
@@ -424,6 +433,27 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	} else{
 		G4cerr << __FILE__ <<  "line" << __LINE__ << ": Can't set pion type for non-pion generator" << G4endl;
 	}
+    }
+
+    if( cmd == genExternalFileCmd ){
+      remollVEventGen* agen = fprigen->GetGenerator();
+      remollGenExternal* thegen = dynamic_cast<remollGenExternal*>(agen);
+      if (thegen) {
+        thegen->SetGenExternalFile(newValue);
+      } else {
+        G4cerr << __FILE__ <<  "line" << __LINE__ << ": Can't set external file name for non-external generator" << G4endl;
+      }
+    }
+
+    if( cmd == genExternalDetIDCmd ){
+      remollVEventGen* agen = fprigen->GetGenerator();
+      remollGenExternal* thegen = dynamic_cast<remollGenExternal*>(agen);
+      if (thegen) {
+        thegen->SetGenExternalDetID(
+            genExternalDetIDCmd->GetNewIntValue(newValue));
+      } else {
+        G4cerr << __FILE__ <<  "line" << __LINE__ << ": Can't set external detector ID for non-external generator" << G4endl;
+      }
     }
 
     if( cmd == EminCmd ){
