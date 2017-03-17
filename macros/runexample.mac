@@ -47,6 +47,9 @@
 #/remoll/gen inelasticAl
 #/remoll/gen quasielasticAl
 #/remoll/gen elasticAl
+#/remoll/gen external
+#/remoll/externalfile remollout.root
+#/remoll/externaldetid 4051
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
