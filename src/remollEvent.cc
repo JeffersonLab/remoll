@@ -17,8 +17,8 @@ void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4St
     fPartPos.push_back(pos);
     fPartLastPos.push_back(pos); // NEW Initialize the previous position to be the same as inition pos
     fPartLastMom.push_back(mom); // NEW Initialize the previous momentum to be the same as initial mom
-    fPartDeltaE = 0.0;  // NEW Initialize to 0 (make sure the units are working here)
-    fPartDeltaTh = 0.0; // NEW Initialize to 0 (make sure the units are working here)
+    fPartDeltaE.push_back(0.0);  // NEW Initialize to 0 (make sure the units are working here)
+    fPartDeltaTh.push_back(0.0); // NEW Initialize to 0 (make sure the units are working here)
     fPartMom.push_back(mom);
     fPartRealMom.push_back(mom);
 

@@ -44,8 +44,8 @@ class remollEvent {
 	std::vector<G4ThreeVector>    fPartMom;  // Generated direction (no ms)
 	std::vector<G4ThreeVector>    fPartLastMom;  // NEW Previous step's direction (no ms)
 	std::vector<G4ThreeVector>    fPartLastPos;  // NEW Previous step's position
-	G4double		      fPartDeltaE;   // NEW Previous step's Delta Energy
-	G4double		      fPartDeltaTh;  // NEW Previous step's Delta Theta
+	std::vector<G4double>	      fPartDeltaE;   // NEW Previous step's Delta Energy
+	std::vector<G4double>	      fPartDeltaTh;  // NEW Previous step's Delta Theta
 	std::vector<G4ThreeVector>    fPartRealMom;  // Direction to go to Geant4
 	std::vector<G4ParticleDefinition *> fPartType;
 

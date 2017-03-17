@@ -6,7 +6,9 @@
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
 #include "G4SteppingManager.hh"
+#include "G4PhysicalConstants.hh"
 #include "remollEvent.hh" // The remollEvent.hh include the fPartLastMom definition
+#include "remollIO.hh" // let the IO see stepping action
 #include <math.h>
 
 remollSteppingAction::remollSteppingAction()
@@ -20,21 +22,23 @@ remollSteppingAction::remollSteppingAction()
 void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
     G4Track* fTrack = aStep->GetTrack();
     G4Material* material = fTrack->GetMaterial();
+    G4double mass = fTrack->GetDefinition()->GetPDGMass();
+
 
     // Check the last momentum against the current momentum
     G4ThreeVector mom = fTrack->GetMomentum();
     
-    Double_t deltaAngle;
-    Double_t deltaEnergy;
+    double deltaAngle;
+    double deltaEnergy;
 
-    deltaEnergy = sqrt(((sqrt(((fTrack->GetParticleMass())**2)+((mom.mag())**2)))-(sqrt(((fTrack->GetParticleMass())**2)+((fPartLastMom().mag())**2))))**2);
+    deltaEnergy = abs(sqrt((mass*mass)+(mom.mag()*mom.mag()))-(sqrt((mass*mass)+(fPartLastMom().mag()*fPartLastMom().mag()))));
     deltaAngle = acos(((mom.x()*fPartLastMom.x())+(mom.y()*fPartLastMom.y())+(mom.z()*fPartLastMom.z()))/(mom().mag()*fPartLastMom().mag()))*(180./pi);
 
     // IF Statements dealing with whether these delta E and Angle are sufficient to warrant storing the current position and deltas in temporary storage for the IO to pick up or get replaced further along in the steppingAction.
     // Make these cuts dynamical and determined by macros
-    if( (deltaEnergy/__E_UNIT > 0.01) && (deltaAngle/deg > 1.0) ) {
+    if( (deltaEnergy > 0.01) && (deltaAngle > 1.0) ) { // Consider adding in material based cuts as well
 	fPartDeltaE = deltaEnergy;
-	fPartDeltaTh = deltaAndle;
+	fPartDeltaTh = deltaAngle;
 	fPartLastPos = fTrack->GetPosition();
     }
 

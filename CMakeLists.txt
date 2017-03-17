@@ -145,8 +145,8 @@ set(REMOLL_SCRIPTS
     geometry_sculpt_less_hybshld/hybridDaughter.gdml
     geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld.gdml
     geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld_roof.gdml
-    geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld_roof_less_1.gdml
-    geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld_roof_less_2.gdml
+    geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld_roof_smaller_1.gdml
+    geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld_roof_smaller_2.gdml
     geometry_sculpt_less_hybshld/targetDaughter.gdml
     geometry_sculpt_less_hybshld/upstreamDaughter.gdml
     geometry_sculpt_less_hybshld/hallDaughter.gdml

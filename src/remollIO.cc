@@ -5,7 +5,8 @@
 #include <TClonesArray.h>
 
 #include "G4ParticleDefinition.hh"
-#include "PhysicalConstants.h"
+#include "G4PhysicalConstants.hh"
+//#include "PhysicalConstants.h"
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
@@ -220,15 +221,6 @@ void remollIO::SetEventData(remollEvent *ev){
     fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
     fEvThCoM  = ev->fThCoM/deg; // specify this in degrees over anything else
 
-    // NEW Placeholders
-  //  Double_t lastpx;
-  //  Double_t lastpy;
-  //  Double_t lastpz;
-  //  Double_t lastpmag;
-  //  Double_t lastpdot;
-  //  Double_t deltaAngle;
-  //  Double_t deltaEnergy;
-  //  Double_t particleMass;
 
     int idx;
     for( idx = 0; idx < n; idx++ ){
