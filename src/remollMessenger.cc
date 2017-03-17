@@ -103,9 +103,13 @@ remollMessenger::remollMessenger(){
     LUNDFileCmd->SetGuidance("LUND Input filename");
     LUNDFileCmd->SetParameterName("filename", false);
 
-    pionCmd = new G4UIcmdWithAString("/remoll/piontype", this);
-    pionCmd->SetGuidance("Generate pion type");
-    pionCmd->SetParameterName("piontype", false);
+    pionTypeCmd = new G4UIcmdWithAString("/remoll/piontype", this);
+    pionTypeCmd->SetGuidance("Generate pion type");
+    pionTypeCmd->SetParameterName("piontype", false);
+
+    flatTypeCmd = new G4UIcmdWithAString("/remoll/flattype", this);
+    flatTypeCmd->SetGuidance("Flat generator particle type");
+    flatTypeCmd->SetParameterName("type", false);
 
     genExternalFileCmd = new G4UIcmdWithAString("/remoll/externalfile",this);
     genExternalFileCmd->SetGuidance("External generator event filename");
@@ -416,7 +420,7 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     }
 
 
-    if( cmd == pionCmd ){ 
+    if( cmd == pionTypeCmd ){ 
 	remollVEventGen *agen = fprigen->GetGenerator();
 	remollGenPion *apion = dynamic_cast<remollGenPion *>(agen);
 	if( apion ){
@@ -433,6 +437,16 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	} else{
 		G4cerr << __FILE__ <<  "line" << __LINE__ << ": Can't set pion type for non-pion generator" << G4endl;
 	}
+    }
+
+    if( cmd == flatTypeCmd ){
+        remollVEventGen *agen = fprigen->GetGenerator();
+        remollGenFlat *thegen = dynamic_cast<remollGenFlat*>(agen);
+        if (thegen) {
+          thegen->SetParticleName(newValue);
+        } else {
+          G4cerr << __FILE__ <<  "line" << __LINE__ << ": Can't set particle type for generator" << G4endl;
+        }
     }
 
     if( cmd == genExternalFileCmd ){
