@@ -466,7 +466,7 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 
     if( cmd == EmaxCmd ){
 	G4double en = EmaxCmd->GetNewDoubleValue(newValue);
-	remollGenFlat *agen = dynamic_cast<remollGenFlat *>(fprigen->GetGenerator());
+	remollVEventGen *agen = fprigen->GetGenerator();
 	if( agen ){
 	    agen->fE_max = en;
 	}
