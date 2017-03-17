@@ -5,6 +5,7 @@
 #include "TObject.h"
 #include "G4Run.hh"
 #include "remolltypes.hh"
+#include "PhysicalConstants.h"
 
 #include "G4String.hh"
 
@@ -100,6 +101,18 @@ class remollIO {
 	Double_t fEvPart_tPy[__IO_MAXHIT];
 	Double_t fEvPart_tPz[__IO_MAXHIT];
 
+	// new tracking Last Significant Non-Detector Hit information
+
+	Double_t fEvPart_Lx[__IO_MAXHIT];
+	Double_t fEvPart_Ly[__IO_MAXHIT];
+	Double_t fEvPart_Lz[__IO_MAXHIT];
+	
+//	Double_t fEvPart_LPx[__IO_MAXHIT];
+//	Double_t fEvPart_LPy[__IO_MAXHIT];
+//	Double_t fEvPart_LPz[__IO_MAXHIT];
+	
+	Double_t fEvPart_LdE[__IO_MAXHIT];
+	Double_t fEvPart_LdTh[__IO_MAXHIT];
 
 	//  GenericDetectorHit
     public:
@@ -134,6 +147,7 @@ class remollIO {
 	Double_t fGenDetHit_Edep[__IO_MAXHIT];
 
 	Int_t fCollCut;
+
 
 	//  GenericDetectorSum
     public:

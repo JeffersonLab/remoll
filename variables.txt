@@ -26,6 +26,9 @@ ev.p[xyz]	Particle initial momentum components, lab frame [GeV]
 ev.th		Particle initial polar angle [rad]
 ev.ph		Particle initial azimuthal angle [rad]
 ev.tp[xyz]	Particle "true" momentum (if no multiple scattering effects)
+ev.l[xyz]	Last significant interaction vertex of particles
+ev.ldE[xyz]	Last significant interaction vertex's change of energy
+ev.ldTh[xyz]	Last significant interaction vertex's change of angle
 
 beam data
 bm.[xyz]	Beam interaction vertex, lab frame [m]

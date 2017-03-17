@@ -5,6 +5,7 @@
 #include <TClonesArray.h>
 
 #include "G4ParticleDefinition.hh"
+#include "PhysicalConstants.h"
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
@@ -16,6 +17,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
+#include <math.h>
 
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMElement.hpp>
@@ -68,7 +70,7 @@ void remollIO::InitializeTree(){
     fTree->Branch("ev.thcom", &fEvThCoM,  "ev.thcom/D");
     fTree->Branch("ev.beamp",  &fEvBeamP,   "ev.beamp/D");
 
-    fTree->Branch("ev.npart", &fNEvPart   ,     "ev.npart/I");
+    fTree->Branch("ev.npart", &fNEvPart   ,   "ev.npart/I");
     fTree->Branch("ev.pid",   &fEvPID,      "ev.pid[ev.npart]/I");
     fTree->Branch("ev.vx",    &fEvPart_X,   "ev.vx[ev.npart]/D");
     fTree->Branch("ev.vy",    &fEvPart_Y,   "ev.vy[ev.npart]/D");
@@ -77,11 +79,21 @@ void remollIO::InitializeTree(){
     fTree->Branch("ev.px",    &fEvPart_Px,  "ev.px[ev.npart]/D");
     fTree->Branch("ev.py",    &fEvPart_Py,  "ev.py[ev.npart]/D");
     fTree->Branch("ev.pz",    &fEvPart_Pz,  "ev.pz[ev.npart]/D");
-    fTree->Branch("ev.th",    &fEvPart_Th,     "ev.th[ev.npart]/D");
-    fTree->Branch("ev.ph",    &fEvPart_Ph,     "ev.ph[ev.npart]/D");
+    fTree->Branch("ev.th",    &fEvPart_Th,    "ev.th[ev.npart]/D");
+    fTree->Branch("ev.ph",    &fEvPart_Ph,    "ev.ph[ev.npart]/D");
     fTree->Branch("ev.tpx",    &fEvPart_tPx,  "ev.tpx[ev.npart]/D");
     fTree->Branch("ev.tpy",    &fEvPart_tPy,  "ev.tpy[ev.npart]/D");
     fTree->Branch("ev.tpz",    &fEvPart_tPz,  "ev.tpz[ev.npart]/D");
+
+
+    fTree->Branch("ev.lx",    &fEvPart_Lx,   "ev.lx[ev.npart]/D");
+    fTree->Branch("ev.ly",    &fEvPart_Ly,   "ev.ly[ev.npart]/D");
+    fTree->Branch("ev.lz",    &fEvPart_Lz,   "ev.lz[ev.npart]/D");
+//    fTree->Branch("ev.lpx",  &fEvPart_LPx,   "ev.lpx[ev.npart]/D");
+//    fTree->Branch("ev.lpy",  &fEvPart_LPy,   "ev.lpy[ev.npart]/D");
+//    fTree->Branch("ev.lpz",  &fEvPart_LPz,   "ev.lpz[ev.npart]/D");
+    fTree->Branch("ev.ldE",   &fEvPart_LdE,  "ev.ldE[ev.npart]/D");
+    fTree->Branch("ev.ldTh",  &fEvPart_LdTh, "ev.ldTh[ev.npart]/D");
 
     fTree->Branch("bm.x",    &fBmX,  "bm.x/D");
     fTree->Branch("bm.y",    &fBmY,  "bm.y/D");
@@ -208,6 +220,16 @@ void remollIO::SetEventData(remollEvent *ev){
     fEvW2     = ev->fW2/__E_UNIT/__E_UNIT;
     fEvThCoM  = ev->fThCoM/deg; // specify this in degrees over anything else
 
+    // NEW Placeholders
+  //  Double_t lastpx;
+  //  Double_t lastpy;
+  //  Double_t lastpz;
+  //  Double_t lastpmag;
+  //  Double_t lastpdot;
+  //  Double_t deltaAngle;
+  //  Double_t deltaEnergy;
+  //  Double_t particleMass;
+
     int idx;
     for( idx = 0; idx < n; idx++ ){
 	fEvPID[idx] = ev->fPartType[idx]->GetPDGEncoding();
@@ -227,6 +249,31 @@ void remollIO::SetEventData(remollEvent *ev){
 	fEvPart_tPx[idx] = ev->fPartMom[idx].x()/__E_UNIT;
 	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
 	fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
+
+	// NEW Placeholder temp variables to hold the last momentum and do further calculations
+	//lastpx = ev->fPartLastMom[idx].x()/__E_UNIT;
+	//lastpy = ev->fPartLastMom[idx].y()/__E_UNIT;
+	//lastpz = ev-fPartLastMom[idx].z()/__E_UNIT;
+	//lastpmag = sqrt((lastpx*lastpx)+(lastpy*pastpy)+(lastpz*lastpz));
+	//lastpdot = (lastpx*lastpx)+(lastpy*pastpy)+(lastpz*lastpz);
+
+	//particleMass = ev->fPartType[idx]->GetPDGMass()/__E_UNIT; // BE SURE TO CHECK MASS UNITS
+	//deltaAngle = acos()*(180./pi); //make sure pi works correctly, imported from PhysicalConstants.h
+	//deltaEnergy = ;
+
+	///////////////////////
+	// complicated if statements to calculate the delta E and delta Theta for a given event, and determin
+	// if they are large enough and then record them as well as the ev.l[xyz] information 
+	//
+	
+	fEvPart_LdE[idx] = ev->fPartDeltaE[idx]/__E_UNIT;
+	fEvPart_LdTh[idx] = ev->fPartDeltaTh[idx]/deg;
+	fEvPart_Lx[idx] = ev->fPartLastPos[idx].x()/__L_UNIT;
+	fEvPart_Ly[idx] = ev->fPartLastPos[idx].y()/__L_UNIT;
+	fEvPart_Lz[idx] = ev->fPartLastPos[idx].z()/__L_UNIT;
+	//
+	///////////////////////
+	
     }
 
     /////////////////////////////////////////////////
