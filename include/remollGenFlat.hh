@@ -12,15 +12,17 @@
 
 class remollGenFlat : public remollVEventGen {
     public:
-	 remollGenFlat();
-	~remollGenFlat();
+	remollGenFlat();
+	virtual ~remollGenFlat();
 
-	double fE_max;
+	void SetParticleName(const G4String& name) {
+	  fParticleName = name;
+	}
 
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
 
-
+        G4String fParticleName;
 };
 
 #endif//__REMOLLGENMOLLER_HH 
