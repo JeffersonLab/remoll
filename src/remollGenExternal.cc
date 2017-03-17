@@ -60,13 +60,15 @@ void remollGenExternal::SetGenExternalFile(const G4String& filename)
   }
 
   // Initialize tree
-  Int_t status_hit = fTree->SetBranchAddress("hit", &fHit);
-  if (! status_hit) {
+  if (fTree->GetBranch("hit")) {
+    fTree->SetBranchAddress("hit", &fHit);
+  } else {
     G4cerr << "Could not find branch hit in event file " << filename << G4endl;
     return;
   }
-  Int_t status_ev = fTree->SetBranchAddress("ev", &fEvent);
-  if (! status_ev) {
+  if (fTree->GetBranch("ev")) {
+    fTree->SetBranchAddress("ev", &fEvent);
+  } else {
     G4cerr << "Could not find branch ev in event file " << filename << G4endl;
     return;
   }
@@ -80,37 +82,45 @@ void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
     return;
   }
 
-  // Read next event from tree and increment
-  fTree->GetEntry(fEntry++);
-  // Keep simulating the last event
-  if (fEntry >= fEntries) {
-    fEntry--;
-    G4cerr << "Reached last event and will keep simulating it..." << G4endl;
-  }
+  // Loop until we find at least one event with some particles
+  int number_of_particles = 0;
+  do {
 
-  // Weighting completely handled by event file
-  evt->SetEffCrossSection(fEvent->xs);
-  evt->SetQ2(fEvent->Q2);
-  evt->SetW2(fEvent->W2);
-  evt->SetAsymmetry(fEvent->A);
+    // Read next event from tree and increment
+    fTree->GetEntry(fEntry++);
+    // Keep simulating the last event
+    if (fEntry >= fEntries) {
+      fEntry--;
+      G4cerr << "Reached last event and will keep simulating it..." << G4endl;
+    }
 
-  // Loop over all hits in this event
-  for (size_t i = 0; i < fHit->size(); i++) {
-    // Create local copy of this hit
-    remollGenericDetectorHit_t hit = fHit->at(i);
+    // Weighting completely handled by event file
+    evt->SetEffCrossSection(fEvent->xs);
+    evt->SetQ2(fEvent->Q2);
+    evt->SetW2(fEvent->W2);
+    evt->SetAsymmetry(fEvent->A);
 
-    // Select only the requested detector ID
-    if (hit.det != fDetectorID) continue;
+    // Loop over all hits in this event
+    for (size_t i = 0; i < fHit->size(); i++) {
+      // Create local copy of this hit
+      remollGenericDetectorHit_t hit = fHit->at(i);
 
-    // Get particle name
-    G4ParticleTable* particletable = G4ParticleTable::GetParticleTable();
-    G4ParticleDefinition* particle = particletable->FindParticle(hit.pid);
-    G4String particlename = particle->GetParticleName();
+      // Select only the requested detector ID
+      if (hit.det != fDetectorID) continue;
 
-    // Throw new particle
-    evt->ProduceNewParticle(
-        G4ThreeVector(hit.x, hit.y, hit.z),
-        G4ThreeVector(hit.px, hit.py, hit.pz),
-        particlename);
-  }
+      // Get particle name
+      G4ParticleTable* particletable = G4ParticleTable::GetParticleTable();
+      G4ParticleDefinition* particle = particletable->FindParticle(hit.pid);
+      G4String particlename = particle->GetParticleName();
+
+      // Throw new particle
+      evt->ProduceNewParticle(
+          G4ThreeVector(hit.x, hit.y, hit.z),
+          G4ThreeVector(hit.px, hit.py, hit.pz),
+          particlename);
+      number_of_particles++;
+    }
+
+  } while (number_of_particles == 0);
+
 }
