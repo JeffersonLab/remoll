@@ -34,15 +34,19 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
 	virtual void SetDetectorType(G4String det_type) {
           if (det_type.compareTo("charged",G4String::ignoreCase) == 0) {
+            G4cout << SensitiveDetectorName << " detects charged particles" << G4endl;
             fDetectOpticalPhotons = false;
             fDetectLowEnergyNeutrals = false;
           }
-	  if (det_type.compareTo("opticalphoton",G4String::ignoreCase) == 0) {
-	    fDetectOpticalPhotons = true;
-	  }
 	  if (det_type.compareTo("lowenergyneutral",G4String::ignoreCase) == 0) {
+            G4cout << SensitiveDetectorName << " detects low energy neutrals" << G4endl;
 	    fDetectLowEnergyNeutrals = true;
 	  }
+          if (det_type.compareTo("opticalphoton",G4String::ignoreCase) == 0) {
+            G4cout << SensitiveDetectorName << " detects optical photons" << G4endl;
+            fDetectOpticalPhotons = true;
+            fDetectLowEnergyNeutrals = true;
+          }
 	}
 
     private:
