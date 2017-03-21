@@ -158,6 +158,8 @@ set(REMOLL_SCRIPTS
     macros/gui.mac
     macros/vis.mac
     macros/tracking.mac
+    macros/runscript.sh
+    macros/handler.sh
     rootlogon.C
   )
 
