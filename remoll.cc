@@ -135,7 +135,7 @@ int main(int argc, char** argv){
 
     runManager->SetUserAction(event_action);
     G4UserSteppingAction* stepping_action = new remollSteppingAction;
-    //((remollSteppingAction *) stepping_action)->SetIO(io); // Let the stepping action know about the IO variables too
+    ((remollSteppingAction *) stepping_action)->SetIO(io); // NEW Let the stepping action know about the IO variables too
     runManager->SetUserAction(stepping_action);
     rmmess->SetStepAct((remollSteppingAction *) stepping_action);
 

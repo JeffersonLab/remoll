@@ -16,7 +16,8 @@ remollEvent::~remollEvent(){
 void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name ){
     fPartPos.push_back(pos);
     fPartLastPos.push_back(pos); // NEW Initialize the previous position to be the same as inition pos
-    fPartLastMom.push_back(mom); // NEW Initialize the previous momentum to be the same as initial mom
+//    fPartLastMom.push_back(mom); // NEW Initialize the previous momentum to be the same as initial mom
+//    fPartLastE.push_back(0.0);  // NEW Initialize to 0 (make sure the units are working here)
     fPartDeltaE.push_back(0.0);  // NEW Initialize to 0 (make sure the units are working here)
     fPartDeltaTh.push_back(0.0); // NEW Initialize to 0 (make sure the units are working here)
     fPartMom.push_back(mom);
@@ -33,8 +34,9 @@ void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4St
 
 void remollEvent::Reset(){
     fPartPos.clear();
-    fPartLastMom.clear(); // NEW
+//    fPartLastMom.clear(); // NEW
     fPartLastPos.clear(); // NEW
+//    fPartLastE.clear(); // NEW
     fPartDeltaE.clear(); // NEW
     fPartDeltaTh.clear(); // NEW
     fPartMom.clear();
@@ -57,8 +59,9 @@ void remollEvent::Reset(){
 
 void remollEvent::UndoLastParticle(){
     fPartPos.pop_back();
-    fPartLastMom.pop_back(); // NEW
+//    fPartLastMom.pop_back(); // NEW
     fPartLastPos.pop_back(); // NEW
+//    fPartLastE.pop_back(); // NEW
     fPartDeltaE.pop_back(); // NEW
     fPartDeltaTh.pop_back(); // NEW
     fPartMom.pop_back();
@@ -89,9 +92,9 @@ G4bool remollEvent::EventIsSane(){
 	if( std::isnan(fPartPos[i].y()) || std::isinf(fPartPos[i].y()) ) return false;
 	if( std::isnan(fPartPos[i].z()) || std::isinf(fPartPos[i].z()) ) return false;
 
-	if( std::isnan(fPartLastMom[i].x()) || std::isinf(fPartLastMom[i].x()) ) return false; // NEW
-	if( std::isnan(fPartLastMom[i].y()) || std::isinf(fPartLastMom[i].y()) ) return false; // NEW
-	if( std::isnan(fPartLastMom[i].z()) || std::isinf(fPartLastMom[i].z()) ) return false; // NEW
+//	if( std::isnan(fPartLastMom[i].x()) || std::isinf(fPartLastMom[i].x()) ) return false; // NEW
+//	if( std::isnan(fPartLastMom[i].y()) || std::isinf(fPartLastMom[i].y()) ) return false; // NEW
+//	if( std::isnan(fPartLastMom[i].z()) || std::isinf(fPartLastMom[i].z()) ) return false; // NEW
 	
 	if( std::isnan(fPartMom[i].x()) || std::isinf(fPartMom[i].x()) ) return false;
 	if( std::isnan(fPartMom[i].y()) || std::isinf(fPartMom[i].y()) ) return false;

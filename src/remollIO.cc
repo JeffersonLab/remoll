@@ -201,8 +201,20 @@ void remollIO::WriteTree(){
 // Interfaces to output section ///////////////////////////////////////////////
 
 // Event Data
+//
+
+
+///////////////// MAKE A NEW FUNCTION THAT STORES AND PUBLISHES THE remollEvent around to the 
+//                steppingAction and reupdates the lastPos/e/theta everytime/lasttime
+//                Be sure to fix the G4Event nonsense I put everywhere...
+
 
 void remollIO::SetEventData(remollEvent *ev){
+
+ 
+    //fEvent = ev;
+    IOSetEvent(ev);
+
     int n = ev->fPartType.size();
     if( n >= __IO_MAXHIT ){
 	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
@@ -242,22 +254,11 @@ void remollIO::SetEventData(remollEvent *ev){
 	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
 	fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
 
-	// NEW Placeholder temp variables to hold the last momentum and do further calculations
-	//lastpx = ev->fPartLastMom[idx].x()/__E_UNIT;
-	//lastpy = ev->fPartLastMom[idx].y()/__E_UNIT;
-	//lastpz = ev-fPartLastMom[idx].z()/__E_UNIT;
-	//lastpmag = sqrt((lastpx*lastpx)+(lastpy*pastpy)+(lastpz*lastpz));
-	//lastpdot = (lastpx*lastpx)+(lastpy*pastpy)+(lastpz*lastpz);
+	/////////////////////
+	// Save the Last position, delta theta and energy variables into the branches
+	// Unfortunately this method may only be called upon creation of a particle, so 
+	// I may need to move these saves to the detector hit method, or some end of life method.
 
-	//particleMass = ev->fPartType[idx]->GetPDGMass()/__E_UNIT; // BE SURE TO CHECK MASS UNITS
-	//deltaAngle = acos()*(180./pi); //make sure pi works correctly, imported from PhysicalConstants.h
-	//deltaEnergy = ;
-
-	///////////////////////
-	// complicated if statements to calculate the delta E and delta Theta for a given event, and determin
-	// if they are large enough and then record them as well as the ev.l[xyz] information 
-	//
-	
 	fEvPart_LdE[idx] = ev->fPartDeltaE[idx]/__E_UNIT;
 	fEvPart_LdTh[idx] = ev->fPartDeltaTh[idx]/deg;
 	fEvPart_Lx[idx] = ev->fPartLastPos[idx].x()/__L_UNIT;

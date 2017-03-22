@@ -7,6 +7,8 @@
 #include "G4VisAttributes.hh"
 #include "G4SteppingManager.hh"
 #include "G4PhysicalConstants.hh"
+#include "G4SystemOfUnits.hh" // be sure to get the units right...
+#include "G4Event.hh" // NEW
 #include "remollEvent.hh" // The remollEvent.hh include the fPartLastMom definition
 #include "remollIO.hh" // let the IO see stepping action
 #include <math.h>
@@ -20,31 +22,48 @@ remollSteppingAction::remollSteppingAction()
 }
 
 void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
+ 
+    //G4int evID = fIO->IOGetEventID(); // NEW	
+    //G4Event* ev = new G4Event(evID); // NEW
+    remollEvent* ev = fIO->IOGetEvent();
+
     G4Track* fTrack = aStep->GetTrack();
     G4Material* material = fTrack->GetMaterial();
-    G4double mass = fTrack->GetDefinition()->GetPDGMass();
+    
+    //G4double mass = fTrack->GetDefinition()->GetPDGMass();
 
 
     // Check the last momentum against the current momentum
-    G4ThreeVector mom = fTrack->GetMomentum();
+    G4ThreeVector mom_direction = fTrack->GetMomentumDirection();
+    G4ThreeVector old_momentum = (fTrack->GetMomentum() - aStep->GetDeltaMomentum())/GeV;
+    G4ThreeVector old_direction = old_momentum.unit();
+    //G4ThreeVector old_direction = fPartLastMom.unit();
     
-    double deltaAngle;
-    double deltaEnergy;
+    //G4double old_energy = fPartOldEnergy;
+    //G4double new_energy = fTrack->GetKineticEnergy()/GeV;
 
-    deltaEnergy = abs(sqrt((mass*mass)+(mom.mag()*mom.mag()))-(sqrt((mass*mass)+(fPartLastMom().mag()*fPartLastMom().mag()))));
-    deltaAngle = acos(((mom.x()*fPartLastMom.x())+(mom.y()*fPartLastMom.y())+(mom.z()*fPartLastMom.z()))/(mom().mag()*fPartLastMom().mag()))*(180./pi);
+    G4double deltaEnergy = aStep->GetDeltaEnergy()/GeV;
+    G4double deltaAngle = mom_direction.theta(old_direction)/deg;
+    //G4double deltaEnergy = abs(new_energy - old_energy);
 
     // IF Statements dealing with whether these delta E and Angle are sufficient to warrant storing the current position and deltas in temporary storage for the IO to pick up or get replaced further along in the steppingAction.
     // Make these cuts dynamical and determined by macros
-    if( (deltaEnergy > 0.01) && (deltaAngle > 1.0) ) { // Consider adding in material based cuts as well
-	fPartDeltaE = deltaEnergy;
-	fPartDeltaTh = deltaAngle;
-	fPartLastPos = fTrack->GetPosition();
+    if( (deltaEnergy > 0.0001) && (deltaAngle > 1.0) ) { // Consider adding in material based cuts as well
+	G4int size = ev->fPartPos.size()-1;
+        ev->fPartDeltaE[size] = deltaEnergy;
+	ev->fPartDeltaTh[size] = deltaAngle;
+	ev->fPartLastPos[size] = fTrack->GetPosition();
     }
 
     // Update the lastMomentum vector to be the current momentum at the end of our step evaluation
-    fPartLastMom = mom; // make sure this equivalence is ok.
-
+    //fPartLastMom = mom; // make sure this equivalence is ok.
+    //fPartLastEnergy = new_energy;
+    
+    /////////////////
+    
+    
+    
+    
     /*
     //Now the stepping length is set to zero for Kryptonite metrial and have introduced a new mechanism to properly kill track by depositing the energy into the volume. 
     //Therefore we no longer needs to artificially kill tracks in the UserSteppingAction : Rakitha Tue Oct 14 10:32:32 EDT 2014

@@ -25,6 +25,8 @@ remollEventAction::~remollEventAction(){
 
 void remollEventAction::BeginOfEventAction(const G4Event* ev){
   // Start timer at event 0
+
+  
   if (ev->GetEventID() == 0) fTimer.Start();
   // Pretty ongoing status
   if ((ev->GetEventID() % 1000) == 0) {

@@ -122,7 +122,6 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
 	      fParticleGun->GetParticleMomentum(),
 	      fParticleGun->GetParticleDefinition()->GetParticleName() );
       fIO->SetEventData(fDefaultEvent);
-
       fParticleGun->GeneratePrimaryVertex(anEvent);
   }
 

@@ -5,6 +5,7 @@
 #include "TObject.h"
 #include "G4Run.hh"
 #include "remolltypes.hh"
+#include "remollEvent.hh"
 #include "G4PhysicalConstants.hh"
 //#include "PhysicalConstants.h"
 
@@ -54,6 +55,8 @@ class remollIO {
 	TTree *fTree;
 
 	char fFilename[__FILENAMELEN];
+	
+	remollEvent *fEvent; // NEW
 
 	std::vector<G4String>       fGDMLFileNames;
 
@@ -66,6 +69,8 @@ class remollIO {
 	// Event data
     public:
 	void SetEventData(remollEvent *);
+	void IOSetEvent( remollEvent *remollEvt ){ fEvent = remollEvt; }
+	remollEvent* IOGetEvent(){return fEvent;} //NEW
     private:
 	Int_t fNEvPart;
 
