@@ -10,6 +10,10 @@ remollGenericDetectorHit::remollGenericDetectorHit(G4int det, G4int copy){
     f3P = G4ThreeVector(-1e9, -1e9, -1e9);
     f3V = G4ThreeVector(-1e9, -1e9, -1e9);
 
+    fLastPos = G4ThreeVector(-1e9, -1e9, -1e9);   // NEW
+    fDeltaE  = -1.0;                              // NEW
+    fDeltaTh = -1.0;                              // NEW
+    
     fP  = -1.0;
     fE  = -1.0;
     fM  = -1.0;
@@ -33,6 +37,10 @@ remollGenericDetectorHit::remollGenericDetectorHit(const remollGenericDetectorHi
     f3P     = right.f3P;
     f3V     = right.f3V;
 
+
+    fLastPos = right.fLastPos; // NEW
+    fDeltaE  = right.fDeltaE;  // NEW
+    fDeltaTh = right.fDeltaTh; // NEW
     fP      = right.fP;
     fE      = right.fE;
     fM      = right.fM;

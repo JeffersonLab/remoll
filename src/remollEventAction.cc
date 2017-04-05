@@ -45,6 +45,11 @@ void remollEventAction::BeginOfEventAction(const G4Event* ev){
   }
 }
 
+
+// Tell event's data from steppingAction to get stored here. Just tag steppingAction updated info into
+// the event->hit object, since it is already being noticed preferentially based on where we care to 
+// look (could help computation time, etc.).
+
 void remollEventAction::EndOfEventAction(const G4Event* evt ) {
   //G4SDManager   *SDman = G4SDManager::GetSDMpointer();
   G4HCofThisEvent *HCE = evt->GetHCofThisEvent();
@@ -59,31 +64,30 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
       
       ////  Generic Detector Hits ///////////////////////////////////
       if( remollGenericDetectorHitsCollection *thiscast = 
-	  dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
-	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorHit((remollGenericDetectorHit *) 
-				     thiscast->GetHit(hidx) );	  
-	}
+	        dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
+	      // DO THINGS with the hits that hit in this col - specifically, change the 
+	      // steppingAction's new variables into the remollGenericDetectorHit's new variables
+        // FIXME which can just be done in the stepping action???
+	      for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
+	        fIO->AddGenericDetectorHit((remollGenericDetectorHit *) 
+				      thiscast->GetHit(hidx) );	  
+	      }
       }
       
       ////  Generic Detector Sum ////////////////////////////////////
       if( remollGenericDetectorSumCollection *thiscast = 
-	  dynamic_cast<remollGenericDetectorSumCollection *>(thiscol)){
-	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorSum((remollGenericDetectorSum *) 
-				     thiscast->GetHit(hidx) );
-	}
-      }
-      
+	         dynamic_cast<remollGenericDetectorSumCollection *>(thiscol)){
+	      for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
+	        fIO->AddGenericDetectorSum((remollGenericDetectorSum *) 
+				      thiscast->GetHit(hidx) );
+	      }
+      } 
     }
   }
 
   // Fill tree and reset buffers
-  fIO->FillTree();
+  fIO->FillTree(); // This is the key moment where the branches get appended too.
   fIO->Flush();
 
   return;
 }
-
-
-

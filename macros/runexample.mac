@@ -4,7 +4,8 @@
 #/tracking/storeTrajectory 1
 
 # This must be called before initialize
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+#/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 
 # This must be explicitly called
 /run/initialize
@@ -58,7 +59,7 @@
 # Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
 
-/remoll/filename remoll_beam.root
+/remoll/filename remoll_beam_tracking.root
 
 #/tracking/verbose 2
 /run/beamOn 10000

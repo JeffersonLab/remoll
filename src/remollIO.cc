@@ -86,16 +86,6 @@ void remollIO::InitializeTree(){
     fTree->Branch("ev.tpy",    &fEvPart_tPy,  "ev.tpy[ev.npart]/D");
     fTree->Branch("ev.tpz",    &fEvPart_tPz,  "ev.tpz[ev.npart]/D");
 
-
-    fTree->Branch("ev.lx",    &fEvPart_Lx,   "ev.lx[ev.npart]/D");
-    fTree->Branch("ev.ly",    &fEvPart_Ly,   "ev.ly[ev.npart]/D");
-    fTree->Branch("ev.lz",    &fEvPart_Lz,   "ev.lz[ev.npart]/D");
-//    fTree->Branch("ev.lpx",  &fEvPart_LPx,   "ev.lpx[ev.npart]/D");
-//    fTree->Branch("ev.lpy",  &fEvPart_LPy,   "ev.lpy[ev.npart]/D");
-//    fTree->Branch("ev.lpz",  &fEvPart_LPz,   "ev.lpz[ev.npart]/D");
-    fTree->Branch("ev.ldE",   &fEvPart_LdE,  "ev.ldE[ev.npart]/D");
-    fTree->Branch("ev.ldTh",  &fEvPart_LdTh, "ev.ldTh[ev.npart]/D");
-
     fTree->Branch("bm.x",    &fBmX,  "bm.x/D");
     fTree->Branch("bm.y",    &fBmY,  "bm.y/D");
     fTree->Branch("bm.z",    &fBmZ,  "bm.z/D");
@@ -134,6 +124,16 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.m",    &fGenDetHit_M,   "hit.m[hit.n]/D"); 
 
     fTree->Branch("hit.edep", &fGenDetHit_Edep, "hit.edep[hit.n]/D");
+
+// NEW
+    fTree->Branch("hit.lx",    &fGenDetHit_Lx,   "hit.lx[hit.n]/D");
+    fTree->Branch("hit.ly",    &fGenDetHit_Ly,   "hit.ly[hit.n]/D");
+    fTree->Branch("hit.lz",    &fGenDetHit_Lz,   "hit.lz[hit.n]/D");
+//    fTree->Branch("hit.lpx",  &fGenDetHit_LPx,   "hit.lpx[hit.n]/D");
+//    fTree->Branch("hit.lpy",  &fGenDetHit_LPy,   "hit.lpy[hit.n]/D");
+//    fTree->Branch("hit.lpz",  &fGetDetHit_LPz,   "hit.lpz[hit.n]/D");
+    fTree->Branch("hit.ldE",   &fGenDetHit_LdE,  "hit.ldE[hit.n]/D");
+    fTree->Branch("hit.ldTh",  &fGenDetHit_LdTh, "hit.ldTh[hit.n]/D");
 
     fTree->Branch("hit.colCut",    &fCollCut,     "hit.colCut/I");
 
@@ -204,25 +204,21 @@ void remollIO::WriteTree(){
 //
 
 
-///////////////// MAKE A NEW FUNCTION THAT STORES AND PUBLISHES THE remollEvent around to the 
-//                steppingAction and reupdates the lastPos/e/theta everytime/lasttime
-//                Be sure to fix the G4Event nonsense I put everywhere...
+///////////////// MAKE A NEW FUNCTION THAT STORES event data for the new Last variables 
+//                at the end of events, since SetEventData does it at the beginning of events (I think)
 
 
 void remollIO::SetEventData(remollEvent *ev){
 
- 
-    //fEvent = ev;
-    IOSetEvent(ev);
 
     int n = ev->fPartType.size();
     if( n >= __IO_MAXHIT ){
 	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
 	return;
     }
-
+ 
     fNEvPart = n;
-
+G4cout << " IMPORTANT: Number of Events! = " << n << G4endl;
     fEvRate   = ev->fRate*s;
     fEvEffXS  = ev->fEffXs/microbarn;
     fEvAsym   = ev->fAsym/__ASYMM_SCALE;
@@ -254,18 +250,6 @@ void remollIO::SetEventData(remollEvent *ev){
 	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
 	fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
 
-	/////////////////////
-	// Save the Last position, delta theta and energy variables into the branches
-	// Unfortunately this method may only be called upon creation of a particle, so 
-	// I may need to move these saves to the detector hit method, or some end of life method.
-
-	fEvPart_LdE[idx] = ev->fPartDeltaE[idx]/__E_UNIT;
-	fEvPart_LdTh[idx] = ev->fPartDeltaTh[idx]/deg;
-	fEvPart_Lx[idx] = ev->fPartLastPos[idx].x()/__L_UNIT;
-	fEvPart_Ly[idx] = ev->fPartLastPos[idx].y()/__L_UNIT;
-	fEvPart_Lz[idx] = ev->fPartLastPos[idx].z()/__L_UNIT;
-	//
-	///////////////////////
 	
     }
 
@@ -325,6 +309,39 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     fGenDetHit_M[n]  = hit->fM/__E_UNIT;
 
     fGenDetHit_Edep[n]  = hit->fEdep/__E_UNIT;
+
+    /// NEW CODE //////////////////
+	  // Save the Last position, delta theta and energy variables into the branches
+	  // Unfortunately this method may only be called upon creation of a particle, so 
+	  // I may need to move these saves to the detector hit method, or some end of life method.
+    //
+    G4cout << "Storing the last signigicant changes (if any) " << G4endl;
+	  G4cout << hit->fDeltaE/__E_UNIT << " = fGenDetHit_LdE[" << n << "]/" << __E_UNIT << G4endl;
+	  G4cout << hit->fDeltaTh/__E_UNIT << " = fGenDetHit_LdTh[" << n << "]/" << __ANG_UNIT << G4endl;
+	  G4cout << hit->fLastPos.x()/__L_UNIT << " = fGenDetHit_Lx[" << n << "]/" << __L_UNIT << G4endl;
+	  G4cout << hit->fLastPos.y()/__L_UNIT << " = fGenDetHit_Ly[" << n << "]/" << __L_UNIT << G4endl;
+	  G4cout << hit->fLastPos.z()/__L_UNIT << " = fGenDetHit_Lz[" << n << "]/" << __L_UNIT << G4endl;
+    fGenDetHit_LdE[n] = hit->fDeltaE/__E_UNIT;
+	  fGenDetHit_LdTh[n] = hit->fDeltaTh/deg;
+	  fGenDetHit_Lx[n] = hit->fLastPos.x()/__L_UNIT;
+	  fGenDetHit_Ly[n] = hit->fLastPos.y()/__L_UNIT;
+	  fGenDetHit_Lz[n] = hit->fLastPos.z()/__L_UNIT;
+	 /* // OLD way of refering to lists passed into remollIO
+    //int id = hit->fTrID;
+	  G4cout << "Storing the last signigicant changes (if any) " << G4endl;
+	  G4cout << hit->fDeltaE[id]/__E_UNIT << " = fHitEvPart_LdE[" << id << "]/" << __E_UNIT << G4endl;
+	  G4cout << hit->fDeltaTh[id]/__E_UNIT << " = fHitEvPart_LdTh[" << id << "]/" << __ANG_UNIT << G4endl;
+	  G4cout << hit->fLastPos[id].x()/__L_UNIT << " = fHitEvPart_Lx[" << id << "]/" << __L_UNIT << G4endl;
+	  G4cout << hit->fLastPos[id].y()/__L_UNIT << " = fHitEvPart_Ly[" << id << "]/" << __L_UNIT << G4endl;
+	  G4cout << hit->fLastPos[id].z()/__L_UNIT << " = fHitEvPart_Lz[" << id << "]/" << __L_UNIT << G4endl;
+    fHitEvPart_LdE[id] = hit->fDeltaE[id]/__E_UNIT;
+	  fHitEvPart_LdTh[id] = hit->fDeltaTh[id]/deg;
+	  fHitEvPart_Lx[id] = hit->fLastPos[id].x()/__L_UNIT;
+	  fHitPart_Ly[id] = hit->fLastPos[id].y()/__L_UNIT;
+	  fHitPart_Lz[id] = hit->fLastPos[id].z()/__L_UNIT;
+	  */
+    ///////////////////////
+	
 
     fNGenDetHit++;
 

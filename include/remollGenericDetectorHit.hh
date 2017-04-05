@@ -36,8 +36,14 @@ class remollGenericDetectorHit : public G4VHit {
 	G4int    fTrID, fPID, fmTrID;
 	// Process generator type
 	G4int    fGen;
-        //energy deposit
-        G4double fEdep;
+  // Energy deposit
+  G4double fEdep;
+        
+	// NEW  Last significant vertex info 
+	
+	G4ThreeVector fLastPos;	// NEW Last significant change position
+	G4double fDeltaE;	      // NEW Last significant change in energy
+	G4double fDeltaTh;	    // NEW Last significant change in angle
 };
 
 

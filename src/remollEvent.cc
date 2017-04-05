@@ -6,20 +6,33 @@
 
 #include "G4ParticleTable.hh"
 
+remollEvent *remollEvent::gSingletonEvent = NULL;
+
 remollEvent::remollEvent(){
     Reset();
+    //NEW 
+    gSingletonEvent = this;
 }
 
 remollEvent::~remollEvent(){
 }
 
+// NEW mimicking remollBeamTarget.cc 
+remollEvent *remollEvent::GetRemollEvent() {
+    if( gSingletonEvent == NULL ){
+        G4cout << "Error: remollEvent is NULL " << G4endl;
+        gSingletonEvent = new remollEvent();
+    }
+    return gSingletonEvent;
+}
+
+//
+
 void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name ){
     fPartPos.push_back(pos);
-    fPartLastPos.push_back(pos); // NEW Initialize the previous position to be the same as inition pos
-//    fPartLastMom.push_back(mom); // NEW Initialize the previous momentum to be the same as initial mom
-//    fPartLastE.push_back(0.0);  // NEW Initialize to 0 (make sure the units are working here)
-    fPartDeltaE.push_back(0.0);  // NEW Initialize to 0 (make sure the units are working here)
-    fPartDeltaTh.push_back(0.0); // NEW Initialize to 0 (make sure the units are working here)
+//    fPartLastPos.push_back(pos); // NEW Initialize the previous position to be the same as inition pos
+//    fPartDeltaE.push_back(0.0);  // NEW Initialize to 0 (make sure the units are working here)
+//    fPartDeltaTh.push_back(0.0); // NEW Initialize to 0 (make sure the units are working here)
     fPartMom.push_back(mom);
     fPartRealMom.push_back(mom);
 
@@ -34,11 +47,9 @@ void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4St
 
 void remollEvent::Reset(){
     fPartPos.clear();
-//    fPartLastMom.clear(); // NEW
-    fPartLastPos.clear(); // NEW
-//    fPartLastE.clear(); // NEW
-    fPartDeltaE.clear(); // NEW
-    fPartDeltaTh.clear(); // NEW
+//    fPartLastPos.clear(); // NEW
+//    fPartDeltaE.clear(); // NEW
+//    fPartDeltaTh.clear(); // NEW
     fPartMom.clear();
     fPartRealMom.clear();
     fPartType.clear();
@@ -57,13 +68,34 @@ void remollEvent::Reset(){
     fThCoM = -1e9;
 }
 
+    // CONSIDER adding a method that undoes previous LastVariables and replaces them with new ones via pop_back() and push_back() 
+    /*void remollEvent::UpdateLastParticle( G4ThreeVector lastPos, G4double deltaE, G4double deltaAng ) {
+    int len = fPartPos.size();
+    G4cout << len << " test2 " << deltaE << G4endl;
+    fPartDeltaE[len] = deltaE;
+    //fPartDeltaE.pop_back();
+    G4cout << " test3 " << G4endl;
+    //fPartDeltaE.push_back( deltaE );
+    G4cout << " test4 " << deltaAng << G4endl;
+    fPartDeltaTh[len] = deltaAng;
+    //fPartDeltaTh.pop_back();
+    G4cout << " test5 " << G4endl;
+    //fPartDeltaTh.push_back( deltaAng );
+    G4cout << " test6 " << lastPos << G4endl;
+    fPartLastPos[len] = lastPos;
+    //fPartLastPos.pop_back();
+    G4cout << " test7 " << G4endl;
+    //fPartLastPos.push_back( lastPos );
+    G4cout << " test8 " << G4endl;
+}
+*/
+
+
 void remollEvent::UndoLastParticle(){
     fPartPos.pop_back();
-//    fPartLastMom.pop_back(); // NEW
-    fPartLastPos.pop_back(); // NEW
-//    fPartLastE.pop_back(); // NEW
-    fPartDeltaE.pop_back(); // NEW
-    fPartDeltaTh.pop_back(); // NEW
+//    fPartLastPos.pop_back(); // NEW
+//    fPartDeltaE.pop_back();  // NEW
+//    fPartDeltaTh.pop_back(); // NEW
     fPartMom.pop_back();
     fPartRealMom.pop_back();
     fPartType.pop_back();
@@ -82,23 +114,20 @@ G4bool remollEvent::EventIsSane(){
     if( std::isnan(fW2) || std::isinf(fW2) ) return false;
 
     if( fPartPos.size() < 1 && fEffXs > 0.0 ){ 
-	return false;
+        return false;
     }
 
     for( i = 0; i < fPartPos.size(); i++ ){
-	if( !fPartType[i] ){ return false; }
+        if( !fPartType[i] ){ return false; }
 
-	if( std::isnan(fPartPos[i].x()) || std::isinf(fPartPos[i].x()) ) return false;
-	if( std::isnan(fPartPos[i].y()) || std::isinf(fPartPos[i].y()) ) return false;
-	if( std::isnan(fPartPos[i].z()) || std::isinf(fPartPos[i].z()) ) return false;
+        if( std::isnan(fPartPos[i].x()) || std::isinf(fPartPos[i].x()) ) return false;
+	      if( std::isnan(fPartPos[i].y()) || std::isinf(fPartPos[i].y()) ) return false;
+	      if( std::isnan(fPartPos[i].z()) || std::isinf(fPartPos[i].z()) ) return false;
 
-//	if( std::isnan(fPartLastMom[i].x()) || std::isinf(fPartLastMom[i].x()) ) return false; // NEW
-//	if( std::isnan(fPartLastMom[i].y()) || std::isinf(fPartLastMom[i].y()) ) return false; // NEW
-//	if( std::isnan(fPartLastMom[i].z()) || std::isinf(fPartLastMom[i].z()) ) return false; // NEW
 	
-	if( std::isnan(fPartMom[i].x()) || std::isinf(fPartMom[i].x()) ) return false;
-	if( std::isnan(fPartMom[i].y()) || std::isinf(fPartMom[i].y()) ) return false;
-	if( std::isnan(fPartMom[i].z()) || std::isinf(fPartMom[i].z()) ) return false;
+        if( std::isnan(fPartMom[i].x()) || std::isinf(fPartMom[i].x()) ) return false;
+        if( std::isnan(fPartMom[i].y()) || std::isinf(fPartMom[i].y()) ) return false;
+        if( std::isnan(fPartMom[i].z()) || std::isinf(fPartMom[i].z()) ) return false;
     }
 
     return true;
@@ -118,25 +147,15 @@ void remollEvent::Print(){
     unsigned int i;
 
     for( i = 0; i < fPartPos.size(); i++ ){
-	if( !fPartType[i] ){
-	    G4cout << "\tParticle type for " << i << " not defined" << G4endl;
-	} else {
-	    G4cout << "\t" << fPartType[i]->GetParticleName() << ":" << G4endl;
-	    G4cout << "\t\tat (" << fPartPos[i].x()/m << ", " << fPartPos[i].y()/m << ", " << fPartPos[i].z()/m  << ") m" << G4endl;
-	    G4cout << "\t\tof (" << fPartMom[i].x()/GeV << ", " << fPartMom[i].y()/GeV << ", " << fPartMom[i].z()/GeV  << ") GeV" << G4endl;
-	}
+        if( !fPartType[i] ){
+            G4cout << "\tParticle type for " << i << " not defined" << G4endl;
+        } else {
+            G4cout << "\t" << fPartType[i]->GetParticleName() << ":" << G4endl;
+            G4cout << "\t\tat (" << fPartPos[i].x()/m << ", " << fPartPos[i].y()/m << ", " << fPartPos[i].z()/m  << ") m" << G4endl;
+            G4cout << "\t\tof (" << fPartMom[i].x()/GeV << ", " << fPartMom[i].y()/GeV << ", " << fPartMom[i].z()/GeV  << ") GeV" << G4endl;
+        }
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
