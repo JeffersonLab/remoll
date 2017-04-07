@@ -50,7 +50,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
 
     G4StepPoint *prestep = step->GetPreStepPoint();
-    G4Track     *track   = step->GetTrack();
+    G4Track     *track   = step->GetTrack(); // FIXME Track will store all of my interesting information from here on out.
 
     G4double edep = step->GetTotalEnergyDeposit();
 
@@ -101,29 +101,10 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 	      thishit->f3P = track->GetMomentum();
 
         // FIXME Plan:
-        // request the current event to harvest its data, if the event is dead (as I suspect it may be) 
-        // then I should use the backup plan, which is to put these variables back into the 
-        // remollSteppingAction and hope that they persist long enough to be used here too.
-        remollEvent *event = remollEvent::GetRemollEvent(); // NEW
-
-        G4int ID = track->GetTrackID();
-        // Declare an iterator to the unordered_map (fPartDeltaEMap or whatever)
-        std::unordered_map<G4int, G4double>::iterator ite;
-        // Find if an element with key "id" exists or not.
-        // find() returns an iterator
-        ite = event->fPartDeltaEMap.find(ID);
-
-        // Check if the iterator points to the end of the map (meaning that it didn't find the key, i.e. the particle never registered a significant vertex at all)
-        if ( ite == event->fPartDeltaEMap.end() ){ // Then add a null result signifier
-            thishit->fLastPos = track->GetVertexPosition(); // NEW
-            thishit->fDeltaE  = 0.0; // NEW
-            thishit->fDeltaTh = 0.0; // NEW
-        }
-        else { // Then add apply the actual values
-            thishit->fLastPos = event->fPartLastPosMap[ID]; // NEW
-            thishit->fDeltaE  = event->fPartDeltaEMap[ID];  // NEW
-            thishit->fDeltaTh = event->fPartDeltaThMap[ID]; // NEW
-        }
+        // get the data from the tracks user variables 
+        thishit->fLastPos = track->GetVertexPosition(); // FIXME to come from track variables = event->fPartLastPosMap[ID]; // NEW
+        thishit->fDeltaE  = 0.0; // NEW
+        thishit->fDeltaTh = 0.0; // NEW
 
 	      thishit->fP = track->GetMomentum().mag();
 	      thishit->fE = track->GetTotalEnergy();

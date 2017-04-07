@@ -326,22 +326,6 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
 	  fGenDetHit_Lx[n] = hit->fLastPos.x()/__L_UNIT;
 	  fGenDetHit_Ly[n] = hit->fLastPos.y()/__L_UNIT;
 	  fGenDetHit_Lz[n] = hit->fLastPos.z()/__L_UNIT;
-	 /* // OLD way of refering to lists passed into remollIO
-    //int id = hit->fTrID;
-	  G4cout << "Storing the last signigicant changes (if any) " << G4endl;
-	  G4cout << hit->fDeltaE[id]/__E_UNIT << " = fHitEvPart_LdE[" << id << "]/" << __E_UNIT << G4endl;
-	  G4cout << hit->fDeltaTh[id]/__E_UNIT << " = fHitEvPart_LdTh[" << id << "]/" << __ANG_UNIT << G4endl;
-	  G4cout << hit->fLastPos[id].x()/__L_UNIT << " = fHitEvPart_Lx[" << id << "]/" << __L_UNIT << G4endl;
-	  G4cout << hit->fLastPos[id].y()/__L_UNIT << " = fHitEvPart_Ly[" << id << "]/" << __L_UNIT << G4endl;
-	  G4cout << hit->fLastPos[id].z()/__L_UNIT << " = fHitEvPart_Lz[" << id << "]/" << __L_UNIT << G4endl;
-    fHitEvPart_LdE[id] = hit->fDeltaE[id]/__E_UNIT;
-	  fHitEvPart_LdTh[id] = hit->fDeltaTh[id]/deg;
-	  fHitEvPart_Lx[id] = hit->fLastPos[id].x()/__L_UNIT;
-	  fHitPart_Ly[id] = hit->fLastPos[id].y()/__L_UNIT;
-	  fHitPart_Lz[id] = hit->fLastPos[id].z()/__L_UNIT;
-	  */
-    ///////////////////////
-	
 
     fNGenDetHit++;
 

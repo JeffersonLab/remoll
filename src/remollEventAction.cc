@@ -65,9 +65,6 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
       ////  Generic Detector Hits ///////////////////////////////////
       if( remollGenericDetectorHitsCollection *thiscast = 
 	        dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
-	      // DO THINGS with the hits that hit in this col - specifically, change the 
-	      // steppingAction's new variables into the remollGenericDetectorHit's new variables
-        // FIXME which can just be done in the stepping action???
 	      for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
 	        fIO->AddGenericDetectorHit((remollGenericDetectorHit *) 
 				      thiscast->GetHit(hidx) );	  

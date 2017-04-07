@@ -6,25 +6,25 @@
 
 #include "G4ParticleTable.hh"
 
-remollEvent *remollEvent::gSingletonEvent = NULL;
+//remollEvent *remollEvent::gSingletonEvent = NULL;
 
 remollEvent::remollEvent(){
     Reset();
     //NEW 
-    gSingletonEvent = this;
+    //gSingletonEvent = this;
 }
 
 remollEvent::~remollEvent(){
 }
 
 // NEW mimicking remollBeamTarget.cc 
-remollEvent *remollEvent::GetRemollEvent() {
-    if( gSingletonEvent == NULL ){
-        G4cout << "Error: remollEvent is NULL " << G4endl;
-        gSingletonEvent = new remollEvent();
-    }
-    return gSingletonEvent;
-}
+//remollEvent *remollEvent::GetRemollEvent() {
+//    if( gSingletonEvent == NULL ){
+//        G4cout << "Error: remollEvent is NULL " << G4endl;
+//        gSingletonEvent = new remollEvent();
+//    }
+//    return gSingletonEvent;
+//}
 
 //
 
@@ -67,28 +67,6 @@ void remollEvent::Reset(){
     fW2    = -1e9*GeV*GeV;
     fThCoM = -1e9;
 }
-
-    // CONSIDER adding a method that undoes previous LastVariables and replaces them with new ones via pop_back() and push_back() 
-    /*void remollEvent::UpdateLastParticle( G4ThreeVector lastPos, G4double deltaE, G4double deltaAng ) {
-    int len = fPartPos.size();
-    G4cout << len << " test2 " << deltaE << G4endl;
-    fPartDeltaE[len] = deltaE;
-    //fPartDeltaE.pop_back();
-    G4cout << " test3 " << G4endl;
-    //fPartDeltaE.push_back( deltaE );
-    G4cout << " test4 " << deltaAng << G4endl;
-    fPartDeltaTh[len] = deltaAng;
-    //fPartDeltaTh.pop_back();
-    G4cout << " test5 " << G4endl;
-    //fPartDeltaTh.push_back( deltaAng );
-    G4cout << " test6 " << lastPos << G4endl;
-    fPartLastPos[len] = lastPos;
-    //fPartLastPos.pop_back();
-    G4cout << " test7 " << G4endl;
-    //fPartLastPos.push_back( lastPos );
-    G4cout << " test8 " << G4endl;
-}
-*/
 
 
 void remollEvent::UndoLastParticle(){
