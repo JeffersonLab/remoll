@@ -45,11 +45,6 @@ void remollEventAction::BeginOfEventAction(const G4Event* ev){
   }
 }
 
-
-// Tell event's data from steppingAction to get stored here. Just tag steppingAction updated info into
-// the event->hit object, since it is already being noticed preferentially based on where we care to 
-// look (could help computation time, etc.).
-
 void remollEventAction::EndOfEventAction(const G4Event* evt ) {
   //G4SDManager   *SDman = G4SDManager::GetSDMpointer();
   G4HCofThisEvent *HCE = evt->GetHCofThisEvent();

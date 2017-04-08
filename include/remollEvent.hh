@@ -16,12 +16,12 @@ class G4ParticleDefinition;
 
 class remollEvent {
     private:
-	static remollEvent *gSingletonEvent; // NEW
+//	static remollEvent *gSingletonEvent; // NEW
     public:
 	 remollEvent();
 	~remollEvent();
 
-	static remollEvent *GetRemollEvent(); // NEW
+//	static remollEvent *GetRemollEvent(); // NEW
 
 	void ProduceNewParticle( G4ThreeVector, G4ThreeVector, G4String );
 	void SetEffCrossSection( G4double xs ){ fEffXs = xs; }
@@ -52,12 +52,10 @@ class remollEvent {
   // Use these std::vectors that are as long as the number of particles tracks involved in a given step
   // I should probably use an unordered_map instead of ordered std:: vector between the tracks G4int 
   // representing getTrackID() and the values of interest
-  std::unordered_map<G4int, G4ThreeVector>	fPartLastPosMap;// NEW
-  std::unordered_map<G4int, G4double>		fPartDeltaEMap;	// NEW
-  std::unordered_map<G4int, G4double>		fPartDeltaThMap;// NEW
-//	std::vector<G4ThreeVector>    fPartLastPos;  // NEW Previous significant step's position
-//	std::vector<G4double>	      fPartDeltaE;   // NEW Previous significant step's Delta Energy
-//	std::vector<G4double>	      fPartDeltaTh;  // NEW Previous significant step's Delta Theta
+  // FIXME I need to use the G4VUserTrackingInformation class to do this storage instead.
+//  std::unordered_map<G4int, G4ThreeVector>	fPartLastPosMap;// NEW
+//  std::unordered_map<G4int, G4double>		fPartDeltaEMap;	// NEW
+//  std::unordered_map<G4int, G4double>		fPartDeltaThMap;// NEW
 	std::vector<G4ThreeVector>    fPartRealMom;  // Direction to go to Geant4
 	std::vector<G4ParticleDefinition *> fPartType;
 

@@ -7,43 +7,44 @@
 #include "G4ThreeVector.hh"
 
 class remollGenericDetectorHit : public G4VHit {
-    public:
-	remollGenericDetectorHit(G4int, G4int);
-	~remollGenericDetectorHit();
+  public:
+	  remollGenericDetectorHit(G4int, G4int);
+	 ~remollGenericDetectorHit();
 
-	remollGenericDetectorHit(const remollGenericDetectorHit &right);
-	const remollGenericDetectorHit& operator=(const remollGenericDetectorHit &right);
-	G4int operator==(const remollGenericDetectorHit &right) const;
+	  remollGenericDetectorHit(const remollGenericDetectorHit &right);
+  	const remollGenericDetectorHit& operator=(const remollGenericDetectorHit &right);
+	  G4int operator==(const remollGenericDetectorHit &right) const;
 
-	inline void *operator new(size_t);
-	inline void operator delete(void *aHit);
-	void *operator new(size_t,void*p){return p;}
+	  inline void *operator new(size_t);
+	  inline void operator delete(void *aHit);
+	  void *operator new(size_t,void*p){return p;}
 
-    private:
+  private:
 
-    public:
-	G4int fDetID;
-	G4int fCopyID;
+  public:
+	  G4int fDetID;
+	  G4int fCopyID;
 
-	// Position and momentum in lab coordinates
-	G4ThreeVector f3X;
-	G4ThreeVector f3P;
-	// Total momentum, energy, mass
-	G4double fP, fE, fM;
-	// Origin
-	G4ThreeVector f3V;
-	// Geant4 track ID, particle type, and mother ID
-	G4int    fTrID, fPID, fmTrID;
-	// Process generator type
-	G4int    fGen;
-  // Energy deposit
-  G4double fEdep;
+	  // Position and momentum in lab coordinates
+	  G4ThreeVector f3X;
+	  G4ThreeVector f3P;
+	  // Total momentum, energy, mass
+	  G4double fP, fE, fM;
+	  // Origin
+	  G4ThreeVector f3V;
+	  // Geant4 track ID, particle type, and mother ID
+	  G4int    fTrID, fPID, fmTrID;
+	  // Process generator type
+	  G4int    fGen;
+    // Energy deposit
+    G4double fEdep;
         
-	// NEW  Last significant vertex info 
+	  // NEW  Last significant vertex info 
 	
-	G4ThreeVector fLastPos;	// NEW Last significant change position
-	G4double fDeltaE;	      // NEW Last significant change in energy
-	G4double fDeltaTh;	    // NEW Last significant change in angle
+	  G4ThreeVector fLastPos;	// NEW Last significant change position
+	  G4double fDeltaE;	      // NEW Last significant change in energy
+	  G4double fDeltaEDep;	      // NEW Last significant change in energy
+	  G4double fDeltaTh;	    // NEW Last significant change in angle
 };
 
 
@@ -52,13 +53,13 @@ typedef G4THitsCollection<remollGenericDetectorHit> remollGenericDetectorHitsCol
 extern G4Allocator<remollGenericDetectorHit> remollGenericDetectorHitAllocator;
 
 inline void* remollGenericDetectorHit::operator new(size_t){
-    void *aHit;
-    aHit = (void *) remollGenericDetectorHitAllocator.MallocSingle();
-    return aHit;
+  void *aHit;
+  aHit = (void *) remollGenericDetectorHitAllocator.MallocSingle();
+  return aHit;
 }
 
 inline void remollGenericDetectorHit::operator delete(void *aHit){
-    remollGenericDetectorHitAllocator.FreeSingle( (remollGenericDetectorHit*) aHit);
+  remollGenericDetectorHitAllocator.FreeSingle( (remollGenericDetectorHit*) aHit);
 }
 
 #endif//__REMOLLGENERICDETECTORHIT_HH

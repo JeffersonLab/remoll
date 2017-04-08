@@ -150,6 +150,7 @@ class remollIO {
 //	Double_t fHitEvPart_LPz[__IO_MAXHIT];
 	
 	Double_t fGenDetHit_LdE[__IO_MAXHIT];
+	Double_t fGenDetHit_LdEDep[__IO_MAXHIT];
 	Double_t fGenDetHit_LdTh[__IO_MAXHIT];
 
 

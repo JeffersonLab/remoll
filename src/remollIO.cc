@@ -133,6 +133,7 @@ void remollIO::InitializeTree(){
 //    fTree->Branch("hit.lpy",  &fGenDetHit_LPy,   "hit.lpy[hit.n]/D");
 //    fTree->Branch("hit.lpz",  &fGetDetHit_LPz,   "hit.lpz[hit.n]/D");
     fTree->Branch("hit.ldE",   &fGenDetHit_LdE,  "hit.ldE[hit.n]/D");
+    fTree->Branch("hit.ldEDep",   &fGenDetHit_LdEDep,  "hit.ldEDep[hit.n]/D");
     fTree->Branch("hit.ldTh",  &fGenDetHit_LdTh, "hit.ldTh[hit.n]/D");
 
     fTree->Branch("hit.colCut",    &fCollCut,     "hit.colCut/I");
@@ -317,11 +318,13 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     //
     G4cout << "Storing the last signigicant changes (if any) " << G4endl;
 	  G4cout << hit->fDeltaE/__E_UNIT << " = fGenDetHit_LdE[" << n << "]/" << __E_UNIT << G4endl;
+	  G4cout << hit->fDeltaEDep/__E_UNIT << " = fGenDetHit_LdEDep[" << n << "]/" << __E_UNIT << G4endl;
 	  G4cout << hit->fDeltaTh/__E_UNIT << " = fGenDetHit_LdTh[" << n << "]/" << __ANG_UNIT << G4endl;
 	  G4cout << hit->fLastPos.x()/__L_UNIT << " = fGenDetHit_Lx[" << n << "]/" << __L_UNIT << G4endl;
 	  G4cout << hit->fLastPos.y()/__L_UNIT << " = fGenDetHit_Ly[" << n << "]/" << __L_UNIT << G4endl;
 	  G4cout << hit->fLastPos.z()/__L_UNIT << " = fGenDetHit_Lz[" << n << "]/" << __L_UNIT << G4endl;
     fGenDetHit_LdE[n] = hit->fDeltaE/__E_UNIT;
+    fGenDetHit_LdEDep[n] = hit->fDeltaE/__E_UNIT;
 	  fGenDetHit_LdTh[n] = hit->fDeltaTh/deg;
 	  fGenDetHit_Lx[n] = hit->fLastPos.x()/__L_UNIT;
 	  fGenDetHit_Ly[n] = hit->fLastPos.y()/__L_UNIT;
