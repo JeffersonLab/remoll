@@ -13,6 +13,7 @@
 #include "remollRunData.hh"
 #include "remollPrimaryGeneratorAction.hh"
 #include "remollEventAction.hh"
+#include "remollVTrackingAction.hh"
 #include "remollSteppingAction.hh"
 
 //#include "G4StepLimiterBuilder.hh"
@@ -132,13 +133,18 @@ int main(int argc, char** argv){
 
     G4UserEventAction* event_action = new remollEventAction;
     ((remollEventAction *) event_action)->SetIO(io);
-
     runManager->SetUserAction(event_action);
+    
     G4UserSteppingAction* stepping_action = new remollSteppingAction;
     //((remollSteppingAction *) stepping_action)->SetIO(io); // NEW Let the stepping action know about the IO variables too
     runManager->SetUserAction(stepping_action);
     rmmess->SetStepAct((remollSteppingAction *) stepping_action);
 
+
+    G4UserTrackingAction* tracking_action = new remollVTrackingAction;
+    //((remollVTrackingAction *) tracking_action)->SetIO(io);
+    runManager->SetUserAction(tracking_action);
+   
     // New units
 
     G4UIsession* session = 0;

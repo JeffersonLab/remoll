@@ -53,9 +53,6 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4StepPoint *prestep = step->GetPreStepPoint();
     //G4StepPoint *poststep = step->GetPostStepPoint();
     G4Track     *track   = step->GetTrack(); // FIXME Track will store all of my interesting information from here on out.
-    remollVUserTrackInformation* trackInfo = (remollVUserTrackInformation*)(track->GetUserInformation());
-
-    trackInfo->Print();
 
     G4double edep = step->GetTotalEnergyDeposit();
 
@@ -101,23 +98,23 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     if( !badhit ){
 	      // Hit
-	      thishit->f3X = prestep->GetPosition();
+	      G4cout << "Hit registered" << G4endl;
+        thishit->f3X = prestep->GetPosition();
 	      thishit->f3V = track->GetVertexPosition();
 	      thishit->f3P = track->GetMomentum();
 
         // FIXME Plan:
         // get the data from the tracks user variables
-        G4cout << "GenericDetector.cc test 0 " << G4endl;
-        G4cout << trackInfo->GetLastSigVertdE(); 
-        G4cout << "GenericDetector.cc test 1 " << G4endl;
+        remollVUserTrackInformation* trackInfo = (remollVUserTrackInformation*)(track->GetUserInformation());
+        trackInfo->Print();
+        G4cout << "LastSigVertdE = " << trackInfo->GetLastSigVertdE() << G4endl;
+        G4cout << "LastSigVertdEDep = " << trackInfo->GetLastSigVertdEDep() << G4endl;
+        G4cout << "LastSigVertdTh = " << trackInfo->GetLastSigVertdTh() << G4endl;
+        G4cout << "LastSigVertdPos = " << trackInfo->GetLastSigVertPos() << G4endl;
         thishit->fDeltaE  = trackInfo->GetLastSigVertdE(); // NEW
-        G4cout << "GenericDetector.cc test 2 " << G4endl;
         thishit->fDeltaEDep = trackInfo->GetLastSigVertdEDep(); // NEW
-        G4cout << "GenericDetector.cc test 3 " << G4endl;
         thishit->fDeltaTh = trackInfo->GetLastSigVertdTh(); // NEW
-        G4cout << "GenericDetector.cc test 4 " << G4endl;
         thishit->fLastPos = trackInfo->GetLastSigVertPos(); // NEW
-        G4cout << "GenericDetector.cc test 5 " << G4endl;
 
 	      thishit->fP = track->GetMomentum().mag();
 	      thishit->fE = track->GetTotalEnergy();

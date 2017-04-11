@@ -39,19 +39,26 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
   G4double deltaEnergy = aStep->GetDeltaEnergy()/GeV;
   G4double deltaEnergyDep = aStep->GetTotalEnergyDeposit()/GeV;
   G4double deltaAngle = mom_direction.theta(old_direction)/deg;
+	  
+    //G4cout << G4endl << "Current delta E and Th variables, and position " << G4endl << G4endl;
+	  //G4cout << deltaEnergy << " = E[" << id << "]/" << __E_UNIT << G4endl;
+	  //G4cout << deltaEnergyDep << " = EDep[" << id << "]/" << __E_UNIT << G4endl;
+	  //G4cout << deltaAngle << " = Th[" << id << "]/" << __ANG_UNIT << G4endl;
+	  //G4cout << fTrack->GetPosition() << " = Position[" << id << "]/" << __L_UNIT << G4endl;
+
+G4cout << "step track id = " << id << G4endl;
 
   // IF Statements dealing with whether these delta E and Angle are sufficient to warrant storing the current position and deltas in temporary storage for the IO to pick up or get replaced further along in the steppingAction.
   // Make these cuts dynamical and determined by macros
-  if( (abs(deltaEnergy) > 0.001) && (deltaAngle > 0.001) ) { // Consider adding in material based cuts as well
-    G4cout << " test" << G4endl;
-	  G4cout << "Significant change detected: " << G4endl;
+  //if( (abs(deltaEnergy) > 0.001) && (deltaAngle > 0.001) ) { // Consider adding in material based cuts as well
+  if( (abs(deltaEnergy) >= 0.00000000000000000001) && (abs(deltaAngle) >= 0.000000000000000000000001) ) { // Consider adding in material based cuts as well
+	  G4cout << G4endl << "Significant change detected: " << G4endl << G4endl;
 	  G4cout << deltaEnergy << " = fPartDeltaE[" << id << "]/" << __E_UNIT << G4endl;
 	  G4cout << deltaEnergyDep << " = fPartDeltaEDep[" << id << "]/" << __E_UNIT << G4endl;
 	  G4cout << deltaAngle << " = fPartDeltaTh[" << id << "]/" << __ANG_UNIT << G4endl;
 	  G4cout << fTrack->GetPosition().x() << " = fPartLastPos.x()[" << id << "]/" << __L_UNIT << G4endl;
 	  G4cout << fTrack->GetPosition().y() << " = fPartLastPos.y()[" << id << "]/" << __L_UNIT << G4endl;
 	  G4cout << fTrack->GetPosition().z() << " = fPartLastPos.z()[" << id << "]/" << __L_UNIT << G4endl;
-    G4cout << " 2nd test" << G4endl;
 
 
     // NEW FIXME GetUserInformation is a G4track member of type G4VUserTrackInformation that I want to use to get my
