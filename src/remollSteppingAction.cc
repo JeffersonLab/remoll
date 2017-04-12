@@ -28,8 +28,8 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
   G4StepPoint *prestep = aStep->GetPreStepPoint();
   G4StepPoint *poststep = aStep->GetPostStepPoint();
   G4Track* fTrack = aStep->GetTrack();
-  G4Material* material = fTrack->GetMaterial();
-  G4int id = fTrack->GetTrackID(); // NEW Just for showing textoutput
+  //G4Material* material = fTrack->GetMaterial();
+  //G4int id = fTrack->GetTrackID(); // NEW Just for showing textoutput
   //G4double mass = fTrack->GetDefinition()->GetPDGMass();
 
   // Check the last momentum against the current momentum
@@ -46,20 +46,23 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
 	  //G4cout << deltaAngle << " = Th[" << id << "]/" << __ANG_UNIT << G4endl;
 	  //G4cout << fTrack->GetPosition() << " = Position[" << id << "]/" << __L_UNIT << G4endl;
 
+/*
 G4cout << "step track id = " << id << G4endl;
+*/
 
   // IF Statements dealing with whether these delta E and Angle are sufficient to warrant storing the current position and deltas in temporary storage for the IO to pick up or get replaced further along in the steppingAction.
   // Make these cuts dynamical and determined by macros
   //if( (abs(deltaEnergy) > 0.001) && (deltaAngle > 0.001) ) { // Consider adding in material based cuts as well
-  if( (abs(deltaEnergy) >= 0.00000000000000000001) && (abs(deltaAngle) >= 0.000000000000000000000001) ) { // Consider adding in material based cuts as well
-	  G4cout << G4endl << "Significant change detected: " << G4endl << G4endl;
-	  G4cout << deltaEnergy << " = fPartDeltaE[" << id << "]/" << __E_UNIT << G4endl;
-	  G4cout << deltaEnergyDep << " = fPartDeltaEDep[" << id << "]/" << __E_UNIT << G4endl;
-	  G4cout << deltaAngle << " = fPartDeltaTh[" << id << "]/" << __ANG_UNIT << G4endl;
-	  G4cout << fTrack->GetPosition().x() << " = fPartLastPos.x()[" << id << "]/" << __L_UNIT << G4endl;
-	  G4cout << fTrack->GetPosition().y() << " = fPartLastPos.y()[" << id << "]/" << __L_UNIT << G4endl;
-	  G4cout << fTrack->GetPosition().z() << " = fPartLastPos.z()[" << id << "]/" << __L_UNIT << G4endl;
-
+  //G4cout << "fAbs(deltaEnergy) = " << fabs(deltaEnergy) << ", and fAbs(deltaAngle) = " << fabs(deltaAngle) << G4endl; 
+  if( (fabs(deltaEnergy) >= 0.001) && (fabs(deltaAngle) >= 0.001) ) { // Consider adding in material based cuts as well
+/*	  G4cout << G4endl << "Significant change detected: " << G4endl << G4endl;
+	  G4cout << deltaEnergy << " = fPartDeltaE[" << id << "]" << " GeV" << G4endl;
+	  G4cout << deltaEnergyDep << " = fPartDeltaEDep[" << id << "]" << " GeV" << G4endl;
+	  G4cout << deltaAngle << " = fPartDeltaTh[" << id << "]" << " degrees" << G4endl;
+	  G4cout << fTrack->GetPosition().x() << " = fPartLastPos.x()[" << id << "]" << " millimeters" << G4endl;
+	  G4cout << fTrack->GetPosition().y() << " = fPartLastPos.y()[" << id << "]" << " millimeters" << G4endl;
+	  G4cout << fTrack->GetPosition().z() << " = fPartLastPos.z()[" << id << "]" << " millimeters" << G4endl;
+*/
 
     // NEW FIXME GetUserInformation is a G4track member of type G4VUserTrackInformation that I want to use to get my
     // remollVUserTrackInformation methods... I'm not sure how this works.

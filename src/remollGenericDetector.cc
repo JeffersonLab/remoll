@@ -98,7 +98,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     if( !badhit ){
 	      // Hit
-	      G4cout << "Hit registered" << G4endl;
+//	      G4cout << "Hit registered" << G4endl;
         thishit->f3X = prestep->GetPosition();
 	      thishit->f3V = track->GetVertexPosition();
 	      thishit->f3P = track->GetMomentum();
@@ -106,11 +106,11 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
         // FIXME Plan:
         // get the data from the tracks user variables
         remollVUserTrackInformation* trackInfo = (remollVUserTrackInformation*)(track->GetUserInformation());
-        trackInfo->Print();
-        G4cout << "LastSigVertdE = " << trackInfo->GetLastSigVertdE() << G4endl;
-        G4cout << "LastSigVertdEDep = " << trackInfo->GetLastSigVertdEDep() << G4endl;
-        G4cout << "LastSigVertdTh = " << trackInfo->GetLastSigVertdTh() << G4endl;
-        G4cout << "LastSigVertdPos = " << trackInfo->GetLastSigVertPos() << G4endl;
+//        trackInfo->Print();
+//        G4cout << "LastSigVertdE = " << trackInfo->GetLastSigVertdE() << G4endl;
+//        G4cout << "LastSigVertdEDep = " << trackInfo->GetLastSigVertdEDep() << G4endl;
+//        G4cout << "LastSigVertdTh = " << trackInfo->GetLastSigVertdTh() << G4endl;
+//        G4cout << "LastSigVertdPos = " << trackInfo->GetLastSigVertPos() << G4endl;
         thishit->fDeltaE  = trackInfo->GetLastSigVertdE(); // NEW
         thishit->fDeltaEDep = trackInfo->GetLastSigVertdEDep(); // NEW
         thishit->fDeltaTh = trackInfo->GetLastSigVertdTh(); // NEW

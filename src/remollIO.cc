@@ -219,7 +219,7 @@ void remollIO::SetEventData(remollEvent *ev){
     }
  
     fNEvPart = n;
-G4cout << " IMPORTANT: Number of Events! = " << n << G4endl;
+//G4cout << " IMPORTANT: Number of Events! = " << n << G4endl;
     fEvRate   = ev->fRate*s;
     fEvEffXS  = ev->fEffXs/microbarn;
     fEvAsym   = ev->fAsym/__ASYMM_SCALE;
@@ -316,13 +316,14 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
 	  // Unfortunately this method may only be called upon creation of a particle, so 
 	  // I may need to move these saves to the detector hit method, or some end of life method.
     //
-    G4cout << "Storing the last signigicant changes (if any) " << G4endl;
-	  G4cout << hit->fDeltaE/__E_UNIT << " = fGenDetHit_LdE[" << n << "]/" << __E_UNIT << G4endl;
-	  G4cout << hit->fDeltaEDep/__E_UNIT << " = fGenDetHit_LdEDep[" << n << "]/" << __E_UNIT << G4endl;
-	  G4cout << hit->fDeltaTh/__E_UNIT << " = fGenDetHit_LdTh[" << n << "]/" << __ANG_UNIT << G4endl;
-	  G4cout << hit->fLastPos.x()/__L_UNIT << " = fGenDetHit_Lx[" << n << "]/" << __L_UNIT << G4endl;
-	  G4cout << hit->fLastPos.y()/__L_UNIT << " = fGenDetHit_Ly[" << n << "]/" << __L_UNIT << G4endl;
-	  G4cout << hit->fLastPos.z()/__L_UNIT << " = fGenDetHit_Lz[" << n << "]/" << __L_UNIT << G4endl;
+/*    G4cout << "Storing the last signigicant changes (if any) " << G4endl;
+	  G4cout << hit->fDeltaE << " = fGenDetHit_LdE[" << n << "]/" << " GeV" << G4endl;
+	  G4cout << hit->fDeltaEDep << " = fGenDetHit_LdEDep[" << n << "]" << " GeV" << G4endl;
+	  G4cout << hit->fDeltaTh << " = fGenDetHit_LdTh[" << n << "]" << " degrees" << G4endl;
+	  G4cout << hit->fLastPos.x()/__L_UNIT << " = fGenDetHit_Lx[" << n << "]/" << " meters" << G4endl;
+	  G4cout << hit->fLastPos.y()/__L_UNIT << " = fGenDetHit_Ly[" << n << "]/" << " meters" << G4endl;
+	  G4cout << hit->fLastPos.z()/__L_UNIT << " = fGenDetHit_Lz[" << n << "]/" << " meters" << G4endl;
+*/
     fGenDetHit_LdE[n] = hit->fDeltaE/__E_UNIT;
     fGenDetHit_LdEDep[n] = hit->fDeltaE/__E_UNIT;
 	  fGenDetHit_LdTh[n] = hit->fDeltaTh/deg;
