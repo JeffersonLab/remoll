@@ -42,9 +42,48 @@
     with half the height (radial dimension) of the lucite blocks.
   -->
   <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="95.0+12.5" unit="cm"/>
+
+  <matrix coldim="2" name="ABSLENGTH_AIR" values="
+    1.54986*eV 1*km
+    1.77127*eV 1*km
+    2.06648*eV 1*km
+    2.47978*eV 1*km
+    3.09973*eV 1*km
+    4.13297*eV 1*km
+    4.95956*eV 1*km
+    5.51063*eV 1*km
+    5.90424*eV 1*km"/>
+
+  <matrix coldim="2" name="RINDEX_AIR" values="
+    1.54986*eV 1.000292
+    1.77127*eV 1.000292
+    2.06648*eV 1.000292
+    2.47978*eV 1.000292
+    3.09973*eV 1.000292
+    4.13297*eV 1.000292
+    4.95956*eV 1.000292
+    5.51063*eV 1.000292
+    5.90424*eV 1.000292"/>
 </define>
 
 <materials>
+
+  <element Z="7" formula="N" name="Nitrogen">
+    <atom value="14"/>
+  </element>
+  <element Z="8" formula="O" name="Oxygen">
+    <atom value="16"/>
+  </element>
+
+  <material name="Air" state="gas">
+    <property name="ABSLENGTH" ref="ABSLENGTH_AIR"/>
+    <property name="RINDEX" ref="RINDEX_AIR"/>
+    <MEE value="85.703" unit="eV"/>
+    <D value="0.00129" unit="g/cm3"/>
+    <fraction n="0.7" ref="Nitrogen"/>
+    <fraction n="0.3" ref="Oxygen"/>
+  </material>
+
 </materials>
 
 <solids>
@@ -63,7 +102,7 @@
 <structure>
 
   <volume name="pionDetectorLuciteSector_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
       <file name="geometry_sculpt/pionDetectorLucite.gdml"/>
@@ -76,7 +115,7 @@
   </volume>
 
   <volume name="pionDetectorLuciteAllSectors_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteAllSectors_solid"/>
     <replicavol number="14"> <!-- number of replicas has to fill mother volume exactly! -->
       <volumeref ref="pionDetectorLuciteSector_logical"/>
