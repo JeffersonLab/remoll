@@ -16,6 +16,7 @@ void remollVTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 {
   //if(aTrack->GetParentID()==0 && aTrack->GetUserInformation()==0)
   remollVUserTrackInformation* anInfo = new remollVUserTrackInformation();//aTrack);
+  anInfo->SetLastSigVert( 0.0, 0.0, 0.0, aTrack->GetPosition());
   //G4cout << "creating new particle tracking info and setting its initial parameters to null values " << G4endl;
   //anInfo->SetLastSigVert( 0.0, 0.0, 0.0, ( 0.0, 0.0, 0.0 ) );
   G4Track* theTrack = (G4Track*)aTrack;

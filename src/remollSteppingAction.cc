@@ -29,47 +29,51 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
   G4StepPoint *poststep = aStep->GetPostStepPoint();
   G4Track* fTrack = aStep->GetTrack();
   //G4Material* material = fTrack->GetMaterial();
-  //G4int id = fTrack->GetTrackID(); // NEW Just for showing textoutput
-  //G4double mass = fTrack->GetDefinition()->GetPDGMass();
+  G4String material = fTrack->GetMaterial()->GetName();
 
-  // Check the last momentum against the current momentum
-  G4ThreeVector mom_direction = poststep->GetMomentumDirection(); //G4ThreeVector mom_direction = fTrack->GetMomentumDirection();
-  G4ThreeVector old_direction = prestep->GetMomentumDirection(); //(fTrack->GetMomentum() - aStep->GetDeltaMomentum())/GeV;
-    
-  G4double deltaEnergy = aStep->GetDeltaEnergy()/GeV;
-  G4double deltaEnergyDep = aStep->GetTotalEnergyDeposit()/GeV;
-  G4double deltaAngle = mom_direction.theta(old_direction)/deg;
-	  
+
+  if( ( material != "VacuumColl" ) && ( material != "VacuumTarg" ) && ( material != "Vacuum" ) && ( material != "Air" ) ) {
+
+  //G4cout << "material = " << material->GetName() << G4endl;
+    //G4int id = fTrack->GetTrackID(); // NEW Just for showing textoutput
+    //G4double mass = fTrack->GetDefinition()->GetPDGMass();
+
+    // Check the last momentum against the current momentum
+    G4ThreeVector mom_direction = poststep->GetMomentumDirection(); //G4ThreeVector mom_direction = fTrack->GetMomentumDirection();
+    G4ThreeVector old_direction = prestep->GetMomentumDirection(); //(fTrack->GetMomentum() - aStep->GetDeltaMomentum())/GeV;
+      
+    G4double deltaEnergy = aStep->GetDeltaEnergy()/GeV;
+    G4double deltaEnergyDep = aStep->GetTotalEnergyDeposit()/GeV;
+    G4double deltaAngle = mom_direction.theta(old_direction)/deg;
+      
     //G4cout << G4endl << "Current delta E and Th variables, and position " << G4endl << G4endl;
-	  //G4cout << deltaEnergy << " = E[" << id << "]/" << __E_UNIT << G4endl;
-	  //G4cout << deltaEnergyDep << " = EDep[" << id << "]/" << __E_UNIT << G4endl;
-	  //G4cout << deltaAngle << " = Th[" << id << "]/" << __ANG_UNIT << G4endl;
-	  //G4cout << fTrack->GetPosition() << " = Position[" << id << "]/" << __L_UNIT << G4endl;
+    //G4cout << deltaEnergy << " = E[" << id << "]/" << __E_UNIT << G4endl;
+    //G4cout << deltaEnergyDep << " = EDep[" << id << "]/" << __E_UNIT << G4endl;
+    //G4cout << deltaAngle << " = Th[" << id << "]/" << __ANG_UNIT << G4endl;
+    //G4cout << fTrack->GetPosition() << " = Position[" << id << "]/" << __L_UNIT << G4endl;
 
-/*
-G4cout << "step track id = " << id << G4endl;
-*/
+    /*
+    G4cout << "step track id = " << id << G4endl;
+    */
 
-  // IF Statements dealing with whether these delta E and Angle are sufficient to warrant storing the current position and deltas in temporary storage for the IO to pick up or get replaced further along in the steppingAction.
-  // Make these cuts dynamical and determined by macros
-  //if( (abs(deltaEnergy) > 0.001) && (deltaAngle > 0.001) ) { // Consider adding in material based cuts as well
-  //G4cout << "fAbs(deltaEnergy) = " << fabs(deltaEnergy) << ", and fAbs(deltaAngle) = " << fabs(deltaAngle) << G4endl; 
-  if( (fabs(deltaEnergy) >= 0.001) && (fabs(deltaAngle) >= 0.001) ) { // Consider adding in material based cuts as well
-/*	  G4cout << G4endl << "Significant change detected: " << G4endl << G4endl;
-	  G4cout << deltaEnergy << " = fPartDeltaE[" << id << "]" << " GeV" << G4endl;
-	  G4cout << deltaEnergyDep << " = fPartDeltaEDep[" << id << "]" << " GeV" << G4endl;
-	  G4cout << deltaAngle << " = fPartDeltaTh[" << id << "]" << " degrees" << G4endl;
-	  G4cout << fTrack->GetPosition().x() << " = fPartLastPos.x()[" << id << "]" << " millimeters" << G4endl;
-	  G4cout << fTrack->GetPosition().y() << " = fPartLastPos.y()[" << id << "]" << " millimeters" << G4endl;
-	  G4cout << fTrack->GetPosition().z() << " = fPartLastPos.z()[" << id << "]" << " millimeters" << G4endl;
-*/
+    // IF Statements dealing with whether these delta E and Angle are sufficient to warrant storing the current position and deltas in temporary storage for the IO to pick up or get replaced further along in the steppingAction.
+    // Make these cuts dynamical and determined by macros
+    //if( (abs(deltaEnergy) > 0.001) && (deltaAngle > 0.001) ) { // Consider adding in material based cuts as well
+    //G4cout << "fAbs(deltaEnergy) = " << fabs(deltaEnergy) << ", and fAbs(deltaAngle) = " << fabs(deltaAngle) << G4endl; 
+    if( (fabs(deltaEnergy) >= 0.001) && (fabs(deltaAngle) >= 0.001) ) { // Consider adding in material based cuts as well
+    /*G4cout << G4endl << "Significant change detected: " << G4endl << G4endl;
+      G4cout << deltaEnergy << " = fPartDeltaE[" << id << "]" << " GeV" << G4endl;
+      G4cout << deltaEnergyDep << " = fPartDeltaEDep[" << id << "]" << " GeV" << G4endl;
+      G4cout << deltaAngle << " = fPartDeltaTh[" << id << "]" << " degrees" << G4endl;
+      G4cout << fTrack->GetPosition().x() << " = fPartLastPos.x()[" << id << "]" << " millimeters" << G4endl;
+      G4cout << fTrack->GetPosition().y() << " = fPartLastPos.y()[" << id << "]" << " millimeters" << G4endl;
+      G4cout << fTrack->GetPosition().z() << " = fPartLastPos.z()[" << id << "]" << " millimeters" << G4endl;
+      */
 
-    // NEW FIXME GetUserInformation is a G4track member of type G4VUserTrackInformation that I want to use to get my
-    // remollVUserTrackInformation methods... I'm not sure how this works.
-    remollVUserTrackInformation* info = (remollVUserTrackInformation*)(fTrack->GetUserInformation());
-    info->SetLastSigVert( deltaEnergy, deltaEnergyDep, deltaAngle, fTrack->GetPosition() );
+      remollVUserTrackInformation* info = (remollVUserTrackInformation*)(fTrack->GetUserInformation());
+      info->SetLastSigVert( deltaEnergy, deltaEnergyDep, deltaAngle, fTrack->GetPosition() );
+    }
   }
-
   /////////////////
     
   /*
