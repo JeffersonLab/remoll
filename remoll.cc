@@ -15,6 +15,7 @@
 #include "remollEventAction.hh"
 #include "remollSteppingAction.hh"
 #include "remollDetectorConstruction.hh"
+#include "remollParallelWorldConstruction.hh"
 
 #include "remollIO.hh"
 #include "remollMessenger.hh"
@@ -92,16 +93,23 @@ int main(int argc, char** argv){
     G4cout << "RunManager construction starting...." << G4endl;
     G4RunManager * runManager = new G4RunManager;
 
+    // Detector geometry
+    remollDetectorConstruction* detector = new remollDetectorConstruction();
+
+    // Parallel world geometry
+    G4String parallelWorldName = "ParallelWorld";
+    remollParallelWorldConstruction* parallelWorld = 
+      new remollParallelWorldConstruction(parallelWorldName);
+    detector->RegisterParallelWorld(parallelWorld);
+    runManager->SetUserInitialization(detector);
+    detector->SetIO(io);
+
+
+    // Messenger
     remollMessenger *rmmess = new remollMessenger();
     rmmess->SetIO(io);
-
-    // Detector geometry
-    G4VUserDetectorConstruction* detector = new remollDetectorConstruction();
-    runManager->SetUserInitialization(detector);
-    rmmess->SetDetCon( ((remollDetectorConstruction *) detector) );
-    rmmess->SetMagField( ((remollDetectorConstruction *) detector)->GetGlobalField() );
-
-    ((remollDetectorConstruction *) detector)->SetIO(io);
+    rmmess->SetDetCon(detector);
+    rmmess->SetMagField(detector->GetGlobalField() );
 
     // Physics we want to use
     G4int verbose = 0;
