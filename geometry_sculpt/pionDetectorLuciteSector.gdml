@@ -10,7 +10,8 @@
     the radius along with the angle of the detector to increase the length in the
     longitudinal direction.
   -->
-  <quantity name="pionDetectorLuciteRadius" type="length" value="1.90" unit="m"/>
+  <quantity name="pionDetectorLuciteInnerRadius" type="length" value="0.60" unit="m"/>
+  <quantity name="pionDetectorLuciteOuterRadius" type="length" value="1.90" unit="m"/>
 
   <!--
     The length is the full extent of the detector in the longitudinal direction.
@@ -88,14 +89,14 @@
 
 <solids>
   <tube name="pionDetectorLuciteSector_solid"
-    rmin="0"
-    rmax="1.00*pionDetectorLuciteRadius"
-    z="1.00*pionDetectorLuciteLength+0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"
+    rmin="1.00*pionDetectorLuciteInnerRadius"
+    rmax="1.00*pionDetectorLuciteOuterRadius"
+    z="1.00*pionDetectorLuciteLength+0.5*pionDetectorLuciteOuterRadius*sin(pionDetectorLuciteSectorAngle)"
     startphi="-PHI/4.0" deltaphi="PHI/2.0" aunit="deg"/>
   <tube name="pionDetectorLuciteAllSectors_solid"
-    rmin="0"
-    rmax="1.01*pionDetectorLuciteRadius"
-    z="1.01*pionDetectorLuciteLength+0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"
+    rmin="0.99*pionDetectorLuciteInnerRadius"
+    rmax="1.01*pionDetectorLuciteOuterRadius"
+    z="1.01*pionDetectorLuciteLength+0.5*pionDetectorLuciteOuterRadius*sin(pionDetectorLuciteSectorAngle)"
     startphi="-PHI/4.0" deltaphi="N_P*PHI/2.0" aunit="deg"/>
 </solids>
 
