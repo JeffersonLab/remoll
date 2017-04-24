@@ -523,6 +523,7 @@
   <volume name="pionDetectorLuciteLightGuideInsideEntryDetector_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuideInsideEntryDetector_intersection_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLuciteLightGuideEntry"/>
     <auxiliary auxtype="DetNo" auxvalue="4010"/>
     <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
     <auxiliary auxtype="Color" auxvalue="White"/>
@@ -531,6 +532,7 @@
   <volume name="pionDetectorLuciteLightGuideInsideExitDetector_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuideInsideExitDetector_intersection_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLuciteLightGuideExit"/>
     <auxiliary auxtype="DetNo" auxvalue="4011"/>
     <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
     <auxiliary auxtype="Color" auxvalue="White"/>
