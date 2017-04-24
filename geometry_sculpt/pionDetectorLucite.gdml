@@ -511,6 +511,8 @@
   <volume name="pionDetectorLuciteMylar_logical">
     <materialref ref="G4_MYLAR"/>
     <solidref ref="pionDetectorLuciteMylar_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLuciteMylar"/>
+    <auxiliary auxtype="DetNo" auxvalue="4030"/>
   </volume>
 
   <volume name="pionDetectorLuciteLightGuideShell_logical">
