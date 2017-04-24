@@ -37,7 +37,10 @@
   <quantity name="pionDetectorLuciteLightGuideExitDetectorThickness" type="length" value="1.0" unit="mm"/>
 
   <quantity name="pionDetectorLucitePMTThickness" type="length" value="1.0" unit="mm"/>
-  <quantity name="pionDetectorLucitePMTDiameter" type="length" value="5.0*2.54" unit="cm"/>
+  <quantity name="pionDetectorLucitePMTDiameter" type="length" value="3.0*2.54" unit="cm"/>
+  <quantity name="pionDetectorLucitePMTHousingHeight" type="length" value="7.5" unit="cm"/>
+  <quantity name="pionDetectorLucitePMTHousingThickness" type="length" value="1.0" unit="mm"/>
+  
 
   <matrix coldim="2" name="ABSLENGTH_AIR" values="
     1.54986*eV 1*km
@@ -198,12 +201,26 @@
   <!-- x in azimuthal direction -->
   <!-- y in downstream beam direction -->
   <!-- z in radial outward direction -->
-  <tube name="pionDetectorLucitePMT_solid"
-    rmin="0"
+  
+  <tube name="pionDetectorLucitePMTWindow_solid"
+    rmin="0.0"
     rmax="pionDetectorLucitePMTDiameter/2.0"
     z="pionDetectorLucitePMTThickness"
     deltaphi="360.0" aunit="deg"/>
-
+  <tube name="pionDetectorLucitePMTInsideHousing_solid"
+    rmin="0.0"
+    rmax="pionDetectorLucitePMTDiameter/2.0-pionDetectorLucitePMTHousingThickness"
+    z="(pionDetectorLucitePMTHousingHeight-pionDetectorLucitePMTHousingThickness-pionDetectorLucitePMTThickness)"
+    deltaphi="360.0" aunit="deg"/>
+  <tube name="pionDetectorLucitePMTOutsideHousing_solid"
+    rmin="0.0"
+    rmax="pionDetectorLucitePMTDiameter/2.0"
+    z="pionDetectorLucitePMTHousingHeight"
+    deltaphi="360.0" aunit="deg"/>
+  <scaledSolid name="pionDetectorLucitePMTOutsideHousingScaled_solid">
+    <solidref ref="pionDetectorLucitePMTOutsideHousing_solid"/>
+    <scaleref ref="scale_up"/>
+  </scaledSolid>
   <trap name="pionDetectorLuciteGlue_solid"
     alpha1="0" alpha2="0"
     theta="pionDetectorLuciteAngle" phi="90.0*deg"
@@ -496,12 +513,35 @@
   
   <volume name="pionDetectorLucitePMTWindow_logical">
     <materialref ref="CsPhotocathode"/>
-    <solidref ref="pionDetectorLucitePMT_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="pionLucitePMT"/>
+    <solidref ref="pionDetectorLucitePMTWindow_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLucitePMTWindow"/>
     <auxiliary auxtype="DetNo" auxvalue="4000"/>
     <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
     <auxiliary auxtype="Color" auxvalue="White"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+  <volume name="pionDetectorLucitePMTInsideHousing_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorLucitePMTInsideHousing_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLucitePMTHousing"/>
+    <auxiliary auxtype="DetNo" auxvalue="4020"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.2"/>
+  </volume>
+  <volume name="pionDetectorLucitePMTOutsideHousing_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="pionDetectorLucitePMTOutsideHousing_solid"/>
+    <physvol name="pionDetectorLucitePMTWindow_physical">
+      <volumeref ref="pionDetectorLucitePMTWindow_logical"/>
+      <position name="pionDetectorLucitePMTWindow_position"
+        z="(-pionDetectorLucitePMTHousingHeight+pionDetectorLucitePMTHousingThickness)/2.0"/>
+    </physvol>
+    <physvol name="pionDetectorLucitePMTInsideHousing_physical">
+      <volumeref ref="pionDetectorLucitePMTInsideHousing_logical"/>
+      <position name="pionDetectorLucitePMTInsideHousing_position"
+        z="(+pionDetectorLucitePMTHousingThickness-pionDetectorLucitePMTThickness)/2.0"/>
+    </physvol>
   </volume>
 
   <volume name="pionDetectorLucite_logical">
@@ -526,15 +566,17 @@
         z="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
                 +pionDetectorLuciteLightGuideHeight/2.0"/>
     </physvol>
-    <physvol name="pionDetectorLucitePMT_physical">
-      <volumeref ref="pionDetectorLucitePMT_logical"/>
-      <position name="pionDetectorLucitePMT_position"
-        y="pionDetectorLuciteHeight/2.0*tan(pionDetectorLuciteAngle)
-          +pionDetectorLuciteLightGuideHeight*tan(pionDetectorLuciteLightGuideAngle)"
-        z="pionDetectorLuciteHeight/2.0
-          +pionDetectorLuciteLightGuideHeight
-          +pionDetectorLucitePMTThickness/2.0"/>
+    
+    <physvol name="pionDetectorLucitePMTOutsideHousing_physical">
+      <volumeref ref="pionDetectorLucitePMTOutsideHousing_logical"/>
+      <position name="pionDetectorLucitePMTOutsideHousing_position"
+        y="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0*tan(pionDetectorLuciteTheta)
+                +pionDetectorLuciteLightGuideHeight*tan(pionDetectorLuciteLightGuideTheta)"
+        z="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
+                +pionDetectorLuciteLightGuideHeight
+                +pionDetectorLucitePMTHousingHeight/2.0"/>
     </physvol>
+
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
