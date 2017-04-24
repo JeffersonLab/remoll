@@ -112,7 +112,7 @@
         z="-0.2*pionDetectorLuciteLength-0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"/>
       <rotation name="pionDetectorLucite_rotation" unit="deg" y="-90.0+pionDetectorLuciteSectorAngle" z="90"/>
     </physvol>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
 
   <volume name="pionDetectorLuciteAllSectors_logical">
@@ -127,7 +127,7 @@
         <offset value="-pi/14.0" unit="mm"/>
       </replicate_along_axis>
     </replicavol>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
 
 </structure>
