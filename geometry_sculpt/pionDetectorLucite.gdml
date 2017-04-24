@@ -8,8 +8,12 @@
   <!--
     For enclosing volumes we merely scale up the actual volume by a small factor.
   -->
-  <constant name="SCALE" value="1.01"/>
-
+  <constant name="SCALE" value="0.1"/>
+  <constant name="SCALE_UP" value="1.0+SCALE"/>
+  <constant name="SCALE_DOWN" value="1.0-SCALE"/>
+  <scale name="scale_up" x="SCALE_UP" y="SCALE_UP" z="SCALE_UP"/>
+  <scale name="scale_down" x="SCALE_DOWN" y="SCALE_DOWN" z="SCALE_DOWN"/>
+  
   <!--
     Common thicknesses of aluminized mylar foils are:
       5 mil = 0.125 mm,
