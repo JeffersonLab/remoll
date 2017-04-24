@@ -50,7 +50,7 @@
 /gui/addButton viewer "Back view"            "/vis/viewer/set/viewpointThetaPhi 0 0 deg"
 /gui/addButton viewer "Side 1 view"            "/vis/viewer/set/viewpointThetaPhi 90 180 deg"
 /gui/addButton viewer "Side 2 view"            "/vis/viewer/set/viewpointThetaPhi -90 180 deg"
-/gui/addButton viewer "Top view"             "/vis/viewer/set/viewpointThetaPhi 90 89 deg"
+/gui/addButton viewer "Top view"             "/vis/viewer/set/viewpointThetaPhi 90 90 deg"
 /gui/addButton viewer "Update viewer"        "/vis/viewer/update"
 /gui/addButton viewer "Update scene"         "/vis/scene/notifyHandlers"
 /gui/addButton viewer "Reset scene"          "/control/execute vis/vis.mac"
