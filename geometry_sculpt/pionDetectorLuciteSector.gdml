@@ -46,8 +46,12 @@
     
     A good choice for this parameter is about 5.0 degrees, to be chosen consistent
     with the average angle of pions behind the spectrometer magnets.
+  
+    pionDetectorLuciteSectorAngleBase is +90.0 degrees for the configuration with
+    PMT radially outward; -90.0 degrees is with the PMT radially inward.
   -->
-  <quantity name="pionDetectorLuciteSectorAngle" type="angle" value="0.0" unit="deg"/>
+  <quantity name="pionDetectorLuciteSectorAngleBase" type="angle" value="-90.0" unit="deg"/>
+  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="5.0" unit="deg"/>
   
   <!--
     The lucite detector is placed radially in reference to the the center of the
@@ -103,26 +107,28 @@
   <tube name="pionDetectorLuciteSector_solid"
     rmin="pionDetectorLuciteInnerRadius"
     rmax="pionDetectorLuciteOuterRadius"
-    z="pionDetectorLuciteLength+0.5*pionDetectorLuciteOuterRadius*sin(pionDetectorLuciteSectorAngle)"
+    z="pionDetectorLuciteLength"
     startphi="-PHI/4.0" deltaphi="PHI/2.0" aunit="deg"/>
   <tube name="pionDetectorLuciteAllSectors_solid"
     rmin="SCALE_DOWN*pionDetectorLuciteInnerRadius"
     rmax="SCALE_UP*pionDetectorLuciteOuterRadius"
-    z="SCALE_UP*pionDetectorLuciteLength+0.5*pionDetectorLuciteOuterRadius*sin(pionDetectorLuciteSectorAngle)"
+    z="SCALE_UP*pionDetectorLuciteLength"
     startphi="-PHI/4.0" deltaphi="N_P*PHI/2.0" aunit="deg"/>
 </solids>
 
 <structure>
-
+  
   <volume name="pionDetectorLuciteSector_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
       <file name="geometry_sculpt/pionDetectorLucite.gdml"/>
       <position name="pionDetectorLucite_position"
-        x="pionDetectorLuciteInnerEdgeRadialPosition"
-        z="-0.2*pionDetectorLuciteLength-0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"/>
-      <rotation name="pionDetectorLucite_rotation" unit="deg" y="-90.0+pionDetectorLuciteSectorAngle" z="90"/>
+        x="pionDetectorLuciteInnerEdgeRadialPosition"/>
+      <rotation name="pionDetectorLucite_rotation"
+                z="pionDetectorLuciteSectorAngleBase"
+                y="-(pionDetectorLuciteSectorAngleBase+pionDetectorLuciteSectorAnglePitch)"/>
+      <!-- x rotation 180: layer 1 in the back -->
     </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
