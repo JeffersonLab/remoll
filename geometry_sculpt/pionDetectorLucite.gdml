@@ -518,6 +518,8 @@
   <volume name="pionDetectorLuciteLightGuideShell_logical">
     <materialref ref="G4_Al"/>
     <solidref ref="pionDetectorLuciteLightGuideShell_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLuciteLightGuideShell"/>
+    <auxiliary auxtype="DetNo" auxvalue="4031"/>
     <auxiliary auxtype="Color" auxvalue="Gray"/>
   </volume>
   <volume name="pionDetectorLuciteLightGuideInsideEntryDetector_logical">
