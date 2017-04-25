@@ -499,10 +499,10 @@
         <position name="pionDetectorLucitePlaneGlue_position"
                y="-N_P*pionDetectorLucitePlaneGlueThicknessInY/2.0
                   +i_p*pionDetectorLucitePlaneGlueThicknessInY
-                  +pionDetectorLuciteWedgeHeight/2.0*abs(tan(pionDetectorLuciteTheta))
-                  -pionDetectorLuciteGlueThicknessInY/2.0-pionDetectorLucitePlaneGlueThicknessInY/2.0"
+                  -pionDetectorLuciteWedgeHeight/2.0*tan(pionDetectorLuciteTheta)
+                  -pionDetectorLuciteGlueThicknessInY/2.0
+                  -pionDetectorLucitePlaneGlueThicknessInY/2.0"
                z="-pionDetectorLuciteWedgeHeight/2.0"/>
-        <!-- why abs??? -->
       </physvol>
     </loop>
     <auxiliary auxtype="Alpha" auxvalue="0.9"/>
