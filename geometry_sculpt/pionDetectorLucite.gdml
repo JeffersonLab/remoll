@@ -76,7 +76,7 @@
   <quantity name="pionDetectorLuciteWedgeBase"
             value="pionDetectorLucitePlaneThicknessInY/2.0
             -pionDetectorLuciteWedgeSide*pionDetectorLuciteWedgeHeight*tan(pionDetectorLuciteTheta)
-            +pionDetectorLuciteWedgeSide*pionDetectorLuciteWedgeBevel/2.0"/>
+            -pionDetectorLuciteWedgeBevel/2.0"/>
   <!-- angle from center of cut parallel to the bottom face to point of the wedge -->
   <quantity name="pionDetectorLuciteWedgeTheta"
             value="-pionDetectorLuciteWedgeSide*atan(pionDetectorLuciteWedgeBase/pionDetectorLuciteWedgeHeight)"/>
