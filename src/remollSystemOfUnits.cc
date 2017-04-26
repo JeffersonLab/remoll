@@ -6,6 +6,8 @@ remollUnits_t::remollUnits_t():
     ppm (remoll::ppm),
     ppb (remoll::ppb),
     // Distance
+    nm  (CLHEP::nm),
+    um  (CLHEP::um),
     mm  (CLHEP::mm),
     cm  (CLHEP::cm),
     m   (CLHEP::m),

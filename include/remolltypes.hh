@@ -75,13 +75,15 @@ struct remollGenericDetectorSum_t {
 struct remollUnits_t
 {
   remollUnits_t();
-  // constructor impl in remollUnits.cc due to conflicts between
+  // constructor impl in remollSystemOfUnits.cc due to conflicts between
   // rootcint and required G4/CLHEP headers
 
   // Asymmetry
   const double ppm;
   const double ppb;
   // Distance
+  const double nm;
+  const double um;
   const double mm;
   const double cm;
   const double m;
