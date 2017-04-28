@@ -1,7 +1,7 @@
 #include "remollGenAl.hh"
 #include "iomanip"
 #include "iostream"
-#include "CLHEP/Random/RandFlat.h"
+#include "Randomize.hh"
 #include "remollEvent.hh"
 #include "remollVertex.hh"
 #include "G4Material.hh"
@@ -28,9 +28,9 @@ remollGenAl::~remollGenAl() {
 void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
 
     G4double beamE = vert->GetBeamE(); // in MeV (it can be modified by beam loss)
-    G4double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min))); // radians
+    G4double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min))); // radians
     G4double phaseSpaceFactor = 2.0*pi*(cos(fTh_min) - cos(fTh_max));
-    G4double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
+    G4double ph = G4RandFlat::shoot(0.0, 2.0*pi);
     G4double eOut=0;
     G4double fWeight=0;
     G4double Q2=0;

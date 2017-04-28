@@ -8,8 +8,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
-#include "CLHEP/Random/RandFlat.h"
-#include "CLHEP/Random/RandGauss.h"
+#include "Randomize.hh"
 
 #include "remollBeamTarget.hh"
 #include "remollMultScatt.hh"
@@ -180,8 +179,8 @@ void remollBeamTarget::SetTargetPos(G4double z){
 remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     remollVertex thisvert;
 
-    G4double rasx = CLHEP::RandFlat::shoot( fX0 - fRasterX/2.0, fX0 + fRasterX/2.0);
-    G4double rasy = CLHEP::RandFlat::shoot( fY0 - fRasterY/2.0, fY0 + fRasterY/2.0);
+    G4double rasx = G4RandFlat::shoot( fX0 - fRasterX/2.0, fX0 + fRasterX/2.0);
+    G4double rasy = G4RandFlat::shoot( fY0 - fRasterY/2.0, fY0 + fRasterY/2.0);
     G4double ztrav, len;
 
     // Sample where along target weighted by density (which roughly corresponds to A
@@ -209,7 +208,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    break;
     }
 
-    ztrav = CLHEP::RandFlat::shoot(0.0, fSampLen);
+    ztrav = G4RandFlat::shoot(0.0, fSampLen);
 
 
     G4bool isLH2;
@@ -365,8 +364,8 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
     assert( !std::isnan(msth) && !std::isnan(msph) );
 
     if(fOldRaster){
-      bmth = CLHEP::RandGauss::shoot(fTh0, fdTh);
-      bmph = CLHEP::RandGauss::shoot(fPh0, fdPh);
+      bmth = G4RandGauss::shoot(fTh0, fdTh);
+      bmph = G4RandGauss::shoot(fPh0, fdPh);
       
       if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
       if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }

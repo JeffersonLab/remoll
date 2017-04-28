@@ -2,7 +2,7 @@
 #include "remollGenPion.hh"
 
 #include "G4String.hh"
-#include "CLHEP/Random/RandFlat.h"
+#include "Randomize.hh"
 
 //#include "wiser_pion.h"
 #include "remollEvent.hh"
@@ -43,8 +43,8 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     //double beamE = remollBeamTarget::GetBeamTarget()->fBeamE;
     double rad_len = vert->GetRadLen();
 
-    double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
-    double ph = CLHEP::RandFlat::shoot(fPh_min, fPh_max);
+    double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
+    double ph = G4RandFlat::shoot(fPh_min, fPh_max);
 
     double true_emax = 0.0;
     //For pion generation we don't set fE_min and fE_max so for now true_emax = beamE : rakitha Wed Sep 25 10:43:57 EDT 2013
@@ -54,7 +54,7 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	true_emax = fE_max;
     }
     
-    double pf = CLHEP::RandFlat::shoot(fE_min, true_emax);
+    double pf = G4RandFlat::shoot(fE_min, true_emax);
 
     assert( pf > 0.0 );
     assert( pf < beamE );

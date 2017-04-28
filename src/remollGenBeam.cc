@@ -1,7 +1,5 @@
 #include "remollGenBeam.hh"
 
-#include "CLHEP/Random/RandFlat.h"
-
 #include "remollEvent.hh"
 #include "remollVertex.hh"
 #include "remollBeamTarget.hh"
@@ -10,7 +8,6 @@
 #include "G4VPhysicalVolume.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PhysicalConstants.hh"
-#include "Randomize.hh"
 
 #include "remolltypes.hh"
 
@@ -44,7 +41,4 @@ void remollGenBeam::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     evt->SetQ2(0.0);
     evt->SetW2(0.0);
-
-    return;
-
 }

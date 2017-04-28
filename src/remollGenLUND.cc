@@ -3,9 +3,6 @@
 // Geant4 includes
 #include <G4Material.hh>
 
-// CLEHP includes
-#include <CLHEP/Random/RandFlat.h>
-
 // remoll includes
 #include "remollBeamTarget.hh"
 #include "remollEvent.hh"

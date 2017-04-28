@@ -1,6 +1,6 @@
 #include "remollGenFlat.hh"
 
-#include "CLHEP/Random/RandFlat.h"
+#include "Randomize.hh"
 
 #include "G4Material.hh"
 #include "G4PhysicalConstants.hh"
@@ -26,9 +26,9 @@ void remollGenFlat::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double mp = 0.938*GeV;
 
-    double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
-    double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
-    double ef = CLHEP::RandFlat::shoot(fE_min, fE_max);
+    double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
+    double ph = G4RandFlat::shoot(fPh_min, fPh_max);
+    double ef = G4RandFlat::shoot(fE_min, fE_max);
 
     evt->SetEffCrossSection(1);
 

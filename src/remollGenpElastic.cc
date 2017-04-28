@@ -1,7 +1,5 @@
 #include "remollGenpElastic.hh"
 
-#include "CLHEP/Random/RandFlat.h"
-
 #include "Randomize.hh"
 #include "G4Material.hh"
 #include "G4VPhysicalVolume.hh"
@@ -194,7 +192,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double icth_b = 1.0/(1.0-cthmax);
     double icth_a = 1.0/(1.0-cthmin);
 
-    double sampv = 1.0/CLHEP::RandFlat::shoot(icth_b, icth_a);
+    double sampv = 1.0/G4RandFlat::shoot(icth_b, icth_a);
 
     assert( -1.0 < sampv && sampv < 1.0 );
 
@@ -204,7 +202,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // sampling
     double samp_fact = sampv*sampv*(icth_a-icth_b)/(cthmin-cthmax);
 
-    double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
+    double ph = G4RandFlat::shoot(0.0, 2.0*pi);
 
     double ef    = proton_mass_c2*beamE/(proton_mass_c2 + beamE*(1.0-cos(th)));;
 
