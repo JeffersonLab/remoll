@@ -98,12 +98,12 @@ int main(int argc, char** argv){
     rmmess->SetIO(io);
 
     // Detector geometry
-    G4VUserDetectorConstruction* detector = new remollDetectorConstruction();
+    remollDetectorConstruction* detector = new remollDetectorConstruction();
     runManager->SetUserInitialization(detector);
-    rmmess->SetDetCon( ((remollDetectorConstruction *) detector) );
-    rmmess->SetMagField( ((remollDetectorConstruction *) detector)->GetGlobalField() );
+    rmmess->SetDetCon(detector);
+    rmmess->SetMagField(detector->GetGlobalField() );
 
-    ((remollDetectorConstruction *) detector)->SetIO(io);
+    detector->SetIO(io);
 
     // Physics we want to use
     G4int verbose = 0;
@@ -121,22 +121,22 @@ int main(int argc, char** argv){
     //-------------------------------
     // UserAction classes
     //-------------------------------
-    G4UserRunAction* run_action = new remollRunAction;
-    ((remollRunAction *) run_action)->SetIO(io);
+    remollRunAction* run_action = new remollRunAction;
+    run_action->SetIO(io);
     runManager->SetUserAction(run_action);
 
-    G4VUserPrimaryGeneratorAction* gen_action = new remollPrimaryGeneratorAction;
-    ((remollPrimaryGeneratorAction *) gen_action)->SetIO(io);
-    rmmess->SetPriGen((remollPrimaryGeneratorAction *)gen_action);
+    remollPrimaryGeneratorAction* gen_action = new remollPrimaryGeneratorAction;
+    gen_action->SetIO(io);
+    rmmess->SetPriGen(gen_action);
     runManager->SetUserAction(gen_action);
 
-    G4UserEventAction* event_action = new remollEventAction;
-    ((remollEventAction *) event_action)->SetIO(io);
+    remollEventAction* event_action = new remollEventAction;
+    event_action->SetIO(io);
 
     runManager->SetUserAction(event_action);
-    G4UserSteppingAction* stepping_action = new remollSteppingAction;
+    remollSteppingAction* stepping_action = new remollSteppingAction;
     runManager->SetUserAction(stepping_action);
-    rmmess->SetStepAct((remollSteppingAction *) stepping_action);
+    rmmess->SetStepAct(stepping_action);
 
     // New units
 
