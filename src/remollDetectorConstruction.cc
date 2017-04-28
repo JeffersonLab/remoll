@@ -335,6 +335,31 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
   return index;
 };
 
+std::vector<G4VPhysicalVolume*> remollDetectorConstruction::GetPhysicalVolumes(
+    G4VPhysicalVolume* physical_volume,
+    const G4LogicalVolume* logical_volume)
+{
+  // Create list of results
+  std::vector<G4VPhysicalVolume*> list;
+
+  // Store as result if the logical volume name agrees
+  if (physical_volume->GetLogicalVolume() == logical_volume) {
+    list.push_back(physical_volume);
+  }
+
+  // Descend down the tree
+  for (int i = 0; i < physical_volume->GetLogicalVolume()->GetNoDaughters(); i++)
+  {
+    // Get results for daughter volumes
+    std::vector<G4VPhysicalVolume*> daughter_list =
+        GetPhysicalVolumes(physical_volume->GetLogicalVolume()->GetDaughter(i),logical_volume);
+    // Add to the list of results
+    list.insert(list.end(),daughter_list.begin(),daughter_list.end());
+  }
+
+  return list;
+}
+
 void remollDetectorConstruction::DumpGeometricalTree(
     G4VPhysicalVolume* aVolume,
     G4int depth,
