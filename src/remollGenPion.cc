@@ -16,7 +16,8 @@
 #include "TF3.h"
 
 
-remollGenPion::remollGenPion(){
+remollGenPion::remollGenPion()
+: fPionType(kPiMinus) {
     fApplyMultScatt = false;
 
     fTh_min = 0.0*deg;
