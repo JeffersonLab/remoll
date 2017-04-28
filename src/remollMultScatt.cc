@@ -537,7 +537,7 @@ double remollMultScatt::GenerateMS(){
 
     // Weight by sin(th)
     double thisth = GenerateMSPlane();
-    while( sin(thisth) < drand48()*sin(thmax) ){
+    while( sin(thisth) < G4UniformRand()*sin(thmax) ){
 	thisth = GenerateMSPlane();
     }
 
