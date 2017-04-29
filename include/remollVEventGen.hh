@@ -35,7 +35,7 @@ class remollVEventGen {
 	G4String GetName(){ return fName; }
 
 	void SetSampType( SampType_t st ) { fSampType = st; }
-	void SetDoMultScatt( G4bool ms ){ fApplyMultScatt = ms; }
+	void SetDoMultScatt( G4bool multscatt ){ fApplyMultScatt = multscatt; }
 
 	virtual void SetThMin( double th ){ fTh_min = th; }
 	virtual void SetThMax( double th ){ fTh_max = th; }
