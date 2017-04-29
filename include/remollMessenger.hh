@@ -5,7 +5,6 @@
 #include "remolltypes.hh"
 #include "G4UImessenger.hh"
 #include "G4UIcommand.hh"
-#include "G4VModularPhysicsList.hh"
 
 /*!
  *   Global messenger class
@@ -23,6 +22,8 @@ class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
 class G4UIcmdWithAString;
 class G4UIcmdWithABool;
+
+class G4VModularPhysicsList;
 
 class remollMessenger : public G4UImessenger {
     public:

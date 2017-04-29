@@ -21,6 +21,7 @@
 
 #include "G4UImanager.hh"
 #include "G4RunManager.hh"
+#include "G4VModularPhysicsList.hh"
 
 #include "G4GDMLParser.hh"
 #include "G4VPhysicalVolume.hh"
