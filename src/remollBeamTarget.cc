@@ -3,7 +3,13 @@
 #include "G4LogicalVolume.hh"
 #include "G4VSolid.hh"
 #include "G4Material.hh"
+
+#ifdef G4MULTITHREADED
+#include "G4MTRunManager.hh"
+#else
 #include "G4RunManager.hh"
+#endif
+
 #include "G4GeometryManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"

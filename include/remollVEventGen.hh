@@ -3,9 +3,10 @@
 
 #include "remolltypes.hh"
 #include "remollglobs.hh"
+#include "remollVertex.hh"
+
 #include "G4String.hh"
 #include "G4ThreeVector.hh"
-#include "remollVertex.hh"
 
 /*!
    Generic base class for event generators

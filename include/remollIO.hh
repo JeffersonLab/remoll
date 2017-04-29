@@ -3,7 +3,6 @@
 
 #include "TROOT.h"
 #include "TObject.h"
-#include "G4Run.hh"
 #include "remolltypes.hh"
 
 #include "G4String.hh"

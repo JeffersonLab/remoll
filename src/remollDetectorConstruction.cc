@@ -12,7 +12,6 @@
 
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
-#include "G4RunManager.hh"
 
 #include "G4Material.hh"
 #include "G4Element.hh"

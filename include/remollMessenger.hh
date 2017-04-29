@@ -1,10 +1,9 @@
 #ifndef remollMessenger_HH
 #define remollMessenger_HH
 
-#include "globals.hh"
 #include "remolltypes.hh"
+
 #include "G4UImessenger.hh"
-#include "G4UIcommand.hh"
 
 /*!
  *   Global messenger class

@@ -1,5 +1,7 @@
 #include "remollMessenger.hh"
 
+#include "Randomize.hh"
+
 #include "G4UIcmdWithAnInteger.hh"
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
@@ -20,7 +22,6 @@
 #include "remollGenLUND.hh" //Dominic Lunde linking GenLUND
 
 #include "G4UImanager.hh"
-#include "G4RunManager.hh"
 #include "G4VModularPhysicsList.hh"
 
 #include "G4GDMLParser.hh"
