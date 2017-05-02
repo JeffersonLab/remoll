@@ -19,7 +19,7 @@
 #include "remollSteppingAction.hh"
 #include "remollGenPion.hh"
 #include "remollGenFlat.hh"
-#include "remollGenLUND.hh" //Dominic Lunde linking GenLUND
+#include "remollGenLUND.hh"
 
 #include "G4UImanager.hh"
 #include "G4VModularPhysicsList.hh"
@@ -185,129 +185,6 @@ remollMessenger::remollMessenger(){
     beamdphCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_dph",this);
     beamdphCmd->SetGuidance("beam gaussian spread in direction y (vertical)");
     beamdphCmd->SetParameterName("beamdph", false);
-
-
-
-    /*
-       fExpType = kNeutronExp;
-
-       runCmd = new G4UIcmdWithAnInteger("/g4sbs/run",this);
-       runCmd->SetGuidance("Run simulation with x events");
-       runCmd->SetParameterName("nevt", false);
-
-       gemconfigCmd = new G4UIcmdWithAnInteger("/g4sbs/gemconfig",this);
-       gemconfigCmd->SetGuidance("Change between GEM configurations");
-       gemconfigCmd->SetParameterName("gemconfig", false);
-
-
-       sigfileCmd = new G4UIcmdWithAString("/g4sbs/sigmafile",this);
-       sigfileCmd->SetGuidance("GEM Sigma filename");
-       sigfileCmd->SetParameterName("sigmafile", false);
-
-       tgtCmd = new G4UIcmdWithAString("/g4sbs/target",this);
-       tgtCmd->SetGuidance("Target type from LH2, LD2, H2, 3He");
-       tgtCmd->SetParameterName("targtype", false);
-
-       kineCmd = new G4UIcmdWithAString("/g4sbs/kine",this);
-       kineCmd->SetGuidance("Kinematic type");
-       kineCmd->SetParameterName("kinetype", false);
-
-       expCmd = new G4UIcmdWithAString("/g4sbs/exp",this);
-       expCmd->SetGuidance("Experiment type");
-       expCmd->SetParameterName("exptype", false);
-
-       geantinoCmd = new G4UIcmdWithABool("/g4sbs/shootgeantino", this);
-       geantinoCmd->SetGuidance("Shoot a geantino instead of e-");
-       geantinoCmd->SetParameterName("shootgeantino", false);
-
-
-       tgtDenCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/targden",this);
-       tgtDenCmd->SetGuidance("Target density");
-       tgtDenCmd->SetParameterName("targden", false);
-
-       tgtPresCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/targpres",this);
-       tgtPresCmd->SetGuidance("Gaseous Target pressure");
-       tgtPresCmd->SetParameterName("targpres", false);
-
-       beamcurCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/beamcur",this);
-       beamcurCmd->SetGuidance("Beam current");
-       beamcurCmd->SetParameterName("beamcur", false);
-
-       runtimeCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/runtime",this);
-       runtimeCmd->SetGuidance("Run time");
-       runtimeCmd->SetParameterName("runtime", false);
-
-       rasterxCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/rasterx",this);
-       rasterxCmd->SetGuidance("Raster x size");
-       rasterxCmd->SetParameterName("size", false);
-
-       rasteryCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/rastery",this);
-       rasteryCmd->SetGuidance("Raster y size");
-       rasteryCmd->SetParameterName("size", false);
-
-       beamECmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/beamE",this);
-       beamECmd->SetGuidance("Beam Energy");
-       beamECmd->SetParameterName("energy", false);
-
-       bbangCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/bbang",this);
-       bbangCmd->SetGuidance("BigBite angle");
-       bbangCmd->SetParameterName("angle", false);
-
-       bbdistCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/bbdist",this);
-       bbdistCmd->SetGuidance("BigBite distance");
-       bbdistCmd->SetParameterName("dist", false);
-
-       hcalangCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/hcalang",this);
-       hcalangCmd->SetGuidance("HCAL angle");
-    hcalangCmd->SetParameterName("angle", false);
-
-    hcaldistCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/hcaldist",this);
-    hcaldistCmd->SetGuidance("HCAL distance");
-    hcaldistCmd->SetParameterName("dist", false);
-
-    hmagdistCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/48D48dist",this);
-    hmagdistCmd->SetGuidance("48D48 distance");
-    hmagdistCmd->SetParameterName("dist", false);
-
-    gemresCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/gemres",this);
-    gemresCmd->SetGuidance("GEM resolution");
-    gemresCmd->SetParameterName("dist", false);
-
-    // Detector position commands
-
-    cerDisCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/cerdist",this);
-    cerDisCmd->SetGuidance("Cerenkov distance from front GEM");
-    cerDisCmd->SetParameterName("dist", false);
-
-    cerDepCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/cerdepth",this);
-    cerDepCmd->SetGuidance("Cerenkov gas depth");
-    cerDepCmd->SetParameterName("dist", false);
-
-    gemSepCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/gemsep",this);
-    gemSepCmd->SetGuidance("GEM separation from front to back set");
-    gemSepCmd->SetParameterName("dist", false);
-
-    bbCalDistCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/bbcaldist",this);
-    bbCalDistCmd->SetGuidance("BigBite caloriter distance from front GEM");
-    bbCalDistCmd->SetParameterName("dist", false);
-
-    thminCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/thmin",this);
-    thminCmd->SetGuidance("Minimum electron generation polar angle");
-    thminCmd->SetParameterName("angle", false);
-
-    thmaxCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/thmax",this);
-    thmaxCmd->SetGuidance("Maximum electron generation polar angle");
-    thmaxCmd->SetParameterName("angle", false);
-
-    phminCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/phmin",this);
-    phminCmd->SetGuidance("Minimum electron generation azimuthal angle");
-    phminCmd->SetParameterName("angle", false);
-
-    phmaxCmd = new G4UIcmdWithADoubleAndUnit("/g4sbs/phmax",this);
-    phmaxCmd->SetGuidance("Maximum electron generation azimuthal angle");
-    phmaxCmd->SetParameterName("angle", false);
-    */
-
 }
 
 remollMessenger::~remollMessenger(){
