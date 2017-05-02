@@ -70,9 +70,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
     fGDMLParser->Clear();
     fGDMLParser->SetOverlapCheck(false);
 
-    fprintf(stdout, "Reading %s\n", fDetFileName.data());
-
-
+    G4cout << "Reading " << fDetFileName << G4endl;
     fGDMLParser->Read(fDetFileName);
 
     worldVolume = fGDMLParser->GetWorldVolume();
