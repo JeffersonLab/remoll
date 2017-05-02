@@ -43,19 +43,20 @@
 #define __DET_STRLEN 200
 #define __MAX_DETS 5000
 
-remollDetectorConstruction::remollDetectorConstruction() {
+remollDetectorConstruction::remollDetectorConstruction()
+{
     // Default geometry file
     fDetFileName = "geometry_sculpt/mollerMother.gdml";
 
     CreateGlobalMagneticField();
 
-    fIO = NULL;
+    fIO = remollIO::GetInstance();
+
     fGDMLParser = NULL;
     fWorldVolume = NULL;
 }
 
-remollDetectorConstruction::~remollDetectorConstruction() {
-}
+remollDetectorConstruction::~remollDetectorConstruction() { }
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct() {
     G4VPhysicalVolume *worldVolume;
@@ -321,7 +322,7 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
     //}
 
   return index;
-};
+}
 
 void remollDetectorConstruction::DumpGeometricalTree(
     G4VPhysicalVolume* aVolume,
