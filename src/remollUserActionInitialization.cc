@@ -7,7 +7,6 @@
 
 #include "remollUserActionInitialization.hh"
 
-#include "remollIO.hh"
 #include "remollMessenger.hh"
 
 #include "remollRunAction.hh"
@@ -15,34 +14,33 @@
 #include "remollSteppingAction.hh"
 #include "remollPrimaryGeneratorAction.hh"
 
-remollUserActionInitialization::remollUserActionInitialization() {
-  fMess = new remollMessenger();
-  fIO   = new remollIO();
-  fMess->SetIO(fIO);
-
-}
+remollUserActionInitialization::remollUserActionInitialization() { }
 
 remollUserActionInitialization::~remollUserActionInitialization() { }
 
 void remollUserActionInitialization::Build() const
 {
-  remollPrimaryGeneratorAction* gen_action = new remollPrimaryGeneratorAction;
-  gen_action->SetIO(fIO);
-  fMess->SetPriGen(gen_action);
+  // Get messenger
+  remollMessenger* mess = remollMessenger::GetInstance();
+
+  // Primary generator action
+  remollPrimaryGeneratorAction* gen_action = new remollPrimaryGeneratorAction();
+  mess->SetPriGen(gen_action); // TODO change to add instance of pri gen
   SetUserAction(gen_action);
 
-  remollEventAction* event_action = new remollEventAction;
-  event_action->SetIO(fIO);
+  // Event action
+  remollEventAction* event_action = new remollEventAction();
+  //mess->SetEventAction(gen_action); // TODO change to add instance of event action
   SetUserAction(event_action);
 
-  remollSteppingAction* stepping_action = new remollSteppingAction;
-  fMess->SetStepAct(stepping_action);
+  // Stepping action
+  remollSteppingAction* stepping_action = new remollSteppingAction();
+  mess->SetStepAct(stepping_action); // TODO change to add instance of stepping action
   SetUserAction(stepping_action);
 }
 
 void remollUserActionInitialization::BuildForMaster() const
 {
-  remollRunAction* run_action = new remollRunAction;
-  run_action->SetIO(fIO);
+  remollRunAction* run_action = new remollRunAction();
   SetUserAction(run_action);
 }

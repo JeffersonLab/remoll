@@ -20,10 +20,6 @@ class remollUserActionInitialization : public G4VUserActionInitialization {
 
     void Build() const;
     void BuildForMaster() const;
-
-  private:
-    remollMessenger* fMess;
-    remollIO* fIO;
 };
 
 #endif /* __REMOLLUSERACTIONINITIALIZATION_HH */
