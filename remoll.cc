@@ -14,16 +14,10 @@
 
 #include "G4UImanager.hh"
 
-#include "remollRunAction.hh"
 #include "remollRun.hh"
 #include "remollRunData.hh"
-#include "remollPrimaryGeneratorAction.hh"
-#include "remollEventAction.hh"
-#include "remollSteppingAction.hh"
+#include "remollUserActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
-
-#include "remollIO.hh"
-#include "remollMessenger.hh"
 
 //  Standard physics list
 #include "G4PhysListFactory.hh"
@@ -98,7 +92,6 @@ int main(int argc, char** argv) {
 
     remollRun::GetRun()->GetData()->SetSeed(seed);
 
-    remollIO *io = new remollIO();
 
     //-------------------------------
     // Initialization of Run manager
@@ -118,42 +111,23 @@ int main(int argc, char** argv) {
     //G4Random::setTheEngine(new CLHEP::RanecuEngine);
     G4Random::setTheSeed(seed);
 
-    remollMessenger *rmmess = new remollMessenger();
-    rmmess->SetIO(io);
-
     // Detector geometry
     remollDetectorConstruction* detector = new remollDetectorConstruction();
     runManager->SetUserInitialization(detector);
-    rmmess->SetDetCon(detector);
-    rmmess->SetMagField(detector->GetGlobalField() );
+    // TODO rmmess->SetDetCon(detector);
+    // TODO rmmess->SetMagField(detector->GetGlobalField() );
 
-    detector->SetIO(io);
+    // TODO detector->SetIO(io);
 
-    // Physics we want to use
+    // Physics list
     G4PhysListFactory factory;
     G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
     physlist->RegisterPhysics(new G4OpticalPhysics());
     runManager->SetUserInitialization(physlist);
 
-    //-------------------------------
-    // UserAction classes
-    //-------------------------------
-    remollRunAction* run_action = new remollRunAction;
-    run_action->SetIO(io);
-    runManager->SetUserAction(run_action);
-
-    remollPrimaryGeneratorAction* gen_action = new remollPrimaryGeneratorAction;
-    gen_action->SetIO(io);
-    rmmess->SetPriGen(gen_action);
-    runManager->SetUserAction(gen_action);
-
-    remollEventAction* event_action = new remollEventAction;
-    event_action->SetIO(io);
-    runManager->SetUserAction(event_action);
-
-    remollSteppingAction* stepping_action = new remollSteppingAction;
-    runManager->SetUserAction(stepping_action);
-    rmmess->SetStepAct(stepping_action);
+    // Run action
+    remollUserActionInitialization* useraction = new remollUserActionInitialization();
+    runManager->SetUserInitialization(useraction);
 
     //----------------
     // Visualization:
