@@ -14,6 +14,8 @@
 
 #include "G4UImanager.hh"
 
+#include "remollMessenger.hh"
+
 #include "remollRun.hh"
 #include "remollRunData.hh"
 #include "remollUserActionInitialization.hh"
@@ -90,9 +92,6 @@ int main(int argc, char** argv) {
     }
 
 
-    remollRun::GetRun()->GetData()->SetSeed(seed);
-
-
     //-------------------------------
     // Initialization of Run manager
     //-------------------------------
@@ -106,16 +105,19 @@ int main(int argc, char** argv) {
 
     // Updated G4Random initialization based on
     // https://twiki.cern.ch/twiki/bin/view/Geant4/QuickMigrationGuideForGeant4V10#Random_numbers
-    //CLHEP::RanluxEngine defaultEngine(1234567, 4);
-    //G4Random::setTheEngine(&defaultEngine);
-    //G4Random::setTheEngine(new CLHEP::RanecuEngine);
+    CLHEP::RanluxEngine defaultEngine(1234567, 4); // TODO why ranlux, not ranecu?
+    G4Random::setTheEngine(&defaultEngine);
     G4Random::setTheSeed(seed);
+    remollRun::GetRun()->GetData()->SetSeed(seed);
+
+    // Messenger
+    remollMessenger* messenger = remollMessenger::GetInstance();
 
     // Detector geometry
     remollDetectorConstruction* detector = new remollDetectorConstruction();
     runManager->SetUserInitialization(detector);
-    // TODO rmmess->SetDetCon(detector);
-    // TODO rmmess->SetMagField(detector->GetGlobalField() );
+    messenger->SetDetCon(detector);
+    messenger->SetMagField(detector->GetGlobalField());
 
     // TODO detector->SetIO(io);
 
