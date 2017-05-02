@@ -24,7 +24,9 @@ void remollRunAction::BeginOfRunAction(const G4Run* aRun)
 {
   G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
   //  timer->Start();
-  fIO->InitializeTree();
+
+  remollIO* io = remollIO::GetInstance();
+  io->InitializeTree();
 
   remollRunData *rmrundata = remollRun::GetRun()->GetData();
 
@@ -40,6 +42,7 @@ void remollRunAction::EndOfRunAction(const G4Run* aRun)
   G4cout << "number of event = " << aRun->GetNumberOfEvent() << G4endl;
   //       << " " << *timer << G4endl;
 
-  fIO->WriteTree();
+  remollIO* io = remollIO::GetInstance();
+  io->WriteTree();
 }
 
