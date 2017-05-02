@@ -25,9 +25,18 @@ class G4UIcmdWithABool;
 class G4VModularPhysicsList;
 
 class remollMessenger : public G4UImessenger {
+
+    private:
+        // Singleton pointer
+        static remollMessenger* gInstance;
+        // Private constructor
+        remollMessenger();
+
     public:
-       	remollMessenger();
-       	~remollMessenger();
+       	// Public destructor
+        virtual ~remollMessenger();
+        // Static instance getter
+       	static remollMessenger* GetInstance();
 
 	void SetIO( remollIO *io ){ fIO = io; }
 	void SetMagField( remollGlobalField *f ){ fField = f; }

@@ -28,9 +28,17 @@ class remollEvent;
 #define __ASYMM_SCALE 1e-9 // ppb
 
 class remollIO {
+    private:
+        // Singleton pointer
+        static remollIO* gInstance;
+        // Private constructor
+        remollIO();
+
     public:
-	 remollIO();
-	~remollIO();
+        // Public destructor
+        virtual ~remollIO();
+        // Static instance getter
+        static remollIO* GetInstance();
 
 	void SetFilename(G4String  fn);
 	G4String GetFilename(){return fFilename;}

@@ -22,6 +22,14 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 
+// Singleton
+remollIO* remollIO::gInstance = 0;
+remollIO* remollIO::GetInstance() {
+  if (gInstance == 0) {
+    gInstance = new remollIO();
+  }
+  return gInstance;
+}
 
 remollIO::remollIO(){
     fTree = NULL;

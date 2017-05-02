@@ -29,6 +29,15 @@
 
 #include <iostream>
 
+// Singleton
+remollMessenger* remollMessenger::gInstance = 0;
+remollMessenger* remollMessenger::GetInstance() {
+  if (gInstance == 0) {
+    gInstance = new remollMessenger();
+  }
+  return gInstance;
+}
+
 remollMessenger::remollMessenger(){
     /*  Initialize all the things it talks to to NULL */
 
