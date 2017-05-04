@@ -14,14 +14,14 @@
 #include "remollSteppingAction.hh"
 #include "remollPrimaryGeneratorAction.hh"
 
-remollUserActionInitialization::remollUserActionInitialization() { }
-
-remollUserActionInitialization::~remollUserActionInitialization() { }
-
-void remollUserActionInitialization::Build() const
+void remollActionInitialization::Build() const
 {
   // Get messenger
   remollMessenger* mess = remollMessenger::GetInstance();
+
+  // Run action
+  remollRunAction* run_action = new remollRunAction();
+  SetUserAction(run_action);
 
   // Primary generator action
   remollPrimaryGeneratorAction* gen_action = new remollPrimaryGeneratorAction();

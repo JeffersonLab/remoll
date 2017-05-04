@@ -10,16 +10,13 @@
 
 #include "G4VUserActionInitialization.hh"
 
-class remollMessenger;
-class remollIO;
-
-class remollUserActionInitialization : public G4VUserActionInitialization {
+class remollActionInitialization : public G4VUserActionInitialization {
   public:
-    remollUserActionInitialization();
-    virtual ~remollUserActionInitialization();
+    remollActionInitialization(): G4VUserActionInitialization() { };
+    virtual ~remollActionInitialization() { };
 
-    void Build() const;
-    void BuildForMaster() const;
+    virtual void Build() const;
+    virtual void BuildForMaster() const;
 };
 
 #endif // __REMOLLACTIONINITIALIZATION_HH
