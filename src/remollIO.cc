@@ -35,6 +35,11 @@ remollIO::remollIO()
 : fFile(0),fTree(0),fFilename("remollout.root")
 {
     G4cout << "Creating remollIO object " << this << G4endl;
+
+    //  Set arrays to 0
+    fNGenDetHit = 0;
+    fNGenDetSum = 0;
+
     InitializeTree();
 }
 
