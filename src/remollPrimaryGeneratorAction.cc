@@ -19,7 +19,7 @@
 #include "remollGenBeam.hh"
 #include "remollGenFlat.hh"
 #include "remollGenAl.hh"
-#include "remollGenLUND.hh" //Dominic Lunde adding the LUND generator command
+#include "remollGenLUND.hh"
 
 #include "G4AutoLock.hh"
 G4Mutex myPrimaryGeneratorMutex = G4MUTEX_INITIALIZER;

@@ -7,6 +7,7 @@
 #include "G4UIcmdWithADoubleAndUnit.hh"
 #include "G4UIcmdWithABool.hh"
 
+#include "remollGlobalField.hh"
 #include "remollOpticalPhysics.hh"
 #include "remollDetectorConstruction.hh"
 #include "remollIO.hh"
@@ -38,7 +39,10 @@ remollMessenger* remollMessenger::GetInstance() {
   return gInstance;
 }
 
-remollMessenger::remollMessenger(){
+remollMessenger::remollMessenger()
+{
+  G4cout << "Creating remollMessenger object " << this << G4endl;
+
     /*  Initialize all the things it talks to to NULL */
 
     fdetcon       = NULL;
