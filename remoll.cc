@@ -12,13 +12,14 @@
 #include "G4RunManager.hh"
 #endif
 
+#include "G4Types.hh"
 #include "G4UImanager.hh"
 
 #include "remollMessenger.hh"
 
 #include "remollRun.hh"
 #include "remollRunData.hh"
-#include "remollUserActionInitialization.hh"
+#include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
 
 //  Standard physics list
@@ -133,7 +134,7 @@ int main(int argc, char** argv) {
     runManager->SetUserInitialization(physlist);
 
     // Run action
-    remollUserActionInitialization* useraction = new remollUserActionInitialization();
+    remollActionInitialization* useraction = new remollActionInitialization();
     runManager->SetUserInitialization(useraction);
 
     //----------------
