@@ -148,7 +148,7 @@ int main(int argc, char** argv) {
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
     // Define UI session for interactive mode
-    if (macro == 1)
+    if (macro.size())
     {
       // Run in batch mode
       G4String command = "/control/execute ";
@@ -182,7 +182,7 @@ int main(int argc, char** argv) {
     clock_t tEnd = clock();
 
     G4cout << " Running time[s]: "<< double(tEnd - tStart) / double(CLOCKS_PER_SEC)
-            << G4endl;
+           << G4endl;
 
 
     return 0;
