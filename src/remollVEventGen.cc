@@ -8,7 +8,10 @@
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
-remollVEventGen::remollVEventGen() {
+remollVEventGen::remollVEventGen()
+: fThCoM_min(0.0), fThCoM_max(0.0), fTh_min(0.0), fTh_max(0.0),
+  fPh_min(0.0), fPh_max(0.0), fE_min(0.0), fE_max(0.0) {
+
     fBeamTarg = remollBeamTarget::GetBeamTarget();
     fRunData  = remollRun::GetInstance()->GetData();
 
