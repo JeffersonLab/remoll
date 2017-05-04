@@ -332,12 +332,10 @@ void remollIO::GrabGDMLFiles(G4String fn)
 
     // Store filename
 
-    unsigned int idx;
-
     // Copy into buffers
-    for( idx = 0; idx < fGDMLFileNames.size(); idx++ ){
-	G4cout << "Found GDML file " << fGDMLFileNames[idx] << G4endl;
-	rundata->AddGDMLFile(fGDMLFileNames[idx]);
+    for(unsigned int idx = 0; idx < fGDMLFileNames.size(); idx++ ){
+        G4cout << "Found GDML file " << fGDMLFileNames[idx] << G4endl;
+        rundata->AddGDMLFile(fGDMLFileNames[idx]);
     }
 }
 
