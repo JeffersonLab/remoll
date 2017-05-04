@@ -9,7 +9,7 @@
 class remollGenericDetectorHit : public G4VHit {
     public:
 	remollGenericDetectorHit(G4int, G4int);
-	~remollGenericDetectorHit();
+	virtual ~remollGenericDetectorHit();
 
 	remollGenericDetectorHit(const remollGenericDetectorHit &right);
 	const remollGenericDetectorHit& operator=(const remollGenericDetectorHit &right);
@@ -17,7 +17,6 @@ class remollGenericDetectorHit : public G4VHit {
 
 	inline void *operator new(size_t);
 	inline void operator delete(void *aHit);
-	void *operator new(size_t,void*p){return p;}
 
     private:
 
@@ -40,18 +39,18 @@ class remollGenericDetectorHit : public G4VHit {
 };
 
 
-typedef G4THitsCollection<remollGenericDetectorHit> remollGenericDetectorHitsCollection;
+typedef G4THitsCollection<remollGenericDetectorHit> remollGenericDetectorHitCollection;
 
-extern G4Allocator<remollGenericDetectorHit> remollGenericDetectorHitAllocator;
+extern G4ThreadLocal G4Allocator<remollGenericDetectorHit>* remollGenericDetectorHitAllocator;
 
 inline void* remollGenericDetectorHit::operator new(size_t){
-    void *aHit;
-    aHit = (void *) remollGenericDetectorHitAllocator.MallocSingle();
-    return aHit;
+  if (!remollGenericDetectorHitAllocator)
+    remollGenericDetectorHitAllocator = new G4Allocator<remollGenericDetectorHit>;
+  return (void *) remollGenericDetectorHitAllocator->MallocSingle();
 }
 
 inline void remollGenericDetectorHit::operator delete(void *aHit){
-    remollGenericDetectorHitAllocator.FreeSingle( (remollGenericDetectorHit*) aHit);
+  remollGenericDetectorHitAllocator->FreeSingle( (remollGenericDetectorHit*) aHit);
 }
 
 #endif//__REMOLLGENERICDETECTORHIT_HH

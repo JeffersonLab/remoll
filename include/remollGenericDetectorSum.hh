@@ -8,7 +8,7 @@
 class remollGenericDetectorSum : public G4VHit {
     public:
 	remollGenericDetectorSum(G4int, G4int);
-	~remollGenericDetectorSum();
+	virtual ~remollGenericDetectorSum();
 
 	remollGenericDetectorSum(const remollGenericDetectorSum &right);
 	const remollGenericDetectorSum& operator=(const remollGenericDetectorSum &right);
@@ -16,7 +16,6 @@ class remollGenericDetectorSum : public G4VHit {
 
 	inline void *operator new(size_t);
 	inline void operator delete(void *aHit);
-	void *operator new(size_t,void*p){return p;}
 
     public:
 	G4int    fDetID;
@@ -27,16 +26,16 @@ class remollGenericDetectorSum : public G4VHit {
 
 typedef G4THitsCollection<remollGenericDetectorSum> remollGenericDetectorSumCollection;
 
-extern G4Allocator<remollGenericDetectorSum> remollGenericDetectorSumAllocator;
+extern G4ThreadLocal G4Allocator<remollGenericDetectorSum>* remollGenericDetectorSumAllocator;
 
 inline void* remollGenericDetectorSum::operator new(size_t){
-    void *aHit;
-    aHit = (void *) remollGenericDetectorSumAllocator.MallocSingle();
-    return aHit;
+  if (!remollGenericDetectorSumAllocator)
+    remollGenericDetectorSumAllocator = new G4Allocator<remollGenericDetectorSum>;
+  return (void *) remollGenericDetectorSumAllocator->MallocSingle();
 }
 
 inline void remollGenericDetectorSum::operator delete(void *aHit){
-    remollGenericDetectorSumAllocator.FreeSingle( (remollGenericDetectorSum*) aHit);
+  remollGenericDetectorSumAllocator->FreeSingle( (remollGenericDetectorSum*) aHit);
 }
 
 #endif//__REMOLLGENERICDETECTORSUM_HH
