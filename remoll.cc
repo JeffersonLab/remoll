@@ -15,7 +15,7 @@
 #include "G4Types.hh"
 #include "G4UImanager.hh"
 
-#include "remollMessenger.hh"
+#include "remollIO.hh"
 
 #include "remollRun.hh"
 #include "remollRunData.hh"
@@ -114,18 +114,12 @@ int main(int argc, char** argv) {
     G4Random::setTheSeed(seed);
     rundata->SetSeed(seed);
 
-    // Messenger
-    remollMessenger* messenger = remollMessenger::GetInstance();
     // Create io object
     remollIO* io = remollIO::GetInstance();
 
     // Detector geometry
     remollDetectorConstruction* detector = new remollDetectorConstruction();
     runManager->SetUserInitialization(detector);
-    messenger->SetDetCon(detector);
-    messenger->SetMagField(detector->GetGlobalField());
-
-    // TODO detector->SetIO(io);
 
     // Physics list
     G4PhysListFactory factory;
