@@ -20,7 +20,6 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
   public:
     void GeneratePrimaries(G4Event* anEvent);
     G4ParticleGun* GetParticleGun();
-    void SetIO( remollIO *io ){ fIO = io; }
 
     void SetGenerator( G4String );
 
@@ -31,7 +30,6 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 
     remollVEventGen *fEventGen;
     remollEvent *fDefaultEvent;
-    remollIO *fIO;
 };
 
 #endif

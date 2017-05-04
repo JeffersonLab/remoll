@@ -11,7 +11,6 @@ class G4LogicalVolume;
 class G4VPhysicalVolume;
 class G4VSensitiveDetector;
 
-class remollIO;
 
 class remollDetectorConstruction : public G4VUserDetectorConstruction
 {
@@ -32,9 +31,6 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     G4GDMLParser *fGDMLParser;
 
-    void SetIO( remollIO *io ){ fIO = io; }
-
-  private:
     //----------------------
     // global magnet section
     //----------------------
@@ -44,7 +40,6 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     remollGlobalField*      fGlobalField;
     G4String                fDetFileName;
 
-    remollIO *fIO;
 
     G4VPhysicalVolume*      fWorldVolume;
 

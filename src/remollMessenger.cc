@@ -41,7 +41,6 @@ remollMessenger* remollMessenger::GetInstance() {
 remollMessenger::remollMessenger(){
     /*  Initialize all the things it talks to to NULL */
 
-    fIO           = NULL;
     fdetcon       = NULL;
     fevact        = NULL;
     fprigen       = NULL;
@@ -292,7 +291,8 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     }
 
     if( cmd == fileCmd ){
-	fIO->SetFilename(newValue);
+        remollIO* io = remollIO::GetInstance();
+	io->SetFilename(newValue);
     }
     
     if( cmd == LUNDFileCmd ){//Dominic Lunde - linking LUND generator

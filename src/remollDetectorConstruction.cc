@@ -44,36 +44,35 @@
 #define __MAX_DETS 5000
 
 remollDetectorConstruction::remollDetectorConstruction()
+: fGDMLParser(0),fWorldVolume(0)
 {
-    // Default geometry file
-    fDetFileName = "geometry_sculpt/mollerMother.gdml";
+  // Connect to messenger
+  remollMessenger* messenger = remollMessenger::GetInstance();
+  messenger->SetDetCon(this);
 
-    CreateGlobalMagneticField();
+  // Create GDML parser
+  fGDMLParser = new G4GDMLParser();
 
-    fIO = remollIO::GetInstance();
-
-    fGDMLParser = NULL;
-    fWorldVolume = NULL;
+  // Default geometry file
+  fDetFileName = "geometry_sculpt/mollerMother.gdml";
 }
 
-remollDetectorConstruction::~remollDetectorConstruction() { }
+remollDetectorConstruction::~remollDetectorConstruction() {
+  delete fGDMLParser;
+}
 
-G4VPhysicalVolume* remollDetectorConstruction::Construct() {
-    G4VPhysicalVolume *worldVolume;
+G4VPhysicalVolume* remollDetectorConstruction::Construct()
+{
+    remollIO* io = remollIO::GetInstance();
+    io->GrabGDMLFiles(fDetFileName);
 
-    fIO->GrabGDMLFiles(fDetFileName);
-
-    if( fGDMLParser ){
-	delete fGDMLParser;
-    }
-    fGDMLParser = new G4GDMLParser();
     fGDMLParser->Clear();
     fGDMLParser->SetOverlapCheck(false);
 
     G4cout << "Reading " << fDetFileName << G4endl;
     fGDMLParser->Read(fDetFileName);
 
-    worldVolume = fGDMLParser->GetWorldVolume();
+    G4VPhysicalVolume* worldVolume = fGDMLParser->GetWorldVolume();
     
   //====================================================
   // Associate target volumes with beam/target class

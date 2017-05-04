@@ -38,7 +38,6 @@ class remollMessenger : public G4UImessenger {
         // Static instance getter
        	static remollMessenger* GetInstance();
 
-	void SetIO( remollIO *io ){ fIO = io; }
 	void SetMagField( remollGlobalField *f ){ fField = f; }
 	void SetPriGen( remollPrimaryGeneratorAction *pg ){ fprigen = pg; }
 	void SetDetCon( remollDetectorConstruction *dc ){ fdetcon= dc; }
@@ -49,7 +48,7 @@ class remollMessenger : public G4UImessenger {
 	void SetNewValue(G4UIcommand* cmd, G4String newValue);
 
     private:
-	remollIO *fIO;
+
 	remollDetectorConstruction *fdetcon;
 	remollEventAction *fevact;
 	remollPrimaryGeneratorAction *fprigen;

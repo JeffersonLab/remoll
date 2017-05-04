@@ -112,6 +112,8 @@ int main(int argc, char** argv) {
 
     // Messenger
     remollMessenger* messenger = remollMessenger::GetInstance();
+    // Create io object
+    remollIO* io = remollIO::GetInstance();
 
     // Detector geometry
     remollDetectorConstruction* detector = new remollDetectorConstruction();

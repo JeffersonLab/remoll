@@ -21,6 +21,9 @@
 #include "remollGenAl.hh"
 #include "remollGenLUND.hh" //Dominic Lunde adding the LUND generator command
 
+#include "G4AutoLock.hh"
+G4Mutex myPrimaryGeneratorMutex = G4MUTEX_INITIALIZER;
+
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
     G4int n_particle = 1;
     fParticleGun = new G4ParticleGun(n_particle);
@@ -110,7 +113,10 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         }
 
         if( thisev->fPartType.size() > 0 ) {
-            fIO->SetEventData(thisev);
+            // TODO
+            //G4AutoLock lock(&myPrimaryGeneratorMutex);
+            //remollIO* io = remollIO::GetInstance();
+            //io->SetEventData(thisev);
         }
     } else { // Use default, static single generator
         // Update this just in case things changed
@@ -121,7 +127,10 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
             fParticleGun->GetParticleMomentumDirection()*
             fParticleGun->GetParticleMomentum(),
             fParticleGun->GetParticleDefinition()->GetParticleName() );
-        fIO->SetEventData(fDefaultEvent);
+
+        //G4AutoLock lock(&myPrimaryGeneratorMutex);
+        //remollIO* io = remollIO::GetInstance();
+        //io->SetEventData(fDefaultEvent);
 
         fParticleGun->GeneratePrimaryVertex(anEvent);
     }

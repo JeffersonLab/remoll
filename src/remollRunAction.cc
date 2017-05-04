@@ -10,6 +10,9 @@
 #include "remollIO.hh"
 #include "remollRun.hh"
 
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollIOMutex = G4MUTEX_INITIALIZER; }
+
 remollRunAction::remollRunAction()
 {
   timer = new G4Timer;
@@ -25,6 +28,7 @@ void remollRunAction::BeginOfRunAction(const G4Run* aRun)
   G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
   //  timer->Start();
 
+  G4AutoLock lock(&remollIOMutex);
   remollIO* io = remollIO::GetInstance();
   io->InitializeTree();
 
@@ -42,6 +46,7 @@ void remollRunAction::EndOfRunAction(const G4Run* aRun)
   G4cout << "number of event = " << aRun->GetNumberOfEvent() << G4endl;
   //       << " " << *timer << G4endl;
 
+  G4AutoLock lock(&remollIOMutex);
   remollIO* io = remollIO::GetInstance();
   io->WriteTree();
 }

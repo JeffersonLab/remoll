@@ -3,15 +3,8 @@
 #include "remollGenericDetectorSum.hh"
 
 #include "G4Event.hh"
-#include "G4EventManager.hh"
 #include "G4HCofThisEvent.hh"
 #include "G4VHitsCollection.hh"
-#include "G4TrajectoryContainer.hh"
-#include "G4Trajectory.hh"
-#include "G4VVisManager.hh"
-#include "G4SDManager.hh"
-#include "G4UImanager.hh"
-#include "G4ios.hh"
 
 #include "remollIO.hh"
 
@@ -56,32 +49,28 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
       // Dyanmic cast to test types, process however see fit and feed to IO
       
       ////  Generic Detector Hits ///////////////////////////////////
-      if( remollGenericDetectorHitsCollection *thiscast = 
-	  dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
-	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorHit((remollGenericDetectorHit *) 
-				     thiscast->GetHit(hidx) );	  
-	}
+      if (remollGenericDetectorHitCollection *thiscast =
+          dynamic_cast<remollGenericDetectorHitCollection*>(thiscol)) {
+        for (unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++) {
+          remollIO::GetInstance()->AddGenericDetectorHit((remollGenericDetectorHit *)
+              thiscast->GetHit(hidx));
+        }
       }
-      
+
       ////  Generic Detector Sum ////////////////////////////////////
-      if( remollGenericDetectorSumCollection *thiscast = 
-	  dynamic_cast<remollGenericDetectorSumCollection *>(thiscol)){
-	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorSum((remollGenericDetectorSum *) 
-				     thiscast->GetHit(hidx) );
-	}
+      if (remollGenericDetectorSumCollection *thiscast =
+          dynamic_cast<remollGenericDetectorSumCollection*>(thiscol)) {
+        for (unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++) {
+          remollIO::GetInstance()->AddGenericDetectorSum((remollGenericDetectorSum *)
+              thiscast->GetHit(hidx));
+        }
       }
       
     }
   }
 
   // Fill tree and reset buffers
-  fIO->FillTree();
-  fIO->Flush();
-
-  return;
+  remollIO* io = remollIO::GetInstance();
+  //fIO->FillTree();
+  //fIO->Flush();
 }
-
-
-
