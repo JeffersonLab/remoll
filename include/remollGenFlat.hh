@@ -12,10 +12,8 @@
 
 class remollGenFlat : public remollVEventGen {
     public:
-	 remollGenFlat();
-	~remollGenFlat();
-
-	double fE_max;
+	remollGenFlat();
+	virtual ~remollGenFlat();
 
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);

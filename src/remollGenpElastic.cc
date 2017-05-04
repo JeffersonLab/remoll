@@ -17,7 +17,7 @@
 #define Euler 0.5772157
 #define NINTERVAL 3
 
-remollGenpElastic::remollGenpElastic(){
+remollGenpElastic::remollGenpElastic() {
     fTh_min =     0.1*deg;
     fTh_max =     2.0*deg;
 

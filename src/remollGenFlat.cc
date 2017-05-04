@@ -9,7 +9,7 @@
 #include "remollVertex.hh"
 #include "remolltypes.hh"
 
-remollGenFlat::remollGenFlat(){
+remollGenFlat::remollGenFlat() {
     fTh_min =     0.0*deg;
     fTh_max =     5.0*deg;
 

@@ -16,7 +16,7 @@ class remollBeamTarget;
 class remollGenpElastic : public remollVEventGen {
     public:
 	remollGenpElastic();
-	~remollGenpElastic();
+	virtual ~remollGenpElastic();
 
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);

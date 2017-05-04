@@ -9,7 +9,7 @@
 #include "remollVertex.hh"
 #include "remolltypes.hh"
 
-remollGenMoller::remollGenMoller(){
+remollGenMoller::remollGenMoller() {
     fThCoM_min =    30.0*deg;
     fThCoM_max =   150.0*deg;
 

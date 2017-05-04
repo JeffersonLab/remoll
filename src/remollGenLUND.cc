@@ -18,8 +18,7 @@
 #include <string>
 
 
-remollGenLUND::remollGenLUND()
-{
+remollGenLUND::remollGenLUND() {
   // Initialize fRunData
   fRunData = remollRun::GetInstance()->GetData();
 
