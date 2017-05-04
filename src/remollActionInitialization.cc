@@ -39,8 +39,9 @@ void remollActionInitialization::Build() const
   SetUserAction(stepping_action);
 }
 
-void remollUserActionInitialization::BuildForMaster() const
+void remollActionInitialization::BuildForMaster() const
 {
+  // Run action
   remollRunAction* run_action = new remollRunAction();
   SetUserAction(run_action);
 }
