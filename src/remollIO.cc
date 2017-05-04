@@ -327,9 +327,7 @@ void remollIO::GrabGDMLFiles(G4String fn)
     remollRunData *rundata = remollRun::GetInstance()->GetData();
     rundata->ClearGDMLFiles();
 
-    xercesc::XMLPlatformUtils::Initialize();
     SearchGDMLforFiles(fn);
-    xercesc::XMLPlatformUtils::Terminate();
 
 
     // Store filename
@@ -359,6 +357,7 @@ void remollIO::SearchGDMLforFiles(G4String fn)
     fGDMLFileNames.push_back(fn);
 
 
+    xercesc::XMLPlatformUtils::Initialize();
 
     xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser();
     xmlParser->parse(fn.data());
@@ -367,6 +366,7 @@ void remollIO::SearchGDMLforFiles(G4String fn)
 
     TraverseChildren( elementRoot );
 
+    xercesc::XMLPlatformUtils::Terminate();
 }
 
 void remollIO::TraverseChildren( xercesc::DOMElement *thisel )
