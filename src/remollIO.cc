@@ -31,43 +31,40 @@ remollIO* remollIO::GetInstance() {
   return gInstance;
 }
 
-remollIO::remollIO(){
-    fTree = NULL;
-    fFile = NULL;
-
-    // Default filename
-    strcpy(fFilename, "remollout.root");
-
+remollIO::remollIO()
+: fFile(0),fTree(0),fFilename("remollout.root")
+{
+    G4cout << "Creating remollIO object " << this << G4endl;
     InitializeTree();
 }
 
-remollIO::~remollIO(){
+remollIO::~remollIO()
+{
+    // Delete tree
     if (fTree) {
-	delete fTree;
-	fTree = NULL;
+        delete fTree;
+        fTree = NULL;
     }
+    // Delete file
     if (fFile) {
-	delete fFile;
-	fFile = NULL;
+        delete fFile;
+        fFile = NULL;
     }
+    G4cout << "Deleting remollIO object " << this << G4endl;
 }
 
-void remollIO::SetFilename(G4String fn){
-    G4cout << "Setting output file to " << fn << G4endl;
-    strcpy(fFilename, fn.data());
-}
-
-void remollIO::InitializeTree(){
+void remollIO::InitializeTree()
+{
     if (fFile) {
-	fFile->Close();
-	delete fFile;
-	fFile = NULL;
-	fTree = NULL;
+        fFile->Close();
+        delete fFile;
+        fFile = NULL;
+        fTree = NULL;
     }
 
     if (fTree) {
-	delete fTree;
-	fTree = NULL;
+        delete fTree;
+        fTree = NULL;
     }
 
     fFile = new TFile(fFilename, "RECREATE");
@@ -146,7 +143,7 @@ void remollIO::InitializeTree(){
     fTree->Branch("sum.vid",  &fGenDetSum_id,   "sum.vid[sum.n]/I");
     fTree->Branch("sum.edep", &fGenDetSum_edep, "sum.edep[sum.n]/D");
 
-    return;
+    G4cout << "Initialized tree." << G4endl;
 }
 
 void remollIO::FillTree(){

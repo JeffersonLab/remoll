@@ -40,8 +40,8 @@ class remollIO {
         // Static instance getter
         static remollIO* GetInstance();
 
-	void SetFilename(G4String  fn);
-	G4String GetFilename(){return fFilename;}
+	void SetFilename(const G4String& name) { fFilename = name; }
+	G4String GetFilename() const { return fFilename; }
 
 	void FillTree();
 	void Flush();
@@ -57,7 +57,7 @@ class remollIO {
 	TFile *fFile;
 	TTree *fTree;
 
-	char fFilename[__FILENAMELEN];
+	G4String fFilename;
 
 	std::vector<G4String>       fGDMLFileNames;
 
