@@ -75,6 +75,6 @@ void remollEventAction::EndOfEventAction(const G4Event* evt )
 
   // Fill tree and reset buffers
   remollIO* io = remollIO::GetInstance();
-  //fIO->FillTree();
-  //fIO->Flush();
+  io->FillTree();
+  io->Flush();
 }
