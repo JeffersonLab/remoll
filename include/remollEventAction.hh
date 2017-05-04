@@ -23,6 +23,7 @@ class remollEventAction : public G4UserEventAction
 
     // Timer for benchmarking of simulation time per event
     G4Timer fTimer;
+    G4int fCounter;
 
 };
 

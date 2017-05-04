@@ -9,35 +9,38 @@
 #include "remollIO.hh"
 
 
-remollEventAction::remollEventAction() {
-}
+remollEventAction::remollEventAction()
+: fCounter(0) { }
 
-remollEventAction::~remollEventAction(){
-}
+remollEventAction::~remollEventAction() { }
 
+void remollEventAction::BeginOfEventAction(const G4Event* ev) {
+  // Start timer at first event
+  if (fCounter == 0) fTimer.Start();
 
-void remollEventAction::BeginOfEventAction(const G4Event* ev){
-  // Start timer at event 0
-  if (ev->GetEventID() == 0) fTimer.Start();
   // Pretty ongoing status
-  if ((ev->GetEventID() % 1000) == 0) {
+  const G4int interval = 1000;
+  if ((fCounter % interval) == 0) {
+
     // Stop timer (running timer cannot be read)
     fTimer.Stop();
+
     // Print event number
     G4cout << "Event " << ev->GetEventID();
     // Only print duration per event when meaningful (avoid division by zero)
     if (ev->GetEventID() > 0)
       G4cout << " (" << std::setprecision(3) << std::fixed
-        << 1000.*fTimer.GetRealElapsed()/1000.0 << " ms/event)";
+        << 1000.0 * fTimer.GetRealElapsed()/float(interval) << " ms/event)";
     // Carriage return without newline
     G4cout << "\r" << std::flush;
+
     // Start timer again
     fTimer.Start();
   }
 }
 
-void remollEventAction::EndOfEventAction(const G4Event* evt ) {
-  //G4SDManager   *SDman = G4SDManager::GetSDMpointer();
+void remollEventAction::EndOfEventAction(const G4Event* evt )
+{
   G4HCofThisEvent *HCE = evt->GetHCofThisEvent();
 
   G4VHitsCollection *thiscol;
@@ -65,9 +68,12 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
               thiscast->GetHit(hidx));
         }
       }
-      
+
     }
   }
+
+  // Increment counter
+  fCounter++;
 
   // Fill tree and reset buffers
   remollIO* io = remollIO::GetInstance();
