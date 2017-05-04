@@ -5,8 +5,8 @@
  *      Author: wdconinc
  */
 
-#ifndef __REMOLLUSERACTIONINITIALIZATION_HH
-#define __REMOLLUSERACTIONINITIALIZATION_HH
+#ifndef __REMOLLACTIONINITIALIZATION_HH
+#define __REMOLLACTIONINITIALIZATION_HH
 
 #include "G4VUserActionInitialization.hh"
 
@@ -22,4 +22,4 @@ class remollUserActionInitialization : public G4VUserActionInitialization {
     void BuildForMaster() const;
 };
 
-#endif /* __REMOLLUSERACTIONINITIALIZATION_HH */
+#endif // __REMOLLACTIONINITIALIZATION_HH

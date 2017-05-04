@@ -5,7 +5,7 @@
  *      Author: wdconinc
  */
 
-#include "remollUserActionInitialization.hh"
+#include "remollActionInitialization.hh"
 
 #include "remollMessenger.hh"
 
