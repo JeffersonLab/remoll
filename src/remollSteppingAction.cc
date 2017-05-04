@@ -8,29 +8,32 @@
 #include "G4SteppingManager.hh"
 
 remollSteppingAction::remollSteppingAction()
-:drawFlag(false)
+: fDrawFlag(false),fEnableKryptonite(true)
 {
-///  new remollSteppingActionMessenger(this);
+  // List of kryptonite materials
+  std::set<G4String> materials = {"Tungsten", "Pb", "Copper"};
 
-    fEnableKryptonite = true;
+  // Find kryptonite materials in material tables
+  G4MaterialTable* table = G4Material::GetMaterialTable();
+  for (G4MaterialTable::const_iterator
+      it  = table->begin();
+      it != table->end(); it++) {
+    if (materials.find((*it)->GetName()) != materials.end()) {
+      fKryptoniteMaterials.insert(*it);
+    }
+  }
 }
 
-void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
+void remollSteppingAction::UserSteppingAction(const G4Step *aStep)
+{
     G4Track* fTrack = aStep->GetTrack();
     G4Material* material = fTrack->GetMaterial();
 
-
     // Don't continue in these materials
-    if( (   material->GetName()=="Tungsten" 
-        ||  material->GetName()=="Pb"
-	||  material->GetName()=="Copper" )
-	    && fEnableKryptonite
-	){
+    if (fEnableKryptonite
+        && fKryptoniteMaterials.find(material) != fKryptoniteMaterials.end()) {
+
       fTrack->SetTrackStatus(fStopAndKill); // kill the current track
       // fTrack->SetTrackStatus(fKillTrackAndSecondaries); // kill the current track and also associated secondaries
     }
-
-
 }
-
-
