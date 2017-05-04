@@ -2,9 +2,10 @@
 #define __REMOLLGENERICDETECTOR_HH
 
 #include "G4VSensitiveDetector.hh"
+
+// Included to avoid forward declaration of collection typedef
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
-#include "remollSteppingAction.hh"
 
 #include <map>
 
@@ -23,6 +24,8 @@ class G4HCofThisEvent;
 class G4Step;
 class G4TouchableHistory;
 
+class remollGenericDetectorSum;
+
 class remollGenericDetector : public G4VSensitiveDetector {
     public:
 	remollGenericDetector( G4String name, G4int detnum );
@@ -33,8 +36,9 @@ class remollGenericDetector : public G4VSensitiveDetector {
 	virtual void EndOfEvent(G4HCofThisEvent*);
 
     private:
-	remollGenericDetectorHitsCollection *fHitColl;
-	remollGenericDetectorSumCollection  *fSumColl;
+	remollGenericDetectorHitCollection *fHitColl;
+	remollGenericDetectorSumCollection *fSumColl;
+
 	G4int fHCID, fSCID;
 
 	std::map<int, remollGenericDetectorSum *> fSumMap;
