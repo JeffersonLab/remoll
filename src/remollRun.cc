@@ -12,7 +12,7 @@ remollRun::remollRun() {
 remollRun::~remollRun() {
 }
 
-remollRun *remollRun::GetRun() {
+remollRun *remollRun::GetInstance() {
     if( gSingleton == NULL ) {
         gSingleton = new remollRun();
     }

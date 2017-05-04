@@ -32,7 +32,7 @@ void remollRunAction::BeginOfRunAction(const G4Run* aRun)
   remollIO* io = remollIO::GetInstance();
   io->InitializeTree();
 
-  remollRunData *rmrundata = remollRun::GetRun()->GetData();
+  remollRunData *rmrundata = remollRun::GetInstance()->GetData();
 
   rmrundata->SetBeamE( remollBeamTarget::GetBeamTarget()->fBeamE/GeV );
   rmrundata->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );

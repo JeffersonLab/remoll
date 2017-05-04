@@ -14,14 +14,14 @@
 class remollRun {
 
 private:
-    static remollRun *gSingleton;
+    static remollRun* gSingleton;
     remollRun();
 
     remollRunData *fRunData;
 
 public:
-    static remollRun *GetRun();
-    ~remollRun();
+    static remollRun* GetInstance();
+    virtual ~remollRun();
 
     remollRunData *GetData() {
         return fRunData;

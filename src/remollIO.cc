@@ -179,7 +179,7 @@ void remollIO::WriteTree()
     fFile->cd();
 
     fTree->Write("T", TObject::kOverwrite);
-    remollRun::GetRun()->GetData()->Write("run_data", TObject::kOverwrite); 
+    remollRun::GetInstance()->GetData()->Write("run_data", TObject::kOverwrite);
 
     fTree->ResetBranchAddresses();
     delete fTree;
@@ -324,7 +324,7 @@ void remollIO::GrabGDMLFiles(G4String fn)
     // Reset list
     fGDMLFileNames.clear();
 
-    remollRunData *rundata = remollRun::GetRun()->GetData();
+    remollRunData *rundata = remollRun::GetInstance()->GetData();
     rundata->ClearGDMLFiles();
 
     xercesc::XMLPlatformUtils::Initialize();

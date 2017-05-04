@@ -103,12 +103,15 @@ int main(int argc, char** argv) {
     G4RunManager * runManager = new G4RunManager;
 #endif
 
+    // Get rundata pointer
+    remollRunData *rundata = remollRun::GetInstance()->GetData();
+
     // Updated G4Random initialization based on
     // https://twiki.cern.ch/twiki/bin/view/Geant4/QuickMigrationGuideForGeant4V10#Random_numbers
     CLHEP::RanluxEngine defaultEngine(1234567, 4); // TODO why ranlux, not ranecu?
     G4Random::setTheEngine(&defaultEngine);
     G4Random::setTheSeed(seed);
-    remollRun::GetRun()->GetData()->SetSeed(seed);
+    rundata->SetSeed(seed);
 
     // Messenger
     remollMessenger* messenger = remollMessenger::GetInstance();
@@ -148,8 +151,6 @@ int main(int argc, char** argv) {
     // Get the pointer to the User Interface manager
     //
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
-
-    remollRunData *rundata = remollRun::GetRun()->GetData();
 
     // Define UI session for interactive mode
     if (macro == 1)

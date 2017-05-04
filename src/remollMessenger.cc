@@ -211,7 +211,7 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     if( cmd == seedCmd ){
 	G4int seed = seedCmd->GetNewIntValue(newValue);
 	G4Random::setTheSeed(seed);
-	remollRun::GetRun()->GetData()->SetSeed(seed);
+	remollRun::GetInstance()->GetData()->SetSeed(seed);
     }
 
     if( cmd == kryptCmd ){

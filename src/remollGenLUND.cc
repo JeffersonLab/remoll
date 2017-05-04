@@ -21,7 +21,7 @@
 remollGenLUND::remollGenLUND()
 {
   // Initialize fRunData
-  fRunData = remollRun::GetRun()->GetData();
+  fRunData = remollRun::GetInstance()->GetData();
 
   // Load table of particle types by LUND number
   pidname[111] = "pi0";
