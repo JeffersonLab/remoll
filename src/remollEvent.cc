@@ -56,8 +56,6 @@ G4bool remollEvent::EventIsSane(){
     // Here we check all the variables and make sure there is nothing 
     // kinematically wrong and there aren't stuff like nans and infs
 
-    unsigned int i;
-
     if( std::isnan(fEffXs) || std::isinf(fEffXs) || fEffXs < 0.0 ) return false;
     if( std::isnan(fAsym) || std::isinf(fAsym) || fAsym < -1.0 || fAsym > 1.0 ) return false;
     if( std::isnan(fThCoM) || std::isinf(fThCoM) ) return false;
@@ -68,7 +66,7 @@ G4bool remollEvent::EventIsSane(){
 	return false;
     }
 
-    for( i = 0; i < fPartPos.size(); i++ ){
+    for(unsigned int i = 0; i < fPartPos.size(); i++ ){
 	if( !fPartType[i] ){ return false; }
 
 	if( std::isnan(fPartPos[i].x()) || std::isinf(fPartPos[i].x()) ) return false;

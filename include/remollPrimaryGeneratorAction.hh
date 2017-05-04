@@ -15,7 +15,7 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
   public:
     remollPrimaryGeneratorAction();
-    ~remollPrimaryGeneratorAction();
+    virtual ~remollPrimaryGeneratorAction();
 
   public:
     void GeneratePrimaries(G4Event* anEvent);

@@ -9,14 +9,15 @@
 */
 
 #include <vector>
+
 #include "G4ThreeVector.hh"
 
 class G4ParticleDefinition;
 
 class remollEvent {
     public:
-	 remollEvent();
-	~remollEvent();
+	remollEvent();
+	virtual ~remollEvent();
 
 	void ProduceNewParticle( G4ThreeVector, G4ThreeVector, G4String );
 	void SetEffCrossSection( G4double xs ){ fEffXs = xs; }
@@ -46,7 +47,7 @@ class remollEvent {
 	std::vector<G4ThreeVector>    fPartPos;
 	std::vector<G4ThreeVector>    fPartMom;  // Generated direction (no ms)
 	std::vector<G4ThreeVector>    fPartRealMom; // Direction to go to Geant4
-	std::vector<G4ParticleDefinition *> fPartType;
+	std::vector<G4ParticleDefinition*> fPartType;
 
 	G4double fBeamE;
 	G4double fRate;

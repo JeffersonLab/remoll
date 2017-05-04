@@ -13,8 +13,8 @@ class remollMagneticField;
 
 class remollGlobalField : public G4MagneticField {
     public: 
-	 remollGlobalField();
-	~remollGlobalField();
+        remollGlobalField();
+	virtual ~remollGlobalField();
 
 	void AddNewField( G4String file );
 	void SetFieldScale( G4String file, G4double scale  );

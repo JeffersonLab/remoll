@@ -13,8 +13,8 @@
 
 class remollGenMoller : public remollVEventGen {
     public:
-	 remollGenMoller();
-	~remollGenMoller();
+	remollGenMoller();
+	virtual ~remollGenMoller();
 
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
