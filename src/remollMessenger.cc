@@ -17,7 +17,6 @@
 #include "remollBeamTarget.hh"
 #include "remollRun.hh"
 #include "remollRunData.hh"
-#include "remollSteppingAction.hh"
 #include "remollGenPion.hh"
 #include "remollGenFlat.hh"
 #include "remollGenLUND.hh"
@@ -46,11 +45,8 @@ remollMessenger::remollMessenger()
     /*  Initialize all the things it talks to to NULL */
 
     fdetcon       = NULL;
-    fevact        = NULL;
-    fprigen       = NULL;
     fField        = NULL;
     fBeamTarg     = NULL;
-    fStepAct      = NULL;
     fPhysicsList  = NULL;
 
     // Grab singleton beam/target
@@ -64,10 +60,6 @@ remollMessenger::remollMessenger()
     seedCmd = new G4UIcmdWithAnInteger("/remoll/seed",this);
     seedCmd->SetGuidance("Set random engine seed");
     seedCmd->SetParameterName("seed", false);
-
-    kryptCmd = new G4UIcmdWithABool("/remoll/kryptonite",this);
-    kryptCmd->SetGuidance("Treat W, Pb, Cu as kryptonite");
-    kryptCmd->SetParameterName("krypt", false);
 
     opticalCmd = new G4UIcmdWithABool("/remoll/optical",this);
     opticalCmd->SetGuidance("Enable optical physics");
@@ -110,93 +102,9 @@ remollMessenger::remollMessenger()
     beamECmd->SetGuidance("Beam energy");
     beamECmd->SetParameterName("beamene", false);
 
-    genSelectCmd = new G4UIcmdWithAString("/remoll/gen",this);
-    genSelectCmd->SetGuidance("Select physics generator");
-    genSelectCmd->SetParameterName("generator", false);
-
     fileCmd = new G4UIcmdWithAString("/remoll/filename",this);
     fileCmd->SetGuidance("Output filename");
     fileCmd->SetParameterName("filename", false);
-
-    LUNDFileCmd = new G4UIcmdWithAString("/remoll/LUND_filename",this); //Dominic Lunde - creating LUND generator inputfile command "LUND_filename" 
-    LUNDFileCmd->SetGuidance("LUND Input filename");
-    LUNDFileCmd->SetParameterName("filename", false);
-
-    pionCmd = new G4UIcmdWithAString("/remoll/piontype", this);
-    pionCmd->SetGuidance("Generate pion type");
-    pionCmd->SetParameterName("piontype", false);
-
-    thminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thmin",this);
-    thminCmd->SetGuidance("Minimum generation angle");
-    thminCmd->SetParameterName("thmin", false);
-
-    thmaxCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thmax",this);
-    thmaxCmd->SetGuidance("Minimum generation angle");
-    thmaxCmd->SetParameterName("thmax", false);
-
-    thCoMminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thcommin",this);
-    thCoMminCmd->SetGuidance("Minimum CoM generation angle");
-    thCoMminCmd->SetParameterName("thcommin", false);
-
-    thCoMmaxCmd = new G4UIcmdWithADoubleAndUnit("/remoll/thcommax",this);
-    thCoMmaxCmd->SetGuidance("Minimum CoM generation angle");
-    thCoMmaxCmd->SetParameterName("thcommax", false);
-
-    EminCmd = new G4UIcmdWithADoubleAndUnit("/remoll/emin",this);
-    EminCmd->SetGuidance("Minimum generation energy");
-    EminCmd->SetParameterName("emin", false);
-
-    EmaxCmd = new G4UIcmdWithADoubleAndUnit("/remoll/emax",this);
-    EmaxCmd->SetGuidance("Maximum generation energy");
-    EmaxCmd->SetParameterName("emax", false);
-
-
-    //////////////////////////////////////////////////
-    // beam info
-
-    rasTypeCmd = new G4UIcmdWithABool("/remoll/oldras", this);
-    rasTypeCmd->SetGuidance("Old (no ang corln) or new (ang corl) raster");
-    rasTypeCmd->SetParameterName("oldras", true);
-
-    rasXCmd = new G4UIcmdWithADoubleAndUnit("/remoll/rasx",this);
-    rasXCmd->SetGuidance("Square raster width in x (horizontal)");
-    rasXCmd->SetParameterName("rasx", false);
-
-    rasYCmd = new G4UIcmdWithADoubleAndUnit("/remoll/rasy",this);
-    rasYCmd->SetGuidance("Square raster width y (vertical)");
-    rasYCmd->SetParameterName("rasy", false);
-
-    beamX0Cmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_x0",this);
-    beamX0Cmd->SetGuidance("beam initial position in x (horizontal)");
-    beamX0Cmd->SetParameterName("beamX0", false);
-
-    beamY0Cmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_y0",this);
-    beamY0Cmd->SetGuidance("beam initial position in y (vertical)");
-    beamY0Cmd->SetParameterName("beamY0", false);
-
-    beamth0Cmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_th0",this);
-    beamth0Cmd->SetGuidance("beam initial direction in x (horizontal)");
-    beamth0Cmd->SetParameterName("beamth0", false);
-
-    beamph0Cmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_ph0",this);
-    beamph0Cmd->SetGuidance("beam initial direction in y (vertical)");
-    beamph0Cmd->SetParameterName("beamph0", false);
-
-    beamCorrThCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_corrth",this);
-    beamCorrThCmd->SetGuidance("beam correlated angle (horizontal)");
-    beamCorrThCmd->SetParameterName("beam_corrth", false);
-
-    beamCorrPhCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_corrph",this);
-    beamCorrPhCmd->SetGuidance("beam correlated angle (vertical)");
-    beamCorrPhCmd->SetParameterName("beam_corrph", false);
-
-    beamdthCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_dth",this);
-    beamdthCmd->SetGuidance("beam gaussian spread in direction x (horizontal)");
-    beamdthCmd->SetParameterName("beamdth", false);
-
-    beamdphCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beam_dph",this);
-    beamdphCmd->SetGuidance("beam gaussian spread in direction y (vertical)");
-    beamdphCmd->SetParameterName("beamdph", false);
 }
 
 remollMessenger::~remollMessenger(){
@@ -211,12 +119,7 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
     if( cmd == seedCmd ){
 	G4int seed = seedCmd->GetNewIntValue(newValue);
 	G4Random::setTheSeed(seed);
-	remollRun::GetInstance()->GetData()->SetSeed(seed);
-    }
-
-    if( cmd == kryptCmd ){
-	G4bool krypt = kryptCmd->GetNewBoolValue(newValue);
-	fStepAct->SetEnableKryptonite(krypt);
+	remollRun::GetRunData()->SetSeed(seed);
     }
 
     if( cmd == opticalCmd ){
@@ -280,10 +183,6 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	fBeamTarg->SetTargetPos(pos);
     }
 
-    if( cmd == genSelectCmd ){
-	fprigen->SetGenerator( newValue );
-    }
-
     if( cmd == beamCurrCmd ){
 	G4double cur = beamCurrCmd->GetNewDoubleValue(newValue);
 	fBeamTarg->SetBeamCurrent(cur);
@@ -298,133 +197,5 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
         remollIO* io = remollIO::GetInstance();
 	io->SetFilename(newValue);
     }
-    
-    if( cmd == LUNDFileCmd ){//Dominic Lunde - linking LUND generator
-	remollVEventGen *agen = fprigen->GetGenerator();
-	remollGenLUND *aLUND = dynamic_cast<remollGenLUND*>(agen);
-	if (aLUND) aLUND->SetLUNDFile(newValue);
-    }
 
-
-    if( cmd == pionCmd ){ 
-	remollVEventGen *agen = fprigen->GetGenerator();
-	remollGenPion *apion = dynamic_cast<remollGenPion *>(agen);
-	if( apion ){
-		if( newValue.compareTo("pi-") == 0 ){
-			apion->SetPionType(remollGenPion::kPiMinus);
-			
-		}
-		if( newValue.compareTo("pi+") == 0 ){
-			apion->SetPionType(remollGenPion::kPiPlus);
-		}
-		if( newValue.compareTo("pi0") == 0 ){
-			apion->SetPionType(remollGenPion::kPi0);
-		}
-	} else{
-		G4cerr << __FILE__ <<  "line" << __LINE__ << ": Can't set pion type for non-pion generator" << G4endl;
-	}
-    }
-
-    if( cmd == EminCmd ){
-	G4double en = EminCmd->GetNewDoubleValue(newValue);
-	remollVEventGen *agen = fprigen->GetGenerator();
-	if( agen ){
-	    agen->fE_min = en;
-	}
-    }
-
-    if( cmd == EmaxCmd ){
-	G4double en = EmaxCmd->GetNewDoubleValue(newValue);
-	remollGenFlat *agen = dynamic_cast<remollGenFlat *>(fprigen->GetGenerator());
-	if( agen ){
-	    agen->fE_max = en;
-	}
-    }
-
-    if( cmd == thminCmd ){
-	G4double th = thminCmd->GetNewDoubleValue(newValue);
-	remollVEventGen *agen = fprigen->GetGenerator();
-	if( agen ){
-	    agen->fTh_min = th;
-	}
-    }
-
-    if( cmd == thmaxCmd ){
-	G4double th = thminCmd->GetNewDoubleValue(newValue);
-	remollVEventGen *agen = fprigen->GetGenerator();
-	if( agen ){
-	    agen->fTh_max = th;
-	}
-    }
-
-    if( cmd == thCoMminCmd ){
-	G4double th = thCoMminCmd->GetNewDoubleValue(newValue);
-	remollVEventGen *agen = fprigen->GetGenerator();
-	if( agen ){
-	    agen->fThCoM_min = th;
-	}
-    }
-
-    if( cmd == thCoMmaxCmd ){
-	G4double th = thCoMminCmd->GetNewDoubleValue(newValue);
-	remollVEventGen *agen = fprigen->GetGenerator();
-	if( agen ){
-	    agen->fThCoM_max = th;
-	}
-    }
-
-    if( cmd == rasTypeCmd ){
-	G4bool rasType = rasTypeCmd->GetNewBoolValue(newValue);
-	fBeamTarg->fOldRaster = rasType;
-    }
-
-    if( cmd == rasXCmd ){
-	G4double x = rasXCmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fRasterX = x;
-    }
-
-    if( cmd == rasYCmd ){
-	G4double y = rasYCmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fRasterY = y;
-    }
-
-    if( cmd == beamX0Cmd ){
-	G4double x = beamX0Cmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fX0 = x;
-    }
-
-    if( cmd == beamY0Cmd ){
-	G4double y = beamY0Cmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fY0 = y;
-    }
-
-    if( cmd == beamth0Cmd ){
-	G4double x = beamth0Cmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fTh0 = x;
-    }
-
-    if( cmd == beamph0Cmd ){
-	G4double y = beamph0Cmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fPh0 = y;
-    }
-
-    if( cmd == beamCorrThCmd ){
-	G4double x = beamCorrThCmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fCorrTh = tan(x);
-    }
-
-    if( cmd == beamCorrPhCmd ){
-	G4double y = beamCorrPhCmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fCorrPh = tan(y);
-    }
-
-    if( cmd == beamdthCmd ){
-	G4double x = beamdthCmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fdTh = x;
-    }
-
-    if( cmd == beamdphCmd ){
-	G4double y = beamdphCmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fdPh = y;
-    }
 }

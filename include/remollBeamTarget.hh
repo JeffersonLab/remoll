@@ -24,6 +24,7 @@
 
 */
 
+class G4GenericMessenger;
 class G4VPhysicalVolume;
 class G4Material;
 class remollMultScatt;
@@ -58,6 +59,8 @@ class remollBeamTarget {
 	remollMultScatt *fMS;
 
     private:
+	G4GenericMessenger* fMessenger;
+
 	std::vector <G4VPhysicalVolume *> fTargVols;
 	G4VPhysicalVolume *fMother;
 

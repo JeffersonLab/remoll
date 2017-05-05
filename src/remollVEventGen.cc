@@ -1,6 +1,7 @@
 #include "remollVEventGen.hh"
 
 #include "G4RotationMatrix.hh"
+#include "G4GenericMessenger.hh"
 
 #include "remollBeamTarget.hh"
 #include "remollVertex.hh"
@@ -17,9 +18,22 @@ remollVEventGen::remollVEventGen()
 
     fSampType       = kCryogen;
     fApplyMultScatt = false;
+
+    // Create generic messenger
+    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+    fMessenger->DeclarePropertyWithUnit("emax","GeV",fE_max,"Maximum generation energy");
+    fMessenger->DeclarePropertyWithUnit("emin","GeV",fE_min,"Minimum generation energy");
+    fMessenger->DeclarePropertyWithUnit("thcommax","deg",fThCoM_max,"Maximum CoM generation theta angle");
+    fMessenger->DeclarePropertyWithUnit("thcommin","deg",fThCoM_min,"Minimum CoM generation theta angle");
+    fMessenger->DeclarePropertyWithUnit("thmax","deg",fTh_max,"Maximum generation theta angle");
+    fMessenger->DeclarePropertyWithUnit("thmin","deg",fTh_min,"Minimum generation theta angle");
+    fMessenger->DeclarePropertyWithUnit("phmax","deg",fPh_max,"Maximum generation phi angle");
+    fMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
 }
 
-remollVEventGen::~remollVEventGen() {
+remollVEventGen::~remollVEventGen()
+{
+    delete fMessenger;
 }
 
 remollEvent *remollVEventGen::GenerateEvent() {
@@ -96,7 +110,5 @@ void remollVEventGen::PolishEvent(remollEvent *ev) {
     }
 
     ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPol;
-
-    return;
 }
 

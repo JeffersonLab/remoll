@@ -8,12 +8,13 @@
 #include <set>
 
 class G4Material;
+class G4GenericMessenger;
 
 class remollSteppingAction : public G4UserSteppingAction
 {
   public:
     remollSteppingAction();
-    virtual ~remollSteppingAction(){};
+    virtual ~remollSteppingAction();
 
     virtual void UserSteppingAction(const G4Step*);
 
@@ -24,6 +25,8 @@ class remollSteppingAction : public G4UserSteppingAction
 
     G4bool fEnableKryptonite;
     std::set<G4Material*> fKryptoniteMaterials;
+
+    G4GenericMessenger* fMessenger;
 
   public:
     inline void SetDrawFlag(G4bool val) { fDrawFlag = val; };

@@ -20,8 +20,6 @@ void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4St
     G4ParticleDefinition* particle = particleTable->FindParticle(name);
 
     fPartType.push_back(particle);
-
-    return;
 }
 
 

@@ -6,6 +6,7 @@
 #include "G4Colour.hh"
 #include "G4VisAttributes.hh"
 #include "G4SteppingManager.hh"
+#include "G4GenericMessenger.hh"
 
 remollSteppingAction::remollSteppingAction()
 : fDrawFlag(false),fEnableKryptonite(true)
@@ -22,6 +23,15 @@ remollSteppingAction::remollSteppingAction()
       fKryptoniteMaterials.insert(*it);
     }
   }
+
+  // Create generic messenger
+  fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+  fMessenger->DeclareProperty("kryptonite",fEnableKryptonite,"Treat W, Pb, Cu as kryptonite");
+}
+
+remollSteppingAction::~remollSteppingAction()
+{
+  delete fMessenger;
 }
 
 void remollSteppingAction::UserSteppingAction(const G4Step *aStep)

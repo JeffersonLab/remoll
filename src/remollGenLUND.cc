@@ -1,7 +1,8 @@
 #include "remollGenLUND.hh"
 
 // Geant4 includes
-#include <G4Material.hh>
+#include "G4Material.hh"
+#include "G4GenericMessenger.hh"
 
 // remoll includes
 #include "remollBeamTarget.hh"
@@ -33,6 +34,8 @@ remollGenLUND::remollGenLUND() {
   bLUND = false;
   LUNDfile_linecount = 0;
 
+  // Add to generic messenger
+  fMessenger->DeclareMethod("LUND_filename",&remollGenLUND::SetLUNDFile,"LUND Input filename");
 }
 
 remollGenLUND::~remollGenLUND()
@@ -71,7 +74,7 @@ void remollGenLUND::SamplePhysics(remollVertex *vert, remollEvent *evt)
     G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR : LUND file events " << LUNDfile_linecount << " mis-match with G4,fRunData->GetNthrown() " <<  fRunData->GetNthrown()<< G4endl;
 }
 
-void remollGenLUND::SetLUNDFile(G4String filename)
+void remollGenLUND::SetLUNDFile(G4String& filename)
 {
   // open the LUND file by name
   LUNDfile.open(filename, std::ios::in);

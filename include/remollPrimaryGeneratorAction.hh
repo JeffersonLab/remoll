@@ -5,6 +5,7 @@
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4String.hh"
 
+class G4GenericMessenger;
 class G4ParticleGun;
 class G4Event;
 class remollIO;
@@ -21,7 +22,7 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     void GeneratePrimaries(G4Event* anEvent);
     G4ParticleGun* GetParticleGun();
 
-    void SetGenerator( G4String );
+    void SetGenerator(G4String&);
 
     remollVEventGen *GetGenerator(){ return fEventGen; }
 
@@ -30,6 +31,8 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 
     remollVEventGen *fEventGen;
     remollEvent *fDefaultEvent;
+
+    G4GenericMessenger* fMessenger;
 };
 
 #endif

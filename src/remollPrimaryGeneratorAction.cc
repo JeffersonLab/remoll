@@ -4,6 +4,8 @@
 #include "G4ParticleGun.hh"
 #include "G4ParticleTable.hh"
 #include "G4ParticleDefinition.hh"
+#include "G4GenericMessenger.hh"
+
 #include "remollIO.hh"
 #include "remollVEventGen.hh"
 #include "remollEvent.hh"
@@ -46,14 +48,19 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
     fParticleGun->SetParticlePosition( fDefaultEvent->fPartPos[0] );
 
     fEventGen = NULL;
+
+    // Create generic messenger
+    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+    fMessenger->DeclareMethod("gen",&remollPrimaryGeneratorAction::SetGenerator,"Select physics generator");
 }
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction() {
     delete fParticleGun;
     delete fDefaultEvent;
+    delete fMessenger;
 }
 
-void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
+void remollPrimaryGeneratorAction::SetGenerator(G4String& genname) {
 
     fEventGen = NULL;
 
@@ -75,7 +82,7 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
         fEventGen = new remollGenAl(1);
     }else if( genname == "elasticAl" ) {
         fEventGen = new remollGenAl(0);
-    }else if( genname == "pion_LUND" ) { //Dominic Lunde - adding GenLUND into the generators
+    }else if( genname == "pion_LUND" ) {
         fEventGen = new remollGenLUND();  
     }
 

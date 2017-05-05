@@ -18,10 +18,16 @@
 class remollGenPion : public remollVEventGen {
 public:
   remollGenPion();
-  ~remollGenPion();
+  virtual ~remollGenPion();
   
   enum Pion_t {kPiPlus, kPiMinus, kPi0};
   
+  void SetPionTypeByString(G4String& t) {
+    if (t == "pi-") SetPionType(kPiMinus);
+    else if (t == "pi+") SetPionType(kPiPlus);
+    else if (t == "pi0") SetPionType(kPi0);
+    else G4cerr << "Recognized pion types: pi-, pi+ and pi0." << G4endl;
+  }
   void SetPionType(Pion_t t) { fPionType = t; }
   
   void SetEmin( double emin ){ fE_min=emin; }

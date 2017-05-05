@@ -22,6 +22,8 @@
    and transform it into what is going to be simulated.
 */
 
+class G4GenericMessenger;
+
 class remollEvent;
 class remollBeamTarget;
 class remollRunData;
@@ -42,10 +44,12 @@ class remollVEventGen {
 	virtual void SetThMax( double th ){ fTh_max = th; }
 	virtual void SetPhMin( double ph ){ fPh_min = ph; }
 	virtual void SetPhMax( double ph ){ fPh_max = ph; }
-	virtual void SetEmin( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
-	virtual void SetEmax( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
-	virtual void SetThCoM_min( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
-	virtual void SetThCoM_max( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
+	virtual void SetEmin( double emin ){ fE_min = emin; }
+	virtual void SetEmax( double emax ){ fE_max = emax; }
+	virtual void SetThCoM_min( double th ){ fThCoM_min = th; }
+	virtual void SetThCoM_max( double th ){ fThCoM_max = th; }
+
+    protected:
 
 	G4double fThCoM_min, fThCoM_max;
 	G4double fTh_min, fTh_max;
@@ -68,6 +72,9 @@ class remollVEventGen {
 	SampType_t fSampType;
 	G4bool     fApplyMultScatt;
 
+    protected:
+
+	G4GenericMessenger* fMessenger;
 };
 
 
