@@ -10,6 +10,8 @@
 class TFile;
 class TTree;
 
+class G4GenericMessenger;
+
 class remollGenericDetectorHit;
 class remollGenericDetectorSum;
 class remollEvent;
@@ -57,7 +59,9 @@ class remollIO {
 	TFile *fFile;
 	TTree *fTree;
 
-	G4String fFilename;
+        G4GenericMessenger* fMessenger;
+
+        G4String fFilename;
 
 	std::vector<G4String> fGDMLFileNames;
 

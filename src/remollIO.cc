@@ -5,6 +5,7 @@
 #include <TClonesArray.h>
 
 #include "G4ParticleDefinition.hh"
+#include "G4GenericMessenger.hh"
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
@@ -41,6 +42,10 @@ remollIO::remollIO()
     fNGenDetSum = 0;
 
     InitializeTree();
+
+    // Create generic messenger
+    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+    fMessenger->DeclareProperty("filename",fFilename,"Output filename");
 }
 
 remollIO::~remollIO()
@@ -56,6 +61,8 @@ remollIO::~remollIO()
         fFile = NULL;
     }
     G4cout << "Deleting remollIO object " << this << G4endl;
+
+    delete fMessenger;
 }
 
 void remollIO::InitializeTree()

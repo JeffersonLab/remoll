@@ -101,10 +101,6 @@ remollMessenger::remollMessenger()
     beamECmd = new G4UIcmdWithADoubleAndUnit("/remoll/beamene",this);
     beamECmd->SetGuidance("Beam energy");
     beamECmd->SetParameterName("beamene", false);
-
-    fileCmd = new G4UIcmdWithAString("/remoll/filename",this);
-    fileCmd->SetGuidance("Output filename");
-    fileCmd->SetParameterName("filename", false);
 }
 
 remollMessenger::~remollMessenger(){
@@ -192,10 +188,4 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 	G4double ene = beamECmd->GetNewDoubleValue(newValue);
 	fBeamTarg->fBeamE = ene;
     }
-
-    if( cmd == fileCmd ){
-        remollIO* io = remollIO::GetInstance();
-	io->SetFilename(newValue);
-    }
-
 }
