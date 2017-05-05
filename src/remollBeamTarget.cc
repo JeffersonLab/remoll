@@ -54,9 +54,16 @@ remollBeamTarget::remollBeamTarget(){
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-    fMessenger->DeclareProperty("oldraster",fOldRaster,"Old (no ang corln) or new (ang corl) raster");
+    fMessenger->DeclareMethodWithUnit("targlen","cm",&remollBeamTarget::SetTargetLen,"Target length").SetStates(G4State_Idle);
+    fMessenger->DeclareMethodWithUnit("targpos","cm",&remollBeamTarget::SetTargetPos,"Target position").SetStates(G4State_Idle);
+
+    fMessenger->DeclarePropertyWithUnit("beamcurr","microampere",fBeamCurr,"Beam current");
+    fMessenger->DeclarePropertyWithUnit("beamene","GeV",fBeamE,"Beam energy");
+
+    fMessenger->DeclareProperty("oldras",fOldRaster,"Old (no ang corln) or new (ang corl) raster");
     fMessenger->DeclarePropertyWithUnit("rasx","cm",fRasterX,"Square raster width x (horizontal)");
     fMessenger->DeclarePropertyWithUnit("rasy","cm",fRasterY,"Square raster width y (vertical)");
+
     fMessenger->DeclarePropertyWithUnit("beam_x0","cm",fX0,"beam initial position in x (horizontal)");
     fMessenger->DeclarePropertyWithUnit("beam_y0","cm",fY0,"beam initial position in y (vertical)");
     fMessenger->DeclarePropertyWithUnit("beam_ph0","deg",fPh0,"beam initial direction in x (horizontal)");

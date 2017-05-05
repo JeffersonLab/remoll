@@ -46,11 +46,7 @@ remollMessenger::remollMessenger()
 
     fdetcon       = NULL;
     fField        = NULL;
-    fBeamTarg     = NULL;
     fPhysicsList  = NULL;
-
-    // Grab singleton beam/target
-    fBeamTarg = remollBeamTarget::GetBeamTarget();
 
     detfilesCmd = new G4UIcmdWithAString("/remoll/setgeofile",this);
     detfilesCmd->SetGuidance("Set geometry GDML files");
@@ -84,23 +80,6 @@ remollMessenger::remollMessenger()
     fieldCurrCmd->SetGuidance("Scale magnetic field by current");
     fieldCurrCmd->SetParameterName("filename", false);
 
-    tgtLenCmd = new G4UIcmdWithADoubleAndUnit("/remoll/targlen",this);
-    tgtLenCmd->SetGuidance("Target length");
-    tgtLenCmd->SetParameterName("targlen", false);
-    tgtLenCmd->AvailableForStates(G4State_Idle); // Only have this AFTER we've initalized geometry
-
-    tgtPosCmd = new G4UIcmdWithADoubleAndUnit("/remoll/targpos",this);
-    tgtPosCmd->SetGuidance("Target position");
-    tgtPosCmd->SetParameterName("targpos", false);
-    tgtPosCmd->AvailableForStates(G4State_Idle); // Only have this AFTER we've initalized geometry
-
-    beamCurrCmd = new G4UIcmdWithADoubleAndUnit("/remoll/beamcurr",this);
-    beamCurrCmd->SetGuidance("Beam current");
-    beamCurrCmd->SetParameterName("beamcurr", false);
-
-    beamECmd = new G4UIcmdWithADoubleAndUnit("/remoll/beamene",this);
-    beamECmd->SetGuidance("Beam energy");
-    beamECmd->SetParameterName("beamene", false);
 }
 
 remollMessenger::~remollMessenger(){
@@ -167,25 +146,5 @@ void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue){
 
 	scaleval = atof(scalestr.data());
 	fField->SetMagnetCurrent( scalefile, scaleval );
-    }
-
-    if( cmd == tgtLenCmd ){
-	G4double len = tgtLenCmd->GetNewDoubleValue(newValue);
-	fBeamTarg->SetTargetLen(len);
-    }
-
-    if( cmd == tgtPosCmd ){
-	G4double pos = tgtPosCmd->GetNewDoubleValue(newValue);
-	fBeamTarg->SetTargetPos(pos);
-    }
-
-    if( cmd == beamCurrCmd ){
-	G4double cur = beamCurrCmd->GetNewDoubleValue(newValue);
-	fBeamTarg->SetBeamCurrent(cur);
-    }
-
-    if( cmd == beamECmd ){
-	G4double ene = beamECmd->GetNewDoubleValue(newValue);
-	fBeamTarg->fBeamE = ene;
     }
 }

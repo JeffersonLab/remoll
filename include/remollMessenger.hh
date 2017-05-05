@@ -44,7 +44,7 @@ class remollMessenger : public G4UImessenger {
 
 	remollDetectorConstruction *fdetcon;
 	remollGlobalField *fField;
-	remollBeamTarget *fBeamTarg;
+
 	G4VModularPhysicsList *fPhysicsList;
 
 	G4UIcmdWithAnInteger *seedCmd;
@@ -57,11 +57,6 @@ class remollMessenger : public G4UImessenger {
 	G4UIcmdWithAString   *fieldScaleCmd;
 	G4UIcmdWithAString   *fieldCurrCmd;
 
-	G4UIcmdWithADoubleAndUnit *tgtLenCmd;
-	G4UIcmdWithADoubleAndUnit *tgtPosCmd;
-
-	G4UIcmdWithADoubleAndUnit *beamCurrCmd;
-	G4UIcmdWithADoubleAndUnit *beamECmd;
 
 };
 
