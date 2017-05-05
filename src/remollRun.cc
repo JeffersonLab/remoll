@@ -1,20 +1,30 @@
 #include "remollRun.hh"
+
+#include "G4Event.hh"
+#include "G4HCofThisEvent.hh"
+
 #include "remollRunData.hh"
 
-remollRun *remollRun::gSingleton = NULL;
+remollRunData* remollRun::fRunData = 0;
 
-remollRun::remollRun() {
-    gSingleton = this;
+remollRunData* remollRun::GetRunData()
+{
+  if (!fRunData) {
     fRunData = new remollRunData();
     fRunData->Init();
+  }
+  return fRunData;
 }
 
-remollRun::~remollRun() {
+remollRun::remollRun() { }
+
+remollRun::~remollRun() { }
+
+void remollRun::RecordEvent(const G4Event* aEvent)
+{
+  G4Run::RecordEvent(aEvent);
 }
 
-remollRun *remollRun::GetInstance() {
-    if( gSingleton == NULL ) {
-        gSingleton = new remollRun();
-    }
-    return gSingleton;
+void remollRun::Merge(const G4Run* aRun) {
+  G4Run::Merge(aRun);
 }

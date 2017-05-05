@@ -93,9 +93,7 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname) {
         G4cout << "Setting generator to " << genname << G4endl;
     }
 
-    remollRun::GetInstance()->GetData()->SetGenName(genname.data());
-
-    return;
+    remollRun::GetRunData()->SetGenName(genname.data());
 }
 
 void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {

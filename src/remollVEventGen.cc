@@ -14,7 +14,7 @@ remollVEventGen::remollVEventGen()
   fPh_min(0.0), fPh_max(0.0), fE_min(0.0), fE_max(0.0) {
 
     fBeamTarg = remollBeamTarget::GetBeamTarget();
-    fRunData  = remollRun::GetInstance()->GetData();
+    fRunData  = remollRun::GetRunData();
 
     fSampType       = kCryogen;
     fApplyMultScatt = false;

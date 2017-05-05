@@ -8,8 +8,10 @@
 
 #ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
+typedef G4MTRunManager RunManager;
 #else
 #include "G4RunManager.hh"
+typedef G4RunManager RunManager;
 #endif
 
 #include "G4Types.hh"
@@ -26,13 +28,8 @@
 #include "G4PhysListFactory.hh"
 #include "G4OpticalPhysics.hh"
 
-#ifdef G4VIS_USE
 #include "G4VisExecutive.hh"
-#endif
-
-#ifdef G4UI_USE
 #include "G4UIExecutive.hh"
-#endif
 
 #ifdef __APPLE__
 #include <unistd.h>
@@ -97,22 +94,15 @@ int main(int argc, char** argv) {
     // Initialization of Run manager
     //-------------------------------
     G4cout << "RunManager construction starting...." << G4endl;
-#ifdef G4MULTITHREADED
-    G4MTRunManager * runManager = new G4MTRunManager;
+    RunManager* runManager = new RunManager;
+    #ifdef G4MULTITHREADED
     if (threads > 0) runManager->SetNumberOfThreads(threads);
-#else
-    G4RunManager * runManager = new G4RunManager;
-#endif
+    #endif
 
-    // Get rundata pointer
-    remollRunData *rundata = remollRun::GetInstance()->GetData();
-
-    // Updated G4Random initialization based on
-    // https://twiki.cern.ch/twiki/bin/view/Geant4/QuickMigrationGuideForGeant4V10#Random_numbers
-    CLHEP::RanluxEngine defaultEngine(1234567, 4); // TODO why ranlux, not ranecu?
+    // Choose the Random engine
+    CLHEP::RanecuEngine defaultEngine(seed);
     G4Random::setTheEngine(&defaultEngine);
-    G4Random::setTheSeed(seed);
-    rundata->SetSeed(seed);
+    remollRun::GetRunData()->SetSeed(seed);
 
     // Create io object
     remollIO* io = remollIO::GetInstance();
@@ -134,17 +124,12 @@ int main(int argc, char** argv) {
     //----------------
     // Visualization:
     //----------------
-#ifdef G4VIS_USE
     // Initialize visualization
     //
     G4VisManager* visManager = new G4VisExecutive;
-    // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
-    // G4VisManager* visManager = new G4VisExecutive("Quiet");
     visManager->Initialize();
-#endif
 
     // Get the pointer to the User Interface manager
-    //
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
     // Define UI session for interactive mode
@@ -153,17 +138,15 @@ int main(int argc, char** argv) {
       // Run in batch mode
       G4String command = "/control/execute ";
       // Copy contents of macro into buffer to be written out into ROOT file
-      rundata->SetMacroFile(macro);
+      remollRun::GetRunData()->SetMacroFile(macro);
       UImanager->ApplyCommand(command + macro);
     } else {
       // Define UI session for interactive mode
-#ifdef G4UI_USE
-      G4UIExecutive * ui = new G4UIExecutive(argc,argv,session);
+      G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
       if (ui->IsGUI())
         UImanager->ApplyCommand("/control/execute macros/gui.mac");
       ui->SessionStart();
       delete ui;
-#endif
     }
 
 
@@ -171,18 +154,15 @@ int main(int argc, char** argv) {
     // Free the store: user actions, physics_list and detector_description are
     //                 owned and deleted by the run manager, so they should not
     //                 be deleted in the main() program !
-
-  #ifdef G4VIS_USE
     delete visManager;
-  #endif
     delete runManager;
 
 
     // Running time measurement: end
     clock_t tEnd = clock();
-
-    G4cout << " Running time[s]: "<< double(tEnd - tStart) / double(CLOCKS_PER_SEC)
-           << G4endl;
+    G4cout << " Running time[s]: "
+        << double(tEnd - tStart) / double(CLOCKS_PER_SEC)
+        << G4endl;
 
 
     return 0;

@@ -43,7 +43,7 @@ void remollGlobalField::AddNewField(const G4String& name)
 
         // Add file data to output data stream
 
-        remollRunData *rd = remollRun::GetInstance()->GetData();
+        remollRunData *rd = remollRun::GetRunData();
 
         TMD5 *md5 = TMD5::FileChecksum(name.data());
 

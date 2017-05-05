@@ -191,7 +191,7 @@ void remollIO::WriteTree()
     fFile->cd();
 
     fTree->Write("T", TObject::kOverwrite);
-    remollRun::GetInstance()->GetData()->Write("run_data", TObject::kOverwrite);
+    remollRun::GetRunData()->Write("run_data", TObject::kOverwrite);
 
     fTree->ResetBranchAddresses();
     delete fTree;
@@ -336,7 +336,7 @@ void remollIO::GrabGDMLFiles(G4String fn)
     // Reset list
     fGDMLFileNames.clear();
 
-    remollRunData *rundata = remollRun::GetInstance()->GetData();
+    remollRunData *rundata = remollRun::GetRunData();
     rundata->ClearGDMLFiles();
 
     SearchGDMLforFiles(fn);

@@ -1,54 +1,63 @@
-
-// Make this appear first!
-#include "G4Timer.hh"
-
 #include "remollRunAction.hh"
-#include "remollBeamTarget.hh"
-#include "G4Run.hh"
-#include "G4UImanager.hh"
-#include "G4ios.hh"
 
 #include "G4RunManager.hh"
 
 #include "remollIO.hh"
 #include "remollRun.hh"
+#include "remollRunData.hh"
+#include "remollBeamTarget.hh"
 
+#include "G4Threading.hh"
 #include "G4AutoLock.hh"
-namespace { G4Mutex remollIOMutex = G4MUTEX_INITIALIZER; }
+namespace { G4Mutex remollRunActionMutex = G4MUTEX_INITIALIZER; }
 
 remollRunAction::remollRunAction() { }
 
 remollRunAction::~remollRunAction() { }
+
+G4Run* remollRunAction::GenerateRun()
 {
-  delete timer;
+  return new remollRun();
 }
 
-void remollRunAction::BeginOfRunAction(const G4Run* aRun)
+void remollRunAction::BeginOfRunAction(const G4Run* run)
 {
+  const remollRun* aRun = static_cast<const remollRun*>(run);
+
   G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
 
-  G4AutoLock lock(&remollIOMutex);
-  remollIO* io = remollIO::GetInstance();
-  io->InitializeTree();
   // Print progress
   G4int evts_to_process = aRun->GetNumberOfEventToBeProcessed();
   G4RunManager::GetRunManager()->SetPrintProgress((evts_to_process > 100)
                                                   ? evts_to_process/100
                                                   : 1);
 
-  remollRunData *rmrundata = remollRun::GetInstance()->GetData();
+  if (IsMaster())
+  {
+    G4cout << __PRETTY_FUNCTION__ << ": Locking thread " << G4Threading::G4GetThreadId() << G4endl;
+    G4AutoLock lock(&remollRunActionMutex);
+    remollIO* io = remollIO::GetInstance();
+    io->InitializeTree();
 
-  rmrundata->SetBeamE( remollBeamTarget::GetBeamTarget()->fBeamE/GeV );
-  rmrundata->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );
-
-  rmrundata->Print();
+    remollRunData *rundata = remollRun::GetRunData();
+    rundata->SetBeamE( remollBeamTarget::GetBeamTarget()->fBeamE/GeV );
+    rundata->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );
+    rundata->Print();
+  }
 }
 
-void remollRunAction::EndOfRunAction(const G4Run* aRun)
+void remollRunAction::EndOfRunAction(const G4Run* run)
 {
+  const remollRun* aRun = static_cast<const remollRun*>(run);
 
-  G4AutoLock lock(&remollIOMutex);
-  remollIO* io = remollIO::GetInstance();
-  io->WriteTree();
+  if (IsMaster())
+  {
+      G4cout << "### Run " << aRun->GetRunID() << " ended." << G4endl;
+
+      G4cout << __PRETTY_FUNCTION__ << ": Locking thread " << G4Threading::G4GetThreadId() << G4endl;
+      G4AutoLock lock(&remollRunActionMutex);
+      remollIO* io = remollIO::GetInstance();
+      io->WriteTree();
+  }
 }
 
