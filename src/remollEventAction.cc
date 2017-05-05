@@ -9,35 +9,11 @@
 #include "remollIO.hh"
 
 
-remollEventAction::remollEventAction()
-: fCounter(0) { }
+remollEventAction::remollEventAction() { }
 
 remollEventAction::~remollEventAction() { }
 
-void remollEventAction::BeginOfEventAction(const G4Event* ev) {
-  // Start timer at first event
-  if (fCounter == 0) fTimer.Start();
-
-  // Pretty ongoing status
-  const G4int interval = 1000;
-  if ((fCounter % interval) == 0) {
-
-    // Stop timer (running timer cannot be read)
-    fTimer.Stop();
-
-    // Print event number
-    G4cout << "Event " << ev->GetEventID();
-    // Only print duration per event when meaningful (avoid division by zero)
-    if (ev->GetEventID() > 0)
-      G4cout << " (" << std::setprecision(3) << std::fixed
-        << 1000.0 * fTimer.GetRealElapsed()/float(interval) << " ms/event)";
-    // Carriage return without newline
-    G4cout << "\r" << std::flush;
-
-    // Start timer again
-    fTimer.Start();
-  }
-}
+void remollEventAction::BeginOfEventAction(const G4Event*) { }
 
 void remollEventAction::EndOfEventAction(const G4Event* evt )
 {
@@ -69,9 +45,6 @@ void remollEventAction::EndOfEventAction(const G4Event* evt )
 
     }
   }
-
-  // Increment counter
-  fCounter++;
 
   // Fill tree and reset buffers
   remollIO* io = remollIO::GetInstance();

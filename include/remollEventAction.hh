@@ -19,12 +19,6 @@ class remollEventAction : public G4UserEventAction
     virtual void BeginOfEventAction(const G4Event*);
     virtual void EndOfEventAction(const G4Event*);
 
-  private:
-
-    // Timer for benchmarking of simulation time per event
-    G4Timer fTimer;
-    G4int fCounter;
-
 };
 
 #endif
