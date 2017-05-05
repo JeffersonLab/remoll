@@ -8,6 +8,9 @@
 
 #include "remollIO.hh"
 
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollEventActionMutex = G4MUTEX_INITIALIZER; }
 
 remollEventAction::remollEventAction() { }
 
@@ -15,11 +18,13 @@ remollEventAction::~remollEventAction() { }
 
 void remollEventAction::BeginOfEventAction(const G4Event*) { }
 
-void remollEventAction::EndOfEventAction(const G4Event* evt )
+void remollEventAction::EndOfEventAction(const G4Event* aEvent)
 {
-  G4HCofThisEvent *HCE = evt->GetHCofThisEvent();
+  G4AutoLock lock(&remollEventActionMutex);
+  remollIO* io = remollIO::GetInstance();
 
   // Traverse all hit collections, sort by output type
+  G4HCofThisEvent *HCE = aEvent->GetHCofThisEvent();
   for (int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++) {
     G4VHitsCollection* thiscol = HCE->GetHC(hcidx);
     if (thiscol){ // This is NULL if nothing is stored
@@ -29,7 +34,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt )
       if (remollGenericDetectorHitCollection *thiscast =
           dynamic_cast<remollGenericDetectorHitCollection*>(thiscol)) {
         for (unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++) {
-          remollIO::GetInstance()->AddGenericDetectorHit((remollGenericDetectorHit *)
+          io->AddGenericDetectorHit((remollGenericDetectorHit *)
               thiscast->GetHit(hidx));
         }
       }
@@ -38,7 +43,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt )
       if (remollGenericDetectorSumCollection *thiscast =
           dynamic_cast<remollGenericDetectorSumCollection*>(thiscol)) {
         for (unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++) {
-          remollIO::GetInstance()->AddGenericDetectorSum((remollGenericDetectorSum *)
+          io->AddGenericDetectorSum((remollGenericDetectorSum *)
               thiscast->GetHit(hidx));
         }
       }
@@ -47,7 +52,6 @@ void remollEventAction::EndOfEventAction(const G4Event* evt )
   }
 
   // Fill tree and reset buffers
-  remollIO* io = remollIO::GetInstance();
   io->FillTree();
   io->Flush();
 }

@@ -35,8 +35,6 @@ remollIO* remollIO::GetInstance() {
 remollIO::remollIO()
 : fFile(0),fTree(0),fFilename("remollout.root")
 {
-    G4cout << "Creating remollIO object " << this << G4endl;
-
     //  Set arrays to 0
     fNGenDetHit = 0;
     fNGenDetSum = 0;
@@ -60,7 +58,6 @@ remollIO::~remollIO()
         delete fFile;
         fFile = NULL;
     }
-    G4cout << "Deleting remollIO object " << this << G4endl;
 
     delete fMessenger;
 }
@@ -181,7 +178,10 @@ void remollIO::Flush()
 
 void remollIO::WriteTree()
 {
-    if( !fFile->IsOpen() ){
+    if (!fFile)
+      return;
+
+    if (!fFile->IsOpen()) {
         G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << ": TFile not open" << G4endl;
         exit(1);
     }
