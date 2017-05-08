@@ -12,15 +12,6 @@
 /remoll/oldras true
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
-# initial position
-/remoll/beam_x0 1 mm
-/remoll/beam_y0 1 mm
-# initial angle
-/remoll/beam_th0 10 mrad
-/remoll/beam_ph0 10 mrad
-# gaussian spread widths
-/remoll/beam_dth 10 mrad
-/remoll/beam_dph 10 mrad
 
 # Beam energy
 /remoll/beamene 11 GeV
@@ -44,13 +35,6 @@
 # theta
 /remoll/thmin 0.5 deg
 /remoll/thmax 3.0 deg
-# phi
-/remoll/phmin -20.0 deg
-/remoll/phmax +20.0 deg
-
-# Target positioning
-/remoll/targpos  10 cm
-/remoll/targlen 100 cm
 
 # Beam current for rate
 /remoll/beamcurr 85 microampere
@@ -63,7 +47,7 @@
 
 # Output
 /control/shell mkdir -p rootfiles/tests/
-/remoll/filename rootfiles/tests/test_
+/remoll/filename rootfiles/tests/test_moller.root
 
 # Shoot
 /run/beamOn 100000
