@@ -17,10 +17,9 @@ typedef G4RunManager RunManager;
 #include "G4Types.hh"
 #include "G4UImanager.hh"
 
-#include "remollIO.hh"
-
 #include "remollRun.hh"
 #include "remollRunData.hh"
+#include "remollMessenger.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
 
@@ -104,8 +103,8 @@ int main(int argc, char** argv) {
     G4Random::setTheEngine(&defaultEngine);
     remollRun::GetRunData()->SetSeed(seed);
 
-    // Create io object
-    remollIO* io = remollIO::GetInstance();
+    // Messenger
+    remollMessenger* messenger = remollMessenger::GetInstance();
 
     // Detector geometry
     remollDetectorConstruction* detector = new remollDetectorConstruction();

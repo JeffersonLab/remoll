@@ -34,30 +34,16 @@ class remollMessenger : public G4UImessenger {
         // Static instance getter
        	static remollMessenger* GetInstance();
 
-	void SetMagField( remollGlobalField *f ){ fField = f; }
-	void SetDetCon( remollDetectorConstruction *dc ){ fdetcon= dc; }
 	void SetPhysList( G4VModularPhysicsList *l ){ fPhysicsList = l; }
 
 	void SetNewValue(G4UIcommand* cmd, G4String newValue);
 
     private:
 
-	remollDetectorConstruction *fdetcon;
-	remollGlobalField *fField;
-
 	G4VModularPhysicsList *fPhysicsList;
 
 	G4UIcmdWithAnInteger *seedCmd;
 	G4UIcmdWithABool     *opticalCmd;
-        G4UIcmdWithABool     *dumpGeometryCmd;
-
-	G4UIcmdWithAString   *detfilesCmd;
-
-	G4UIcmdWithAString   *newfieldCmd;
-	G4UIcmdWithAString   *fieldScaleCmd;
-	G4UIcmdWithAString   *fieldCurrCmd;
-
-
 };
 
 #endif//remollMessenger_HH
