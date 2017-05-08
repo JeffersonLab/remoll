@@ -15,7 +15,6 @@
 
 remollGenBeam::remollGenBeam() {
     fApplyMultScatt = true;
-    fBeamTarg = remollBeamTarget::GetBeamTarget();
 
     fZpos = -5.0*m;
 }

@@ -23,8 +23,6 @@ class remollGenpElastic : public remollVEventGen {
 
 	G4double RadProfile(G4double,G4double);
 	G4double EnergNumInt(G4double,G4double,G4double);
-
-	remollBeamTarget *fBeamTarg;
 };
 
 #endif//__REMOLLGENPELASTIC_HH 

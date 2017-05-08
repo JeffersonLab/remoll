@@ -21,11 +21,9 @@ remollGenpElastic::remollGenpElastic() {
     fTh_min =     0.1*deg;
     fTh_max =     2.0*deg;
 
-    fE_min = 80.0*MeV; // Absolute minimum of electron energy
-                            // to generate
+    fE_min = 80.0*MeV; // Absolute minimum of electron energy to generate
 
     fApplyMultScatt = true;
-    fBeamTarg = remollBeamTarget::GetBeamTarget();
 }
 
 remollGenpElastic::~remollGenpElastic(){
