@@ -70,8 +70,8 @@ remollBeamTarget::remollBeamTarget()
     fMessenger->DeclarePropertyWithUnit("beam_th0","deg",fTh0,"beam initial direction in y (vertical)");
     fMessenger->DeclarePropertyWithUnit("beam_corrph","deg",fCorrPh,"beam correlated angle (horizontal)");
     fMessenger->DeclarePropertyWithUnit("beam_corrth","deg",fCorrTh,"beam correlated angle (vertical)");
-    fMessenger->DeclarePropertyWithUnit("beam_dph","cm",fdPh,"beam gaussian spread in x (horizontal)");
-    fMessenger->DeclarePropertyWithUnit("beam_dth","cm",fdTh,"beam gaussian spread in y (vertical)");
+    fMessenger->DeclarePropertyWithUnit("beam_dph","deg",fdPh,"beam gaussian spread in x (horizontal)");
+    fMessenger->DeclarePropertyWithUnit("beam_dth","deg",fdTh,"beam gaussian spread in y (vertical)");
 }
 
 remollBeamTarget::~remollBeamTarget()
