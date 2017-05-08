@@ -1,11 +1,9 @@
 #include "remollSteppingAction.hh"
-//#include "remollSteppingActionMessenger.hh"
 
-#include "G4VVisManager.hh"
-#include "G4Polyline.hh"
-#include "G4Colour.hh"
-#include "G4VisAttributes.hh"
-#include "G4SteppingManager.hh"
+#include "G4Step.hh"
+#include "G4Track.hh"
+#include "G4Material.hh"
+#include "G4MaterialTable.hh"
 #include "G4GenericMessenger.hh"
 
 remollSteppingAction::remollSteppingAction()

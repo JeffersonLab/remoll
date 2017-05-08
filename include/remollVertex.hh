@@ -12,8 +12,8 @@ class G4Material;
 
 class remollVertex {
     public:
-	 remollVertex();
-	~remollVertex();
+	remollVertex();
+	virtual ~remollVertex();
 
 	G4double    GetBeamE(){ return fBeamE; }
 	G4double    GetRadLen(){ return fRadLen; }
