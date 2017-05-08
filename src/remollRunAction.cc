@@ -22,6 +22,7 @@ G4Run* remollRunAction::GenerateRun()
 
 void remollRunAction::BeginOfRunAction(const G4Run* run)
 {
+  // Cast into remollRun
   const remollRun* aRun = static_cast<const remollRun*>(run);
 
   // Print progress
@@ -35,7 +36,6 @@ void remollRunAction::BeginOfRunAction(const G4Run* run)
   {
     G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
 
-    G4cout << __PRETTY_FUNCTION__ << ": Locking thread " << G4Threading::G4GetThreadId() << G4endl;
     G4AutoLock lock(&remollRunActionMutex);
     remollIO* io = remollIO::GetInstance();
     io->InitializeTree();
@@ -49,13 +49,13 @@ void remollRunAction::BeginOfRunAction(const G4Run* run)
 
 void remollRunAction::EndOfRunAction(const G4Run* run)
 {
+  // Cast into remollRun
   const remollRun* aRun = static_cast<const remollRun*>(run);
 
   if (IsMaster())
   {
       G4cout << "### Run " << aRun->GetRunID() << " ended." << G4endl;
 
-      G4cout << __PRETTY_FUNCTION__ << ": Locking thread " << G4Threading::G4GetThreadId() << G4endl;
       G4AutoLock lock(&remollRunActionMutex);
       remollIO* io = remollIO::GetInstance();
       io->WriteTree();
