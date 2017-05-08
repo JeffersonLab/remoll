@@ -9,6 +9,8 @@
 
 class G4Event;
 
+class remollPrimaryGeneratorAction;
+
 class remollEventAction : public G4UserEventAction
 {
   public:
@@ -19,6 +21,14 @@ class remollEventAction : public G4UserEventAction
     virtual void BeginOfEventAction(const G4Event*);
     virtual void EndOfEventAction(const G4Event*);
 
+  private:
+    // Pointer to primary generator action
+    remollPrimaryGeneratorAction* fPrimaryGeneratorAction;
+  public:
+    // Setter for primary generator action
+    void SetPrimaryGeneratorAction(remollPrimaryGeneratorAction* action) {
+      fPrimaryGeneratorAction = action;
+    }
 };
 
 #endif
