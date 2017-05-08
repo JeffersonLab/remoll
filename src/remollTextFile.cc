@@ -24,7 +24,8 @@ remollTextFile::remollTextFile(const char *fn){
     copyFileIn(fn);
 }
 
-remollTextFile::remollTextFile(const remollTextFile& r){
+remollTextFile::remollTextFile(const remollTextFile& r)
+: TObject(r) {
     fFilenameSize = r.fFilenameSize;
     fFilename = new char[r.fFilenameSize];
     strncpy(fFilename, r.fFilename, fFilenameSize);
@@ -180,11 +181,4 @@ const char *remollTextFile::GetBaseFile(const char *fp){
     return &(fp[idx]);
 }
 
-ClassImp(remollTextFile);
-
-
-
-
-
-
-
+ClassImp(remollTextFile)

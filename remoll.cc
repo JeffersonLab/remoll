@@ -76,8 +76,9 @@ int main(int argc, char** argv){
     //  /dev/urandom doens't block
     FILE *fdrand = fopen("/dev/urandom", "r");
     if( fdrand ){
-	fread(&devrandseed, sizeof(int), 1, fdrand);
-	seed += devrandseed;
+	if (fread(&devrandseed, sizeof(int), 1, fdrand))
+	  seed += devrandseed;
+	else G4cerr << "Can't read /dev/urandom." << G4endl;
 	fclose(fdrand);
     }
 
