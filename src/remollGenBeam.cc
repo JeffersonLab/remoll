@@ -19,14 +19,17 @@ remollGenBeam::remollGenBeam() {
     fZpos = -5.0*m;
 }
 
-remollGenBeam::~remollGenBeam(){
-}
+remollGenBeam::~remollGenBeam() { }
 
-void remollGenBeam::SamplePhysics(remollVertex *vert, remollEvent *evt){
+void remollGenBeam::SamplePhysics(remollVertex *vert, remollEvent *evt)
+{
     // Get initial beam energy instead of using other sampling
-    double beamE = fBeamTarg->fBeamE;
-    evt->fBeamE = beamE;
-    evt->fBeamMomentum = evt->fBeamMomentum.unit()*sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2);;
+    double E = fBeamTarg->fBeamE;
+    double m = electron_mass_c2;
+    double p = sqrt(E*E - m*m);
+
+    evt->fBeamE = E;
+    evt->fBeamMomentum = evt->fBeamMomentum.unit()*p;
 
     // Override target sampling z
     evt->fVertexPos.setZ( fZpos );

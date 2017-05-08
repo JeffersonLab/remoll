@@ -38,7 +38,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double beamE = fBeamTarg->fBeamE;
     double Ekin  = beamE - electron_mass_c2;
 
-    std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargVols();
+    std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargetVolumes();
 
     bool bypass_target = false;
 
