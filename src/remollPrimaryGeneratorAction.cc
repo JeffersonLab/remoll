@@ -23,9 +23,6 @@
 #include "remollGenAl.hh"
 #include "remollGenLUND.hh"
 
-#include "G4AutoLock.hh"
-namespace { G4Mutex myPrimaryGeneratorMutex = G4MUTEX_INITIALIZER; }
-
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 : fEventGen(0),fEvent(0)
 {

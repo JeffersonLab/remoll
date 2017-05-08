@@ -40,6 +40,7 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
   for (int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++) {
     G4VHitsCollection* thiscol = HCE->GetHC(hcidx);
     if (thiscol){ // This is NULL if nothing is stored
+
       // Dynamic cast to test types, process however see fit and feed to IO
       
       ////  Generic Detector Hits ///////////////////////////////////
