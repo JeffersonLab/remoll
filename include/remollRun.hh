@@ -19,10 +19,6 @@ class remollRun: public G4Run {
     remollRun();
     virtual ~remollRun();
 
-    virtual void RecordEvent(const G4Event*);
-
-    virtual void Merge(const G4Run*);
-
   // Static run data access
   private:
     static remollRunData* fRunData;

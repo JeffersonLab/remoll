@@ -19,12 +19,3 @@ remollRunData* remollRun::GetRunData()
 remollRun::remollRun() { }
 
 remollRun::~remollRun() { }
-
-void remollRun::RecordEvent(const G4Event* aEvent)
-{
-  G4Run::RecordEvent(aEvent);
-}
-
-void remollRun::Merge(const G4Run* aRun) {
-  G4Run::Merge(aRun);
-}
