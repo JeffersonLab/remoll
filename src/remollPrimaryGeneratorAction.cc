@@ -118,10 +118,9 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
         }
 
         if( thisev->fPartType.size() > 0 ) {
-            // TODO
-            //G4AutoLock lock(&myPrimaryGeneratorMutex);
-            //remollIO* io = remollIO::GetInstance();
-            //io->SetEventData(thisev);
+            G4AutoLock lock(&myPrimaryGeneratorMutex);
+            remollIO* io = remollIO::GetInstance();
+            io->SetEventData(thisev);
         }
     } else { // Use default, static single generator
         // Update this just in case things changed
@@ -133,9 +132,9 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
             fParticleGun->GetParticleMomentum(),
             fParticleGun->GetParticleDefinition()->GetParticleName() );
 
-        //G4AutoLock lock(&myPrimaryGeneratorMutex);
-        //remollIO* io = remollIO::GetInstance();
-        //io->SetEventData(fDefaultEvent);
+        G4AutoLock lock(&myPrimaryGeneratorMutex);
+        remollIO* io = remollIO::GetInstance();
+        io->SetEventData(fDefaultEvent);
 
         fParticleGun->GeneratePrimaryVertex(anEvent);
     }
