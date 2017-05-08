@@ -73,7 +73,7 @@ class remollIO {
 
 	// Event data
     public:
-	void SetEventData(remollEvent *);
+	void SetEventData(const remollEvent *);
     private:
 	Int_t fNEvPart;
 

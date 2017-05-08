@@ -210,7 +210,7 @@ void remollIO::WriteTree()
 
 // Event Data
 
-void remollIO::SetEventData(remollEvent *ev)
+void remollIO::SetEventData(const remollEvent *ev)
 {
     int n = ev->fPartType.size();
     if( n > __IO_MAXHIT ){
