@@ -22,6 +22,7 @@
    and transform it into what is going to be simulated.
 */
 
+class G4ParticleGun;
 class G4GenericMessenger;
 
 class remollEvent;
@@ -55,6 +56,17 @@ class remollVEventGen {
 	G4double fTh_min, fTh_max;
 	G4double fPh_min, fPh_max;
 	G4double fE_min, fE_max;
+
+    protected:
+	// Number of particles
+	G4int fNumberOfParticles;
+	// Particle gun
+        G4ParticleGun* fParticleGun;
+    public:
+	// Set the number of particles
+	void SetNumberOfParticles(G4int n);
+	// Get a new particle gun for this generator
+        G4ParticleGun* GetParticleGun() const { return fParticleGun; }
 
     private:
 	const G4String fName;

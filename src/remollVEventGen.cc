@@ -18,6 +18,8 @@ remollVEventGen::remollVEventGen()
 
     fSampType       = kCryogen;
     fApplyMultScatt = false;
+    // Set initial number of particles and create particle gun
+    SetNumberOfParticles(fNumberOfParticles);
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -36,7 +38,22 @@ remollVEventGen::~remollVEventGen()
     delete fMessenger;
 }
 
-remollEvent *remollVEventGen::GenerateEvent() {
+void remollVEventGen::SetNumberOfParticles(G4int n)
+{
+  // Store new number of particles
+  fNumberOfParticles = n;
+
+  // Delete old particle gun
+  if (fParticleGun) {
+    delete fParticleGun;
+    fParticleGun = 0;
+  }
+  // Create new particle gun
+  fParticleGun = new G4ParticleGun(fNumberOfParticles);
+}
+
+remollEvent* remollVEventGen::GenerateEvent()
+{
     // Set up beam/target vertex
     remollVertex vert   = fBeamTarg->SampleVertex(fSampType);
 
