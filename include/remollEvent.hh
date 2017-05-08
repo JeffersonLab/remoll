@@ -14,6 +14,8 @@
 
 class G4ParticleDefinition;
 
+class remollBeamTarget;
+
 class remollEvent {
     public:
 	remollEvent();
@@ -37,6 +39,10 @@ class remollEvent {
 	void   Print();
 
     private:
+	remollBeamTarget* fBeamTarget;
+    public:
+	const remollBeamTarget* GetBeamTarget() const { return fBeamTarget; }
+	void SetBeamTarget(remollBeamTarget* bt) { fBeamTarget = bt; }
 
     public:
 	// Interaction information

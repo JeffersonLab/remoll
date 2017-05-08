@@ -4,7 +4,8 @@
 #include "G4ParticleTable.hh"
 #include "G4SystemOfUnits.hh"
 
-remollEvent::remollEvent(){
+remollEvent::remollEvent()
+: fBeamTarget(0) {
     Reset();
 }
 
