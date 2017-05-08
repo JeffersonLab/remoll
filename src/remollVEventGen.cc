@@ -31,10 +31,14 @@ remollVEventGen::remollVEventGen()
     fMessenger->DeclarePropertyWithUnit("thmin","deg",fTh_min,"Minimum generation theta angle");
     fMessenger->DeclarePropertyWithUnit("phmax","deg",fPh_max,"Maximum generation phi angle");
     fMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
+
+    fBeamTarg = new remollBeamTarget();
+
 }
 
 remollVEventGen::~remollVEventGen()
 {
+    delete fBeamTarg;
     delete fMessenger;
 }
 
@@ -60,6 +64,8 @@ remollEvent* remollVEventGen::GenerateEvent()
     /////////////////////////////////////////////////////////////////////
     // Create and initialize values for event
     remollEvent *thisev = new remollEvent();
+    thisev->SetBeamTarget(fBeamTarg);
+
     thisev->fVertexPos    = fBeamTarg->fVer;
     if( fApplyMultScatt ) {
         thisev->fBeamMomentum = fBeamTarg->fSampE*(fBeamTarg->fDir.unit());

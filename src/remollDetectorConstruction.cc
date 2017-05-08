@@ -44,6 +44,9 @@
 #define __DET_STRLEN 200
 #define __MAX_DETS 5000
 
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
@@ -95,8 +98,6 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
     // This could be made more general with a full treesearch
     //====================================================
 
-    remollBeamTarget *beamtarg = remollBeamTarget::GetBeamTarget();
-    beamtarg->Reset();
     G4LogicalVolume *thislog = worldVolume->GetLogicalVolume();
     G4int vidx = 0;
 
@@ -109,10 +110,12 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 	G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 	    ":  target definition structure in GDML not valid" << G4endl;
     } else {
-	beamtarg->SetMotherVolume(thislog->GetDaughter(vidx));
+        // Mutex lock before writing static structures in remollBeamTarget
+        G4AutoLock lock(&remollDetectorConstructionMutex);
+        remollBeamTarget::ResetTargetVolumes();
+	remollBeamTarget::SetMotherVolume(thislog->GetDaughter(vidx));
 
 	thislog = thislog->GetDaughter(vidx)->GetLogicalVolume();
-
 
 	////////////////////////////////////////////////////////////////////////////////
 	// List relevant target volumes here terminated by "" //////////////////////////
@@ -140,7 +143,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 		exit(1);
 	    }
 
-	    beamtarg->AddVolume(thislog->GetDaughter(vidx));
+	    remollBeamTarget::AddTargetVolume(thislog->GetDaughter(vidx));
 	    nidx++;
 	}
     }

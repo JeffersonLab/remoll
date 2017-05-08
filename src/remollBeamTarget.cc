@@ -26,25 +26,25 @@
 #define __MAX_MAT 100
 #define Euler 0.5772157
 
-remollBeamTarget *remollBeamTarget::gSingleton = NULL;
+// Initialize static geometry objects
+G4VPhysicalVolume* remollBeamTarget::fTargetMother = 0;
+std::vector <G4VPhysicalVolume *> remollBeamTarget::fTargetVolumes;
 
-remollBeamTarget::remollBeamTarget(){
-    gSingleton = this;
-    fMother = NULL;
+G4double remollBeamTarget::fLH2Length   = -1e9;
+G4double remollBeamTarget::fZpos        = -1e9;
+G4double remollBeamTarget::fLH2pos      = -1e9;
+G4double remollBeamTarget::fTotalLength = 0.0;
+
+remollBeamTarget::remollBeamTarget()
+: fBeamE(gDefaultBeamE),fBeamCurr(gDefaultBeamCur),fBeamPol(gDefaultBeamPol),
+  fOldRaster(true),fRasterX(5.0*mm),fRasterY(5.0*mm),
+  fX0(0.0),fY0(0.0),fTh0(0.0),fPh0(0.0),
+  fdTh(0.0),fdPh(0.0),fCorrTh(0.0),fCorrPh(0.0)
+{
     UpdateInfo();
 
-    fOldRaster = true;
-    fRasterX = fRasterY = 5.0*mm;
-    fX0 = fY0 = fTh0 = fPh0 = fdTh = fdPh = 0.0;
-
-    fCorrTh = fCorrPh = 0.0;
-
+    // Create new multiple scattering
     fMS = new remollMultScatt();
-
-    fBeamE   = gDefaultBeamE;
-    fBeamPol = gDefaultBeamPol;
-
-    fBeamCurr = gDefaultBeamCur;
 
     fEcut = 1e-6*MeV;
 
@@ -77,35 +77,28 @@ remollBeamTarget::remollBeamTarget(){
 remollBeamTarget::~remollBeamTarget()
 {
     delete fMessenger;
+    delete fMS;
 }
-
-remollBeamTarget *remollBeamTarget::GetBeamTarget() {
-    if( gSingleton == NULL ){
-	gSingleton = new remollBeamTarget();
-    }
-    return gSingleton;
-}
-
 
 G4double remollBeamTarget::GetEffLumin(){
-    G4double lumin = fEffMatLen*fBeamCurr/(e_SI*coulomb);
-    return lumin;
+    return fEffMatLen*fBeamCurr/(e_SI*coulomb);
 }
 
-void remollBeamTarget::UpdateInfo(){
-    std::vector<G4VPhysicalVolume *>::iterator it;
-
+void remollBeamTarget::UpdateInfo()
+{
     fLH2Length   = -1e9;
     fZpos        = -1e9;
     fLH2pos      = -1e9;
     fTotalLength = 0.0;
 
     // Can't calculate anything without mother
-    if( !fMother ) return;
-    fZpos = fMother->GetFrameTranslation().z();
+    if( !fTargetMother ) return;
+    fZpos = fTargetMother->GetFrameTranslation().z();
 
-    for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
-	// Assume everything is non-nested tubes
+    for (std::vector<G4VPhysicalVolume *>::iterator
+        it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
+
+        // Assume everything is non-nested tubes
 	if( !dynamic_cast<G4Tubs *>( (*it)->GetLogicalVolume()->GetSolid() ) ){
 	    G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		":  Target volume not made of G4Tubs" << G4endl; 
@@ -113,11 +106,13 @@ void remollBeamTarget::UpdateInfo(){
 	}
 
 	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
-	    if( fLH2Length >= 0.0 ){
-		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		    ":  Multiply defined LH2 volumes" << G4endl; 
-		exit(1);
-	    }
+
+// TODO This doesn't work when moving to static
+//	    if( fLH2Length >= 0.0 ){
+//		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+//		    ":  Multiply defined LH2 volumes" << G4endl;
+//		exit(1);
+//	    }
 
 	    fLH2Length = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
 		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
@@ -128,19 +123,26 @@ void remollBeamTarget::UpdateInfo(){
 		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
 	}
     }
-
-    return;
 }
 
 
-void remollBeamTarget::SetTargetLen(G4double z){
-    std::vector<G4VPhysicalVolume *>::iterator it;
+void remollBeamTarget::SetTargetLen(G4double z)
+{
+    // Loop over target volumes
+    for (std::vector<G4VPhysicalVolume *>::iterator
+        it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
 
-    for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
-	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
-	    // Change the length of the target volume
-	    ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->SetZHalfLength(z/2.0);
+        G4GeometryManager::GetInstance()->OpenGeometry((*it));
+
+        // If liquid hydrogen tubs
+        G4Material* material = (*it)->GetLogicalVolume()->GetMaterial();
+	if (material->GetName() == "LiquidHydrogen")
+	{
+            G4VSolid* solid = (*it)->GetLogicalVolume()->GetSolid();
+            G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
+            // Change the length of the target volume
+            if (tubs) tubs->SetZHalfLength(z/2.0);
+
 	} else {
 
 	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
@@ -169,18 +171,22 @@ void remollBeamTarget::SetTargetLen(G4double z){
     UpdateInfo();
 }
 
-void remollBeamTarget::SetTargetPos(G4double z){
-    std::vector<G4VPhysicalVolume *>::iterator it;
-
+void remollBeamTarget::SetTargetPos(G4double z)
+{
     //G4double zshift = z-(fZpos+fLH2pos);
 
+    for (std::vector<G4VPhysicalVolume *>::iterator
+        it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++ ) {
 
-    for(it = fTargVols.begin(); it != fTargVols.end(); it++ ){
-	G4GeometryManager::GetInstance()->OpenGeometry((*it));
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+        G4GeometryManager::GetInstance()->OpenGeometry((*it));
+
+        G4Material* material = (*it)->GetLogicalVolume()->GetMaterial();
+	if (material->GetName() == "LiquidHydrogen") {
 	    // Change the length of the target volume
-	    (*it)->SetTranslation( G4ThreeVector(0.0, 0.0, z-fZpos) );
+	    (*it)->SetTranslation(G4ThreeVector(0.0, 0.0, z-fZpos));
+
 	} else {
+
 	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		": volume other than cryogen has been specified, but handling not implemented" << G4endl;
 
@@ -207,12 +213,12 @@ void remollBeamTarget::SetTargetPos(G4double z){
 ////////////////////////////////////////////////////////////////////////////////////////////
 //  Sampling functions
 
-remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
+remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
+{
     remollVertex thisvert;
 
-    G4double rasx = G4RandFlat::shoot( fX0 - fRasterX/2.0, fX0 + fRasterX/2.0);
-    G4double rasy = G4RandFlat::shoot( fY0 - fRasterY/2.0, fY0 + fRasterY/2.0);
-    G4double ztrav, len;
+    G4double rasx = G4RandFlat::shoot(fX0 - fRasterX/2.0, fX0 + fRasterX/2.0);
+    G4double rasy = G4RandFlat::shoot(fY0 - fRasterY/2.0, fY0 + fRasterY/2.0);
 
     // Sample where along target weighted by density (which roughly corresponds to A
     // or the number of electrons, which is probably good enough for this
@@ -223,7 +229,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    fSampLen = fLH2Length;
 	    break;
 
-    case kWalls:
+        case kWalls:
 	    G4cerr << "ERROR" << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		": scattering from cell walls has been specified, but handling not implemented" << G4endl;
 	    exit(1);
@@ -239,7 +245,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 	    break;
     }
 
-    ztrav = G4RandFlat::shoot(0.0, fSampLen);
+    G4double ztrav = G4RandFlat::shoot(0.0, fSampLen);
 
 
     G4bool isLH2;
@@ -257,7 +263,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
     // Figure out the material we are in and the radiation length we traversed
     std::vector<G4VPhysicalVolume *>::iterator it;
-    for(it = fTargVols.begin(); it != fTargVols.end() && !foundvol; it++ ){
+    for(it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !foundvol; it++ ){
 	mat = (*it)->GetLogicalVolume()->GetMaterial();
 	if( mat->GetName() == "LiquidHydrogen" ) { 
 	    isLH2 = true; 
@@ -268,7 +274,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
 	} 
 
-	len = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*mat->GetDensity();
+	G4double len = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*mat->GetDensity();
 	switch( samp ){
 	    case kCryogen: 
 		/*
@@ -453,33 +459,3 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp){
 
     return thisvert;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

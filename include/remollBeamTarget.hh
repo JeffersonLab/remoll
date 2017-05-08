@@ -30,21 +30,33 @@ class G4Material;
 class remollMultScatt;
 
 class remollBeamTarget {
+
     private: 
-	static remollBeamTarget *gSingleton;
-	remollBeamTarget();
+        // Static geometry objects
+        static std::vector <G4VPhysicalVolume*> fTargetVolumes;
+        static G4VPhysicalVolume* fTargetMother;
+
+        static G4double fTotalLength;
+        static G4double fLH2Length, fZpos, fLH2pos;
+
+        static void UpdateInfo();
 
     public:
-	static remollBeamTarget *GetBeamTarget();
-	~remollBeamTarget();
+        // Static geometry functions
+        static void ResetTargetVolumes(){ fTargetVolumes.clear(); fTargetMother = 0; UpdateInfo(); }
+        static void SetMotherVolume( G4VPhysicalVolume *v ){ fTargetMother = v; UpdateInfo(); }
+        static void AddTargetVolume( G4VPhysicalVolume *v ){ fTargetVolumes.push_back(v); UpdateInfo(); }
+        static std::vector<G4VPhysicalVolume*> GetTargetVolumes(){ return fTargetVolumes; }
+
+        void SetTargetPos(G4double z);
+        void SetTargetLen(G4double l);
+
+    public:
+        remollBeamTarget();
+	virtual ~remollBeamTarget();
 
 	G4double GetEffLumin();
 
-	void Reset(){ fTargVols.clear(); fMother = NULL; UpdateInfo(); }
-	void SetMotherVolume( G4VPhysicalVolume *v ){ fMother = v; UpdateInfo(); }
-	void AddVolume( G4VPhysicalVolume *v ){ fTargVols.push_back(v);  UpdateInfo(); }
-	void SetTargetPos(G4double z);
-	void SetTargetLen(G4double l);
 
 	remollVertex SampleVertex(SampType_t);
 
@@ -52,21 +64,12 @@ class remollBeamTarget {
 	G4double fBeamCurr;
 	G4double fBeamPol;
 
-	std::vector <G4VPhysicalVolume *> GetTargVols(){ return fTargVols; }
-
 	remollMultScatt *fMS;
 
     private:
 	G4GenericMessenger* fMessenger;
 
-	std::vector <G4VPhysicalVolume *> fTargVols;
-	G4VPhysicalVolume *fMother;
 
-	void UpdateInfo();
-
-
-	G4double fTotalLength;
-	G4double fLH2Length, fZpos, fLH2pos;
 
 	G4Material *fDefaultMat;
 

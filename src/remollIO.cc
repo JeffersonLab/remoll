@@ -254,7 +254,7 @@ void remollIO::SetEventData(const remollEvent *ev)
     /////////////////////////////////////////////////
     //  Set beam data as well
 
-    remollBeamTarget *bt = remollBeamTarget::GetBeamTarget();
+    const remollBeamTarget* bt = ev->GetBeamTarget();
 
     fBmX = bt->fVer.x()/__L_UNIT;
     fBmY = bt->fVer.y()/__L_UNIT;
