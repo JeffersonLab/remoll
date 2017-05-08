@@ -24,16 +24,17 @@ void remollRunAction::BeginOfRunAction(const G4Run* run)
 {
   const remollRun* aRun = static_cast<const remollRun*>(run);
 
-  G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
-
   // Print progress
+  G4int interval = 100; // Print this many progress points (i.e. 100 -> every 1%)
   G4int evts_to_process = aRun->GetNumberOfEventToBeProcessed();
-  G4RunManager::GetRunManager()->SetPrintProgress((evts_to_process > 100)
-                                                  ? evts_to_process/100
+  G4RunManager::GetRunManager()->SetPrintProgress((evts_to_process > interval)
+                                                  ? evts_to_process/interval
                                                   : 1);
 
   if (IsMaster())
   {
+    G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
+
     G4cout << __PRETTY_FUNCTION__ << ": Locking thread " << G4Threading::G4GetThreadId() << G4endl;
     G4AutoLock lock(&remollRunActionMutex);
     remollIO* io = remollIO::GetInstance();
