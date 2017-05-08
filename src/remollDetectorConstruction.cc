@@ -10,6 +10,7 @@
 
 #include "TGeoManager.h"
 
+#include "G4GenericMessenger.hh"
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
 
@@ -49,15 +50,24 @@ G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 remollDetectorConstruction::remollDetectorConstruction()
 : fGDMLParser(0),fWorldVolume(0)
 {
-  // Connect to messenger
-  remollMessenger* messenger = remollMessenger::GetInstance();
-  messenger->SetDetCon(this);
-
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
 
   // Default geometry file
   fDetFileName = "geometry_sculpt/mollerMother.gdml";
+
+  // Create generic messenger
+  fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+  fMessenger->DeclareProperty(
+      "setgeofile",
+      fDetFileName,
+      "Set geometry GDML files")
+      .SetStates(G4State_PreInit);
+  fMessenger->DeclareMethod(
+      "dumpgeometry",
+      &remollDetectorConstruction::DumpGeometricalTreeFromWorld,
+      "Dump the geometry tree")
+      .SetStates(G4State_Idle);
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
@@ -321,10 +331,6 @@ void remollDetectorConstruction::ConstructSDandField()
 
   if (fGlobalField) delete fGlobalField;
   fGlobalField = new remollGlobalField();
-
-  remollMessenger* messenger = remollMessenger::GetInstance();
-  messenger->SetDetCon(this);
-  messenger->SetMagField(fGlobalField);
 }
 
 G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int index){  

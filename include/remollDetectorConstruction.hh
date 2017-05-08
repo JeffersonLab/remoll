@@ -11,6 +11,7 @@ class G4Tubs;
 class G4LogicalVolume;
 class G4VPhysicalVolume;
 class G4VSensitiveDetector;
+class G4GenericMessenger;
 
 class remollGlobalField;
 
@@ -32,6 +33,8 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     G4GDMLParser *fGDMLParser;
 
+    G4GenericMessenger* fMessenger;
+
     //----------------------
     // global magnet section
     //----------------------
@@ -45,6 +48,9 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   public:
 
+    void DumpGeometricalTreeFromWorld(G4bool surfchk = false) {
+      DumpGeometricalTree(0,0,surfchk);
+    }
     void DumpGeometricalTree(G4VPhysicalVolume* aVolume = 0,
       G4int depth = 0, G4bool surfchk = false);
 
