@@ -3,6 +3,7 @@
 #include "G4TransportationManager.hh"
 #include "G4FieldManager.hh"
 #include "G4UImanager.hh"
+#include "G4GenericMessenger.hh"
 
 #include "remollMagneticField.hh"
 
@@ -23,11 +24,17 @@ remollGlobalField::remollGlobalField()
     G4FieldManager* fieldmanager = transportationmanager->GetFieldManager();
     fieldmanager->SetDetectorField(this);
     fieldmanager->CreateChordFinder(this);
+
+    // Create generic messenger
+    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+    fMessenger->DeclareMethod("addfield",&remollGlobalField::AddNewField,"Add magnetic field");
+    fMessenger->DeclareMethod("scalefield",&remollGlobalField::SetFieldScaleByString,"Scale magnetic field");
+    fMessenger->DeclareMethod("magcurrent",&remollGlobalField::SetMagnetCurrentByString,"Scale magnetic field by current");
 }
 
 remollGlobalField::~remollGlobalField() { }
 
-void remollGlobalField::AddNewField(const G4String& name)
+void remollGlobalField::AddNewField(G4String& name)
 {
     remollMagneticField *thisfield = new remollMagneticField(name);
 
@@ -108,6 +115,18 @@ void remollGlobalField::GetFieldValue( const G4double p[], G4double *resB) const
     }
 }
 
+void remollGlobalField::SetFieldScaleByString(G4String& name_scale)
+{
+  std::istringstream iss(name_scale);
+
+  G4String name, scalestr;
+  iss >> name;
+  iss >> scalestr;
+
+  G4double scaleval = atof(scalestr);
+  SetFieldScale(name, scaleval);
+}
+
 void remollGlobalField::SetFieldScale(const G4String& name, G4double scale)
 {
     remollMagneticField *field = GetFieldByName(name);
@@ -117,6 +136,25 @@ void remollGlobalField::SetFieldScale(const G4String& name, G4double scale)
         G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
             << ": field " << name << " scaling failed" << G4endl;
     }
+}
+
+void remollGlobalField::SetMagnetCurrentByString(G4String& name_scale)
+{
+  std::istringstream iss(name_scale);
+
+  G4String name, scalestr, scaleunit;
+  iss >> name;
+  iss >> scalestr;
+  iss >> scaleunit;
+
+  if (scaleunit != "A") {
+    // FIXME: less snark and more functionality?
+    G4cerr << __FILE__ << " line " << __LINE__ <<  ":\n\tGraaaah - just put the current for " <<  name <<  " in amps..." << G4endl;
+    exit(1);
+  }
+
+  G4double scaleval = atof(scalestr);
+  SetMagnetCurrent(name, scaleval);
 }
 
 void remollGlobalField::SetMagnetCurrent(const G4String& name, G4double scale)

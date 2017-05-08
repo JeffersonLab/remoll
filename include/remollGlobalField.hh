@@ -10,6 +10,8 @@
 
 #include <vector>
 
+class G4GenericMessenger;
+
 class remollMagneticField;
 
 class remollGlobalField : public G4MagneticField {
@@ -17,8 +19,10 @@ class remollGlobalField : public G4MagneticField {
         remollGlobalField();
 	virtual ~remollGlobalField();
 
-	void AddNewField(const G4String& name);
+	void AddNewField(G4String& name);
+	void SetFieldScaleByString(G4String& name_scale);
 	void SetFieldScale(const G4String& name, G4double scale);
+        void SetMagnetCurrentByString(G4String& name_scale);
 	void SetMagnetCurrent(const G4String& name, G4double scale);
 
 	void GetFieldValue(const G4double[], G4double*) const;
@@ -27,6 +31,8 @@ class remollGlobalField : public G4MagneticField {
 	std::vector<remollMagneticField*> fFields;
 
 	remollMagneticField* GetFieldByName(const G4String& name);
+
+	G4GenericMessenger* fMessenger;
 };
 
 
