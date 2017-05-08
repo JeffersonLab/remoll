@@ -20,17 +20,17 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 
   public:
     void GeneratePrimaries(G4Event* anEvent);
-    G4ParticleGun* GetParticleGun();
+
+    const remollEvent* GetEvent() const { return fEvent; }
 
     void SetGenerator(G4String&);
-
-    remollVEventGen *GetGenerator(){ return fEventGen; }
 
   private:
     G4ParticleGun* fParticleGun;
 
     remollVEventGen *fEventGen;
-    remollEvent *fDefaultEvent;
+
+    remollEvent *fEvent;
 
     G4GenericMessenger* fMessenger;
 };

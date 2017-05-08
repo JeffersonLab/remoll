@@ -1,5 +1,8 @@
 #include "remollVEventGen.hh"
 
+#include <cassert>
+
+#include "G4ParticleGun.hh"
 #include "G4RotationMatrix.hh"
 #include "G4GenericMessenger.hh"
 
@@ -11,13 +14,9 @@
 
 remollVEventGen::remollVEventGen()
 : fThCoM_min(0.0), fThCoM_max(0.0), fTh_min(0.0), fTh_max(0.0),
-  fPh_min(0.0), fPh_max(0.0), fE_min(0.0), fE_max(0.0) {
-
-    fBeamTarg = remollBeamTarget::GetBeamTarget();
-    fRunData  = remollRun::GetRunData();
-
-    fSampType       = kCryogen;
-    fApplyMultScatt = false;
+  fPh_min(0.0), fPh_max(0.0), fE_min(0.0), fE_max(0.0),
+  fNumberOfParticles(1),fParticleGun(0)
+{
     // Set initial number of particles and create particle gun
     SetNumberOfParticles(fNumberOfParticles);
 
@@ -34,6 +33,8 @@ remollVEventGen::remollVEventGen()
 
     fBeamTarg = new remollBeamTarget();
 
+    fSampType       = kCryogen;
+    fApplyMultScatt = false;
 }
 
 remollVEventGen::~remollVEventGen()
@@ -123,13 +124,17 @@ void remollVEventGen::PolishEvent(remollEvent *ev) {
         (*iter) += ev->fVertexPos;
     }
     
+    // Get number of thrown events
+    remollRunData* rundata = remollRun::GetRunData();
+    G4double nthrown = rundata->GetNthrown();
 
+    // Calculate rate
     if ( ev->fRate == 0 ){// If the rate is set to 0 then calculate it using the cross section
-    	ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/((G4double) fRunData->GetNthrown());
+    	ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/nthrown;
     }
     else { // For LUND - calculate rate and cross section	
-    	ev->fEffXs = ev->fRate*((G4double) fRunData->GetNthrown())/(fBeamTarg->GetEffLumin());
-    	ev->fRate = ev->fRate/((G4double) fRunData->GetNthrown());
+    	ev->fEffXs = ev->fRate*nthrown/(fBeamTarg->GetEffLumin());
+    	ev->fRate = ev->fRate/nthrown;
     }
 
     ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPol;

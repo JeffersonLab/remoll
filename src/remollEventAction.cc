@@ -1,18 +1,21 @@
 #include "remollEventAction.hh"
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
+#include "remollPrimaryGeneratorAction.hh"
 
 #include "G4Event.hh"
 #include "G4HCofThisEvent.hh"
 #include "G4VHitsCollection.hh"
 
 #include "remollIO.hh"
+#include "remollEvent.hh"
 
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
 namespace { G4Mutex remollEventActionMutex = G4MUTEX_INITIALIZER; }
 
-remollEventAction::remollEventAction() { }
+remollEventAction::remollEventAction()
+: fPrimaryGeneratorAction(0) { }
 
 remollEventAction::~remollEventAction() { }
 
@@ -20,8 +23,17 @@ void remollEventAction::BeginOfEventAction(const G4Event*) { }
 
 void remollEventAction::EndOfEventAction(const G4Event* aEvent)
 {
+  // We collect all interaction with remollIO in this thread for as
+  // little locking as possible. This means that all the thread local
+  // information must be retrieved from here.
+
+  // Lock mutex
   G4AutoLock lock(&remollEventActionMutex);
   remollIO* io = remollIO::GetInstance();
+
+  // Get primary event action information
+  const remollEvent* event = fPrimaryGeneratorAction->GetEvent();
+  io->SetEventData(event);
 
   // Traverse all hit collections, sort by output type
   G4HCofThisEvent *HCE = aEvent->GetHCofThisEvent();

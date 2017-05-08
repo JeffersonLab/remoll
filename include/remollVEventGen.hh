@@ -41,17 +41,9 @@ class remollVEventGen {
 	void SetSampType( SampType_t st ) { fSampType = st; }
 	void SetDoMultScatt( G4bool multscatt ){ fApplyMultScatt = multscatt; }
 
-	virtual void SetThMin( double th ){ fTh_min = th; }
-	virtual void SetThMax( double th ){ fTh_max = th; }
-	virtual void SetPhMin( double ph ){ fPh_min = ph; }
-	virtual void SetPhMax( double ph ){ fPh_max = ph; }
-	virtual void SetEmin( double emin ){ fE_min = emin; }
-	virtual void SetEmax( double emax ){ fE_max = emax; }
-	virtual void SetThCoM_min( double th ){ fThCoM_min = th; }
-	virtual void SetThCoM_max( double th ){ fThCoM_max = th; }
-
     protected:
 
+	// Generation limits
 	G4double fThCoM_min, fThCoM_max;
 	G4double fTh_min, fTh_max;
 	G4double fPh_min, fPh_max;
@@ -71,8 +63,9 @@ class remollVEventGen {
     private:
 	const G4String fName;
 
+
+    protected:
 	remollBeamTarget *fBeamTarg;
-	remollRunData    *fRunData;
 
 	void PolishEvent(remollEvent *);
 	
@@ -85,7 +78,7 @@ class remollVEventGen {
 	G4bool     fApplyMultScatt;
 
     protected:
-
+	// Generic messenger as protected to be used in derived classes
 	G4GenericMessenger* fMessenger;
 };
 

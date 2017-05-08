@@ -41,7 +41,6 @@ void remollRunAction::BeginOfRunAction(const G4Run* run)
     io->InitializeTree();
 
     remollRunData *rundata = remollRun::GetRunData();
-    rundata->SetBeamE( remollBeamTarget::GetBeamTarget()->fBeamE/GeV );
     rundata->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );
     rundata->Print();
   }
