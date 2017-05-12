@@ -13,6 +13,8 @@ include/gitinfo.hh
 *.root
 *.out
 *.pdf
+*.log
+*.dot
 
 #ignore kdev files
 *.kdev4
@@ -21,3 +23,7 @@ include/gitinfo.hh
 build*
 bldXcode
 map_directory
+
+#ignore log and rootfiles directory
+log
+rootfiles
