@@ -66,4 +66,4 @@
 /remoll/filename rootfiles/tests/test_raster.root
 
 # Shoot
-/run/beamOn 100000
+/run/beamOn 10000

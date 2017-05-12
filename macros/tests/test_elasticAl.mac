@@ -27,9 +27,9 @@
 #/remoll/gen pion
 #/remoll/piontype pi-
 #/remoll/gen pion_LUND
-/remoll/gen elasticAl
 #/remoll/gen inelasticAl
 #/remoll/gen quasielasticAl
+/remoll/gen elasticAl
 
 # Generation limits
 # theta
@@ -50,4 +50,4 @@
 /remoll/filename rootfiles/tests/test_elasticAl.root
 
 # Shoot
-/run/beamOn 100000
+/run/beamOn 10000

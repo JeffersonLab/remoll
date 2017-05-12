@@ -1,10 +1,23 @@
 #!/bin/bash
 
 dir=`dirname $0`/../..
-mkdir -p $dir/rootfiles/tests
-mkdir -p $dir/log/tests
+dir=`readlink -f ${dir}`
 
-for i in $dir/macros/tests/*.mac ; do
-	echo "Running $i..."
-	build/remoll $i 2>&1 | tee $dir/log/tests/${i/mac/log}
+rootfiles=${dir}/rootfiles/tests
+analysis=${dir}/analysis/tests
+logfiles=${dir}/log/tests
+macros=${dir}/macros/tests
+mkdir -p ${rootfiles} ${logfiles}
+
+for macro in ${macros}/*.mac ; do
+	name=`basename ${macro} .mac`
+	echo "Running ${name}..."
+	build/remoll ${macro} 2>&1 | tee ${logfiles}/${name}.log
+done
+
+for rootfile in ${rootfiles}/*.root ; do
+	name=`basename ${rootfile} .root`
+	for rootmacro in ${analysis}/*.C ; do
+		root -q -b -l "${rootmacro}+(\"${rootfiles}\",\"${name}\")"
+	done
 done
