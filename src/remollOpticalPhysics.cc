@@ -33,9 +33,9 @@ void remollOpticalPhysics::ConstructParticle()
 
 void remollOpticalPhysics::ConstructProcess()
 {
-    G4cout << "remollOpticalPhysics:: Add Optical Physics Processes"
+    G4cout << "remollOpticalPhysics:: Add Optical Physics Processes: Deactivated!"
            << G4endl;
-
+    /*
   theWLSProcess = new G4OpWLS();
 
   theScintProcess = new G4Scintillation();
@@ -107,6 +107,7 @@ void remollOpticalPhysics::ConstructProcess()
     }
 
   }
+    */
 }
 
 void remollOpticalPhysics::SetNbOfPhotonsCerenkov(G4int MaxNumber)
