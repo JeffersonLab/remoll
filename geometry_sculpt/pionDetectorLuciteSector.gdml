@@ -6,11 +6,21 @@
   <constant name="PHI" value="360.0/7.0"/>
 
   <!--
+    For enclosing volumes we merely scale up the actual volume by a small factor.
+  -->
+  <constant name="SCALE" value="0.01"/>
+  <constant name="SCALE_UP" value="1.0+SCALE"/>
+  <constant name="SCALE_DOWN" value="1.0-SCALE"/>
+  <scale name="scale_up" x="SCALE_UP" y="SCALE_UP" z="SCALE_UP"/>
+  <scale name="scale_down" x="SCALE_DOWN" y="SCALE_DOWN" z="SCALE_DOWN"/>
+
+  <!--
     The radius is the full extent of the detector in the radial direction. We use
     the radius along with the angle of the detector to increase the length in the
     longitudinal direction.
   -->
-  <quantity name="pionDetectorLuciteRadius" type="length" value="1.90" unit="m"/>
+  <quantity name="pionDetectorLuciteInnerRadius" type="length" value="0.60" unit="m"/>
+  <quantity name="pionDetectorLuciteOuterRadius" type="length" value="1.90" unit="m"/>
 
   <!--
     The length is the full extent of the detector in the longitudinal direction.
@@ -33,9 +43,16 @@
     This variable implements the global rotation of the entire lucite/lightguide
     assembly. There are also angles that can be set independently for lucite and
     for lightguide.
+    
+    A good choice for this parameter is about 5.0 degrees, to be chosen consistent
+    with the average angle of pions behind the spectrometer magnets.
+  
+    pionDetectorLuciteSectorAngleBase is +90.0 degrees for the configuration with
+    PMT radially outward; -90.0 degrees is with the PMT radially inward.
   -->
-  <quantity name="pionDetectorLuciteSectorAngle" type="angle" value="0.0" unit="deg"/>
-
+  <quantity name="pionDetectorLuciteSectorAngleBase" type="angle" value="-90.0" unit="deg"/>
+  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="5.0" unit="deg"/>
+  
   <!--
     The lucite detector is placed radially in reference to the the center of the
     lucite blocks. This means that the position of the inner edge must be augmented
@@ -88,30 +105,32 @@
 
 <solids>
   <tube name="pionDetectorLuciteSector_solid"
-    rmin="0"
-    rmax="1.00*pionDetectorLuciteRadius"
-    z="1.00*pionDetectorLuciteLength+0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"
+    rmin="pionDetectorLuciteInnerRadius"
+    rmax="pionDetectorLuciteOuterRadius"
+    z="pionDetectorLuciteLength"
     startphi="-PHI/4.0" deltaphi="PHI/2.0" aunit="deg"/>
   <tube name="pionDetectorLuciteAllSectors_solid"
-    rmin="0"
-    rmax="1.01*pionDetectorLuciteRadius"
-    z="1.01*pionDetectorLuciteLength+0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"
+    rmin="SCALE_DOWN*pionDetectorLuciteInnerRadius"
+    rmax="SCALE_UP*pionDetectorLuciteOuterRadius"
+    z="SCALE_UP*pionDetectorLuciteLength"
     startphi="-PHI/4.0" deltaphi="N_P*PHI/2.0" aunit="deg"/>
 </solids>
 
 <structure>
-
+  
   <volume name="pionDetectorLuciteSector_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
       <file name="geometry_sculpt/pionDetectorLucite.gdml"/>
       <position name="pionDetectorLucite_position"
-        x="pionDetectorLuciteInnerEdgeRadialPosition"
-        z="-0.2*pionDetectorLuciteLength-0.5*pionDetectorLuciteRadius*sin(pionDetectorLuciteSectorAngle)"/>
-      <rotation name="pionDetectorLucite_rotation" unit="deg" y="-90.0+pionDetectorLuciteSectorAngle" z="90"/>
+        x="pionDetectorLuciteInnerEdgeRadialPosition"/>
+      <rotation name="pionDetectorLucite_rotation"
+                z="pionDetectorLuciteSectorAngleBase"
+                y="-(pionDetectorLuciteSectorAngleBase+pionDetectorLuciteSectorAnglePitch)"/>
+      <!-- x rotation 180: layer 1 in the back -->
     </physvol>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
 
   <volume name="pionDetectorLuciteAllSectors_logical">
@@ -126,7 +145,7 @@
         <offset value="-pi/14.0" unit="mm"/>
       </replicate_along_axis>
     </replicavol>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
 
 </structure>

@@ -5,10 +5,11 @@
   <constant name="N_P" value="2"/> <!-- also change in replicavol below -->
   <constant name="PHI" value="360.0/2.0"/>
 
-  <constant name="pionDetectorTSRadius" value="1.7"/> <!-- m -->
-  <constant name="pionDetectorTSLength" value="0.1"/> <!-- m -->
+  <quantity name="pionDetectorTSInnerRadius" type="length" value="0.6" unit="m"/>
+  <quantity name="pionDetectorTSOuterRadius" type="length" value="1.7" unit="m"/>
+  <quantity name="pionDetectorTSLength" type="length" value="0.1" unit="m"/>
 
-  <constant name="pionDetectorTSRadialPosition" value="105.0"/> <!-- cm -->
+  <quantity name="pionDetectorTSRadialPosition" type="length" value="105.0" unit="cm"/>
 </define>
 
 <materials>
@@ -16,14 +17,14 @@
 
 <solids>
   <tube name="pionDetectorTSOpenSector_solid"
-    rmin="0.0"
-    rmax="0.98*pionDetectorTSRadius"
-       z="0.98*pionDetectorTSLength" lunit="m"
+    rmin="0.98*pionDetectorTSInnerRadius"
+    rmax="0.98*pionDetectorTSOuterRadius"
+       z="0.98*pionDetectorTSLength"
     startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
   <tube name="pionDetectorTSAllSectors_solid"
-    rmin="0.0"
-    rmax="0.99*pionDetectorTSRadius"
-       z="0.99*pionDetectorTSLength" lunit="m"
+    rmin="0.99*pionDetectorTSInnerRadius"
+    rmax="0.99*pionDetectorTSOuterRadius"
+       z="0.99*pionDetectorTSLength"
     startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
@@ -34,8 +35,8 @@
     <solidref ref="pionDetectorTSOpenSector_solid"/>
     <physvol name="pionDetectorTS_physical">
       <file name="geometry_sculpt/pionDetectorTS.gdml"/>
-      <position name="pionDetectorTS_position" unit="cm" x="pionDetectorTSRadialPosition"/>
-      <rotation name="pionDetectorTS_rotation" unit="deg" y="-90.0" z="90"/>
+      <position name="pionDetectorTS_position" x="pionDetectorTSRadialPosition"/>
+      <rotation name="pionDetectorTS_rotation" y="-90.0" z="90" unit="deg"/>
     </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
