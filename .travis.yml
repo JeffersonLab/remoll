@@ -18,6 +18,9 @@ script:
 - wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyUpstream_rm_1.1.txt
 - source geant4.sh && build/remoll macros/runexample.mac 2>&1 | tee remollout.log
 - source geant4.sh && scripts/tests/test_macros.sh  2>&1 | tee remolltest.log
+- tar -czvf remolltest.root.tar.gz rootfiles/tests/*.root
+- tar -czvf remolltest.log.tar.gz rootfiles/tests/*.log remolltest.log
+- tar -czvf remolltest.png.tar.gz rootfiles/tests/analysis/*.png
 
 deploy:
   provider: releases
@@ -29,8 +32,7 @@ deploy:
   - remollbuild.log
   - remollout.root
   - remollout.log
-  - rootfiles/tests/*.root
-  - logfiles/tests/*.log
+  - remolltest.*
   skip_cleanup: true
   on:
     repo: JeffersonLab/remoll
