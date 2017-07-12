@@ -29,6 +29,8 @@ deploy:
   - remollbuild.log
   - remollout.root
   - remollout.log
+  - rootfiles/tests/*.root
+  - logfiles/tests/*.log
   skip_cleanup: true
   on:
     repo: JeffersonLab/remoll
