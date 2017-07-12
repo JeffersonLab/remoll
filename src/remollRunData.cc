@@ -95,15 +95,4 @@ void remollRunData::RecreateGDML( const char *adir, bool clobber ){
     return;
 }
 
-ClassImp(remollRunData);
-
-
-
-
-
-
-
-
-
-
-
+ClassImp(remollRunData)

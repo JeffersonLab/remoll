@@ -6,15 +6,17 @@ compiler: gcc
 before_install:
 - sudo apt-add-repository -y ppa:wdconinc/ppa-trusty
 - sudo apt-get update -y
-- sudo apt-get install -y cmake root-system clhep geant4
+- sudo apt-get install -y cmake3 root-system libgeant4-dev
+- sudo install-geant4-data all
 
 script:
-- mkdir build && pushd build && cmake .. && popd
-- make --directory build
+- mkdir build
+- pushd build && cmake .. 2>&1 | tee -a ../remollbuild.log && popd
+- pushd build &&  make    2>&1 | tee -a ../remollbuild.log && popd
 - mkdir map_directory
 - wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyHybrid_rm_3.0.txt
 - wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyUpstream_rm_1.1.txt
-- build/remoll macros/runexample.mac 2>&1 > remollout.log
+- source geant4.sh && build/remoll macros/runexample.mac 2>&1 | tee remollout.log
 
 deploy:
   provider: releases
@@ -23,7 +25,10 @@ deploy:
   file:
   - build/remoll
   - build/libremollroot.so
+  - remollbuild.log
   - remollout.root
   - remollout.log
+  skip_cleanup: true
   on:
     repo: JeffersonLab/remoll
+    tags: true
