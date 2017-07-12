@@ -6,7 +6,7 @@ compiler: gcc
 before_install:
 - sudo apt-add-repository -y ppa:wdconinc/ppa-trusty
 - sudo apt-get update -y
-- sudo apt-get install -y cmake3 root-system geant4
+- sudo apt-get install -y cmake3 root-system libgeant4-dev
 
 script:
 - mkdir build && pushd build && cmake .. && popd
