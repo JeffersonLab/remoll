@@ -17,6 +17,7 @@ script:
 - wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyHybrid_rm_3.0.txt
 - wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyUpstream_rm_1.1.txt
 - source geant4.sh && build/remoll macros/runexample.mac 2>&1 | tee remollout.log
+- source geant4.sh && scripts/tests/test_macros.sh  2>&1 | tee remolltest.log
 
 deploy:
   provider: releases
