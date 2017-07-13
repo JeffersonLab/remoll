@@ -50,4 +50,4 @@
 /remoll/filename rootfiles/tests/test_inelastic.root
 
 # Shoot
-/run/beamOn 10000
+/run/beamOn 1000
