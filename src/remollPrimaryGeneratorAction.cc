@@ -45,8 +45,13 @@ remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
 
 void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
 {
-    fEventGen = 0;
+    // Delete previous generator
+    if (fEventGen) {
+      delete fEventGen;
+      fEventGen = 0;
+    }
 
+    // Create new generator
     if( genname == "moller" ) {
         fEventGen = new remollGenMoller();
     }else if( genname == "elastic" ) {
