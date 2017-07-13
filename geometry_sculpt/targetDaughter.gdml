@@ -29,6 +29,7 @@
     <volume name="h2Targ">
       <materialref ref="LiquidHydrogen"/>
       <solidref ref="tubeTarget"/>
+      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     </volume>
 
     <volume name="logicTarget">
@@ -40,6 +41,7 @@
         <position name="targ_center" unit="mm" x="0" y="0" z="0"/>
       </physvol>
 
+      <auxiliary auxtype="TargetSystem" auxvalue=""/>
     </volume>
 
 </structure>
