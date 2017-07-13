@@ -7,8 +7,10 @@ rootfiles=${dir}/rootfiles/tests
 analysis=${dir}/analysis/tests
 logfiles=${dir}/logfiles/tests
 macros=${dir}/macros/tests
-mkdir -p ${rootfiles} ${logfiles}
+mkdir -p ${logfiles}
 
+
+mkdir -p ${rootfiles}
 macro=${macros}/$1.mac
 if [ ! -f ${macro} ] ; then
 	echo "${macro} not found."
@@ -19,6 +21,8 @@ name=`basename ${macro} .mac`
 echo "Running ${name}..."
 build/remoll ${macro} 2>&1 | tee ${logfiles}/${name}.log
 
+
+mkdir -p ${rootfiles}/analysis
 rootfile=${rootfiles}/$1.root
 if [ ! -f ${rootfile} ] ; then
 	echo "${rootfile} not found."
