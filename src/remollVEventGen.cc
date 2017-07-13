@@ -30,6 +30,10 @@ remollVEventGen::remollVEventGen()
     fMessenger->DeclarePropertyWithUnit("thmin","deg",fTh_min,"Minimum generation theta angle");
     fMessenger->DeclarePropertyWithUnit("phmax","deg",fPh_max,"Maximum generation phi angle");
     fMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
+    fMessenger->DeclareMethod(
+        "printeventgen",
+        &remollVEventGen::PrintEventGen,
+        "Print the event generator limits");
 
     fBeamTarg = new remollBeamTarget();
 
@@ -41,6 +45,15 @@ remollVEventGen::~remollVEventGen()
 {
     delete fBeamTarg;
     delete fMessenger;
+}
+
+void remollVEventGen::PrintEventGen()
+{
+  G4cout << "Event generator: " << fName << G4endl;
+  G4cout << "E =     [" << fE_min/GeV  << "," << fE_max/GeV  << "] GeV" << G4endl;
+  G4cout << "phi =   [" << fPh_min/deg << "," << fPh_max/deg << "] deg" << G4endl;
+  G4cout << "theta = [" << fTh_min/deg << "," << fTh_max/deg << "] deg" << G4endl;
+  G4cout << "theta (COM) = [" << fThCoM_min/deg << "," << fThCoM_max/deg << "] deg" << G4endl;
 }
 
 void remollVEventGen::SetNumberOfParticles(G4int n)

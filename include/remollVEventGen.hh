@@ -34,15 +34,21 @@ class remollVEventGen {
 	remollVEventGen();
 	virtual ~remollVEventGen();
 
+	void PrintEventGen();
+
 	remollEvent *GenerateEvent();
 
-	G4String GetName(){ return fName; }
+	G4String GetName() { return fName; }
 
 	void SetSampType( SampType_t st ) { fSampType = st; }
 	void SetDoMultScatt( G4bool multscatt ){ fApplyMultScatt = multscatt; }
 
-    protected:
 
+    protected:
+	// Generator name
+        G4String fName;
+
+    protected:
 	// Generation limits
 	G4double fThCoM_min, fThCoM_max;
 	G4double fTh_min, fTh_max;
@@ -59,10 +65,6 @@ class remollVEventGen {
 	void SetNumberOfParticles(G4int n);
 	// Get a new particle gun for this generator
         G4ParticleGun* GetParticleGun() const { return fParticleGun; }
-
-    private:
-	const G4String fName;
-
 
     protected:
 	remollBeamTarget *fBeamTarg;
