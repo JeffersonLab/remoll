@@ -13,7 +13,8 @@
 
 #include <math.h>
 
-remollGenBeam::remollGenBeam() {
+remollGenBeam::remollGenBeam()
+: remollVEventGen("beam") {
     fApplyMultScatt = true;
 
     fZpos = -5.0*m;

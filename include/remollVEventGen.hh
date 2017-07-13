@@ -31,7 +31,7 @@ class remollRunData;
 
 class remollVEventGen {
     public:
-	remollVEventGen();
+	remollVEventGen(G4String name);
 	virtual ~remollVEventGen();
 
 	void PrintEventGen();

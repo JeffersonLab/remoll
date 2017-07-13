@@ -10,7 +10,8 @@
 
 #include "remolltypes.hh"
 
-remollGenpInelastic::remollGenpInelastic() {
+remollGenpInelastic::remollGenpInelastic()
+: remollVEventGen("inelastic") {
     fTh_min =     0.1*deg;
     fTh_max =     5.0*deg;
 

@@ -19,8 +19,20 @@ extern G4int F1F2IN09(G4int Z, G4int IA, G4double qsq,
 extern G4int F1F2QE09(G4int Z, G4int IA, G4double qsq,
 		      G4double wsq, G4double &F1, G4double &F2);
 
-remollGenAl::remollGenAl(G4int physicsType) {
-    type=physicsType;
+std::map<G4int,G4String> remollGenAl::fNamesMap = remollGenAl::CreateNamesMap();
+
+std::map<G4int,G4String> remollGenAl::CreateNamesMap() {
+  std::map<G4int,G4String> names;
+  names[0] = "elasticAl";
+  names[1] = "quasielasticAl";
+  names[2] = "inelasticAl";
+  return names;
+}
+
+remollGenAl::remollGenAl(G4int physicsType)
+: remollVEventGen(fNamesMap[physicsType]) {
+    type = physicsType;
+
     fTh_min =     0.1*deg;
     fTh_max =     5.0*deg;
     fApplyMultScatt = true;

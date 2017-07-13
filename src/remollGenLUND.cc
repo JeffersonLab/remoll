@@ -19,7 +19,8 @@
 #include <string>
 
 
-remollGenLUND::remollGenLUND() {
+remollGenLUND::remollGenLUND()
+: remollVEventGen("pion_LUND") {
   // Initialize fRunData
   fRunData = remollRun::GetRunData();
 

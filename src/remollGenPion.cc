@@ -18,7 +18,8 @@
 
 
 remollGenPion::remollGenPion()
-: fPionType(kPiMinus) {
+: remollVEventGen("pion"),
+  fPionType(kPiMinus) {
     fApplyMultScatt = false;
 
     fTh_min = 0.0*deg;
