@@ -24,7 +24,7 @@
 #include "remollGenLUND.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
-: fEventGen(0),fEvent(0)
+: fParticleGun(0),fEventGen(0),fEvent(0),fMessenger(0)
 {
     // Default generator
     G4String default_generator = "moller";
@@ -40,7 +40,8 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
 {
-    delete fMessenger;
+    if (fMessenger) delete fMessenger;
+    if (fEventGen)  delete fEventGen;
 }
 
 void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
