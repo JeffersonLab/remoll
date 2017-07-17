@@ -6,8 +6,6 @@
 
 */
 
-#include "CLHEP/Random/Random.h"
-
 #include "remollRunAction.hh"
 #include "remollRun.hh"
 #include "remollRunData.hh"
@@ -82,9 +80,9 @@ int main(int argc, char** argv){
 	fclose(fdrand);
     }
 
-    CLHEP::HepRandom::createInstance();
-    CLHEP::HepRandom::setTheSeed(seed);
-
+    // Choose the Random engine
+    G4Random::setTheEngine(new CLHEP::RanecuEngine());
+    G4Random::setTheSeed(seed);
     remollRun::GetRun()->GetData()->SetSeed(seed);
 
     remollIO *io = new remollIO();
