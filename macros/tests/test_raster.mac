@@ -27,7 +27,7 @@
 
 
 #/remoll/gen beam
-#/remoll/gen moller
+/remoll/gen moller
 #/remoll/thcommin 30.0 deg
 #/remoll/thcommax 150.0 deg
 #/remoll/gen elastic 
