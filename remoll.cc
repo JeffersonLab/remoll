@@ -98,8 +98,8 @@ int main(int argc, char** argv) {
     #endif
 
     // Choose the Random engine
-    CLHEP::RanecuEngine defaultEngine(seed);
-    G4Random::setTheEngine(&defaultEngine);
+    G4Random::setTheEngine(new CLHEP::RanecuEngine());
+    G4Random::setTheSeed(seed);
     remollRun::GetRunData()->SetSeed(seed);
 
     // Messenger
