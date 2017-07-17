@@ -48,6 +48,8 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   public:
 
+    void DumpElements();
+    void DumpMaterials();
     void DumpGeometricalTreeFromWorld(G4bool surfchk = false) {
       DumpGeometricalTree(0,0,surfchk);
     }

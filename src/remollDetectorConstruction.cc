@@ -71,6 +71,16 @@ remollDetectorConstruction::remollDetectorConstruction()
       &remollDetectorConstruction::DumpGeometricalTreeFromWorld,
       "Dump the geometry tree")
       .SetStates(G4State_Idle);
+  fMessenger->DeclareMethod(
+      "dumpelements",
+      &remollDetectorConstruction::DumpElements,
+      "Dump the elements")
+      .SetStates(G4State_Idle);
+  fMessenger->DeclareMethod(
+      "dumpmaterials",
+      &remollDetectorConstruction::DumpMaterials,
+      "Dump the materials")
+      .SetStates(G4State_Idle);
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
@@ -229,20 +239,10 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
   // Output geometry tree
   //==========================
 
-  G4cout << G4endl << "Element table: " << G4endl << G4endl;
-  G4cout << *(G4Element::GetElementTable()) << G4endl;
-
-  G4cout << G4endl << "Material table: " << G4endl << G4endl;
-  G4cout << *(G4Material::GetMaterialTable()) << G4endl;
-
   UpdateCopyNo(worldVolume,1); 
     
   fWorldVolume = worldVolume;
 
-  //commented out the below dump geometry routine to save terminal output length 
-  //G4cout << G4endl << "Geometry tree: " << G4endl << G4endl;
-  //DumpGeometricalTree(worldVolume);
-  
   G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
 
   return fWorldVolume;
@@ -348,6 +348,16 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
     //}
 
   return index;
+}
+
+void remollDetectorConstruction::DumpElements() {
+  G4cout << G4endl << "Element table: " << G4endl << G4endl;
+  G4cout << *(G4Element::GetElementTable()) << G4endl;
+}
+
+void remollDetectorConstruction::DumpMaterials() {
+  G4cout << G4endl << "Material table: " << G4endl << G4endl;
+  G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 }
 
 void remollDetectorConstruction::DumpGeometricalTree(
