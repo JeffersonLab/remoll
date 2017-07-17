@@ -4,6 +4,8 @@
 #include "G4ParticleGun.hh"
 #include "G4ParticleTable.hh"
 #include "G4ParticleDefinition.hh"
+#include "G4GenericMessenger.hh"
+
 #include "remollIO.hh"
 #include "remollVEventGen.hh"
 #include "remollEvent.hh"
@@ -19,41 +21,38 @@
 #include "remollGenBeam.hh"
 #include "remollGenFlat.hh"
 #include "remollGenAl.hh"
-#include "remollGenLUND.hh" //Dominic Lunde adding the LUND generator command
+#include "remollGenLUND.hh"
 
-remollPrimaryGeneratorAction::remollPrimaryGeneratorAction() {
-    G4int n_particle = 1;
-    fParticleGun = new G4ParticleGun(n_particle);
+remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
+: fParticleGun(0),fEventGen(0),fEvent(0),fMessenger(0)
+{
+    // Default generator
+    G4String default_generator = "moller";
+    SetGenerator(default_generator);
 
+    // Get the particle gun
+    fParticleGun = fEventGen->GetParticleGun();
 
-    fDefaultEvent = new remollEvent();
-    fDefaultEvent->ProduceNewParticle(
-        G4ThreeVector(0.*cm,0.*cm,-100.*cm),
-        G4ThreeVector(0.0,0.0, gDefaultBeamE),
-        "e-" );
-
-    double kinE = sqrt(fDefaultEvent->fPartMom[0].mag()*fDefaultEvent->fPartMom[0].mag()
-                       + fDefaultEvent->fPartType[0]->GetPDGMass()*fDefaultEvent->fPartType[0]->GetPDGMass() )
-                  -  fDefaultEvent->fPartType[0]->GetPDGMass();
-
-    // Default generator data
-    fParticleGun->SetParticleDefinition(fDefaultEvent->fPartType[0]);
-    fParticleGun->SetParticleMomentumDirection(fDefaultEvent->fPartMom[0].unit());
-    fParticleGun->SetParticleEnergy( kinE  );
-    fParticleGun->SetParticlePosition( fDefaultEvent->fPartPos[0] );
-
-    fEventGen = NULL;
+    // Create generic messenger
+    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+    fMessenger->DeclareMethod("gen",&remollPrimaryGeneratorAction::SetGenerator,"Select physics generator");
 }
 
-remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction() {
-    delete fParticleGun;
-    delete fDefaultEvent;
+remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
+{
+    if (fMessenger) delete fMessenger;
+    if (fEventGen)  delete fEventGen;
 }
 
-void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
+void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
+{
+    // Delete previous generator
+    if (fEventGen) {
+      delete fEventGen;
+      fEventGen = 0;
+    }
 
-    fEventGen = NULL;
-
+    // Create new generator
     if( genname == "moller" ) {
         fEventGen = new remollGenMoller();
     }else if( genname == "elastic" ) {
@@ -72,7 +71,7 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
         fEventGen = new remollGenAl(1);
     }else if( genname == "elasticAl" ) {
         fEventGen = new remollGenAl(0);
-    }else if( genname == "pion_LUND" ) { //Dominic Lunde - adding GenLUND into the generators
+    }else if( genname == "pion_LUND" ) {
         fEventGen = new remollGenLUND();  
     }
 
@@ -83,55 +82,38 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String genname) {
         G4cout << "Setting generator to " << genname << G4endl;
     }
 
-    remollRun::GetRun()->GetData()->SetGenName(genname.data());
+    // Get the particle gun
+    fParticleGun = fEventGen->GetParticleGun();
 
-    return;
+    remollRun::GetRunData()->SetGenName(genname.data());
 }
 
-void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent) {
+void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
+{
+    if (!fEventGen) {
+      G4cerr << __FILE__ << " line " << __LINE__ << " - No event generator found." << G4endl;
+      exit(1);
+    }
 
-    /*  Generate event, set IO data */
+    // Delete old primary event
+    if (fEvent) {
+      delete fEvent;
+      fEvent = 0;
+    }
 
-    remollEvent *thisev = NULL;
-    if( fEventGen ) { // Specified our own generator
-        thisev = fEventGen->GenerateEvent();
-        for( unsigned int pidx = 0; pidx < thisev->fPartType.size(); pidx++ ) {
+    // Create new primary event
+    fEvent = fEventGen->GenerateEvent();
+    for (unsigned int pidx = 0; pidx < fEvent->fPartType.size(); pidx++) {
 
-            double kinE = sqrt(thisev->fPartMom[pidx].mag()*thisev->fPartMom[pidx].mag() +
-                               thisev->fPartType[pidx]->GetPDGMass()*thisev->fPartType[pidx]->GetPDGMass())
-                          -  thisev->fPartType[pidx]->GetPDGMass();
+        double p = fEvent->fPartMom[pidx].mag();
+        double m = fEvent->fPartType[pidx]->GetPDGMass();
+        double kinE = sqrt(p*p + m*m) - m;
 
-            fParticleGun->SetParticleDefinition(thisev->fPartType[pidx]);
-            fParticleGun->SetParticleMomentumDirection(thisev->fPartMom[pidx].unit());
-            fParticleGun->SetParticleEnergy( kinE  );
-            fParticleGun->SetParticlePosition( thisev->fPartPos[pidx] );
-
-            fParticleGun->GeneratePrimaryVertex(anEvent);
-        }
-
-        if( thisev->fPartType.size() > 0 ) {
-            fIO->SetEventData(thisev);
-        }
-    } else { // Use default, static single generator
-        // Update this just in case things changed
-        // from the command user interface
-        fDefaultEvent->Reset();
-        fDefaultEvent->ProduceNewParticle(
-            fParticleGun->GetParticlePosition(),
-            fParticleGun->GetParticleMomentumDirection()*
-            fParticleGun->GetParticleMomentum(),
-            fParticleGun->GetParticleDefinition()->GetParticleName() );
-        fIO->SetEventData(fDefaultEvent);
+        fParticleGun->SetParticleDefinition(fEvent->fPartType[pidx]);
+        fParticleGun->SetParticleEnergy(kinE);
+        fParticleGun->SetParticlePosition(fEvent->fPartPos[pidx]);
+        fParticleGun->SetParticleMomentumDirection(fEvent->fPartMom[pidx].unit());
 
         fParticleGun->GeneratePrimaryVertex(anEvent);
     }
-
-    if( thisev != NULL ) {
-        delete thisev;
-    }
 }
-
-G4ParticleGun* remollPrimaryGeneratorAction::GetParticleGun() {
-    return fParticleGun;
-}
-

@@ -22,41 +22,52 @@
    and transform it into what is going to be simulated.
 */
 
+class G4ParticleGun;
+class G4GenericMessenger;
+
 class remollEvent;
 class remollBeamTarget;
 class remollRunData;
 
 class remollVEventGen {
     public:
-	remollVEventGen();
+	remollVEventGen(G4String name);
 	virtual ~remollVEventGen();
+
+	void PrintEventGen();
 
 	remollEvent *GenerateEvent();
 
-	G4String GetName(){ return fName; }
+	G4String GetName() { return fName; }
 
 	void SetSampType( SampType_t st ) { fSampType = st; }
 	void SetDoMultScatt( G4bool multscatt ){ fApplyMultScatt = multscatt; }
 
-	virtual void SetThMin( double th ){ fTh_min = th; }
-	virtual void SetThMax( double th ){ fTh_max = th; }
-	virtual void SetPhMin( double ph ){ fPh_min = ph; }
-	virtual void SetPhMax( double ph ){ fPh_max = ph; }
-	virtual void SetEmin( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
-	virtual void SetEmax( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
-	virtual void SetThCoM_min( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
-	virtual void SetThCoM_max( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
 
+    protected:
+	// Generator name
+        G4String fName;
+
+    protected:
+	// Generation limits
 	G4double fThCoM_min, fThCoM_max;
 	G4double fTh_min, fTh_max;
 	G4double fPh_min, fPh_max;
 	G4double fE_min, fE_max;
 
-    private:
-	const G4String fName;
+    protected:
+	// Number of particles
+	G4int fNumberOfParticles;
+	// Particle gun
+        G4ParticleGun* fParticleGun;
+    public:
+	// Set the number of particles
+	void SetNumberOfParticles(G4int n);
+	// Get a new particle gun for this generator
+        G4ParticleGun* GetParticleGun() const { return fParticleGun; }
 
+    protected:
 	remollBeamTarget *fBeamTarg;
-	remollRunData    *fRunData;
 
 	void PolishEvent(remollEvent *);
 	
@@ -68,6 +79,9 @@ class remollVEventGen {
 	SampType_t fSampType;
 	G4bool     fApplyMultScatt;
 
+    protected:
+	// Generic messenger as protected to be used in derived classes
+	G4GenericMessenger* fMessenger;
 };
 
 

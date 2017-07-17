@@ -1,6 +1,10 @@
 #include "remollVEventGen.hh"
 
+#include <cassert>
+
+#include "G4ParticleGun.hh"
 #include "G4RotationMatrix.hh"
+#include "G4GenericMessenger.hh"
 
 #include "remollBeamTarget.hh"
 #include "remollVertex.hh"
@@ -8,24 +12,76 @@
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
-remollVEventGen::remollVEventGen() {
-    fBeamTarg = remollBeamTarget::GetBeamTarget();
-    fRunData  = remollRun::GetRun()->GetData();
+remollVEventGen::remollVEventGen(const G4String name)
+: fName(name),
+  fThCoM_min(0.0), fThCoM_max(0.0), fTh_min(0.0), fTh_max(0.0),
+  fPh_min(0.0), fPh_max(0.0), fE_min(0.0), fE_max(0.0),
+  fNumberOfParticles(1),fParticleGun(0),
+  fBeamTarg(0), fMessenger(0)
+{
+    // Set initial number of particles and create particle gun
+    SetNumberOfParticles(fNumberOfParticles);
+
+    // Create generic messenger
+    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+    fMessenger->DeclarePropertyWithUnit("emax","GeV",fE_max,"Maximum generation energy");
+    fMessenger->DeclarePropertyWithUnit("emin","GeV",fE_min,"Minimum generation energy");
+    fMessenger->DeclarePropertyWithUnit("thcommax","deg",fThCoM_max,"Maximum CoM generation theta angle");
+    fMessenger->DeclarePropertyWithUnit("thcommin","deg",fThCoM_min,"Minimum CoM generation theta angle");
+    fMessenger->DeclarePropertyWithUnit("thmax","deg",fTh_max,"Maximum generation theta angle");
+    fMessenger->DeclarePropertyWithUnit("thmin","deg",fTh_min,"Minimum generation theta angle");
+    fMessenger->DeclarePropertyWithUnit("phmax","deg",fPh_max,"Maximum generation phi angle");
+    fMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
+    fMessenger->DeclareMethod(
+        "printeventgen",
+        &remollVEventGen::PrintEventGen,
+        "Print the event generator limits");
+
+    fBeamTarg = new remollBeamTarget();
 
     fSampType       = kCryogen;
     fApplyMultScatt = false;
 }
 
-remollVEventGen::~remollVEventGen() {
+remollVEventGen::~remollVEventGen()
+{
+    delete fBeamTarg;
+    delete fMessenger;
 }
 
-remollEvent *remollVEventGen::GenerateEvent() {
+void remollVEventGen::PrintEventGen()
+{
+  G4cout << "Event generator: " << fName << G4endl;
+  G4cout << "E =     [" << fE_min/GeV  << "," << fE_max/GeV  << "] GeV" << G4endl;
+  G4cout << "phi =   [" << fPh_min/deg << "," << fPh_max/deg << "] deg" << G4endl;
+  G4cout << "theta = [" << fTh_min/deg << "," << fTh_max/deg << "] deg" << G4endl;
+  G4cout << "theta (COM) = [" << fThCoM_min/deg << "," << fThCoM_max/deg << "] deg" << G4endl;
+}
+
+void remollVEventGen::SetNumberOfParticles(G4int n)
+{
+  // Store new number of particles
+  fNumberOfParticles = n;
+
+  // Delete old particle gun
+  if (fParticleGun) {
+    delete fParticleGun;
+    fParticleGun = 0;
+  }
+  // Create new particle gun
+  fParticleGun = new G4ParticleGun(fNumberOfParticles);
+}
+
+remollEvent* remollVEventGen::GenerateEvent()
+{
     // Set up beam/target vertex
     remollVertex vert   = fBeamTarg->SampleVertex(fSampType);
 
     /////////////////////////////////////////////////////////////////////
     // Create and initialize values for event
     remollEvent *thisev = new remollEvent();
+    thisev->SetBeamTarget(fBeamTarg);
+
     thisev->fVertexPos    = fBeamTarg->fVer;
     if( fApplyMultScatt ) {
         thisev->fBeamMomentum = fBeamTarg->fSampE*(fBeamTarg->fDir.unit());
@@ -83,17 +139,19 @@ void remollVEventGen::PolishEvent(remollEvent *ev) {
         (*iter) += ev->fVertexPos;
     }
     
+    // Get number of thrown events
+    remollRunData* rundata = remollRun::GetRunData();
+    G4double nthrown = rundata->GetNthrown();
 
+    // Calculate rate
     if ( ev->fRate == 0 ){// If the rate is set to 0 then calculate it using the cross section
-    	ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/((G4double) fRunData->GetNthrown());
+    	ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/nthrown;
     }
     else { // For LUND - calculate rate and cross section	
-    	ev->fEffXs = ev->fRate*((G4double) fRunData->GetNthrown())/(fBeamTarg->GetEffLumin());
-    	ev->fRate = ev->fRate/((G4double) fRunData->GetNthrown());
+    	ev->fEffXs = ev->fRate*nthrown/(fBeamTarg->GetEffLumin());
+    	ev->fRate = ev->fRate/nthrown;
     }
 
     ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPol;
-
-    return;
 }
 

@@ -3,6 +3,8 @@
 
 #include "remollVEventGen.hh"
 
+#include <map>
+
 class remollGenAl : public remollVEventGen {
 public:
   remollGenAl(G4int physicsType);
@@ -10,6 +12,10 @@ public:
   
 private:
   G4int type;
+
+  static std::map<G4int,G4String> fNamesMap;
+  static std::map<G4int,G4String> CreateNamesMap();
+
   void SamplePhysics(remollVertex *, remollEvent *);
 
   ///Christy Bosted fit 

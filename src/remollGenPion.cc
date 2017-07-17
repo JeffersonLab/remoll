@@ -1,6 +1,7 @@
 #include "remollBeamTarget.hh"
 #include "remollGenPion.hh"
 
+#include "G4GenericMessenger.hh"
 #include "G4String.hh"
 #include "Randomize.hh"
 
@@ -17,7 +18,8 @@
 
 
 remollGenPion::remollGenPion()
-: fPionType(kPiMinus) {
+: remollVEventGen("pion"),
+  fPionType(kPiMinus) {
     fApplyMultScatt = false;
 
     fTh_min = 0.0*deg;
@@ -30,9 +32,13 @@ remollGenPion::remollGenPion()
     fE_min = 0.0*MeV;
     fE_max = -1.0*GeV; // negative to automatically pick beam energy
 
+    // Add to generic messenger
+    fMessenger->DeclareMethod("piontype",&remollGenPion::SetPionTypeByString,"Generate pion type");
 }
 
-remollGenPion::~remollGenPion(){
+remollGenPion::~remollGenPion()
+{
+    delete fMessenger;
 }
 
 void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
@@ -260,7 +266,7 @@ Double_t remollGenPion::wiser_sigma(Double_t Ebeam, Double_t pf, Double_t thf, D
 
     delete mass2;
     return 0.0;
-};
+}
 
 Double_t remollGenPion::wiser_total_sigma(Double_t Ebeam, Double_t intrad, Double_t extrad, Int_t type){
   /*

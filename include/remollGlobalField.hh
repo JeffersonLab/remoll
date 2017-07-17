@@ -7,26 +7,32 @@
 */
 
 #include "G4MagneticField.hh"
-#include "G4UImanager.hh"
+
+#include <vector>
+
+class G4GenericMessenger;
 
 class remollMagneticField;
 
 class remollGlobalField : public G4MagneticField {
     public: 
-	 remollGlobalField();
-	~remollGlobalField();
+        remollGlobalField();
+	virtual ~remollGlobalField();
 
-	void AddNewField( G4String file );
-	void SetFieldScale( G4String file, G4double scale  );
-	void SetMagnetCurrent( G4String file, G4double scale  );
+	void AddNewField(G4String& name);
+	void SetFieldScaleByString(G4String& name_scale);
+	void SetFieldScale(const G4String& name, G4double scale);
+        void SetMagnetCurrentByString(G4String& name_scale);
+	void SetMagnetCurrent(const G4String& name, G4double scale);
 
-	void GetFieldValue( const G4double[], G4double *) const;
+	void GetFieldValue(const G4double[], G4double*) const;
 
     private:
-	std::vector<remollMagneticField *> fFields;
+	std::vector<remollMagneticField*> fFields;
 
-	remollMagneticField *GetFieldByName( G4String file );
+	remollMagneticField* GetFieldByName(const G4String& name);
 
+	G4GenericMessenger* fMessenger;
 };
 
 

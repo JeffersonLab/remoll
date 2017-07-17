@@ -16,15 +16,13 @@ class remollBeamTarget;
 class remollGenpElastic : public remollVEventGen {
     public:
 	remollGenpElastic();
-	~remollGenpElastic();
+	virtual ~remollGenpElastic();
 
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
 
 	G4double RadProfile(G4double,G4double);
 	G4double EnergNumInt(G4double,G4double,G4double);
-
-	remollBeamTarget *fBeamTarg;
 };
 
 #endif//__REMOLLGENPELASTIC_HH 

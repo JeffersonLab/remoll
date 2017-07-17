@@ -8,7 +8,9 @@
 #include <unistd.h>
 #endif
 
-remollRunData::remollRunData(){
+remollRunData::remollRunData()
+{
+    fSeed = 0;
     fNthrown = -1;
     fBeamE   = -1e9;
     fGenName[0]  = '\0';

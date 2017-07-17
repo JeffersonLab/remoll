@@ -9,23 +9,21 @@
    This is implemented in the soliton model
  */
 
-#include "remollRunData.hh"
+#include "G4Run.hh"
 
-class remollRun {
+class remollRunData;
 
-private:
-    static remollRun *gSingleton;
+class remollRun: public G4Run {
+
+  public:
     remollRun();
+    virtual ~remollRun();
 
-    remollRunData *fRunData;
-
-public:
-    static remollRun *GetRun();
-    ~remollRun();
-
-    remollRunData *GetData() {
-        return fRunData;
-    }
+  // Static run data access
+  private:
+    static remollRunData* fRunData;
+  public:
+    static remollRunData* GetRunData();
 };
 
-#endif//__REMOLLRUN_HH
+#endif //__REMOLLRUN_HH

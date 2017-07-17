@@ -20,8 +20,8 @@ class TGeoManager;
 class remollRunData : public TObject {
   using TObject::Print;
     public:
-	 remollRunData();
-	~remollRunData();
+	remollRunData();
+	virtual ~remollRunData();
 
 	unsigned long long int GetNthrown(){ return fNthrown; }
 	void SetNthrown(unsigned long long int n){ fNthrown = n; }

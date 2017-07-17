@@ -1,45 +1,63 @@
-
-// Make this appear first!
-#include "G4Timer.hh"
-
 #include "remollRunAction.hh"
-#include "remollBeamTarget.hh"
-#include "G4Run.hh"
-#include "G4UImanager.hh"
-#include "G4ios.hh"
+
+#include "G4RunManager.hh"
+
 #include "remollIO.hh"
 #include "remollRun.hh"
+#include "remollRunData.hh"
+#include "remollBeamTarget.hh"
 
-remollRunAction::remollRunAction()
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollRunActionMutex = G4MUTEX_INITIALIZER; }
+
+remollRunAction::remollRunAction() { }
+
+remollRunAction::~remollRunAction() { }
+
+G4Run* remollRunAction::GenerateRun()
 {
-  timer = new G4Timer;
+  return new remollRun();
 }
 
-remollRunAction::~remollRunAction()
+void remollRunAction::BeginOfRunAction(const G4Run* run)
 {
-  delete timer;
+  // Cast into remollRun
+  const remollRun* aRun = static_cast<const remollRun*>(run);
+
+  // Print progress
+  G4int interval = 100; // Print this many progress points (i.e. 100 -> every 1%)
+  G4int evts_to_process = aRun->GetNumberOfEventToBeProcessed();
+  G4RunManager::GetRunManager()->SetPrintProgress((evts_to_process > interval)
+                                                  ? evts_to_process/interval
+                                                  : 1);
+
+  if (IsMaster())
+  {
+    G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
+
+    G4AutoLock lock(&remollRunActionMutex);
+    remollIO* io = remollIO::GetInstance();
+    io->InitializeTree();
+
+    remollRunData *rundata = remollRun::GetRunData();
+    rundata->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );
+    rundata->Print();
+  }
 }
 
-void remollRunAction::BeginOfRunAction(const G4Run* aRun)
+void remollRunAction::EndOfRunAction(const G4Run* run)
 {
-  G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
-  //  timer->Start();
-  fIO->InitializeTree();
+  // Cast into remollRun
+  const remollRun* aRun = static_cast<const remollRun*>(run);
 
-  remollRunData *rmrundata = remollRun::GetRun()->GetData();
+  if (IsMaster())
+  {
+      G4cout << "### Run " << aRun->GetRunID() << " ended." << G4endl;
 
-  rmrundata->SetBeamE( remollBeamTarget::GetBeamTarget()->fBeamE/GeV );
-  rmrundata->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );
-
-  rmrundata->Print();
-}
-
-void remollRunAction::EndOfRunAction(const G4Run* aRun)
-{
-  timer->Stop();
-  G4cout << "number of event = " << aRun->GetNumberOfEvent() << G4endl;
-  //       << " " << *timer << G4endl;
-
-  fIO->WriteTree();
+      G4AutoLock lock(&remollRunActionMutex);
+      remollIO* io = remollIO::GetInstance();
+      io->WriteTree();
+  }
 }
 

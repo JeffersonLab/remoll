@@ -1,25 +1,32 @@
 #include "remollGenericDetector.hh"
 
+#include "remollGenericDetectorHit.hh"
+#include "remollGenericDetectorSum.hh"
+
 #include "G4OpticalPhoton.hh"
 #include "G4SDManager.hh"
 
-remollGenericDetector::remollGenericDetector( G4String name, G4int detnum ) : G4VSensitiveDetector(name){
-    char colname[255];
+#include <sstream>
 
-    fDetNo = detnum;
-    assert( fDetNo > 0 );
+remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
+: G4VSensitiveDetector(name),fHitColl(0),fSumColl(0)
+{
+  fDetNo = detnum;
+  assert( fDetNo > 0 );
 
-//    fTrackSecondaries = false;
-    fTrackSecondaries = true;
+  //    fTrackSecondaries = false;
+  fTrackSecondaries = true;
 
-    sprintf(colname, "genhit_%d", detnum);
-    collectionName.insert(G4String(colname));
+  std::stringstream genhit;
+  genhit << "genhit_" << detnum;
+  collectionName.insert(G4String(genhit.str()));
 
-    sprintf(colname, "gensum_%d", detnum);
-    collectionName.insert(G4String(colname));
+  std::stringstream gensum;
+  gensum << "gensum_" << detnum;
+  collectionName.insert(G4String(gensum.str()));
 
-    fHCID = -1;
-    fSCID = -1;
+  fHCID = -1;
+  fSCID = -1;
 }
 
 remollGenericDetector::~remollGenericDetector(){
@@ -27,8 +34,8 @@ remollGenericDetector::~remollGenericDetector(){
 
 void remollGenericDetector::Initialize(G4HCofThisEvent *){
 
-    fHitColl = new remollGenericDetectorHitsCollection( SensitiveDetectorName, collectionName[0] );
-    fSumColl = new remollGenericDetectorSumCollection ( SensitiveDetectorName, collectionName[1] );
+    fHitColl = new remollGenericDetectorHitCollection( SensitiveDetectorName, collectionName[0] );
+    fSumColl = new remollGenericDetectorSumCollection( SensitiveDetectorName, collectionName[1] );
 
     fSumMap.clear();
 

@@ -8,7 +8,8 @@
 #include "globals.hh"
 
 class G4Event;
-class remollIO;
+
+class remollPrimaryGeneratorAction;
 
 class remollEventAction : public G4UserEventAction
 {
@@ -20,19 +21,14 @@ class remollEventAction : public G4UserEventAction
     virtual void BeginOfEventAction(const G4Event*);
     virtual void EndOfEventAction(const G4Event*);
 
-    void SetIO( remollIO *io ){ fIO = io; }
-
   private:
-  //  G4int gemCollID, hcalCollID, bbcalCollID;
-
-    double fGEMres;
-
-    remollIO *fIO;
-
-    // Timer for benchmarking of simulation time per event
-    G4Timer fTimer;
-
+    // Pointer to primary generator action
+    remollPrimaryGeneratorAction* fPrimaryGeneratorAction;
   public:
+    // Setter for primary generator action
+    void SetPrimaryGeneratorAction(remollPrimaryGeneratorAction* action) {
+      fPrimaryGeneratorAction = action;
+    }
 };
 
 #endif

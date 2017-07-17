@@ -10,6 +10,8 @@
 class TFile;
 class TTree;
 
+class G4GenericMessenger;
+
 class remollGenericDetectorHit;
 class remollGenericDetectorSum;
 class remollEvent;
@@ -28,12 +30,20 @@ class remollEvent;
 #define __ASYMM_SCALE 1e-9 // ppb
 
 class remollIO {
-    public:
-	 remollIO();
-	~remollIO();
+    private:
+        // Singleton pointer
+        static remollIO* gInstance;
+        // Private constructor
+        remollIO();
 
-	void SetFilename(G4String  fn);
-	G4String GetFilename(){return fFilename;}
+    public:
+        // Public destructor
+        virtual ~remollIO();
+        // Static instance getter
+        static remollIO* GetInstance();
+
+	void SetFilename(const G4String& name) { fFilename = name; }
+	G4String GetFilename() const { return fFilename; }
 
 	void FillTree();
 	void Flush();
@@ -49,9 +59,11 @@ class remollIO {
 	TFile *fFile;
 	TTree *fTree;
 
-	char fFilename[__FILENAMELEN];
+        G4GenericMessenger* fMessenger;
 
-	std::vector<G4String>       fGDMLFileNames;
+        G4String fFilename;
+
+	std::vector<G4String> fGDMLFileNames;
 
 	void SearchGDMLforFiles(G4String );
 	void TraverseChildren(  xercesc::DOMElement * );
@@ -61,7 +73,7 @@ class remollIO {
 
 	// Event data
     public:
-	void SetEventData(remollEvent *);
+	void SetEventData(const remollEvent *);
     private:
 	Int_t fNEvPart;
 

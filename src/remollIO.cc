@@ -5,6 +5,7 @@
 #include <TClonesArray.h>
 
 #include "G4ParticleDefinition.hh"
+#include "G4GenericMessenger.hh"
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
@@ -22,44 +23,57 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 
+// Singleton
+remollIO* remollIO::gInstance = 0;
+remollIO* remollIO::GetInstance() {
+  if (gInstance == 0) {
+    gInstance = new remollIO();
+  }
+  return gInstance;
+}
 
-remollIO::remollIO(){
-    fTree = NULL;
-    fFile = NULL;
-
-    // Default filename
-    strcpy(fFilename, "remollout.root");
+remollIO::remollIO()
+: fFile(0),fTree(0),fFilename("remollout.root")
+{
+    //  Set arrays to 0
+    fNGenDetHit = 0;
+    fNGenDetSum = 0;
 
     InitializeTree();
+
+    // Create generic messenger
+    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+    fMessenger->DeclareProperty("filename",fFilename,"Output filename");
 }
 
-remollIO::~remollIO(){
+remollIO::~remollIO()
+{
+    // Delete tree
     if (fTree) {
-	delete fTree;
-	fTree = NULL;
+        delete fTree;
+        fTree = NULL;
     }
+    // Delete file
     if (fFile) {
-	delete fFile;
-	fFile = NULL;
+        delete fFile;
+        fFile = NULL;
     }
+
+    delete fMessenger;
 }
 
-void remollIO::SetFilename(G4String fn){
-    G4cout << "Setting output file to " << fn << G4endl;
-    strcpy(fFilename, fn.data());
-}
-
-void remollIO::InitializeTree(){
+void remollIO::InitializeTree()
+{
     if (fFile) {
-	fFile->Close();
-	delete fFile;
-	fFile = NULL;
-	fTree = NULL;
+        fFile->Close();
+        delete fFile;
+        fFile = NULL;
+        fTree = NULL;
     }
 
     if (fTree) {
-	delete fTree;
-	fTree = NULL;
+        delete fTree;
+        fTree = NULL;
     }
 
     fFile = new TFile(fFilename, "RECREATE");
@@ -138,33 +152,38 @@ void remollIO::InitializeTree(){
     fTree->Branch("sum.vid",  &fGenDetSum_id,   "sum.vid[sum.n]/I");
     fTree->Branch("sum.edep", &fGenDetSum_edep, "sum.edep[sum.n]/D");
 
-    return;
+    G4cout << "Initialized tree." << G4endl;
 }
 
-void remollIO::FillTree(){
-    if( !fTree ){ 
-	fprintf(stderr, "Error %s: %s line %d - Trying to fill non-existant tree\n", __PRETTY_FUNCTION__, __FILE__, __LINE__ );
-	return; 
+void remollIO::FillTree()
+{
+    if( !fTree ){
+        G4cerr << "Error " << __PRETTY_FUNCTION__ << ": "
+            << __FILE__ <<  " line " << __LINE__
+            << " - Trying to fill non-existent tree" << G4endl;
+        return;
     }
 
     fTree->Fill();
     fTree->GetCurrentFile();
 }
 
-void remollIO::Flush(){
+void remollIO::Flush()
+{
     //  Set arrays to 0
     fNGenDetHit = 0;
     fNGenDetSum = 0;
     fCollCut = 1; // default
 }
 
-void remollIO::WriteTree(){
-    assert( fFile );
-    assert( fTree );
+void remollIO::WriteTree()
+{
+    if (!fFile)
+      return;
 
-    if( !fFile->IsOpen() ){
-	G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << ": TFile not open" << G4endl;
-	exit(1);
+    if (!fFile->IsOpen()) {
+        G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << ": TFile not open" << G4endl;
+        exit(1);
     }
 
     G4cout << "Writing output to " << fFile->GetName() << "... ";
@@ -172,7 +191,7 @@ void remollIO::WriteTree(){
     fFile->cd();
 
     fTree->Write("T", TObject::kOverwrite);
-    remollRun::GetRun()->GetData()->Write("run_data", TObject::kOverwrite); 
+    remollRun::GetRunData()->Write("run_data", TObject::kOverwrite);
 
     fTree->ResetBranchAddresses();
     delete fTree;
@@ -184,8 +203,6 @@ void remollIO::WriteTree(){
     fFile = NULL;
 
     G4cout << "written" << G4endl;
-
-    return;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -193,11 +210,12 @@ void remollIO::WriteTree(){
 
 // Event Data
 
-void remollIO::SetEventData(remollEvent *ev){
+void remollIO::SetEventData(const remollEvent *ev)
+{
     int n = ev->fPartType.size();
     if( n > __IO_MAXHIT ){
-	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
-	return;
+        G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+        return;
     }
 
     fNEvPart = n;
@@ -214,52 +232,49 @@ void remollIO::SetEventData(remollEvent *ev){
 
     int idx;
     for( idx = 0; idx < n; idx++ ){
-	fEvPID[idx] = ev->fPartType[idx]->GetPDGEncoding();
+        fEvPID[idx] = ev->fPartType[idx]->GetPDGEncoding();
 
-	fEvPart_X[idx] = ev->fPartPos[idx].x()/__L_UNIT;
-	fEvPart_Y[idx] = ev->fPartPos[idx].y()/__L_UNIT;
-	fEvPart_Z[idx] = ev->fPartPos[idx].z()/__L_UNIT;
+        fEvPart_X[idx] = ev->fPartPos[idx].x()/__L_UNIT;
+        fEvPart_Y[idx] = ev->fPartPos[idx].y()/__L_UNIT;
+        fEvPart_Z[idx] = ev->fPartPos[idx].z()/__L_UNIT;
 
-	fEvPart_Px[idx] = ev->fPartRealMom[idx].x()/__E_UNIT;
-	fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
-	fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
-	fEvPart_Th[idx] = ev->fPartRealMom[idx].theta();
-	fEvPart_Ph[idx] = ev->fPartRealMom[idx].phi();
+        fEvPart_Px[idx] = ev->fPartRealMom[idx].x()/__E_UNIT;
+        fEvPart_Py[idx] = ev->fPartRealMom[idx].y()/__E_UNIT;
+        fEvPart_Pz[idx] = ev->fPartRealMom[idx].z()/__E_UNIT;
+        fEvPart_Th[idx] = ev->fPartRealMom[idx].theta();
+        fEvPart_Ph[idx] = ev->fPartRealMom[idx].phi();
 
-	fEvPart_P[idx] = ev->fPartRealMom[idx].mag()/__E_UNIT;
+        fEvPart_P[idx] = ev->fPartRealMom[idx].mag()/__E_UNIT;
 
-	fEvPart_tPx[idx] = ev->fPartMom[idx].x()/__E_UNIT;
-	fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
-	fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
+        fEvPart_tPx[idx] = ev->fPartMom[idx].x()/__E_UNIT;
+        fEvPart_tPy[idx] = ev->fPartMom[idx].y()/__E_UNIT;
+        fEvPart_tPz[idx] = ev->fPartMom[idx].z()/__E_UNIT;
     }
 
     /////////////////////////////////////////////////
     //  Set beam data as well
 
-    remollBeamTarget *bt = remollBeamTarget::GetBeamTarget();
+    const remollBeamTarget* bt = ev->GetBeamTarget();
 
     fBmX = bt->fVer.x()/__L_UNIT;
     fBmY = bt->fVer.y()/__L_UNIT;
     fBmZ = bt->fVer.z()/__L_UNIT;
-    
+
     fBmdX = bt->fDir.x();
     fBmdY = bt->fDir.y();
     fBmdZ = bt->fDir.z();
     fBmth = bt->fDir.theta();
     fBmph = bt->fDir.phi()/deg;
-
-    //    G4cout << "** fDir:: " << bt->fDir.x()/deg << "  " << bt->fDir.y()/deg << "  " << bt->fVer.z()/mm << G4endl;
-
-    return;
 }
 
 // GenericDetectorHit
 
-void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
+void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit)
+{
     int n = fNGenDetHit;
     if( n > __IO_MAXHIT ){
-	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
-	return;
+        G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+        return;
     }
 
     fGenDetHit_det[n]  = hit->fDetID;
@@ -291,19 +306,20 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit){
     fNGenDetHit++;
 
     // for collimator cut
-    if( (hit->fDetID==200 && hit->f3X.perp()/__L_UNIT < 0.03) || 
-      	(hit->fDetID==201 && hit->f3X.perp()/__L_UNIT < 0.05) )
-      fCollCut=0;
+    if( (hit->fDetID==200 && hit->f3X.perp()/__L_UNIT < 0.03) ||
+        (hit->fDetID==201 && hit->f3X.perp()/__L_UNIT < 0.05) )
+        fCollCut=0;
 }
 
 
 // GenericDetectorSum
 
-void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
+void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit)
+{
     int n = fNGenDetSum;
     if( n > __IO_MAXHIT ){
-	G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
-	return;
+        G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
+        return;
     }
 
     fGenDetSum_edep[n] = hit->fEdep/__E_UNIT;
@@ -315,89 +331,74 @@ void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
 
 /*---------------------------------------------------------------------------------*/
 
-void remollIO::GrabGDMLFiles(G4String fn){
+void remollIO::GrabGDMLFiles(G4String fn)
+{
     // Reset list
     fGDMLFileNames.clear();
 
-    remollRunData *rundata = remollRun::GetRun()->GetData();
+    remollRunData *rundata = remollRun::GetRunData();
     rundata->ClearGDMLFiles();
 
-    xercesc::XMLPlatformUtils::Initialize();
     SearchGDMLforFiles(fn);
-    xercesc::XMLPlatformUtils::Terminate();
 
 
     // Store filename
 
-    unsigned int idx;
-
     // Copy into buffers
-    for( idx = 0; idx < fGDMLFileNames.size(); idx++ ){
-	G4cout << "Found GDML file " << fGDMLFileNames[idx] << G4endl;
-	rundata->AddGDMLFile(fGDMLFileNames[idx]);
+    for(unsigned int idx = 0; idx < fGDMLFileNames.size(); idx++ ){
+        G4cout << "Found GDML file " << fGDMLFileNames[idx] << G4endl;
+        rundata->AddGDMLFile(fGDMLFileNames[idx]);
     }
-
-    return;
 }
 
-void remollIO::SearchGDMLforFiles(G4String fn){
+void remollIO::SearchGDMLforFiles(G4String fn)
+{
     /*!  Chase down files to be included by GDML.
      *   Mainly look for file tags and perform recursively */
 
     struct stat thisfile;
 
     int ret = stat(fn.data(), &thisfile);
-
     if( ret != 0 ){
-	G4cerr << "ERROR opening file " << fn <<  " in " << __PRETTY_FUNCTION__ << ": " << strerror(errno) << G4endl;
-	exit(1);
+        G4cerr << "ERROR opening file " << fn <<  " in " << __PRETTY_FUNCTION__ << ": " << strerror(errno) << G4endl;
+        exit(1);
     }
 
-   xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser();
+    fGDMLFileNames.push_back(fn);
 
-   // Make sure file exists - otherwise freak out
 
-   fGDMLFileNames.push_back(fn.data());
+    xercesc::XMLPlatformUtils::Initialize();
 
-   xmlParser->parse( fn.data() );
-   xercesc::DOMDocument* xmlDoc = xmlParser->getDocument();
+    xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser();
+    xmlParser->parse(fn.data());
+    xercesc::DOMDocument* xmlDoc = xmlParser->getDocument();
+    xercesc::DOMElement* elementRoot = xmlDoc->getDocumentElement();
 
-   xercesc::DOMElement* elementRoot = xmlDoc->getDocumentElement();
+    TraverseChildren( elementRoot );
 
-   TraverseChildren( elementRoot );
-   return;
+    xercesc::XMLPlatformUtils::Terminate();
 }
 
-void remollIO::TraverseChildren( xercesc::DOMElement *thisel ){
+void remollIO::TraverseChildren( xercesc::DOMElement *thisel )
+{
+    xercesc::DOMNodeList* children = thisel->getChildNodes();
+    const XMLSize_t nodeCount = children->getLength();
 
-   xercesc::DOMNodeList*      children = thisel->getChildNodes();
-   const XMLSize_t nodeCount = children->getLength();
+    for( XMLSize_t xx = 0; xx < nodeCount; ++xx ){
+        xercesc::DOMNode* currentNode = children->item(xx);
+        if( currentNode->getNodeType() ){   // true is not NULL
 
-   for( XMLSize_t xx = 0; xx < nodeCount; ++xx ){
-       xercesc::DOMNode* currentNode = children->item(xx);
-       if( currentNode->getNodeType() ){   // true is not NULL
+            if (currentNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE) { // is element
+                xercesc::DOMElement* currentElement
+                = dynamic_cast< xercesc::DOMElement* >( currentNode );
+                if( xercesc::XMLString::equals(currentElement->getTagName(), xercesc::XMLString::transcode("file"))){
+                    SearchGDMLforFiles(G4String(xercesc::XMLString::transcode(currentElement->getAttribute(xercesc::XMLString::transcode("name")))));
+                }
 
-	   if( currentNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE ){ // is element 
-	       xercesc::DOMElement* currentElement
-		   = dynamic_cast< xercesc::DOMElement* >( currentNode );
-	       if( xercesc::XMLString::equals(currentElement->getTagName(), xercesc::XMLString::transcode("file"))){
-		   SearchGDMLforFiles(G4String(xercesc::XMLString::transcode(currentElement->getAttribute(xercesc::XMLString::transcode("name")))));
-	       }
-
-	       if( currentElement->getChildNodes()->getLength() > 0 ){
-		   TraverseChildren( currentElement );
-	       }
-	   }
-       }
-   }
-
+                if( currentElement->getChildNodes()->getLength() > 0 ){
+                    TraverseChildren( currentElement );
+                }
+            }
+        }
+    }
 }
-
-
-
-
-
-
-
-
-

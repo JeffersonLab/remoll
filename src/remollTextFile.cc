@@ -6,7 +6,7 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-remollTextFile::remollTextFile(){
+remollTextFile::remollTextFile() {
     fFilenameSize = 0;
     fFilename = NULL;
 
@@ -14,7 +14,7 @@ remollTextFile::remollTextFile(){
     fBuffer = NULL;
 }
 
-remollTextFile::remollTextFile(const char *fn){
+remollTextFile::remollTextFile(const char *fn) {
     fFilenameSize = 0;
     fFilename = NULL;
 
@@ -48,7 +48,7 @@ const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
 }
 
 remollTextFile::~remollTextFile(){
-    if( fBuffer ){ delete fBuffer; }
+    if (fBuffer) { delete[] fBuffer; }
 }
 
 void remollTextFile::copyFileIn(const char *fn){
@@ -165,7 +165,7 @@ void remollTextFile::Print(){
 
     printf("%s\n", tmpbuf);
 
-    delete tmpbuf;
+    delete[] tmpbuf;
 
     return;
 }
@@ -181,4 +181,4 @@ const char *remollTextFile::GetBaseFile(const char *fp){
     return &(fp[idx]);
 }
 
-ClassImp(remollTextFile)
+ClassImp(remollTextFile);

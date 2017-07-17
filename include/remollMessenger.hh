@@ -9,13 +9,9 @@
  *   Global messenger class
  */
 
-class remollIO;
 class remollDetectorConstruction;
-class remollEventAction;
-class remollPrimaryGeneratorAction;
 class remollGlobalField;
 class remollBeamTarget;
-class remollSteppingAction;
 
 class G4UIcmdWithAnInteger;
 class G4UIcmdWithADoubleAndUnit;
@@ -25,78 +21,29 @@ class G4UIcmdWithABool;
 class G4VModularPhysicsList;
 
 class remollMessenger : public G4UImessenger {
-    public:
-       	remollMessenger();
-       	~remollMessenger();
 
-	void SetIO( remollIO *io ){ fIO = io; }
-	void SetMagField( remollGlobalField *f ){ fField = f; }
-	void SetPriGen( remollPrimaryGeneratorAction *pg ){ fprigen = pg; }
-	void SetDetCon( remollDetectorConstruction *dc ){ fdetcon= dc; }
-	void SetEvAct( remollEventAction *ev ){ fevact = ev; }
-	void SetStepAct( remollSteppingAction *st ){ fStepAct = st; }
+    private:
+        // Singleton pointer
+        static remollMessenger* gInstance;
+        // Private constructor
+        remollMessenger();
+
+    public:
+       	// Public destructor
+        virtual ~remollMessenger();
+        // Static instance getter
+       	static remollMessenger* GetInstance();
+
 	void SetPhysList( G4VModularPhysicsList *l ){ fPhysicsList = l; }
 
 	void SetNewValue(G4UIcommand* cmd, G4String newValue);
 
     private:
-	remollIO *fIO;
-	remollDetectorConstruction *fdetcon;
-	remollEventAction *fevact;
-	remollPrimaryGeneratorAction *fprigen;
-	remollGlobalField *fField;
-	remollBeamTarget *fBeamTarg;
-	remollSteppingAction *fStepAct;
+
 	G4VModularPhysicsList *fPhysicsList;
 
 	G4UIcmdWithAnInteger *seedCmd;
-	G4UIcmdWithABool     *kryptCmd;
 	G4UIcmdWithABool     *opticalCmd;
-        G4UIcmdWithABool     *dumpGeometryCmd;
-
-	G4UIcmdWithAString   *detfilesCmd;
-
-	G4UIcmdWithAString   *newfieldCmd;
-	G4UIcmdWithAString   *fieldScaleCmd;
-	G4UIcmdWithAString   *fieldCurrCmd;
-	G4UIcmdWithAString   *genSelectCmd;
-
-	G4UIcmdWithADoubleAndUnit *tgtLenCmd;
-	G4UIcmdWithADoubleAndUnit *tgtPosCmd;
-
-	G4UIcmdWithADoubleAndUnit *beamCurrCmd;
-	G4UIcmdWithADoubleAndUnit *beamECmd;
-
-	G4UIcmdWithABool       *rasTypeCmd;
-
-	G4UIcmdWithADoubleAndUnit *rasXCmd;
-	G4UIcmdWithADoubleAndUnit *rasYCmd;
-
-	G4UIcmdWithADoubleAndUnit *beamX0Cmd;
-	G4UIcmdWithADoubleAndUnit *beamY0Cmd;
-
-	G4UIcmdWithADoubleAndUnit *beamth0Cmd;
-	G4UIcmdWithADoubleAndUnit *beamph0Cmd;
-
-	G4UIcmdWithADoubleAndUnit *beamCorrThCmd;
-	G4UIcmdWithADoubleAndUnit *beamCorrPhCmd;
-
-	G4UIcmdWithADoubleAndUnit *beamdthCmd;
-	G4UIcmdWithADoubleAndUnit *beamdphCmd;
-
-	G4UIcmdWithAString   *fileCmd;
-	G4UIcmdWithAString   *pionCmd;
-	G4UIcmdWithAString   *LUNDFileCmd;//Dominic Lunde linking GenLUND
-
-	////////////////////////////////////////////////
-	// To general event generators
-	G4UIcmdWithADoubleAndUnit *thminCmd;
-	G4UIcmdWithADoubleAndUnit *thmaxCmd;
-	G4UIcmdWithADoubleAndUnit *thCoMminCmd;
-	G4UIcmdWithADoubleAndUnit *thCoMmaxCmd;
-	G4UIcmdWithADoubleAndUnit *EminCmd;
-	G4UIcmdWithADoubleAndUnit *EmaxCmd;
-
 };
 
 #endif//remollMessenger_HH

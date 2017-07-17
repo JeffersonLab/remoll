@@ -26,7 +26,7 @@ class remollGenLUND : public remollVEventGen {
     // virtual destructor
     virtual ~remollGenLUND();
 
-    void SetLUNDFile(G4String f);
+    void SetLUNDFile(G4String& f);
 
   private:
     void SamplePhysics(remollVertex *, remollEvent *);

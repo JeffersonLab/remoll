@@ -101,6 +101,8 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
     // the Moliere f0 width.  I think this number
     // accounts for the higher order terms in the sum,
     // so it's what we should use.
+    assert(radsum > 0.0);
+    assert(p != 0);
     double thpdg  = 13.6*MeV*sqrt(radsum)*(1.0 + 0.038*log(radsum))/p;
     fthpdg = thpdg;
 
@@ -170,6 +172,7 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
 
     fth = thpdg;
 
+    assert( !std::isnan(fth));
     double v0  = CalcMSDistPlane( 0.0    );
     double v2  = CalcMSDistPlane( 2.0*fth);
     double v10 = CalcMSDistPlane(10.0*fth);
@@ -396,6 +399,7 @@ double remollMultScatt::CalcMSDistPlane( double theta){
 
     if( fReturnZero ) return 0.0;
 
+    assert(! std::isnan(theta));
     double th = fabs(theta)/sqrt(fchi2*fB);
 
     if( std::isnan(th) ){
@@ -429,10 +433,12 @@ double remollMultScatt::CalcMSDist( double theta, double p, double t, double A, 
 
 double remollMultScatt::CalcMSDist( double theta, double p, int nmat, double t[], double A[], double Z[] ){
     Init( p, nmat, t, A, Z );
+    assert( !std::isnan(theta));
     return CalcMSDist(theta);
 }
 
 double remollMultScatt::CalcMSDist( double theta){
+    assert( !std::isnan(theta));
     return CalcMSDistPlane(theta)*sin(fabs(theta));
 }
 
@@ -484,6 +490,7 @@ double remollMultScatt::GenerateMSPlane(){
 	//  pretty good since this are only 5% of the distribution
 	do {
 	    trialv = -log(exp(-fl*2.0*fth) - fDt*G4UniformRand()) /fl;
+	    assert( !std::isnan(trialv));
 	} 
 	while ( G4UniformRand() > CalcMSDistPlane( trialv )*
 		exp(fl*trialv)/fC);

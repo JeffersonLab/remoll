@@ -17,15 +17,14 @@
 #define Euler 0.5772157
 #define NINTERVAL 3
 
-remollGenpElastic::remollGenpElastic(){
+remollGenpElastic::remollGenpElastic()
+: remollVEventGen("elastic") {
     fTh_min =     0.1*deg;
     fTh_max =     2.0*deg;
 
-    fE_min = 80.0*MeV; // Absolute minimum of electron energy
-                            // to generate
+    fE_min = 80.0*MeV; // Absolute minimum of electron energy to generate
 
     fApplyMultScatt = true;
-    fBeamTarg = remollBeamTarget::GetBeamTarget();
 }
 
 remollGenpElastic::~remollGenpElastic(){
@@ -40,7 +39,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double beamE = fBeamTarg->fBeamE;
     double Ekin  = beamE - electron_mass_c2;
 
-    std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargVols();
+    std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargetVolumes();
 
     bool bypass_target = false;
 
