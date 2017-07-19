@@ -122,7 +122,6 @@ void remollIO::InitializeTree(){
     fTree->Branch("hit.p",    &fGenDetHit_P,   "hit.p[hit.n]/D");
     fTree->Branch("hit.e",    &fGenDetHit_E,   "hit.e[hit.n]/D");
     fTree->Branch("hit.m",    &fGenDetHit_M,   "hit.m[hit.n]/D"); 
-
     fTree->Branch("hit.edep", &fGenDetHit_Edep, "hit.edep[hit.n]/D");
 
 // NEW

@@ -1099,7 +1099,7 @@
       <positionref ref="DSshieldcollSubstract_CENTER_1" />
     </subtraction> 
 
-    <box lunit="mm" name="boxDSShieldColl1_solid_3" x="boxDSShieldCollSubstract1_width" y="boxDSShieldColl1_height + 50" z="boxDSShieldColl1_length + 50"/>
+    <box lunit="mm" name="boxDSShieldColl1_solid_3" x="boxDSShieldCollSubstract1_width" y="boxDSShieldColl1_height + 50" z="boxDSShieldColl1_length + 50"/>  <!-- What in the world is this? Why is it offset in x? It doesn't even appear to do anything at all... FIXME -->
 
     <subtraction name ="boxDSShieldColl1_solid">
       <first ref="boxDSShieldColl1_solid_2"/>
@@ -1349,6 +1349,8 @@
       <!-- <solidref ref="boxDSShieldColl1_solid"/> -->
       <solidref ref="boxDSShieldColl1_sub_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="6020"/>
     </volume>
 
     <!-- Neutron Poly Shielding -->
@@ -1360,6 +1362,9 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="6021"/>
+    </volume>
     </volume>
 
 <!-- PolyShield1 will be outside shielding hut -->
@@ -1371,6 +1376,9 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield2_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_4_Det"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="6025"/>
+    </volume>
     </volume>
 
     <volume name="boxDSShield1_logic">
@@ -1378,12 +1386,18 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxDSShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_4_Det"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="6024"/>
+    </volume>
    </volume>
 
    <volume name="boxDSShield1_roof_logic">
       <materialref ref="Lead"/>
       <solidref ref="boxDSShield1_roof_solid"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Roof_Det"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="6027"/>
+    </volume>
    </volume>
 
 

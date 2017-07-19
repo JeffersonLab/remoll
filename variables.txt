@@ -46,6 +46,7 @@ hit.p[xyz]	Momentum components of particle, lab frame [GeV]
 hit.v[xyz]	Creation vertex of particles
 hit.e		Energy of particle [GeV]
 hit.m		Mass of particle [GeV]
+hit.edep    Energy deposited in hit [GeV]
 
 hit.l[xyz]	Last significant interaction vertex of particles
 hit.ldE[xyz]	Last significant interaction vertex's change of energy
