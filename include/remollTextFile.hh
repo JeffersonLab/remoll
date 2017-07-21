@@ -12,7 +12,7 @@ class remollTextFile : public TObject {
 	 remollTextFile(const remollTextFile &);
 	 const remollTextFile& operator=(const remollTextFile &);
 	 remollTextFile(const char *);
-	~remollTextFile();
+	 virtual ~remollTextFile();
 
 	 void copyFileIn(const char *);
 

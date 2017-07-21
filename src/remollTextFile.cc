@@ -6,7 +6,8 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-remollTextFile::remollTextFile() {
+remollTextFile::remollTextFile()
+: TObject() {
     fFilenameSize = 0;
     fFilename = NULL;
 
@@ -14,7 +15,8 @@ remollTextFile::remollTextFile() {
     fBuffer = NULL;
 }
 
-remollTextFile::remollTextFile(const char *fn) {
+remollTextFile::remollTextFile(const char *fn)
+: TObject() {
     fFilenameSize = 0;
     fFilename = NULL;
 
@@ -36,6 +38,8 @@ remollTextFile::remollTextFile(const remollTextFile& r)
 }
 
 const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
+    TObject::operator=(r);
+
     fFilenameSize = r.fFilenameSize;
     fFilename = new char[r.fFilenameSize];
     strncpy(fFilename, r.fFilename, fFilenameSize);
