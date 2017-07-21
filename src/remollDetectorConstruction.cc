@@ -53,7 +53,7 @@ G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 remollDetectorConstruction::remollDetectorConstruction()
 : fGDMLParser(0),
   fMessenger(0),fGeometryMessenger(0),
-  fVerboseLevel(1),
+  fVerboseLevel(0),
   fGDMLValidate(true),fGDMLOverlapCheck(true),
   fWorldVolume(0)
 {
