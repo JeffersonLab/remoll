@@ -13,6 +13,9 @@ class remollPhysicsList: public G4VModularPhysicsList
     virtual ~remollPhysicsList();
 
   public:
+    // Set verbose level
+    void SetVerboseLevel(G4int level);
+
     // Set optical physics
     void SetOpticalPhysics(G4bool flag);
     // Enable optical physics
@@ -25,8 +28,6 @@ class remollPhysicsList: public G4VModularPhysicsList
     void RegisterReferencePhysList(G4String name);
 
   private:
-    G4int fVerboseLevel;
-
     G4VModularPhysicsList* fReferencePhysList;
     G4VPhysicsConstructor* fOpticalPhysics;
 

@@ -4,13 +4,15 @@
 #include "G4OpticalPhysics.hh"
 #include "G4GenericMessenger.hh"
 #include "G4RunManager.hh"
+#include "G4HadronicProcessStore.hh"
 
 remollPhysicsList::remollPhysicsList()
 : G4VModularPhysicsList(),
-  fVerboseLevel(1),
   fReferencePhysList(0),fOpticalPhysics(0),
   fPhysListMessenger(0),fBaseMessenger(0)
 {
+  SetVerboseLevel(0);
+
   // Get default reference physics list
   RegisterReferencePhysList("QGSP_BERT_HP");
 
@@ -37,9 +39,9 @@ remollPhysicsList::remollPhysicsList()
       "Remoll optical physics properties");
 
   // Create commands
-  fPhysListMessenger->DeclareProperty(
+  fPhysListMessenger->DeclareMethod(
       "verbose",
-      fVerboseLevel,
+      &remollPhysicsList::SetVerboseLevel,
       "Set physics list verbose level")
               .SetStates(G4State_PreInit);
   fPhysListMessenger->DeclareMethod(
@@ -71,6 +73,15 @@ remollPhysicsList::~remollPhysicsList()
   if (fBaseMessenger) delete fBaseMessenger;
 }
 
+void remollPhysicsList::SetVerboseLevel(G4int level)
+{
+  // Let upstream handle this first
+  G4VModularPhysicsList::SetVerboseLevel(level);
+
+  // Set verbose level of HadronicProcessStore
+  G4HadronicProcessStore::Instance()->SetVerbose(level);
+}
+
 void remollPhysicsList::SetOpticalPhysics(G4bool flag)
 {
   if (flag) EnableOpticalPhysics();
@@ -80,10 +91,10 @@ void remollPhysicsList::SetOpticalPhysics(G4bool flag)
 void remollPhysicsList::EnableOpticalPhysics()
 {
   if (fOpticalPhysics) delete fOpticalPhysics;
-  fOpticalPhysics = new G4OpticalPhysics(fVerboseLevel);
+  fOpticalPhysics = new G4OpticalPhysics(GetVerboseLevel());
 
   // Print output
-  if (fVerboseLevel > 0)
+  if (GetVerboseLevel() > 0)
     G4cout << "Registering " << fOpticalPhysics->GetPhysicsName() << G4endl;
 
   // Replace existing physics
@@ -96,7 +107,7 @@ void remollPhysicsList::EnableOpticalPhysics()
 void remollPhysicsList::DisableOpticalPhysics()
 {
   // Print output
-  if (fVerboseLevel > 0)
+  if (GetVerboseLevel() > 0)
     G4cout << "Removing " << fOpticalPhysics->GetPhysicsName() << G4endl;
 
   if (fOpticalPhysics)
@@ -138,7 +149,7 @@ void remollPhysicsList::RegisterReferencePhysList(G4String name)
 {
   // This approach is based on examples/advanced/medical_linac.
   G4PhysListFactory factory;
-  factory.SetVerbose(fVerboseLevel);
+  factory.SetVerbose(GetVerboseLevel());
 
   // Check whether this reference physics list exists
   if (! factory.IsReferencePhysList(name)) {
@@ -150,21 +161,24 @@ void remollPhysicsList::RegisterReferencePhysList(G4String name)
 
   // Get reference physics list
   fReferencePhysList = factory.GetReferencePhysList(name);
-  fReferencePhysList->SetVerboseLevel(fVerboseLevel);
+  fReferencePhysList->SetVerboseLevel(GetVerboseLevel());
 
   // Register physics from this list
   G4int i = 0;
-  const G4VPhysicsConstructor* elem = 0;
-  while ((elem = fReferencePhysList->GetPhysics(i++)) != 0) {
+  G4VPhysicsConstructor* elem = 0;
+  while ((elem = const_cast<G4VPhysicsConstructor*>(fReferencePhysList->GetPhysics(i++))) != 0) {
+    // Change verbose level
+    elem->SetVerboseLevel(GetVerboseLevel());
+
     // Print output
-    if (fVerboseLevel > 0)
+    if (GetVerboseLevel() > 0)
       G4cout << "Registering " << elem->GetPhysicsName() << G4endl;
 
     // Replace existing physics
-    ReplacePhysics(const_cast<G4VPhysicsConstructor*>(elem));
+    ReplacePhysics(elem);
   }
 
   // Blank space
-  if (fVerboseLevel > 0)
+  if (GetVerboseLevel() > 0)
     G4cout << G4endl;
 }
