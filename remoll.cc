@@ -20,12 +20,9 @@ typedef G4RunManager RunManager;
 #include "remollRun.hh"
 #include "remollRunData.hh"
 #include "remollMessenger.hh"
+#include "remollPhysicsList.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
-
-//  Standard physics list
-#include "G4PhysListFactory.hh"
-#include "G4OpticalPhysics.hh"
 
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
@@ -103,6 +100,8 @@ int main(int argc, char** argv) {
     remollRun::GetRunData()->SetSeed(seed);
 
     // Messenger
+    // TODO only thing the messenger does is set the seed, this could and should
+    // be done by /random/ commands in next major version
     remollMessenger* messenger = remollMessenger::GetInstance();
 
     // Detector geometry
@@ -110,9 +109,7 @@ int main(int argc, char** argv) {
     runManager->SetUserInitialization(detector);
 
     // Physics list
-    G4PhysListFactory factory;
-    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
-    physlist->RegisterPhysics(new G4OpticalPhysics());
+    remollPhysicsList* physlist = new remollPhysicsList();
     runManager->SetUserInitialization(physlist);
 
     // Run action
@@ -165,6 +162,6 @@ int main(int argc, char** argv) {
         << double(tEnd - tStart) / double(CLOCKS_PER_SEC)
         << G4endl;
 
-
+    // Return success
     return 0;
 }
