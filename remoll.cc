@@ -124,8 +124,11 @@ int main(int argc, char** argv) {
     //----------------
     // Initialize visualization
     //
-    G4VisManager* visManager = new G4VisExecutive;
+    G4VisManager* visManager = new G4VisExecutive();
+    // Verbose level "warnings" (3) as is too noisy during initialization
+    visManager->SetVerboseLevel(0);
     visManager->Initialize();
+    visManager->SetVerboseLevel(3);
 
     // Get the pointer to the User Interface manager
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
