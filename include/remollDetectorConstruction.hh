@@ -34,6 +34,11 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     G4GDMLParser *fGDMLParser;
 
     G4GenericMessenger* fMessenger;
+    G4GenericMessenger* fGeometryMessenger;
+
+    G4int fVerboseLevel;
+    G4bool fGDMLValidate;
+    G4bool fGDMLOverlapCheck;
 
     //----------------------
     // global magnet section
@@ -50,7 +55,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     void DumpElements();
     void DumpMaterials();
-    void DumpGeometricalTreeFromWorld(G4bool surfchk = false) {
+    void DumpGeometry(G4bool surfchk = false) {
       DumpGeometricalTree(0,0,surfchk);
     }
     void DumpGeometricalTree(G4VPhysicalVolume* aVolume = 0,

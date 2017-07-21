@@ -51,7 +51,11 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
 remollDetectorConstruction::remollDetectorConstruction()
-: fGDMLParser(0),fWorldVolume(0)
+: fGDMLParser(0),
+  fMessenger(0),fGeometryMessenger(0),
+  fVerboseLevel(1),
+  fGDMLValidate(true),fGDMLOverlapCheck(true),
+  fWorldVolume(0)
 {
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
@@ -68,9 +72,10 @@ remollDetectorConstruction::remollDetectorConstruction()
       .SetStates(G4State_PreInit);
   fMessenger->DeclareMethod(
       "dumpgeometry",
-      &remollDetectorConstruction::DumpGeometricalTreeFromWorld,
+      &remollDetectorConstruction::DumpGeometry,
       "Dump the geometry tree")
-      .SetStates(G4State_Idle);
+      .SetStates(G4State_Idle)
+      .SetDefaultValue("false");
   fMessenger->DeclareMethod(
       "dumpelements",
       &remollDetectorConstruction::DumpElements,
@@ -81,10 +86,55 @@ remollDetectorConstruction::remollDetectorConstruction()
       &remollDetectorConstruction::DumpMaterials,
       "Dump the materials")
       .SetStates(G4State_Idle);
+
+  // Create geometry messenger
+  fGeometryMessenger = new G4GenericMessenger(this,
+      "/remoll/geometry/",
+      "Remoll geometry properties");
+  fGeometryMessenger->DeclareProperty(
+      "setfile",
+      fDetFileName,
+      "Set geometry GDML file")
+      .SetStates(G4State_PreInit);
+  fGeometryMessenger->DeclareProperty(
+      "verbose",
+      fVerboseLevel,
+      "Set geometry verbose level")
+          .SetStates(G4State_PreInit);
+  fGeometryMessenger->DeclareProperty(
+      "validate",
+      fGDMLValidate,
+      "Set GMDL validate flag")
+          .SetStates(G4State_PreInit)
+          .SetDefaultValue("true");
+  fGeometryMessenger->DeclareProperty(
+      "overlapcheck",
+      fGDMLOverlapCheck,
+      "Set GMDL overlap check flag")
+          .SetStates(G4State_PreInit)
+          .SetDefaultValue("true");
+  fGeometryMessenger->DeclareMethod(
+      "dumpelements",
+      &remollDetectorConstruction::DumpElements,
+      "Dump the elements")
+      .SetStates(G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "dumpmaterials",
+      &remollDetectorConstruction::DumpMaterials,
+      "Dump the materials")
+      .SetStates(G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "dumpgeometry",
+      &remollDetectorConstruction::DumpGeometry,
+      "Dump the geometry tree")
+      .SetStates(G4State_Idle)
+      .SetDefaultValue("false");
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
-  delete fGDMLParser;
+    delete fGDMLParser;
+    delete fMessenger;
+    delete fGeometryMessenger;
 }
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct()
@@ -93,12 +143,12 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
     io->GrabGDMLFiles(fDetFileName);
 
     fGDMLParser->Clear();
-    fGDMLParser->SetOverlapCheck(false);
+    fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
 
     G4cout << "Reading " << fDetFileName << G4endl;
-    fGDMLParser->Read(fDetFileName);
+    fGDMLParser->Read(fDetFileName,fGDMLValidate);
 
-    G4VPhysicalVolume* worldVolume = fGDMLParser->GetWorldVolume();
+    fWorldVolume = fGDMLParser->GetWorldVolume();
     
     //====================================================
     // Associate target volumes with beam/target class
@@ -108,7 +158,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
     // This could be made more general with a full treesearch
     //====================================================
 
-    G4LogicalVolume *thislog = worldVolume->GetLogicalVolume();
+    G4LogicalVolume *thislog = fWorldVolume->GetLogicalVolume();
     G4int vidx = 0;
 
     G4String targetmothername = "logicTarget";
@@ -164,18 +214,21 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
 
-  G4cout << "Found " << auxmap->size()
+  if (fVerboseLevel > 0)
+      G4cout << "Found " << auxmap->size()
          << " volume(s) with auxiliary information."
 	 << G4endl << G4endl;
   for (G4GDMLAuxMapType::const_iterator
 	  iter  = auxmap->begin();
 	  iter != auxmap->end(); iter++) {
-      G4cout << "Volume " << ((*iter).first)->GetName()
+      if (fVerboseLevel > 0)
+          G4cout << "Volume " << ((*iter).first)->GetName()
 	     << " has the following list of auxiliary information: "<< G4endl;
       for (G4GDMLAuxListType::const_iterator
 	      vit  = (*iter).second.begin();
 	      vit != (*iter).second.end(); vit++) {
-	G4cout << "--> Type: " << (*vit).type
+        if (fVerboseLevel > 0)
+            G4cout << "--> Type: " << (*vit).type
 	       << " Value: "   << (*vit).value << std::endl;
 
         if ((*vit).type == "Visibility") {
@@ -196,11 +249,13 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
         if ((*vit).type == "Color") {
           G4Colour colour(1.0,1.0,1.0);
           if (G4Colour::GetColour((*vit).value, colour)) {
-            G4cout << "Setting color to " << (*vit).value << "." << G4endl;
+            if (fVerboseLevel > 0)
+              G4cout << "Setting color to " << (*vit).value << "." << G4endl;
             G4VisAttributes visAttribute(colour);
             ((*iter).first)->SetVisAttributes(visAttribute);
           } else {
-            G4cout << "Colour " << (*vit).value << " is not known." << G4endl;
+            if (fVerboseLevel > 0)
+              G4cout << "Colour " << (*vit).value << " is not known." << G4endl;
           }
         }
 
@@ -219,7 +274,8 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
         }
       }
   }
-  G4cout << G4endl<< G4endl;
+  if (fVerboseLevel > 0)
+      G4cout << G4endl<< G4endl;
 
   //==========================
   // Visualization attributes
@@ -227,23 +283,22 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 
   G4VisAttributes* motherVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   motherVisAtt->SetVisibility(false);
-  worldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
+  fWorldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
 
   G4VisAttributes* daughterVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   daughterVisAtt->SetForceWireframe (true);
-  for(int i=0;i<worldVolume->GetLogicalVolume()->GetNoDaughters();i++){
-      worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
+  for(int i=0;i<fWorldVolume->GetLogicalVolume()->GetNoDaughters();i++){
+      fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
   }
 
   //==========================
   // Output geometry tree
   //==========================
 
-  UpdateCopyNo(worldVolume,1); 
-    
-  fWorldVolume = worldVolume;
+  UpdateCopyNo(fWorldVolume,1);
 
-  G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
+  if (fVerboseLevel > 0)
+    G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
 
   return fWorldVolume;
 }
@@ -263,7 +318,8 @@ void remollDetectorConstruction::ConstructSDandField()
 
   G4GDMLAuxListType::const_iterator vit, nit;
 
-  G4cout << "Beginning sensitive detector assignment" << G4endl;
+  if (fVerboseLevel > 0)
+      G4cout << "Beginning sensitive detector assignment" << G4endl;
 
   G4bool useddetnums[__MAX_DETS];
   for (k = 0; k < __MAX_DETS; k++ ){useddetnums[k] = false;}
@@ -272,7 +328,8 @@ void remollDetectorConstruction::ConstructSDandField()
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
       G4LogicalVolume* myvol = (*iter).first;
-      G4cout << "Volume " << myvol->GetName() << G4endl;
+      if (fVerboseLevel > 0)
+          G4cout << "Volume " << myvol->GetName() << G4endl;
 
       for (G4GDMLAuxListType::const_iterator
           vit  = (*iter).second.begin();
@@ -312,13 +369,14 @@ void remollDetectorConstruction::ConstructSDandField()
 
               assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
 
-              thisdet = SDman->FindSensitiveDetector(detectorname);
+              thisdet = SDman->FindSensitiveDetector(detectorname,(fVerboseLevel > 0));
 
               if( thisdet == 0 ) {
                   thisdet = new remollGenericDetector(detectorname, det_no);
-                  G4cout << "  Creating sensitive detector " << det_type
-                      << " for volume " << myvol->GetName()
-                      <<  G4endl << G4endl;
+                  if (fVerboseLevel > 0)
+                      G4cout << "  Creating sensitive detector " << det_type
+                          << " for volume " << myvol->GetName()
+                          <<  G4endl << G4endl;
                   SDman->AddNewDetector(thisdet);
               }
 
@@ -326,7 +384,8 @@ void remollDetectorConstruction::ConstructSDandField()
           }
       }
   }
-  G4cout << "Completed sensitive detector assignment" << G4endl;
+  if (fVerboseLevel > 0)
+      G4cout << "Completed sensitive detector assignment" << G4endl;
 
   //==========================
   // Magnetic fields
