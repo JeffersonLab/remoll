@@ -377,6 +377,8 @@ void remollIO::SearchGDMLforFiles(G4String fn)
     TraverseChildren( elementRoot );
 
     xercesc::XMLPlatformUtils::Terminate();
+
+    delete xmlParser;
 }
 
 void remollIO::TraverseChildren( xercesc::DOMElement *thisel )
