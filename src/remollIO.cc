@@ -392,10 +392,22 @@ void remollIO::TraverseChildren( xercesc::DOMElement *thisel )
 
             if (currentNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE) { // is element
                 xercesc::DOMElement* currentElement
-                = dynamic_cast< xercesc::DOMElement* >( currentNode );
-                if( xercesc::XMLString::equals(currentElement->getTagName(), xercesc::XMLString::transcode("file"))){
-                    SearchGDMLforFiles(G4String(xercesc::XMLString::transcode(currentElement->getAttribute(xercesc::XMLString::transcode("name")))));
+                  = dynamic_cast< xercesc::DOMElement* >( currentNode );
+                // transcode
+                XMLCh* str_file = xercesc::XMLString::transcode("file");
+                if( xercesc::XMLString::equals(currentElement->getTagName(), str_file)){
+                    // transcode
+                    XMLCh* str_name = xercesc::XMLString::transcode("name");
+                    const XMLCh* attr = currentElement->getAttribute(str_name);
+                    char* str_attr = xercesc::XMLString::transcode(attr);
+                    // search files
+                    SearchGDMLforFiles(G4String(str_attr));
+                    // release
+                    xercesc::XMLString::release(&str_name);
+                    xercesc::XMLString::release(&str_attr);
                 }
+                // release
+                xercesc::XMLString::release(&str_file);
 
                 if( currentElement->getChildNodes()->getLength() > 0 ){
                     TraverseChildren( currentElement );
