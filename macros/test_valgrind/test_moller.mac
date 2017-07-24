@@ -45,8 +45,8 @@
 /remoll/seed 123456
 
 # Output
-/control/shell mkdir -p rootfiles/valgrind/
-/remoll/filename rootfiles/valgrind/test_moller.root
+/control/shell mkdir -p rootfiles/test_valgrind/
+/remoll/filename rootfiles/test_valgrind/test_moller.root
 
 # Shoot
 /run/beamOn 100
