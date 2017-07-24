@@ -15,11 +15,11 @@
 namespace { G4Mutex remollEventActionMutex = G4MUTEX_INITIALIZER; }
 
 remollEventAction::remollEventAction()
-: fPrimaryGeneratorAction(0) { }
+: fPrimaryGeneratorAction(0),fEventSeed("") { }
 
 remollEventAction::~remollEventAction() { }
 
-void remollEventAction::BeginOfEventAction(const G4Event*) { }
+void remollEventAction::BeginOfEventAction(const G4Event* event) { }
 
 void remollEventAction::EndOfEventAction(const G4Event* aEvent)
 {
@@ -30,6 +30,10 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
   // Lock mutex
   G4AutoLock lock(&remollEventActionMutex);
   remollIO* io = remollIO::GetInstance();
+
+  // Store random seed
+  //fEventSeed = aEvent->GetRandomNumberStatus();
+  io->SetEventSeed(fEventSeed);
 
   // Get primary event action information
   const remollEvent* event = fPrimaryGeneratorAction->GetEvent();

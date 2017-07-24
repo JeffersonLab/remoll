@@ -73,6 +73,7 @@ class remollIO {
 
 	// Event data
     public:
+	void SetEventSeed(const G4String& seed);
 	void SetEventData(const remollEvent *);
     private:
 	Int_t fNEvPart;
@@ -85,6 +86,7 @@ class remollIO {
 	Double_t fEvQ2;
 	Double_t fEvW2;
 	Double_t fEvThCoM;
+	TString fEvSeed;
 
 	Double_t fBmX;
 	Double_t fBmY;

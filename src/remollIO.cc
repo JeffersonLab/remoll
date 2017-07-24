@@ -90,7 +90,8 @@ void remollIO::InitializeTree()
     fTree->Branch("ev.Q2",    &fEvQ2,     "ev.Q2/D");
     fTree->Branch("ev.W2",    &fEvW2,     "ev.W2/D");
     fTree->Branch("ev.thcom", &fEvThCoM,  "ev.thcom/D");
-    fTree->Branch("ev.beamp",  &fEvBeamP,   "ev.beamp/D");
+    fTree->Branch("ev.beamp", &fEvBeamP,  "ev.beamp/D");
+    fTree->Branch("ev.seed",  &fEvSeed,   "ev.seed/C");
 
     fTree->Branch("ev.npart", &fNEvPart   ,     "ev.npart/I");
     fTree->Branch("ev.pid",   &fEvPID,      "ev.pid[ev.npart]/I");
@@ -207,6 +208,13 @@ void remollIO::WriteTree()
 
 ///////////////////////////////////////////////////////////////////////////////
 // Interfaces to output section ///////////////////////////////////////////////
+
+// Event seed
+void remollIO::SetEventSeed(const G4String& seed)
+{
+  fEvSeed = seed;
+}
+
 
 // Event Data
 
