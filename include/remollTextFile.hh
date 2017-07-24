@@ -25,7 +25,7 @@ class remollTextFile : public TObject {
 	void RecreateInDir(const char *path, bool clobber = false);
 
     private:
-	int fFilenameSize;
+	unsigned int fFilenameSize;
 	char *fFilename;
 
 	unsigned long long int fBufferSize;
