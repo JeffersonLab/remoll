@@ -1,0 +1,12 @@
+# List physics lists
+/remoll/physlist/list
+
+# Register different physics list
+/remoll/physlist/register QGSP_BERT
+
+# Re-register default physics list
+/remoll/physlist/register QGSP_BERT_HP
+
+# Initialize and run
+/run/initialize
+/run/beamOn 1
