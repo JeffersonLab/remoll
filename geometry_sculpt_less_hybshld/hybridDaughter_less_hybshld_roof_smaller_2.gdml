@@ -1365,20 +1365,18 @@
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6021"/>
     </volume>
-    </volume>
 
 <!-- PolyShield1 will be outside shielding hut -->
     <volume name="boxDSPolyShield2_logic">
 <!--  <materialref ref="Concrete"/> -->
 <!--  <materialref ref="Tungsten"/> -->
-<!-- <materialref ref="Borated_Concrete"/ -->
+<!--  <materialref ref="Borated_Concrete"/ -->
       <materialref ref="Polythene"/>
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield2_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_4_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6025"/>
-    </volume>
     </volume>
 
     <volume name="boxDSShield1_logic">
@@ -1389,7 +1387,6 @@
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_4_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6024"/>
     </volume>
-   </volume>
 
    <volume name="boxDSShield1_roof_logic">
       <materialref ref="Lead"/>
@@ -1398,7 +1395,6 @@
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Roof_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6027"/>
     </volume>
-   </volume>
 
 
     <volume name="DSShield_Tube_logic">

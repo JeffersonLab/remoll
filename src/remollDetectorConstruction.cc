@@ -42,11 +42,12 @@
 #include "G4Colour.hh"
 
 #define __DET_STRLEN 200
-#define __MAX_DETS 5000
+#define __MAX_DETS 7000
 
 remollDetectorConstruction::remollDetectorConstruction() {
     // Default geometry file
-    fDetFileName = "geometry_sculpt/mollerMother.gdml";
+    //fDetFileName = "geometry_sculpt/mollerMother.gdml";
+    fDetFileName = "geometry_sculpt_less_hybshld/mollerMother.gdml";
 
 
     CreateGlobalMagneticField();
