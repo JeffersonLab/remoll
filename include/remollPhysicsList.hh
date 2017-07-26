@@ -25,11 +25,17 @@ class remollPhysicsList: public G4VModularPhysicsList
 
     // Handle reference physics lists in messenger
     void ListReferencePhysLists();
+    void RemoveReferencePhysList();
     void RegisterReferencePhysList(G4String name);
 
   private:
+    G4String fReferencePhysListName;
     G4VModularPhysicsList* fReferencePhysList;
     G4VPhysicsConstructor* fOpticalPhysics;
+
+    // Deleting an unused physics list also deletes particles, causing
+    // all kinds of issues with new reference physics lists
+    std::vector<G4VModularPhysicsList*> fReferencePhysicsListToDelete;
 
   protected:
     // Generic messenger as protected to be used in derived classes

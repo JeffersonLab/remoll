@@ -68,6 +68,13 @@ remollPhysicsList::remollPhysicsList()
 
 remollPhysicsList::~remollPhysicsList()
 {
+  // TODO deleting old reference physics lists still fails when the same one
+  // was loaded again, e.g. when loading default physics list explicitly
+  //for (size_t i = 0; i < fReferencePhysicsListToDelete.size(); i++) {
+  //  delete fReferencePhysicsListToDelete.at(i);
+  //}
+  //fReferencePhysicsListToDelete.clear();
+
   if (fPhysListMessenger) delete fPhysListMessenger;
   if (fOpticalMessenger) delete fOpticalMessenger;
   if (fBaseMessenger) delete fBaseMessenger;
@@ -90,35 +97,39 @@ void remollPhysicsList::SetOpticalPhysics(G4bool flag)
 
 void remollPhysicsList::EnableOpticalPhysics()
 {
-  if (fOpticalPhysics) delete fOpticalPhysics;
-  fOpticalPhysics = new G4OpticalPhysics(GetVerboseLevel());
+  if (fOpticalPhysics) {
+    G4cout << "Optical physics already active" << G4endl;
+    return;
+  }
 
   // Print output
   if (GetVerboseLevel() > 0)
-    G4cout << "Registering " << fOpticalPhysics->GetPhysicsName() << G4endl;
+    G4cout << "Registering optical physics" << G4endl;
 
-  // Replace existing physics
-  ReplacePhysics(fOpticalPhysics);
+  // Create optical physics
+  fOpticalPhysics = new G4OpticalPhysics(GetVerboseLevel());
 
-  // Notify run manager
-  G4RunManager::GetRunManager()->PhysicsHasBeenModified();
+  // Register existing physics
+  RegisterPhysics(fOpticalPhysics);
 }
 
 void remollPhysicsList::DisableOpticalPhysics()
 {
+  if (!fOpticalPhysics) {
+    G4cout << "Optical physics not active" << G4endl;
+    return;
+  }
+
   // Print output
   if (GetVerboseLevel() > 0)
-    G4cout << "Removing " << fOpticalPhysics->GetPhysicsName() << G4endl;
+    G4cout << "Removing optical physics" << G4endl;
 
-  if (fOpticalPhysics)
-    RemovePhysics(fOpticalPhysics);
+  // Remove optical physics
+  RemovePhysics(fOpticalPhysics);
+
+  // Delete optical physics
+  delete fOpticalPhysics;
   fOpticalPhysics = 0;
-
-  //if (fOpticalPhysics) delete fOpticalPhysics;
-  //fOpticalPhysics = 0;
-
-  // Notify run manager
-  G4RunManager::GetRunManager()->PhysicsHasBeenModified();
 }
 
 void remollPhysicsList::ListReferencePhysLists()
@@ -145,9 +156,38 @@ void remollPhysicsList::ListReferencePhysLists()
   G4cout << G4endl;
 }
 
+void remollPhysicsList::RemoveReferencePhysList()
+{
+  // Print output
+  if (GetVerboseLevel() > 0)
+    G4cout << "Removing existing reference physics list" << G4endl;
+
+  // Remove physics in previous reference list
+  G4int i = 0;
+  G4VPhysicsConstructor* elem = 0;
+  while ((elem = const_cast<G4VPhysicsConstructor*>(fReferencePhysList->GetPhysics(i++))) != 0) {
+    // Print output
+    if (GetVerboseLevel() > 0)
+      G4cout << "Removing " << elem->GetPhysicsName() << G4endl;
+
+    // Remove physics
+    RemovePhysics(elem);
+  }
+
+  // Delete reference physics list
+  fReferencePhysicsListToDelete.push_back(fReferencePhysList);
+  fReferencePhysList = 0;
+}
+
 void remollPhysicsList::RegisterReferencePhysList(G4String name)
 {
-  // This approach is based on examples/advanced/medical_linac.
+  // Already loaded
+  if (name == fReferencePhysListName) {
+    G4cout << "Reference physics list " << name << " already loaded" << G4endl;
+    return;
+  }
+
+  // Load the factory
   G4PhysListFactory factory;
   factory.SetVerbose(GetVerboseLevel());
 
@@ -159,9 +199,13 @@ void remollPhysicsList::RegisterReferencePhysList(G4String name)
     return;
   }
 
+  // Remove previous reference physics list
+  if (fReferencePhysList) RemoveReferencePhysList();
+
   // Get reference physics list
   fReferencePhysList = factory.GetReferencePhysList(name);
   fReferencePhysList->SetVerboseLevel(GetVerboseLevel());
+  fReferencePhysListName = name;
 
   // Register physics from this list
   G4int i = 0;
@@ -174,8 +218,8 @@ void remollPhysicsList::RegisterReferencePhysList(G4String name)
     if (GetVerboseLevel() > 0)
       G4cout << "Registering " << elem->GetPhysicsName() << G4endl;
 
-    // Replace existing physics
-    ReplacePhysics(elem);
+    // Register existing physics
+    RegisterPhysics(elem);
   }
 
   // Blank space
