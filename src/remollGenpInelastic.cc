@@ -53,8 +53,9 @@ void remollGenpInelastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double Q2 = 2.0*beamE*ef*(1.0-cos(th));
     evt->SetQ2( Q2 );
 
-    G4double APV = Q2*0.8e-4/GeV/GeV; // Empirical APV value, 
+    G4double APV = -1.0*Q2*0.8e-4/GeV/GeV; // Empirical APV value, 
                                       // stolen from mollerClass.C in mollersim
+	// R-L asymmetry for ep inelastic should be negative
 
     evt->SetAsymmetry(APV);
 
