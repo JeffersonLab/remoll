@@ -107,12 +107,11 @@ void remollBeamTarget::UpdateInfo()
 
 	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
 
-// TODO This doesn't work when moving to static
-//	    if( fLH2Length >= 0.0 ){
-//		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-//		    ":  Multiply defined LH2 volumes" << G4endl;
-//		exit(1);
-//	    }
+	    if( fLH2Length >= 0.0 ){
+		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+		    ":  Multiply defined LH2 volumes" << G4endl;
+		exit(1);
+	    }
 
 	    fLH2Length = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
 		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
