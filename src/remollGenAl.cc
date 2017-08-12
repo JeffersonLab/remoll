@@ -49,9 +49,9 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
     double samp_fact = sampv*sampv*(icth_a-icth_b)/(cthmin-cthmax);
 
     G4double phaseSpaceFactor = 2.0*pi*(cos(fTh_min) - cos(fTh_max))*samp_fact;
-  */  
+*/
 //////////////---end modification
-    
+
     G4double phaseSpaceFactor = 2.0*pi*(cos(fTh_min) - cos(fTh_max));
     G4double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
     G4double eOut=0;
@@ -190,7 +190,7 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   fWeight = xsect*sin(theta);
   effectiveXsection = xsect;
 
-  ///~~~ Aymmetry calculation //
+  ///~~~ Aymmetry calculation
   const G4double gf=1.16637e-5;//fermi coupling [GeV^-2]
   const G4double qwp=0.0713;
   const G4double qwn=-0.988;

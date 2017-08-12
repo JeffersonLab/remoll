@@ -48,13 +48,18 @@
       <solidref ref="tubeTargetMother"/>
 
       <physvol>
+        <volumeref ref="USAlTarg"/>
+        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750"/>
+      </physvol>
+
+      <physvol>
         <volumeref ref="h2Targ"/>
         <position name="targ_center" unit="mm" x="0" y="0" z="0"/>
       </physvol>
       
       <physvol>
-        <volumeref ref="AlTarg"/>
-        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750"/>
+        <volumeref ref="DSAlTarg"/>
+        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="750"/>
       </physvol>
 
 
