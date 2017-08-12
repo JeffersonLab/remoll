@@ -47,6 +47,7 @@
 #/remoll/gen quasielasticAl
 #/remoll/gen elasticAl
 
+/remoll/targname USAlTarg
 #/remoll/targpos   0 cm
 #/remoll/targlen  0.0127 cm
 
