@@ -186,7 +186,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 	//         *ORDERING IS IMPORTANT - MUST GO UPSTREAM TO DOWNSTREAM*
 	//         FIXME:  can sort that on our own
 	G4String targvolnames[] = {
-	    "h2Targ", ""
+	    "USAlTarg", "h2Targ", "DSAlTarg", ""
 	};
 	////////////////////////////////////////////////////////////////////////////////
 
@@ -200,10 +200,10 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 	    if( vidx == thislog->GetNoDaughters() ){
 		G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		    ":  target definition structure in GDML not valid.  Could not find volume " << targvolnames[nidx] << G4endl;
-		exit(1);
+	    } else {
+		remollBeamTarget::AddTargetVolume(thislog->GetDaughter(vidx));
 	    }
 
-	    remollBeamTarget::AddTargetVolume(thislog->GetDaughter(vidx));
 	    nidx++;
 	}
     }
