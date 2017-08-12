@@ -5,13 +5,15 @@
 
 # This must be called before initialize
 #/remoll/setgeofile geometry_sculpt/mollerMother.gdml
-/remoll/setgeofile geometry/mollerMother.gdml
+#/remoll/setgeofile geometry_sculpt_less_hybshld/mollerMother.gdml
+#/remoll/setgeofile /home/cameronc/gitdir/dose_remoll/build/geometry_sculpt_less_hybshld/mollerMother.gdml
+/remoll/setgeofile /home/cameronc/gitdir/dose_remoll/build/geometry_tests/mollerMother.gdml
 
 # This must be explicitly called
 /run/initialize
 
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+/remoll/addfield /home/cameronc/gitdir/dose_remoll/build/map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield /home/cameronc/gitdir/dose_remoll/build/map_directory/blockyUpstream_rm_1.1.txt
 
 #/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
 #/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
@@ -59,7 +61,7 @@
 # Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
 
-/remoll/filename remoll_beam_tracking.root
+/remoll/filename remoll_beam_tracking_1M_NEW.root
 
 #/tracking/verbose 2
-/run/beamOn 10
+/run/beamOn 1000000
