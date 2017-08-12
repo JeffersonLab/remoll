@@ -27,6 +27,7 @@
 #define Euler 0.5772157
 
 // Initialize static geometry objects
+G4String remollBeamTarget::fActiveTargetVolume = "h2Targ";
 G4VPhysicalVolume* remollBeamTarget::fTargetMother = 0;
 std::vector <G4VPhysicalVolume *> remollBeamTarget::fTargetVolumes;
 
@@ -54,6 +55,7 @@ remollBeamTarget::remollBeamTarget()
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+    fMessenger->DeclareMethod("targname",&remollBeamTarget::SetActiveTargetVolume,"Target name").SetStates(G4State_Idle);
     fMessenger->DeclareMethodWithUnit("targlen","cm",&remollBeamTarget::SetTargetLen,"Target length").SetStates(G4State_Idle);
     fMessenger->DeclareMethodWithUnit("targpos","cm",&remollBeamTarget::SetTargetPos,"Target position").SetStates(G4State_Idle);
 
@@ -105,11 +107,11 @@ void remollBeamTarget::UpdateInfo()
 	    exit(1);
 	}
 
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() == "LiquidHydrogen" ){
+	if( (*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
 
 	    if( fLH2Length >= 0.0 ){
 		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		    ":  Multiply defined LH2 volumes" << G4endl;
+		    ":  Multiply defined target volumes" << G4endl;
 		exit(1);
 	    }
 
@@ -125,6 +127,13 @@ void remollBeamTarget::UpdateInfo()
 }
 
 
+void remollBeamTarget::SetActiveTargetVolume(G4String name)
+{
+  fActiveTargetVolume = name;
+  UpdateInfo();
+}
+
+
 void remollBeamTarget::SetTargetLen(G4double z)
 {
     // Loop over target volumes
@@ -133,9 +142,8 @@ void remollBeamTarget::SetTargetLen(G4double z)
 
         G4GeometryManager::GetInstance()->OpenGeometry((*it));
 
-        // If liquid hydrogen tubs
-        G4Material* material = (*it)->GetLogicalVolume()->GetMaterial();
-	if (material->GetName() == "LiquidHydrogen")
+        // If target tubs
+	if ((*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume)
 	{
             G4VSolid* solid = (*it)->GetLogicalVolume()->GetSolid();
             G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
@@ -145,7 +153,7 @@ void remollBeamTarget::SetTargetLen(G4double z)
 	} else {
 
 	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": volume other than cryogen has been specified, but handling not implemented" << G4endl;
+		": volume other than target has been specified, but handling not implemented" << G4endl;
 	    // Move position of all other volumes based on half length change
 
 	    /*
@@ -179,15 +187,14 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
         G4GeometryManager::GetInstance()->OpenGeometry((*it));
 
-        G4Material* material = (*it)->GetLogicalVolume()->GetMaterial();
-	if (material->GetName() == "LiquidHydrogen") {
+	if ((*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume) {
 	    // Change the length of the target volume
 	    (*it)->SetTranslation(G4ThreeVector(0.0, 0.0, z-fZpos));
 
 	} else {
 
 	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": volume other than cryogen has been specified, but handling not implemented" << G4endl;
+		": volume other than target has been specified, but handling not implemented" << G4endl;
 
 	    // Move position of all other volumes based on half length change
 

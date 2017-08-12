@@ -31,8 +31,9 @@ class remollMultScatt;
 
 class remollBeamTarget {
 
-    private: 
+    private:
         // Static geometry objects
+	static G4String fActiveTargetVolume;
         static std::vector <G4VPhysicalVolume*> fTargetVolumes;
         static G4VPhysicalVolume* fTargetMother;
 
@@ -48,6 +49,7 @@ class remollBeamTarget {
         static void AddTargetVolume( G4VPhysicalVolume *v ){ fTargetVolumes.push_back(v); UpdateInfo(); }
         static std::vector<G4VPhysicalVolume*> GetTargetVolumes(){ return fTargetVolumes; }
 
+        void SetActiveTargetVolume(G4String name);
         void SetTargetPos(G4double z);
         void SetTargetLen(G4double l);
 
