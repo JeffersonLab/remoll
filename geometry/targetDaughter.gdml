@@ -37,7 +37,12 @@
       <solidref ref="tubeTarget"/>
     </volume>
  
-   <volume name="AlTarg">
+   <volume name="USAlTarg">
+      <materialref ref="Aluminum"/>
+      <solidref ref="AlWindow"/>
+    </volume>
+
+   <volume name="DSAlTarg">
       <materialref ref="Aluminum"/>
       <solidref ref="AlWindow"/>
     </volume>
