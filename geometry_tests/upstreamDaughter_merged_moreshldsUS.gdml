@@ -127,20 +127,20 @@
       -->
     <!-- Default value before check3 -->
     <!-- <constant name="boxUSShieldColl1_inner_rmax" value="140"/>  -->
+    <constant name="USShield1_extension" value="829.5"/>
+    <constant name="USShield2_extension" value="0"/>
     <constant name="boxUSShieldColl1_inner_rmax" value="100"/>
-    <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET"/>
+    <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET-USShield1_extension/2"/>
     <constant name="boxUSShieldColl2_inner_rmax" value="335"/>
     <!-- There is a gap between shld-2 and shld-3 and offset is a temp. fix to close it -->
     <constant name="boxUSShieldColl2_gapOffset" value="70"/>
-    <position name="USshieldcoll_center_2" unit="mm" x="0" y="0" z="6400-UOFFSET - boxUSShieldColl2_gapOffset/2"/>
+    <position name="USshieldcoll_center_2" unit="mm" x="0" y="0" z="6400-UOFFSET - boxUSShieldColl2_gapOffset/2 + USShield2_extension/2"/>
     <constant name="USShield1_width" value="2660"/> <!-- was originally  2270"/>  7/10/2017 Cameron --> 
     <constant name="USShield2_width" value="2660"/>
     <!--Default value before check3 -->
     <!-- <constant name="USShield1_height" value="2270"/> -->
     <constant name="USShield1_height" value="2660"/>
     <constant name="USShield2_height" value="2660"/>
-    <constant name="USShield1_extension" value="829.5"/>
-    <constant name="USShield2_extension" value="0"/>
     <constant name="USShield1_length" value="1000 + USShield1_extension"/>
     <constant name="USShield2_length" value="1000 + USShield2_extension + boxUSShieldColl2_gapOffset"/>
 
@@ -157,7 +157,7 @@
     <constant name="USPolyShield1_y_offset" value="(USPolyShield1_top_thickness - USPolyShield1_bottom_thickness)/2"/>
     <position name="boxUSPolyShield1_trans1" unit="mm" x="0" y="-1*USPolyShield1_top_thickness/2 + USPolyShield1_bottom_thickness/2" z="0"/>
     <position name="boxUSPolyShield1_trans2" unit="mm" x="0" y="-1*USPolyShield1_y_offset" z="0"/>
-    <position name="boxUSPolyShield1_center" unit="mm" x="0" y="USPolyShield1_y_offset" z="5865-UOFFSET"/>
+    <position name="boxUSPolyShield1_center" unit="mm" x="0" y="USPolyShield1_y_offset" z="5865-UOFFSET-(USShield1_extension-USShield2_extension)/2"/>
 
     <constant name="X_ARC" value="COIL_STRAIGHT_L/2"/>
     <constant name="Y1_ARC" value="-INCOILRADIUS-(COIL_ARC_R+XS_H/2)"/>
