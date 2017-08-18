@@ -204,7 +204,8 @@
     <constant name="AlCan_side_thickness" value="25.4"/>
     <constant name="AlCan_top_thickness" value="38.1"/>
     <constant name="AlCan_bottom_thickness" value="25.4"/>
-    <constant name="AlCan_length" value="8574.02"/>
+    <constant name="AlCan_conflict_reduction" value="800"/>
+    <constant name="AlCan_length" value="8574.02-AlCan_conflict_reduction"/> <!-- 1000mm length decrease to avoid conflicts -->
     <constant name="AlCan_width" value="2844.8"/>
     <constant name="AlCan_height" value="3251.2"/>
     <constant name="AlCan_US_Opening_Bore_R" value="508/2"/>
@@ -212,10 +213,10 @@
     <constant name="AlCan_opening_sub_length" value="25.4"/>
     <constant name="AlCan_x_center_offset" value="0.0"/>
     <constant name="AlCan_y_center_offset" value="228.6"/>
-    <constant name="AlCan_z_center_offset" value="13500.41 - DOFFSET"/>
+    <constant name="AlCan_z_center_offset" value="13500.41 - DOFFSET + AlCan_conflict_reduction/2"/> <!-- 500 mm downstream shift to avoid conflicts -->
     <position name="boxAlCan_sub_trans" unit="mm" x="0" y="-1*AlCan_top_thickness/2 + AlCan_bottom_thickness/2" z="0"/>
-    <position name="boxAlCan_US_opening_trans" unit="mm" x="0" y="0" z="-1*AlCan_length/2 + AlCan_side_thickness/2"/>
-    <position name="boxAlCan_DS_opening_trans" unit="mm" x="0" y="0" z="1*AlCan_length/2 - AlCan_side_thickness/2"/>
+    <position name="boxAlCan_US_opening_trans" unit="mm" x="0" y="-228.6" z="-1*AlCan_length/2 + AlCan_side_thickness/2"/>
+    <position name="boxAlCan_DS_opening_trans" unit="mm" x="0" y="-228.6" z="1*AlCan_length/2 - AlCan_side_thickness/2"/>
     <position name="boxAlCan_center" unit="mm" x="AlCan_x_center_offset" y="AlCan_y_center_offset" z="AlCan_z_center_offset"/>
 
 
@@ -1222,7 +1223,7 @@
 
     <!-- Aluminum Can solids-->
     <box lunit="mm" name="boxAlCan_solid_1" x="AlCan_width" y="AlCan_height" z="AlCan_length"/>
-    <box lunit="mm" name="boxAlCan_solid_2" x="AlCan_width - 2*AlCan_side_thickness" y="AlCan_height - AlCan_top_thickness - AlCan_bottom_thickness" z="AlCan_length - 2*DSShield_side_thickness"/>
+    <box lunit="mm" name="boxAlCan_solid_2" x="AlCan_width - 2*AlCan_side_thickness" y="AlCan_height - AlCan_top_thickness - AlCan_bottom_thickness" z="AlCan_length - 2*AlCan_side_thickness"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_US_opening_solid" rmax="AlCan_US_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_DS_opening_solid" rmax="AlCan_DS_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length"/>
 
@@ -1447,7 +1448,7 @@
       <solidref ref="boxAlCan_solid"/>
       <auxiliary auxtype="Color" auxvalue="pink"/>
       <auxiliary auxtype="SensDet" auxvalue="Aluminum_Can_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6027"/>
+      <auxiliary auxtype="DetNo" auxvalue="6030"/>
     </volume>
    
     

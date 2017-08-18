@@ -1402,6 +1402,8 @@
       <materialref ref="Lead"/>
       <solidref ref="DSShield_Tube_solid_1"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="SensDet" auxvalue="Lead_shldtube"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="6028"/>
     </volume>
 
     <!-- beam pipe -->

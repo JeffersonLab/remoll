@@ -128,7 +128,7 @@
     <!-- Default value before check3 -->
     <!-- <constant name="boxUSShieldColl1_inner_rmax" value="140"/>  -->
     <constant name="USShield1_extension" value="0"/>
-    <constant name="USShield2_extension" value="370"/>
+    <constant name="USShield2_extension" value="370 - 30"/> <!-- subtract 30 to prevent overlaps?? -->
     <constant name="boxUSShieldColl1_inner_rmax" value="100"/>
     <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET-USShield1_extension/2"/>
     <constant name="boxUSShieldColl2_inner_rmax" value="335"/>
@@ -670,7 +670,7 @@
       -->
     <box lunit="mm" name="boxUSShieldColl1_solid_1" x="USShield1_width" y="USShield1_height" z="USShield1_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_1" rmax="boxUSShieldColl1_inner_rmax" rmin="0" startphi="0" z="1050"/>
-
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_1" rmax="boxUSShieldColl1_inner_rmax" rmin="0" startphi="0" z="USShield1_length + 50"/>
     <subtraction name ="boxUSShieldColl1_solid">
       <first ref="boxUSShieldColl1_solid_1"/>
       <second ref="USShield_subTube_solid_1"/>
@@ -678,7 +678,7 @@
     </subtraction> 
 
     <box lunit="mm" name="boxUSShieldColl2_solid_1" x="USShield2_width" y="USShield2_height" z="USShield2_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_2" rmax="boxUSShieldColl2_inner_rmax" rmin="0" startphi="0" z="1050 + boxUSShieldColl2_gapOffset"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_2" rmax="boxUSShieldColl2_inner_rmax" rmin="0" startphi="0" z="USShield2_length + 50"/>
 
     <subtraction name ="boxUSShieldColl2_solid">
       <first ref="boxUSShieldColl2_solid_1"/>
