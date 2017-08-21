@@ -194,7 +194,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 	while( targvolnames[nidx] != "" ){
 	    vidx = 0;
 	    while( vidx < thislog->GetNoDaughters() ){
-		if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
+	        if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
 		vidx++; 
 	    }
 	    if( vidx == thislog->GetNoDaughters() ){
