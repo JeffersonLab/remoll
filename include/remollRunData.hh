@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <string>
-#include <remolltypes.hh>
+#include "remolltypes.hh"
 
 #include "gitinfo.hh"
 #include "remollTextFile.hh"
