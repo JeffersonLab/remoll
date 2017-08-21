@@ -71,12 +71,7 @@ class remollBeamTarget {
     private:
 	G4GenericMessenger* fMessenger;
 
-
-
 	G4Material *fDefaultMat;
-
-	bool fAlreadyWarned;
-
 	
     public:
 	// Base position, angle *sampled* info

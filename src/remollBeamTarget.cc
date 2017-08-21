@@ -51,8 +51,6 @@ remollBeamTarget::remollBeamTarget()
 
     fDefaultMat = new G4Material("Default_proton"   , 1., 1.0, 1e-19*g/mole);
 
-    fAlreadyWarned = false;
-
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
     fMessenger->DeclareMethod("targname",&remollBeamTarget::SetActiveTargetVolume,"Target name").SetStates(G4State_Idle);
@@ -398,9 +396,10 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     }
 
     if( !foundvol ){
-	if( !fAlreadyWarned ){
+        static G4bool alreadywarned = false;
+	if( !alreadywarned ){
 	    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": Could not find sampling volume" << G4endl;
-	    fAlreadyWarned = true;
+	    alreadywarned = true;
 	}
 
 	thisvert.fMaterial = fDefaultMat;
