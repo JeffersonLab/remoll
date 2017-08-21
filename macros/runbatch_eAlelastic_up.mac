@@ -1,8 +1,3 @@
-#  Example file
-
-# store tracks
-#/tracking/storeTrajectory 1
-
 # This must be called before initialize
 /remoll/setgeofile geometry/mollerMother.gdml
 
@@ -12,61 +7,27 @@
 /remoll/addfield blockyHybrid_rm_3.0.txt
 /remoll/addfield blockyUpstream_rm_1.1.txt
 
-#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
-#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
-
 # Raster and initial angle stuff
 /remoll/oldras true
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
-#/remoll/beam_x0 0 mm
-#/remoll/beam_y0 0 mm
-# initial angle
-#/remoll/beam_th0 0 mrad
-#/remoll/beam_ph0 0 mrad
-# gaussian spread widths
-#/remoll/beam_dth 0 mrad
-#/remoll/beam_dph 0 mrad
 
 /remoll/beamene 11 GeV
-
-#/remoll/gen beam
-#/remoll/gen moller
-#/remoll/thcommin 30.0 deg
-#/remoll/thcommax 150.0 deg
-
-#/remoll/gen elastic 
-#/remoll/thmin 0.1 deg
-#/remoll/thmax 2.0 deg
-#/remoll/emin 80.0 MeV
-
-#/remoll/gen inelastic 
-#/remoll/gen pion
 
 #/remoll/gen inelasticAl
 #/remoll/gen quasielasticAl
 /remoll/gen elasticAl
 
 /remoll/targname USAlTarg
-#/remoll/targpos   0 cm
+#/remoll/targpos   -75.0 cm
 #/remoll/targlen  0.0127 cm
 
 /remoll/beamcurr 85 microampere
-
-#Enable optical photons and processes
-#/remoll/optical true
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
 /remoll/kryptonite true
 
-/process/list
-
-# Specify random number seed
-#/remoll/seed 123456
-
 /remoll/filename remoll_eAlelastic_up.root
 
-#/tracking/verbose 2
-
-/run/beamOn 1000000
+/run/beamOn 10000000
