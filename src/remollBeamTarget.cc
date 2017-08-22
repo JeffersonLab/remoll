@@ -249,7 +249,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 
 
     G4bool foundvol = false;
-    G4Material *mat;
     G4double zinvol;
 
     G4double cumz   = 0.0;
@@ -276,7 +275,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // Figure out the material we are in and the radiation length we traversed
     std::vector<G4VPhysicalVolume *>::iterator it;
     for(it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !foundvol; it++ ){
-	mat = (*it)->GetLogicalVolume()->GetMaterial();
 
         // Try to cast the target volume into its tubs solid
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
@@ -284,27 +282,27 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
         G4VSolid* solid = volume->GetSolid();
         G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
 
-	G4double len = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*mat->GetDensity();
+        G4double radiationlength = tubs->GetZHalfLength()*2.0 * material->GetDensity();
 	switch( samp ){
 	    case kCryogen: 
 		foundvol = true;
-		zinvol = ztrav/mat->GetDensity();
-		radsum += zinvol/mat->GetRadlen();
+		zinvol = ztrav/material->GetDensity();
+		radsum += zinvol/material->GetRadlen();
 		break;
 
 	    case kFullTarget:
-		if( ztrav - cumz < len ){
+		if( ztrav - cumz < radiationlength ){
 		    foundvol = true;
-		    zinvol = (ztrav - cumz)/mat->GetDensity();
-		    radsum += zinvol/mat->GetRadlen();
+		    zinvol = (ztrav - cumz)/material->GetDensity();
+		    radsum += zinvol/material->GetRadlen();
 		} else {
-		    radsum += len/mat->GetDensity()/mat->GetRadlen();
-		    cumz   += len;
+		    radsum += radiationlength/material->GetDensity()/material->GetRadlen();
+		    cumz   += radiationlength;
 		}
 		break;
 	}
 
-	if( mat->GetBaseMaterial() ){
+	if( material->GetBaseMaterial() ){
 	    G4cerr << __FILE__ << " " << __PRETTY_FUNCTION__ << ":  The material you're using isn't" <<
 		" defined in a way we can use for multiple scattering calculations" << G4endl;
 	    G4cerr << "Aborting" << G4endl; 
@@ -313,7 +311,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 
 	if( foundvol ){
 	    // For our vertex
-	    thisvert.fMaterial = mat;
+	    thisvert.fMaterial = material;
 	    thisvert.fRadLen   = radsum;
 
 	    // For our own info
@@ -324,9 +322,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 		       - ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength() );
 
 	    G4double masssum = 0.0;
-	    const G4int *atomvec = mat->GetAtomsVector();
-	    const G4ElementVector *elvec = mat->GetElementVector();
-	    const G4double *fracvec = mat->GetFractionVector();
+	    const G4int *atomvec = material->GetAtomsVector();
+	    const G4ElementVector *elvec = material->GetElementVector();
+	    const G4double *fracvec = material->GetFractionVector();
 
 	    for( unsigned int i = 0; i < elvec->size(); i++ ){
 		// FIXME:  Not sure why AtomsVector would ever return null
@@ -337,21 +335,21 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 		} else {
 		    masssum += (*elvec)[i]->GetA();
 		}
-		msthick[nmsmat] = mat->GetDensity()*zinvol*fracvec[i];
+		msthick[nmsmat] = material->GetDensity()*zinvol*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
 
 		nmsmat++;
 	    }
 
-	    fEffMatLen = (fSampLen/len)* // Sample weighting
-	      mat->GetDensity()*((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*Avogadro/masssum; // material thickness
+	    fEffMatLen = (fSampLen/radiationlength)* // Sample weighting
+	      material->GetDensity() * tubs->GetZHalfLength()*2.0 * Avogadro/masssum; // material thickness
 	} else {
-	    const G4ElementVector *elvec = mat->GetElementVector();
-	    const G4double *fracvec = mat->GetFractionVector();
+	    const G4ElementVector *elvec = material->GetElementVector();
+	    const G4double *fracvec = material->GetFractionVector();
 	    for( unsigned int i = 0; i < elvec->size(); i++ ){
 
-		msthick[nmsmat] = len*fracvec[i];
+		msthick[nmsmat] = radiationlength*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
 		nmsmat++;
