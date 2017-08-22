@@ -262,19 +262,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     double   msA[__MAX_MAT];
     double   msZ[__MAX_MAT];
 
-    //upstream window multiple scattering
-    msthick[nmsmat]=0.0127*cm*2.7*g/cm/cm/cm;
-    msA[nmsmat]=27;
-    msZ[nmsmat]=13;
-    nmsmat++;
-
-    // LH2 multiple scattering
-    msthick[nmsmat]=150*cm*0.0708*g/cm/cm/cm;
-    msA[nmsmat]=1;
-    msZ[nmsmat]=1;
-    nmsmat++;
-
-
     // Figure out the material we are in and the radiation length we traversed
     std::vector<G4VPhysicalVolume *>::iterator it;
     for(it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !foundvol; it++ ){
