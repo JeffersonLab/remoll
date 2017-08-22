@@ -369,25 +369,21 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	thisvert.fRadLen   = 0.0;
     }
     
-    // Sample multiple scattering + angles
-    G4double msth, msph;
-    G4double bmth, bmph;
 
-
-
-
+    // Sample multiple scattering angles
+    G4double msth = 0, msph = 0;
     if( nmsmat > 0 ){
 	fMS->Init( fBeamE, nmsmat, msthick, msA, msZ );
 	msth = fMS->GenerateMSPlane();
 	msph = fMS->GenerateMSPlane();
-    } else {
-	msth = 0.0;
-	msph = 0.0;
     }
-
     assert( !std::isnan(msth) && !std::isnan(msph) );
 
+
+    // Sample raster angles
+    G4double bmth = 0, bmph = 0;
     if(fOldRaster){
+      // Gaussian distribution with mean and sigma
       bmth = G4RandGauss::shoot(fTh0, fdTh);
       bmph = G4RandGauss::shoot(fPh0, fdPh);
       
