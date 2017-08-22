@@ -248,7 +248,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     G4double ztrav = G4RandFlat::shoot(0.0, fSampLen);
 
 
-    G4bool isLH2;
     G4bool foundvol = false;
     G4Material *mat;
     G4double zinvol;
@@ -278,16 +277,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     std::vector<G4VPhysicalVolume *>::iterator it;
     for(it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !foundvol; it++ ){
 	mat = (*it)->GetLogicalVolume()->GetMaterial();
-/*	if( mat->GetName() == "Aluminum" ) { 
-	    isLH2 = true; 
-	} else { 
-	    isLH2 = false;
-	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": volume not LH2 has been specified, but handling not implemented" << G4endl;
 
-	} 
-*/
-	isLH2=true;
         // Try to cast the target volume into its tubs solid
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
         G4Material* material = volume->GetMaterial();
@@ -297,11 +287,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	G4double len = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*mat->GetDensity();
 	switch( samp ){
 	    case kCryogen: 
-		/*
-		if( !isLH2 ){
-		    radsum += len/mat->GetDensity()/mat->GetRadlen();
-		} else {
-		*/
 		foundvol = true;
 		zinvol = ztrav/mat->GetDensity();
 		radsum += zinvol/mat->GetRadlen();
