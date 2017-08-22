@@ -360,7 +360,8 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     if( !foundvol ){
         static G4bool alreadywarned = false;
 	if( !alreadywarned ){
-	    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": Could not find sampling volume" << G4endl;
+	    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+	            ": Could not find sampling volume" << G4endl;
 	    alreadywarned = true;
 	}
 
