@@ -24,7 +24,6 @@
 #include <math.h>
 
 #define __MAX_MAT 100
-#define Euler 0.5772157
 
 // Initialize static geometry objects
 G4String remollBeamTarget::fActiveTargetVolume = "h2Targ";
@@ -411,6 +410,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     G4double  Ekin = fBeamE - electron_mass_c2;
     G4double  bt   = (fRadLen + 0.18)*4.0/3.0; //additional radlength added for downstream window
     G4double  prob_sample, eloss, sample, env, value, ref;
+
+    // Euler-Mascheroni constant for gamma function
+    const static G4double Euler = 0.5772157;
 
     G4double prob = 1.- pow(fEcut/Ekin,bt) - bt/(bt+1.)*(1.- pow(fEcut/Ekin,bt+1.))
 	+ 0.75*bt/(2.+bt)*(1.- pow(fEcut/Ekin,bt+2.));
