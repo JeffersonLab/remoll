@@ -288,6 +288,11 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	} 
 */
 	isLH2=true;
+        // Try to cast the target volume into its tubs solid
+        G4LogicalVolume* volume = (*it)->GetLogicalVolume();
+        G4Material* material = volume->GetMaterial();
+        G4VSolid* solid = volume->GetSolid();
+        G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
 
 	G4double len = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0*mat->GetDensity();
 	switch( samp ){
