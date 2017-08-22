@@ -78,7 +78,7 @@ class remollBeamTarget {
     public:
 	// Base position, angle *sampled* info
 	G4ThreeVector fVer, fDir;
-	G4double fSampE, fRadLen, fSampLen;
+	G4double fSampE, fRadLen;
 	G4double fTravLen;
 	G4double fEcut, fEffMatLen;
 

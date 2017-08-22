@@ -237,17 +237,18 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // or the number of electrons, which is probably good enough for this
 
     // Figure out how far along the target we got
+    G4double samplinglength = 0;
     switch( samp ){
-	case kCryogen: 
-	    fSampLen = fActiveTargetRadiationLength;
+	case kActiveTargetVolume:
+	    samplinglength = fActiveTargetRadiationLength;
 	    break;
 
-	case kFullTarget:
-	    fSampLen = fTotalTargetRadiationLength;
+	case kAllTargetVolumes:
+	    samplinglength = fTotalTargetRadiationLength;
 	    break;
     }
 
-    G4double ztrav = G4RandFlat::shoot(0.0, fSampLen);
+    G4double ztrav = G4RandFlat::shoot(0.0, samplinglength);
 
 
     G4bool foundvol = false;
@@ -286,13 +287,13 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 
         G4double radiationlength = tubs->GetZHalfLength()*2.0 * material->GetDensity();
 	switch( samp ){
-	    case kCryogen: 
+	    case kActiveTargetVolume:
 		foundvol = true;
 		zinvol = ztrav/material->GetDensity();
 		radsum += zinvol/material->GetRadlen();
 		break;
 
-	    case kFullTarget:
+	    case kAllTargetVolumes:
 		if( ztrav - cumz < radiationlength ){
 		    foundvol = true;
 		    zinvol = (ztrav - cumz)/material->GetDensity();
@@ -344,7 +345,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 		nmsmat++;
 	    }
 
-	    fEffMatLen = (fSampLen/radiationlength)* // Sample weighting
+	    fEffMatLen = (samplinglength/radiationlength)* // Sample weighting
 	      material->GetDensity() * tubs->GetZHalfLength()*2.0 * Avogadro/masssum; // material thickness
 	} else {
 	    const G4ElementVector *elvec = material->GetElementVector();
@@ -404,6 +405,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 
     fDir.rotateY(msth);
     fDir.rotateX(msph);
+
 
     // Sample beam energy based on radiation
     // We do this so it doesn't affect the weighting

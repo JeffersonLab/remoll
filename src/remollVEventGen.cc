@@ -39,7 +39,7 @@ remollVEventGen::remollVEventGen(const G4String name)
 
     fBeamTarg = new remollBeamTarget();
 
-    fSampType       = kCryogen;
+    fSampType       = kActiveTargetVolume;
     fApplyMultScatt = false;
 }
 
