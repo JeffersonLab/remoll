@@ -68,8 +68,8 @@ void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
     G4double phaseSpaceFactor = 2.0*pi*(cos(fTh_min) - cos(fTh_max))*samp_fact;
 */
 
-    G4double phaseSpaceFactor = (fPh_max - fPh_max) * (cos(fTh_min) - cos(fTh_max));
-    G4double ph = G4RandFlat::shoot(fPh_max, fPh_max);
+    G4double phaseSpaceFactor = (fPh_max - fPh_min) * (cos(fTh_min) - cos(fTh_max));
+    G4double ph = G4RandFlat::shoot(fPh_min, fPh_max);
     G4double eOut=0;
     G4double fWeight=0;
     G4double Q2=0;

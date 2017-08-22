@@ -15,7 +15,7 @@
 remollVEventGen::remollVEventGen(const G4String name)
 : fName(name),
   fThCoM_min(0.0), fThCoM_max(0.0), fTh_min(0.0), fTh_max(0.0),
-  fPh_min(0.0), fPh_max(0.0), fE_min(0.0), fE_max(0.0),
+  fPh_min(0.0), fPh_max(360.0*deg), fE_min(0.0), fE_max(0.0),
   fNumberOfParticles(1),fParticleGun(0),
   fBeamTarg(0), fMessenger(0)
 {
