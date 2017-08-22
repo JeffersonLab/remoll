@@ -225,8 +225,11 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
 remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 {
-    remollVertex thisvert;
+    // Create vertex
+    remollVertex vertex;
 
+    // Sample raster x and y positions on target
+    // (assumed independent of z position)
     G4double rasx = G4RandFlat::shoot(fX0 - fRasterX/2.0, fX0 + fRasterX/2.0);
     G4double rasy = G4RandFlat::shoot(fY0 - fRasterY/2.0, fY0 + fRasterY/2.0);
 
@@ -310,8 +313,8 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 
 	if( foundvol ){
 	    // For our vertex
-	    thisvert.fMaterial = material;
-	    thisvert.fRadLen   = radsum;
+	    vertex.fMaterial = material;
+	    vertex.fRadLen   = radsum;
 
 	    // For our own info
 	    fTravLen = zinvol;
@@ -364,8 +367,8 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	    alreadywarned = true;
 	}
 
-	thisvert.fMaterial = fDefaultMat;
-	thisvert.fRadLen   = 0.0;
+	vertex.fMaterial = fDefaultMat;
+	vertex.fRadLen   = 0.0;
     }
     
 
@@ -438,9 +441,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     }
 
 
-    thisvert.fBeamE = fSampE;
+    vertex.fBeamE = fSampE;
 
     assert( fBeamE >= electron_mass_c2 );
 
-    return thisvert;
+    return vertex;
 }
