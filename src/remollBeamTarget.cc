@@ -240,17 +240,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	    fSampLen = fActiveTargetRadiationLength;
 	    break;
 
-        case kWalls:
-	    G4cerr << "ERROR" << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": scattering from cell walls has been specified, but handling not implemented" << G4endl;
-	    exit(1);
-	    break;
-
-	    /*
-	case kWalls:
-	    fSampLen = fTotalLength-fLH2Length;
-	    break;
-	    */
 	case kFullTarget:
 	    fSampLen = fTotalTargetRadiationLength;
 	    break;
@@ -311,27 +300,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 		foundvol = true;
 		zinvol = ztrav/mat->GetDensity();
 		radsum += zinvol/mat->GetRadlen();
-		//}
-		break;
-
-	    case kWalls:
-
-		G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": scattering from cell walls has been specified, but handling not implemented" << G4endl;
-		/*
-		if( isLH2 ){
-		    radsum += len/mat->GetDensity()/mat->GetRadlen();
-		} else {
-		    if( ztrav - cumz < len ){
-			foundvol = true;
-			zinvol = (ztrav - cumz)/mat->GetDensity();
-			radsum += zinvol/mat->GetRadlen();
-		    } else {
-			radsum += len/mat->GetDensity()/mat->GetRadlen();
-			cumz   += len;
-		    }
-		}
-		*/
 		break;
 
 	    case kFullTarget:
