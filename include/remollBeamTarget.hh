@@ -37,8 +37,10 @@ class remollBeamTarget {
         static std::vector <G4VPhysicalVolume*> fTargetVolumes;
         static G4VPhysicalVolume* fTargetMother;
 
-        static G4double fTotalLength;
-        static G4double fLH2Length, fZpos, fLH2pos;
+        static G4double fTotalTargetRadiationLength;
+        static G4double fActiveTargetRadiationLength;
+        static G4double fMotherTargetAbsolutePosition;
+        static G4double fActiveTargetRelativePosition;
 
         static void UpdateInfo();
 

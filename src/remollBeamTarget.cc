@@ -31,10 +31,10 @@ G4String remollBeamTarget::fActiveTargetVolume = "h2Targ";
 G4VPhysicalVolume* remollBeamTarget::fTargetMother = 0;
 std::vector <G4VPhysicalVolume *> remollBeamTarget::fTargetVolumes;
 
-G4double remollBeamTarget::fLH2Length   = -1e9;
-G4double remollBeamTarget::fZpos        = -1e9;
-G4double remollBeamTarget::fLH2pos      = -1e9;
-G4double remollBeamTarget::fTotalLength = 0.0;
+G4double remollBeamTarget::fActiveTargetRadiationLength   = -1e9;
+G4double remollBeamTarget::fMotherTargetAbsolutePosition        = -1e9;
+G4double remollBeamTarget::fActiveTargetRelativePosition      = -1e9;
+G4double remollBeamTarget::fTotalTargetRadiationLength = 0.0;
 
 remollBeamTarget::remollBeamTarget()
 : fBeamE(gDefaultBeamE),fBeamCurr(gDefaultBeamCur),fBeamPol(gDefaultBeamPol),
@@ -86,14 +86,14 @@ G4double remollBeamTarget::GetEffLumin(){
 
 void remollBeamTarget::UpdateInfo()
 {
-    fLH2Length   = -1e9;
-    fZpos        = -1e9;
-    fLH2pos      = -1e9;
-    fTotalLength = 0.0;
+    fActiveTargetRadiationLength  = -1e9;
+    fMotherTargetAbsolutePosition = -1e9;
+    fActiveTargetRelativePosition = -1e9;
+    fTotalTargetRadiationLength = 0.0;
 
     // Can't calculate anything without mother
     if( !fTargetMother ) return;
-    fZpos = fTargetMother->GetFrameTranslation().z();
+    fMotherTargetAbsolutePosition = fTargetMother->GetFrameTranslation().z();
 
     for (std::vector<G4VPhysicalVolume *>::iterator
         it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
@@ -113,19 +113,19 @@ void remollBeamTarget::UpdateInfo()
 
 	if( (*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
 
-	    if( fLH2Length >= 0.0 ){
+	    if( fActiveTargetRadiationLength >= 0.0 ){
 		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		    ":  Multiply defined target volumes" << G4endl;
 		exit(1);
 	    }
 
-	    fLH2Length = ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
-		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+	    fActiveTargetRadiationLength = tubs->GetZHalfLength()*2.0
+		* material->GetDensity();
 
-	    fLH2pos    = (*it)->GetFrameTranslation().z();
+	    fActiveTargetRelativePosition = (*it)->GetFrameTranslation().z();
 
-	    fTotalLength += ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength()*2.0
-		*(*it)->GetLogicalVolume()->GetMaterial()->GetDensity();
+	    fTotalTargetRadiationLength += tubs->GetZHalfLength()*2.0
+		* material->GetDensity();
 	}
     }
 }
@@ -194,7 +194,7 @@ void remollBeamTarget::SetTargetPos(G4double z)
 	if ((*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume) {
 
 	    // Change the length of the target volume
-	    (*it)->SetTranslation(G4ThreeVector(0.0, 0.0, z-fZpos));
+	    (*it)->SetTranslation(G4ThreeVector(0.0, 0.0, z-fMotherTargetAbsolutePosition));
 
 	} else {
 
@@ -237,7 +237,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // Figure out how far along the target we got
     switch( samp ){
 	case kCryogen: 
-	    fSampLen = fLH2Length;
+	    fSampLen = fActiveTargetRadiationLength;
 	    break;
 
         case kWalls:
@@ -252,7 +252,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	    break;
 	    */
 	case kFullTarget:
-	    fSampLen = fTotalLength;
+	    fSampLen = fTotalTargetRadiationLength;
 	    break;
     }
 
@@ -362,7 +362,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	    fTravLen = zinvol;
 	    fRadLen = radsum;
 	    fVer    = G4ThreeVector( rasx, rasy, 
-		      zinvol - (*it)->GetFrameTranslation().z() + fZpos 
+		      zinvol - (*it)->GetFrameTranslation().z() + fMotherTargetAbsolutePosition 
 		       - ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength() );
 
 	    G4double masssum = 0.0;
