@@ -98,8 +98,14 @@ void remollBeamTarget::UpdateInfo()
     for (std::vector<G4VPhysicalVolume *>::iterator
         it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
 
+        // Try to cast the target volume into its tubs solid
+        G4LogicalVolume* volume = (*it)->GetLogicalVolume();
+        G4Material* material = volume->GetMaterial();
+        G4VSolid* solid = volume->GetSolid();
+        G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
+
         // Assume everything is non-nested tubes
-	if( !dynamic_cast<G4Tubs *>( (*it)->GetLogicalVolume()->GetSolid() ) ){
+	if( !tubs ){
 	    G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		":  Target volume not made of G4Tubs" << G4endl; 
 	    exit(1);
