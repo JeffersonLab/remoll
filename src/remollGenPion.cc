@@ -44,10 +44,10 @@ remollGenPion::~remollGenPion()
 void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // Generate Pion event
 
-  double beamE   = vert->GetBeamE();
+  double beamE   = vert->GetBeamEnergy();
     // Use unradiated beam vertex
     //double beamE = remollBeamTarget::GetBeamTarget()->fBeamE;
-    double rad_len = vert->GetRadLen();
+    double rad_len = vert->GetRadiationLength();
 
     double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
     double ph = G4RandFlat::shoot(fPh_min, fPh_max);

@@ -66,9 +66,9 @@ class remollBeamTarget {
 
 	remollVertex SampleVertex(SampType_t);
 
-	G4double fBeamE;
-	G4double fBeamCurr;
-	G4double fBeamPol;
+	G4double fBeamEnergy;
+	G4double fBeamCurrent;
+	G4double fBeamPolarization;
 
 	remollMultScatt *fMS;
 
@@ -80,9 +80,12 @@ class remollBeamTarget {
     public:
 	// Base position, angle *sampled* info
 	G4ThreeVector fVer, fDir;
-	G4double fSampE, fRadLen;
-	G4double fTravLen;
-	G4double fEcut, fEffMatLen;
+	G4double fSampledEnergy;
+	G4double fRadiationLength;
+	G4double fTravelledLength;
+        G4double fEffectiveMaterialLength;
+
+        G4double fEnergyCut;
 
 	// Base position/angle sampling info
         G4bool fOldRaster;

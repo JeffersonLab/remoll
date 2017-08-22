@@ -36,7 +36,7 @@ G4double remollBeamTarget::fActiveTargetRelativePosition = -1e9;
 G4double remollBeamTarget::fTotalTargetEffectiveLength = 0.0;
 
 remollBeamTarget::remollBeamTarget()
-: fBeamE(gDefaultBeamE),fBeamCurr(gDefaultBeamCur),fBeamPol(gDefaultBeamPol),
+: fBeamEnergy(gDefaultBeamE),fBeamCurrent(gDefaultBeamCur),fBeamPolarization(gDefaultBeamPol),
   fOldRaster(true),fRasterX(5.0*mm),fRasterY(5.0*mm),
   fX0(0.0),fY0(0.0),fTh0(0.0),fPh0(0.0),
   fdTh(0.0),fdPh(0.0),fCorrTh(0.0),fCorrPh(0.0)
@@ -46,9 +46,11 @@ remollBeamTarget::remollBeamTarget()
     // Create new multiple scattering
     fMS = new remollMultScatt();
 
-    fEcut = 1e-6*MeV;
+    // Infrared energy cutoff
+    fEnergyCut = 1e-6 * MeV;
 
-    fDefaultMat = new G4Material("Default_proton"   , 1., 1.0, 1e-19*g/mole);
+    // Default material if sampling volume not found
+    fDefaultMat = new G4Material("Default_proton", 1.0, 1.0, 1e-19*g/mole);
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -56,8 +58,8 @@ remollBeamTarget::remollBeamTarget()
     fMessenger->DeclareMethodWithUnit("targlen","cm",&remollBeamTarget::SetTargetLen,"Target length").SetStates(G4State_Idle);
     fMessenger->DeclareMethodWithUnit("targpos","cm",&remollBeamTarget::SetTargetPos,"Target position").SetStates(G4State_Idle);
 
-    fMessenger->DeclarePropertyWithUnit("beamcurr","microampere",fBeamCurr,"Beam current");
-    fMessenger->DeclarePropertyWithUnit("beamene","GeV",fBeamE,"Beam energy");
+    fMessenger->DeclarePropertyWithUnit("beamcurr","microampere",fBeamCurrent,"Beam current");
+    fMessenger->DeclarePropertyWithUnit("beamene","GeV",fBeamEnergy,"Beam energy");
 
     fMessenger->DeclareProperty("oldras",fOldRaster,"Old (no ang corln) or new (ang corl) raster");
     fMessenger->DeclarePropertyWithUnit("rasx","cm",fRasterX,"Square raster width x (horizontal)");
@@ -80,7 +82,7 @@ remollBeamTarget::~remollBeamTarget()
 }
 
 G4double remollBeamTarget::GetEffLumin(){
-    return fEffMatLen*fBeamCurr/(e_SI*coulomb);
+    return fEffectiveMaterialLength*fBeamCurrent/(e_SI*coulomb);
 }
 
 void remollBeamTarget::UpdateInfo()
@@ -247,24 +249,29 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	    total_effective_length = fTotalTargetEffectiveLength;
 	    break;
     }
-    G4double ztrav = G4RandFlat::shoot(0.0, total_effective_length);
+    G4double effective_position = G4RandFlat::shoot(0.0, total_effective_length);
 
 
+    G4bool found_active_volume = false;
 
-    G4bool foundvol = false;
-    G4double zinvol;
+    // Cumulative lengths
+    G4double cumulative_effective_length = 0.0;
+    G4double cumulative_radiation_length = 0.0;
 
-    G4double cumz   = 0.0;
-    G4double radsum = 0.0;
-
+    // Start with no multiple scattering materials loaded:
+    // this may seem like something that can be made static,
+    // but it's probably not worth it since only called once per event.
     int      nmsmat = 0;
     double   msthick[__MAX_MAT];
     double   msA[__MAX_MAT];
     double   msZ[__MAX_MAT];
 
     // Figure out the material we are in and the radiation length we traversed
-    std::vector<G4VPhysicalVolume *>::iterator it;
-    for(it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !foundvol; it++ ){
+    for (std::vector<G4VPhysicalVolume *>::iterator
+        it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !found_active_volume; it++ ){
+
+        // Relative position of this target volume in mother volume
+        G4double relative_position = (*it)->GetFrameTranslation().z();
 
         // Try to cast the target volume into its tubs solid
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
@@ -272,22 +279,38 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
         G4VSolid* solid = volume->GetSolid();
         G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
 
-        G4double radiationlength = tubs->GetZHalfLength()*2.0 * material->GetDensity();
-	switch( samp ){
+        // Effective length of this target volume
+        G4double effective_length = tubs->GetZHalfLength()*2.0 * material->GetDensity();
+
+        // Find position in this volume (if we are in it)
+        G4double effective_position_in_volume;
+        G4double actual_position_in_volume;
+        switch( samp ){
 	    case kActiveTargetVolume:
-		foundvol = true;
-		zinvol = ztrav/material->GetDensity();
-		radsum += zinvol/material->GetRadlen();
+	        if ((*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
+	            // This is the active volume, and we only sample here
+	            found_active_volume = true;
+	            actual_position_in_volume = effective_position/material->GetDensity();
+	            // but we still want cumulative radiation lengths of part of the volume
+	            cumulative_radiation_length += actual_position_in_volume/material->GetRadlen();
+	        } else {
+	            // but we still want cumulative radiation lengths of all of the volume
+                    cumulative_radiation_length += effective_length/material->GetDensity()/material->GetRadlen();
+                }
 		break;
 
 	    case kAllTargetVolumes:
-		if( ztrav - cumz < radiationlength ){
-		    foundvol = true;
-		    zinvol = (ztrav - cumz)/material->GetDensity();
-		    radsum += zinvol/material->GetRadlen();
+		if( effective_position - cumulative_effective_length < effective_length ){
+                    // This is the volume where our sample landed
+		    found_active_volume = true;
+		    effective_position_in_volume = (effective_position - cumulative_effective_length);
+		    actual_position_in_volume = effective_position_in_volume/material->GetDensity();
+                    // but we still want cumulative radiation lengths of part of the volume
+		    cumulative_radiation_length += actual_position_in_volume/material->GetRadlen();
 		} else {
-		    radsum += radiationlength/material->GetDensity()/material->GetRadlen();
-		    cumz   += radiationlength;
+                    // but we still want cumulative radiation lengths of all of the volume
+		    cumulative_radiation_length += effective_length/material->GetDensity()/material->GetRadlen();
+		    cumulative_effective_length += effective_length;
 		}
 		break;
 	}
@@ -299,17 +322,17 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	    exit(1);
 	}
 
-	if( foundvol ){
+	if( found_active_volume ){
 	    // For our vertex
 	    vertex.fMaterial = material;
-	    vertex.fRadLen   = radsum;
+	    vertex.fRadiationLength   = cumulative_radiation_length;
 
 	    // For our own info
-	    fTravLen = zinvol;
-	    fRadLen = radsum;
+	    fTravelledLength = actual_position_in_volume;
+	    fRadiationLength = cumulative_radiation_length;
 	    fVer    = G4ThreeVector( rasx, rasy, 
-		      zinvol - (*it)->GetFrameTranslation().z() + fMotherTargetAbsolutePosition 
-		       - ((G4Tubs *) (*it)->GetLogicalVolume()->GetSolid())->GetZHalfLength() );
+		      actual_position_in_volume - (*it)->GetFrameTranslation().z() + fMotherTargetAbsolutePosition
+		       - tubs->GetZHalfLength() );
 
 	    G4double masssum = 0.0;
 	    const G4int *atomvec = material->GetAtomsVector();
@@ -325,21 +348,20 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 		} else {
 		    masssum += (*elvec)[i]->GetA();
 		}
-		msthick[nmsmat] = material->GetDensity()*zinvol*fracvec[i];
+		msthick[nmsmat] = material->GetDensity()*actual_position_in_volume*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
-
 		nmsmat++;
 	    }
 
-	    fEffMatLen = (samplinglength/radiationlength)* // Sample weighting
-	      material->GetDensity() * tubs->GetZHalfLength()*2.0 * Avogadro/masssum; // material thickness
+	    // Effective material length for luminosity calculation
+	    fEffectiveMaterialLength = (total_effective_length/effective_length) * // Sample weighting
+	      effective_length * Avogadro/masssum; // material thickness
 	} else {
 	    const G4ElementVector *elvec = material->GetElementVector();
 	    const G4double *fracvec = material->GetFractionVector();
 	    for( unsigned int i = 0; i < elvec->size(); i++ ){
-
-		msthick[nmsmat] = radiationlength*fracvec[i];
+		msthick[nmsmat] = effective_length*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
 		nmsmat++;
@@ -347,23 +369,25 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	}
     }
 
-    if( !foundvol ){
+
+    // If no volume was found
+    if( !found_active_volume ){
         static G4bool alreadywarned = false;
 	if( !alreadywarned ){
 	    G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 	            ": Could not find sampling volume" << G4endl;
 	    alreadywarned = true;
 	}
-
+	// Set default material and no radiation length
 	vertex.fMaterial = fDefaultMat;
-	vertex.fRadLen   = 0.0;
+	vertex.fRadiationLength = 0.0;
     }
     
 
     // Sample multiple scattering angles
     G4double msth = 0, msph = 0;
     if( nmsmat > 0 ){
-	fMS->Init( fBeamE, nmsmat, msthick, msA, msZ );
+	fMS->Init( fBeamEnergy, nmsmat, msthick, msA, msZ );
 	msth = fMS->GenerateMSPlane();
 	msph = fMS->GenerateMSPlane();
     }
@@ -399,14 +423,14 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     //
     // This can be ignored and done in a generator by itself
 
-    G4double  Ekin = fBeamE - electron_mass_c2;
-    G4double  bt   = (fRadLen + 0.18)*4.0/3.0; //additional radlength added for downstream window
+    G4double  Ekin = fBeamEnergy - electron_mass_c2;
+    G4double  bt   = fRadiationLength * 4.0 / 3.0;
 
     // Euler-Mascheroni constant for gamma function
     const static G4double Euler = 0.5772157;
 
-    G4double prob = 1.- pow(fEcut/Ekin,bt) - bt/(bt+1.)*(1.- pow(fEcut/Ekin,bt+1.))
-	+ 0.75*bt/(2.+bt)*(1.- pow(fEcut/Ekin,bt+2.));
+    G4double prob = 1.- pow(fEnergyCut/Ekin,bt) - bt/(bt+1.)*(1.- pow(fEnergyCut/Ekin,bt+1.))
+	+ 0.75*bt/(2.+bt)*(1.- pow(fEnergyCut/Ekin,bt+2.));
     prob = prob/(1.- bt*Euler + bt*bt/2.*(Euler*Euler+pi*pi/6.)); /* Gamma function */
 
     G4double prob_sample = G4UniformRand();
@@ -414,24 +438,22 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
         G4double eloss, sample, ref;
 	do {
 	    sample = G4UniformRand();
-	    eloss = fEcut*pow(Ekin/fEcut,sample);
+	    eloss = fEnergyCut*pow(Ekin/fEnergyCut,sample);
 	    G4double env = 1./eloss;
 	    G4double value = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,bt);
 
-	    sample = G4UniformRand();
+	    sample = G4UniformRand(); // FIXME (wdc) again?
 	    ref = value/env;
 	} while (sample > ref);
 
-	fSampE = fBeamE - eloss;
-	assert( fSampE > electron_mass_c2 );
+	fSampledEnergy = fBeamEnergy - eloss;
+	assert( fSampledEnergy >= electron_mass_c2 );
     } else {
-	fSampE = fBeamE;
+	fSampledEnergy = fBeamEnergy;
     }
 
-
-    vertex.fBeamE = fSampE;
-
-    assert( fBeamE >= electron_mass_c2 );
+    vertex.fBeamEnergy = fSampledEnergy;
+    assert( fBeamEnergy >= electron_mass_c2 );
 
     return vertex;
 }

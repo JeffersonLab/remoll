@@ -84,9 +84,9 @@ remollEvent* remollVEventGen::GenerateEvent()
 
     thisev->fVertexPos    = fBeamTarg->fVer;
     if( fApplyMultScatt ) {
-        thisev->fBeamMomentum = fBeamTarg->fSampE*(fBeamTarg->fDir.unit());
+        thisev->fBeamMomentum = fBeamTarg->fSampledEnergy*(fBeamTarg->fDir.unit());
     } else {
-        thisev->fBeamMomentum = fBeamTarg->fSampE*G4ThreeVector(0.0, 0.0, 1.0);
+        thisev->fBeamMomentum = fBeamTarg->fSampledEnergy*G4ThreeVector(0.0, 0.0, 1.0);
     }
     /////////////////////////////////////////////////////////////////////
 
@@ -152,6 +152,6 @@ void remollVEventGen::PolishEvent(remollEvent *ev) {
     	ev->fRate = ev->fRate/nthrown;
     }
 
-    ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPol;
+    ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPolarization;
 }
 

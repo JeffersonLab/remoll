@@ -43,7 +43,7 @@ remollGenAl::~remollGenAl() {
 
 void remollGenAl::SamplePhysics(remollVertex *vert, remollEvent *evt) {
 
-    G4double beamE = vert->GetBeamE(); // in MeV (it can be modified by beam loss)
+    G4double beamE = vert->GetBeamEnergy(); // in MeV (it can be modified by beam loss)
     G4double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min))); // radians
 
     /////////////////////////////////////////
