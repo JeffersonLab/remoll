@@ -30,10 +30,10 @@ G4String remollBeamTarget::fActiveTargetVolume = "h2Targ";
 G4VPhysicalVolume* remollBeamTarget::fTargetMother = 0;
 std::vector <G4VPhysicalVolume *> remollBeamTarget::fTargetVolumes;
 
-G4double remollBeamTarget::fActiveTargetRadiationLength   = -1e9;
-G4double remollBeamTarget::fMotherTargetAbsolutePosition        = -1e9;
-G4double remollBeamTarget::fActiveTargetRelativePosition      = -1e9;
-G4double remollBeamTarget::fTotalTargetRadiationLength = 0.0;
+G4double remollBeamTarget::fActiveTargetEffectiveLength  = -1e9;
+G4double remollBeamTarget::fMotherTargetAbsolutePosition = -1e9;
+G4double remollBeamTarget::fActiveTargetRelativePosition = -1e9;
+G4double remollBeamTarget::fTotalTargetEffectiveLength = 0.0;
 
 remollBeamTarget::remollBeamTarget()
 : fBeamE(gDefaultBeamE),fBeamCurr(gDefaultBeamCur),fBeamPol(gDefaultBeamPol),
@@ -85,10 +85,10 @@ G4double remollBeamTarget::GetEffLumin(){
 
 void remollBeamTarget::UpdateInfo()
 {
-    fActiveTargetRadiationLength  = -1e9;
+    fActiveTargetEffectiveLength  = -1e9;
     fMotherTargetAbsolutePosition = -1e9;
     fActiveTargetRelativePosition = -1e9;
-    fTotalTargetRadiationLength = 0.0;
+    fTotalTargetEffectiveLength = 0.0;
 
     // Can't calculate anything without mother
     if( !fTargetMother ) return;
@@ -112,18 +112,18 @@ void remollBeamTarget::UpdateInfo()
 
 	if( (*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
 
-	    if( fActiveTargetRadiationLength >= 0.0 ){
+	    if( fActiveTargetEffectiveLength >= 0.0 ){
 		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		    ":  Multiply defined target volumes" << G4endl;
 		exit(1);
 	    }
 
-	    fActiveTargetRadiationLength = tubs->GetZHalfLength()*2.0
+	    fActiveTargetEffectiveLength = tubs->GetZHalfLength()*2.0
 		* material->GetDensity();
 
 	    fActiveTargetRelativePosition = (*it)->GetFrameTranslation().z();
 
-	    fTotalTargetRadiationLength += tubs->GetZHalfLength()*2.0
+	    fTotalTargetEffectiveLength += tubs->GetZHalfLength()*2.0
 		* material->GetDensity();
 	}
     }
@@ -237,18 +237,18 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // or the number of electrons, which is probably good enough for this
 
     // Figure out how far along the target we got
-    G4double samplinglength = 0;
+    G4double total_effective_length = 0;
     switch( samp ){
 	case kActiveTargetVolume:
-	    samplinglength = fActiveTargetRadiationLength;
+	    total_effective_length = fActiveTargetEffectiveLength;
 	    break;
 
 	case kAllTargetVolumes:
-	    samplinglength = fTotalTargetRadiationLength;
+	    total_effective_length = fTotalTargetEffectiveLength;
 	    break;
     }
+    G4double ztrav = G4RandFlat::shoot(0.0, total_effective_length);
 
-    G4double ztrav = G4RandFlat::shoot(0.0, samplinglength);
 
 
     G4bool foundvol = false;
