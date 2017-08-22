@@ -401,7 +401,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 
     G4double  Ekin = fBeamE - electron_mass_c2;
     G4double  bt   = (fRadLen + 0.18)*4.0/3.0; //additional radlength added for downstream window
-    G4double  prob_sample, eloss, sample, env, value, ref;
 
     // Euler-Mascheroni constant for gamma function
     const static G4double Euler = 0.5772157;
@@ -410,14 +409,14 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	+ 0.75*bt/(2.+bt)*(1.- pow(fEcut/Ekin,bt+2.));
     prob = prob/(1.- bt*Euler + bt*bt/2.*(Euler*Euler+pi*pi/6.)); /* Gamma function */
 
-    prob_sample = G4UniformRand();
-
+    G4double prob_sample = G4UniformRand();
     if (prob_sample <= prob) {
+        G4double eloss, sample, ref;
 	do {
 	    sample = G4UniformRand();
 	    eloss = fEcut*pow(Ekin/fEcut,sample);
-	    env = 1./eloss;
-	    value = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,bt);
+	    G4double env = 1./eloss;
+	    G4double value = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,bt);
 
 	    sample = G4UniformRand();
 	    ref = value/env;
