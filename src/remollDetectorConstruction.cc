@@ -192,10 +192,11 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 
 	int nidx = 0;
 	while( targvolnames[nidx] != "" ){
+	    targvolnames[nidx].append("_PV");
 	    vidx = 0;
 	    while( vidx < thislog->GetNoDaughters() ){
-		if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
-		vidx++; 
+	        if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx]) break;
+		vidx++;
 	    }
 	    if( vidx == thislog->GetNoDaughters() ){
 		G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<

@@ -23,7 +23,7 @@ remollGenMoller::~remollGenMoller(){
 void remollGenMoller::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // Generate Moller event
 
-    double beamE = vert->GetBeamE();
+    double beamE = vert->GetBeamEnergy();
     double me    = electron_mass_c2;
 
     double beta_com  = sqrt( (beamE - me)/(beamE + me) );
