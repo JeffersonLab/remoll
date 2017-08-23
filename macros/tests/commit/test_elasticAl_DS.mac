@@ -18,8 +18,8 @@
 #/remoll/gen quasielasticAl
 /remoll/gen elasticAl
 
-/remoll/targname USAlTarg
-#/remoll/targpos   -75.0 cm
+/remoll/targname DSAlTarg
+#/remoll/targpos   +75.0 cm
 #/remoll/targlen  0.0127 cm
 
 /remoll/beamcurr 85 microampere
@@ -30,4 +30,4 @@
 
 /remoll/filename test_elasticAl_DS.root
 
-/run/beamOn 10000000
+/run/beamOn 100000
