@@ -18,10 +18,10 @@
 
 
 #/remoll/gen beam
-#/remoll/gen moller
+/remoll/gen moller
 #/remoll/thcommin 30.0 deg
 #/remoll/thcommax 150.0 deg
-/remoll/gen elastic 
+#/remoll/gen elastic 
 #/remoll/emin 80.0 MeV
 #/remoll/gen inelastic 
 #/remoll/gen pion
@@ -46,8 +46,7 @@
 /remoll/seed 123456
 
 # Output
-/control/shell mkdir -p rootfiles/tests/
-/remoll/filename rootfiles/tests/test_elastic.root
+/remoll/filename test_moller.root
 
 # Shoot
-/run/beamOn 1000
+/run/beamOn 100000

@@ -12,13 +12,22 @@
 /remoll/oldras true
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
+# initial position
+/remoll/beam_x0 10 mm
+/remoll/beam_y0 10 mm
+# initial angle
+/remoll/beam_th0 10 mrad
+/remoll/beam_ph0 10 mrad
+# gaussian spread widths
+/remoll/beam_dth 10 mrad
+/remoll/beam_dph 10 mrad
 
 # Beam energy
 /remoll/beamene 11 GeV
 
 
 #/remoll/gen beam
-#/remoll/gen moller
+/remoll/gen moller
 #/remoll/thcommin 30.0 deg
 #/remoll/thcommax 150.0 deg
 #/remoll/gen elastic 
@@ -27,27 +36,33 @@
 #/remoll/gen pion
 #/remoll/piontype pi-
 #/remoll/gen pion_LUND
-/remoll/gen inelasticAl
+#/remoll/gen inelasticAl
 #/remoll/gen quasielasticAl
 #/remoll/gen elasticAl
 
 # Generation limits
 # theta
-/remoll/thmin 0.5 deg
-/remoll/thmax 3.0 deg
+#/remoll/thmin 0.5 deg
+#/remoll/thmax 3.0 deg
+# phi
+#/remoll/phmin -20.0 deg
+#/remoll/phmax +20.0 deg
+
+# Target positioning
+#/remoll/targpos  10 cm
+#/remoll/targlen 100 cm
 
 # Beam current for rate
 /remoll/beamcurr 85 microampere
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite false
+#/remoll/kryptonite false
 
 /remoll/seed 123456
 
 # Output
-/control/shell mkdir -p rootfiles/tests/
-/remoll/filename rootfiles/tests/test_inelasticAl.root
+/remoll/filename test_raster.root
 
 # Shoot
 /run/beamOn 1000

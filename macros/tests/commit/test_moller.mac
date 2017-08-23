@@ -46,8 +46,7 @@
 /remoll/seed 123456
 
 # Output
-/control/shell mkdir -p rootfiles/tests/
-/remoll/filename rootfiles/tests/test_moller.root
+/remoll/filename test_moller.root
 
 # Shoot
 /run/beamOn 1000
