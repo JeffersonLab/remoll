@@ -21,7 +21,7 @@ script:
 - source geant4.sh && scripts/tests/test_macros.sh release 2>&1 | tee remolltest_release.log
 - tar -czvf remolltest.root.tar.gz rootfiles/tests/release/*.root
 - tar -czvf remolltest.log.tar.gz logfiles/tests/release/*.log
-- tar -czvf remolltest.png.tar.gz rootfiles/tests/analysis/release/*.png
+- tar -czvf remolltest.png.tar.gz rootfiles/tests/release/analysis/*.png
 
 deploy:
   provider: releases
