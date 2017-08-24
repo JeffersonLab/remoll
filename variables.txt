@@ -46,6 +46,7 @@ hit.p[xyz]	Momentum components of particle, lab frame [GeV]
 hit.v[xyz]	Creation vertex of particles
 hit.e		Energy of particle [GeV]
 hit.m		Mass of particle [GeV]
+hit.edep    Energy deposited in hit [GeV]
 
 sum data
 sum.n		Summed detectors the event
