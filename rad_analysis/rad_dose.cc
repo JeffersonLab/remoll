@@ -59,6 +59,7 @@ Plots added for y vs z vertex distributions
 #include <TFrame.h>
 #include <TObjArray.h>
 #include <TVector2.h>
+#include <TLatex.h>
 
 using namespace std;
 
@@ -189,10 +190,12 @@ int main(Int_t argc,Char_t* argv[]) {
   //input info:
   Int_t n_events=1e7;
   Int_t beamcurrent = 85;//uA
-  TString added_file="/home/cameronc/gitdir/dose_remoll/output/movedcol4_10M.root";
-  TString plotsFolder="/home/cameronc/gitdir/dose_remoll/output/Plots_movedcol4_10M/";//Name of folder for saving plots
-  TString rootfilename=plotsFolder+"movedcol4_10M_plots.root";//name of the rootfile to save generated histograms
-  list_outputs.open(plotsFolder+"list_outputs_movedcol4_10M.txt");
+  //TString modifier="AlCan_10M";
+  TString modifier="original_10M";
+  TString added_file="/home/cameronc/gitdir/dose_remoll/output/"+modifier+".root";
+  TString plotsFolder="/home/cameronc/gitdir/dose_remoll/output/Plots_"+modifier+"/";//Name of folder for saving plots
+  TString rootfilename=plotsFolder+modifier+"_plots.root";//name of the rootfile to save generated histograms
+  list_outputs.open(plotsFolder+"list_outputs_"+modifier+".txt");
   
   Tmol->Add(added_file);
   list_outputs << "Contents of textout_flux and textout_power lists of strings" << std::endl;
@@ -290,8 +293,9 @@ int main(Int_t argc,Char_t* argv[]) {
   // FIXME Add more cuts for different kinds of ranges
   //                                      { change the binning to reflect the opposite nature, good, all binned in one spot, decent-needs better boundaries->775?, 775?, decent, decent, seems to miss a whole lot }
   //                                      { hall**            ,  target       ,  collar        ,  coll1shld , +magnet    ,  coll4shld,  hybshld         ,  other,  all  }; -> Hall is an inverted volume in x and z, not y.
-  Double_t z_vertex_cuts_low[n_regions] = {-235.-80           , -235.-80.     ,  285.1+10.-20. ,  397.95-0.5,  775.05+0.5,  812.     ,  992.            , -500. , -3000.}; //last index store vertices outside of other ranges 
-  Double_t z_vertex_cuts_up[n_regions]  = { 1781.837          ,  235.+80.     ,  285.1+10.+20. ,  775.      ,  812.      ,  992.     ,  1821.837        ,  2000.,  3500.};
+  //                                was   {-315 tp 1781.837   , -315 to 315   ,  275.1 to 315.1,  397.45-775,  775.55-812,  812-992  ,  992-1821.837    ,  other,  all  }; -> Hall is an inverted volume in x and z, not y.
+  Double_t z_vertex_cuts_low[n_regions] = {-235.-80           , -235.-80.     ,  285.1+10.-20. ,  315.1     ,  775.05+0.5,  812.     ,  992.            , -500. , -3000.}; //last index store vertices outside of other ranges 
+  Double_t z_vertex_cuts_up[n_regions]  = { 1821.837          ,  235.+80.     ,  285.1+10.+20. ,  812.      ,  812.      ,  992.     ,  1821.837        ,  2000.,  3500.};
   Double_t x_vertex_cuts_low[n_regions] = {-296.5             ,  91.5-296.-80., -18.5-20.      , -213.-1.   , -386.84-1. , -386.84-1.,  91.5-285.75-40. , -500. , -3000.};
   Double_t x_vertex_cuts_up[n_regions]  = { 296.5             ,  91.5+296.+80.,  18.5+20.      ,  213.+1.   ,  386.84+1. ,  386.84+1.,  91.5+285.75+40. ,  500. ,  3000.};
   Double_t y_vertex_cuts_low[n_regions] = {-330.              , -40.-250.-40. , -18.5-20.      , -213.-1.   , -290.-1.   , -290.-1.  , -40.-250.-40.    , -500. , -1000.};
@@ -1010,26 +1014,26 @@ int main(Int_t argc,Char_t* argv[]) {
     detector[2+d] = svertex_shld[d].Data(); 
     //"Total","Side","Top","Hall","TargetHut","TargetHutPoly","LeadCollar","LeadCollarPoly","Coll1ShldUS","Coll1ShldDS","Coll1ShldPoly","Coll4Shld","Coll4ShldPoly","HybridShld"};
   }
-  const char * chpid[n_particles]         = {"e^{\pm}","\gamma","n^0"};
+  const char * chpid[n_particles]         = {"e+-","photon","n0"};
   const char * chenrange[n_energy_ranges] = {"E<10","10<E<100","100<E"};
 
   TList * list_power = new TList;
   TString strline;
   char line[600];
   char line1[600];
-  strline="Rootfile name";
+  strline="Rootfile_name";
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
   strline=added_file;//"/home/rakithab/Simulation_Analysis/Remoll/MOLLER_12GeV/Rootfiles/";//main root files used//_allshield_BorConcrete
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
   // POWER
-  strline="Total Radiation Power to the detector (W/uA)";
+  strline="Total_Radiation_Power_into_the_specified_detector_(W/uA)";
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  printf(" \n Total Radiation Power to the detector (W/uA) \n");
-  printf(" %20s %20s","Type","E Rnge (MeV)");
-  sprintf(line," %20s %20s","Type","E Rnge (MeV)");
+  printf(" \n Total_Radiation_Power_into_the_specified_detector_(W/uA) \n");
+  printf(" %20s %20s","Type","E_Range_(MeV)");
+  sprintf(line," %20s %20s","Type","E_Range_(MeV)");
   for(Int_t t=0;t<2+n_shlds;t++){
     printf(" %13s",detector[t]);
     sprintf(line,"%s %13s",line,detector[t]);
@@ -1066,12 +1070,12 @@ int main(Int_t argc,Char_t* argv[]) {
     }
   }
 
-  printf(" \n Vertex Cut : Radiation Power to the hall (W/uA) \n");
-  strline="Vertex Cut : Radiation Power to the hall (W/uA)";
+  printf(" \n Vertex_Cut:Radiation_Power_into_the_hall_(W/uA) \n");
+  strline="Vertex_Cut:Radiation_Power_into_the_hall_(W/uA)";
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  printf(" %20s %20s %20s \t %13s \t %13s \n","Vertex","Type","E Range (MeV)",detector[0],detector[1]);
-  sprintf(line," %20s %20s %20s \t %13s \t %13s ","Vertex","Type","E Range (MeV)",detector[0],detector[1]);
+  printf(" %20s %20s %20s \t %13s \t %13s \n","Vertex","Type","E_Range_(MeV)",detector[0],detector[1]);
+  sprintf(line," %20s %20s %20s \t %13s \t %13s ","Vertex","Type","E_Range_(MeV)",detector[0],detector[1]);
   list_power->Add(new TObjString(line));
   list_outputs << line << endl;
   for (Int_t i=0;i<n_regions;i++){
@@ -1092,12 +1096,12 @@ int main(Int_t argc,Char_t* argv[]) {
     }
   }
   
-  printf(" \n ShldBlock Cut : Radiation Power to the Shielding Blocks (W/uA) \n");
-  strline="ShldBlock Cut : Radiation Power to the Shielding Blocks (W/uA)";
+  printf(" \n ShldBlock_Cut:Radiation_Power_into_the_Shielding_Blocks_(W/uA) \n");
+  strline="ShldBlock_Cut:Radiation_Power_into_the_Shielding_Blocks_(W/uA)";
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  printf(" %20s %20s %20s","ShldBlock","Type","E Range (MeV)");
-  sprintf(line," %20s %20s %20s","ShldBlock","Type","E Range (MeV)");
+  printf(" %20s %20s %20s","ShldBlock","Type","E_Range_(MeV)");
+  sprintf(line," %20s %20s %20s","ShldBlock","Type","E_Range_(MeV)");
   printf(" \n");
   list_power->Add(new TObjString(line));
   list_outputs << line << endl;
@@ -1121,12 +1125,12 @@ int main(Int_t argc,Char_t* argv[]) {
   sum=0;
   shld_sum=0;
   TList * list_flux = new TList;
-  printf(" \n Total Radiation Flux to the detector (Hz/uA)\n");
-  strline="Total Radiation Flux to the detector (Hz/uA)";
+  printf(" \n Total_Radiation_Flux_into_the_specified_detector_(Hz/uA)\n");
+  strline="Total_Radiation_Flux_into_the_speicified_detector_(Hz/uA)";
   list_flux->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  printf(" %20s %20s","Type","E Range (MeV)");
-  sprintf(line," %20s %20s","Type","E Range (MeV)");
+  printf(" %20s %20s","Type","E_Range_(MeV)");
+  sprintf(line," %20s %20s","Type","E_Range_(MeV)");
   for(Int_t t=0;t<2+n_shlds;t++){
     printf(" %13s",detector[t]);
     sprintf(line,"%s %13s",line,detector[t]);
@@ -1159,12 +1163,12 @@ int main(Int_t argc,Char_t* argv[]) {
     }
   }
 
-  printf(" \n Vertex Cut : Radiation Flux to the hall (Hz/uA) \n");
-  strline="Vertex Cut : Radiation Flux to the hall (Hz/uA)";
+  printf(" \n Vertex_Cut:Radiation_Flux_into_the_hall_(Hz/uA) \n");
+  strline="Vertex_Cut:Radiation_Flux_into_the_hall_(Hz/uA)";
   list_flux->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  printf(" %20s %20s %20s \t %13s \t %13s \n","Vertex","Type","E Rnge (MeV)",detector[0],detector[1]);
-  sprintf(line," %20s %20s %20s \t %13s \t %13s ","Vertex","Type","E Rnge (MeV)",detector[0],detector[1]);
+  printf(" %20s %20s %20s \t %13s \t %13s \n","Vertex","Type","E_Range_(MeV)",detector[0],detector[1]);
+  sprintf(line," %20s %20s %20s \t %13s \t %13s ","Vertex","Type","E_Range_(MeV)",detector[0],detector[1]);
   list_flux->Add(new TObjString(line));
   list_outputs << line << endl;
   for (Int_t i=0;i<n_regions;i++){
@@ -1185,12 +1189,12 @@ int main(Int_t argc,Char_t* argv[]) {
     }
   }
   
-  printf(" \n ShldBlock Cut : Radiation Flux to the Shielding Blocks (W/uA) \n");
-  strline="ShldBlock Cut : Radiation Flux to the Shielding Blocks (W/uA)";
+  printf(" \n ShldBlock_Cut:Radiation_Flux_into_the_Shielding_Blocks_(Hz/uA) \n");
+  strline="ShldBlock_Cut:Radiation_Flux_into_the_Shielding_Blocks_(Hz/uA)";
   list_flux->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  printf(" %20s %20s %20s","ShldBlock","Type","E Rnge (MeV)");
-  sprintf(line," %20s %20s %20s","ShldBlock","Type","E Rnge (MeV)");
+  printf(" %20s %20s %20s","ShldBlock","Type","E_Range_(MeV)");
+  sprintf(line," %20s %20s %20s","ShldBlock","Type","E_Range_(MeV)");
   printf(" \n");
   list_flux->Add(new TObjString(line));
   list_outputs << line << endl;
