@@ -127,7 +127,8 @@
       -->
     <!-- Default value before check3 -->
     <!-- <constant name="boxUSShieldColl1_inner_rmax" value="140"/>  -->
-    <constant name="USShield1_extension" value="829.5 - 30"/> <!-- subtract 30 to prevent overlaps?? -->
+    <constant name="USShield1_extension" value="829.5 - 50"/> <!-- subtract 50 to prevent overlaps? -->
+    <constant name="USBoxmother_extension" value="1100"/>
     <constant name="USShield2_extension" value="0"/>
     <constant name="boxUSShieldColl1_inner_rmax" value="100"/>
     <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET-USShield1_extension/2"/>
@@ -199,14 +200,14 @@
     <constant name="tubeBeampipeMother_2_union_rmax" value="335 - 0.9"/>
     <!--length is determined from DS mother volume DSmothertubeBeampipeMother_sub_length -->
     <constant name="tubeBeampipeMother_2_union_length" value="1000 + 1 + 2*400 - 100 - 0.5"/>
-    <!--Original lenght was 4500 and 1000 from DS was subtracted to prevent overlapping 
+    <!--Original length was 4500 and 1000 from DS was subtracted to prevent overlapping 
 		 Now length is increased to 6500 and 2000 from DS was subtracted to prevent overlapping 
 		 Doing so length is increased by 1000 in the US of the BoxMother volume
       -->
-    <constant name="USBoxmother_length" value="6500"/>
+    <constant name="USBoxmother_length" value="6500+USBoxmother_extension"/>
 
     <constant name="USTubemothersubtract_length" value="1000"/>
-    <constant name="USBoxmothersubtract_length" value="2225"/>
+    <constant name="USBoxmothersubtract_length" value="2225+USBoxmother_extension/2"/>
     <constant name="USBoxmotherunion_length" value="1000"/>
     <position name="USmothersubtract_center_1" unit="mm" x="0" y="0" z="USTubemother_length/2 - USTubemothersubtract_length/2"/>
     <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2"/>
@@ -214,7 +215,7 @@
 
     <!--beampipe 1, 2, and 3 were my initial design and it is not in use because this design is not in the CAD from Tyler
       I will add CAD based beam pipe separately but keep the old design for the record Rakitha Tue Nov 24 11:29:13 EST 2015 -->
-    <position name="beampipe_union_1_center" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - tubeBeampipeMother_1_union_length/2 + 0.1"/>
+    <position name="beampipe_union_1_center" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - tubeBeampipeMother_1_union_length/2 + 0.1 + USBoxmother_extension/2"/>
     <position name="beampipe_union_2_center" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length + tubeBeampipeMother_2_union_length/2"/>
     <constant name="beampipe_1_part1_length" value="100"/>
     <constant name="beampipe_1_thickness" value="10"/>
