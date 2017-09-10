@@ -58,6 +58,9 @@ if(USE_BOOST)
     endif()
 endif()
 
+#CADMesh
+find_package(cadmesh)
+#End of CADMesh
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -119,7 +122,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/remoll*.hh)
 #
 add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
 set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} ${cadmesh_LIBRARIES})
 
 add_executable(remoll-bin remoll.cc)
 set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
@@ -128,6 +131,7 @@ target_link_libraries(remoll-bin remoll-lib)
 add_executable(reroot-bin reroot.cc)
 set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
 target_link_libraries(reroot-bin remoll-lib)
+
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
