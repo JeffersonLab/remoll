@@ -37,6 +37,9 @@
 // GDML export
 #include "G4GDMLParser.hh"
 
+//CADMesh
+#include "CADMesh.hh"
+
 //visual
 #include "G4VisAttributes.hh"
 #include "G4Colour.hh"
@@ -139,6 +142,10 @@ remollDetectorConstruction::~remollDetectorConstruction() {
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct()
 {
+    //Testing CADMesh
+    G4ThreeVector offset = G4ThreeVector(-30*cm, 0, 0);
+    CADMesh * mesh = new CADMesh("../../models/cone.ply", mm, offset, false);
+    //end of CADMesh test
     remollIO* io = remollIO::GetInstance();
     io->GrabGDMLFiles(fDetFileName);
 
