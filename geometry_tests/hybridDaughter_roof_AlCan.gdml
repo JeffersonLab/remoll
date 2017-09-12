@@ -82,7 +82,7 @@
     <position name="boxDSPolyShield1_center" unit="mm" x="0" y="0" z="9020-DOFFSET"/>
 
 
-    <!--Shielding hut dimensions -->
+    <!-- Hybrid shielding hut dimensions -->
     <constant name="DSShield_length" value="8293.6"/>
     <constant name="DSShield_width" value="5715"/>
     <constant name="DSShield_height" value="5000"/>
@@ -95,12 +95,33 @@
     <!--DS beam bore is an rough estimation based on the beam pipe size on CAD design but this could be different from this value-->
     <constant name="boxShield_DS_beam_bore" value="686"/>
     
-    <!-- Shielding hut positions -->
+    <!-- Hybrid Shielding hut positions -->
     <position name="boxDSShield_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="-1*DSShield_side_thickness/2-1"/>
     <position name="boxDSShield_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSShield_y_offset" z="0"/> 
     <!-- <position name="boxDSShield_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSShield_y_offset + DSShield_top_thickness*1/2" z="0 + DSShield_side_thickness*1/2"/> -->
     <position name="boxDSShield1_center" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSShield_side_thickness"/>
     <position name="boxDSShield1_roof_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_y_offset+DSShield_height/2" z="1*DSShield_side_thickness+DSPolyShield1_side_thickness-DSShield_length/4"/>
+
+    <!-- Neutron Poly Shielding subtracting volume positions -->
+    <position name="boxDSPolyShieldSub1_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="0"/>
+    <position name="boxDSPolyShieldSub1_trans2" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSPolyShield1_length/2 - DSPolyShield1_side_thickness/2"/>
+
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding hut -->
+    <constant name="DSPolyShield2_side_thickness" value="400"/>
+    <constant name="DSPolyShield2_top_thickness" value="400"/>
+    <constant name="DSPolyShield2_bottom_thickness" value="0"/>
+    <constant name="DSPolyShieldSub2_thickness" value="800"/>
+    <constant name="DSPolyShield2_length" value="DSShield_length + 1 + 2*DSPolyShield2_side_thickness"/>
+    <constant name="DSPolyShield2_width" value="DSShield_width + 1 + 2*DSPolyShield2_side_thickness"/>
+    <constant name="DSPolyShield2_height" value="DSShield_height + 1 + DSPolyShield2_top_thickness + DSPolyShield2_bottom_thickness"/>
+    <constant name="DSPolyShield2_y_offset" value="-1*(DSPolyShield2_top_thickness - DSPolyShield2_bottom_thickness)/2"/>
+    <position name="boxDSPolyShield2_trans1" unit="mm" x="0" y="-1*DSPolyShield2_top_thickness/2 + DSPolyShield2_bottom_thickness/2" z="0"/>
+    <position name="boxDSPolyShield2_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSPolyShield2_y_offset" z="0"/>
+    <position name="boxDSPolyShield2_trans3" unit="mm" x="0" y="0" z="-1*DSPolyShield2_length/2 + DSPolyShieldSub2_thickness/2"/>
+    <position name="boxDSPolyShield2_center" unit="mm" x="DSShield_x_offset" y="DSPolyShield2_y_offset" z="DSShield_side_thickness"/>
+
 
     <!--Mother volume -->
     <constant name="boxDSMother_width" value="2*4500"/>
@@ -178,25 +199,25 @@
     <constant name="shield_DS_beampipe_length" value="shield_DS_beampipe_p1_length + shield_DS_beampipe_p2_length + shield_DS_beampipe_p3_length"/>
     <position name="shield_DS_beampipe_center" unit="mm" x="0" y="0" z="posPCOLL2_z  + PCOLL2_THICK/2"/>
     
-     
-    <!-- Neutron Poly Shielding subtracting volume positions -->
-    <position name="boxDSPolyShieldSub1_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="0"/>
-    <position name="boxDSPolyShieldSub1_trans2" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSPolyShield1_length/2 - DSPolyShield1_side_thickness/2"/>
 
-    <!-- Neutron Poly Shielding -->
-    <!-- PolyShield1 will be outside shielding hut -->
-    <constant name="DSPolyShield2_side_thickness" value="400"/>
-    <constant name="DSPolyShield2_top_thickness" value="400"/>
-    <constant name="DSPolyShield2_bottom_thickness" value="0"/>
-    <constant name="DSPolyShieldSub2_thickness" value="800"/>
-    <constant name="DSPolyShield2_length" value="DSShield_length + 1 + 2*DSPolyShield2_side_thickness"/>
-    <constant name="DSPolyShield2_width" value="DSShield_width + 1 + 2*DSPolyShield2_side_thickness"/>
-    <constant name="DSPolyShield2_height" value="DSShield_height + 1 + DSPolyShield2_top_thickness + DSPolyShield2_bottom_thickness"/>
-    <constant name="DSPolyShield2_y_offset" value="-1*(DSPolyShield2_top_thickness - DSPolyShield2_bottom_thickness)/2"/>
-    <position name="boxDSPolyShield2_trans1" unit="mm" x="0" y="-1*DSPolyShield2_top_thickness/2 + DSPolyShield2_bottom_thickness/2" z="0"/>
-    <position name="boxDSPolyShield2_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSPolyShield2_y_offset" z="0"/>
-    <position name="boxDSPolyShield2_trans3" unit="mm" x="0" y="0" z="-1*DSPolyShield2_length/2 + DSPolyShieldSub2_thickness/2"/>
-    <position name="boxDSPolyShield2_center" unit="mm" x="DSShield_x_offset" y="DSPolyShield2_y_offset" z="DSShield_side_thickness"/>
+    <!-- Aluminum Hybrid Magnet Vacuum Chamber -->
+    <constant name="AlCan_side_thickness" value="25.4"/>
+    <constant name="AlCan_top_thickness" value="38.1"/>
+    <constant name="AlCan_bottom_thickness" value="25.4"/>
+    <constant name="AlCan_conflict_reduction" value="800"/>
+    <constant name="AlCan_length" value="8574.02-AlCan_conflict_reduction"/> <!-- 1000mm length decrease to avoid conflicts -->
+    <constant name="AlCan_width" value="2844.8"/>
+    <constant name="AlCan_height" value="3251.2"/>
+    <constant name="AlCan_US_Opening_Bore_R" value="508/2"/>
+    <constant name="AlCan_DS_Opening_Bore_R" value="1219.2/2"/>
+    <constant name="AlCan_opening_sub_length" value="25.4"/>
+    <constant name="AlCan_x_center_offset" value="0.0"/>
+    <constant name="AlCan_y_center_offset" value="228.6"/>
+    <constant name="AlCan_z_center_offset" value="13500.41 - DOFFSET + AlCan_conflict_reduction/2"/> <!-- 500 mm downstream shift to avoid conflicts -->
+    <position name="boxAlCan_sub_trans" unit="mm" x="0" y="-1*AlCan_top_thickness/2 + AlCan_bottom_thickness/2" z="0"/>
+    <position name="boxAlCan_US_opening_trans" unit="mm" x="0" y="-228.6" z="-1*AlCan_length/2 + AlCan_side_thickness/2"/>
+    <position name="boxAlCan_DS_opening_trans" unit="mm" x="0" y="-228.6" z="1*AlCan_length/2 - AlCan_side_thickness/2"/>
+    <position name="boxAlCan_center" unit="mm" x="AlCan_x_center_offset" y="AlCan_y_center_offset" z="AlCan_z_center_offset"/>
 
 
     <constant name="PCOLL2_SCULPT_P1_X" value ="63.0"/>
@@ -1200,6 +1221,31 @@
     <box lunit="mm" name="boxDSShield1_roof_solid" x="DSShield_width/2" y="DSShield_roof_thickness" z="DSShield_length/2"/>
 
 
+    <!-- Aluminum Can solids-->
+    <box lunit="mm" name="boxAlCan_solid_1" x="AlCan_width" y="AlCan_height" z="AlCan_length"/>
+    <box lunit="mm" name="boxAlCan_solid_2" x="AlCan_width - 2*AlCan_side_thickness" y="AlCan_height - AlCan_top_thickness - AlCan_bottom_thickness" z="AlCan_length - 2*AlCan_side_thickness"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_US_opening_solid" rmax="AlCan_US_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_DS_opening_solid" rmax="AlCan_DS_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length"/>
+
+    <subtraction name ="boxAlCan_solid_3">
+      <first ref="boxAlCan_solid_1"/>
+      <second ref="boxAlCan_solid_2"/>
+      <positionref ref="boxAlCan_sub_trans" />
+    </subtraction>    
+ 
+    <subtraction name ="boxAlCan_solid_4">
+      <first ref="boxAlCan_solid_3"/>
+      <second ref="AlCan_US_opening_solid"/>
+      <positionref ref="boxAlCan_US_opening_trans" />
+    </subtraction>     
+    
+    <subtraction name ="boxAlCan_solid">
+      <first ref="boxAlCan_solid_4"/>
+      <second ref="AlCan_DS_opening_solid"/>
+      <positionref ref="boxAlCan_DS_opening_trans" />
+    </subtraction>     
+
+
 </solids>
 
 <structure>
@@ -1388,7 +1434,7 @@
       <auxiliary auxtype="DetNo" auxvalue="6024"/>
     </volume>
 
-   <volume name="boxDSShield1_roof_logic">
+    <volume name="boxDSShield1_roof_logic">
       <materialref ref="Lead"/>
       <solidref ref="boxDSShield1_roof_solid"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
@@ -1397,6 +1443,15 @@
     </volume>
 
 
+    <volume name="boxAlCan_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="boxAlCan_solid"/>
+      <auxiliary auxtype="Color" auxvalue="pink"/>
+      <auxiliary auxtype="SensDet" auxvalue="Aluminum_Can_Det"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="6030"/>
+    </volume>
+   
+    
     <volume name="DSShield_Tube_logic">
       <materialref ref="Lead"/>
       <solidref ref="DSShield_Tube_solid_1"/>
@@ -1593,6 +1648,11 @@
       <physvol>
         <volumeref ref="boxDSShield1_roof_logic"/>
         <positionref ref="boxDSShield1_roof_center"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="boxAlCan_logic"/>
+        <positionref ref="boxAlCan_center"/>
       </physvol>
 
    </volume>

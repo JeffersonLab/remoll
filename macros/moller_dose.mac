@@ -1,6 +1,5 @@
 #  Example file
 
-#/remoll/setgeofile geometry_sculpt_wshield/mollerMother.gdml
 /remoll/setgeofile geometry_sculpt_less_hybshld/mollerMother.gdml
 
 # This must be explicitly called
@@ -9,15 +8,8 @@
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
-# Raster and initial angle stuff
-/remoll/rasx 5 mm
-/remoll/rasy 5 mm
 
 /remoll/gen beam
-/remoll/beamene 11.0 GeV
-
-/remoll/targpos   0 cm
-/remoll/targlen 150 cm
 
 /remoll/beamcurr 75 microampere
 
@@ -28,9 +20,9 @@
 # realistic rather than pure absorbers
 /remoll/kryptonite   false
 
-/remoll/filename /home/rakithab/Work/Research/Simulation/MOLLER_12GeV/Rootfiles/remoller_e_beam_partialShld_1M_1.root
-#/remoll/filename output.root
+/remoll/filename dose_output.root
 
+# run for ~4 hours
 /run/beamOn 1000000
 #/run/beamOn 1000
 

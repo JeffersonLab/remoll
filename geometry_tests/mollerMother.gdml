@@ -30,32 +30,32 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-      <file name="geometry_sculpt_less_hybshld/targetDaughter.gdml"/>
+      <file name="../../geometry_tests/targetDaughter.gdml"/>
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
 
       <physvol>
-      <file name="geometry_sculpt_less_hybshld/hallDaughter.gdml"/>
+      <file name="../../geometry_tests/hallDaughter.gdml"/>
       <positionref ref="hallCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-      <file name="geometry_sculpt_less_hybshld/detectorDaughter.gdml"/>
+      <file name="../../geometry_tests/detectorDaughter.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-	    <file name="geometry_sculpt_less_hybshld/upstreamDaughter_merged_design1_check3.gdml"/>
+	    <file name="../../geometry_tests/upstreamDaughter_merged.gdml"/>
 	    <positionref ref="upstreamCenter"/>
     	<rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-    	<file name="geometry_sculpt_less_hybshld/hybridDaughter_less_hybshld_roof_smaller_2.gdml"/>
+    	<file name="../../geometry_tests/hybridDaughter_roof.gdml"/>
 	    <positionref ref="hybridCenter"/>
     	<rotationref ref="identity"/>
       </physvol>    
