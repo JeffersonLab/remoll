@@ -61,4 +61,4 @@
 /remoll/filename remoll_beam.root
 
 #/tracking/verbose 2
-/run/beamOn 10000
+/run/beamOn 100
