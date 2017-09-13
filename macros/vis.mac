@@ -12,7 +12,8 @@
 
 # This is the current working geometry
 /remoll/setgeofile geometry_sculpt_less_hybshld/mollerMother.gdml
-
+# This is the stable dose geometry
+/remoll/setgeofile geometry_dose/mollerMother.gdml
 
 #/remoll/likekryptonite  true
 
