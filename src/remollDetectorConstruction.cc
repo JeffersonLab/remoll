@@ -42,7 +42,7 @@
 #include "G4Colour.hh"
 
 #define __DET_STRLEN 200
-#define __MAX_DETS 5000
+#define __MAX_DETS 10000
 
 remollDetectorConstruction::remollDetectorConstruction() {
     // Default geometry file
@@ -218,6 +218,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
   for( k = 0; k < __MAX_DETS; k++ ){useddetnums[k] = false;}
   k = 0;
 
+  G4int det_count=0;
   for( iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
       G4LogicalVolume* myvol = (*iter).first;
       G4cout << "Volume " << myvol->GetName() << G4endl;
@@ -231,8 +232,9 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	      for( nit  = (*iter).second.begin(); nit != (*iter).second.end(); nit++) {
 		  if ((*nit).type == "DetNo") {
 		      det_no= atoi((*nit).value.data());
+		      det_count++;//increment the detect count
 		      if( det_no >= __MAX_DETS ){
-			  G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR detector number too high" << G4endl;
+			  G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR detector number too high! Use a DetNo below 10000 for every detector." << G4endl; 
 			  exit(1);
 		      }
 		      useddetnums[det_no] = true;
