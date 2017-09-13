@@ -204,8 +204,9 @@
       <materialref ref="Concrete"/>
       <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="cylwall_hole"/>
-      <auxiliary auxtype="SensDet" auxvalue="Hall_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6000"/>
+      <!-- NEW Sensitive detector FIXME -->
+      <!-- <auxiliary auxtype="SensDet" auxvalue="Hall_Det"/> -->
+      <!-- <auxiliary auxtype="DetNo" auxvalue="6000"/> -->
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5009"/> -->
     </volume>
 

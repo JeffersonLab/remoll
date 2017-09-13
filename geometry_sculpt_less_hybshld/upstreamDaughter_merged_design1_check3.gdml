@@ -801,8 +801,8 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl1_solid"/> 
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_1_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6010"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_1_Det"/>   
+      <auxiliary auxtype="DetNo" auxvalue="6010"/> -->
     </volume>
 
     <volume name="boxUSShieldColl2_logic">
@@ -812,8 +812,9 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl2_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_2_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6011"/>
+       <!-- NEW Sensitive detector FIXME -->
+      <!-- <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_2_Det"/>
+      <auxiliary auxtype="DetNo" auxvalue="6011"/> -->
     </volume>
 
     <!-- Neutron Poly Shielding -->
@@ -825,8 +826,9 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxUSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_US_1_2_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6012"/>
+       <!-- NEW Sensitive detector FIXME -->
+      <!--  <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_US_1_2_Det"/>
+      <auxiliary auxtype="DetNo" auxvalue="6012"/> -->
     </volume>
 
     <volume name="beampipe_1_logic">

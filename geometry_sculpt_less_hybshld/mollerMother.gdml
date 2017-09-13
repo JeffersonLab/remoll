@@ -59,8 +59,7 @@
 	    <positionref ref="hybridCenter"/>
     	<rotationref ref="identity"/>
       </physvol>    
-
-
+ 
     </volume>
   </structure>
 
