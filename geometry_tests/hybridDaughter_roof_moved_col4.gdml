@@ -39,16 +39,26 @@
     <constant name="PCOLL2_R1_U" value ="38.0"/>
     <constant name="PCOLL2_R1_D" value ="38.0"/>
     <!-- coll sep, inner rad, adjust this -->
-    <constant name="PCOLL2_R2_U" value ="64"/>
-    <constant name="PCOLL2_R2_D" value ="64"/>
+    <constant name="PCOLL2_R2_U" value ="52.5"/>  <!-- was 64"/> -->
+    <constant name="PCOLL2_R2_D" value ="52.5"/>
     <!-- coll sep, outer rad, adjust this -->
-    <constant name="PCOLL2_R3_U" value ="221"/>
-    <constant name="PCOLL2_R3_D" value ="221"/>
+    <constant name="PCOLL2_R3_U" value ="165.5"/> <!-- was 221"/> -->
+    <constant name="PCOLL2_R3_D" value ="165.5"/>
     <constant name="PCOLL2_R4_U" value ="300"/>
     <constant name="PCOLL2_R4_D" value ="300"/>
     <constant name="PCOLL2_THICK" value ="100.0"/>
 
-    <position name="posPCOLL2TRAP" unit="mm" x="0" y="0" z="9825-DOFFSET+PCOLL2_THICK/2.0+0.5"/>
+<!-- original numbers: FIXME also, this does not do the correct envelope matching that Tyler's envelopes suggests
+    <constant name="PCOLL2_R1_U" value ="38.0"/>
+    <constant name="PCOLL2_R1_D" value ="38.0"/>
+    <constant name="PCOLL2_R2_U" value ="64"/>
+    <constant name="PCOLL2_R2_D" value ="64"/>
+    <constant name="PCOLL2_R3_U" value ="221"/>
+    <constant name="PCOLL2_R3_D" value ="221"/>
+    <constant name="PCOLL2_R4_U" value ="300"/>
+    <constant name="PCOLL2_R4_D" value ="300"/> -->
+    
+    <!-- <position name="posPCOLL2TRAP" unit="mm" x="0" y="0" z="9825-DOFFSET+PCOLL2_THICK/2.0+0.5"/> -->
 
     <!--
        Shielding collimators dimensions
@@ -66,7 +76,7 @@
     <position name="DSshieldcollSubstract_CENTER_1" unit="mm" x="0" y="0" z="0"/> 
     <position name="DSshieldcollSubstract_CENTER_2" unit="mm" x="-boxDSShieldCollSubstract1_width/2 - boxDSShieldColl1_width/2" y="0" z="0"/> 
     <position name="DSshieldcollSubstract_CENTER_3" unit="mm" x="0" y="0" z="500 - DSShield_Tube_solid_1_length/2"/> 
-    <position name="DSshieldcollSubstract_CENTER_4" unit="mm" x="0" y="0" z="9020 - DOFFSET + 500 - DSShield_Tube_solid_1_length/2"/> 
+    <position name="DSshieldcollSubstract_CENTER_4" unit="mm" x="0" y="0" z="9020 - DOFFSET - col4shift + 500 - DSShield_Tube_solid_1_length/2"/> 
 
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->

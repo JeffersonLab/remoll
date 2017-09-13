@@ -188,10 +188,10 @@ int main(Int_t argc,Char_t* argv[]) {
   TChain * Tmol =new TChain("T");
   //Cameron Clarke runs:
   //input info:
-  Int_t n_events=1e7;
+  Int_t n_events=1e6;
   Int_t beamcurrent = 85;//uA
   //TString modifier="AlCan_10M";
-  TString modifier="original_10M";
+  TString modifier="movedcol4_1M";
   TString added_file="/home/cameronc/gitdir/dose_remoll/output/"+modifier+".root";
   TString plotsFolder="/home/cameronc/gitdir/dose_remoll/output/Plots_"+modifier+"/";//Name of folder for saving plots
   TString rootfilename=plotsFolder+modifier+"_plots.root";//name of the rootfile to save generated histograms
