@@ -196,7 +196,7 @@
     <!--radius is determined from DS mother volume boxDSShieldColl1_inner_rmax -->
     <constant name="tubeBeampipeMother_2_union_rmax" value="335 - 0.9"/>
     <!--length is determined from DS mother volume DSmothertubeBeampipeMother_sub_length -->
-    <constant name="tubeBeampipeMother_2_union_length" value="1000 + 1 + 2*400 - 100 - 0.5"/>
+    <constant name="tubeBeampipeMother_2_union_length" value="0.1*(1000 + 1 + 2*400 - 100 - 0.5)"/>
     <!--Original lenght was 4500 and 1000 from DS was subtracted to prevent overlapping 
 		 Now length is increased to 6500 and 2000 from DS was subtracted to prevent overlapping 
 		 Doing so length is increased by 1000 in the US of the BoxMother volume
@@ -299,16 +299,19 @@
       <second ref="boxUpstream_2"/>
       <positionref ref="USmothersubtract_center_2" />
     </subtraction>
-    <union name ="boxUpstream_5">
+    <union name ="boxUpstream"> <!-- _5"> -->
       <first ref="boxUpstream_4"/>
       <second ref="tubeBeampipe_1_union"/>
       <positionref ref="beampipe_union_1_center" />
     </union>
+    <!-- FIXME 9/20/2017
     <union name ="boxUpstream">
       <first ref="boxUpstream_5"/>
       <second ref="tubeBeampipe_2_union"/>
       <positionref ref="beampipe_union_2_center" />
     </union>
+    -->
+
 
     <!--Following beampipe design is not in use -->
     <!--Beam pipe 1 for a polycone center coordinate is at the front face-->
@@ -970,7 +973,7 @@
         <volumeref ref="shield_US_beampipe_1_logic"/>
         <positionref ref="shield_US_beampipe_center"/>
       </physvol>
-   </volume>
+   </volume> 
 </structure>
 
 <setup name="Default" version="1.0">
