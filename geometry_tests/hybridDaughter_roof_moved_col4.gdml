@@ -36,8 +36,8 @@
     <constant name="col4shift" value ="1500"/>
     <constant name="posPCOLL2_z" value ="9825-DOFFSET-col4shift"/>
     <position name="posPCOLL2" unit="mm" x="0" y="0" z="posPCOLL2_z"/>
-    <constant name="PCOLL2_R1_U" value ="38.0"/>
-    <constant name="PCOLL2_R1_D" value ="38.0"/>
+    <constant name="PCOLL2_R1_U" value ="30"/> <!-- Was 38.0" for no good reason/> -->
+    <constant name="PCOLL2_R1_D" value ="30"/> <!-- 8.0"/> -->
     <!-- coll sep, inner rad, adjust this -->
     <constant name="PCOLL2_R2_U" value ="52.5"/>  <!-- was 64"/> -->
     <constant name="PCOLL2_R2_D" value ="52.5"/>
