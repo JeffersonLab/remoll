@@ -210,7 +210,7 @@
     <position name="boxDSPolyShield2_center" unit="mm" x="DSShield_x_offset" y="DSPolyShield2_y_offset" z="DSShield_side_thickness"/>
 
     <!-- FIXME Sculpt definition of collimator 4 -->
-
+    <!-- FIXME Original definitions for unshifted in z collimator 4
     <constant name="PCOLL2_SCULPT_P1_X" value ="63.0"/>
     <constant name="PCOLL2_SCULPT_P1_Y" value ="10.0"/>
     <constant name="PCOLL2_SCULPT_P2_X" value ="106.5"/>
@@ -219,6 +219,16 @@
     <constant name="PCOLL2_SCULPT_P3_Y" value ="36.0"/>
     <constant name="PCOLL2_SCULPT_P4_X" value ="228.0"/>
     <constant name="PCOLL2_SCULPT_P4_Y" value ="55.0"/>
+    -->
+    <constant name="PCOLL2_SCULPT_P1_X" value ="50.8"/>
+    <constant name="PCOLL2_SCULPT_P1_Y" value ="13.4"/>
+    <constant name="PCOLL2_SCULPT_P2_X" value ="87.6"/>
+    <constant name="PCOLL2_SCULPT_P2_Y" value ="21.9"/>
+    <constant name="PCOLL2_SCULPT_P3_X" value ="126.5"/>
+    <constant name="PCOLL2_SCULPT_P3_Y" value ="27.2"/>
+    <constant name="PCOLL2_SCULPT_P4_X" value ="163.9"/>
+    <constant name="PCOLL2_SCULPT_P4_Y" value ="36.3"/>
+
 
     <position name="PCOLL2_lcut1" unit="mm" x="PCOLL2_SCULPT_P1_X" y="-PCOLL2_SCULPT_P1_Y" z="-PCOLL2_THICK/2-5"/> 
     <position name="PCOLL2_lcut2" unit="mm" x="PCOLL2_SCULPT_P2_X" y="-PCOLL2_SCULPT_P2_Y" z="-PCOLL2_THICK/2-5"/> 
