@@ -100,7 +100,19 @@
     <position name="boxDSShield_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSShield_y_offset" z="0"/> 
     <!-- <position name="boxDSShield_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSShield_y_offset + DSShield_top_thickness*1/2" z="0 + DSShield_side_thickness*1/2"/> -->
     <position name="boxDSShield1_center" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSShield_side_thickness"/>
-    <position name="boxDSShield1_roof_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_y_offset+DSShield_height/2" z="1*DSShield_side_thickness+DSPolyShield1_side_thickness-DSShield_length/4"/>
+
+   <!--   <position name="boxDSShield1_roof_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_y_offset+DSShield_height/2" z="1*DSShield_side_thickness+DSPolyShield1_side_thickness-DSShield_length/4"/>  -->
+
+
+
+ <!-- <position name="boxDSShield1_roof_center" unit="mm" x="0*DSShield_x_offset" y="0*DSShield_y_offset+DSShield_height/10" z=" -2927.72"/> -->
+ 
+
+<position name="boxDSShield1_roof_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_height/6" z=" -2927.71"/>
+
+ <position name="boxDSShield1_roof1_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_height/6-87.515" z=" -2927.71"/> 
+
+
 
     <!--Mother volume -->
     <constant name="boxDSMother_width" value="2*4500"/>
@@ -1197,7 +1209,10 @@
       <positionref ref="boxDSShield_trans2" />
     </subtraction>     
     
-    <box lunit="mm" name="boxDSShield1_roof_solid" x="DSShield_width/2" y="DSShield_roof_thickness" z="DSShield_length/2"/>
+    <!-- <box lunit="mm" name="boxDSShield1_roof_solid" x="DSShield_width/2" y="DSShield_roof_thickness" z="DSShield_length/2"/> -->
+
+ <box lunit="mm" name="boxDSShield1_roof_solid" x="DSShield_width/2" y="DSShield_roof_thickness" z="DSShield_length/8"/>
+ <box lunit="mm" name="boxDSShield1_roof1_solid" x="DSShield_width/2" y="20" z="DSShield_length/8"/>
 
 
 </solids>
@@ -1380,11 +1395,21 @@
       <auxiliary auxtype="Color" auxvalue="green"/>
    </volume>
 
+
    <volume name="boxDSShield1_roof_logic">
-      <materialref ref="Lead"/>
+      <materialref ref="Concrete"/>                       
       <solidref ref="boxDSShield1_roof_solid"/>
-      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>  
    </volume>
+
+
+      <volume name="boxDSShield1_roof1_logic">
+      <materialref ref="Lead"/>                       
+      <solidref ref="boxDSShield1_roof1_solid"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>  
+   </volume>
+               
+
 
 
     <volume name="DSShield_Tube_logic">
@@ -1580,10 +1605,24 @@
         <positionref ref="boxDSShield1_center"/>
       </physvol>
 -->
-      <physvol>
+
+
+
+
+
+  <physvol>
         <volumeref ref="boxDSShield1_roof_logic"/>
         <positionref ref="boxDSShield1_roof_center"/>
       </physvol>
+
+
+<physvol>
+        <volumeref ref="boxDSShield1_roof1_logic"/>
+        <positionref ref="boxDSShield1_roof1_center"/>
+      </physvol>
+
+
+
 
    </volume>
 </structure>
