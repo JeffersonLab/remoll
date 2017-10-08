@@ -5,6 +5,14 @@
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
 
+# Default install path is the source directory
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
+    message(STATUS "    Use -DCMAKE_INSTALL_PREFIX=/usr/local to set to something else" )
+    set (CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}"
+         CACHE PATH "default install path" FORCE )
+endif()
+
 #MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_MACOSX_RPATH ON)
@@ -174,5 +182,8 @@ add_custom_target(REMOLL DEPENDS remoll)
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
 install(TARGETS remoll DESTINATION bin)
+install(TARGETS remollroot DESTINATION lib)
+install(DIRECTORY schema DESTINATION share/remoll)
+install(DIRECTORY geometry geometry_sculpt DESTINATION share/remoll)
 
 
