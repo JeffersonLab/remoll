@@ -127,10 +127,10 @@
       -->
     <!-- Default value before check3 -->
     <!-- <constant name="boxUSShieldColl1_inner_rmax" value="140"/>  -->
-    <constant name="USShield1_extension" value="829.5 - 50"/> <!-- subtract 50 to prevent overlaps? -->
+    <constant name="USShield1_extension" value="829.5 - 50"/> <!-- subtract 50 to prevent overlaps? - make this parametrized in the future to avoid arbitrariness -->
     <constant name="USBoxmother_extensionUS" value="1100"/>
+    <constant name="USShield2_extension" value="370 - 90"/> <!-- subtract 90 to prevent overlaps?? -->
     <constant name="USBoxmother_extensionDS" value="0"/>
-    <constant name="USShield2_extension" value="0"/>
     <constant name="boxUSShieldColl1_inner_rmax" value="100"/>
     <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET-USShield1_extension/2"/>
     <constant name="boxUSShieldColl2_inner_rmax" value="335"/>
@@ -205,10 +205,10 @@
 		 Now length is increased to 6500 and 2000 from DS was subtracted to prevent overlapping 
 		 Doing so length is increased by 1000 in the US of the BoxMother volume
       -->
-    <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
+    <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS+USBoxmother_extensionDS"/>
 
     <constant name="USTubemothersubtract_length" value="1000"/>
-    <constant name="USBoxmothersubtract_length" value="2225+USBoxmother_extensionUS/2"/>
+    <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS+USBoxmother_extensionDS)/2"/>
     <constant name="USBoxmotherunion_length" value="1000"/>
     <position name="USmothersubtract_center_1" unit="mm" x="0" y="0" z="USTubemother_length/2 - USTubemothersubtract_length/2"/>
     <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2"/>
@@ -216,8 +216,8 @@
 
     <!--beampipe 1, 2, and 3 were my initial design and it is not in use because this design is not in the CAD from Tyler
       I will add CAD based beam pipe separately but keep the old design for the record Rakitha Tue Nov 24 11:29:13 EST 2015 -->
-    <position name="beampipe_union_1_center" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - tubeBeampipeMother_1_union_length/2 + 0.1 + USBoxmother_extensionUS/2"/>
-    <position name="beampipe_union_2_center" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length + tubeBeampipeMother_2_union_length/2"/>
+    <position name="beampipe_union_1_center" unit="mm" x="0" y="0" z="-1*USBoxmother_length/2 - tubeBeampipeMother_1_union_length/2 + 0.1 + USBoxmother_extensionUS/2 - USBoxmother_extensionDS/2"/> <!-- upstream beampipe hole subtraction (region target)-->
+    <position name="beampipe_union_2_center" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length + tubeBeampipeMother_2_union_length/2"/> <!-- downstream beampipe hole substraction (region hybrid shield)-->
     <constant name="beampipe_1_part1_length" value="100"/>
     <constant name="beampipe_1_thickness" value="10"/>
     <constant name="beampipe_1_part1_rmax" value="190"/>
@@ -298,21 +298,23 @@
     <box lunit="mm" name="boxUpstream_3" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmotherunion_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_1_union" rmax="tubeBeampipeMother_1_union_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_1_union_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_2_union" rmax="tubeBeampipeMother_2_union_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_2_union_length"/>
-    <subtraction name ="boxUpstream_4">
+    <subtraction name="boxUpstream"> <!-- originally was _4"> -->
       <first ref="boxUpstream_1"/>
       <second ref="boxUpstream_2"/>
       <positionref ref="USmothersubtract_center_2" />
     </subtraction>
-    <union name ="boxUpstream_5">
+    <!-- no longer put subtracted and added beampipe placeholder volumes 
+    <union name="boxUpstream_5">
       <first ref="boxUpstream_4"/>
       <second ref="tubeBeampipe_1_union"/>
       <positionref ref="beampipe_union_1_center" />
     </union>
-    <union name ="boxUpstream">
+    <union name="boxUpstream">
       <first ref="boxUpstream_5"/>
       <second ref="tubeBeampipe_2_union"/>
       <positionref ref="beampipe_union_2_center" />
     </union>
+    -->
 
     <!--Following beampipe design is not in use -->
     <!--Beam pipe 1 for a polycone center coordinate is at the front face-->
@@ -339,6 +341,7 @@
     </polycone>
     <!--End of beampipe design that is not in use -->
 
+    <!-- inner photon collimating beampipe near collimator 1 -->
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_1" rmax1="shield_US_beampipe_US_rmax" rmax2="shield_US_beampipe_DS_rmax" rmin1="shield_US_beampipe_US_rmin" rmin2="shield_US_beampipe_DS_rmin" startphi="0" z="shield_US_beampipe_length"/>
 
     <!-- New merged col-1 -->

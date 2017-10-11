@@ -106,7 +106,6 @@
     <position name="boxDSPolyShieldSub1_trans1" unit="mm" x="0" y="-1*DSShield_top_thickness/2" z="0"/>
     <position name="boxDSPolyShieldSub1_trans2" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSPolyShield1_length/2 - DSPolyShield1_side_thickness/2"/>
 
-
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding hut -->
     <constant name="DSPolyShield2_side_thickness" value="400"/>
@@ -199,7 +198,6 @@
     <constant name="shield_DS_beampipe_length" value="shield_DS_beampipe_p1_length + shield_DS_beampipe_p2_length + shield_DS_beampipe_p3_length"/>
     <position name="shield_DS_beampipe_center" unit="mm" x="0" y="0" z="posPCOLL2_z  + PCOLL2_THICK/2"/>
     
-
     <!-- Aluminum Hybrid Magnet Vacuum Chamber -->
     <constant name="AlCan_side_thickness" value="25.4"/>
     <constant name="AlCan_top_thickness" value="38.1"/>

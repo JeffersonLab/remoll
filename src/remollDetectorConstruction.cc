@@ -47,7 +47,7 @@
 remollDetectorConstruction::remollDetectorConstruction() {
     // Default geometry file
     //fDetFileName = "geometry_sculpt/mollerMother.gdml";
-    fDetFileName = "geometry_sculpt_less_hybshld/mollerMother.gdml";
+    fDetFileName = "geometry_tests/mollerMother.gdml";
 
 
     CreateGlobalMagneticField();
