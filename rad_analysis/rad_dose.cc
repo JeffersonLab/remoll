@@ -17,6 +17,7 @@ Plots added for y vs z vertex distributions
 
 #include <vector>
 #include <string>
+#include <sstream>
 #include <algorithm>
 #include <iostream>
 #include <fstream>
@@ -188,16 +189,36 @@ int main(Int_t argc,Char_t* argv[]) {
   TChain * Tmol =new TChain("T");
   //Cameron Clarke runs:
   //input info:
-  Int_t n_events=1e6;
-  Int_t beamcurrent = 85;//uA
-  //TString modifier="AlCan_10M";
-  TString modifier="movedcol4_1M";
-  TString added_file="/home/cameronc/gitdir/dose_remoll/output/"+modifier+".root";
-  TString plotsFolder="/home/cameronc/gitdir/dose_remoll/output/Plots_"+modifier+"/";//Name of folder for saving plots
-  TString rootfilename=plotsFolder+modifier+"_plots.root";//name of the rootfile to save generated histograms
-  list_outputs.open(plotsFolder+"list_outputs_"+modifier+".txt");
+  const int n_mills = 10;  // Be sure to change these
+  TString n_millsS; // here
   
-  Tmol->Add(added_file);
+  ostringstream temp_str_stream;
+  temp_str_stream<<n_mills;
+  
+  n_millsS=temp_str_stream.str();
+  
+  Int_t n_events = n_mills*1e6;
+  Int_t beamcurrent = 85;//uA
+  //TString modifier="combined_half";
+  //TString added_file="/home/cameronc/gitdir/dose_remoll/output/"+modifier+".root";
+  
+  TString modifier="combined";
+  //TString added_file_array[n_mills] = new TString();
+  TString added_file_array[n_mills]={"test"}; // The last index is for the shieldings: target, shielding blocks 1 to 4, and other vertices
+  for (int v=1 ; v <= n_mills ; v++){ 
+    ostringstream temp_str_stream2;
+    temp_str_stream2<<v;
+    TString vS;
+    vS=temp_str_stream2.str();
+    added_file_array[v]="/home/cameronc/gitdir/dose_remoll/output/"+modifier+"_"+n_millsS+"M/out_"+modifier+vS+"/remoll_1M.root";
+    Tmol->Add(added_file_array[v]);
+  }
+  
+  TString plotsFolder="/home/cameronc/gitdir/dose_remoll/output/Plots_"+modifier+"_"+n_millsS+"M/";//Name of folder for saving plots
+  TString rootfilename=plotsFolder+modifier+"_"+n_millsS+"M_plots.root";//name of the rootfile to save generated histograms
+  list_outputs.open(plotsFolder+"list_outputs_"+modifier+"_"+n_millsS+"M.txt");
+  
+  //Tmol->Add(added_file);
   list_outputs << "Contents of textout_flux and textout_power lists of strings" << std::endl;
 
   // Alright: Everything necessary exists for me to plot vertex vs. z plots, but the R vs. z plots are probably enough for now to be honest (need to be set to some absolute scale). It would be nice to have a radiation at top of hall plot vs. z (color mapped maybe) distribution as well though. I also want to generate plots of the last significant scattering vertex, not just the particle creation vertices, in case these are significantly different.
@@ -1024,7 +1045,8 @@ int main(Int_t argc,Char_t* argv[]) {
   strline="Rootfile_name";
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  strline=added_file;//"/home/rakithab/Simulation_Analysis/Remoll/MOLLER_12GeV/Rootfiles/";//main root files used//_allshield_BorConcrete
+  //strline=added_file;
+  strline=added_file_array[1];
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
   // POWER

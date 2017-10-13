@@ -3,4 +3,4 @@
 #$ -cwd
 #$ -j y
 #$ -S /bin/bash
-../../remoll ../../macros/runexample.mac 
+../../remoll ../../macros/runexample_combined.mac 
