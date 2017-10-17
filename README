@@ -58,7 +58,7 @@ Visualization macros are found in vis/
 
 To run, execute
 
-./remoll 
+./build/remoll 
 
 which should bring up a graphical command interface
 
@@ -71,6 +71,11 @@ then
 /control/execute vis/Qt.mac
 
 (or another macro in the vis directory, if you prefer)
+
+Due to a reported issue (https://github.com/JeffersonLab/remoll/issues/40)
+you may need to run remoll with the following env var set:
+
+LIBGL_ALWAYS_INDIRECT=1 ./build/remoll
 
 ---------------------------------------------------
 
