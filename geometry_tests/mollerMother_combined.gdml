@@ -55,7 +55,7 @@
       </physvol>
 
       <physvol>
-    	<file name="../../geometry_tests/hybridDaughter_combined.gdml"/>
+    	<file name="../../geometry_tests/hybridDaughter_combined_polyroof.gdml"/>
 	    <positionref ref="hybridCenter"/>
     	<rotationref ref="identity"/>
       </physvol>    

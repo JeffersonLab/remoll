@@ -189,8 +189,9 @@ int main(Int_t argc,Char_t* argv[]) {
   TChain * Tmol =new TChain("T");
   //Cameron Clarke runs:
   //input info:
-  const int n_mills = 10;  // Be sure to change these
-  TString n_millsS; // here
+  const int n_mills = 10;// FIXME number of million events
+  TString modifier=argv[1];//"combined_polyroof_more";// name of file to read (+ "_n_mills")
+  TString n_millsS;
   
   ostringstream temp_str_stream;
   temp_str_stream<<n_mills;
@@ -202,9 +203,8 @@ int main(Int_t argc,Char_t* argv[]) {
   //TString modifier="combined_half";
   //TString added_file="/home/cameronc/gitdir/dose_remoll/output/"+modifier+".root";
   
-  TString modifier="combined";
   //TString added_file_array[n_mills] = new TString();
-  TString added_file_array[n_mills]={"test"}; // The last index is for the shieldings: target, shielding blocks 1 to 4, and other vertices
+  TString added_file_array[n_mills]={""}; // The last index is for the shieldings: target, shielding blocks 1 to 4, and other vertices
   for (int v=1 ; v <= n_mills ; v++){ 
     ostringstream temp_str_stream2;
     temp_str_stream2<<v;
