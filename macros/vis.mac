@@ -11,8 +11,7 @@
 #/remoll/setgeofile geometry_sculpt/mollerMother_krypto_Coils.gdml
 
 # This is the current working geometry
-/remoll/setgeofile geometry_sculpt_less_hybshld/mollerMother.gdml
-
+/remoll/setgeofile ../../geometry_tests/mollerMother_combined_local.gdml
 
 #/remoll/likekryptonite  true
 
@@ -25,7 +24,7 @@
 /run/initialize
 #/remoll/optical true
 #/remoll/addfield CLEO_rm.dat
-/control/execute vis/vis.mac
+/control/execute ../../vis/vis.mac
 #/gun/position 0.0 0.0 -0.1 m
 #/gun/momentum 0.5 1.0 2.0 GeV
 

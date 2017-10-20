@@ -190,33 +190,43 @@ int main(Int_t argc,Char_t* argv[]) {
   //Cameron Clarke runs:
   //input info:
   const int n_mills = 10;// FIXME number of million events
-  TString modifier=argv[1];//"combined_polyroof_more";// name of file to read (+ "_n_mills")
-  TString n_millsS;
-  
-  ostringstream temp_str_stream;
-  temp_str_stream<<n_mills;
-  
-  n_millsS=temp_str_stream.str();
-  
+  //TString modifier=argv[1];//"combined_polyroof_more";// name of file to read (+ "_n_mills")
+  //std::ostringstream ss;
+  //ss << n_mills << 'M';
+  //TString nmills = ss.str();
+  //cout<<nmills<<endl;
   Int_t n_events = n_mills*1e6;
   Int_t beamcurrent = 85;//uA
   //TString modifier="combined_half";
   //TString added_file="/home/cameronc/gitdir/dose_remoll/output/"+modifier+".root";
   
   //TString added_file_array[n_mills] = new TString();
-  TString added_file_array[n_mills]={""}; // The last index is for the shieldings: target, shielding blocks 1 to 4, and other vertices
+  //ostringstream added_file_array[n_mills]; // The last index is for the shieldings: target, shielding blocks 1 to 4, and other vertices
+  TString added_file_array[n_mills]={""};//n_mills]={""}; // The last index is for the shieldings: target, shielding blocks 1 to 4, and other vertices
   for (int v=1 ; v <= n_mills ; v++){ 
     ostringstream temp_str_stream2;
+    ostringstream temp_str_stream3;
     temp_str_stream2<<v;
     TString vS;
     vS=temp_str_stream2.str();
-    added_file_array[v]="/home/cameronc/gitdir/dose_remoll/output/"+modifier+"_"+n_millsS+"M/out_"+modifier+vS+"/remoll_1M.root";
+    temp_str_stream3<<"/home/cameronc/gitdir/dose_remoll/output/"<<argv[1]<<"_"<<n_mills<<"M/out_"<<argv[1]<<vS<<"/remoll_1M.root";
+    added_file_array[v]=temp_str_stream3.str();
     Tmol->Add(added_file_array[v]);
   }
   
-  TString plotsFolder="/home/cameronc/gitdir/dose_remoll/output/Plots_"+modifier+"_"+n_millsS+"M/";//Name of folder for saving plots
-  TString rootfilename=plotsFolder+modifier+"_"+n_millsS+"M_plots.root";//name of the rootfile to save generated histograms
-  list_outputs.open(plotsFolder+"list_outputs_"+modifier+"_"+n_millsS+"M.txt");
+  ostringstream temp_str_stream4;
+  temp_str_stream4<<"/home/cameronc/gitdir/dose_remoll/output/Plots_"<<argv[1]<<"_"<<n_mills<<"M/";//Name of folder for saving plots
+  TString plotsFolder=temp_str_stream4.str();//Name of folder for saving plots
+  //TString plotsFolder="/home/cameronc/gitdir/dose_remoll/output/Plots_"+modifier+"_"+nmills+"/";//Name of folder for saving plots
+  ostringstream temp_str_stream5;
+  temp_str_stream5<<plotsFolder<<argv[1]<<"_"<<n_mills<<"M_plots.root";//name of the rootfile to save generated histograms
+  TString rootfilename=temp_str_stream5.str();//name of the rootfile to save generated histograms
+  //TString rootfilename=plotsFolder+modifier+"_"+nmills+"_plots.root";//name of the rootfile to save generated histograms
+  ostringstream temp_str_stream6;
+  temp_str_stream6<<plotsFolder<<"list_outputs_"<<argv[1]<<"_"<<n_mills<<"M.txt";
+  TString textfilename=temp_str_stream6.str();
+  list_outputs.open(textfilename);
+  //list_outputs.open(plotsFolder+"list_outputs_"+modifier+"_"+nmills+".txt");
   
   //Tmol->Add(added_file);
   list_outputs << "Contents of textout_flux and textout_power lists of strings" << std::endl;
