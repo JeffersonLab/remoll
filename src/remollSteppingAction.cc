@@ -26,13 +26,13 @@ void remollSteppingAction::InitializeMaterials()
 
   // Find kryptonite materials in material tables
   G4MaterialTable* table = G4Material::GetMaterialTable();
-  G4cout << "Loading kryptonite materials table." << G4endl;
+  G4cout << "Loading kryptonite materials table..." << G4endl;
   for (G4MaterialTable::const_iterator
       it  = table->begin();
       it != table->end(); it++) {
     if (materials.find((*it)->GetName()) != materials.end()) {
       fKryptoniteMaterials.insert(*it);
-      G4cout << "Treating " << (*it) << " (" << (*it)->GetName() << ") as kryptonite." << G4endl;
+      G4cout << "Treating " << (*it)->GetName() << " as kryptonite." << G4endl;
     }
   }
 }
