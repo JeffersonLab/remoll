@@ -25,6 +25,7 @@ class remollSteppingAction : public G4UserSteppingAction
 
     G4bool fEnableKryptonite;
     std::set<G4Material*> fKryptoniteMaterials;
+    void InitializeMaterials();
 
     G4GenericMessenger* fMessenger;
 
