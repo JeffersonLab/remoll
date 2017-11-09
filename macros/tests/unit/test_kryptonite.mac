@@ -39,14 +39,12 @@
 # Beam current for rate
 /remoll/beamcurr 85 microampere
 
-# Make interactions with W, Cu, and Pb
-# realistic rather than pure absorbers
-/remoll/kryptonite true
-
 /remoll/seed 123456
 
 # Output
-/remoll/filename test_moller.root
+/remoll/filename test_kryptonite.root
 
-# Shoot
-/run/beamOn 10000
+/remoll/kryptonite true
+/run/beamOn 100
+/remoll/kryptonite false
+/run/beamOn 100
