@@ -77,7 +77,7 @@ You may encounter the following error message when running in graphical mode:
  This will cause problems; please hide them or dlopen() them after the call to
  TROOT::InitInterpreter()!
 ```
-This is a known issue 40, https://github.com/JeffersonLab/remoll/issues/40. A
+This is a [known issue](https://github.com/JeffersonLab/remoll/issues/40). A
 workaround is to run remoll with OpenGL disabled:
 ```
 LIBGL_ALWAYS_INDIRECT=1 build/remoll
