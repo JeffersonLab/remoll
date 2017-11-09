@@ -29,7 +29,9 @@ deploy:
   - build/remoll
   - build/libremollroot.so
   - remollbuild.log
-  - remolltest.*.tar.gz
+  - remolltest.root.tar.gz
+  - remolltest.log.tar.gz
+  - remolltest.png.tar.gz
   skip_cleanup: true
   on:
     repo: JeffersonLab/remoll
