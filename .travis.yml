@@ -31,6 +31,7 @@ deploy:
   - build/remoll
   - build/libremollroot.so
   - remollbuild.log
+  - remolltest_*.log
   - remolltest.*.tar.gz
   skip_cleanup: true
   on:
