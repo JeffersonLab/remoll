@@ -36,7 +36,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     //  Crazy weighting for brem because ep cross section blows up at low Q2
 
     // Get initial beam energy instead of using other sampling
-    double beamE = fBeamTarg->fBeamE;
+    double beamE = fBeamTarg->fBeamEnergy;
     double Ekin  = beamE - electron_mass_c2;
 
     std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargetVolumes();
@@ -56,7 +56,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	bypass_target = true;
     }
 
-    double bremcut = fBeamTarg->fEcut;
+    double bremcut = fBeamTarg->fEnergyCut;
 
     // Approximation for Q2, just needs to be order of magnitude
     double effQ2 = 2.0*beamE*beamE*(1.0-cos(0.5*deg));
@@ -66,7 +66,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double bt;
     if( !bypass_target ){
-	bt = (4.0/3.0)*(fBeamTarg->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
+	bt = (4.0/3.0)*(fBeamTarg->fTravelledLength/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
 		+ int_bt);
     } else {
 	bt = 0.0;
@@ -277,7 +277,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     if (prob_sample <= prob) {//Bremsstrahlung has taken place!
 	do {
 	    sample = G4UniformRand();
-	    eloss = fBeamTarg->fEcut*pow(Ekin/fBeamTarg->fEcut,sample);
+	    eloss = fBeamTarg->fEnergyCut*pow(Ekin/fBeamTarg->fEnergyCut,sample);
 	    env = 1./eloss;
 	    value = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,bt);
 
@@ -300,7 +300,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 }
 
 G4double remollGenpElastic::RadProfile(G4double eloss, G4double btt){
-     double Ekin = fBeamTarg->fBeamE - electron_mass_c2;
+     double Ekin = fBeamTarg->fBeamEnergy - electron_mass_c2;
      double retval = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,btt);
 
      if( std::isnan(retval) || std::isinf(retval) ){
@@ -317,7 +317,7 @@ G4double remollGenpElastic::RadProfile(G4double eloss, G4double btt){
 G4double remollGenpElastic::EnergNumInt(G4double btt, G4double a0, G4double b0){
     const int nbin = 1000;
     double sum = 0.0;
-    double bremcut = fBeamTarg->fEcut;
+    double bremcut = fBeamTarg->fEnergyCut;
 
     int j;
     double boolc[5] = {7.0, 32.0, 12.0, 32.0, 7.0};

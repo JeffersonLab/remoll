@@ -5,11 +5,12 @@
 
 #include "G4OpticalPhoton.hh"
 #include "G4SDManager.hh"
+#include "G4GenericMessenger.hh"
 
 #include <sstream>
 
 remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
-: G4VSensitiveDetector(name),fHitColl(0),fSumColl(0)
+: G4VSensitiveDetector(name),fHitColl(0),fSumColl(0),fEnabled(true)
 {
   fDetNo = detnum;
   assert( fDetNo > 0 );
@@ -27,6 +28,14 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
 
   fHCID = -1;
   fSCID = -1;
+
+  // Create generic messenger
+  fMessenger = new G4GenericMessenger(this,"/remoll/SD/det" + std::to_string(fDetNo) + "/","Remoll SD properties for " + name);
+  fMessenger->DeclareProperty(
+      "enable",
+      fEnabled,
+      "Enable recording of hits in this detector")
+      .SetDefaultValue("true");
 }
 
 remollGenericDetector::~remollGenericDetector(){
@@ -46,6 +55,9 @@ void remollGenericDetector::Initialize(G4HCofThisEvent *){
 G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4bool badedep = false;
     G4bool badhit  = false;
+
+    // Ignore this detector if disabled
+    if (! fEnabled) return false;
 
     // Ignore optical photons as hits (but still simulate them
     // so they can knock out electrons of the photocathode)

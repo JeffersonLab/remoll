@@ -1,0 +1,33 @@
+# This must be called before initialize
+/remoll/setgeofile geometry/mollerMother.gdml
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+
+/remoll/beamene 11 GeV
+
+/remoll/gen inelasticAl
+#/remoll/gen quasielasticAl
+#/remoll/gen elasticAl
+
+/remoll/targname USAlTarg
+#/remoll/targpos   -75.0 cm
+#/remoll/targlen  0.0127 cm
+
+/remoll/beamcurr 85 microampere
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite true
+
+/remoll/filename remoll_eAlinelastic_up.root
+
+/run/beamOn 10000000

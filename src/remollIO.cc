@@ -90,7 +90,8 @@ void remollIO::InitializeTree()
     fTree->Branch("ev.Q2",    &fEvQ2,     "ev.Q2/D");
     fTree->Branch("ev.W2",    &fEvW2,     "ev.W2/D");
     fTree->Branch("ev.thcom", &fEvThCoM,  "ev.thcom/D");
-    fTree->Branch("ev.beamp",  &fEvBeamP,   "ev.beamp/D");
+    fTree->Branch("ev.beamp", &fEvBeamP,  "ev.beamp/D");
+    fTree->Branch("ev.seed",  &fEvSeed,   "ev.seed/C");
 
     fTree->Branch("ev.npart", &fNEvPart   ,     "ev.npart/I");
     fTree->Branch("ev.pid",   &fEvPID,      "ev.pid[ev.npart]/I");
@@ -207,6 +208,13 @@ void remollIO::WriteTree()
 
 ///////////////////////////////////////////////////////////////////////////////
 // Interfaces to output section ///////////////////////////////////////////////
+
+// Event seed
+void remollIO::SetEventSeed(const G4String& seed)
+{
+  fEvSeed = seed;
+}
+
 
 // Event Data
 
@@ -377,6 +385,8 @@ void remollIO::SearchGDMLforFiles(G4String fn)
     TraverseChildren( elementRoot );
 
     xercesc::XMLPlatformUtils::Terminate();
+
+    delete xmlParser;
 }
 
 void remollIO::TraverseChildren( xercesc::DOMElement *thisel )
@@ -390,10 +400,22 @@ void remollIO::TraverseChildren( xercesc::DOMElement *thisel )
 
             if (currentNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE) { // is element
                 xercesc::DOMElement* currentElement
-                = dynamic_cast< xercesc::DOMElement* >( currentNode );
-                if( xercesc::XMLString::equals(currentElement->getTagName(), xercesc::XMLString::transcode("file"))){
-                    SearchGDMLforFiles(G4String(xercesc::XMLString::transcode(currentElement->getAttribute(xercesc::XMLString::transcode("name")))));
+                  = dynamic_cast< xercesc::DOMElement* >( currentNode );
+                // transcode
+                XMLCh* str_file = xercesc::XMLString::transcode("file");
+                if( xercesc::XMLString::equals(currentElement->getTagName(), str_file)){
+                    // transcode
+                    XMLCh* str_name = xercesc::XMLString::transcode("name");
+                    const XMLCh* attr = currentElement->getAttribute(str_name);
+                    char* str_attr = xercesc::XMLString::transcode(attr);
+                    // search files
+                    SearchGDMLforFiles(G4String(str_attr));
+                    // release
+                    xercesc::XMLString::release(&str_name);
+                    xercesc::XMLString::release(&str_attr);
                 }
+                // release
+                xercesc::XMLString::release(&str_file);
 
                 if( currentElement->getChildNodes()->getLength() > 0 ){
                     TraverseChildren( currentElement );

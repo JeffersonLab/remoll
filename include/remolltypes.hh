@@ -17,7 +17,7 @@
 
 #include "TTimeStamp.h"
 
-enum SampType_t { kCryogen, kWalls, kFullTarget };
+enum SampType_t { kActiveTargetVolume, kAllTargetVolumes };
 
 struct filedata_t {
     char filename[__RUNSTR_LEN];

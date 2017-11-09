@@ -23,7 +23,7 @@ remollGenFlat::~remollGenFlat(){
 void remollGenFlat::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // Generate event flat in phase space
 
-    double beamE = vert->GetBeamE();
+    double beamE = vert->GetBeamEnergy();
 
     double mp = 0.938*GeV;
 

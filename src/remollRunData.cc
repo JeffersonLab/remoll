@@ -71,12 +71,10 @@ void remollRunData::Print(){
 
 }
 
-void remollRunData::AddGDMLFile( const char *fn ){
+void remollRunData::AddGDMLFile( const char *fn )
+{
     // Check for duplicates I guess
-
-    unsigned int i;
-
-    for( i = 0; i < fGDMLFiles.size(); i++ ){
+    for(unsigned int i = 0; i < fGDMLFiles.size(); i++ ){
 	if( strcmp(fn, fGDMLFiles[i].GetFilename()) == 0 ){
 	    // Already added
 	    return;
@@ -86,13 +84,11 @@ void remollRunData::AddGDMLFile( const char *fn ){
     fGDMLFiles.push_back(remollTextFile(fn)); 
 }
 
-void remollRunData::RecreateGDML( const char *adir, bool clobber ){
-    unsigned int idx;
-
-    for( idx = 0; idx < fGDMLFiles.size(); idx++ ){
+void remollRunData::RecreateGDML( const char *adir, bool clobber )
+{
+    for(unsigned int idx = 0; idx < fGDMLFiles.size(); idx++ ){
 	fGDMLFiles[idx].RecreateInDir(adir, clobber);
     }
-    return;
 }
 
 ClassImp(remollRunData)

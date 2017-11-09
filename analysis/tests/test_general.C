@@ -29,6 +29,14 @@ void test_general (const TString& inputdir, const TString& inputname)
   c1.SaveAs(outputdir + "/" + inputname + "_" + "h_vy.png");
   T.Draw("ev.vz >> h_vz(200,-1.00,+1.00)","",hopt);
   c1.SaveAs(outputdir + "/" + inputname + "_" + "h_vz.png");
+  T.Draw("ev.beamp >> h_beamp(110,0.0,+11.0)","",hopt);
+  c1.SaveAs(outputdir + "/" + inputname + "_" + "h_beamp.png");
+  T.Draw("ev.beamp:ev.vz >> h_beamp_vz(20,-1.0,+1.0)","",hopt+",PROF");
+  c1.SaveAs(outputdir + "/" + inputname + "_" + "h_beamp_vz.png");
+  T.Draw("ev.thcom >> h_thcom(180,0.0,+180.0)","",hopt);
+  c1.SaveAs(outputdir + "/" + inputname + "_" + "h_thcom.png");
+  T.Draw("log(rate) >> h_lograte(200,-25.0,+25.0)","",hopt);
+  c1.SaveAs(outputdir + "/" + inputname + "_" + "h_lograte.png");
 
   // Save and close
   file.Write();

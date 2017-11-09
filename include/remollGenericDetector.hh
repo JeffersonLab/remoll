@@ -23,6 +23,7 @@
 class G4HCofThisEvent;
 class G4Step;
 class G4TouchableHistory;
+class G4GenericMessenger;
 
 class remollGenericDetectorSum;
 
@@ -45,6 +46,10 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
 	G4bool fTrackSecondaries;
 	G4int fDetNo;
+
+	G4bool fEnabled;
+
+	G4GenericMessenger* fMessenger;
 
 };
 
