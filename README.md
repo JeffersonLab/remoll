@@ -83,3 +83,42 @@ workaround is to run remoll with OpenGL disabled:
 LIBGL_ALWAYS_INDIRECT=1 build/remoll
 ```
 
+## Docker container
+
+**Note**: This image will allow you to use remoll in batch mode only. A separate image supporting the GUI mode will be available soon.
+
+### Building
+
+```
+sudo docker build -t remoll .
+```
+
+### Running
+
+You can use a prebuilt image [available on Docker Hub](https://hub.docker.com/r/jeffersonlab/remoll/).
+
+```
+docker run --rm \
+    -v `pwd`/output:/jlab/2.1/Linux_CentOS7.3.1611-x86_64-gcc4.8.5/remoll/rootfiles/ \
+    jeffersonlab/remoll [macro to run]
+```
+
+The ROOT files produced by remoll will be present in the output directory.
+
+## Singularity container
+
+### Building
+
+```
+sudo singularity build remoll.img Singularity
+```
+
+## Running
+
+```
+singularity pull shub://jeffersonlab/remoll-singularity
+singularity run --bind `pwd`:/jlab/2.1/Linux_CentOS7.3.1611-x86_64-gcc4.8.5/remoll/rootfiles/ \
+    jeffersonlab-remoll-singularity-master.simg \
+    macros/tests/test_moller.mac
+```
+
