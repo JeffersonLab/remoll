@@ -1,13 +1,13 @@
 # remoll: Simulation for the 12 GeV MOLLER Experiment at Jefferson Lab
 
+[![Build Status](https://travis-ci.org/JeffersonLab/remoll.svg?branch=develop)](https://travis-ci.org/JeffersonLab/remoll)
+
 ## Contact information
 
 The development of remoll is coordinated on the mailing list
-12gevmoller_sim@jlab.org. You can subscribe at
-https://mailman.jlab.org/mailman/listinfo/12gevmoller_sim
+12gevmoller_sim@jlab.org which you can subscribe to [here](https://mailman.jlab.org/mailman/listinfo/12gevmoller_sim).
 
-A slack discussion channel is available at https://jlab12gev.slack.com,
-in particular the channels #moller_simulation and #moller_simulation_dev.
+There is a [slack channel](https://jlab12gev.slack.com) available for general discussion and questions. In particular, the `#moller_simulation` and `#moller_simulation_dev` channels are used for topics related to this project.
 
 
 ## Dependencies 
@@ -33,8 +33,7 @@ make
 
 ## Magnetic field maps
 
-Magnetic field maps can be downloaded from
-http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/.
+Magnetic field maps are **required** to use the software and are available for download [here](http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/).
 
 
 ## Running remoll
@@ -60,7 +59,7 @@ You can also load another macro in the `vis` directory, if
 you prefer another visualization driver.
 
 
-## Troubleshooting:
+## Troubleshooting
 
 ### Missing gitinfo.hh
 
@@ -78,7 +77,7 @@ You may encounter the following error message when running in graphical mode:
  This will cause problems; please hide them or dlopen() them after the call to
  TROOT::InitInterpreter()!
 ```
-This is a known issue 40, https://github.com/JeffersonLab/remoll/issues/40. A
+This is a [known issue](https://github.com/JeffersonLab/remoll/issues/40). A
 workaround is to run remoll with OpenGL disabled:
 ```
 LIBGL_ALWAYS_INDIRECT=1 build/remoll
