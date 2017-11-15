@@ -1,5 +1,5 @@
 Bootstrap:docker  
-From:jeffersonlab/remoll:latest 
+From:jeffersonlab/remoll:develop
 
 %files
 
