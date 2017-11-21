@@ -29,6 +29,5 @@ build*
 bldXcode
 map_directory
 
-#ignore log and rootfiles directory
+#ignore log files directory
 log
-rootfiles
