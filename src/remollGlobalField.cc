@@ -64,7 +64,7 @@ void remollGlobalField::AddNewField(G4String& name)
 
         //G4cout << "MD5 checksum " << md5->AsString() << G4endl;
 
-        delete md5;
+        //delete md5;
 
         struct stat fs;
         stat(name.data(), &fs);
