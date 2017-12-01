@@ -52,16 +52,19 @@ void remollGlobalField::AddNewField(G4String& name)
 
         remollRunData *rd = remollRun::GetRunData();
 
-        TMD5 *md5 = TMD5::FileChecksum(name.data());
+        // FIXME disabled TMD5 functionality as long as CentOS 7.2 is common
+        // due to kernel bug when running singularity containers
+
+        //TMD5 *md5 = TMD5::FileChecksum(name.data());
 
         filedata_t fdata;
 
         strcpy(fdata.filename, name.data());
-        strcpy(fdata.hashsum, md5->AsString() );
+        strcpy(fdata.hashsum, "no hash" ); // md5->AsString() );
 
-        G4cout << "MD5 checksum " << md5->AsString() << G4endl;
+        //G4cout << "MD5 checksum " << md5->AsString() << G4endl;
 
-        delete md5;
+        //delete md5;
 
         struct stat fs;
         stat(name.data(), &fs);
