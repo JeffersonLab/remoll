@@ -30,7 +30,9 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   fSCID = -1;
 
   // Create generic messenger
-  fMessenger = new G4GenericMessenger(this,"/remoll/SD/det" + std::to_string(fDetNo) + "/","Remoll SD properties for " + name);
+  std::stringstream ss;
+  ss << fDetNo;
+  fMessenger = new G4GenericMessenger(this,"/remoll/SD/det" + ss.str() + "/","Remoll SD properties for " + name);
   fMessenger->DeclareProperty(
       "enable",
       fEnabled,
