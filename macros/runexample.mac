@@ -28,8 +28,6 @@
 #/remoll/beam_dth 0 mrad
 #/remoll/beam_dph 0 mrad
 
-/remoll/beamene 11 GeV
-
 #/remoll/gen beam
 /remoll/gen moller
 #/remoll/thcommin 30.0 deg
@@ -45,6 +43,8 @@
 #/remoll/gen inelasticAl
 #/remoll/gen quasielasticAl
 #/remoll/gen elasticAl
+
+/remoll/beamene 11 GeV
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
