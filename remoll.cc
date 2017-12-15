@@ -35,6 +35,7 @@ typedef G4RunManager RunManager;
 #endif
 
 #include <ctime>
+#include <fstream>
 
 namespace {
   void PrintUsage() {
@@ -54,17 +55,16 @@ int main(int argc, char** argv) {
     clock_t tStart = clock();
 
 
-    // Initialize the CLHEP random engine
-    unsigned int seed = time(0) + (int) getpid();
-    unsigned int devrandseed = 0;
-    //  /dev/urandom doens't block
-    FILE *fdrand = fopen("/dev/urandom", "r");
-    if (fdrand) {
-	if (fread(&devrandseed, sizeof(int), 1, fdrand)) {
-	  seed += devrandseed;
-	} else G4cerr << "Can't read /dev/urandom." << G4endl;
-	fclose(fdrand);
-    }
+    // Initialize the random seed
+    G4long seed = time(0) + (int) getpid();
+    // Open /dev/urandom
+    std::ifstream urandom("/dev/urandom", std::ios::in | std::ios::binary);
+    // If stream is open
+    if (urandom) {
+      urandom.read(reinterpret_cast<char*>(&seed), sizeof(seed));
+      urandom.close();
+    } else G4cerr << "Can't read /dev/urandom." << G4endl;
+
 
     // Parse command line options
     G4String macro;
@@ -100,7 +100,7 @@ int main(int argc, char** argv) {
     // Choose the Random engine
     G4Random::setTheEngine(new CLHEP::RanecuEngine());
     G4Random::setTheSeed(seed);
-    remollRun::GetRunData()->SetSeed(seed);
+    remollRun::UpdateSeed();
 
     // Messenger
     remollMessenger* messenger = remollMessenger::GetInstance();
