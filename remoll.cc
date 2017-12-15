@@ -98,7 +98,6 @@ int main(int argc, char** argv) {
     #endif
 
     // Choose the Random engine
-    G4Random::setTheEngine(new CLHEP::RanecuEngine());
     G4Random::setTheSeed(seed);
     remollRun::UpdateSeed();
 
