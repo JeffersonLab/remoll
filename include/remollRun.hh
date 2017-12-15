@@ -24,6 +24,8 @@ class remollRun: public G4Run {
     static remollRunData* fRunData;
   public:
     static remollRunData* GetRunData();
+
+    static void UpdateSeed();
 };
 
 #endif //__REMOLLRUN_HH
