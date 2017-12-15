@@ -1,5 +1,6 @@
 #include "remollRun.hh"
 
+#include "Randomize.hh"
 #include "G4Event.hh"
 #include "G4HCofThisEvent.hh"
 
@@ -14,6 +15,11 @@ remollRunData* remollRun::GetRunData()
     fRunData->Init();
   }
   return fRunData;
+}
+
+void remollRun::UpdateSeed()
+{
+  GetRunData()->SetSeed(G4Random::getTheSeed());
 }
 
 remollRun::remollRun() { }

@@ -36,8 +36,8 @@ remollMessenger::~remollMessenger() { }
 void remollMessenger::SetNewValue(G4UIcommand* cmd, G4String newValue)
 {
     if( cmd == seedCmd ){
-	G4int seed = seedCmd->GetNewIntValue(newValue);
+	G4long seed = seedCmd->GetNewIntValue(newValue);
 	G4Random::setTheSeed(seed);
-	remollRun::GetRunData()->SetSeed(seed);
+	remollRun::UpdateSeed();
     }
 }
