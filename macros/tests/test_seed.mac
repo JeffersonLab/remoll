@@ -1,0 +1,19 @@
+# This will produce three files test_seed_1.root, test_seed_2.root, test_seed_3.root.
+
+# The files test_seed_1.root and test_seed_3.root should have identical content.
+# The file test_seed_2.root should have different content.
+
+/run/initialize
+
+/remoll/filename test_seed_1.root
+/remoll/seed 123456
+/run/beamOn 100
+
+/remoll/filename test_seed_2.root
+/remoll/seed 654321
+/run/beamOn 100
+
+/remoll/filename test_seed_3.root
+/remoll/seed 123456
+/run/beamOn 100
+
