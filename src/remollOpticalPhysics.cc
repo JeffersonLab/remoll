@@ -83,8 +83,8 @@ void remollOpticalPhysics::ConstructProcess()
   G4EmSaturation* emSaturation = G4LossTableManager::Instance()->EmSaturation();
   theScintProcess->AddSaturation(emSaturation);
 
-  #if G4VERSION_NUMBER < 1000
-  G4ParticleTable::G4PTblDicIterator* aParticleIterator = theParticleIterator;
+  #if G4VERSION_NUMBER >= 1030
+  G4ParticleTable::G4PTblDicIterator* aParticleIterator = GetParticleIterator();
   #endif
   aParticleIterator->reset();
   while ( (*aParticleIterator)() ){
