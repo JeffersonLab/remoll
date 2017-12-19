@@ -40,6 +40,10 @@ class remollVEventGen {
 
 	G4String GetName() { return fName; }
 
+	void SetBeamTarget(remollBeamTarget* bt) {
+	  fBeamTarg = bt;
+	}
+
 	void SetSampType( SampType_t st ) { fSampType = st; }
 	void SetDoMultScatt( G4bool multscatt ){ fApplyMultScatt = multscatt; }
 
@@ -67,10 +71,10 @@ class remollVEventGen {
         G4ParticleGun* GetParticleGun() const { return fParticleGun; }
 
     protected:
-	remollBeamTarget *fBeamTarg;
+	remollBeamTarget* fBeamTarg;
 
 	void PolishEvent(remollEvent *);
-	
+
 	// Pure virtual function that needs to be filled out
 	virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
 

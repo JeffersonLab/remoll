@@ -37,15 +37,12 @@ remollVEventGen::remollVEventGen(const G4String name)
         &remollVEventGen::PrintEventGen,
         "Print the event generator limits");
 
-    fBeamTarg = new remollBeamTarget();
-
     fSampType       = kActiveTargetVolume;
     fApplyMultScatt = false;
 }
 
 remollVEventGen::~remollVEventGen()
 {
-    delete fBeamTarg;
     delete fMessenger;
 }
 

@@ -7,6 +7,7 @@
 #include "G4GenericMessenger.hh"
 
 #include "remollIO.hh"
+#include "remollBeamTarget.hh"
 #include "remollVEventGen.hh"
 #include "remollEvent.hh"
 #include "remollRun.hh"
@@ -24,8 +25,11 @@
 #include "remollGenLUND.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
-: fParticleGun(0),fEventGen(0),fEvent(0),fMessenger(0)
+: fParticleGun(0),fBeamTarg(0),fEventGen(0),fEvent(0),fMessenger(0)
 {
+    // Create beam target
+    fBeamTarg = new remollBeamTarget();
+
     // Default generator
     G4String default_generator = "moller";
     SetGenerator(default_generator);
@@ -41,6 +45,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
 {
     if (fMessenger) delete fMessenger;
+    if (fBeamTarg)  delete fBeamTarg;
     if (fEventGen)  delete fEventGen;
 }
 
@@ -80,6 +85,14 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
         exit(1);
     } else {
         G4cout << "Setting generator to " << genname << G4endl;
+    }
+
+    // Set the beam target
+    if (fBeamTarg) {
+      fEventGen->SetBeamTarget(fBeamTarg);
+    } else {
+      G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR no beam target" << G4endl;
+      exit(1);
     }
 
     // Get the particle gun
