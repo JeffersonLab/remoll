@@ -79,7 +79,7 @@
   <element Z="13" formula="Al" name="Aluminium" >
     <atom value="26.98" />
   </element>
- 
+
   <isotope name="Si28" Z="14" N="28">
     <atom type="A" value="27.98"/>
   </isotope>
@@ -248,12 +248,6 @@
       <atom unit="g/mole" value="183.85"/>
    </material>
 
-   <material Z="13" name="Aluminum" state="solid">
-      <D unit="g/cm3" value="2.7"/>
-      <atom unit="g/mole" value="26.981"/>
-   </material>
-
-
 <!--Better definition would be to start from isotopes and build natural lead -->
     <material Z="82" name="Lead" state="solid">
       <MEE unit="eV" value="823"/>
@@ -361,6 +355,13 @@
     <P unit="pascal" value="3e-18"/>
     <D unit="g/cm3" value="1e-25"/>
     <atom unit="g/mole" value="1.01"/>
+  </material>
+
+  <material Z="1" name="Air" state="gas">
+    <T unit="K" value="295.0"/>
+    <P unit="pascal" value="101325.0"/>
+    <D unit="g/cm3" value="1.225e-3"/>
+    <atom unit="g/mole" value="29.0"/>
   </material>
 
   <material Z="1" name="Vacuum" state="gas">
