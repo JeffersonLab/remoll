@@ -1485,7 +1485,7 @@
 
 
     <volume name="logicDownstream">
-      <materialref ref="Air"/>
+      <materialref ref="G4_AIR"/>
       <!-- <solidref ref="tubeDownstream"/> -->
       <solidref ref="boxDownstream"/>
 
