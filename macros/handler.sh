@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-dir=$HOME/gitdir/tracking_env_remoll/build/
+dir=$HOME/gitdir/tracking_peri/build/
 
 for i in `seq 1 20`;
 do

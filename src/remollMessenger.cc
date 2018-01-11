@@ -8,6 +8,7 @@
 #include "remollOpticalPhysics.hh"
 #include "remollDetectorConstruction.hh"
 #include "remollIO.hh"
+#include "remollEvent.hh"
 #include "remollEventAction.hh"
 #include "remollVEventGen.hh"
 #include "remollPrimaryGeneratorAction.hh"

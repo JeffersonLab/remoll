@@ -125,7 +125,7 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
 
     // Don't continue in these materials
     
-
+/*
    if( (   material->GetName()=="Tungsten" 
         ||  material->GetName()=="Pb"
 	||  material->GetName()=="Copper" )
@@ -133,7 +133,7 @@ void remollSteppingAction::UserSteppingAction(const G4Step *aStep) {
 	){
 	fTrack->SetTrackStatus(fKillTrackAndSecondaries);
     }
-
+*/
 
    myfile1.close();
    myfile2.close();

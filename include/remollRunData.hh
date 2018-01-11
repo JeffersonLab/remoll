@@ -7,6 +7,8 @@
 #include <string>
 
 #include "remolltypes.hh"
+
+#include "gitinfo.hh"
 #include "remollTextFile.hh"
 
 /*!
@@ -18,7 +20,7 @@
 class TGeoManager;
 
 class remollRunData : public TObject {
-  using TObject::Print;
+//  using TObject::Print;
     public:
 	 remollRunData();
 	~remollRunData();
@@ -51,6 +53,7 @@ class remollRunData : public TObject {
 	unsigned int  fSeed;
 	double fBeamE;
 	char fGenName[__RUNSTR_LEN];
+	char fGitInfo[__GITMAXINFO_SIZE];
 
 	char fHostName[__RUNSTR_LEN];
 	char fRunPath[__RUNSTR_LEN];
