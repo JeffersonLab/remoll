@@ -27,5 +27,5 @@ RUN echo '#!/bin/bash'                                > /entrypoint.sh && \
     chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["macros/tests/test_beam.mac"]
+CMD ["macros/runexample.mac"]
 
