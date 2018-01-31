@@ -10,7 +10,8 @@ do
 	mkdir $name
 	cd $name
 	qsub ../../macros/runscript_combined.sh
-	cd ..
+  sleep 1
+  cd ..
 done
 
 

@@ -86,6 +86,8 @@ int main(int argc, char** argv){
 
     remollRun::GetRun()->GetData()->SetSeed(seed);
 
+    G4cout<< "The seed is equal to " << seed <<G4endl;
+
     remollIO *io = new remollIO();
 
     //-------------------------------

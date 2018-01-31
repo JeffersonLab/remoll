@@ -1,0 +1,67 @@
+#  Example file
+
+# store tracks
+#/tracking/storeTrajectory 1
+
+# This must be called before initialize
+#/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+#/remoll/setgeofile geometry_sculpt_less_hybshld/mollerMother.gdml
+#/remoll/setgeofile /home/cameronc/gitdir/dose_remoll/build/geometry_sculpt_less_hybshld/mollerMother.gdml
+/remoll/setgeofile /home/cameronc/gitdir/dose_remoll/build/geometry_tests/mollerMother_moreshldsUS.gdml
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/addfield /home/cameronc/gitdir/dose_remoll/build/map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield /home/cameronc/gitdir/dose_remoll/build/map_directory/blockyUpstream_rm_1.1.txt
+
+#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
+#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+
+# Raster and initial angle stuff
+/remoll/oldras false
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+#/remoll/beam_x0 0 mm
+#/remoll/beam_y0 0 mm
+# initial angle
+#/remoll/beam_th0 0 mrad
+#/remoll/beam_ph0 0 mrad
+# gaussian spread widths
+#/remoll/beam_dth 0 mrad
+#/remoll/beam_dph 0 mrad
+
+/remoll/beamene 11 GeV
+
+/remoll/gen beam
+#/remoll/gen moller
+#/remoll/thcommin 30.0 deg
+#/remoll/thcommax 150.0 deg
+#/remoll/gen elastic 
+#/remoll/thmin 0.1 deg
+#/remoll/thmax 2.0 deg
+#/remoll/emin 80.0 MeV
+#/remoll/gen inelastic 
+#/remoll/gen pion
+
+/remoll/targpos   0 cm
+/remoll/targlen 150 cm
+
+/remoll/beamcurr 85 microampere
+
+#Enable optical photons and processes
+#/remoll/optical true
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite   false
+
+/process/list
+
+# Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
+#/remoll/seed 123456
+
+/remoll/filename remoll_beam_tracking_1M_NEW.root
+
+#/tracking/verbose 2
+/run/beamOn 1000000
