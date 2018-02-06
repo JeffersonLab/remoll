@@ -710,7 +710,7 @@
 
     <box lunit="mm" name="box1" x="box1_width" y="box1_height" z="box1_length"/> 
     <box lunit="mm" name="box2" x="box2_width" y="box2_height" z="box2_length"/> 
-    <box lunit="mm" name="box3" x="box2_width-10" y="box2_height-10" z="box2_length-10"/> 
+    <box lunit="mm" name="box3" x="box2_width - 10" y="box2_height - 10" z="box2_length - 10"/> 
 
     <union name="tubeDownstream">
         <first ref="box1"/>
