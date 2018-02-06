@@ -1,4 +1,5 @@
-
+#include<iostream>
+using namespace std;
 
 #include "remollDetectorConstruction.hh"
 #include "remollGenericDetector.hh"
@@ -112,7 +113,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	//         *ORDERING IS IMPORTANT - MUST GO UPSTREAM TO DOWNSTREAM*
 	//         FIXME:  can sort that on our own
 	G4String targvolnames[] = {
-	    "h2Targ", ""
+	    "AlTarg", ""
 	};
 	////////////////////////////////////////////////////////////////////////////////
 
@@ -120,7 +121,11 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct() {
 	while( targvolnames[nidx] != "" ){
 	    vidx = 0;
 	    while( vidx < thislog->GetNoDaughters() ){
-		if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
+		cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"<<endl;
+		cout<<thislog->GetDaughter(vidx)->GetName()<<endl;
+		cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"<<endl;
+		if( thislog->GetDaughter(vidx)->GetName() == G4String(targvolnames[nidx]).append("_PV")) break;
+	       //	if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
 		vidx++; 
 	    }
 	    if( vidx == thislog->GetNoDaughters() ){
