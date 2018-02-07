@@ -257,16 +257,16 @@
     <volume name="logicUScoll_1">
 	<materialref ref="Tungsten"/>
 	<solidref ref="uscyl_1"/>
-	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-	<auxiliary auxtype="DetNo" auxvalue="2002"/>
+	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
+	<!-- <auxiliary auxtype="DetNo" auxvalue="2002"/> -->
     </volume>
 
 
    <volume name="logicUScollunion_1">
       <materialref ref="Tungsten"/>
       <solidref ref="uscoll2_union_6"/>
-      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2001"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="coilDet"/> -->
+      <!-- <auxiliary auxtype="DetNo" auxvalue="2001"/> -->
     </volume>
 
    <volume name="logiccoll2trap">
