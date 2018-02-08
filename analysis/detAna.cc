@@ -29,7 +29,7 @@ int main(int argc, char **argv){
   tStart = clock();
 
   if(argc == 1 || (strcmp("--help",argv[1])==0) ){
-    cout<<"usage: build/bkgAna [options] "<<endl
+    cout<<"usage: build/detAna [options] "<<endl
         <<"\t--infile <path to rootfile or file with a list to rootfiles>\n";
     return 1;
   }
@@ -150,9 +150,9 @@ long processOne(string fnm){
 
       if(!findDetector(ringHit, sector, atan2(hit_y[j],hit_x[j]), hit_r[j])) continue;
 
-      double phi = atan2(hit_y[j],hit_x[j]);
-      if(phi<0) phi+=2*pi;
-      if(!(phi>=2*pi/7*6 && phi<2*pi/7*7)) continue;
+      // double phi = atan2(hit_y[j],hit_x[j]);
+      // if(phi<0) phi+=2*pi;
+      // if(!(phi>=2*pi/7*6 && phi<2*pi/7*7)) continue;
 
       if(hit_r[j] < 0.5) continue;
 
@@ -178,7 +178,7 @@ long processOne(string fnm){
 }
 
 void initOutput(string fnm){
-  fout = new TFile(Form("%s_bkgAnaTst.root",fnm.substr(0,fnm.find(".")).c_str()),"RECREATE");
+  fout = new TFile(Form("%s_detAna.root",fnm.substr(0,fnm.find(".")).c_str()),"RECREATE");
 
   hRate = new TH1D("hRate","Sums for all rings and sectors",18,0,18);
   const string secNm[3]={"closed","transition","open"};
