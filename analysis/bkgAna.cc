@@ -9,17 +9,19 @@
 #include "TFile.h"
 #include "TTree.h"
 #include "TH1D.h"
+#include "TH2D.h"
 
 using namespace std;
 clock_t tStart;
 
-void findDetector(vector<int> &ring, int &sector, double phi, double r);
+int findDetector(vector<int> &ring, int &sector, double phi, double r);
 long processOne(string fnm);
 void writeOutput();
 void initOutput(string fnm);
 TFile *fout;
 vector<vector<TH1D*>> hAsym;
-TH1D *hSums;
+TH1D *hRate,*rRate, *rRateAsym,*r,*sourceZ;
+TH2D *hXY,*hXYrate, *hXYrateAsym;
 
 const double pi=acos(-1);
 
@@ -28,7 +30,7 @@ int main(int argc, char **argv){
 
   if(argc == 1 || (strcmp("--help",argv[1])==0) ){
     cout<<"usage: build/bkgAna [options] "<<endl
-	<<"\t--infile <path to rootfile or file with a list to rootfiles>\n";
+        <<"\t--infile <path to rootfile or file with a list to rootfiles>\n";
     return 1;
   }
 
@@ -64,7 +66,7 @@ int main(int argc, char **argv){
 }
 
 long processOne(string fnm){
-  TFile *fin=new TFile(fnm.c_str(),"READ");
+  TFile *fin=TFile::Open(fnm.c_str(),"READ");
   if(!fin->IsOpen()){
     cout<<"Problem: can't find file: "<<fnm<<endl;
     fin->Close();
@@ -126,14 +128,15 @@ long processOne(string fnm){
     t->GetEntry(i);
     if( float(i+1)/nEntries*100 > currentProc){
       cout<<"at tree entry\t"<<i<<"\t"<< float(i+1)/nEntries*100<<" %\ttime:\t"
-	  <<(double) ((clock() - tStart)/CLOCKS_PER_SEC)<<" [s]"<<endl;
+          <<(double) ((clock() - tStart)/CLOCKS_PER_SEC)<<" [s]"<<endl;
       currentProc+=procStep;
-
     }
 
     procID.clear();
     for(int j=0;j<hit_n;j++){
-      if(hit_z[j] <= 26) continue;
+      //28.489 added to make sure no back detector hits are recorded
+      if(hit_z[j] <= 28 || hit_z[j]>28.498) continue;
+      if(rate>1e7) continue;//this cut is not understandable ... there is some difference between YZ output and mine where rates >1e7 screw up the results
 
       //select only e- and pi-
       if(hit_pid[j]!=11 && hit_pid[j]!=-211) continue;
@@ -145,37 +148,63 @@ long processOne(string fnm){
       if( find(procID.begin(),procID.end(), hit_trid[j]) != procID.end() ) continue;
       procID.push_back(hit_trid[j]);
 
-      findDetector(ringHit, sector, atan2(hit_y[j],hit_x[j]), hit_r[j]);
+      if(!findDetector(ringHit, sector, atan2(hit_y[j],hit_x[j]), hit_r[j])) continue;
+
+      double phi = atan2(hit_y[j],hit_x[j]);
+      if(phi<0) phi+=2*pi;
+      if(!(phi>=2*pi/7*6 && phi<2*pi/7*7)) continue;
+
+      if(hit_r[j] < 0.5) continue;
+
+      r->Fill(hit_r[j]);
+      rRate->Fill(hit_r[j],rate);
+      rRateAsym->Fill(hit_r[j],rate*ev_A);
+      sourceZ->Fill(hit_vz[j]);
+      hXY->Fill(hit_x[j],hit_y[j]);
+      hXYrate->Fill(hit_x[j],hit_y[j],rate);
+      hXYrateAsym->Fill(hit_x[j],hit_y[j],rate*ev_A);
+
       for(unsigned int k=0;k<ringHit.size();k++){
-	if(ringHit[k]!=-1){
-	  hAsym[ringHit[k]][sector]->Fill(ev_A,rate);
-	  hSums->SetBinContent(ringHit[k]*3+sector,
-			       rate + hSums->GetBinContent(ringHit[k]*3+sector));
-	}
+        if(ringHit[k]!=-1){
+          hAsym[ringHit[k]][sector]->Fill(ev_A,rate);
+          hRate->SetBinContent(ringHit[k]*3+sector+1,
+                               rate + hRate->GetBinContent(ringHit[k]*3+sector+1));
+        }
       }
     }
   }
+
   return nEntries;
 }
 
 void initOutput(string fnm){
-  fout = new TFile(Form("%s_bkgAna.root",fnm.substr(0,fnm.find(".")).c_str()),"RECREATE");
+  fout = new TFile(Form("%s_bkgAnaTst.root",fnm.substr(0,fnm.find(".")).c_str()),"RECREATE");
 
-  hSums = new TH1D("hSums","Sums for all rings and sectors",18,0,18);
+  hRate = new TH1D("hRate","Sums for all rings and sectors",18,0,18);
   const string secNm[3]={"closed","transition","open"};
   for(int i=1;i<=18;i++)
-    hSums->GetXaxis()->SetBinLabel(i,Form("R%d %s",(i-1-(i-1)%3)/3+1,secNm[(i-1)%3].c_str()));
+    hRate->GetXaxis()->SetBinLabel(i,Form("R%d %s",(i-1-(i-1)%3)/3+1,secNm[(i-1)%3].c_str()));
 
   for(int i=0;i<6;i++){
     vector<TH1D*> dt;
     for(int j=0;j<3;j++){
       TH1D *h = new TH1D(Form("hAsym_R%d_S%d",i+1,j),
-			 Form("rate weighted Asyms for Ring %d Sector %s;asymmetry [ppb]",i+1,secNm[j].c_str()),
-			 100,-1000000,1000000);
+                         Form("rate weighted Asyms for Ring %d Sector %s;asymmetry [ppb]",i+1,secNm[j].c_str()),
+                         100,-1000000,1000000);
       dt.push_back(h);
     }
     hAsym.push_back(dt);
   }
+
+  fout->mkdir("QA","quality assurance plots");
+  fout->cd("QA");
+  r = new TH1D("r","radial distribution;r[m]",200,0.5,1.5);
+  rRate = new TH1D("rRate","rate weighted distribution;r[m]",200,0.5,1.5);
+  rRateAsym = new TH1D("rRateAsym","rate*Asym weighted distribution;r[m]",200,0.5,1.5);
+  hXY = new TH2D("hXY","2D hit ditribution;x [m];y [m]",200,-2.1,2.1,200,-2.1,2.1);
+  hXYrate = new TH2D("hXYrate","rate weighted 2D hit ditribution;x [m];y [m]",200,-2.1,2.1,200,-2.1,2.1);
+  hXYrateAsym = new TH2D("hXYrateAsym","rate*asym weighted 2D hit ditribution;x [m];y [m]",200,-2.1,2.1,200,-2.1,2.1);
+  sourceZ = new TH1D("sourceZ","initial vertex for hit ;z position [m]",5000,-1,1);
 }
 
 void writeOutput(){
@@ -183,12 +212,22 @@ void writeOutput(){
   for(int i=0;i<6;i++)
     for(int j=0;j<3;j++)
       hAsym[i][j]->Write();
-  hSums->Write();
+  hRate->Write();
+
+  fout->cd("QA");
+  r->Write();
+  rRate->Write();
+  rRateAsym->Write();
+  hXY->Write();
+  hXYrate->Write();
+  hXYrateAsym->Write();
+  sourceZ->Write();
+
   fout->Close();
 }
 
 
-void findDetector(vector<int> &ring, int &sector, double phi, double r){
+int findDetector(vector<int> &ring, int &sector, double phi, double r){
   const double rMin[8]={0.690, 0.730, 0.780, 0.855, 0.935, 0.960, 0.960, 1.100};
   const double rMax[8]={0.730, 0.780, 0.855, 0.930, 1.040, 1.075, 1.100, 1.200};
   const int region2ring[8]={0,1,2,3,4,4,4,5};
@@ -202,7 +241,7 @@ void findDetector(vector<int> &ring, int &sector, double phi, double r){
     }else
       ring.push_back(-1);
 
-  if(!found) return;
+  if(!found) return found;
 
   if( phi < 0 ) phi += 2*pi;
   const double secPhi = fmod(phi,2*pi/7);
@@ -218,4 +257,5 @@ void findDetector(vector<int> &ring, int &sector, double phi, double r){
     sector = 1;
   else if( secPhi < 8*pi/28 )
     sector = 0;
+  return 1;
 }
