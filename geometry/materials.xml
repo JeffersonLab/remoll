@@ -229,7 +229,10 @@
     <fraction ref="N15" n="0.0037" />
   </element>
 
-
+  <material Z="13" name="Aluminium" state="solid">
+            <D unit="g/cm3" value="2.70"/>
+            <atom unit="g/mole" value="26.98"/>
+  </material> 
   
   <material Z="1" name="VacuumTarg" state="gas">
     <T unit="K" value="2.73"/>
@@ -237,6 +240,7 @@
     <D unit="g/cm3" value="1e-25"/>
     <atom unit="g/mole" value="1.01"/>
   </material>
+  
   <material Z="1" name="LiquidHydrogen" state="liquid">
     <T unit="K" value="20.27"/>
     <D unit="g/cm3" value="0.0708"/>
