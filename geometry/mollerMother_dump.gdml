@@ -31,38 +31,38 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-      <file name="geometry/targetDaughter_merged.gdml"/>
+      <file name="geometry/targetDaughter.gdml"/>
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
 
       <physvol>
-      <file name="geometry/hallDaughter_merged.gdml"/>
+      <file name="geometry/hallDaughter_dump.gdml"/>
       <positionref ref="hallCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-      <file name="geometry/detectorDaughter_merged.gdml"/>
+      <file name="geometry/detectorDaughter.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-	    <file name="geometry/upstreamDaughter_merged.gdml"/>
+	    <file name="geometry/upstreamDaughter.gdml"/>
 	    <positionref ref="upstreamCenter"/>
     	<rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-    	<file name="geometry/hybridDaughter_merged.gdml"/>
+    	<file name="geometry/hybridDaughter.gdml"/>
 	    <positionref ref="hybridCenter"/>
     	<rotationref ref="identity"/>
       </physvol>    
 
       <physvol>
-    	<file name="geometry/dumpDaughter_merged.gdml"/>
+    	<file name="geometry/dumpDaughter.gdml"/>
 	    <positionref ref="hybridCenter"/>
     	<rotationref ref="identity"/>
       </physvol>    

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
-
+  
 <!DOCTYPE gdml [
 <!ENTITY materials SYSTEM "materials.xml">
 ]>
@@ -296,7 +296,7 @@
 
   <solids>
     <!-- Mother Volume -->
-    <box lunit="cm" name="boxMother" x="width_mother" y="height_mother" z="length_mother"/>
+    <box lunit="cm" name="boxDumpMother" x="width_mother" y="height_mother" z="length_mother"/>
 
     <!-- Hall - simplified from MOLLER FIXME -->
 
@@ -330,7 +330,7 @@
       <positionref ref="dumpExt_trans"/>
     </subtraction>
 
-    <!-- Dump Enclosure -->
+  <!-- Dump Enclosure -->
 
     <box lunit="cm" name="boxDumpBulk" x="dump_width" y="dump_height" z="dump_length"/>
     <box lunit="cm" name="boxDumpUSSub" x="dumpUSSub_width" y="dumpUSSub_height" z="dumpUSSub_length*1.005"/>
@@ -490,12 +490,12 @@
       <positionref ref="tubeDumpWaterTank_trans"/>
       <rotationref ref="identity"/>
     </subtraction>
-    
+ 
   </solids>
 
   <structure>
 
-   <volume name="hall_top_logic">
+    <volume name="hall_top_logic">
       <materialref ref="Concrete"/>
       <solidref ref="hall_top_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
@@ -663,10 +663,11 @@
       <auxiliary auxtype="DetNo" auxvalue="25"/>
     </volume>
 
-    <volume name="logicMother">
+    <volume name="logicDump">
       <materialref ref="Vacuum"/>
-      <solidref ref="boxMother"/>
+      <solidref ref="boxDumpMother"/>
 
+<!-- 
       <physvol name="hall_top">
         <volumeref ref="hall_top_logic"/>
         <positionref ref="hall_top_center"/>
@@ -689,7 +690,7 @@
         <volumeref ref="dumpExt_logic"/>
         <positionref ref="dumpExt_center"/>
       </physvol>
-
+-->
       <physvol name="dump">
         <volumeref ref="dump_logic"/>
         <positionref ref="dump_center"/>
@@ -778,8 +779,8 @@
     </volume>
   </structure>
 
-  <setup name="Default" version="1.0">
-    <world ref="logicMother"/>
+  <setup name="Dump" version="1.0">
+    <world ref="logicDump"/>
   </setup>
 
 </gdml>
