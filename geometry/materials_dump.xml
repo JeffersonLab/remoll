@@ -419,6 +419,7 @@
     <fraction n="0.9500" ref="Tungsten"/>
     <fraction n="0.015" ref="Copper"/>
     <fraction n="0.035" ref="Nickel"/>
+  </material> 
 
   <material Z="10" name="Water" state="liquid">
     <T unit="K" value="298"/>
@@ -427,6 +428,5 @@
     <atom unit="g/mole" value="18"/>
   </material>    
 
- </material>
 
 </materials>
