@@ -35,7 +35,6 @@
       <rotationref ref="identity"/>
       </physvol>
 
-
       <physvol>
       <file name="geometry/hallDaughter_merged.gdml"/>
       <positionref ref="hallCenter"/>

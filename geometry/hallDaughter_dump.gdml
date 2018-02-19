@@ -279,6 +279,9 @@
   <!--Hall A side wall detector -->
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="out_cylwalldet" rmin="0.0" rmax="radius_of_cylwall + 1.*thick_cylwall +  10 + 3" z="height_cylwall" />
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="in_cylwalldet" rmin="0.0" rmax="radius_of_cylwall + 1.*thick_cylwall + 10" z="height_cylwall+10" />
+<!--
+     <box lunit="mm" name="wall_cylholedet" x="width_dump_hole" y="height_dump_hole" z="3.0*thick_cylwall"/>
+-->
 
   <subtraction name ="cylwalldet_full">
       <first ref="out_cylwalldet"/>
