@@ -255,10 +255,17 @@
     rmax="pionDetectorLucitePMTDiameter/2.0"
     z="pionDetectorLucitePMTHousingHeight"
     deltaphi="360.0" aunit="deg"/>
+<!-- scaledSolid not supported until geant4 4.10.3
   <scaledSolid name="pionDetectorLucitePMTOutsideHousingScaled_solid">
     <solidref ref="pionDetectorLucitePMTOutsideHousing_solid"/>
     <scaleref ref="scale_up"/>
   </scaledSolid>
+ -->
+  <tube name="pionDetectorLucitePMTOutsideHousingScaled_solid"
+    rmin="0.0"
+    rmax="SCALE_UP*pionDetectorLucitePMTDiameter/2.0"
+    z="SCALE_UP*pionDetectorLucitePMTHousingHeight"
+    deltaphi="360.0" aunit="deg"/>
   
   <trap name="pionDetectorLuciteGlue_solid"
     alpha1="0.0" alpha2="0.0"
@@ -357,10 +364,32 @@
       y="pionDetectorLuciteMylarThickness/2.0*tan(pionDetectorLuciteTheta)"
       z="pionDetectorLuciteMylarThickness/2.0"/>
   </subtraction>
+<!-- scaledSolid not supported until geant4 4.10.3
   <scaledSolid name="pionDetectorLuciteAllPlanesWedgeGlueMylarScaled_solid">
     <solidref ref="pionDetectorLuciteAllPlanesWedgeGlueMylar_solid"/>
     <scaleref ref="scale_up"/>
   </scaledSolid>
+ -->
+  <trap name="pionDetectorLuciteAllPlanesWedgeGlueMylarScaled_solid"
+    alpha1="0.0" alpha2="0.0"
+    theta="pionDetectorLuciteTheta" phi="90.0*deg"
+    x1="SCALE_UP*(pionDetectorLuciteInsideWidth
+        +2.0*pionDetectorLuciteMylarThickness)"
+    x2="SCALE_UP*(pionDetectorLuciteInsideWidth
+        +2.0*pionDetectorLuciteMylarThickness)"
+    x3="SCALE_UP*(pionDetectorLuciteOutsideWidth
+        +pionDetectorLuciteWedgeHeight*pionDetectorLuciteSlopeInX
+        +2.0*pionDetectorLuciteMylarThickness)"
+    x4="SCALE_UP*(pionDetectorLuciteOutsideWidth
+        +pionDetectorLuciteWedgeHeight*pionDetectorLuciteSlopeInX
+        +2.0*pionDetectorLuciteMylarThickness)"
+    y1="SCALE_UP*(pionDetectorLuciteAllPlanesGlueThicknessInY
+        +2.0*pionDetectorLuciteMylarThicknessInY)"
+    y2="SCALE_UP*(pionDetectorLuciteAllPlanesGlueThicknessInY
+        +2.0*pionDetectorLuciteMylarThicknessInY)"
+     z="SCALE_UP*(pionDetectorLuciteHeight
+        +pionDetectorLuciteWedgeHeight
+        +pionDetectorLuciteMylarThickness)"/>
 
   <trap name="pionDetectorLuciteLightGuideInside_solid"
     alpha1="0.0" alpha2="0.0"
@@ -423,10 +452,22 @@
     y1="pionDetectorLuciteAllPlanesGlueThicknessInY+2.0*pionDetectorLuciteLightGuideThickness"
     y2="pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
      z="pionDetectorLuciteLightGuideHeight+pionDetectorLucitePMTThickness"/>
+<!-- scaledSolid not supported until geant4 4.10.3
   <scaledSolid name="pionDetectorLuciteLightGuideOutsidePMTScaled_solid">
     <solidref ref="pionDetectorLuciteLightGuideOutsidePMT_solid"/>
     <scaleref ref="scale_up"/>
   </scaledSolid>
+ -->
+  <trap name="pionDetectorLuciteLightGuideOutsidePMTScaled_solid"
+    alpha1="0.0" alpha2="0.0"
+    theta="pionDetectorLuciteLightGuideTheta" phi="90.0*deg"
+    x1="SCALE_UP*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness)"
+    x2="SCALE_UP*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness)"
+    x3="SCALE_UP*(pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
+    x4="SCALE_UP*(pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
+    y1="SCALE_UP*(pionDetectorLuciteAllPlanesGlueThicknessInY+2.0*pionDetectorLuciteLightGuideThickness)"
+    y2="SCALE_UP*(pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
+     z="SCALE_UP*(pionDetectorLuciteLightGuideHeight+pionDetectorLucitePMTThickness)"/>
   
   <!-- Wish we could use multiUnion but requires new uSolids -->
   <union name="pionDetectorLucitePlanesLightGuideScaled_solid">

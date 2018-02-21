@@ -30,12 +30,16 @@
   <volume name="pionDetectorVirtualDetPlugVacuum_logical">
     <materialref ref="Vacuum"/>
     <solidref ref="pionDetectorVirtualDetPlug_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4040"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
   <volume name="pionDetectorVirtualDetPlugVacuumKryptonite_logical">
     <materialref ref="VacuumKryptonite"/>
     <solidref ref="pionDetectorVirtualDetPlug_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4041"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
@@ -60,12 +64,16 @@
   <volume name="pionDetectorVirtualDetCollVacuum_logical">
     <materialref ref="Vacuum"/>
     <solidref ref="pionDetectorVirtualDetColl_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4060"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
   <volume name="pionDetectorVirtualDetCollVacuumKryptonite_logical">
     <materialref ref="VacuumKryptonite"/>
     <solidref ref="pionDetectorVirtualDetColl_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4061"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
@@ -86,6 +94,8 @@
       <volumeref ref="pionDetectorVirtualDetCollVacuum_logical"/>
     </physvol>
 
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4000"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
@@ -105,6 +115,8 @@
       <volumeref ref="pionDetectorVirtualDetCollVacuumKryptonite_logical"/>
     </physvol>
 
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4001"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
