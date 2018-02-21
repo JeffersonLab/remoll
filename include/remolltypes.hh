@@ -60,8 +60,10 @@ struct remollGenericDetectorHit_t {
   int mtrid;
   double t;
   double x, y, z;
+  double xl, yl, zl;
   double r, ph;
   double px, py, pz;
+  double pxl, pyl, pzl;
   double p, e, m;
   double vx, vy, vz;
 };

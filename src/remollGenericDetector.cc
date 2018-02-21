@@ -111,9 +111,15 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     if( !badhit ){
 	// Hit
-	thishit->f3X = point->GetPosition();
-	thishit->f3V = track->GetVertexPosition();
-	thishit->f3P = track->GetMomentum();
+
+	// Positions
+	G4ThreeVector global_position = point->GetPosition();
+	G4ThreeVector local_position = point->GetTouchable()->GetHistory()->GetTopTransform().TransformPoint(global_position);
+	thishit->f3X  = global_position;
+	thishit->f3Xl = local_position;
+
+	thishit->f3V  = track->GetVertexPosition();
+	thishit->f3P  = track->GetMomentum();
 
         thishit->fTime = point->GetGlobalTime();
 
