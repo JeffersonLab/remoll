@@ -20,9 +20,7 @@
       2 mil = 0.05 mm.
   -->
   <quantity name="pionDetectorLuciteMylarThickness" type="length" value="0.05" unit="mm"/>
-
   <quantity name="pionDetectorLuciteGlueThickness"  type="length" value="1.0" unit="mm"/>
-
   <quantity name="pionDetectorLucitePlaneThickness" type="length" value="2.54" unit="cm"/>
   
   <quantity name="pionDetectorLuciteInsideWidth"  type="length" value="30.0" unit="cm"/>
@@ -520,6 +518,7 @@
     <solidref ref="pionDetectorLuciteMylar_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteMylar"/>
     <auxiliary auxtype="DetNo" auxvalue="4030"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.9"/>
   </volume>
 
   <volume name="pionDetectorLuciteLightGuideShell_logical">
@@ -528,6 +527,7 @@
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteLightGuideShell"/>
     <auxiliary auxtype="DetNo" auxvalue="4031"/>
     <auxiliary auxtype="Color" auxvalue="Gray"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.9"/>
   </volume>
   <volume name="pionDetectorLuciteLightGuideInsideEntryDetector_logical">
     <materialref ref="Air"/>
@@ -592,6 +592,7 @@
       <position name="pionDetectorLucitePMTInsideHousing_position"
         z="(+pionDetectorLucitePMTHousingThickness-pionDetectorLucitePMTThickness)/2.0"/>
     </physvol>
+    <auxiliary auxtype="Alpha" auxvalue="0.9"/>
   </volume>
 
   <volume name="pionDetectorLucite_logical">
