@@ -525,7 +525,7 @@
       <materialref ref="Concrete"/>
       <solidref ref="dump_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
-      <auxiliary auxtype="SensDet" auxvalue="Dump"/>
+<!--  <auxiliary auxtype="SensDet" auxvalue="Dump"/> -->
       <auxiliary auxtype="DetNo" auxvalue="9"/>
     </volume>
     
@@ -645,15 +645,15 @@
       <materialref ref="Aluminum"/>
       <solidref ref="tubeDumpWaterTank_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
-      <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Can"/>
+<!--  <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Can"/> -->
       <auxiliary auxtype="DetNo" auxvalue="24"/>
     </volume>
     
     <volume name="waterDumpWaterTank_logic">
-      <materialref ref="Water"/>
+      <materialref ref="G4_WATER"/>
       <solidref ref="waterDumpWaterTank_solid"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Water"/>
+<!--  <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Water"/> -->
       <auxiliary auxtype="DetNo" auxvalue="25"/>
     </volume>
 
