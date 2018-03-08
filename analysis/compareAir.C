@@ -22,7 +22,7 @@ void drawOneProc(string process,TCanvas *c1){
   int marker[3]={20,21,24};
 
   for(int i=0;i<3;i++){
-    f[i]=TFile::Open(Form("remollout_VacTst_%s_%s_detAna.root",process.c_str(),condition[i].c_str()),"READ");
+    f[i]=TFile::Open(Form("../output/remollout_VacTst_%s_%s_detAna.root",process.c_str(),condition[i].c_str()),"READ");
     hr[i]=(TH1D*)f[i]->Get("QA/rRate");
     hr[i]->Rebin(2);
     hr[i]->GetXaxis()->SetRangeUser(0.6,1.3);
