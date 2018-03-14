@@ -4,7 +4,7 @@
 #/vis/open OGLIQt 1200x800
 
 # This is the current working geometry
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+/remoll/setgeofile geometry_sculpt/mollerMother_beamline_can.gdml
 
 #/remoll/likekryptonite  true
 
