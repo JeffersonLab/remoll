@@ -312,7 +312,15 @@
 <constant name="box2_height" value="7000.0"/>
 <constant name="box2_length" value="10900.0"/>
 <position name="tubeDownstreamPos"   x="0" y="0" z="box1_length/2 + box2_length/2 - 0.1" unit="mm"/>
- 
+<constant name="DSbeam_vac_r1U" value ="30."/> <!-- 66mm radius clearance inside the hybrid toroid - make beampipe to match -->
+<constant name="DSbeam_vac_r1D" value ="60."/> <!-- 66mm radius clearance inside the hybrid toroid - make beampipe to match -->
+<constant name="Col4_offset" value ="500.0"/>
+<constant name="DSbeam_vac_z1" value ="box1_length - Col4_offset"/>
+<constant name="DSbeam_vac_r2" value ="100."/> <!-- 200mm diameter spread of vertices as Nitrogen nuclear scattering sources - see March 9 detector meeting slides from Ciprian 3/14/2018 -->
+
+<constant name="DSbeam_vac_z2" value ="box2_length"/>
+<position name="DSbeam_vac_subpos" unit="mm" x="0" y="0" z="DSbeam_vac_z1/2 + DSbeam_vac_z2/2"/>
+<position name="DSbeam_vac_pos" unit="mm" x="0" y="0" z="Col4_offset/2"/>
 
 <position name="posCOIL_X"   x="seg_X_radius"                                y="0" z="seg_X_z-DOFFSET/10." unit="cm"/>
 <position name="posCOIL_Y"   x="seg_Y_radius"                                y="0" z="seg_Y_z-DOFFSET/10." unit="cm"/>
@@ -710,13 +718,26 @@
 
     <box lunit="mm" name="box1" x="box1_width" y="box1_height" z="box1_length"/> 
     <box lunit="mm" name="box2" x="box2_width" y="box2_height" z="box2_length"/> 
-    <box lunit="mm" name="box3" x="box2_width - 10" y="box2_height - 10" z="box2_length - 10"/> 
+    <cone lunit="mm" aunit="deg" name="DSbeam_vac1" rmin1="0.0" rmax1="DSbeam_vac_r1U" rmin2="0.0" rmax2="DSbeam_vac_r1D" z="DSbeam_vac_z1" deltaphi="360" startphi="0"/>
+    <tube lunit="mm" aunit="deg" name="DSbeam_vac2" rmin="0.0" rmax="DSbeam_vac_r2" z="DSbeam_vac_z2" deltaphi="360" startphi="0"/>
+    
+    <union name="DSbeam_vac">
+        <first ref="DSbeam_vac1"/>
+        <second ref="DSbeam_vac2"/>
+        <positionref ref="DSbeam_vac_subpos"/>  
+    </union> 
 
-    <union name="tubeDownstream">
+    <union name="tubeDownstream_sub">
         <first ref="box1"/>
         <second ref="box2"/>
         <positionref ref="tubeDownstreamPos"/>  
     </union> 
+
+    <subtraction name="tubeDownstream">
+        <first ref="tubeDownstream_sub"/>
+        <second ref="DSbeam_vac"/>
+        <positionref ref="DSbeam_vac_pos"/>  
+    </subtraction> 
 
 <!--    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="1000" rmin="0" startphi="0" z="7865.68"/> -->
 
@@ -969,19 +990,9 @@
 	<!-- <auxiliary auxtype="DetNo" auxvalue="201"/> -->
     </volume>
 
-    <volume name="logicBox3">
-      <materialref ref="G4_AIR"/>
-      <solidref ref="box3"/>
-    </volume>
-
-    
     <volume name="logicDownstream">
-      <materialref ref="VacuumColl"/>
+      <materialref ref="G4_AIR"/>
       <solidref ref="tubeDownstream"/>
-      <physvol name="box3Phys">
-        <volumeref ref="logicBox3"/>
-        <positionref ref="tubeDownstreamPos"/>
-      </physvol>
       <physvol name="DScoil_0">
         <volumeref ref="logicDScoil_0"/>
         <positionref ref="CENTER"/>
