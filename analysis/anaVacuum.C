@@ -1,22 +1,29 @@
 void anaVacuum(){
-  // TFile *finV=TFile::Open("remollout_VacTst_Moller_Vac.root","READ");
-  // TFile *finC=TFile::Open("remollout_VacTst_Moller_Can.root","READ");
-  // TFile *finA=TFile::Open("remollout_VacTst_Moller_Air.root","READ");
-  // TFile *finV=TFile::Open("remollout_VacTst_epElastic_Vac.root","READ");
-  // TFile *finC=TFile::Open("remollout_VacTst_epElastic_Can.root","READ");
-  // TFile *finA=TFile::Open("remollout_VacTst_epElastic_Air.root","READ");
-  TFile *finV=TFile::Open("remollout_VacTst_epInelastic_Vac.root","READ");
-  TFile *finC=TFile::Open("remollout_VacTst_epInelastic_Can.root","READ");
-  TFile *finA=TFile::Open("remollout_VacTst_epInelastic_Air.root","READ");
+  // TFile *finV=TFile::Open("../output/remollout_VacTst_Moller_Vac.root","READ");
+  // TFile *finC=TFile::Open("../output/remollout_VacTst_Moller_Can.root","READ");
+  // TFile *finA=TFile::Open("../output/remollout_VacTst_Moller_Air.root","READ");
+
+  TFile *finV=TFile::Open("../output/remollout_VacTst_epElastic_Vac.root","READ");
+  TFile *finC=TFile::Open("../output/remollout_VacTst_epElastic_beamline_Can.root","READ");
+  TFile *finA=TFile::Open("../output/remollout_VacTst_epElastic_beamline_Air.root","READ");
+  // TFile *finC=TFile::Open("../output/remollout_VacTst_epElastic_Can.root","READ");
+  // TFile *finA=TFile::Open("../output/remollout_VacTst_epElastic_Air.root","READ");
+
+  // TFile *finV=TFile::Open("../output/remollout_VacTst_epInelastic_Vac.root","READ");
+  // TFile *finC=TFile::Open("../output/remollout_VacTst_epInelastic_beamline_Can.root","READ");
+  // TFile *finA=TFile::Open("../output/remollout_VacTst_epInelastic_beamline_Air.root","READ");
+  // TFile *finC=TFile::Open("../output/remollout_VacTst_epInelastic_Can.root","READ");
+  // TFile *finA=TFile::Open("../output/remollout_VacTst_epInelastic_Air.root","READ");
+
   TTree *tV=(TTree*)finV->Get("T");
   TTree *tC=(TTree*)finC->Get("T");
   TTree *tA=(TTree*)finA->Get("T");
 
   gStyle->SetOptStat("e");
   double zhigh=2e9;
-  string tgtCuts="rate*(hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz<1)";
-  string NoNtgtCuts="rate*(hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz>1)";
-  string defaultCuts="rate*(hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2)";
+  string tgtCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz<1)";
+  string NoNtgtCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz>1)";
+  string defaultCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2)";
   TCanvas *c1=new TCanvas();
   c1->Divide(3);
   c1->cd(1);
@@ -201,6 +208,9 @@ void anaVacuum(){
   thTgTV->DrawCopy("h&&same");
   thTgTC->DrawCopy("h&&same");
   gPad->SetLogy(1);
+  cout<<"Percent of contributions with tgt source(Vac): "<<thTgTV->Integral()/thV->Integral()<<endl;
+  cout<<"Percent of contributions with tgt source(Air): "<<thTgTA->Integral()/thA->Integral()<<endl;
+  cout<<"Percent of contributions with tgt source(Can): "<<thTgTC->Integral()/thC->Integral()<<endl;
 
   TCanvas *c42=new TCanvas();
   TH1D *thNoNtgtV=new TH1D("thNoNtgtV",";theta [deg]",180,0,90);
@@ -216,6 +226,12 @@ void anaVacuum(){
   thNoNtgtV->DrawCopy("h&&same");
   thNoNtgtC->DrawCopy("h&&same");
   gPad->SetLogy(1);
+  cout<<"Percent of contributions with non tgt source(Vac): "<<thNoNtgtV->Integral()/thV->Integral()
+      <<"\tTotal rate compared to vacuum\t"<<thV->Integral()/thV->Integral()<<endl;
+  cout<<"Percent of contributions with non tgt source(Air): "<<thNoNtgtA->Integral()/thA->Integral()
+      <<"\tTotal rate compared to vacuum\t"<<thA->Integral()/thV->Integral()<<endl;
+  cout<<"Percent of contributions with non tgt source(Can): "<<thNoNtgtC->Integral()/thC->Integral()
+      <<"\tTotal rate compared to vacuum\t"<<thC->Integral()/thV->Integral()<<endl;
 
   TCanvas *c7=new TCanvas();
   c7->Divide(3);
@@ -279,6 +295,47 @@ void anaVacuum(){
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
+
+  TCanvas *c91=new TCanvas();
+  c91->Divide(3);
+  c91->cd(1);
+  TH2D *rzSrcV=new TH2D("rzSrcV",";z[m];r[m]",200,-1,30,200,0,4);
+  tV->Project("rzSrcV","sqrt(hit.vy*hit.vy + hit.vx*hit.vx):hit.vz",defaultCuts.c_str());
+  rzSrcV->GetZaxis()->SetRangeUser(1,zhigh);
+  rzSrcV->DrawCopy("colz");
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  c91->cd(2);
+  TH2D *rzSrcC=new TH2D("rzSrcC",";z[m];r[m]",200,-1,30,200,0,4);
+  tC->Project("rzSrcC","sqrt(hit.vy*hit.vy + hit.vx*hit.vx):hit.vz",defaultCuts.c_str());
+  rzSrcC->GetZaxis()->SetRangeUser(1,zhigh);
+  rzSrcC->DrawCopy("colz");
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  c91->cd(3);
+  TH2D *rzSrcA=new TH2D("rzSrcA",";z[m];r[m]",200,-1,30,200,0,4);
+  tA->Project("rzSrcA","sqrt(hit.vy*hit.vy + hit.vx*hit.vx):hit.vz",defaultCuts.c_str());
+  rzSrcA->GetZaxis()->SetRangeUser(1,zhigh);
+  rzSrcA->DrawCopy("colz");
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+
+  TCanvas *c92=new TCanvas();
+  TH1D *rSrcV=new TH1D("rSrcV",";source r [m]",100,-1,4);
+  TH1D *rSrcC=new TH1D("rSrcC",";source r [m]",100,-1,4);
+  TH1D *rSrcA=new TH1D("rSrcA",";source r [m]",100,-1,4);
+  tV->Project("rSrcV","sqrt(hit.vy*hit.vy + hit.vx*hit.vx)",defaultCuts.c_str());
+  tC->Project("rSrcC","sqrt(hit.vy*hit.vy + hit.vx*hit.vx)",defaultCuts.c_str());
+  tA->Project("rSrcA","sqrt(hit.vy*hit.vy + hit.vx*hit.vx)",defaultCuts.c_str());
+  rSrcV->SetLineColor(1);
+  rSrcC->SetLineColor(4);
+  rSrcA->SetLineColor(2);
+  rSrcV->DrawCopy("h");
+  rSrcC->DrawCopy("h&&same");
+  rSrcA->DrawCopy("h&&same");
 
   TCanvas *c10=new TCanvas();
   TH1D *pTpV=new TH1D("pTpV",";pT [%]",100,0,1);
