@@ -17,9 +17,14 @@ void drawOneProc(string process,TCanvas *c1){
   TH1D *hr[3], *dr[3];
   TH1D *ha[3], *da[3];
   string condition[3]={"Vac","Air","Can"};
+  if(process == "epElastic" || process == "epInelastic"){
+    condition[1]="beamline_Air";
+    condition[2]="beamline_Can";
+  }
   string drawOpt[3]={"h","h&&same","h&&same"};
   int color[3]={1,2,4};
   int marker[3]={20,21,24};
+  double rates[3]={0,0,0};
 
   for(int i=0;i<3;i++){
     f[i]=TFile::Open(Form("../output/remollout_VacTst_%s_%s_detAna.root",process.c_str(),condition[i].c_str()),"READ");
@@ -31,6 +36,9 @@ void drawOneProc(string process,TCanvas *c1){
     hr[i]->SetMarkerStyle(marker[i]);
     c1->cd(1);
     hr[i]->DrawCopy(drawOpt[i].c_str());
+    int b1 = hr[i]->GetXaxis()->FindBin(0.69);
+    int b2 = hr[i]->GetXaxis()->FindBin(1.20);
+    rates[i] = hr[i]->Integral(b1,b2);
 
     ha[i]=(TH1D*)f[i]->Get("QA/rRateAsym");
     ha[i]->Rebin(2);
@@ -63,4 +71,6 @@ void drawOneProc(string process,TCanvas *c1){
     c1->cd(4);
     da[i]->DrawCopy(drawOpt[i].c_str());
   }
+  cout<<process<<"\tRates (V,A,C):\t"<<rates[0]<<"\t"<<rates[1]<<"\t"<<rates[2]<<endl;
+  cout<<process<<"\tratios A/V C/V:\t"<<rates[1]/rates[0]<<"\t"<<rates[2]/rates[0]<<endl;
 }
