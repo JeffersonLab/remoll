@@ -119,6 +119,9 @@ add_library(remollroot SHARED ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh ${l
 target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 
+add_executable(detAna analysis/detAna.cc)
+target_link_libraries(detAna ${ROOT_LIBRARIES})
+
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
 # build remoll. This is so that we can run the executable directly because it
