@@ -79,7 +79,11 @@
   <element Z="13" formula="Al" name="Aluminium" >
     <atom value="26.98" />
   </element>
-
+ 
+  <element Z="13" formula="Al" name="Aluminum" >
+    <atom value="26.98" />
+  </element>
+  
   <isotope name="Si28" Z="14" N="28">
     <atom type="A" value="27.98"/>
   </isotope>
@@ -229,7 +233,10 @@
     <fraction ref="N15" n="0.0037" />
   </element>
 
-
+  <material Z="13" name="Aluminium" state="solid">
+            <D unit="g/cm3" value="2.70"/>
+            <atom unit="g/mole" value="26.98"/>
+  </material> 
   
   <material Z="1" name="VacuumTarg" state="gas">
     <T unit="K" value="2.73"/>
@@ -237,6 +244,7 @@
     <D unit="g/cm3" value="1e-25"/>
     <atom unit="g/mole" value="1.01"/>
   </material>
+  
   <material Z="1" name="LiquidHydrogen" state="liquid">
     <T unit="K" value="20.27"/>
     <D unit="g/cm3" value="0.0708"/>
@@ -411,6 +419,14 @@
     <fraction n="0.9500" ref="Tungsten"/>
     <fraction n="0.015" ref="Copper"/>
     <fraction n="0.035" ref="Nickel"/>
-  </material>
+  </material> 
+
+  <!--  <material Z="10" name="Water" state="liquid">
+    <T unit="K" value="298"/>
+    <P unit="pascal" value="101325"/> 
+    <D unit="g/cm3" value="1"/>
+    <atom unit="g/mole" value="18"/>
+  </material>    
+  -->
 
 </materials>

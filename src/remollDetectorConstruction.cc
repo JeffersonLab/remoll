@@ -42,7 +42,7 @@
 #include "G4Colour.hh"
 
 #define __DET_STRLEN 200
-#define __MAX_DETS 5000
+#define __MAX_DETS 10000
 
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
