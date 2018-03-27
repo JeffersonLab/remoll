@@ -1001,8 +1001,9 @@
       <zplane rmin="DSbeampipe_3_part4_rmin" rmax="DSbeampipe_3_part4_rmax" z="DSbeampipe_3_part1_length + 0.1 + DSbeampipe_3_part2_length + 0.1 + DSbeampipe_3_part3_length + 0.1"/> 
       <zplane rmin="DSbeampipe_3_part4_rmin" rmax="DSbeampipe_3_part4_rmax" z="DSbeampipe_3_part1_length + 0.1 + DSbeampipe_3_part2_length + 0.1 + DSbeampipe_3_part3_length + 0.1 + DSbeampipe_3_part4_length"/>
     </polycone>
-
     <!--End of beampipe that is not in use -->
+
+
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="shield_DS_beampipe_solid"> 
       <zplane rmin="shield_DS_beampipe_p1_US_rmin" rmax="shield_DS_beampipe_p1_US_rmax" z="0"/> 
       <zplane rmin="shield_DS_beampipe_p1_DS_rmin" rmax="shield_DS_beampipe_p1_DS_rmax" z="shield_DS_beampipe_p1_length"/> 
@@ -1276,8 +1277,8 @@
     <!-- Local shielding solids -->
     <box lunit="mm" name="boxDSShield1_local_solid_1" x="DSShield_local_width" y="DSShield_local_height" z="DSShield_local_length"/>
     <box lunit="mm" name="boxDSShield1_polylocal_solid_1" x="DSShield_polylocal_width" y="DSShield_polylocal_height" z="DSShield_polylocal_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_local_opening_solid" rmax="DSShield_local_inner_rmax" rmin="0" startphi="0" z="DSShield_local_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_polylocal_opening_solid" rmax="DSShield_polylocal_inner_rmax" rmin="0" startphi="0" z="DSShield_polylocal_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_local_opening_solid" rmax="DSShield_local_inner_rmax" rmin="0" startphi="0" z="DSShield_local_length + 10.0"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_polylocal_opening_solid" rmax="DSShield_polylocal_inner_rmax" rmin="0" startphi="0" z="DSShield_polylocal_length + 10.0"/>
 
     <subtraction name ="boxDSShield1_local_solid">
       <first ref="boxDSShield1_local_solid_1"/>
