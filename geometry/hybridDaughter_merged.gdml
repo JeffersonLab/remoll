@@ -244,7 +244,7 @@
     <constant name="AlCan_height" value="3251.2"/>
     <constant name="AlCan_US_Opening_Bore_R" value="508/2"/>
     <constant name="AlCan_DS_Opening_Bore_R" value="1219.2/2"/>
-    <constant name="AlCan_opening_sub_length" value="25.4"/>
+    <constant name="AlCan_opening_sub_length" value="25.4 + 1.0"/>
     <constant name="AlCan_x_center_offset" value="0.0"/>
     <constant name="AlCan_y_center_offset" value="228.6"/>
     <constant name="AlCan_z_center_offset" value="13500.41 - DOFFSET + AlCan_conflict_reduction/2"/> <!-- 500 mm downstream shift to avoid conflicts -->
