@@ -1,15 +1,21 @@
 void anaVacuum(){
   // TFile *finV=TFile::Open("../output/remollout_VacTst_Moller_Vac.root","READ");
+  // TFile *finC=TFile::Open("../output/remollout_VacTst_Moller_kryp_beamline_Can.root","READ");
+  // TFile *finA=TFile::Open("../output/remollout_VacTst_Moller_kryp_beamline_Air.root","READ");
   // TFile *finC=TFile::Open("../output/remollout_VacTst_Moller_Can.root","READ");
   // TFile *finA=TFile::Open("../output/remollout_VacTst_Moller_Air.root","READ");
 
   TFile *finV=TFile::Open("../output/remollout_VacTst_epElastic_Vac.root","READ");
-  TFile *finC=TFile::Open("../output/remollout_VacTst_epElastic_beamline_Can.root","READ");
-  TFile *finA=TFile::Open("../output/remollout_VacTst_epElastic_beamline_Air.root","READ");
+  TFile *finC=TFile::Open("../output/remollout_VacTst_epElastic_kryp_beamline_Can.root","READ");
+  TFile *finA=TFile::Open("../output/remollout_VacTst_epElastic_kryp_beamline_Air.root","READ");
+  // TFile *finC=TFile::Open("../output/remollout_VacTst_epElastic_beamline_Can.root","READ");
+  // TFile *finA=TFile::Open("../output/remollout_VacTst_epElastic_beamline_Air.root","READ");
   // TFile *finC=TFile::Open("../output/remollout_VacTst_epElastic_Can.root","READ");
   // TFile *finA=TFile::Open("../output/remollout_VacTst_epElastic_Air.root","READ");
 
   // TFile *finV=TFile::Open("../output/remollout_VacTst_epInelastic_Vac.root","READ");
+  // TFile *finC=TFile::Open("../output/remollout_VacTst_epInelastic_kryp_beamline_Can.root","READ");
+  // TFile *finA=TFile::Open("../output/remollout_VacTst_epInelastic_kryp_beamline_Air.root","READ");
   // TFile *finC=TFile::Open("../output/remollout_VacTst_epInelastic_beamline_Can.root","READ");
   // TFile *finA=TFile::Open("../output/remollout_VacTst_epInelastic_beamline_Air.root","READ");
   // TFile *finC=TFile::Open("../output/remollout_VacTst_epInelastic_Can.root","READ");
@@ -20,10 +26,31 @@ void anaVacuum(){
   TTree *tA=(TTree*)finA->Get("T");
 
   gStyle->SetOptStat("e");
-  double zhigh=2e9;
+  double zhigh=1e11;
   string tgtCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz<1)";
   string NoNtgtCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz>1)";
   string defaultCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2)";
+
+  // string tgtCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.935 && hit.r<1.1 && hit.vz<1)";
+  // string NoNtgtCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.935 && hit.r<1.1 && hit.vz>1)";
+  // string defaultCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.935 && hit.r<1.1)";
+
+  TCanvas *c0=new TCanvas();
+  TH1D *rateV = new TH1D("rateV","rate weighted dist",100,0.55,1.2);
+  TH1D *rateA = new TH1D("rateA","rate weighted dist",100,0.55,1.2);
+  TH1D *rateC = new TH1D("rateC","rate weighted dist",100,0.55,1.2);
+  tV->Project("rateV","hit.r",defaultCuts.c_str());
+  tA->Project("rateA","hit.r",defaultCuts.c_str());
+  tC->Project("rateC","hit.r",defaultCuts.c_str());
+  rateA->SetLineColor(2);
+  rateV->SetLineColor(1);
+  rateA->SetLineColor(2);
+  rateC->SetLineColor(4);
+  rateA->DrawCopy("h");
+  rateV->DrawCopy("h&&same");
+  rateC->DrawCopy("h&&same");
+  gPad->SetLogy(1);
+
   TCanvas *c1=new TCanvas();
   c1->Divide(3);
   c1->cd(1);
@@ -296,7 +323,7 @@ void anaVacuum(){
   gPad->SetGridx(1);
   gPad->SetGridy(1);
 
-  TCanvas *c91=new TCanvas();
+  TCanvas *c91=new TCanvas("c91","Full detector plane");
   c91->Divide(3);
   c91->cd(1);
   TH2D *rzSrcV=new TH2D("rzSrcV",";z[m];r[m]",200,-1,30,200,0,4);
