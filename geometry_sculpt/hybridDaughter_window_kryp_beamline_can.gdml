@@ -306,7 +306,7 @@
 <!-- NEW! FIXME Cameron 2/5/2018 -->
 
 <constant name="box1_width" value="2844.8"/>
-<constant name="box1_height" value="3251.2"/>
+<constant name="box1_height" value="3251.2 + 500.0"/>
 <constant name="box1_length" value="7865.68"/>
 <constant name="box2_width" value="5000.0"/>
 <constant name="box2_height" value="7000.0"/>
@@ -317,11 +317,31 @@
 <position name="DSbeam_vac_pos" unit="mm" x="0" y="0" z="0"/>
 <position name="DSbeam_pipe_pos" unit="mm" x="0" y="0" z="box1_length/2 + box2_length/2"/>
 
-<constant name="window_thickness" value="5.0"/>
-<constant name="window_inner_radius" value="1.*DSbeam_vac_r + 0.1"/>
-<constant name="window_outer_radius" value="700.0"/>
-<constant name="window_z_pos" value ="1.*box1_length/2 - 1.*window_thickness"/>
-<position name="window_pos" unit="mm" x="0" y="0" z="window_z_pos"/>
+
+    <!-- 4-5-2018 - Aluminum Hybrid Magnet Vacuum Chamber -->
+    <constant name="AlCan_side_thickness" value="25.4"/>
+    <constant name="AlCan_top_thickness" value="38.1"/>
+    <constant name="AlCan_bottom_thickness" value="25.4"/>
+    <constant name="AlCan_conflict_reduction" value="800"/>
+    <constant name="AlCan_length" value="8574.02-AlCan_conflict_reduction - 700.0"/> <!-- 1000mm length decrease to avoid conflicts -->
+    <constant name="AlCan_width" value="2844.8 - 200.0"/>
+    <constant name="AlCan_height" value="3251.2"/>
+    <constant name="AlCan_US_Opening_Bore_R" value="508/2"/>
+    <constant name="AlCan_DS_Opening_Bore_R" value="1219.2/2"/>
+    <constant name="AlCan_opening_sub_length" value="25.4"/>
+    <constant name="AlCan_x_center_offset" value="0.0"/>
+    <constant name="AlCan_y_center_offset" value="228.6"/>
+    <constant name="AlCan_z_center_offset" value="13500.41 - DOFFSET + AlCan_conflict_reduction/2 - 200"/> <!-- 500 mm downstream shift to avoid conflicts -->
+    <position name="boxAlCan_sub_trans" unit="mm" x="0" y="-1*AlCan_top_thickness/2 + AlCan_bottom_thickness/2" z="0"/>
+    <position name="boxAlCan_US_opening_trans" unit="mm" x="0" y="-228.6" z="-1*AlCan_length/2 + AlCan_side_thickness/2"/>
+    <position name="boxAlCan_DS_opening_trans" unit="mm" x="0" y="-228.6" z="1*AlCan_length/2 - AlCan_side_thickness/2"/>
+    <position name="boxAlCan_center" unit="mm" x="AlCan_x_center_offset" y="AlCan_y_center_offset" z="AlCan_z_center_offset"/>
+
+  <constant name="window_thickness" value="5.0"/>
+  <constant name="window_inner_radius" value="1.*DSbeam_vac_r + 0.1"/>
+  <constant name="window_outer_radius" value="AlCan_DS_Opening_Bore_R + 10"/>
+  <constant name="window_z_pos" value ="1.*box1_length/2 - 1.*window_thickness"/>
+  <position name="window_pos" unit="mm" x="0" y="0" z="window_z_pos"/>
 
 <position name="posCOIL_X"   x="seg_X_radius"                                y="0" z="seg_X_z-DOFFSET/10." unit="cm"/>
 <position name="posCOIL_Y"   x="seg_Y_radius"                                y="0" z="seg_Y_z-DOFFSET/10." unit="cm"/>
@@ -885,7 +905,35 @@
         <rotationref ref="ARotateZ_6"/>
     </union>
 
-</solids>
+
+
+    <!-- Aluminum Can solids -->
+    <box lunit="mm" name="boxAlCan_solid_1" x="AlCan_width" y="AlCan_height" z="AlCan_length"/>
+    <box lunit="mm" name="boxAlCan_solid_2" x="AlCan_width - 2*AlCan_side_thickness" y="AlCan_height - AlCan_top_thickness - AlCan_bottom_thickness" z="AlCan_length - 2*AlCan_side_thickness"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_US_opening_solid" rmax="AlCan_US_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_DS_opening_solid" rmax="AlCan_DS_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length"/>
+
+    <subtraction name ="boxAlCan_solid_3">
+      <first ref="boxAlCan_solid_1"/>
+      <second ref="boxAlCan_solid_2"/>
+      <positionref ref="boxAlCan_sub_trans" />
+    </subtraction>    
+ 
+    <subtraction name ="boxAlCan_solid_4">
+      <first ref="boxAlCan_solid_3"/>
+      <second ref="AlCan_US_opening_solid"/>
+      <positionref ref="boxAlCan_US_opening_trans" />
+    </subtraction>     
+    
+    <subtraction name ="boxAlCan_solid">
+      <first ref="boxAlCan_solid_4"/>
+      <second ref="AlCan_DS_opening_solid"/>
+      <positionref ref="boxAlCan_DS_opening_trans" />
+    </subtraction>     
+
+
+  
+  </solids>
 
 <structure>
      <volume name="logicDScoil_0">
@@ -996,7 +1044,18 @@
     <volume name="logicBox3">
       <materialref ref="G4_AIR"/>
       <solidref ref="box3"/>
+
     </volume>
+    
+    <volume name="boxAlCan_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="boxAlCan_solid"/>
+      <auxiliary auxtype="Color" auxvalue="pink"/> <!-- 
+      <auxiliary auxtype="SensDet" auxvalue="Aluminum_Can_Det"/> NEW Sensitive detector FIXME 
+      <auxiliary auxtype="DetNo" auxvalue="6030"/>  -->
+
+    </volume>
+ 
 
     <volume name="logicDSbeam_pipe">
       <materialref ref="Tungsten"/>
@@ -1026,6 +1085,7 @@
         <volumeref ref="logicBox3"/>
         <positionref ref="tubeDownstreamPos"/>
       </physvol>
+
       <physvol name="DScoil_0">
         <volumeref ref="logicDScoil_0"/>
         <positionref ref="CENTER"/>
@@ -1119,6 +1179,12 @@
 	<volumeref ref="logicpcoll2trap"/>
         <positionref ref="posPCOLL2TRAP"/>
       </physvol>
+      
+      <physvol>
+        <volumeref ref="boxAlCan_logic"/>
+        <positionref ref="boxAlCan_center"/>
+      </physvol>
+
 
    </volume>
 </structure>
