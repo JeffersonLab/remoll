@@ -1022,8 +1022,8 @@
     <volume name="logicUS_window">
 	<materialref ref="Aluminum"/>
 	<solidref ref="window_US"/> 
-	<!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
-	<!-- <auxiliary auxtype="DetNo" auxvalue="201"/> -->
+	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+	<auxiliary auxtype="DetNo" auxvalue="997"/>
     </volume>
 
 
