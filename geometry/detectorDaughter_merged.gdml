@@ -30,8 +30,7 @@
 <structure>
 
     <volume name="logicWasher_0">
-      <!-- <materialref ref="VacuumDet"/> -->
-      <materialref ref="Kryptonite"/>
+      <materialref ref="VacuumDet"/>
       <solidref ref="solWasher1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="28"/>
