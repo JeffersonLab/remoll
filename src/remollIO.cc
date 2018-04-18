@@ -37,7 +37,7 @@ remollIO::remollIO()
 {
     //  Set arrays to 0
     fNGenDetHit = 0;
-    fNGenDetSum = 0;
+//    fNGenDetSum = 0; //FIXME - removed by Cameron 4/18/2018 because array overflows are causing segfaults
 
     InitializeTree();
 
@@ -80,7 +80,7 @@ void remollIO::InitializeTree()
 
     fTree = new TTree("T", "Geant4 Moller Simulation");
 
-    fTree->SetMaxTreeSize(1900000000); // 1.9GB
+//    fTree->SetMaxTreeSize(1900000000); // 1.9GB
 
     // Event information
     fTree->Branch("rate",     &fEvRate,   "rate/D");
@@ -148,11 +148,12 @@ void remollIO::InitializeTree()
     fTree->Branch("hit.colCut",    &fCollCut,     "hit.colCut/I");
 
     // GenericDetectorSum
+/*  //FIXME - removed by Cameron 4/18/2018 because array overflows are causing segfaults 
     fTree->Branch("sum.n",    &fNGenDetSum,     "sum.n/I");
     fTree->Branch("sum.det",  &fGenDetSum_det,  "sum.det[sum.n]/I");
     fTree->Branch("sum.vid",  &fGenDetSum_id,   "sum.vid[sum.n]/I");
     fTree->Branch("sum.edep", &fGenDetSum_edep, "sum.edep[sum.n]/D");
-
+*/
     G4cout << "Initialized tree." << G4endl;
 }
 
@@ -173,7 +174,7 @@ void remollIO::Flush()
 {
     //  Set arrays to 0
     fNGenDetHit = 0;
-    fNGenDetSum = 0;
+//    fNGenDetSum = 0;//FIXME - removed by Cameron 4/18/2018 because array overflows are causing segfaults
     fCollCut = 1; // default
 }
 
@@ -324,6 +325,8 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit)
 
 void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit)
 {
+/*
+    //FIXME - removed by Cameron 4/18/2018 because array overflows are causing segfaults
     int n = fNGenDetSum;
     if( n > __IO_MAXHIT ){
         G4cerr << "WARNING: " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":  Buffer size exceeded!" << G4endl;
@@ -335,6 +338,7 @@ void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit)
     fGenDetSum_id[n]   = hit->fCopyID;
 
     fNGenDetSum++;
+*/
 }
 
 /*---------------------------------------------------------------------------------*/
