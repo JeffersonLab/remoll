@@ -36,10 +36,7 @@ remollGenPion::remollGenPion()
     fMessenger->DeclareMethod("piontype",&remollGenPion::SetPionTypeByString,"Generate pion type");
 }
 
-remollGenPion::~remollGenPion()
-{
-    delete fMessenger;
-}
+remollGenPion::~remollGenPion() { }
 
 void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // Generate Pion event
