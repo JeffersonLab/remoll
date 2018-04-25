@@ -98,9 +98,9 @@ void remollIO::FillTree(){
 
 void remollIO::Flush(){
     // Set individual structs to zero
-    static remollEvent_t ev0 = {0};
+    static remollEvent_t ev0 = { };
     fEv = ev0;
-    static remollBeamTarget_t bm0 = {0};
+    static remollBeamTarget_t bm0 = { };
     fBm = bm0;
 
     // Set arrays to 0
