@@ -38,7 +38,8 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 ROOT_GENERATE_DICTIONARY(
     remollDict                         # path to dictionary to generate
-    "include/remollRunData.hh"         # list of classes to process
+    "include/remolltypes.hh"           # list of classes to process
+    "include/remollRunData.hh"
     "include/remollTextFile.hh"
     LINKDEF "include/remollLinkDef.h"  # ROOT linkDef file
 )
