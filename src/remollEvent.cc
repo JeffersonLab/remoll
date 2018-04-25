@@ -21,9 +21,9 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
   for (size_t idx = 0; idx < fPartType.size(); idx++) {
     remollEventParticle_t part;
     part.pid = fPartType[idx]->GetPDGEncoding();
-    part.x = fPartPos[idx].x();
-    part.y = fPartPos[idx].y();
-    part.z = fPartPos[idx].z();
+    part.vx = fPartPos[idx].x();
+    part.vy = fPartPos[idx].y();
+    part.vz = fPartPos[idx].z();
     part.px = fPartRealMom[idx].x();
     part.py = fPartRealMom[idx].y();
     part.pz = fPartRealMom[idx].z();
