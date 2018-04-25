@@ -44,7 +44,7 @@ struct remollBeamTarget_t {
 // Primary particle structure
 struct remollEventParticle_t {
   int pid;
-  double x, y, z;
+  double vx, vy, vz;
   double px, py, pz;
   double th, ph, p;
   double tpx, tpy, tpz;
