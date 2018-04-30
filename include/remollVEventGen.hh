@@ -86,6 +86,7 @@ class remollVEventGen {
     protected:
 	// Generic messenger as protected to be used in derived classes
 	G4GenericMessenger* fMessenger;
+	G4GenericMessenger* fThisGenMessenger;
 };
 
 
