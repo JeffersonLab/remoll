@@ -21,6 +21,7 @@
 #include "remollGenPion.hh"
 #include "remollGenBeam.hh"
 #include "remollGenFlat.hh"
+#include "remollGenExternal.hh"
 #include "remollGenAl.hh"
 #include "remollGenLUND.hh"
 
@@ -76,8 +77,10 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
         fEventGen = new remollGenAl(1);
     }else if( genname == "elasticAl" ) {
         fEventGen = new remollGenAl(0);
+    }else if( genname == "external" ) {
+        fEventGen = new remollGenExternal();
     }else if( genname == "pion_LUND" ) {
-        fEventGen = new remollGenLUND();  
+        fEventGen = new remollGenLUND();
     }
 
     if( !fEventGen ) {
