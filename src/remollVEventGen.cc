@@ -35,14 +35,14 @@ remollVEventGen::remollVEventGen(const G4String name)
     fMessenger->DeclarePropertyWithUnit("phmax","deg",fPh_max,"Maximum generation phi angle");
     fMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
     fMessenger->DeclareMethod(
-        "printeventgen",
+        "printlimits",
         &remollVEventGen::PrintEventGen,
         "Print the event generator limits");
 
     // Create specific event generator messenger
     fThisGenMessenger = new G4GenericMessenger(this,"/remoll/" + name + "/","Remoll " + name +  " generator properties");
     fThisGenMessenger->DeclareMethod(
-        "printeventgen",
+        "printlimits",
         &remollVEventGen::PrintEventGen,
         "Print the event generator limits");
 
