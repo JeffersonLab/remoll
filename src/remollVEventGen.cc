@@ -41,6 +41,10 @@ remollVEventGen::remollVEventGen(const G4String name)
 
     // Create specific event generator messenger
     fThisGenMessenger = new G4GenericMessenger(this,"/remoll/" + name + "/","Remoll " + name +  " generator properties");
+    fThisGenMessenger->DeclareMethod(
+        "printeventgen",
+        &remollVEventGen::PrintEventGen,
+        "Print the event generator limits");
 
     fSampType       = kActiveTargetVolume;
     fApplyMultScatt = false;
