@@ -40,7 +40,9 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
       .SetDefaultValue("true");
 }
 
-remollGenericDetector::~remollGenericDetector(){
+remollGenericDetector::~remollGenericDetector()
+{
+  delete fMessenger;
 }
 
 void remollGenericDetector::Initialize(G4HCofThisEvent *){
