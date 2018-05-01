@@ -132,10 +132,9 @@ int main(int argc, char** argv) {
     if (macro.size())
     {
       // Run in batch mode
-      G4String command = "/control/execute ";
       // Copy contents of macro into buffer to be written out into ROOT file
       remollRun::GetRunData()->SetMacroFile(macro);
-      UImanager->ApplyCommand(command + macro);
+      UImanager->ExecuteMacroFile(macro);
     } else {
       // Define UI session for interactive mode
       G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
