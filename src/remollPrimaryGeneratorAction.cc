@@ -40,14 +40,26 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-    fMessenger->DeclareMethod("gen",&remollPrimaryGeneratorAction::SetGenerator,"Select physics generator");
+    fMessenger->DeclareMethod("gen",&remollPrimaryGeneratorAction::SetGenerator_Deprecated,"Select physics generator");
+
+    // Create event generator messenger
+    fEvGenMessenger = new G4GenericMessenger(this,"/remoll/evgen/","Remoll event generator properties");
+    fEvGenMessenger->DeclareMethod("set",&remollPrimaryGeneratorAction::SetGenerator,"Select physics generator");
 }
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
 {
+    if (fEvGenMessenger) delete fEvGenMessenger;
     if (fMessenger) delete fMessenger;
     if (fBeamTarg)  delete fBeamTarg;
     if (fEventGen)  delete fEventGen;
+}
+
+void remollPrimaryGeneratorAction::SetGenerator_Deprecated(G4String& genname)
+{
+    G4cerr << "The command `/remoll/gen` is deprecated." << G4endl;
+    G4cerr << "Instead use `/remoll/evgen/set`." << G4endl;
+    SetGenerator(genname);
 }
 
 void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)

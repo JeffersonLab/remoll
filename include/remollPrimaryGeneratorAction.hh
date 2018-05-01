@@ -25,6 +25,7 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     const remollEvent* GetEvent() const { return fEvent; }
 
     void SetGenerator(G4String&);
+    void SetGenerator_Deprecated(G4String&);
 
   private:
     G4ParticleGun* fParticleGun;
@@ -36,6 +37,7 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     remollEvent *fEvent;
 
     G4GenericMessenger* fMessenger;
+    G4GenericMessenger* fEvGenMessenger;
 };
 
 #endif
