@@ -57,11 +57,13 @@ void remollGenExternal::SetGenExternalFile(const G4String& filename)
 
   // Try to find tree in file
   fFile->GetObject("T",fTree);
-  fEntries = fTree->GetEntries();
   if (! fTree) {
     G4cerr << "Could not find tree T in event file " << filename << G4endl;
     return;
   }
+
+  // Get number of entries
+  fEntries = fTree->GetEntries();
 
   // Initialize tree
   if (fTree->GetBranch("hit")) {
