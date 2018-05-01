@@ -22,7 +22,7 @@ remollSteppingAction::~remollSteppingAction()
 void remollSteppingAction::InitializeMaterials()
 {
   // List of kryptonite materials
-  std::set<G4String> materials = {"Tungsten", "Pb", "Copper"};
+  std::set<G4String> materials = {"Tungsten", "Lead", "Copper"};
 
   // Find kryptonite materials in material tables
   G4MaterialTable* table = G4Material::GetMaterialTable();
@@ -32,7 +32,7 @@ void remollSteppingAction::InitializeMaterials()
       it != table->end(); it++) {
     if (materials.find((*it)->GetName()) != materials.end()) {
       fKryptoniteMaterials.insert(*it);
-      G4cout << "Treating " << (*it)->GetName() << " as kryptonite." << G4endl;
+      G4cout << "Adding " << (*it)->GetName() << " to list of kryptonite candidates." << G4endl;
     }
   }
 }
