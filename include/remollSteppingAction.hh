@@ -20,10 +20,15 @@ class remollSteppingAction : public G4UserSteppingAction
 
     void SetEnableKryptonite(G4bool k){ fEnableKryptonite = k; }
 
+    void AddKryptoniteCandidate(const G4String& name);
+    void DelKryptoniteCandidate(const G4String& name);
+    void ListKryptoniteCandidates();
+
   private:
     G4bool fDrawFlag;
 
     G4bool fEnableKryptonite;
+    std::set<G4String> fKryptoniteCandidates;
     std::set<G4Material*> fKryptoniteMaterials;
     void InitializeMaterials();
 

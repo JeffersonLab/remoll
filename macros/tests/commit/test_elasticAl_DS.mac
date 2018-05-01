@@ -26,7 +26,7 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite true
+/remoll/kryptonite/set true
 
 /remoll/filename test_elasticAl_DS.root
 

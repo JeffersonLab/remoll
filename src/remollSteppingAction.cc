@@ -9,9 +9,16 @@
 remollSteppingAction::remollSteppingAction()
 : fDrawFlag(false),fEnableKryptonite(true)
 {
+  AddKryptoniteCandidate("Tungsten");
+  AddKryptoniteCandidate("Copper");
+  AddKryptoniteCandidate("Lead");
+
   // Create generic messenger
-  fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-  fMessenger->DeclareProperty("kryptonite",fEnableKryptonite,"Treat W, Pb, Cu as kryptonite");
+  fMessenger = new G4GenericMessenger(this,"/remoll/kryptonite/","Remoll kryptonite properties");
+  fMessenger->DeclareProperty("set",fEnableKryptonite,"Treat materials as kryptonite");
+  fMessenger->DeclareMethod("add",&remollSteppingAction::AddKryptoniteCandidate,"Add specified material to list of kryptonite candidates");
+  fMessenger->DeclareMethod("del",&remollSteppingAction::DelKryptoniteCandidate,"Remove specified material from list of kryptonite candidates");
+  fMessenger->DeclareMethod("list",&remollSteppingAction::ListKryptoniteCandidates,"List kryptonite candidate materials");
 }
 
 remollSteppingAction::~remollSteppingAction()
@@ -19,20 +26,41 @@ remollSteppingAction::~remollSteppingAction()
   delete fMessenger;
 }
 
+void remollSteppingAction::AddKryptoniteCandidate(const G4String& name)
+{
+  G4cout << "Adding " << name << " to list of kryptonite candidates." << G4endl;
+  fKryptoniteCandidates.insert(name);
+  InitializeMaterials();
+}
+
+void remollSteppingAction::DelKryptoniteCandidate(const G4String& name)
+{
+  G4cout << "Removing " << name << " from list of kryptonite candidates." << G4endl;
+  fKryptoniteCandidates.erase(name);
+  InitializeMaterials();
+}
+
+void remollSteppingAction::ListKryptoniteCandidates()
+{
+  G4cout << "List of kryptonite candidate materials:" << G4endl;
+  for (std::set<G4String>::const_iterator
+      it  = fKryptoniteCandidates.begin();
+      it != fKryptoniteCandidates.end();
+      it++)
+    G4cout << *it << G4endl;
+}
+
 void remollSteppingAction::InitializeMaterials()
 {
-  // List of kryptonite materials
-  std::set<G4String> materials = {"Tungsten", "Lead", "Copper"};
-
   // Find kryptonite materials in material tables
   G4MaterialTable* table = G4Material::GetMaterialTable();
-  G4cout << "Loading kryptonite materials table..." << G4endl;
+  G4cout << "Regenerating table of kryptonite material candidate pointers..." << G4endl;
+  fKryptoniteMaterials.clear();
   for (G4MaterialTable::const_iterator
       it  = table->begin();
       it != table->end(); it++) {
-    if (materials.find((*it)->GetName()) != materials.end()) {
+    if (fKryptoniteCandidates.find((*it)->GetName()) != fKryptoniteCandidates.end()) {
       fKryptoniteMaterials.insert(*it);
-      G4cout << "Adding " << (*it)->GetName() << " to list of kryptonite candidates." << G4endl;
     }
   }
 }
