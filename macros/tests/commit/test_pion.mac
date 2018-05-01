@@ -25,7 +25,7 @@
 #/remoll/emin 80.0 MeV
 #/remoll/evgen/set inelastic 
 /remoll/evgen/set pion
-#/remoll/piontype pi-
+#/remoll/evgen/pion/settype pi-
 #/remoll/evgen/set pion_LUND
 #/remoll/evgen/set inelasticAl
 #/remoll/evgen/set quasielasticAl
