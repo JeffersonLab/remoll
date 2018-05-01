@@ -25,14 +25,14 @@
 /remoll/beamene 11
 
 /remoll/beamene 5
-/remoll/gen beam
+/remoll/evgen/set beam
 /remoll/filename test_beam_5GeV_1.root
 /run/beamOn 100
 
 
 /remoll/beamene 11
 
-/remoll/gen beam
+/remoll/evgen/set beam
 /remoll/beamene 5
 /remoll/filename test_beam_5GeV_2.root
 /run/beamOn 100

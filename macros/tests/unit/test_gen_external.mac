@@ -1,3 +1,11 @@
 /run/initialize
-/remoll/gen external
-/remoll/external/detid 28
+/remoll/evgen/set moller
+/remoll/filename remollin.root
+/run/beamOn 100
+/remoll/filename remollout.root
+
+/remoll/evgen/set external
+/run/beamOn 0
+/remoll/evgen/external/file remollin.root
+/remoll/evgen/external/detid 28
+/run/beamOn 1

@@ -1,2 +1,3 @@
 /run/initialize
-/remoll/gen moller
+/remoll/evgen/set moller
+/run/beamOn 1

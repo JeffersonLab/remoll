@@ -1,2 +1,3 @@
 /run/initialize
-/remoll/gen elastic
+/remoll/evgen/set elastic
+/run/beamOn 1
