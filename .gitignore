@@ -34,3 +34,16 @@ rad_analysis
 
 #ignore log files directory
 log
+
+#ignore project files for eclipse
+.cproject
+.project
+
+#ignore dot files
+*.dot
+
+#sample_gdml output
+sample_gdml.*
+
+#ignore log files
+*.log

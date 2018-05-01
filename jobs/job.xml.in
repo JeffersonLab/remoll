@@ -1,5 +1,5 @@
 <Request>
-  <Email email="kbartlet@jlab.org" request="false" job="true"/>
+  <Email email="mundy@jlab.org" request="false" job="true"/>
   <Project name="moller12gev"/>
   <Track name="simulation"/>
   <Name name="%name%_%jobid%"/>
@@ -16,9 +16,9 @@ rm -f rootfiles/%name%_%jobid%_workdir
   <TimeLimit unit="minutes" time="4320"/>
 
   <Job>
-    <Output src="%name%_%jobid%.root" dest="mss:/mss/home/kbartlet/rootfiles/%name%/%name%_%jobid%.root"/>
-    <Stdout dest="/u/scratch/kbartlet/output/%name%_%jobid%.out"/>
-    <Stderr dest="/u/scratch/kbartlet/output/%name%_%jobid%.err"/>
+    <Output src="%name%_%jobid%.root" dest="mss:/mss/home/mundy/rootfiles/%name%/%name%_%jobid%.root"/>
+    <Stdout dest="/u/home/mundy/remoll/moller_output/250_mm/%name%_%jobid%.out"/>
+    <Stderr dest="/u/home/mundy/remoll/moller_output/250_mm/%name%_%jobid%.err"/>
   </Job>
 
 </Request>

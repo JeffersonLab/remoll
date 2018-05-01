@@ -1,11 +1,11 @@
 #include "remollGenericDetector.hh"
 
-#include "remollGenericDetectorHit.hh"
-#include "remollGenericDetectorSum.hh"
-
 #include "G4OpticalPhoton.hh"
 #include "G4SDManager.hh"
 #include "G4GenericMessenger.hh"
+
+#include "remollGenericDetectorHit.hh"
+#include "remollGenericDetectorSum.hh"
 
 #include <sstream>
 
@@ -15,8 +15,9 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   fDetNo = detnum;
   assert( fDetNo > 0 );
 
-  //    fTrackSecondaries = false;
-  fTrackSecondaries = true;
+  fDetectSecondaries = true;
+  fDetectOpticalPhotons = false;
+  fDetectLowEnergyNeutrals = false;
 
   std::stringstream genhit;
   genhit << "genhit_" << detnum;
@@ -65,8 +66,15 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     // Ignore optical photons as hits (but still simulate them
     // so they can knock out electrons of the photocathode)
-    if (step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) {
-      //std::cout << "Return on optical photon" << std::endl;
+    if (! fDetectOpticalPhotons
+        && step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) {
+      return false;
+    }
+
+    // Ignore neutral particles below 0.1 MeV
+    G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
+    if (! fDetectLowEnergyNeutrals
+        && charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
       return false;
     }
 
@@ -85,7 +93,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // that have just entered our boundary
     badhit = true;
     if( track->GetCreatorProcess() == 0 ||
-	    (point->GetStepStatus() == fGeomBoundary && fTrackSecondaries)
+	(fDetectSecondaries && point->GetStepStatus() == fGeomBoundary)
       ){
 	badhit = false;
     }
@@ -123,9 +131,17 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     if( !badhit ){
 	// Hit
-	thishit->f3X = point->GetPosition();
-	thishit->f3V = track->GetVertexPosition();
-	thishit->f3P = track->GetMomentum();
+
+	// Positions
+	G4ThreeVector global_position = point->GetPosition();
+	G4ThreeVector local_position = point->GetTouchable()->GetHistory()->GetTopTransform().TransformPoint(global_position);
+	thishit->f3X  = global_position;
+	thishit->f3Xl = local_position;
+
+	thishit->f3V  = track->GetVertexPosition();
+	thishit->f3P  = track->GetMomentum();
+
+        thishit->fTime = point->GetGlobalTime();
 
 	thishit->fP = track->GetMomentum().mag();
 	thishit->fE = track->GetTotalEnergy();

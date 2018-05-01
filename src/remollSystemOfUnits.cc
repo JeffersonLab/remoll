@@ -6,6 +6,8 @@ remollUnits_t::remollUnits_t():
     ppm (remoll::ppm),
     ppb (remoll::ppb),
     // Distance
+    nm  (CLHEP::nm),
+    um  (CLHEP::um),
     mm  (CLHEP::mm),
     cm  (CLHEP::cm),
     m   (CLHEP::m),
@@ -18,6 +20,7 @@ remollUnits_t::remollUnits_t():
     cm3 (CLHEP::cm3),
     m3  (CLHEP::m3),
     // Energy
+    eV (CLHEP::eV),
     keV (CLHEP::keV),
     MeV (CLHEP::MeV),
     GeV (CLHEP::GeV),

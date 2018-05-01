@@ -42,6 +42,7 @@ ROOT_GENERATE_DICTIONARY(
     "include/remollRunData.hh"
     "include/remollTextFile.hh"
     LINKDEF "include/remollLinkDef.h"  # ROOT linkDef file
+    OPTIONS -p
 )
 
 #----------------------------------------------------------------------------
@@ -101,7 +102,6 @@ endif()
 
 include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
 
-
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
@@ -109,16 +109,20 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
-file(GLOB libsources ${PROJECT_SOURCE_DIR}/src/remollRunData.cc ${PROJECT_SOURCE_DIR}/src/remollTextFile.cc)
-file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh)
-
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(remoll remoll.cc ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh ${sources} ${headers} remollDict.cxx)
-add_library(remollroot SHARED ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh ${libsources} ${libheaders} remollDict.cxx)
-target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
-target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+add_library(remoll-lib SHARED ${sources} ${headers} remollDict.cxx)
+set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
+target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+
+add_executable(remoll-bin remoll.cc)
+set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
+target_link_libraries(remoll-bin remoll-lib)
+
+add_executable(reroot-bin reroot.cc)
+set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
+target_link_libraries(reroot-bin remoll-lib)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -147,6 +151,15 @@ set(REMOLL_SCRIPTS
     geometry_sculpt/hybridDaughter.gdml
     geometry_sculpt/targetDaughter.gdml
     geometry_sculpt/upstreamDaughter.gdml
+    geometry_sculpt/pionDetectorCalorimeter.gdml
+    geometry_sculpt/pionDetectorGEM.gdml
+    geometry_sculpt/pionDetectorGEMOpenSector.gdml
+    geometry_sculpt/pionDetectorLucite.gdml
+    geometry_sculpt/pionDetectorLuciteSector.gdml
+    geometry_sculpt/pionDetectorSystem.gdml
+    geometry_sculpt/pionDetectorTS.gdml
+    geometry_sculpt/pionDetectorTSOpenSector.gdml
+    geometry_sculpt/pionDetectorVirtualDet.gdml
     geometry_sculpt/schema/gdml.xsd
     geometry_sculpt/schema/gdml_core.xsd
     geometry_sculpt/schema/gdml_define.xsd
@@ -176,14 +189,12 @@ endforeach()
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
 #
-add_custom_target(REMOLL DEPENDS remoll)
+add_custom_target(REMOLL DEPENDS remoll-bin)
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS remoll DESTINATION bin)
-install(TARGETS remollroot DESTINATION lib)
-install(DIRECTORY schema DESTINATION share/remoll)
-install(DIRECTORY geometry geometry_sculpt DESTINATION share/remoll)
+install(TARGETS remoll-bin reroot-bin DESTINATION bin)
+install(TARGETS remoll-lib DESTINATION lib)
 
 

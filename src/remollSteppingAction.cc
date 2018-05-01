@@ -9,6 +9,7 @@
 remollSteppingAction::remollSteppingAction()
 : fDrawFlag(false),fEnableKryptonite(true)
 {
+  AddKryptoniteCandidate("VacuumKryptonite");
   AddKryptoniteCandidate("Tungsten");
   AddKryptoniteCandidate("Copper");
   AddKryptoniteCandidate("Lead");
