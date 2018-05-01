@@ -14,9 +14,9 @@
 
 /remoll/beamene 11 GeV
 
-#/remoll/gen inelasticAl
-#/remoll/gen quasielasticAl
-/remoll/gen elasticAl
+#/remoll/evgen/set inelasticAl
+#/remoll/evgen/set quasielasticAl
+/remoll/evgen/set elasticAl
 
 /remoll/targname DSAlTarg
 #/remoll/targpos   +75.0 cm

@@ -17,19 +17,19 @@
 /remoll/beamene 11 GeV
 
 
-#/remoll/gen beam
-#/remoll/gen moller
+#/remoll/evgen/set beam
+#/remoll/evgen/set moller
 #/remoll/thcommin 30.0 deg
 #/remoll/thcommax 150.0 deg
-#/remoll/gen elastic 
+#/remoll/evgen/set elastic 
 #/remoll/emin 80.0 MeV
-#/remoll/gen inelastic 
-/remoll/gen pion
+#/remoll/evgen/set inelastic 
+/remoll/evgen/set pion
 #/remoll/piontype pi-
-#/remoll/gen pion_LUND
-#/remoll/gen inelasticAl
-#/remoll/gen quasielasticAl
-#/remoll/gen elasticAl
+#/remoll/evgen/set pion_LUND
+#/remoll/evgen/set inelasticAl
+#/remoll/evgen/set quasielasticAl
+#/remoll/evgen/set elasticAl
 
 # Generation limits
 # theta
