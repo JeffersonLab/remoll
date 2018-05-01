@@ -24,7 +24,7 @@ remollVEventGen::remollVEventGen(const G4String name)
     // Set initial number of particles and create particle gun
     SetNumberOfParticles(fNumberOfParticles);
 
-    // Create generic messenger
+    // Create event generator messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
     fMessenger->DeclarePropertyWithUnit("emax","GeV",fE_max,"Maximum generation energy");
     fMessenger->DeclarePropertyWithUnit("emin","GeV",fE_min,"Minimum generation energy");
@@ -39,12 +39,23 @@ remollVEventGen::remollVEventGen(const G4String name)
         &remollVEventGen::PrintEventGen,
         "Print the event generator limits");
 
-    // Create specific event generator messenger
-    fThisGenMessenger = new G4GenericMessenger(this,"/remoll/" + name + "/","Remoll " + name +  " generator properties");
-    fThisGenMessenger->DeclareMethod(
+    // Create event generator messenger
+    fEvGenMessenger = new G4GenericMessenger(this,"/remoll/evgen/","Remoll event generator properties");
+    fEvGenMessenger->DeclarePropertyWithUnit("emax","GeV",fE_max,"Maximum generation energy");
+    fEvGenMessenger->DeclarePropertyWithUnit("emin","GeV",fE_min,"Minimum generation energy");
+    fEvGenMessenger->DeclarePropertyWithUnit("thmax","deg",fTh_max,"Maximum generation theta angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("thmin","deg",fTh_min,"Minimum generation theta angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("phmax","deg",fPh_max,"Maximum generation phi angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("thcommax","deg",fThCoM_max,"Maximum CoM generation theta angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("thcommin","deg",fThCoM_min,"Minimum CoM generation theta angle");
+    fEvGenMessenger->DeclareMethod(
         "printlimits",
         &remollVEventGen::PrintEventGen,
         "Print the event generator limits");
+
+    // Create specific event generator messenger
+    fThisGenMessenger = new G4GenericMessenger(this,"/remoll/evgen/" + name + "/","Remoll " + name + " generator properties");
 
     fSampType       = kActiveTargetVolume;
     fApplyMultScatt = false;
@@ -53,6 +64,7 @@ remollVEventGen::remollVEventGen(const G4String name)
 remollVEventGen::~remollVEventGen()
 {
     delete fThisGenMessenger;
+    delete fEvGenMessenger;
     delete fMessenger;
 }
 
