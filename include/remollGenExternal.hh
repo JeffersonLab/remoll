@@ -36,7 +36,7 @@ class remollGenExternal : public remollVEventGen {
         remollGenExternal();
         virtual ~remollGenExternal();
 
-        void SetGenExternalFile(const G4String& filename);
+        void SetGenExternalFile(G4String& filename);
         void SetGenExternalDetID(const G4int detid) {
           fDetectorID = detid;
         }

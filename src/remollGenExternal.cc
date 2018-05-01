@@ -40,7 +40,7 @@ remollGenExternal::~remollGenExternal()
   }
 }
 
-void remollGenExternal::SetGenExternalFile(const G4String& filename)
+void remollGenExternal::SetGenExternalFile(G4String& filename)
 {
   // Close previous file
   if (fFile) {
