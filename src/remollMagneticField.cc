@@ -266,7 +266,7 @@ void remollMagneticField::ReadFieldMap(){
 	exit(1);
     }
 
-    if( mapphirange < fxtantSize ){
+    if( fabs( fabs((mapphirange - fxtantSize)/mapphirange)) > 0.03 ){
 	G4cerr << "Warning " << __FILE__ << " line " << __LINE__ 
 	    << ": File " << fFilename << " header contains too narrow phi range for given xtants." << G4endl <<  "Warning:   Proceeding assuming null field in non-described regions" << G4endl << (fMax[kPhi] - fMin[kPhi])/degree << " deg range < " <<  fxtantSize/degree << " deg xtant" << G4endl;
     }
