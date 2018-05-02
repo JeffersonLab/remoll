@@ -36,6 +36,19 @@ class remollGenericDetector : public G4VSensitiveDetector {
 	virtual G4bool ProcessHits(G4Step*,G4TouchableHistory*);
 	virtual void EndOfEvent(G4HCofThisEvent*);
 
+        void SetEnabled(bool flag) {
+          G4cout << "flag = " << (flag? "enabled" : "disabled") << G4endl;
+          fEnabled = flag; PrintEnabled();
+        };
+        void SetDisabled(bool flag) {
+          G4cout << "flag = " << (flag? "enabled" : "disabled") << G4endl;
+          fEnabled = !flag; PrintEnabled();
+        };
+        void PrintEnabled() const {
+          G4cout << "Det " << GetName() << " (" << fDetNo << ") "
+                 << (fEnabled? "enabled" : "disabled") << G4endl;
+        };
+
     private:
 	remollGenericDetectorHitCollection *fHitColl;
 	remollGenericDetectorSumCollection *fSumColl;
