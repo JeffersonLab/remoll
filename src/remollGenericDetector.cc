@@ -37,7 +37,7 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
       "enable",
       fEnabled,
       "Enable recording of hits in this detector")
-      .SetDefaultValue("true");
+      .SetParameterName("flag",true).SetDefaultValue(true);
 }
 
 remollGenericDetector::~remollGenericDetector()
