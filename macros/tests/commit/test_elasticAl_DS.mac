@@ -4,6 +4,7 @@
 # This must be explicitly called
 /run/initialize
 
+# Field maps
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
@@ -12,6 +13,7 @@
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
 
+# Beam energy
 /remoll/beamene 11 GeV
 
 #/remoll/evgen/set inelasticAl
@@ -22,12 +24,22 @@
 #/remoll/targpos   +75.0 cm
 #/remoll/targlen  0.0127 cm
 
+# Generation limits
+# theta
+/remoll/thmin 0.5 deg
+/remoll/thmax 3.0 deg
+
+# Beam current for rate
 /remoll/beamcurr 85 microampere
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
 /remoll/kryptonite/set true
 
+/remoll/seed 123456
+
+# Output
 /remoll/filename test_elasticAl_DS.root
 
-/run/beamOn 100000
+# Shoot
+/run/beamOn 10000
