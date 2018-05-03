@@ -15,3 +15,14 @@
 /remoll/SD/det2004/enable true
 /remoll/filename test_det_enable_2.root
 /run/beamOn 100
+
+# Disable all detectors
+/remoll/SD/disable
+/remoll/filename test_det_enable_3.root
+/run/beamOn 100
+
+# Enable all detectors
+/remoll/SD/enable
+/remoll/filename test_det_enable_4.root
+/run/beamOn 100
+

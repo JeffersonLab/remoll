@@ -9,6 +9,9 @@
 
 #include <sstream>
 
+std::set<remollGenericDetector*> remollGenericDetector::fGenericDetectors = std::set<remollGenericDetector*>();
+G4GenericMessenger* remollGenericDetector::fStaticMessenger = 0;
+
 remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
 : G4VSensitiveDetector(name),fHitColl(0),fSumColl(0),fEnabled(true)
 {
@@ -29,7 +32,7 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   fHCID = -1;
   fSCID = -1;
 
-  // Create generic messenger
+  // Create generic detector messenger
   std::stringstream ss;
   ss << fDetNo;
   fMessenger = new G4GenericMessenger(this,"/remoll/SD/det" + ss.str() + "/","Remoll SD properties for " + name);
@@ -38,10 +41,25 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
       fEnabled,
       "Enable recording of hits in this detector")
       .SetParameterName("flag",true).SetDefaultValue(true);
+
+  // Create static messenger
+  fStaticMessenger = new G4GenericMessenger(this,"/remoll/SD/","Remoll SD properties");
+  fStaticMessenger->DeclareMethod(
+    "enable",
+    &remollGenericDetector::SetAllEnabled,
+    "Enable recording of hits in all detectors");
+  fStaticMessenger->DeclareMethod(
+    "disable",
+    &remollGenericDetector::SetAllDisabled,
+    "Disable recording of hits in all detectors");
+
+  // Add to static list
+  InsertGenericDetector(this);
 }
 
 remollGenericDetector::~remollGenericDetector()
 {
+  EraseGenericDetector(this);
   delete fMessenger;
 }
 

@@ -8,6 +8,7 @@
 #include "remollGenericDetectorSum.hh"
 
 #include <map>
+#include <set>
 
 /*! 
       Default detector class.  This will record information on:
@@ -28,6 +29,32 @@ class G4GenericMessenger;
 class remollGenericDetectorSum;
 
 class remollGenericDetector : public G4VSensitiveDetector {
+    private:
+        static G4GenericMessenger* fStaticMessenger;
+        static std::set<remollGenericDetector*> fGenericDetectors;
+        static void InsertGenericDetector(remollGenericDetector* det) {
+          fGenericDetectors.insert(det);
+        }
+        static void EraseGenericDetector(remollGenericDetector* det) {
+          fGenericDetectors.erase(det);
+        }
+        void SetAllEnabled() {
+          for (std::set<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              (*it)->SetEnabled();
+          }
+        }
+        void SetAllDisabled() {
+          for (std::set<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              (*it)->SetDisabled();
+          }
+        }
+
     public:
 	remollGenericDetector( G4String name, G4int detnum );
 	virtual ~remollGenericDetector();
@@ -36,12 +63,10 @@ class remollGenericDetector : public G4VSensitiveDetector {
 	virtual G4bool ProcessHits(G4Step*,G4TouchableHistory*);
 	virtual void EndOfEvent(G4HCofThisEvent*);
 
-        void SetEnabled(bool flag) {
-          G4cout << "flag = " << (flag? "enabled" : "disabled") << G4endl;
+        void SetEnabled(G4bool flag = true) {
           fEnabled = flag; PrintEnabled();
         };
-        void SetDisabled(bool flag) {
-          G4cout << "flag = " << (flag? "enabled" : "disabled") << G4endl;
+        void SetDisabled(G4bool flag = true) {
           fEnabled = !flag; PrintEnabled();
         };
         void PrintEnabled() const {
