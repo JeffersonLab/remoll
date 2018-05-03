@@ -23,13 +23,15 @@ public :
 
    // Declaration of leaf types
    Double_t *rate;
+   remollUnits_t *units;
+   remollUnits_t &unit;
    remollEvent_t *ev;
    remollBeamTarget_t *bm;
    std::vector<remollEventParticle_t> *part;
    std::vector<remollGenericDetectorHit_t> *hit;
    std::vector<remollGenericDetectorSum_t> *sum;
 
-   remoll(TTree *tree = 0);
+   remoll(TString name = "");
    virtual ~remoll();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
@@ -40,17 +42,20 @@ public :
    virtual void     Show(Long64_t entry = -1);
 };
 
-remoll::remoll(TTree *tree) : fChain(0) 
+remoll::remoll(TString name): fChain(0), units(0), unit(*units)
 {
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
-   if (tree == 0) {
+  TTree* tree = 0;
+   if (name == "") {
       TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("remollout.root");
       if (!f || !f->IsOpen()) {
          f = new TFile("remollout.root");
       }
       f->GetObject("T",tree);
-
+   }else {
+      TFile *f = new TFile(name);
+      f->GetObject("T",tree);
    }
    Init(tree);
 }
@@ -95,6 +100,7 @@ void remoll::Init(TTree *tree)
    fChain = tree;
    fCurrent = -1;
 
+   fChain->SetBranchAddress("units", &units);
    fChain->SetBranchAddress("rate", &rate);
    fChain->SetBranchAddress("bm", &bm);
    fChain->SetBranchAddress("ev", &ev);
