@@ -95,7 +95,6 @@ void remollBeamTarget::PrintTargetInfo()
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
         G4Material* material = volume->GetMaterial();
         G4VSolid* solid = volume->GetSolid();
-        G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
 
         G4cout << "Target volume " << (*it)->GetName() << ":" << G4endl;
         G4cout << " volume:   " << volume->GetName() << G4endl;
