@@ -82,6 +82,11 @@ include(${Geant4_USE_FILE})
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Woverloaded-virtual")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic")
 
+# Ignore warning of struct initialization { } for gcc < 5.0 (after that it is ignored internally)
+if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-field-initializers")
+endif()
+
 # C++11 standard if avialable
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
