@@ -58,6 +58,8 @@ class remollBeamTarget {
         void SetTargetPos(G4double z);
         void SetTargetLen(G4double l);
 
+        void PrintTargetInfo();
+
     public:
         remollBeamTarget();
 	virtual ~remollBeamTarget();

@@ -1,0 +1,17 @@
+/run/initialize
+
+/remoll/tracking/set 0
+/remoll/filename test_tracking_flag_0.root
+/run/beamOn 100
+
+/remoll/tracking/set 1
+/remoll/filename test_tracking_flag_1.root
+/run/beamOn 100
+
+/remoll/tracking/set 2
+/remoll/filename test_tracking_flag_2.root
+/run/beamOn 100
+
+/remoll/tracking/set 3
+/remoll/filename test_tracking_flag_3.root
+/run/beamOn 100

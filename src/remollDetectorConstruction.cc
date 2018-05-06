@@ -337,7 +337,6 @@ void remollDetectorConstruction::ConstructSDandField()
   //==========================
   G4SDManager* SDman = G4SDManager::GetSDMpointer();
   char detectorname[__DET_STRLEN];
-  int retval;
 
   G4VSensitiveDetector* thisdet;
 
@@ -392,7 +391,7 @@ void remollDetectorConstruction::ConstructSDandField()
               }
               /////////////////////////////////////////////////////////////
 
-              retval = snprintf(detectorname, __DET_STRLEN,"remoll/det_%d", det_no);
+              int retval = snprintf(detectorname, __DET_STRLEN,"remoll/det_%d", det_no);
 
               assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
 

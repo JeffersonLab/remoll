@@ -27,14 +27,14 @@ remollSteppingAction::~remollSteppingAction()
   delete fMessenger;
 }
 
-void remollSteppingAction::AddKryptoniteCandidate(const G4String& name)
+void remollSteppingAction::AddKryptoniteCandidate(const G4String name)
 {
   G4cout << "Adding " << name << " to list of kryptonite candidates." << G4endl;
   fKryptoniteCandidates.insert(name);
   InitializeMaterials();
 }
 
-void remollSteppingAction::DelKryptoniteCandidate(const G4String& name)
+void remollSteppingAction::DelKryptoniteCandidate(const G4String name)
 {
   G4cout << "Removing " << name << " from list of kryptonite candidates." << G4endl;
   fKryptoniteCandidates.erase(name);

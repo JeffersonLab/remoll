@@ -16,17 +16,6 @@
 # Beam energy
 /remoll/beamene 11 GeV
 
-
-#/remoll/evgen/set beam
-#/remoll/evgen/set moller
-#/remoll/thcommin 30.0 deg
-#/remoll/thcommax 150.0 deg
-#/remoll/evgen/set elastic 
-#/remoll/emin 80.0 MeV
-#/remoll/evgen/set inelastic 
-#/remoll/evgen/set pion
-#/remoll/piontype pi-
-#/remoll/evgen/set pion_LUND
 #/remoll/evgen/set inelasticAl
 #/remoll/evgen/set quasielasticAl
 /remoll/evgen/set elasticAl
@@ -49,4 +38,4 @@
 /remoll/filename test_elasticAl.root
 
 # Shoot
-/run/beamOn 1000
+/run/beamOn 10000

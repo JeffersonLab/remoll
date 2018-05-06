@@ -57,6 +57,7 @@ remollBeamTarget::remollBeamTarget()
     fMessenger->DeclareMethod("targname",&remollBeamTarget::SetActiveTargetVolume,"Target name").SetStates(G4State_Idle);
     fMessenger->DeclareMethodWithUnit("targlen","cm",&remollBeamTarget::SetTargetLen,"Target length").SetStates(G4State_Idle);
     fMessenger->DeclareMethodWithUnit("targpos","cm",&remollBeamTarget::SetTargetPos,"Target position").SetStates(G4State_Idle);
+    fMessenger->DeclareMethod("printtargetinfo",&remollBeamTarget::PrintTargetInfo).SetStates(G4State_Idle);
 
     fMessenger->DeclarePropertyWithUnit("beamcurr","microampere",fBeamCurrent,"Beam current");
     fMessenger->DeclarePropertyWithUnit("beamene","GeV",fBeamEnergy,"Beam energy");
@@ -85,6 +86,32 @@ G4double remollBeamTarget::GetEffLumin(){
     return fEffectiveMaterialLength*fBeamCurrent/(e_SI*coulomb);
 }
 
+void remollBeamTarget::PrintTargetInfo()
+{
+    for (std::vector<G4VPhysicalVolume *>::iterator
+        it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
+
+        // Try to cast the target volume into its tubs solid
+        G4LogicalVolume* volume = (*it)->GetLogicalVolume();
+        G4Material* material = volume->GetMaterial();
+        G4VSolid* solid = volume->GetSolid();
+
+        G4cout << "Target volume " << (*it)->GetName() << ":" << G4endl;
+        G4cout << " volume:   " << volume->GetName() << G4endl;
+        G4cout << " material: " << material->GetName() << G4endl;
+        G4cout << " solid: "    << solid->GetName() << G4endl;
+
+	if( (*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
+            G4cout << " active volume: " << fActiveTargetVolume << G4endl;
+        }
+    }
+
+    G4cout << "Final target parameters: " << G4endl;
+    G4cout << " active target effective length: " << fActiveTargetEffectiveLength << G4endl;
+    G4cout << " active target relative position: " << fActiveTargetRelativePosition << G4endl;
+    G4cout << " total active length: " << fTotalTargetEffectiveLength << G4endl;
+}
+
 void remollBeamTarget::UpdateInfo()
 {
     fActiveTargetEffectiveLength  = -1e9;
@@ -93,7 +120,10 @@ void remollBeamTarget::UpdateInfo()
     fTotalTargetEffectiveLength = 0.0;
 
     // Can't calculate anything without mother
-    if( !fTargetMother ) return;
+    if( !fTargetMother ) {
+      G4cerr << "Warning: No target mother volume found." << G4endl;
+      return;
+    }
     fMotherTargetAbsolutePosition = fTargetMother->GetFrameTranslation().z();
 
     for (std::vector<G4VPhysicalVolume *>::iterator
