@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <constant name="N_X" value="7"/> <!-- also change in replicavol below -->
+  <constant name="N_Y" value="4"/> <!-- also change in replicavol below -->
+
+  <quantity name="pionDetectorCalorimeterBlockWidth"  type="length" value="2.54" unit="cm"/>
+  <quantity name="pionDetectorCalorimeterBlockLength" type="length" value="20.0" unit="cm"/>
+
+  <quantity name="pionDetectorCalorimeterPMTDiameter"  type="length" value="2.54" unit="cm"/>
+  <quantity name="pionDetectorCalorimeterPMTThickness" type="length" value="1.00" unit="mm"/>
+
+  <matrix coldim="2" name="ABSLENGTH_PBWO4" values="
+      1.54986*eV 263160
+      1.77127*eV 250000
+      2.06648*eV 227270
+      2.47978*eV 200000
+      3.09973*eV 131580
+      4.13297*eV 16130
+      4.95956*eV 740
+      5.51063*eV 125
+      5.90424*eV 10"/>
+
+  <matrix coldim="2" name="RINDEX_PBWO4" values="
+      1.54986*eV 1.45338
+      1.77127*eV 1.45536
+      2.06648*eV 1.4581
+      2.47978*eV 1.46239
+      3.09973*eV 1.47018
+      4.13297*eV 1.48786
+      4.95956*eV 1.50751
+      5.51063*eV 1.52422
+      5.90424*eV 1.53842"/>
+
+  <matrix coldim="2" name="REFLECTIVITY_CATHODE" values="
+      1.54986*eV 0.25
+      1.77127*eV 0.25
+      2.06648*eV 0.25
+      2.47978*eV 0.25
+      3.09973*eV 0.25
+      4.13297*eV 0.25
+      4.95956*eV 0.25
+      5.51063*eV 0.25
+      5.90424*eV 0.25"/>
+
+  <matrix coldim="2" name="EFFICIENCY_CATHODE" values="
+      1.54986*eV 0.0080
+      1.77127*eV 0.0298
+      2.06648*eV 0.0638
+      2.47978*eV 0.1240
+      3.09973*eV 0.1770
+      4.13297*eV 0.2110
+      4.95956*eV 0.1780
+      5.51063*eV 0.0890
+      5.90424*eV 0.0355"/>
+</define>
+
+<materials>
+
+  <material name="CsPhotocathode" state="solid" Z="39">
+    <property name="REFLECTIVITY" ref="REFLECTIVITY_CATHODE"/>
+    <property name="EFFICIENCY" ref="EFFICIENCY_CATHODE"/>
+    <MEE value="190" unit="eV"/>
+    <D value="5" unit="g/cm3"/>
+    <atom value="39.0983" unit="g/mole"/>
+  </material>
+
+  <element Z="1" formula="H" name="Hydrogen">
+    <atom value="1"/>
+  </element>
+  <element Z="6" formula="C" name="Carbon">
+    <atom value="12"/>
+  </element>
+  <element Z="8" formula="O" name="Oxygen">
+    <atom value="16"/>
+  </element>
+
+  <!-- TODO change to actual PbWO4 from Calorimeter -->
+  <material name="Calorimeter" formula="PbWO4">
+    <property name="ABSLENGTH" ref="ABSLENGTH_PBWO4"/>
+    <property name="RINDEX" ref="RINDEX_PBWO4"/>
+    <MEE value="125.663004061076" unit="eV"/>
+    <D value="1.18" unit="g/cm3"/>
+    <fraction n="0.080538" ref="Hydrogen"/>
+    <fraction n="0.599848" ref="Carbon"/>
+    <fraction n="0.319614" ref="Oxygen"/>
+  </material>
+
+</materials>
+
+<solids>
+  <!-- x in radial outward direction -->
+  <!-- y in azimuthal direction -->
+  <!-- z in downstream beam direction -->
+  <tube name="pionDetectorCalorimeterPMT_solid" aunit="deg" rmin="0" rmax="pionDetectorCalorimeterPMTDiameter/2.0" z="pionDetectorCalorimeterPMTThickness" deltaphi="360.0"/>
+  <box name="pionDetectorCalorimeterSingleBlock_solid"  x="1.0*pionDetectorCalorimeterBlockWidth" y="1.0*pionDetectorCalorimeterBlockWidth" z="pionDetectorCalorimeterBlockLength"/>
+  <box name="pionDetectorCalorimeterSingleBlockPMT_solid" x="1.0*pionDetectorCalorimeterBlockWidth" y="1.0*pionDetectorCalorimeterBlockWidth" z="pionDetectorCalorimeterBlockLength+2.0*pionDetectorCalorimeterPMTThickness"/>
+  <box name="pionDetectorCalorimeterRowOfBlocksPMT_solid" x="N_X*pionDetectorCalorimeterBlockWidth" y="1.0*pionDetectorCalorimeterBlockWidth" z="pionDetectorCalorimeterBlockLength+2.0*pionDetectorCalorimeterPMTThickness"/>
+  <box name="pionDetectorCalorimeterAllBlocksPMT_solid"   x="N_X*pionDetectorCalorimeterBlockWidth" y="N_Y*pionDetectorCalorimeterBlockWidth" z="pionDetectorCalorimeterBlockLength+2.0*pionDetectorCalorimeterPMTThickness"/>
+
+  <opticalsurface name="pionDetectorCalorimeterSingleBlockOpticalSurface" 
+    finish="polished"
+    model="glisur"
+    type="dielectric_dielectric"
+    value="1.0"/>
+  <opticalsurface name="pionDetectorCalorimeterPMTOpticalSurface"
+    finish="polished"
+    model="glisur"
+    type="dielectric_dielectric"
+    value="1.0"/>
+
+</solids>
+
+<structure>
+
+  <volume name="pionDetectorCalorimeterSingleBlock_logical">
+    <materialref ref="Calorimeter"/>
+    <solidref ref="pionDetectorCalorimeterSingleBlock_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionCalorimeterDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="4004"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
+  <volume name="pionDetectorCalorimeterPMT_logical">
+    <materialref ref="CsPhotocathode"/>
+    <solidref ref="pionDetectorCalorimeterPMT_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionCalorimeterPMT"/>
+    <auxiliary auxtype="DetNo" auxvalue="4005"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
+  <volume name="pionDetectorCalorimeterSingleBlockPMT_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorCalorimeterSingleBlockPMT_solid"/>
+    <physvol>
+      <volumeref ref="pionDetectorCalorimeterSingleBlock_logical"/>
+      <position name="pionDetectorCalorimeterSingleBlock_position"/>
+    </physvol>
+    <physvol>
+      <volumeref ref="pionDetectorCalorimeterPMT_logical"/>
+      <position name="pionDetectorCalorimeterPMT_position" z="pionDetectorCalorimeterBlockLength/2.0+pionDetectorCalorimeterPMTThickness/2.0"/>
+    </physvol>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
+  <volume name="pionDetectorCalorimeterRowOfBlocksPMT_logical">
+    <materialref ref="Calorimeter"/>
+    <solidref ref="pionDetectorCalorimeterRowOfBlocksPMT_solid"/>
+    <replicavol number="7">
+      <volumeref ref="pionDetectorCalorimeterSingleBlockPMT_logical"/>
+      <replicate_along_axis>
+        <direction x="1"/>
+        <width value="pionDetectorCalorimeterBlockWidth" unit="mm"/>
+        <offset value="0"/>
+      </replicate_along_axis>
+    </replicavol>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+  <volume name="pionDetectorCalorimeterAllBlocksPMT_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorCalorimeterAllBlocksPMT_solid"/>
+    <replicavol number="4">
+      <volumeref ref="pionDetectorCalorimeterRowOfBlocksPMT_logical"/>
+      <replicate_along_axis>
+        <direction y="1"/>
+        <width value="pionDetectorCalorimeterBlockWidth" unit="mm"/>
+        <offset value="0"/>
+      </replicate_along_axis>
+    </replicavol>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+  <skinsurface name="pionDetectorCalorimeterSingleBlock_skinsurface" surfaceproperty="pionDetectorCalorimeterSingleBlockOpticalSurface">
+    <volumeref ref="pionDetectorCalorimeterSingleBlock_logical"/>
+  </skinsurface>
+
+  <skinsurface name="pionDetectorCalorimeterPMT_skinsurface" surfaceproperty="pionDetectorCalorimeterPMTOpticalSurface">
+    <volumeref ref="pionDetectorCalorimeterPMT_logical"/>
+  </skinsurface>
+
+<!--
+  <bordersurface name="pionDetectorCalorimeterSingleBlockPMT_bordersurface" surfaceproperty="pionDetectorCalorimeterSingleBlockOpticalSurface">
+    <physvolref ref="pionDetectorCalorimeterSingleBlock_physical"/>
+    <physvolref ref="pionDetectorCalorimeterPMT_physical"/>
+  </bordersurface>
+-->
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorCalorimeterAllBlocksPMT_logical"/>
+</setup>
+
+</gdml>

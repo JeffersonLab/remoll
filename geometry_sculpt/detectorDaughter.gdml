@@ -18,29 +18,49 @@
       <D unit="g/cm3" value="1e-25"/>
       <atom unit="g/mole" value="1.01"/>
     </material>
+    <material Z ="82" name = "Lead" state = "solid">
+	<MEE unit = "eV" value = "823"/>
+	<D unit = "g/cm3" value = "11.35"/>
+	<atom unit = "g/mole" value = "207.19"/>
+    </material>
   </materials>
 
 <solids>
-    <box lunit="mm" name="boxDetectors" x="4000" y="4000" z="500"/>
+    <box lunit="mm" name="boxDetectors" x="4000" y="4000" z="4000"/>
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="Shower_max" rmax="1100" rmin="935" startphi="0" z="25"/>
 </solids>
 
 <structure>
 
-    <volume name="logicWasher_0">
+    <volume name="main_detector_logical">
       <materialref ref="VacuumDet"/>
       <solidref ref="solWasher1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="28"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    
+    <volume name="shower_max_logical">
+      <materialref ref="Lead"/>
+      <solidref ref="Shower_max"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="30"/>
     </volume>
 
     <volume name="logicDetector">
       <materialref ref="Vacuum"/>
       <solidref ref="boxDetectors"/>
 
-      <physvol name="planeDet_0">
-        <volumeref ref="logicWasher_0"/>
+      <physvol name="main_detector_physical">
+        <volumeref ref="main_detector_logical"/>
         <position name="wash_phys_0_pos" unit="mm" x="0" y="0" z="0"/>
+      </physvol>	
+
+      <physvol name="shower_max_physical">
+        <volumeref ref="shower_max_logical"/>
+	<!-- Should be centered at 29 m in the mother volume -->
+        <position name="wash_phys_2_pos" unit="mm" x="0" y="0" z="500"/>
       </physvol>	
 
    </volume>

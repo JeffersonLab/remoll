@@ -1,4 +1,8 @@
-#  Example file
+#  Scott Mundy
+# Feb 24, 2016
+# sim_moller.mac
+#
+# simulation macro for pion analysis using moller gen.
 
 # store tracks
 #/tracking/storeTrajectory 1
@@ -9,13 +13,11 @@
 # This must be explicitly called
 /run/initialize
 
-/remoll/dumpgeometry true
-
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
-#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
-#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
+/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
 
 # Raster and initial angle stuff
 /remoll/oldras true
@@ -30,6 +32,8 @@
 #/remoll/beam_dth 0 mrad
 #/remoll/beam_dph 0 mrad
 
+/remoll/beamene 11 GeV
+
 #/remoll/gen beam
 /remoll/gen moller
 #/remoll/thcommin 30.0 deg
@@ -40,34 +44,30 @@
 #/remoll/emin 80.0 MeV
 #/remoll/gen inelastic 
 #/remoll/gen pion
-#/remoll/piontype pi+
-#/remoll/gen pion_LUND
 #/remoll/gen inelasticAl
 #/remoll/gen quasielasticAl
 #/remoll/gen elasticAl
-#/remoll/gen external
-#/remoll/externalfile remollout.root
-#/remoll/externaldetid 4051
-
-/remoll/beamene 11 GeV
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
 
 /remoll/beamcurr 85 microampere
 
+#Enable optical photons and processes
+#/remoll/optical true
+
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite/set true
+/remoll/kryptonite true
 
 /process/list
 
 # Specify random number seed
-/remoll/seed 123456
+/remoll/seed 2158
 
-/remoll/filename remollout.root
-#/remoll/LUND_filename hallD_pion_p_MOLLER_1M_1.lund
+/remoll/filename  ~/MOLLER/remoll/moller_test.root
 
 #/tracking/verbose 2
 
-/run/beamOn 10000
+/run/beamOn 3000
+

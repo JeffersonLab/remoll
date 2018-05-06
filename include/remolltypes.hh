@@ -8,9 +8,9 @@
    data around and useful enumerations
 */
 
-#if !defined(__CINT__) && !defined(__CLING__)
-#include <G4Types.hh>
-#endif
+//#if !defined(__CINT__) && !defined(__CLING__)
+//#include <G4Types.hh>
+//#endif
 
 #define __RUNSTR_LEN 255
 #define __MAXFILE_LEN 1048576 // MB file size limit
@@ -58,9 +58,12 @@ struct remollGenericDetectorHit_t {
   int pid;
   int gen;
   int mtrid;
+  double t;
   double x, y, z;
+  double xl, yl, zl;
   double r, ph;
   double px, py, pz;
+  double pxl, pyl, pzl;
   double p, e, m;
   double vx, vy, vz;
 };
@@ -74,13 +77,15 @@ struct remollGenericDetectorSum_t {
 struct remollUnits_t
 {
   remollUnits_t();
-  // constructor impl in remollUnits.cc due to conflicts between
+  // constructor impl in remollSystemOfUnits.cc due to conflicts between
   // rootcint and required G4/CLHEP headers
 
   // Asymmetry
   const double ppm;
   const double ppb;
   // Distance
+  const double nm;
+  const double um;
   const double mm;
   const double cm;
   const double m;
@@ -93,6 +98,7 @@ struct remollUnits_t
   const double cm3;
   const double m3;
   // Energy
+  const double eV;
   const double keV;
   const double MeV;
   const double GeV;

@@ -5,7 +5,7 @@ name=remoll_test
 #on to the get more simultaions)
 firstjob=1
 #last number of jobs one would like done
-lastjob=1
+lastjob=100
 #number of events simulated in each Geant4 file
 nevents=100000
 #batch system
