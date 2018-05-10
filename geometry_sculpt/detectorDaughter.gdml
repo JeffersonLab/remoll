@@ -23,20 +23,20 @@
 	<D unit = "g/cm3" value = "11.35"/>
 	<atom unit = "g/mole" value = "207.19"/>
     </material>
+    <material Z="74" name="W" state="solid">
+        <D unit="g/cm3" value="19.3"/>
+        <atom unit="g/mole" value="183.85"/>
+    </material>
   </materials>
 
 <solids>
-    <box lunit="mm" name="boxDetectors" x="4000" y="4000" z="4000"/>
-
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
+    <box lunit="mm" name="boxDetectors" x="4000" y="4000" z="1300"/>
 
 
-<!--    <tube aunit="deg" deltaphi="360" lunit="mm" name="Lead_wall" rmax="1900" rmin="0" startphi="0" z="350"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax="1900" rmin="600" startphi="0" z="10"/>
 
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="Straw_Man" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
--->
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="Shower_max" rmax="1100" rmin="935" startphi="0" z="25"/>
-
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="Shower_max" rmax="1100" rmin="935" startphi="0" z="32"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="Shower_max_ring" rmax="1100" rmin="935" startphi="0" z="5"/>
 
 </solids>
 
@@ -51,26 +51,24 @@
     </volume>
     
     <volume name="shower_max_logical">
-      <materialref ref="Lead"/>
+      <materialref ref="W"/>
       <solidref ref="Shower_max"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="30"/>
+    </volume>
+   
+    <volume name="shower_max_front_det">
+        <materialref ref="VacuumDet"/>
+        <solidref ref="Shower_max_ring"/>
+        <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+        <auxiliary auxtype="DetNo" auxvalue="30"/>
     </volume>
 
-<!-- This is legacy code for putting the straw man and lead wall in the same volume as the main detector
-    <volume name="lead_wall_logical">
-      <materialref ref="Lead"/>
-      <solidref ref="Lead_wall"/>
+    <volume name="shower_max_rear_det">
+        <materialref ref="VacuumDet"/>
+        <solidref ref="Shower_max_ring"/>
+        <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+        <auxiliary auxtype="DetNo" auxvalue="31"/>
     </volume>
-  
-    <volume name="straw_man_logical">
-      <materialref ref="VacuumDet"/>
-      <solidref ref="Straw_Man"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="29"/>
-    </volume>
-    -->
-    <volume name="logicDetector">
+   <volume name="logicDetector">
       <materialref ref="Vacuum"/>
       <solidref ref="boxDetectors"/>
 
@@ -81,22 +79,25 @@
 
       <physvol name="shower_max_physical">
         <volumeref ref="shower_max_logical"/>
-	<!-- Should be centered at 29 m in the mother volume -->
-        <position name="wash_phys_2_pos" unit="mm" x="0" y="0" z="500"/>
+	<!-- Should be centered at 29.1 m in the mother volume -->
+        <position name="wash_phys_2_pos" unit="mm" x="0" y="0" z="600"/>
+      </physvol>
+
+        <!-- the front and back detector should be offset from the showermax by 5 mm, since the showermax
+             is 32 mm thick, and gdml counts from the center, the boundaries of the tungsten should be at
+             600-16 = 584 and 600+16 = 616. The detector planes are 5 mm thick, so centering them 7.5 mm away at
+             576.5 mm and 623.5 mm should be fine.-->  
+      <physvol name="shower_max_front_det_physical">
+        <volumeref ref="shower_max_front_det"/>
+        <position name="shower_max_front_det_pos" unit="mm" x="0" y="0" z="576.5"/>
+      </physvol>
+     
+      <physvol name="shower_max_rear_det_physical">
+        <volumeref ref="shower_max_rear_det"/>
+        <position name="shower_max_rear_det_pos" unit="mm" x="0" y="0" z="623.5"/>
       </physvol>	
 
-      <!-- Below are the physical volumes for the lead disc and straw man detector
-      <physvol name="lead_wall_physical">
-        <volumeref ref="lead_wall_logical"/>
-        <position name="lead_phys_0_pos" unit="mm" x="0" y="0" z="1000"/>
-      </physvol>	
-
-      <physvol name="straw_man_physical">
-        <volumeref ref="straw_man_logical"/>
-        <position name="wash_phys_1_pos" unit="mm" x="0" y="0" z="1500"/>
-      </physvol>	
- 	-->
-   </volume>
+       </volume>
 </structure>
 
 <setup name="Default" version="1.0">

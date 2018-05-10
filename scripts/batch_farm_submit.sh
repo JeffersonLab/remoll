@@ -1,11 +1,12 @@
 
-name=remoll_test
+#name=moller_lead_wall_100mm
 
+name=pion_lead_wall_100mm
 #first job number (can change if just want to add
 #on to the get more simultaions)
-firstjob=1
+firstjob=66000
 #last number of jobs one would like done
-lastjob=100
+lastjob=66099
 #number of events simulated in each Geant4 file
 nevents=100000
 #batch system
