@@ -1,4 +1,3 @@
-
 #ifndef remollRunAction_h
 #define remollRunAction_h 1
 
@@ -19,6 +18,9 @@ class remollRunAction : public G4UserRunAction
 
     void BeginOfRunAction(const G4Run* aRun);
     void EndOfRunAction(const G4Run* aRun);
+
+  private:
+    G4Timer* fTimer;
 };
 
 #endif

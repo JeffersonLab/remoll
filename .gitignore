@@ -1,3 +1,5 @@
+images
+
 *~
 *.swp
 *.DS_Store
@@ -19,11 +21,31 @@ include/gitinfo.hh
 #ignore kdev files
 *.kdev4
 
+#install directories
+bin
+lib
+share
+
 #ignore build and map directory
 build*
 bldXcode
 map_directory
 
-#ignore log and rootfiles directory
+#ignore rad_dose radiation analysis work (another repository on sbujlab github)
+rad_analysis
+
+#ignore log files directory
 log
-rootfiles
+
+#ignore project files for eclipse
+.cproject
+.project
+
+#ignore dot files
+*.dot
+
+#sample_gdml output
+sample_gdml.*
+
+#ignore log files
+*.log

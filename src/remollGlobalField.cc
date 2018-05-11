@@ -70,7 +70,7 @@ void remollGlobalField::AddNewField(G4String& name)
         stat(name.data(), &fs);
         fdata.timestamp = TTimeStamp( fs.st_mtime );
 
-        fdata.timestamp.Print();
+        G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
 
         rd->AddMagData(fdata);
 

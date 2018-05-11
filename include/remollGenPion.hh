@@ -22,6 +22,11 @@ public:
   
   enum Pion_t {kPiPlus, kPiMinus, kPi0};
   
+  void SetPionTypeByString_Deprecated(G4String& t) {
+    G4cerr << "The command `/remoll/piontype` is deprecated." << G4endl;
+    G4cerr << "Use instead `/remoll/evgen/pion/settype`." << G4endl;
+    SetPionTypeByString(t);
+  }
   void SetPionTypeByString(G4String& t) {
     if (t == "pi-") SetPionType(kPiMinus);
     else if (t == "pi+") SetPionType(kPiPlus);

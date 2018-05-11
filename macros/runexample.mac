@@ -9,6 +9,8 @@
 # This must be explicitly called
 /run/initialize
 
+/remoll/dumpgeometry true
+
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
@@ -28,8 +30,6 @@
 #/remoll/beam_dth 0 mrad
 #/remoll/beam_dph 0 mrad
 
-/remoll/beamene 11 GeV
-
 #/remoll/gen beam
 /remoll/gen moller
 #/remoll/thcommin 30.0 deg
@@ -45,18 +45,20 @@
 #/remoll/gen inelasticAl
 #/remoll/gen quasielasticAl
 #/remoll/gen elasticAl
+#/remoll/gen external
+#/remoll/externalfile remollout.root
+#/remoll/externaldetid 4051
+
+/remoll/beamene 11 GeV
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
 
 /remoll/beamcurr 85 microampere
 
-#Enable optical photons and processes
-#/remoll/optical true
-
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite true
+/remoll/kryptonite/set true
 
 /process/list
 

@@ -1,16 +1,19 @@
+#!/bin/bash
 
-name=remoll_test
+name=${1:-remoll_test}
 
 #first job number (can change if just want to add
 #on to the get more simultaions)
 firstjob=1
 #last number of jobs one would like done
-lastjob=1
+lastjob=100
 #number of events simulated in each Geant4 file
 nevents=100000
 #batch system
 batch=xml
-remoll=~/remoll
+
+remoll=`dirname $0`
+remoll=${remoll/scripts/}
 
 let jobid=${firstjob}
  while [[ ${jobid} -le ${lastjob} ]] ; do
@@ -29,6 +32,7 @@ let jobid=${firstjob}
   #replace the variables in the file macros/${basename}.in
   #which creates the mac file that Geant4 uses
 	sed -e "s|%nevents%|${nevents}|g" \
+			-e "s|%user%|${USER}|g" \
 			-e "s|%remoll%|${remoll}|g" \
 			-e "s|%seedA%|${seedA}|g" \
 			-e "s|%seedB%|${seedB}|g" \
@@ -40,6 +44,7 @@ let jobid=${firstjob}
   #replace the variables in the file ${basename}.in
   #which creates the job file that is submitted to the farm
 	sed -e "s|%nevents%|${nevents}|g" \
+			-e "s|%user%|${USER}|g" \
 			-e "s|%remoll%|${remoll}|g" \
 			-e "s|%seedA%|${seedA}|g" \
 			-e "s|%seedB%|${seedB}|g" \

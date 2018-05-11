@@ -6,7 +6,8 @@
 #include <errno.h>
 #include <sys/stat.h>
 
-remollTextFile::remollTextFile() {
+remollTextFile::remollTextFile()
+: TObject() {
     fFilenameSize = 0;
     fFilename = NULL;
 
@@ -14,7 +15,8 @@ remollTextFile::remollTextFile() {
     fBuffer = NULL;
 }
 
-remollTextFile::remollTextFile(const char *fn) {
+remollTextFile::remollTextFile(const char *fn)
+: TObject() {
     fFilenameSize = 0;
     fFilename = NULL;
 
@@ -36,10 +38,14 @@ remollTextFile::remollTextFile(const remollTextFile& r)
 }
 
 const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
+    TObject::operator=(r);
+
+    if (fFilename) { delete[] fFilename; }
     fFilenameSize = r.fFilenameSize;
     fFilename = new char[r.fFilenameSize];
     strncpy(fFilename, r.fFilename, fFilenameSize);
 
+    if (fBuffer) { delete[] fBuffer; }
     fBufferSize = r.fBufferSize;
     fBuffer = new char[r.fBufferSize];
     memcpy(fBuffer, r.fBuffer, fBufferSize);
@@ -48,7 +54,8 @@ const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
 }
 
 remollTextFile::~remollTextFile(){
-    if (fBuffer) { delete[] fBuffer; }
+    if (fFilename) { delete[] fFilename; }
+    if (fBuffer)   { delete[] fBuffer; }
 }
 
 void remollTextFile::copyFileIn(const char *fn){
@@ -113,7 +120,6 @@ void remollTextFile::RecreateInDir(const char *adir, bool clobber ){
 
     delete thisdir;
     delete catpath;
-    return;
 }
 
 void remollTextFile::Recreate(const char *fn, bool clobber ){
@@ -166,8 +172,6 @@ void remollTextFile::Print(){
     printf("%s\n", tmpbuf);
 
     delete[] tmpbuf;
-
-    return;
 }
 
 const char *remollTextFile::GetBaseFile(const char *fp){

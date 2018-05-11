@@ -1,0 +1,38 @@
+# This will produce four files test_moller_$E.root, $E = 8,9,10,11 GeV.
+
+/run/initialize
+
+/remoll/filename test_moller_8.root
+/remoll/beamene 8 GeV
+/run/beamOn 100
+
+/remoll/filename test_moller_9.root
+/remoll/beamene 9 GeV
+/run/beamOn 100
+
+/remoll/filename test_moller_10.root
+/remoll/beamene 10 GeV
+/run/beamOn 100
+
+/remoll/filename test_moller_11.root
+/remoll/beamene 11 GeV
+/run/beamOn 100
+
+
+# This will produce two files test_beam_5_$i.root, $1 = 1,2.
+
+
+/remoll/beamene 11
+
+/remoll/beamene 5
+/remoll/evgen/set beam
+/remoll/filename test_beam_5GeV_1.root
+/run/beamOn 100
+
+
+/remoll/beamene 11
+
+/remoll/evgen/set beam
+/remoll/beamene 5
+/remoll/filename test_beam_5GeV_2.root
+/run/beamOn 100

@@ -2,12 +2,14 @@ dist: trusty
 language: cpp
 sudo: required
 compiler: gcc
+services:
+- docker
 
 before_install:
 - sudo apt-add-repository -y ppa:wdconinc/ppa-trusty
 - sudo apt-get update -y
 - sudo apt-get install -y cmake3 root-system libgeant4-dev
-- sudo install-geant4-data all
+- sudo install-geant4-data all > /dev/null
 
 script:
 - mkdir build
@@ -16,10 +18,21 @@ script:
 - mkdir map_directory
 - wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyHybrid_rm_3.0.txt
 - wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyUpstream_rm_1.1.txt
-- source geant4.sh && scripts/tests/test_macros.sh  2>&1 | tee remolltest.log
-- tar -czvf remolltest.root.tar.gz rootfiles/tests/*.root
-- tar -czvf remolltest.log.tar.gz logfiles/tests/*.log remolltest.log
-- tar -czvf remolltest.png.tar.gz rootfiles/tests/analysis/*.png
+- source geant4.sh && scripts/tests/test_macros.sh unit 2>&1 | tee remolltest_unit.log
+- source geant4.sh && scripts/tests/test_macros.sh commit 2>&1 | tee remolltest_commit.log
+- source geant4.sh && scripts/tests/test_macros.sh release 2>&1 | tee remolltest_release.log
+- tar -czvf remolltest.root.tar.gz rootfiles/tests/release/*.root rootfiles/tests/release/analysis/*.root
+- tar -czvf remolltest.log.tar.gz logfiles/tests/release/*.log logfiles/tests/release/analysis/*.log
+- tar -czvf remolltest.png.tar.gz rootfiles/tests/release/analysis/*.png
+- docker build -t jeffersonlab/remoll .
+
+after_success:
+- docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+- if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker tag jeffersonlab/remoll jeffersonlab/remoll:latest && docker push jeffersonlab/remoll:latest;
+  else
+    docker tag jeffersonlab/remoll jeffersonlab/remoll:$TRAVIS_BRANCH && docker push jeffersonlab/remoll:$TRAVIS_BRANCH;
+  fi
 
 deploy:
   provider: releases
@@ -29,6 +42,9 @@ deploy:
   - build/remoll
   - build/libremollroot.so
   - remollbuild.log
+  - remolltest_unit.log
+  - remolltest_commit.log
+  - remolltest_release.log
   - remolltest.root.tar.gz
   - remolltest.log.tar.gz
   - remolltest.png.tar.gz
@@ -36,3 +52,4 @@ deploy:
   on:
     repo: JeffersonLab/remoll
     tags: true
+

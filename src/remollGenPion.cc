@@ -33,21 +33,19 @@ remollGenPion::remollGenPion()
     fE_max = -1.0*GeV; // negative to automatically pick beam energy
 
     // Add to generic messenger
-    fMessenger->DeclareMethod("piontype",&remollGenPion::SetPionTypeByString,"Generate pion type");
+    fMessenger->DeclareMethod("piontype",&remollGenPion::SetPionTypeByString_Deprecated,"Generate pion type");
+    fThisGenMessenger->DeclareMethod("settype",&remollGenPion::SetPionTypeByString,"Generate pion type");
 }
 
-remollGenPion::~remollGenPion()
-{
-    delete fMessenger;
-}
+remollGenPion::~remollGenPion() { }
 
 void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // Generate Pion event
 
-  double beamE   = vert->GetBeamE();
+  double beamE   = vert->GetBeamEnergy();
     // Use unradiated beam vertex
     //double beamE = remollBeamTarget::GetBeamTarget()->fBeamE;
-    double rad_len = vert->GetRadLen();
+    double rad_len = vert->GetRadiationLength();
 
     double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
     double ph = G4RandFlat::shoot(fPh_min, fPh_max);
@@ -119,7 +117,7 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt){
     evt->SetRate(0);
 
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
-	    G4ThreeVector(pf*sin(ph)*sin(th), pf*cos(ph)*sin(th), pf*cos(th)), 
+	    G4ThreeVector(pf*cos(ph)*sin(th), pf*sin(ph)*sin(th), pf*cos(th)), 
 	    piontypestr );
     return;
 

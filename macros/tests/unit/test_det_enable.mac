@@ -1,0 +1,28 @@
+/run/initialize
+
+# Disable pion detectors
+/remoll/SD/det2001/enable no
+/remoll/SD/det2002/enable false
+/remoll/SD/det2003/enable false
+/remoll/SD/det2004/enable false
+/remoll/filename test_det_enable_1.root
+/run/beamOn 100
+
+# Enable pion detectors
+/remoll/SD/det2001/enable
+/remoll/SD/det2002/enable yes
+/remoll/SD/det2003/enable yes
+/remoll/SD/det2004/enable true
+/remoll/filename test_det_enable_2.root
+/run/beamOn 100
+
+# Disable all detectors
+/remoll/SD/disable
+/remoll/filename test_det_enable_3.root
+/run/beamOn 100
+
+# Enable all detectors
+/remoll/SD/enable
+/remoll/filename test_det_enable_4.root
+/run/beamOn 100
+

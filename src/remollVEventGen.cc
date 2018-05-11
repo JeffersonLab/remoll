@@ -14,15 +14,17 @@
 
 remollVEventGen::remollVEventGen(const G4String name)
 : fName(name),
-  fThCoM_min(0.0), fThCoM_max(0.0), fTh_min(0.0), fTh_max(0.0),
-  fPh_min(0.0), fPh_max(360.0*deg), fE_min(0.0), fE_max(0.0),
+  fThCoM_min(0.0), fThCoM_max(180.0*deg),
+  fTh_min(0.0), fTh_max(180.0*deg),
+  fPh_min(0.0), fPh_max(360.0*deg),
+  fE_min(0.0), fE_max(11.0*GeV),
   fNumberOfParticles(1),fParticleGun(0),
   fBeamTarg(0), fMessenger(0)
 {
     // Set initial number of particles and create particle gun
     SetNumberOfParticles(fNumberOfParticles);
 
-    // Create generic messenger
+    // Create event generator messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
     fMessenger->DeclarePropertyWithUnit("emax","GeV",fE_max,"Maximum generation energy");
     fMessenger->DeclarePropertyWithUnit("emin","GeV",fE_min,"Minimum generation energy");
@@ -33,19 +35,36 @@ remollVEventGen::remollVEventGen(const G4String name)
     fMessenger->DeclarePropertyWithUnit("phmax","deg",fPh_max,"Maximum generation phi angle");
     fMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
     fMessenger->DeclareMethod(
-        "printeventgen",
+        "printlimits",
         &remollVEventGen::PrintEventGen,
         "Print the event generator limits");
 
-    fBeamTarg = new remollBeamTarget();
+    // Create event generator messenger
+    fEvGenMessenger = new G4GenericMessenger(this,"/remoll/evgen/","Remoll event generator properties");
+    fEvGenMessenger->DeclarePropertyWithUnit("emax","GeV",fE_max,"Maximum generation energy");
+    fEvGenMessenger->DeclarePropertyWithUnit("emin","GeV",fE_min,"Minimum generation energy");
+    fEvGenMessenger->DeclarePropertyWithUnit("thmax","deg",fTh_max,"Maximum generation theta angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("thmin","deg",fTh_min,"Minimum generation theta angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("phmax","deg",fPh_max,"Maximum generation phi angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("thcommax","deg",fThCoM_max,"Maximum CoM generation theta angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("thcommin","deg",fThCoM_min,"Minimum CoM generation theta angle");
+    fEvGenMessenger->DeclareMethod(
+        "printlimits",
+        &remollVEventGen::PrintEventGen,
+        "Print the event generator limits");
 
-    fSampType       = kCryogen;
+    // Create specific event generator messenger
+    fThisGenMessenger = new G4GenericMessenger(this,"/remoll/evgen/" + name + "/","Remoll " + name + " generator properties");
+
+    fSampType       = kActiveTargetVolume;
     fApplyMultScatt = false;
 }
 
 remollVEventGen::~remollVEventGen()
 {
-    delete fBeamTarg;
+    delete fThisGenMessenger;
+    delete fEvGenMessenger;
     delete fMessenger;
 }
 
@@ -84,9 +103,9 @@ remollEvent* remollVEventGen::GenerateEvent()
 
     thisev->fVertexPos    = fBeamTarg->fVer;
     if( fApplyMultScatt ) {
-        thisev->fBeamMomentum = fBeamTarg->fSampE*(fBeamTarg->fDir.unit());
+        thisev->fBeamMomentum = fBeamTarg->fSampledEnergy*(fBeamTarg->fDir.unit());
     } else {
-        thisev->fBeamMomentum = fBeamTarg->fSampE*G4ThreeVector(0.0, 0.0, 1.0);
+        thisev->fBeamMomentum = fBeamTarg->fSampledEnergy*G4ThreeVector(0.0, 0.0, 1.0);
     }
     /////////////////////////////////////////////////////////////////////
 
@@ -152,6 +171,6 @@ void remollVEventGen::PolishEvent(remollEvent *ev) {
     	ev->fRate = ev->fRate/nthrown;
     }
 
-    ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPol;
+    ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPolarization;
 }
 

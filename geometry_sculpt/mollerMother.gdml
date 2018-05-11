@@ -6,6 +6,8 @@
      <position name="upstreamCenter" x="0" y="0" z="7000."/>
      <position name="hybridCenter" x="0" y="0" z="13366.57"/>
      <position name="detectorCenter" x="0" y="0" z="28500."/>
+     <!-- full pion detector system pionDetectorCenter should be around 31-32000 mm -->
+     <position name="pionDetectorCenter" x="0" y="0" z="32000."/>
      <rotation name="identity"/>
 </define>
 
@@ -33,9 +35,26 @@
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
+
+      <!-- Simple disc detector -->
       <physvol>
       <file name="geometry_sculpt/detectorDaughter.gdml"/>
       <positionref ref="detectorCenter"/>
+      <rotationref ref="identity"/>
+      </physvol> 
+      
+      <!-- Barrel detector --> 
+      <!-- BUGGED
+      <physvol>
+      <file name = "geometry_sculpt/mollerdet.gdml"/>
+      <positionref ref="detectorCenter"/>
+      <rotationref ref ="identity"/>
+      </physvol>
+	-->     
+
+      <physvol>
+      <file name="geometry_sculpt/pionDetectorSystem.gdml"/>
+      <positionref ref="pionDetectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
       <physvol>
@@ -47,8 +66,8 @@
       <file name="geometry_sculpt/hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
       <rotationref ref="identity"/>
-      </physvol> 
-
+      </physvol>
+      
     </volume>
   </structure>
 

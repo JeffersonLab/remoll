@@ -44,7 +44,7 @@ remollGenLUND::~remollGenLUND()
   LUNDfile.close();
 }
 
-void remollGenLUND::SamplePhysics(remollVertex *vert, remollEvent *evt)
+void remollGenLUND::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 {
   // check if valid LUND file loaded and number of thrown events is less than file length
   if (bLUND &&

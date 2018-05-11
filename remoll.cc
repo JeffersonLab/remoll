@@ -19,13 +19,13 @@ typedef G4RunManager RunManager;
 
 #include "remollRun.hh"
 #include "remollRunData.hh"
+
+#include "remollIO.hh"
 #include "remollMessenger.hh"
+#include "remollPhysicsList.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
-
-//  Standard physics list
-#include "G4PhysListFactory.hh"
-#include "G4OpticalPhysics.hh"
+#include "remollParallelWorldConstruction.hh"
 
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
@@ -102,16 +102,21 @@ int main(int argc, char** argv) {
     remollRun::UpdateSeed();
 
     // Messenger
+    // TODO only thing the messenger does is set the seed, this could and should
+    // be done by /random/ commands in next major version
     remollMessenger* messenger = remollMessenger::GetInstance();
 
     // Detector geometry
     remollDetectorConstruction* detector = new remollDetectorConstruction();
     runManager->SetUserInitialization(detector);
 
+    // Parallel world geometry
+    G4String parallelWorldName = "ParallelWorld";
+    remollParallelWorldConstruction* parallelWorld = new remollParallelWorldConstruction(parallelWorldName);
+    runManager->SetUserInitialization(detector);
+
     // Physics list
-    G4PhysListFactory factory;
-    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
-    physlist->RegisterPhysics(new G4OpticalPhysics());
+    remollPhysicsList* physlist = new remollPhysicsList();
     runManager->SetUserInitialization(physlist);
 
     // Run action
@@ -123,8 +128,10 @@ int main(int argc, char** argv) {
     //----------------
     // Initialize visualization
     //
-    G4VisManager* visManager = new G4VisExecutive;
+    // Verbose level "warnings" (3) as is too noisy during initialization
+    G4VisManager* visManager = new G4VisExecutive("quiet");
     visManager->Initialize();
+    visManager->SetVerboseLevel("warnings");
 
     // Get the pointer to the User Interface manager
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
@@ -133,10 +140,9 @@ int main(int argc, char** argv) {
     if (macro.size())
     {
       // Run in batch mode
-      G4String command = "/control/execute ";
       // Copy contents of macro into buffer to be written out into ROOT file
       remollRun::GetRunData()->SetMacroFile(macro);
-      UImanager->ApplyCommand(command + macro);
+      UImanager->ExecuteMacroFile(macro);
     } else {
       // Define UI session for interactive mode
       G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
@@ -161,6 +167,6 @@ int main(int argc, char** argv) {
         << double(tEnd - tStart) / double(CLOCKS_PER_SEC)
         << G4endl;
 
-
+    // Return success
     return 0;
 }

@@ -42,7 +42,7 @@
 #include "G4Colour.hh"
 
 #define __DET_STRLEN 200
-#define __MAX_DETS 5000
+#define __MAX_DETS 10000
 
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
@@ -51,7 +51,11 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
 remollDetectorConstruction::remollDetectorConstruction()
-: fGDMLParser(0),fWorldVolume(0)
+: fGDMLParser(0),
+  fMessenger(0),fGeometryMessenger(0),
+  fVerboseLevel(0),
+  fGDMLValidate(true),fGDMLOverlapCheck(true),
+  fWorldVolume(0)
 {
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
@@ -68,9 +72,10 @@ remollDetectorConstruction::remollDetectorConstruction()
       .SetStates(G4State_PreInit);
   fMessenger->DeclareMethod(
       "dumpgeometry",
-      &remollDetectorConstruction::DumpGeometricalTreeFromWorld,
+      &remollDetectorConstruction::DumpGeometry,
       "Dump the geometry tree")
-      .SetStates(G4State_Idle);
+      .SetStates(G4State_Idle)
+      .SetDefaultValue("false");
   fMessenger->DeclareMethod(
       "dumpelements",
       &remollDetectorConstruction::DumpElements,
@@ -81,10 +86,55 @@ remollDetectorConstruction::remollDetectorConstruction()
       &remollDetectorConstruction::DumpMaterials,
       "Dump the materials")
       .SetStates(G4State_Idle);
+
+  // Create geometry messenger
+  fGeometryMessenger = new G4GenericMessenger(this,
+      "/remoll/geometry/",
+      "Remoll geometry properties");
+  fGeometryMessenger->DeclareProperty(
+      "setfile",
+      fDetFileName,
+      "Set geometry GDML file")
+      .SetStates(G4State_PreInit);
+  fGeometryMessenger->DeclareProperty(
+      "verbose",
+      fVerboseLevel,
+      "Set geometry verbose level")
+          .SetStates(G4State_PreInit);
+  fGeometryMessenger->DeclareProperty(
+      "validate",
+      fGDMLValidate,
+      "Set GMDL validate flag")
+          .SetStates(G4State_PreInit)
+          .SetDefaultValue("true");
+  fGeometryMessenger->DeclareProperty(
+      "overlapcheck",
+      fGDMLOverlapCheck,
+      "Set GMDL overlap check flag")
+          .SetStates(G4State_PreInit)
+          .SetDefaultValue("true");
+  fGeometryMessenger->DeclareMethod(
+      "dumpelements",
+      &remollDetectorConstruction::DumpElements,
+      "Dump the elements")
+      .SetStates(G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "dumpmaterials",
+      &remollDetectorConstruction::DumpMaterials,
+      "Dump the materials")
+      .SetStates(G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "dumpgeometry",
+      &remollDetectorConstruction::DumpGeometry,
+      "Dump the geometry tree")
+      .SetStates(G4State_Idle)
+      .SetDefaultValue("false");
 }
 
 remollDetectorConstruction::~remollDetectorConstruction() {
-  delete fGDMLParser;
+    delete fGDMLParser;
+    delete fMessenger;
+    delete fGeometryMessenger;
 }
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct()
@@ -93,89 +143,119 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
     io->GrabGDMLFiles(fDetFileName);
 
     fGDMLParser->Clear();
-    fGDMLParser->SetOverlapCheck(false);
+    fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
 
     G4cout << "Reading " << fDetFileName << G4endl;
-    fGDMLParser->Read(fDetFileName);
+    fGDMLParser->Read(fDetFileName,fGDMLValidate);
 
-    G4VPhysicalVolume* worldVolume = fGDMLParser->GetWorldVolume();
-    
+    fWorldVolume = fGDMLParser->GetWorldVolume();
+
+    //==========================
+    // List auxiliary info
+    //==========================
+
+    const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+    G4cout << "Found " << auxmap->size()
+               << " volume(s) with auxiliary information."
+               << G4endl << G4endl;
+
     //====================================================
     // Associate target volumes with beam/target class
-    // This has to match what is declared in the GDML volumes
-    // We absolutely need some connection between the geometry
-    // structure and having access to the physical volumes.
-    // This could be made more general with a full treesearch
     //====================================================
 
-    G4LogicalVolume *thislog = worldVolume->GetLogicalVolume();
-    G4int vidx = 0;
+    // Loop over volumes with auxiliary information
+    for(G4GDMLAuxMapType::const_iterator
+        iter  = auxmap->begin();
+        iter != auxmap->end(); iter++) {
 
-    G4String targetmothername = "logicTarget";
-    while( vidx < thislog->GetNoDaughters() ){
-	if( thislog->GetDaughter(vidx)->GetName() == targetmothername.append("_PV")) break;
-	vidx++; 
+      // Loop over auxiliary tags for this logical volume
+      G4LogicalVolume* logical_volume = (*iter).first;
+      for (G4GDMLAuxListType::const_iterator
+          vit  = (*iter).second.begin();
+          vit != (*iter).second.end(); vit++) {
+
+        // Treat auxiliary type "TargetSystem"
+        if ((*vit).type == "TargetSystem") {
+          // Found target mother logical volume
+          G4LogicalVolume* mother_logical_volume = logical_volume;
+          G4cout << "Found target mother logical volume "
+              << mother_logical_volume->GetName() << "." << G4endl;
+
+          // Now find target mother physical volume
+          G4VPhysicalVolume* mother_physical_volume = 0;
+          std::vector<G4VPhysicalVolume*> list =
+              GetPhysicalVolumes(fWorldVolume,mother_logical_volume);
+          if (list.size() == 1) {
+            mother_physical_volume = list[0];
+
+            // Mutex lock before writing static structures in remollBeamTarget
+            G4AutoLock lock(&remollDetectorConstructionMutex);
+            remollBeamTarget::ResetTargetVolumes();
+            remollBeamTarget::SetMotherVolume(mother_physical_volume);
+
+            G4cout << "Found target mother physical volume "
+                << mother_physical_volume->GetName() << "." << G4endl;
+          } else {
+            G4cout << "Target mother logical volume does not occur "
+                << "*exactly once* as a physical volume." << G4endl;
+            exit(-1);
+          }
+
+          // Loop over target mother logical volume daughters
+          for (int i = 0; i < mother_logical_volume->GetNoDaughters(); i++) {
+
+            // Get daughter physical and logical volumes
+            G4VPhysicalVolume* target_physical_volume = mother_logical_volume->GetDaughter(i);
+            G4LogicalVolume* target_logical_volume = target_physical_volume->GetLogicalVolume();
+
+            // Target volume must contain "Target" auxiliary tag as well
+            //
+            // TODO Seems like this shouldn't require an iteration over a map,
+            // of all things, but I coulnd't get auxmap[target_logical_volume]
+            // to work due to (unhelpful) compiler errors, probably related to
+            // the use of the typedef instead of actual map. Something like a
+            // for (G4GDMLAuxListType::const_iterator vit2 =
+            //   auxmap[target_logical_volume].begin(); etc
+            for(G4GDMLAuxMapType::const_iterator
+                iter2  = auxmap->begin();
+                iter2 != auxmap->end(); iter2++) {
+              if ((*iter2).first == target_logical_volume) {
+                for (G4GDMLAuxListType::const_iterator
+                    vit2  = (*iter2).second.begin();
+                    vit2 != (*iter2).second.end(); vit2++) {
+
+                  // If the logical volume is tagged as "TargetSamplingVolume"
+                  if ((*vit2).type == "TargetSamplingVolume") {
+
+                    // Add target volume
+                    G4cout << "Adding target sampling volume "
+                        << target_logical_volume->GetName() << "." << G4endl;
+                    remollBeamTarget::AddTargetVolume(target_physical_volume);
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
-    if( vidx == thislog->GetNoDaughters() ){
-	G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-	    ":  target definition structure in GDML not valid" << G4endl;
-    } else {
-        // Mutex lock before writing static structures in remollBeamTarget
-        G4AutoLock lock(&remollDetectorConstructionMutex);
-        remollBeamTarget::ResetTargetVolumes();
-	remollBeamTarget::SetMotherVolume(thislog->GetDaughter(vidx));
 
-	thislog = thislog->GetDaughter(vidx)->GetLogicalVolume();
 
-	////////////////////////////////////////////////////////////////////////////////
-	// List relevant target volumes here terminated by "" //////////////////////////
-	// FIXME:  This could probably be done better with auxiliary information
-	//         though that only gives us *logical* volumes and we need the physical
-	//         volumes for placement information
-	//
-	//         *ORDERING IS IMPORTANT - MUST GO UPSTREAM TO DOWNSTREAM*
-	//         FIXME:  can sort that on our own
-	G4String targvolnames[] = {
-	    "h2Targ", ""
-	};
-	////////////////////////////////////////////////////////////////////////////////
-
-	int nidx = 0;
-	while( targvolnames[nidx] != "" ){
-	    vidx = 0;
-	    while( vidx < thislog->GetNoDaughters() ){
-		if( thislog->GetDaughter(vidx)->GetName() == targvolnames[nidx].append("_PV")) break;
-		vidx++; 
-	    }
-	    if( vidx == thislog->GetNoDaughters() ){
-		G4cerr << "Error " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		    ":  target definition structure in GDML not valid.  Could not find volume " << targvolnames[nidx] << G4endl;
-		exit(1);
-	    }
-
-	    remollBeamTarget::AddTargetVolume(thislog->GetDaughter(vidx));
-	    nidx++;
-	}
-    }
-
-  //==========================
-  // List auxiliary info
-  //==========================
-
-  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
-
-  G4cout << "Found " << auxmap->size()
+  if (fVerboseLevel > 0)
+      G4cout << "Found " << auxmap->size()
          << " volume(s) with auxiliary information."
 	 << G4endl << G4endl;
   for (G4GDMLAuxMapType::const_iterator
 	  iter  = auxmap->begin();
 	  iter != auxmap->end(); iter++) {
-      G4cout << "Volume " << ((*iter).first)->GetName()
+      if (fVerboseLevel > 0)
+          G4cout << "Volume " << ((*iter).first)->GetName()
 	     << " has the following list of auxiliary information: "<< G4endl;
       for (G4GDMLAuxListType::const_iterator
 	      vit  = (*iter).second.begin();
 	      vit != (*iter).second.end(); vit++) {
-	G4cout << "--> Type: " << (*vit).type
+        if (fVerboseLevel > 0)
+            G4cout << "--> Type: " << (*vit).type
 	       << " Value: "   << (*vit).value << std::endl;
 
         if ((*vit).type == "Visibility") {
@@ -196,11 +276,13 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
         if ((*vit).type == "Color") {
           G4Colour colour(1.0,1.0,1.0);
           if (G4Colour::GetColour((*vit).value, colour)) {
-            G4cout << "Setting color to " << (*vit).value << "." << G4endl;
+            if (fVerboseLevel > 0)
+              G4cout << "Setting color to " << (*vit).value << "." << G4endl;
             G4VisAttributes visAttribute(colour);
             ((*iter).first)->SetVisAttributes(visAttribute);
           } else {
-            G4cout << "Colour " << (*vit).value << " is not known." << G4endl;
+            if (fVerboseLevel > 0)
+              G4cout << "Colour " << (*vit).value << " is not known." << G4endl;
           }
         }
 
@@ -219,7 +301,8 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
         }
       }
   }
-  G4cout << G4endl<< G4endl;
+  if (fVerboseLevel > 0)
+      G4cout << G4endl<< G4endl;
 
   //==========================
   // Visualization attributes
@@ -227,23 +310,22 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 
   G4VisAttributes* motherVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   motherVisAtt->SetVisibility(false);
-  worldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
+  fWorldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
 
   G4VisAttributes* daughterVisAtt= new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   daughterVisAtt->SetForceWireframe (true);
-  for(int i=0;i<worldVolume->GetLogicalVolume()->GetNoDaughters();i++){
-      worldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
+  for(int i=0;i<fWorldVolume->GetLogicalVolume()->GetNoDaughters();i++){
+      fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
   }
 
   //==========================
   // Output geometry tree
   //==========================
 
-  UpdateCopyNo(worldVolume,1); 
-    
-  fWorldVolume = worldVolume;
+  UpdateCopyNo(fWorldVolume,1);
 
-  G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
+  if (fVerboseLevel > 0)
+    G4cout << G4endl << "###### Leaving remollDetectorConstruction::Read() " << G4endl << G4endl;
 
   return fWorldVolume;
 }
@@ -255,7 +337,6 @@ void remollDetectorConstruction::ConstructSDandField()
   //==========================
   G4SDManager* SDman = G4SDManager::GetSDMpointer();
   char detectorname[__DET_STRLEN];
-  int retval;
 
   G4VSensitiveDetector* thisdet;
 
@@ -263,7 +344,8 @@ void remollDetectorConstruction::ConstructSDandField()
 
   G4GDMLAuxListType::const_iterator vit, nit;
 
-  G4cout << "Beginning sensitive detector assignment" << G4endl;
+  if (fVerboseLevel > 0)
+      G4cout << "Beginning sensitive detector assignment" << G4endl;
 
   G4bool useddetnums[__MAX_DETS];
   for (k = 0; k < __MAX_DETS; k++ ){useddetnums[k] = false;}
@@ -272,7 +354,8 @@ void remollDetectorConstruction::ConstructSDandField()
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
       G4LogicalVolume* myvol = (*iter).first;
-      G4cout << "Volume " << myvol->GetName() << G4endl;
+      if (fVerboseLevel > 0)
+          G4cout << "Volume " << myvol->GetName() << G4endl;
 
       for (G4GDMLAuxListType::const_iterator
           vit  = (*iter).second.begin();
@@ -308,17 +391,18 @@ void remollDetectorConstruction::ConstructSDandField()
               }
               /////////////////////////////////////////////////////////////
 
-              retval = snprintf(detectorname, __DET_STRLEN,"remoll/det_%d", det_no);
+              int retval = snprintf(detectorname, __DET_STRLEN,"remoll/det_%d", det_no);
 
               assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
 
-              thisdet = SDman->FindSensitiveDetector(detectorname);
+              thisdet = SDman->FindSensitiveDetector(detectorname,(fVerboseLevel > 0));
 
               if( thisdet == 0 ) {
                   thisdet = new remollGenericDetector(detectorname, det_no);
-                  G4cout << "  Creating sensitive detector " << det_type
-                      << " for volume " << myvol->GetName()
-                      <<  G4endl << G4endl;
+                  if (fVerboseLevel > 0)
+                      G4cout << "  Creating sensitive detector " << det_type
+                          << " for volume " << myvol->GetName()
+                          <<  G4endl << G4endl;
                   SDman->AddNewDetector(thisdet);
               }
 
@@ -326,7 +410,8 @@ void remollDetectorConstruction::ConstructSDandField()
           }
       }
   }
-  G4cout << "Completed sensitive detector assignment" << G4endl;
+  if (fVerboseLevel > 0)
+      G4cout << "Completed sensitive detector assignment" << G4endl;
 
   //==========================
   // Magnetic fields
@@ -358,6 +443,31 @@ void remollDetectorConstruction::DumpElements() {
 void remollDetectorConstruction::DumpMaterials() {
   G4cout << G4endl << "Material table: " << G4endl << G4endl;
   G4cout << *(G4Material::GetMaterialTable()) << G4endl;
+}
+
+std::vector<G4VPhysicalVolume*> remollDetectorConstruction::GetPhysicalVolumes(
+    G4VPhysicalVolume* physical_volume,
+    const G4LogicalVolume* logical_volume)
+{
+  // Create list of results
+  std::vector<G4VPhysicalVolume*> list;
+
+  // Store as result if the logical volume name agrees
+  if (physical_volume->GetLogicalVolume() == logical_volume) {
+    list.push_back(physical_volume);
+  }
+
+  // Descend down the tree
+  for (int i = 0; i < physical_volume->GetLogicalVolume()->GetNoDaughters(); i++)
+  {
+    // Get results for daughter volumes
+    std::vector<G4VPhysicalVolume*> daughter_list =
+        GetPhysicalVolumes(physical_volume->GetLogicalVolume()->GetDaughter(i),logical_volume);
+    // Add to the list of results
+    list.insert(list.end(),daughter_list.begin(),daughter_list.end());
+  }
+
+  return list;
 }
 
 void remollDetectorConstruction::DumpGeometricalTree(
