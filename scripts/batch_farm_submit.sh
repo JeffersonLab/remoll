@@ -1,17 +1,19 @@
+#!/bin/bash
 
-#name=moller_lead_wall_100mm
+name=${1:-remoll_test}
 
-name=pion_lead_wall_100mm
 #first job number (can change if just want to add
 #on to the get more simultaions)
-firstjob=66000
+firstjob=1
 #last number of jobs one would like done
-lastjob=66099
+lastjob=100
 #number of events simulated in each Geant4 file
 nevents=100000
 #batch system
 batch=xml
-remoll=~/remoll
+
+remoll=`dirname $0`
+remoll=${remoll/scripts/}
 
 let jobid=${firstjob}
  while [[ ${jobid} -le ${lastjob} ]] ; do
