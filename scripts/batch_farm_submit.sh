@@ -32,6 +32,7 @@ let jobid=${firstjob}
   #replace the variables in the file macros/${basename}.in
   #which creates the mac file that Geant4 uses
 	sed -e "s|%nevents%|${nevents}|g" \
+			-e "s|%user%|${USER}|g" \
 			-e "s|%remoll%|${remoll}|g" \
 			-e "s|%seedA%|${seedA}|g" \
 			-e "s|%seedB%|${seedB}|g" \
@@ -43,6 +44,7 @@ let jobid=${firstjob}
   #replace the variables in the file ${basename}.in
   #which creates the job file that is submitted to the farm
 	sed -e "s|%nevents%|${nevents}|g" \
+			-e "s|%user%|${USER}|g" \
 			-e "s|%remoll%|${remoll}|g" \
 			-e "s|%seedA%|${seedA}|g" \
 			-e "s|%seedB%|${seedB}|g" \
