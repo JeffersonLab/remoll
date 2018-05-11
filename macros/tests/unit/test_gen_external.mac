@@ -1,7 +1,7 @@
 /run/initialize
 /remoll/evgen/set moller
 /remoll/filename remollin.root
-/run/beamOn 100
+/run/beamOn 1000
 
 /remoll/filename remollout.root
 
@@ -10,4 +10,4 @@
 /remoll/evgen/external/file remollin.root
 /remoll/evgen/external/detid 28
 /remoll/filename remollout.root
-/run/beamOn 10
+/run/beamOn 1
