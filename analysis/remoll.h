@@ -23,6 +23,7 @@ public :
 
    // Declaration of leaf types
    Double_t rate;
+   remollUnits_t *units;
    remollEvent_t *ev;
    remollBeamTarget_t *bm;
    std::vector<remollEventParticle_t> *part;
