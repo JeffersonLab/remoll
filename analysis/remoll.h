@@ -7,56 +7,56 @@
 
 #ifndef remoll_h
 #define remoll_h
-
+#include <iostream>
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
-
+#include <TH1D.h>
 #include "remolltypes.hh"
 
 // Header file for the classes stored in the TTree if any.
 
 class remoll {
 public :
-   TTree          *fChain;   //!pointer to the analyzed TTree or TChain
+   TChain         *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
 
    // Declaration of leaf types
-   Double_t *rate;
+   Double_t rate;
    remollUnits_t *units;
-   remollUnits_t &unit;
    remollEvent_t *ev;
    remollBeamTarget_t *bm;
    std::vector<remollEventParticle_t> *part;
    std::vector<remollGenericDetectorHit_t> *hit;
    std::vector<remollGenericDetectorSum_t> *sum;
 
-   remoll(TString name = "");
+   remoll(const TString& name = "remollout.root");
    virtual ~remoll();
    virtual Int_t    Cut(Long64_t entry);
    virtual Int_t    GetEntry(Long64_t entry);
    virtual Long64_t LoadTree(Long64_t entry);
-   virtual void     Init(TTree *tree);
+   virtual void     Init(TChain *tree);
    virtual void     Loop() = 0;
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 };
 
-remoll::remoll(TString name): fChain(0), units(0), unit(*units)
+remoll::remoll(const TString& name) : fChain(0) 
 {
+TChain* tree = new TChain("T");
+fCurrent = tree->Add(name);
+
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
-  TTree* tree = 0;
-   if (name == "") {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("remollout.root");
-      if (!f || !f->IsOpen()) {
-         f = new TFile("remollout.root");
-      }
-      f->GetObject("T",tree);
-   }else {
-      TFile *f = new TFile(name);
-      f->GetObject("T",tree);
-   }
+//   if (tree == 0) {
+  //    TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject(name);
+    //  if (!f || !f->IsOpen()) {
+      //   f = new TFile(name);
+     // }
+    //  f->GetObject("T",tree);
+
+  // }
+
    Init(tree);
 }
 
@@ -85,7 +85,7 @@ Long64_t remoll::LoadTree(Long64_t entry)
    return centry;
 }
 
-void remoll::Init(TTree *tree)
+void remoll::Init(TChain *tree)
 {
    // The Init() function is called when the selector needs to initialize
    // a new tree or chain. Typically here the branch addresses and branch
@@ -99,8 +99,7 @@ void remoll::Init(TTree *tree)
    if (!tree) return;
    fChain = tree;
    fCurrent = -1;
-
-   fChain->SetBranchAddress("units", &units);
+   std::cout<< "setting branches" << std::endl;
    fChain->SetBranchAddress("rate", &rate);
    fChain->SetBranchAddress("bm", &bm);
    fChain->SetBranchAddress("ev", &ev);
