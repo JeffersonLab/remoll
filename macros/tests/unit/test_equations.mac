@@ -1,0 +1,21 @@
+/run/initialize
+
+/remoll/field/print
+
+
+/remoll/field/steppertype 5
+
+/remoll/field/equationtype 0
+/run/beamOn 10
+
+/remoll/field/equationtype 2
+/run/beamOn 10
+
+
+/remoll/field/steppertype 1
+
+/remoll/field/equationtype 0
+/run/beamOn 10
+
+/remoll/field/equationtype 2
+/run/beamOn 10
