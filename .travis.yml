@@ -16,8 +16,8 @@ script:
 - pushd build && cmake .. 2>&1 | tee -a ../remollbuild.log && popd
 - pushd build &&  make    2>&1 | tee -a ../remollbuild.log && popd
 - mkdir map_directory
-- wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyHybrid_rm_3.0.txt
-- wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyUpstream_rm_1.1.txt
+- wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyHybrid_rm_3.0.txt 2>&1 | grep -v -F ".........."
+- wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyUpstream_rm_1.1.txt 2>&1 | grep -v -F ".........."
 - source geant4.sh && scripts/tests/test_macros.sh unit 2>&1 | tee remolltest_unit.log
 - source geant4.sh && scripts/tests/test_macros.sh commit 2>&1 | tee remolltest_commit.log
 - source geant4.sh && scripts/tests/test_macros.sh release 2>&1 | tee remolltest_release.log
