@@ -80,8 +80,14 @@ remollGlobalField::remollGlobalField()
     // Create global field messenger
     fGlobalFieldMessenger = new G4GenericMessenger(this,"/remoll/field/","Remoll global field properties");
     fGlobalFieldMessenger->DeclareMethod("equationtype",&remollGlobalField::SetEquationType,"Set equation type: \n 0: B-field, no spin (default); \n 1: EM-field, no spin; \n 2: B-field, with spin; \n 3: EM-field, with spin");
-    fGlobalFieldMessenger->DeclareMethod("steppertype",&remollGlobalField::SetStepperType,"Set stepper type: \n 0: ExplicitEuler; \n 1: ImplicitEuler; \n 2: SimpleRunge \n 3: SimpleHeum; \n 4: ClassicalRK4 (default); \n 5: CashKarpRKF45");
+    fGlobalFieldMessenger->DeclareMethod("steppertype",&remollGlobalField::SetStepperType,"Set stepper type: \n 0: ExplicitEuler; \n 1: ImplicitEuler; \n 2: SimpleRunge; \n 3: SimpleHeum; \n 4: ClassicalRK4 (default); \n 5: CashKarpRKF45");
     fGlobalFieldMessenger->DeclareMethod("print",&remollGlobalField::PrintAccuracyParameters,"Print the accuracy parameters");
+    fGlobalFieldMessenger->DeclareProperty("epsmin",fEpsMin,"Set the minimum epsilon of the field propagator");
+    fGlobalFieldMessenger->DeclareProperty("epsmax",fEpsMax,"Set the maximum epsilon of the field propagator");
+    fGlobalFieldMessenger->DeclareProperty("minstep",fMinStep,"Set the minimum step of the chord finder");
+    fGlobalFieldMessenger->DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
+    fGlobalFieldMessenger->DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
+    fGlobalFieldMessenger->DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
 }
 
 remollGlobalField::~remollGlobalField()
