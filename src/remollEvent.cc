@@ -22,6 +22,9 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
   for (size_t idx = 0; idx < fPartType.size(); idx++) {
     remollEventParticle_t part;
     part.pid = fPartType[idx]->GetPDGEncoding();
+    part.sx = fPartSpin[idx].x();
+    part.sy = fPartSpin[idx].y();
+    part.sz = fPartSpin[idx].z();
     part.vx = fPartPos[idx].x();
     part.vy = fPartPos[idx].y();
     part.vz = fPartPos[idx].z();
@@ -54,9 +57,10 @@ remollEvent_t remollEvent::GetEventIO() const {
   return ev;
 }
 
-void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name ){
+void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name, G4ThreeVector spin ){
     fPartPos.push_back(pos);
     fPartMom.push_back(mom);
+    fPartSpin.push_back(spin);
     fPartRealMom.push_back(mom);
 
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
@@ -65,10 +69,10 @@ void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4St
     fPartType.push_back(particle);
 }
 
-
 void remollEvent::Reset(){
     fPartPos.clear();
     fPartMom.clear();
+    fPartSpin.clear();
     fPartRealMom.clear();
     fPartType.clear();
 
@@ -89,6 +93,7 @@ void remollEvent::Reset(){
 void remollEvent::UndoLastParticle(){
     fPartPos.pop_back();
     fPartMom.pop_back();
+    fPartSpin.pop_back();
     fPartRealMom.pop_back();
     fPartType.pop_back();
 }
@@ -140,8 +145,9 @@ void remollEvent::Print(){
 	    G4cout << "\tParticle type for " << i << " not defined" << G4endl;
 	} else {
 	    G4cout << "\t" << fPartType[i]->GetParticleName() << ":" << G4endl;
-	    G4cout << "\t\tat (" << fPartPos[i].x()/m << ", " << fPartPos[i].y()/m << ", " << fPartPos[i].z()/m  << ") m" << G4endl;
-	    G4cout << "\t\tof (" << fPartMom[i].x()/GeV << ", " << fPartMom[i].y()/GeV << ", " << fPartMom[i].z()/GeV  << ") GeV" << G4endl;
+	    G4cout << "\t\tat x = (" << fPartPos[i].x()/m << ", " << fPartPos[i].y()/m << ", " << fPartPos[i].z()/m  << ") m" << G4endl;
+	    G4cout << "\t\tof p = (" << fPartMom[i].x()/GeV << ", " << fPartMom[i].y()/GeV << ", " << fPartMom[i].z()/GeV  << ") GeV" << G4endl;
+	    G4cout << "\t\tand s = (" << fPartSpin[i].x() << ", " << fPartSpin[i].y() << ", " << fPartSpin[i].z()  << ")" << G4endl;
 	}
     }
 }
