@@ -141,7 +141,10 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
         fParticleGun->SetParticleEnergy(kinE);
         fParticleGun->SetParticlePosition(fEvent->fPartPos[pidx]);
         fParticleGun->SetParticleMomentumDirection(fEvent->fPartMom[pidx].unit());
-
+	G4ThreeVector pol = fEvent->fPartSpin[pidx];
+	if (pol.getR()>0.01)
+	  fParticleGun->SetParticlePolarization(pol);
+	
         fParticleGun->GeneratePrimaryVertex(anEvent);
     }
 }
