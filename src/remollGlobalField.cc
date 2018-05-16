@@ -59,17 +59,14 @@ remollGlobalField::remollGlobalField()
     fFieldPropagator = transportationmanager->GetPropagatorInField();
     fFieldManager = transportationmanager->GetFieldManager();
 
-    SetEquation();
-    SetStepper();
-
-    fChordFinder = new G4ChordFinder(this,fMinStep,fStepper);
-
-    fFieldManager->CreateChordFinder(this);
-
-    SetAccuracyParameters();
-
     // Connect field manager to this global field
     fFieldManager->SetDetectorField(this);
+
+    // Create equation, stepper, and chordfinder
+    SetEquation();
+    SetStepper();
+    SetChordFinder();
+    SetAccuracyParameters();
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -132,23 +129,29 @@ void remollGlobalField::SetEquation()
   switch (fEquationType)
   {
     case 0:
+      G4cout << "G4Mag_UsualEqRhs is called with 6 dof" << G4endl;
       fEquation = new G4Mag_UsualEqRhs(this);
       fEquationDoF = 6;
       break;
     case 1:
+      G4cout << "G4EqMagElectricField is called with 6 dof" << G4endl;
       fEquation = new G4EqMagElectricField(this);
       fEquationDoF = 6;
       break;
     case 2:
+      G4cout << "G4Mag_SpinEqRhs is called with 12 dof" << G4endl;
       fEquation = new G4Mag_SpinEqRhs(this);
       fEquationDoF = 12;
       break;
     case 3:
+      G4cout << "G4EqEMFieldWithSpin is called with 12 dof" << G4endl;
       fEquation = new G4EqEMFieldWithSpin(this);
       fEquationDoF = 12;
       break;
     default: fEquation = 0;
   }
+
+  SetStepper();
 }
 
 void remollGlobalField::SetStepper()
@@ -183,6 +186,16 @@ void remollGlobalField::SetStepper()
       break;
     default: fStepper = 0;
   }
+
+  SetChordFinder();
+}
+
+void remollGlobalField::SetChordFinder()
+{
+  if (fChordFinder) delete fChordFinder;
+
+  fChordFinder = new G4ChordFinder(this,fMinStep,fStepper);
+  fFieldManager->CreateChordFinder(this);
 }
 
 void remollGlobalField::AddNewField(G4String& name)

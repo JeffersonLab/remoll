@@ -36,18 +36,22 @@ class remollGlobalField : public G4MagneticField {
 
 	void GetFieldValue(const G4double[], G4double*) const;
 
+    private:
+        /// Set the stepper
+        void SetEquation();
+
+        /// Set the stepper
+        void SetStepper();
+
+        /// Set the stepper
+        void SetChordFinder();
+
     public:
         /// Set the stepper types
         void SetEquationType(G4int i) { fEquationType = i; SetEquation(); }
 
-        /// Set the stepper
-        void SetEquation();
-
         /// Set the stepper types
         void SetStepperType(G4int i) { fStepperType = i; SetStepper(); }
-
-        /// Set the stepper
-        void SetStepper();
 
         /// Set the minimum step length
         void SetMinStep(G4double stp) { fMinStep = stp; SetAccuracyParameters(); }
