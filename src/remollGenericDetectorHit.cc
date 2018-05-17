@@ -34,6 +34,7 @@ remollGenericDetectorHit::remollGenericDetectorHit(const remollGenericDetectorHi
   f3X     = right.f3X;
   f3Xl    = right.f3Xl;
   f3P     = right.f3P;
+  f3S     = right.f3S;
   f3V     = right.f3V;
 
   fTime   = right.fTime;
