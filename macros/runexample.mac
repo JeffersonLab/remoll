@@ -50,7 +50,7 @@
 #/remoll/externaldetid 4051
 
 /remoll/evgen/beamPolarization +L
-/remoll/field/equationtype 3
+/remoll/field/equationtype 2
 /remoll/field/steppertype 2
 /remoll/field/print
 
