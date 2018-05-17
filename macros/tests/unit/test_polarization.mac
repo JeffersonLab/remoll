@@ -5,6 +5,5 @@
 
 /remoll/gen moller
 
-/remoll/field/steppertype 3
 /remoll/field/equationtype 2
 /run/beamOn 100
