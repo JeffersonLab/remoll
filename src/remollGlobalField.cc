@@ -95,7 +95,6 @@ remollGlobalField::~remollGlobalField()
   if (fEquation)        delete fEquation;
   if (fStepper)         delete fStepper;
   if (fChordFinder)     delete fChordFinder;
-
 }
 
 void remollGlobalField::SetAccuracyParameters()
@@ -195,7 +194,7 @@ void remollGlobalField::SetChordFinder()
   if (fChordFinder) delete fChordFinder;
 
   fChordFinder = new G4ChordFinder(this,fMinStep,fStepper);
-  fFieldManager->CreateChordFinder(this);
+  fFieldManager->SetChordFinder(fChordFinder);
 }
 
 void remollGlobalField::AddNewField(G4String& name)
