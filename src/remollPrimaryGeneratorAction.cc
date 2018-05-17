@@ -129,6 +129,16 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
       fEvent = 0;
     }
 
+    const G4String fBeamPol = fEventGen->GetBeamPolarization();
+    G4ThreeVector cross(0,0,2);
+    if( fBeamPol == "0" ) cross = G4ThreeVector(0,0,0);
+    else{
+      if( fBeamPol.contains('V') ) cross = G4ThreeVector(1,0,0);
+      else if( fBeamPol.contains('H') ) cross = G4ThreeVector(0,1,0);
+
+      if( fBeamPol.contains('-') ) cross *= -1;
+    }
+
     // Create new primary event
     fEvent = fEventGen->GenerateEvent();
     for (unsigned int pidx = 0; pidx < fEvent->fPartType.size(); pidx++) {
@@ -141,10 +151,20 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
         fParticleGun->SetParticleEnergy(kinE);
         fParticleGun->SetParticlePosition(fEvent->fPartPos[pidx]);
         fParticleGun->SetParticleMomentumDirection(fEvent->fPartMom[pidx].unit());
-	G4ThreeVector pol = fEvent->fPartSpin[pidx];
-	if (pol.getR()>0.01)
-	  fParticleGun->SetParticlePolarization(pol);
-	
+
+	G4ThreeVector pol(0,0,0);
+	if( pidx == 0 ){
+	  if( cross.mag() !=0 ){
+	    if(cross.mag() == 1 ) //transverse polarization
+	      pol = G4ThreeVector( (fEvent->fPartMom[0].unit()).cross(cross));
+	    else if( fBeamPol.contains("+") ) //positive helicity
+	      pol = fEvent->fPartMom[0].unit();
+	    else //negative helicity
+	      pol = - fEvent->fPartMom[0].unit();
+	  }
+	}
+	fParticleGun->SetParticlePolarization(pol);
+
         fParticleGun->GeneratePrimaryVertex(anEvent);
     }
 }
