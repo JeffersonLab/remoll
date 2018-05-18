@@ -1,7 +1,0 @@
-# This must be called before initialize
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
-
-# This must be explicitly called
-/run/initialize
-
-/remoll/dumpgeometry false
