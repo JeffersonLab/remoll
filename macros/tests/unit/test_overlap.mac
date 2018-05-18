@@ -11,9 +11,9 @@
 # This must be explicitly called
 /run/initialize
 
-# Dump geometry and materials
-/remoll/geometry/dumpelements
-/remoll/geometry/dumpmaterials
+# Print geometry and materials
+/remoll/geometry/printelements
+/remoll/geometry/printmaterials
 
-# Dump geometry tree
-/remoll/geometry/dumpgeometry true
+# Print geometry tree
+/remoll/geometry/printgeometry true
