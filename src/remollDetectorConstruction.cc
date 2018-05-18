@@ -61,7 +61,7 @@ remollDetectorConstruction::remollDetectorConstruction()
   fGDMLParser = new G4GDMLParser();
 
   // Default geometry file
-  fDetFileName = "geometry_sculpt/mollerMother.gdml";
+  fDetFileName = "geometry/mollerMother.gdml";
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
