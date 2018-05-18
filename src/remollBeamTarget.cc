@@ -41,8 +41,6 @@ remollBeamTarget::remollBeamTarget()
   fX0(0.0),fY0(0.0),fTh0(0.0),fPh0(0.0),
   fdTh(0.0),fdPh(0.0),fCorrTh(0.0),fCorrPh(0.0)
 {
-    UpdateInfo();
-
     // Create new multiple scattering
     fMS = new remollMultScatt();
 
@@ -119,9 +117,8 @@ void remollBeamTarget::UpdateInfo()
     fActiveTargetRelativePosition = -1e9;
     fTotalTargetEffectiveLength = 0.0;
 
-    // Can't calculate anything without mother
-    if( !fTargetMother ) {
-      G4cerr << "Warning: No target mother volume found." << G4endl;
+    // Can't calculate anything without mother, let's hope we find one later on
+    if (!fTargetMother) {
       return;
     }
     fMotherTargetAbsolutePosition = fTargetMother->GetFrameTranslation().z();
@@ -257,6 +254,20 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
 remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 {
+    // Check if target mother volume exists
+    if (fTargetMother == 0) {
+      G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
+                "No target mother volume defined!" << G4endl;
+      exit(1);
+    }
+
+    // Check if target volume exists
+    if (fTargetVolumes.size() == 0) {
+      G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
+                "No target volume defined!" << G4endl;
+      exit(1);
+    }
+
     // Create vertex
     remollVertex vertex;
 
