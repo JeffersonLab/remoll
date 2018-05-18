@@ -72,7 +72,7 @@
       <solidref ref="pionDetectorSystem_solid"/>
 
       <physvol>
-        <file name="geometry_sculpt/pionDetectorVirtualDet.gdml"
+        <file name="geometry/pionDetectorVirtualDet.gdml"
            volname="pionDetectorVirtualDetVacuum_logical"/>
         <positionref ref="pionDetectorVirtualDetPositionFront"/>
       </physvol>
@@ -83,38 +83,38 @@
       </physvol>
 
       <physvol>
-        <file name="geometry_sculpt/pionDetectorVirtualDet.gdml"
+        <file name="geometry/pionDetectorVirtualDet.gdml"
            volname="pionDetectorVirtualDetVacuumKryptonite_logical"/>
         <positionref ref="pionDetectorVirtualDetPositionBack"/>
       </physvol>
 
       <physvol>
-        <file name="geometry_sculpt/pionDetectorTSOpenSector.gdml"/>
+        <file name="geometry/pionDetectorTSOpenSector.gdml"/>
         <positionref ref="pionDetectorTSFrontPosition"/>
       </physvol>
 
       <physvol>
-        <file name="geometry_sculpt/pionDetectorGEMOpenSector.gdml"/>
+        <file name="geometry/pionDetectorGEMOpenSector.gdml"/>
         <positionref ref="pionDetectorGEMFrontPosition"/>
       </physvol>
 
       <physvol>
-        <file name="geometry_sculpt/pionDetectorLuciteSector.gdml"/>
+        <file name="geometry/pionDetectorLuciteSector.gdml"/>
         <positionref ref="pionDetectorLucitePosition"/>
       </physvol>
 
       <physvol>
-        <file name="geometry_sculpt/pionDetectorGEMOpenSector.gdml"/>
+        <file name="geometry/pionDetectorGEMOpenSector.gdml"/>
         <positionref ref="pionDetectorGEMBackPosition"/>
       </physvol>
 
       <physvol>
-        <file name="geometry_sculpt/pionDetectorTSOpenSector.gdml"/>
+        <file name="geometry/pionDetectorTSOpenSector.gdml"/>
         <positionref ref="pionDetectorTSBackPosition"/>
       </physvol>
 
       <physvol>
-        <file name="geometry_sculpt/pionDetectorCalorimeter.gdml"/>
+        <file name="geometry/pionDetectorCalorimeter.gdml"/>
         <positionref ref="pionDetectorCalorimeterPosition"/>
       </physvol>
 
