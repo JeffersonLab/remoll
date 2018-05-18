@@ -6,6 +6,7 @@
      <position name="upstreamCenter" x="0" y="0" z="7000."/>
      <position name="hybridCenter" x="0" y="0" z="13366.57"/>
      <position name="detectorCenter" x="0" y="0" z="28500."/>
+     <position name="pionDetectorCenter" x="0" y="0" z="32000."/>
      <rotation name="identity"/>
 </define>
 
@@ -36,6 +37,11 @@
       <physvol>
       <file name="geometry/detectorDaughter.gdml"/>
       <positionref ref="detectorCenter"/>
+      <rotationref ref="identity"/>
+      </physvol>
+      <physvol>
+      <file name="geometry/pionDetectorSystem.gdml"/>
+      <positionref ref="pionDetectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
       <physvol>

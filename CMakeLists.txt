@@ -111,8 +111,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 #
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/remoll*.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
@@ -138,41 +138,6 @@ target_link_libraries(reroot-bin remoll-lib)
 FILE( GLOB REMOLL_GEO "geometry/*" )
 
 set(REMOLL_SCRIPTS
-    geometry/mollerMother.gdml
-    geometry/detectorDaughter.gdml
-    geometry/hybridDaughter.gdml
-    geometry/targetDaughter.gdml
-    geometry/upstreamDaughter.gdml
-    geometry/schema/gdml.xsd
-    geometry/schema/gdml_core.xsd
-    geometry/schema/gdml_define.xsd
-    geometry/schema/gdml_extensions.xsd
-    geometry/schema/gdml_materials.xsd
-    geometry/schema/gdml_parameterised.xsd
-    geometry/schema/gdml_replicas.xsd
-    geometry/schema/gdml_solids.xsd
-    geometry_sculpt/mollerMother.gdml
-    geometry_sculpt/detectorDaughter.gdml
-    geometry_sculpt/hybridDaughter.gdml
-    geometry_sculpt/targetDaughter.gdml
-    geometry_sculpt/upstreamDaughter.gdml
-    geometry_sculpt/pionDetectorCalorimeter.gdml
-    geometry_sculpt/pionDetectorGEM.gdml
-    geometry_sculpt/pionDetectorGEMOpenSector.gdml
-    geometry_sculpt/pionDetectorLucite.gdml
-    geometry_sculpt/pionDetectorLuciteSector.gdml
-    geometry_sculpt/pionDetectorSystem.gdml
-    geometry_sculpt/pionDetectorTS.gdml
-    geometry_sculpt/pionDetectorTSOpenSector.gdml
-    geometry_sculpt/pionDetectorVirtualDet.gdml
-    geometry_sculpt/schema/gdml.xsd
-    geometry_sculpt/schema/gdml_core.xsd
-    geometry_sculpt/schema/gdml_define.xsd
-    geometry_sculpt/schema/gdml_extensions.xsd
-    geometry_sculpt/schema/gdml_materials.xsd
-    geometry_sculpt/schema/gdml_parameterised.xsd
-    geometry_sculpt/schema/gdml_replicas.xsd
-    geometry_sculpt/schema/gdml_solids.xsd
     vis/OIX.mac
     vis/Qt.mac
     vis/vis.mac

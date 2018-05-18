@@ -53,12 +53,12 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   public:
 
-    void DumpElements();
-    void DumpMaterials();
-    void DumpGeometry(G4bool surfchk = false) {
-      DumpGeometricalTree(0,0,surfchk);
+    void PrintElements();
+    void PrintMaterials();
+    void PrintGeometry(G4bool surfchk = false) {
+      PrintGeometryTree(0,0,surfchk);
     }
-    void DumpGeometricalTree(G4VPhysicalVolume* aVolume = 0,
+    void PrintGeometryTree(G4VPhysicalVolume* aVolume = 0,
       G4int depth = 0, G4bool surfchk = false);
 
     std::vector<G4VPhysicalVolume*> GetPhysicalVolumes(

@@ -4,4 +4,4 @@
 # This must be explicitly called
 /run/initialize
 
-/remoll/dumpgeometry false
+/remoll/printgeometry false

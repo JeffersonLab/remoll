@@ -6,8 +6,6 @@
      <position name="upstreamCenter" x="0" y="0" z="7000."/>
      <position name="hybridCenter" x="0" y="0" z="13366.57"/>
      <position name="detectorCenter" x="0" y="0" z="28500."/>
-     <!-- full pion detector system pionDetectorCenter should be around 31-32000 mm -->
-     <position name="pionDetectorCenter" x="0" y="0" z="32000."/>
      <rotation name="identity"/>
 </define>
 
@@ -52,11 +50,6 @@
       </physvol>
 	-->     
 
-      <physvol>
-      <file name="geometry_sculpt/pionDetectorSystem.gdml"/>
-      <positionref ref="pionDetectorCenter"/>
-      <rotationref ref="identity"/>
-      </physvol>
       <physvol>
       <file name="geometry_sculpt/upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ ! -f "$1" ] ; then
-  echo "First copy the output of '/remoll/dumpgeometry false' to a file."
+  echo "First copy the output of '/remoll/printgeometry false' to a file."
   echo "Then run this script as: $0 <filename>"
   exit
 fi

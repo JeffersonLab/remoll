@@ -61,7 +61,7 @@ remollDetectorConstruction::remollDetectorConstruction()
   fGDMLParser = new G4GDMLParser();
 
   // Default geometry file
-  fDetFileName = "geometry_sculpt/mollerMother.gdml";
+  fDetFileName = "geometry/mollerMother.gdml";
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -71,20 +71,20 @@ remollDetectorConstruction::remollDetectorConstruction()
       "Set geometry GDML files")
       .SetStates(G4State_PreInit);
   fMessenger->DeclareMethod(
-      "dumpgeometry",
-      &remollDetectorConstruction::DumpGeometry,
-      "Dump the geometry tree")
+      "printgeometry",
+      &remollDetectorConstruction::PrintGeometry,
+      "Print the geometry tree")
       .SetStates(G4State_Idle)
       .SetDefaultValue("false");
   fMessenger->DeclareMethod(
-      "dumpelements",
-      &remollDetectorConstruction::DumpElements,
-      "Dump the elements")
+      "printelements",
+      &remollDetectorConstruction::PrintElements,
+      "Print the elements")
       .SetStates(G4State_Idle);
   fMessenger->DeclareMethod(
-      "dumpmaterials",
-      &remollDetectorConstruction::DumpMaterials,
-      "Dump the materials")
+      "printmaterials",
+      &remollDetectorConstruction::PrintMaterials,
+      "Print the materials")
       .SetStates(G4State_Idle);
 
   // Create geometry messenger
@@ -114,19 +114,19 @@ remollDetectorConstruction::remollDetectorConstruction()
           .SetStates(G4State_PreInit)
           .SetDefaultValue("true");
   fGeometryMessenger->DeclareMethod(
-      "dumpelements",
-      &remollDetectorConstruction::DumpElements,
-      "Dump the elements")
+      "printelements",
+      &remollDetectorConstruction::PrintElements,
+      "Print the elements")
       .SetStates(G4State_Idle);
   fGeometryMessenger->DeclareMethod(
-      "dumpmaterials",
-      &remollDetectorConstruction::DumpMaterials,
-      "Dump the materials")
+      "printmaterials",
+      &remollDetectorConstruction::PrintMaterials,
+      "Print the materials")
       .SetStates(G4State_Idle);
   fGeometryMessenger->DeclareMethod(
-      "dumpgeometry",
-      &remollDetectorConstruction::DumpGeometry,
-      "Dump the geometry tree")
+      "printgeometry",
+      &remollDetectorConstruction::PrintGeometry,
+      "Print the geometry tree")
       .SetStates(G4State_Idle)
       .SetDefaultValue("false");
 }
@@ -435,12 +435,12 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
   return index;
 }
 
-void remollDetectorConstruction::DumpElements() {
+void remollDetectorConstruction::PrintElements() {
   G4cout << G4endl << "Element table: " << G4endl << G4endl;
   G4cout << *(G4Element::GetElementTable()) << G4endl;
 }
 
-void remollDetectorConstruction::DumpMaterials() {
+void remollDetectorConstruction::PrintMaterials() {
   G4cout << G4endl << "Material table: " << G4endl << G4endl;
   G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 }
@@ -470,7 +470,7 @@ std::vector<G4VPhysicalVolume*> remollDetectorConstruction::GetPhysicalVolumes(
   return list;
 }
 
-void remollDetectorConstruction::DumpGeometricalTree(
+void remollDetectorConstruction::PrintGeometryTree(
     G4VPhysicalVolume* aVolume,
     G4int depth,
     G4bool surfchk)
@@ -499,6 +499,6 @@ void remollDetectorConstruction::DumpGeometricalTree(
 
   // Descend down the tree
   for (int i = 0; i < aVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
-    DumpGeometricalTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk);
+    PrintGeometryTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk);
   }
 }
