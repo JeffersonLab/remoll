@@ -21,7 +21,6 @@ typedef G4RunManager RunManager;
 #include "remollRunData.hh"
 
 #include "remollIO.hh"
-#include "remollMessenger.hh"
 #include "remollPhysicsList.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
@@ -97,14 +96,8 @@ int main(int argc, char** argv) {
     if (threads > 0) runManager->SetNumberOfThreads(threads);
     #endif
 
-    // Choose the Random engine
+    // Set the default random seed
     G4Random::setTheSeed(seed);
-    remollRun::UpdateSeed();
-
-    // Messenger
-    // TODO only thing the messenger does is set the seed, this could and should
-    // be done by /random/ commands in next major version
-    remollMessenger* messenger = remollMessenger::GetInstance();
 
     // Detector geometry
     remollDetectorConstruction* detector = new remollDetectorConstruction();

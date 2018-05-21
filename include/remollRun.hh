@@ -11,6 +11,8 @@
 
 #include "G4Run.hh"
 
+class G4GenericMessenger;
+
 class remollRunData;
 
 class remollRun: public G4Run {
@@ -25,7 +27,10 @@ class remollRun: public G4Run {
   public:
     static remollRunData* GetRunData();
 
-    static void UpdateSeed();
+    void UpdateSeed(G4long seed);
+
+  private:
+    G4GenericMessenger* fMessenger;
 };
 
 #endif //__REMOLLRUN_HH
