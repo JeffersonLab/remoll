@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "pionMaterials.xml">
+  <!ENTITY matrices SYSTEM "pionMatrices.xml">
+]>
+
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
   <quantity name="pionDetectorGEMThickness" type="length" value="2.54" unit="cm"/>
   <quantity name="pionDetectorGEMWidth" type="length" value="60.0" unit="cm"/>
   <quantity name="pionDetectorGEMHeight" type="length" value="50.0" unit="cm"/>
+
+  &matrices;
 </define>
 
-<materials>
-  <!-- TODO: GEM gas mixture -->
-  <material name="GEMGasMixture">
-    <!-- density CO2 at STP = 1.98 kg/m3 -->
-    <!-- density Ar at STP = 1.784 kg/m3 -->
-    <D value="1.882" unit="mg/cm3"/>
-    <fraction n="0.5" ref="G4_CARBON_DIOXIDE"/>
-    <fraction n="0.5" ref="G4_Ar"/>
-  </material>
-</materials>
+&materials;
 
 <solids>
   <!-- x in azimuthal direction -->

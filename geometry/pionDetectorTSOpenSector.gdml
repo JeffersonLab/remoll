@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "pionMaterials.xml">
+  <!ENTITY matrices SYSTEM "pionMatrices.xml">
+]>
+
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
@@ -10,10 +16,11 @@
   <quantity name="pionDetectorTSLength" type="length" value="0.1" unit="m"/>
 
   <quantity name="pionDetectorTSRadialPosition" type="length" value="105.0" unit="cm"/>
+
+  &matrices;
 </define>
 
-<materials>
-</materials>
+&materials;
 
 <solids>
   <tube name="pionDetectorTSOpenSector_solid"
