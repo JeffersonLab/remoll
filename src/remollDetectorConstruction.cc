@@ -3,10 +3,7 @@
 #include "remollGenericDetector.hh"
 #include "remollBeamTarget.hh"
 #include "remollGlobalField.hh"
-#include "remollRun.hh"
-#include "remollRunData.hh"
 #include "remollIO.hh"
-#include "remollMessenger.hh"
 
 #include "TGeoManager.h"
 
