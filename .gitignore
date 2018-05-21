@@ -1,7 +1,13 @@
 images
 
+# output from createHTML
+_remoll_*.html
+
+# backups etc
 *~
 *.swp
+
+# Mac
 *.DS_Store
 
 #ignore doxygen files for now
