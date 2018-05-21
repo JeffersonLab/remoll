@@ -29,7 +29,7 @@
 <structure>
 
   <volume name="pionDetectorVirtualDetPlugVacuum_logical">
-    <materialref ref="Vacuum"/>
+    <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorVirtualDetPlug_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="4040"/>
@@ -46,7 +46,7 @@
   </volume>
 
   <volume name="pionDetectorVirtualDetRingVacuum_logical">
-    <materialref ref="Vacuum"/>
+    <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorVirtualDetRing_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="4050"/>
@@ -63,7 +63,7 @@
   </volume>
 
   <volume name="pionDetectorVirtualDetCollVacuum_logical">
-    <materialref ref="Vacuum"/>
+    <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorVirtualDetColl_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="4060"/>
