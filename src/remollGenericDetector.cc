@@ -158,6 +158,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
 	thishit->f3V  = track->GetVertexPosition();
 	thishit->f3P  = track->GetMomentum();
+	thishit->f3S  = track->GetPolarization();
 
         thishit->fTime = point->GetGlobalTime();
 

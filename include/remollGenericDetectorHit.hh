@@ -30,7 +30,7 @@ class remollGenericDetectorHit : public G4VHit {
 	G4ThreeVector f3X;
 	G4ThreeVector f3Xl;
 	G4ThreeVector f3P;
-	G4ThreeVector f3Pl;
+	G4ThreeVector f3S;
         // Global time
         G4double fTime;
 	// Total momentum, energy, mass
@@ -63,9 +63,9 @@ class remollGenericDetectorHit : public G4VHit {
         hit.px  = f3P.x();
         hit.py  = f3P.y();
         hit.pz  = f3P.z();
-        hit.pxl = f3Pl.x();
-        hit.pyl = f3Pl.y();
-        hit.pzl = f3Pl.z();
+        hit.sx  = f3S.x();
+        hit.sy  = f3S.y();
+        hit.sz  = f3S.z();
         hit.vx  = f3V.x();
         hit.vy  = f3V.y();
         hit.vz  = f3V.z();

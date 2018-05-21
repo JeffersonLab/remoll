@@ -46,6 +46,7 @@ struct remollEventParticle_t {
   int pid;
   double vx, vy, vz;
   double px, py, pz;
+  double sx, sy, sz;
   double th, ph, p;
   double tpx, tpy, tpz;
 };
@@ -64,6 +65,7 @@ struct remollGenericDetectorHit_t {
   double r, ph;
   double px, py, pz;
   double pxl, pyl, pzl;
+  double sx, sy, sz;
   double p, e, m;
   double vx, vy, vz;
 };
