@@ -2,7 +2,7 @@
 
 #include "Randomize.hh"
 #include "G4Event.hh"
-#include "G4HCofThisEvent.hh"
+#include "G4GenericMessenger.hh"
 
 #include "remollRunData.hh"
 
@@ -17,11 +17,27 @@ remollRunData* remollRun::GetRunData()
   return fRunData;
 }
 
-void remollRun::UpdateSeed()
+void remollRun::UpdateSeed(G4long seed)
 {
-  GetRunData()->SetSeed(G4Random::getTheSeed());
+  GetRunData()->SetSeed(seed);
+  G4Random::setTheSeed(seed);
+  G4cout << "Random seed set to " << seed << G4endl;
 }
 
-remollRun::remollRun() { }
+remollRun::remollRun()
+: G4Run()
+{
+  // Create messenger to set the seed with single long int
+  fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+  fMessenger->DeclareMethod(
+      "seed",
+      &remollRun::UpdateSeed,
+      "Set random engine seed")
+      .SetParameterName("seed", false)
+      .SetStates(G4State_PreInit,G4State_Idle);
+}
 
-remollRun::~remollRun() { }
+remollRun::~remollRun()
+{
+  delete fMessenger;
+}
