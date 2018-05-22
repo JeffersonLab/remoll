@@ -142,6 +142,20 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
     fGDMLParser->Clear();
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
 
+    G4cout << G4endl;
+    G4cout << "remoll: Note: GDML file validation can cause many warnings." << G4endl;
+    G4cout << "remoll: Some can be safely ignore. Here are some guidelines:" << G4endl;
+    G4cout << "remoll: - 'ID attribute is referenced but was never declared'" << G4endl;
+    G4cout << "remoll:   If the attribute starts with G4_ it is likely defined" << G4endl;
+    G4cout << "remoll:   in the NIST materials database and declared later." << G4endl;
+    G4cout << "remoll: - 'attribute phi is not declared for element direction'" << G4endl;
+    G4cout << "remoll:   Replication along the phi direction is not supported" << G4endl;
+    G4cout << "remoll:   by the GDML standard, but it is by geant4." << G4endl;
+    G4cout << "remoll: - 'no declaration found for element property'" << G4endl;
+    G4cout << "remoll:   Setting optical properties is not supported" << G4endl;
+    G4cout << "remoll:   by the GDML standard, but it is by geant4 (e.g. G01)." << G4endl;
+    G4cout << G4endl;
+
     G4cout << "Reading " << fDetFileName << G4endl;
     fGDMLParser->Read(fDetFileName,fGDMLValidate);
 

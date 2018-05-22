@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "pionMaterials.xml">
+  <!ENTITY matrices SYSTEM "pionMatrices.xml">
+]>
+
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
@@ -39,10 +45,11 @@
    <position name="pionDetectorTSBackPosition"     unit="m" x="0" y="0" z="+0.40"/>
    <position name="pionDetectorGEMBackPosition"    unit="m" x="0" y="0" z="+0.50"/>
    <position name="pionDetectorCalorimeterPosition" unit="m" x="-1.10" y="0" z="+0.66"/>
+
+   &matrices;
 </define>
 
-<materials>
-</materials>
+&materials;
 
 <solids>
     <tube name="pionDetectorLeadDonut_solid"

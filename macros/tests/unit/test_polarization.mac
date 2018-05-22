@@ -1,0 +1,9 @@
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+/remoll/gen moller
+
+/remoll/field/equationtype 2
+/run/beamOn 100
