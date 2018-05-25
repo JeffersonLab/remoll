@@ -2,11 +2,12 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-     <position name="targetCenter" x="0" y="0" z="0"/>
-     <position name="upstreamCenter" x="0" y="0" z="7000."/>
-     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
-     <position name="detectorCenter" x="0" y="0" z="28500."/>
-     <position name="pionDetectorCenter" x="0" y="0" z="32000."/>
+     <position unit="mm" name="targetCenter" x="0" y="0" z="0"/>
+     <position unit="mm" name="upstreamCenter" x="0" y="0" z="7000."/>
+     <position unit="mm" name="hybridCenter" x="0" y="0" z="13366.57"/>
+     <position unit="mm" name="trackingCenter" x="0" y="0" z="25635."/>
+     <position unit="mm" name="detectorCenter" x="0" y="0" z="28500."/>
+     <position unit="mm" name="pionDetectorCenter" x="0" y="0" z="32000."/>
      <rotation name="identity"/>
 </define>
 
@@ -34,21 +35,30 @@
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
+
       <physvol>
       <file name="geometry/detectorDaughter.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
+
+      <physvol name="trackingDetectors_physical">
+      <file name="geometry/trackingDaughter.gdml"/>
+      <positionref ref="trackingCenter"/>
+      </physvol>
+
       <physvol>
       <file name="geometry/pionDetectorSystem.gdml"/>
       <positionref ref="pionDetectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
+
       <physvol>
       <file name="geometry/upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>
       </physvol>
+
       <physvol>
       <file name="geometry/hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
