@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "pionMaterials.xml">
+  <!ENTITY matrices SYSTEM "pionMatrices.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <!-- Full pion detector system dimensions -->
+   <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.5" unit="m"/>
+   <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.0" unit="m"/>
+   <quantity name="pionDetectorSystemLength" type="length" value="1.7" unit="m"/>
+
+  <!-- Lead donut dimensions -->
+   <quantity name="pionDetectorLeadDonutThickness" type="length" value="0.25" unit="m"/>
+   <quantity name="pionDetectorLeadDonutInnerRadius" type="length" value="0.90" unit="m"/>
+   <quantity name="pionDetectorLeadDonutOuterRadius" type="length" value="1.15" unit="m"/>
+
+  <!-- Virtual detector dimensions (before and after lead donut) -->
+   <quantity name="pionDetectorVirtualDetThickness" type="length" value="1.0" unit="cm"/>
+
+   <!-- Derived position of lead donut and virtual detectors -->
+   <position name="pionDetectorVirtualDetPositionFront"
+             x="0" y="0"
+             z="-pionDetectorSystemLength/2.0
+             +pionDetectorVirtualDetThickness/2.0"/>
+   <position name="pionDetectorLeadDonutPosition"
+             x="0" y="0" 
+             z="-pionDetectorSystemLength/2.0
+             +pionDetectorVirtualDetThickness
+             +pionDetectorLeadDonutThickness/2.0"/>
+   <position name="pionDetectorVirtualDetPositionBack"
+             x="0" y="0"
+             z="-pionDetectorSystemLength/2.0
+             +pionDetectorVirtualDetThickness
+             +pionDetectorLeadDonutThickness
+             +pionDetectorVirtualDetThickness/2.0"/>
+
+   <!-- Positions of detectors within full pion detector system -->
+   <position name="pionDetectorGEMFrontPosition"   unit="m" x="0" y="0" z="-0.50"/>
+   <position name="pionDetectorTSFrontPosition"    unit="m" x="0" y="0" z="-0.40"/>
+   <position name="pionDetectorLucitePosition"     unit="m" x="0" y="0" z="+0.00"/>
+   <position name="pionDetectorTSBackPosition"     unit="m" x="0" y="0" z="+0.40"/>
+   <position name="pionDetectorGEMBackPosition"    unit="m" x="0" y="0" z="+0.50"/>
+   <position name="pionDetectorCalorimeterPosition" unit="m" x="-1.10" y="0" z="+0.66"/>
+
+   &matrices;
+</define>
+
+&materials;
+
+<solids>
+    <tube name="pionDetectorLeadDonut_solid"
+      rmin="pionDetectorLeadDonutInnerRadius"
+      rmax="pionDetectorLeadDonutOuterRadius"
+      z="pionDetectorLeadDonutThickness"
+      deltaphi="360.0" aunit="deg"/>
+    <tube name="pionDetectorSystem_solid"
+      rmin="pionDetectorSystemInnerRadius"
+      rmax="pionDetectorSystemOuterRadius"
+      z="pionDetectorSystemLength"
+      deltaphi="360.0" aunit="deg"/>
+</solids>
+
+<structure>
+
+    <volume name="pionDetectorLeadDonut_logical">
+      <!-- for testing with electron: disable lead and turn into G4_Galactic -->
+      <!-- <materialref ref="G4_Galactic"/> -->
+      <materialref ref="G4_Pb"/>
+      <solidref ref="pionDetectorLeadDonut_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+
+    <volume name="pionDetectorSystem_logical">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="pionDetectorSystem_solid"/>
+
+      <physvol>
+        <file name="geometry/pionDetectorVirtualDet.gdml"
+           volname="pionDetectorVirtualDetVacuum_logical"/>
+        <positionref ref="pionDetectorVirtualDetPositionFront"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="pionDetectorLeadDonut_logical"/>
+        <positionref ref="pionDetectorLeadDonutPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/pionDetectorVirtualDet.gdml"
+           volname="pionDetectorVirtualDetVacuumKryptonite_logical"/>
+        <positionref ref="pionDetectorVirtualDetPositionBack"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/pionDetectorTSOpenSector.gdml"/>
+        <positionref ref="pionDetectorTSFrontPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/pionDetectorGEMOpenSector.gdml"/>
+        <positionref ref="pionDetectorGEMFrontPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/pionDetectorLuciteSector.gdml"/>
+        <positionref ref="pionDetectorLucitePosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/pionDetectorGEMOpenSector.gdml"/>
+        <positionref ref="pionDetectorGEMBackPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/pionDetectorTSOpenSector.gdml"/>
+        <positionref ref="pionDetectorTSBackPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="geometry/pionDetectorCalorimeter.gdml"/>
+        <positionref ref="pionDetectorCalorimeterPosition"/>
+      </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+   </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorSystem_logical"/>
+</setup>
+
+</gdml>

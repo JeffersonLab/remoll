@@ -24,7 +24,7 @@ remollGenpInelastic::~remollGenpInelastic(){
 void remollGenpInelastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // Generate inelastic event
 
-    double beamE = vert->GetBeamE();
+    double beamE = vert->GetBeamEnergy();
     double mp    = proton_mass_c2;
 
     double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min)));

@@ -5,7 +5,22 @@
 #include "G4UImanager.hh"
 #include "G4GenericMessenger.hh"
 
+#include "G4PropagatorInField.hh"
+
+#include "G4Mag_UsualEqRhs.hh"
+#include "G4EqMagElectricField.hh"
+#include "G4Mag_SpinEqRhs.hh"
+#include "G4EqEMFieldWithSpin.hh"
+
+#include "G4ExplicitEuler.hh"
+#include "G4ImplicitEuler.hh"
+#include "G4SimpleRunge.hh"
+#include "G4SimpleHeum.hh"
+#include "G4ClassicalRK4.hh"
+#include "G4CashKarpRKF45.hh"
+
 #include "remollMagneticField.hh"
+#include "remollSystemOfUnits.hh"
 
 #include <remolltypes.hh>
 #include <remollRun.hh>
@@ -18,21 +33,169 @@
 
 #define __GLOBAL_NDIM 3
 
-remollGlobalField::remollGlobalField()
+G4ThreadLocal remollGlobalField* remollGlobalField::fObject = 0;
+
+remollGlobalField* remollGlobalField::GetObject()
 {
+  if (!fObject) new remollGlobalField();
+  return fObject;
+}
+
+remollGlobalField::remollGlobalField()
+// NOTE: when changing defaults below, also change guidance in messenger commands
+: fEquationType(0),fStepperType(4),
+  fMinStep(0.01*mm),fDeltaChord(3.0*mm),
+  fDeltaOneStep(0.01*mm),fDeltaIntersection(0.1*mm),
+  fEpsMin(1.0e-5*mm),fEpsMax(1.0e-4*mm),
+  fEquation(0),fEquationDoF(0),
+  fFieldManager(0),fFieldPropagator(0),
+  fStepper(0),fChordFinder(0)
+{
+    // Set static pointer
+    fObject = this;
+
+    // Get field propagator and managers
     G4TransportationManager* transportationmanager = G4TransportationManager::GetTransportationManager();
-    G4FieldManager* fieldmanager = transportationmanager->GetFieldManager();
-    fieldmanager->SetDetectorField(this);
-    fieldmanager->CreateChordFinder(this);
+    fFieldPropagator = transportationmanager->GetPropagatorInField();
+    fFieldManager = transportationmanager->GetFieldManager();
+
+    // Connect field manager to this global field
+    fFieldManager->SetDetectorField(this);
+
+    // Create equation, stepper, and chordfinder
+    SetEquation();
+    SetStepper();
+    SetChordFinder();
+    SetAccuracyParameters();
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
     fMessenger->DeclareMethod("addfield",&remollGlobalField::AddNewField,"Add magnetic field");
     fMessenger->DeclareMethod("scalefield",&remollGlobalField::SetFieldScaleByString,"Scale magnetic field");
     fMessenger->DeclareMethod("magcurrent",&remollGlobalField::SetMagnetCurrentByString,"Scale magnetic field by current");
+
+    // Create global field messenger
+    fGlobalFieldMessenger = new G4GenericMessenger(this,"/remoll/field/","Remoll global field properties");
+    fGlobalFieldMessenger->DeclareMethod("equationtype",&remollGlobalField::SetEquationType,"Set equation type: \n 0: B-field, no spin (default); \n 1: EM-field, no spin; \n 2: B-field, with spin; \n 3: EM-field, with spin");
+    fGlobalFieldMessenger->DeclareMethod("steppertype",&remollGlobalField::SetStepperType,"Set stepper type: \n 0: ExplicitEuler; \n 1: ImplicitEuler; \n 2: SimpleRunge; \n 3: SimpleHeum; \n 4: ClassicalRK4 (default); \n 5: CashKarpRKF45");
+    fGlobalFieldMessenger->DeclareMethod("print",&remollGlobalField::PrintAccuracyParameters,"Print the accuracy parameters");
+    fGlobalFieldMessenger->DeclareProperty("epsmin",fEpsMin,"Set the minimum epsilon of the field propagator");
+    fGlobalFieldMessenger->DeclareProperty("epsmax",fEpsMax,"Set the maximum epsilon of the field propagator");
+    fGlobalFieldMessenger->DeclareProperty("minstep",fMinStep,"Set the minimum step of the chord finder");
+    fGlobalFieldMessenger->DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
+    fGlobalFieldMessenger->DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
+    fGlobalFieldMessenger->DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
 }
 
-remollGlobalField::~remollGlobalField() { }
+remollGlobalField::~remollGlobalField()
+{
+  delete fMessenger;
+  delete fGlobalFieldMessenger;
+
+  if (fEquation)        delete fEquation;
+  if (fStepper)         delete fStepper;
+  if (fChordFinder)     delete fChordFinder;
+}
+
+void remollGlobalField::SetAccuracyParameters()
+{
+  // Set accuracy parameters
+  fChordFinder->SetDeltaChord(fDeltaChord);
+
+  fFieldManager->SetAccuraciesWithDeltaOneStep(fDeltaOneStep);
+  fFieldManager->SetDeltaIntersection(fDeltaIntersection);
+
+  fFieldPropagator->SetMinimumEpsilonStep(fEpsMin);
+  fFieldPropagator->SetMaximumEpsilonStep(fEpsMax);
+}
+
+void remollGlobalField::PrintAccuracyParameters()
+{
+  G4cout << "Accuracy Parameters:" <<
+            " MinStep = " << fMinStep <<
+            " DeltaChord = " << fDeltaChord <<
+            " DeltaOneStep = " << fDeltaOneStep << G4endl;
+  G4cout << "                    " <<
+            " DeltaIntersection = " << fDeltaIntersection <<
+            " EpsMin = " << fEpsMin <<
+            " EpsMax = " << fEpsMax <<  G4endl;
+}
+
+void remollGlobalField::SetEquation()
+{
+  if (fEquation) delete fEquation;
+
+  switch (fEquationType)
+  {
+    case 0:
+      G4cout << "G4Mag_UsualEqRhs is called with 6 dof" << G4endl;
+      fEquation = new G4Mag_UsualEqRhs(this);
+      fEquationDoF = 6;
+      break;
+    case 1:
+      G4cout << "G4EqMagElectricField is called with 6 dof" << G4endl;
+      fEquation = new G4EqMagElectricField(this);
+      fEquationDoF = 6;
+      break;
+    case 2:
+      G4cout << "G4Mag_SpinEqRhs is called with 12 dof" << G4endl;
+      fEquation = new G4Mag_SpinEqRhs(this);
+      fEquationDoF = 12;
+      break;
+    case 3:
+      G4cout << "G4EqEMFieldWithSpin is called with 12 dof" << G4endl;
+      fEquation = new G4EqEMFieldWithSpin(this);
+      fEquationDoF = 12;
+      break;
+    default: fEquation = 0;
+  }
+
+  SetStepper();
+}
+
+void remollGlobalField::SetStepper()
+{
+  if (fStepper) delete fStepper;
+
+  switch (fStepperType)
+  {
+    case 0:
+      fStepper = new G4ExplicitEuler(fEquation, fEquationDoF);
+      G4cout << "G4ExplicitEuler is called" << G4endl;
+      break;
+    case 1:
+      fStepper = new G4ImplicitEuler(fEquation, fEquationDoF);
+      G4cout << "G4ImplicitEuler is called" << G4endl;
+      break;
+    case 2:
+      fStepper = new G4SimpleRunge(fEquation, fEquationDoF);
+      G4cout << "G4SimpleRunge is called" << G4endl;
+      break;
+    case 3:
+      fStepper = new G4SimpleHeum(fEquation, fEquationDoF);
+      G4cout << "G4SimpleHeum is called" << G4endl;
+      break;
+    case 4:
+      fStepper = new G4ClassicalRK4(fEquation, fEquationDoF);
+      G4cout << "G4ClassicalRK4 (default) is called" << G4endl;
+      break;
+    case 5:
+      fStepper = new G4CashKarpRKF45(fEquation, fEquationDoF);
+      G4cout << "G4CashKarpRKF45 is called" << G4endl;
+      break;
+    default: fStepper = 0;
+  }
+
+  SetChordFinder();
+}
+
+void remollGlobalField::SetChordFinder()
+{
+  if (fChordFinder) delete fChordFinder;
+
+  fChordFinder = new G4ChordFinder(this,fMinStep,fStepper);
+  fFieldManager->SetChordFinder(fChordFinder);
+}
 
 void remollGlobalField::AddNewField(G4String& name)
 {
@@ -70,7 +233,7 @@ void remollGlobalField::AddNewField(G4String& name)
         stat(name.data(), &fs);
         fdata.timestamp = TTimeStamp( fs.st_mtime );
 
-        fdata.timestamp.Print();
+        G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
 
         rd->AddMagData(fdata);
 

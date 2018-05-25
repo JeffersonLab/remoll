@@ -33,11 +33,23 @@
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
+
+      <!-- Simple disc detector -->
       <physvol>
       <file name="geometry_sculpt/detectorDaughter.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="identity"/>
+      </physvol> 
+      
+      <!-- Barrel detector --> 
+      <!-- BUGGED
+      <physvol>
+      <file name = "geometry_sculpt/mollerdet.gdml"/>
+      <positionref ref="detectorCenter"/>
+      <rotationref ref ="identity"/>
       </physvol>
+	-->     
+
       <physvol>
       <file name="geometry_sculpt/upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
@@ -47,8 +59,8 @@
       <file name="geometry_sculpt/hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
       <rotationref ref="identity"/>
-      </physvol> 
-
+      </physvol>
+      
     </volume>
   </structure>
 

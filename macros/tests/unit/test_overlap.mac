@@ -1,0 +1,19 @@
+# This must be called before initialize
+/remoll/geometry/setfile geometry_sculpt/mollerMother.gdml
+
+# Read geometry silently
+/remoll/geometry/verbose 0
+
+# Validate GDML and check for overlap while reading
+/remoll/geometry/validate true
+/remoll/geometry/overlapcheck true
+
+# This must be explicitly called
+/run/initialize
+
+# Print geometry and materials
+/remoll/geometry/printelements
+/remoll/geometry/printmaterials
+
+# Print geometry tree
+/remoll/geometry/printgeometry true

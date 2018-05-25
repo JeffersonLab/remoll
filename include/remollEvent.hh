@@ -12,6 +12,8 @@
 
 #include "G4ThreeVector.hh"
 
+#include "remolltypes.hh"
+
 class G4ParticleDefinition;
 
 class remollBeamTarget;
@@ -21,7 +23,7 @@ class remollEvent {
 	remollEvent();
 	virtual ~remollEvent();
 
-	void ProduceNewParticle( G4ThreeVector, G4ThreeVector, G4String );
+	void ProduceNewParticle( G4ThreeVector, G4ThreeVector, G4String, G4ThreeVector spin = G4ThreeVector(0.0,0.0,0.0) );
 	void SetEffCrossSection( G4double xs ){ fEffXs = xs; }
 	void SetRate( G4double rate ){ fRate = rate; }
 	G4double GetRate(){ return fRate; }
@@ -50,6 +52,7 @@ class remollEvent {
 	G4ThreeVector fVertexPos;
 
 	// Particles to be produced
+	std::vector<G4ThreeVector>    fPartSpin;
 	std::vector<G4ThreeVector>    fPartPos;
 	std::vector<G4ThreeVector>    fPartMom;  // Generated direction (no ms)
 	std::vector<G4ThreeVector>    fPartRealMom; // Direction to go to Geant4
@@ -64,6 +67,10 @@ class remollEvent {
 	G4double fW2;
 	G4double fXbj;
 	G4double fThCoM;
+
+    public:
+        remollEvent_t GetEventIO() const;
+        std::vector<remollEventParticle_t> GetEventParticleIO() const;
 };
 
 #endif//__REMOLLEVENT_HH

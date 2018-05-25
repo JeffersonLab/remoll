@@ -1,0 +1,27 @@
+# This will produce four files test_seed_$i.root, $i = 0,...,3.
+
+# The file test_seed_0.root should have a random seed and have unique content.
+# The file test_seed_1.root and test_seed_3.root should have identical content.
+# The file test_seed_2.root should have different content from test_seed_1.root and test_seed_3.root.
+
+/run/initialize
+
+/remoll/filename test_seed_0.root
+/run/beamOn 100
+
+/remoll/filename test_seed_1.root
+/remoll/seed 123456
+/run/beamOn 100
+
+/remoll/filename test_seed_2.root
+/remoll/seed 654321
+/run/beamOn 100
+
+/remoll/filename test_seed_3.root
+/remoll/seed 123456
+/run/beamOn 100
+
+/remoll/filename test_seed_4.root
+/random/setSeeds 44685444 30927891
+/run/beamOn 100
+

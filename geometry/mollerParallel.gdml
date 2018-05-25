@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+   <!-- Scattering angles of backgrounds -->
+   <quantity name="ee_zmin" type="length" value="30.0" unit="m"/>
+   <quantity name="ee_zmax" type="length" value="31.0" unit="m"/>
+   <quantity name="ee_rmin" type="length" value="0.90" unit="m"/>
+   <quantity name="ee_rmax" type="length" value="0.95" unit="m"/>
+   <quantity name="ee_downstream_theta" type="angle" value="10.0" unit="deg"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box lunit="mm" name="ParallelWorld_solid" x="4000" y="4000" z="80000"/>
+  <cone name="ee_solid"
+      rmin1="ee_rmin"
+      rmax1="ee_rmax"
+      rmin2="ee_rmin+(ee_zmax-ee_zmin)*tan(ee_downstream_theta)"
+      rmax2="ee_rmax+(ee_zmax-ee_zmin)*tan(ee_downstream_theta)"
+      z="ee_zmax-ee_zmin"
+      deltaphi="360.0" aunit="deg"/>
+</solids>
+
+<structure>
+  <volume name="ee_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="ee_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+  <volume name="ParallelWorld_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="ParallelWorld_solid"/>
+
+    <physvol>
+      <volumeref ref="ee_logical"/>
+      <position name="ee_position" z="(ee_zmax+ee_zmin)/2.0"/>
+    </physvol>
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="ParallelWorld_logical"/>
+</setup>
+
+</gdml>

@@ -15,14 +15,14 @@ class remollVertex {
 	remollVertex();
 	virtual ~remollVertex();
 
-	G4double    GetBeamE(){ return fBeamE; }
-	G4double    GetRadLen(){ return fRadLen; }
-	G4Material *GetMaterial(){ return fMaterial; }
+	G4double   GetBeamEnergy()      const { return fBeamEnergy; }
+	G4double   GetRadiationLength() const { return fRadiationLength; }
+	const G4Material* GetMaterial() const { return fMaterial; }
 
     public:
-	G4double fBeamE;
-	G4double fRadLen;
-	G4Material *fMaterial;
+	G4double fBeamEnergy;
+	G4double fRadiationLength;
+	G4Material* fMaterial;
 };
 
 #endif//__REMOLLVERTEX_HH

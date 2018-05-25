@@ -1,21 +1,26 @@
 #include "remollGenericDetector.hh"
 
+#include "G4OpticalPhoton.hh"
+#include "G4SDManager.hh"
+#include "G4GenericMessenger.hh"
+
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
 
-#include "G4OpticalPhoton.hh"
-#include "G4SDManager.hh"
-
 #include <sstream>
 
+std::set<remollGenericDetector*> remollGenericDetector::fGenericDetectors = std::set<remollGenericDetector*>();
+G4GenericMessenger* remollGenericDetector::fStaticMessenger = 0;
+
 remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
-: G4VSensitiveDetector(name),fHitColl(0),fSumColl(0)
+: G4VSensitiveDetector(name),fHitColl(0),fSumColl(0),fEnabled(true)
 {
   fDetNo = detnum;
   assert( fDetNo > 0 );
 
-  //    fTrackSecondaries = false;
-  fTrackSecondaries = true;
+  fDetectSecondaries = true;
+  fDetectOpticalPhotons = false;
+  fDetectLowEnergyNeutrals = false;
 
   std::stringstream genhit;
   genhit << "genhit_" << detnum;
@@ -27,9 +32,36 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
 
   fHCID = -1;
   fSCID = -1;
+
+  // Create generic detector messenger
+  std::stringstream ss;
+  ss << fDetNo;
+  fMessenger = new G4GenericMessenger(this,"/remoll/SD/det" + ss.str() + "/","Remoll SD properties for " + name);
+  fMessenger->DeclareProperty(
+      "enable",
+      fEnabled,
+      "Enable recording of hits in this detector")
+      .SetParameterName("flag",true).SetDefaultValue(true);
+
+  // Create static messenger
+  fStaticMessenger = new G4GenericMessenger(this,"/remoll/SD/","Remoll SD properties");
+  fStaticMessenger->DeclareMethod(
+    "enable",
+    &remollGenericDetector::SetAllEnabled,
+    "Enable recording of hits in all detectors");
+  fStaticMessenger->DeclareMethod(
+    "disable",
+    &remollGenericDetector::SetAllDisabled,
+    "Disable recording of hits in all detectors");
+
+  // Add to static list
+  InsertGenericDetector(this);
 }
 
-remollGenericDetector::~remollGenericDetector(){
+remollGenericDetector::~remollGenericDetector()
+{
+  EraseGenericDetector(this);
+  delete fMessenger;
 }
 
 void remollGenericDetector::Initialize(G4HCofThisEvent *){
@@ -47,10 +79,20 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4bool badedep = false;
     G4bool badhit  = false;
 
+    // Ignore this detector if disabled
+    if (! fEnabled) return false;
+
     // Ignore optical photons as hits (but still simulate them
     // so they can knock out electrons of the photocathode)
-    if (step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) {
-      //std::cout << "Return on optical photon" << std::endl;
+    if (! fDetectOpticalPhotons
+        && step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) {
+      return false;
+    }
+
+    // Ignore neutral particles below 0.1 MeV
+    G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
+    if (! fDetectLowEnergyNeutrals
+        && charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
       return false;
     }
 
@@ -69,7 +111,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // that have just entered our boundary
     badhit = true;
     if( track->GetCreatorProcess() == 0 ||
-	    (point->GetStepStatus() == fGeomBoundary && fTrackSecondaries)
+	(fDetectSecondaries && point->GetStepStatus() == fGeomBoundary)
       ){
 	badhit = false;
     }
@@ -107,9 +149,18 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     if( !badhit ){
 	// Hit
-	thishit->f3X = point->GetPosition();
-	thishit->f3V = track->GetVertexPosition();
-	thishit->f3P = track->GetMomentum();
+
+	// Positions
+	G4ThreeVector global_position = point->GetPosition();
+	G4ThreeVector local_position = point->GetTouchable()->GetHistory()->GetTopTransform().TransformPoint(global_position);
+	thishit->f3X  = global_position;
+	thishit->f3Xl = local_position;
+
+	thishit->f3V  = track->GetVertexPosition();
+	thishit->f3P  = track->GetMomentum();
+	thishit->f3S  = track->GetPolarization();
+
+        thishit->fTime = point->GetGlobalTime();
 
 	thishit->fP = track->GetMomentum().mag();
 	thishit->fE = track->GetTotalEnergy();

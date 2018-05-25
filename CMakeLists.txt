@@ -5,6 +5,14 @@
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
 
+# Default install path is the source directory
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
+    message(STATUS "    Use -DCMAKE_INSTALL_PREFIX=/usr/local to set to something else" )
+    set (CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}"
+         CACHE PATH "default install path" FORCE )
+endif()
+
 #MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_MACOSX_RPATH ON)
@@ -30,9 +38,11 @@ include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 ROOT_GENERATE_DICTIONARY(
     remollDict                         # path to dictionary to generate
-    "include/remollRunData.hh"         # list of classes to process
+    "include/remolltypes.hh"           # list of classes to process
+    "include/remollRunData.hh"
     "include/remollTextFile.hh"
     LINKDEF "include/remollLinkDef.h"  # ROOT linkDef file
+    OPTIONS -p
 )
 
 #----------------------------------------------------------------------------
@@ -73,6 +83,11 @@ include(${Geant4_USE_FILE})
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Woverloaded-virtual")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic")
 
+# Ignore warning of struct initialization { } for gcc < 5.0 (after that it is ignored internally)
+if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-field-initializers")
+endif()
+
 # C++11 standard if avialable
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
@@ -92,24 +107,27 @@ endif()
 
 include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
 
-
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 #
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
-
-file(GLOB libsources ${PROJECT_SOURCE_DIR}/src/remollRunData.cc ${PROJECT_SOURCE_DIR}/src/remollTextFile.cc)
-file(GLOB libheaders ${PROJECT_SOURCE_DIR}/include/*.hh)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/remoll*.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
-add_executable(remoll remoll.cc ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh ${sources} ${headers} remollDict.cxx)
-add_library(remollroot SHARED ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh ${libsources} ${libheaders} remollDict.cxx)
-target_link_libraries(remoll ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
-target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
+set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
+target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+
+add_executable(remoll-bin remoll.cc)
+set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
+target_link_libraries(remoll-bin remoll-lib)
+
+add_executable(reroot-bin reroot.cc)
+set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
+target_link_libraries(reroot-bin remoll-lib)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -120,32 +138,6 @@ target_link_libraries(remollroot ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
 FILE( GLOB REMOLL_GEO "geometry/*" )
 
 set(REMOLL_SCRIPTS
-    geometry/mollerMother.gdml
-    geometry/detectorDaughter.gdml
-    geometry/hybridDaughter.gdml
-    geometry/targetDaughter.gdml
-    geometry/upstreamDaughter.gdml
-    geometry/schema/gdml.xsd
-    geometry/schema/gdml_core.xsd
-    geometry/schema/gdml_define.xsd
-    geometry/schema/gdml_extensions.xsd
-    geometry/schema/gdml_materials.xsd
-    geometry/schema/gdml_parameterised.xsd
-    geometry/schema/gdml_replicas.xsd
-    geometry/schema/gdml_solids.xsd
-    geometry_sculpt/mollerMother.gdml
-    geometry_sculpt/detectorDaughter.gdml
-    geometry_sculpt/hybridDaughter.gdml
-    geometry_sculpt/targetDaughter.gdml
-    geometry_sculpt/upstreamDaughter.gdml
-    geometry_sculpt/schema/gdml.xsd
-    geometry_sculpt/schema/gdml_core.xsd
-    geometry_sculpt/schema/gdml_define.xsd
-    geometry_sculpt/schema/gdml_extensions.xsd
-    geometry_sculpt/schema/gdml_materials.xsd
-    geometry_sculpt/schema/gdml_parameterised.xsd
-    geometry_sculpt/schema/gdml_replicas.xsd
-    geometry_sculpt/schema/gdml_solids.xsd
     vis/OIX.mac
     vis/Qt.mac
     vis/vis.mac
@@ -167,11 +159,12 @@ endforeach()
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
 #
-add_custom_target(REMOLL DEPENDS remoll)
+add_custom_target(REMOLL DEPENDS remoll-bin)
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS remoll DESTINATION bin)
+install(TARGETS remoll-bin reroot-bin DESTINATION bin)
+install(TARGETS remoll-lib DESTINATION lib)
 
 

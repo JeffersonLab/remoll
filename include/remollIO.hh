@@ -3,9 +3,15 @@
 
 #include "TROOT.h"
 #include "TObject.h"
+
+#include "G4Run.hh"
+
 #include "remolltypes.hh"
+#include "remollSystemOfUnits.hh"
 
 #include "G4String.hh"
+
+#include <vector>
 
 class TFile;
 class TTree;
@@ -19,7 +25,6 @@ class remollEvent;
 #include <xercesc/dom/DOMElement.hpp>
 
 
-#define __IO_MAXHIT 10000
 #define __FILENAMELEN 255
 
 // Units for output
@@ -73,73 +78,30 @@ class remollIO {
 
 	// Event data
     public:
+	void SetEventSeed(const G4String& seed);
 	void SetEventData(const remollEvent *);
     private:
-	Int_t fNEvPart;
 
+	// Units
+	remollUnits_t fUnits;
+
+	// Event data
 	Double_t fEvRate;
-	Double_t fEvEffXS;
-	Double_t fEvAsym;
-	Double_t fEvmAsym;
-	Double_t fEvBeamP;
-	Double_t fEvQ2;
-	Double_t fEvW2;
-	Double_t fEvThCoM;
+	TString fEvSeed;
+	remollEvent_t fEv;
+	remollBeamTarget_t fBm;
 
-	Double_t fBmX;
-	Double_t fBmY;
-	Double_t fBmZ;
-	Double_t fBmdX;
-	Double_t fBmdY;
-	Double_t fBmdZ;
-	Double_t fBmth;
-	Double_t fBmph;
-
-	Int_t fEvPID[__IO_MAXHIT];
-
-	Double_t fEvPart_X[__IO_MAXHIT];
-	Double_t fEvPart_Y[__IO_MAXHIT];
-	Double_t fEvPart_Z[__IO_MAXHIT];
-	Double_t fEvPart_Px[__IO_MAXHIT];
-	Double_t fEvPart_Py[__IO_MAXHIT];
-	Double_t fEvPart_Pz[__IO_MAXHIT];
-	Double_t fEvPart_Th[__IO_MAXHIT];
-	Double_t fEvPart_Ph[__IO_MAXHIT];
-	Double_t fEvPart_P[__IO_MAXHIT];
-	Double_t fEvPart_tPx[__IO_MAXHIT];
-	Double_t fEvPart_tPy[__IO_MAXHIT];
-	Double_t fEvPart_tPz[__IO_MAXHIT];
-
+        // Event particles
+    public:
+        void SetEventData(remollEvent *);
+    private:
+        std::vector<remollEventParticle_t> fEvPart;
 
 	//  GenericDetectorHit
     public:
 	void AddGenericDetectorHit(remollGenericDetectorHit *);
     private:
-	Int_t fNGenDetHit;
-	Int_t fGenDetHit_det[__IO_MAXHIT];
-	Int_t fGenDetHit_id[__IO_MAXHIT];
-
-	Int_t fGenDetHit_trid[__IO_MAXHIT];
-	Int_t fGenDetHit_pid[__IO_MAXHIT];
-	Int_t fGenDetHit_gen[__IO_MAXHIT];
-	Int_t fGenDetHit_mtrid[__IO_MAXHIT];
-
-	Double_t fGenDetHit_X[__IO_MAXHIT];
-	Double_t fGenDetHit_Y[__IO_MAXHIT];
-	Double_t fGenDetHit_Z[__IO_MAXHIT];
-	Double_t fGenDetHit_R[__IO_MAXHIT];
-	Double_t fGenDetHit_Ph[__IO_MAXHIT];
-
-	Double_t fGenDetHit_Px[__IO_MAXHIT];
-	Double_t fGenDetHit_Py[__IO_MAXHIT];
-	Double_t fGenDetHit_Pz[__IO_MAXHIT];
-	Double_t fGenDetHit_P[__IO_MAXHIT];
-	Double_t fGenDetHit_E[__IO_MAXHIT];
-	Double_t fGenDetHit_M[__IO_MAXHIT];
-
-	Double_t fGenDetHit_Vx[__IO_MAXHIT];
-	Double_t fGenDetHit_Vy[__IO_MAXHIT];
-	Double_t fGenDetHit_Vz[__IO_MAXHIT];
+	std::vector<remollGenericDetectorHit_t> fGenDetHit;
 
 	Int_t fCollCut;
 
@@ -147,10 +109,7 @@ class remollIO {
     public:
 	void AddGenericDetectorSum(remollGenericDetectorSum *);
     private:
-	Int_t fNGenDetSum;
-	Int_t fGenDetSum_det[__IO_MAXHIT];
-	Int_t fGenDetSum_id[__IO_MAXHIT];
-	Double_t fGenDetSum_edep[__IO_MAXHIT];
+        std::vector<remollGenericDetectorSum_t> fGenDetSum;
 };
 
 #endif//remollIO_HH

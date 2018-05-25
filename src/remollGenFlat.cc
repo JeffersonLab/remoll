@@ -14,6 +14,8 @@ remollGenFlat::remollGenFlat()
     fTh_min =     0.0*deg;
     fTh_max =     5.0*deg;
 
+    fParticleName = "e-";
+
     fApplyMultScatt = true;
 }
 
@@ -23,7 +25,7 @@ remollGenFlat::~remollGenFlat(){
 void remollGenFlat::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // Generate event flat in phase space
 
-    double beamE = vert->GetBeamE();
+    double beamE = vert->GetBeamEnergy();
 
     double mp = 0.938*GeV;
 
@@ -51,9 +53,9 @@ void remollGenFlat::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     evt->SetW2( mp*mp + 2.0*mp*(beamE-ef) - Q2 );
 
-    evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
-	                     G4ThreeVector(ef*sin(th)*cos(ph), ef*sin(th)*sin(ph), ef*cos(th) ), 
-			     "e-" );
+    evt->ProduceNewParticle(
+        G4ThreeVector(0.0, 0.0, 0.0),
+        G4ThreeVector(ef*sin(th)*cos(ph), ef*sin(th)*sin(ph), ef*cos(th) ),
+        fParticleName);
 
-    return;
 }

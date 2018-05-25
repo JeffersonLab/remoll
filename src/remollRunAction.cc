@@ -1,6 +1,8 @@
 #include "remollRunAction.hh"
 
+#include "G4GenericMessenger.hh"
 #include "G4RunManager.hh"
+#include "G4Timer.hh"
 
 #include "remollIO.hh"
 #include "remollRun.hh"
@@ -11,9 +13,33 @@
 #include "G4AutoLock.hh"
 namespace { G4Mutex remollRunActionMutex = G4MUTEX_INITIALIZER; }
 
-remollRunAction::remollRunAction() { }
+remollRunAction::remollRunAction()
+{
+  // Create messenger to set the seed with single long int
+  fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+  fMessenger->DeclareMethod(
+      "seed",
+      &remollRunAction::UpdateSeed,
+      "Set random engine seed")
+      .SetParameterName("seed", false)
+      .SetStates(G4State_PreInit,G4State_Idle);
 
-remollRunAction::~remollRunAction() { }
+  // Create timer
+  fTimer = new G4Timer();
+}
+
+remollRunAction::~remollRunAction()
+{
+  delete fMessenger;
+  delete fTimer;
+}
+
+void remollRunAction::UpdateSeed(const G4long seed)
+{
+  G4Random::setTheSeed(seed);
+  remollRun::GetRunData()->SetSeed(seed);
+  G4cout << "Random seed set to " << seed << G4endl;
+}
 
 G4Run* remollRunAction::GenerateRun()
 {
@@ -36,6 +62,8 @@ void remollRunAction::BeginOfRunAction(const G4Run* run)
   {
     G4cout << "### Run " << aRun->GetRunID() << " start." << G4endl;
 
+    fTimer->Start();
+
     G4AutoLock lock(&remollRunActionMutex);
     remollIO* io = remollIO::GetInstance();
     io->InitializeTree();
@@ -53,7 +81,10 @@ void remollRunAction::EndOfRunAction(const G4Run* run)
 
   if (IsMaster())
   {
-      G4cout << "### Run " << aRun->GetRunID() << " ended." << G4endl;
+      fTimer->Stop();
+
+      G4cout << "### Run " << aRun->GetRunID() << " ended "
+             << "(" << fTimer->GetUserElapsed() << "s)." << G4endl;
 
       G4AutoLock lock(&remollRunActionMutex);
       remollIO* io = remollIO::GetInstance();

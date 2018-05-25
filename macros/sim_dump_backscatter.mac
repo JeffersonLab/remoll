@@ -1,0 +1,38 @@
+#  Example file
+
+# This must be called before initialize
+/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+
+/remoll/beamene 11 GeV
+
+/remoll/gen moller
+/remoll/thmin 0.01 deg
+/remoll/thmax 2.00 deg
+
+/remoll/targpos   0 cm
+/remoll/targlen 150 cm
+
+/remoll/beamcurr 85 microampere
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite false
+
+# Specify random number seed
+/remoll/seed 123456
+
+# Filename
+/remoll/filename remoll_11GeV_moller_leadwall_nokrypt.root
+
+/run/beamOn 100000

@@ -99,14 +99,6 @@
     <quantity name="PhotonDetectorRadius" type="length" value="0.5*3.0*25.4" unit="mm"/>
     <quantity name="PhotocathodeRadialLocation" type="length" value="1360.0" unit="mm"/>
     <matrix coldim="1" name="RadialPosition" values="(QuartzOuterRadius[1]+QuartzInnerRadius[1])*0.5 (QuartzOuterRadius[2]+QuartzInnerRadius[2])*0.5 (QuartzOuterRadius[3]+QuartzInnerRadius[3])*0.5 (QuartzOuterRadius[4]+QuartzInnerRadius[4])*0.5 (QuartzOuterRadius[5]+QuartzInnerRadius[5])*0.5 (QuartzOuterRadius[6]+QuartzInnerRadius[6])*0.5 (QuartzOuterRadius[7]+QuartzInnerRadius[7])*0.5"/>
-    <!-- could be source of future problems **check with Wouter
-    if ( LightGuide_Length[id]>Reflector_Length[id] )
-        LightGuide_Length[id] = LightGuide_Length[id] - Reflector_Length[id];
-    else
-    {
-        Reflector_Length[id] = LightGuide_Length[id] - 1.0*cm;
-        LightGuide_Length[id] = 1.0*cm;
-    } -->
     <matrix coldim="1" name="LightGuideLength" values="-ReflectorLength+(PhotocathodeRadialLocation-RadialPosition[1]-0.5*ProbeHeight[1])/cos(LightGuideTiltAngle) -ReflectorLength+(PhotocathodeRadialLocation-RadialPosition[2]-0.5*ProbeHeight[2])/cos(LightGuideTiltAngle) -ReflectorLength+(PhotocathodeRadialLocation-RadialPosition[3]-0.5*ProbeHeight[3])/cos(LightGuideTiltAngle) -ReflectorLength+(PhotocathodeRadialLocation-RadialPosition[4]-0.5*ProbeHeight[4])/cos(LightGuideTiltAngle) -ReflectorLength+(PhotocathodeRadialLocation-RadialPosition[5]-0.5*ProbeHeight[5])/cos(LightGuideTiltAngle) -ReflectorLength+(PhotocathodeRadialLocation-RadialPosition[6]-0.5*ProbeHeight[6])/cos(LightGuideTiltAngle) -ReflectorLength+(PhotocathodeRadialLocation-RadialPosition[7]-0.5*ProbeHeight[7])/cos(LightGuideTiltAngle)"/>
     <matrix coldim="1" name="LightGuide_x1" values="Reflector_x2[1] Reflector_x2[2] Reflector_x2[3] Reflector_x2[4] Reflector_x2[5] Reflector_x2[6] Reflector_x2[7]"/>
     <variable name="LightGuide_x2" value="PhotonDetectorRadius+2.0*mm"/>
@@ -117,21 +109,6 @@
     <variable name="EndcapWidth" value="2.0*(LightGuide_y2+LightGuideThickness)"/>
     <variable name="EndcapThickness" value="LightGuideThickness"/>
     <matrix coldim="1" name="ContainerLength" values="2.0*(PhotocathodeRadialLocation-RadialPosition[1]+ProbeHeight[1]/2.0)/cos(LightGuideTiltAngle)+10.0*mm 2.0*(PhotocathodeRadialLocation-RadialPosition[2]+ProbeHeight[2]/2.0)/cos(LightGuideTiltAngle)+10.0*mm 2.0*(PhotocathodeRadialLocation-RadialPosition[3]+ProbeHeight[3]/2.0)/cos(LightGuideTiltAngle)+10.0*mm 2.0*(PhotocathodeRadialLocation-RadialPosition[4]+ProbeHeight[4]/2.0)/cos(LightGuideTiltAngle)+10.0*mm 2.0*(PhotocathodeRadialLocation-RadialPosition[5]+ProbeHeight[5]/2.0)/cos(LightGuideTiltAngle)+10.0*mm 2.0*(PhotocathodeRadialLocation-RadialPosition[6]+ProbeHeight[6]/2.0)/cos(LightGuideTiltAngle)+10.0*mm 2.0*(PhotocathodeRadialLocation-RadialPosition[7]+ProbeHeight[7]/2.0)/cos(LightGuideTiltAngle)+10.0*mm"/>
-    <!-- could cause problems - check with Wouter
-    G4double Container_Width;
-    if ( Probe_Width_Bottom[id] > 2.0*PhotonDetector_Radius )
-        Container_Width = Probe_Width_Bottom[id]+0.5*cm;
-    else
-        Container_Width = 2.0*PhotonDetector_Radius+0.5*cm;
-    
-    G4double Container_Thickness;
-    G4double ProbeOccupiedSpace = Probe_Height[id]*sin ( 45.0*degree ) +PhotonDetector_Radius;
-
-    if ( ProbeOccupiedSpace > PhotonDetector_Radius )
-        Container_Thickness = ProbeOccupiedSpace*2.0;
-    else
-        Container_Thickness = 2.0*PhotonDetector_Radius+0.5*cm; 
-    -->
     <matrix coldim="1" name="ContainerWidth" values="ProbeWidthBottom[1]+0.5*cm ProbeWidthBottom[2]+0.5*cm ProbeWidthBottom[3]+0.5*cm ProbeWidthBottom[4]+0.5*cm ProbeWidthBottom[5]+0.5*cm ProbeWidthBottom[6]+0.5*cm ProbeWidthBottom[7]+0.5*cm"/>
     <matrix coldim="1" name="ContainerThickness" values="(ProbeHeight[1]*sin(45.0*degree)+PhotonDetectorRadius)*2.0 (ProbeHeight[2]*sin(45.0*degree)+PhotonDetectorRadius)*2.0 (ProbeHeight[3]*sin(45.0*degree)+PhotonDetectorRadius)*2.0 (ProbeHeight[4]*sin(45.0*degree)+PhotonDetectorRadius)*2.0 (ProbeHeight[5]*sin(45.0*degree)+PhotonDetectorRadius)*2.0 (ProbeHeight[6]*sin(45.0*degree)+PhotonDetectorRadius)*2.0 (ProbeHeight[7]*sin(45.0*degree)+PhotonDetectorRadius)*2.0"/>
     <quantity name="PhotonDetectorFullLength" type="length" value="1.0" unit="mm"/>
@@ -217,12 +194,21 @@
       <D unit="g/cm3" value="5"/>
       <atom unit="g/mole" value="39.0983"/>
     </material>
+    <material Z="1" name="VacuumDet" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
   </materials>
 
   <solids>
+    <!-- Scott Mundy: For simplicity the lead ring is now a disc 2 meters in radius-->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadRingSolid" rmax="2000" rmin="0" startphi="0" z="150"/>
     
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadRingSolid" rmax="1060" rmin="900" startphi="0" z="25.2555066"/>
- 
+    <!--Straw Man detector, also a disc 2 meters in radius-->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="StrawManSolid" rmax="2000" rmin="0" startphi="0" z="10"/>
+    
     <opticalsurface finish="3" model="0" name="ProbeCoatOpticalSurface" type="0" value="1"/>
     <opticalsurface finish="0" model="1" name="GuideOpticalSurface" type="0" value="1"/>
     <opticalsurface finish="0" model="0" name="PhotocathodeOpticalSurface" type="0" value="1"/>
@@ -281,74 +267,24 @@
       <tube aunit="deg" deltaphi="360" lunit="mm" name="PhotonDetectorContainerSolid[i]" rmax="PhotonDetectorRadius" rmin="0" startphi="0" z="PhotonDetectorContainerFullLength"/>
       <box lunit="mm" name="ContainerSolid[i]" x="ContainerWidth[i]" y="ContainerLength[i]" z="ContainerThickness[i]"/>
     </loop>
-    
+  
     <!-- Detector -->
-    <box lunit="mm" name="mollerdetContainerSolid" x="4000" y="4000" z="4000"/>
-    
-    
-    
-    <box lunit="mm" name="ProbeCoat_Box0x9653bd0" x="267.503395142857" y="102.2" z="17.2"/>    
-    <box lunit="mm" name="ProbeCoat_Prism0x9653c50" x="267.603395142857" y="23.5132034355964" z="214.432034355964"/>    
-    <subtraction name="ProbeCoatOuterSurface_Solid0x9653d30">
-      <first ref="ProbeCoat_Box0x9653bd0"/>
-      <second ref="ProbeCoat_Prism0x9653c50"/>
-      <position name="ProbeCoatOuterSurface_Solid0x9653d30_pos" unit="mm" x="0" y="-55.3566017177982" z="8.6"/>
-    </subtraction>    
-    <box lunit="mm" name="ProbeCoatInnerSurface_Solid0x9653ef8" x="265.503395142857" y="102.2" z="15.2"/>    
-    <subtraction name="ProbeCoatOuterSurface_Solid-ProbeCoatInnerSurface_Solid0x9653fa0">
-      <first ref="ProbeCoatOuterSurface_Solid0x9653d30"/>
-      <second ref="ProbeCoatInnerSurface_Solid0x9653ef8"/>
-      <position name="ProbeCoatOuterSurface_Solid-ProbeCoatInnerSurface_Solid0x9653fa0_pos" unit="mm" x="0" y="-1" z="0"/>
-    </subtraction>    
-    <opticalsurface finish="3" model="0" name="ProbeCoat_Optical_Surface_5" type="0" value="1"/>   
-    <trd lunit="mm" name="Probe_Box0x96545d8" x1="242.863447285714" x2="265.303395142857" y1="14" y2="15" z="99.9998"/>    
-    <box lunit="mm" name="Probe_Prism0x9654638" x="375.395659554657" y="21.4132034355964" z="21.4132034355964"/>    
-    <subtraction name="Probe_Box-Probe_Prism0x96546e0">
-      <first ref="Probe_Box0x96545d8"/>
-      <second ref="Probe_Prism0x9654638"/>
-      <position name="Probe_Box-Probe_Prism0x96546e0_pos" unit="mm" x="0" y="-7.5" z="57.5"/>
-      <rotation name="Probe_Box-Probe_Prism0x96546e0_rot" unit="deg" x="-45" y="0" z="0"/>
-    </subtraction>    
-    <subtraction name="Probe0x9654840">
-      <first ref="Probe_Box-Probe_Prism0x96546e0"/>
-      <second ref="Probe_Prism0x9654638"/>
-      <position name="Probe0x9654840_pos" unit="mm" x="0" y="7.5" z="57.5"/>
-      <rotation name="Probe0x9654840_rot" unit="deg" x="45" y="0" z="0"/>
-    </subtraction>
-    <opticalsurface finish="0" model="1" name="OpticalSurface_5" type="1" value="0"/>    
-    <box lunit="mm" name="ProbeContainer_Solid0x9653a00" x="267.703395142857" y="102.4" z="17.4"/>    
-    <trd lunit="mm" name="ReflectorOuterSurface_Solid0x9655108" x1="271.303395142857" x2="271.303395142857" y1="21" y2="45.1029329302766" z="35"/>    
-    <trd lunit="mm" name="ReflectorInnerSurface_Solid0x96551a0" x1="267.303395142857" x2="267.303395142857" y1="17" y2="41.1029329302766" z="35.02"/>    
-    <subtraction name="ReflectorOuterSurface_Solid-ReflectorInnerSurface_Solid0x9655258">
-      <first ref="ReflectorOuterSurface_Solid0x9655108"/>
-      <second ref="ReflectorInnerSurface_Solid0x96551a0"/>
-    </subtraction>    
-    <opticalsurface finish="0" model="1" name="Guide_OpticalSurface_5" type="0" value="1"/>    
-    <trd lunit="mm" name="LightGuideOuterSurface_Solid0x96553e8" x1="271.303395142857" x2="84.2" y1="45.1029329302766" y2="84.2" z="205"/>    
-    <trd lunit="mm" name="LightGuideInnerSurface_Solid0x9655480" x1="267.303395142857" x2="80.2" y1="41.1029329302766" y2="80.2" z="205.02"/>    
-    <subtraction name="LightGuideOuterSurface_Solid-LightGuideInnerSurface_Solid0x9655538">
-      <first ref="LightGuideOuterSurface_Solid0x96553e8"/>
-      <second ref="LightGuideInnerSurface_Solid0x9655480"/>
-    </subtraction>    
-    <box lunit="mm" name="Endcap_Frame0x9655718" x="84.2" y="84.2" z="2"/>    
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="Endcap_Cut0x9655790" rmax="38.1" rmin="0" startphi="0" z="3"/>    
-    <subtraction name="Endcap_Frame-Endcap_Cut0x9655878">
-      <first ref="Endcap_Frame0x9655718"/>
-      <second ref="Endcap_Cut0x9655790"/>
-    </subtraction>   
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PhotonDetectorEntranceWindow_Solid0x9656078" rmax="38.1" rmin="0" startphi="0" z="2"/>    
-    <opticalsurface finish="0" model="0" name="Photocathode_OS_5" type="0" value="1"/>   
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PhotonDetector_Solid0x9656288" rmax="38.1" rmin="0" startphi="0" z="1"/>    
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PhotonDetectorContainer_Solid0x9655dd8" rmax="38.1" rmin="0" startphi="0" z="3"/>    
-    <box lunit="mm" name="Container_Solid0x96521c8" x="270.303395142857" y="690" z="217.621356237309"/>
-  </solids>
-
+    <box lunit="mm" name="mollerdetContainerSolid" x="4000" y="4000" z="6000"/>
+	</solids>
   <structure>
     <volume name="LeadRingLogical">
       <materialref ref="Lead"/>
       <solidref ref="LeadRingSolid"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
+    </volume>
+      <volume name="StrawManLogical">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="StrawManSolid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="31"/>
     </volume>
     
     
@@ -385,7 +321,8 @@
         <materialref ref="Aluminium"/>
         <solidref ref="LightGuideOuterSurface-InnerSurfaceSolid[j]"/>
         <auxiliary auxtype="Color" auxvalue="cyan"/>
-        <!--<auxiliary auxtype="SensDet" auxvalue="planeDet"/>-->
+        <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+        <auxiliary auxtype="DetNo" auxvalue="29"/>
       </volume>
       <volume name="EndcapLogical[j]">
         <materialref ref="Aluminium"/>
@@ -396,7 +333,8 @@
         <materialref ref="Quartz"/>
         <solidref ref="PhotonDetectorEntranceWindowSolid[j]"/>
         <auxiliary auxtype="Color" auxvalue="magenta"/>
-                <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+		<auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="30"/> =======
       </volume>
       <volume name="PhotonDetectorLogical[j]">
         <materialref ref="Photocathode"/>
@@ -449,97 +387,7 @@
     </loop>
     
     
-    <!--
-    <volume name="ProbeCoat_Logical_50x9654160">
-      <materialref ref="Tyvek"/>
-      <solidref ref="ProbeCoatOuterSurface_Solid-ProbeCoatInnerSurface_Solid0x9653fa0"/>
-      <auxiliary auxtype="Color" auxvalue="magenta"/>
-    </volume>    
-    <volume name="Detector_Logical_50x9654a00">
-      <materialref ref="Quartz"/>
-      <solidref ref="Probe0x9654840"/>
-      <auxiliary auxtype="Color" auxvalue="gray"/>
-      <auxiliary auxtype="SensDet" auxvalue="Quartz"/>
-    </volume>    
-    <volume name="ProbeContainer_Logical_50x9653a88">
-      <materialref ref="Air"/>
-      <solidref ref="ProbeContainer_Solid0x9653a00"/>
-      <physvol name="ProbeCoat_Physical_50x96541f0">
-        <volumeref ref="ProbeCoat_Logical_50x9654160"/>
-      </physvol>
-      <physvol name="Detector_Physical_50x9654a90">
-        <volumeref ref="Detector_Logical_50x9654a00"/>
-        <rotation name="Detector_Physical_50x9654a90_rot" unit="deg" x="-90" y="0" z="0"/>
-      </physvol>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-    </volume>    
-    <volume name="Reflector_Logical_50x96552b0">
-      <materialref ref="Aluminium"/>
-      <solidref ref="ReflectorOuterSurface_Solid-ReflectorInnerSurface_Solid0x9655258"/>
-      <auxiliary auxtype="Color" auxvalue="brown"/>
-    </volume>    
-    <volume name="LightGuide_Logical_50x96555c0">
-      <materialref ref="Aluminium"/>
-      <solidref ref="LightGuideOuterSurface_Solid-LightGuideInnerSurface_Solid0x9655538"/>
-      <auxiliary auxtype="Color" auxvalue="cyan"/>
-    </volume>    
-    <volume name="Endcap_Logical_50x9655900">
-      <materialref ref="Aluminium"/>
-      <solidref ref="Endcap_Frame-Endcap_Cut0x9655878"/>
-      <auxiliary auxtype="Color" auxvalue="green"/>
-    </volume>    
-    <volume name="PhotonDetectorEntranceWindow_Logical_50x9656168">
-      <materialref ref="Quartz"/>
-      <solidref ref="PhotonDetectorEntranceWindow_Solid0x9656078"/>
-      <auxiliary auxtype="Color" auxvalue="magenta"/>
-    </volume>    
-    <volume name="PhotonDetector_Logical_50x9656370">
-      <materialref ref="Photocathode"/>
-      <solidref ref="PhotonDetector_Solid0x9656288"/>
-      <auxiliary auxtype="Color" auxvalue="red"/>
-    </volume>    
-    <volume name="PhotonDetectorContainer_Logical_50x9655ec8">
-      <materialref ref="Air"/>
-      <solidref ref="PhotonDetectorContainer_Solid0x9655dd8"/>
-      <physvol name="PhotonDetectorEntranceWindow_Physical_50x9656210">
-        <volumeref ref="PhotonDetectorEntranceWindow_Logical_50x9656168"/>
-        <position name="PhotonDetectorEntranceWindow_Physical_50x9656210_pos" unit="mm" x="0" y="0" z="-0.5"/>
-      </physvol>
-      <physvol name="PhotonDetector_Physical_50x9656408">
-        <volumeref ref="PhotonDetector_Logical_50x9656370"/>
-        <position name="PhotonDetector_Physical_50x9656408_pos" unit="mm" x="0" y="0" z="1"/>
-      </physvol>
-    <auxiliary auxtype="Color" auxvalue="yellow"/>
-    </volume>    
-    <volume name="Container_Logical_50x9652248">
-      <materialref ref="Air"/>
-      <solidref ref="Container_Solid0x96521c8"/>
-      <physvol name="ProbeContainer_Physical_50x9653b20">
-        <volumeref ref="ProbeContainer_Logical_50x9653a88"/>
-      </physvol>
-      <physvol name="Reflector_Physical_50x9655310">
-        <volumeref ref="Reflector_Logical_50x96552b0"/>
-        <position name="Reflector_Physical_50x9655310_pos" unit="mm" x="0" y="-61.5" z="0"/>
-        <rotation name="Reflector_Physical_50x9655310_rot" unit="deg" x="-90" y="0" z="0"/>
-      </physvol>
-      <physvol name="LightGuide_Physical_50x9655650">
-        <volumeref ref="LightGuide_Logical_50x96555c0"/>
-        <position name="LightGuide_Physical_50x9655650_pos" unit="mm" x="0" y="-181.5" z="0"/>
-        <rotation name="LightGuide_Physical_50x9655650_rot" unit="deg" x="-90" y="0" z="0"/>
-      </physvol>
-      <physvol name="Endcap_Physical_50x9655990">
-        <volumeref ref="Endcap_Logical_50x9655900"/>
-        <position name="Endcap_Physical_50x9655990_pos" unit="mm" x="0" y="-285" z="0"/>
-        <rotation name="Endcap_Physical_50x9655990_rot" unit="deg" x="-90" y="0" z="0"/>
-      </physvol>
-      <physvol name="PhotonDetectorContainer_Physical_50x9655f68">
-        <volumeref ref="PhotonDetectorContainer_Logical_50x9655ec8"/>
-        <position name="PhotonDetectorContainer_Physical_50x9655f68_pos" unit="mm" x="0" y="-285.5" z="0"/>
-        <rotation name="PhotonDetectorContainer_Physical_50x9655f68_rot" unit="deg" x="-90" y="0" z="0"/>
-      </physvol>
-      <auxiliary auxtype="Visibility" auxvalue="false"/>
-    </volume>
-    -->
+   
     
     
     <!-- detector -->
@@ -547,19 +395,17 @@
       <materialref ref="Air"/>
       <solidref ref="mollerdetContainerSolid"/>
 
-      <!--
-      <physvol name="Container_Physical_2230x9653988">
-        <volumeref ref="Container_Logical_50x9652248"/>
-        <position name="Container_Physical_2230x9653988_pos" unit="mm" x="-1082.16998252182" y="-246.998236691509" z="200.0"/>
-        <rotation name="Container_Physical_2230x9653988_rot" unit="deg" x="0" y="0" z="77.1428571428571"/>
-      </physvol>
-      -->
+
       
-      <!-- commented out for simplicity right now - will add back in -->
-      <!-- <physvol name="LeadRingPhysical">
+    
+      <physvol name="LeadRingPhysical">
         <volumeref ref="LeadRingLogical"/>
-        <position name="LeadRingPhysical_pos" unit="mm" x="0" y="0" z="1050"/>
-      </physvol> -->
+        <position name="LeadRingPhysical_pos" unit="mm" x="0" y="0" z="1750"/>
+      </physvol>
+      <physvol name="StrawManPhysical">
+      	<volumeref ref="StrawManLogical"/>
+      	<position name="StrawManPhysical_pos" unit="mm" x="0" y="0" z="2500"/>
+      </physvol>
       
     
     
@@ -569,21 +415,19 @@
           <physvol name="ContainerPhysical[k][p]">
             <volumeref ref="ContainerLogical[k]"/>
             <position name="ContainerPhysical_even_pos[k][p]" unit="mm" x="-RadialPosition[k]*cos(p*MasterContainerPhi[k])" y="RadialPosition[k]*sin(p*MasterContainerPhi[k])" z="Z_Position[k]-DetectorShiftInZ"/>
-            <rotation name="ContainerPhysical_even_rot[k][p]" unit="1" x="0" y="0" z="90*degree+(p*MasterContainerPhi[k])"/>
+            <rotation name="ContainerPhysical_even_rot[k][p]" unit="deg" x="0" y="0" z="90+(p*MasterContainerPhi[k])"/>
           </physvol>
          </loop>
           <loop for="q" from="1" to="MaxNumDet[k]" step="2">
           <physvol name="ContainerPhysical[k][q]">
             <volumeref ref="ContainerLogical[k]"/>
             <position name="ContainerPhysical_odd_pos[k][q]" unit="mm" x="-RadialPosition[k]*cos(q*MasterContainerPhi[k])" y="RadialPosition[k]*sin(q*MasterContainerPhi[k])" z="Z_Position[k]+DetectorShiftInZ"/>
-            <rotation name="ContainerPhysical_odd_rot[k][p]" unit="1" x="0" y="0" z="90*degree+(q*MasterContainerPhi[k])"/>
+            <rotation name="ContainerPhysical_odd_rot[k][p]" unit="deg" x="0" y="0" z="90+(q*MasterContainerPhi[k])"/>
           </physvol>
         </loop>
       </loop>
       
     </volume>
-    
-    
     
     <!-- <skinsurface name="ProbeCoatSkinSurface_0" surfaceproperty="ProbeCoatOpticalSurface">
       <volumeref ref="ProbeCoatLogical_0"/>

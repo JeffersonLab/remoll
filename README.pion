@@ -1,0 +1,35 @@
+This README was created by Scott Mundy, a graduating senior at William and Mary to conclude his research.
+
+The intention of this is to provide a more detailed guide on how the simulation can be used than the existing README.
+
+Geometry files are located in geometry_sculpt. 
+The file detectorDaughter.gdml contains the straw-man disc detector located at the main detector ring's position, as well as the showermax.
+The thickness of lead can be adjusted in pionDetectorSystem.gdml.
+
+After altering geometry, from the build directory type "make" into the terminal. This will update the remoll executable to include the changes. This MUST BE DONE before submitting to the farm or problems will arise.
+
+Additionally, when inexplicable bugs start to happen, it is usually a good idea to go into the build directory, type "make clean" which will reset the files and start over from scratch (as opposed to just updating the links currently in existence). Then type "make" to rebuild the executable.
+
+In order to submit simulations to the farm, several things need to be done. In the jobs directory, the job.xml.in file needs to be updated to have the correct paths. You need to make sure that the error and output files are being dumped into existing scratch directories, and that the username is correct for them and the root file destinations. The scratch directory can be accessed by using "cd ../.." from the home directory (i.e. the directory that contains the remoll directory). From there you can navigate into scratch, your user name and then make directories in there as you would normally.
+
+The batch submission script is found in the scripts directory. In order for this to work you will need to ensure that several things are changed. First, the name= line at the top will need to be changed to what you want the root files
+to be called. When this is changed you need to ensure that a macro of the same name exists in the macros directory. If the name is pion_lead_wall_100mm there must be a macro called "pion_lead_wall_100mm.in" inside the macros directory. An example macro for this case is included on github. If you were to change the thickness to say, 125mm, you would simply need to copy the existing 100mm macro into a new macro called "pion_lead_wall_125mm.in" inside the macros
+directory, the macros are all identical for moller and pion batches it simply needs to exist. It is important that you distinguish between the moller simulations and pion simulations because they will be using different datasets, and 
+the macros will be slightly different.
+
+Additionally you need to adjust the job submission numbers to what you want. This allows you to distinguish datasets easily. Personally I used a system in which the jobs for a given set ran from X0000-X0099, with X being a number. Minor alterations could be named X1000-X1099. The purpose of this being to easily pull 100 simulation files from a single batch with one line, i.e. X00*.root. The * character is a "wildcard" character that will match all possible patterns of characters that complete the statement, in this case all integers from 00-99. This is used both when caching the files and when pulling them into an analysis script, and also helps you keep different data sets separated mentally.
+
+Once these changes are made, make sure that you have used "make" in the build directory to update/create the remoll executable. Then FROM THE REMOLL DIRECTORY type "scripts/batch_farm_submit.sh" at which point the terminal will update
+as the jobs are submitted to the farm.
+
+Jobs can be tracked with the Jlab scientific computing website and generally take between 15 minutes and 6 hours to begin running. If your job finishes unusually fast, make sure you check the output files in scratch to be sure that all the events were actually run. Just because the farm says the job succeeded does not mean it actually did what it was supposed to. Also note that there can be a large time difference between the first file completing and the last, so
+make sure all files have succeeded before attempting to cache them.
+
+When you have all the files written to tape, you then want to cache them using jcache. Just type jcache -h to get a list of commands and syntax and use jcache get (...) to pull in the files you want. The caching process usually takes
+several hours.
+
+Once the files are cached they can be easily accessed through an analysis script.
+
+The instructions of how to run the analysis scripts are included at the top of the example scripts on git-hub, along with comments to help understand them.
+
+

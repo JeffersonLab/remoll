@@ -22,10 +22,10 @@ remollGenBeam::remollGenBeam()
 
 remollGenBeam::~remollGenBeam() { }
 
-void remollGenBeam::SamplePhysics(remollVertex *vert, remollEvent *evt)
+void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 {
     // Get initial beam energy instead of using other sampling
-    double E = fBeamTarg->fBeamE;
+    double E = fBeamTarg->fBeamEnergy;
     double m = electron_mass_c2;
     double p = sqrt(E*E - m*m);
 

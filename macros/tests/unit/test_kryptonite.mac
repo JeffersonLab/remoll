@@ -1,0 +1,11 @@
+/run/initialize
+/remoll/filename test_kryptonite.root
+
+/remoll/kryptonite/del Lead
+/remoll/kryptonite/add G4_Pb
+/remoll/kryptonite/list
+
+/remoll/kryptonite/set true
+/run/beamOn 100
+/remoll/kryptonite/set false
+/run/beamOn 100

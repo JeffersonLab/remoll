@@ -1,4 +1,6 @@
 #include "remollEvent.hh"
+#include "remolltypes.hh"
+
 #include <math.h>
 
 #include "G4ParticleTable.hh"
@@ -12,9 +14,53 @@ remollEvent::remollEvent()
 remollEvent::~remollEvent(){
 }
 
-void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name ){
+/**
+ * Fill the event particle structure for writing to IO.
+ */
+std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
+  std::vector<remollEventParticle_t> parts;
+  for (size_t idx = 0; idx < fPartType.size(); idx++) {
+    remollEventParticle_t part;
+    part.pid = fPartType[idx]->GetPDGEncoding();
+    part.sx = fPartSpin[idx].x();
+    part.sy = fPartSpin[idx].y();
+    part.sz = fPartSpin[idx].z();
+    part.vx = fPartPos[idx].x();
+    part.vy = fPartPos[idx].y();
+    part.vz = fPartPos[idx].z();
+    part.px = fPartRealMom[idx].x();
+    part.py = fPartRealMom[idx].y();
+    part.pz = fPartRealMom[idx].z();
+    part.th = fPartRealMom[idx].theta();
+    part.ph = fPartRealMom[idx].phi();
+    part.p  = fPartRealMom[idx].mag();
+    part.tpx = fPartMom[idx].x();
+    part.tpy = fPartMom[idx].y();
+    part.tpz = fPartMom[idx].z();
+    parts.push_back(part);
+  }
+  return parts;
+}
+
+/**
+ * Fill the event structure for writing to IO.
+ */
+remollEvent_t remollEvent::GetEventIO() const {
+  remollEvent_t ev;
+  ev.xs = fEffXs/microbarn;
+  ev.A  = fAsym/1e-9;
+  ev.Am = fmAsym/1e-9;
+  ev.Q2 = fQ2;
+  ev.W2 = fW2;
+  ev.thcom = fThCoM;
+  ev.beamp = fBeamMomentum.mag();
+  return ev;
+}
+
+void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name, G4ThreeVector spin ){
     fPartPos.push_back(pos);
     fPartMom.push_back(mom);
+    fPartSpin.push_back(spin);
     fPartRealMom.push_back(mom);
 
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
@@ -23,10 +69,10 @@ void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4St
     fPartType.push_back(particle);
 }
 
-
 void remollEvent::Reset(){
     fPartPos.clear();
     fPartMom.clear();
+    fPartSpin.clear();
     fPartRealMom.clear();
     fPartType.clear();
 
@@ -47,6 +93,7 @@ void remollEvent::Reset(){
 void remollEvent::UndoLastParticle(){
     fPartPos.pop_back();
     fPartMom.pop_back();
+    fPartSpin.pop_back();
     fPartRealMom.pop_back();
     fPartType.pop_back();
 }
@@ -98,8 +145,9 @@ void remollEvent::Print(){
 	    G4cout << "\tParticle type for " << i << " not defined" << G4endl;
 	} else {
 	    G4cout << "\t" << fPartType[i]->GetParticleName() << ":" << G4endl;
-	    G4cout << "\t\tat (" << fPartPos[i].x()/m << ", " << fPartPos[i].y()/m << ", " << fPartPos[i].z()/m  << ") m" << G4endl;
-	    G4cout << "\t\tof (" << fPartMom[i].x()/GeV << ", " << fPartMom[i].y()/GeV << ", " << fPartMom[i].z()/GeV  << ") GeV" << G4endl;
+	    G4cout << "\t\tat x = (" << fPartPos[i].x()/m << ", " << fPartPos[i].y()/m << ", " << fPartPos[i].z()/m  << ") m" << G4endl;
+	    G4cout << "\t\tof p = (" << fPartMom[i].x()/GeV << ", " << fPartMom[i].y()/GeV << ", " << fPartMom[i].z()/GeV  << ") GeV" << G4endl;
+	    G4cout << "\t\tand s = (" << fPartSpin[i].x() << ", " << fPartSpin[i].y() << ", " << fPartSpin[i].z()  << ")" << G4endl;
 	}
     }
 }

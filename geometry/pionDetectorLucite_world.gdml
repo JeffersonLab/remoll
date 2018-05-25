@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "pionMaterials.xml">
+  <!ENTITY matrices SYSTEM "pionMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <position name="targetCenter" z="-1.0*m"/>
+  <position name="pionDetectorCenter" z="1.5*m"/>
+
+  &matrices;
+</define>
+
+&materials;
+
+<solids>
+  <box name="world_solid" x="2*m" y="2*m" z="4*m"/>
+</solids>
+
+<structure>
+
+  <volume name="world_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="world_solid"/>
+
+    <physvol>
+      <file name="geometry/targetDaughter.gdml"/>
+      <positionref ref="targetCenter"/>
+    </physvol>
+
+    <physvol>
+      <file name="geometry/pionDetectorLucite.gdml"/>
+      <positionref ref="pionDetectorCenter"/>
+      <rotation x="90*deg"/>
+    </physvol>
+      
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="world_logical"/>
+</setup>
+
+</gdml>

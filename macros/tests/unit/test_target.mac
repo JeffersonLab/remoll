@@ -1,0 +1,7 @@
+/run/initialize
+/remoll/targname USAlTarg
+/remoll/targpos   -74.9 cm
+/remoll/targlen  0.0127 cm
+/remoll/printtargetinfo
+/run/beamOn 1
+

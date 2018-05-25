@@ -15,11 +15,11 @@
 namespace { G4Mutex remollEventActionMutex = G4MUTEX_INITIALIZER; }
 
 remollEventAction::remollEventAction()
-: fPrimaryGeneratorAction(0) { }
+  : fPrimaryGeneratorAction(0),fEventSeed("") { }
 
 remollEventAction::~remollEventAction() { }
 
-void remollEventAction::BeginOfEventAction(const G4Event*) { }
+void remollEventAction::BeginOfEventAction(const G4Event* event) { }
 
 void remollEventAction::EndOfEventAction(const G4Event* aEvent)
 {
@@ -30,6 +30,10 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
   // Lock mutex
   G4AutoLock lock(&remollEventActionMutex);
   remollIO* io = remollIO::GetInstance();
+
+  // Store random seed
+  //fEventSeed = aEvent->GetRandomNumberStatus();
+  io->SetEventSeed(fEventSeed);
 
   // Get primary event action information
   const remollEvent* event = fPrimaryGeneratorAction->GetEvent();
@@ -42,13 +46,13 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
     if (thiscol){ // This is NULL if nothing is stored
 
       // Dynamic cast to test types, process however see fit and feed to IO
-      
+
       ////  Generic Detector Hits ///////////////////////////////////
       if (remollGenericDetectorHitCollection *thiscast =
           dynamic_cast<remollGenericDetectorHitCollection*>(thiscol)) {
         for (unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++) {
           io->AddGenericDetectorHit((remollGenericDetectorHit *)
-              thiscast->GetHit(hidx));
+                                    thiscast->GetHit(hidx));
         }
       }
 
@@ -57,7 +61,7 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
           dynamic_cast<remollGenericDetectorSumCollection*>(thiscol)) {
         for (unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++) {
           io->AddGenericDetectorSum((remollGenericDetectorSum *)
-              thiscast->GetHit(hidx));
+                                    thiscast->GetHit(hidx));
         }
       }
 

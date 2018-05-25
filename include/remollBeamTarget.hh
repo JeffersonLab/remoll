@@ -4,6 +4,7 @@
 #include "remolltypes.hh"
 #include "remollglobs.hh"
 #include "remollVertex.hh"
+
 #include "G4ThreeVector.hh"
 #include <vector>
 
@@ -31,13 +32,18 @@ class remollMultScatt;
 
 class remollBeamTarget {
 
-    private: 
+    private:
         // Static geometry objects
+	static G4String fActiveTargetVolume;
         static std::vector <G4VPhysicalVolume*> fTargetVolumes;
         static G4VPhysicalVolume* fTargetMother;
 
-        static G4double fTotalLength;
-        static G4double fLH2Length, fZpos, fLH2pos;
+        // Effective lengths are weighted by density (i.e. in 1/cm^2)
+        static G4double fTotalTargetEffectiveLength;
+        static G4double fActiveTargetEffectiveLength;
+        // Positions are in physical distances (i.e. in cm)
+        static G4double fMotherTargetAbsolutePosition;
+        static G4double fActiveTargetRelativePosition;
 
         static void UpdateInfo();
 
@@ -48,8 +54,11 @@ class remollBeamTarget {
         static void AddTargetVolume( G4VPhysicalVolume *v ){ fTargetVolumes.push_back(v); UpdateInfo(); }
         static std::vector<G4VPhysicalVolume*> GetTargetVolumes(){ return fTargetVolumes; }
 
+        void SetActiveTargetVolume(G4String name);
         void SetTargetPos(G4double z);
         void SetTargetLen(G4double l);
+
+        void PrintTargetInfo();
 
     public:
         remollBeamTarget();
@@ -60,28 +69,26 @@ class remollBeamTarget {
 
 	remollVertex SampleVertex(SampType_t);
 
-	G4double fBeamE;
-	G4double fBeamCurr;
-	G4double fBeamPol;
+	G4double fBeamEnergy;
+	G4double fBeamCurrent;
+	G4double fBeamPolarization;
 
 	remollMultScatt *fMS;
 
     private:
 	G4GenericMessenger* fMessenger;
 
-
-
 	G4Material *fDefaultMat;
-
-	bool fAlreadyWarned;
-
 	
     public:
 	// Base position, angle *sampled* info
 	G4ThreeVector fVer, fDir;
-	G4double fSampE, fRadLen, fSampLen;
-	G4double fTravLen;
-	G4double fEcut, fEffMatLen;
+	G4double fSampledEnergy;
+	G4double fRadiationLength;
+	G4double fTravelledLength;
+        G4double fEffectiveMaterialLength;
+
+        G4double fEnergyCut;
 
 	// Base position/angle sampling info
         G4bool fOldRaster;
@@ -90,6 +97,19 @@ class remollBeamTarget {
 	G4double fTh0, fPh0;
 	G4double fdTh, fdPh, fCorrTh, fCorrPh;
 
+    public:
+        remollBeamTarget_t GetBeamTargetIO() const {
+          remollBeamTarget_t bm;
+          bm.x = fVer.x();
+          bm.y = fVer.y();
+          bm.z = fVer.z();
+          bm.dx = fDir.x();
+          bm.dy = fDir.y();
+          bm.dz = fDir.z();
+          bm.th = fDir.theta();
+          bm.ph = fDir.phi();
+          return bm;
+        }
 };
 
 

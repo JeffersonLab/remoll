@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "pionMaterials.xml">
+  <!ENTITY matrices SYSTEM "pionMatrices.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <quantity name="pionDetectorTSThickness" type="length" value="2.54" unit="cm"/>
+  <quantity name="pionDetectorTSWidth" type="length" value="70.0" unit="cm"/>
+  <quantity name="pionDetectorTSHeight" type="length" value="60.0" unit="cm"/>
+
+  &matrices;
+</define>
+
+&materials;
+
+<solids>
+  <!-- x in azimuthal direction -->
+  <!-- y in downstream beam direction -->
+  <!-- z in radial outward direction -->
+  <box  name="pionDetectorTSPlane_solid" y="pionDetectorTSThickness" x="pionDetectorTSWidth" z="pionDetectorTSHeight"/>
+</solids>
+
+<structure>
+
+  <volume name="pionDetectorTSPlane_logical">
+    <!-- EJ-200, reference http://www.eljentechnology.com/products/plastic-scintillators/ej-200-ej-204-ej-208-ej-212 -->
+    <materialref ref="G4_PLASTIC_SC_VINYLTOLUENE"/>
+    <solidref ref="pionDetectorTSPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionDetTS"/>
+    <auxiliary auxtype="DetNo" auxvalue="4003"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
+  <volume name="pionDetectorTS_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorTSPlane_solid"/>
+
+    <physvol name="pionDetectorTS_physical">
+      <volumeref ref="pionDetectorTSPlane_logical"/>
+    </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorTS_logical"/>
+</setup>
+
+</gdml>

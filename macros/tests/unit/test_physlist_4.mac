@@ -1,0 +1,6 @@
+# Register already loaded physics list
+/remoll/physlist/register QGSP_BERT_HP
+
+# Initialize and run
+/run/initialize
+/run/beamOn 1
