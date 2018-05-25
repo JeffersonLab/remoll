@@ -24,7 +24,7 @@ typedef G4RunManager RunManager;
 #include "remollPhysicsList.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
-#include "remollParallelWorldConstruction.hh"
+#include "remollParallelConstruction.hh"
 
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
@@ -101,11 +101,9 @@ int main(int argc, char** argv) {
 
     // Detector geometry
     remollDetectorConstruction* detector = new remollDetectorConstruction();
-    runManager->SetUserInitialization(detector);
-
     // Parallel world geometry
-    G4String parallelWorldName = "ParallelWorld";
-    remollParallelWorldConstruction* parallelWorld = new remollParallelWorldConstruction(parallelWorldName);
+    remollParallelConstruction* parallel = new remollParallelConstruction();
+    detector->RegisterParallelWorld(parallel);
     runManager->SetUserInitialization(detector);
 
     // Physics list
