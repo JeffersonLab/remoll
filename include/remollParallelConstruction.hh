@@ -1,5 +1,5 @@
-#ifndef __REMOLLPARALLELWORLDCONSTRUCTION_HH
-#define __REMOLLPARALLELWORLDCONSTRUCTION_HH 1
+#ifndef __REMOLLPARALLELCONSTRUCTION_HH
+#define __REMOLLPARALLELCONSTRUCTION_HH 1
 
 #include <G4VUserParallelWorld.hh>
 
@@ -13,15 +13,15 @@ class G4GDMLParser;
 /// - void Construct()
 ///     creates a parallel world in the mass world and parameterized volumes
 //
-class remollParallelWorldConstruction : public G4VUserParallelWorld
+class remollParallelConstruction : public G4VUserParallelWorld
 {
   public:
-    remollParallelWorldConstruction(G4String& parallelWorldName);
-    virtual ~remollParallelWorldConstruction();
+    remollParallelConstruction();
+    virtual ~remollParallelConstruction();
 
   public:
     virtual void Construct();
-    
+
     void SetParallelWorldGeomFile(const G4String& filename) {
       fFileName = filename;
     };
@@ -31,4 +31,4 @@ class remollParallelWorldConstruction : public G4VUserParallelWorld
     G4String fFileName;
 };
 
-#endif // __REMOLLPARALLELWORLDCONSTRUCTION_HH
+#endif // __REMOLLPARALLELCONSTRUCTION_HH
