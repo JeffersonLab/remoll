@@ -8,7 +8,7 @@
 remollParallelConstruction
 ::remollParallelConstruction()
 : G4VUserParallelWorld("The Upside Down"),
-  fConstructed(false),fFileName("geometry/parallelWorld.gdml")
+  fConstructed(false),fFileName("geometry/mollerParallel.gdml")
 {;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
