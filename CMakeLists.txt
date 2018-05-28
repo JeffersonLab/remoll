@@ -132,7 +132,6 @@ add_executable(reroot-bin reroot.cc)
 set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
 target_link_libraries(reroot-bin remoll-lib)
 
-
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
 # build remoll. This is so that we can run the executable directly because it
