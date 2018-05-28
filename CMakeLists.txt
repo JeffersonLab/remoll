@@ -50,17 +50,28 @@ ROOT_GENERATE_DICTIONARY(
 
 if(USE_BOOST)
     find_package(Boost COMPONENTS iostreams)
-    include_directories(${Boost_INCLUDE_DIRS})
-    link_directories(${Boost_LIBRARY_DIR})
-    ADD_DEFINITIONS(-D__USE_BOOST)
-    if(Boost_IOSTREAMS_FOUND)
-        ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+    if(Boost_FOUND)
+        include_directories(${Boost_INCLUDE_DIRS})
+        link_directories(${Boost_LIBRARY_DIR})
+        ADD_DEFINITIONS(-D__USE_BOOST)
+        if(Boost_IOSTREAMS_FOUND)
+            ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+        endif()
     endif()
 endif()
 
-#CADMesh
-find_package(cadmesh)
-#End of CADMesh
+#----------------------------------------------------------------------------
+# Find CADMesh libraries
+if(USE_CADMESH)
+    find_package(cadmesh)
+    if(cadmesh_FOUND)
+        # Pretty sure at some point cadmesh will update to use lowercase
+        include_directories(${CADMESH_INCLUDE_DIRS})
+        include_directories(${cadmesh_INCLUDE_DIRS})
+        link_directories(${cadmesh_LIBRARY_DIR})
+        ADD_DEFINITIONS(-D__USE_CADMESH)
+    endif()
+endif()
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
