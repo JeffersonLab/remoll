@@ -34,12 +34,12 @@ class remollGenericDetector : public G4VSensitiveDetector {
         static std::list<remollGenericDetector*> fGenericDetectors;
         static void InsertGenericDetector(remollGenericDetector* det) {
           fGenericDetectors.push_back(det);
+          fGenericDetectors.sort(isBefore);
         }
         static void EraseGenericDetector(remollGenericDetector* det) {
           fGenericDetectors.remove(det);
         }
         void PrintAll() {
-          fGenericDetectors.sort();
           for (std::list<remollGenericDetector*>::iterator
             it  = fGenericDetectors.begin();
             it != fGenericDetectors.end();
@@ -62,6 +62,10 @@ class remollGenericDetector : public G4VSensitiveDetector {
             it++) {
               (*it)->SetDisabled();
           }
+        }
+
+        static bool isBefore(const remollGenericDetector* left, const remollGenericDetector* right) {
+          return (left->fDetNo < right->fDetNo);
         }
 
     public:
