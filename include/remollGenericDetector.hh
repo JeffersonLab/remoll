@@ -65,7 +65,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
         }
 
         static bool isBefore(const remollGenericDetector* left, const remollGenericDetector* right) {
-          return (left->fDetNo < right->fDetNo);
+          return (left? (right? (left->fDetNo < right->fDetNo): false): true);
         }
 
     public:
