@@ -16,6 +16,9 @@
 /remoll/filename test_det_enable_2.root
 /run/beamOn 100
 
+# Print all detectors
+/remoll/SD/print_all
+
 # Disable all detectors
 /remoll/SD/disable_all
 /remoll/filename test_det_enable_3.root
