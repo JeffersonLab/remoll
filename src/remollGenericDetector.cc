@@ -46,11 +46,11 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   // Create static messenger
   fStaticMessenger = new G4GenericMessenger(this,"/remoll/SD/","Remoll SD properties");
   fStaticMessenger->DeclareMethod(
-    "enable",
+    "enable_all",
     &remollGenericDetector::SetAllEnabled,
     "Enable recording of hits in all detectors");
   fStaticMessenger->DeclareMethod(
-    "disable",
+    "disable_all",
     &remollGenericDetector::SetAllDisabled,
     "Disable recording of hits in all detectors");
 
