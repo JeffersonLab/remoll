@@ -9,7 +9,7 @@
 
 #include <sstream>
 
-std::set<remollGenericDetector*> remollGenericDetector::fGenericDetectors = std::set<remollGenericDetector*>();
+std::list<remollGenericDetector*> remollGenericDetector::fGenericDetectors = std::list<remollGenericDetector*>();
 G4GenericMessenger* remollGenericDetector::fStaticMessenger = 0;
 
 remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )

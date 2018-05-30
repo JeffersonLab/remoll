@@ -8,7 +8,7 @@
 #include "remollGenericDetectorSum.hh"
 
 #include <map>
-#include <set>
+#include <list>
 
 /*! 
       Default detector class.  This will record information on:
@@ -31,15 +31,16 @@ class remollGenericDetectorSum;
 class remollGenericDetector : public G4VSensitiveDetector {
     private:
         static G4GenericMessenger* fStaticMessenger;
-        static std::set<remollGenericDetector*> fGenericDetectors;
+        static std::list<remollGenericDetector*> fGenericDetectors;
         static void InsertGenericDetector(remollGenericDetector* det) {
-          fGenericDetectors.insert(det);
+          fGenericDetectors.push_back(det);
         }
         static void EraseGenericDetector(remollGenericDetector* det) {
-          fGenericDetectors.erase(det);
+          fGenericDetectors.remove(det);
+        }
         }
         void SetAllEnabled() {
-          for (std::set<remollGenericDetector*>::iterator
+          for (std::list<remollGenericDetector*>::iterator
             it  = fGenericDetectors.begin();
             it != fGenericDetectors.end();
             it++) {
@@ -47,7 +48,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
           }
         }
         void SetAllDisabled() {
-          for (std::set<remollGenericDetector*>::iterator
+          for (std::list<remollGenericDetector*>::iterator
             it  = fGenericDetectors.begin();
             it != fGenericDetectors.end();
             it++) {
