@@ -38,6 +38,14 @@ class remollGenericDetector : public G4VSensitiveDetector {
         static void EraseGenericDetector(remollGenericDetector* det) {
           fGenericDetectors.remove(det);
         }
+        void PrintAll() {
+          fGenericDetectors.sort();
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              (*it)->PrintEnabled();
+          }
         }
         void SetAllEnabled() {
           for (std::list<remollGenericDetector*>::iterator
