@@ -17,12 +17,12 @@
 /run/beamOn 100
 
 # Disable all detectors
-/remoll/SD/disable
+/remoll/SD/disable_all
 /remoll/filename test_det_enable_3.root
 /run/beamOn 100
 
 # Enable all detectors
-/remoll/SD/enable
+/remoll/SD/enable_all
 /remoll/filename test_det_enable_4.root
 /run/beamOn 100
 
