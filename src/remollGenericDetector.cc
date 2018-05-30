@@ -53,6 +53,10 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
     "disable_all",
     &remollGenericDetector::SetAllDisabled,
     "Disable recording of hits in all detectors");
+  fStaticMessenger->DeclareMethod(
+    "print_all",
+    &remollGenericDetector::PrintAll,
+    "Print all detectors");
 
   // Add to static list
   InsertGenericDetector(this);
