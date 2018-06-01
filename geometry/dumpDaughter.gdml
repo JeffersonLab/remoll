@@ -778,7 +778,7 @@
         <positionref ref="waterDumpWaterTank_center"/>
       </physvol>
 
-      <!-- FIXME This dump configuration was used as a double check against the dump implementation in Ciprian's prexSim for PREXII - and so it leaves out many details and has rough approximations which should all be checked again - it was developed from the engineering files made available in http://hallaweb.jlab.org/parity/prex/beamline/ - it also refers to the CAD documents in the Hall A engineering CAD - a copy of which is available at /work/halla/parity/disk1/CAD_Storage or /mss/halla/parity/moller12gev/CAD_Backups/
+      <!-- FIXME This dump configuration was used as a double check against the dump implementation in Ciprian's prexSim for PREXII - and so it leaves out many details and has rough approximations which should all be checked again - it was developed from the engineering files made available in http://hallaweb.jlab.org/parity/prex/beamline/ - it also refers to the CAD documents in the Hall A engineering CAD - a copy of which is available at /work/halla/parity/disk1/CAD_Storage or /mss/halla/parity/moller12gev/CAD_Backups/ -->
 
     </volume>
   </structure>
