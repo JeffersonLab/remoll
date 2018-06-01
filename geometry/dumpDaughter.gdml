@@ -476,7 +476,7 @@
     
     <!-- Water Tank Dump (should have rounded tank ends, but using cylinder for now) -->
 
-    <tube name="tubeDumpWaterTank" 
+    <tube name="tubeDumpWaterTank_solid" 
           aunit="deg" startphi="0" deltaphi="360" 
           lunit="cm" rmin="dumpWaterTank_r" rmax="dumpWaterTank_r + dumpWaterTank_thickness"
           z="dumpWaterTank_length + 2*dumpWaterTank_thickness"/>
@@ -486,8 +486,8 @@
           lunit="cm" rmin="0.0" rmax="dumpWaterTank_r"
           z="dumpWaterTank_length"/>
         
-    <subtraction name="tubeDumpWaterTank_solid">
-      <first ref="tubeDumpWaterTank"/>
+    <subtraction name="tubeDumpWaterTank_subtraction_solid">
+      <first ref="tubeDumpWaterTank_solid"/>
       <second ref="waterDumpWaterTank_solid"/>
       <positionref ref="tubeDumpWaterTank_trans"/>
       <rotationref ref="identity"/>
@@ -651,7 +651,7 @@
     
     <volume name="tubeDumpWaterTank_logic">
       <materialref ref="Aluminum"/>
-      <solidref ref="tubeDumpWaterTank_solid"/>
+      <solidref ref="tubeDumpWaterTank_subtraction_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Can"/>
       <auxiliary auxtype="DetNo" auxvalue="24"/>
