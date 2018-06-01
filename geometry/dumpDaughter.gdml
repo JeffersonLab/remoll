@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
   
 <!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "materials.xml">
+  <!ENTITY materials SYSTEM "materials.xml">
 ]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
   <define>
     <!-- Commonly adjusted parameters -->
     <!-- Units are in cm, and are NOT half-lengths -->
