@@ -2,6 +2,8 @@
 #define __REMOLLGENERICDETECTOR_HH
 
 #include "G4VSensitiveDetector.hh"
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
 
 // Included to avoid forward declaration of collection typedef
 #include "remollGenericDetectorHit.hh"
@@ -28,19 +30,25 @@ class G4GenericMessenger;
 
 class remollGenericDetectorSum;
 
+namespace { G4Mutex remollGenericDetectorMutex = G4MUTEX_INITIALIZER; }
+
 class remollGenericDetector : public G4VSensitiveDetector {
     private:
         static G4GenericMessenger* fStaticMessenger;
         static std::list<remollGenericDetector*> fGenericDetectors;
         static void InsertGenericDetector(remollGenericDetector* det) {
           fGenericDetectors.push_back(det);
-          fGenericDetectors.sort(isBefore);
+          remollGenericDetector::Sort();
         }
         static void EraseGenericDetector(remollGenericDetector* det) {
           fGenericDetectors.remove(det);
         }
+        static void Sort() {
+          G4AutoLock lock(&remollGenericDetectorMutex);
+          fGenericDetectors.sort(isBefore);
+        }
         void PrintAll() {
-          for (std::list<remollGenericDetector*>::iterator
+          for (std::list<remollGenericDetector*>::const_iterator
             it  = fGenericDetectors.begin();
             it != fGenericDetectors.end();
             it++) {
