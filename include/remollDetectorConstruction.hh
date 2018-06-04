@@ -19,13 +19,15 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
 
-    remollDetectorConstruction(const G4String& gdmlfile = "geometry/mollerMother.gdml");
+    remollDetectorConstruction(const G4String& gdmlfile);
     virtual ~remollDetectorConstruction();
 
   public:
 
     G4VPhysicalVolume* Construct();
     void ConstructSDandField();
+
+    void ReloadGeometry(const G4String& gdmlfile);
 
     void SetDetectorGeomFile(const G4String& name) { fGDMLFile = name; }
 

@@ -5,36 +5,25 @@
 #include "remollGlobalField.hh"
 #include "remollIO.hh"
 
-#include "TGeoManager.h"
-
 #include "G4GenericMessenger.hh"
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
 
-#include "G4Material.hh"
-#include "G4Element.hh"
-#include "G4NistManager.hh"
-
 #include "G4LogicalVolume.hh"
-#include "G4ThreeVector.hh"
-#include "G4PVPlacement.hh"
-#include "G4UserLimits.hh"
 #include "globals.hh"
+
+#include "G4RunManager.hh"
 
 #include "G4SDManager.hh"
 #include "G4VSensitiveDetector.hh"
 
-#include "G4UImanager.hh"
-#include "G4UIcommand.hh"
-
-#include "G4ios.hh"
-
 #include "G4UnitsTable.hh"
+#include "G4NistManager.hh"
 
 // GDML export
 #include "G4GDMLParser.hh"
 
-//visual
+// visual
 #include "G4VisAttributes.hh"
 #include "G4Colour.hh"
 
@@ -48,14 +37,14 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
 remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
-: fGDMLFile(gdmlfile),fGDMLParser(0),
-  fGDMLValidate(true),fGDMLOverlapCheck(true),
+: fGDMLFile("geometry/mollerMother.gdml"),fGDMLParser(0),
+  fGDMLValidate(false),fGDMLOverlapCheck(true),
   fMessenger(0),fGeometryMessenger(0),
   fVerboseLevel(0),
   fWorldVolume(0)
 {
-  // Create GDML parser
-  fGDMLParser = new G4GDMLParser();
+  // If gdmlfile is non-empty
+  if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -108,6 +97,11 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
           .SetStates(G4State_PreInit)
           .SetDefaultValue("true");
   fGeometryMessenger->DeclareMethod(
+      "load",
+      &remollDetectorConstruction::ReloadGeometry,
+      "Reload the geometry")
+      .SetStates(G4State_PreInit,G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
       "printelements",
       &remollDetectorConstruction::PrintElements,
       "Print the elements")
@@ -151,8 +145,10 @@ void remollDetectorConstruction::PrintGDMLWarning() const
 
 G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 {
-    // Setup parser
-    fGDMLParser->Clear();
+    // Clear parser
+    //fGDMLParser->Clear(); // FIXME doesn't clear auxmap
+    if (fGDMLParser) delete fGDMLParser;
+    fGDMLParser = new G4GDMLParser();
 
     // Print GDML warning
     PrintGDMLWarning();
@@ -178,9 +174,6 @@ void remollDetectorConstruction::PrintAuxiliaryInfo() const
   G4cout << "Found " << auxmap->size()
          << " volume(s) with auxiliary information."
          << G4endl << G4endl;
-  if (fVerboseLevel > 0) {
-
-  }
 }
 
 void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
@@ -485,8 +478,17 @@ void remollDetectorConstruction::ConstructSDandField()
   LoadMagneticField();
 }
 
-G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int index){  
+void remollDetectorConstruction::ReloadGeometry(const G4String& gdmlfile)
+{
+  // Set new geometry
+  SetDetectorGeomFile(gdmlfile);
 
+  // Trigger Construct and ConstructSDandField
+  G4RunManager::GetRunManager()->ReinitializeGeometry(true);
+}
+
+G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int index)
+{
   //if (aVolume->GetLogicalVolume()->GetNoDaughters()==0 ){
       aVolume->SetCopyNo(index);
       index++;
