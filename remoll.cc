@@ -39,7 +39,7 @@ typedef G4RunManager RunManager;
 namespace {
   void PrintUsage() {
     G4cerr << "Usage: " << G4endl;
-    G4cerr << " remoll [-m macro ] [-u UIsession] [-r seed] ";
+    G4cerr << " remoll [-g geometry] [-m macro] [-u UIsession] [-r seed] ";
 #ifdef G4MULTITHREADED
     G4cerr << "[-t nThreads] ";
 #endif
@@ -68,16 +68,18 @@ int main(int argc, char** argv) {
     // Parse command line options
     G4String macro;
     G4String session;
+    G4String geometry;
 #ifdef G4MULTITHREADED
     G4int threads = 0;
 #endif
     //
     for (G4int i = 1; i < argc; ++i) {
-      if      (G4String(argv[i]) == "-m") macro   = argv[++i];
-      else if (G4String(argv[i]) == "-u") session = argv[++i];
-      else if (G4String(argv[i]) == "-r") seed    = atoi(argv[++i]);
+      if      (G4String(argv[i]) == "-m") macro    = argv[++i];
+      else if (G4String(argv[i]) == "-g") geometry = argv[++i];
+      else if (G4String(argv[i]) == "-u") session  = argv[++i];
+      else if (G4String(argv[i]) == "-r") seed     = atoi(argv[++i]);
 #ifdef G4MULTITHREADED
-      else if (G4String(argv[i]) == "-t") threads = atoi(argv[++i]);
+      else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
 #endif
       else if (argv[i][0] != '-') macro = argv[i];
       else {
@@ -100,7 +102,7 @@ int main(int argc, char** argv) {
     G4Random::setTheSeed(seed);
 
     // Detector geometry
-    remollDetectorConstruction* detector = new remollDetectorConstruction();
+    remollDetectorConstruction* detector = new remollDetectorConstruction(geometry);
     // Parallel world geometry
     remollParallelConstruction* parallel = new remollParallelConstruction();
     detector->RegisterParallelWorld(parallel);

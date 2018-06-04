@@ -47,24 +47,21 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
-remollDetectorConstruction::remollDetectorConstruction()
-: fGDMLParser(0),
+remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
+: fGDMLFile(gdmlfile),fGDMLParser(0),
+  fGDMLValidate(true),fGDMLOverlapCheck(true),
   fMessenger(0),fGeometryMessenger(0),
   fVerboseLevel(0),
-  fGDMLValidate(true),fGDMLOverlapCheck(true),
   fWorldVolume(0)
 {
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
 
-  // Default geometry file
-  fDetFileName = "geometry/mollerMother.gdml";
-
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
   fMessenger->DeclareProperty(
       "setgeofile",
-      fDetFileName,
+      fGDMLFile,
       "Set geometry GDML files")
       .SetStates(G4State_PreInit);
   fMessenger->DeclareMethod(
@@ -90,7 +87,7 @@ remollDetectorConstruction::remollDetectorConstruction()
       "Remoll geometry properties");
   fGeometryMessenger->DeclareProperty(
       "setfile",
-      fDetFileName,
+      fGDMLFile,
       "Set geometry GDML file")
       .SetStates(G4State_PreInit);
   fGeometryMessenger->DeclareProperty(
@@ -161,15 +158,15 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     PrintGDMLWarning();
 
     // Parse GDML file
-    G4cout << "Reading " << fDetFileName << G4endl;
+    G4cout << "Reading " << fGDMLFile << G4endl;
     G4cout << "- schema validation " << (fGDMLValidate? "on": "off") << G4endl;
     G4cout << "- overlap check " << (fGDMLOverlapCheck? "on": "off") << G4endl;
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
-    fGDMLParser->Read(fDetFileName,fGDMLValidate);
+    fGDMLParser->Read(fGDMLFile,fGDMLValidate);
 
     // Add GDML files to IO
     remollIO* io = remollIO::GetInstance();
-    io->GrabGDMLFiles(fDetFileName);
+    io->GrabGDMLFiles(fGDMLFile);
 
     // Return world volume
     return fGDMLParser->GetWorldVolume();

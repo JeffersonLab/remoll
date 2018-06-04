@@ -19,7 +19,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
 
-    remollDetectorConstruction();
+    remollDetectorConstruction(const G4String& gdmlfile = "geometry/mollerMother.gdml");
     virtual ~remollDetectorConstruction();
 
   public:
@@ -27,18 +27,20 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     G4VPhysicalVolume* Construct();
     void ConstructSDandField();
 
-    void SetDetectorGeomFile(const G4String& name) { fDetFileName = name; }
+    void SetDetectorGeomFile(const G4String& name) { fGDMLFile = name; }
 
   private:
 
+    G4String fGDMLFile;
     G4GDMLParser *fGDMLParser;
+
+    G4bool fGDMLValidate;
+    G4bool fGDMLOverlapCheck;
 
     G4GenericMessenger* fMessenger;
     G4GenericMessenger* fGeometryMessenger;
 
     G4int fVerboseLevel;
-    G4bool fGDMLValidate;
-    G4bool fGDMLOverlapCheck;
 
     //----------------------
     // global magnet section
@@ -46,8 +48,6 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     //
 
     static G4ThreadLocal remollGlobalField* fGlobalField;
-
-    G4String fDetFileName;
 
     G4VPhysicalVolume*      fWorldVolume;
 
