@@ -67,6 +67,16 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   private:
 
+    void PrintGDMLWarning() const;
+    G4VPhysicalVolume* ParseGDMLFile();
+
+    void PrintAuxiliaryInfo() const;
+    void ParseAuxiliaryTargetInfo();
+    void ParseAuxiliaryVisibilityInfo();
+    void ParseAuxiliarySensDetInfo();
+
+    void LoadMagneticField();
+
     G4int UpdateCopyNo(G4VPhysicalVolume* aVolume, G4int index = 0);
 
 };
