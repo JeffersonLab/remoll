@@ -478,7 +478,7 @@ void remollDetectorConstruction::ConstructSDandField()
   LoadMagneticField();
 }
 
-void remollDetectorConstruction::ReloadGeometry(const G4String& gdmlfile)
+void remollDetectorConstruction::ReloadGeometry(const G4String gdmlfile)
 {
   // Set new geometry
   SetDetectorGeomFile(gdmlfile);

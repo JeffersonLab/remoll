@@ -27,7 +27,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     G4VPhysicalVolume* Construct();
     void ConstructSDandField();
 
-    void ReloadGeometry(const G4String& gdmlfile);
+    void ReloadGeometry(const G4String gdmlfile);
 
     void SetDetectorGeomFile(const G4String& name) { fGDMLFile = name; }
 
