@@ -18,106 +18,25 @@
 <solids>
   <tube aunit="deg" deltaphi="360.0" name="pionDetectorVirtualDet_solid"
         rmin="600*mm" rmax="1900*mm" startphi="0" z="pionDetectorVirtualDetThickness"/>
-  <tube aunit="deg" deltaphi="360.0" name="pionDetectorVirtualDetPlug_solid"
-        rmin="600*mm"    rmax="1040*mm" startphi="0" z="pionDetectorVirtualDetThickness"/>
-  <tube aunit="deg" deltaphi="360.0" name="pionDetectorVirtualDetRing_solid"
-        rmin="1040*mm" rmax="1220*mm" startphi="0" z="pionDetectorVirtualDetThickness"/>
-  <tube aunit="deg" deltaphi="360.0" name="pionDetectorVirtualDetColl_solid"
-        rmin="1220*mm" rmax="1900*mm" startphi="0" z="pionDetectorVirtualDetThickness"/>
 </solids>
 
 <structure>
 
-  <volume name="pionDetectorVirtualDetPlugVacuum_logical">
+  <volume name="pionDetectorVirtualDetVacuum_logical">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="pionDetectorVirtualDetPlug_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4040"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-  </volume>
-  <volume name="pionDetectorVirtualDetPlugVacuumKryptonite_logical">
-    <materialref ref="VacuumKryptonite"/>
-    <solidref ref="pionDetectorVirtualDetPlug_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4041"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-  </volume>
-
-  <volume name="pionDetectorVirtualDetRingVacuum_logical">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="pionDetectorVirtualDetRing_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4050"/>
-    <auxiliary auxtype="Color" auxvalue="red"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-  </volume>
-  <volume name="pionDetectorVirtualDetRingVacuumKryptonite_logical">
-    <materialref ref="VacuumKryptonite"/>
-    <solidref ref="pionDetectorVirtualDetRing_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4051"/>
-    <auxiliary auxtype="Color" auxvalue="red"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-  </volume>
-
-  <volume name="pionDetectorVirtualDetCollVacuum_logical">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="pionDetectorVirtualDetColl_solid"/>
+    <solidref ref="pionDetectorVirtualDet_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="4060"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
-  <volume name="pionDetectorVirtualDetCollVacuumKryptonite_logical">
+
+  <volume name="pionDetectorVirtualDetVacuumKryptonite_logical">
     <materialref ref="VacuumKryptonite"/>
-    <solidref ref="pionDetectorVirtualDetColl_solid"/>
+    <solidref ref="pionDetectorVirtualDet_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="4061"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-  </volume>
-
-  <volume name="pionDetectorVirtualDetVacuum_logical">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="pionDetectorVirtualDet_solid"/>
-
-    <physvol name="pionDetectorVirtualDetPlug_physical">
-      <volumeref ref="pionDetectorVirtualDetPlugVacuum_logical"/>
-    </physvol>
-
-    <physvol name="pionDetectorVirtualDetRing_physical">
-      <volumeref ref="pionDetectorVirtualDetRingVacuum_logical"/>
-    </physvol>
-
-    <physvol name="pionDetectorVirtualDetColl_physical">
-      <volumeref ref="pionDetectorVirtualDetCollVacuum_logical"/>
-    </physvol>
-
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4000"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-  </volume>
-
-  <volume name="pionDetectorVirtualDetVacuumKryptonite_logical">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="pionDetectorVirtualDet_solid"/>
-
-    <physvol name="pionDetectorVirtualDetPlug_physical">
-      <volumeref ref="pionDetectorVirtualDetPlugVacuumKryptonite_logical"/>
-    </physvol>
-
-    <physvol name="pionDetectorVirtualDetRing_physical">
-      <volumeref ref="pionDetectorVirtualDetRingVacuumKryptonite_logical"/>
-    </physvol>
-
-    <physvol name="pionDetectorVirtualDetColl_physical">
-      <volumeref ref="pionDetectorVirtualDetCollVacuumKryptonite_logical"/>
-    </physvol>
-
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4001"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
