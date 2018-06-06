@@ -9,7 +9,7 @@
 // Geant4 headers
 #include "G4ParticleTable.hh"
 #include "G4GenericMessenger.hh"
-#include "CLHEP/Random/RandFlat.h"
+#include "Randomize.hh"
 
 // ROOT headers
 #include "TFile.h"
@@ -103,7 +103,7 @@ void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
 
     // Read next event from tree and increment
     //fTree->GetEntry(fEntry++);
-    fEntry = CLHEP::RandFlat::shoot(fEntries);
+    fEntry = G4RandFlat::shoot(fEntries);
     fTree->GetEntry(fEntry);
     // Keep simulating the last event
     //if (fEntry >= fEntries) {
