@@ -35,8 +35,6 @@ public:
   }
   void SetPionType(Pion_t t) { fPionType = t; }
   
-  void SetEmin( double emin ){ fE_min=emin; }
-  void SetEmax( double emax ){ fE_max=emax; }
 
   //static routine below is used as a root TF1 fit function
   static Double_t wiser_all_fit(Double_t *x, Double_t *par){
