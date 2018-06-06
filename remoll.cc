@@ -53,6 +53,8 @@ int main(int argc, char** argv) {
     // Running time measurement: start
     clock_t tStart = clock();
 
+    // Fix for #40: avoids LLVM/GL errors
+    gROOT->Reset();
 
     // Initialize the random seed
     G4long seed = time(0) + (int) getpid();
