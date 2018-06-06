@@ -20,7 +20,7 @@
   <constant name="thick_wall" value="1547.76"/> 
   <constant name="center_wall" value="radius_of_hall+thick_wall/2"/>      Not in use anymore -->
 
-  <constant name="radius_of_cylwall" value="25460."/>
+  <constant name="radius_of_cylwall" value="26517.6"/><!--25460."/>-->
   <constant name="thick_cylwall" value="1487."/>  
   <constant name="height_cylwall" value="17770."/>
   <constant name="bottom_cylwall" value="-4470."/>  
