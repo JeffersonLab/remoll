@@ -32,7 +32,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     fBeamTarg = new remollBeamTarget();
 
     // Default generator
-    G4String default_generator = "external";
+    G4String default_generator = "moller";
     SetGenerator(default_generator);
 
     // Get the particle gun
