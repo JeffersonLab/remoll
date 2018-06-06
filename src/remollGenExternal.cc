@@ -68,6 +68,7 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
     G4cerr << "Could not find tree T in event file (SetGenExternalFile)" << filename << G4endl;
     return;
   }
+  inFileLock.unlock();
 
   // Get number of entries
   fEntries = fTree->GetEntries();
@@ -102,6 +103,7 @@ void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
 
     // Read next event from tree and increment
     //fTree->GetEntry(fEntry++);
+    fEntry = CLHEP::RandFlat::shoot(fEntries);
     fTree->GetEntry(fEntry);
     // Keep simulating the last event
     //if (fEntry >= fEntries) {
@@ -109,7 +111,6 @@ void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
     //  G4cerr << "Reached last event and will begin again" << G4endl;
     //}
     //fEntry = rand()%fEntries;
-    fEntry = CLHEP::RandFlat::shoot(fEntries);
     // Weighting completely handled by event file
     evt->SetEffCrossSection(fEvent->xs);
     evt->SetQ2(fEvent->Q2);
