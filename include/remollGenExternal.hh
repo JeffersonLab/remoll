@@ -23,6 +23,9 @@
 // System headers
 #include <vector>
 
+//Mutex Header
+#include "G4AutoLock.hh"
+
 // Forward declarations
 class TFile;
 class TTree;
@@ -43,7 +46,6 @@ class remollGenExternal : public remollVEventGen {
 
     private:
         void SamplePhysics(remollVertex *, remollEvent *);
-
         // External event file and tree, entry number
         TFile* fFile;
         TTree* fTree;

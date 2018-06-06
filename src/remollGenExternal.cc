@@ -6,10 +6,10 @@
  */
 
 #include "remollGenExternal.hh"
-
 // Geant4 headers
 #include "G4ParticleTable.hh"
 #include "G4GenericMessenger.hh"
+#include "CLHEP/Random/RandFlat.h"
 
 // ROOT headers
 #include "TFile.h"
@@ -19,16 +19,21 @@
 #include "remollVertex.hh"
 #include "remolltypes.hh"
 
+G4Mutex inFileMutex = G4MUTEX_INITIALIZER;
+
 remollGenExternal::remollGenExternal()
 : remollVEventGen("external"),
   fFile(0), fTree(0),
   fEntry(0), fEntries(0),
   fEvent(0), fHit(0),
-  fDetectorID(0)
+  fDetectorID(28)
 {
   // Add to generic messenger
   fThisGenMessenger->DeclareMethod("file",&remollGenExternal::SetGenExternalFile,"External generator event filename");
   fThisGenMessenger->DeclareMethod("detid",&remollGenExternal::SetGenExternalDetID,"External generator detector ID");
+  G4cout << "Constructed remollGenExternal" << G4endl;
+  //FIXME hardcode the file
+  SetGenExternalFile(*new G4String("remollin.root"));
 }
 
 remollGenExternal::~remollGenExternal()
@@ -42,6 +47,8 @@ remollGenExternal::~remollGenExternal()
 
 void remollGenExternal::SetGenExternalFile(G4String& filename)
 {
+  G4AutoLock inFileLock(&inFileMutex);
+  G4cout << "Setting the external file to " << filename << " from " << fFile << G4endl;
   // Close previous file
   if (fFile) {
     fFile->Close();
@@ -58,7 +65,7 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
   // Try to find tree in file
   fFile->GetObject("T",fTree);
   if (! fTree) {
-    G4cerr << "Could not find tree T in event file " << filename << G4endl;
+    G4cerr << "Could not find tree T in event file (SetGenExternalFile)" << filename << G4endl;
     return;
   }
 
@@ -78,13 +85,14 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
     G4cerr << "Could not find branch ev in event file " << filename << G4endl;
     return;
   }
+  G4cout << "External file set to " << filename << G4endl;
 }
 
 void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
 {
   // Check whether three exists
   if (! fTree) {
-    G4cerr << "Could not find tree T in event file" << G4endl;
+    G4cerr << "Could not find tree T in event file (SamplePhysics)" << G4endl;
     return;
   }
 
@@ -93,13 +101,15 @@ void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
   do {
 
     // Read next event from tree and increment
-    fTree->GetEntry(fEntry++);
+    //fTree->GetEntry(fEntry++);
+    fTree->GetEntry(fEntry);
     // Keep simulating the last event
-    if (fEntry >= fEntries) {
-      fEntry--;
-      G4cerr << "Reached last event and will keep simulating it..." << G4endl;
-    }
-
+    //if (fEntry >= fEntries) {
+    //  fEntry = 0;
+    //  G4cerr << "Reached last event and will begin again" << G4endl;
+    //}
+    //fEntry = rand()%fEntries;
+    fEntry = CLHEP::RandFlat::shoot(fEntries);
     // Weighting completely handled by event file
     evt->SetEffCrossSection(fEvent->xs);
     evt->SetQ2(fEvent->Q2);
