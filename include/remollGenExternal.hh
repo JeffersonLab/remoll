@@ -43,6 +43,9 @@ class remollGenExternal : public remollVEventGen {
         void SetGenExternalDetID(const G4int detid) {
           fDetectorID = detid;
         }
+        void SetGenExternalLoopID(const G4int loopid){
+            fLoopID = loopid;
+        }
 
     private:
         void SamplePhysics(remollVertex *, remollEvent *);
@@ -57,6 +60,7 @@ class remollGenExternal : public remollVEventGen {
 
         // Detector ID to consider
         G4int fDetectorID;
+        G4int fLoopID;
 
 };
 

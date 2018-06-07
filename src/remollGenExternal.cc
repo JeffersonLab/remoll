@@ -14,7 +14,6 @@
 // ROOT headers
 #include "TFile.h"
 #include "TTree.h"
-
 #include "remollEvent.hh"
 #include "remollVertex.hh"
 #include "remolltypes.hh"
@@ -26,11 +25,12 @@ remollGenExternal::remollGenExternal()
   fFile(0), fTree(0),
   fEntry(0), fEntries(0),
   fEvent(0), fHit(0),
-  fDetectorID(28)
+  fDetectorID(28), fLoopID(1)
 {
   // Add to generic messenger
   fThisGenMessenger->DeclareMethod("file",&remollGenExternal::SetGenExternalFile,"External generator event filename");
   fThisGenMessenger->DeclareMethod("detid",&remollGenExternal::SetGenExternalDetID,"External generator detector ID");
+  fThisGenMessenger->DeclareMethod("loop",&remollGenExternal::SetGenExternalLoopID,"External generator loop mode-- 1 sequential (default)   2 random");
   G4cout << "Constructed remollGenExternal" << G4endl;
   //FIXME hardcode the file
   SetGenExternalFile(*new G4String("remollin.root"));
@@ -103,14 +103,23 @@ void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
 
     // Read next event from tree and increment
     //fTree->GetEntry(fEntry++);
-    fEntry = G4RandFlat::shoot(fEntries);
+    if (fLoopID == 1)
+    {
+        fEntry++;
+        if (fEntry >= fEntries)
+            fEntry = 0;
+    }
+    else if (fLoopID == 2)
+    {
+        fEntry = G4RandFlat::shoot(fEntries);
+    }
+    else
+    {
+        G4cerr << "Invalid loop setting " << fLoopID << ". Picking random event..." << G4endl;
+        fEntry = G4RandFlat::shoot(fEntries);    
+    }
     fTree->GetEntry(fEntry);
-    // Keep simulating the last event
-    //if (fEntry >= fEntries) {
-    //  fEntry = 0;
-    //  G4cerr << "Reached last event and will begin again" << G4endl;
-    //}
-    //fEntry = rand()%fEntries;
+    
     // Weighting completely handled by event file
     evt->SetEffCrossSection(fEvent->xs*microbarn);
     evt->SetQ2(fEvent->Q2);
