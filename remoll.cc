@@ -53,8 +53,11 @@ int main(int argc, char** argv) {
     // Running time measurement: start
     clock_t tStart = clock();
 
-    // Fix for #40: avoids LLVM/GL errors
+    #if ROOT_VERSION_CODE >= ROOT_VERSION(6,0,0)
+    // Fix for #40: avoids LLVM/GL errors, but only for ROOT 6:
+    // make sure gROOT is loaded before LLVM by using it first
     gROOT->Reset();
+    #endif
 
     // Initialize the random seed
     G4long seed = time(0) + (int) getpid();
