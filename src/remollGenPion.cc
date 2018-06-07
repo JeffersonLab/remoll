@@ -13,7 +13,6 @@
 #include "remolltypes.hh"
 
 #include "TF1.h"
-#include "TF3.h"
 
 
 remollGenPion::remollGenPion()
@@ -227,7 +226,11 @@ double remollGenPion::wiser_sigma(
 	double *x = new double[np];
 	double *w = new double[np];
 
+        #if ROOT_VERSION_CODE >= ROOT_VERSION(6,0,0)
 	TF1 *wiserfit = new TF1("wiserfit", remollGenPion::wiserfit, E_gamma_min, Ebeam, 5, 1, TF1::EAddToList::kNo);
+        #else
+	TF1 *wiserfit = new TF1("wiserfit", remollGenPion::wiserfit, E_gamma_min, Ebeam, 5);
+        #endif
 	wiserfit->SetParameter(0, Ebeam);
 	wiserfit->SetParameter(1, pf);
 	wiserfit->SetParameter(2, thf);
