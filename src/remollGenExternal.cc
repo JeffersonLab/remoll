@@ -112,10 +112,10 @@ void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
     //}
     //fEntry = rand()%fEntries;
     // Weighting completely handled by event file
-    evt->SetEffCrossSection(fEvent->xs);
+    evt->SetEffCrossSection(fEvent->xs*microbarn);
     evt->SetQ2(fEvent->Q2);
     evt->SetW2(fEvent->W2);
-    evt->SetAsymmetry(fEvent->A);
+    evt->SetAsymmetry(fEvent->A*1e-9);
 
     // Loop over all hits in this event
     for (size_t i = 0; i < fHit->size(); i++) {
