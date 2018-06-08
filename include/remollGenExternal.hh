@@ -23,8 +23,8 @@
 // System headers
 #include <vector>
 
-//Mutex Header
 #include "G4AutoLock.hh"
+#include "Randomize.hh"
 
 // Forward declarations
 class TFile;
@@ -43,8 +43,8 @@ class remollGenExternal : public remollVEventGen {
         void SetGenExternalDetID(const G4int detid) {
           fDetectorID = detid;
         }
-        void SetGenExternalLoopID(const G4int loopid){
-            fLoopID = loopid;
+        void SetGenExternalEntry(const G4int firstEventID){
+            fEntry = ((firstEventID >= 0)? firstEventID : G4RandFlat::shoot(fEntries));
         }
 
     private:

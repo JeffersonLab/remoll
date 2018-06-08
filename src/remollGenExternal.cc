@@ -9,7 +9,6 @@
 // Geant4 headers
 #include "G4ParticleTable.hh"
 #include "G4GenericMessenger.hh"
-#include "Randomize.hh"
 
 // ROOT headers
 #include "TFile.h"
@@ -30,7 +29,7 @@ remollGenExternal::remollGenExternal()
   // Add to generic messenger
   fThisGenMessenger->DeclareMethod("file",&remollGenExternal::SetGenExternalFile,"External generator event filename");
   fThisGenMessenger->DeclareMethod("detid",&remollGenExternal::SetGenExternalDetID,"External generator detector ID");
-  fThisGenMessenger->DeclareMethod("loop",&remollGenExternal::SetGenExternalLoopID,"External generator loop mode-- 1 sequential (default)   2 random");
+  fThisGenMessenger->DeclareMethod("startEvent",&remollGenExternal::SetGenExternalEntry,"External generator starting event: -1 starts random,  n starts at n (default n=0)");
   G4cout << "Constructed remollGenExternal" << G4endl;
   //FIXME hardcode the file
   SetGenExternalFile(*new G4String("remollin.root"));
@@ -86,7 +85,7 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
     G4cerr << "Could not find branch ev in event file " << filename << G4endl;
     return;
   }
-  G4cout << "External file set to " << filename << G4endl;
+
 }
 
 void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
@@ -96,29 +95,15 @@ void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
     G4cerr << "Could not find tree T in event file (SamplePhysics)" << G4endl;
     return;
   }
-
   // Loop until we find at least one event with some particles
   int number_of_particles = 0;
   do {
 
     // Read next event from tree and increment
     //fTree->GetEntry(fEntry++);
-    if (fLoopID == 1)
-    {
-        fEntry++;
-        if (fEntry >= fEntries)
-            fEntry = 0;
-    }
-    else if (fLoopID == 2)
-    {
-        fEntry = G4RandFlat::shoot(fEntries);
-    }
-    else
-    {
-        G4cerr << "Invalid loop setting " << fLoopID << ". Picking random event..." << G4endl;
-        fEntry = G4RandFlat::shoot(fEntries);    
-    }
-    fTree->GetEntry(fEntry);
+    if (fEntry >= fEntries)
+        fEntry = 0;
+    fTree->GetEntry(fEntry++);
     
     // Weighting completely handled by event file
     evt->SetEffCrossSection(fEvent->xs*microbarn);
