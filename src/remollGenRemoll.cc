@@ -217,10 +217,10 @@ double remollGenRemoll::RadSpectrum(){
   else{//moller
     bool filled = false;
 
-    double n[4],mu[4],sig[4],r,u1,u2;
-    n = {3.28542e8,4.98888e7,1.43470e8,1.70085e8};
-    mu = {9.97921e-1,1.01235,1.00520,0.984920};
-    sig = {0.04,3.07008e-2,3.187e-2,0.04};
+    double r,u1,u2;
+    double n[4] = {3.28542e8,4.98888e7,1.43470e8,1.70085e8};
+    double mu[4] = {9.97921e-1,1.01235,1.00520,0.984920};
+    double sig[4] = {0.04,3.07008e-2,3.187e-2,0.04};
     do{
       u1 = 2.0*CLHEP::RandFlat::shoot(0.0,1.0) - 1;
       u2 = 2.0*CLHEP::RandFlat::shoot(0.0,1.0) - 1;
