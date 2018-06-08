@@ -49,6 +49,13 @@ remollVEventGen::remollVEventGen(const G4String name)
     fEvGenMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
     fEvGenMessenger->DeclarePropertyWithUnit("thcommax","deg",fThCoM_max,"Maximum CoM generation theta angle");
     fEvGenMessenger->DeclarePropertyWithUnit("thcommin","deg",fThCoM_min,"Minimum CoM generation theta angle");
+    fEvGenMessenger->DeclarePropertyWithUnit("rmax","mm",fR_max,"Maximum generation radial hit position (mm) for Remoll generator");
+    fEvGenMessenger->DeclarePropertyWithUnit("rmin","mm",fR_min,"Minimum generation radial hit position (mm) for Remoll generator");
+    fEvGenMessenger->DeclarePropertyWithUnit("deltaphmax","deg",fDeltaPh_max,"Upward Phi spread limit");
+    fEvGenMessenger->DeclarePropertyWithUnit("deltaphmin","deg",fDeltaPh_min,"Downward Phi spread limit");
+    fEvGenMessenger->DeclareProperty("BoffsetR",fBoffsetR,"Boolean for offsetting detector to the side (and flat radial distribution if R_max =/= 0)");
+    fEvGenMessenger->DeclareProperty("sector",fSector,"Integer sector number for Remoll generator");
+    fEvGenMessenger->DeclareProperty("ring",fRing,"Integer ring number for Remoll generator");
     fEvGenMessenger->DeclareMethod(
         "printlimits",
         &remollVEventGen::PrintEventGen,
@@ -72,7 +79,9 @@ void remollVEventGen::PrintEventGen()
 {
   G4cout << "Event generator: " << fName << G4endl;
   G4cout << "E =     [" << fE_min/GeV  << "," << fE_max/GeV  << "] GeV" << G4endl;
+  G4cout << "r hits (Remoll generator) =[" << fR_min/mm << "," << fR_max/mm << "] mm" << G4endl;
   G4cout << "phi =   [" << fPh_min/deg << "," << fPh_max/deg << "] deg" << G4endl;
+  G4cout << "phi spread (remoll generator) =  [" << fDeltaPh_min/deg << "," << fDeltaPh_max/deg << "] deg" << G4endl;
   G4cout << "theta = [" << fTh_min/deg << "," << fTh_max/deg << "] deg" << G4endl;
   G4cout << "theta (COM) = [" << fThCoM_min/deg << "," << fThCoM_max/deg << "] deg" << G4endl;
 }
