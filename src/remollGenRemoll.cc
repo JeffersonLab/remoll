@@ -179,7 +179,6 @@ double remollGenRemoll::RadSpectrum(){
     return flatRad;
   }
   
-
   //Randomly generate the distribution using the Metropolis algorithm
   double r, a, u; 
   //r_t is the previous hit, r is the proposed new hit, a is their relative
