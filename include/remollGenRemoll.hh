@@ -32,14 +32,15 @@ class remollGenRemoll : public remollVEventGen {
 
   private:
     void SamplePhysics(remollVertex *, remollEvent *);
-    TH1F * elasticDist;
-    TH1F * inelDist;
-
+    void SetGenFunctionFile(G4String& filename);
     double fZpos;
-
+    
+    TFile* fFile;
+    TF1* fFunc;
+    G4double r_t;
   public:
     G4double fXmin, fXmax, fYmin, fYmax;
-    G4double fZ; 
+    G4double fZ;
 //    G4double fEmin, fEmax;
 //    G4double fthetaMin, fthetaMax;
 //    G4double fPhiMin, fPhiMax;
