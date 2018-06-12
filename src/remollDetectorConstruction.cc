@@ -400,7 +400,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                   nit != (*iter).second.end(); nit++) {
 
                   if ((*nit).type == "DetNo") {
-                      det_no= atoi((*nit).value.data());
+                      det_no = atoi((*nit).value.data());
                       if( det_no >= __MAX_DETS ){
                           G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR detector number too high" << G4endl;
                           exit(1);
@@ -408,15 +408,11 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                       useddetnums[det_no] = true;
                   }
               }
-              if( det_no <= 0 ){
-                  k = 1;
-                  while( useddetnums[k] == true && k < __MAX_DETS ){ k++; }
-                  if( k >= __MAX_DETS ){
-                      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR too many detectors" << G4endl;
-                      exit(1);
-                  }
-                  det_no = k;
-                  useddetnums[k] = true;
+              if (det_no <= 0) {
+                  G4cerr << __FILE__ << " line " << __LINE__ << ": "
+                         << "Warning: detector number not set for volume " << myvol->GetName() << G4endl;
+                  G4cerr << "Skipping sensitive detector assignment." << G4endl;
+                  continue;
               }
               /////////////////////////////////////////////////////////////
 
