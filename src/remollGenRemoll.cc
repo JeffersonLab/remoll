@@ -97,7 +97,7 @@ void remollGenRemoll::SetGenFunctionFile(G4String& input) {
 void remollGenRemoll::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 {
 
-  double xPos, yPos, zPos;
+  double xPos, yPos, zPos, zOffset;
   fE_min = 2.0*GeV;
   fE_max = 11.0*GeV;
 
@@ -110,14 +110,14 @@ void remollGenRemoll::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
   fPh_min = 0.0*deg;
   fPh_max = 360.0*deg;
 
-  fDeltaPh_min = -0.0*deg;//-2.0*deg;
-  fDeltaPh_max = 0.0*deg;//2.0*deg;
+  fDeltaPh_min = -2.0*deg;
+  fDeltaPh_max = 2.0*deg;
 
 //  fRing = 5;
 //  fSector = 0; //FIXME what are the sector options? What do they refer to?
 //  fBoffsetR = false;
 
-  zPos = fZ;
+//  zPos = fZ;
 
   // Get initial Remoll energy instead of using other sampling
   double E = CLHEP::RandFlat::shoot( fE_min, fE_max );
@@ -142,11 +142,12 @@ void remollGenRemoll::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     {1017.5,987.5,1030},
     {1150,1150,1150}};
   double rad = RadSpectrum();
-  zPos = (28500 - 500); //FIXME arbitrary z offset for Moller distribution propagation - affects air showering noise
+  zOffset = -1*500; //FIXME arbitrary z offset for Moller distribution propagation - affects air showering noise
+  zPos = (28500 + zOffset); //FIXME arbitrary z offset for Moller distribution propagation - affects air showering noise
   double xHitPos = (rad*cos(randPhi) - 1*((fBoffsetR)?radialOffset[fRing][fSector] : 0)); // Putting the offset here means that the detector and distribution will still make circles, just where the edge of the circle now passes the origin
   double yHitPos = rad*sin(randPhi);
-  xPos = xHitPos - (-1*zPos)*sin(randTheta)*cos(randPhi) - (-1*zPos)*sin(randPhi)*sin(randDeltaPhi);
-  yPos = yHitPos - (-1*zPos)*sin(randTheta)*sin(randPhi) + (-1*zPos)*cos(randPhi)*sin(randDeltaPhi);
+  xPos = xHitPos - (-1*zOffset)*sin(randTheta)*cos(randPhi) - (-1*zOffset)*sin(randPhi)*sin(randDeltaPhi);
+  yPos = yHitPos - (-1*zOffset)*sin(randTheta)*sin(randPhi) + (-1*zOffset)*cos(randPhi)*sin(randDeltaPhi);
 
 
   assert( E > 0.0 );
@@ -161,8 +162,6 @@ void remollGenRemoll::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
   // where it asks the remollBeamTarget to treat the vertex as beam target spread. Adds (+=) the vector fVertexPos
   // to the particle position vector defined when particle is defined, happening in PolishEvent() method
   evt->fVertexPos.setZ( 0.0 );
-  evt->fVertexPos.setY( 0.0 );
-  evt->fVertexPos.setX( 0.0 );
   
   evt->SetEffCrossSection(0.0);
   evt->SetAsymmetry(0.0);
