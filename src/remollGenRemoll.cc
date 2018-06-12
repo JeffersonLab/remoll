@@ -110,8 +110,8 @@ void remollGenRemoll::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
   fPh_min = 0.0*deg;
   fPh_max = 360.0*deg;
 
-  fDeltaPh_min = -2.0*deg;
-  fDeltaPh_max = 2.0*deg;
+  fDeltaPh_min = -0.0*deg;//-2.0*deg;
+  fDeltaPh_max = 0.0*deg;//2.0*deg;
 
 //  fRing = 5;
 //  fSector = 0; //FIXME what are the sector options? What do they refer to?
@@ -161,6 +161,8 @@ void remollGenRemoll::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
   // where it asks the remollBeamTarget to treat the vertex as beam target spread. Adds (+=) the vector fVertexPos
   // to the particle position vector defined when particle is defined, happening in PolishEvent() method
   evt->fVertexPos.setZ( 0.0 );
+  evt->fVertexPos.setY( 0.0 );
+  evt->fVertexPos.setX( 0.0 );
   
   evt->SetEffCrossSection(0.0);
   evt->SetAsymmetry(0.0);
@@ -182,7 +184,6 @@ double remollGenRemoll::RadSpectrum(){
   double r, a, u; 
   //r_t is the previous hit, r is the proposed new hit, a is their relative
   //probabilities, and u is the deciding probability.
-  
   r = CLHEP::RandGauss::shoot(r_t,0.1); //generate proposed r with gaussian around previous
   a = fFunc->Eval(r) / fFunc->Eval(r_t);
 
