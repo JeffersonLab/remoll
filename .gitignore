@@ -55,3 +55,6 @@ sample_gdml.*
 
 #ignore log files
 *.log
+
+#Don't ignore the root TF1 file required to run the "remoll" generator - this should be cleaned up later, but for now this is how it is being stored.
+!analysis/externalGenerator/remollGenFunctions.root
