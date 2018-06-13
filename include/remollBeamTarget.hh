@@ -45,6 +45,11 @@ class remollBeamTarget {
         static G4double fMotherTargetAbsolutePosition;
         static G4double fActiveTargetRelativePosition;
 
+        static G4bool fTargetGeometryHasBeenModified;
+        static void TargetGeometryHasBeenModified() {
+          fTargetGeometryHasBeenModified = true;
+        }
+
         static void UpdateInfo();
 
     public:

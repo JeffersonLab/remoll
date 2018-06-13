@@ -26,6 +26,7 @@
 #define __MAX_MAT 100
 
 // Initialize static geometry objects
+G4bool remollBeamTarget::fTargetGeometryHasBeenModified = false;
 G4String remollBeamTarget::fActiveTargetVolume = "h2Targ";
 G4VPhysicalVolume* remollBeamTarget::fTargetMother = 0;
 std::vector <G4VPhysicalVolume *> remollBeamTarget::fTargetVolumes;
