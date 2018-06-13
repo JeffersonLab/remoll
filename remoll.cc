@@ -67,6 +67,7 @@ int main(int argc, char** argv) {
     if (urandom) {
       urandom.read(reinterpret_cast<char*>(&seed), sizeof(seed));
       urandom.close();
+      seed = labs(seed);
     } else G4cerr << "Can't read /dev/urandom." << G4endl;
 
 
@@ -82,7 +83,7 @@ int main(int argc, char** argv) {
       if      (G4String(argv[i]) == "-m") macro    = argv[++i];
       else if (G4String(argv[i]) == "-g") geometry = argv[++i];
       else if (G4String(argv[i]) == "-u") session  = argv[++i];
-      else if (G4String(argv[i]) == "-r") seed     = atoi(argv[++i]);
+      else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
 #ifdef G4MULTITHREADED
       else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
 #endif
