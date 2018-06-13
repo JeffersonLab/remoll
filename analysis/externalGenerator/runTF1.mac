@@ -22,7 +22,7 @@
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
 
-/remoll/evgen/set remoll
+/remoll/evgen/set TF1 
 
 /remoll/beamene 11 GeV
 
