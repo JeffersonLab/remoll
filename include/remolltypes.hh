@@ -68,6 +68,7 @@ struct remollGenericDetectorHit_t {
   double sx, sy, sz;
   double p, e, m;
   double vx, vy, vz;
+  double edep;
 };
 struct remollGenericDetectorSum_t {
   int det;
