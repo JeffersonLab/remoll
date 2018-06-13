@@ -177,6 +177,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 	// FIXME - Enumerate encodings
 	thishit->fGen   = (long int) track->GetCreatorProcess();
 
+        thishit->fEdep  = edep;
     }
 
     return !badedep && !badhit;
