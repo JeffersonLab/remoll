@@ -46,6 +46,7 @@ class remollGenericDetectorHit : public G4VHit {
 	G4int    fTrID, fPID, fmTrID;
 	// Process generator type
 	G4int    fGen;
+
 };
 
 

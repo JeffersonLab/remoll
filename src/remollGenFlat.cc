@@ -1,46 +1,36 @@
-#include "remollGenpInelastic.hh"
-
-#include "christy_bosted_inelastic.h"
+#include "remollGenFlat.hh"
 
 #include "CLHEP/Random/RandFlat.h"
 
+#include "G4Material.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "remollEvent.hh"
 #include "remollVertex.hh"
-#include "G4Material.hh"
-
 #include "remolltypes.hh"
 
-remollGenpInelastic::remollGenpInelastic(){
-    fTh_min =     0.1*deg;
+remollGenFlat::remollGenFlat(){
+    fTh_min =     0.0*deg;
     fTh_max =     5.0*deg;
 
     fApplyMultScatt = true;
 }
 
-remollGenpInelastic::~remollGenpInelastic(){
+remollGenFlat::~remollGenFlat(){
 }
 
-void remollGenpInelastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
-    // Generate inelastic event
+void remollGenFlat::SamplePhysics(remollVertex *vert, remollEvent *evt){
+    // Generate event flat in phase space
 
     double beamE = vert->GetBeamE();
-    double mp    = proton_mass_c2;
+
+    double mp = 0.938*GeV;
 
     double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
     double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
-    double efmax = mp*beamE/(mp + beamE*(1.0-cos(th)));
-    double ef = CLHEP::RandFlat::shoot(0.0, efmax);
+    double ef = CLHEP::RandFlat::shoot(fE_min, fE_max);
 
-    double thissigma_p = sigma_p( beamE/GeV, th, ef/GeV )*nanobarn/GeV;
-    double thissigma_n = sigma_n( beamE/GeV, th, ef/GeV )*nanobarn/GeV;
-
-    double sigmatot = thissigma_p*vert->GetMaterial()->GetZ() +
-	//  Effective neutron number...  I don't like it either  SPR 2/14/2013
-	thissigma_n*(vert->GetMaterial()->GetA()*mole/g - vert->GetMaterial()->GetZ());
-
-    double V = 2.0*pi*(cos(fTh_min) - cos(fTh_max))*efmax;
-
-    evt->SetEffCrossSection(sigmatot*V);
+    evt->SetEffCrossSection(1);
 
     if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << 

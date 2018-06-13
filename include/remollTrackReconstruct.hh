@@ -59,7 +59,7 @@ private:
 
   // GEM wire plane tracks
   std::vector<remollGenericDetectorHit*> aTrackHit;
-  G4int rTrackHitSize; // size of the aTrackHit vector
+  size_t rTrackHitSize; // size of the aTrackHit vector
   std::vector<remollGenericDetectorHit*> aTrackHitOrg; // original
 
   std:: vector <std::vector <G4ThreeVector> > hitPos;

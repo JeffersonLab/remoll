@@ -80,6 +80,7 @@ class remollBeamTarget {
 	G4double fEcut, fEffMatLen;
 
 	// Base position/angle sampling info
+        G4bool fOldRaster;
 	G4double fRasterX, fRasterY;
 	G4double fX0, fY0;
 	G4double fTh0, fPh0;

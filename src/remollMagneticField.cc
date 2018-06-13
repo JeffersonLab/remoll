@@ -1,6 +1,8 @@
 #include "remollMagneticField.hh"
 #include "G4UImanager.hh"
 
+#include "G4PhysicalConstants.hh"
+#include "G4SystemOfUnits.hh"
 #include "G4ThreeVector.hh"
 
 #include <iostream>
@@ -127,7 +129,7 @@ void remollMagneticField::ReadFieldMap(){
 
     // open the field map file
     G4int nlines = 0;
-    int nread;
+    // int nread;
     G4int cidx;
 
 

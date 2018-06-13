@@ -46,7 +46,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
     thiscol = HCE->GetHC(hcidx);
     if(thiscol){ // This is NULL if nothing is stored
       // Dyanmic cast to test types, process however see fit and feed to IO
-      
+
       ////  Generic Detector Hits ///////////////////////////////////
       if( remollGenericDetectorHitsCollection *thiscast = 
 	  dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
@@ -56,9 +56,9 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
 	    (remollGenericDetectorHit *) thiscast->GetHit(hidx);
 
 	  ////  store GEM hits for track reconstruction
-	  if(currentHit->fDetID >= 501 && currentHit->fDetID <= 505){
+	  if(currentHit->fDetID >= 501 && currentHit->fDetID <= 504){
 	    rTrack->AddHit(currentHit);
-	  } 
+	  }
 	  // non-GEM hits
 	  else fIO->AddGenericDetectorHit(currentHit);
 	}

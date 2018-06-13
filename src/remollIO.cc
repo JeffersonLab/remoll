@@ -56,7 +56,7 @@ void remollIO::InitializeTree(){
 
     fTree = new TTree("T", "Geant4 Moller Simulation");
 
-    fTree->SetMaxTreeSize(1900000000LL); // 1.9GB
+    fTree->SetMaxTreeSize(1900000000); // 1.9GB
 
     // Event information
     fTree->Branch("rate",     &fEvRate,   "rate/D");
@@ -89,6 +89,8 @@ void remollIO::InitializeTree(){
     fTree->Branch("bm.dx",    &fBmdX,  "bm.dx/D");
     fTree->Branch("bm.dy",    &fBmdY,  "bm.dy/D");
     fTree->Branch("bm.dz",    &fBmdZ,  "bm.dz/D");
+    fTree->Branch("bm.th",    &fBmth,  "bm.th/D");
+    fTree->Branch("bm.ph",    &fBmph,  "bm.ph/D");
 
     // GenericDetectorHit
     fTree->Branch("hit.n",    &fNGenDetHit,     "hit.n/I");
@@ -257,6 +259,10 @@ void remollIO::SetEventData(remollEvent *ev){
     fBmdX = bt->fDir.x();
     fBmdY = bt->fDir.y();
     fBmdZ = bt->fDir.z();
+    fBmth = bt->fDir.theta();
+    fBmph = bt->fDir.phi()/deg;
+
+    //    G4cout << "** fDir:: " << bt->fDir.x()/deg << "  " << bt->fDir.y()/deg << "  " << bt->fVer.z()/mm << G4endl;
 
     return;
 }
