@@ -27,7 +27,7 @@ class remollEventAction : public G4UserEventAction
   //    double fGEMres;
 
     remollIO *fIO;
-    remollTrackReconstruct *rTrack;
+    remollTrackReconstruct* rTrack;
 
   public:
 };

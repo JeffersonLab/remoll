@@ -13,7 +13,8 @@ remollGenMoller::remollGenMoller(){
     fThCoM_min =    30.0*deg;
     fThCoM_max =   150.0*deg;
 
-    fApplyMultScatt = true;
+    fApplyMultScatt = false;
+    fBeamTarg = remollBeamTarget::GetBeamTarget();
 }
 
 remollGenMoller::~remollGenMoller(){
@@ -22,7 +23,11 @@ remollGenMoller::~remollGenMoller(){
 void remollGenMoller::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // Generate Moller event
 
-    double beamE = vert->GetBeamE();
+  //    double beamE = vert->GetBeamE();
+    double beamE = fBeamTarg->fBeamE;
+    evt->fBeamE = beamE;
+    evt->fBeamMomentum = evt->fBeamMomentum.unit()*sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2);
+
     double me    = electron_mass_c2;
 
     double beta_com  = sqrt( (beamE - me)/(beamE + me) );

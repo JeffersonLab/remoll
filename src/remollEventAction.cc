@@ -40,6 +40,7 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
   G4VHitsCollection *thiscol;
 
   rTrack = new remollTrackReconstruct();
+  
   // Traverse all hit collections, sort by output type
   for( int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++ ){
     thiscol = HCE->GetHC(hcidx);
@@ -67,8 +68,8 @@ void remollEventAction::EndOfEventAction(const G4Event* evt ) {
       if( remollGenericDetectorSumCollection *thiscast = 
 	  dynamic_cast<remollGenericDetectorSumCollection *>(thiscol)){
 	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorSum((remollGenericDetectorSum *) 
-				     thiscast->GetHit(hidx) );
+	  fIO->AddGenericDetectorSum( (remollGenericDetectorSum *) 
+				      thiscast->GetHit(hidx) );
 	}
       }
      
