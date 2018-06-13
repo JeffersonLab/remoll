@@ -14,8 +14,9 @@
 #include <math.h>
 
 remollGenBeam::remollGenBeam()
-: remollVEventGen("beam") {
-    fApplyMultScatt = true;
+: remollVEventGen("beam")
+{
+    fApplyMultScatt = false;
 
     fZpos = -5.0*m;
 }
@@ -35,13 +36,15 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     // Override target sampling z
     evt->fVertexPos.setZ( fZpos );
 
-    evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
-	    evt->fBeamMomentum, 
-	    "e-" );
+    G4ThreeVector pos(0.0, 0.0, 0.0);
+    G4ThreeVector mom = evt->fBeamMomentum;
+    static G4ParticleDefinition* particle =
+        G4ParticleTable::GetParticleTable()->FindParticle("e-");
+    evt->ProduceNewParticle(pos,mom,particle);
 
+    // No cross section, asymmetry, or kinematic variables
     evt->SetEffCrossSection(0.0);
     evt->SetAsymmetry(0.0);
-
     evt->SetQ2(0.0);
     evt->SetW2(0.0);
 }
