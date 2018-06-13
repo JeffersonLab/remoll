@@ -1,13 +1,17 @@
 #include "remollRunData.hh"
+#include "gitinfo.hh"
 
 #include <string.h>
 #include <errno.h>
+
+#ifdef __APPLE__
+#include <unistd.h>
+#endif
 
 remollRunData::remollRunData(){
     fNthrown = -1;
     fBeamE   = -1e9;
     fGenName[0]  = '\0';
-    fGitInfo[0]  = '\0';
     fHostName[0] = '\0';
 }
 
@@ -18,7 +22,6 @@ void remollRunData::Init(){
     fNthrown = 0;
     fBeamE   = 0;
     strcpy(fGenName, "default");
-    strcpy(fGitInfo, gGitInfoStr);
     if(gethostname(fHostName,__RUNSTR_LEN) == -1){
 	fprintf(stderr, "%s line %d: ERROR could not get hostname\n", __PRETTY_FUNCTION__ ,  __LINE__ );
 	fprintf(stderr, "%s\n",strerror(errno));
@@ -30,7 +33,11 @@ void remollRunData::Init(){
 }
 
 void remollRunData::Print(){
-    printf("git repository info\n-------------------------------------------------\n%s-------------------------------------------------\n\n", fGitInfo);
+    char gitInfo[__GITMAXINFO_SIZE];
+    gitInfo[0] = '\0';
+    strcpy(gitInfo, gGitInfoStr);
+
+    printf("git repository info\n-------------------------------------------------\n%s-------------------------------------------------\n\n", gitInfo);
     printf("Run at %s on %s\n", fRunTime.AsString("ls"), fHostName);
     printf("Run Path %s\n", fRunPath);
     printf("N generated = %ld\n", fNthrown);

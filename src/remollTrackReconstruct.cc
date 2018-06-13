@@ -18,6 +18,8 @@
 #include "CLHEP/Random/RandGauss.h"
 #include "TMath.h"
 
+#include "G4SystemOfUnits.hh"
+
 #include "remollTrackReconstruct.hh"
 #include "remollGenericDetectorHit.hh"
 
@@ -61,7 +63,7 @@ void remollTrackReconstruct::ClearTrack(){
 
 void remollTrackReconstruct::PrintHitInfo(std::vector<remollGenericDetectorHit*> aHitVec){
 
-  G4int aHitVecSize = aHitVec.size();
+  size_t aHitVecSize = aHitVec.size();
 
   for(size_t i =0; i<aHitVecSize;i++){
     G4cout << "Info for Hit# " << i+1 << G4endl;
@@ -77,8 +79,8 @@ G4int remollTrackReconstruct::ReconstructTrack(){
   // return if no tracks
   if(rTrackHitSize==0) return 0;
 
-  G4int copyID=0;
-  G4int maxCopyID=1;
+  size_t copyID=0;
+  size_t maxCopyID=1;
 
   //  G4cout << "aTrackHit.size():: " << rTrackHitSize << G4endl;
 
@@ -201,7 +203,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
   if(EvalTrackVerbose){
     G4cout << "Entering remollTrackReconstruct::EvaluateTrack(...)" << G4endl;
 
-    for(G4int iPts=0;iPts<rPosX.size();iPts++)
+    for(size_t iPts=0;iPts<rPosX.size();iPts++)
       G4cout << rPosX[iPts] <<"\t" << rPosZ[iPts] << "\t" << rGEMResX[iPts] << G4endl;
   }
 
@@ -211,7 +213,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
   G4double matXZ[dim][dim] = {{0}};
 
   // fill the matrix as
-  for(G4int iPts=0;iPts<rPosX.size();iPts++){
+  for(size_t iPts=0;iPts<rPosX.size();iPts++){
     matXZ[0][0] += 1/pow(rGEMResX[iPts],2);
     matXZ[0][1] += rPosZ[iPts]/pow(rGEMResX[iPts],2);
     matXZ[1][0] += rPosZ[iPts]/pow(rGEMResX[iPts],2);
@@ -227,7 +229,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
 
   // create and fill a vector as
   G4double vecXZ[dim] = {0};
-  for(G4int iPts=0;iPts<rPosX.size();iPts++){
+  for(size_t iPts=0;iPts<rPosX.size();iPts++){
     vecXZ[0] += rPosX[iPts]/pow(rGEMResX[iPts],2);
     vecXZ[1] += rPosX[iPts]*rPosZ[iPts]/pow(rGEMResX[iPts],2);
   }
@@ -291,9 +293,9 @@ void remollTrackReconstruct::FillRecTrackHit(){
     G4int copyID=aTrackHit[i]->fCopyID;
 
     // in mm by default
-    G4double tmpz = aTrackHit[i]->f3X.z(); // tmpz does not have to be chained to fCopyID because FillRecTrackHit only fills the tracks for 1 GEM box at a time.
+    //    G4double tmpz = aTrackHit[i]->f3X.z(); // tmpz does not have to be chained to fCopyID because FillRecTrackHit only fills the tracks for 1 GEM box at a time.
 
-    //G4double tmpz = 28695.0*mm; // maindet z ** COMMENT ME ** 
+    G4double tmpz = 28695.0*mm; // maindet z ** COMMENT ME ** 
       
     // reconstuct positions, recTrackXZ[j] hold (a,b)
     // tmpx/y in mm

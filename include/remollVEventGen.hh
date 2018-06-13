@@ -37,9 +37,19 @@ class remollVEventGen {
 	void SetSampType( SampType_t st ) { fSampType = st; }
 	void SetDoMultScatt( G4bool ms ){ fApplyMultScatt = ms; }
 
+	virtual void SetThMin( double th ){ fTh_min = th; }
+	virtual void SetThMax( double th ){ fTh_max = th; }
+	virtual void SetPhMin( double ph ){ fPh_min = ph; }
+	virtual void SetPhMax( double ph ){ fPh_max = ph; }
+	virtual void SetEmin( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
+	virtual void SetEmax( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
+	virtual void SetThCoM_min( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
+	virtual void SetThCoM_max( double ){ G4cerr << __FILE__ << " line " << __LINE__ << " " << __PRETTY_FUNCTION__ << " :  Generator does not respond to this command" << G4endl; }
+
 	G4double fThCoM_min, fThCoM_max;
 	G4double fTh_min, fTh_max;
-	G4double fE_min;
+	G4double fPh_min, fPh_max;
+	G4double fE_min, fE_max;
 
     private:
 	const G4String fName;

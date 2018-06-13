@@ -29,6 +29,7 @@ void remollGenericDetector::Initialize(G4HCofThisEvent *){
     fSumColl = new remollGenericDetectorSumCollection ( SensitiveDetectorName, collectionName[1] );
 
     fSumMap.clear();
+
 }
 
 ///////////////////////////////////////////////////////////////////////
@@ -37,16 +38,23 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4bool badedep = false;
     G4bool badhit  = false;
 
+    // Ignore optical photons as hits (but still simulate them
+    // so they can knock out electrons of the photocathode)
+    if (step->GetTrack()->GetDefinition()->GetParticleName() == "opticalphoton") {
+      //std::cout << "Return on optical photon" << std::endl;
+      return false;
+    }
+
     // Get touchable volume info
     G4TouchableHistory *hist = 
 	(G4TouchableHistory*)(step->GetPreStepPoint()->GetTouchable());
-    G4int  copyID = hist->GetReplicaNumber();
+    //G4int  copyID = hist->GetVolume(1)->GetCopyNo();//return the copy id of the parent volume
+    G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
 
     G4StepPoint *prestep = step->GetPreStepPoint();
     G4Track     *track   = step->GetTrack();
 
     G4double edep = step->GetTotalEnergyDeposit();
-
 
     // We're just going to record primary particles and things
     // that have just entered our boundary
@@ -78,7 +86,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 	}
     } else {
 	thissum = fSumMap[copyID];
-    }
+    } 
     /////////////////////////////////////////////////////
 
     // Do the actual data grabbing
@@ -106,6 +114,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
 	// FIXME - Enumerate encodings
 	thishit->fGen   = (long int) track->GetCreatorProcess();
+
     }
 
     return !badedep && !badhit;

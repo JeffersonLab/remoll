@@ -5,7 +5,7 @@
  * All the information on the run
  * The data object will get put into the output
  * stream
-  
+
    This is implemented in the soliton model
  */
 
@@ -13,17 +13,19 @@
 
 class remollRun {
 
-    private:
-	static remollRun *gSingleton;
-	 remollRun();
+private:
+    static remollRun *gSingleton;
+    remollRun();
 
-	remollRunData *fRunData;
+    remollRunData *fRunData;
 
-    public:
-	 static remollRun *GetRun();
-	~remollRun();
+public:
+    static remollRun *GetRun();
+    ~remollRun();
 
-	remollRunData *GetData(){return fRunData;}
+    remollRunData *GetData() {
+        return fRunData;
+    }
 };
 
 #endif//__REMOLLRUN_HH
