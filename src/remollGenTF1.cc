@@ -1,14 +1,13 @@
-/* remollGenRemoll.cc
+/* remollGenTF1.cc
  *
  * Updated June 2018
- * Authors: Audrey Farrell, Cameron Clarke
  *
  * Reads functions of radius from external root file and generates particles according to those functions.
  * Default functions are inside remollGenFunctions.root, and include moller, elastic, and inelastic scattering
  * for the whole array as well as for sectors 1, 2, and 3.
  *
  */
-#include "remollGenRemoll.hh"
+#include "remollGenTF1.hh"
 
 #include "remollEvent.hh"
 #include "remollVertex.hh"
@@ -34,26 +33,26 @@
 
 G4Mutex inFileMutex2 = G4MUTEX_INITIALIZER; //files are being read so mutex is needed
 
-remollGenRemoll::remollGenRemoll()
-: remollVEventGen("Remoll"),
+remollGenTF1::remollGenTF1()
+: remollVEventGen("TF1"),
     fFile(0),
     fFunc(0)
 {
     fApplyMultScatt = true;
     r_t = CLHEP::RandFlat::shoot(0.6,1.2);
     fZpos = (28.5*m - 0.52*m);
-    fThisGenMessenger->DeclareMethod("input",&remollGenRemoll::SetGenFunctionFile,"ROOT filename:function name");
+    fThisGenMessenger->DeclareMethod("input",&remollGenTF1::SetGenFunctionFile,"ROOT filename:function name");
     SetGenFunctionFile(*new G4String("../analysis/externalGenerator/remollGenFunctions.root:elastic_0"));
 }
 
-remollGenRemoll::~remollGenRemoll() {
+remollGenTF1::~remollGenTF1() {
     if (fFile){
         fFile->Close();
         fFunc = 0;
     }
 }
 
-void remollGenRemoll::SetGenFunctionFile(G4String& input) {
+void remollGenTF1::SetGenFunctionFile(G4String& input) {
     if (!input.contains(":")){
         G4cerr << "Improper formatting for user input. Please ensure your macro commands include '/remoll/remollinput <file name>:<function name>'" << G4endl;
         return;
@@ -94,7 +93,7 @@ void remollGenRemoll::SetGenFunctionFile(G4String& input) {
     inFileLock.unlock();
 }
 
-void remollGenRemoll::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
+void remollGenTF1::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 {
 
   double xPos, yPos, zPos, zOffset;
@@ -170,8 +169,7 @@ void remollGenRemoll::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 
 }
 
-double remollGenRemoll::RadSpectrum(){
-  //determine whether to use moller, elastic, or inelastic distribution
+double remollGenTF1::RadSpectrum(){
 
   if (fR_max>0.0 && fBoffsetR==true) {
     double flatRad = CLHEP::RandFlat::shoot(fR_min,fR_max);

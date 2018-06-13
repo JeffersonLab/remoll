@@ -1,5 +1,5 @@
-#ifndef __REMOLLGENREMOLL_HH 
-#define __REMOLLGENREMOLL_HH 
+#ifndef __REMOLLGENTF1_HH 
+#define __REMOLLGENTF1_HH 
 /*!
  * Event generator matching MOLLER output at detector plane
  *
@@ -23,10 +23,10 @@
 #include <TLeaf.h>
 
 
-class remollGenRemoll : public remollVEventGen {
+class remollGenTF1 : public remollVEventGen {
   public:
-    remollGenRemoll();
-    virtual ~remollGenRemoll();
+    remollGenTF1();
+    virtual ~remollGenTF1();
     void GeneratePrimaries(G4Event* anEvent);
     double RadSpectrum();
 
@@ -50,4 +50,4 @@ class remollGenRemoll : public remollVEventGen {
 
 };
 
-#endif//__REMOLLGENREMOLL_HH 
+#endif//__REMOLLGENTF1_HH 
