@@ -41,6 +41,8 @@ class remollGenericDetectorHit : public G4VHit {
 	G4int    fTrID, fPID, fmTrID;
 	// Process generator type
 	G4int    fGen;
+        // Energy deposited
+        G4double fEdep;
 
     public:
       const remollGenericDetectorHit_t GetGenericDetectorHitIO() const {
@@ -72,6 +74,7 @@ class remollGenericDetectorHit : public G4VHit {
         hit.p  = fP;
         hit.e  = fE;
         hit.m  = fM;
+        hit.edep = fEdep;
         return hit;
       };
 };
