@@ -11,10 +11,9 @@
 #include <vector>
 
 #include "G4ThreeVector.hh"
+#include "G4ParticleTable.hh"
 
 #include "remolltypes.hh"
-
-class G4ParticleDefinition;
 
 class remollBeamTarget;
 
@@ -23,7 +22,16 @@ class remollEvent {
 	remollEvent();
 	virtual ~remollEvent();
 
-	void ProduceNewParticle( G4ThreeVector, G4ThreeVector, G4String, G4ThreeVector spin = G4ThreeVector(0.0,0.0,0.0) );
+	G4ParticleDefinition* FindParticle(const G4String& name) {
+	  return G4ParticleTable::GetParticleTable()->FindParticle(name);
+	}
+
+	void ProduceNewParticle(const G4ThreeVector pos, const G4ThreeVector mom, G4ParticleDefinition* part,
+		const G4ThreeVector spin = G4ThreeVector(0.0,0.0,0.0));
+	void ProduceNewParticle(const G4ThreeVector pos, const G4ThreeVector mom, const G4String& name,
+		const G4ThreeVector spin = G4ThreeVector(0.0,0.0,0.0))
+	{ ProduceNewParticle(pos, mom, FindParticle(name), spin); }
+
 	void SetEffCrossSection( G4double xs ){ fEffXs = xs; }
 	void SetRate( G4double rate ){ fRate = rate; }
 	G4double GetRate(){ return fRate; }
@@ -37,8 +45,8 @@ class remollEvent {
 	void Reset();
 	void UndoLastParticle();
 
-	G4bool EventIsSane();
-	void   Print();
+	G4bool EventIsSane() const;
+	void Print() const;
 
     private:
 	remollBeamTarget* fBeamTarget;

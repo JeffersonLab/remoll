@@ -57,19 +57,17 @@ remollEvent_t remollEvent::GetEventIO() const {
   return ev;
 }
 
-void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name, G4ThreeVector spin ){
+void remollEvent::ProduceNewParticle(const G4ThreeVector pos, const G4ThreeVector mom, G4ParticleDefinition* part, const G4ThreeVector spin)
+{
     fPartPos.push_back(pos);
     fPartMom.push_back(mom);
     fPartSpin.push_back(spin);
     fPartRealMom.push_back(mom);
-
-    G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
-    G4ParticleDefinition* particle = particleTable->FindParticle(name);
-
-    fPartType.push_back(particle);
+    fPartType.push_back(part);
 }
 
-void remollEvent::Reset(){
+void remollEvent::Reset()
+{
     fPartPos.clear();
     fPartMom.clear();
     fPartSpin.clear();
@@ -90,7 +88,8 @@ void remollEvent::Reset(){
     fThCoM = -1e9;
 }
 
-void remollEvent::UndoLastParticle(){
+void remollEvent::UndoLastParticle()
+{
     fPartPos.pop_back();
     fPartMom.pop_back();
     fPartSpin.pop_back();
@@ -98,8 +97,9 @@ void remollEvent::UndoLastParticle(){
     fPartType.pop_back();
 }
 
-G4bool remollEvent::EventIsSane(){
-    // Here we check all the variables and make sure there is nothing 
+G4bool remollEvent::EventIsSane() const
+{
+    // Here we check all the variables and make sure there is nothing
     // kinematically wrong and there aren't stuff like nans and infs
 
     if( std::isnan(fEffXs) || std::isinf(fEffXs) || fEffXs < 0.0 ) return false;
@@ -108,11 +108,11 @@ G4bool remollEvent::EventIsSane(){
     if( std::isnan(fQ2) || std::isinf(fQ2) ) return false;
     if( std::isnan(fW2) || std::isinf(fW2) ) return false;
 
-    if( fPartPos.size() < 1 && fEffXs > 0.0 ){ 
+    if( fPartPos.size() < 1 && fEffXs > 0.0 ){
 	return false;
     }
 
-    for(unsigned int i = 0; i < fPartPos.size(); i++ ){
+    for(size_t i = 0; i < fPartPos.size(); i++ ){
 	if( !fPartType[i] ){ return false; }
 
 	if( std::isnan(fPartPos[i].x()) || std::isinf(fPartPos[i].x()) ) return false;
@@ -128,7 +128,7 @@ G4bool remollEvent::EventIsSane(){
 }
 
 
-void remollEvent::Print(){
+void remollEvent::Print() const {
     G4cout << "Event " << this << " dump" << G4endl;
     G4cout << "\t" << fEffXs/nanobarn << " nb effective cross section " << G4endl;
     G4cout << "\t" << fAsym*1e6 << " ppm asymmetry" << G4endl;
@@ -138,9 +138,7 @@ void remollEvent::Print(){
 
     G4cout << "\t" << fPartPos.size() << " particles generated" << G4endl;
 
-    unsigned int i;
-
-    for( i = 0; i < fPartPos.size(); i++ ){
+    for(size_t i = 0; i < fPartPos.size(); i++ ){
 	if( !fPartType[i] ){
 	    G4cout << "\tParticle type for " << i << " not defined" << G4endl;
 	} else {
@@ -151,16 +149,3 @@ void remollEvent::Print(){
 	}
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
