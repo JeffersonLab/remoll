@@ -35,13 +35,6 @@ XERCES_CPP_NAMESPACE_END
 
 #define __FILENAMELEN 255
 
-// Units for output
-#define __E_UNIT GeV
-#define __L_UNIT m
-#define __T_UNIT ns
-#define __ANG_UNIT rad
-#define __ASYMM_SCALE 1e-9 // ppb
-
 class remollIO {
     private:
         // Singleton pointer
