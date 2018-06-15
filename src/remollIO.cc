@@ -188,8 +188,8 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit)
     fGenDetHit.push_back(hit->GetGenericDetectorHitIO());
 
     // for collimator cut
-    if( (hit->fDetID==200 && hit->f3X.perp()/__L_UNIT < 0.03) ||
-        (hit->fDetID==201 && hit->f3X.perp()/__L_UNIT < 0.05) )
+    if( (hit->fDetID==200 && hit->f3X.perp() < 0.03*m) ||
+        (hit->fDetID==201 && hit->f3X.perp() < 0.05*m) )
         fCollCut=0;
 }
 
