@@ -1,10 +1,10 @@
 #include "remollEvent.hh"
 #include "remolltypes.hh"
+#include "remollSystemOfUnits.hh"
 
 #include <math.h>
 
 #include "G4ParticleTable.hh"
-#include "G4SystemOfUnits.hh"
 
 remollEvent::remollEvent()
 : fBeamTarget(0) {
