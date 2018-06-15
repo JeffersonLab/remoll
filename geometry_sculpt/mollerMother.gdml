@@ -5,12 +5,6 @@
     <position name="targetCenter" x="0" y="0" z="0"/>
     <position name="upstreamCenter" x="0" y="0" z="7000."/>
     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
-    
-    <position name="GEM1Center" x="0" y="0" z="-0+22700.-230.-10."/> 
-    <position name="GEM2Center" x="0" y="0" z="-0+23700.-230.-10."/> 
-    <position name="GEM3Center" x="0" y="0" z="-0+27700.-230.-10."/> 
-    <position name="GEM4Center" x="0" y="0" z="-0+28700.-230.-10."/> 
-
     <position name="mainDetCenter" x="0" y="0" z="-0+28700."/> 
 
     <rotation name="identity"/>
@@ -73,31 +67,6 @@
 	<rotationref ref="identity"/>
       </physvol>
       
-      <!-- GEM Detectors -->
-      <physvol name="GEMDet1">
-	<file name="geometry_sculpt/daughterGEM1.gdml"/>
-	<positionref ref="GEM1Center"/>
-	<rotationref ref="identity"/>
-      </physvol>
-
-      <physvol name="GEMDet2">
-	<file name="geometry_sculpt/daughterGEM2.gdml"/>
-	<positionref ref="GEM2Center"/>
-	<rotationref ref="identity"/>
-      </physvol>
-
-      <physvol name="GEMDet3">
-	<file name="geometry_sculpt/daughterGEM3.gdml"/>
-	<positionref ref="GEM3Center"/>
-	<rotationref ref="identity"/>
-      </physvol>
-
-      <physvol name="GEMDet4">
-	<file name="geometry_sculpt/daughterGEM4.gdml"/>
-	<positionref ref="GEM4Center"/>
-	<rotationref ref="identity"/>
-      </physvol>
-
     </volume>
   </structure>
 
