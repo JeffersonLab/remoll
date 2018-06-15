@@ -54,3 +54,9 @@ sum.det		Detector number
 sum.vid		Volume ID number (not yet implemented)
 sum.edep	Total energy deposited in detector [MeV]
 
+
+Hint: if you wish to plot tree variables not in their stored units, use the
+units tree to renormalize them:
+  T->Draw("hit.pz/GeV:hit.z/m")
+This will plot momentum in GeV versus position in meters (and even label the
+axes accordingly).
