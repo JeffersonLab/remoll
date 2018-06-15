@@ -16,7 +16,7 @@
 //  -- copied from track.C in moller/tracking
 //
 //  -- copied from mollersim/backup_Mar20_2013/include/MollerSimGEM_TrackReconstruct.hh
-// 
+//
 
 #ifndef __REMOLLTRACKRECONSTRUCT_HH
 #define __REMOLLTRACKRECONSTRUCT_HH
@@ -29,11 +29,11 @@ class remollTrackReconstruct{
 
 public:
   remollTrackReconstruct();
-  ~remollTrackReconstruct();
+  virtual ~remollTrackReconstruct();
 
   void AddHit(remollGenericDetectorHit* aHit);
 
-  G4int GetTrackHitSize(){return rTrackHitSize;};
+  G4int GetTrackHitSize() { return aTrackHit.size(); };
   void  PrintTrackInfo(){
     PrintHitInfo(aTrackHit);
   };
@@ -59,13 +59,12 @@ private:
 
   // GEM wire plane tracks
   std::vector<remollGenericDetectorHit*> aTrackHit;
-  size_t rTrackHitSize; // size of the aTrackHit vector
   std::vector<remollGenericDetectorHit*> aTrackHitOrg; // original
 
   std:: vector <std::vector <G4ThreeVector> > hitPos;
   std:: vector <std::vector <G4ThreeVector> > GEMRes;
 
-  // recTrack has (a,b,0) of 
+  // recTrack has (a,b,0) of
   //    x = a + bz & y = a + bz
   // recTrack[0] is (a,b) along XZ plane
   // recTrack[1] is (a,b) along YZ plane
