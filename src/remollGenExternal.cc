@@ -109,7 +109,7 @@ void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
     evt->SetEffCrossSection(fEvent->xs*microbarn);
     evt->SetQ2(fEvent->Q2);
     evt->SetW2(fEvent->W2);
-    evt->SetAsymmetry(fEvent->A*1e-9);
+    evt->SetAsymmetry(fEvent->A*ppb);
 
     // Loop over all hits in this event
     for (size_t i = 0; i < fHit->size(); i++) {
