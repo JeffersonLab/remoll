@@ -22,8 +22,16 @@ class remollGenericDetectorHit;
 class remollGenericDetectorSum;
 class remollEvent;
 
-#include <xercesc/dom/DOMElement.hpp>
-
+//FIXME: forward declares not possible since xerces uses a
+// namespace alias and requires upstream knowledge or a pre-
+// processor directive, which in turn requires another header
+// so there's no gain...
+//#include <xercesc/dom/DOMElement.hpp>
+// or
+#include <xercesc/util/XercesDefs.hpp>
+XERCES_CPP_NAMESPACE_BEGIN
+class DOMElement;
+XERCES_CPP_NAMESPACE_END
 
 #define __FILENAMELEN 255
 
