@@ -21,6 +21,7 @@
 #include "remollGenPion.hh"
 #include "remollGenBeam.hh"
 #include "remollGenTF1.hh"
+#include "remollGen12CElastic.hh"
 #include "remollGenFlat.hh"
 #include "remollGenExternal.hh"
 #include "remollGenAl.hh"
@@ -96,11 +97,13 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
         fEventGen = new remollGenExternal();
     }else if( genname == "pion_LUND" ) {
         fEventGen = new remollGenLUND();
+    }else if( genname == "carbon" ){
+	fEventGen = new remollGen12CElastic();
     }
 
-    if( !fEventGen ) {
-        G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR generator " << genname << " invalid" << G4endl;
-        exit(1);
+    if( !fEventGen ){
+	G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR generator " << genname << " invalid" << G4endl;
+	exit(1);
     } else {
         G4cout << "Setting generator to " << genname << G4endl;
     }

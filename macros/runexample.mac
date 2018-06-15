@@ -35,6 +35,9 @@
 #/remoll/thcommin 30.0 deg
 #/remoll/thcommax 150.0 deg
 #/remoll/evgen/set elastic 
+#/remoll/evgen/set carbon
+#/remoll/thmin 0.1 deg
+#/remoll/thmax 2.0 deg
 #/remoll/thmin 0.1 deg
 #/remoll/thmax 2.0 deg
 #/remoll/emin 80.0 MeV
@@ -51,8 +54,13 @@
 
 /remoll/beamene 11 GeV
 
+# For LH2
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
+
+# For carbon
+/remoll/targpos 0.0 cm
+/remoll/targlen 1.5 mm
 
 /remoll/beamcurr 85 microampere
 

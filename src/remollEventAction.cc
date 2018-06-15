@@ -9,6 +9,7 @@
 
 #include "remollIO.hh"
 #include "remollEvent.hh"
+#include "remollTrackReconstruct.hh"
 
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
@@ -39,6 +40,9 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
   const remollEvent* event = fPrimaryGeneratorAction->GetEvent();
   io->SetEventData(event);
 
+  // Create track reconstruction object
+  remollTrackReconstruct track;
+
   // Traverse all hit collections, sort by output type
   G4HCofThisEvent *HCE = aEvent->GetHCofThisEvent();
   for (int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++) {
@@ -51,8 +55,16 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
       if (remollGenericDetectorHitCollection *thiscast =
           dynamic_cast<remollGenericDetectorHitCollection*>(thiscol)) {
         for (unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++) {
-          io->AddGenericDetectorHit((remollGenericDetectorHit *)
-                                    thiscast->GetHit(hidx));
+
+	  remollGenericDetectorHit *currentHit =
+	    (remollGenericDetectorHit *) thiscast->GetHit(hidx);
+
+	  ////  store GEM hits for track reconstruction
+	  if(currentHit->fDetID >= 501 && currentHit->fDetID <= 504){
+	    track.AddHit(currentHit);
+	  }
+	  // non-GEM hits
+	  else io->AddGenericDetectorHit(currentHit);
         }
       }
 
@@ -66,6 +78,17 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
       }
 
     }
+  }
+
+  ////  reconstruct tracks, and store them into rootfile
+  if (track.GetTrackHitSize() > 0) {
+
+    track.ReconstructTrack();
+
+    std::vector<remollGenericDetectorHit*> rechits = track.GetTrack();
+
+    for (size_t j = 0; j < rechits.size(); j++)
+      io->AddGenericDetectorHit((remollGenericDetectorHit *) rechits[j]);
   }
 
   // Fill tree and reset buffers

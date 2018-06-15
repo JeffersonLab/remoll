@@ -11,6 +11,8 @@
 
 #include "remollVEventGen.hh"
 
+class remollBeamTarget;
+
 class remollGenMoller : public remollVEventGen {
     public:
 	remollGenMoller();
@@ -18,6 +20,8 @@ class remollGenMoller : public remollVEventGen {
 
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
+
+	remollBeamTarget *fBeamTarg;
 
 };
 

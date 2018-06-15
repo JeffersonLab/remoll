@@ -208,6 +208,8 @@ void remollBeamTarget::SetTargetLen(G4double z)
     runManager->GeometryHasBeenModified();
 
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetLen(z)" << G4endl;
 }
 
 void remollBeamTarget::SetTargetPos(G4double z)
@@ -246,6 +248,8 @@ void remollBeamTarget::SetTargetPos(G4double z)
     runManager->GeometryHasBeenModified();
 
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetPos(z)" << G4endl;
 }
 
 
