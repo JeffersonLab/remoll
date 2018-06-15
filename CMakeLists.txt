@@ -144,7 +144,6 @@ set(REMOLL_SCRIPTS
     vis/X.mac
     macros/runexample.mac
     macros/gui.mac
-    rootlogon.C
   )
 
 foreach(_script ${REMOLL_SCRIPTS})
