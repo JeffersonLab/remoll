@@ -2,7 +2,9 @@
 
 #include "G4OpticalPhoton.hh"
 #include "G4SDManager.hh"
+#include "G4RunManager.hh"
 #include "G4GenericMessenger.hh"
+#include "G4TrajectoryContainer.hh"
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
@@ -193,6 +195,17 @@ void remollGenericDetector::EndOfEvent(G4HCofThisEvent*HCE) {
 
     HCE->AddHitsCollection( fHCID, fHitColl );
     HCE->AddHitsCollection( fSCID, fSumColl );
+
+
+    G4TrajectoryContainer* trajectoryContainer =
+        G4RunManager::GetRunManager()->GetCurrentEvent()->GetTrajectoryContainer();
+    if (trajectoryContainer == 0) return;
+
+    for (G4int i = 0; i < trajectoryContainer->entries(); i++) {
+        if ((*trajectoryContainer)[i]->GetTrackID() < 2) {
+            (*trajectoryContainer)[i]->ShowTrajectory();
+        }
+    }
 
     return;
 }
