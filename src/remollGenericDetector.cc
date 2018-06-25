@@ -7,6 +7,10 @@
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
 
+#include "G4RunManager.hh"
+#include "G4TrajectoryContainer.hh"
+#include "G4TrajectoryPoint.hh"
+
 #include <sstream>
 
 std::list<remollGenericDetector*> remollGenericDetector::fGenericDetectors = std::list<remollGenericDetector*>();
@@ -193,6 +197,19 @@ void remollGenericDetector::EndOfEvent(G4HCofThisEvent*HCE) {
     HCE->AddHitsCollection( fHCID, fHitColl );
     HCE->AddHitsCollection( fSCID, fSumColl );
 
+    G4TrajectoryContainer* trajectoryContainer = 
+	G4RunManager::GetRunManager()->GetCurrentEvent()->GetTrajectoryContainer();
+    if(trajectoryContainer == 0) return;
+    
+    for(G4int i = 0; i < trajectoryContainer->entries(); i++){
+	if((*trajectoryContainer)[i]->GetTrackID() < 2){
+		(*trajectoryContainer)[i]->ShowTrajectory();
+		for(int j = 0; j <(*trajectoryContainer)[i]->GetPointEntries(); j++){
+			G4TrajectoryPoint* point = (G4TrajectoryPoint*)((*trajectoryContainer)[i]->GetPoint(j));
+			G4cout << "Point "<< point->GetPosition() << "." << G4endl;
+		}
+	}
+    }
     return;
 }
 

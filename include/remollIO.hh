@@ -24,7 +24,6 @@ class remollEvent;
 
 #include <xercesc/dom/DOMElement.hpp>
 
-
 #define __FILENAMELEN 255
 
 // Units for output
