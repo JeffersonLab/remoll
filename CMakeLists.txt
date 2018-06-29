@@ -1,5 +1,4 @@
 #----------------------------------------------------------------------------
-
 # Setup the project
 #
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
@@ -77,8 +76,30 @@ endif()
 #
 include(${Geant4_USE_FILE})
 
+#----------------------------------------------------------------------------
+# Find HepMC (optional package)
+#
+find_package(HepMC QUIET)
+if(HepMC_FOUND)
+  message(STATUS "HepMC found --> building with HepMC enabled.")
+  add_definitions(-DG4LIB_USE_HEPMC)
+else()
+  set(HepMC_LIBRARIES "")
+endif()
 
-#debugging symbols, complains
+#----------------------------------------------------------------------------
+# Find Pythia6 (optional package)
+#
+find_package(Pythia6 QUIET)
+if(PYTHIA6_FOUND)
+  message(STATUS "Pythia6 found --> building with Pythia6 enabled.")
+  add_definitions(-DG4LIB_USE_PYTHIA)
+else()
+  set(PYTHIA6_LIBRARIES "")
+endif()
+
+#----------------------------------------------------------------------------
+# Debugging symbols, warnings
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -pg")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Woverloaded-virtual")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic")
@@ -119,7 +140,12 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/remoll*.hh)
 #
 add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
 set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries(remoll-lib
+  ${Geant4_LIBRARIES}
+  ${ROOT_LIBRARIES}
+  ${Boost_LIBRARIES}
+  ${HEPMC_LIBRARIES}
+  ${PYTHIA6_LIBRARIES})
 
 add_executable(remoll-bin remoll.cc)
 set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
