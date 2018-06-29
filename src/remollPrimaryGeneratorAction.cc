@@ -6,6 +6,13 @@
 #include "G4ParticleDefinition.hh"
 #include "G4GenericMessenger.hh"
 
+#ifdef G4LIB_USE_HEPMC
+#include "HepMCG4AsciiReader.hh"
+#ifdef G4LIB_USE_PYTHIA
+#include "HepMCG4PythiaReader.hh"
+#endif
+#endif
+
 #include "remollIO.hh"
 #include "remollBeamTarget.hh"
 #include "remollVEventGen.hh"
@@ -27,21 +34,35 @@
 #include "remollGenLUND.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
-: fParticleGun(0),fBeamTarg(0),fEventGen(0),fEvent(0),fMessenger(0)
+: fEventGen(0),fPriGen(0),fParticleGun(0),fBeamTarg(0),fEvent(0),fMessenger(0)
 {
+    // Populate map with all possible event generators
+    fEvGenMap["moller"] = new remollGenMoller();
+    fEvGenMap["elastic"] = new remollGenpElastic();
+    fEvGenMap["inelastic"] = new remollGenpInelastic();
+    fEvGenMap["pion"] = new remollGenPion();
+    fEvGenMap["beam"] = new remollGenBeam();
+    fEvGenMap["flat"] = new remollGenFlat();
+    fEvGenMap["TF1"] = new remollGenTF1();
+    fEvGenMap["elasticAl"] = new remollGenAl(0);
+    fEvGenMap["quasielasticAl"] = new remollGenAl(1);
+    fEvGenMap["inelasticAl"] = new remollGenAl(2);
+    fEvGenMap["external"] = new remollGenExternal();
+    fEvGenMap["pion_LUND"] = new remollGenLUND();
+
+    // Populate map with all possible primary generators
+    fPriGenMap["particlegun"] = new G4ParticleGun();
+    fPriGenMap["hepmc_ascii"] = new HepMCG4AsciiReader();
+    #ifdef G4LIB_USE_PYTHIA
+    fPriGenMap["hepmc_pythia"] = new HepMCG4PythiaReader()
+    #endif
+
     // Create beam target
     fBeamTarg = new remollBeamTarget();
 
     // Default generator
     G4String default_generator = "moller";
     SetGenerator(default_generator);
-
-    // Get the particle gun
-    fParticleGun = fEventGen->GetParticleGun();
-
-    // Create generic messenger
-    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-    fMessenger->DeclareMethod("gen",&remollPrimaryGeneratorAction::SetGenerator_Deprecated,"Select physics generator");
 
     // Create event generator messenger
     fEvGenMessenger = new G4GenericMessenger(this,"/remoll/evgen/","Remoll event generator properties");
@@ -56,85 +77,71 @@ remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
     if (fEventGen)  delete fEventGen;
 }
 
-void remollPrimaryGeneratorAction::SetGenerator_Deprecated(G4String& genname)
-{
-    G4cerr << "The command `/remoll/gen` is deprecated." << G4endl;
-    G4cerr << "Instead use `/remoll/evgen/set`." << G4endl;
-    SetGenerator(genname);
-}
-
 void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
 {
-    // Delete previous generator
-    if (fEventGen) {
-      delete fEventGen;
+    // Set generator to null
+    fEventGen = 0;
+    fPriGen = 0;
+
+    // Find event generator
+    std::map<G4String,remollVEventGen*>::iterator evgen = fEvGenMap.find(genname);
+    if (evgen != fEvGenMap.end()) {
+      G4cout << "Setting generator to " << genname << G4endl;
+      fPriGen = 0;
+      fPriGenName = "";
+      fEventGen = evgen->second;
+      fEventGenName = evgen->first;
+      fParticleGun = fEventGen->GetParticleGun();
+    }
+
+    // Find primary generator
+    std::map<G4String,G4VPrimaryGenerator*>::iterator prigen = fPriGenMap.find(genname);
+    if (prigen != fPriGenMap.end()) {
+      G4cout << "Setting generator to " << genname << G4endl;
+      fPriGen = prigen->second;
+      fPriGenName = prigen->first;
       fEventGen = 0;
+      fEventGenName = "";
+      fParticleGun = 0;
     }
 
-    // Create new generator
-    if( genname == "moller" ) {
-        fEventGen = new remollGenMoller();
-    }else if( genname == "elastic" ) {
-        fEventGen = new remollGenpElastic();
-    }else if( genname == "inelastic" ) {
-        fEventGen = new remollGenpInelastic();
-    }else if( genname == "pion" ) {
-        fEventGen = new remollGenPion();
-    }else if( genname == "beam" ) {
-        fEventGen = new remollGenBeam();
-    }else if( genname == "TF1" ) {
-        fEventGen = new remollGenTF1();
-    }else if( genname == "flat" ) {
-        fEventGen = new remollGenFlat();
-    }else if( genname == "inelasticAl" ) {
-        fEventGen = new remollGenAl(2);
-    }else if( genname == "quasielasticAl" ) {
-        fEventGen = new remollGenAl(1);
-    }else if( genname == "elasticAl" ) {
-        fEventGen = new remollGenAl(0);
-    }else if( genname == "external" ) {
-        fEventGen = new remollGenExternal();
-    }else if( genname == "pion_LUND" ) {
-        fEventGen = new remollGenLUND();
-    }
-
-    if( !fEventGen ) {
-        G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR generator " << genname << " invalid" << G4endl;
-        exit(1);
-    } else {
-        G4cout << "Setting generator to " << genname << G4endl;
-    }
-
-    // Set the beam target
-    if (fBeamTarg) {
-      fEventGen->SetBeamTarget(fBeamTarg);
-    } else {
-      G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR no beam target" << G4endl;
+    // No generator found
+    if (!fEventGen && !fPriGen) {
+      G4cerr << __FILE__ << " line " << __LINE__ << " - ERROR generator " << genname << " invalid" << G4endl;
       exit(1);
     }
 
-    // Get the particle gun
-    fParticleGun = fEventGen->GetParticleGun();
+    // Set the beam target
+    if (fEventGen) {
+      fEventGen->SetBeamTarget(fBeamTarg);
+    }
 
     remollRun::GetRunData()->SetGenName(genname.data());
 }
 
 void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-    if (!fEventGen) {
+    if (!fEventGen && !fPriGen) {
       G4cerr << __FILE__ << " line " << __LINE__ << " - No event generator found." << G4endl;
       exit(1);
     }
 
-    // Delete old primary event
-    if (fEvent) {
-      delete fEvent;
-      fEvent = 0;
+    if (!fEventGen && fPriGen) {
+      fPriGen->GeneratePrimaryVertex(anEvent);
+      return;
     }
 
-    // Create new primary event
-    fEvent = fEventGen->GenerateEvent();
-    for (unsigned int pidx = 0; pidx < fEvent->fPartType.size(); pidx++) {
+    if (fEventGen) {
+
+      // Delete old primary event
+      if (fEvent) {
+        delete fEvent;
+        fEvent = 0;
+      }
+
+      // Create new primary event
+      fEvent = fEventGen->GenerateEvent();
+      for (unsigned int pidx = 0; pidx < fEvent->fPartType.size(); pidx++) {
 
         double p = fEvent->fPartMom[pidx].mag();
         double m = fEvent->fPartType[pidx]->GetPDGMass();
@@ -147,7 +154,8 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 	G4ThreeVector pol = fEvent->fPartSpin[pidx];
 	if (pol.getR()>0.01)
 	  fParticleGun->SetParticlePolarization(pol);
-	
+
         fParticleGun->GeneratePrimaryVertex(anEvent);
+      }
     }
 }
