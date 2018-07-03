@@ -1,3 +1,35 @@
+/* remollHEPEvtInterface
+
+This class reads files written as a /HEPEVT/ common block by the
+following code (examples/extended/runAndEvent/RE05).
+
+
+***********************************************************
+      SUBROUTINE HEP2G4
+*
+* Output /HEPEVT/ event structure to G4HEPEvtInterface
+*
+* M.Asai (asai@kekvax.kek.jp)  --  24/09/96
+*
+***********************************************************
+      PARAMETER (NMXHEP=4000)
+      COMMON/HEPEVT/NEVHEP,NHEP,ISTHEP(NMXHEP),IDHEP(NMXHEP),
+     >JMOHEP(2,NMXHEP),JDAHEP(2,NMXHEP),PHEP(5,NMXHEP),VHEP(4,NMXHEP)
+      DOUBLE PRECISION PHEP,VHEP
+*
+      WRITE(6,*) NHEP
+      DO IHEP=1,NHEP
+       WRITE(6,10)
+     >  ISTHEP(IHEP),IDHEP(IHEP),JDAHEP(1,IHEP),JDAHEP(2,IHEP),
+     >  PHEP(1,IHEP),PHEP(2,IHEP),PHEP(3,IHEP),PHEP(5,IHEP)
+10    FORMAT(I4,I10,I5,I5,4(1X,D15.8))
+      ENDDO
+*
+      RETURN
+      END
+
+*/
+
 #include "remollHEPEvtInterface.hh"
 #include "remollHEPEvtMessenger.hh"
 
