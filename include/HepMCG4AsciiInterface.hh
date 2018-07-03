@@ -23,10 +23,10 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file eventgenerator/HepMC/HepMCEx01/include/HepMCG4AsciiReader.hh
-/// \brief Definition of the HepMCG4AsciiReader class
+/// \file eventgenerator/HepMC/HepMCEx01/include/HepMCG4AsciiInterface.hh
+/// \brief Definition of the HepMCG4AsciiInterface class
 //
-// $Id: HepMCG4AsciiReader.hh 77801 2013-11-28 13:33:20Z gcosmo $
+// $Id: HepMCG4AsciiInterface.hh 77801 2013-11-28 13:33:20Z gcosmo $
 //
 
 #ifndef HEPMC_G4_ASCII_READER_H
@@ -35,21 +35,21 @@
 #include "HepMCG4Interface.hh"
 #include "HepMC/IO_GenEvent.h"
 
-class HepMCG4AsciiReaderMessenger;
+class HepMCG4AsciiMessenger;
 
-class HepMCG4AsciiReader : public HepMCG4Interface {
+class HepMCG4AsciiInterface : public HepMCG4Interface {
 protected:
   G4String filename;
   HepMC::IO_GenEvent* asciiInput;
 
   G4int verbose;
-  HepMCG4AsciiReaderMessenger* messenger;
+  HepMCG4AsciiMessenger* messenger;
 
   virtual HepMC::GenEvent* GenerateHepMCEvent();
 
 public:
-  HepMCG4AsciiReader();
-  ~HepMCG4AsciiReader();
+  HepMCG4AsciiInterface();
+  ~HepMCG4AsciiInterface();
 
   // set/get methods
   void SetFileName(G4String name);
@@ -66,22 +66,22 @@ public:
 // inline functions
 // ====================================================================
 
-inline void HepMCG4AsciiReader::SetFileName(G4String name)
+inline void HepMCG4AsciiInterface::SetFileName(G4String name)
 {
   filename= name;
 }
 
-inline G4String HepMCG4AsciiReader::GetFileName() const
+inline G4String HepMCG4AsciiInterface::GetFileName() const
 {
   return filename;
 }
 
-inline void HepMCG4AsciiReader::SetVerboseLevel(G4int i)
+inline void HepMCG4AsciiInterface::SetVerboseLevel(G4int i)
 {
   verbose= i;
 }
 
-inline G4int HepMCG4AsciiReader::GetVerboseLevel() const
+inline G4int HepMCG4AsciiInterface::GetVerboseLevel() const
 {
   return verbose;
 }

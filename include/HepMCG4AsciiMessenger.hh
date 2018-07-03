@@ -23,49 +23,38 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file eventgenerator/HepMC/HepMCEx01/src/HepMCG4AsciiReader.cc
-/// \brief Implementation of the HepMCG4AsciiReader class
+/// \file eventgenerator/HepMC/HepMCEx01/include/HepMCG4AsciiMessenger.hh
+/// \brief Definition of the HepMCG4AsciiMessenger class
 //
-// $Id: HepMCG4AsciiReader.cc 77801 2013-11-28 13:33:20Z gcosmo $
+// $Id: HepMCG4AsciiMessenger.hh 77801 2013-11-28 13:33:20Z gcosmo $
 //
 
-#include "HepMCG4AsciiReader.hh"
-#include "HepMCG4AsciiReaderMessenger.hh"
+#ifndef HEPMC_G4_ASCII_READER_MESSENGER_H
+#define HEPMC_G4_ASCII_READER_MESSENGER_H
 
-#include <iostream>
-#include <fstream>
+#include "G4UImessenger.hh"
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-HepMCG4AsciiReader::HepMCG4AsciiReader()
-  :  filename("xxx.dat"), verbose(0)
-{
-  asciiInput= new HepMC::IO_GenEvent(filename.c_str(), std::ios::in);
+class HepMCG4AsciiInterface;
+class G4UIdirectory;
+class G4UIcmdWithoutParameter;
+class G4UIcmdWithAString;
+class G4UIcmdWithAnInteger;
 
-  messenger= new HepMCG4AsciiReaderMessenger(this);
-}
+class HepMCG4AsciiMessenger : public G4UImessenger {
+public:
+  HepMCG4AsciiMessenger(HepMCG4AsciiInterface* iface);
+  virtual ~HepMCG4AsciiMessenger();
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-HepMCG4AsciiReader::~HepMCG4AsciiReader()
-{
-  delete asciiInput;
-  delete messenger;
-}
+  void SetNewValue(G4UIcommand* command, G4String newValues);
+  G4String GetCurrentValue(G4UIcommand* command);
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void HepMCG4AsciiReader::Initialize()
-{
-  delete asciiInput;
+private:
+  HepMCG4AsciiInterface* gen;
 
-  asciiInput= new HepMC::IO_GenEvent(filename.c_str(), std::ios::in);
-}
+  G4UIdirectory* fDir;
+  G4UIcmdWithAnInteger* fVerbose;
+  G4UIcmdWithAString* fOpen;
 
-//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-HepMC::GenEvent* HepMCG4AsciiReader::GenerateHepMCEvent()
-{
-  HepMC::GenEvent* evt= asciiInput-> read_next_event();
-  if(!evt) return 0; // no more event
+};
 
-  if(verbose>0) evt-> print();
-
-  return evt;
-}
+#endif

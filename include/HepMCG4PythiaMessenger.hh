@@ -58,8 +58,8 @@ private:
   G4UIcmdWithAString*      printRandomStatus;
 
 public:
-  HepMCG4PythiaMessenger(HepMCG4PythiaInterface* agen);
-  ~HepMCG4PythiaMessenger();
+  HepMCG4PythiaMessenger(HepMCG4PythiaInterface* iface);
+  virtual ~HepMCG4PythiaMessenger();
 
   void SetNewValue(G4UIcommand* command, G4String newValues);
   G4String GetCurrentValue(G4UIcommand* command);

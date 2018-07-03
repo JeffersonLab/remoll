@@ -6,10 +6,11 @@
 #include "G4ParticleDefinition.hh"
 #include "G4GenericMessenger.hh"
 
+#include "remollHEPEvtInterface.hh"
 #ifdef G4LIB_USE_HEPMC
-#include "HepMCG4AsciiReader.hh"
+#include "HepMCG4AsciiInterface.hh"
 #ifdef G4LIB_USE_PYTHIA
-#include "HepMCG4PythiaReader.hh"
+#include "HepMCG4PythiaInterface.hh"
 #endif
 #endif
 
@@ -52,9 +53,12 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 
     // Populate map with all possible primary generators
     fPriGenMap["particlegun"] = new G4ParticleGun();
-    fPriGenMap["hepmc_ascii"] = new HepMCG4AsciiReader();
+    fPriGenMap["hepevt"] = new remollHEPEvtInterface();
+    #ifdef G4LIB_USE_HEPMC
+    fPriGenMap["hepmcAscii"] = new HepMCG4AsciiInterface();
     #ifdef G4LIB_USE_PYTHIA
-    fPriGenMap["hepmc_pythia"] = new HepMCG4PythiaReader()
+    fPriGenMap["hepmcPythia"] = new HepMCG4PythiaInterface()
+    #endif
     #endif
 
     // Create beam target

@@ -23,55 +23,54 @@
 // * acceptance of all terms of the Geant4 Software license.          *
 // ********************************************************************
 //
-/// \file eventgenerator/HepMC/HepMCEx01/src/HepMCG4AsciiReaderMessenger.cc
-/// \brief Implementation of the HepMCG4AsciiReaderMessenger class
+/// \file eventgenerator/HepMC/HepMCEx01/src/HepMCG4AsciiMessenger.cc
+/// \brief Implementation of the HepMCG4AsciiMessenger class
 //
-// $Id: HepMCG4AsciiReaderMessenger.cc 77801 2013-11-28 13:33:20Z gcosmo $
+// $Id: HepMCG4AsciiMessenger.cc 77801 2013-11-28 13:33:20Z gcosmo $
 //
 #include "G4UIdirectory.hh"
 #include "G4UIcmdWithoutParameter.hh"
 #include "G4UIcmdWithAString.hh"
 #include "G4UIcmdWithAnInteger.hh"
-#include "HepMCG4AsciiReaderMessenger.hh"
-#include "HepMCG4AsciiReader.hh"
+#include "HepMCG4AsciiMessenger.hh"
+#include "HepMCG4AsciiInterface.hh"
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-HepMCG4AsciiReaderMessenger::HepMCG4AsciiReaderMessenger
-                             (HepMCG4AsciiReader* agen)
+HepMCG4AsciiMessenger::HepMCG4AsciiMessenger
+                      (HepMCG4AsciiInterface* agen)
   : gen(agen)
 {
-  dir= new G4UIdirectory("/generator/hepmcAscii/");
-  dir-> SetGuidance("Reading HepMC event from an Ascii file");
+  fDir= new G4UIdirectory("/generator/hepmcAscii/");
+  fDir-> SetGuidance("Reading HepMC event from an Ascii file");
 
-  verbose=
+  fVerbose=
     new G4UIcmdWithAnInteger("/generator/hepmcAscii/verbose", this);
-  verbose-> SetGuidance("Set verbose level");
-  verbose-> SetParameterName("verboseLevel", false, false);
-  verbose-> SetRange("verboseLevel>=0 && verboseLevel<=1");
+  fVerbose-> SetGuidance("Set verbose level");
+  fVerbose-> SetParameterName("verboseLevel", false, false);
+  fVerbose-> SetRange("verboseLevel>=0 && verboseLevel<=1");
 
-  open= new G4UIcmdWithAString("/generator/hepmcAscii/open", this);
-  open-> SetGuidance("(re)open data file (HepMC Ascii format)");
-  open-> SetParameterName("input ascii file", true, true);
+  fOpen= new G4UIcmdWithAString("/generator/hepmcAscii/open", this);
+  fOpen-> SetGuidance("(re)open data file (HepMC Ascii format)");
+  fOpen-> SetParameterName("input ascii file", true, true);
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-HepMCG4AsciiReaderMessenger::~HepMCG4AsciiReaderMessenger()
+HepMCG4AsciiMessenger::~HepMCG4AsciiMessenger()
 {
-  delete verbose;
-  delete open;
-
-  delete dir;
+  delete fVerbose;
+  delete fOpen;
+  delete fDir;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void HepMCG4AsciiReaderMessenger::SetNewValue(G4UIcommand* command,
+void HepMCG4AsciiMessenger::SetNewValue(G4UIcommand* command,
                                               G4String newValues)
 {
-  if (command==verbose) {
-    int level= verbose-> GetNewIntValue(newValues);
+  if (command==fVerbose) {
+    int level= fVerbose-> GetNewIntValue(newValues);
     gen-> SetVerboseLevel(level);
-  } else if (command==open) {
+  } else if (command==fOpen) {
     gen-> SetFileName(newValues);
     G4cout << "HepMC Ascii inputfile: "
            << gen-> GetFileName() << G4endl;
@@ -81,13 +80,13 @@ void HepMCG4AsciiReaderMessenger::SetNewValue(G4UIcommand* command,
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-G4String HepMCG4AsciiReaderMessenger::GetCurrentValue(G4UIcommand* command)
+G4String HepMCG4AsciiMessenger::GetCurrentValue(G4UIcommand* command)
 {
   G4String cv;
 
-  if (command == verbose) {
-    cv= verbose-> ConvertToString(gen-> GetVerboseLevel());
-  } else  if (command == open) {
+  if (command == fVerbose) {
+    cv= fVerbose-> ConvertToString(gen-> GetVerboseLevel());
+  } else  if (command == fOpen) {
     cv= gen-> GetFileName();
   }
   return cv;
