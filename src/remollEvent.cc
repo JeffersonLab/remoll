@@ -21,7 +21,7 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
   std::vector<remollEventParticle_t> parts;
   for (size_t idx = 0; idx < fPartType.size(); idx++) {
     remollEventParticle_t part;
-    part.pid = fPartType[idx]->GetPDGEncoding();
+    part.pid = (fPartType[idx]? fPartType[idx]->GetPDGEncoding(): 0);
     part.sx = fPartSpin[idx].x();
     part.sy = fPartSpin[idx].y();
     part.sz = fPartSpin[idx].z();
