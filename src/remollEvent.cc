@@ -4,11 +4,27 @@
 
 #include <math.h>
 
+#include "G4Event.hh"
 #include "G4ParticleTable.hh"
 
 remollEvent::remollEvent()
-: fBeamTarget(0) {
+: fBeamTarget(0)
+{
     Reset();
+}
+
+remollEvent::remollEvent(G4Event* event)
+: fBeamTarget(0)
+{
+  Reset();
+  for (G4int i = 0; i < event->GetNumberOfPrimaryVertex(); i++) {
+    G4PrimaryVertex* vertex = event->GetPrimaryVertex(i);
+    G4ThreeVector pos = vertex->GetPosition();
+    for (G4int j = 0; j < vertex->GetNumberOfParticle(); j++) {
+      G4PrimaryParticle* particle = vertex->GetPrimary(j);
+      ProduceNewParticle(pos,particle);
+    }
+  }
 }
 
 remollEvent::~remollEvent(){
@@ -57,7 +73,23 @@ remollEvent_t remollEvent::GetEventIO() const {
   return ev;
 }
 
-void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name, G4ThreeVector spin ){
+void remollEvent::ProduceNewParticle(G4ThreeVector pos, G4PrimaryParticle* particle)
+{
+  fPartPos.push_back(pos);
+
+  G4ThreeVector mom(particle->GetMomentum());
+  G4ThreeVector spin(particle->GetPolarization());
+
+  fPartMom.push_back(mom);
+  fPartSpin.push_back(spin);
+  fPartRealMom.push_back(mom);
+
+  G4ParticleDefinition* type = const_cast<G4ParticleDefinition*>(particle->GetParticleDefinition());
+  fPartType.push_back(type);
+}
+
+void remollEvent::ProduceNewParticle(G4ThreeVector pos, G4ThreeVector mom, G4String name, G4ThreeVector spin )
+{
     fPartPos.push_back(pos);
     fPartMom.push_back(mom);
     fPartSpin.push_back(spin);
