@@ -145,8 +145,8 @@ void remollGenTF1::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
   fR_min = 0.0*mm;
   fR_max = 0.0*mm;
 
-  fPh_min = 0.0*deg;
-  fPh_max = 360.0*deg;
+  fPh_min = 80.0*deg;
+  fPh_max = 110.0*deg;
 
   fDeltaPh_min = -2.0*deg;
   fDeltaPh_max = 2.0*deg;
@@ -181,7 +181,7 @@ void remollGenTF1::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     {1150,1150,1150}};
   double rad = RadSpectrum();
   zOffset = -1*500; //FIXME arbitrary z offset for Moller distribution propagation - affects air showering noise
-  zPos = (28500 + zOffset); //FIXME arbitrary z offset for Moller distribution propagation - affects air showering noise
+  zPos = (0.0*28500 + zOffset); //FIXME arbitrary z offset for Moller distribution propagation - affects air showering noise
   double xHitPos = (rad*cos(randPhi)- 1*((fBoffsetR)? radialOffset[fRing][fSector] : 0.0)); // Putting the offset here means that the detector and distribution will still make circles, just where the edge of the circle now passes the origin
   double yHitPos = rad*sin(randPhi);
   xPos = xHitPos - (-1*zOffset)*sin(randTheta)*cos(randPhi) - (-1*zOffset)*sin(randPhi)*sin(randDeltaPhi);
@@ -259,7 +259,7 @@ void remollGenTF1::distAnalysis(){
 void remollGenTF1::getHist(G4String& fname){
     G4AutoLock inFileLock(&inFileMutex2);
     
-    G4cout << "Opening file " << fname << G4endl;
+    std::cerr << "Opening file " << fname << G4endl;
     TFile *file = new TFile(fname);
     if (!file){
         G4cerr << "File not found." << G4endl;
@@ -355,7 +355,7 @@ void remollGenTF1::fitHist(G4String& type){
 
          else if (type == "elastic"){
             TH1F* rad = fElasticHist;
-             G4cerr << "Fitting elastic sector " << fSector << G4endl;
+            G4cerr << "Fitting elastic sector " << fSector << G4endl;
            
             fit = new TF1("el", remollGenTF1::elasticFit, 600,1200,6);
             
@@ -449,7 +449,7 @@ double remollGenTF1::inelasticFit(double *x, double *par){
     double arg = (fabs(par[2])>1e-6)? (x[0] - (par[1]))/par[2] : 0.0;
     g = par[0]*exp(-0.5*arg*arg)/(par[2]*sqrt(2.0*TMath::Pi()));
     if (x[0] > (par[1]))
-        e = par[3]/TMath::Power(x[0],par[4]);/* + par[5];*/
+        e = par[3]/TMath::Power(x[0],par[4]);
     if (g > e){
         return g;
     }
