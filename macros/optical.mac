@@ -1,3 +1,17 @@
+# Note:
+# As long as mainly the pion detector is setup for optical photons,
+# you may want to ensure that some electrons reach it by making the
+# following changes in geometry/pionDetectorSystem.gdml:
+#     <volume name="pionDetectorLeadDonut_logical">
+#       <!-- for testing with electron: disable lead and turn into G4_Galactic -->
+#-      <!-- <materialref ref="G4_Galactic"/> -->
+#-      <materialref ref="G4_Pb"/>
+#+      <materialref ref="G4_Galactic"/>
+#+      <!-- <materialref ref="G4_Pb"/> -->
+#       <solidref ref="pionDetectorLeadDonut_solid"/>
+#       <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+#     </volume>
+
 # This must be called before initialize
 /remoll/setgeofile geometry/mollerMother.gdml
 
