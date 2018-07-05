@@ -16,8 +16,13 @@ class remollGenBeam : public remollVEventGen {
 	virtual ~remollGenBeam();
 
     private:
+    void SetOriginX(double x);
+    void SetOriginY(double y);
+    void SetOriginZ(double z);
 	void SamplePhysics(remollVertex *, remollEvent *);
 
+	double fXpos;
+	double fYpos;
 	double fZpos;
 };
 

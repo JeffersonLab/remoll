@@ -1,0 +1,73 @@
+# Recreating the Mainz beam test
+
+# store tracks
+
+# This must be called before initialize
+/remoll/setgeofile geometry/mollerMother_black.gdml
+/remoll/physlist/optical/enable
+# This must be explicitly called
+/run/initialize
+
+/remoll/printgeometry true
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
+#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+#/remoll/beam_x0 0 mm
+#/remoll/beam_y0 0 mm
+# initial angle
+#/remoll/beam_th0 0 mrad
+#/remoll/beam_ph0 0 mrad
+# gaussian spread widths
+#/remoll/beam_dth 0 mrad
+#/remoll/beam_dph 0 mrad
+/remoll/tracking/set 3
+
+/remoll/evgen/set beam 
+/run/beamOn 0
+/remoll/evgen/beam/x 0
+/remoll/evgen/beam/y 987.5 
+#/remoll/evgen/set moller
+#/remoll/thcommin 30.0 deg
+#/remoll/thcommax 150.0 deg
+#/remoll/evgen/set elastic 
+#/remoll/thmin 0.1 deg
+#/remoll/thmax 2.0 deg
+#/remoll/emin 80.0 MeV
+#/remoll/evgen/set inelastic 
+#/remoll/evgen/set pion
+#/remoll/piontype pi+
+#/remoll/evgen/set pion_LUND
+#/remoll/evgen/set inelasticAl
+#/remoll/evgen/set quasielasticAl
+#/remoll/evgen/set elasticAl
+#/remoll/evgen/set external
+#/remoll/externalfile remollout.root
+#/remoll/externaldetid 4051
+
+/remoll/beamene 11 GeV
+
+/remoll/targpos   0 cm
+/remoll/targlen 150 cm
+
+/remoll/beamcurr 85 microampere
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite/set true
+
+/process/list
+
+/remoll/filename remollout.root
+#/remoll/LUND_filename hallD_pion_p_MOLLER_1M_1.lund
+
+#/tracking/verbose 2
+
+/run/beamOn 100
