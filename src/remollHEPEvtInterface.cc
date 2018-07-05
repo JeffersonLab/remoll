@@ -46,7 +46,6 @@ G4VPrimaryGenerator* remollHEPEvtInterface::fHEPEvtInterface = 0;
 remollHEPEvtInterface::remollHEPEvtInterface()
 : fVerbose(0), fFilename("hepevt.dat")
 {
-  Initialize();
   fMessenger = new remollHEPEvtMessenger(this);
 }
 
@@ -61,11 +60,12 @@ void remollHEPEvtInterface::Initialize()
 {
   G4AutoLock lock(&remollHEPEvtInterfaceMutex);
   if (fHEPEvtInterface) { delete fHEPEvtInterface; fHEPEvtInterface = 0; }
-  fHEPEvtInterface = new G4HEPEvtInterface(fFilename,1);
+  fHEPEvtInterface = new G4HEPEvtInterface(fFilename,fVerbose);
 }
 
 void remollHEPEvtInterface::GeneratePrimaryVertex(G4Event* anEvent)
 {
   G4AutoLock lock(&remollHEPEvtInterfaceMutex);
+  if (!fHEPEvtInterface) { Initialize(); }
   fHEPEvtInterface->GeneratePrimaryVertex(anEvent);
 }
