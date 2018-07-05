@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 
 <!DOCTYPE gdml [
-    <!ENTITY materials_r5 SYSTEM "materialsOptical.xml">
+    <!ENTITY materials_r5 SYSTEM "materialsOptical_cathode.xml">
     <!ENTITY matrices_r5 SYSTEM "matrices_r5.xml">
 ]> 
 
@@ -78,7 +78,7 @@
       </physvol>
 -->
       <physvol>
-      <file name="geometry/detector_r5.gdml"/>
+      <file name="geometry/detector_cathode.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="rot"/>
       </physvol>
