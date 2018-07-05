@@ -1,11 +1,49 @@
-## MadGraph5 event generator
+# MadGraph5 event generator
 
 The MadGraph5 generator information can be used to generate Les Houches event files
 for any arbitrary processes. Only cross section weights are generated, no asymmetries.
 
+## Installing MadGraph5
+MadGraph5 is distributed using the Bazaar version control system. Download it using
+```
+cd /usr/local
+bzr branch lp:mg5amcnlo
+```
+For convienience, add the following script to your `/usr/local/bin` directory as `mg5.sh`
+```
+export PATH=/usr/local/mg5amcnlo/bin:$PATH
+```
+and start each session in which you wish to use MadGraph5 with `source mg5.sh`.
+
+## Installing MadAnalysis5
+MadAnalysis is also distributed using the Bazaar version control system. Download it using
+```
+cd /usr/local
+bzr branch lp:madanalysis5
+```
+and create a script `ma5.sh` in your `/usr/local/bin` directory with
+```
+export PATH=/usr/local/madanalysis5/bin:$PATH
+```
+
 ## Running MadGraph5
 MadGraph5 uses a mixture of command line and web-based interfaces. The files stored in
 this directory define a number of processes in ee and ep scattering, at leading order.
+
+As an example, to create Moller scattering events using the card `proc_card_mg5_ee_ee.dat`
+use the command
+```
+mg5_aMC proc_card_mg5_ee_ee.dat
+```
+
+## Running MadEvent
+After running MadGraph5 to determine the relevant diagrams, we want to generate events
+using MadEvent5. The executable for this is inside the directory structure created by
+MadGraph5 under `bin/madevent`. The files distributed here start MadEvent automatically
+with the `launch` command in the last line. You can just repeat the MadGraph5 calls
+above.
+
+The generated files are gzipped and need to be unzipped before moving on to the next step.
 
 ## Conversion from Les Houches to HepMC event format
 Since MadGraph5 generates files in the Les Houches event format, we need to convert
