@@ -53,7 +53,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 
     // Populate map with all possible primary generators
     fPriGenMap["particlegun"] = new G4ParticleGun();
-    fPriGenMap["hepevt"] = new remollHEPEvtInterface();
+    fPriGenMap["HEPEvt"] = new remollHEPEvtInterface();
     #ifdef G4LIB_USE_HEPMC
     fPriGenMap["hepmcAscii"] = new HepMCG4AsciiInterface();
     #ifdef G4LIB_USE_PYTHIA
