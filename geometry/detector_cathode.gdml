@@ -79,7 +79,7 @@
          <materialref ref="Photocathode"/>
          <solidref ref="pmtCathodeSol_50002"/> 
          <auxiliary auxtype="Color" auxvalue="green"/> 
- 	 <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+ 	 <auxiliary auxtype="SensDet" auxvalue="opticalphoton"/> 
 	 <auxiliary auxtype="DetNo" auxvalue="50402"/>  
 </volume>
 <skinsurface name="pmtCathodeVol_50002_skin" surfaceproperty="Cathode" >
