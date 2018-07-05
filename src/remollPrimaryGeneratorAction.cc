@@ -130,18 +130,21 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
       exit(1);
     }
 
+    // Delete old primary event
+    if (fEvent) {
+      delete fEvent;
+      fEvent = 0;
+    }
+
     if (!fEventGen && fPriGen) {
       fPriGen->GeneratePrimaryVertex(anEvent);
+
+      fEvent = new remollEvent(anEvent);
+
       return;
     }
 
     if (fEventGen) {
-
-      // Delete old primary event
-      if (fEvent) {
-        delete fEvent;
-        fEvent = 0;
-      }
 
       // Create new primary event
       fEvent = fEventGen->GenerateEvent();
