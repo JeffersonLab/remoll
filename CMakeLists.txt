@@ -84,7 +84,7 @@ if(HepMC_FOUND)
   message(STATUS "HepMC found --> building with HepMC enabled.")
   add_definitions(-DG4LIB_USE_HEPMC)
 else()
-  set(HepMC_LIBRARIES "")
+  set(HEPMC_LIBRARIES "")
 endif()
 
 #----------------------------------------------------------------------------
