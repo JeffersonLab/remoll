@@ -391,9 +391,9 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           vit != (*iter).second.end(); vit++) {
 
           if ((*vit).type == "SensDet") {
-              G4String det_type = (*vit).value;
 
               // Also allow specification of det number ///////////////////
+              G4String det_type = "";
               int det_no = -1;
               for (G4GDMLAuxListType::const_iterator
                   nit  = (*iter).second.begin();
@@ -406,6 +406,10 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                           exit(1);
                       }
                       useddetnums[det_no] = true;
+                  }
+
+                  if ((*nit).type == "DetType") {
+                      det_type = (*nit).value.data();
                   }
               }
               if (det_no <= 0) {
@@ -424,12 +428,17 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
               G4VSensitiveDetector* thisdet = SDman->FindSensitiveDetector(detectorname,(fVerboseLevel > 0));
 
               if( thisdet == 0 ) {
-                  thisdet = new remollGenericDetector(detectorname, det_no);
                   if (fVerboseLevel > 0)
-                      G4cout << "  Creating sensitive detector " << det_type
-                          << " for volume " << myvol->GetName()
+                      G4cout << "  Creating sensitive detector "
+                          << "for volume " << myvol->GetName()
                           <<  G4endl << G4endl;
-                  SDman->AddNewDetector(thisdet);
+
+                  remollGenericDetector* det = new remollGenericDetector(detectorname, det_no);
+                  if (det_type.size() > 0) det->SetDetectorType(det_type);
+
+                  SDman->AddNewDetector(det);
+
+                  thisdet = det;
               }
 
               myvol->SetSensitiveDetector(thisdet);
