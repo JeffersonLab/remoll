@@ -70,7 +70,6 @@ void remollRunAction::BeginOfRunAction(const G4Run* run)
 
     remollRunData *rundata = remollRun::GetRunData();
     rundata->SetNthrown( aRun->GetNumberOfEventToBeProcessed() );
-    rundata->Print();
   }
 }
 
