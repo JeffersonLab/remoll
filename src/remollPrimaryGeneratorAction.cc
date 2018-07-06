@@ -37,6 +37,14 @@
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 : fEventGen(0),fPriGen(0),fParticleGun(0),fBeamTarg(0),fEvent(0),fMessenger(0)
 {
+    static bool has_been_warned = false;
+    if (! has_been_warned) {
+      G4cout << "remoll: All possible event generators are instantiated every time." << G4endl;
+      G4cout << "remoll: This means some will not find necessary input files or" << G4endl;
+      G4cout << "remoll: print other information in the next few lines." << G4endl;
+      has_been_warned = true;
+    }
+
     // Populate map with all possible event generators
     fEvGenMap["moller"] = new remollGenMoller();
     fEvGenMap["elastic"] = new remollGenpElastic();
