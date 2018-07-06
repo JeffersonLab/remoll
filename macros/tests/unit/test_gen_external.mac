@@ -6,7 +6,6 @@
 /remoll/filename remollout.root
 
 /remoll/evgen/set external
-/run/beamOn 0
 /remoll/evgen/external/file remollin.root
 /remoll/evgen/external/detid 28
 /remoll/evgen/external/startEvent 0
