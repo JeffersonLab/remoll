@@ -28,16 +28,24 @@ class G4GenericMessenger;
 
 class remollGenericDetectorSum;
 
+namespace { G4Mutex remollGenericDetectorMutex = G4MUTEX_INITIALIZER; }
+
 class remollGenericDetector : public G4VSensitiveDetector {
     private:
         static G4GenericMessenger* fStaticMessenger;
         static std::list<remollGenericDetector*> fGenericDetectors;
         static void InsertGenericDetector(remollGenericDetector* det) {
+          G4AutoLock lock(&remollGenericDetectorMutex);
           fGenericDetectors.push_back(det);
           fGenericDetectors.sort(isBefore);
         }
         static void EraseGenericDetector(remollGenericDetector* det) {
+          G4AutoLock lock(&remollGenericDetectorMutex);
           fGenericDetectors.remove(det);
+        }
+        static void Sort() {
+          G4AutoLock lock(&remollGenericDetectorMutex);
+          fGenericDetectors.sort(isBefore);
         }
         void PrintAll() {
           for (std::list<remollGenericDetector*>::iterator
