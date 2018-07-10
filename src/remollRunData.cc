@@ -1,6 +1,8 @@
 #include "remollRunData.hh"
 #include "gitinfo.hh"
 
+#include "G4ios.hh"
+
 #include <string.h>
 #include <errno.h>
 
@@ -20,7 +22,8 @@ remollRunData::remollRunData()
 remollRunData::~remollRunData(){
 }
 
-void remollRunData::Init(){
+void remollRunData::Init()
+{
     fNthrown = 0;
     fBeamE   = 0;
     strcpy(fGenName, "default");
@@ -34,41 +37,38 @@ void remollRunData::Init(){
     }
 }
 
-void remollRunData::Print(){
-    char gitInfo[__GITMAXINFO_SIZE];
-    gitInfo[0] = '\0';
-    strcpy(gitInfo, gGitInfoStr);
+void remollRunData::Print()
+{
+    G4cout << "git repository info" << G4endl;
+    G4cout << "-------------------------------------------------" << G4endl;
+    G4cout << gGitInfo << G4endl;
+    G4cout << "-------------------------------------------------" << G4endl;
+    G4cout << "Run at " << fRunTime.AsString("ls") << " on " << fHostName << G4endl;
+    G4cout << "Run Path " << fRunPath << G4endl;;
+    G4cout << "N generated = " << fNthrown << G4endl;
+    G4cout << "Beam Energy = " << fBeamE << "GeV" << G4endl;
+    G4cout << "Generator   = " << fGenName << G4endl;
 
-    printf("git repository info\n-------------------------------------------------\n%s-------------------------------------------------\n\n", gitInfo);
-    printf("Run at %s on %s\n", fRunTime.AsString("ls"), fHostName);
-    printf("Run Path %s\n", fRunPath);
-    printf("N generated = %ld\n", fNthrown);
-    printf("Beam Energy = %f GeV\n", fBeamE);
-    printf("Generator   = %s\n", fGenName);
-
-    printf("Field maps:\n");
-    unsigned int i;
-    for( i = 0; i < fMagData.size(); i++ ){
-	printf("\t%s\n", fMagData[i].filename);
-	printf("\t%s\n", fMagData[i].hashsum);
-	printf("\t%s\n\n", fMagData[i].timestamp.AsString("ls"));
+    G4cout << "Field maps:" << G4endl;
+    for (unsigned int i = 0; i < fMagData.size(); i++ ){
+	G4cout << "\t" << fMagData[i].filename << G4endl;
+	G4cout << "\t" << fMagData[i].hashsum << G4endl;
+	G4cout << "\t" << fMagData[i].timestamp.AsString("ls") << G4endl;
     }
 
-    printf("Macro run:\n-------------------------------------------------\n");
-
+    G4cout << "Macro run:" << G4endl;
+    G4cout << "-------------------------------------------------" << G4endl;
     fMacro.Print();
-    
-    printf("-------------------------------------------------\n\n");
-    printf("Stored GDML Files:\n");
-    for( i = 0; i < fGDMLFiles.size(); i++ ){
+    G4cout << "-------------------------------------------------" << G4endl;
+    G4cout << "Stored GDML Files:" << G4endl;
+    for (unsigned int i = 0; i < fGDMLFiles.size(); i++ ) {
 	if( fGDMLFiles[i].GetBufferSize() >= 1024 ){
-	    printf("\t%32s %4lld kB\n", fGDMLFiles[i].GetFilename(), fGDMLFiles[i].GetBufferSize()/1024 );
+	    G4cout << "\t" << fGDMLFiles[i].GetFilename() << " " << fGDMLFiles[i].GetBufferSize()/1024 << "kB" << G4endl;
 	} else {
-	    printf("\t%32s   <1 kB\n", fGDMLFiles[i].GetFilename());
+	    G4cout << "\t" << fGDMLFiles[i].GetFilename() << " < 1kB" << G4endl;
 	}
     }
-    printf("-------------------------------------------------\n\n");
-
+    G4cout << "-------------------------------------------------" << G4endl;
 }
 
 void remollRunData::AddGDMLFile( const char *fn )

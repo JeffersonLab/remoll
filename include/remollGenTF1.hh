@@ -13,6 +13,8 @@
 #include "remollVEventGen.hh"
 #include "CLHEP/Random/RandFlat.h"
 #include "CLHEP/Random/RandGauss.h"
+#include "G4AutoLock.hh"
+
 #include <math.h>
 // For the TH1Fs
 #include <TFile.h>
@@ -21,6 +23,13 @@
 #include <TH2.h>
 #include <TTree.h>
 #include <TLeaf.h>
+
+#include <vector>
+
+class TFile;
+class TTree;
+struct remollEvent_t;
+struct remollGenericDetectorHit_t;
 
 
 class remollGenTF1 : public remollVEventGen {
@@ -32,11 +41,34 @@ class remollGenTF1 : public remollVEventGen {
 
   private:
     void SamplePhysics(remollVertex *, remollEvent *);
+    
+    void SetRing(G4int num);
+    void SetRadOffset(G4bool offset);
     void SetGenFunctionFile(G4String& filename);
+    void SetSector(int secnum);
+    void SetScatteringType(G4String& input);
+
+    void distAnalysis();
+    void getHist(G4String& fname);
+    void fitHist(G4String& type);
+    static double elasticFit(double *x, double *par);
+    static double inelasticFit(double *x, double *par);
+    static double lorentzFit(double *x, double *par);
+
     double fZpos;
     
+
     TFile* fFile;
     TF1* fFunc;
+    TF1* fMollerFunc;
+    TF1* fElasticFunc;
+    TF1* fInelasticFunc;
+    G4String fType;
+    G4int fRing;
+    G4int fSector;
+    TH1F* fMollerHist;
+    TH1F* fElasticHist;
+    TH1F* fInelasticHist;
     G4double r_t;
   public:
     G4double fXmin, fXmax, fYmin, fYmax;
@@ -46,7 +78,7 @@ class remollGenTF1 : public remollVEventGen {
 //    G4double fPhiMin, fPhiMax;
 //    G4double fDeltaPhiMin, fDeltaPhiMax;
 //    G4int fSector, fRing;
-//    G4bool fBoffsetR; 
+    G4bool fBoffsetR; 
 
 };
 

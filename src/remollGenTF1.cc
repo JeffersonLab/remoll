@@ -27,34 +27,70 @@
 #include <math.h>
 #include <iostream>
 #include <string>
+#include <vector>
 // For the TF1s
-#include <TFile.h>
-#include <TF1.h>
+#include "TROOT.h"
+#include "TFile.h"
+#include "TTree.h"
+#include "TH1F.h"
+#include "TF1.h"
+#include "TMath.h"
+
 
 G4Mutex inFileMutex2 = G4MUTEX_INITIALIZER; //files are being read so mutex is needed
 
 remollGenTF1::remollGenTF1()
 : remollVEventGen("TF1"),
+    fRing(1), fSector(0), 
+    fType(),
     fFile(0),
-    fFunc(0)
+    fFunc(0),fMollerFunc(0),
+    fElasticFunc(0),
+    fInelasticFunc(0)
 {
+    G4cerr << "Initializing TF1 generator" << G4endl;
     fApplyMultScatt = true;
-    r_t = CLHEP::RandFlat::shoot(0.6,1.2);
+    r_t = CLHEP::RandFlat::shoot(600,1200);
     fZpos = (28.5*m - 0.52*m);
-    fThisGenMessenger->DeclareMethod("input",&remollGenTF1::SetGenFunctionFile,"ROOT filename:function name");
-    SetGenFunctionFile(*new G4String("../analysis/externalGenerator/remollGenFunctions.root:elastic_0"));
+    fThisGenMessenger->DeclareMethod("setFileFunction",&remollGenTF1::SetGenFunctionFile,"ROOT filename:function name");
+    fThisGenMessenger->DeclareMethod("scattType",&remollGenTF1::SetScatteringType,"Scattering type: moller, elastic, inelastic, or all");
+    fThisGenMessenger->DeclareMethod("sector",&remollGenTF1::SetSector,"Sector number: 1,2,or 3, or 0 for all");
+    fThisGenMessenger->DeclareMethod("radOffset",&remollGenTF1::SetRadOffset,"Radial offset to center detectors: boolean");
+    fThisGenMessenger->DeclareMethod("ring",&remollGenTF1::SetRing,"Detector ring number (1-6)");
+    SetScatteringType(*new G4String("all"));
+    SetSector(0);
+    SetRadOffset(false);
+    SetGenFunctionFile(*new G4String("remollGenFunctions.root:elastic_0"));
 }
 
 remollGenTF1::~remollGenTF1() {
     if (fFile){
         fFile->Close();
-        fFunc = 0;
     }
+    fFunc = 0;
+    fMollerFunc = 0;
+    fElasticFunc = 0;
+    fInelasticFunc = 0;
 }
 
+void remollGenTF1::SetRing(G4int num){ fRing = num; }
+
+void remollGenTF1::SetRadOffset(G4bool offset){ fBoffsetR = offset; }
+
+void remollGenTF1::SetScatteringType(G4String& input){ fType = input; }
+
+void remollGenTF1::SetSector(const G4int secnum){ fSector = secnum; }
+
 void remollGenTF1::SetGenFunctionFile(G4String& input) {
+    G4cout << "File name set to " << input << G4endl;
+    if(input == "genDefault"){ //input for generating input files using moller, elastic, and inelastic generators and then performing fits to use as TF1 input
+        G4cerr << "Reading generated default output files." << G4endl;
+        distAnalysis();
+        return;
+    }
+
     if (!input.contains(":")){
-        G4cerr << "Improper formatting for user input. Please ensure your macro commands include '/remoll/remollinput <file name>:<function name>'" << G4endl;
+        G4cerr << "Improper formatting for user input. Please ensure your macro commands include '/remoll/evgen/TF1/setFileFunction <file name>:<function name>'" << G4endl;
         return;
     }
 
@@ -81,7 +117,7 @@ void remollGenTF1::SetGenFunctionFile(G4String& input) {
 
     fFile = new TFile(filename);
     if (! fFile){
-        G4cerr << "could not open function file " << filename << G4endl;
+        G4cerr << "Could not open function file " << filename << G4endl;
         return;
     }
 
@@ -95,7 +131,10 @@ void remollGenTF1::SetGenFunctionFile(G4String& input) {
 
 void remollGenTF1::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 {
-
+    if (!fFunc){
+        G4cerr << "No Function set before SamplePhysics was called" << G4endl;
+        return;
+    }
   double xPos, yPos, zPos, zOffset;
   fE_min = 2.0*GeV;
   fE_max = 11.0*GeV;
@@ -143,7 +182,7 @@ void remollGenTF1::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
   double rad = RadSpectrum();
   zOffset = -1*500; //FIXME arbitrary z offset for Moller distribution propagation - affects air showering noise
   zPos = (28500 + zOffset); //FIXME arbitrary z offset for Moller distribution propagation - affects air showering noise
-  double xHitPos = (rad*cos(randPhi) - 1*((fBoffsetR)?radialOffset[fRing][fSector] : 0)); // Putting the offset here means that the detector and distribution will still make circles, just where the edge of the circle now passes the origin
+  double xHitPos = (rad*cos(randPhi)- 1*((fBoffsetR)? radialOffset[fRing][fSector] : 0.0)); // Putting the offset here means that the detector and distribution will still make circles, just where the edge of the circle now passes the origin
   double yHitPos = rad*sin(randPhi);
   xPos = xHitPos - (-1*zOffset)*sin(randTheta)*cos(randPhi) - (-1*zOffset)*sin(randPhi)*sin(randDeltaPhi);
   yPos = yHitPos - (-1*zOffset)*sin(randTheta)*sin(randPhi) + (-1*zOffset)*cos(randPhi)*sin(randDeltaPhi);
@@ -170,24 +209,252 @@ void remollGenTF1::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 }
 
 double remollGenTF1::RadSpectrum(){
-
-  if (fR_max>0.0 && fBoffsetR==true) {
-    double flatRad = CLHEP::RandFlat::shoot(fR_min,fR_max);
-    return flatRad;
-  }
+    //generate radius from TF1, radius in millimeters!
+    if (fR_max>0.0 && fBoffsetR==true) {
+        double flatRad = CLHEP::RandFlat::shoot(fR_min,fR_max);
+        return flatRad;
+    }
   
   //Randomly generate the distribution using the Metropolis algorithm
-  double r, a, u; 
+    double r, a, u; 
   //r_t is the previous hit, r is the proposed new hit, a is their relative
   //probabilities, and u is the deciding probability.
-  r = CLHEP::RandGauss::shoot(r_t,0.1); //generate proposed r with gaussian around previous
-  a = fFunc->Eval(r) / fFunc->Eval(r_t);
-
-  u = CLHEP::RandFlat::shoot(0.0,1.0);
-  if (u <= a)
-      r_t = r;
-
-  double finRad = (r_t)*1000.0;
-  return  finRad;
+    r = CLHEP::RandGauss::shoot(r_t,100); //generate proposed r with gaussian around previous
+    
+    if (fType == "all" && !fFile){
+        a = (fMollerFunc->Eval(r) + fElasticFunc->Eval(r) + fInelasticFunc->Eval(r)) / (fMollerFunc->Eval(r_t) + fElasticFunc->Eval(r_t) + fInelasticFunc->Eval(r_t));
+    }else{
+        a = fFunc->Eval(r) / fFunc->Eval(r_t);
+    }
+    u = CLHEP::RandFlat::shoot(0.0,1.0);
+    if (u <= a)
+        r_t = r;
+    return  r_t;
 }
 
+void remollGenTF1::distAnalysis(){
+    //takes input of remoll output files using moller, elastic, and inelastic generators
+    //Pulls hit radius data from the root files and puts it into histograms, and then fits 
+    //those histograms with parameterized functions that are output into remollGenFunctions.root
+    if (fType == "moller" || fType == "all"){
+        G4String* fname = new G4String("remollout_moller.root");
+        getHist(*fname);
+        fitHist(*new G4String("moller"));
+        if(fType == "moller")
+            fFunc = fMollerFunc;
+    }if (fType == "elastic" || fType == "all"){
+        getHist(*new G4String("remollout_elastic.root"));
+        fitHist(*new G4String("elastic"));
+        if (fType == "elastic")
+            fFunc = fElasticFunc;
+    }if (fType == "inelastic" || fType == "all"){
+        getHist(*new G4String("remollout_inelastic.root"));
+        fitHist(*new G4String("inelastic"));
+        if (fType == "inelastic")
+            fFunc = fInelasticFunc;
+    }
+}
+
+
+void remollGenTF1::getHist(G4String& fname){
+    G4AutoLock inFileLock(&inFileMutex2);
+    
+    G4cout << "Opening file " << fname << G4endl;
+    TFile *file = new TFile(fname);
+    if (!file){
+        G4cerr << "File not found." << G4endl;
+        exit(1);
+    }
+    TTree *T = (TTree*)(file->Get("T"));
+    if (!T){
+        G4cerr << "TTree T not found" << G4endl;
+        exit(1);
+    }
+    TH1F* rad = new TH1F("rad","hit.r",120,600,1200);
+    
+    rad->GetXaxis()->SetTitle("Radius (mm)");
+    rad->GetYaxis()->SetTitle("Rate (GeV/5 mm)");
+
+    int entry = 0;
+    int entries = T->GetEntries();
+    double rate;
+    std::vector<remollGenericDetectorHit_t>* Hit = new std::vector<remollGenericDetectorHit_t>;
+
+    if (T->GetBranch("hit")){
+        T->SetBranchAddress("hit", &Hit);
+    }else{
+        G4cerr << "Could not find branch hit in input file" << G4endl;
+    }
+    if (T->GetBranch("rate")){ 
+        T->SetBranchAddress("rate",&rate);
+    }else{
+        G4cerr << "Could not find branch rate in input file" << G4endl;
+    }
+    std::cerr << "Total entries to read: " << entries << std::endl;
+    for(int i = 0; i < entries; i++){
+        T->GetEntry(i);
+        for (size_t j = 0; j <  Hit->size(); j++){
+            remollGenericDetectorHit_t hit = Hit->at(j);//create local copy of hit
+            if (hit.det == 28 && hit.r > 600 && hit.r < 1200 && (hit.pid == 11 || hit.pid == -11)){
+                if (fSector == 0){
+                    rad->Fill(hit.r,rate);
+                    continue;
+                }
+                 
+                //determine sector number (conditions provided by Seamus)
+                 double secphi;
+                 double eigth = 360.0/56.0;
+                 if (atan2(hit.y,hit.x)>0){
+                     secphi = fmod(atan2(hit.y,hit.x),2.0*3.14159/7.0)*180/3.14159;
+                }
+                 else{
+                     secphi = fmod(atan2(hit.y,hit.x)+2.0*3.14159,2.0*3.14159/7.0)*180/3.14159;
+                 }
+
+                 if((secphi < eigth || secphi > 7*eigth) && fSector == 1)
+                     rad->Fill(hit.r,rate);
+                 if (((eigth < secphi && secphi < 3.0*eigth) || (5.0*eigth < secphi && secphi < 7.0*eigth)) && fSector == 2)
+                     rad->Fill(hit.r,rate);
+                 if ((3.0*eigth < secphi && secphi < 5.0*eigth) && fSector == 3)
+                     rad->Fill(hit.r,rate);
+            }
+        }
+    } 
+    rad->Scale(1e7/entries);
+    rad->SetDirectory(0);    
+    file->Close();
+    inFileLock.unlock();
+    if (fname == "remollout_moller.root"){
+        fMollerHist = rad;
+    }else if (fname == "remollout_elastic.root"){
+        fElasticHist = rad;
+    }else if ( fname == "remollout_inelastic.root"){
+        fInelasticHist = rad;
+    }
+    return;
+    
+}
+
+void remollGenTF1::fitHist(G4String& type){
+    TF1* fit;
+     
+    //fit histograms of all sectors
+        if (type == "moller"){
+            TH1F* rad = fMollerHist;
+            G4cerr << "Fitting moller sector " << fSector << G4endl;
+            fit = new TF1("mol","gaus",600,1200);
+            rad->GetXaxis()->SetRange(rad->FindBin(900),rad->FindBin(1100));
+            double max = rad->GetMaximum();
+            double mean = rad->GetBinCenter(rad->GetMaximumBin());
+            double FWHM = rad->GetBinCenter(rad->FindLastBinAbove(max/2.0)) - rad->GetBinCenter(rad->FindFirstBinAbove(max/2.0));
+            fit->SetParameters(max,FWHM/2,mean);
+            rad->Fit("mol","NM");
+            fMollerFunc = fit;
+            return;
+        }
+
+         else if (type == "elastic"){
+            TH1F* rad = fElasticHist;
+             G4cerr << "Fitting elastic sector " << fSector << G4endl;
+           
+            fit = new TF1("el", remollGenTF1::elasticFit, 600,1200,6);
+            
+            rad->GetXaxis()->SetRange(rad->FindBin(700),rad->FindBin(800));  
+            
+            double max = rad->GetMaximum();
+            double mean = rad->GetBinCenter(rad->GetMaximumBin());
+            double FWHM = rad->GetBinCenter(rad->FindLastBinAbove(max/2.0)) - rad->GetBinCenter(rad->FindFirstBinAbove(max/2.0));
+            fit->SetParameter(0,max);
+            fit->SetParameter(2,mean);
+            fit->SetParameter(1,FWHM/2);
+
+            //Adjust range to only quadratic range
+            rad->GetXaxis()->SetRange(rad->FindBin(800),rad->FindBin(1100));
+            
+            //fit->SetParameter(3,8e6);
+            double b = rad->GetBinCenter(rad->GetMinimumBin());
+            double c = rad->GetMinimum();
+            double a = rad->GetBinContent(rad->FindBin(b+110))/12100;
+            
+            fit->SetParameter(3, a);
+            fit->SetParameter(4, c);
+            fit->SetParameter(5, b);
+
+            
+            rad->GetXaxis()->SetRange(rad->FindBin(600),rad->FindBin(1200));
+            rad->Fit(fit,"QMN");
+            fit->SetParameters(fit->GetParameters());
+            rad->Fit(fit,"MN");
+            fElasticFunc = fit;
+            return;
+         }
+    
+        else if (type == "inelastic"){
+            G4cerr << "Fitting inelastic sector "<< fSector << G4endl;
+            TH1F* rad = fInelasticHist;
+            fit = new TF1("in",remollGenTF1::inelasticFit,600,1200,5);
+            
+            
+            rad->GetXaxis()->SetRange(0,rad->FindBin(800));
+            double max = rad->GetMaximum();
+            double mean = rad->GetBinCenter(rad->GetMaximumBin());
+            double HWHM = abs(mean - rad->GetBinCenter(rad->FindFirstBinAbove(max/2.0)));
+            double stddev = 2*HWHM / (2*sqrt(2*log(2)));
+            fit->SetParameter(0,max);
+            fit->SetParameter(1,mean);
+            fit->SetParameter(2,stddev);
+            
+            //a*x^-b
+            rad->GetXaxis()->SetRange(rad->FindBin(mean),rad->FindBin(1200));
+            double x1 = 950.0;
+            double x2 = 1100.0;
+            double y1 = rad->GetBinContent(rad->FindBin(x1));
+            double y2 = rad->GetBinContent(rad->FindBin(x2));
+            double b = log(y1/y2) / log(x2/x1);
+            double a = y1 / pow(x1,-1*b);
+            fit->SetParameter(3,a);
+            fit->SetParameter(4,b);
+
+            rad->GetXaxis()->SetRange(0,120);
+
+            rad->Fit(fit,"NMWP");
+            fInelasticFunc = fit;
+            return;
+        }
+    return;
+}
+double remollGenTF1::lorentzFit(double *x, double *par){
+    return (0.5*par[0]*par[1]/TMath::Pi())/TMath::Max(1.0e-10,(x[0]-par[2])*(x[0]-par[2]) + 0.25*par[1]*par[1]);
+}
+
+double remollGenTF1::elasticFit(double *x, double *par){
+    if (x[0] > 1200 || x[0] < 600)
+        return 0.0;
+    double q = 0.0;
+    double l = lorentzFit(x,par);
+
+    q =  (TMath::Abs(par[3])*(x[0]-par[5])*(x[0]-par[5])-par[4]);
+    if (l < q && x[0] > par[2]){
+        return q;
+    }else{
+        return l;
+    }
+    return 0.0;
+}
+
+double remollGenTF1::inelasticFit(double *x, double *par){
+    double g;
+    double e;
+
+    double arg = (fabs(par[2])>1e-6)? (x[0] - (par[1]))/par[2] : 0.0;
+    g = par[0]*exp(-0.5*arg*arg)/(par[2]*sqrt(2.0*TMath::Pi()));
+    if (x[0] > (par[1]))
+        e = par[3]/TMath::Power(x[0],par[4]);/* + par[5];*/
+    if (g > e){
+        return g;
+    }
+    else{
+        return e;
+    }
+    return 0.0;
+}

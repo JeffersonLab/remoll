@@ -28,7 +28,7 @@
 #include "G4Colour.hh"
 
 #define __DET_STRLEN 200
-#define __MAX_DETS 10000
+#define __MAX_DETS 100000
 
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
@@ -376,10 +376,6 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
-  G4bool useddetnums[__MAX_DETS];
-  for (k = 0; k < __MAX_DETS; k++ ){useddetnums[k] = false;}
-  k = 0;
-
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
       G4LogicalVolume* myvol = (*iter).first;
@@ -391,9 +387,9 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           vit != (*iter).second.end(); vit++) {
 
           if ((*vit).type == "SensDet") {
-              G4String det_type = (*vit).value;
 
               // Also allow specification of det number ///////////////////
+              G4String det_type = "";
               int det_no = -1;
               for (G4GDMLAuxListType::const_iterator
                   nit  = (*iter).second.begin();
@@ -405,7 +401,10 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                           G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR detector number too high" << G4endl;
                           exit(1);
                       }
-                      useddetnums[det_no] = true;
+                  }
+
+                  if ((*nit).type == "DetType") {
+                      det_type = (*nit).value.data();
                   }
               }
               if (det_no <= 0) {
@@ -424,12 +423,17 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
               G4VSensitiveDetector* thisdet = SDman->FindSensitiveDetector(detectorname,(fVerboseLevel > 0));
 
               if( thisdet == 0 ) {
-                  thisdet = new remollGenericDetector(detectorname, det_no);
                   if (fVerboseLevel > 0)
-                      G4cout << "  Creating sensitive detector " << det_type
-                          << " for volume " << myvol->GetName()
+                      G4cout << "  Creating sensitive detector "
+                          << "for volume " << myvol->GetName()
                           <<  G4endl << G4endl;
-                  SDman->AddNewDetector(thisdet);
+
+                  remollGenericDetector* det = new remollGenericDetector(detectorname, det_no);
+                  if (det_type.size() > 0) det->SetDetectorType(det_type);
+
+                  SDman->AddNewDetector(det);
+
+                  thisdet = det;
               }
 
               myvol->SetSensitiveDetector(thisdet);
