@@ -376,10 +376,6 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
-  G4bool useddetnums[__MAX_DETS];
-  for (k = 0; k < __MAX_DETS; k++ ){useddetnums[k] = false;}
-  k = 0;
-
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
       G4LogicalVolume* myvol = (*iter).first;
@@ -405,7 +401,6 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                           G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR detector number too high" << G4endl;
                           exit(1);
                       }
-                      useddetnums[det_no] = true;
                   }
 
                   if ((*nit).type == "DetType") {
