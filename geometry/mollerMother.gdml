@@ -31,36 +31,36 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-      <file name="geometry/targetDaughter.gdml"/>
+      <file name="targetDaughter.gdml"/>
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-      <file name="geometry/detectorDaughter.gdml"/>
+      <file name="detectorDaughter.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol name="trackingDetectors_physical">
-      <file name="geometry/trackingDaughter.gdml"/>
+      <file name="trackingDaughter.gdml"/>
       <positionref ref="trackingCenter"/>
       </physvol>
 
       <physvol>
-      <file name="geometry/pionDetectorSystem.gdml"/>
+      <file name="pionDetectorSystem.gdml"/>
       <positionref ref="pionDetectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-      <file name="geometry/upstreamDaughter.gdml"/>
+      <file name="upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-      <file name="geometry/hybridDaughter.gdml"/>
+      <file name="hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
       <rotationref ref="identity"/>
       </physvol> 
