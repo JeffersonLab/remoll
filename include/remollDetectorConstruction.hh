@@ -30,8 +30,12 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     void ReloadGeometry(const G4String gdmlfile);
 
     void SetDetectorGeomFile(const G4String& name) {
-      fGDMLPath = name;
-      fGDMLFile = name;
+      size_t i = name.rfind('/');
+      if (i != std::string::npos) {
+        fGDMLPath = name.substr(0,i);
+      } else fGDMLPath = ".";
+      fGDMLFile = name.substr(i + 1);
+      G4cout << fGDMLPath << "    /    " << fGDMLFile << G4endl;
     }
 
   private:

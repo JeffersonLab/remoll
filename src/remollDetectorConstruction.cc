@@ -50,15 +50,10 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-  fMessenger->DeclareProperty(
+  fMessenger->DeclareMethod(
       "setgeofile",
-      fGDMLFile,
+      &remollDetectorConstruction::SetDetectorGeomFile,
       "Set geometry GDML file")
-      .SetStates(G4State_PreInit);
-  fMessenger->DeclareProperty(
-      "setgeopath",
-      fGDMLPath,
-      "Set geometry GDML path")
       .SetStates(G4State_PreInit);
   fMessenger->DeclareMethod(
       "printgeometry",
@@ -81,15 +76,10 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
   fGeometryMessenger = new G4GenericMessenger(this,
       "/remoll/geometry/",
       "Remoll geometry properties");
-  fGeometryMessenger->DeclareProperty(
+  fGeometryMessenger->DeclareMethod(
       "setfile",
-      fGDMLFile,
+      &remollDetectorConstruction::SetDetectorGeomFile,
       "Set geometry GDML file")
-      .SetStates(G4State_PreInit);
-  fGeometryMessenger->DeclareProperty(
-      "setpath",
-      fGDMLPath,
-      "Set geometry GDML path")
       .SetStates(G4State_PreInit);
   fGeometryMessenger->DeclareProperty(
       "verbose",
