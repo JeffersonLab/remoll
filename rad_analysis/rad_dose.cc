@@ -144,8 +144,8 @@ Bool_t kShowGraphic=kTRUE;            //Show canvases and they will be saved the
 
 //Boolean parameter to disable/enable saving histograms as png
 Bool_t kVertices=kTRUE;               // Governs the cut region plotting
-Bool_t kShlds=kTRUE;                  // Governs the sensitive shielding region vertex position plotting
-Bool_t kShldHits=kTRUE;               // Governs the sensitive shielding region hit position plotting
+Bool_t kShlds=kFALSE;                  // Governs the sensitive shielding region vertex position plotting
+Bool_t kShldHits=kFALSE;               // Governs the sensitive shielding region hit position plotting
 Bool_t k1D=kFALSE;                    // Governs 1D plottings
 
 Bool_t kSave1DKEHisto=(k1D && kVertices);      // option to save Kinetic energy from cut regions histograms
@@ -209,7 +209,7 @@ int main(Int_t argc,Char_t* argv[]) {
     temp_str_stream2<<v;
     TString vS;
     vS=temp_str_stream2.str();
-    temp_str_stream3<<"/home/cameronc/gitdir/dose_remoll/output/"<<argv[1]<<"_"<<n_mills<<"M/out_"<<argv[1]<<vS<<"/remoll_1M.root";
+    temp_str_stream3<<"/home/cameronc/gitdir/dose_remoll/output/"<<argv[1]<<"_"<<n_mills<<"M/out_"<<argv[1]<<vS<<"/remoll_"<<argv[1]<<"_1M.root";
     added_file_array[v]=temp_str_stream3.str();
     Tmol->Add(added_file_array[v]);
   }
@@ -255,7 +255,7 @@ int main(Int_t argc,Char_t* argv[]) {
   Tmol->SetBranchAddress("hit.ldE",&fGenDetHit_LdE);
   Tmol->SetBranchAddress("hit.edep",&fGenDetHit_edep);
 
-  Int_t nentries = (Int_t)Tmol->GetEntries();
+  const Int_t nentries = (Int_t)Tmol->GetEntries();
 
   if (kSaveRootFile){
     TString rootfilestatus="RECREATE";
@@ -327,16 +327,16 @@ int main(Int_t argc,Char_t* argv[]) {
   //                                      { change the binning to reflect the opposite nature, good, all binned in one spot, decent-needs better boundaries->775?, 775?, decent, decent, seems to miss a whole lot }
   //                                      { hall**            ,  target       ,  collar        ,  coll1shld , +magnet    ,  coll4shld,  hybshld         ,  dump ,  other,  all  }; -> Hall is an inverted volume in x and z, not y.
   //                                was   {-315 tp 1781.837   , -315 to 315   ,  275.1 to 315.1,  397.45-775,  775.55-812,  812-992  ,  992-1821.837    ,  dump ,  other,  all  }; -> Hall is an inverted volume in x and z, not y.
-  Double_t z_vertex_cuts_low[n_regions] = {-235.-80           , -235.-80.     ,  285.1+10.-20. ,  315.1     ,  775.05+0.5,  812.     ,  992.            ,  3200., -500. , -3000.}; //last index store vertices outside of other ranges 
-  Double_t z_vertex_cuts_up[n_regions]  = { 1821.837          ,  235.+80.     ,  285.1+10.+20. ,  812.      ,  812.      ,  992.     ,  1821.837        ,  7000.,  2000.,  3500.};
-  Double_t x_vertex_cuts_low[n_regions] = {-296.5             ,  91.5-296.-80., -18.5-20.      , -213.-1.   , -386.84-1. , -386.84-1.,  91.5-285.75-40. , -500. , -500. , -3000.};
-  Double_t x_vertex_cuts_up[n_regions]  = { 296.5             ,  91.5+296.+80.,  18.5+20.      ,  213.+1.   ,  386.84+1. ,  386.84+1.,  91.5+285.75+40. ,  500. ,  500. ,  3000.};
+  Double_t z_vertex_cuts_low[n_regions] = {-235.-80           , -235.-80.     ,  285.1+10.-20. ,  315.1     ,  775.05+0.5,  812.     ,  992.            ,  3200., -500. , -2500.}; //last index store vertices outside of other ranges 
+  Double_t z_vertex_cuts_up[n_regions]  = { 1821.837          ,  235.+80.     ,  285.1+10.+20. ,  812.      ,  812.      ,  992.     ,  1821.837        ,  7000.,  3200.,  3200.};
+  Double_t x_vertex_cuts_low[n_regions] = {-296.5             ,  91.5-296.-80., -18.5-20.      , -213.-1.   , -386.84-1. , -386.84-1.,  91.5-285.75-40. , -500. , -500. , -2000.};
+  Double_t x_vertex_cuts_up[n_regions]  = { 296.5             ,  91.5+296.+80.,  18.5+20.      ,  213.+1.   ,  386.84+1. ,  386.84+1.,  91.5+285.75+40. ,  500. ,  500. ,  2000.};
   Double_t y_vertex_cuts_low[n_regions] = {-330.              , -40.-250.-40. , -18.5-20.      , -213.-1.   , -290.-1.   , -290.-1.  , -40.-250.-40.    , -500. , -500. , -1000.};
-  Double_t y_vertex_cuts_up[n_regions]  = { 330.              , -40.+250.+40. ,  18.5+20.      ,  213.+1.   ,  290.+1.   ,  290.+1.  , -40.+250.+40.    ,  500. ,  500. ,  2500.};
-  Double_t R_vertex_cuts_up[n_regions]  = { 5000.             ,  500.         ,  75.           ,  350.      ,  500.      ,  500.     ,  450.            ,  500. ,  500. ,  3500.};
+  Double_t y_vertex_cuts_up[n_regions]  = { 330.              , -40.+250.+40. ,  18.5+20.      ,  213.+1.   ,  290.+1.   ,  290.+1.  , -40.+250.+40.    ,  500. ,  500. ,  2000.};
+  Double_t R_vertex_cuts_up[n_regions]  = { 5000.             ,  500.         ,  75.           ,  350.      ,  500.      ,  500.     ,  450.            ,  500. ,  500. ,  2500.};
   Int_t    x_vertex_bin_counts[n_regions]={ 1000, 300, 50, 300, 300, 300, 300, 1000, 1000, 1000}; // default, overridden below
   Int_t    y_vertex_bin_counts[n_regions]={ 1000, 300, 50, 300, 300, 300, 300, 1000, 1000, 1000};
-  Int_t    z_vertex_bin_counts[n_regions]={ 1000, 300, 50, 300, 300, 300, 300, 1900, 1000, 1000};
+  Int_t    z_vertex_bin_counts[n_regions]={ 1000, 300, 50, 300, 300, 300, 300, 1200, 1000, 1000};
   Int_t    R_vertex_bin_counts[n_regions]={ 1000, 300, 50, 300, 300, 300, 300, 500 , 1000, 1000};
   // FIXME Use a constant bin/area metric.
   Int_t    x_area_per_bin = 1; // 1 cm per bin
@@ -357,19 +357,19 @@ int main(Int_t argc,Char_t* argv[]) {
   Double_t Hall_x_vertices_up  =  500.;
   Double_t Hall_y_vertices_low = -500.;
   Double_t Hall_y_vertices_up  =  500.;
-  Double_t Hall_R_vertices_up  =  3500.;
+  Double_t Hall_R_vertices_up  =  2500.;
   if(kVertices==kTRUE && kShlds==kFALSE){
-    z_vertex_bin_counts[0] = 6500;
-    x_vertex_bin_counts[0] = 6000;
-    y_vertex_bin_counts[0] = 3500;
-    R_vertex_bin_counts[0] = 3000;
-    Double_t Hall_z_vertices_low = -3000.;
-    Double_t Hall_z_vertices_up  =  3500.;
-    Double_t Hall_x_vertices_low = -3000.;
-    Double_t Hall_x_vertices_up  =  3000.;
-    Double_t Hall_y_vertices_low = -1000.;
-    Double_t Hall_y_vertices_up  =  2500.;
-    Double_t Hall_R_vertices_up  =  3500.;
+    z_vertex_bin_counts[0] = 650;
+    x_vertex_bin_counts[0] = 600;
+    y_vertex_bin_counts[0] = 350;
+    R_vertex_bin_counts[0] = 300;
+    Double_t Hall_z_vertices_low = -300.;
+    Double_t Hall_z_vertices_up  =  350.;
+    Double_t Hall_x_vertices_low = -300.;
+    Double_t Hall_x_vertices_up  =  300.;
+    Double_t Hall_y_vertices_low = -100.;
+    Double_t Hall_y_vertices_up  =  250.;
+    Double_t Hall_R_vertices_up  =  350.;
   }
 
   // OLD vertices
@@ -424,7 +424,7 @@ int main(Int_t argc,Char_t* argv[]) {
 	      //1D radiation histograms
         Histo_kineE[i][j][k]=new TH1F(Form("Histo_kineE_%d_%d_%d",i+1,j+1,k+1),Form("%s from %s Area in %s MeV Range; KineE (MeV)",spid[j].Data(),svertex[i].Data(),ke_range[k].Data()),100,bin_ranges[i][j][k],bin_ranges[i][j][k+1]);
 	      Histo_vertex[i][j][k]=new TH1F(Form("Histo_vertex_%d_%d_%d",i+1,j+1,k+1),Form("%s Vertices from %s Area in %s MeV Range (KE weighted);Z vertex (cm);MeV",spid[j].Data(),svertex[i].Data(),ke_range[k].Data()),vertex_bin_counts[i],vertex_bin_ranges_low[i],vertex_bin_ranges_up[i]);
-	      Histo_vertex_noWeight[i][j][k]=new TH1F(Form("Histo_vertex_noWeight_%d_%d_%d",i+1,j+1,k+1),Form("%s Vertices from %s Area in %s MeV Range ;Z vertex (cm);Counts",spid[j].Data(),svertex[i].Data(),ke_range[k].Data()),vertex_bin_counts[i],vertex_bin_ranges_low[i],vertex_bin_ranges_up[i]);
+	      Histo_vertex_noWeight[i][j][k]=new TH1F(Form("Histo_vertex_noWeight_%d_%d_%d",i+1,j+1,k+1),Form("%s Vertices from %s Area in %s MeV Range ;Z vertex (cm);Counts, for %d events",spid[j].Data(),svertex[i].Data(),ke_range[k].Data(),n_events),vertex_bin_counts[i],vertex_bin_ranges_low[i],vertex_bin_ranges_up[i]);
 	      //2D vertex distribution histograms
 	      if (i>0){
           HistoVertex_RadDet[i][j][k][0]=new TH2D(Form("HistoVertex_RadDet_v%d_p%d_k%d_0",i+1,j+1,k+1),Form(" %s from %s Area in %s MeV Range; x (cm); y (cm); (MeV)",spid[j].Data(),svertex[i].Data(),ke_range[k].Data()),x_vertex_bin_counts[i],x_vertex_cuts_low[i]-1,x_vertex_cuts_up[i]+1,y_vertex_bin_counts[i],y_vertex_cuts_low[i]-1,y_vertex_cuts_up[i]+1);
@@ -446,24 +446,25 @@ int main(Int_t argc,Char_t* argv[]) {
   } 
 
   // FIXME New histograms and stuff
+  //if(kShlds){
   for(Int_t i=0;i<n_shlds;i++){
     for(Int_t j=0;j<n_particles;j++){
       for(Int_t k=0;k<n_energy_ranges;k++){
         Histo_shld_kineE[i][j][k]=new TH1F(Form("Histo_shld_kineE_%d_%d_%d",i+1,j+1,k+1),Form("%s into %s Area in %s MeV Range; KineE (MeV)",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1);
 	      Histo_shld_vertex[i][j][k]=new TH1F(Form("Histo_shld_vertex_%d_%d_%d",i+1,j+1,k+1),Form("%s Vertices into %s Area in %s MeV Range (KE weighted);Z vertex (cm);MeV",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1);
-	      Histo_shld_vertex_noWeight[i][j][k]=new TH1F(Form("Histo_shld_vertex_noWeight_%d_%d_%d",i+1,j+1,k+1),Form("%s Vertices into %s Area in %s MeV Range ;Z vertex (cm);Counts",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1);
+	      Histo_shld_vertex_noWeight[i][j][k]=new TH1F(Form("Histo_shld_vertex_noWeight_%d_%d_%d",i+1,j+1,k+1),Form("%s Vertices into %s Area in %s MeV Range ;Z vertex (cm);Counts, for %d events",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data(),n_events),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1);
         HistoVertex_shld_RadDet[i][j][k][0]=new TH2D(Form("HistoVertex_shld_RadDet_v%d_p%d_k%d_0",i+1,j+1,k+1),Form(" %s into %s Area in %s MeV Range; x (cm); y (cm); (MeV)",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),x_vertex_bin_counts[0],Hall_x_vertices_low-1,Hall_x_vertices_up+1,y_vertex_bin_counts[0],Hall_y_vertices_low-1,Hall_y_vertices_up+1);
-	      HistoVertex_shld_RadDet[i][j][k][1]=new TH2D(Form("HistoVertex_shld_RadDet_v%d_p%d_k%d_2",i+1,j+1,k+1),Form(" %s into %s Area in %s MeV Range; z (cm); y (cm); (Counts)",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1,y_vertex_bin_counts[0],Hall_y_vertices_low-1,Hall_y_vertices_up+1);
+	      HistoVertex_shld_RadDet[i][j][k][1]=new TH2D(Form("HistoVertex_shld_RadDet_v%d_p%d_k%d_2",i+1,j+1,k+1),Form(" %s into %s Area in %s MeV Range; z (cm); y (cm); (MeV)",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1,y_vertex_bin_counts[0],Hall_y_vertices_low-1,Hall_y_vertices_up+1);
 	      
         
         Histo_shld_hit[i][j][k]=new TH1F(Form("Histo_shld_hit_%d_%d_%d",i+1,j+1,k+1),Form("%s Hits into %s Area in %s MeV Range (KE weighted);Z vertex (cm);MeV",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1);
-	      Histo_shld_hit_noWeight[i][j][k]=new TH1F(Form("Histo_shld_hit_noWeight_%d_%d_%d",i+1,j+1,k+1),Form("%s Hits into %s Area in %s MeV Range ;Z vertex (cm);Counts",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1);
+	      Histo_shld_hit_noWeight[i][j][k]=new TH1F(Form("Histo_shld_hit_noWeight_%d_%d_%d",i+1,j+1,k+1),Form("%s Hits into %s Area in %s MeV Range ;Z vertex (cm);Counts, for %d events",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data(),n_events),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1);
         HistoHit_shld_RadDet[i][j][k][0]=new TH2D(Form("HistoHit_shld_RadDet_v%d_p%d_k%d_0",i+1,j+1,k+1),Form(" %s Hits into %s Area in %s MeV Range; x (cm); y (cm); (MeV)",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),x_vertex_bin_counts[0],Hall_x_vertices_low-1,Hall_x_vertices_up+1,y_vertex_bin_counts[0],Hall_y_vertices_low-1,Hall_y_vertices_up+1);
 	      HistoHit_shld_RadDet[i][j][k][1]=new TH2D(Form("HistoHitx_shld_RadDet_v%d_p%d_k%d_2",i+1,j+1,k+1),Form(" %s Hits into %s Area in %s MeV Range; z (cm); y (cm); (MeV)",spid[j].Data(),svertex_shld[i].Data(),ke_range[k].Data()),z_vertex_bin_counts[0],Hall_z_vertices_low-1,Hall_z_vertices_up+1,y_vertex_bin_counts[0],Hall_y_vertices_low-1,Hall_y_vertices_up+1);
       }
     }
   }
-
+  //}
   int detid    = -1;
   int pid      = -1;
   Int_t vrtx   = -1; //index for vertex range
@@ -535,49 +536,49 @@ int main(Int_t argc,Char_t* argv[]) {
               // FIXME edit the histograms to be filled here.
               //following if is a redundant check I already checked  vrtx for negative values up
               Histo_kineE[vrtx][pid][keid]->Fill(kineE);
-              Histo_vertex[vrtx][pid][keid]->Fill(fGenDetHit_VZ[j]*100,kineE);
+              Histo_vertex[vrtx][pid][keid]->Fill(fGenDetHit_VZ[j]*100,kineE/n_events);
               Histo_vertex_noWeight[vrtx][pid][keid]->Fill(fGenDetHit_VZ[j]*100,1);
               if (detid==0){
-                Histo_RadDet[vrtx][pid][0]->Fill(phi,fGenDetHit_Y[j]*100,kineE);//fill cyl. phi detector
+                Histo_RadDet[vrtx][pid][0]->Fill(phi,fGenDetHit_Y[j]*100,kineE/n_events);//fill cyl. phi detector
                 if (fGenDetHit_Z[j]>=0)
-                  Histo_RadDet[vrtx][pid][3]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE);//fill cyl. detector	forward
+                  Histo_RadDet[vrtx][pid][3]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE/n_events);//fill cyl. detector	forward
                 else
-                  Histo_RadDet[vrtx][pid][4]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE);//fill cyl. detector	backward
+                  Histo_RadDet[vrtx][pid][4]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE/n_events);//fill cyl. detector	backward
               }	
               else if (detid==1 || detid==2)
-                Histo_RadDet[vrtx][pid][detid]->Fill(fGenDetHit_Z[j]*100,fGenDetHit_X[j]*100,kineE);//fill roof detector
+                Histo_RadDet[vrtx][pid][detid]->Fill(fGenDetHit_Z[j]*100,fGenDetHit_X[j]*100,kineE/n_events);//fill roof detector
 
               //Fill vertex 2D plots
-              HistoVertex_RadDet[vrtx][pid][keid][0]->Fill(fGenDetHit_VX[j]*100,fGenDetHit_VY[j]*100,kineE);
-              //HistoVertex_RadDet[vrtx][pid][keid][1]->Fill(fGenDetHit_VZ[j]*100,TMath::Sqrt(TMath::Power(fGenDetHit_VX[j]*100,2)+TMath::Power(fGenDetHit_VY[j]*100,2)),kineE);
-              HistoVertex_RadDet[vrtx][pid][keid][1]->Fill(fGenDetHit_VZ[j]*100,fGenDetHit_VY[j]*100,kineE);
+              HistoVertex_RadDet[vrtx][pid][keid][0]->Fill(fGenDetHit_VX[j]*100,fGenDetHit_VY[j]*100,kineE/n_events);
+              //HistoVertex_RadDet[vrtx][pid][keid][1]->Fill(fGenDetHit_VZ[j]*100,TMath::Sqrt(TMath::Power(fGenDetHit_VX[j]*100,2)+TMath::Power(fGenDetHit_VY[j]*100,2)),kineE/n_events);
+              HistoVertex_RadDet[vrtx][pid][keid][1]->Fill(fGenDetHit_VZ[j]*100,fGenDetHit_VY[j]*100,kineE/n_events);
  
             }
             else if (hit_radius > hit_radius_min[vrtx_z])//without this condition warning will print for tracks going to the dump
-              printf("warning: energy outside the ranges %4.3f \n",kineE);
+              printf("warning: energy outside the ranges %4.3f \n",kineE/n_events);
           }// end for loop, run once per event per region it appears in
          //Run once per event
      /*   if (keid>=0 && hit_radius > hit_radius_min[vrtx_z]){
           //Fill vertex distribution 2D plots for all vertices using last index
-          HistoVertex_RadDet[n_regions-1][pid][keid][0]->Fill(fGenDetHit_VX[j]*100,fGenDetHit_VY[j]*100,kineE);
-          HistoVertex_RadDet[n_regions-1][pid][keid][1]->Fill(fGenDetHit_VZ[j]*100,TMath::Sqrt(TMath::Power(fGenDetHit_VX[j]*100,2)+TMath::Power(fGenDetHit_VY[j]*100,2)),kineE);
-          HistoVertex_RadDet[n_regions-1][pid][keid][2]->Fill(fGenDetHit_VZ[j]*100,fGenDetHit_VY[j]*100,kineE);
-          Histo_kineE[n_regions][pid][keid]->Fill(kineE);
+          HistoVertex_RadDet[n_regions-1][pid][keid][0]->Fill(fGenDetHit_VX[j]*100,fGenDetHit_VY[j]*100,kineE/n_events);
+          HistoVertex_RadDet[n_regions-1][pid][keid][1]->Fill(fGenDetHit_VZ[j]*100,TMath::Sqrt(TMath::Power(fGenDetHit_VX[j]*100,2)+TMath::Power(fGenDetHit_VY[j]*100,2)),kineE/n_events);
+          HistoVertex_RadDet[n_regions-1][pid][keid][2]->Fill(fGenDetHit_VZ[j]*100,fGenDetHit_VY[j]*100,kineE/n_events);
+          Histo_kineE[n_regions][pid][keid]->Fill(kineE/n_events);
             
           if (detid==0){
-            Histo_RadDet[n_regions-1][pid][0]->Fill(phi,fGenDetHit_Y[j]*100,kineE);//fill cyl. detector //index 5 will fill all the vertices (vrtx from 0 to 6)
+            Histo_RadDet[n_regions-1][pid][0]->Fill(phi,fGenDetHit_Y[j]*100,kineE/n_events);//fill cyl. detector //index 5 will fill all the vertices (vrtx from 0 to 6)
             if (fGenDetHit_Z[j]>=0)		
-              Histo_RadDet[n_regions-1][pid][3]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE);//fill cyl. detector	
+              Histo_RadDet[n_regions-1][pid][3]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE/n_events);//fill cyl. detector	
             else
-              Histo_RadDet[n_regions-1][pid][4]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE);//fill cyl. detector	
+              Histo_RadDet[n_regions-1][pid][4]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE/n_events);//fill cyl. detector	
           }	
           else if (detid==1 || detid==2)
-            Histo_RadDet[n_regions-1][pid][detid]->Fill(fGenDetHit_Z[j]*100,fGenDetHit_X[j]*100,kineE);//fill cyl. detector //index n_regions-1 will fill all the vertices (vrtx from 0 to n_regions-1)
+            Histo_RadDet[n_regions-1][pid][detid]->Fill(fGenDetHit_Z[j]*100,fGenDetHit_X[j]*100,kineE/n_events);//fill cyl. detector //index n_regions-1 will fill all the vertices (vrtx from 0 to n_regions-1)
             //index n_regions-1 will fill all the vertices (vrtx from 0 to n_regions-1) if used here
           if (detid==0)
-            Histo_RadDet[n_regions-1][pid][0]->Fill(phi,fGenDetHit_Y[j]*100,kineE);//fill cyl. detector
+            Histo_RadDet[n_regions-1][pid][0]->Fill(phi,fGenDetHit_Y[j]*100,kineE/n_events);//fill cyl. detector
           else if (detid==1 || detid==2)
-            Histo_RadDet[n_regions-1][pid][detid]->Fill(fGenDetHit_Z[j]*100,fGenDetHit_X[j]*100,kineE);//fill cyl. detector
+            Histo_RadDet[n_regions-1][pid][detid]->Fill(fGenDetHit_Z[j]*100,fGenDetHit_X[j]*100,kineE/n_events);//fill cyl. detector
         }*/
         }
 
@@ -617,16 +618,16 @@ int main(Int_t argc,Char_t* argv[]) {
             // FIXME edit the histograms to be filled here.
             //following if is a redundant check I already checked  vrtx for negative values up
             Histo_shld_kineE[vrtx][pid][keid]->Fill(kineE);
-            Histo_shld_vertex[vrtx][pid][keid]->Fill(fGenDetHit_VZ[j]*100,kineE);
+            Histo_shld_vertex[vrtx][pid][keid]->Fill(fGenDetHit_VZ[j]*100,kineE/n_events);
             Histo_shld_vertex_noWeight[vrtx][pid][keid]->Fill(fGenDetHit_VZ[j]*100,1);
-            Histo_shld_hit[vrtx][pid][keid]->Fill(fGenDetHit_Z[j]*100,kineE);
+            Histo_shld_hit[vrtx][pid][keid]->Fill(fGenDetHit_Z[j]*100,kineE/n_events);
             Histo_shld_hit_noWeight[vrtx][pid][keid]->Fill(fGenDetHit_Z[j]*100,1);
 
             //Fill vertex 2D plots
-            HistoVertex_shld_RadDet[vrtx][pid][keid][0]->Fill(fGenDetHit_VX[j]*100,fGenDetHit_VY[j]*100,kineE);
-            HistoVertex_shld_RadDet[vrtx][pid][keid][1]->Fill(fGenDetHit_VZ[j]*100,fGenDetHit_VY[j]*100,kineE);
-            HistoHit_shld_RadDet[vrtx][pid][keid][0]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE);
-            HistoHit_shld_RadDet[vrtx][pid][keid][1]->Fill(fGenDetHit_Z[j]*100,fGenDetHit_Y[j]*100,kineE);
+            HistoVertex_shld_RadDet[vrtx][pid][keid][0]->Fill(fGenDetHit_VX[j]*100,fGenDetHit_VY[j]*100,kineE/n_events);
+            HistoVertex_shld_RadDet[vrtx][pid][keid][1]->Fill(fGenDetHit_VZ[j]*100,fGenDetHit_VY[j]*100,kineE/n_events);
+            HistoHit_shld_RadDet[vrtx][pid][keid][0]->Fill(fGenDetHit_X[j]*100,fGenDetHit_Y[j]*100,kineE/n_events);
+            HistoHit_shld_RadDet[vrtx][pid][keid][1]->Fill(fGenDetHit_Z[j]*100,fGenDetHit_Y[j]*100,kineE/n_events);
           }
         }
       }
@@ -1041,6 +1042,7 @@ int main(Int_t argc,Char_t* argv[]) {
     }
   }
 
+
   // Textfile outputs
   const char * detector[2+n_shlds];
   detector[0]="Side";detector[1]="Top";
@@ -1055,6 +1057,7 @@ int main(Int_t argc,Char_t* argv[]) {
   TString strline;
   char line[600];
   char line1[600];
+  char line2[600];
   strline="Rootfile_name";
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
@@ -1063,12 +1066,12 @@ int main(Int_t argc,Char_t* argv[]) {
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
   // POWER
-  strline="Total_Radiation_Power_into_the_specified_detector_(MeV)";
+  strline="Total_Radiation_Power_into_the_specified_detector_(MeV/event)";
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  printf(" \n Total_Radiation_Power_into_the_specified_detector_(MeV) \n");
-  printf(" %20s %20s","Type","E_Range_(MeV)");
-  sprintf(line," %20s %20s","Type","E_Range_(MeV)");
+  printf(" \n Total_Radiation_Power_into_the_specified_detector_(MeV/event) \n");
+  printf(" %20s %20s","Type","E_Range_(MeV/event)");
+  sprintf(line," %20s %20s","Type","E_Range_(MeV/event)");
   for(Int_t t=0;t<2+n_shlds;t++){
     printf(" %13s",detector[t]);
     sprintf(line,"%s %13s",line,detector[t]);
@@ -1088,14 +1091,14 @@ int main(Int_t argc,Char_t* argv[]) {
       for(Int_t k=0;k<2;k++){//detector                             // number of hall (roof, walls) detectors present
 	      for (Int_t s=0;s<n_regions;s++)
 	        sum+=power_local[s][k][i][j];//sum over all the vertices
-        printf("%12.3E",sum);
-	      sprintf(line1,"%s %12.3E",line1,sum);
+        printf("%12.3E",sum/n_events);
+	      sprintf(line1,"%s %12.3E",line1,sum/n_events);
 	      sum=0;
       }
       for(Int_t k=0;k<n_shlds;k++){
 	      shld_sum+=shld_power_local[k][i][j];
-        printf("%12.3E",shld_sum);
-	      sprintf(line1,"%s %12.3E",line1,shld_sum);
+        printf("%12.3E",shld_sum/n_events);
+	      sprintf(line1,"%s %12.3E",line1,shld_sum/n_events);
 	      shld_sum=0;
       }
       printf("\n");
@@ -1105,12 +1108,12 @@ int main(Int_t argc,Char_t* argv[]) {
     }
   }
 
-  printf(" \n Vertex_Cut:Radiation_Power_into_the_hall_(MeV) \n");
-  strline="Vertex_Cut:Radiation_Power_into_the_hall_(MeV)";
+  printf(" \n Vertex_Cut:Radiation_Power_into_the_hall_(MeV/event) \n");
+  strline="Vertex_Cut:Radiation_Power_into_the_hall_(MeV/event)";
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  printf(" %20s %20s %20s \t %13s \t %13s \n","Vertex","Type","E_Range_(MeV)",detector[0],detector[1]);
-  sprintf(line," %20s %20s %20s \t %13s \t %13s ","Vertex","Type","E_Range_(MeV)",detector[0],detector[1]);
+  printf(" %20s %20s %20s \t %13s \t %13s \n","Vertex","Type","E_Range_(MeV/event)",detector[0],detector[1]);
+  sprintf(line," %20s %20s %20s \t %13s \t %13s ","Vertex","Type","E_Range_(MeV/event)",detector[0],detector[1]);
   list_power->Add(new TObjString(line));
   list_outputs << line << endl;
   for (Int_t i=0;i<n_regions;i++){
@@ -1120,8 +1123,8 @@ int main(Int_t argc,Char_t* argv[]) {
 	      sprintf(line," %20s %20s %20s",svertex[i].Data(),chpid[j],chenrange[k]);
 	      sprintf(line1," ");//empty previous values
 	      for(Int_t l=0;l<2;l++){//detector                             // number of hall (roof, wall) detectors present
-	        printf("%12.3E",power_local[i][l][j][k]);
-          sprintf(line1,"%s %12.3E",line1,power_local[i][l][j][k]);
+	        printf("%12.3E",power_local[i][l][j][k]/n_events);
+          sprintf(line1,"%s %12.3E",line1,power_local[i][l][j][k]/n_events);
 	      }
 	      printf("\n");
 	      sprintf(line," %s %s",line,line1);
@@ -1131,12 +1134,12 @@ int main(Int_t argc,Char_t* argv[]) {
     }
   }
   
-  printf(" \n ShldBlock_Cut:Radiation_Power_into_the_Shielding_Blocks_(MeV) \n");
-  strline="ShldBlock_Cut:Radiation_Power_into_the_Shielding_Blocks_(MeV)";
+  printf(" \n ShldBlock_Cut:Radiation_Power_into_the_Shielding_Blocks_(MeV/event) \n");
+  strline="ShldBlock_Cut:Radiation_Power_into_the_Shielding_Blocks_(MeV/event)";
   list_power->Add(new TObjString(strline));
   list_outputs << strline << endl;
-  printf(" %20s %20s %20s","ShldBlock","Type","E_Range_(MeV)");
-  sprintf(line," %20s %20s %20s","ShldBlock","Type","E_Range_(MeV)");
+  printf(" %20s %20s %20s","ShldBlock","Type","E_Range_(MeV/event)");
+  sprintf(line," %20s %20s %20s","ShldBlock","Type","E_Range_(MeV/event)");
   printf(" \n");
   list_power->Add(new TObjString(line));
   list_outputs << line << endl;
@@ -1146,8 +1149,8 @@ int main(Int_t argc,Char_t* argv[]) {
 	      printf(" %20s %20s %20s",svertex_shld[i].Data(),chpid[j],chenrange[k]);
 	      sprintf(line," %20s %20s %20s",svertex_shld[i].Data(),chpid[j],chenrange[k]);
 	      sprintf(line1," ");//empty previous values
-	      printf("%12.3E",shld_power_local[i][j][k]);
-        sprintf(line1,"%s %12.3E",line1,shld_power_local[i][j][k]);
+	      printf("%12.3E",shld_power_local[i][j][k]/n_events);
+        sprintf(line1,"%s %12.3E",line1,shld_power_local[i][j][k]/n_events);
 	      printf("\n");
 	      sprintf(line," %s %s",line,line1);
 	      list_power->Add(new TObjString(line));
@@ -1160,10 +1163,10 @@ int main(Int_t argc,Char_t* argv[]) {
   sum=0;
   shld_sum=0;
   TList * list_flux = new TList;
-  printf(" \n Total_Radiation_Flux_into_the_specified_detector_(Counts)\n");
-  strline="Total_Radiation_Flux_into_the_speicified_detector_(Counts)";
-  list_flux->Add(new TObjString(strline));
-  list_outputs << strline << endl;
+  printf(" \n Total_Radiation_Flux_into_the_specified_detector_(Counts, for %d events)\n",n_events);
+  sprintf(line2,"Total_Radiation_Flux_into_the_specified_detector_(Counts, for %d events)",n_events);
+  list_flux->Add(new TObjString(line2));
+  list_outputs << line2 << endl;
   printf(" %20s %20s","Type","E_Range_(MeV)");
   sprintf(line," %20s %20s","Type","E_Range_(MeV)");
   for(Int_t t=0;t<2+n_shlds;t++){
@@ -1181,14 +1184,14 @@ int main(Int_t argc,Char_t* argv[]) {
       for(Int_t k=0;k<2;k++){//detector                             // number of hall (roof, walls) detectors present
 	      for (Int_t s=0;s<n_regions;s++)
 	        sum+=flux_local[s][k][i][j];//sum over all the vertices
-        printf("%12.3E",sum);
-	      sprintf(line1,"%s %12.3E",line1,sum);
+        printf("%12.3E",sum/n_events);
+	      sprintf(line1,"%s %12.3E",line1,sum/n_events);
 	      sum=0;
       }
       for(Int_t k=0;k<n_shlds;k++){
         shld_sum+=shld_flux_local[k][i][j];
-        printf("%12.3E",shld_sum);
-	      sprintf(line1,"%s %12.3E",line1,shld_sum);
+        printf("%12.3E",shld_sum/n_events);
+	      sprintf(line1,"%s %12.3E",line1,shld_sum/n_events);
 	      shld_sum=0;
       }
       printf("\n");
@@ -1198,10 +1201,10 @@ int main(Int_t argc,Char_t* argv[]) {
     }
   }
 
-  printf(" \n Vertex_Cut:Radiation_Flux_into_the_hall_(Counts) \n");
-  strline="Vertex_Cut:Radiation_Flux_into_the_hall_(Counts)";
-  list_flux->Add(new TObjString(strline));
-  list_outputs << strline << endl;
+  printf(" \n Vertex_Cut:Radiation_Flux_into_the_hall_(Counts, for %d events)\n",n_events);
+  sprintf(line2,"Vertex_Cut:Radiation_Flux_into_the_hall_(Counts, for %d events)",n_events);
+  list_flux->Add(new TObjString(line2));
+  list_outputs << line2 << endl;
   printf(" %20s %20s %20s \t %13s \t %13s \n","Vertex","Type","E_Range_(MeV)",detector[0],detector[1]);
   sprintf(line," %20s %20s %20s \t %13s \t %13s ","Vertex","Type","E_Range_(MeV)",detector[0],detector[1]);
   list_flux->Add(new TObjString(line));
@@ -1213,8 +1216,8 @@ int main(Int_t argc,Char_t* argv[]) {
         sprintf(line," %20s %20s %20s",svertex[i].Data(),chpid[j],chenrange[k]);
         sprintf(line1," ");//empty previous values
         for(Int_t l=0;l<2;l++){//detector                             // number of hall (roof, walls) detectors present
-          printf("%12.3E",flux_local[i][l][j][k]);
-          sprintf(line1,"%s %12.3E",line1,flux_local[i][l][j][k]);
+          printf("%12.3E",flux_local[i][l][j][k]/n_events);
+          sprintf(line1,"%s %12.3E",line1,flux_local[i][l][j][k]/n_events);
         }
         printf("\n");
         sprintf(line," %s %s",line,line1);
@@ -1224,10 +1227,10 @@ int main(Int_t argc,Char_t* argv[]) {
     }
   }
   
-  printf(" \n ShldBlock_Cut:Radiation_Flux_into_the_Shielding_Blocks_(Counts) \n");
-  strline="ShldBlock_Cut:Radiation_Flux_into_the_Shielding_Blocks_(Counts)";
-  list_flux->Add(new TObjString(strline));
-  list_outputs << strline << endl;
+  printf(" \n ShldBlock_Cut:Radiation_Flux_into_the_Shielding_Blocks_(Counts, for %d events)\n",n_events);
+  sprintf(line2,"ShldBlock_Cut:Radiation_Flux_into_the_Shielding_Blocks_(Counts, for %d events)",n_events);
+  list_flux->Add(new TObjString(line2));
+  list_outputs << line2 << endl;
   printf(" %20s %20s %20s","ShldBlock","Type","E_Range_(MeV)");
   sprintf(line," %20s %20s %20s","ShldBlock","Type","E_Range_(MeV)");
   printf(" \n");
@@ -1239,8 +1242,8 @@ int main(Int_t argc,Char_t* argv[]) {
 	      printf(" %20s %20s %20s",svertex_shld[i].Data(),chpid[j],chenrange[k]);
 	      sprintf(line," %20s %20s %20s",svertex_shld[i].Data(),chpid[j],chenrange[k]);
 	      sprintf(line1," ");//empty previous values
-	      printf("%12.3E",shld_flux_local[i][j][k]);
-        sprintf(line1,"%s %12.3E",line1,shld_flux_local[i][j][k]);
+	      printf("%12.3E",shld_flux_local[i][j][k]/n_events);
+        sprintf(line1,"%s %12.3E",line1,shld_flux_local[i][j][k]/n_events);
 	      printf("\n");
 	      sprintf(line," %s %s",line,line1);
 	      list_flux->Add(new TObjString(line));
