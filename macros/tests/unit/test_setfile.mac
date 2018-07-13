@@ -1,3 +1,2 @@
-/remoll/geometry/setpath geometry
-/remoll/geometry/setfile mollerMother.gdml
+/remoll/geometry/setfile geometry/mollerMother.gdml
 /run/initialize
