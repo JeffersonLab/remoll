@@ -9,7 +9,7 @@ compile
 g++ hyperon-gen.cpp
 ```
 
-There is an input file used by hyperon-gen.cpp called hyperon.h. You can set the parameters used in the code here.
+There is an input file used by hyperon-gen.cpp called hyperon-gen.h. You can set the parameters used in the code here.
 Select the hyperon line, lambda, sigma plus, sigma zero, which you want to create.
 
 The code produces a file called hyperon_outp.dat. This file should be transferred to ../hyperons/hyperon_outp.dat.

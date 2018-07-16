@@ -6,7 +6,7 @@
 #include <fstream>
 #include <cctype>
 #include <cstring>
-#include "hyperon.h"
+#include "hyperon-gen.h"
 
 #include <stdio.h>      /* printf, NULL */
 #include <stdlib.h>     /* strtod */
