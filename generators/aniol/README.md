@@ -1,5 +1,6 @@
 Note: this directory and included files are obtained from Konrad Aniol's personal page at:
   https://userweb.jlab.org/~aniol/moller/scripts/readme.dat
+They represent the code as of 19-Jun-2013 (accessed 16-Jul-2018).
 ---
 
 In order to create the code which produces the lambda distribution file (x,y,v,px,py,pz,weight) simply
