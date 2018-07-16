@@ -392,8 +392,6 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
   //==========================
   G4SDManager* SDman = G4SDManager::GetSDMpointer();
 
-  G4int k=0;
-
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
