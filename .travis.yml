@@ -23,11 +23,11 @@ script:
 - source geant4.sh ;
   for suite in unit commit release ; do
     scripts/tests/test_macros.sh ${suite} 2>&1 | tee remolltest.${suite}.log ;
-    tar -czvf remolltest.${suite}.log.tar.gz		-C logfiles/tests	${suite}/*.log
-    tar -czvf remolltest.${suite}.analysis.log.tar.gz	-C logfiles/tests	${suite}/analysis/*.log ;
-    tar -czvf remolltest.${suite}.root.tar.gz		-C rootfiles/tests	${suite}/*.root ;
-    tar -czvf remolltest.${suite}.analysis.png.tar.gz	-C rootfiles/tests	${suite}/analysis/*.png ;
-    tar -czvf remolltest.${suite}.analysis.root.tar.gz	-C rootfiles/tests	${suite}/analysis/*.root ;
+    tar -czvf remolltest.${suite}.log.tar.gz		--transform 's|logfiles/tests/||g'	logfiles/tests/${suite}/*.log
+    tar -czvf remolltest.${suite}.analysis.log.tar.gz	--transform 's|logfiles/tests/||g'	logfiles/tests/${suite}/analysis/*.log ;
+    tar -czvf remolltest.${suite}.root.tar.gz		--transform 's|rootfiles/tests/||g'	rootfiles/tests/${suite}/*.root ;
+    tar -czvf remolltest.${suite}.analysis.png.tar.gz	--transform 's|rootfiles/tests/||g'	rootfiles/tests/${suite}/analysis/*.png ;
+    tar -czvf remolltest.${suite}.analysis.root.tar.gz	--transform 's|rootfiles/tests/||g'	rootfiles/tests/${suite}/analysis/*.root ;
   done ;
 - docker build -t jeffersonlab/remoll .
 
