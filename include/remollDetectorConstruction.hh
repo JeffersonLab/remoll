@@ -35,7 +35,6 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
         fGDMLPath = name.substr(0,i);
       } else fGDMLPath = ".";
       fGDMLFile = name.substr(i + 1);
-      G4cout << fGDMLPath << "    /    " << fGDMLFile << G4endl;
     }
 
   private:
