@@ -63,9 +63,7 @@ void remollVEventGen::PrintEventGen()
 {
   G4cout << "Event generator: " << fName << G4endl;
   G4cout << "E =     [" << fE_min/GeV  << "," << fE_max/GeV  << "] GeV" << G4endl;
-  G4cout << "r hits (Remoll generator) =[" << fR_min/mm << "," << fR_max/mm << "] mm" << G4endl;
   G4cout << "phi =   [" << fPh_min/deg << "," << fPh_max/deg << "] deg" << G4endl;
-  G4cout << "phi spread (remoll generator) =  [" << fDeltaPh_min/deg << "," << fDeltaPh_max/deg << "] deg" << G4endl;
   G4cout << "theta = [" << fTh_min/deg << "," << fTh_max/deg << "] deg" << G4endl;
   G4cout << "theta (COM) = [" << fThCoM_min/deg << "," << fThCoM_max/deg << "] deg" << G4endl;
 }

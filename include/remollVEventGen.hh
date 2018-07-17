@@ -34,7 +34,7 @@ class remollVEventGen {
 	remollVEventGen(G4String name);
 	virtual ~remollVEventGen();
 
-	void PrintEventGen();
+	virtual void PrintEventGen();
 
 	remollEvent *GenerateEvent();
 

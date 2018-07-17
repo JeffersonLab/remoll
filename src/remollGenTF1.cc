@@ -80,6 +80,13 @@ remollGenTF1::~remollGenTF1() {
     fInelasticFunc = 0;
 }
 
+void remollGenTF1::PrintEventGen()
+{
+  remollVEventGen::PrintEventGen();
+  G4cout << "r hits (Remoll generator) =[" << fR_min/mm << "," << fR_max/mm << "] mm" << G4endl;
+  G4cout << "phi spread (remoll generator) =  [" << fDeltaPh_min/deg << "," << fDeltaPh_max/deg << "] deg" << G4endl;
+}
+
 void remollGenTF1::SetRing(G4int num){ fRing = num; }
 
 void remollGenTF1::SetRadOffset(G4bool offset){ fBoffsetR = offset; }

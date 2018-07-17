@@ -38,6 +38,7 @@ class remollGenTF1 : public remollVEventGen {
     virtual ~remollGenTF1();
     void GeneratePrimaries(G4Event* anEvent);
     double RadSpectrum();
+    void PrintEventGen();
 
   private:
     void SamplePhysics(remollVertex *, remollEvent *);
@@ -75,7 +76,6 @@ class remollGenTF1 : public remollVEventGen {
     G4double fZ;
     G4double fDeltaPh_min, fDeltaPh_max;
     G4double fR_min, fR_max;
-    G4int fSector, fRing;
     G4bool fBoffsetR;
 
 };
