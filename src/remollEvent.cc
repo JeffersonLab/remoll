@@ -1,10 +1,10 @@
 #include "remollEvent.hh"
 #include "remolltypes.hh"
+#include "remollSystemOfUnits.hh"
 
 #include <math.h>
 
 #include "G4ParticleTable.hh"
-#include "G4SystemOfUnits.hh"
 
 remollEvent::remollEvent()
 : fBeamTarget(0) {
@@ -48,8 +48,8 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
 remollEvent_t remollEvent::GetEventIO() const {
   remollEvent_t ev;
   ev.xs = fEffXs/microbarn;
-  ev.A  = fAsym/1e-9;
-  ev.Am = fmAsym/1e-9;
+  ev.A  = fAsym/ppb;
+  ev.Am = fmAsym/ppb;
   ev.Q2 = fQ2;
   ev.W2 = fW2;
   ev.thcom = fThCoM;

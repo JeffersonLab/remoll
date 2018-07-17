@@ -19,7 +19,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
 
-    remollDetectorConstruction();
+    remollDetectorConstruction(const G4String& gdmlfile);
     virtual ~remollDetectorConstruction();
 
   public:
@@ -27,18 +27,30 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     G4VPhysicalVolume* Construct();
     void ConstructSDandField();
 
-    void SetDetectorGeomFile(const G4String& name) { fDetFileName = name; }
+    void ReloadGeometry(const G4String gdmlfile);
+
+    void SetDetectorGeomFile(G4String name) {
+      size_t i = name.rfind('/');
+      if (i != std::string::npos) {
+        fGDMLPath = name.substr(0,i);
+      } else fGDMLPath = ".";
+      fGDMLFile = name.substr(i + 1);
+      G4cout << fGDMLPath << "    /    " << fGDMLFile << G4endl;
+    }
 
   private:
 
+    G4String fGDMLPath;
+    G4String fGDMLFile;
     G4GDMLParser *fGDMLParser;
+
+    G4bool fGDMLValidate;
+    G4bool fGDMLOverlapCheck;
 
     G4GenericMessenger* fMessenger;
     G4GenericMessenger* fGeometryMessenger;
 
     G4int fVerboseLevel;
-    G4bool fGDMLValidate;
-    G4bool fGDMLOverlapCheck;
 
     //----------------------
     // global magnet section
@@ -47,18 +59,16 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     static G4ThreadLocal remollGlobalField* fGlobalField;
 
-    G4String fDetFileName;
-
     G4VPhysicalVolume*      fWorldVolume;
 
   public:
 
-    void DumpElements();
-    void DumpMaterials();
-    void DumpGeometry(G4bool surfchk = false) {
-      DumpGeometricalTree(0,0,surfchk);
+    void PrintElements();
+    void PrintMaterials();
+    void PrintGeometry(G4bool surfchk = false) {
+      PrintGeometryTree(0,0,surfchk);
     }
-    void DumpGeometricalTree(G4VPhysicalVolume* aVolume = 0,
+    void PrintGeometryTree(G4VPhysicalVolume* aVolume = 0,
       G4int depth = 0, G4bool surfchk = false);
 
     std::vector<G4VPhysicalVolume*> GetPhysicalVolumes(
@@ -66,6 +76,16 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
         const G4LogicalVolume*);
 
   private:
+
+    void PrintGDMLWarning() const;
+    G4VPhysicalVolume* ParseGDMLFile();
+
+    void PrintAuxiliaryInfo() const;
+    void ParseAuxiliaryTargetInfo();
+    void ParseAuxiliaryVisibilityInfo();
+    void ParseAuxiliarySensDetInfo();
+
+    void LoadMagneticField();
 
     G4int UpdateCopyNo(G4VPhysicalVolume* aVolume, G4int index = 0);
 

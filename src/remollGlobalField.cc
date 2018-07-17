@@ -59,14 +59,14 @@ remollGlobalField::remollGlobalField()
     fFieldPropagator = transportationmanager->GetPropagatorInField();
     fFieldManager = transportationmanager->GetFieldManager();
 
-    // Connect field manager to this global field
-    fFieldManager->SetDetectorField(this);
-
     // Create equation, stepper, and chordfinder
     SetEquation();
     SetStepper();
     SetChordFinder();
     SetAccuracyParameters();
+
+    // Connect field manager to this global field
+    fFieldManager->SetDetectorField(this);
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");

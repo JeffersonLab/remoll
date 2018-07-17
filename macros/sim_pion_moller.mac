@@ -1,0 +1,32 @@
+# This must be called before initialize
+/remoll/setgeofile geometry/mollerMother.gdml
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+/remoll/beamene 11 GeV
+
+
+# Enable optical photons and processes
+#/remoll/optical true
+
+# Only read detectors 28 and 30
+/remoll/SD/disable_all
+/remoll/SD/det_28/enable true
+/remoll/SD/det_30/enable true
+/remoll/SD/print_all
+
+/remoll/seed 3000
+/remoll/evgen/set pion
+/remoll/evgen/thmin 0.3 deg
+/remoll/evgen/thmax 1.1 deg
+/remoll/filename sim_pion.root
+/run/beamOn 100000
+
+/remoll/seed 3000
+/remoll/evgen/set moller
+/remoll/filename sim_moller.root
+/run/beamOn 100000

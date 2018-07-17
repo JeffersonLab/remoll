@@ -10,6 +10,7 @@
 
   <constant name="tubeTarget_rmax" value="40"/>
   <constant name="tubeTarget_length" value="1500"/>
+  <constant name="AlWindowTarget_length" value="0.127"/>
 
   <!-- Mother volume parameters -->
   <constant name="boxTargetMother_width" value="9500"/>
@@ -118,6 +119,8 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="tubeTarget_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget_solid_1" rmax="tubeShield_beam_rmax" rmin="0" startphi="0" z="2*tubeTarget_length"/>
 
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlWindow" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="AlWindowTarget_length"/>
+
     <!--Following solids used for initial target shielding cylinder - Rakitha -->
     <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_solid_1" rmax="tubeShield_rmax" rmin="tubeShield_rmin" startphi="0" z="tubeShield_height"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_topdisk_solid" rmax="tubeShield_disk_rmax" rmin="0" startphi="0" z="tubeShield_disk_thickness"/>
@@ -214,6 +217,19 @@
     <volume name="h2Targ">
       <materialref ref="LiquidHydrogen"/>
       <solidref ref="tubeTarget"/>
+      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+    </volume>
+
+    <volume name="USAlTarg">
+      <materialref ref="Aluminum"/>
+      <solidref ref="AlWindow"/>
+      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+    </volume>
+
+    <volume name="DSAlTarg">
+      <materialref ref="Aluminum"/>
+      <solidref ref="AlWindow"/>
+      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     </volume>
 
     <volume name="TargShield_topdisk_logic">
@@ -282,8 +298,18 @@
       <solidref ref="boxTargetMother"/>
 
       <physvol>
+        <volumeref ref="USAlTarg"/>
+        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750"/>
+      </physvol>
+
+      <physvol>
         <volumeref ref="h2Targ"/>
         <position name="targ_center1" unit="mm" x="0" y="0" z="0"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="DSAlTarg"/>
+        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="750"/>
       </physvol>
 
       <!--Shown below are initial target shielding cylinder - Rakitha  -->
@@ -332,6 +358,7 @@
         <positionref ref="LeadCollar_center_1"/>
       </physvol>
 -->
+      <auxiliary auxtype="TargetSystem" auxvalue=""/>
     </volume>
 
 </structure>

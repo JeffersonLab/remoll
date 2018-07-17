@@ -47,6 +47,12 @@ class remollVEventGen {
 	void SetSampType( SampType_t st ) { fSampType = st; }
 	void SetDoMultScatt( G4bool multscatt ){ fApplyMultScatt = multscatt; }
 
+        void SetEmin(double emin) { fE_min = emin; }
+        void SetEmax(double emax) { fE_max = emax; }
+        void SetPhmin(double phmin) { fPh_min = phmin; }
+        void SetPhmax(double phmax) { fPh_max = phmax; }
+        void SetThmin(double thmin) { fTh_min = thmin; }
+        void SetThmax(double thmax) { fTh_max = thmax; }
 
     protected:
 	// Generator name
@@ -56,8 +62,12 @@ class remollVEventGen {
 	// Generation limits
 	G4double fThCoM_min, fThCoM_max;
 	G4double fTh_min, fTh_max;
+	G4double fR_min, fR_max;
 	G4double fPh_min, fPh_max;
+	G4double fDeltaPh_min, fDeltaPh_max;
 	G4double fE_min, fE_max;
+  G4bool fBoffsetR;
+  G4int fSector, fRing;
 
   G4String fBeamPol;
 public:

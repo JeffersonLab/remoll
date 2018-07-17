@@ -1,22 +1,22 @@
-#include "remollParallelWorldConstruction.hh"
+#include "remollParallelConstruction.hh"
 
 #include <G4GDMLParser.hh>
 #include <G4LogicalVolume.hh>
 #include <G4PVPlacement.hh>
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-remollParallelWorldConstruction
-::remollParallelWorldConstruction(G4String& parallelWorldName)
-: G4VUserParallelWorld(parallelWorldName),
-  fConstructed(false),fFileName("geometry_sculpt/parallelWorld.gdml")
+remollParallelConstruction
+::remollParallelConstruction()
+: G4VUserParallelWorld("parallel"),
+  fConstructed(false),fFileName("geometry/mollerParallel.gdml")
 {;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-remollParallelWorldConstruction::~remollParallelWorldConstruction()
+remollParallelConstruction::~remollParallelConstruction()
 {;}
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void remollParallelWorldConstruction::Construct()
+void remollParallelConstruction::Construct()
 {
   if (fConstructed) return;
   fConstructed = true;

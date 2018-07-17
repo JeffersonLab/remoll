@@ -41,11 +41,6 @@ Magnetic field maps are **required** to use the software and are available for d
 An example macro will be found in `macros/`, in particular the
 macro `runexample.mac` will be instructive for new users.
 
-You need to load `libremollroot.so` if you want to access 
-the classes written out to the ROOT files.  Building
-remoll will create a rootlogon.C which will do this
-automatically.
-
 To execute remoll, run `build/remoll` from inside the source
 directory. This should bring up a graphical command interface.
 
@@ -58,6 +53,33 @@ macro commands:
 You can also load another macro in the `vis` directory, if
 you prefer another visualization driver.
 
+## Analyzing the output
+
+Though you can access the data field alone with a regular root
+installation (it will warn about non-perfect support), you will
+need to load `libremoll.so` if you want to access the methods on
+those classes written out to the ROOT files.
+
+You can use the LD_PRELOAD environment variable to load the
+`libremoll.so` library (you could even add this to your login
+script):
+```
+export LD_PRELOAD=build/libremoll.so 
+root -l remollout.root 
+```
+in bash, or
+```
+setenv LD_PRELOAD build/libremoll.so 
+root -l remollout.root 
+```
+in tcsh, or in a single line
+```
+LD_PRELOAD=build/libremoll.so root -l remollout.root
+```
+
+To simplify this without the need for an environment variable,
+you can also use the helper executable `reroot` which is built
+every time you compile.
 
 ## Troubleshooting
 

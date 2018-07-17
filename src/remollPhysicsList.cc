@@ -5,16 +5,23 @@
 #include "G4GenericMessenger.hh"
 #include "G4RunManager.hh"
 #include "G4HadronicProcessStore.hh"
+#include "G4ParticleHPManager.hh"
 
 remollPhysicsList::remollPhysicsList()
 : G4VModularPhysicsList(),
   fReferencePhysList(0),fOpticalPhysics(0),
   fPhysListMessenger(0),fBaseMessenger(0)
 {
+  // Let users know to ignore the warning by Particle HP package
+  G4cout << "remoll: Since the high precision neutron simulation in the default physics list" << G4endl;
+  G4cout << "remoll: generates a lot of warnings that cannot be avoided, we are setting the " << G4endl;
+  G4cout << "remoll: physics list verbose level to zero. Use /remoll/physlist/verbose to set" << G4endl;
+  G4cout << "remoll: the verbose level to a non-zero value." << G4endl << G4endl;
+  //
   SetVerboseLevel(0);
 
   // Get default reference physics list
-  RegisterReferencePhysList("QGSP_BERT_HP");
+  RegisterReferencePhysList("QGSP_BERT");
 
   // TODO Backwards compatible, remove this on next major version change
   // Create base messenger
@@ -87,6 +94,8 @@ void remollPhysicsList::SetVerboseLevel(G4int level)
 
   // Set verbose level of HadronicProcessStore
   G4HadronicProcessStore::Instance()->SetVerbose(level);
+  G4ParticleHPManager::GetInstance()->SetVerboseLevel(level);
+  G4cout << G4endl; // empty line after G4ParticleHPManager complaint
 }
 
 void remollPhysicsList::SetOpticalPhysics(G4bool flag)

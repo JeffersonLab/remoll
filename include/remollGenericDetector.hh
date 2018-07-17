@@ -2,13 +2,15 @@
 #define __REMOLLGENERICDETECTOR_HH
 
 #include "G4VSensitiveDetector.hh"
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
 
 // Included to avoid forward declaration of collection typedef
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
 
 #include <map>
-#include <set>
+#include <list>
 
 /*! 
       Default detector class.  This will record information on:
@@ -28,18 +30,35 @@ class G4GenericMessenger;
 
 class remollGenericDetectorSum;
 
+namespace { G4Mutex remollGenericDetectorMutex = G4MUTEX_INITIALIZER; }
+
 class remollGenericDetector : public G4VSensitiveDetector {
     private:
         static G4GenericMessenger* fStaticMessenger;
-        static std::set<remollGenericDetector*> fGenericDetectors;
+        static std::list<remollGenericDetector*> fGenericDetectors;
         static void InsertGenericDetector(remollGenericDetector* det) {
-          fGenericDetectors.insert(det);
+          G4AutoLock lock(&remollGenericDetectorMutex);
+          fGenericDetectors.push_back(det);
+          fGenericDetectors.sort(isBefore);
         }
         static void EraseGenericDetector(remollGenericDetector* det) {
-          fGenericDetectors.erase(det);
+          G4AutoLock lock(&remollGenericDetectorMutex);
+          fGenericDetectors.remove(det);
+        }
+        static void Sort() {
+          G4AutoLock lock(&remollGenericDetectorMutex);
+          fGenericDetectors.sort(isBefore);
+        }
+        void PrintAll() {
+          for (std::list<remollGenericDetector*>::const_iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              (*it)->PrintEnabled();
+          }
         }
         void SetAllEnabled() {
-          for (std::set<remollGenericDetector*>::iterator
+          for (std::list<remollGenericDetector*>::iterator
             it  = fGenericDetectors.begin();
             it != fGenericDetectors.end();
             it++) {
@@ -47,12 +66,16 @@ class remollGenericDetector : public G4VSensitiveDetector {
           }
         }
         void SetAllDisabled() {
-          for (std::set<remollGenericDetector*>::iterator
+          for (std::list<remollGenericDetector*>::iterator
             it  = fGenericDetectors.begin();
             it != fGenericDetectors.end();
             it++) {
               (*it)->SetDisabled();
           }
+        }
+
+        static bool isBefore(const remollGenericDetector* left, const remollGenericDetector* right) {
+          return (left? (right? (left->fDetNo < right->fDetNo): false): true);
         }
 
     public:

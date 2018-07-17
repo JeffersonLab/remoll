@@ -31,7 +31,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
 
 # Update header file
-add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" )
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" DEPENDS ${PROJECT_SOURCE_DIR}/pullgitinfo.py)
 
 # this is to ensure we find the header we need
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
@@ -111,8 +111,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 #
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/remoll*.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
@@ -135,51 +135,17 @@ target_link_libraries(reroot-bin remoll-lib)
 # relies on these scripts being in the current working directory.
 #
 
-FILE( GLOB REMOLL_GEO "geometry/*" )
+install(DIRECTORY geometry DESTINATION share/remoll)
+install(DIRECTORY macros DESTINATION share/remoll)
+install(DIRECTORY vis DESTINATION share/remoll)
 
 set(REMOLL_SCRIPTS
-    geometry/mollerMother.gdml
-    geometry/detectorDaughter.gdml
-    geometry/hybridDaughter.gdml
-    geometry/targetDaughter.gdml
-    geometry/upstreamDaughter.gdml
-    geometry/schema/gdml.xsd
-    geometry/schema/gdml_core.xsd
-    geometry/schema/gdml_define.xsd
-    geometry/schema/gdml_extensions.xsd
-    geometry/schema/gdml_materials.xsd
-    geometry/schema/gdml_parameterised.xsd
-    geometry/schema/gdml_replicas.xsd
-    geometry/schema/gdml_solids.xsd
-    geometry_sculpt/mollerMother.gdml
-    geometry_sculpt/detectorDaughter.gdml
-    geometry_sculpt/hybridDaughter.gdml
-    geometry_sculpt/targetDaughter.gdml
-    geometry_sculpt/upstreamDaughter.gdml
-    geometry_sculpt/pionDetectorCalorimeter.gdml
-    geometry_sculpt/pionDetectorGEM.gdml
-    geometry_sculpt/pionDetectorGEMOpenSector.gdml
-    geometry_sculpt/pionDetectorLucite.gdml
-    geometry_sculpt/pionDetectorLuciteSector.gdml
-    geometry_sculpt/pionDetectorSystem.gdml
-    geometry_sculpt/pionDetectorTS.gdml
-    geometry_sculpt/pionDetectorTSOpenSector.gdml
-    geometry_sculpt/pionDetectorVirtualDet.gdml
-    geometry_sculpt/schema/gdml.xsd
-    geometry_sculpt/schema/gdml_core.xsd
-    geometry_sculpt/schema/gdml_define.xsd
-    geometry_sculpt/schema/gdml_extensions.xsd
-    geometry_sculpt/schema/gdml_materials.xsd
-    geometry_sculpt/schema/gdml_parameterised.xsd
-    geometry_sculpt/schema/gdml_replicas.xsd
-    geometry_sculpt/schema/gdml_solids.xsd
     vis/OIX.mac
     vis/Qt.mac
     vis/vis.mac
     vis/X.mac
     macros/runexample.mac
     macros/gui.mac
-    rootlogon.C
   )
 
 foreach(_script ${REMOLL_SCRIPTS})
@@ -201,5 +167,3 @@ add_custom_target(REMOLL DEPENDS remoll-bin)
 #
 install(TARGETS remoll-bin reroot-bin DESTINATION bin)
 install(TARGETS remoll-lib DESTINATION lib)
-
-

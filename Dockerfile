@@ -14,7 +14,7 @@ RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh && \
     mkdir -p $REMOLL/build && cd $REMOLL/build && cmake .. && make
 
 # Download the map data files and place them in the correct directory
-RUN wget -r --no-parent -l1 -A txt http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/
+RUN wget -r --no-parent -l1 -A txt http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/ 2>&1 | grep -v -F ".........."
 RUN mkdir map_directory && \
     find ./hallaweb.jlab.org -mindepth 2 -type f -exec mv -t ./map_directory -i '{}' + && \
     rm -rf hallaweb.jlab.org

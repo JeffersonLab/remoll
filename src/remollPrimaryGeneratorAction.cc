@@ -20,6 +20,7 @@
 #include "remollGenpInelastic.hh"
 #include "remollGenPion.hh"
 #include "remollGenBeam.hh"
+#include "remollGenTF1.hh"
 #include "remollGenFlat.hh"
 #include "remollGenExternal.hh"
 #include "remollGenAl.hh"
@@ -81,6 +82,8 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
         fEventGen = new remollGenPion();
     }else if( genname == "beam" ) {
         fEventGen = new remollGenBeam();
+    }else if( genname == "TF1" ) {
+        fEventGen = new remollGenTF1();
     }else if( genname == "flat" ) {
         fEventGen = new remollGenFlat();
     }else if( genname == "inelasticAl" ) {

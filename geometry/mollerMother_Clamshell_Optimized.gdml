@@ -29,22 +29,22 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-      <file name="geometry/targetDaughter_Clamshell_Optimized.gdml"/>
+      <file name="targetDaughter_Clamshell_Optimized.gdml"/>
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
       <physvol>
-      <file name="geometry/detectorDaughter.gdml"/>
+      <file name="detectorDaughter.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
       <physvol>
-      <file name="geometry/upstreamDaughter.gdml"/>
+      <file name="upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>
       </physvol>
       <physvol>
-      <file name="geometry/hybridDaughter.gdml"/>
+      <file name="hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
       <rotationref ref="identity"/>
       </physvol> 
