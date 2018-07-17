@@ -93,10 +93,10 @@ class remollVEventGen {
 	SampType_t fSampType;
 	G4bool     fApplyMultScatt;
 
-    protected:
+    private:
 	// Generic messenger as protected to be used in derived classes
-	G4GenericMessenger* fMessenger;
 	G4GenericMessenger* fEvGenMessenger;
+    protected:
 	G4GenericMessenger* fThisGenMessenger;
 };
 

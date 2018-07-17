@@ -42,11 +42,11 @@
 
 # Generation limits
 # theta
-#/remoll/thmin 0.5 deg
-#/remoll/thmax 3.0 deg
+#/remoll/evgen/thmin 0.5 deg
+#/remoll/evgen/thmax 3.0 deg
 # phi
-#/remoll/phmin -20.0 deg
-#/remoll/phmax +20.0 deg
+#/remoll/evgen/phmin -20.0 deg
+#/remoll/evgen/phmax +20.0 deg
 
 # Target positioning
 #/remoll/targpos  10 cm
