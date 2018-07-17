@@ -52,6 +52,13 @@ remollGenTF1::remollGenTF1()
     fApplyMultScatt = true;
     r_t = CLHEP::RandFlat::shoot(600,1200);
     fZpos = (28.5*m - 0.52*m);
+    fThisGenMessenger->DeclarePropertyWithUnit("rmax","mm",fR_max,"Maximum generation radial hit position (mm) for Remoll generator");
+    fThisGenMessenger->DeclarePropertyWithUnit("rmin","mm",fR_min,"Minimum generation radial hit position (mm) for Remoll generator");
+    fThisGenMessenger->DeclarePropertyWithUnit("deltaphmax","deg",fDeltaPh_max,"Upward Phi spread limit");
+    fThisGenMessenger->DeclarePropertyWithUnit("deltaphmin","deg",fDeltaPh_min,"Downward Phi spread limit");
+    fThisGenMessenger->DeclareProperty("BoffsetR",fBoffsetR,"Boolean for offsetting detector to the side (and flat radial distribution if R_max =/= 0)");
+    fThisGenMessenger->DeclareProperty("sector",fSector,"Integer sector number for Remoll generator");
+    fThisGenMessenger->DeclareProperty("ring",fRing,"Integer ring number for Remoll generator");
     fThisGenMessenger->DeclareMethod("setFileFunction",&remollGenTF1::SetGenFunctionFile,"ROOT filename:function name");
     fThisGenMessenger->DeclareMethod("scattType",&remollGenTF1::SetScatteringType,"Scattering type: moller, elastic, inelastic, or all");
     fThisGenMessenger->DeclareMethod("sector",&remollGenTF1::SetSector,"Sector number: 1,2,or 3, or 0 for all");
