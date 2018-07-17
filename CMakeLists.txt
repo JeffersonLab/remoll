@@ -135,7 +135,9 @@ target_link_libraries(reroot-bin remoll-lib)
 # relies on these scripts being in the current working directory.
 #
 
-FILE( GLOB REMOLL_GEO "geometry/*" )
+install(DIRECTORY geometry DESTINATION share/remoll)
+install(DIRECTORY macros DESTINATION share/remoll)
+install(DIRECTORY vis DESTINATION share/remoll)
 
 set(REMOLL_SCRIPTS
     vis/OIX.mac
@@ -165,5 +167,3 @@ add_custom_target(REMOLL DEPENDS remoll-bin)
 #
 install(TARGETS remoll-bin reroot-bin DESTINATION bin)
 install(TARGETS remoll-lib DESTINATION lib)
-
-
