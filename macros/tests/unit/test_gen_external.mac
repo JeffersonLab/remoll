@@ -1,4 +1,7 @@
+/run/numberOfThreads 1
+
 /run/initialize
+
 /remoll/evgen/set moller
 /remoll/filename remollin.root
 /run/beamOn 1000
