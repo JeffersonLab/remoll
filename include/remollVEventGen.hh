@@ -69,6 +69,10 @@ class remollVEventGen {
   G4bool fBoffsetR;
   G4int fSector, fRing;
 
+  G4String fBeamPol;
+public:
+  const G4String GetBeamPolarization(){return fBeamPol;}
+
     protected:
 	// Number of particles
 	G4int fNumberOfParticles;

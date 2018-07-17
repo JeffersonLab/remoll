@@ -18,6 +18,7 @@ remollVEventGen::remollVEventGen(const G4String name)
   fTh_min(0.0), fTh_max(180.0*deg),
   fPh_min(0.0), fPh_max(360.0*deg),
   fE_min(0.0), fE_max(11.0*GeV),
+  fBeamPol("0"),
   fNumberOfParticles(1),fParticleGun(0),
   fBeamTarg(0), fMessenger(0)
 {
@@ -49,6 +50,7 @@ remollVEventGen::remollVEventGen(const G4String name)
     fEvGenMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
     fEvGenMessenger->DeclarePropertyWithUnit("thcommax","deg",fThCoM_max,"Maximum CoM generation theta angle");
     fEvGenMessenger->DeclarePropertyWithUnit("thcommin","deg",fThCoM_min,"Minimum CoM generation theta angle");
+    fEvGenMessenger->DeclareProperty("beamPolarization",fBeamPol,"Polarization direction: +L, +H, +V, -L, -H, -V, 0");
     fEvGenMessenger->DeclarePropertyWithUnit("rmax","mm",fR_max,"Maximum generation radial hit position (mm) for Remoll generator");
     fEvGenMessenger->DeclarePropertyWithUnit("rmin","mm",fR_min,"Minimum generation radial hit position (mm) for Remoll generator");
     fEvGenMessenger->DeclarePropertyWithUnit("deltaphmax","deg",fDeltaPh_max,"Upward Phi spread limit");
