@@ -32,12 +32,12 @@
 
 #/remoll/evgen/set beam
 /remoll/evgen/set moller
-#/remoll/thcommin 30.0 deg
-#/remoll/thcommax 150.0 deg
+#/remoll/evgen/thcommin 30.0 deg
+#/remoll/evgen/thcommax 150.0 deg
 #/remoll/evgen/set elastic 
-#/remoll/thmin 0.1 deg
-#/remoll/thmax 2.0 deg
-#/remoll/emin 80.0 MeV
+#/remoll/evgen/thmin 0.1 deg
+#/remoll/evgen/thmax 2.0 deg
+#/remoll/evgen/emin 80.0 MeV
 #/remoll/evgen/set inelastic 
 #/remoll/evgen/set pion
 #/remoll/piontype pi+

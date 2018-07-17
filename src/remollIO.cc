@@ -165,15 +165,18 @@ void remollIO::SetEventSeed(const G4String& seed)
 
 void remollIO::SetEventData(const remollEvent *ev)
 {
-    fEvRate   = ev->fRate*s;
+  if (! ev) return;
 
-    // Event variables
-    fEv     = ev->GetEventIO();
-    // Primary particles
-    fEvPart = ev->GetEventParticleIO();
+  fEvRate   = ev->fRate*s;
 
-    // Beam data
-    const remollBeamTarget* bt = ev->GetBeamTarget();
+  // Event variables
+  fEv     = ev->GetEventIO();
+  // Primary particles
+  fEvPart = ev->GetEventParticleIO();
+
+  // Beam data
+  const remollBeamTarget* bt = ev->GetBeamTarget();
+  if (bt)
     fBm = bt->GetBeamTargetIO();
 }
 

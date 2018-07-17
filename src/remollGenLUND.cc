@@ -36,7 +36,7 @@ remollGenLUND::remollGenLUND()
   LUNDfile_linecount = 0;
 
   // Add to generic messenger
-  fMessenger->DeclareMethod("LUND_filename",&remollGenLUND::SetLUNDFile,"LUND Input filename");
+  fThisGenMessenger->DeclareMethod("LUND_filename",&remollGenLUND::SetLUNDFile,"LUND Input filename");
 }
 
 remollGenLUND::~remollGenLUND()

@@ -31,7 +31,7 @@ remollGenPion::remollGenPion()
     fE_max = -1.0*GeV; // negative to automatically pick beam energy
 
     // Add to generic messenger
-    fMessenger->DeclareMethod("piontype",&remollGenPion::SetPionTypeByString_Deprecated,"Generate pion type");
+    fThisGenMessenger->DeclareMethod("piontype",&remollGenPion::SetPionTypeByString_Deprecated,"Generate pion type");
     fThisGenMessenger->DeclareMethod("settype",&remollGenPion::SetPionTypeByString,"Generate pion type");
 }
 

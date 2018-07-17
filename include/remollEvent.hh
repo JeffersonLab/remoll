@@ -14,6 +14,8 @@
 
 #include "remolltypes.hh"
 
+class G4Event;
+class G4PrimaryParticle;
 class G4ParticleDefinition;
 
 class remollBeamTarget;
@@ -21,9 +23,11 @@ class remollBeamTarget;
 class remollEvent {
     public:
 	remollEvent();
+	remollEvent(G4Event*);
 	virtual ~remollEvent();
 
 	void ProduceNewParticle( G4ThreeVector, G4ThreeVector, G4String, G4ThreeVector spin = G4ThreeVector(0.0,0.0,0.0) );
+	void ProduceNewParticle( G4ThreeVector, G4PrimaryParticle* );
 	void SetEffCrossSection( G4double xs ){ fEffXs = xs; }
 	void SetRate( G4double rate ){ fRate = rate; }
 	G4double GetRate(){ return fRate; }

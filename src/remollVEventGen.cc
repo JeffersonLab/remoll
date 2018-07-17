@@ -12,33 +12,23 @@
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
+G4double remollVEventGen::fTh_min = 0.0*deg;
+G4double remollVEventGen::fTh_max = 180.0*deg;
+G4double remollVEventGen::fThCoM_min = 0.0*deg;
+G4double remollVEventGen::fThCoM_max = 180.0*deg;
+G4double remollVEventGen::fPh_min = 0.0*deg;
+G4double remollVEventGen::fPh_max = 360.0*deg;
+G4double remollVEventGen::fE_min = 0.0*deg;
+G4double remollVEventGen::fE_max = 11.0*GeV;
+
 remollVEventGen::remollVEventGen(const G4String name)
 : fName(name),
-  fThCoM_min(0.0), fThCoM_max(180.0*deg),
-  fTh_min(0.0), fTh_max(180.0*deg),
-  fPh_min(0.0), fPh_max(360.0*deg),
-  fE_min(0.0), fE_max(11.0*GeV),
   fBeamPol("0"),
   fNumberOfParticles(1),fParticleGun(0),
-  fBeamTarg(0), fMessenger(0)
+  fBeamTarg(0)
 {
     // Set initial number of particles and create particle gun
     SetNumberOfParticles(fNumberOfParticles);
-
-    // Create event generator messenger
-    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-    fMessenger->DeclarePropertyWithUnit("emax","GeV",fE_max,"Maximum generation energy");
-    fMessenger->DeclarePropertyWithUnit("emin","GeV",fE_min,"Minimum generation energy");
-    fMessenger->DeclarePropertyWithUnit("thcommax","deg",fThCoM_max,"Maximum CoM generation theta angle");
-    fMessenger->DeclarePropertyWithUnit("thcommin","deg",fThCoM_min,"Minimum CoM generation theta angle");
-    fMessenger->DeclarePropertyWithUnit("thmax","deg",fTh_max,"Maximum generation theta angle");
-    fMessenger->DeclarePropertyWithUnit("thmin","deg",fTh_min,"Minimum generation theta angle");
-    fMessenger->DeclarePropertyWithUnit("phmax","deg",fPh_max,"Maximum generation phi angle");
-    fMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
-    fMessenger->DeclareMethod(
-        "printlimits",
-        &remollVEventGen::PrintEventGen,
-        "Print the event generator limits");
 
     // Create event generator messenger
     fEvGenMessenger = new G4GenericMessenger(this,"/remoll/evgen/","Remoll event generator properties");
@@ -51,13 +41,6 @@ remollVEventGen::remollVEventGen(const G4String name)
     fEvGenMessenger->DeclarePropertyWithUnit("thcommax","deg",fThCoM_max,"Maximum CoM generation theta angle");
     fEvGenMessenger->DeclarePropertyWithUnit("thcommin","deg",fThCoM_min,"Minimum CoM generation theta angle");
     fEvGenMessenger->DeclareProperty("beamPolarization",fBeamPol,"Polarization direction: +L, +H, +V, -L, -H, -V, 0");
-    fEvGenMessenger->DeclarePropertyWithUnit("rmax","mm",fR_max,"Maximum generation radial hit position (mm) for Remoll generator");
-    fEvGenMessenger->DeclarePropertyWithUnit("rmin","mm",fR_min,"Minimum generation radial hit position (mm) for Remoll generator");
-    fEvGenMessenger->DeclarePropertyWithUnit("deltaphmax","deg",fDeltaPh_max,"Upward Phi spread limit");
-    fEvGenMessenger->DeclarePropertyWithUnit("deltaphmin","deg",fDeltaPh_min,"Downward Phi spread limit");
-    fEvGenMessenger->DeclareProperty("BoffsetR",fBoffsetR,"Boolean for offsetting detector to the side (and flat radial distribution if R_max =/= 0)");
-    fEvGenMessenger->DeclareProperty("sector",fSector,"Integer sector number for Remoll generator");
-    fEvGenMessenger->DeclareProperty("ring",fRing,"Integer ring number for Remoll generator");
     fEvGenMessenger->DeclareMethod(
         "printlimits",
         &remollVEventGen::PrintEventGen,
@@ -74,16 +57,13 @@ remollVEventGen::~remollVEventGen()
 {
     delete fThisGenMessenger;
     delete fEvGenMessenger;
-    delete fMessenger;
 }
 
 void remollVEventGen::PrintEventGen()
 {
   G4cout << "Event generator: " << fName << G4endl;
   G4cout << "E =     [" << fE_min/GeV  << "," << fE_max/GeV  << "] GeV" << G4endl;
-  G4cout << "r hits (Remoll generator) =[" << fR_min/mm << "," << fR_max/mm << "] mm" << G4endl;
   G4cout << "phi =   [" << fPh_min/deg << "," << fPh_max/deg << "] deg" << G4endl;
-  G4cout << "phi spread (remoll generator) =  [" << fDeltaPh_min/deg << "," << fDeltaPh_max/deg << "] deg" << G4endl;
   G4cout << "theta = [" << fTh_min/deg << "," << fTh_max/deg << "] deg" << G4endl;
   G4cout << "theta (COM) = [" << fThCoM_min/deg << "," << fThCoM_max/deg << "] deg" << G4endl;
 }
