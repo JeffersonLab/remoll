@@ -27,6 +27,8 @@
 #include "G4VisAttributes.hh"
 #include "G4Colour.hh"
 
+#include <sys/param.h>
+
 #define __DET_STRLEN 200
 #define __MAX_DETS 100000
 
@@ -37,7 +39,7 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
 remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
-: fGDMLFile("geometry/mollerMother.gdml"),fGDMLParser(0),
+: fGDMLPath("geometry"),fGDMLFile("mollerMother.gdml"),fGDMLParser(0),
   fGDMLValidate(false),fGDMLOverlapCheck(true),
   fMessenger(0),fGeometryMessenger(0),
   fVerboseLevel(0),
@@ -48,10 +50,10 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-  fMessenger->DeclareProperty(
+  fMessenger->DeclareMethod(
       "setgeofile",
-      fGDMLFile,
-      "Set geometry GDML files")
+      &remollDetectorConstruction::SetDetectorGeomFile,
+      "Set geometry GDML file")
       .SetStates(G4State_PreInit);
   fMessenger->DeclareMethod(
       "printgeometry",
@@ -74,9 +76,9 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
   fGeometryMessenger = new G4GenericMessenger(this,
       "/remoll/geometry/",
       "Remoll geometry properties");
-  fGeometryMessenger->DeclareProperty(
+  fGeometryMessenger->DeclareMethod(
       "setfile",
-      fGDMLFile,
+      &remollDetectorConstruction::SetDetectorGeomFile,
       "Set geometry GDML file")
       .SetStates(G4State_PreInit);
   fGeometryMessenger->DeclareProperty(
@@ -153,16 +155,35 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     // Print GDML warning
     PrintGDMLWarning();
 
-    // Parse GDML file
+    // Print parsing options
     G4cout << "Reading " << fGDMLFile << G4endl;
     G4cout << "- schema validation " << (fGDMLValidate? "on": "off") << G4endl;
     G4cout << "- overlap check " << (fGDMLOverlapCheck? "on": "off") << G4endl;
+
+    // Change directory
+    char cwd[MAXPATHLEN];
+    if (!getcwd(cwd,MAXPATHLEN)) {
+      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR no current working directory" << G4endl;
+      exit(-1);
+    }
+    if (chdir(fGDMLPath)) {
+      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
+      exit(-1);
+    }
+
+    // Parse GDML file
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+
 
     // Add GDML files to IO
     remollIO* io = remollIO::GetInstance();
     io->GrabGDMLFiles(fGDMLFile);
+
+    if (chdir(cwd)) {
+      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
+      exit(-1);
+    }
 
     // Return world volume
     return fGDMLParser->GetWorldVolume();
@@ -370,8 +391,6 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
   // Sensitive detectors
   //==========================
   G4SDManager* SDman = G4SDManager::GetSDMpointer();
-
-  G4int k=0;
 
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
