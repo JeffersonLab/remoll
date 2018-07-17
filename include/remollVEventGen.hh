@@ -65,6 +65,10 @@ class remollVEventGen {
 	static G4double fPh_min, fPh_max;
 	static G4double fE_min, fE_max;
 
+  G4String fBeamPol;
+public:
+  const G4String GetBeamPolarization(){return fBeamPol;}
+
     protected:
 	// Number of particles
 	G4int fNumberOfParticles;

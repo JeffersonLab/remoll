@@ -23,6 +23,7 @@ G4double remollVEventGen::fE_max = 11.0*GeV;
 
 remollVEventGen::remollVEventGen(const G4String name)
 : fName(name),
+  fBeamPol("0"),
   fNumberOfParticles(1),fParticleGun(0),
   fBeamTarg(0)
 {
@@ -39,6 +40,7 @@ remollVEventGen::remollVEventGen(const G4String name)
     fEvGenMessenger->DeclarePropertyWithUnit("phmin","deg",fPh_min,"Minimum generation phi angle");
     fEvGenMessenger->DeclarePropertyWithUnit("thcommax","deg",fThCoM_max,"Maximum CoM generation theta angle");
     fEvGenMessenger->DeclarePropertyWithUnit("thcommin","deg",fThCoM_min,"Minimum CoM generation theta angle");
+    fEvGenMessenger->DeclareProperty("beamPolarization",fBeamPol,"Polarization direction: +L, +H, +V, -L, -H, -V, 0");
     fEvGenMessenger->DeclareMethod(
         "printlimits",
         &remollVEventGen::PrintEventGen,
