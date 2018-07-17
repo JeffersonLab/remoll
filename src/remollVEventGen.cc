@@ -12,12 +12,17 @@
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
+G4double remollVEventGen::fTh_min = 0.0*deg;
+G4double remollVEventGen::fTh_max = 180.0*deg;
+G4double remollVEventGen::fThCoM_min = 0.0*deg;
+G4double remollVEventGen::fThCoM_max = 180.0*deg;
+G4double remollVEventGen::fPh_min = 0.0*deg;
+G4double remollVEventGen::fPh_max = 360.0*deg;
+G4double remollVEventGen::fE_min = 0.0*deg;
+G4double remollVEventGen::fE_max = 11.0*GeV;
+
 remollVEventGen::remollVEventGen(const G4String name)
 : fName(name),
-  fThCoM_min(0.0), fThCoM_max(180.0*deg),
-  fTh_min(0.0), fTh_max(180.0*deg),
-  fPh_min(0.0), fPh_max(360.0*deg),
-  fE_min(0.0), fE_max(11.0*GeV),
   fNumberOfParticles(1),fParticleGun(0),
   fBeamTarg(0)
 {

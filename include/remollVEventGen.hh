@@ -60,10 +60,10 @@ class remollVEventGen {
 
     protected:
 	// Generation limits
-	G4double fThCoM_min, fThCoM_max;
-	G4double fTh_min, fTh_max;
-	G4double fPh_min, fPh_max;
-	G4double fE_min, fE_max;
+	static G4double fThCoM_min, fThCoM_max;
+	static G4double fTh_min, fTh_max;
+	static G4double fPh_min, fPh_max;
+	static G4double fE_min, fE_max;
 
     protected:
 	// Number of particles
