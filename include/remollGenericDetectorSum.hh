@@ -31,24 +31,20 @@ class remollGenericDetectorSum : public G4VHit {
 
 	void AddEDep( int pid, G4ThreeVector x, double ene );
 
-	double GetEdep( int pid );
-	G4ThreeVector GetPos( int pid );
+	double GetEdep(int pid = 0) const;
+	G4ThreeVector GetPos(int pid = 0) const;
 
-	std::vector<sumdata_t> fData;
-
-    private:
-	int parttypes[N_PART_DIVISIONS];
+	std::vector<remollGenericDetectorSumByPID_t> fSumByPID;
 
     public:
-      const remollGenericDetectorSum_t GetGenericDetectorSumIO(int pid = 0) const {
+      const remollGenericDetectorSum_t GetGenericDetectorSumIO() const {
         remollGenericDetectorSum_t sum;
-        sum.pid = pid;
         sum.det = fDetID;
         sum.vid = fCopyID;
-        sum.x = GetPos(pid).x();
-        sum.y = GetPos(pid).y();
-        sum.z = GetPos(pid).z();
-        sum.edep = GetEdep(pid);
+        sum.edep = GetEdep();
+        for (size_t i = 0; i < fSumByPID.size(); i++) {
+          sum.data.push_back(fSumByPID[i]);
+        }
         return sum;
       }
 };

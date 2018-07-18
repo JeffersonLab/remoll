@@ -188,19 +188,7 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit)
 
 // GenericDetectorSum
 void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
-    // Particles that are payed attention to in our sums, 0 means all types
-    std::vector<int> particles_to_track;
-    particles_to_track.push_back(0);
-    particles_to_track.push_back(-11);
-    particles_to_track.push_back( 11);
-    particles_to_track.push_back( 22);
-    particles_to_track.push_back(2112);
-    particles_to_track.push_back(2212);
-    particles_to_track.push_back(-211);
-    particles_to_track.push_back( 211);
-    for (int j = 0; j < particles_to_track.size(); j++) {
-        fGenDetSum.push_back(hit->GetGenericDetectorSumIO(particles_to_track[j]));
-    }
+    fGenDetSum.push_back(hit->GetGenericDetectorSumIO());
 }
 
 /*---------------------------------------------------------------------------------*/

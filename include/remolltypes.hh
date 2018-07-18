@@ -70,12 +70,16 @@ struct remollGenericDetectorHit_t {
   double vx, vy, vz;
   double edep;
 };
-struct remollGenericDetectorSum_t {
-  int det;
-  int vid;
-  int pid;
+struct remollGenericDetectorSumByPID_t {
   double x,y,z;
   double edep;
+  int pid;
+};
+struct remollGenericDetectorSum_t {
+  std::vector<remollGenericDetectorSumByPID_t> data;
+  double edep;
+  int det;
+  int vid;
 };
 
 // System of units structure
