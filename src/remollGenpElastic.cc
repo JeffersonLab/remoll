@@ -1,20 +1,15 @@
 #include "remollGenpElastic.hh"
 
-#include "CLHEP/Random/RandFlat.h"
+#include "Randomize.hh"
+#include "G4Material.hh"
+#include "G4VPhysicalVolume.hh"
+#include "G4LogicalVolume.hh"
+#include "G4PhysicalConstants.hh"
 
 #include "remollEvent.hh"
 #include "remollVertex.hh"
 #include "remollBeamTarget.hh"
 #include "remollMultScatt.hh"
-
-#include "G4Material.hh"
-#include "G4VPhysicalVolume.hh"
-#include "G4LogicalVolume.hh"
-#include "Randomize.hh"
-
-#include "G4SystemOfUnits.hh"
-#include "G4PhysicalConstants.hh"
-
 #include "remolltypes.hh"
 
 #include <math.h>
@@ -22,15 +17,14 @@
 #define Euler 0.5772157
 #define NINTERVAL 3
 
-remollGenpElastic::remollGenpElastic(){
+remollGenpElastic::remollGenpElastic()
+: remollVEventGen("elastic") {
     fTh_min =     0.1*deg;
     fTh_max =     2.0*deg;
 
-    fE_min = 80.0*MeV; // Absolute minimum of electron energy
-                            // to generate
+    fE_min = 80.0*MeV; // Absolute minimum of electron energy to generate
 
     fApplyMultScatt = true;
-    fBeamTarg = remollBeamTarget::GetBeamTarget();
 }
 
 remollGenpElastic::~remollGenpElastic(){
@@ -42,10 +36,10 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     //  Crazy weighting for brem because ep cross section blows up at low Q2
 
     // Get initial beam energy instead of using other sampling
-    double beamE = fBeamTarg->fBeamE;
+    double beamE = fBeamTarg->fBeamEnergy;
     double Ekin  = beamE - electron_mass_c2;
 
-    std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargVols();
+    std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargetVolumes();
 
     bool bypass_target = false;
 
@@ -57,12 +51,12 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
 	    G4cerr << __FILE__ << " line " << __LINE__ << ": WARNING could not find target" << G4endl;
 	    bypass_target = true;
-	}     
+	}
     } else {
 	bypass_target = true;
     }
 
-    double bremcut = fBeamTarg->fEcut;
+    double bremcut = fBeamTarg->fEnergyCut;
 
     // Approximation for Q2, just needs to be order of magnitude
     double effQ2 = 2.0*beamE*beamE*(1.0-cos(0.5*deg));
@@ -72,7 +66,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double bt;
     if( !bypass_target ){
-	bt = (4.0/3.0)*(fBeamTarg->fTravLen/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
+	bt = (4.0/3.0)*(fBeamTarg->fTravelledLength/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
 		+ int_bt);
     } else {
 	bt = 0.0;
@@ -184,7 +178,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     // Set event information to our new sampling
     evt->fBeamE = beamE;
-    evt->fBeamMomentum = evt->fBeamMomentum.unit()*sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2);;
+    evt->fBeamMomentum = evt->fBeamMomentum.unit()*sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2);
 
     ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -197,7 +191,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double icth_b = 1.0/(1.0-cthmax);
     double icth_a = 1.0/(1.0-cthmin);
 
-    double sampv = 1.0/CLHEP::RandFlat::shoot(icth_b, icth_a);
+    double sampv = 1.0/G4RandFlat::shoot(icth_b, icth_a);
 
     assert( -1.0 < sampv && sampv < 1.0 );
 
@@ -207,9 +201,9 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // sampling
     double samp_fact = sampv*sampv*(icth_a-icth_b)/(cthmin-cthmax);
 
-    double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
+    double ph = G4RandFlat::shoot(0.0, 2.0*pi);
 
-    double ef    = proton_mass_c2*beamE/(proton_mass_c2 + beamE*(1.0-cos(th)));;
+    double ef    = proton_mass_c2*beamE/(proton_mass_c2 + beamE*(1.0-cos(th)));
 
     double q2  = 2.0*beamE*ef*(1.0-cos(th));
     double tau = q2/(4.0*proton_mass_c2*proton_mass_c2);
@@ -246,7 +240,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     thisZ = vert->GetMaterial()->GetZ();
 
-    evt->SetEffCrossSection(sigma*V*thisZ*value);
+    evt->SetEffCrossSection(sigma*V*thisZ*thisZ*value);
 
     if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
 	G4cerr << __FILE__ << " line " << __LINE__ << 
@@ -272,7 +266,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // We're going to use the new kinematics for this guy
 
     int_bt = (alpha/pi)*( log( q2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
-    Ekin = ef - electron_mass_c2;;
+    Ekin = ef - electron_mass_c2;
     double env, ref;
 
     prob = 1.- pow(bremcut/Ekin, int_bt) - int_bt/(int_bt+1.)*(1.- pow(bremcut/Ekin,int_bt+1.))
@@ -283,7 +277,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     if (prob_sample <= prob) {//Bremsstrahlung has taken place!
 	do {
 	    sample = G4UniformRand();
-	    eloss = fBeamTarg->fEcut*pow(Ekin/fBeamTarg->fEcut,sample);
+	    eloss = fBeamTarg->fEnergyCut*pow(Ekin/fBeamTarg->fEnergyCut,sample);
 	    env = 1./eloss;
 	    value = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,bt);
 
@@ -306,7 +300,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 }
 
 G4double remollGenpElastic::RadProfile(G4double eloss, G4double btt){
-     double Ekin = fBeamTarg->fBeamE - electron_mass_c2;
+     double Ekin = fBeamTarg->fBeamEnergy - electron_mass_c2;
      double retval = 1./eloss*(1.-eloss/Ekin+0.75*pow(eloss/Ekin,2))*pow(eloss/Ekin,btt);
 
      if( std::isnan(retval) || std::isinf(retval) ){
@@ -323,7 +317,7 @@ G4double remollGenpElastic::RadProfile(G4double eloss, G4double btt){
 G4double remollGenpElastic::EnergNumInt(G4double btt, G4double a0, G4double b0){
     const int nbin = 1000;
     double sum = 0.0;
-    double bremcut = fBeamTarg->fEcut;
+    double bremcut = fBeamTarg->fEnergyCut;
 
     int j;
     double boolc[5] = {7.0, 32.0, 12.0, 32.0, 7.0};

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <position name="trackingPlaneFront1_position" z="-2.5" unit="m"/>
+  <position name="trackingPlaneFront2_position" z="-2." unit="m"/>
+  <position name="trackingPlaneBack1_position"  z="+2." unit="m"/>
+  <position name="trackingPlaneBack2_position"  z="+2.5" unit="m"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box name="trackingBoundingBoxSolid"
+    x="4000" y="4000" z="5001" lunit="mm"/>
+  <tube name="trackingPlaneSolid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="0" rmax="2000.0" z="0.1" lunit="mm"/>
+</solids>
+
+<structure>
+
+  <volume name="trackingPlane">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingPlaneSolid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="30"/>
+  </volume>
+
+  <volume name="trackingBoundingBox">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingBoundingBoxSolid"/>
+
+    <physvol name="trackingPlaneFront1">
+      <volumeref ref="trackingPlane"/>
+      <positionref ref="trackingPlaneFront1_position"/>
+    </physvol>	
+    <physvol name="trackingPlaneFront2">
+      <volumeref ref="trackingPlane"/>
+      <positionref ref="trackingPlaneFront2_position"/>
+    </physvol>	
+
+    <physvol name="trackingPlaneBack1">
+      <volumeref ref="trackingPlane"/>
+      <positionref ref="trackingPlaneBack1_position"/>
+    </physvol>	
+    <physvol name="trackingPlaneBack2">
+      <volumeref ref="trackingPlane"/>
+      <positionref ref="trackingPlaneBack2_position"/>
+    </physvol>	
+
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="trackingBoundingBox"/>
+</setup>
+
+</gdml>

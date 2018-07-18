@@ -6,227 +6,165 @@
 
 */
 
-#include "CLHEP/Random/Random.h"
+#ifdef G4MULTITHREADED
+#include "G4MTRunManager.hh"
+typedef G4MTRunManager RunManager;
+#else
+#include "G4RunManager.hh"
+typedef G4RunManager RunManager;
+#endif
 
-#include "remollRunAction.hh"
+#include "G4Types.hh"
+#include "G4UImanager.hh"
+
 #include "remollRun.hh"
 #include "remollRunData.hh"
-#include "remollPrimaryGeneratorAction.hh"
-#include "remollEventAction.hh"
-#include "remollSteppingAction.hh"
-
-//#include "G4StepLimiterBuilder.hh"
-#include "G4StepLimiterPhysics.hh"
-
-#include "remollDetectorConstruction.hh"
 
 #include "remollIO.hh"
-#include "remollMessenger.hh"
+#include "remollPhysicsList.hh"
+#include "remollActionInitialization.hh"
+#include "remollDetectorConstruction.hh"
+#include "remollParallelConstruction.hh"
 
-//  Standard physics list
-#include "G4Version.hh"
-#include "G4PhysListFactory.hh"
-#include "G4OpticalPhysics.hh"
-#if G4VERSION_NUMBER < 1000
-#include "G4StepLimiterBuilder.hh"
-#else
-#include "G4StepLimiterPhysics.hh"
-#endif
-
-#include "G4RunManager.hh"
-
-#include "G4UnitsTable.hh"
-
-#include "G4RunManagerKernel.hh"
-
-//to make gui.mac work
-#include <G4UImanager.hh>
-#include <G4UIExecutive.hh>
-#include <G4UIterminal.hh>
-
-#ifdef G4UI_USE_QT
-#include "G4UIQt.hh"
-#endif
-
-#ifdef G4UI_USE_XM
-#include "G4UIXm.hh"
-#endif
-
-#ifdef G4UI_USE_TCSH
-#include "G4UItcsh.hh"
-#endif
-
-#ifdef G4VIS_USE
 #include "G4VisExecutive.hh"
+#include "G4UIExecutive.hh"
+
+#ifdef __APPLE__
+#include <unistd.h>
 #endif
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+#include <ctime>
+#include <fstream>
 
-int main(int argc, char** argv){
+namespace {
+  void PrintUsage() {
+    G4cerr << "Usage: " << G4endl;
+    G4cerr << " remoll [-g geometry] [-m macro] [-u UIsession] [-r seed] ";
+#ifdef G4MULTITHREADED
+    G4cerr << "[-t nThreads] ";
+#endif
+    G4cerr << "[macro]" << G4endl;
+  }
+}
 
-    // Initialize the CLHEP random engine used by
-    // "shoot" type functions
+int main(int argc, char** argv) {
 
-    unsigned int seed = time(0) + (int) getpid();
+    // Running time measurement: start
+    clock_t tStart = clock();
 
-    unsigned int devrandseed = 0;
-    //  /dev/urandom doens't block
-    FILE *fdrand = fopen("/dev/urandom", "r");
-    if( fdrand ){
-	fread(&devrandseed, sizeof(int), 1, fdrand);
-	seed += devrandseed;
-	fclose(fdrand);
+    #if ROOT_VERSION_CODE >= ROOT_VERSION(6,0,0)
+    // Fix for #40: avoids LLVM/GL errors, but only for ROOT 6:
+    // make sure gROOT is loaded before LLVM by using it first
+    gROOT->Reset();
+    #endif
+
+    // Initialize the random seed
+    G4long seed = time(0) + (int) getpid();
+    // Open /dev/urandom
+    std::ifstream urandom("/dev/urandom", std::ios::in | std::ios::binary);
+    // If stream is open
+    if (urandom) {
+      urandom.read(reinterpret_cast<char*>(&seed), sizeof(seed));
+      urandom.close();
+      seed = labs(seed);
+    } else G4cerr << "Can't read /dev/urandom." << G4endl;
+
+
+    // Parse command line options
+    G4String macro;
+    G4String session;
+    G4String geometry;
+#ifdef G4MULTITHREADED
+    G4int threads = 0;
+#endif
+    //
+    for (G4int i = 1; i < argc; ++i) {
+      if      (G4String(argv[i]) == "-m") macro    = argv[++i];
+      else if (G4String(argv[i]) == "-g") geometry = argv[++i];
+      else if (G4String(argv[i]) == "-u") session  = argv[++i];
+      else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
+#ifdef G4MULTITHREADED
+      else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
+#endif
+      else if (argv[i][0] != '-') macro = argv[i];
+      else {
+        PrintUsage();
+        return 1;
+      }
     }
 
-    CLHEP::HepRandom::createInstance();
-    CLHEP::HepRandom::setTheSeed(seed);
-
-    remollRun::GetRun()->GetData()->SetSeed(seed);
-
-    remollIO *io = new remollIO();
 
     //-------------------------------
     // Initialization of Run manager
     //-------------------------------
     G4cout << "RunManager construction starting...." << G4endl;
-    G4RunManager * runManager = new G4RunManager;
+    RunManager* runManager = new RunManager;
+    #ifdef G4MULTITHREADED
+    if (threads > 0) runManager->SetNumberOfThreads(threads);
+    #endif
 
-    remollMessenger *rmmess = new remollMessenger();
-    rmmess->SetIO(io);
+    // Set the default random seed
+    G4Random::setTheSeed(seed);
 
     // Detector geometry
-    G4VUserDetectorConstruction* detector = new remollDetectorConstruction();
+    remollDetectorConstruction* detector = new remollDetectorConstruction(geometry);
+    // Parallel world geometry
+    remollParallelConstruction* parallel = new remollParallelConstruction();
+    detector->RegisterParallelWorld(parallel);
     runManager->SetUserInitialization(detector);
-    rmmess->SetDetCon( ((remollDetectorConstruction *) detector) );
-    rmmess->SetMagField( ((remollDetectorConstruction *) detector)->GetGlobalField() );
 
-    ((remollDetectorConstruction *) detector)->SetIO(io);
-
-    // Physics we want to use
-    G4int verbose = 0;
-    G4PhysListFactory factory;
-    #if G4VERSION_NUMBER < 1000
-    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
-    physlist->RegisterPhysics( new G4StepLimiterBuilder(verbose) );
-    #else
-    //G4VModularPhysicsList* physlist = factory.GetReferencePhysList("FTFP_BERT_LIV");
-    G4VModularPhysicsList* physlist = factory.GetReferencePhysList("QGSP_BERT_HP");
-    physlist->RegisterPhysics( new G4StepLimiterPhysics(verbose) );
-    #endif
-    physlist->SetVerboseLevel(verbose);
+    // Physics list
+    remollPhysicsList* physlist = new remollPhysicsList();
     runManager->SetUserInitialization(physlist);
 
-    //-------------------------------
-    // UserAction classes
-    //-------------------------------
-    G4UserRunAction* run_action = new remollRunAction;
-    ((remollRunAction *) run_action)->SetIO(io);
-    runManager->SetUserAction(run_action);
-
-    G4VUserPrimaryGeneratorAction* gen_action = new remollPrimaryGeneratorAction;
-    ((remollPrimaryGeneratorAction *) gen_action)->SetIO(io);
-    rmmess->SetPriGen((remollPrimaryGeneratorAction *)gen_action);
-    runManager->SetUserAction(gen_action);
-
-    G4UserEventAction* event_action = new remollEventAction;
-    ((remollEventAction *) event_action)->SetIO(io);
-
-    runManager->SetUserAction(event_action);
-    G4UserSteppingAction* stepping_action = new remollSteppingAction;
-    runManager->SetUserAction(stepping_action);
-    rmmess->SetStepAct((remollSteppingAction *) stepping_action);
-
-    // New units
-
-    G4UIsession* session = 0;
+    // Run action
+    remollActionInitialization* useraction = new remollActionInitialization();
+    runManager->SetUserInitialization(useraction);
 
     //----------------
     // Visualization:
     //----------------
-
-    if (argc==1)   // Define UI session for interactive mode.
-    {
-
-	// G4UIterminal is a (dumb) terminal.
-
-#if defined(G4UI_USE_XM)
-	session = new G4UIXm(argc,argv);
-#elif defined(G4UI_USE_WIN32)
-	session = new G4UIWin32();
-#elif defined(G4UI_USE_QT)
-	session = new G4UIQt(argc,argv);
-#elif defined(G4UI_USE_TCSH)
-	session = new G4UIterminal(new G4UItcsh);
-#else
-	session = new G4UIterminal();
-#endif
-
-    }
-
-    remollRunData *rundata = remollRun::GetRun()->GetData();
-
-#ifdef G4VIS_USE
-    // Visualization, if you choose to have it!
+    // Initialize visualization
     //
-    // Simple graded message scheme - give first letter or a digit:
-    //  0) quiet,         // Nothing is printed.
-    //  1) startup,       // Startup and endup messages are printed...
-    //  2) errors,        // ...and errors...
-    //  3) warnings,      // ...and warnings...
-    //  4) confirmations, // ...and confirming messages...
-    //  5) parameters,    // ...and parameters of scenes and views...
-    //  6) all            // ...and everything available.
+    // Verbose level "warnings" (3) as is too noisy during initialization
+    G4VisManager* visManager = new G4VisExecutive("quiet");
+    visManager->Initialize();
+    visManager->SetVerboseLevel("warnings");
 
-    //this is the initializing the run manager?? Right?
-    G4VisManager* visManager = new G4VisExecutive;
-    //visManager -> SetVerboseLevel (1);
-    visManager ->Initialize();
-#endif
+    // Get the pointer to the User Interface manager
+    G4UImanager* UImanager = G4UImanager::GetUIpointer();
 
-    //get the pointer to the User Interface manager
-    G4UImanager * UI = G4UImanager::GetUIpointer();
-
-    if (session)   // Define UI session for interactive mode.
+    // Define UI session for interactive mode
+    if (macro.size())
     {
-	// G4UIterminal is a (dumb) terminal.
-	//UI->ApplyCommand("/control/execute myVis.mac");
-
-#if defined(G4UI_USE_XM) || defined(G4UI_USE_WIN32) || defined(G4UI_USE_QT)
-	// Customize the G4UIXm,Win32 menubar with a macro file :
-	UI->ApplyCommand("/control/execute macros/gui.mac");
-#endif
-
-	session->SessionStart();
-	delete session;
-    }
-    else           // Batch mode - not using the GUI
-    {
-#ifdef G4VIS_USE
-	visManager->SetVerboseLevel("quiet");
-#endif
-	//these line will execute a macro without the GUI
-	//in GEANT4 a macro is executed when it is passed to the command, /control/execute
-	G4String command = "/control/execute ";
-	G4String fileName = argv[1];
-
-	/* Copy contents of macro into buffer to be written out
-	 * into ROOT file
-	 * */
-	rundata->SetMacroFile(argv[1]);
-
-
-	UI->ApplyCommand(command+fileName);
+      // Run in batch mode
+      // Copy contents of macro into buffer to be written out into ROOT file
+      remollRun::GetRunData()->SetMacroFile(macro);
+      UImanager->ExecuteMacroFile(macro);
+    } else {
+      // Define UI session for interactive mode
+      G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
+      if (ui->IsGUI())
+        UImanager->ApplyCommand("/control/execute macros/gui.mac");
+      ui->SessionStart();
+      delete ui;
     }
 
-    //if one used the GUI then delete it
-#ifdef G4VIS_USE
+
+    // Job termination
+    // Free the store: user actions, physics_list and detector_description are
+    //                 owned and deleted by the run manager, so they should not
+    //                 be deleted in the main() program !
     delete visManager;
-#endif
+    delete runManager;
 
-    // Initialize Run manager
-    // runManager->Initialize();
 
+    // Running time measurement: end
+    clock_t tEnd = clock();
+    G4cout << " Running time[s]: "
+        << double(tEnd - tStart) / double(CLOCKS_PER_SEC)
+        << G4endl;
+
+    // Return success
     return 0;
 }

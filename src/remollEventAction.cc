@@ -1,87 +1,97 @@
 #include "remollEventAction.hh"
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
+#include "remollPrimaryGeneratorAction.hh"
 
 #include "G4Event.hh"
-#include "G4EventManager.hh"
 #include "G4HCofThisEvent.hh"
 #include "G4VHitsCollection.hh"
-#include "G4TrajectoryContainer.hh"
-#include "G4Trajectory.hh"
-#include "G4VVisManager.hh"
-#include "G4SDManager.hh"
-#include "G4UImanager.hh"
-#include "G4ios.hh"
 
 #include "remollIO.hh"
+#include "remollEvent.hh"
+#include "remollTrackReconstruct.hh"
 
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollEventActionMutex = G4MUTEX_INITIALIZER; }
 
-remollEventAction::remollEventAction() {
-}
+remollEventAction::remollEventAction()
+  : fPrimaryGeneratorAction(0),fEventSeed("") { }
 
-remollEventAction::~remollEventAction(){
-}
+remollEventAction::~remollEventAction() { }
 
+void remollEventAction::BeginOfEventAction(const G4Event* event) { }
 
-void remollEventAction::BeginOfEventAction(const G4Event* ev){
-  // Start timer at event 0
-  if (ev->GetEventID() == 0) fTimer.Start();
-  // Pretty ongoing status
-  if ((ev->GetEventID() % 1000) == 0) {
-    // Stop timer (running timer cannot be read)
-    fTimer.Stop();
-    // Print event number
-    G4cout << "Event " << ev->GetEventID();
-    // Only print duration per event when meaningful (avoid division by zero)
-    if (ev->GetEventID() > 0)
-      G4cout << " (" << std::setprecision(3) << std::fixed
-        << 1000.*fTimer.GetRealElapsed()/1000.0 << " ms/event)";
-    // Carriage return without newline
-    G4cout << "\r" << std::flush;
-    // Start timer again
-    fTimer.Start();
-  }
-}
+void remollEventAction::EndOfEventAction(const G4Event* aEvent)
+{
+  // We collect all interaction with remollIO in this thread for as
+  // little locking as possible. This means that all the thread local
+  // information must be retrieved from here.
 
-void remollEventAction::EndOfEventAction(const G4Event* evt ) {
-  //G4SDManager   *SDman = G4SDManager::GetSDMpointer();
-  G4HCofThisEvent *HCE = evt->GetHCofThisEvent();
+  // Lock mutex
+  G4AutoLock lock(&remollEventActionMutex);
+  remollIO* io = remollIO::GetInstance();
 
-  G4VHitsCollection *thiscol;
+  // Store random seed
+  //fEventSeed = aEvent->GetRandomNumberStatus();
+  io->SetEventSeed(fEventSeed);
+
+  // Get primary event action information
+  const remollEvent* event = fPrimaryGeneratorAction->GetEvent();
+  io->SetEventData(event);
+
+  // Create track reconstruction object
+  remollTrackReconstruct track;
 
   // Traverse all hit collections, sort by output type
-  for( int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++ ){
-    thiscol = HCE->GetHC(hcidx);
-    if(thiscol){ // This is NULL if nothing is stored
-      // Dyanmic cast to test types, process however see fit and feed to IO
-      
+  G4HCofThisEvent *HCE = aEvent->GetHCofThisEvent();
+  for (int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++) {
+    G4VHitsCollection* thiscol = HCE->GetHC(hcidx);
+    if (thiscol){ // This is NULL if nothing is stored
+
+      // Dynamic cast to test types, process however see fit and feed to IO
+
       ////  Generic Detector Hits ///////////////////////////////////
-      if( remollGenericDetectorHitsCollection *thiscast = 
-	  dynamic_cast<remollGenericDetectorHitsCollection *>(thiscol)){
-	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorHit((remollGenericDetectorHit *) 
-				     thiscast->GetHit(hidx) );	  
-	}
+      if (remollGenericDetectorHitCollection *thiscast =
+          dynamic_cast<remollGenericDetectorHitCollection*>(thiscol)) {
+        for (unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++) {
+
+	  remollGenericDetectorHit *currentHit =
+	    (remollGenericDetectorHit *) thiscast->GetHit(hidx);
+
+	  ////  store GEM hits for track reconstruction
+	  if(currentHit->fDetID >= 501 && currentHit->fDetID <= 504){
+	    track.AddHit(currentHit);
+	  }
+	  // non-GEM hits
+	  else io->AddGenericDetectorHit(currentHit);
+        }
       }
-      
+
       ////  Generic Detector Sum ////////////////////////////////////
-      if( remollGenericDetectorSumCollection *thiscast = 
-	  dynamic_cast<remollGenericDetectorSumCollection *>(thiscol)){
-	for( unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++ ){
-	  fIO->AddGenericDetectorSum((remollGenericDetectorSum *) 
-				     thiscast->GetHit(hidx) );
-	}
+      if (remollGenericDetectorSumCollection *thiscast =
+          dynamic_cast<remollGenericDetectorSumCollection*>(thiscol)) {
+        for (unsigned int hidx = 0; hidx < thiscast->GetSize(); hidx++) {
+          io->AddGenericDetectorSum((remollGenericDetectorSum *)
+                                    thiscast->GetHit(hidx));
+        }
       }
-      
+
     }
   }
 
+  ////  reconstruct tracks, and store them into rootfile
+  if (track.GetTrackHitSize() > 0) {
+
+    track.ReconstructTrack();
+
+    std::vector<remollGenericDetectorHit*> rechits = track.GetTrack();
+
+    for (size_t j = 0; j < rechits.size(); j++)
+      io->AddGenericDetectorHit((remollGenericDetectorHit *) rechits[j]);
+  }
+
   // Fill tree and reset buffers
-  fIO->FillTree();
-  fIO->Flush();
-
-  return;
+  io->FillTree();
+  io->Flush();
 }
-
-
-

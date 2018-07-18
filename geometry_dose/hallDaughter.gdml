@@ -19,6 +19,11 @@
   <constant name="height_wall" value="7200."/>  
   <constant name="thick_wall" value="1547.76"/> 
   <constant name="center_wall" value="radius_of_hall+thick_wall/2"/>      Not in use anymore -->
+  <constant name="radius_of_hall" value="26517"/>
+  <constant name="width_wall" value="20000"/> 
+  <constant name="height_wall" value="7200."/>  
+  <constant name="thick_wall" value="1547.76"/> 
+  <constant name="center_wall" value="radius_of_hall+thick_wall/2"/>
 
   <constant name="radius_of_cylwall" value="25460."/>
   <constant name="thick_cylwall" value="1487."/>  
@@ -41,6 +46,14 @@
 
 <!--  <constant name="center_dump" value="radius_of_hall+length_dump/2+thick_wall"/> -->
   <constant name="length_dump" value="6000."/>
+  <constant name="thick_floor" value="500."/> 
+  <constant name="width_floor" value="20000."/> 
+  <constant name="floor_y_center" value="(-height_wall-thick_floor)/2"/>
+
+  <constant name="width_dump" value="6000."/> 
+  <constant name="height_dump" value="height_wall"/> 
+  <constant name="length_dump" value="6000."/> 
+<!--  <constant name="center_dump" value="radius_of_hall+length_dump/2+thick_wall"/> -->
   <constant name="center_dump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
   <constant name="center_cyldump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
 

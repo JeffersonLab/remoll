@@ -5,25 +5,25 @@
  * All the information on the run
  * The data object will get put into the output
  * stream
-  
+
    This is implemented in the soliton model
  */
 
-#include "remollRunData.hh"
+#include "G4Run.hh"
 
-class remollRun {
+class remollRunData;
 
-    private:
-	static remollRun *gSingleton;
-	 remollRun();
+class remollRun: public G4Run {
 
-	remollRunData *fRunData;
+  public:
+    remollRun(): G4Run() { };
+    virtual ~remollRun() { };
 
-    public:
-	 static remollRun *GetRun();
-	~remollRun();
-
-	remollRunData *GetData(){return fRunData;}
+  // Static run data access
+  private:
+    static remollRunData* fRunData;
+  public:
+    static remollRunData* GetRunData();
 };
 
-#endif//__REMOLLRUN_HH
+#endif //__REMOLLRUN_HH

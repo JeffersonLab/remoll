@@ -7,8 +7,6 @@
 #include <string>
 
 #include "remolltypes.hh"
-
-#include "gitinfo.hh"
 #include "remollTextFile.hh"
 
 /*!
@@ -20,10 +18,10 @@
 class TGeoManager;
 
 class remollRunData : public TObject {
-
+  using TObject::Print;
     public:
-	 remollRunData();
-	~remollRunData();
+	remollRunData();
+	virtual ~remollRunData();
 
 	unsigned long long int GetNthrown(){ return fNthrown; }
 	void SetNthrown(unsigned long long int n){ fNthrown = n; }
@@ -34,7 +32,7 @@ class remollRunData : public TObject {
 	const char *GetGenName(){ return fGenName; }
 
 	void SetBeamE(double E){ fBeamE = E; }
-	void SetSeed(unsigned int seed){ fSeed = seed; }
+	void SetSeed(unsigned long int seed){ fSeed = seed; }
 
 	void AddMagData(filedata_t d){fMagData.push_back(d);}
 	void SetMacroFile(const char *fn){ fMacro = remollTextFile(fn); }
@@ -50,10 +48,9 @@ class remollRunData : public TObject {
 	TTimeStamp fRunTime;
 
 	long int  fNthrown;
-	unsigned int  fSeed;
+	long int  fSeed;
 	double fBeamE;
 	char fGenName[__RUNSTR_LEN];
-	char fGitInfo[__GITMAXINFO_SIZE];
 
 	char fHostName[__RUNSTR_LEN];
 	char fRunPath[__RUNSTR_LEN];

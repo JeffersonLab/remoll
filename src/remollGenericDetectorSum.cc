@@ -1,14 +1,13 @@
 #include "remollGenericDetectorSum.hh"
 
-G4Allocator<remollGenericDetectorSum> remollGenericDetectorSumAllocator;
+G4ThreadLocal G4Allocator<remollGenericDetectorSum>* remollGenericDetectorSumAllocator = 0;
 
-remollGenericDetectorSum::remollGenericDetectorSum(int detid, int copyid){
-    fDetID  = detid;
-    fCopyID = copyid;
+remollGenericDetectorSum::remollGenericDetectorSum(int detid, int copyid)
+: fDetID(detid),fCopyID(copyid) {
+  fEdep   = 0.0;
 }
 
-remollGenericDetectorSum::~remollGenericDetectorSum(){
-}
+remollGenericDetectorSum::~remollGenericDetectorSum() { }
 
 void remollGenericDetectorSum::AddEDep( int pid, G4ThreeVector pos, double ene ){
     sumdata_t data;
@@ -53,18 +52,20 @@ G4ThreeVector remollGenericDetectorSum::GetPos( int pid ){
     return G4ThreeVector(xsum/esum, ysum/esum, zsum/esum);
 }
 
-remollGenericDetectorSum::remollGenericDetectorSum(const remollGenericDetectorSum &right) : G4VHit(){
-    // copy constructor
-    fDetID  = right.fDetID;
-    fCopyID = right.fCopyID;
-    fData   = right.fData;
+remollGenericDetectorSum::remollGenericDetectorSum(const remollGenericDetectorSum &right)
+: G4VHit(right) {
+  // copy constructor
+  fDetID  = right.fDetID;
+  fCopyID = right.fCopyID;
+  fEdep   = right.fEdep;
+  fData   = right.fData;
 }
 
-const remollGenericDetectorSum& remollGenericDetectorSum::operator =(const remollGenericDetectorSum &right){
-    (*this) = right;
-    return *this;
+const remollGenericDetectorSum& remollGenericDetectorSum::operator=(const remollGenericDetectorSum &right){
+  (*this) = right;
+  return *this;
 }
 
-G4int remollGenericDetectorSum::operator==(const remollGenericDetectorSum &right ) const {
-    return (this==&right) ? 1 : 0;
+G4int remollGenericDetectorSum::operator==(const remollGenericDetectorSum &right) const {
+  return (this==&right) ? 1 : 0;
 }

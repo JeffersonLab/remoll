@@ -1,0 +1,4 @@
+/run/initialize
+/remoll/evgen/set HEPEvt
+/generator/HEPEvt/open macros/tests/unit/test_gen_hepevt.dat
+/run/beamOn 1

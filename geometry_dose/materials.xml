@@ -233,7 +233,6 @@
             <D unit="g/cm3" value="2.70"/>
             <atom unit="g/mole" value="26.98"/>
   </material> 
-
   
   <material Z="1" name="VacuumTarg" state="gas">
     <T unit="K" value="2.73"/>

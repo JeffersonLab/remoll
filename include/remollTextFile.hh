@@ -6,12 +6,13 @@
 #include "TObject.h"
 
 class remollTextFile : public TObject {
-    public:
+  using TObject::Print;
+     public:       
 	 remollTextFile();
 	 remollTextFile(const remollTextFile &);
 	 const remollTextFile& operator=(const remollTextFile &);
 	 remollTextFile(const char *);
-	~remollTextFile();
+	 virtual ~remollTextFile();
 
 	 void copyFileIn(const char *);
 
@@ -24,7 +25,7 @@ class remollTextFile : public TObject {
 	void RecreateInDir(const char *path, bool clobber = false);
 
     private:
-	int fFilenameSize;
+	unsigned int fFilenameSize;
 	char *fFilename;
 
 	unsigned long long int fBufferSize;

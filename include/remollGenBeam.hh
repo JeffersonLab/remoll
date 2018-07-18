@@ -10,18 +10,18 @@
 
 #include "remollVEventGen.hh"
 
-class remollBeamTarget;
-
 class remollGenBeam : public remollVEventGen {
     public:
 	remollGenBeam();
-	~remollGenBeam();
-
+	virtual ~remollGenBeam();
+    void SetOriginX(double x);
+    void SetOriginY(double y);
+    void SetOriginZ(double z);
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
 
-	remollBeamTarget *fBeamTarg;
-
+	double fXpos;
+	double fYpos;
 	double fZpos;
 };
 

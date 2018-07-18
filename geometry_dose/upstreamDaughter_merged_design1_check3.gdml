@@ -147,6 +147,11 @@
     <constant name="USPolyShield1_side_thickness" value="400 + 400"/>
     <constant name="USPolyShield1_top_thickness" value="400 + 400"/>
     <constant name="USPolyShield1_bottom_thickness" value="400 + 400"/>
+    <!-- removed in merge of dose to develop
+    <constant name="USPolyShield1_side_thickness" value="400"/>
+    <constant name="USPolyShield1_top_thickness" value="400"/>
+    <constant name="USPolyShield1_bottom_thickness" value="400"/>
+     -->
     <constant name="USPolyShield1_length" value="USShield1_length + USShield2_length + 1 + 2*USPolyShield1_side_thickness + 100"/>
     <constant name="USPolyShield1_width" value="USShield2_width + 1 + 2*USPolyShield1_side_thickness"/>
     <constant name="USPolyShield1_height" value="USShield2_height + 1 + USPolyShield1_top_thickness + USPolyShield1_bottom_thickness"/>
@@ -189,6 +194,10 @@
     <constant name="USTubemother_rmax" value="1900"/>
     <constant name="USBoxmother_width" value="4200 + 300"/>
     <constant name="USBoxmother_height" value="4000 + 300"/>
+    <!-- removed in merge from dose in develop
+    <constant name="USBoxmother_width" value="4200"/>
+    <constant name="USBoxmother_height" value="4000"/>
+     -->
     <constant name="USTubemother_length" value="4500"/>
     <constant name="tubeBeampipeMother_1_union_rmax" value="200-1"/>
     <!--500 subtracted to have space for lead coller + potential poly shielding -->
@@ -801,8 +810,6 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl1_solid"/> 
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_1_Det"/>   
-      <auxiliary auxtype="DetNo" auxvalue="6010"/> -->
     </volume>
 
     <volume name="boxUSShieldColl2_logic">
@@ -812,9 +819,6 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl2_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-       <!-- NEW Sensitive detector FIXME -->
-      <!-- <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_2_Det"/>
-      <auxiliary auxtype="DetNo" auxvalue="6011"/> -->
     </volume>
 
     <!-- Neutron Poly Shielding -->
@@ -826,9 +830,6 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxUSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-       <!-- NEW Sensitive detector FIXME -->
-      <!--  <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_US_1_2_Det"/>
-      <auxiliary auxtype="DetNo" auxvalue="6012"/> -->
     </volume>
 
     <volume name="beampipe_1_logic">

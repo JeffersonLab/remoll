@@ -1,0 +1,6 @@
+# Enable optical physics
+/remoll/physlist/optical/enable
+
+# Initialize and run
+/run/initialize
+/run/beamOn 1

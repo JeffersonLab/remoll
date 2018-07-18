@@ -1500,13 +1500,10 @@
         <rotationref ref="RotateZ_6"/>
       </physvol>
 
-      <!--Removing col-3 -->
-      <!--
       <physvol name="DScoll_1">
         <volumeref ref="logicDScoll_1"/>
         <positionref ref="posCOLL1"/>
       </physvol>
-      -->
 
       <physvol name="DScoll_5">
         <volumeref ref="logicDScoll_5"/>
@@ -1558,7 +1555,6 @@
         <volumeref ref="boxDSShield1_logic"/>
         <positionref ref="boxDSShield1_center"/>
       </physvol>
-
 
    </volume>
 </structure>
