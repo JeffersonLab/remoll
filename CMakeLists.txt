@@ -193,10 +193,6 @@ set(REMOLL_SCRIPTS
     macros/runexample.mac
     macros/gui.mac
     macros/moller_dose.mac
-    macros/vis.mac
-    macros/runscript.sh
-    macros/handler.sh
-    rootlogon.C
   )
 
 foreach(_script ${REMOLL_SCRIPTS})
