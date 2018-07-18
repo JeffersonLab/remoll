@@ -8,6 +8,7 @@
 #include "G4GenericMessenger.hh"
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
+#include "G4UserLimits.hh"
 
 #include "G4LogicalVolume.hh"
 #include "globals.hh"
