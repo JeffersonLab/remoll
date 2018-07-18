@@ -1,7 +1,7 @@
 #  Example file
 
 # This must be called before initialize
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 
 # This must be explicitly called
 /run/initialize
@@ -17,8 +17,8 @@
 /remoll/beamene 11 GeV
 
 /remoll/gen moller
-/remoll/thmin 0.01 deg
-/remoll/thmax 2.00 deg
+/remoll/evgen/thmin 0.01 deg
+/remoll/evgen/thmax 2.00 deg
 
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm

@@ -90,7 +90,7 @@
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
-      <file name="geometry/pionDetectorLucite.gdml"/>
+      <file name="pionDetectorLucite.gdml"/>
       <position name="pionDetectorLucite_position"
         x="pionDetectorLuciteInnerEdgeRadialPosition"/>
       <rotation name="pionDetectorLucite_rotation"

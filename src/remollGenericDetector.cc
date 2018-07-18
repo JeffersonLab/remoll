@@ -84,12 +84,32 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4bool badhit  = false;
 
     // Ignore this detector if disabled
-    if (! fEnabled) return false;
+    if (! fEnabled) {
+      static bool has_been_warned = false;
+      if (! has_been_warned) {
+        G4cout << "remoll: Some detectors have been explicitly disabled in macros." << G4endl;
+        G4cout << "remoll: To disable/enable detectors, use the following syntax:" << G4endl;
+        G4cout << "remoll:   /remoll/SD/print_all" << G4endl;
+        G4cout << "remoll:   /remoll/SD/enable_all" << G4endl;
+        G4cout << "remoll:   /remoll/SD/disable_all" << G4endl;
+        G4cout << "remoll:   /remoll/SD/det_4001/enable" << G4endl;
+        G4cout << "remoll:   /remoll/SD/det_4001/disable" << G4endl;
+        has_been_warned = true;
+      }
+      return false;
+    }
 
     // Ignore optical photons as hits (but still simulate them
     // so they can knock out electrons of the photocathode)
     if (! fDetectOpticalPhotons
         && step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()) {
+      static bool has_been_warned = false;
+      if (! has_been_warned) {
+        G4cout << "remoll: Optical photons simulated but not stored for all detectors." << G4endl;
+        G4cout << "remoll: To save optical photon hits, use the following in gdml:" << G4endl;
+        G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"opticalphoton\"/>" << G4endl;
+        has_been_warned = true;
+      }
       return false;
     }
 
@@ -97,6 +117,13 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
     if (! fDetectLowEnergyNeutrals
         && charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
+      static bool has_been_warned = false;
+      if (! has_been_warned) {
+        G4cout << "remoll: <0.1 MeV neutrals simulated but not stored for all detectors." << G4endl;
+        G4cout << "remoll: To save low energy neutral hits, use the following in gdml:" << G4endl;
+        G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"lowenergyneutral\"/>" << G4endl;
+        has_been_warned = true;
+      }
       return false;
     }
 
