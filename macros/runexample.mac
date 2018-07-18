@@ -56,8 +56,13 @@
 
 /remoll/beamene 11 GeV
 
+# For LH2
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
+
+# For carbon
+#/remoll/targpos 0.0 cm
+#/remoll/targlen 1.5 mm
 
 /remoll/beamcurr 85 microampere
 

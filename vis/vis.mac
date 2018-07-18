@@ -1,3 +1,9 @@
+# set the geometry
+/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+
+####
+/run/initialize
+
 #
 # Create a new empty scene
 #

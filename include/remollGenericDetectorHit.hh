@@ -20,6 +20,8 @@ class remollGenericDetectorHit : public G4VHit {
 	inline void *operator new(size_t);
 	inline void operator delete(void *aHit);
 
+        void Print();
+
     private:
 
     public:
@@ -33,6 +35,14 @@ class remollGenericDetectorHit : public G4VHit {
 	G4ThreeVector f3S;
         // Global time
         G4double fTime;
+        // direction
+        G4ThreeVector f3dP;
+
+        // reconstructed pos, Th for GEM
+	G4ThreeVector f3XRec;
+	G4ThreeVector f3dPRec;
+        G4double fThRec;
+
 	// Total momentum, energy, mass
 	G4double fP, fE, fM;
 	// Origin
@@ -94,4 +104,4 @@ inline void remollGenericDetectorHit::operator delete(void *aHit){
   remollGenericDetectorHitAllocator->FreeSingle( (remollGenericDetectorHit*) aHit);
 }
 
-#endif//__REMOLLGENERICDETECTORHIT_HH
+#endif //__REMOLLGENERICDETECTORHIT_HH

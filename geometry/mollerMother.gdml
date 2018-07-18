@@ -6,6 +6,12 @@
      <position unit="mm" name="upstreamCenter" x="0" y="0" z="7000."/>
      <position unit="mm" name="hybridCenter" x="0" y="0" z="13366.57"/>
      <position unit="mm" name="trackingCenter" x="0" y="0" z="25635."/>
+
+     <position name="GEM1Center" x="0" y="0" z="22700.-230.-10." unit="mm"/>
+     <position name="GEM2Center" x="0" y="0" z="23700.-230.-10." unit="mm"/>
+     <position name="GEM3Center" x="0" y="0" z="27700.-230.-10." unit="mm"/>
+     <position name="GEM4Center" x="0" y="0" z="28700.-230.-10." unit="mm"/>
+
      <position unit="mm" name="detectorCenter" x="0" y="0" z="28500."/>
      <position unit="mm" name="pionDetectorCenter" x="0" y="0" z="32000."/>
      <rotation name="identity"/>
@@ -37,32 +43,32 @@
       </physvol>
 
       <physvol>
-      <file name="detectorDaughter.gdml"/>
-      <positionref ref="detectorCenter"/>
-      <rotationref ref="identity"/>
+        <file name="detectorDaughter.gdml"/>
+        <positionref ref="detectorCenter"/>
+        <rotationref ref="identity"/>
       </physvol>
 
       <physvol name="trackingDetectors_physical">
-      <file name="trackingDaughter.gdml"/>
-      <positionref ref="trackingCenter"/>
+        <file name="trackingDaughter.gdml"/>
+        <positionref ref="trackingCenter"/>
       </physvol>
 
+      <!-- Pion Detectors -->
       <physvol>
-      <file name="pionDetectorSystem.gdml"/>
-      <positionref ref="pionDetectorCenter"/>
-      <rotationref ref="identity"/>
+        <file name="pionDetectorSystem.gdml"/>
+        <positionref ref="pionDetectorCenter"/>
       </physvol>
 
+      <!-- Upstream Spectrometer -->
       <physvol>
-      <file name="upstreamDaughter.gdml"/>
-      <positionref ref="upstreamCenter"/>
-      <rotationref ref="identity"/>
+        <file name="upstreamDaughter.gdml"/>
+        <positionref ref="upstreamCenter"/>
       </physvol>
 
+      <!-- Hybrid Spectrometer -->
       <physvol>
-      <file name="hybridDaughter.gdml"/>
-      <positionref ref="hybridCenter"/>
-      <rotationref ref="identity"/>
+        <file name="hybridDaughter.gdml"/>
+        <positionref ref="hybridCenter"/>
       </physvol> 
 
     </volume>

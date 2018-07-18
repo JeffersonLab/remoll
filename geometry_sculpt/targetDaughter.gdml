@@ -38,12 +38,12 @@
       <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     </volume>
 
-   <volume name="USAlTarg">
+    <volume name="USAlTarg">
       <materialref ref="Aluminum"/>
       <solidref ref="AlWindow"/>
     </volume>
 
-   <volume name="DSAlTarg">
+    <volume name="DSAlTarg">
       <materialref ref="Aluminum"/>
       <solidref ref="AlWindow"/>
     </volume>

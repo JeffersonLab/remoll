@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
-<define>
-     <position name="targetCenter" x="0" y="0" z="0"/>
-     <position name="upstreamCenter" x="0" y="0" z="7000."/>
-     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
-     <position name="detectorCenter" x="0" y="0" z="28500."/>
-     <rotation name="identity"/>
+  <define>
+    <position name="targetCenter" x="0" y="0" z="0"/>
+    <position name="upstreamCenter" x="0" y="0" z="7000."/>
+    <position name="hybridCenter" x="0" y="0" z="13366.57"/>
+    <position name="mainDetCenter" x="0" y="0" z="-0+28700."/> 
+
+    <rotation name="identity"/>
 </define>
 
 <materials>
@@ -28,37 +29,32 @@
       <materialref ref="Vacuum"/>
       <solidref ref="boxMother"/>
 
+      <!-- Target -->
       <physvol>
-      <file name="targetDaughter.gdml"/>
-      <positionref ref="targetCenter"/>
-      <rotationref ref="identity"/>
+        <file name="targetDaughter.gdml"/>
+        <positionref ref="targetCenter"/>
+        <rotationref ref="identity"/>
       </physvol>
 
       <!-- Simple disc detector -->
       <physvol>
-      <file name="detectorDaughter.gdml"/>
-      <positionref ref="detectorCenter"/>
-      <rotationref ref="identity"/>
+        <file name="detectorDaughter.gdml"/>
+        <positionref ref="detectorCenter"/>
       </physvol> 
       
-      <!-- Barrel detector --> 
-      <!-- BUGGED
+      <!-- These are spectrometers -->
       <physvol>
-      <file name="mollerdet.gdml"/>
-      <positionref ref="detectorCenter"/>
-      <rotationref ref ="identity"/>
+        <file name="mollerdet.gdml"/>
+        <positionref ref="detectorCenter"/>
       </physvol>
-	-->     
 
       <physvol>
-      <file name="upstreamDaughter.gdml"/>
-      <positionref ref="upstreamCenter"/>
-      <rotationref ref="identity"/>
+        <file name="upstreamDaughter.gdml"/>
+        <positionref ref="upstreamCenter"/>
       </physvol>
       <physvol>
-      <file name="hybridDaughter.gdml"/>
-      <positionref ref="hybridCenter"/>
-      <rotationref ref="identity"/>
+        <file name="hybridDaughter.gdml"/>
+        <positionref ref="hybridCenter"/>
       </physvol>
       
     </volume>
