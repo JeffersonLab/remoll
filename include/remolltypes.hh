@@ -16,9 +16,6 @@
 #define __MAXFILE_LEN 1048576 // MB file size limit
 
 #include "TTimeStamp.h"
-//#include "G4ThreeVector.hh"
-//#include <vector>
-//using namespace std;
 
 enum SampType_t { kActiveTargetVolume, kAllTargetVolumes };
 
@@ -53,8 +50,6 @@ struct remollEventParticle_t {
   double th, ph, p;
   double tpx, tpy, tpz;
   std::vector<double> tjx, tjy, tjz; //Trajectory information
-  //std::vector<vector<double>> traj; //Trajectory information
-  //std::vector<G4ThreeVector> traj; //Cannot use this for some reason
 };
 
 // Generic detector hit and sum structure

@@ -27,12 +27,6 @@ remollTrackingAction::~remollTrackingAction()
 
 void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 {
-  //Store primary trajector
-  if (aTrack->GetParentID() == 0){
-    fpTrackingManager->SetStoreTrajectory(true);
-  } else {
-    fpTrackingManager->SetStoreTrajectory(false);
-  }
 
   // Track primary electron only
   if (fTrackingFlag == 0) {

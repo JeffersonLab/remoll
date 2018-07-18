@@ -59,7 +59,6 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
 		}
 	}
     }
-
     parts.push_back(part);
   }
   return parts;
