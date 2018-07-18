@@ -42,7 +42,7 @@ class remollGenericDetectorSum : public G4VHit {
     public:
       const remollGenericDetectorSum_t GetGenericDetectorSumIO(int pid = 0) const {
         remollGenericDetectorSum_t sum;
-        sum.pid = pid
+        sum.pid = pid;
         sum.det = fDetID;
         sum.vid = fCopyID;
         sum.x = GetPos(pid).x();
