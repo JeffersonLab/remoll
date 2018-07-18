@@ -20,7 +20,7 @@ remollEventAction::remollEventAction()
 
 remollEventAction::~remollEventAction() { }
 
-void remollEventAction::BeginOfEventAction(const G4Event* event) { }
+void remollEventAction::BeginOfEventAction(const G4Event* /* event */) { }
 
 void remollEventAction::EndOfEventAction(const G4Event* aEvent)
 {
