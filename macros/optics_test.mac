@@ -57,6 +57,8 @@
 #/remoll/evgen/beam/py 0
 /remoll/evgen/beam/pz 0.9904822158
 
+/remoll/evgen/beam/partName e-
+
 /remoll/filename remollout_quartz.root
 
 /run/beamOn 1
