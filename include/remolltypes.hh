@@ -76,7 +76,7 @@ struct remollGenericDetectorSumByPID_t {
   int pid;
 };
 struct remollGenericDetectorSum_t {
-  std::vector<remollGenericDetectorSumByPID_t> data;
+  std::vector<remollGenericDetectorSumByPID_t> by_pid;
   double edep;
   int det;
   int vid;
