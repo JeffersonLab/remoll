@@ -47,7 +47,6 @@ namespace {
   }
 }
 
-
 int main(int argc, char** argv) {
 
     // Running time measurement: start

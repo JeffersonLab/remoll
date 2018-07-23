@@ -28,6 +28,27 @@ remollSteppingAction::~remollSteppingAction()
   delete fMessenger;
 }
 
+    /*
+    //Now the stepping length is set to zero for Kryptonite metrial and have introduced a new mechanism to properly kill track by depositing the energy into the volume. 
+    //Therefore we no longer needs to artificially kill tracks in the UserSteppingAction : Rakitha Tue Oct 14 10:32:32 EDT 2014
+
+    /////////////////////////No Longer in Use//////////////////////////////
+
+    // Don't continue in these materials
+    if( (   material->GetName()=="Tungsten" 
+        ||  material->GetName()=="Pb"
+	||  material->GetName()=="Copper" )
+	    && fEnableKryptonite
+	){
+      // fTrack->SetTrackStatus(fStopAndKill); // kill the current track
+      fTrack->SetTrackStatus(fKillTrackAndSecondaries); // kill the current track and also associated secondaries
+    }
+    //stop and kill in Kryptonite materials : Rakitha Wed Sep 17 10:21:58 EDT 2014
+    if (material->GetName()=="Kryptonite" ){
+      fTrack->SetTrackStatus(fStopAndKill);
+    }
+    */
+
 void remollSteppingAction::AddKryptoniteCandidate(const G4String name)
 {
   if (fVerbose > 0)

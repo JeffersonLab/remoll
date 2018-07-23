@@ -10,6 +10,9 @@
 #include "G4PhysicalConstants.hh"
 #include "G4GenericMessenger.hh"
 
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "remolltypes.hh"
 
 #include <math.h>
@@ -20,11 +23,10 @@ remollGenBeam::remollGenBeam()
     fZpos(-5.0*m)
 {
     fApplyMultScatt = true;
-    
+
     fThisGenMessenger->DeclareMethod("x",&remollGenBeam::SetOriginX,"x coordinate of origin for the beam");
     fThisGenMessenger->DeclareMethod("y",&remollGenBeam::SetOriginY,"y coordinate of origin for the beam");
     fThisGenMessenger->DeclareMethod("z",&remollGenBeam::SetOriginZ,"z coordinate of origin for the beam");
-    //fZpos = -5.0*m;
 }
 
 remollGenBeam::~remollGenBeam() { }
