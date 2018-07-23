@@ -75,8 +75,7 @@
 # Specify random number seed
 /remoll/seed 123456
 
-/remoll/filename remollout_SpinPrecTest.root
-#/remoll/LUND_filename hallD_pion_p_MOLLER_1M_1.lund
+/remoll/filename remollout.root
 
 #/tracking/verbose 2
 
