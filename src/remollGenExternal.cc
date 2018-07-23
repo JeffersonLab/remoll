@@ -87,7 +87,7 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
 
 }
 
-void remollGenExternal::SamplePhysics(remollVertex *vert, remollEvent *evt)
+void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt)
 {
   // Check whether three exists
   if (! fTree) {
