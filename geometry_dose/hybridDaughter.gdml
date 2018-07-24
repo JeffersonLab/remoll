@@ -1370,10 +1370,7 @@
     <volume name="DSShield_Tube_logic">
       <materialref ref="Lead"/>
       <solidref ref="DSShield_Tube_solid_1"/>
-<<<<<<< HEAD
       <auxiliary auxtype="Color" auxvalue="red"/>
-=======
->>>>>>> integration-dose
     </volume>
 
     <!-- beam pipe -->
