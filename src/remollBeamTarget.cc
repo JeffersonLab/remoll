@@ -427,7 +427,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	vertex.fMaterial = fDefaultMat;
 	vertex.fRadiationLength = 0.0;
     }
-    
 
     // Sample multiple scattering angles
     G4double msth = 0, msph = 0;
@@ -445,13 +444,13 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
       // Gaussian distribution with mean and sigma
       bmth = G4RandGauss::shoot(fTh0, fdTh);
       bmph = G4RandGauss::shoot(fPh0, fdPh);
-      
+
       if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
       if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
-      
+
       // Initial direction
       fDir = G4ThreeVector(0.0, 0.0, 1.0);
-      
+
       fDir.rotateY( bmth); // Positive th pushes to positive X (around Y-axis)
       fDir.rotateX(-bmph); // Positive ph pushes to positive Y (around X-axis)
     } else{

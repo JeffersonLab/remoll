@@ -11,6 +11,9 @@
 #include "G4GenericMessenger.hh"
 #include "G4ParticleTable.hh"
 
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "remolltypes.hh"
 
 #include <math.h>
@@ -23,7 +26,7 @@ remollGenBeam::remollGenBeam()
     fParticleName("e-")
 {
     fApplyMultScatt = true;
-    
+
     fThisGenMessenger->DeclareMethod("x",&remollGenBeam::SetOriginX,"x coordinate of origin for the beam");
     fThisGenMessenger->DeclareMethod("y",&remollGenBeam::SetOriginY,"y coordinate of origin for the beam");
     fThisGenMessenger->DeclareMethod("z",&remollGenBeam::SetOriginZ,"z coordinate of origin for the beam");

@@ -140,20 +140,21 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     // We're just going to record primary particles and things
     // that have just entered our boundary
+    //the following condition ensure that not all the hits are recorded. This will reflect in the energy deposit sum from the hits compared to the energy deposit from the hit sum detectors.
     badhit = true;
     if( track->GetCreatorProcess() == 0 ||
 	(fDetectSecondaries && point->GetStepStatus() == fGeomBoundary)
       ){
 	badhit = false;
     }
-
+    //badhit = false;
 
     //  Make pointer to new hit if it's a valid track
     remollGenericDetectorHit *thishit;
     if( !badhit ){
 	thishit = new remollGenericDetectorHit(fDetNo, copyID);
 	fHitColl->insert( thishit );
-    }
+    } 
 
     //  Get pointer to our sum  /////////////////////////
     remollGenericDetectorSum *thissum = NULL;
@@ -175,7 +176,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
     if( !badedep ){
 	// This is all we need to do for the sum
-	thissum->fEdep += edep;
+	thissum->AddEDep( track->GetDefinition()->GetPDGEncoding(), point->GetPosition(), edep );
     }
 
     if( !badhit ){
@@ -202,7 +203,7 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 	thishit->fTrID  = track->GetTrackID();
 	thishit->fmTrID = track->GetParentID();
 	thishit->fPID   = track->GetDefinition()->GetPDGEncoding();
-
+	thishit->fEdep  = edep; 
 	// FIXME - Enumerate encodings
 	thishit->fGen   = (long int) track->GetCreatorProcess();
 

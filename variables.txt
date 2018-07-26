@@ -39,6 +39,7 @@ hit.pid		Geant4 particle type
 hit.trid	Geant4 track ID number (1 = first particle created)
 hit.mtrid	Geant4 mother track ID number (0 = particle from gun)
 hit.gen		Generator (not yet implemented)
+
 hit.[xyz]	Hit coordinate, lab frame [mm]
 hit.[xyz]l	Hit coordinate, local solid frame [mm]
 hit.r		Hit radial coordinate, lab frame [mm]
@@ -48,6 +49,7 @@ hit.s[xyz]	Polarization components of particle, lab frame [1]
 hit.v[xyz]	Creation vertex of particles [mm]
 hit.e		Energy of particle [MeV]
 hit.m		Mass of particle [MeV]
+hit.edep	Energy deposited in hit [MeV]
 
 sum data - array variable:
 sum.det		Detector number

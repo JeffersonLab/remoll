@@ -8,6 +8,7 @@
 #include "G4GenericMessenger.hh"
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
+#include "G4UserLimits.hh"
 
 #include "G4LogicalVolume.hh"
 #include "globals.hh"
@@ -510,6 +511,14 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
 {
   //if (aVolume->GetLogicalVolume()->GetNoDaughters()==0 ){
       aVolume->SetCopyNo(index);
+      G4Material* material;
+      G4VisAttributes* kryptoVisAtt= new G4VisAttributes(G4Colour(0.7,0.0,0.0));
+      //set user limits for Kryptonite materials. When tracks are killed inside Kryptonite materials, energy will be properly deposited
+      material = aVolume->GetLogicalVolume()->GetMaterial();
+      if(material->GetName()=="Kryptonite" ){
+	aVolume->GetLogicalVolume()->SetUserLimits( new G4UserLimits(0.0, 0.0, 0.0, DBL_MAX, DBL_MAX) );
+	aVolume->GetLogicalVolume()->SetVisAttributes(kryptoVisAtt);
+      }
       index++;
       //}else {
     for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++){

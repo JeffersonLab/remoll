@@ -51,14 +51,13 @@
       </physvol>
 
       <physvol>
-      <!-- <file name="upstreamDaughter.gdml"/> -->
       <file name="upstreamDaughter_merged_design1_check3.gdml"/>
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-      <file name="hybridDaughter.gdml"/>
+      <file name="hybridDaughter_less_hybshld_roof_smaller_2.gdml"/>
       <positionref ref="hybridCenter"/>
       <rotationref ref="identity"/>
       </physvol>    

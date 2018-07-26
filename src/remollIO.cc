@@ -187,8 +187,7 @@ void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit)
 }
 
 // GenericDetectorSum
-void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit)
-{
+void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
     fGenDetSum.push_back(hit->GetGenericDetectorSumIO());
 }
 
