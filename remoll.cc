@@ -14,6 +14,7 @@ typedef G4MTRunManager RunManager;
 typedef G4RunManager RunManager;
 #endif
 
+#include "G4Version.hh"
 #include "G4Types.hh"
 #include "G4UImanager.hh"
 
@@ -130,8 +131,8 @@ int main(int argc, char** argv) {
     #if G4VERSION_NUMBER >= 1031
     G4UImanager::UseDoublePrecisionStr(true);
     #else
-    G4cout << "Note issue 130: double precision input may be truncated." << G4endl;
-    G4cout << "https://github.com/JeffersonLab/remoll/issues/130" << G4endl;
+    G4cout << "remoll: Warning: issue 130, double precision input may be truncated." << G4endl;
+    G4cout << "remoll: see also https://github.com/JeffersonLab/remoll/issues/130" << G4endl;
     #endif
 
     // Define UI session for interactive mode
