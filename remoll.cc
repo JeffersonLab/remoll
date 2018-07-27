@@ -126,6 +126,13 @@ int main(int argc, char** argv) {
 
     // Get the pointer to the User Interface manager
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
+    // use double precision
+    #if G4VERSION_NUMBER >= 1031
+    G4UImanager::UseDoublePrecisionStr(true);
+    #else
+    G4cout << "Note issue 130: double precision input may be truncated." << G4endl;
+    G4cout << "https://github.com/JeffersonLab/remoll/issues/130" << G4endl;
+    #endif
 
     // Define UI session for interactive mode
     if (macro.size())
