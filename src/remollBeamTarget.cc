@@ -25,6 +25,10 @@
 
 #define __MAX_MAT 100
 
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollBeamTargetMutex = G4MUTEX_INITIALIZER; }
+
 // Initialize static geometry objects
 G4String remollBeamTarget::fActiveTargetVolume = "h2Targ";
 G4VPhysicalVolume* remollBeamTarget::fTargetMother = 0;
@@ -112,6 +116,8 @@ void remollBeamTarget::PrintTargetInfo()
 
 void remollBeamTarget::UpdateInfo()
 {
+    G4AutoLock lock(&remollBeamTargetMutex);
+
     fActiveTargetEffectiveLength  = -1e9;
     fMotherTargetAbsolutePosition = -1e9;
     fActiveTargetRelativePosition = -1e9;
@@ -161,14 +167,20 @@ void remollBeamTarget::UpdateInfo()
 
 void remollBeamTarget::SetActiveTargetVolume(G4String name)
 {
+  G4AutoLock lock(&remollBeamTargetMutex);
   fActiveTargetVolume = name;
+
+  lock.unlock();
   UpdateInfo();
 }
 
 
 void remollBeamTarget::SetTargetLen(G4double z)
 {
+    G4AutoLock lock(&remollBeamTargetMutex);
+
     // Loop over target volumes
+    G4bool active_target_volume_found = false;
     for (std::vector<G4VPhysicalVolume *>::iterator
         it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
 
@@ -181,39 +193,48 @@ void remollBeamTarget::SetTargetLen(G4double z)
             G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
             // Change the length of the target volume
             if (tubs) tubs->SetZHalfLength(z/2.0);
+            active_target_volume_found = true;
 
-	} else {
-
-	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": volume other than target has been specified, but handling not implemented" << G4endl;
-	    // Move position of all other volumes based on half length change
-
-	    /*
-	    G4ThreeVector pos = (*it)->GetFrameTranslation();
-
-	    if( pos.z() < fLH2pos ){
-		pos = pos + G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
-	    } else {
-		pos = pos - G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
-	    }
-
-	    (*it)->SetTranslation(pos);
-	    */
 	}
+
 	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
     }
 
+    if (!active_target_volume_found) {
+
+        G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+            ": volume other than target has been specified, but handling not implemented" << G4endl;
+
+        // Move position of all other volumes based on half length change
+
+        /*
+        G4ThreeVector pos = (*it)->GetFrameTranslation();
+
+        if( pos.z() < fLH2pos ){
+            pos = pos + G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
+        } else {
+            pos = pos - G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
+        }
+
+        (*it)->SetTranslation(pos);
+        */
+    }
 
     G4RunManager* runManager = G4RunManager::GetRunManager();
     runManager->GeometryHasBeenModified();
 
+    lock.unlock();
     UpdateInfo();
 }
 
 void remollBeamTarget::SetTargetPos(G4double z)
 {
+    G4AutoLock lock(&remollBeamTargetMutex);
+
     //G4double zshift = z-(fZpos+fLH2pos);
 
+    // Loop over target volumes
+    G4bool active_target_volume_found = false;
     for (std::vector<G4VPhysicalVolume *>::iterator
         it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++ ) {
 
@@ -223,28 +244,33 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
 	    // Change the length of the target volume
 	    (*it)->SetTranslation(G4ThreeVector(0.0, 0.0, z-fMotherTargetAbsolutePosition));
+            active_target_volume_found = true;
 
-	} else {
-
-	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": volume other than target has been specified, but handling not implemented" << G4endl;
-
-	    // Move position of all other volumes based on half length change
-
-	    /*
-	    G4ThreeVector prespos = (*it)->GetFrameTranslation();
-
-	    G4ThreeVector pos = prespos + G4ThreeVector(0.0, 0.0, zshift );
-
-	    (*it)->SetTranslation(prespos);
-	    */
 	}
+
 	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
+    }
+
+    if (!active_target_volume_found) {
+
+        G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+            ": volume other than target has been specified, but handling not implemented" << G4endl;
+
+        // Move position of all other volumes based on half length change
+
+        /*
+        G4ThreeVector prespos = (*it)->GetFrameTranslation();
+
+        G4ThreeVector pos = prespos + G4ThreeVector(0.0, 0.0, zshift );
+
+        (*it)->SetTranslation(prespos);
+        */
     }
 
     G4RunManager* runManager = G4RunManager::GetRunManager();
     runManager->GeometryHasBeenModified();
 
+    lock.unlock();
     UpdateInfo();
 }
 
