@@ -25,6 +25,10 @@
 
 #define __MAX_MAT 100
 
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollBeamTargetMutex = G4MUTEX_INITIALIZER; }
+
 // Initialize static geometry objects
 G4String remollBeamTarget::fActiveTargetVolume = "h2Targ";
 G4VPhysicalVolume* remollBeamTarget::fTargetMother = 0;
@@ -112,6 +116,8 @@ void remollBeamTarget::PrintTargetInfo()
 
 void remollBeamTarget::UpdateInfo()
 {
+    G4AutoLock lock(&remollBeamTargetMutex);
+
     fActiveTargetEffectiveLength  = -1e9;
     fMotherTargetAbsolutePosition = -1e9;
     fActiveTargetRelativePosition = -1e9;
@@ -161,13 +167,18 @@ void remollBeamTarget::UpdateInfo()
 
 void remollBeamTarget::SetActiveTargetVolume(G4String name)
 {
+  G4AutoLock lock(&remollBeamTargetMutex);
   fActiveTargetVolume = name;
+
+  lock.unlock();
   UpdateInfo();
 }
 
 
 void remollBeamTarget::SetTargetLen(G4double z)
 {
+    G4AutoLock lock(&remollBeamTargetMutex);
+
     // Loop over target volumes
     G4bool active_target_volume_found = false;
     for (std::vector<G4VPhysicalVolume *>::iterator
@@ -212,11 +223,14 @@ void remollBeamTarget::SetTargetLen(G4double z)
     G4RunManager* runManager = G4RunManager::GetRunManager();
     runManager->GeometryHasBeenModified();
 
+    lock.unlock();
     UpdateInfo();
 }
 
 void remollBeamTarget::SetTargetPos(G4double z)
 {
+    G4AutoLock lock(&remollBeamTargetMutex);
+
     //G4double zshift = z-(fZpos+fLH2pos);
 
     // Loop over target volumes
@@ -256,6 +270,7 @@ void remollBeamTarget::SetTargetPos(G4double z)
     G4RunManager* runManager = G4RunManager::GetRunManager();
     runManager->GeometryHasBeenModified();
 
+    lock.unlock();
     UpdateInfo();
 }
 
