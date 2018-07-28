@@ -30,6 +30,9 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetMomentumX,"x component of momentum");
     fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetMomentumY,"y component of momentum");
     fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetMomentumZ,"z component of momentum");
+    fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
+    fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
+    fThisGenMessenger->DeclareMethod("sz",&remollGenBeam::SetPolarizationZ,"z component of polarization");
     fThisGenMessenger->DeclareMethod("partName",&remollGenBeam::SetPartName,"name of particle to shoot");
     
     //fZpos = -5.0*m;
@@ -43,6 +46,10 @@ void remollGenBeam::SetOriginZ(double z){ fZpos = z; }
 void remollGenBeam::SetMomentumX(double px){ fXmomentum = px; }
 void remollGenBeam::SetMomentumY(double py){ fYmomentum = py; }
 void remollGenBeam::SetMomentumZ(double pz){ fZmomentum = pz; }
+
+void remollGenBeam::SetPolarizationX(double sx){ fXPolarization = sx; }
+void remollGenBeam::SetPolarizationY(double sy){ fYPolarization = sy; }
+void remollGenBeam::SetPolarizationZ(double sz){ fZPolarization = sz; }
 
 void remollGenBeam::SetPartName(G4String& name){ fParticleName = name; }
 
@@ -59,6 +66,7 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 
     evt->fBeamE = E;
     evt->fBeamMomentum = p*G4ThreeVector(fXmomentum, fYmomentum, fZmomentum);
+    evt->fBeamPolarization = G4ThreeVector(fXPolarization, fYPolarization, fZPolarization);
 
     // Override target sampling z
     evt->fVertexPos.setX( fXpos );
@@ -67,7 +75,8 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
 	    evt->fBeamMomentum, 
-	    fParticleName);
+	    fParticleName,
+            evt->fBeamPolarization);
 
     evt->SetEffCrossSection(0.0);
     evt->SetAsymmetry(0.0);
