@@ -68,18 +68,16 @@ remollGenericDetector::~remollGenericDetector()
   delete fMessenger;
 }
 
-void remollGenericDetector::Initialize(G4HCofThisEvent *){
-
-    fHitColl = new remollGenericDetectorHitCollection( SensitiveDetectorName, collectionName[0] );
-    fSumColl = new remollGenericDetectorSumCollection( SensitiveDetectorName, collectionName[1] );
+void remollGenericDetector::Initialize(G4HCofThisEvent*)
+{
+    fHitColl = new remollGenericDetectorHitCollection(SensitiveDetectorName, collectionName[0]);
+    fSumColl = new remollGenericDetectorSumCollection(SensitiveDetectorName, collectionName[1]);
 
     fSumMap.clear();
-
 }
 
-///////////////////////////////////////////////////////////////////////
-
-G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
+G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
+{
     G4bool badedep = false;
     G4bool badhit  = false;
 
@@ -212,18 +210,15 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     return !badedep && !badhit;
 }
 
-///////////////////////////////////////////////////////////////////////
-
-void remollGenericDetector::EndOfEvent(G4HCofThisEvent*HCE) {
+void remollGenericDetector::EndOfEvent(G4HCofThisEvent* HCE)
+{
     G4SDManager *sdman = G4SDManager::GetSDMpointer();
 
-    if(fHCID<0){ fHCID = sdman->GetCollectionID(collectionName[0]); }
-    if(fSCID<0){ fSCID = sdman->GetCollectionID(collectionName[1]); }
+    if (fHCID < 0) { fHCID = sdman->GetCollectionID(collectionName[0]); }
+    if (fSCID < 0) { fSCID = sdman->GetCollectionID(collectionName[1]); }
 
-    HCE->AddHitsCollection( fHCID, fHitColl );
-    HCE->AddHitsCollection( fSCID, fSumColl );
-
-    return;
+    HCE->AddHitsCollection(fHCID, fHitColl);
+    HCE->AddHitsCollection(fSCID, fSumColl);
 }
 
 
