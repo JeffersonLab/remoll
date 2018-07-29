@@ -225,6 +225,8 @@ void remollBeamTarget::SetTargetLen(G4double z)
 
     lock.unlock();
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetLen(z)" << G4endl;
 }
 
 void remollBeamTarget::SetTargetPos(G4double z)
@@ -272,6 +274,8 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
     lock.unlock();
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetPos(z)" << G4endl;
 }
 
 
@@ -520,7 +524,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     }
 
     vertex.fBeamEnergy = fSampledEnergy;
-    assert( fBeamEnergy >= electron_mass_c2 );
+    //assert( fBeamEnergy >= electron_mass_c2 );
 
     return vertex;
 }

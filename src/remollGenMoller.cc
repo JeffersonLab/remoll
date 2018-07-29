@@ -63,11 +63,11 @@ void remollGenMoller::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
   evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0),
                            G4ThreeVector(pperp*cos(phcom), pperp*sin(phcom), gamma_com*(ppar + e_com*beta_com) ),
-                           "e-" , G4ThreeVector(0,0,1));
+                           "e-");
 
   evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0),
                            G4ThreeVector(-pperp*cos(phcom), -pperp*sin(phcom), gamma_com*(-ppar + e_com*beta_com) ),
-                           "e-" );
+                           "e-");
 
   return;
 

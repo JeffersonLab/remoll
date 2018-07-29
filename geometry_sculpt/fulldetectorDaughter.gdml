@@ -431,7 +431,7 @@
         <materialref ref="Quartz"/>
         <solidref ref="Probe[j]"/>              
         <auxiliary auxtype="Color" auxvalue="gray"/>
-        <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+        <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
       </volume>
       <volume name="ProbeContainerLogical[j]">
         <materialref ref="Air_Optical"/>
@@ -472,7 +472,7 @@
         <materialref ref="Photocathode"/>
         <solidref ref="PhotonDetectorSolid[j]"/>
         <auxiliary auxtype="Color" auxvalue="red"/>
-		<auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+        <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
       </volume>
       <volume name="PhotonDetectorContainerLogical[j]">
         <materialref ref="Air_Optical"/>

@@ -336,7 +336,7 @@
         <materialref ref="Quartz"/>
         <solidref ref="PhotonDetectorEntranceWindowSolid[j]"/>
         <auxiliary auxtype="Color" auxvalue="magenta"/>
-	<auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+	<!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
       </volume>
       <volume name="PhotonDetectorLogical[j]">
         <materialref ref="Photocathode"/>

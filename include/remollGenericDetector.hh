@@ -2,6 +2,8 @@
 #define __REMOLLGENERICDETECTOR_HH
 
 #include "G4VSensitiveDetector.hh"
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
 
 // Included to avoid forward declaration of collection typedef
 #include "remollGenericDetectorHit.hh"
@@ -48,7 +50,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
           fGenericDetectors.sort(isBefore);
         }
         void PrintAll() {
-          for (std::list<remollGenericDetector*>::iterator
+          for (std::list<remollGenericDetector*>::const_iterator
             it  = fGenericDetectors.begin();
             it != fGenericDetectors.end();
             it++) {

@@ -32,12 +32,12 @@
 
 #/remoll/evgen/set beam
 /remoll/evgen/set moller
-#/remoll/thcommin 30.0 deg
-#/remoll/thcommax 150.0 deg
+#/remoll/evgen/thcommin 30.0 deg
+#/remoll/evgen/thcommax 150.0 deg
 #/remoll/evgen/set elastic 
-#/remoll/thmin 0.1 deg
-#/remoll/thmax 2.0 deg
-#/remoll/emin 80.0 MeV
+#/remoll/evgen/thmin 0.1 deg
+#/remoll/evgen/thmax 2.0 deg
+#/remoll/evgen/emin 80.0 MeV
 #/remoll/evgen/set inelastic 
 #/remoll/evgen/set pion
 #/remoll/piontype pi+
@@ -49,10 +49,20 @@
 #/remoll/externalfile remollout.root
 #/remoll/externaldetid 4051
 
+/remoll/evgen/beamPolarization +L
+/remoll/field/equationtype 2
+/remoll/field/steppertype 2
+/remoll/field/print
+
 /remoll/beamene 11 GeV
 
+# For LH2
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
+
+# For carbon
+#/remoll/targpos 0.0 cm
+#/remoll/targlen 1.5 mm
 
 /remoll/beamcurr 85 microampere
 
@@ -65,9 +75,9 @@
 # Specify random number seed
 /remoll/seed 123456
 
-/remoll/filename remollout.root
+/remoll/filename remollout_SpinPrecTest.root
 #/remoll/LUND_filename hallD_pion_p_MOLLER_1M_1.lund
 
 #/tracking/verbose 2
 
-/run/beamOn 10000
+/run/beamOn 100

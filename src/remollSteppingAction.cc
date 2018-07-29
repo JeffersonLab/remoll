@@ -7,7 +7,7 @@
 #include "G4GenericMessenger.hh"
 
 remollSteppingAction::remollSteppingAction()
-: fDrawFlag(false),fEnableKryptonite(true)
+: fDrawFlag(false),fEnableKryptonite(true),fVerbose(0)
 {
   AddKryptoniteCandidate("VacuumKryptonite");
   AddKryptoniteCandidate("Tungsten");
@@ -16,6 +16,7 @@ remollSteppingAction::remollSteppingAction()
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/kryptonite/","Remoll kryptonite properties");
+  fMessenger->DeclareProperty("verbose",fVerbose,"Set verbose level");
   fMessenger->DeclareProperty("set",fEnableKryptonite,"Treat materials as kryptonite");
   fMessenger->DeclareMethod("add",&remollSteppingAction::AddKryptoniteCandidate,"Add specified material to list of kryptonite candidates");
   fMessenger->DeclareMethod("del",&remollSteppingAction::DelKryptoniteCandidate,"Remove specified material from list of kryptonite candidates");
@@ -29,14 +30,18 @@ remollSteppingAction::~remollSteppingAction()
 
 void remollSteppingAction::AddKryptoniteCandidate(const G4String name)
 {
-  G4cout << "Adding " << name << " to list of kryptonite candidates." << G4endl;
+  if (fVerbose > 0)
+    G4cout << "Adding " << name << " to list of kryptonite candidates." << G4endl;
+
   fKryptoniteCandidates.insert(name);
   InitializeMaterials();
 }
 
 void remollSteppingAction::DelKryptoniteCandidate(const G4String name)
 {
-  G4cout << "Removing " << name << " from list of kryptonite candidates." << G4endl;
+  if (fVerbose > 0)
+    G4cout << "Removing " << name << " from list of kryptonite candidates." << G4endl;
+
   fKryptoniteCandidates.erase(name);
   InitializeMaterials();
 }
@@ -53,9 +58,11 @@ void remollSteppingAction::ListKryptoniteCandidates()
 
 void remollSteppingAction::InitializeMaterials()
 {
+  if (fVerbose > 0)
+    G4cout << "Regenerating table of kryptonite material candidate pointers..." << G4endl;
+
   // Find kryptonite materials in material tables
   G4MaterialTable* table = G4Material::GetMaterialTable();
-  G4cout << "Regenerating table of kryptonite material candidate pointers..." << G4endl;
   fKryptoniteMaterials.clear();
   for (G4MaterialTable::const_iterator
       it  = table->begin();

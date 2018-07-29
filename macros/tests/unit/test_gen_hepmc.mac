@@ -1,0 +1,4 @@
+/run/initialize
+/remoll/evgen/set hepmcAscii
+/generator/hepmcAscii/open macros/tests/unit/test_gen_hepmc.dat
+/run/beamOn 1

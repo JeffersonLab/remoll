@@ -41,7 +41,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorTSOpenSector_solid"/>
     <physvol name="pionDetectorTS_physical">
-      <file name="geometry/pionDetectorTS.gdml"/>
+      <file name="pionDetectorTS.gdml"/>
       <position name="pionDetectorTS_position" x="pionDetectorTSRadialPosition"/>
       <rotation name="pionDetectorTS_rotation" y="-90.0" z="90" unit="deg"/>
     </physvol>
