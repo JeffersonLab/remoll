@@ -123,6 +123,20 @@ else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
 endif()
 
+# C++11 standard if available
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+if(COMPILER_SUPPORTS_CXX11)
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++11 support.")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++0x support.")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
+endif()
+
 #----------------------------------------------------------------------------
 # Generate dictionaries as well (so we can write objects to ROOT files
 
@@ -178,6 +192,7 @@ set(REMOLL_SCRIPTS
     vis/X.mac
     macros/runexample.mac
     macros/gui.mac
+    macros/moller_dose.mac
   )
 
 foreach(_script ${REMOLL_SCRIPTS})

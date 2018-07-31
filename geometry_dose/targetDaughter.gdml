@@ -12,7 +12,8 @@
   <constant name="tubeTarget_length" value="1500"/>
 
   <!-- Mother volume parameters -->
-  <constant name="boxTargetMother_width" value="8600"/>
+  <constant name="boxTargetMother_width" value="9500"/>
+  <!--  <constant name="boxTargetMother_width" value="8600"/> -->
   <constant name="boxTargetMother_height" value="6000 - 100"/>
   <constant name="boxTargetMother_length" value="6400"/>
   <constant name="tubeBeampipeMother_sub_rmax" value="200"/>
@@ -44,8 +45,12 @@
 
   <!-- Neutron Poly Shielding -->
   <!-- PolyShield1 will be outside shielding -->
+  <constant name="tgtPolyShield1_side_thickness" value="400 + 400"/>
+  <constant name="tgtPolyShield1_top_thickness" value="400 + 400"/>
+  <!-- removed on merge from dose branch into develop
   <constant name="tgtPolyShield1_side_thickness" value="400"/>
   <constant name="tgtPolyShield1_top_thickness" value="400"/>
+   -->
   <constant name="tgtPolyShield1_length" value="tgtShield_length + 1 + 2*tgtPolyShield1_side_thickness"/>
   <constant name="tgtPolyShield1_width" value="tgtShield_width + 1 + 2*tgtPolyShield1_side_thickness"/>
   <constant name="tgtPolyShield1_height" value="tgtShield_height + 1 + 1*tgtPolyShield1_top_thickness"/>
@@ -67,6 +72,7 @@
   <constant name="shieldcoll_center" value="2851"/>
   <position name="boxtgtPolyShield_LeadCollar_trans1" unit="mm" x="0" y="0" z="0"/>
   <position name="boxtgtPolyShield_LeadCollar_trans2" unit="mm" x="0" y="0" z="-1*tgtPolyShield_LeadCollar_front_thickness/2"/>
+  <position name="boxtgtPolyShield_LeadCollar_sub_trans1" unit="mm" x="-1*tgtShield_x_offset" y="0" z="tgtPolyShield1_length/2 - (tgtPolyShield_LeadCollar_front_thickness/2 + LeadCollar_length/2)"/>
 
 
   <!--Sens box detector  -->
@@ -167,13 +173,22 @@
       <positionref ref="boxtgtPolyShield1_trans1" />
     </subtraction> 
 
-    <subtraction name ="boxtgtPolyShield1_solid">
+    <box lunit="mm" name="boxPolyShield_LeadCollar_solid_sub" x="LeadCollar_width+0.1 + 2*tgtPolyShield_LeadCollar_side_thickness + 0.1 " y="LeadCollar_height + tgtPolyShield_LeadCollar_top_thickness + tgtPolyShield_LeadCollar_bottom_thickness + 0.1" z="LeadCollar_length + tgtPolyShield_LeadCollar_front_thickness + 0.1"/>
+
+    <subtraction name ="boxtgtPolyShield1_solid_4">
       <first ref="boxtgtPolyShield1_solid_3"/>
+      <second ref="boxPolyShield_LeadCollar_solid_sub"/>
+      <positionref ref="boxtgtPolyShield_LeadCollar_sub_trans1" />
+    </subtraction>
+
+    <subtraction name ="boxtgtPolyShield1_solid">
+      <first ref="boxtgtPolyShield1_solid_4"/>
       <second ref="tgtPolyShield1_beamTube_solid"/>
       <!--Use same positioning as target shield hut hole subtraction -->
       <positionref ref="boxtgtPolyShield1_trans2" />
-    </subtraction>     
+    </subtraction>  
 
+    
     <box lunit="mm" name="boxPolyShield_LeadCollar_solid_1" x="LeadCollar_width + 2*tgtPolyShield_LeadCollar_side_thickness" y="LeadCollar_height + tgtPolyShield_LeadCollar_top_thickness + tgtPolyShield_LeadCollar_bottom_thickness" z="LeadCollar_length + tgtPolyShield_LeadCollar_front_thickness"/>
     <box lunit="mm" name="boxPolyShield_LeadCollar_solid_2" x="LeadCollar_width + 1" y="LeadCollar_height + 1" z="LeadCollar_length + 1"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="boxPolyShield_LeadCollar_subTube_solid" rmax="ShieldCol1_inner_rmax+1" rmin="0" startphi="0" z="LeadCollar_length + tgtPolyShield_LeadCollar_front_thickness + 10"/>
@@ -216,21 +231,23 @@
       <solidref ref="TargShield_bottomdisk_solid"/>
     </volume>
 
-    <volume name="TargShield_logic">
+    <!--    <volume name="TargShield_logic">
       <materialref ref="Concrete"/>
-<!--  <materialref ref="Tungsten"/> -->
-<!--  <materialref ref="Borated_Concrete"/> -->
       <solidref ref="TargShield_solid"/>
-    </volume>
+    </volume>                                       old cylindrical shielding -->
 
     <volume name="boxtgtShield1_logic">
-      <materialref ref="Concrete"/>
+      <materialref ref="Lead"/>
+<!--      <materialref ref="Tungsten"/>  -->
 <!--  <materialref ref=HD_"Concrete"/> -->
 <!--  <auxiliary auxtype="Color" auxvalue="Blue"/> -->
-<!--  <materialref ref="Tungsten"/> -->
+<!--  <materialref ref="Concrete"/> -->
 <!--  <materialref ref="Borated_Concrete"/> -->
       <solidref ref="boxtgtShield1_solid"/>
-      <auxiliary auxtype="Color" auxvalue="green"/>
+<!--       <auxiliary auxtype="Color" auxvalue="green"/> -->
+      <auxiliary auxtype="Color" auxvalue="red"/>
+     <!-- <auxiliary auxtype="SensDet" auxvalue="Lead_Shield_Hut_Det"/>  --> <!-- NEW Sensitive detector FIXME -->
+     <!-- <auxiliary auxtype="DetNo" auxvalue="6003"/>  -->
     </volume>
 
   <!-- Neutron Poly Shielding -->
