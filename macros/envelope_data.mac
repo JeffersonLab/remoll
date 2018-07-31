@@ -1,5 +1,8 @@
 # File for creating the output files needed to feed into envelope fitting analysis. 
 
+# store tracks
+/tracking/storeTrajectory 1
+
 # This must be called before initialize
 /remoll/setgeofile geometry/mollerMother_merged.gdml
 
@@ -15,7 +18,7 @@
 /remoll/rasx 10 cm
 /remoll/rasy 10 cm
 
-/remoll/beamene 1 MeV
+/remoll/beamene 100 MeV
 /remoll/evgen/set beam
 /run/beamOn 0
 /remoll/filename remollout_raytrace_100k.root
