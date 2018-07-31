@@ -1,1 +1,0 @@
-old_rad_dose.cc is Rakitha's old analysis script and the new one is the one Cameron is working on updating. This code is intended to produce histograms of radiation vertices and hit positions based on their general x,y,z starting points or ending points. Steps have been taken to normalize the energy axes and provide uniform binning across related histograms.
