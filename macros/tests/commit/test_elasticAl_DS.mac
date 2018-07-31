@@ -26,8 +26,8 @@
 
 # Generation limits
 # theta
-/remoll/thmin 0.5 deg
-/remoll/thmax 3.0 deg
+/remoll/evgen/thmin 0.5 deg
+/remoll/evgen/thmax 3.0 deg
 
 # Beam current for rate
 /remoll/beamcurr 85 microampere
