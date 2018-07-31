@@ -6,6 +6,24 @@
 # This must be explicitly called
 /run/initialize
 
+/process/list
+
+#create ray tracing (no B fields) output file (for photon line-of-sight testing)
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 10 cm
+/remoll/rasy 10 cm
+
+/remoll/beamene 1 MeV
+/remoll/evgen/set beam
+/run/beamOn 0
+/remoll/filename remollout_raytrace_100k.root
+/run/beamOn 100000
+
+
+
+
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
@@ -25,7 +43,6 @@
 # realistic rather than pure absorbers
 #/remoll/kryptonite/set true
 
-/process/list
 
 #create moller output file
 /remoll/evgen/set moller
@@ -45,8 +62,10 @@
 /remoll/filename remollout_inelastic_100k.root
 /run/beamOn 100000
 
-#create beam generator output file (for all types of scattering together, and for photon tracking purposes)
+#create beam generator output file (for all types of scattering together)
 /remoll/evgen/set beam
 /run/beamOn 0
 /remoll/filename remollout_beam_100k.root
 /run/beamOn 100000
+
+
