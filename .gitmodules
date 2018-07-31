@@ -1,0 +1,6 @@
+[submodule "geometry"]
+	path = geometry
+	url = https://github.com/JeffersonLab/remoll-geometry
+[submodule "schema"]
+	path = schema
+	url = https://github.com/JeffersonLab/gdml-schema
