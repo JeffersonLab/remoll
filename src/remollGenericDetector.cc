@@ -7,6 +7,10 @@
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
 
+#include "G4RunManager.hh"
+#include "G4TrajectoryContainer.hh"
+#include "G4TrajectoryPoint.hh"
+
 #include <sstream>
 
 std::list<remollGenericDetector*> remollGenericDetector::fGenericDetectors = std::list<remollGenericDetector*>();

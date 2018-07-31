@@ -49,6 +49,7 @@ struct remollEventParticle_t {
   double sx, sy, sz;
   double th, ph, p;
   double tpx, tpy, tpz;
+  std::vector<double> tjx, tjy, tjz; //Trajectory information
 };
 
 // Generic detector hit and sum structure
