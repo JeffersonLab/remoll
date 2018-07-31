@@ -27,6 +27,7 @@ part.s[xyz]	Particle initial polarization components, lab frame [1]
 part.th		Particle initial polar angle [rad]
 part.ph		Particle initial azimuthal angle [rad]
 part.tp[xyz]	Particle "true" momentum (if no multiple scattering effects)
+part.tj[xyz]  Particle trajectories [mm]
 
 beam data - single variable:
 bm.[xyz]	Beam interaction vertex, lab frame [mm]
