@@ -253,6 +253,11 @@
       <atom unit="g/mole" value="26.981"/>
    </material>
 
+   <material Z="13" name="Aluminium" state="solid">
+      <D unit="g/cm3" value="2.7"/>
+      <atom unit="g/mole" value="26.981"/>
+   </material>
+
 
 <!--Better definition would be to start from isotopes and build natural lead -->
     <material Z="82" name="Lead" state="solid">
