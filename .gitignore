@@ -38,8 +38,7 @@ bldXcode
 map_directory
 
 #ignore rad_dose radiation analysis work (another repository on sbujlab github)
-rad_analysis*
-rad_analysis/*
+rad_analysis
 
 #ignore log files directory
 log
