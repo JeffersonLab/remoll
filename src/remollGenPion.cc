@@ -10,6 +10,9 @@
 #include "G4Material.hh"
 #include "G4PhysicalConstants.hh"
 
+#include "G4SystemOfUnits.hh"
+#include "G4PhysicalConstants.hh"
+
 #include "remolltypes.hh"
 
 #include "TF1.h"
@@ -31,7 +34,7 @@ remollGenPion::remollGenPion()
     fE_max = -1.0*GeV; // negative to automatically pick beam energy
 
     // Add to generic messenger
-    fMessenger->DeclareMethod("piontype",&remollGenPion::SetPionTypeByString_Deprecated,"Generate pion type");
+    fThisGenMessenger->DeclareMethod("piontype",&remollGenPion::SetPionTypeByString_Deprecated,"Generate pion type");
     fThisGenMessenger->DeclareMethod("settype",&remollGenPion::SetPionTypeByString,"Generate pion type");
 }
 

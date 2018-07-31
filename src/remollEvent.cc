@@ -1,5 +1,6 @@
 #include "remollEvent.hh"
 #include "remolltypes.hh"
+#include "remollSystemOfUnits.hh"
 
 #include "G4RunManager.hh"
 #include "G4TrajectoryContainer.hh"
@@ -7,12 +8,27 @@
 
 #include <math.h>
 
+#include "G4Event.hh"
 #include "G4ParticleTable.hh"
-#include "G4SystemOfUnits.hh"
 
 remollEvent::remollEvent()
-: fBeamTarget(0) {
+: fBeamTarget(0)
+{
     Reset();
+}
+
+remollEvent::remollEvent(G4Event* event)
+: fBeamTarget(0)
+{
+  Reset();
+  for (G4int i = 0; i < event->GetNumberOfPrimaryVertex(); i++) {
+    G4PrimaryVertex* vertex = event->GetPrimaryVertex(i);
+    G4ThreeVector pos = vertex->GetPosition();
+    for (G4int j = 0; j < vertex->GetNumberOfParticle(); j++) {
+      G4PrimaryParticle* particle = vertex->GetPrimary(j);
+      ProduceNewParticle(pos,particle);
+    }
+  }
 }
 
 remollEvent::~remollEvent(){
@@ -25,7 +41,7 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
   std::vector<remollEventParticle_t> parts;
   for (size_t idx = 0; idx < fPartType.size(); idx++) {
     remollEventParticle_t part;
-    part.pid = fPartType[idx]->GetPDGEncoding();
+    part.pid = (fPartType[idx]? fPartType[idx]->GetPDGEncoding(): 0);
     part.sx = fPartSpin[idx].x();
     part.sy = fPartSpin[idx].y();
     part.sz = fPartSpin[idx].z();
@@ -70,8 +86,8 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
 remollEvent_t remollEvent::GetEventIO() const {
   remollEvent_t ev;
   ev.xs = fEffXs/microbarn;
-  ev.A  = fAsym/1e-9;
-  ev.Am = fmAsym/1e-9;
+  ev.A  = fAsym/ppb;
+  ev.Am = fmAsym/ppb;
   ev.Q2 = fQ2;
   ev.W2 = fW2;
   ev.thcom = fThCoM;
@@ -79,7 +95,23 @@ remollEvent_t remollEvent::GetEventIO() const {
   return ev;
 }
 
-void remollEvent::ProduceNewParticle( G4ThreeVector pos, G4ThreeVector mom, G4String name, G4ThreeVector spin ){
+void remollEvent::ProduceNewParticle(G4ThreeVector pos, G4PrimaryParticle* particle)
+{
+  fPartPos.push_back(pos);
+
+  G4ThreeVector mom(particle->GetMomentum());
+  G4ThreeVector spin(particle->GetPolarization());
+
+  fPartMom.push_back(mom);
+  fPartSpin.push_back(spin);
+  fPartRealMom.push_back(mom);
+
+  G4ParticleDefinition* type = const_cast<G4ParticleDefinition*>(particle->GetParticleDefinition());
+  fPartType.push_back(type);
+}
+
+void remollEvent::ProduceNewParticle(G4ThreeVector pos, G4ThreeVector mom, G4String name, G4ThreeVector spin )
+{
     fPartPos.push_back(pos);
     fPartMom.push_back(mom);
     fPartSpin.push_back(spin);

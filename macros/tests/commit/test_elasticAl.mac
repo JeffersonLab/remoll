@@ -1,5 +1,5 @@
 # This must be called before initialize
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 
 # This must be explicitly called
 /run/initialize
@@ -22,8 +22,8 @@
 
 # Generation limits
 # theta
-/remoll/thmin 0.5 deg
-/remoll/thmax 3.0 deg
+/remoll/evgen/thmin 0.5 deg
+/remoll/evgen/thmax 3.0 deg
 
 # Beam current for rate
 /remoll/beamcurr 85 microampere

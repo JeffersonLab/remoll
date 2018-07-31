@@ -22,16 +22,18 @@ class remollGenericDetectorHit;
 class remollGenericDetectorSum;
 class remollEvent;
 
-#include <xercesc/dom/DOMElement.hpp>
+//FIXME: forward declares not possible since xerces uses a
+// namespace alias and requires upstream knowledge or a pre-
+// processor directive, which in turn requires another header
+// so there's no gain...
+//#include <xercesc/dom/DOMElement.hpp>
+// or
+#include <xercesc/util/XercesDefs.hpp>
+XERCES_CPP_NAMESPACE_BEGIN
+class DOMElement;
+XERCES_CPP_NAMESPACE_END
 
 #define __FILENAMELEN 255
-
-// Units for output
-#define __E_UNIT GeV
-#define __L_UNIT m
-#define __T_UNIT ns
-#define __ANG_UNIT rad
-#define __ASYMM_SCALE 1e-9 // ppb
 
 class remollIO {
     private:
@@ -101,8 +103,6 @@ class remollIO {
 	void AddGenericDetectorHit(remollGenericDetectorHit *);
     private:
 	std::vector<remollGenericDetectorHit_t> fGenDetHit;
-
-	Int_t fCollCut;
 
 	//  GenericDetectorSum
     public:

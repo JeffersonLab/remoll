@@ -1,5 +1,4 @@
 #----------------------------------------------------------------------------
-
 # Setup the project
 #
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
@@ -31,7 +30,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
 
 # Update header file
-add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" )
+add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" DEPENDS ${PROJECT_SOURCE_DIR}/pullgitinfo.py)
 
 # this is to ensure we find the header we need
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
@@ -77,8 +76,30 @@ endif()
 #
 include(${Geant4_USE_FILE})
 
+#----------------------------------------------------------------------------
+# Find HepMC (optional package)
+#
+find_package(HepMC QUIET)
+if(HepMC_FOUND)
+  message(STATUS "HepMC found --> building with HepMC enabled.")
+  add_definitions(-DG4LIB_USE_HEPMC)
+else()
+  set(HEPMC_LIBRARIES "")
+endif()
 
-#debugging symbols, complains
+#----------------------------------------------------------------------------
+# Find Pythia6 (optional package)
+#
+find_package(Pythia6 QUIET)
+if(PYTHIA6_FOUND)
+  message(STATUS "Pythia6 found --> building with Pythia6 enabled.")
+  add_definitions(-DG4LIB_USE_PYTHIA)
+else()
+  set(PYTHIA6_LIBRARIES "")
+endif()
+
+#----------------------------------------------------------------------------
+# Debugging symbols, warnings
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -pg")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Woverloaded-virtual")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic")
@@ -89,6 +110,20 @@ if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
 endif()
 
 # C++11 standard if avialable
+include(CheckCXXCompilerFlag)
+CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+if(COMPILER_SUPPORTS_CXX11)
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++11 support.")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+elseif(COMPILER_SUPPORTS_CXX0X)
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++0x support.")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+else()
+        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
+endif()
+
+# C++11 standard if available
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -113,13 +148,24 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 #
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/remoll*.hh)
+if(HepMC_FOUND)
+	file(GLOB hepmc_sources ${PROJECT_SOURCE_DIR}/src/HepMC*.cc)
+	file(GLOB hepmc_headers ${PROJECT_SOURCE_DIR}/src/HepMC*.hh)
+	set(sources ${sources} ${hepmc_sources})
+	set(headers ${headers} ${hepmc_headers})
+endif()
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
 add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
 set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} )
+target_link_libraries(remoll-lib
+  ${Geant4_LIBRARIES}
+  ${ROOT_LIBRARIES}
+  ${Boost_LIBRARIES}
+  ${HEPMC_LIBRARIES}
+  ${PYTHIA6_LIBRARIES})
 
 add_executable(remoll-bin remoll.cc)
 set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
@@ -135,7 +181,9 @@ target_link_libraries(reroot-bin remoll-lib)
 # relies on these scripts being in the current working directory.
 #
 
-FILE( GLOB REMOLL_GEO "geometry/*" )
+install(DIRECTORY geometry DESTINATION share/remoll)
+install(DIRECTORY macros DESTINATION share/remoll)
+install(DIRECTORY vis DESTINATION share/remoll)
 
 set(REMOLL_SCRIPTS
     vis/OIX.mac
@@ -144,7 +192,7 @@ set(REMOLL_SCRIPTS
     vis/X.mac
     macros/runexample.mac
     macros/gui.mac
-    rootlogon.C
+    macros/moller_dose.mac
   )
 
 foreach(_script ${REMOLL_SCRIPTS})
@@ -166,5 +214,3 @@ add_custom_target(REMOLL DEPENDS remoll-bin)
 #
 install(TARGETS remoll-bin reroot-bin DESTINATION bin)
 install(TARGETS remoll-lib DESTINATION lib)
-
-

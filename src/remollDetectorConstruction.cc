@@ -8,6 +8,7 @@
 #include "G4GenericMessenger.hh"
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
+#include "G4UserLimits.hh"
 
 #include "G4LogicalVolume.hh"
 #include "globals.hh"
@@ -27,8 +28,10 @@
 #include "G4VisAttributes.hh"
 #include "G4Colour.hh"
 
+#include <sys/param.h>
+
 #define __DET_STRLEN 200
-#define __MAX_DETS 10000
+#define __MAX_DETS 100000
 
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
@@ -37,7 +40,7 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
 remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
-: fGDMLFile("geometry/mollerMother.gdml"),fGDMLParser(0),
+: fGDMLPath("geometry"),fGDMLFile("mollerMother.gdml"),fGDMLParser(0),
   fGDMLValidate(false),fGDMLOverlapCheck(true),
   fMessenger(0),fGeometryMessenger(0),
   fVerboseLevel(0),
@@ -48,10 +51,10 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-  fMessenger->DeclareProperty(
+  fMessenger->DeclareMethod(
       "setgeofile",
-      fGDMLFile,
-      "Set geometry GDML files")
+      &remollDetectorConstruction::SetDetectorGeomFile,
+      "Set geometry GDML file")
       .SetStates(G4State_PreInit);
   fMessenger->DeclareMethod(
       "printgeometry",
@@ -74,9 +77,9 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
   fGeometryMessenger = new G4GenericMessenger(this,
       "/remoll/geometry/",
       "Remoll geometry properties");
-  fGeometryMessenger->DeclareProperty(
+  fGeometryMessenger->DeclareMethod(
       "setfile",
-      fGDMLFile,
+      &remollDetectorConstruction::SetDetectorGeomFile,
       "Set geometry GDML file")
       .SetStates(G4State_PreInit);
   fGeometryMessenger->DeclareProperty(
@@ -153,16 +156,35 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     // Print GDML warning
     PrintGDMLWarning();
 
-    // Parse GDML file
+    // Print parsing options
     G4cout << "Reading " << fGDMLFile << G4endl;
     G4cout << "- schema validation " << (fGDMLValidate? "on": "off") << G4endl;
     G4cout << "- overlap check " << (fGDMLOverlapCheck? "on": "off") << G4endl;
+
+    // Change directory
+    char cwd[MAXPATHLEN];
+    if (!getcwd(cwd,MAXPATHLEN)) {
+      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR no current working directory" << G4endl;
+      exit(-1);
+    }
+    if (chdir(fGDMLPath)) {
+      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
+      exit(-1);
+    }
+
+    // Parse GDML file
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+
 
     // Add GDML files to IO
     remollIO* io = remollIO::GetInstance();
     io->GrabGDMLFiles(fGDMLFile);
+
+    if (chdir(cwd)) {
+      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
+      exit(-1);
+    }
 
     // Return world volume
     return fGDMLParser->GetWorldVolume();
@@ -371,14 +393,8 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
   //==========================
   G4SDManager* SDman = G4SDManager::GetSDMpointer();
 
-  G4int k=0;
-
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
-
-  G4bool useddetnums[__MAX_DETS];
-  for (k = 0; k < __MAX_DETS; k++ ){useddetnums[k] = false;}
-  k = 0;
 
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
@@ -391,32 +407,31 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           vit != (*iter).second.end(); vit++) {
 
           if ((*vit).type == "SensDet") {
-              G4String det_type = (*vit).value;
 
               // Also allow specification of det number ///////////////////
+              G4String det_type = "";
               int det_no = -1;
               for (G4GDMLAuxListType::const_iterator
                   nit  = (*iter).second.begin();
                   nit != (*iter).second.end(); nit++) {
 
                   if ((*nit).type == "DetNo") {
-                      det_no= atoi((*nit).value.data());
+                      det_no = atoi((*nit).value.data());
                       if( det_no >= __MAX_DETS ){
                           G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR detector number too high" << G4endl;
                           exit(1);
                       }
-                      useddetnums[det_no] = true;
+                  }
+
+                  if ((*nit).type == "DetType") {
+                      det_type = (*nit).value.data();
                   }
               }
-              if( det_no <= 0 ){
-                  k = 1;
-                  while( useddetnums[k] == true && k < __MAX_DETS ){ k++; }
-                  if( k >= __MAX_DETS ){
-                      G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR too many detectors" << G4endl;
-                      exit(1);
-                  }
-                  det_no = k;
-                  useddetnums[k] = true;
+              if (det_no <= 0) {
+                  G4cerr << __FILE__ << " line " << __LINE__ << ": "
+                         << "Warning: detector number not set for volume " << myvol->GetName() << G4endl;
+                  G4cerr << "Skipping sensitive detector assignment." << G4endl;
+                  continue;
               }
               /////////////////////////////////////////////////////////////
 
@@ -428,12 +443,17 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
               G4VSensitiveDetector* thisdet = SDman->FindSensitiveDetector(detectorname,(fVerboseLevel > 0));
 
               if( thisdet == 0 ) {
-                  thisdet = new remollGenericDetector(detectorname, det_no);
                   if (fVerboseLevel > 0)
-                      G4cout << "  Creating sensitive detector " << det_type
-                          << " for volume " << myvol->GetName()
+                      G4cout << "  Creating sensitive detector "
+                          << "for volume " << myvol->GetName()
                           <<  G4endl << G4endl;
-                  SDman->AddNewDetector(thisdet);
+
+                  remollGenericDetector* det = new remollGenericDetector(detectorname, det_no);
+                  if (det_type.size() > 0) det->SetDetectorType(det_type);
+
+                  SDman->AddNewDetector(det);
+
+                  thisdet = det;
               }
 
               myvol->SetSensitiveDetector(thisdet);
@@ -491,6 +511,14 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
 {
   //if (aVolume->GetLogicalVolume()->GetNoDaughters()==0 ){
       aVolume->SetCopyNo(index);
+      G4Material* material;
+      G4VisAttributes* kryptoVisAtt= new G4VisAttributes(G4Colour(0.7,0.0,0.0));
+      //set user limits for Kryptonite materials. When tracks are killed inside Kryptonite materials, energy will be properly deposited
+      material = aVolume->GetLogicalVolume()->GetMaterial();
+      if(material->GetName()=="Kryptonite" ){
+	aVolume->GetLogicalVolume()->SetUserLimits( new G4UserLimits(0.0, 0.0, 0.0, DBL_MAX, DBL_MAX) );
+	aVolume->GetLogicalVolume()->SetVisAttributes(kryptoVisAtt);
+      }
       index++;
       //}else {
     for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++){

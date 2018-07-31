@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "materials_dump.xml">
+<!ENTITY materials SYSTEM "materials.xml">
 ]>
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
@@ -21,7 +21,7 @@
   <constant name="thick_wall" value="1547.76"/> 
   <constant name="center_wall" value="radius_of_hall+thick_wall/2"/>      Not in use anymore -->
 
-  <constant name="radius_of_cylwall" value="25460."/>
+  <constant name="radius_of_cylwall" value="26517.6"/><!--25460."/>-->
   <constant name="hall_cylwall_radius" value="radius_of_cylwall/10"/>
   <constant name="thick_cylwall" value="1487."/>  
   <constant name="hall_cylwall_thickness" value="thick_cylwall/10"/>  

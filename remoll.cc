@@ -14,6 +14,7 @@ typedef G4MTRunManager RunManager;
 typedef G4RunManager RunManager;
 #endif
 
+#include "G4Version.hh"
 #include "G4Types.hh"
 #include "G4UImanager.hh"
 
@@ -47,7 +48,6 @@ namespace {
   }
 }
 
-
 int main(int argc, char** argv) {
 
     // Running time measurement: start
@@ -67,6 +67,7 @@ int main(int argc, char** argv) {
     if (urandom) {
       urandom.read(reinterpret_cast<char*>(&seed), sizeof(seed));
       urandom.close();
+      seed = labs(seed);
     } else G4cerr << "Can't read /dev/urandom." << G4endl;
 
 
@@ -82,7 +83,7 @@ int main(int argc, char** argv) {
       if      (G4String(argv[i]) == "-m") macro    = argv[++i];
       else if (G4String(argv[i]) == "-g") geometry = argv[++i];
       else if (G4String(argv[i]) == "-u") session  = argv[++i];
-      else if (G4String(argv[i]) == "-r") seed     = atoi(argv[++i]);
+      else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
 #ifdef G4MULTITHREADED
       else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
 #endif
@@ -133,6 +134,13 @@ int main(int argc, char** argv) {
 
     // Get the pointer to the User Interface manager
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
+    // use double precision
+    #if G4VERSION_NUMBER >= 1031
+    G4UImanager::UseDoublePrecisionStr(true);
+    #else
+    G4cout << "remoll: Warning: issue 130, double precision input may be truncated." << G4endl;
+    G4cout << "remoll: see also https://github.com/JeffersonLab/remoll/issues/130" << G4endl;
+    #endif
 
     // Define UI session for interactive mode
     if (macro.size())

@@ -4,6 +4,11 @@
 #include "G4VHit.hh"
 #include "G4THitsCollection.hh"
 #include "G4Allocator.hh"
+#include "G4ThreeVector.hh"
+
+#include "remolltypes.hh"
+
+#include <vector>
 
 #include "remolltypes.hh"
 
@@ -24,12 +29,22 @@ class remollGenericDetectorSum : public G4VHit {
 	G4int    fCopyID;
 	G4double fEdep;
 
+	void AddEDep( int pid, G4ThreeVector x, double ene );
+
+	double GetEdep(int pid = 0) const;
+	G4ThreeVector GetPos(int pid = 0) const;
+
+	std::vector<remollGenericDetectorSumByPID_t> fSumByPID;
+
     public:
       const remollGenericDetectorSum_t GetGenericDetectorSumIO() const {
         remollGenericDetectorSum_t sum;
         sum.det = fDetID;
         sum.vid = fCopyID;
-        sum.edep = fEdep;
+        sum.edep = GetEdep();
+        for (size_t i = 0; i < fSumByPID.size(); i++) {
+          sum.by_pid.push_back(fSumByPID[i]);
+        }
         return sum;
       }
 };
