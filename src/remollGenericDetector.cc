@@ -168,7 +168,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
         } else thissum = fSumMap[copyID];
 
         // Add energy deposit
-        thissum->AddEDep( track->GetDefinition()->GetPDGEncoding(), point->GetPosition(), edep );
+        thissum->AddEDep(track->GetDefinition()->GetPDGEncoding(), prepoint->GetPosition(), edep );
     }
 
     if (! badhit) {
