@@ -1,37 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
 	<position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
+	<position name="coneMother_sub_1_center" x="0" y="0" z="0.0000" unit="mm"/>
 </define>
 
-  <materials>
-    <material Z="1" name="Vacuum" state="gas">
-      <T unit="K" value="2.73"/>
-      <P unit="pascal" value="3e-18"/>
-      <D unit="g/cm3" value="1e-25"/>
-      <atom unit="g/mole" value="1.01"/>
-    </material>
-    <material Z="1" name="VacuumDet" state="gas">
-      <T unit="K" value="2.73"/>
-      <P unit="pascal" value="3e-18"/>
-      <D unit="g/cm3" value="1e-25"/>
-      <atom unit="g/mole" value="1.01"/>
-    </material>
-    <material Z ="82" name = "Lead" state = "solid">
-	<MEE unit = "eV" value = "823"/>
-	<D unit = "g/cm3" value = "11.35"/>
-	<atom unit = "g/mole" value = "207.19"/>
-    </material>
-    <material Z="74" name="W" state="solid">
-        <D unit="g/cm3" value="19.3"/>
-        <atom unit="g/mole" value="183.85"/>
-    </material>
-  </materials>
+&materials;
 
 <solids>
     <box lunit="mm" name="boxDetectors" x="4000" y="4000" z="1300"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax="1900" rmin="600" startphi="0" z="10"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="coneMother_sub_1" rmax1="499" rmax2="499" rmin1="0" rmin2="0" startphi="0" z="1000"/>
+    <subtraction name ="boxMotherDetector">
+	<first ref="boxDetectors"/> 
+	<second ref="coneMother_sub_1"/> 
+	<positionref ref="coneMother_sub_1_center"/>
+    </subtraction>
+
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax1="1900" rmax2="1900" rmin1="500" rmin2="500" startphi="0" z="10"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="Shower_max" rmax="1100" rmin="935" startphi="0" z="32"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="Shower_max_ring" rmax="1100" rmin="935" startphi="0" z="5"/>
 </solids>

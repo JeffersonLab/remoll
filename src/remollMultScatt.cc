@@ -121,7 +121,10 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
 
     // Check to see if we have a relevant amount of material
     // otherwise don't bother
-    if( fNmat == 0 || log(bsum) < 1.0 ){
+    /*
+      Added  bsum < 0 check to this if statement otherwise if target material is set to vacuum for beam on target case b would be nan and exit the simulation - Rakitha Fri Aug 21 12:19:37 EDT 2015
+     */
+    if( fNmat == 0 || bsum < 0 || log(bsum) < 1.0){
 	fInit = true;
 	fReturnZero = true;
 
@@ -137,6 +140,7 @@ void remollMultScatt::Init( double p, int nmat, double t[], double A[], double Z
     }
 
     double b = log( bsum );
+    //std::cout<<b<<std::endl;
     assert( b > 1.0 );
 
     if( std::isnan(b) || std::isinf(b) || b <= 0.0 ){

@@ -7,6 +7,10 @@
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
 
+#include "G4RunManager.hh"
+#include "G4TrajectoryContainer.hh"
+#include "G4TrajectoryPoint.hh"
+
 #include <sstream>
 
 std::list<remollGenericDetector*> remollGenericDetector::fGenericDetectors = std::list<remollGenericDetector*>();
@@ -138,6 +142,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
 
     // We're just going to record primary particles and things
     // that have just entered our boundary
+    //the following condition ensure that not all the hits are recorded. This will reflect in the energy deposit sum from the hits compared to the energy deposit from the hit sum detectors.
     badhit = true;
     if (track->GetCreatorProcess() == 0 ||
 	(fDetectSecondaries && prepoint->GetStepStatus() == fGeomBoundary)) {
@@ -163,13 +168,13 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
         } else thissum = fSumMap[copyID];
 
         // Add energy deposit
-        thissum->fEdep += edep;
+        thissum->AddEDep( track->GetDefinition()->GetPDGEncoding(), point->GetPosition(), edep );
     }
 
     if (! badhit) {
-	// Hit
-	remollGenericDetectorHit* thishit = new remollGenericDetectorHit(fDetNo, copyID);
-	fHitColl->insert( thishit );
+        // Hit
+        remollGenericDetectorHit* thishit = new remollGenericDetectorHit(fDetNo, copyID);
+        fHitColl->insert( thishit );
 
         // Which point do we store?
         G4StepPoint* point = 0;
@@ -182,30 +187,30 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
           point = prepoint;
         }
 
-	// Positions
-	G4ThreeVector global_position = point->GetPosition();
-	G4ThreeVector local_position = point->GetTouchable()->GetHistory()->GetTopTransform().TransformPoint(global_position);
-	thishit->f3X  = global_position;
-	thishit->f3Xl = local_position;
+        // Positions
+        G4ThreeVector global_position = point->GetPosition();
+        G4ThreeVector local_position = point->GetTouchable()->GetHistory()->GetTopTransform().TransformPoint(global_position);
+        thishit->f3X  = global_position;
+        thishit->f3Xl = local_position;
 
-	thishit->f3V  = track->GetVertexPosition();
-	thishit->f3P  = track->GetMomentum();
-	thishit->f3S  = track->GetPolarization();
+        thishit->f3V  = track->GetVertexPosition();
+        thishit->f3P  = track->GetMomentum();
+        thishit->f3S  = track->GetPolarization();
 
         thishit->fTime = point->GetGlobalTime();
 
-	thishit->f3dP = track->GetMomentumDirection();
+        thishit->f3dP = track->GetMomentumDirection();
 
-	thishit->fP = track->GetMomentum().mag();
-	thishit->fE = track->GetTotalEnergy();
-	thishit->fM = track->GetDefinition()->GetPDGMass();
+        thishit->fP = track->GetMomentum().mag();
+        thishit->fE = track->GetTotalEnergy();
+        thishit->fM = track->GetDefinition()->GetPDGMass();
 
-	thishit->fTrID  = track->GetTrackID();
-	thishit->fmTrID = track->GetParentID();
-	thishit->fPID   = track->GetDefinition()->GetPDGEncoding();
-
-	// FIXME - Enumerate encodings
-	thishit->fGen   = (long int) track->GetCreatorProcess();
+        thishit->fTrID  = track->GetTrackID();
+        thishit->fmTrID = track->GetParentID();
+        thishit->fPID   = track->GetDefinition()->GetPDGEncoding();
+        thishit->fEdep  = edep; 
+        // FIXME - Enumerate encodings
+        thishit->fGen   = (long int) track->GetCreatorProcess();
 
         thishit->fEdep  = step->GetTotalEnergyDeposit();
     }
