@@ -1,0 +1,8 @@
+/run/initialize
+/remoll/evgen/set beam
+/remoll/evgen/beam/z -200
+/remoll/evgen/beam/x -1300 mm
+/remoll/evgen/beam/px 0
+/remoll/evgen/beam/py 0
+/remoll/evgen/beam/pz 1
+/run/beamOn 1
