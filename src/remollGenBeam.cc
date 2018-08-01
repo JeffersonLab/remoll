@@ -20,28 +20,26 @@
 
 remollGenBeam::remollGenBeam()
 : remollVEventGen("beam"),
-    fXpos(0.0), fYpos(0.0),
-    fZpos(-.5*m), fXmomentum(0.0),
-    fYmomentum(0.0), fZmomentum(1.0),
-    fParticleName("e-")
+  fXpos(0.0), fYpos(0.0), fZpos(-.5*m),
+  fXmomentum(0.0), fYmomentum(0.0), fZmomentum(1.0),
+  fParticleName("e-")
 {
     fApplyMultScatt = true;
 
-    fThisGenMessenger->DeclareMethod("x",&remollGenBeam::SetOriginX,"x coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethod("y",&remollGenBeam::SetOriginY,"y coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethod("z",&remollGenBeam::SetOriginZ,"z coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetMomentumX,"x component of momentum");
-    fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetMomentumY,"y component of momentum");
-    fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetMomentumZ,"z component of momentum");
+    fThisGenMessenger->DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginX,"x coordinate of origin for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("y","mm",&remollGenBeam::SetOriginY,"y coordinate of origin for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("z","mm",&remollGenBeam::SetOriginZ,"z coordinate of origin for the beam");
+    fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetMomentumX,"x component of momentum direction");
+    fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetMomentumY,"y component of momentum direction");
+    fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetMomentumZ,"z component of momentum direction");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
     fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
     fThisGenMessenger->DeclareMethod("sz",&remollGenBeam::SetPolarizationZ,"z component of polarization");
     fThisGenMessenger->DeclareMethod("partName",&remollGenBeam::SetPartName,"name of particle to shoot");
-    
-    //fZpos = -5.0*m;
 }
 
 remollGenBeam::~remollGenBeam() { }
+
 void remollGenBeam::SetOriginX(double x){ fXpos = x; }
 void remollGenBeam::SetOriginY(double y){ fYpos = y; }
 void remollGenBeam::SetOriginZ(double z){ fZpos = z; }
@@ -58,7 +56,6 @@ void remollGenBeam::SetPartName(G4String& name){ fParticleName = name; }
 
 void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 {
-
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
     G4ParticleDefinition* particle = particleTable->FindParticle(fParticleName);
 
