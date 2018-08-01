@@ -101,12 +101,12 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     }
 
     // Get the step point and track
-    G4StepPoint *point = step->GetPreStepPoint();
-    G4Track     *track = step->GetTrack();
+    G4StepPoint* prepoint = step->GetPreStepPoint();
+    G4StepPoint* postpoint = step->GetPostStepPoint();
+    G4Track*     track = step->GetTrack();
 
     // Get touchable volume info
-    G4TouchableHistory *hist = (G4TouchableHistory*)(point->GetTouchable());
-    //G4int  copyID = hist->GetVolume(1)->GetCopyNo();//return the copy id of the parent volume
+    G4TouchableHistory *hist = (G4TouchableHistory*)(prepoint->GetTouchable());
     G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
 
     G4double edep = step->GetTotalEnergyDeposit();
@@ -114,45 +114,48 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // We're just going to record primary particles and things
     // that have just entered our boundary
     badhit = true;
-    if( track->GetCreatorProcess() == 0 ||
-	(fDetectSecondaries && point->GetStepStatus() == fGeomBoundary)
-      ){
+    if (track->GetCreatorProcess() == 0 ||
+	(fDetectSecondaries && prepoint->GetStepStatus() == fGeomBoundary)) {
 	badhit = false;
     }
 
-
-    //  Make pointer to new hit if it's a valid track
-    remollGenericDetectorHit *thishit;
-    if( !badhit ){
-	thishit = new remollGenericDetectorHit(fDetNo, copyID);
-	fHitColl->insert( thishit );
+    badedep = false;
+    if (edep <= 0.0) {
+        badedep = true;
     }
 
-    //  Get pointer to our sum  /////////////////////////
-    remollGenericDetectorSum *thissum = NULL;
-
-    if( !fSumMap.count(copyID) ){
-	if( edep > 0.0 ){
-	    thissum = new remollGenericDetectorSum(fDetNo, copyID);
-	    fSumMap[copyID] = thissum;
-	    fSumColl->insert( thissum );
-	} else {
-	    badedep = true;
-	}
-    } else {
-	thissum = fSumMap[copyID];
-    } 
     /////////////////////////////////////////////////////
 
     // Do the actual data grabbing
 
-    if( !badedep ){
-	// This is all we need to do for the sum
-	thissum->fEdep += edep;
+    if (! badedep) {
+        // Sum
+        remollGenericDetectorSum* thissum = 0;
+        if (! fSumMap.count(copyID)) {
+	    thissum = new remollGenericDetectorSum(fDetNo, copyID);
+	    fSumMap[copyID] = thissum;
+	    fSumColl->insert(thissum);
+        } else thissum = fSumMap[copyID];
+
+        // Add energy deposit
+        thissum->fEdep += edep;
     }
 
-    if( !badhit ){
+    if (! badhit) {
 	// Hit
+	remollGenericDetectorHit* thishit = new remollGenericDetectorHit(fDetNo, copyID);
+	fHitColl->insert( thishit );
+
+        // Which point do we store?
+        G4StepPoint* point = 0;
+        // optical absorption
+        if (step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()
+         && postpoint->GetStepStatus() == fGeomBoundary) {
+          point = postpoint;
+        // all other cases
+        } else {
+          point = prepoint;
+        }
 
 	// Positions
 	G4ThreeVector global_position = point->GetPosition();
@@ -176,7 +179,6 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
 
 	// FIXME - Enumerate encodings
 	thishit->fGen   = (long int) track->GetCreatorProcess();
-
     }
 
     return !badedep && !badhit;
