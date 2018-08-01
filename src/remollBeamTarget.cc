@@ -523,7 +523,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     }
 
     vertex.fBeamEnergy = fSampledEnergy;
-    assert( fBeamEnergy >= electron_mass_c2 );
+    //assert( fBeamEnergy >= electron_mass_c2 );
 
     return vertex;
 }

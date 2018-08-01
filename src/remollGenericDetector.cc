@@ -23,8 +23,8 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   assert( fDetNo > 0 );
 
   fDetectSecondaries = true;
-  fDetectOpticalPhotons = false;
-  fDetectLowEnergyNeutrals = false;
+  fDetectOpticalPhotons = true;//false;
+  fDetectLowEnergyNeutrals = true;//false;
 
   std::stringstream genhit;
   genhit << "genhit_" << detnum;
@@ -72,18 +72,16 @@ remollGenericDetector::~remollGenericDetector()
   delete fMessenger;
 }
 
-void remollGenericDetector::Initialize(G4HCofThisEvent *){
-
-    fHitColl = new remollGenericDetectorHitCollection( SensitiveDetectorName, collectionName[0] );
-    fSumColl = new remollGenericDetectorSumCollection( SensitiveDetectorName, collectionName[1] );
+void remollGenericDetector::Initialize(G4HCofThisEvent*)
+{
+    fHitColl = new remollGenericDetectorHitCollection(SensitiveDetectorName, collectionName[0]);
+    fSumColl = new remollGenericDetectorSumCollection(SensitiveDetectorName, collectionName[1]);
 
     fSumMap.clear();
-
 }
 
-///////////////////////////////////////////////////////////////////////
-
-G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
+G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
+{
     G4bool badedep = false;
     G4bool badhit  = false;
 
@@ -132,12 +130,12 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     }
 
     // Get the step point and track
-    G4StepPoint *point = step->GetPreStepPoint();
-    G4Track     *track = step->GetTrack();
+    G4StepPoint* prepoint = step->GetPreStepPoint();
+    G4StepPoint* postpoint = step->GetPostStepPoint();
+    G4Track*     track = step->GetTrack();
 
     // Get touchable volume info
-    G4TouchableHistory *hist = (G4TouchableHistory*)(point->GetTouchable());
-    //G4int  copyID = hist->GetVolume(1)->GetCopyNo();//return the copy id of the parent volume
+    G4TouchableHistory *hist = (G4TouchableHistory*)(prepoint->GetTouchable());
     G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
 
     G4double edep = step->GetTotalEnergyDeposit();
@@ -146,89 +144,89 @@ G4bool remollGenericDetector::ProcessHits( G4Step *step, G4TouchableHistory *){
     // that have just entered our boundary
     //the following condition ensure that not all the hits are recorded. This will reflect in the energy deposit sum from the hits compared to the energy deposit from the hit sum detectors.
     badhit = true;
-    if( track->GetCreatorProcess() == 0 ||
-	(fDetectSecondaries && point->GetStepStatus() == fGeomBoundary)
-      ){
+    if (track->GetCreatorProcess() == 0 ||
+	(fDetectSecondaries && prepoint->GetStepStatus() == fGeomBoundary)) {
 	badhit = false;
     }
-    //badhit = false;
 
-    //  Make pointer to new hit if it's a valid track
-    remollGenericDetectorHit *thishit;
-    if( !badhit ){
-	thishit = new remollGenericDetectorHit(fDetNo, copyID);
-	fHitColl->insert( thishit );
-    } 
+    badedep = false;
+    if (edep <= 0.0) {
+        badedep = true;
+    }
 
-    //  Get pointer to our sum  /////////////////////////
-    remollGenericDetectorSum *thissum = NULL;
-
-    if( !fSumMap.count(copyID) ){
-	if( edep > 0.0 ){
-	    thissum = new remollGenericDetectorSum(fDetNo, copyID);
-	    fSumMap[copyID] = thissum;
-	    fSumColl->insert( thissum );
-	} else {
-	    badedep = true;
-	}
-    } else {
-	thissum = fSumMap[copyID];
-    } 
     /////////////////////////////////////////////////////
 
     // Do the actual data grabbing
 
-    if( !badedep ){
-	// This is all we need to do for the sum
-	thissum->AddEDep( track->GetDefinition()->GetPDGEncoding(), point->GetPosition(), edep );
+    if (! badedep) {
+        // Sum
+        remollGenericDetectorSum* thissum = 0;
+        if (! fSumMap.count(copyID)) {
+	    thissum = new remollGenericDetectorSum(fDetNo, copyID);
+	    fSumMap[copyID] = thissum;
+	    fSumColl->insert(thissum);
+        } else thissum = fSumMap[copyID];
+
+        // Add energy deposit
+        thissum->AddEDep(track->GetDefinition()->GetPDGEncoding(), prepoint->GetPosition(), edep );
     }
 
-    if( !badhit ){
-	// Hit
+    if (! badhit) {
+        // Hit
+        remollGenericDetectorHit* thishit = new remollGenericDetectorHit(fDetNo, copyID);
+        fHitColl->insert( thishit );
 
-	// Positions
-	G4ThreeVector global_position = point->GetPosition();
-	G4ThreeVector local_position = point->GetTouchable()->GetHistory()->GetTopTransform().TransformPoint(global_position);
-	thishit->f3X  = global_position;
-	thishit->f3Xl = local_position;
+        // Which point do we store?
+        G4StepPoint* point = 0;
+        // optical absorption
+        if (step->GetTrack()->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition()
+         && postpoint->GetStepStatus() == fGeomBoundary) {
+          point = postpoint;
+        // all other cases
+        } else {
+          point = prepoint;
+        }
 
-	thishit->f3V  = track->GetVertexPosition();
-	thishit->f3P  = track->GetMomentum();
-	thishit->f3S  = track->GetPolarization();
+        // Positions
+        G4ThreeVector global_position = point->GetPosition();
+        G4ThreeVector local_position = point->GetTouchable()->GetHistory()->GetTopTransform().TransformPoint(global_position);
+        thishit->f3X  = global_position;
+        thishit->f3Xl = local_position;
+
+        thishit->f3V  = track->GetVertexPosition();
+        thishit->f3P  = track->GetMomentum();
+        thishit->f3S  = track->GetPolarization();
 
         thishit->fTime = point->GetGlobalTime();
 
-	thishit->f3dP = track->GetMomentumDirection();
+        thishit->f3dP = track->GetMomentumDirection();
 
-	thishit->fP = track->GetMomentum().mag();
-	thishit->fE = track->GetTotalEnergy();
-	thishit->fM = track->GetDefinition()->GetPDGMass();
+        thishit->fP = track->GetMomentum().mag();
+        thishit->fE = track->GetTotalEnergy();
+        thishit->fM = track->GetDefinition()->GetPDGMass();
 
-	thishit->fTrID  = track->GetTrackID();
-	thishit->fmTrID = track->GetParentID();
-	thishit->fPID   = track->GetDefinition()->GetPDGEncoding();
-	thishit->fEdep  = edep; 
-	// FIXME - Enumerate encodings
-	thishit->fGen   = (long int) track->GetCreatorProcess();
+        thishit->fTrID  = track->GetTrackID();
+        thishit->fmTrID = track->GetParentID();
+        thishit->fPID   = track->GetDefinition()->GetPDGEncoding();
+        thishit->fEdep  = edep; 
+        // FIXME - Enumerate encodings
+        thishit->fGen   = (long int) track->GetCreatorProcess();
 
-        thishit->fEdep  = edep;
+        thishit->fEdep  = step->GetTotalEnergyDeposit();
     }
 
     return !badedep && !badhit;
 }
 
-///////////////////////////////////////////////////////////////////////
-
-void remollGenericDetector::EndOfEvent(G4HCofThisEvent*HCE) {
+void remollGenericDetector::EndOfEvent(G4HCofThisEvent* HCE)
+{
     G4SDManager *sdman = G4SDManager::GetSDMpointer();
 
-    if(fHCID<0){ fHCID = sdman->GetCollectionID(collectionName[0]); }
-    if(fSCID<0){ fSCID = sdman->GetCollectionID(collectionName[1]); }
+    if (fHCID < 0) { fHCID = sdman->GetCollectionID(collectionName[0]); }
+    if (fSCID < 0) { fSCID = sdman->GetCollectionID(collectionName[1]); }
 
-    HCE->AddHitsCollection( fHCID, fHitColl );
-    HCE->AddHitsCollection( fSCID, fSumColl );
-
-    return;
+    HCE->AddHitsCollection(fHCID, fHitColl);
+    HCE->AddHitsCollection(fSCID, fSumColl);
 }
 
 

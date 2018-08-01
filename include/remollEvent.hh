@@ -53,6 +53,7 @@ class remollEvent {
     public:
 	// Interaction information
 	G4ThreeVector fBeamMomentum;
+	G4ThreeVector fBeamPolarization;
 	G4ThreeVector fVertexPos;
 
 	// Particles to be produced

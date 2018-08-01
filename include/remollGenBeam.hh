@@ -22,6 +22,10 @@ class remollGenBeam : public remollVEventGen {
     void SetMomentumY(double py);
     void SetMomentumZ(double pz);
 
+    void SetPolarizationX(double px);
+    void SetPolarizationY(double py);
+    void SetPolarizationZ(double pz);
+
     void SetPartName(G4String& name);
 
     private:
@@ -34,6 +38,10 @@ class remollGenBeam : public remollVEventGen {
     double fXmomentum;
     double fYmomentum;
     double fZmomentum;
+
+    double fXPolarization;
+    double fYPolarization;
+    double fZPolarization;
 
     G4String fParticleName;
 };
