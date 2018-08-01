@@ -521,10 +521,6 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                   if ((*nit).type == "DetType") {
                       det_type = (*nit).value.data();
                   }
-
-                  if ((*nit).type == "DetType") {
-                      det_type = (*nit).value.data();
-                  }
               }
               if (det_no <= 0) {
                   G4cerr << __FILE__ << " line " << __LINE__ << ": "
