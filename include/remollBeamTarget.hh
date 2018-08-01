@@ -75,11 +75,14 @@ class remollBeamTarget {
 
 	remollMultScatt *fMS;
 
+	bool fAlreadyWarned;
+        bool fAlreadyWarned_LH2;
+
     private:
 	G4GenericMessenger* fMessenger;
 
 	G4Material *fDefaultMat;
-	
+
     public:
 	// Base position, angle *sampled* info
 	G4ThreeVector fVer, fDir;

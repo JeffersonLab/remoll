@@ -20,6 +20,8 @@
 
 #pragma link C++ struct remollGenericDetectorSum_t+;
 #pragma link C++ class vector<remollGenericDetectorSum_t>+;
+#pragma link C++ struct remollGenericDetectorSumByPID_t+;
+#pragma link C++ class vector<remollGenericDetectorSumByPID_t>+;
 
 #endif
 

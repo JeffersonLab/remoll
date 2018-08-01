@@ -1,0 +1,53 @@
+1) In the file "hyperon.h", which is used in hyperon-gen.cpp
+  a) select the hyperon by using "double myhp = ..." for the hyperon you want
+     and comment out the hyperons you don't want
+  b) select the step size in dPt and dPk
+
+2) g++ hyperon-gen.cpp
+
+3) ./a.out
+ a) This produces a file called "hyperon_outp.dat". There is a bit of text in the first two
+    lines but the rest of the file has "xH yH zH pHx pHy pHz weight" specifying
+    the decay position(xH,yH,zH), the hyperon's momentum, (pHx,pHy,pHz) and the
+     weight = (number of hyperons)/electron for the moller target
+ b) cp hyperon_outp.dat ../hyperons/.
+
+4) Now you want to make a file of the hyperon's decay particles. For this use
+   "hyperon_decay.cpp". This file uses "hyperon_decay.h".
+   a) edit hyperon_decay.cpp, example for lambda->proton+pi-, insert lines
+
+// setup for lambda->proton+piminus
+double alpha=0.645,Sr=0.75,h=-1.,frac=0.64,mhyp=mLambda,ma=mpion,mb=mproton,sign=-1.;
+      
+where,
+alpha = decay asymmetry parameter
+Sr = hyperon rest frame polarization (taken to be along Z direction for bremsstrahlung) 
+h = helicity, +1. or -1.
+frac = branching fraction for this mode of decay
+mhyp = mlambda
+ma = mpion (generate the pion's momentum spectrum in the lab)
+mb = proton (partner of particle ma)
+sign = -1. (leave this at -1., this enables Lorentz transformation from center of mass
+            to the lab)
+
+   b) g++ hyperon_decay.cpp
+   c) ./a.out
+   d) input file is from "../hyperons/hyperon_outp.dat"
+   e) output file is "hyperon_particle_decays.dat"
+      format for file is xH,yH,zH,pax,pay,paz,weighta
+
+where location in space of ma is (xH,yH,zH)
+        momentum of ma is (pax,pay,paz)
+        weighta = (number of particles a)/electron
+        this file can be an event generator for geant simulation
+--------------------------------------------------------
+
+If you want to do a root analysis of the "hyperon_particle_decays.dat" file,
+ an example script uses
+
+a) cp hyperon_particle_decays.dat ../hyperons/.
+b) root
+in root type ".x hyperon_particles_plot.cxx("4")"
+
+sample histograms are plotted 
+
