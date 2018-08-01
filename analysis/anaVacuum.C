@@ -1,79 +1,88 @@
+void doAnalysis(string, string, string);
+void writeHisto(TH1*, TFile*);
+
 void anaVacuum(){
-  // TFile *finV=TFile::Open("../output/remollout_VacTst_Moller_Vac.root","READ");
-  // TFile *finC=TFile::Open("../output/remollout_VacTst_Moller_Can.root","READ");
-  // TFile *finA=TFile::Open("../output/remollout_VacTst_Moller_Air.root","READ");
+  string process[3]={"Moller","epElastic","epInelastic"};
 
-  TFile *finV=TFile::Open("../output/remollout_VacTst_epElastic_Vac.root","READ");
-  TFile *finC=TFile::Open("../output/remollout_VacTst_epElastic_beamline_Can.root","READ");
-  TFile *finA=TFile::Open("../output/remollout_VacTst_epElastic_beamline_Air.root","READ");
-  // TFile *finC=TFile::Open("../output/remollout_VacTst_epElastic_Can.root","READ");
-  // TFile *finA=TFile::Open("../output/remollout_VacTst_epElastic_Air.root","READ");
+  string simVer[3]={"","_beamline","_kryp_beamline"};
+  int nSim=2;
 
-  // TFile *finV=TFile::Open("../output/remollout_VacTst_epInelastic_Vac.root","READ");
-  // TFile *finC=TFile::Open("../output/remollout_VacTst_epInelastic_beamline_Can.root","READ");
-  // TFile *finA=TFile::Open("../output/remollout_VacTst_epInelastic_beamline_Air.root","READ");
-  // TFile *finC=TFile::Open("../output/remollout_VacTst_epInelastic_Can.root","READ");
-  // TFile *finA=TFile::Open("../output/remollout_VacTst_epInelastic_Air.root","READ");
+  string allAcceptance = "&& hit.r>0.6 && hit.r<1.2";
+  string r5Acceptance = "&& hit.r>0.935 && hit.r<1.1";
+
+  //doAnalysis(process[0],simVer[nSim],r5Acceptance);
+  //doAnalysis(process[1],simVer[nSim],r5Acceptance);
+  doAnalysis(process[2],simVer[nSim],r5Acceptance);
+
+  //doAnalysis(process[0],simVer[nSim],allAcceptance);
+  //doAnalysis(process[1],simVer[nSim],allAcceptance);
+  //doAnalysis(process[2],simVer[nSim],allAcceptance);
+}
+
+void doAnalysis(string proc, string simVer, string rRangeCut){
+  string foutNm = Form("o_%s%s_anaVac.root",proc.c_str(),simVer.c_str());
+  cout<<"Output goes into: "<<foutNm << endl;
+  TFile *fout = new TFile(foutNm.c_str(),"RECREATE");
+  TFile *finV = TFile::Open(Form("../output/remollout_VacTst_%s_Vac.root",proc.c_str()),"READ");
+  TFile *finC = TFile::Open(Form("../output/remollout_VacTst_%s%s_Can.root",proc.c_str(), simVer.c_str()),"READ");
+  TFile *finA = TFile::Open(Form("../output/remollout_VacTst_%s%s_Air.root",proc.c_str(), simVer.c_str()),"READ");
 
   TTree *tV=(TTree*)finV->Get("T");
   TTree *tC=(TTree*)finC->Get("T");
   TTree *tA=(TTree*)finA->Get("T");
 
   gStyle->SetOptStat("e");
-  double zhigh=2e9;
-  string tgtCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz<1)";
-  string NoNtgtCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz>1)";
-  string defaultCuts="rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2)";
-  TCanvas *c1=new TCanvas();
-  c1->Divide(3);
-  c1->cd(1);
-  TH2D *xyPosV=new TH2D("xyPosV",";x;y",200,-1.2,1.2,200,-1.2,1.2);
-  tV->Project("xyPosV","hit.y:hit.x",defaultCuts.c_str());
-  xyPosV->GetZaxis()->SetRangeUser(1,zhigh);
-  xyPosV->DrawCopy("colz");
-  gPad->SetLogz(1);
-  gPad->SetGridx(1);
-  gPad->SetGridy(1);
-  c1->cd(2);
-  TH2D *xyPosC=new TH2D("xyPosC",";x;y",200,-1.2,1.2,200,-1.2,1.2);
-  tC->Project("xyPosC","hit.y:hit.x",defaultCuts.c_str());
-  xyPosC->GetZaxis()->SetRangeUser(1,zhigh);
-  xyPosC->DrawCopy("colz");
-  gPad->SetLogz(1);
-  gPad->SetGridx(1);
-  gPad->SetGridy(1);
-  c1->cd(3);
-  TH2D *xyPosA=new TH2D("xyPosA",";x;y",200,-1.2,1.2,200,-1.2,1.2);
-  tA->Project("xyPosA","hit.y:hit.x",defaultCuts.c_str());
-  xyPosA->GetZaxis()->SetRangeUser(1,zhigh);
-  xyPosA->DrawCopy("colz");
-  gPad->SetLogz(1);
-  gPad->SetGridx(1);
-  gPad->SetGridy(1);
+  double zhigh=1e11;
 
-  TCanvas *c2=new TCanvas();
-  c2->Divide(3);
-  c2->cd(1);
-  TH2D *xyMomV=new TH2D("xyMomV",";P_x;P_y",200,-0.5,0.5,200,-0.5,0.5);
-  tV->Project("xyMomV","hit.py:hit.px",defaultCuts.c_str());
-  xyMomV->GetZaxis()->SetRangeUser(1,zhigh);
-  xyMomV->DrawCopy("colz");
+  string tgtCuts = Form("rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 %s && hit.vz<1)",rRangeCut.c_str());
+  string NoNtgtCuts = Form("rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 %s && hit.vz>1)",rRangeCut.c_str());
+  string defaultCuts = Form("rate*(hit.e>0.001 && hit.det==28 && hit.pid==11 %s)",rRangeCut.c_str());
+
+  TCanvas *c0=new TCanvas();
+  TH1D *rateV = new TH1D("rateV","rate weighted dist",100,0.55,1.2);
+  TH1D *rateA = new TH1D("rateA","rate weighted dist",100,0.55,1.2);
+  TH1D *rateC = new TH1D("rateC","rate weighted dist",100,0.55,1.2);
+  tV->Project("rateV","hit.r",defaultCuts.c_str());
+  tA->Project("rateA","hit.r",defaultCuts.c_str());
+  tC->Project("rateC","hit.r",defaultCuts.c_str());
+  rateA->SetLineColor(2);
+  rateV->SetLineColor(1);
+  rateA->SetLineColor(2);
+  rateC->SetLineColor(4);
+  rateA->DrawCopy("h");
+  rateV->DrawCopy("h&&same");
+  rateC->DrawCopy("h&&same");
+  writeHisto(rateA,fout);
+  writeHisto(rateC,fout);
+  writeHisto(rateV,fout);
+  gPad->SetLogy(1);
+
+  TCanvas *c91=new TCanvas("c91","Full detector plane");
+  c91->Divide(3);
+  c91->cd(1);
+  TH2D *rzSrcV=new TH2D("rzSrcV",";z[m];r[m]",200,-1,30,200,0,4);
+  tV->Project("rzSrcV","sqrt(hit.vy*hit.vy + hit.vx*hit.vx):hit.vz",defaultCuts.c_str());
+  rzSrcV->GetZaxis()->SetRangeUser(1,zhigh);
+  rzSrcV->DrawCopy("colz");
+  writeHisto(rzSrcV,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
-  c2->cd(2);
-  TH2D *xyMomC=new TH2D("xyMomC",";P_x;P_y",200,-0.5,0.5,200,-0.5,0.5);
-  tC->Project("xyMomC","hit.py:hit.px",defaultCuts.c_str());
-  xyMomC->GetZaxis()->SetRangeUser(1,zhigh);
-  xyMomC->DrawCopy("colz");
+  c91->cd(2);
+  TH2D *rzSrcC=new TH2D("rzSrcC",";z[m];r[m]",200,-1,30,200,0,4);
+  tC->Project("rzSrcC","sqrt(hit.vy*hit.vy + hit.vx*hit.vx):hit.vz",defaultCuts.c_str());
+  rzSrcC->GetZaxis()->SetRangeUser(1,zhigh);
+  rzSrcC->DrawCopy("colz");
+  writeHisto(rzSrcC,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
-  c2->cd(3);
-  TH2D *xyMomA=new TH2D("xyMomA",";P_x;P_y",200,-0.5,0.5,200,-0.5,0.5);
-  tA->Project("xyMomA","hit.py:hit.px",defaultCuts.c_str());
-  xyMomA->GetZaxis()->SetRangeUser(1,zhigh);
-  xyMomA->DrawCopy("colz");
+  c91->cd(3);
+  TH2D *rzSrcA=new TH2D("rzSrcA",";z[m];r[m]",200,-1,30,200,0,4);
+  tA->Project("rzSrcA","sqrt(hit.vy*hit.vy + hit.vx*hit.vx):hit.vz",defaultCuts.c_str());
+  rzSrcA->GetZaxis()->SetRangeUser(1,zhigh);
+  rzSrcA->DrawCopy("colz");
+  writeHisto(rzSrcA,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -85,6 +94,7 @@ void anaVacuum(){
   tV->Project("erCorrV","hit.e:hit.r",defaultCuts.c_str());
   erCorrV->GetZaxis()->SetRangeUser(1,zhigh);
   erCorrV->DrawCopy("colz");
+  writeHisto(erCorrV,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -93,6 +103,7 @@ void anaVacuum(){
   tC->Project("erCorrC","hit.e:hit.r",defaultCuts.c_str());
   erCorrC->GetZaxis()->SetRangeUser(1,zhigh);
   erCorrC->DrawCopy("colz");
+  writeHisto(erCorrC,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -101,14 +112,78 @@ void anaVacuum(){
   tA->Project("erCorrA","hit.e:hit.r",defaultCuts.c_str());
   erCorrA->GetZaxis()->SetRangeUser(1,zhigh);
   erCorrA->DrawCopy("colz");
+  writeHisto(erCorrA,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
+
+  //return;
   TCanvas *c6=new TCanvas();
   TH2D *erCorrDiff=(TH2D*)erCorrA->Clone("e-r correlation difference");
   erCorrDiff->Add(erCorrV,-1);
   erCorrDiff->Rebin2D(4,4);
   erCorrDiff->DrawCopy("Surf3");
+  writeHisto(erCorrDiff,fout);
+
+  TCanvas *c1=new TCanvas();
+  c1->Divide(3);
+  c1->cd(1);
+  TH2D *xyPosV=new TH2D("xyPosV",";x;y",200,-1.2,1.2,200,-1.2,1.2);
+  tV->Project("xyPosV","hit.y:hit.x",defaultCuts.c_str());
+  xyPosV->GetZaxis()->SetRangeUser(1,zhigh);
+  xyPosV->DrawCopy("colz");
+  writeHisto(xyPosV,fout);
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  c1->cd(2);
+  TH2D *xyPosC=new TH2D("xyPosC",";x;y",200,-1.2,1.2,200,-1.2,1.2);
+  tC->Project("xyPosC","hit.y:hit.x",defaultCuts.c_str());
+  xyPosC->GetZaxis()->SetRangeUser(1,zhigh);
+  xyPosC->DrawCopy("colz");
+  writeHisto(xyPosC,fout);
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  c1->cd(3);
+  TH2D *xyPosA=new TH2D("xyPosA",";x;y",200,-1.2,1.2,200,-1.2,1.2);
+  tA->Project("xyPosA","hit.y:hit.x",defaultCuts.c_str());
+  xyPosA->GetZaxis()->SetRangeUser(1,zhigh);
+  xyPosA->DrawCopy("colz");
+  writeHisto(xyPosA,fout);
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+
+  TCanvas *c2=new TCanvas();
+  c2->Divide(3);
+  c2->cd(1);
+  TH2D *xyMomV=new TH2D("xyMomV",";P_x;P_y",200,-0.5,0.5,200,-0.5,0.5);
+  tV->Project("xyMomV","hit.py:hit.px",defaultCuts.c_str());
+  xyMomV->GetZaxis()->SetRangeUser(1,zhigh);
+  xyMomV->DrawCopy("colz");
+  writeHisto(xyMomV,fout);
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  c2->cd(2);
+  TH2D *xyMomC=new TH2D("xyMomC",";P_x;P_y",200,-0.5,0.5,200,-0.5,0.5);
+  tC->Project("xyMomC","hit.py:hit.px",defaultCuts.c_str());
+  xyMomC->GetZaxis()->SetRangeUser(1,zhigh);
+  xyMomC->DrawCopy("colz");
+  writeHisto(xyMomC,fout);
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  c2->cd(3);
+  TH2D *xyMomA=new TH2D("xyMomA",";P_x;P_y",200,-0.5,0.5,200,-0.5,0.5);
+  tA->Project("xyMomA","hit.py:hit.px",defaultCuts.c_str());
+  xyMomA->GetZaxis()->SetRangeUser(1,zhigh);
+  xyMomA->DrawCopy("colz");
+  writeHisto(xyMomA,fout);
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
 
   TCanvas *c51=new TCanvas();
   c51->Divide(3);
@@ -117,6 +192,7 @@ void anaVacuum(){
   tV->Project("erCorrTgtV","hit.e:hit.r",tgtCuts.c_str());
   erCorrTgtV->GetZaxis()->SetRangeUser(1,zhigh);
   erCorrTgtV->DrawCopy("colz");
+  writeHisto(erCorrTgtV,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -125,6 +201,7 @@ void anaVacuum(){
   tC->Project("erCorrTgtC","hit.e:hit.r",tgtCuts.c_str());
   erCorrTgtC->GetZaxis()->SetRangeUser(1,zhigh);
   erCorrTgtC->DrawCopy("colz");
+  writeHisto(erCorrTgtC,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -133,6 +210,7 @@ void anaVacuum(){
   tA->Project("erCorrTgtA","hit.e:hit.r",tgtCuts.c_str());
   erCorrTgtA->GetZaxis()->SetRangeUser(1,zhigh);
   erCorrTgtA->DrawCopy("colz");
+  writeHisto(erCorrTgtA,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -144,6 +222,7 @@ void anaVacuum(){
   tV->Project("erCorrNoNtgtV","hit.e:hit.r",NoNtgtCuts.c_str());
   erCorrNoNtgtV->GetZaxis()->SetRangeUser(1,zhigh);
   erCorrNoNtgtV->DrawCopy("colz");
+  writeHisto(erCorrNoNtgtV,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -152,6 +231,7 @@ void anaVacuum(){
   tC->Project("erCorrNoNtgtC","hit.e:hit.r",NoNtgtCuts.c_str());
   erCorrNoNtgtC->GetZaxis()->SetRangeUser(1,zhigh);
   erCorrNoNtgtC->DrawCopy("colz");
+  writeHisto(erCorrNoNtgtC,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -160,6 +240,7 @@ void anaVacuum(){
   tA->Project("erCorrNoNtgtA","hit.e:hit.r",NoNtgtCuts.c_str());
   erCorrNoNtgtA->GetZaxis()->SetRangeUser(1,zhigh);
   erCorrNoNtgtA->DrawCopy("colz");
+  writeHisto(erCorrNoNtgtA,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -178,6 +259,9 @@ void anaVacuum(){
   pV->DrawCopy("h&&same");
   pC->DrawCopy("h&&same");
   gPad->SetLogy(1);
+  writeHisto(pA,fout);
+  writeHisto(pV,fout);
+  writeHisto(pC,fout);
 
   TCanvas *c4=new TCanvas();
   TH1D *thV=new TH1D("thV",";theta [deg]",180,0,90);
@@ -193,6 +277,9 @@ void anaVacuum(){
   thV->DrawCopy("h&&same");
   thC->DrawCopy("h&&same");
   gPad->SetLogy(1);
+  writeHisto(thA,fout);
+  writeHisto(thV,fout);
+  writeHisto(thC,fout);
 
   TCanvas *c41=new TCanvas();
   TH1D *thTgTV=new TH1D("thTgTV",";theta [deg]",180,0,90);
@@ -211,6 +298,9 @@ void anaVacuum(){
   cout<<"Percent of contributions with tgt source(Vac): "<<thTgTV->Integral()/thV->Integral()<<endl;
   cout<<"Percent of contributions with tgt source(Air): "<<thTgTA->Integral()/thA->Integral()<<endl;
   cout<<"Percent of contributions with tgt source(Can): "<<thTgTC->Integral()/thC->Integral()<<endl;
+  writeHisto(thTgTA,fout);
+  writeHisto(thTgTV,fout);
+  writeHisto(thTgTC,fout);
 
   TCanvas *c42=new TCanvas();
   TH1D *thNoNtgtV=new TH1D("thNoNtgtV",";theta [deg]",180,0,90);
@@ -232,6 +322,9 @@ void anaVacuum(){
       <<"\tTotal rate compared to vacuum\t"<<thA->Integral()/thV->Integral()<<endl;
   cout<<"Percent of contributions with non tgt source(Can): "<<thNoNtgtC->Integral()/thC->Integral()
       <<"\tTotal rate compared to vacuum\t"<<thC->Integral()/thV->Integral()<<endl;
+  writeHisto(thNoNtgtA,fout);
+  writeHisto(thNoNtgtV,fout);
+  writeHisto(thNoNtgtC,fout);
 
   TCanvas *c7=new TCanvas();
   c7->Divide(3);
@@ -249,6 +342,7 @@ void anaVacuum(){
   tV->Project("xzSrcV","hit.vx:hit.vz",defaultCuts.c_str());
   xzSrcV->GetZaxis()->SetRangeUser(1,zhigh);
   xzSrcV->DrawCopy("colz");
+  writeHisto(xzSrcV,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -257,6 +351,7 @@ void anaVacuum(){
   tC->Project("xzSrcC","hit.vx:hit.vz",defaultCuts.c_str());
   xzSrcC->GetZaxis()->SetRangeUser(1,zhigh);
   xzSrcC->DrawCopy("colz");
+  writeHisto(xzSrcC,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -265,6 +360,7 @@ void anaVacuum(){
   tA->Project("xzSrcA","hit.vx:hit.vz",defaultCuts.c_str());
   xzSrcA->GetZaxis()->SetRangeUser(1,zhigh);
   xzSrcA->DrawCopy("colz");
+  writeHisto(xzSrcA,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -276,6 +372,7 @@ void anaVacuum(){
   tV->Project("xySrcV","hit.vy:hit.vx",defaultCuts.c_str());
   xySrcV->GetZaxis()->SetRangeUser(1,zhigh);
   xySrcV->DrawCopy("colz");
+  writeHisto(xySrcV,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -284,6 +381,7 @@ void anaVacuum(){
   tC->Project("xySrcC","hit.vy:hit.vx",defaultCuts.c_str());
   xySrcC->GetZaxis()->SetRangeUser(1,zhigh);
   xySrcC->DrawCopy("colz");
+  writeHisto(xySrcC,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -292,33 +390,7 @@ void anaVacuum(){
   tA->Project("xySrcA","hit.vy:hit.vx",defaultCuts.c_str());
   xySrcA->GetZaxis()->SetRangeUser(1,zhigh);
   xySrcA->DrawCopy("colz");
-  gPad->SetLogz(1);
-  gPad->SetGridx(1);
-  gPad->SetGridy(1);
-
-  TCanvas *c91=new TCanvas();
-  c91->Divide(3);
-  c91->cd(1);
-  TH2D *rzSrcV=new TH2D("rzSrcV",";z[m];r[m]",200,-1,30,200,0,4);
-  tV->Project("rzSrcV","sqrt(hit.vy*hit.vy + hit.vx*hit.vx):hit.vz",defaultCuts.c_str());
-  rzSrcV->GetZaxis()->SetRangeUser(1,zhigh);
-  rzSrcV->DrawCopy("colz");
-  gPad->SetLogz(1);
-  gPad->SetGridx(1);
-  gPad->SetGridy(1);
-  c91->cd(2);
-  TH2D *rzSrcC=new TH2D("rzSrcC",";z[m];r[m]",200,-1,30,200,0,4);
-  tC->Project("rzSrcC","sqrt(hit.vy*hit.vy + hit.vx*hit.vx):hit.vz",defaultCuts.c_str());
-  rzSrcC->GetZaxis()->SetRangeUser(1,zhigh);
-  rzSrcC->DrawCopy("colz");
-  gPad->SetLogz(1);
-  gPad->SetGridx(1);
-  gPad->SetGridy(1);
-  c91->cd(3);
-  TH2D *rzSrcA=new TH2D("rzSrcA",";z[m];r[m]",200,-1,30,200,0,4);
-  tA->Project("rzSrcA","sqrt(hit.vy*hit.vy + hit.vx*hit.vx):hit.vz",defaultCuts.c_str());
-  rzSrcA->GetZaxis()->SetRangeUser(1,zhigh);
-  rzSrcA->DrawCopy("colz");
+  writeHisto(xySrcA,fout);
   gPad->SetLogz(1);
   gPad->SetGridx(1);
   gPad->SetGridy(1);
@@ -336,6 +408,9 @@ void anaVacuum(){
   rSrcV->DrawCopy("h");
   rSrcC->DrawCopy("h&&same");
   rSrcA->DrawCopy("h&&same");
+  writeHisto(rSrcA,fout);
+  writeHisto(rSrcV,fout);
+  writeHisto(rSrcC,fout);
 
   TCanvas *c10=new TCanvas();
   TH1D *pTpV=new TH1D("pTpV",";pT [%]",100,0,1);
@@ -351,6 +426,9 @@ void anaVacuum(){
   pTpA->DrawCopy("h&&same");
   pTpC->DrawCopy("h&&same");
   gPad->SetLogy(1);
+  writeHisto(pTpA,fout);
+  writeHisto(pTpV,fout);
+  writeHisto(pTpC,fout);
 
   TCanvas *c11=new TCanvas();
   TH1D *pTV=new TH1D("pTV",";pT [GeV]",100,0,12);
@@ -366,10 +444,18 @@ void anaVacuum(){
   pTA->DrawCopy("h&&same");
   pTC->DrawCopy("h&&same");
   gPad->SetLogy(1);
+  writeHisto(pTA,fout);
+  writeHisto(pTV,fout);
+  writeHisto(pTC,fout);
 
 
-  // finV->Close();
-  // finA->Close();
-  // finC->Close();
+  finV->Close();
+  finA->Close();
+  finC->Close();
+  fout->Close();
 }
 
+void writeHisto(TH1* h, TFile *f){
+  f->cd();
+  h->Write();
+}
