@@ -23,6 +23,13 @@ class remollPhysicsList: public G4VModularPhysicsList
     // Disable optical physics
     void DisableOpticalPhysics();
 
+    // Set step limiter physics
+    void SetStepLimiterPhysics(G4bool flag);
+    // Enable step limiter physics
+    void EnableStepLimiterPhysics();
+    // Disable step limiter physics
+    void DisableStepLimiterPhysics();
+
     // Handle reference physics lists in messenger
     void ListReferencePhysLists();
     void RemoveReferencePhysList();
@@ -32,6 +39,7 @@ class remollPhysicsList: public G4VModularPhysicsList
     G4String fReferencePhysListName;
     G4VModularPhysicsList* fReferencePhysList;
     G4VPhysicsConstructor* fOpticalPhysics;
+    G4VPhysicsConstructor* fStepLimiterPhysics;
 
     // Deleting an unused physics list also deletes particles, causing
     // all kinds of issues with new reference physics lists
@@ -41,6 +49,7 @@ class remollPhysicsList: public G4VModularPhysicsList
     // Generic messenger as protected to be used in derived classes
     G4GenericMessenger* fPhysListMessenger;
     G4GenericMessenger* fOpticalMessenger;
+    G4GenericMessenger* fStepLimiterMessenger;
     G4GenericMessenger* fBaseMessenger;
 };
 
