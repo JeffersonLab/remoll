@@ -27,6 +27,7 @@ remollTrackingAction::~remollTrackingAction()
 
 void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 {
+
   // Track primary electron only
   if (fTrackingFlag == 0) {
     if (aTrack->GetParentID() == 0) {

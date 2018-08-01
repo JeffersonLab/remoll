@@ -133,7 +133,7 @@
     <!-- There is a gap between shld-2 and shld-3 and offset is a temp. fix to close it -->
     <constant name="boxUSShieldColl2_gapOffset" value="70"/>
     <position name="USshieldcoll_center_2" unit="mm" x="0" y="0" z="6400-UOFFSET - boxUSShieldColl2_gapOffset/2"/>
-    <constant name="USShield1_width" value="2270"/>
+    <constant name="USShield1_width" value="2660"/> <!-- was originally  2270"/>  7/10/2017 Cameron --> 
     <constant name="USShield2_width" value="2660"/>
     <!--Default value before check3 -->
     <!-- <constant name="USShield1_height" value="2270"/> -->
@@ -144,9 +144,14 @@
 
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
+    <constant name="USPolyShield1_side_thickness" value="400 + 400"/>
+    <constant name="USPolyShield1_top_thickness" value="400 + 400"/>
+    <constant name="USPolyShield1_bottom_thickness" value="400 + 400"/>
+    <!-- removed in merge of dose to develop
     <constant name="USPolyShield1_side_thickness" value="400"/>
     <constant name="USPolyShield1_top_thickness" value="400"/>
     <constant name="USPolyShield1_bottom_thickness" value="400"/>
+     -->
     <constant name="USPolyShield1_length" value="USShield1_length + USShield2_length + 1 + 2*USPolyShield1_side_thickness + 100"/>
     <constant name="USPolyShield1_width" value="USShield2_width + 1 + 2*USPolyShield1_side_thickness"/>
     <constant name="USPolyShield1_height" value="USShield2_height + 1 + USPolyShield1_top_thickness + USPolyShield1_bottom_thickness"/>
@@ -187,8 +192,12 @@
        To have optimized US mother volume use these numbers
       -->
     <constant name="USTubemother_rmax" value="1900"/>
+    <constant name="USBoxmother_width" value="4200 + 300"/>
+    <constant name="USBoxmother_height" value="4000 + 300"/>
+    <!-- removed in merge from dose in develop
     <constant name="USBoxmother_width" value="4200"/>
     <constant name="USBoxmother_height" value="4000"/>
+     -->
     <constant name="USTubemother_length" value="4500"/>
     <constant name="tubeBeampipeMother_1_union_rmax" value="200-1"/>
     <!--500 subtracted to have space for lead coller + potential poly shielding -->

@@ -92,9 +92,6 @@ void remollIO::InitializeTree()
     // GenericDetectorSum
     fTree->Branch("sum",      &fGenDetSum);
 
-    // Cut variables derived from hit information
-    fTree->Branch("colCut",    &fCollCut,     "colCut/I");
-
     G4cout << "Initialized tree." << G4endl;
 }
 
@@ -123,8 +120,6 @@ void remollIO::Flush()
     fEvPart.clear();
     fGenDetHit.clear();
     fGenDetSum.clear();
-
-    fCollCut = 1; // default
 }
 
 void remollIO::WriteTree()
@@ -170,15 +165,18 @@ void remollIO::SetEventSeed(const G4String& seed)
 
 void remollIO::SetEventData(const remollEvent *ev)
 {
-    fEvRate   = ev->fRate*s;
+  if (! ev) return;
 
-    // Event variables
-    fEv     = ev->GetEventIO();
-    // Primary particles
-    fEvPart = ev->GetEventParticleIO();
+  fEvRate   = ev->fRate*s;
 
-    // Beam data
-    const remollBeamTarget* bt = ev->GetBeamTarget();
+  // Event variables
+  fEv     = ev->GetEventIO();
+  // Primary particles
+  fEvPart = ev->GetEventParticleIO();
+
+  // Beam data
+  const remollBeamTarget* bt = ev->GetBeamTarget();
+  if (bt)
     fBm = bt->GetBeamTargetIO();
 }
 
@@ -186,16 +184,10 @@ void remollIO::SetEventData(const remollEvent *ev)
 void remollIO::AddGenericDetectorHit(remollGenericDetectorHit *hit)
 {
     fGenDetHit.push_back(hit->GetGenericDetectorHitIO());
-
-    // for collimator cut
-    if( (hit->fDetID==200 && hit->f3X.perp()/__L_UNIT < 0.03) ||
-        (hit->fDetID==201 && hit->f3X.perp()/__L_UNIT < 0.05) )
-        fCollCut=0;
 }
 
 // GenericDetectorSum
-void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit)
-{
+void remollIO::AddGenericDetectorSum(remollGenericDetectorSum *hit){
     fGenDetSum.push_back(hit->GetGenericDetectorSumIO());
 }
 

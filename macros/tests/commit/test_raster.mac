@@ -28,10 +28,10 @@
 
 #/remoll/evgen/set beam
 /remoll/evgen/set moller
-#/remoll/thcommin 30.0 deg
-#/remoll/thcommax 150.0 deg
+#/remoll/evgen/thcommin 30.0 deg
+#/remoll/evgen/thcommax 150.0 deg
 #/remoll/evgen/set elastic 
-#/remoll/emin 80.0 MeV
+#/remoll/evgen/emin 80.0 MeV
 #/remoll/evgen/set inelastic 
 #/remoll/evgen/set pion
 #/remoll/piontype pi-
@@ -42,11 +42,11 @@
 
 # Generation limits
 # theta
-#/remoll/thmin 0.5 deg
-#/remoll/thmax 3.0 deg
+#/remoll/evgen/thmin 0.5 deg
+#/remoll/evgen/thmax 3.0 deg
 # phi
-#/remoll/phmin -20.0 deg
-#/remoll/phmax +20.0 deg
+#/remoll/evgen/phmin -20.0 deg
+#/remoll/evgen/phmax +20.0 deg
 
 # Target positioning
 #/remoll/targpos  10 cm

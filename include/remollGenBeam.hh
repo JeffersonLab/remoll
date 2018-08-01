@@ -14,11 +14,28 @@ class remollGenBeam : public remollVEventGen {
     public:
 	remollGenBeam();
 	virtual ~remollGenBeam();
+    void SetOriginX(double x);
+    void SetOriginY(double y);
+    void SetOriginZ(double z);
+
+    void SetMomentumX(double px);
+    void SetMomentumY(double py);
+    void SetMomentumZ(double pz);
+
+    void SetPartName(G4String& name);
 
     private:
 	void SamplePhysics(remollVertex *, remollEvent *);
 
+	double fXpos;
+	double fYpos;
 	double fZpos;
+
+    double fXmomentum;
+    double fYmomentum;
+    double fZmomentum;
+
+    G4String fParticleName;
 };
 
 #endif//__REMOLLGENBEAM_HH 

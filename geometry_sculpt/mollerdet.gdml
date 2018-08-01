@@ -298,7 +298,7 @@
         <materialref ref="Quartz"/>
         <solidref ref="Probe[j]"/>              
         <auxiliary auxtype="Color" auxvalue="gray"/>
-        <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+        <!-- <auxiliary auxtype="SensDet" auxvalue="planeDet"/> -->
       </volume>
       <volume name="ProbeContainerLogical[j]">
         <materialref ref="Air"/>
@@ -333,8 +333,8 @@
         <materialref ref="Quartz"/>
         <solidref ref="PhotonDetectorEntranceWindowSolid[j]"/>
         <auxiliary auxtype="Color" auxvalue="magenta"/>
-		<auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="30"/> =======
+        <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+        <auxiliary auxtype="DetNo" auxvalue="30"/>
       </volume>
       <volume name="PhotonDetectorLogical[j]">
         <materialref ref="Photocathode"/>

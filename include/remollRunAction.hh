@@ -25,6 +25,11 @@ class remollRunAction : public G4UserRunAction
   private:
     G4GenericMessenger* fMessenger;
     G4Timer* fTimer;
+
+  private:
+    G4int fInterval;
+  public:
+    void SetUpdateInterval(G4int interval) { fInterval = interval; };
 };
 
 #endif
