@@ -65,7 +65,7 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     double p = sqrt(E*E - m*m);
 
     evt->fBeamE = E;
-    evt->fBeamMomentum = p*G4ThreeVector(fXmomentum, fYmomentum, fZmomentum);
+    evt->fBeamMomentum = p*G4ThreeVector(fXmomentum, fYmomentum, fZmomentum).unit();
     evt->fBeamPolarization = G4ThreeVector(fXPolarization, fYPolarization, fZPolarization);
 
     // Override target sampling z
