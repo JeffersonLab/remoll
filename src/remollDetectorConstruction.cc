@@ -8,8 +8,10 @@
 #include "G4GenericMessenger.hh"
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
+#include "G4UIcmdWithADoubleAndUnit.hh"
 #include "G4UserLimits.hh"
 
+#include "G4LogicalVolumeStore.hh"
 #include "G4LogicalVolume.hh"
 #include "globals.hh"
 
@@ -28,6 +30,7 @@
 #include "G4VisAttributes.hh"
 #include "G4Colour.hh"
 
+#include <algorithm>
 #include <sys/param.h>
 
 #define __DET_STRLEN 200
@@ -120,6 +123,57 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
       "Print the geometry tree")
       .SetStates(G4State_Idle)
       .SetDefaultValue("false");
+
+  // Create user limits messenger
+  fUserLimitsMessenger = new G4GenericMessenger(this,
+      "/remoll/geometry/userlimits/",
+      "Remoll geometry properties");
+  fUserLimitsMessenger->DeclareMethod(
+      "usermaxallowedstep",
+      &remollDetectorConstruction::SetUserMaxAllowedStep,
+      "Set user limit MaxAllowedStep for logical volume")
+      .SetStates(G4State_Idle);
+  fUserLimitsMessenger->DeclareMethod(
+      "usermaxtracklength",
+      &remollDetectorConstruction::SetUserMaxTrackLength,
+      "Set user limit MaxTrackLength for logical volume")
+      .SetStates(G4State_Idle);
+  fUserLimitsMessenger->DeclareMethod(
+      "usermaxtime",
+      &remollDetectorConstruction::SetUserMaxTime,
+      "Set user limit MaxTime for logical volume")
+      .SetStates(G4State_Idle);
+  fUserLimitsMessenger->DeclareMethod(
+      "userminekine",
+      &remollDetectorConstruction::SetUserMinEkine,
+      "Set user limit MinEkine for logical volume")
+      .SetStates(G4State_Idle);
+  fUserLimitsMessenger->DeclareMethod(
+      "userminrange",
+      &remollDetectorConstruction::SetUserMinRange,
+      "Set user limit MinRange for logical volume")
+      .SetStates(G4State_Idle);
+}
+
+void remollDetectorConstruction::SetUserMaxAllowedStep(G4String name, G4String value_units)
+{
+  SetUserLimits(__FUNCTION__,name,value_units);
+}
+void remollDetectorConstruction::SetUserMaxTrackLength(G4String name, G4String value_units)
+{
+  SetUserLimits(__FUNCTION__,name,value_units);
+}
+void remollDetectorConstruction::SetUserMaxTime(G4String name, G4String value_units)
+{
+  SetUserLimits(__FUNCTION__,name,value_units);
+}
+void remollDetectorConstruction::SetUserMinEkine(G4String name, G4String value_units)
+{
+  SetUserLimits(__FUNCTION__,name,value_units);
+}
+void remollDetectorConstruction::SetUserMinRange(G4String name, G4String value_units)
+{
+  SetUserLimits(__FUNCTION__,name,value_units);
 }
 
 remollDetectorConstruction::~remollDetectorConstruction()
@@ -127,6 +181,7 @@ remollDetectorConstruction::~remollDetectorConstruction()
     delete fGDMLParser;
     delete fMessenger;
     delete fGeometryMessenger;
+    delete fUserLimitsMessenger;
 }
 
 void remollDetectorConstruction::PrintGDMLWarning() const
@@ -292,6 +347,46 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
       } // loop over auxiliary tags in volume to find "TargetSystem"
 
     } // loop over volumes with auxiliary tags to find "TargetSystem"
+}
+
+void remollDetectorConstruction::ParseAuxiliaryUserLimits()
+{
+  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  for(G4GDMLAuxMapType::const_iterator
+      iter  = auxmap->begin();
+      iter != auxmap->end(); iter++) {
+
+    if (fVerboseLevel > 0)
+      G4cout << "Volume " << ((*iter).first)->GetName()
+             << " has the following list of auxiliary information: "<< G4endl;
+
+    // Loop over auxiliary tags for this logical volume
+    G4LogicalVolume* logical_volume = (*iter).first;
+    for (G4GDMLAuxListType::const_iterator
+        vit  = (*iter).second.begin();
+        vit != (*iter).second.end(); vit++) {
+
+      if (fVerboseLevel > 0)
+        G4cout << "--> Type: " << (*vit).type
+	       << " Value: "   << (*vit).value << std::endl;
+
+      // Skip if not starting with User
+      if ((*vit).type.find("User") != 0) continue;
+
+      // Get existing or create new user limits
+      G4UserLimits* userlimits = logical_volume->GetUserLimits();
+      if (! userlimits) {
+        userlimits = new G4UserLimits();
+        logical_volume->SetUserLimits(userlimits);
+      }
+
+      // Set based on type
+      SetUserLimit(userlimits,(*vit).type,(*vit).value);
+    }
+  }
+
+  if (fVerboseLevel > 0)
+      G4cout << G4endl << G4endl;
 }
 
 void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
@@ -474,6 +569,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
   // Parse auxiliary info
   PrintAuxiliaryInfo();
   ParseAuxiliaryTargetInfo();
+  ParseAuxiliaryUserLimits();
   ParseAuxiliaryVisibilityInfo();
 
   // Set copy number of geometry tree
@@ -498,6 +594,44 @@ void remollDetectorConstruction::ConstructSDandField()
   LoadMagneticField();
 }
 
+
+void remollDetectorConstruction::SetUserLimit(G4UserLimits* userlimits, const G4String type, const G4String value_units)
+{
+  G4double value = G4UIcmdWithADoubleAndUnit::GetNewDoubleValue(value_units);
+  G4String type_lower = type;
+  std::transform(type_lower.begin(), type_lower.end(), type_lower.begin(), ::tolower);
+  if      (type_lower == "usermaxallowedstep") userlimits->SetMaxAllowedStep(value);
+  else if (type_lower == "usermaxtracklength") userlimits->SetUserMaxTrackLength(value);
+  else if (type_lower == "usermaxtime")        userlimits->SetUserMaxTime(value);
+  else if (type_lower == "userminekine")       userlimits->SetUserMinEkine(value);
+  else if (type_lower == "userminrange")       userlimits->SetUserMinRange(value);
+  else G4cerr << __FILE__ << " line " << __LINE__ << ": Warning user type " << type << " unknown" << G4endl;
+}
+
+void remollDetectorConstruction::SetUserLimits(G4String type, G4String name, G4String value_units)
+{
+  // Parse arguments
+  if (type.find("Set") == 0) type.erase(0,3);
+  std::replace(value_units.begin(),value_units.end(), '*', ' ');
+
+  // Find volume
+  G4LogicalVolume* logical_volume = G4LogicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! logical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Get user limits
+  G4UserLimits* userlimits = logical_volume->GetUserLimits();
+  if (! userlimits) {
+    userlimits = new G4UserLimits();
+    logical_volume->SetUserLimits(userlimits);
+  }
+
+  // Set user limits
+  SetUserLimit(userlimits,type,value_units);
+}
+
 void remollDetectorConstruction::ReloadGeometry(const G4String gdmlfile)
 {
   // Set new geometry
@@ -515,7 +649,7 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
       G4VisAttributes* kryptoVisAtt= new G4VisAttributes(G4Colour(0.7,0.0,0.0));
       //set user limits for Kryptonite materials. When tracks are killed inside Kryptonite materials, energy will be properly deposited
       material = aVolume->GetLogicalVolume()->GetMaterial();
-      if(material->GetName()=="Kryptonite" ){
+      if (material->GetName() == "Kryptonite") {
 	aVolume->GetLogicalVolume()->SetUserLimits( new G4UserLimits(0.0, 0.0, 0.0, DBL_MAX, DBL_MAX) );
 	aVolume->GetLogicalVolume()->SetVisAttributes(kryptoVisAtt);
       }

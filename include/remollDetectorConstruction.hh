@@ -12,6 +12,7 @@ class G4LogicalVolume;
 class G4VPhysicalVolume;
 class G4VSensitiveDetector;
 class G4GenericMessenger;
+class G4UserLimits;
 
 class remollGlobalField;
 
@@ -37,6 +38,15 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
       fGDMLFile = name.substr(i + 1);
     }
 
+    void SetUserLimits(G4String type, G4String name, G4String value_units);
+    void SetUserLimit(G4UserLimits* userlimits, const G4String limit, const G4String value_units);
+
+    void SetUserMaxAllowedStep(G4String name, G4String value_units);
+    void SetUserMaxTrackLength(G4String name, G4String value_units);
+    void SetUserMaxTime(G4String name, G4String value_units);
+    void SetUserMinEkine(G4String name, G4String value_units);
+    void SetUserMinRange(G4String name, G4String value_units);
+
   private:
 
     G4String fGDMLPath;
@@ -48,6 +58,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     G4GenericMessenger* fMessenger;
     G4GenericMessenger* fGeometryMessenger;
+    G4GenericMessenger* fUserLimitsMessenger;
 
     G4int fVerboseLevel;
 
@@ -81,6 +92,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     void PrintAuxiliaryInfo() const;
     void ParseAuxiliaryTargetInfo();
+    void ParseAuxiliaryUserLimits();
     void ParseAuxiliaryVisibilityInfo();
     void ParseAuxiliarySensDetInfo();
 
