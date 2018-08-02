@@ -17,8 +17,6 @@
     <constant name="DELTAT" value ="1.0"/>
     <constant name="DELTAZ" value ="1.0"/>
 
-  
-
     <!-- petal -->
     <!--Collimator 3 old position  9575. Moved US by 30 cm and new position 9175 -->
     <position name="posCOLL1" unit="mm" x="0" y="0" z="9175-DOFFSET"/>
@@ -100,7 +98,12 @@
     <position name="boxDSShield_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSShield_y_offset" z="0"/> 
     <!-- <position name="boxDSShield_trans2" unit="mm" x="-1*DSShield_x_offset" y="-1*DSShield_y_offset + DSShield_top_thickness*1/2" z="0 + DSShield_side_thickness*1/2"/> -->
     <position name="boxDSShield1_center" unit="mm" x="DSShield_x_offset" y="DSShield_y_offset" z="DSShield_side_thickness"/>
-    <position name="boxDSShield1_roof_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_y_offset+DSShield_height/2" z="1*DSShield_side_thickness+DSPolyShield1_side_thickness-DSShield_length/4"/>
+
+    <!--   <position name="boxDSShield1_roof_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_y_offset+DSShield_height/2" z="1*DSShield_side_thickness+DSPolyShield1_side_thickness-DSShield_length/4"/>  -->
+    <!-- <position name="boxDSShield1_roof_center" unit="mm" x="0*DSShield_x_offset" y="0*DSShield_y_offset+DSShield_height/10" z=" -2927.72"/> -->
+    <position name="boxDSShield1_roof_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_height/6" z=" -2927.71"/>
+    <position name="boxDSShield1_roof1_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_height/6-87.515" z=" -2927.71"/> 
+
 
     <!--Mother volume -->
     <constant name="boxDSMother_width" value="2*4500"/>
@@ -1099,7 +1102,8 @@
       <positionref ref="DSshieldcollSubstract_CENTER_1" />
     </subtraction> 
 
-    <box lunit="mm" name="boxDSShieldColl1_solid_3" x="boxDSShieldCollSubstract1_width" y="boxDSShieldColl1_height + 50" z="boxDSShieldColl1_length + 50"/>  <!-- What in the world is this? Why is it offset in x? It doesn't even appear to do anything at all... FIXME -->
+    <box lunit="mm" name="boxDSShieldColl1_solid_3" x="boxDSShieldCollSubstract1_width" y="boxDSShieldColl1_height + 50" z="boxDSShieldColl1_length + 50"/>
+
 
     <subtraction name ="boxDSShieldColl1_solid">
       <first ref="boxDSShieldColl1_solid_2"/>
@@ -1197,7 +1201,11 @@
       <positionref ref="boxDSShield_trans2" />
     </subtraction>     
     
-    <box lunit="mm" name="boxDSShield1_roof_solid" x="DSShield_width/2" y="DSShield_roof_thickness" z="DSShield_length/2"/>
+    <!-- <box lunit="mm" name="boxDSShield1_roof_solid" x="DSShield_width/2" y="DSShield_roof_thickness" z="DSShield_length/2"/> -->
+
+ <box lunit="mm" name="boxDSShield1_roof_solid" x="DSShield_width/2" y="DSShield_roof_thickness" z="DSShield_length/8"/>
+ <box lunit="mm" name="boxDSShield1_roof1_solid" x="DSShield_width/2" y="20" z="DSShield_length/8"/>
+
 
 
 </solids>
@@ -1349,9 +1357,6 @@
       <!-- <solidref ref="boxDSShieldColl1_solid"/> -->
       <solidref ref="boxDSShieldColl1_sub_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <!-- NEW Sensitive detector FIXME -->
-<!--      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_3_Det"/> 
-      <auxiliary auxtype="DetNo" auxvalue="6020"/> -->
     </volume>
 
     <!-- Neutron Poly Shielding -->
@@ -1363,23 +1368,20 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <!-- NEW Sensitive detector FIXME -->
-      <!-- <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> 
-      <auxiliary auxtype="DetNo" auxvalue="6021"/> -->
+
     </volume>
 
 <!-- PolyShield1 will be outside shielding hut -->
     <volume name="boxDSPolyShield2_logic">
 <!--  <materialref ref="Concrete"/> -->
 <!--  <materialref ref="Tungsten"/> -->
-<!--  <materialref ref="Borated_Concrete"/ -->
+
+<!-- <materialref ref="Borated_Concrete"/ -->
       <materialref ref="Polythene"/>
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield2_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <!-- NEW Sensitive detector FIXME -->
-      <!-- <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_4_Det"/> 
-      <auxiliary auxtype="DetNo" auxvalue="6025"/> -->
+
     </volume>
 
     <volume name="boxDSShield1_logic">
@@ -1387,19 +1389,22 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxDSShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <!-- NEW Sensitive detector FIXME -->
-      <!-- <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_4_Det"/> 
-      <auxiliary auxtype="DetNo" auxvalue="6024"/> -->
-    </volume>
+
+   </volume>
+
 
    <volume name="boxDSShield1_roof_logic">
-      <materialref ref="Lead"/>
+      <materialref ref="Concrete"/>                       
       <solidref ref="boxDSShield1_roof_solid"/>
-      <auxiliary auxtype="Color" auxvalue="red"/>
-      <!-- NEW Sensitive detector FIXME -->
-      <!-- <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Roof_Det"/> 
-      <auxiliary auxtype="DetNo" auxvalue="6027"/> -->
-    </volume>
+      <auxiliary auxtype="Color" auxvalue="green"/>  
+   </volume>
+
+
+      <volume name="boxDSShield1_roof1_logic">
+      <materialref ref="Lead"/>                       
+      <solidref ref="boxDSShield1_roof1_solid"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>  
+   </volume>
 
 
     <volume name="DSShield_Tube_logic">
@@ -1595,9 +1600,16 @@
         <positionref ref="boxDSShield1_center"/>
       </physvol>
 -->
-      <physvol>
+
+  <physvol>
         <volumeref ref="boxDSShield1_roof_logic"/>
         <positionref ref="boxDSShield1_roof_center"/>
+      </physvol>
+
+
+<physvol>
+        <volumeref ref="boxDSShield1_roof1_logic"/>
+        <positionref ref="boxDSShield1_roof1_center"/>
       </physvol>
 
    </volume>
