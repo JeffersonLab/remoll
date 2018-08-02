@@ -133,7 +133,7 @@
     <!-- There is a gap between shld-2 and shld-3 and offset is a temp. fix to close it -->
     <constant name="boxUSShieldColl2_gapOffset" value="70"/>
     <position name="USshieldcoll_center_2" unit="mm" x="0" y="0" z="6400-UOFFSET - boxUSShieldColl2_gapOffset/2"/>
-    <constant name="USShield1_width" value="2270"/>
+    <constant name="USShield1_width" value="2660"/> <!-- was originally  2270"/>  7/10/2017 Cameron --> 
     <constant name="USShield2_width" value="2660"/>
     <!--Default value before check3 -->
     <!-- <constant name="USShield1_height" value="2270"/> -->
@@ -801,6 +801,8 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl1_solid"/> 
       <auxiliary auxtype="Color" auxvalue="green"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_1_Det"/>   
+      <auxiliary auxtype="DetNo" auxvalue="6010"/> -->
     </volume>
 
     <volume name="boxUSShieldColl2_logic">
@@ -810,6 +812,9 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl2_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
+       <!-- NEW Sensitive detector FIXME -->
+      <!-- <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_2_Det"/>
+      <auxiliary auxtype="DetNo" auxvalue="6011"/> -->
     </volume>
 
     <!-- Neutron Poly Shielding -->
@@ -821,6 +826,9 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxUSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
+       <!-- NEW Sensitive detector FIXME -->
+      <!--  <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_US_1_2_Det"/>
+      <auxiliary auxtype="DetNo" auxvalue="6012"/> -->
     </volume>
 
     <volume name="beampipe_1_logic">

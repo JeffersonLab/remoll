@@ -1,20 +1,14 @@
 #include "remollRun.hh"
+
 #include "remollRunData.hh"
 
-remollRun *remollRun::gSingleton = NULL;
+remollRunData* remollRun::fRunData = 0;
 
-remollRun::remollRun(){
-    gSingleton = this;
+remollRunData* remollRun::GetRunData()
+{
+  if (!fRunData) {
     fRunData = new remollRunData();
     fRunData->Init();
-}
-
-remollRun::~remollRun(){
-}
-
-remollRun *remollRun::GetRun(){
-    if( gSingleton == NULL ){
-	gSingleton = new remollRun();
-    }
-    return gSingleton;
+  }
+  return fRunData;
 }

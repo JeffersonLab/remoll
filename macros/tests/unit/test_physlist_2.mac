@@ -1,0 +1,9 @@
+# Enable optical physics
+/remoll/physlist/optical/enable
+
+# Disable optical physics again
+/remoll/physlist/optical/disable
+
+# Initialize and run
+/run/initialize
+/run/beamOn 1

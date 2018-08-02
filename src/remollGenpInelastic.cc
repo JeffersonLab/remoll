@@ -2,7 +2,7 @@
 
 #include "christy_bosted_inelastic.h"
 
-#include "CLHEP/Random/RandFlat.h"
+#include "Randomize.hh"
 
 #include "remollEvent.hh"
 #include "remollVertex.hh"
@@ -10,7 +10,8 @@
 
 #include "remolltypes.hh"
 
-remollGenpInelastic::remollGenpInelastic(){
+remollGenpInelastic::remollGenpInelastic()
+: remollVEventGen("inelastic") {
     fTh_min =     0.1*deg;
     fTh_max =     5.0*deg;
 
@@ -23,13 +24,13 @@ remollGenpInelastic::~remollGenpInelastic(){
 void remollGenpInelastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // Generate inelastic event
 
-    double beamE = vert->GetBeamE();
+    double beamE = vert->GetBeamEnergy();
     double mp    = proton_mass_c2;
 
-    double th = acos(CLHEP::RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
-    double ph = CLHEP::RandFlat::shoot(0.0, 2.0*pi);
+    double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
+    double ph = G4RandFlat::shoot(0.0, 2.0*pi);
     double efmax = mp*beamE/(mp + beamE*(1.0-cos(th)));;
-    double ef = CLHEP::RandFlat::shoot(0.0, efmax);
+    double ef = G4RandFlat::shoot(0.0, efmax);
 
     double thissigma_p = sigma_p( beamE/GeV, th, ef/GeV )*nanobarn/GeV;
     double thissigma_n = sigma_n( beamE/GeV, th, ef/GeV )*nanobarn/GeV;
@@ -52,8 +53,9 @@ void remollGenpInelastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double Q2 = 2.0*beamE*ef*(1.0-cos(th));
     evt->SetQ2( Q2 );
 
-    G4double APV = Q2*0.8e-4/GeV/GeV; // Empirical APV value, 
+    G4double APV = -1.0*Q2*0.8e-4/GeV/GeV; // Empirical APV value, 
                                       // stolen from mollerClass.C in mollersim
+	// R-L asymmetry for ep inelastic should be negative
 
     evt->SetAsymmetry(APV);
 

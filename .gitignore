@@ -1,64 +1,60 @@
+images
+
+# output from createHTML
+_remoll_*.html
+
+# backups etc
 *~
 *.swp
+
+# Mac
+*.DS_Store
+
 #ignore doxygen files for now
 doc
-include/gitinfo.hh
-Rootfiles/
-Rootfiles_Feb2015/
-Rootfiles_Jun2015/
-Rootfiles_Mar2015/
-Rootfiles_May2015/
-Rootfiles_old/
-asym.xlsx
-build/
-edep.xlsx
-edep_Jun2015.xlsx
-edep_May2015.xlsx
-figs/
-git_branches.note
-git_notes.txt
-install_notes.txt
-libremollroot.dylib
-log/
-macros/runexample_beam_55ras.mac
-macros/runexample_beam_55ras_bm8m.mac
-macros/runexample_beam_noras.mac
-macros/runexample_beam_noras_bm8m.mac
-macros/runexample_moll_55ras_bm8m.mac
-macros/runexample_moll_noras_bm8m.mac
-macros_silwal/
-map_directory/
-plots/
-plots_Jun2015/
-plots_May2015/
-plots_farm/
-presentation/
-remoll
-remoll.note
-remollout.log
-remollout.root
-scripts/remollAna_C.d
-scripts/remollAna_C.so
-scripts/remollH1_C.d
-scripts/remollH1_C.so
-scripts_mine/
-test/
-th_rec_C12_4GEMRes_1000um.txt
-th_rec_C12_4GEMRes_500um.txt
-th_rec_C12_4GEMRes_75um.txt
-tracking_notes.txt
-txtfiles/
-txtfiles_Dec21_2013/
-txtfiles_Jan1_2014/
-txtfiles_Nov5/
-txtfiles_Oct15/
-txtfiles_Oct16/
-txtfiles_Oct22/
-txtfiles_Oct23/
-txtfiles_Oct25/
-txtfiles_farm/
-txtfiles_old/
-txtfiles_test/
 
+#ignore libraries and helper files
+*.so
+*.d
 
+#ignore output files
+*.root
+*.out
+*.pdf
+*.log
+*.dot
 
+#ignore kdev files
+*.kdev4
+
+#install directories
+bin
+lib
+share
+
+#ignore build and map directory
+build*
+bldXcode
+map_directory
+
+#ignore rad_dose radiation analysis work (another repository on sbujlab github)
+rad_analysis
+
+#ignore log files directory
+log
+
+#ignore project files for eclipse
+.cproject
+.project
+
+#ignore dot files
+*.dot
+
+#sample_gdml output
+sample_gdml.*
+
+#ignore log files
+*.log
+
+#Don't ignore the root TF1 file required to run the "remoll" generator - this should be cleaned up later, but for now this is how it is being stored.
+!analysis/externalGenerator/remollGenFunctions.root

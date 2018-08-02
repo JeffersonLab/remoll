@@ -179,7 +179,6 @@
     </subtraction>
 
 
-
     <box lunit="mm" name="COLL_BOX"  x="1000" y="1000" z="1000"/>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_1" rmax1="COLL1_R4_U" rmax2="COLL1_R4_D" rmin1="COLL1_R1_U" rmin2="COLL1_R1_D" startphi="0" z="COLL1_THICK"/>

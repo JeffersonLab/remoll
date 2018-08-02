@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "pionMaterials.xml">
+  <!ENTITY matrices SYSTEM "pionMatrices.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <quantity name="pionDetectorGEMThickness" type="length" value="2.54" unit="cm"/>
+  <quantity name="pionDetectorGEMWidth" type="length" value="60.0" unit="cm"/>
+  <quantity name="pionDetectorGEMHeight" type="length" value="50.0" unit="cm"/>
+
+  &matrices;
+</define>
+
+&materials;
+
+<solids>
+  <!-- x in azimuthal direction -->
+  <!-- y in downstream beam direction -->
+  <!-- z in radial outward direction -->
+  <box  name="pionDetectorGEMPlane_solid" y="pionDetectorGEMThickness" x="pionDetectorGEMWidth" z="pionDetectorGEMHeight"/>
+</solids>
+
+<structure>
+
+  <volume name="pionDetectorGEMSinglePlane_logical">
+    <materialref ref="GEMGasMixture"/>
+    <solidref ref="pionDetectorGEMPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionDetGEM"/>
+    <auxiliary auxtype="DetNo" auxvalue="4002"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
+  <volume name="pionDetectorGEM_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorGEMPlane_solid"/>
+
+    <physvol name="pionDetectorGEM_physical">
+      <volumeref ref="pionDetectorGEMSinglePlane_logical"/>
+    </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorGEM_logical"/>
+</setup>
+
+</gdml>

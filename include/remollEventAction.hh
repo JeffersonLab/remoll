@@ -1,4 +1,3 @@
-
 #ifndef remollEventAction_h
 #define remollEventAction_h 1
 
@@ -8,7 +7,10 @@
 #include "globals.hh"
 
 class G4Event;
+
+class remollPrimaryGeneratorAction;
 class remollIO;
+class remollTrackReconstruct;
 
 class remollEventAction : public G4UserEventAction
 {
@@ -20,21 +22,25 @@ class remollEventAction : public G4UserEventAction
     virtual void BeginOfEventAction(const G4Event*);
     virtual void EndOfEventAction(const G4Event*);
 
-    void SetIO( remollIO *io ){ fIO = io; }
-
   private:
-  //  G4int gemCollID, hcalCollID, bbcalCollID;
-
-    double fGEMres;
-
+    // Pointer to primary generator action
+    remollPrimaryGeneratorAction* fPrimaryGeneratorAction;
     remollIO *fIO;
+    remollTrackReconstruct* rTrack;
 
     // Timer for benchmarking of simulation time per event
     G4Timer fTimer;
 
   public:
+    // Setter for primary generator action
+    void SetPrimaryGeneratorAction(remollPrimaryGeneratorAction* action) {
+      fPrimaryGeneratorAction = action;
+    }
+
+  private:
+    // Random seed at begin of event
+    G4String fEventSeed;
 };
 
 #endif
 
-    

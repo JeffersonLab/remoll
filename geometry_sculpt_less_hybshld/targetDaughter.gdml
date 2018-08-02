@@ -226,12 +226,10 @@
       <solidref ref="TargShield_bottomdisk_solid"/>
     </volume>
 
-    <volume name="TargShield_logic">
+    <!--    <volume name="TargShield_logic">
       <materialref ref="Concrete"/>
-<!--  <materialref ref="Tungsten"/> -->
-<!--  <materialref ref="Borated_Concrete"/> -->
       <solidref ref="TargShield_solid"/>
-    </volume>
+    </volume>                                       old cylindrical shielding -->
 
     <volume name="boxtgtShield1_logic">
       <materialref ref="Lead"/>
@@ -243,6 +241,8 @@
       <solidref ref="boxtgtShield1_solid"/>
 <!--       <auxiliary auxtype="Color" auxvalue="green"/> -->
       <auxiliary auxtype="Color" auxvalue="red"/>
+     <!-- <auxiliary auxtype="SensDet" auxvalue="Lead_Shield_Hut_Det"/>  --> <!-- NEW Sensitive detector FIXME -->
+     <!-- <auxiliary auxtype="DetNo" auxvalue="6003"/>  -->
     </volume>
 
   <!-- Neutron Poly Shielding -->
@@ -253,6 +253,9 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxtgtPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <!-- NEW Sensitive detector FIXME -->
+<!--      <auxiliary auxtype="SensDet" auxvalue="Lead_PolyShield_Hut_Det"/>  --> 
+<!--      <auxiliary auxtype="DetNo" auxvalue="6004"/>  -->
     </volume>
  
     <volume name="boxShieldColl1_logic">
@@ -261,13 +264,19 @@
       <materialref ref="Lead"/>
       <solidref ref="boxShieldColl1_solid"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
-    </volume>
+      <!-- NEW Sensitive detector FIXME -->
+      <!-- <auxiliary auxtype="SensDet" auxvalue="Lead_Collar_Det"/>  --> 
+      <!-- <auxiliary auxtype="DetNo" auxvalue="6007"/> -->
+   </volume>
 
     
     <volume name="boxPolyShield_LeadCollar_logic">
       <materialref ref="Polythene"/>
       <solidref ref="boxPolyShield_LeadCollar_solid_4"/>
       <auxiliary auxtype="Color" auxvalue="brown"/>
+      <!-- NEW Sensitive detector FIXME -->
+      <!-- <auxiliary auxtype="SensDet" auxvalue="Lead_Collar_Poly_Shield_Det"/>  --> 
+      <!-- <auxiliary auxtype="DetNo" auxvalue="6008"/>  -->
     </volume>
 
     <volume name="logicTarget">
