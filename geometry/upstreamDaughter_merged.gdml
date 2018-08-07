@@ -251,7 +251,12 @@
     <constant name="shield_US_beampipe_DS_rmin" value="31"/>
     <constant name="shield_US_beampipe_US_rmax" value="shield_US_beampipe_US_rmin+shield_US_beampipe_thickness"/>
     <constant name="shield_US_beampipe_DS_rmax" value="shield_US_beampipe_DS_rmin+shield_US_beampipe_thickness"/>
-    <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_length/2 + COLL1_z + COLL1_THICK/2 + 1"/>
+    <constant name="shield_US_beampipe_center_z" value="shield_US_beampipe_length/2 + COLL1_z + COLL1_THICK/2 + 1"/>
+    <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z"/>
+
+    <constant name="posCOLL2_det_z" value ="5925-UOFFSET+(COLL2_THICK/2.0) + 0.1"/>
+    <position name="posCOLL2_det_sub" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z - posCOLL2_det_z"/> <!-- this detector is directly after the acceptance defining collimator -->
+    <position name="posCOLL2_det" unit="mm" x="0" y="0" z="posCOLL2_det_z"/> <!-- this detector is directly after the acceptance defining collimator -->
     
 
     <!-- Neutron Shielding -->
@@ -343,6 +348,14 @@
 
     <!-- inner photon collimating beampipe near collimator 1 -->
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_1" rmax1="shield_US_beampipe_US_rmax" rmax2="shield_US_beampipe_DS_rmax" rmin1="shield_US_beampipe_US_rmin" rmin2="shield_US_beampipe_DS_rmin" startphi="0" z="shield_US_beampipe_length"/>
+    <!-- Detector after collimator 2 -->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="COLL2_det_solid_1" rmax="COLL2_R4_D" rmin="0" startphi="0" z="0.01"/>
+    <subtraction name ="COLL2_det_solid">
+      <first ref="COLL2_det_solid_1"/>
+      <second ref="solid_shield_US_beampipe_1"/>
+      <positionref ref="posCOLL2_det_sub" />
+    </subtraction>
+
 
     <!-- New merged col-1 -->
     <!--R max will be same as before, I'm starting with bore radius of the exit bore for whole col-1 and then subtract appropriately -->
@@ -713,6 +726,14 @@
 
 
 <structure>
+    <volume name="COLL2_det_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="COLL2_det_solid"/> 
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="29"/>
+    </volume>
+
     <volume name="logicUScoll_1">
 	<!-- <materialref ref="Tungsten"/> -->
 	<materialref ref="CW95"/>
@@ -862,13 +883,19 @@
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="solid_shield_US_beampipe_1"/>
-      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Color" auxvalue="yellow"/>
     </volume>
 
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeUpstream"/> -->
       <solidref ref="boxUpstream"/>
+
+      <!-- Collimator 2 detector (right after acceptance defining collimator defined) for performing elaborate envelopes that dont care about where they end up - photon envelope especially
+      <physvol name="COLL2_det">
+        <volumeref ref="COLL2_det_logic"/>
+        <positionref ref="posCOLL2_det"/>
+      </physvol>-->
 
       <physvol name="UScoll_1">
         <volumeref ref="logicUScoll_1"/>
