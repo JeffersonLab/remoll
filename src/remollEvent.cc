@@ -64,8 +64,9 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
     if(trajectoryContainer==0){}
     
     else for(G4int i = 0; i < trajectoryContainer->entries(); i++){
-	//Only store trajectories of primary particles
+	//Only store trajectories of primary particles or photons whose track id is set to 1 in the trackingAction
 	if((*trajectoryContainer)[i]->GetTrackID() < 2){
+    // || (*trajectoryContainer)[i]->GetPDGEncoding()==22){
 		//Store each point in the container in the remollEventParticle_t structure
 		for(int j = 0; j<(*trajectoryContainer)[i]->GetPointEntries(); j++){
 			G4TrajectoryPoint* point = (G4TrajectoryPoint*)((*trajectoryContainer)[i]->GetPoint(j));

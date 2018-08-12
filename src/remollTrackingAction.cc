@@ -3,10 +3,11 @@
 // geant4 includes
 #include "G4TrackingManager.hh"
 #include "G4OpticalPhoton.hh"
+#include "G4Gamma.hh"
 #include "G4GenericMessenger.hh"
 
 remollTrackingAction::remollTrackingAction()
-: fMessenger(0),fTrackingFlag(3)
+: fMessenger(0),fTrackingFlag(0)
 {
   fMessenger = new G4GenericMessenger(this,"/remoll/tracking/","Remoll tracking properties");
   fMessenger->DeclareProperty("set",fTrackingFlag)
@@ -32,7 +33,7 @@ void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
   if (fTrackingFlag == 0) {
     if (aTrack->GetParentID() == 0) {
     } else {
-        fpTrackingManager->EventAborted();
+      fpTrackingManager->EventAborted();
       return;
     }
   }
@@ -51,6 +52,19 @@ void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
   else if (fTrackingFlag == 2) {
     if (aTrack->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition())
     {
+    } else {
+      fpTrackingManager->EventAborted();
+      return;
+    }
+  }
+
+  // Track primary electron and secondaries except optical photons, but also set the gammas (pdgid == 22) to have low track ID so they get stored to part.tj[xyz] variables
+  if (fTrackingFlag == 3) {
+    if (aTrack->GetDefinition() != G4OpticalPhoton::OpticalPhotonDefinition() || aTrack->GetDefinition() == G4Gamma::GammaDefinition())
+    {
+      if (aTrack->GetDefinition() == G4Gamma::GammaDefinition()){
+        aTrack->SetTrackID(1);
+      }
     } else {
       fpTrackingManager->EventAborted();
       return;
