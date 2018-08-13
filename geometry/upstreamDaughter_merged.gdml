@@ -92,7 +92,8 @@
 
     <!--    <position name="posCOLL2" unit="mm" x="0" y="0" z="5600-UOFFSET"/> -->
     <!-- main coll, adjust this -->
-    <position name="posCOLL2" unit="mm" x="0" y="0" z="5925-UOFFSET"/>
+    <constant name="posCOLL2z" value ="5925-UOFFSET"/>
+    <position name="posCOLL2" unit="mm" x="0" y="0" z="posCOLL2z"/>
     <!--Shielding beam pipe overlap with col-2 so I increased to bore radius in col-2 from 26.0 to 29.55 -->
     <constant name="COLL2_R1_U" value ="29.55"/>
     <constant name="COLL2_R1_D" value ="29.55"/>
@@ -109,7 +110,7 @@
     <constant name="TRAPOUTERR" value ="(COLL2_R4_U+COLL2_R3_D)/2"/>
     <constant name="TRAPINNERR" value ="(COLL2_R2_D+COLL2_R1_U)/2"/>
     <constant name="TRAPRADIUS" value ="TRAPOUTERR/2+TRAPINNERR/2"/>
-    <constant name="posCOLL2TRAP_Z" value ="5925-UOFFSET+COLL2_THICK/2.0+0.5"/>
+    <constant name="posCOLL2TRAP_Z" value ="posCOLL2z+COLL2_THICK/2.0+0.5"/>
     <position name="posCOLL2TRAP" unit="mm" x="0" y="0" z="posCOLL2TRAP_Z"/> 
 
     <constant name="COIL_ANGLE" value="0.14754"/>
@@ -254,7 +255,7 @@
     <constant name="shield_US_beampipe_center_z" value="shield_US_beampipe_length/2 + COLL1_z + COLL1_THICK/2 + 1"/>
     <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z"/>
 
-    <constant name="posCOLL2_det_z" value ="5925-UOFFSET+(COLL2_THICK/2.0) + 0.1"/>
+    <constant name="posCOLL2_det_z" value ="posCOLL2z+(COLL2_THICK/2.0) + 0.1"/>
     <position name="posCOLL2_det_sub" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z - posCOLL2_det_z"/> <!-- this detector is directly after the acceptance defining collimator -->
     <position name="posCOLL2_det" unit="mm" x="0" y="0" z="posCOLL2_det_z"/> <!-- this detector is directly after the acceptance defining collimator -->
     
