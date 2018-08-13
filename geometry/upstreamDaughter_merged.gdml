@@ -350,9 +350,15 @@
     <!-- inner photon collimating beampipe near collimator 1 -->
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_1" rmax1="shield_US_beampipe_US_rmax" rmax2="shield_US_beampipe_DS_rmax" rmin1="shield_US_beampipe_US_rmin" rmin2="shield_US_beampipe_DS_rmin" startphi="0" z="shield_US_beampipe_length"/>
     <!-- Detector after collimator 2 -->
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="COLL2_det_solid_1" rmax="COLL2_R4_D" rmin="0" startphi="0" z="0.01"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="COLL2_det_solid_1" rmax="COLL2_R4_D" rmin="COLL2_R1_D" startphi="0" z="0.01"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="COLL2_det_inner_solid_1" rmax="COLL2_R1_D" rmin="0" startphi="0" z="0.01"/>
     <subtraction name ="COLL2_det_solid">
       <first ref="COLL2_det_solid_1"/>
+      <second ref="solid_shield_US_beampipe_1"/>
+      <positionref ref="posCOLL2_det_sub" />
+    </subtraction>
+    <subtraction name ="COLL2_det_inner_solid">
+      <first ref="COLL2_det_inner_solid_1"/>
       <second ref="solid_shield_US_beampipe_1"/>
       <positionref ref="posCOLL2_det_sub" />
     </subtraction>
@@ -732,7 +738,15 @@
       <solidref ref="COLL2_det_solid"/> 
       <auxiliary auxtype="Color" auxvalue="red"/>
       <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="29"/>
+      <auxiliary auxtype="DetNo" auxvalue="220"/>
+    </volume>
+
+    <volume name="COLL2_det_inner_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="COLL2_det_inner_solid"/> 
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="221"/>
     </volume>
 
     <volume name="logicUScoll_1">
@@ -895,6 +909,11 @@
       <!-- Collimator 2 detector (right after acceptance defining collimator defined) for performing elaborate envelopes that dont care about where they end up - photon envelope especially
       <physvol name="COLL2_det">
         <volumeref ref="COLL2_det_logic"/>
+        <positionref ref="posCOLL2_det"/>
+      </physvol>
+
+      <physvol name="COLL2_inner_det">
+        <volumeref ref="COLL2_det_inner_logic"/>
         <positionref ref="posCOLL2_det"/>
       </physvol>-->
 
