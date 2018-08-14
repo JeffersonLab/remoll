@@ -11,6 +11,7 @@ remollSteppingAction::remollSteppingAction()
 {
   AddKryptoniteCandidate("VacuumKryptonite");
   AddKryptoniteCandidate("Tungsten");
+  AddKryptoniteCandidate("CW95");
   AddKryptoniteCandidate("Copper");
   AddKryptoniteCandidate("Lead");
 
