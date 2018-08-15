@@ -3,7 +3,7 @@
 /remoll/setgeofile geometry/mollerMother_merged.gdml
 # This must be explicitly called
 /run/initialize
-/remoll/tracking/set 3
+/remoll/tracking/set 0
 /tracking/storeTrajectory 1
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
@@ -20,5 +20,5 @@
 /process/list
 # Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
-/remoll/filename remoll_moller_envelope_1M.root
+/remoll/filename remoll_moller_envelope_10M.root
 /run/beamOn 1000000
