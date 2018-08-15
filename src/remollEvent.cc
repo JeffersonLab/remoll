@@ -76,6 +76,7 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
           part.tjy.push_back(point->GetPosition()[1]);
           part.tjz.push_back(point->GetPosition()[2]);
         }
+        break;
       }
     }
     parts.push_back(part);
