@@ -57,7 +57,7 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
     part.tpx = fPartMom[idx].x();
     part.tpy = fPartMom[idx].y();
     part.tpz = fPartMom[idx].z();
-    part.trid = 0;
+    part.trid = idx+1;
 
 //The following code stores the trajectories of primary particles    
     G4TrajectoryContainer* trajectoryContainer = 
@@ -67,20 +67,17 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
     if(trajectoryContainer==0){
     }
     else for(G4int i = 0; i < trajectoryContainer->entries(); i++){
-	//Only store trajectories of primary particles
-	//if((*trajectoryContainer)[i]->GetTrackID() < 2){
-	if(((*trajectoryContainer)[i]->GetParentID() == 0) && abs(((*trajectoryContainer)[i]->GetInitialMomentum().mag()-part.p))<0.001){
-    //G4cout<<"Trajectory container["<<i<<"]->GetInitialMomentum()->mag() = "<<(*trajectoryContainer)[i]->GetInitialMomentum().mag()<<" ==? part.p = "<<part.p<<G4endl;
-        //G4cout<<"Yes"<<G4endl;
-        part.trid = ((*trajectoryContainer)[i]->GetTrackID());
-		//Store each point in the container in the remollEventParticle_t structure
-		for(int j = 0; j<(*trajectoryContainer)[i]->GetPointEntries(); j++){
-			G4TrajectoryPoint* point = (G4TrajectoryPoint*)((*trajectoryContainer)[i]->GetPoint(j));
-			part.tjx.push_back(point->GetPosition()[0]);
-			part.tjy.push_back(point->GetPosition()[1]);
-			part.tjz.push_back(point->GetPosition()[2]);
-		}
-	}
+      //Only store trajectories of primary particles
+      if(((*trajectoryContainer)[i]->GetParentID() == 0) && ((*trajectoryContainer)[i]->GetTrackID() == idx)){
+        //Store each point in the container in the remollEventParticle_t structure
+        for(int j = 0; j<(*trajectoryContainer)[i]->GetPointEntries(); j++){
+          G4TrajectoryPoint* point = (G4TrajectoryPoint*)((*trajectoryContainer)[i]->GetPoint(j));
+          part.tjx.push_back(point->GetPosition()[0]);
+          part.tjy.push_back(point->GetPosition()[1]);
+          part.tjz.push_back(point->GetPosition()[2]);
+        }
+        break;
+      }
     }
     parts.push_back(part);
   }
