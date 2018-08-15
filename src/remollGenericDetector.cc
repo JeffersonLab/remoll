@@ -25,6 +25,7 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   fDetectSecondaries = true;
   fDetectOpticalPhotons = false;
   fDetectLowEnergyNeutrals = false;
+  fBoundaryHits = false;
 
   std::stringstream genhit;
   genhit << "genhit_" << detnum;
@@ -115,7 +116,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
       return false;
     }
 
-    // Ignore neutral particles below 0.1 MeV
+    // Det Type: Ignore neutral particles below 0.1 MeV
     G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
     if (! fDetectLowEnergyNeutrals
         && charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
@@ -152,6 +153,19 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
     badedep = false;
     if (edep <= 0.0) {
         badedep = true;
+    }
+
+    // Det Type: Only detect hits that are on the incident boundary edge of the geometry in question
+    if (fBoundaryHits
+	    && prepoint->GetStepStatus() != fGeomBoundary) {
+      static bool has_been_warned = false;
+      if (! has_been_warned) {
+        G4cout << "remoll: only hits on the boundary are being stored for boundaryhits==true detectors." << G4endl;
+        G4cout << "remoll: To save just boundary hits alone, use the following in gdml:" << G4endl;
+        G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"boundaryhits\"/>" << G4endl;
+        has_been_warned = true;
+      }
+      return false;
     }
 
     /////////////////////////////////////////////////////
