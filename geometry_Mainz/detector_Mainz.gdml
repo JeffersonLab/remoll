@@ -53,6 +53,10 @@
         <materialref ref="Aluminium"/>
         <solidref ref="reflectorSol_50002"/> 
         <auxiliary auxtype="Color" auxvalue="red"/> 
+        <auxiliary auxtype="Color" auxvalue="brown"/> 
+        <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+        <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
+        <auxiliary auxtype="DetNo" auxvalue="50202"/>  
       </volume>
 
       <skinsurface name="reflectorVol_50002_skin" surfaceproperty="Mylar" >
@@ -71,7 +75,7 @@
         <auxiliary auxtype="Color" auxvalue="brown"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
-        <auxiliary auxtype="DetNo" auxvalue="50202"/>  
+        <auxiliary auxtype="DetNo" auxvalue="50302"/>  
       </volume>
       
       <skinsurface name="lgVolSkin_50002_skin" surfaceproperty="Mylar" >
@@ -84,7 +88,7 @@
         <auxiliary auxtype="Color" auxvalue="red"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
         <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
-        <auxiliary auxtype="DetNo" auxvalue="50302"/>  
+        <auxiliary auxtype="DetNo" auxvalue="50402"/>  
       </volume>
       
       <skinsurface name="pmtVol_50002_skin" surfaceproperty="Aluminium" >
@@ -99,7 +103,7 @@
         <auxiliary auxtype="Color" auxvalue="green"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
-        <auxiliary auxtype="DetNo" auxvalue="50402"/>  
+        <auxiliary auxtype="DetNo" auxvalue="50502"/>  
       </volume>
       
       <skinsurface name="pmtCathodeVol_50002_skin" surfaceproperty="Cathode" >
