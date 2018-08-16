@@ -22,6 +22,7 @@
         <solidref ref="quartzSol_50002"/> 
         <auxiliary auxtype="Color" auxvalue="red"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+        <auxiliary auxtype="DetType" auxvalue="boundaryhits"/> 
         <auxiliary auxtype="DetNo" auxvalue="50002"/>  
       </volume>
       <skinsurface name="quartzRecVol_50002_skin" surfaceproperty="Quartz" >
@@ -40,6 +41,7 @@
         <solidref ref="refSolSkin1_50002"/> 
         <auxiliary auxtype="Color" auxvalue="brown"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+        <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
         <auxiliary auxtype="DetNo" auxvalue="50102"/>  
       </volume>
 
@@ -68,6 +70,7 @@
         <solidref ref="lgSolSkin_50002"/> 
         <auxiliary auxtype="Color" auxvalue="brown"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+        <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
         <auxiliary auxtype="DetNo" auxvalue="50202"/>  
       </volume>
       
@@ -80,6 +83,7 @@
         <solidref ref="pmtSol_50002"/> 
         <auxiliary auxtype="Color" auxvalue="red"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+        <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
         <auxiliary auxtype="DetNo" auxvalue="50302"/>  
       </volume>
       
@@ -94,8 +98,8 @@
         <solidref ref="pmtCathodeSol_50002"/> 
         <auxiliary auxtype="Color" auxvalue="green"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
-        <auxiliary auxtype="DetNo" auxvalue="50402"/>  
         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+        <auxiliary auxtype="DetNo" auxvalue="50402"/>  
       </volume>
       
       <skinsurface name="pmtCathodeVol_50002_skin" surfaceproperty="Cathode" >

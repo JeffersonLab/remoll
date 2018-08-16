@@ -119,11 +119,14 @@
     <property name="SPECULARLOBECONSTANT" ref="Quartz_Surf_SPECLOBE"/>
     <property name="SPECULARSPIKECONSTANT" ref="Quartz_Surf_SPECSPIKE"/> 
     <property name="BACKSCATTERCONSTANT" ref="Quartz_Surf_BACKSCATTER"/> 
-    </opticalsurface><opticalsurface name="Aluminium" model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
+  </opticalsurface>
+  <opticalsurface name="Aluminium" model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
     <property name="REFLECTIVITY" ref="Aluminium_Surf_Reflectivity"/>
-    </opticalsurface><opticalsurface name="Mylar" model="glisur" finish="polishlumirrorair" type="dielectric_metal" value="1.0">
+    </opticalsurface>
+  <opticalsurface name="Mylar" model="glisur" finish="polishlumirrorair" type="dielectric_metal" value="1.0">
     <property name="REFLECTIVITY" ref="Mylar_Surf_Reflectivity"/>
-    </opticalsurface><opticalsurface name="Cathode" model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
+  </opticalsurface>
+  <opticalsurface name="Cathode" model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
     <property name="REFLECTIVITY" ref="Cathode_Surf_Reflectivity"/>
     <property name="EFFICIENCY" ref="Cathode_Surf_Efficiency"/>
   </opticalsurface>
