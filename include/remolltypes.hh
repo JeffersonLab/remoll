@@ -49,6 +49,7 @@ struct remollEventParticle_t {
   double sx, sy, sz;
   double th, ph, p;
   double tpx, tpy, tpz;
+  int trid;
   std::vector<double> tjx, tjy, tjz; //Trajectory information
 };
 

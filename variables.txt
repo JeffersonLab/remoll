@@ -28,6 +28,7 @@ part.th		Particle initial polar angle [rad]
 part.ph		Particle initial azimuthal angle [rad]
 part.tp[xyz]	Particle "true" momentum (if no multiple scattering effects)
 part.tj[xyz]  Particle trajectories [mm]
+part.trid	Geant4 track ID number (1 = first particle created, stored per tj[xyz] entry)
 
 beam data - single variable:
 bm.[xyz]	Beam interaction vertex, lab frame [mm]
