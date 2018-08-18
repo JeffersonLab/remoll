@@ -157,7 +157,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
 
     // Det Type: Only detect hits that are on the incident boundary edge of the geometry in question
     if (fBoundaryHits
-	    && postpoint->GetStepStatus() != fGeomBoundary){
+        && prepoint->GetStepStatus() != fGeomBoundary){
       static bool has_been_warned = false;
       if (! has_been_warned) {
         G4cout << "remoll: only hits on the boundary are being stored for boundaryhits==true detectors." << G4endl;

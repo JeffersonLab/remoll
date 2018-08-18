@@ -1,0 +1,45 @@
+# Recreating the Mainz beam test
+
+# These must be called before initialize
+/remoll/setgeofile geometry_Mainz/mollerMother.gdml
+/remoll/physlist/optical/enable
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/printgeometry true
+
+#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
+#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+
+#Set Beam Generator settings
+/remoll/evgen/set beam 
+/run/beamOn 0
+
+
+#----------------------------------------
+
+# Kill tracks on interactions with W, Cu, and Pb
+/remoll/kryptonite/set true
+
+/process/list
+
+# Electrons incident on quartz------------
+
+/remoll/evgen/beam/x -987.5 mm
+/remoll/evgen/beam/z -500 mm
+/remoll/beamene 855 MeV
+
+/remoll/evgen/beam/partName e-
+
+/remoll/filename remollout_Mainz_1.root
+
+/remoll/tracking/set 2
+/event/verbose 1
+/tracking/verbose 1
+/run/beamOn 100
