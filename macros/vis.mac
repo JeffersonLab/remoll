@@ -4,7 +4,7 @@
 #/vis/open OGLIQt 1200x800
 
 # This is the current working geometry
-/remoll/setgeofile geometry_Mainz/mollerMother.gdml
+/remoll/setgeofile geometry/mollerMother_merged.gdml
 
 #/remoll/likekryptonite  true
 
