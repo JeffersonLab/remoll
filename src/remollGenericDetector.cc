@@ -6,6 +6,7 @@
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
+#include "remollUserTrackInformation.hh"
 
 #include "G4RunManager.hh"
 #include "G4TrajectoryContainer.hh"
@@ -135,6 +136,23 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
     G4StepPoint* postpoint = step->GetPostStepPoint();
     G4Track*     track = step->GetTrack();
 
+    // First step in volume?
+    G4bool firststepinvolume = false;
+    G4VUserTrackInformation* usertrackinfo = track->GetUserInformation();
+    if (usertrackinfo) {
+      remollUserTrackInformation* remollusertrackinfo =
+          dynamic_cast<remollUserTrackInformation*>(usertrackinfo);
+      if (remollusertrackinfo) {
+        // check prepoint status
+        if (prepoint->GetStepStatus() == fGeomBoundary)
+          firststepinvolume = true;
+        else if (prepoint->GetStepStatus() == fUndefined)
+          // check stored postpoint status
+          if (remollusertrackinfo->GetStepStatus() == fGeomBoundary)
+            firststepinvolume = true;
+      }
+    }
+
     // Get touchable volume info
     G4TouchableHistory *hist = (G4TouchableHistory*)(prepoint->GetTouchable());
     G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
@@ -146,7 +164,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
     //the following condition ensure that not all the hits are recorded. This will reflect in the energy deposit sum from the hits compared to the energy deposit from the hit sum detectors.
     badhit = true;
     if (track->GetCreatorProcess() == 0 ||
-	(fDetectSecondaries && prepoint->GetStepStatus() == fGeomBoundary)) {
+	(fDetectSecondaries && firststepinvolume)) {
 	badhit = false;
     }
 
@@ -157,7 +175,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
 
     // Det Type: Only detect hits that are on the incident boundary edge of the geometry in question
     if (fBoundaryHits
-        && prepoint->GetStepStatus() != fGeomBoundary){
+        && ! firststepinvolume){
       static bool has_been_warned = false;
       if (! has_been_warned) {
         G4cout << "remoll: only hits on the boundary are being stored for boundaryhits==true detectors." << G4endl;
