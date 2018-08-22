@@ -36,7 +36,7 @@
       </physvol>
 
       <physvol>
-          <file name="detector_Mainz.gdml"/>
+          <file name="detector_Mainz_v2.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="rot"/>
       </physvol>

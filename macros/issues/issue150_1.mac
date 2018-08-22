@@ -32,11 +32,12 @@
 # Electrons incident on quartz------------
 
 /remoll/evgen/beam/x -987.5 mm
-/remoll/evgen/beam/z -10.1 mm
+/remoll/evgen/beam/z -500 mm
 /remoll/beamene 855 MeV
 
 /remoll/evgen/beam/partName e-
 
-/remoll/filename remollout_Mainz.root
+/remoll/filename remollout_Mainz_1.root
 
+/remoll/tracking/set 2
 /run/beamOn 100

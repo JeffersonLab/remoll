@@ -6,6 +6,7 @@
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
+#include "remollUserTrackInformation.hh"
 
 #include "G4RunManager.hh"
 #include "G4TrajectoryContainer.hh"
@@ -25,6 +26,7 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   fDetectSecondaries = true;
   fDetectOpticalPhotons = false;
   fDetectLowEnergyNeutrals = false;
+  fBoundaryHits = false;
 
   std::stringstream genhit;
   genhit << "genhit_" << detnum;
@@ -115,7 +117,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
       return false;
     }
 
-    // Ignore neutral particles below 0.1 MeV
+    // Det Type: Ignore neutral particles below 0.1 MeV
     G4double charge = step->GetTrack()->GetDefinition()->GetPDGCharge();
     if (! fDetectLowEnergyNeutrals
         && charge == 0.0 && step->GetTrack()->GetTotalEnergy() < 0.1*CLHEP::MeV) {
@@ -134,6 +136,24 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
     G4StepPoint* postpoint = step->GetPostStepPoint();
     G4Track*     track = step->GetTrack();
 
+    // First step in volume?
+    G4bool firststepinvolume = false;
+    // if prepoint status is fGeomBoundary it's easy
+    if (prepoint->GetStepStatus() == fGeomBoundary)
+      firststepinvolume = true;
+    // if prepoint status is fUndefined it could be because of optical photons
+    else if (prepoint->GetStepStatus() == fUndefined) {
+      // get track user information and cast in our own format
+      G4VUserTrackInformation* usertrackinfo = track->GetUserInformation();
+      remollUserTrackInformation* remollusertrackinfo =
+          dynamic_cast<remollUserTrackInformation*>(usertrackinfo);
+      if (remollusertrackinfo) {
+        // if stored postpoint status is fGeomBoundary
+        if (remollusertrackinfo->GetStepStatus() == fGeomBoundary)
+          firststepinvolume = true;
+      }
+    }
+
     // Get touchable volume info
     G4TouchableHistory *hist = (G4TouchableHistory*)(prepoint->GetTouchable());
     G4int  copyID = hist->GetVolume()->GetCopyNo();//return the copy id of the logical volume
@@ -145,13 +165,26 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
     //the following condition ensure that not all the hits are recorded. This will reflect in the energy deposit sum from the hits compared to the energy deposit from the hit sum detectors.
     badhit = true;
     if (track->GetCreatorProcess() == 0 ||
-	(fDetectSecondaries && prepoint->GetStepStatus() == fGeomBoundary)) {
+	(fDetectSecondaries && firststepinvolume)) {
 	badhit = false;
     }
 
     badedep = false;
     if (edep <= 0.0) {
         badedep = true;
+    }
+
+    // Det Type: Only detect hits that are on the incident boundary edge of the geometry in question
+    if (fBoundaryHits
+        && ! firststepinvolume){
+      static bool has_been_warned = false;
+      if (! has_been_warned) {
+        G4cout << "remoll: only hits on the boundary are being stored for boundaryhits==true detectors." << G4endl;
+        G4cout << "remoll: To save just boundary hits alone, use the following in gdml:" << G4endl;
+        G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"boundaryhits\"/>" << G4endl;
+        has_been_warned = true;
+      }
+      return false;
     }
 
     /////////////////////////////////////////////////////
