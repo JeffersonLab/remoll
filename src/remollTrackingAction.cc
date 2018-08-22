@@ -4,6 +4,7 @@
 #include "remollUserTrackInformation.hh"
 
 // geant4 includes
+#include "G4Version.hh"
 #include "G4TrackingManager.hh"
 #include "G4OpticalPhoton.hh"
 #include "G4GenericMessenger.hh"
@@ -32,7 +33,11 @@ void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 {
   G4VUserTrackInformation* usertrackinfo = aTrack->GetUserInformation();
   if (! usertrackinfo) {
+    #if G4VERSION_NUMBER >= 1030
     aTrack->SetUserInformation(new remollUserTrackInformation());
+    #else
+    const_cast<G4Track*>(aTrack)->SetUserInformation(new remollUserTrackInformation());
+    #endif
   }
 
   // Track primary electron only
