@@ -138,18 +138,19 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
 
     // First step in volume?
     G4bool firststepinvolume = false;
-    G4VUserTrackInformation* usertrackinfo = track->GetUserInformation();
-    if (usertrackinfo) {
+    // if prepoint status is fGeomBoundary it's easy
+    if (prepoint->GetStepStatus() == fGeomBoundary)
+      firststepinvolume = true;
+    // if prepoint status is fUndefined it could be because of optical photons
+    else if (prepoint->GetStepStatus() == fUndefined) {
+      // get track user information and cast in our own format
+      G4VUserTrackInformation* usertrackinfo = track->GetUserInformation();
       remollUserTrackInformation* remollusertrackinfo =
           dynamic_cast<remollUserTrackInformation*>(usertrackinfo);
       if (remollusertrackinfo) {
-        // check prepoint status
-        if (prepoint->GetStepStatus() == fGeomBoundary)
+        // if stored postpoint status is fGeomBoundary
+        if (remollusertrackinfo->GetStepStatus() == fGeomBoundary)
           firststepinvolume = true;
-        else if (prepoint->GetStepStatus() == fUndefined)
-          // check stored postpoint status
-          if (remollusertrackinfo->GetStepStatus() == fGeomBoundary)
-            firststepinvolume = true;
       }
     }
 
