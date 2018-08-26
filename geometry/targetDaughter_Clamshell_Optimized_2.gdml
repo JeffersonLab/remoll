@@ -64,6 +64,17 @@
     <!--I have use 100 before based on Tyler's ray tracing we can reduce down to 74 mm -->  
     <constant name="ShieldCol1_inner_rmax" value="74"/>
 
+      <!-- Lead Top -->
+      <constant name="LeadTop_width" value="tgtShield_width - 2*tgtShield_side_thickness"/>
+      <constant name="LeadTop_length" value="tgtShield_length - 2*tgtShield_side_thickness"/>
+      <constant name="LeadTop_thickness" value="400"/>
+      <!-- Lead front  -->
+      <constant name="LeadFront_height" value="5000-500-400+200"/>
+      <constant name="LeadFront_width" value="tgtShield_width - 2*tgtShield_side_thickness"/>
+      <constant name="LeadFront_thickness" value="400"/>
+      <constant name="LeadFront_height_trim" value="1500"/>
+      
+  
     <!-- PolyShield for lead collar -->
     <constant name="tgtPolyShield_LeadCollar_top_thickness" value="200"/>
     <constant name="tgtPolyShield_LeadCollar_bottom_thickness" value="200"/>
@@ -95,6 +106,7 @@
     <position name="boxtgtShield_trans3" unit="mm" x="0-300" y="-1*400/2+200.1" z="0+200.1"/>
     <position name="boxtgtShield_trans2" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset-50-25" z="0"/>
     <position name="boxtgtShield_trans22" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset+450-100" z="0"/>
+    <position name="boxtgtShield_trans23" unit="mm" x="0" y="-1*(5000-500-400+200)/2 + LeadFront_height_trim/2 - 1" z="0"/>
     <position name="boxtgtShield_trans4" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset+250+200-100" z="0"/>
     <position name="boxtgtShield1_center" unit="mm" x="tgtShield_x_offset" y="tgtShield_y_offset+50+25+YOFFSET_targ" z="0"/>
 
@@ -233,9 +245,10 @@
 
    <box lunit="mm" name="boxtgtShield_poly_solid_1" x="tgtShield_width - 2*tgtShield_side_thickness" y="tgtShield_height - tgtShield_top_thickness-400+200" z="tgtShield_length - 2*tgtShield_side_thickness-400"/>
 
-   <box lunit="mm" name="box1_lead_solid_1"  x="tgtShield_width - 2*tgtShield_side_thickness" y="400" z="tgtShield_length - 2*tgtShield_side_thickness"/>
-   <box lunit="mm" name="box2_lead_solid_2"  x="tgtShield_width - 2*tgtShield_side_thickness" y="5000-500-400+200" z="400"/>
-
+   
+   <box lunit="mm" name="box1_lead_solid_1"  x="LeadTop_width" y="LeadTop_thickness" z="LeadTop_length"/>
+   <box lunit="mm" name="box2_lead_solid_2"  x="LeadFront_width" y="LeadFront_height" z="LeadFront_thickness"/>
+   <box lunit="mm" name="box3_lead_solid_1"  x="LeadFront_width + 1" y="LeadFront_height_trim" z="LeadFront_thickness + 1"/>
 
    <box lunit="mm" name="boxtgtShield_poly_solid_2" x="tgtShield_width - 2*tgtShield_side_thickness-2*400" y="tgtShield_height - tgtShield_top_thickness-400+200" z="tgtShield_length - 2*tgtShield_side_thickness-2*400"/>
 
@@ -252,10 +265,16 @@
      <first ref="boxtgtShield1_solid_3"/>
      <second ref="tgtShield_beamTube_solid"/>
      <positionref ref="boxtgtShield_trans2" />
-   </subtraction>   
+   </subtraction>
+
+   <subtraction name ="box2_lead_solid_0">
+     <first ref="box2_lead_solid_2"/>
+     <second ref="box3_lead_solid_1"/>
+     <positionref ref="boxtgtShield_trans23" />
+   </subtraction>
 
    <subtraction name ="box2_lead_solid_1">
-     <first ref="box2_lead_solid_2"/>
+     <first ref="box2_lead_solid_0"/>
      <second ref="tgtShield_beamTube_solid"/>
      <positionref ref="boxtgtShield_trans22" />
    </subtraction>   
