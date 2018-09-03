@@ -8,7 +8,7 @@
     <position name="trackingCenter" x="0" y="0" z="25635."/>
     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
     <position name="detectorCenter" x="0" y="0" z="28500."/>
-    <position name="pionDetectorCenter" x="0" y="0" z="32000."/>
+    <position name="pionDetectorCenter" x="0" y="0" z="29500."/>
   </define>
 
   <materials>
