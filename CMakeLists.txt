@@ -185,11 +185,9 @@ install(DIRECTORY geometry DESTINATION share/remoll)
 install(DIRECTORY macros DESTINATION share/remoll)
 install(DIRECTORY vis DESTINATION share/remoll)
 
+file(GLOB vis_macros RELATIVE ${PROJECT_SOURCE_DIR} vis/*.mac)
 set(REMOLL_SCRIPTS
-    vis/OIX.mac
-    vis/Qt.mac
-    vis/vis.mac
-    vis/X.mac
+    ${vis_macros}
     macros/runexample.mac
     macros/gui.mac
     macros/moller_dose.mac
