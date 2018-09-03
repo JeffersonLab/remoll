@@ -463,6 +463,7 @@
     <volume name="cylHallDet_1_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cylHallDet_1"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="99"/>
     </volume>
@@ -470,6 +471,7 @@
     <volume name="cylHallDet_2_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cylHallDet_2"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="101"/>
     </volume>
@@ -477,6 +479,7 @@
     <volume name="cylHallDet_3_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cylHallDet_3"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="103"/>
     </volume>
@@ -485,6 +488,7 @@
     <volume name="cylHallDet_4_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cylHallDet_4"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="105"/>
     </volume>
@@ -492,12 +496,14 @@
     <volume name="topwalldet_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="topwalldet_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="107"/>
     </volume>
     <volume name="cylwalldet_logic">
       <materialref ref="Concrete"/>
       <solidref ref="cylwalldet_hole"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="109"/>
     </volume>
@@ -507,6 +513,7 @@
       <materialref ref="Concrete"/>
       <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="topwall_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5010"/> -->
     </volume>
 
@@ -514,6 +521,7 @@
       <materialref ref="Concrete"/>
       <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="cylwall_hole"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Hall_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6000"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5009"/> -->
@@ -525,6 +533,7 @@
       <materialref ref="Concrete"/>
       <solidref ref="dump_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 <!--  <auxiliary auxtype="SensDet" auxvalue="Dump"/> -->
       <auxiliary auxtype="DetNo" auxvalue="9"/>
     </volume>
@@ -533,6 +542,7 @@
       <materialref ref="Lead"/>
       <solidref ref="dumpTempShield_left_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Dump_Temp_Shield_left"/>
       <auxiliary auxtype="DetNo" auxvalue="10"/>
     </volume>
@@ -541,6 +551,7 @@
       <materialref ref="Lead"/>
       <solidref ref="dumpTempShield_right_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Dump_Temp_Shield_right"/>
       <auxiliary auxtype="DetNo" auxvalue="11"/>
     </volume>
@@ -549,6 +560,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndFlangeUS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Flange_US"/>
       <auxiliary auxtype="DetNo" auxvalue="12"/>
     </volume>
@@ -557,6 +569,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndConeUS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Cone_US"/>
       <auxiliary auxtype="DetNo" auxvalue="13"/>
     </volume>
@@ -565,6 +578,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndPipeUS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Pipe_US"/>
       <auxiliary auxtype="DetNo" auxvalue="14"/>
     </volume>
@@ -573,6 +587,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndDonut_inner_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Donut_Inner_US"/>
       <auxiliary auxtype="DetNo" auxvalue="15"/>
     </volume>
@@ -581,6 +596,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndDonut_middle_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Donut_Middle_US"/>
       <auxiliary auxtype="DetNo" auxvalue="16"/>
     </volume>
@@ -589,6 +605,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndDonut_outer_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Donut_Outer_US"/>
       <auxiliary auxtype="DetNo" auxvalue="17"/>
     </volume>
@@ -597,6 +614,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndPipeDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Pipe_DS"/>
       <auxiliary auxtype="DetNo" auxvalue="18"/>
     </volume>
@@ -605,6 +623,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndConeDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Cone_DS"/>
       <auxiliary auxtype="DetNo" auxvalue="19"/>
     </volume>
@@ -613,6 +632,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndPipeDDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Pipe_DDS"/>
       <auxiliary auxtype="DetNo" auxvalue="20"/>
     </volume>
@@ -621,6 +641,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="ndFlangeDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Flange_DS"/>
       <auxiliary auxtype="DetNo" auxvalue="21"/>
     </volume>
@@ -629,6 +650,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="nitrogenAtmWall_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Nitrogen_Atmosphere_Wall"/>
       <auxiliary auxtype="DetNo" auxvalue="22"/>
     </volume>
@@ -637,6 +659,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="dumpPipeDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Dump_DS_Pipe"/>
       <auxiliary auxtype="DetNo" auxvalue="23"/>
     </volume>
@@ -645,6 +668,7 @@
       <materialref ref="Aluminum"/>
       <solidref ref="tubeDumpWaterTank_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 <!--  <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Can"/> -->
       <auxiliary auxtype="DetNo" auxvalue="24"/>
     </volume>
@@ -653,6 +677,7 @@
       <materialref ref="G4_WATER"/>
       <solidref ref="waterDumpWaterTank_solid"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 <!--  <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Water"/> -->
       <auxiliary auxtype="DetNo" auxvalue="25"/>
     </volume>
