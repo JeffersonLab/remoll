@@ -235,7 +235,11 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     // Parse GDML file
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+    G4VPhysicalVolume* worldvolume = fGDMLParser->GetWorldVolume();
 
+    // Print overlaps
+    if (fGDMLOverlapCheck)
+      PrintGeometryTree(worldvolume,0,true,false);
 
     // Add GDML files to IO
     remollIO* io = remollIO::GetInstance();
@@ -247,7 +251,7 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     }
 
     // Return world volume
-    return fGDMLParser->GetWorldVolume();
+    return worldvolume;
 }
 
 void remollDetectorConstruction::PrintAuxiliaryInfo() const
