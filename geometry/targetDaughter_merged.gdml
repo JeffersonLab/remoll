@@ -299,7 +299,7 @@
 
       <physvol>
         <volumeref ref="USAlTarg"/>
-        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750"/>
+        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-(AlWindowTarget_length+tubeTarget_length)/2.0"/>
       </physvol>
 
       <physvol>
@@ -309,7 +309,7 @@
 
       <physvol>
         <volumeref ref="DSAlTarg"/>
-        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="750"/>
+        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="+(AlWindowTarget_length+tubeTarget_length)/2.0"/>
       </physvol>
 
       <!--Shown below are initial target shielding cylinder - Rakitha  -->
