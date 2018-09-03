@@ -68,7 +68,7 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
     }
     else for(G4int i = 0; i < trajectoryContainer->entries(); i++){
       //Only store trajectories of primary particles
-      if(((*trajectoryContainer)[i]->GetParentID() == 0) && ((*trajectoryContainer)[i]->GetTrackID() == idx+1)){
+      if(((*trajectoryContainer)[i]->GetParentID() == 0) && ((*trajectoryContainer)[i]->GetTrackID() == G4int(idx+1))){
         //Store each point in the container in the remollEventParticle_t structure
         for(int j = 0; j<(*trajectoryContainer)[i]->GetPointEntries(); j++){
           G4TrajectoryPoint* point = (G4TrajectoryPoint*)((*trajectoryContainer)[i]->GetPoint(j));
