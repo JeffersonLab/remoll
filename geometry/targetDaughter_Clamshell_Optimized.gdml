@@ -455,10 +455,10 @@
    </volume>
 
    <volume name="cyll2_logic">
-     <materialref ref="Kryptonite"/>  
+     <materialref ref="Aluminium"/>  
      <solidref ref="cyll2"/>
      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-     <auxiliary auxtype="Color" auxvalue="brown"/>
+     <auxiliary auxtype="Color" auxvalue="silver"/>
      <auxiliary auxtype="DetNo" auxvalue="1"/>
    </volume>
 
