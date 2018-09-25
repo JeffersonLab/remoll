@@ -510,7 +510,7 @@ G4double remollTrackReconstruct::EvalTrackPos(G4double z, G4ThreeVector &ab)
 }
 
 // return the direction angle, which is just the slope
-G4double remollTrackReconstruct::EvalTrackAng(G4double z,G4ThreeVector &ab)
+G4double remollTrackReconstruct::EvalTrackAng(G4double /* z */, G4ThreeVector &ab)
 {
   return ab.y();  // in rad
 }

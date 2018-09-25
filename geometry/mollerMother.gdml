@@ -6,12 +6,6 @@
      <position unit="mm" name="upstreamCenter" x="0" y="0" z="7000."/>
      <position unit="mm" name="hybridCenter" x="0" y="0" z="13366.57"/>
      <position unit="mm" name="trackingCenter" x="0" y="0" z="25635."/>
-
-     <position name="GEM1Center" x="0" y="0" z="22700.-230.-10." unit="mm"/>
-     <position name="GEM2Center" x="0" y="0" z="23700.-230.-10." unit="mm"/>
-     <position name="GEM3Center" x="0" y="0" z="27700.-230.-10." unit="mm"/>
-     <position name="GEM4Center" x="0" y="0" z="28700.-230.-10." unit="mm"/>
-
      <position unit="mm" name="detectorCenter" x="0" y="0" z="28500."/>
      <position unit="mm" name="pionDetectorCenter" x="0" y="0" z="32000."/>
      <rotation name="identity"/>

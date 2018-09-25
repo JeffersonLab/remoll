@@ -123,6 +123,11 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
       "Print the geometry tree")
       .SetStates(G4State_Idle)
       .SetDefaultValue("false");
+  fGeometryMessenger->DeclareMethod(
+      "printoverlaps",
+      &remollDetectorConstruction::PrintOverlaps,
+      "Print the geometry overlap")
+      .SetStates(G4State_Idle);
 
   // Create user limits messenger
   fUserLimitsMessenger = new G4GenericMessenger(this,
@@ -230,7 +235,11 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     // Parse GDML file
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+    G4VPhysicalVolume* worldvolume = fGDMLParser->GetWorldVolume();
 
+    // Print overlaps
+    if (fGDMLOverlapCheck)
+      PrintGeometryTree(worldvolume,0,true,false);
 
     // Add GDML files to IO
     remollIO* io = remollIO::GetInstance();
@@ -242,7 +251,7 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     }
 
     // Return world volume
-    return fGDMLParser->GetWorldVolume();
+    return worldvolume;
 }
 
 void remollDetectorConstruction::PrintAuxiliaryInfo() const
@@ -701,32 +710,39 @@ std::vector<G4VPhysicalVolume*> remollDetectorConstruction::GetPhysicalVolumes(
 void remollDetectorConstruction::PrintGeometryTree(
     G4VPhysicalVolume* aVolume,
     G4int depth,
-    G4bool surfchk)
+    G4bool surfchk,
+    G4bool print)
 {
   // Null volume
   if (aVolume == 0) aVolume = fWorldVolume;
 
   // Print spaces
-  for (int isp = 0; isp < depth; isp++) { G4cout << "  "; }
+  if (print) {
+    for (int isp = 0; isp < depth; isp++) { G4cout << "  "; }
+  }
   // Print name
-  G4cout << aVolume->GetName() << "[" << aVolume->GetCopyNo() << "] "
-         << aVolume->GetLogicalVolume()->GetName() << " "
-         << aVolume->GetLogicalVolume()->GetNoDaughters() << " "
-         << aVolume->GetLogicalVolume()->GetMaterial()->GetName() << " "
-	 << G4BestUnit(aVolume->GetLogicalVolume()->GetMass(true),"Mass");
+  if (print) {
+    G4cout << aVolume->GetName() << "[" << aVolume->GetCopyNo() << "] "
+           << aVolume->GetLogicalVolume()->GetName() << " "
+           << aVolume->GetLogicalVolume()->GetNoDaughters() << " "
+           << aVolume->GetLogicalVolume()->GetMaterial()->GetName() << " "
+           << G4BestUnit(aVolume->GetLogicalVolume()->GetMass(true),"Mass");
+  }
   // Print sensitive detector
-  if (aVolume->GetLogicalVolume()->GetSensitiveDetector())
+  if (print && aVolume->GetLogicalVolume()->GetSensitiveDetector())
   {
     G4cout << " " << aVolume->GetLogicalVolume()->GetSensitiveDetector()
                             ->GetFullPathName();
   }
-  G4cout << G4endl;
+  if (print) {
+    G4cout << G4endl;
+  }
 
   // Check overlapping volumes
-  if (surfchk) aVolume->CheckOverlaps();
+  if (surfchk) aVolume->CheckOverlaps(1000,0.0,false);
 
   // Descend down the tree
   for (int i = 0; i < aVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
-    PrintGeometryTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk);
+    PrintGeometryTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk,print);
   }
 }

@@ -342,7 +342,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
         it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !found_active_volume; it++ ){
 
         // Relative position of this target volume in mother volume
-        G4double relative_position = (*it)->GetFrameTranslation().z();
+        //G4double relative_position = (*it)->GetFrameTranslation().z();
 
         // Try to cast the target volume into its tubs solid
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
