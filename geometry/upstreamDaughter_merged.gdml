@@ -737,6 +737,7 @@
       <materialref ref="Vacuum"/>
       <solidref ref="COLL2_det_solid"/> 
       <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="220"/>
     </volume>
@@ -745,6 +746,7 @@
       <materialref ref="Vacuum"/>
       <solidref ref="COLL2_det_inner_solid"/> 
       <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="221"/>
     </volume>
@@ -844,6 +846,7 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl1_solid"/> 
       <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_1_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6010"/>
     </volume>
@@ -855,6 +858,7 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl2_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_2_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6011"/>
     </volume>
@@ -868,6 +872,7 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxUSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_US_1_2_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6012"/>
     </volume>
@@ -877,6 +882,7 @@
       <materialref ref="Tungsten"/>
       <solidref ref="beampipe_1"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
     <volume name="beampipe_2_logic">
@@ -884,6 +890,7 @@
       <materialref ref="Tungsten"/>
       <solidref ref="beampipe_2"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
     <volume name="beampipe_3_logic">
@@ -891,6 +898,7 @@
       <materialref ref="Tungsten"/>
       <solidref ref="beampipe_3"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
 
@@ -899,6 +907,7 @@
       <materialref ref="Tungsten"/>
       <solidref ref="solid_shield_US_beampipe_1"/>
       <auxiliary auxtype="Color" auxvalue="yellow"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
     <volume name="logicUpstream">
