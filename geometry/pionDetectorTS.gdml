@@ -31,7 +31,7 @@
     <materialref ref="G4_PLASTIC_SC_VINYLTOLUENE"/>
     <solidref ref="pionDetectorTSPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionDetTS"/>
-    <auxiliary auxtype="DetNo" auxvalue="4003"/>
+    <auxiliary auxtype="DetNo" auxvalue="8003"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
 
