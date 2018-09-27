@@ -102,7 +102,7 @@
     <position name="LeadCollar_center_1" unit="mm" x="0" y="YOFFSET_targ" z="shieldcoll_center + tgtPolyShield_LeadCollar_front_thickness/2"/>
     <position name="beampipe_sub_center" unit="mm" x="0" y="YOFFSET_targ" z="boxTargetMother_length/2 - tubeBeampipeMother_sub_length/2"/>
 
-    <position name="boxtgtShield_trans1" unit="mm" x="0" y="-1*tgtShield_top_thickness/2+50" z="0"/>
+    <position name="boxtgtShield_trans1" unit="mm" x="0" y="-1*tgtShield_top_thickness/2+50-50" z="0"/>
     <position name="boxtgtShield_trans3" unit="mm" x="0-300" y="-1*400/2+200.1" z="0+200.1"/>
     <position name="boxtgtShield_trans2" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset-50-25" z="0"/>
     <position name="boxtgtShield_trans22" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset+450-100" z="0"/>
@@ -241,7 +241,7 @@
 
    <!--Target Shielding hut solids-->
    <box lunit="mm" name="boxtgtShield_solid_1" x="tgtShield_width+2*100" y="tgtShield_height+100+50" z="tgtShield_length+2*100"/>
-   <box lunit="mm" name="boxtgtShield_solid_2" x="tgtShield_width - 2*tgtShield_side_thickness" y="tgtShield_height - tgtShield_top_thickness+200-50" z="tgtShield_length - 2*tgtShield_side_thickness"/>
+   <box lunit="mm" name="boxtgtShield_solid_2" x="tgtShield_width - 2*tgtShield_side_thickness" y="tgtShield_height - tgtShield_top_thickness+200-50+100" z="tgtShield_length - 2*tgtShield_side_thickness"/>
 
    <box lunit="mm" name="boxtgtShield_poly_solid_1" x="tgtShield_width - 2*tgtShield_side_thickness" y="tgtShield_height - tgtShield_top_thickness-400+200" z="tgtShield_length - 2*tgtShield_side_thickness-400"/>
 
@@ -465,7 +465,7 @@
 
      <physvol>
        <volumeref ref="USAlTarg"/>
-       <position name="targ_upstream_window" unit="mm" x="0" y="YOFFSET_targ" z="-750"/>
+       <position name="targ_upstream_window" unit="mm" x="0" y="YOFFSET_targ" z="-750-1"/>
      </physvol>
 
      <physvol>
@@ -475,7 +475,7 @@
 
      <physvol>
        <volumeref ref="DSAlTarg"/>
-       <position name="targ_downstream_window" unit="mm" x="0" y="YOFFSET_targ" z="750"/>
+       <position name="targ_downstream_window" unit="mm" x="0" y="YOFFSET_targ" z="750+1"/>
      </physvol>
 
      <physvol>
