@@ -93,7 +93,7 @@
 
     <!--Hall A top wall -->
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  rmin="radius_topwall_in" rmax="radius_topwall_out"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="hall_top_sub" rmin="0.0" rmax="radius_topwall_out+10" z="2*radius_topwall_out" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="hall_top_sub" rmin="0.0" rmax="radius_topwall_out+10" z="2*radius_topwall_out + 1" />
  
   <subtraction name ="topwall_solid">
       <first ref="hall_top_shell"/>
