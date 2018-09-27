@@ -51,7 +51,7 @@
     <materialref ref="Calorimeter"/>
     <solidref ref="pionDetectorCalorimeterSingleBlock_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionCalorimeterDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4004"/>
+    <auxiliary auxtype="DetNo" auxvalue="8004"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
 
@@ -59,7 +59,7 @@
     <materialref ref="CsPhotocathode"/>
     <solidref ref="pionDetectorCalorimeterPMT_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionCalorimeterPMT"/>
-    <auxiliary auxtype="DetNo" auxvalue="4005"/>
+    <auxiliary auxtype="DetNo" auxvalue="8005"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
 

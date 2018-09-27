@@ -382,7 +382,7 @@
     <materialref ref="Lucite"/>
     <solidref ref="pionDetectorLucitePlaneWedge_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4001"/>
+    <auxiliary auxtype="DetNo" auxvalue="8001"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
@@ -421,7 +421,7 @@
     <materialref ref="G4_MYLAR"/>
     <solidref ref="pionDetectorLuciteMylar_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteMylar"/>
-    <auxiliary auxtype="DetNo" auxvalue="4030"/>
+    <auxiliary auxtype="DetNo" auxvalue="8030"/>
     <auxiliary auxtype="Alpha" auxvalue="0.9"/>
   </volume>
 
@@ -429,7 +429,7 @@
     <materialref ref="G4_Al"/>
     <solidref ref="pionDetectorLuciteLightGuideShell_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteLightGuideShell"/>
-    <auxiliary auxtype="DetNo" auxvalue="4031"/>
+    <auxiliary auxtype="DetNo" auxvalue="8031"/>
     <auxiliary auxtype="Color" auxvalue="Gray"/>
     <auxiliary auxtype="Alpha" auxvalue="0.9"/>
   </volume>
@@ -437,7 +437,7 @@
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuideInsideEntryDetector_intersection_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteLightGuideEntry"/>
-    <auxiliary auxtype="DetNo" auxvalue="4010"/>
+    <auxiliary auxtype="DetNo" auxvalue="8010"/>
     <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
     <auxiliary auxtype="Color" auxvalue="White"/>
     <auxiliary auxtype="Alpha" auxvalue="0.2"/>
@@ -446,7 +446,7 @@
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuideInsideExitDetector_intersection_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteLightGuideExit"/>
-    <auxiliary auxtype="DetNo" auxvalue="4011"/>
+    <auxiliary auxtype="DetNo" auxvalue="8011"/>
     <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
     <auxiliary auxtype="Color" auxvalue="White"/>
     <auxiliary auxtype="Alpha" auxvalue="0.2"/>
@@ -469,7 +469,7 @@
     <materialref ref="CsPhotocathode"/>
     <solidref ref="pionDetectorLucitePMTWindow_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLucitePMTWindow"/>
-    <auxiliary auxtype="DetNo" auxvalue="4000"/>
+    <auxiliary auxtype="DetNo" auxvalue="8000"/>
     <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
     <auxiliary auxtype="Color" auxvalue="White"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
@@ -478,7 +478,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorLucitePMTInsideHousing_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLucitePMTHousing"/>
-    <auxiliary auxtype="DetNo" auxvalue="4020"/>
+    <auxiliary auxtype="DetNo" auxvalue="8020"/>
     <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.2"/>

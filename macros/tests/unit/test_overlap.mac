@@ -11,9 +11,10 @@
 # This must be explicitly called
 /run/initialize
 
-# Print geometry and materials
+# Print geometry, materials, overlaps
 /remoll/geometry/printelements
 /remoll/geometry/printmaterials
+/remoll/geometry/printoverlaps
 
 # Print geometry tree
 /remoll/geometry/printgeometry true

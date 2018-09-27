@@ -26,7 +26,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorVirtualDet_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4060"/>
+    <auxiliary auxtype="DetNo" auxvalue="8060"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
@@ -35,7 +35,7 @@
     <materialref ref="VacuumKryptonite"/>
     <solidref ref="pionDetectorVirtualDet_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="4061"/>
+    <auxiliary auxtype="DetNo" auxvalue="8061"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>

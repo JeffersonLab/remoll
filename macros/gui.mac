@@ -17,31 +17,27 @@
 #
 # File :
 /gui/addMenu   file File
-/gui/addButton file Initialize "/run/initialize"
 /gui/addButton file Exit "exit"
+
 #
-# Run menu :
-/gui/addMenu   run Run
-/gui/addButton run "beamOn 1"    "/run/beamOn 1"
-/gui/addButton run "beamOn 2"    "/run/beamOn 2"
-/gui/addButton run "beamOn 5"    "/run/beamOn 5"
-/gui/addButton run "beamOn 10"   "/run/beamOn 10"
-/gui/addButton run "beamOn 15"   "/run/beamOn 15"
-/gui/addButton run "beamOn 20"   "/run/beamOn 20"
-/gui/addButton run "beamOn 25"   "/run/beamOn 25"
-/gui/addButton run "beamOn 50"   "/run/beamOn 50"
-/gui/addButton run "beamOn 100"  "/run/beamOn 100"
-/gui/addButton run "beamOn 200"  "/run/beamOn 200"
-/gui/addButton run "beamOn 1000" "/run/beamOn 1000"
-/gui/addButton run "beamOn 2000" "/run/beamOn 2000"
+# Geometry menu :
+/gui/addMenu   geom "1. Geometry"
+/gui/addButton geom geometry/mollerMother.gdml      "/remoll/setgeofile geometry/mollerMother.gdml"
+/gui/addButton geom geometry/mollerMother_dump.gdml "/remoll/setgeofile geometry/mollerMother_dump.gdml"
+
+#
+# Initialize menu :
+/gui/addMenu   init "2. Initialize"
+/gui/addButton init Initialize "/run/initialize"
 
 #
 # Viewer menu :
-/gui/addMenu   viewer Viewer
+/gui/addMenu   viewer "3. Viewer"
 #/gui/addButton viewer "My viewer"            "/control/execute vis/myVis.mac"
 #/gui/addButton viewer "OIX viewer"           "/control/execute vis/OIX.mac"
 #/gui/addButton viewer "X viewer"             "/control/execute vis/X.mac"
-/gui/addButton viewer "Qt viewer"            "/control/execute vis/Qt.mac"
+/gui/addButton viewer "Qt viewer (immediate)"  "/control/execute vis/IQt.mac"
+/gui/addButton viewer "Qt viewer (scene tree)" "/control/execute vis/SQt.mac"
 /gui/addButton viewer "Set style solid"      "/vis/viewer/set/style s"
 /gui/addButton viewer "Set style wire"       "/vis/viewer/set/style w"
 /gui/addButton viewer "Hide tracks behind objects" "/vis/viewer/set/hiddenMarker true"
@@ -55,4 +51,20 @@
 /gui/addButton viewer "Update viewer"        "/vis/viewer/update"
 /gui/addButton viewer "Update scene"         "/vis/scene/notifyHandlers"
 /gui/addButton viewer "Reset scene"          "/control/execute vis/vis.mac"
+
 #
+# Run menu :
+/gui/addMenu   run "4. Run"
+/gui/addButton run "beamOn 1"    "/run/beamOn 1"
+/gui/addButton run "beamOn 2"    "/run/beamOn 2"
+/gui/addButton run "beamOn 5"    "/run/beamOn 5"
+/gui/addButton run "beamOn 10"   "/run/beamOn 10"
+/gui/addButton run "beamOn 15"   "/run/beamOn 15"
+/gui/addButton run "beamOn 20"   "/run/beamOn 20"
+/gui/addButton run "beamOn 25"   "/run/beamOn 25"
+/gui/addButton run "beamOn 50"   "/run/beamOn 50"
+/gui/addButton run "beamOn 100"  "/run/beamOn 100"
+/gui/addButton run "beamOn 200"  "/run/beamOn 200"
+/gui/addButton run "beamOn 1000" "/run/beamOn 1000"
+/gui/addButton run "beamOn 2000" "/run/beamOn 2000"
+

@@ -30,7 +30,7 @@
     <materialref ref="GEMGasMixture"/>
     <solidref ref="pionDetectorGEMPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionDetGEM"/>
-    <auxiliary auxtype="DetNo" auxvalue="4002"/>
+    <auxiliary auxtype="DetNo" auxvalue="8002"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
 
