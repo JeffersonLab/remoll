@@ -62,7 +62,7 @@
       <fraction n="0.7" ref="N"/>
       <fraction n="0.3" ref="O"/>
     </material>
-    <material Z="13" name="CATH" state="solid">
+    <material Z="13" name="CATH_mat" state="solid">
       <T unit="K" value="293.15"/>
       <MEE unit="eV" value="166"/>
       <D unit="g/cm3" value="2.7"/>

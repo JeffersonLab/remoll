@@ -10,8 +10,8 @@
       xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <constant name="N_P" value="7"/> <!-- also change in replicavol below -->
-  <constant name="PHI" value="360.0/7.0"/>
+  <constant name="N_P" value="14"/> <!-- also change in replicavol below -->
+  <constant name="PHI" value="360.0/N_P"/>
 
   <!--
     For enclosing volumes we merely scale up the actual volume by a small factor.
@@ -27,7 +27,7 @@
     the radius along with the angle of the detector to increase the length in the
     longitudinal direction.
   -->
-  <quantity name="showerMaxDetectorInnerRadius" type="length" value="0.60" unit="m"/>
+  <quantity name="showerMaxDetectorInnerRadius" type="length" value="0.00" unit="m"/>
   <quantity name="showerMaxDetectorOuterRadius" type="length" value="1.90" unit="m"/>
 
   <!--
@@ -48,8 +48,8 @@
     showerMaxDetectorSectorAngleBase is +90.0 degrees for the configuration with
     PMT radially outward; -90.0 degrees is with the PMT radially inward.
   -->
-  <quantity name="showerMaxDetectorSectorAngleBase" type="angle" value="-90.0" unit="deg"/>
-  <quantity name="showerMaxDetectorSectorAnglePitch" type="angle" value="5.0" unit="deg"/>
+  <quantity name="showerMaxDetectorSectorAngleBase" type="angle" value="0.0" unit="deg"/>
+  <quantity name="showerMaxDetectorSectorAnglePitch" type="angle" value="0.0" unit="deg"/>
   
   <!--
     The  detector is placed radially in reference to the the center of the
@@ -68,12 +68,12 @@
     rmin="showerMaxDetectorInnerRadius"
     rmax="showerMaxDetectorOuterRadius"
     z="showerMaxDetectorLength"
-    startphi="-PHI/4.0" deltaphi="PHI/2.0" aunit="deg"/>
+    startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
   <tube name="showerMaxDetectorAllSectors_solid"
     rmin="SCALE_DOWN*showerMaxDetectorInnerRadius"
     rmax="SCALE_UP*showerMaxDetectorOuterRadius"
     z="SCALE_UP*showerMaxDetectorLength"
-    startphi="-PHI/4.0" deltaphi="N_P*PHI/2.0" aunit="deg"/>
+    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
 <structure>
@@ -88,7 +88,6 @@
       <rotation name="showerMaxDetector_rotation"
                 z="showerMaxDetectorSectorAngleBase"
                 y="-(showerMaxDetectorSectorAngleBase+showerMaxDetectorSectorAnglePitch)"/>
-      <!-- x rotation 180: layer 1 in the back -->
     </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
@@ -96,13 +95,12 @@
   <volume name="showerMaxDetectorAllSectors_logical">
     <materialref ref="Air"/>
     <solidref ref="showerMaxDetectorAllSectors_solid"/>
-    <replicavol number="7"> <!-- number of replicas has to fill mother volume exactly! -->
+    <replicavol number="14"> <!-- number of replicas has to fill mother volume exactly! -->
       <volumeref ref="showerMaxDetectorSector_logical"/>
       <replicate_along_axis>
         <direction phi="1"/>
-        <!-- bug geant4.10.02.p02: unit must be a length, but mm == 1 -->
-        <width value="2.0*pi/7.0" unit="mm"/>
-        <offset value="-pi/7.0" unit="mm"/>
+        <width value="PHI" unit="deg"/>
+        <offset value="-PHI/2.0" unit="deg"/>
       </replicate_along_axis>
     </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
