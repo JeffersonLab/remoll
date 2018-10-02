@@ -30,7 +30,7 @@
 
   <solids>
     <box name="ShowerMaxDetectorSector_solid"
-      x="720" y="250" z="680" lunit="mm"/>
+      x="700" y="250" z="210" lunit="mm"/>
 
     <trap name="ShowerMaxDetectorQuartz_solid"
       alpha1="ShowerMaxDetectorQuartzAngle" alpha2="ShowerMaxDetectorQuartzAngle" phi="0" theta="0"
@@ -154,7 +154,7 @@
       <physvol name="ShowerMaxDetectorQuartz_1_phys">
         <volumeref ref="ShowerMaxDetectorQuartz_log"/>
         <position name="ShowerMaxDetectorQuartz_pos" unit="mm" x="0" y="0" z="-18"/>
-        <rotation name="ShowerMaxDetectorQuartz_rot" unit="deg" x="90" y="0" z="0"/>
+        <rotation name="ShowerMaxDetectorQuartz_rot" unit="deg" x="-90" y="0" z="0"/>
       </physvol>
       <physvol name="ShowerMaxDetectorTungsten_2_phys">
         <volumeref ref="ShowerMaxDetectorTungsten_box_log"/>
@@ -172,7 +172,7 @@
       <physvol name="ShowerMaxDetectorQuartz_3_phys">
         <volumeref ref="ShowerMaxDetectorQuartz_log"/>
         <position name="ShowerMaxDetectorQuartz_pos" unit="mm" x="0" y="0" z="-54"/>
-        <rotation name="ShowerMaxDetectorQuartz_rot" unit="deg" x="90" y="0" z="0"/>
+        <rotation name="ShowerMaxDetectorQuartz_rot" unit="deg" x="-90" y="0" z="0"/>
       </physvol>
       <physvol name="ShowerMaxDetectorTungsten_4_phys">
         <volumeref ref="ShowerMaxDetectorTungsten_box_log"/>

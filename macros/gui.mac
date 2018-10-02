@@ -24,7 +24,7 @@
 /gui/addMenu   geom "1. Geometry"
 /gui/addButton geom geometry/mollerMother.gdml      "/remoll/setgeofile geometry/mollerMother.gdml"
 /gui/addButton geom geometry/mollerMother_dump.gdml "/remoll/setgeofile geometry/mollerMother_dump.gdml"
-
+/gui/addButton geom geometry/mollerMother_showerMaxOnly.gdml "/remoll/setgeofile geometry/mollerMother_showerMaxOnly.gdml"
 #
 # Initialize menu :
 /gui/addMenu   init "2. Initialize"

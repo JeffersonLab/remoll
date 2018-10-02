@@ -35,7 +35,13 @@
     This is increased when a non-zero angle is used. Make sure to modify this if
     you modify the angle below so as to avoid overlaps.
   -->
-  <quantity name="showerMaxDetectorLength" type="length" value="0.69" unit="m"/>
+  <quantity name="showerMaxDetectorLength" type="length" value="0.25" unit="m"/>
+
+  <!--
+    The shift is the difference in longitudinal position between the two detector
+    wheels.
+  -->
+  <quantity name="showerMaxDetectorShift" type="length" value="0.25" unit="m"/>
 
   <!--
     This variable implements the global rotation of the entire detector/lightguide
@@ -64,23 +70,37 @@
 &materials;
 
 <solids>
-  <tube name="showerMaxDetectorSector_solid"
+  <tube name="showerMaxDetectorSingleSector_solid"
     rmin="showerMaxDetectorInnerRadius"
     rmax="showerMaxDetectorOuterRadius"
     z="showerMaxDetectorLength"
     startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
-  <tube name="showerMaxDetectorAllSectors_solid"
+
+  <tube name="showerMaxDetectorAllSectorsFront_solid"
     rmin="SCALE_DOWN*showerMaxDetectorInnerRadius"
     rmax="SCALE_UP*showerMaxDetectorOuterRadius"
     z="SCALE_UP*showerMaxDetectorLength"
+    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
+
+  <tube name="showerMaxDetectorAllSectorsBack_solid"
+    rmin="SCALE_DOWN*showerMaxDetectorInnerRadius"
+    rmax="SCALE_UP*showerMaxDetectorOuterRadius"
+    z="SCALE_UP*showerMaxDetectorLength"
+    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
+
+  <tube name="showerMaxDetectorAllSectorsFrontBack_solid"
+    rmin="SCALE_DOWN*SCALE_DOWN*showerMaxDetectorInnerRadius"
+    rmax="SCALE_UP*SCALE_UP*showerMaxDetectorOuterRadius"
+    z="SCALE_UP*SCALE_UP*(2.0*showerMaxDetectorLength+showerMaxDetectorShift)"
     startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
 <structure>
   
-  <volume name="showerMaxDetectorSector_logical">
+  <volume name="showerMaxDetectorSingleSector_logical">
     <materialref ref="Air"/>
-    <solidref ref="showerMaxDetectorSector_solid"/>
+    <solidref ref="showerMaxDetectorSingleSector_solid"/>
+
     <physvol name="showerMaxDetector_physical">
       <file name="showerMaxDetector.gdml"/>
       <position name="showerMaxDetector_position"
@@ -89,27 +109,65 @@
                 z="showerMaxDetectorSectorAngleBase"
                 y="-(showerMaxDetectorSectorAngleBase+showerMaxDetectorSectorAnglePitch)"/>
     </physvol>
+
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
 
-  <volume name="showerMaxDetectorAllSectors_logical">
+  <volume name="showerMaxDetectorAllSectorsFront_logical">
     <materialref ref="Air"/>
-    <solidref ref="showerMaxDetectorAllSectors_solid"/>
+    <solidref ref="showerMaxDetectorAllSectorsFront_solid"/>
+
     <replicavol number="14"> <!-- number of replicas has to fill mother volume exactly! -->
-      <volumeref ref="showerMaxDetectorSector_logical"/>
+      <volumeref ref="showerMaxDetectorSingleSector_logical"/>
       <replicate_along_axis>
         <direction phi="1"/>
         <width value="PHI" unit="deg"/>
         <offset value="-PHI/2.0" unit="deg"/>
       </replicate_along_axis>
     </replicavol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
+  </volume>
+
+  <volume name="showerMaxDetectorAllSectorsBack_logical">
+    <materialref ref="Air"/>
+    <solidref ref="showerMaxDetectorAllSectorsBack_solid"/>
+
+    <replicavol number="14"> <!-- number of replicas has to fill mother volume exactly! -->
+      <volumeref ref="showerMaxDetectorSingleSector_logical"/>
+      <replicate_along_axis>
+        <direction phi="1"/>
+        <width value="PHI" unit="deg"/>
+        <offset value="+0/2.0" unit="deg"/>
+      </replicate_along_axis>
+    </replicavol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
+  </volume>
+
+  <volume name="showerMaxDetectorAllSectorsFrontBack_logical">
+    <materialref ref="Air"/>
+    <solidref ref="showerMaxDetectorAllSectorsFrontBack_solid"/>
+
+    <physvol name="showerMaxDetectorFront_physical">
+      <volumeref ref="showerMaxDetectorAllSectorsFront_logical"/>
+      <position name="showerMaxDetectorFront_position"
+        z="-showerMaxDetectorShift/2.0"/>
+    </physvol>
+
+    <physvol name="showerMaxDetectorBack_physical">
+      <volumeref ref="showerMaxDetectorAllSectorsBack_logical"/>
+      <position name="showerMaxDetectorBack_position"
+        z="+showerMaxDetectorShift/2.0"/>
+    </physvol>
+
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
 
 </structure>
 
 <setup name="Default" version="1.0">
-  <world ref="showerMaxDetectorAllSectors_logical"/>
+  <world ref="showerMaxDetectorAllSectorsFrontBack_logical"/>
 </setup>
 
 </gdml>
