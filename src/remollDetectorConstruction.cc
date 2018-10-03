@@ -477,9 +477,9 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
       G4cout << G4endl << G4endl;
 
 
-  // Set the world volume invisible
+  // Set the world volume to wireframe
   G4VisAttributes* motherVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  motherVisAtt->SetVisibility(false);
+  motherVisAtt->SetForceWireframe(true);
   fWorldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
 
   // Set all immediate daughters of the world volume to wireframe
