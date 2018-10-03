@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box lunit="mm" name="world_solid" x="4000" y="4000" z="80000"/>
+</solids>
+
+<structure>
+
+  <volume name="world_logic">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="world_solid"/>
+
+    <physvol>
+      <file name="targetDaughter.gdml"/>
+    </physvol>
+
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="world_logic"/>
+</setup>
+
+</gdml>
