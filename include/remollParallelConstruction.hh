@@ -6,6 +6,7 @@
 class G4LogicalVolume;
 class G4VPhysicalVolume;
 class G4GDMLParser;
+class G4GenericMessenger;
 
 //
 /// A parallel world construction class
@@ -16,19 +17,29 @@ class G4GDMLParser;
 class remollParallelConstruction : public G4VUserParallelWorld
 {
   public:
-    remollParallelConstruction();
+    remollParallelConstruction(const G4String& gdmlfile);
     virtual ~remollParallelConstruction();
 
   public:
     virtual void Construct();
+    virtual void ConstructSD();
 
-    void SetParallelWorldGeomFile(const G4String& filename) {
-      fFileName = filename;
+    void ParseAuxiliaryVisibilityInfo();
+
+    void SetParallelGeomFile(const G4String& gdmlfile) {
+      fGDMLFile = gdmlfile;
     };
 
   private:
     G4bool fConstructed;
-    G4String fFileName;
+    G4String fGDMLFile;
+    G4int fVerboseLevel;
+    G4bool fGDMLValidate;
+    G4bool fGDMLOverlapCheck;
+
+    G4GenericMessenger* fParallelMessenger;
+
+    G4GDMLParser* fGDMLParser;
 };
 
 #endif // __REMOLLPARALLELCONSTRUCTION_HH
