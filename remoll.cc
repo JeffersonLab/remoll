@@ -74,14 +74,16 @@ int main(int argc, char** argv) {
     // Parse command line options
     G4String macro;
     G4String session;
-    G4String geometry;
+    G4String geometry_gdmlfile;
+    G4String parallel_gdmlfile;
 #ifdef G4MULTITHREADED
     G4int threads = 0;
 #endif
     //
     for (G4int i = 1; i < argc; ++i) {
       if      (G4String(argv[i]) == "-m") macro    = argv[++i];
-      else if (G4String(argv[i]) == "-g") geometry = argv[++i];
+      else if (G4String(argv[i]) == "-g") geometry_gdmlfile = argv[++i];
+      else if (G4String(argv[i]) == "-p") parallel_gdmlfile = argv[++i];
       else if (G4String(argv[i]) == "-u") session  = argv[++i];
       else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
 #ifdef G4MULTITHREADED
@@ -108,9 +110,9 @@ int main(int argc, char** argv) {
     G4Random::setTheSeed(seed);
 
     // Detector geometry
-    remollDetectorConstruction* detector = new remollDetectorConstruction(geometry);
+    remollDetectorConstruction* detector = new remollDetectorConstruction(geometry_gdmlfile);
     // Parallel world geometry
-    remollParallelConstruction* parallel = new remollParallelConstruction();
+    remollParallelConstruction* parallel = new remollParallelConstruction(parallel_gdmlfile);
     detector->RegisterParallelWorld(parallel);
     runManager->SetUserInitialization(detector);
 
