@@ -25,7 +25,7 @@ remollParallelConstruction::remollParallelConstruction(const G4String& gdmlfile)
 
   // Create parallel geometry messenger
   fParallelMessenger = new G4GenericMessenger(this,
-      "/remoll/geometry/parallel/",
+      "/remoll/parallel/",
       "Remoll parallel geometry properties");
   fParallelMessenger->DeclareMethod(
       "setfile",

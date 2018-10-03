@@ -26,7 +26,7 @@
 /gui/addButton geom geometry/mollerMother_dump.gdml          "/remoll/geometry/setfile geometry/mollerMother_dump.gdml"
 /gui/addButton geom geometry/mollerMother_empty.gdml         "/remoll/geometry/setfile geometry/mollerMother_empty.gdml"
 /gui/addButton geom geometry/mollerMother_showerMaxOnly.gdml "/remoll/geometry/setfile geometry/mollerMother_showerMaxOnly.gdml"
-/gui/addButton geom geometry/mollerParallel.gdml             "/remoll/geometry/parallel/setfile geometry/mollerParallel.gdml"
+/gui/addButton geom geometry/mollerParallel.gdml             "/remoll/parallel/setfile geometry/mollerParallel.gdml"
 #
 # Initialize menu :
 /gui/addMenu   init "2. Initialize"
