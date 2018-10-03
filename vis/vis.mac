@@ -6,6 +6,10 @@
 #
 /vis/scene/create
 
+#
+# Draw both real and parallel worlds
+#
+/vis/drawVolume worlds
 
 #
 # Declare that the world volume should be added to the scene
