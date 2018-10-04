@@ -1,5 +1,7 @@
 #include "remollParallelConstruction.hh"
 
+#include <sys/param.h>
+
 #include <G4GDMLParser.hh>
 #include <G4LogicalVolume.hh>
 #include <G4PVPlacement.hh>
@@ -9,13 +11,19 @@
 #include <G4Colour.hh>
 
 #include "remollGenericDetector.hh"
+#include "remollIO.hh"
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 remollParallelConstruction::remollParallelConstruction(const G4String& name, const G4String& gdmlfile)
 : G4VUserParallelWorld(name),
-  fConstructed(false),
-  fVerboseLevel(1),
-  fParallelMessenger(0)
+  fGDMLPath("geometry"),fGDMLFile("mollerParallel.gdml"),
+  fGDMLParser(0),
+  fGDMLValidate(false),
+  fGDMLOverlapCheck(true),
+  fVerboseLevel(0),
+  fParallelMessenger(0),
+  fWorldVolume(0),
+  fWorldName(name)
 {
   // If gdmlfile is non-empty
   if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;
@@ -29,7 +37,7 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
       "Remoll parallel geometry properties");
   fParallelMessenger->DeclareMethod(
       "setfile",
-      &remollParallelConstruction::SetParallelGeomFile,
+      &remollParallelConstruction::SetGDMLFile,
       "Set parallel geometry GDML file")
       .SetStates(G4State_PreInit);
   fParallelMessenger->DeclareProperty(
@@ -54,40 +62,108 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 remollParallelConstruction::~remollParallelConstruction()
 {
+  delete fGDMLParser;
   delete fParallelMessenger;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void remollParallelConstruction::PrintGDMLWarning() const
+{
+    G4cout << G4endl;
+    G4cout << "remoll: Note: GDML file validation can cause many warnings." << G4endl;
+    G4cout << "remoll: Some can be safely ignore. Here are some guidelines:" << G4endl;
+    G4cout << "remoll: - 'ID attribute is referenced but was never declared'" << G4endl;
+    G4cout << "remoll:   If the attribute starts with G4_ it is likely defined" << G4endl;
+    G4cout << "remoll:   in the NIST materials database and declared later." << G4endl;
+    G4cout << "remoll: - 'attribute phi is not declared for element direction'" << G4endl;
+    G4cout << "remoll:   Replication along the phi direction is not supported" << G4endl;
+    G4cout << "remoll:   by the GDML standard, but it is by geant4." << G4endl;
+    G4cout << "remoll: - 'no declaration found for element property'" << G4endl;
+    G4cout << "remoll:   Setting optical properties is not supported" << G4endl;
+    G4cout << "remoll:   by the GDML standard, but it is by geant4 (e.g. G01)." << G4endl;
+    G4cout << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void remollParallelConstruction::Construct()
 {
-  if (fConstructed) return;
-  fConstructed = true;
+  // Parse GDML file
+  fWorldVolume = ParseGDMLFile();
 
-  // Read GDML parallel world
-  fGDMLParser->Clear();
-  fGDMLParser->Read(fGDMLFile);
-
-  // Get parallel world
-  G4VPhysicalVolume* parallelWorld = fGDMLParser->GetWorldVolume();
-  G4LogicalVolume *parallelWorldLogical = parallelWorld->GetLogicalVolume();
-
-  // Get ghost world
-  G4VPhysicalVolume* ghostWorld = GetWorld();
-  G4LogicalVolume* ghostWorldLogical = ghostWorld->GetLogicalVolume();
-
-  // Place parallel world into ghost world
-  new G4PVPlacement(0,G4ThreeVector(0.,0.,0.),
-                    parallelWorldLogical,"parallel_logic_PV",
-                    ghostWorldLogical,false,0);
-
-  // Set the world volume invisible
-  G4VisAttributes* motherVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  motherVisAtt->SetForceWireframe(true);
-  parallelWorld->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
-  ghostWorld->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
-
-  // Parse visibility
+  // Parse auxiliary info
+  PrintAuxiliaryInfo();
   ParseAuxiliaryVisibilityInfo();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void remollParallelConstruction::ConstructSD()
+{
+  // Parse auxiliary info
+  ParseAuxiliarySensDetInfo();
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
+{
+  // Clear parser
+  //fGDMLParser->Clear(); // FIXME doesn't clear auxmap, instead just recreate
+  if (fGDMLParser) delete fGDMLParser;
+  fGDMLParser = new G4GDMLParser();
+
+  // Print GDML warning
+  PrintGDMLWarning();
+
+  // Print parsing options
+  G4cout << "Reading " << fGDMLFile << G4endl;
+  G4cout << "- schema validation " << (fGDMLValidate? "on": "off") << G4endl;
+  G4cout << "- overlap check " << (fGDMLOverlapCheck? "on": "off") << G4endl;
+
+  // Change directory
+  char cwd[MAXPATHLEN];
+  if (!getcwd(cwd,MAXPATHLEN)) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR no current working directory" << G4endl;
+    exit(-1);
+  }
+  if (chdir(fGDMLPath)) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
+    exit(-1);
+  }
+
+  // Parse GDML file
+  fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
+  fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+  G4VPhysicalVolume* parallelvolume = fGDMLParser->GetWorldVolume();
+  G4LogicalVolume* parallellogical = parallelvolume->GetLogicalVolume();
+
+  // Add GDML files to IO
+  remollIO* io = remollIO::GetInstance();
+  io->GrabGDMLFiles(fGDMLFile);
+
+  // Change directory back
+  if (chdir(cwd)) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
+    exit(-1);
+  }
+
+  // Get world volume in which we must place parallel world
+  G4VPhysicalVolume* worldvolume = GetWorld();
+  G4LogicalVolume* worldlogical = worldvolume->GetLogicalVolume();
+
+  // Place parallel world into world volume
+  new G4PVPlacement(0,G4ThreeVector(0.,0.,0.),
+                    parallellogical,"parallel_logic_PV",
+                    worldlogical,false,0);
+
+  return worldvolume;
+}
+
+//....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
+void remollParallelConstruction::PrintAuxiliaryInfo() const
+{
+  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  G4cout << "Found " << auxmap->size()
+         << " volume(s) with auxiliary information."
+         << G4endl << G4endl;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -168,10 +244,23 @@ void remollParallelConstruction::ParseAuxiliaryVisibilityInfo()
   }
   if (fVerboseLevel > 0)
       G4cout << G4endl << G4endl;
+
+
+  // Set the world volume invisible
+  G4VisAttributes* motherVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
+  motherVisAtt->SetForceWireframe(true);
+  fWorldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
+
+  // Set all immediate daughters of the world volume to wireframe
+  G4VisAttributes* daughterVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
+  daughterVisAtt->SetForceWireframe(true);
+  for (int i = 0; i < fWorldVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
+    fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
+  }
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
-void remollParallelConstruction::ConstructSD()
+void remollParallelConstruction::ParseAuxiliarySensDetInfo()
 {
   //==========================
   // Sensitive detectors

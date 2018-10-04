@@ -21,25 +21,44 @@ class remollParallelConstruction : public G4VUserParallelWorld
     virtual ~remollParallelConstruction();
 
   public:
+
     virtual void Construct();
     virtual void ConstructSD();
 
-    void ParseAuxiliaryVisibilityInfo();
-
-    void SetParallelGeomFile(const G4String& gdmlfile) {
-      fGDMLFile = gdmlfile;
-    };
-
   private:
-    G4bool fConstructed;
+    G4String fGDMLPath;
     G4String fGDMLFile;
-    G4int fVerboseLevel;
+
+    void SetGDMLFile(const G4String& gdmlfile) {
+      size_t i = gdmlfile.rfind('/');
+      if (i != std::string::npos) {
+        fGDMLPath = gdmlfile.substr(0,i);
+      } else fGDMLPath = ".";
+      fGDMLFile = gdmlfile.substr(i + 1);
+    }
+
+    G4GDMLParser *fGDMLParser;
+
     G4bool fGDMLValidate;
     G4bool fGDMLOverlapCheck;
 
+    G4int fVerboseLevel;
+
     G4GenericMessenger* fParallelMessenger;
 
-    G4GDMLParser* fGDMLParser;
+    G4VPhysicalVolume* fWorldVolume;
+    G4String           fWorldName;
+
+  private:
+
+    void PrintGDMLWarning() const;
+
+    G4VPhysicalVolume* ParseGDMLFile();
+
+    void PrintAuxiliaryInfo() const;
+    void ParseAuxiliaryVisibilityInfo();
+    void ParseAuxiliarySensDetInfo();
+
 };
 
 #endif // __REMOLLPARALLELCONSTRUCTION_HH

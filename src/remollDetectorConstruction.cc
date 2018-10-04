@@ -43,9 +43,13 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
 remollDetectorConstruction::remollDetectorConstruction(const G4String& name, const G4String& gdmlfile)
-: fGDMLPath("geometry"),fGDMLFile("mollerMother.gdml"),fGDMLParser(0),
-  fGDMLValidate(false),fGDMLOverlapCheck(true),
-  fMessenger(0),fGeometryMessenger(0),
+: fGDMLPath("geometry"),fGDMLFile("mollerMother.gdml"),
+  fGDMLParser(0),
+  fGDMLValidate(false),
+  fGDMLOverlapCheck(true),
+  fMessenger(0),
+  fGeometryMessenger(0),
+  fUserLimitsMessenger(0),
   fVerboseLevel(0),
   fWorldVolume(0),
   fWorldName(name)
@@ -53,11 +57,14 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   // If gdmlfile is non-empty
   if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;
 
+  // Create GDML parser
+  fGDMLParser = new G4GDMLParser();
+
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
   fMessenger->DeclareMethod(
       "setgeofile",
-      &remollDetectorConstruction::SetDetectorGeomFile,
+      &remollDetectorConstruction::SetGDMLFile,
       "Set geometry GDML file")
       .SetStates(G4State_PreInit);
   fMessenger->DeclareMethod(
@@ -83,7 +90,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       "Remoll geometry properties");
   fGeometryMessenger->DeclareMethod(
       "setfile",
-      &remollDetectorConstruction::SetDetectorGeomFile,
+      &remollDetectorConstruction::SetGDMLFile,
       "Set geometry GDML file")
       .SetStates(G4State_PreInit);
   fGeometryMessenger->DeclareProperty(
@@ -210,7 +217,7 @@ void remollDetectorConstruction::PrintGDMLWarning() const
 G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 {
     // Clear parser
-    //fGDMLParser->Clear(); // FIXME doesn't clear auxmap
+    //fGDMLParser->Clear(); // FIXME doesn't clear auxmap, instead just recreate
     if (fGDMLParser) delete fGDMLParser;
     fGDMLParser = new G4GDMLParser();
 
@@ -246,6 +253,7 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     remollIO* io = remollIO::GetInstance();
     io->GrabGDMLFiles(fGDMLFile);
 
+    // Change directory back
     if (chdir(cwd)) {
       G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
       exit(-1);
@@ -645,7 +653,7 @@ void remollDetectorConstruction::SetUserLimits(G4String type, G4String name, G4S
 void remollDetectorConstruction::ReloadGeometry(const G4String gdmlfile)
 {
   // Set new geometry
-  SetDetectorGeomFile(gdmlfile);
+  SetGDMLFile(gdmlfile);
 
   // Trigger Construct and ConstructSDandField
   G4RunManager::GetRunManager()->ReinitializeGeometry(true);
