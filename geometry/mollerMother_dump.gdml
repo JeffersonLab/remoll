@@ -8,7 +8,8 @@
     <position name="trackingCenter" x="0" y="0" z="25635."/>
     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
     <position name="detectorCenter" x="0" y="0" z="28500."/>
-    <position name="pionDetectorCenter" x="0" y="0" z="29500."/>
+    <position name="showerMaxDetectorCenter" x="0" y="0" z="29500."/>
+    <position name="pionDetectorCenter" x="0" y="0" z="29750."/>
   </define>
 
   <materials>
@@ -39,6 +40,14 @@
         <positionref ref="detectorCenter"/>
       </physvol>
 
+<!--
+      <physvol>
+        <file name="detector_parametrized.gdml"/>
+        <rotation name="detector_rot" y="90" unit="deg"/>
+        <positionref ref="detectorCenter"/>
+      </physvol>
+ -->
+
       <physvol>
         <file name="trackingDaughter.gdml"/>
         <positionref ref="trackingCenter"/>
@@ -53,6 +62,11 @@
         <file name="hybridDaughter_merged.gdml"/>
         <positionref ref="hybridCenter"/>
       </physvol>    
+
+      <physvol>
+        <file name="showerMaxDetectorSystem.gdml"/>
+        <positionref ref="showerMaxDetectorCenter"/>
+      </physvol>
 
       <physvol>
         <file name="pionDetectorSystem.gdml"/>
