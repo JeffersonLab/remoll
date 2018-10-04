@@ -29,7 +29,7 @@ class remollParallelConstruction : public G4VUserParallelWorld
     G4String fGDMLPath;
     G4String fGDMLFile;
 
-    void SetGDMLFile(const G4String& gdmlfile) {
+    void SetGDMLFile(G4String gdmlfile) {
       size_t i = gdmlfile.rfind('/');
       if (i != std::string::npos) {
         fGDMLPath = gdmlfile.substr(0,i);
