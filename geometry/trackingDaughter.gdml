@@ -2,52 +2,203 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <position name="trackingPlaneFront1_position" z="-2.5" unit="m"/>
-  <position name="trackingPlaneFront2_position" z="-2." unit="m"/>
-  <position name="trackingPlaneBack1_position"  z="+2." unit="m"/>
-  <position name="trackingPlaneBack2_position"  z="+2.5" unit="m"/>
+  <constant name="PHI" value="360.0/7.0"/>
+  <quantity name="PHI1" type="angle" value="1*PHI" unit="deg"/>
+  <quantity name="PHI2" type="angle" value="2*PHI" unit="deg"/>
+  <quantity name="PHI3" type="angle" value="3*PHI" unit="deg"/>
+  <quantity name="PHI4" type="angle" value="4*PHI" unit="deg"/>
+  <quantity name="PHI5" type="angle" value="5*PHI" unit="deg"/>
+  <quantity name="PHI6" type="angle" value="6*PHI" unit="deg"/>
+  <quantity name="PHI7" type="angle" value="7*PHI" unit="deg"/>
+
+  <quantity name="GEMThickness"   type="length" value="30" unit="mm"/>
+
+  <quantity name="GEMFrameThickness"   type="length" value="10" unit="mm"/>
+  <quantity name="GEMFrameInnerLength" type="length" value="300" unit="mm"/>
+  <quantity name="GEMFrameInnerWidth"  type="length" value="300" unit="mm"/>
+  <quantity name="GEMFrameOuterLength" type="length" value="350" unit="mm"/>
+  <quantity name="GEMFrameOuterWidth"  type="length" value="350" unit="mm"/>
+
+  <quantity name="GEMKaptonCathodeThickness" type="length" value="0.050" unit="mm"/>
+  <quantity name="GEMKaptonMiddleThickness"  type="length" value="0.050" unit="mm"/>
+  <quantity name="GEMKaptonAnodeThickness"   type="length" value="0.050" unit="mm"/>
+  <quantity name="GEMFR4AnodeThickness"      type="length" value="0.300" unit="mm"/>
+  <quantity name="GEMCopperLayerThickness"   type="length" value="0.005" unit="mm"/>
+
+  <quantity name="GEMPositionRadius" type="length" value="0.85" unit="m"/>
+
+  <position name="GEMTrackingPlaneFront1_pos" z="-2.5" unit="m"/>
+  <position name="GEMTrackingPlaneFront2_pos" z="-2.0" unit="m"/>
+  <position name="GEMTrackingPlaneBack1_pos"  z="+2.0" unit="m"/>
+  <position name="GEMTrackingPlaneBack2_pos"  z="+2.5" unit="m"/>
 </define>
 
 <materials>
+  <material name="ArCO2" state="gas">
+    <T unit="K" value="293.15"/>
+    <D unit="g/cm3" value="0.0018"/>
+    <fraction n="0.8" ref="G4_Ar"/>
+    <fraction n="0.2" ref="G4_CARBON_DIOXIDE"/>
+  </material>
+
+  <material name="Epoxy" state="solid">
+    <T unit="K" value="293.15"/>
+    <D unit="g/cm3" value="1.2"/>
+    <fraction n="0.15" ref="G4_H"/>
+    <fraction n="0.85" ref="G4_C"/>
+  </material>
+
+  <material name="FR4" state="solid">
+    <T unit="K" value="293.15"/>
+    <D unit="g/cm3" value="1.86"/>
+    <fraction n="0.6" ref="G4_SILICON_DIOXIDE"/>
+    <fraction n="0.4" ref="Epoxy"/>
+  </material>
 </materials>
 
 <solids>
-  <box name="trackingBoundingBoxSolid"
+  <box name="GEMTrackingBoundingBox_sol"
     x="4000" y="4000" z="5001" lunit="mm"/>
-  <tube name="trackingPlaneSolid"
+  <tube name="GEMTrackingPlane_sol"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="0" rmax="2000.0" z="0.1" lunit="mm"/>
+    rmin="0" rmax="1.9" z="0.010" lunit="m"/>
+
+  <box name="GEMDetector_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="10.0*cm"/>
+
+  <box name="GEMFrameInner_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMFrameThickness"/>
+  <box name="GEMFrameOuter_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="GEMFrameThickness"/>
+  <subtraction name="GEMFrame_sol">
+    <first ref="GEMFrameOuter_sol"/>
+    <second ref="GEMFrameInner_sol"/>
+  </subtraction>
+
+  <box name="GEMKaptonCathodeFoil_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMKaptonCathodeThickness"/>
+  <box name="GEMKaptonMiddleFoil_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMKaptonMiddleThickness"/>
+  <box name="GEMKaptonAnodeFoil_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMKaptonAnodeThickness"/>
 </solids>
 
 <structure>
 
-  <volume name="trackingPlane">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingPlaneSolid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="30"/>
+  <volume name="GEMFrame_log">
+    <materialref ref="FR4"/>
+    <solidref ref="GEMFrame_sol"/>
   </volume>
 
-  <volume name="trackingBoundingBox">
+  <volume name="GEMKaptonCathodeFoil_log">
+    <materialref ref="G4_KAPTON"/>
+    <solidref ref="GEMKaptonCathodeFoil_sol"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMKaptonCathodeFoil"/>
+    <auxiliary auxtype="DetNo"   auxvalue="511"/>
+  </volume>
+
+  <volume name="GEMKaptonMiddleFoil_log">
+    <materialref ref="G4_KAPTON"/>
+    <solidref ref="GEMKaptonMiddleFoil_sol"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMKaptonMiddleFoil"/>
+    <auxiliary auxtype="DetNo"   auxvalue="512"/>
+  </volume>
+
+  <volume name="GEMKaptonAnodeFoil_log">
+    <materialref ref="G4_KAPTON"/>
+    <solidref ref="GEMKaptonAnodeFoil_sol"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMKaptonAnodeFoil"/>
+    <auxiliary auxtype="DetNo"   auxvalue="513"/>
+  </volume>
+
+  <volume name="GEMDetector_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingBoundingBoxSolid"/>
+    <solidref ref="GEMDetector_sol"/>
 
-    <physvol name="trackingPlaneFront1">
-      <volumeref ref="trackingPlane"/>
-      <positionref ref="trackingPlaneFront1_position"/>
-    </physvol>	
-    <physvol name="trackingPlaneFront2">
-      <volumeref ref="trackingPlane"/>
-      <positionref ref="trackingPlaneFront2_position"/>
+    <physvol name="GEMFrame_phys">
+      <volumeref ref="GEMFrame_log"/>
+      <position name="GEMFrame_pos" z="0.0" unit="mm"/>
     </physvol>	
 
-    <physvol name="trackingPlaneBack1">
-      <volumeref ref="trackingPlane"/>
-      <positionref ref="trackingPlaneBack1_position"/>
+    <physvol name="GEMKaptonCathodeFoil_phys">
+      <volumeref ref="GEMKaptonCathodeFoil_log"/>
+      <position name="GEMKaptonCathodeFoil_pos" z="-3.0" unit="mm"/>
     </physvol>	
-    <physvol name="trackingPlaneBack2">
-      <volumeref ref="trackingPlane"/>
-      <positionref ref="trackingPlaneBack2_position"/>
+    <physvol name="GEMKaptonMiddleFoil_phys">
+      <volumeref ref="GEMKaptonMiddleFoil_log"/>
+      <position name="GEMKaptonMiddleFoil_pos" z="0.0" unit="mm"/>
+    </physvol>	
+    <physvol name="GEMKaptonAnodeFoil_phys">
+      <volumeref ref="GEMKaptonAnodeFoil_log"/>
+      <position name="GEMKaptonAnodeFoil_pos" z="+3.0" unit="mm"/>
+    </physvol>	
+    
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+  <volume name="GEMTrackingPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="GEMTrackingPlane_sol"/>
+
+    <physvol name="GEMDetector_sector1_phys">
+      <volumeref ref="GEMDetector_log"/>
+      <position name="GEMDetector_sector1_pos" x="GEMPositionRadius*cos(PHI1)" y="GEMPositionRadius*sin(PHI1)"/>
+      <rotation name="GEMDetector_sector1_rot" z="-PHI1"/>
+    </physvol>	
+    
+    <physvol name="GEMDetector_sector2_phys">
+      <volumeref ref="GEMDetector_log"/>
+      <position name="GEMDetector_sector2_pos" x="GEMPositionRadius*cos(PHI2)" y="GEMPositionRadius*sin(PHI2)"/>
+      <rotation name="GEMDetector_sector2_rot" z="-PHI2"/>
+    </physvol>	
+    
+    <physvol name="GEMDetector_sector3_phys">
+      <volumeref ref="GEMDetector_log"/>
+      <position name="GEMDetector_sector3_pos" x="GEMPositionRadius*cos(PHI3)" y="GEMPositionRadius*sin(PHI3)"/>
+      <rotation name="GEMDetector_sector3_rot" z="-PHI3"/>
+    </physvol>	
+    
+    <physvol name="GEMDetector_sector4_phys">
+      <volumeref ref="GEMDetector_log"/>
+      <position name="GEMDetector_sector4_pos" x="GEMPositionRadius*cos(PHI4)" y="GEMPositionRadius*sin(PHI4)"/>
+      <rotation name="GEMDetector_sector4_rot" z="-PHI4"/>
+    </physvol>	
+    
+    <physvol name="GEMDetector_sector5_phys">
+      <volumeref ref="GEMDetector_log"/>
+      <position name="GEMDetector_sector5_pos" x="GEMPositionRadius*cos(PHI5)" y="GEMPositionRadius*sin(PHI5)"/>
+      <rotation name="GEMDetector_sector5_rot" z="-PHI5"/>
+    </physvol>	
+    
+    <physvol name="GEMDetector_sector6_phys">
+      <volumeref ref="GEMDetector_log"/>
+      <position name="GEMDetector_sector6_pos" x="GEMPositionRadius*cos(PHI6)" y="GEMPositionRadius*sin(PHI6)"/>
+      <rotation name="GEMDetector_sector6_rot" z="-PHI6"/>
+    </physvol>	
+    
+    <physvol name="GEMDetector_sector7_phys">
+      <volumeref ref="GEMDetector_log"/>
+      <position name="GEMDetector_sector7_pos" x="GEMPositionRadius*cos(PHI7)" y="GEMPositionRadius*sin(PHI7)"/>
+      <rotation name="GEMDetector_sector7_rot" z="-PHI7"/>
+    </physvol>	
+    
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+  <volume name="GEMTrackingBoundingBox_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="GEMTrackingBoundingBox_sol"/>
+
+    <physvol name="GEMTrackingPlaneFront1_phys">
+      <volumeref ref="GEMTrackingPlane_log"/>
+      <positionref ref="GEMTrackingPlaneFront1_pos"/>
+    </physvol>	
+    <physvol name="GEMTrackingPlaneFront2_phys">
+      <volumeref ref="GEMTrackingPlane_log"/>
+      <positionref ref="GEMTrackingPlaneFront2_pos"/>
+    </physvol>	
+
+    <physvol name="GEMTrackingPlaneBack1_phys">
+      <volumeref ref="GEMTrackingPlane_log"/>
+      <positionref ref="GEMTrackingPlaneBack1_pos"/>
+    </physvol>	
+    <physvol name="GEMTrackingPlaneBack2_phys">
+      <volumeref ref="GEMTrackingPlane_log"/>
+      <positionref ref="GEMTrackingPlaneBack2_pos"/>
     </physvol>	
 
   </volume>
@@ -55,7 +206,7 @@
 </structure>
 
 <setup name="Default" version="1.0">
-  <world ref="trackingBoundingBox"/>
+  <world ref="GEMTrackingBoundingBox_log"/>
 </setup>
 
 </gdml>
