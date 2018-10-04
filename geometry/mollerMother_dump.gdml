@@ -35,11 +35,6 @@
         <positionref ref="hallCenter"/>
       </physvol>
 
-      <physvol>
-        <file name="detectorDaughter_merged.gdml"/>
-        <positionref ref="detectorCenter"/>
-      </physvol>
-
 <!--
       <physvol>
         <file name="detector_parametrized.gdml"/>

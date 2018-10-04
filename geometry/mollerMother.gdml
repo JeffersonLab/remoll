@@ -29,11 +29,6 @@
         <positionref ref="targetCenter"/>
       </physvol>
 
-      <physvol>
-        <file name="detectorDaughter.gdml"/>
-        <positionref ref="detectorCenter"/>
-      </physvol>
-
       <physvol name="trackingDetectors_physical">
         <file name="trackingDaughter.gdml"/>
         <positionref ref="trackingCenter"/>
