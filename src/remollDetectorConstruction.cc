@@ -42,12 +42,13 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
-remollDetectorConstruction::remollDetectorConstruction(const G4String& gdmlfile)
+remollDetectorConstruction::remollDetectorConstruction(const G4String& name, const G4String& gdmlfile)
 : fGDMLPath("geometry"),fGDMLFile("mollerMother.gdml"),fGDMLParser(0),
   fGDMLValidate(false),fGDMLOverlapCheck(true),
   fMessenger(0),fGeometryMessenger(0),
   fVerboseLevel(0),
-  fWorldVolume(0)
+  fWorldVolume(0),
+  fWorldName(name)
 {
   // If gdmlfile is non-empty
   if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;

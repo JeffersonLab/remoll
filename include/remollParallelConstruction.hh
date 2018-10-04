@@ -17,7 +17,7 @@ class G4GenericMessenger;
 class remollParallelConstruction : public G4VUserParallelWorld
 {
   public:
-    remollParallelConstruction(const G4String& gdmlfile);
+    remollParallelConstruction(const G4String& name, const G4String& gdmlfile);
     virtual ~remollParallelConstruction();
 
   public:

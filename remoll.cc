@@ -110,9 +110,11 @@ int main(int argc, char** argv) {
     G4Random::setTheSeed(seed);
 
     // Detector geometry
-    remollDetectorConstruction* detector = new remollDetectorConstruction(geometry_gdmlfile);
+    G4String material_name = "material";
+    remollDetectorConstruction* detector = new remollDetectorConstruction(material_name, geometry_gdmlfile);
     // Parallel world geometry
-    remollParallelConstruction* parallel = new remollParallelConstruction(parallel_gdmlfile);
+    G4String parallel_name = "parallel";
+    remollParallelConstruction* parallel = new remollParallelConstruction(parallel_name, parallel_gdmlfile);
     detector->RegisterParallelWorld(parallel);
     runManager->SetUserInitialization(detector);
 

@@ -20,7 +20,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
 
-    remollDetectorConstruction(const G4String& gdmlfile);
+    remollDetectorConstruction(const G4String& name, const G4String& gdmlfile);
     virtual ~remollDetectorConstruction();
 
   public:
@@ -69,7 +69,8 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     static G4ThreadLocal remollGlobalField* fGlobalField;
 
-    G4VPhysicalVolume*      fWorldVolume;
+    G4VPhysicalVolume* fWorldVolume;
+    G4String           fWorldName;
 
   public:
 
