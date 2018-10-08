@@ -16,7 +16,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 remollParallelConstruction::remollParallelConstruction(const G4String& name, const G4String& gdmlfile)
 : G4VUserParallelWorld(name),
-  fGDMLPath("geometry"),fGDMLFile("mollerParallel.gdml"),
+  fGDMLPath("geometry"),fGDMLFile(""),
   fGDMLParser(0),
   fGDMLValidate(false),
   fGDMLOverlapCheck(true),
@@ -87,6 +87,12 @@ void remollParallelConstruction::PrintGDMLWarning() const
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void remollParallelConstruction::Construct()
 {
+  // Only parse GDML if file is defined
+  if (fGDMLFile.size() == 0) {
+    G4cout << "Warning: no parallel world loaded." << G4endl;
+    return;
+  }
+
   // Parse GDML file
   fWorldVolume = ParseGDMLFile();
 
@@ -98,6 +104,12 @@ void remollParallelConstruction::Construct()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void remollParallelConstruction::ConstructSD()
 {
+  // Only parse GDML if file is defined
+  if (fGDMLFile.size() == 0) {
+    G4cout << "Warning: no parallel world loaded." << G4endl;
+    return;
+  }
+
   // Parse auxiliary info
   ParseAuxiliarySensDetInfo();
 }

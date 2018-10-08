@@ -4,7 +4,8 @@
 #/tracking/storeTrajectory 1
 
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother.gdml
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
 
 # This must be explicitly called
 /run/initialize
