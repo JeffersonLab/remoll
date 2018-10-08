@@ -32,6 +32,12 @@
 # realistic rather than pure absorbers
 /remoll/kryptonite/set false
 
+/remoll/SD/disable_all
+/remoll/SD/det_28/enable true
+/remoll/SD/det_30/enable true
+/remoll/SD/det_8060/enable true
+/remoll/SD/det_8061/enable true
+
 # Specify random number seed
 /remoll/seed 123456
 
