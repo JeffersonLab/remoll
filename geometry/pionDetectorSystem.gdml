@@ -11,7 +11,7 @@
    <!-- Full pion detector system dimensions -->
    <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.5" unit="m"/>
    <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.0" unit="m"/>
-   <quantity name="pionDetectorSystemLength" type="length" value="1.7" unit="m"/>
+   <quantity name="pionDetectorSystemLength" type="length" value="1.65" unit="m"/>
 
    <!-- Lead donut dimensions -->
    <quantity name="pionDetectorLeadDonutThickness" type="length" value="0.25" unit="m"/>
@@ -120,10 +120,12 @@
         <positionref ref="pionDetectorTSBackPosition"/>
       </physvol>
 
+<!--
       <physvol>
         <file name="pionDetectorCalorimeter.gdml"/>
         <positionref ref="pionDetectorCalorimeterPosition"/>
       </physvol>
+-->
 
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
