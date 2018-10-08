@@ -53,13 +53,20 @@
 /gui/addButton viewer "Side 2 view"            "/vis/viewer/set/viewpointThetaPhi -90 180 deg"
 /gui/addButton viewer "Top view"             "/vis/viewer/set/viewpointThetaPhi 90 90 deg"
 /gui/addButton viewer "Cutaway"              "/control/execute vis/cutaway.mac"
+/gui/addButton viewer "Mag fields"           "/vis/scene/add/magneticField 50"
 /gui/addButton viewer "Update viewer"        "/vis/viewer/update"
 /gui/addButton viewer "Update scene"         "/vis/scene/notifyHandlers"
 /gui/addButton viewer "Reset scene"          "/control/execute vis/vis.mac"
 
 #
 # Run menu :
-/gui/addMenu   run "4. Run"
+/gui/addMenu   field "4. Fields"
+/gui/addButton field "blockyHybrid_rm_3.0"   "/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt"
+/gui/addButton field "blockyUpstream_rm_1.1" "/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt"
+
+#
+# Run menu :
+/gui/addMenu   run "5. Run"
 /gui/addButton run "beamOn 1"    "/run/beamOn 1"
 /gui/addButton run "beamOn 2"    "/run/beamOn 2"
 /gui/addButton run "beamOn 5"    "/run/beamOn 5"
