@@ -33,7 +33,7 @@
   <quantity name="pionDetectorLuciteOutsideWidth" type="length" value="30.0" unit="cm"/>
 
   <quantity name="pionDetectorLuciteHeight" type="length" value="25.0" unit="cm"/>
-  <quantity name="pionDetectorLuciteTheta" type="angle" value="-22.5" unit="deg"/>
+  <quantity name="pionDetectorLuciteTheta" type="angle" value="0.0" unit="deg"/>
 
   <constant name="pionDetectorLuciteWedgeSide" value="1.0"/>
   <quantity name="pionDetectorLuciteWedgeAngle" type="angle" value="45.0" unit="deg"/>
@@ -45,7 +45,7 @@
 
   <quantity name="pionDetectorLuciteLightGuideThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLuciteLightGuideHeight" type="length" value="25.0" unit="cm"/>
-  <quantity name="pionDetectorLuciteLightGuideTheta" type="angle" value="22.5" unit="deg"/>
+  <quantity name="pionDetectorLuciteLightGuideTheta" type="angle" value="0" unit="deg"/>
 
   <quantity name="pionDetectorLuciteLightGuideEntryDetectorThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLuciteLightGuideExitDetectorThickness" type="length" value="1.0" unit="mm"/>
