@@ -62,7 +62,7 @@
 
   <tube name="GEMTrackingPlane_sol"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="0" rmax="1.9" z="0.010" lunit="m"/>
+    rmin="0" rmax="1.9*m" z="10.0*cm"/>
 
   <box name="GEMDetector_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="10.0*cm"/>
 
