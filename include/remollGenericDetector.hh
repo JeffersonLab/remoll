@@ -58,6 +58,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
               (*it)->PrintEnabled();
           }
         }
+
         void SetAllEnabled() {
           for (std::list<remollGenericDetector*>::iterator
             it  = fGenericDetectors.begin();
@@ -72,6 +73,25 @@ class remollGenericDetector : public G4VSensitiveDetector {
             it != fGenericDetectors.end();
             it++) {
               (*it)->SetDisabled();
+          }
+        }
+
+        void SetOneEnabled(G4int det) {
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              if ((*it)->fDetNo == det)
+                (*it)->SetEnabled();
+          }
+        }
+        void SetOneDisabled(G4int det) {
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              if ((*it)->fDetNo == det)
+                (*it)->SetDisabled();
           }
         }
 
@@ -130,10 +150,10 @@ class remollGenericDetector : public G4VSensitiveDetector {
     }
 
     void SetEnabled(G4bool flag = true) {
-        fEnabled = flag; PrintEnabled();
+        fEnabled = flag;
     };
     void SetDisabled(G4bool flag = true) {
-        fEnabled = !flag; PrintEnabled();
+        fEnabled = !flag;
     };
     void PrintEnabled() const {
         G4cout << "Det " << GetName() << " (" << fDetNo << ") "

@@ -31,6 +31,16 @@
 
 # Disable range detectors
 /remoll/SD/disable_range 4000 5000
+/remoll/SD/print_all
 
 # Enable range detectors
 /remoll/SD/enable_range 4002 5000
+/remoll/SD/print_all
+
+# Disable one detector
+/remoll/SD/disable 4004
+/remoll/SD/print_all
+
+# Enable one detector
+/remoll/SD/enable 4000
+/remoll/SD/print_all
