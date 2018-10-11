@@ -38,12 +38,6 @@
   <quantity name="showerMaxDetectorLength" type="length" value="0.12" unit="m"/>
 
   <!--
-    The shift is the difference in longitudinal position between the two detector
-    wheels.
-  -->
-  <quantity name="showerMaxDetectorShift" type="length" value="0.12" unit="m"/>
-
-  <!--
     This variable implements the global rotation of the entire detector/lightguide
     assembly. There are also angles that can be set independently for  and
     for lightguide.
@@ -91,7 +85,7 @@
   <tube name="showerMaxDetectorAllSectorsFrontBack_solid"
     rmin="SCALE_DOWN*SCALE_DOWN*showerMaxDetectorInnerRadius"
     rmax="SCALE_UP*SCALE_UP*showerMaxDetectorOuterRadius"
-    z="SCALE_UP*SCALE_UP*(showerMaxDetectorLength+showerMaxDetectorShift)"
+    z="SCALE_UP*SCALE_UP*(2.0*showerMaxDetectorLength)"
     startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
