@@ -3,10 +3,10 @@
 
 <define>
   <position name="trackingDetectorVirtualPlaneCenter_pos" z="25.635" unit="m"/>
-  <position name="trackingDetectorVirtualPlaneFront1_pos" z="-2.5" unit="m"/>
-  <position name="trackingDetectorVirtualPlaneFront2_pos" z="-2.0" unit="m"/>
-  <position name="trackingDetectorVirtualPlaneBack1_pos"  z="+2.0" unit="m"/>
-  <position name="trackingDetectorVirtualPlaneBack2_pos"  z="+2.5" unit="m"/>
+  <position name="trackingDetectorVirtualPlaneFront1_pos" z="-1.45" unit="m"/>
+  <position name="trackingDetectorVirtualPlaneFront2_pos" z="-1.25" unit="m"/>
+  <position name="trackingDetectorVirtualPlaneBack1_pos"  z="+1.25" unit="m"/>
+  <position name="trackingDetectorVirtualPlaneBack2_pos"  z="+1.45" unit="m"/>
   <position name="mainDetectorVirtualPlane_pos" z="28.500" unit="m"/>
 </define>
 
