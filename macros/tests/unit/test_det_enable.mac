@@ -29,3 +29,8 @@
 /remoll/filename test_det_enable_4.root
 /run/beamOn 100
 
+# Disable range detectors
+/remoll/SD/disable_range 4000 5000
+
+# Enable range detectors
+/remoll/SD/enable_range 4002 5000

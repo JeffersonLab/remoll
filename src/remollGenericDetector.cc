@@ -60,6 +60,14 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
     &remollGenericDetector::SetAllDisabled,
     "Disable recording of hits in all detectors");
   fStaticMessenger->DeclareMethod(
+    "enable_range",
+    &remollGenericDetector::SetRangeEnabled,
+    "Enable recording of hits in range of detectors");
+  fStaticMessenger->DeclareMethod(
+    "disable_range",
+    &remollGenericDetector::SetRangeDisabled,
+    "Disable recording of hits in range of detectors");
+  fStaticMessenger->DeclareMethod(
     "print_all",
     &remollGenericDetector::PrintAll,
     "Print all detectors");

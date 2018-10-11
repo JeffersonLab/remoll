@@ -2,6 +2,7 @@
 #define __REMOLLGENERICDETECTOR_HH
 
 #include "G4VSensitiveDetector.hh"
+#include "G4TwoVector.hh"
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
 
@@ -71,6 +72,25 @@ class remollGenericDetector : public G4VSensitiveDetector {
             it != fGenericDetectors.end();
             it++) {
               (*it)->SetDisabled();
+          }
+        }
+
+        void SetRangeEnabled(G4TwoVector v) {
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              if ((*it)->fDetNo >= v.x() && (*it)->fDetNo <= v.y())
+                (*it)->SetEnabled();
+          }
+        }
+        void SetRangeDisabled(G4TwoVector v) {
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              if ((*it)->fDetNo >= v.x() && (*it)->fDetNo <= v.y())
+                (*it)->SetDisabled();
           }
         }
 
