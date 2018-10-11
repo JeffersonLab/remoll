@@ -10,7 +10,7 @@
       xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <constant name="N_P" value="14"/> <!-- also change in replicavol below -->
+  <constant name="N_P" value="14"/> <!-- number per ring -->
   <constant name="PHI" value="360.0/N_P"/>
 
   <!--
@@ -27,7 +27,7 @@
     the radius along with the angle of the detector to increase the length in the
     longitudinal direction.
   -->
-  <quantity name="showerMaxDetectorInnerRadius" type="length" value="0.00" unit="m"/>
+  <quantity name="showerMaxDetectorInnerRadius" type="length" value="0.50" unit="m"/>
   <quantity name="showerMaxDetectorOuterRadius" type="length" value="1.90" unit="m"/>
 
   <!--
@@ -35,13 +35,13 @@
     This is increased when a non-zero angle is used. Make sure to modify this if
     you modify the angle below so as to avoid overlaps.
   -->
-  <quantity name="showerMaxDetectorLength" type="length" value="0.25" unit="m"/>
+  <quantity name="showerMaxDetectorLength" type="length" value="0.12" unit="m"/>
 
   <!--
     The shift is the difference in longitudinal position between the two detector
     wheels.
   -->
-  <quantity name="showerMaxDetectorShift" type="length" value="0.25" unit="m"/>
+  <quantity name="showerMaxDetectorShift" type="length" value="0.12" unit="m"/>
 
   <!--
     This variable implements the global rotation of the entire detector/lightguide
@@ -91,7 +91,7 @@
   <tube name="showerMaxDetectorAllSectorsFrontBack_solid"
     rmin="SCALE_DOWN*SCALE_DOWN*showerMaxDetectorInnerRadius"
     rmax="SCALE_UP*SCALE_UP*showerMaxDetectorOuterRadius"
-    z="SCALE_UP*SCALE_UP*(2.0*showerMaxDetectorLength+showerMaxDetectorShift)"
+    z="SCALE_UP*SCALE_UP*(showerMaxDetectorLength+showerMaxDetectorShift)"
     startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
@@ -117,7 +117,7 @@
     <materialref ref="Air"/>
     <solidref ref="showerMaxDetectorAllSectorsFront_solid"/>
 
-    <replicavol number="14"> <!-- number of replicas has to fill mother volume exactly! -->
+    <replicavol number="N_P"> <!-- number of replicas has to fill mother volume exactly! -->
       <volumeref ref="showerMaxDetectorSingleSector_logical"/>
       <replicate_along_axis>
         <direction phi="1"/>
@@ -133,7 +133,7 @@
     <materialref ref="Air"/>
     <solidref ref="showerMaxDetectorAllSectorsBack_solid"/>
 
-    <replicavol number="14"> <!-- number of replicas has to fill mother volume exactly! -->
+    <replicavol number="N_P"> <!-- number of replicas has to fill mother volume exactly! -->
       <volumeref ref="showerMaxDetectorSingleSector_logical"/>
       <replicate_along_axis>
         <direction phi="1"/>
@@ -152,13 +152,13 @@
     <physvol name="showerMaxDetectorFront_physical">
       <volumeref ref="showerMaxDetectorAllSectorsFront_logical"/>
       <position name="showerMaxDetectorFront_position"
-        z="-showerMaxDetectorShift/2.0"/>
+        z="-SCALE_UP*showerMaxDetectorLength/2.0"/>
     </physvol>
 
     <physvol name="showerMaxDetectorBack_physical">
       <volumeref ref="showerMaxDetectorAllSectorsBack_logical"/>
       <position name="showerMaxDetectorBack_position"
-        z="+showerMaxDetectorShift/2.0"/>
+        z="+SCALE_UP*showerMaxDetectorLength/2.0"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
