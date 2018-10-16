@@ -78,8 +78,19 @@
 /gui/addButton field "blockyHybrid_rm_3.0"   "/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt"
 /gui/addButton field "blockyUpstream_rm_1.1" "/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt"
 #
+# Generator menu :
+/gui/addMenu   gen "6. Generator"
+/gui/addButton gen "Moller"   "/remoll/evgen/set moller"
+/gui/addButton gen "Beam"     "/remoll/evgen/set beam"
+/gui/addButton gen "Beam/pi-" "/remoll/evgen/beam/partName pi-"
+/gui/addButton gen "Pion"     "/remoll/evgen/set pion"
+/gui/addButton gen "Pion/pi-" "/remoll/evgen/pion/settype pi-"
+/gui/addButton gen "Pion/pi+" "/remoll/evgen/pion/settype pi+"
+/gui/addButton gen "Pion/pi0" "/remoll/evgen/pion/settype pi0"
+
+#
 # Run menu :
-/gui/addMenu   run "6. Run"
+/gui/addMenu   run "7. Run"
 /gui/addButton run "beamOn 1"    "/run/beamOn 1"
 /gui/addButton run "beamOn 2"    "/run/beamOn 2"
 /gui/addButton run "beamOn 5"    "/run/beamOn 5"
