@@ -119,14 +119,16 @@ class remollGenericDetector : public G4VSensitiveDetector {
         }
 
     public:
-	remollGenericDetector( G4String name, G4int detnum );
-	virtual ~remollGenericDetector();
+      remollGenericDetector( G4String name, G4int detnum );
+      virtual ~remollGenericDetector();
 
-	virtual void Initialize(G4HCofThisEvent*);
-	virtual G4bool ProcessHits(G4Step*,G4TouchableHistory*);
-	virtual void EndOfEvent(G4HCofThisEvent*);
+      virtual void Initialize(G4HCofThisEvent*);
+      virtual G4bool ProcessHits(G4Step*,G4TouchableHistory*);
+      virtual void EndOfEvent(G4HCofThisEvent*);
 
-    virtual void SetDetectorType(G4String det_type) {
+      void BuildStaticMessenger();
+
+      virtual void SetDetectorType(G4String det_type) {
         if (det_type.compareTo("charged",G4String::ignoreCase) == 0) {
             G4cout << SensitiveDetectorName << " detects charged particles" << G4endl;
             fDetectOpticalPhotons = false;
