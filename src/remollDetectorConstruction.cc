@@ -747,8 +747,8 @@ void remollDetectorConstruction::PrintGeometryTree(
     G4cout << G4endl;
   }
 
-  // Check overlapping volumes
-  if (surfchk) aVolume->CheckOverlaps(1000,0.0,false);
+  // Check overlapping volumes (tolerance of 1 mm)
+  if (surfchk) aVolume->CheckOverlaps(1000,1.0*mm,false);
 
   // Descend down the tree
   for (int i = 0; i < aVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
