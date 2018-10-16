@@ -368,8 +368,8 @@
     <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_4" rmax1="COLL4_R4_U" rmax2="COLL4_R4_D" rmin1="COLL4_R1_U" rmin2="COLL4_R1_D" startphi="0" z="COLL4_THICK"/>
     <cone aunit="deg" deltaphi="360" lunit="mm" name="dscyl_5" rmax1="COLL5_R4_U" rmax2="COLL5_R4_D" rmin1="COLL5_R1_U" rmin2="COLL5_R1_D" startphi="0" z="COLL5_THICK"/>
 
-    <box lunit="mm" name="COIL_BOX"  x="1000/sqrt(2)" y="1000/sqrt(2)" z="7865.68"/>
-    <box lunit="mm" name="COIL_BOX_2"  x="1000/sqrt(2)" y="1000/sqrt(2)" z="7865.68"/>
+    <box lunit="mm" name="DS_COIL_BOX_1"  x="1000/sqrt(2)" y="1000/sqrt(2)" z="7865.68"/>
+    <box lunit="mm" name="DS_COIL_BOX_2"  x="1000/sqrt(2)" y="1000/sqrt(2)" z="7865.68"/>
 
     <box lunit="cm" name="SEGMENT_X"  x="HEIGHT_X" y="WIDTH_X" z="seg_length_X"/>
     <box lunit="cm" name="SEGMENT_Y"  x="HEIGHT_Y" y="WIDTH_Y" z="seg_length_X"/>
@@ -418,7 +418,7 @@
 
 
     <intersection name ="dscoilunion_0">
-        <first ref="COIL_BOX"/>
+        <first ref="DS_COIL_BOX_1"/>
         <second ref="SEGMENT_X"/>
         <positionref ref="posCOIL_X"/>
         <rotationref ref="RotateCOIL_X"/>
@@ -486,7 +486,7 @@
 
 
     <intersection name ="dscoilunion_101">
-        <first ref="COIL_BOX_2"/>
+        <first ref="DS_COIL_BOX_2"/>
         <second ref="SEGMENT_A_1"/>
         <positionref ref="posCOIL_A_1"/>
         <rotationref ref="RotateCOIL_A_1"/>
