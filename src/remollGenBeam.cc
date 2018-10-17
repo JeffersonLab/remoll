@@ -24,6 +24,7 @@ remollGenBeam::remollGenBeam()
   fXmomentum(0.0), fYmomentum(0.0), fZmomentum(1.0),
   fParticleName("e-")
 {
+    fSampType = kNoTargetVolume;
     fApplyMultScatt = true;
 
     fThisGenMessenger->DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginX,"x coordinate of origin for the beam");

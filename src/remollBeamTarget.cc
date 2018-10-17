@@ -284,6 +284,14 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
 remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 {
+    // Create vertex
+    remollVertex vertex;
+
+    // No sampling required
+    if (samp == kNoTargetVolume) {
+      return vertex;
+    }
+
     // Check if target mother volume exists
     if (fTargetMother == 0) {
       G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
@@ -297,9 +305,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
                 "No target volume defined!" << G4endl;
       exit(1);
     }
-
-    // Create vertex
-    remollVertex vertex;
 
     // Sample raster x and y positions on target
     // (assumed independent of z position)
