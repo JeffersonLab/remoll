@@ -181,6 +181,7 @@
     <volume name="ShowerMaxDetectorQuartz_log">
       <materialref ref="Quartz_mat"/>
       <solidref ref="ShowerMaxDetectorQuartz_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="ShowerMaxDetectorQuartz"/>
       <auxiliary auxtype="DetNo" auxvalue="7001"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
       <auxiliary auxtype="Alpha" auxvalue="0.25"/>
@@ -188,6 +189,7 @@
     <volume name="ShowerMaxDetectorTungsten_log">
       <materialref ref="G4_W"/>
       <solidref ref="ShowerMaxDetectorTungsten_box"/>
+      <auxiliary auxtype="SensDet" auxvalue="ShowerMaxDetectorTungsten"/>
       <auxiliary auxtype="DetNo" auxvalue="7002"/>
       <auxiliary auxtype="Color" auxvalue="Gray"/>
       <auxiliary auxtype="Alpha" auxvalue="0.50"/>
@@ -230,6 +232,7 @@
     <volume name="ShowerMaxDetectorCathode_log">
       <materialref ref="CATH_mat"/>
       <solidref ref="ShowerMaxDetectorCathode_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="ShowerMaxDetectorCathode"/>
       <auxiliary auxtype="DetNo" auxvalue="7000"/>
       <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
       <auxiliary auxtype="Color" auxvalue="White"/>
