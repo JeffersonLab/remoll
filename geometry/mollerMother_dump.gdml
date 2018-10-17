@@ -5,11 +5,11 @@
     <position name="hallCenter" x="0" y="0" z="4000"/>
     <position name="targetCenter" x="0" y="0" z="0"/>
     <position name="upstreamCenter" x="0" y="0" z="7000."/>
-    <position name="trackingCenter" x="0" y="0" z="25635."/>
+    <position name="trackingCenter" x="0" y="0" z="26635."/>
     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
     <position name="detectorCenter" x="0" y="0" z="28500."/>
-    <position name="showerMaxDetectorCenter" x="0" y="0" z="29500."/>
-    <position name="pionDetectorCenter" x="0" y="0" z="29750."/>
+    <position name="showerMaxDetectorCenter" x="0" y="0" z="28750."/>
+    <position name="pionDetectorCenter" x="0" y="0" z="29600."/>
   </define>
 
   <materials>

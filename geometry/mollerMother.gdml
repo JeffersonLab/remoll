@@ -5,21 +5,20 @@
      <position unit="mm" name="targetCenter" x="0" y="0" z="0"/>
      <position unit="mm" name="upstreamCenter" x="0" y="0" z="7000."/>
      <position unit="mm" name="hybridCenter" x="0" y="0" z="13366.57"/>
-     <position unit="mm" name="trackingCenter" x="0" y="0" z="25635."/>
+     <position unit="mm" name="trackingCenter" x="0" y="0" z="26635."/>
      <position unit="mm" name="detectorCenter" x="0" y="0" z="28500."/>
-     <position unit="mm" name="showerMaxDetectorCenter" x="0" y="0" z="31000."/>
-     <position unit="mm" name="pionDetectorCenter" x="0" y="0" z="32000."/>
+     <position unit="mm" name="showerMaxDetectorCenter" x="0" y="0" z="28750."/>
+     <position unit="mm" name="pionDetectorCenter" x="0" y="0" z="29600."/>
 </define>
 
 <materials>
 </materials>
 
 <solids>
-     <box lunit="mm" name="world_solid" x="4000" y="4000" z="80000"/>
+  <box lunit="mm" name="world_solid" x="4000" y="4000" z="80000"/>
 </solids>
 
   <structure>
-
     <volume name="world_logic">
       <materialref ref="G4_Galactic"/>
       <solidref ref="world_solid"/>
