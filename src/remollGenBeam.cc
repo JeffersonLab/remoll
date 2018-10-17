@@ -21,18 +21,21 @@
 remollGenBeam::remollGenBeam()
 : remollVEventGen("beam"),
   fXpos(0.0), fYpos(0.0), fZpos(-.5*m),
-  fXmomentum(0.0), fYmomentum(0.0), fZmomentum(1.0),
+  fXdir(0.0), fYdir(0.0), fZdir(1.0),
   fParticleName("e-")
 {
     fSampType = kNoTargetVolume;
     fApplyMultScatt = true;
 
+    fThisGenMessenger->DeclareMethodWithUnit("origin","mm",&remollGenBeam::SetOrigin,"set origin");
     fThisGenMessenger->DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginX,"x coordinate of origin for the beam");
     fThisGenMessenger->DeclareMethodWithUnit("y","mm",&remollGenBeam::SetOriginY,"y coordinate of origin for the beam");
     fThisGenMessenger->DeclareMethodWithUnit("z","mm",&remollGenBeam::SetOriginZ,"z coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetMomentumX,"x component of momentum direction");
-    fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetMomentumY,"y component of momentum direction");
-    fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetMomentumZ,"z component of momentum direction");
+    fThisGenMessenger->DeclareMethod("direction",&remollGenBeam::SetDirection,"set momentum direction");
+    fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetDirectionX,"x component of momentum direction");
+    fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetDirectionY,"y component of momentum direction");
+    fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"z component of momentum direction");
+    fThisGenMessenger->DeclareMethod("polarization",&remollGenBeam::SetPolarization,"set polarization");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
     fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
     fThisGenMessenger->DeclareMethod("sz",&remollGenBeam::SetPolarizationZ,"z component of polarization");
@@ -41,17 +44,20 @@ remollGenBeam::remollGenBeam()
 
 remollGenBeam::~remollGenBeam() { }
 
+void remollGenBeam::SetOrigin(G4ThreeVector origin){ fXpos = origin.x(); fYpos = origin.y(); fZpos = origin.z(); }
 void remollGenBeam::SetOriginX(double x){ fXpos = x; }
 void remollGenBeam::SetOriginY(double y){ fYpos = y; }
 void remollGenBeam::SetOriginZ(double z){ fZpos = z; }
 
-void remollGenBeam::SetMomentumX(double px){ fXmomentum = px; }
-void remollGenBeam::SetMomentumY(double py){ fYmomentum = py; }
-void remollGenBeam::SetMomentumZ(double pz){ fZmomentum = pz; }
+void remollGenBeam::SetDirection(G4ThreeVector direction){ fXdir = direction.x(); fYdir = direction.y(); fZdir = direction.z(); }
+void remollGenBeam::SetDirectionX(double px){ fXdir = px; }
+void remollGenBeam::SetDirectionY(double py){ fYdir = py; }
+void remollGenBeam::SetDirectionZ(double pz){ fZdir = pz; }
 
-void remollGenBeam::SetPolarizationX(double sx){ fXPolarization = sx; }
-void remollGenBeam::SetPolarizationY(double sy){ fYPolarization = sy; }
-void remollGenBeam::SetPolarizationZ(double sz){ fZPolarization = sz; }
+void remollGenBeam::SetPolarization(G4ThreeVector polarization){ fXpol = polarization.x(); fYpol = polarization.y(); fZpol = polarization.z(); }
+void remollGenBeam::SetPolarizationX(double sx){ fXpol = sx; }
+void remollGenBeam::SetPolarizationY(double sy){ fYpol = sy; }
+void remollGenBeam::SetPolarizationZ(double sz){ fZpol = sz; }
 
 void remollGenBeam::SetPartName(G4String& name){ fParticleName = name; }
 
@@ -66,16 +72,17 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     double p = sqrt(E*E - m*m);
 
     evt->fBeamE = E;
-    evt->fBeamMomentum = p*G4ThreeVector(fXmomentum, fYmomentum, fZmomentum).unit();
-    evt->fBeamPolarization = G4ThreeVector(fXPolarization, fYPolarization, fZPolarization);
+    evt->fBeamMomentum = p * G4ThreeVector(fXdir,fYdir,fZdir).unit();
+    evt->fBeamPolarization = G4ThreeVector(fXpol, fYpol, fZpol);
 
     // Override target sampling z
     evt->fVertexPos.setX( fXpos );
     evt->fVertexPos.setY( fYpos );
     evt->fVertexPos.setZ( fZpos );
 
-    evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
-	    evt->fBeamMomentum, 
+    evt->ProduceNewParticle(
+	    G4ThreeVector(0.0, 0.0, 0.0),
+	    evt->fBeamMomentum,
 	    fParticleName,
             evt->fBeamPolarization);
 
