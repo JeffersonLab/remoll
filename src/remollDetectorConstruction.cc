@@ -6,6 +6,8 @@
 #include "remollIO.hh"
 
 #include "G4GenericMessenger.hh"
+#include "G4GeometryManager.hh"
+#include "G4GeometryTolerance.hh"
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"
 #include "G4UIcmdWithADoubleAndUnit.hh"
@@ -244,6 +246,19 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
     G4VPhysicalVolume* worldvolume = fGDMLParser->GetWorldVolume();
+
+    // Print tolerances
+    if (fVerboseLevel > 0) {
+      G4cout << "Computed surface tolerance = "
+             << G4GeometryTolerance::GetInstance()->GetSurfaceTolerance()/mm
+             << " mm" << G4endl;
+      G4cout << "Computed angular tolerance = "
+             << G4GeometryTolerance::GetInstance()->GetAngularTolerance()/rad
+             << " rad" << G4endl;
+      G4cout << "Computed radial tolerance = "
+             << G4GeometryTolerance::GetInstance()->GetRadialTolerance()/mm
+             << " mm" << G4endl;
+    }
 
     // Print overlaps
     if (fGDMLOverlapCheck)
