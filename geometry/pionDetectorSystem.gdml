@@ -11,7 +11,7 @@
    <!-- Full pion detector system dimensions -->
    <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.5" unit="m"/>
    <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.0" unit="m"/>
-   <quantity name="pionDetectorSystemLength" type="length" value="1.65" unit="m"/>
+   <quantity name="pionDetectorSystemLength" type="length" value="1.45" unit="m"/>
 
    <!-- Lead donut dimensions -->
    <quantity name="pionDetectorLeadDonutThickness" type="length" value="0.25" unit="m"/>
@@ -39,12 +39,19 @@
              +pionDetectorVirtualDetThickness/2.0"/>
 
    <!-- Positions of detectors within full pion detector system -->
-   <position name="pionDetectorGEMFrontPosition"   unit="m" x="0" y="0" z="-0.50"/>
-   <position name="pionDetectorTSFrontPosition"    unit="m" x="0" y="0" z="-0.40"/>
-   <position name="pionDetectorLucitePosition"     unit="m" x="0" y="0" z="+0.00"/>
-   <position name="pionDetectorTSBackPosition"     unit="m" x="0" y="0" z="+0.40"/>
-   <position name="pionDetectorGEMBackPosition"    unit="m" x="0" y="0" z="+0.50"/>
-   <position name="pionDetectorCalorimeterPosition" unit="m" x="-1.10" y="0" z="+0.66"/>
+   <quantity name="pionDetectorLuciteCenter" type="length"
+             value="-pionDetectorSystemLength/2.0
+                    +pionDetectorVirtualDetThickness
+                    +pionDetectorLeadDonutThickness
+                    +pionDetectorVirtualDetThickness
+                    +0.58*m"/>
+
+   <position name="pionDetectorGEMFrontPosition"    x="0"   y="0"   z="pionDetectorLuciteCenter-0.52*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorTSFrontPosition"     x="0"   y="0"   z="pionDetectorLuciteCenter-0.41*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorLucitePosition"      x="0"   y="0"   z="pionDetectorLuciteCenter+0.00*m"/> <!-- 0.69*m thick -->
+   <position name="pionDetectorTSBackPosition"      x="0"   y="0"   z="pionDetectorLuciteCenter+0.41*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorGEMBackPosition"     x="0"   y="0"   z="pionDetectorLuciteCenter+0.52*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorCalorimeterPosition" x="1*m" y="1*m" z="pionDetectorLuciteCenter+0.66*m"/>
 
    &matrices;
 </define>
