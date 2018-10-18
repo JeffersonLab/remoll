@@ -503,10 +503,6 @@
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLucite_solid"/>
 
-    <physvol name="pionDetectorLucite_reference">
-      <file name="surveymarker.gdml"/>
-    </physvol>
-
     <physvol name="pionDetectorLuciteMylar_physical">
       <volumeref ref="pionDetectorLuciteMylar_logical"/>
       <position name="pionDetectorLuciteMylar_position"
