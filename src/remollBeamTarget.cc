@@ -317,13 +317,17 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // Figure out how far along the target we got
     G4double total_effective_length = 0;
     switch( samp ){
-	case kActiveTargetVolume:
-	    total_effective_length = fActiveTargetEffectiveLength;
-	    break;
+        case kActiveTargetVolume:
+            total_effective_length = fActiveTargetEffectiveLength;
+            break;
 
-	case kAllTargetVolumes:
-	    total_effective_length = fTotalTargetEffectiveLength;
-	    break;
+        case kAllTargetVolumes:
+            total_effective_length = fTotalTargetEffectiveLength;
+            break;
+
+        case kNoTargetVolume:
+            // nothing to do, just avoid compilation warning
+            break;
     }
     G4double effective_position = G4RandFlat::shoot(0.0, total_effective_length);
 
