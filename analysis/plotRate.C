@@ -1,19 +1,60 @@
+string rSelect="&& hit.r>0.935 && hit.r<1.1";//r5
+// string rSelect="&& hit.r>0.6 && hit.r<1.2";//all det
+
 void doOne(TTree*, TCanvas*,double);
 
 void plotRate(){
-  const int nFl=9;
+  const int nFl=12;
   string fnms[nFl]={
     "../output/remollout_VacTst_Moller_Vac.root",
-    "../output/remollout_VacTst_Moller_kryp_beamline_Can.root",
-    "../output/remollout_VacTst_Moller_kryp_beamline_Air.root",
+    // "../output/remollout_VacTst_Moller_kryp_beamline_Can.root",
+    // "../output/remollout_VacTst_Moller_kryp_beamline_Air.root",
+    // "../output/remollout_VacTst_Moller_kryp_beamline_He.root",
     // "../output/remollout_VacTst_Moller_Can.root",
     // "../output/remollout_VacTst_Moller_Air.root",
-    "../output/remollout_VacTst_epInelastic_Vac.root",
-    "../output/remollout_VacTst_epInelastic_kryp_beamline_Can.root",
-    "../output/remollout_VacTst_epInelastic_kryp_beamline_Air.root",
+    // "../output/remollout_VacTst_epInelastic_Vac.root",
+    // "../output/remollout_VacTst_epInelastic_kryp_beamline_Can.root",
+    // "../output/remollout_VacTst_epInelastic_kryp_beamline_Air.root",
     "../output/remollout_VacTst_epElastic_Vac.root",
-    "../output/remollout_VacTst_epElastic_kryp_beamline_Can.root",
-    "../output/remollout_VacTst_epElastic_kryp_beamline_Air.root"
+    // "../output/remollout_VacTst_epElastic_kryp_beamline_Can.root",
+    // "../output/remollout_VacTst_epElastic_kryp_beamline_Air.root",
+    // "../output/remollout_VacTst_epElastic_kryp_beamline_He.root",
+  //   "../remollout_VacTst_Moller_window_kryp_beamline_Air.root",
+  //   "../remollout_VacTst_Moller_window_kryp_beamline_Can.root",
+  //   "../remollout_VacTst_Moller_window_kryp_beamline_HeAir.root",
+  //   "../remollout_VacTst_Moller_window_kryp_beamline_HeCan.root",
+  //   "../remollout_VacTst_Moller_window_kryp_beamline_CanHeAll.root",
+  //   "../remollout_VacTst_epElastic_window_kryp_beamline_Air.root",
+  //   "../remollout_VacTst_epElastic_window_kryp_beamline_Can.root",
+  //   "../remollout_VacTst_epElastic_window_kryp_beamline_HeAir.root",
+  //   "../remollout_VacTst_epElastic_window_kryp_beamline_HeCan.root",
+  //   "../remollout_VacTst_epElastic_window_kryp_beamline_CanHeAll.root"
+    // "../remollout_VacTst3reg_epElastic_krypBeamline_ABC-VVA.root",
+    // "../remollout_VacTst3reg_epElastic_krypBeamline_DSwin_ABC-VVA.root",
+    // "../remollout_VacTst3reg_epElastic_krypBeamline_DSwin_b3075_ABC-VVA.root",
+    // "../remollout_VacTst3reg_epElastic_krypBeamline_DSwin_b3050_ABC-VVA.root",
+    // "../remollout_VacTst3reg_epElastic_krypBeamline_DSwin1p5mm_b3050_ABC-VVA.root",
+    // "../remollout_VacTst3reg_epElastic_krypBeamline_USwin_DSwin_ABC-HHA.root",
+    // "../remollout_VacTst3reg_epElastic_krypBeamline_USwin_DSwin_ABC-AHA.root",
+    //"../remollout_VacTst3reg_epElastic_krypBeamline_USwin_movedDSwin_ABC-HAA.root",
+    "../remollout_VacTst3reg_epElastic_krypBeamline_DSwin1p5mm_b3050_ABC-VVA.root",
+    "../remollout_VacTst3reg_epElastic_krypBeamline_DSwin1p0mm_b3050_ABC-VVA.root",
+    "../remollout_VacTst3reg_epElastic_krypBeamline_DSwin0p5mm_b3050_ABC-VVA.root",
+    "../remollout_VacTst3reg_epElastic_krypBeamline_DSwin1p5mm_b3075_ABC-VVA.root",
+    "../remollout_VacTst3reg_epElastic_krypBeamline_DSwin1p5mm_b3100_ABC-VVA.root",
+    // "../remollout_VacTst3reg_Moller_krypBeamline_ABC-VVA.root",
+    // "../remollout_VacTst3reg_Moller_krypBeamline_DSwin_ABC-VVA.root",
+    // "../remollout_VacTst3reg_Moller_krypBeamline_DSwin_b3075_ABC-VVA.root",
+    // "../remollout_VacTst3reg_Moller_krypBeamline_DSwin_b3050_ABC-VVA.root",
+    // "../remollout_VacTst3reg_Moller_krypBeamline_DSwin1p5mm_b3050_ABC-VVA.root",
+    // "../remollout_VacTst3reg_Moller_krypBeamline_USwin_DSwin_ABC-HHA.root",
+    // "../remollout_VacTst3reg_Moller_krypBeamline_USwin_DSwin_ABC-AHA.root",
+    // "../remollout_VacTst3reg_Moller_krypBeamline_USwin_movedDSwin_ABC-HAA.root",
+    "../remollout_VacTst3reg_Moller_krypBeamline_DSwin1p5mm_b3050_ABC-VVA.root",
+    "../remollout_VacTst3reg_Moller_krypBeamline_DSwin1p0mm_b3050_ABC-VVA.root",
+    "../remollout_VacTst3reg_Moller_krypBeamline_DSwin0p5mm_b3050_ABC-VVA.root",
+    "../remollout_VacTst3reg_Moller_krypBeamline_DSwin1p5mm_b3075_ABC-VVA.root",
+    "../remollout_VacTst3reg_Moller_krypBeamline_DSwin1p5mm_b3100_ABC-VVA.root"
   };
 
   double highLimit[nFl]={4e10,4e10,4e10,2e9,2e9,2e9,1e9,1e9,5e9};
@@ -37,8 +78,6 @@ void doOne(TTree *t, TCanvas *can,double highLimit){
   TH1D *h1=new TH1D("h1","hits ;rate[Hz]",200,0,highLimit);
   TH1D *h2=new TH1D("h2","rate weighted ;rate[Hz]",200,0,highLimit);
   int b1 = h1->GetXaxis()->FindBin(1e7);
-  string rSelect="&& hit.r>0.935 && hit.r<1.1";//r5
-  //string rSelect="&& hit.r>0.6 && hit.r<1.2";//all det
   can->Divide(2);
   can->cd(1);
   t->Project("h1","rate",Form("(hit.det==28 && hit.e>0.001 && hit.pid==11 %s)",rSelect.c_str()));
