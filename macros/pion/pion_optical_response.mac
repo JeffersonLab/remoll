@@ -44,7 +44,7 @@
 /remoll/filename showermax_piondetectors_optical_response_pion_100k.root
 
 # Number of events
-/run/beamOn 10000
+/run/beamOn 100000
 
 
 ### 2. now with moller electrons
@@ -67,4 +67,4 @@
 /remoll/filename showermax_piondetectors_optical_response_moller_100k.root
 
 # Number of events
-/run/beamOn 100000
+/run/beamOn 10000
