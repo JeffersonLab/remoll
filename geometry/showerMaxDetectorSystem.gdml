@@ -71,21 +71,21 @@
     startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
 
   <tube name="showerMaxDetectorAllSectorsFront_solid"
-    rmin="SCALE_DOWN*showerMaxDetectorInnerRadius"
-    rmax="SCALE_UP*showerMaxDetectorOuterRadius"
-    z="SCALE_UP*showerMaxDetectorLength"
+    rmin="showerMaxDetectorInnerRadius"
+    rmax="showerMaxDetectorOuterRadius"
+    z="showerMaxDetectorLength"
     startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 
   <tube name="showerMaxDetectorAllSectorsBack_solid"
-    rmin="SCALE_DOWN*showerMaxDetectorInnerRadius"
-    rmax="SCALE_UP*showerMaxDetectorOuterRadius"
-    z="SCALE_UP*showerMaxDetectorLength"
+    rmin="showerMaxDetectorInnerRadius"
+    rmax="showerMaxDetectorOuterRadius"
+    z="showerMaxDetectorLength"
     startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 
   <tube name="showerMaxDetectorAllSectorsFrontBack_solid"
-    rmin="SCALE_DOWN*SCALE_DOWN*showerMaxDetectorInnerRadius"
-    rmax="SCALE_UP*SCALE_UP*showerMaxDetectorOuterRadius"
-    z="SCALE_UP*SCALE_UP*(2.0*showerMaxDetectorLength)"
+    rmin="SCALE_DOWN*showerMaxDetectorInnerRadius"
+    rmax="SCALE_UP*showerMaxDetectorOuterRadius"
+    z="SCALE_UP*(2.0*showerMaxDetectorLength)"
     startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
@@ -132,7 +132,7 @@
       <replicate_along_axis>
         <direction phi="1"/>
         <width value="PHI" unit="deg"/>
-        <offset value="+0/2.0" unit="deg"/>
+        <offset value="0" unit="deg"/>
       </replicate_along_axis>
     </replicavol>
 
