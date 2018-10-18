@@ -15,8 +15,8 @@
 
    <!-- Lead donut dimensions -->
    <quantity name="pionDetectorLeadDonutThickness" type="length" value="0.25" unit="m"/>
-   <quantity name="pionDetectorLeadDonutInnerRadius" type="length" value="0.90" unit="m"/>
-   <quantity name="pionDetectorLeadDonutOuterRadius" type="length" value="1.15" unit="m"/>
+   <quantity name="pionDetectorLeadDonutInnerRadius" type="length" value="0.55" unit="m"/>
+   <quantity name="pionDetectorLeadDonutOuterRadius" type="length" value="1.90" unit="m"/>
 
    <!-- Virtual detector dimensions (before and after lead donut) -->
    <quantity name="pionDetectorVirtualDetThickness" type="length" value="1.0" unit="cm"/>
@@ -78,6 +78,9 @@
       <!-- <materialref ref="G4_Galactic"/> -->
       <materialref ref="G4_Pb"/>
       <solidref ref="pionDetectorLeadDonut_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="pionDetectorLeadDonut_SD"/>
+      <auxiliary auxtype="DetNo" auxvalue="8009"/>
+      <auxiliary auxtype="Color" auxvalue="Gray"/>
       <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     </volume>
 

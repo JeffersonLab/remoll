@@ -56,7 +56,7 @@
       <replicate_along_axis>
         <direction phi="1"/>
         <width value="PHI" unit="deg"/>
-        <offset value="-PHI/2.0" unit="deg"/>
+        <offset value="0" unit="deg"/>
       </replicate_along_axis>
     </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>

@@ -12,15 +12,6 @@
   <constant name="PHI" value="360.0/N_P"/>
 
   <!--
-    For enclosing volumes we merely scale up the actual volume by a small factor.
-  -->
-  <constant name="SCALE" value="0.01"/>
-  <constant name="SCALE_UP" value="1.0+SCALE"/>
-  <constant name="SCALE_DOWN" value="1.0-SCALE"/>
-  <scale name="scale_up" x="SCALE_UP" y="SCALE_UP" z="SCALE_UP"/>
-  <scale name="scale_down" x="SCALE_DOWN" y="SCALE_DOWN" z="SCALE_DOWN"/>
-
-  <!--
     The radius is the full extent of the detector in the radial direction. We use
     the radius along with the angle of the detector to increase the length in the
     longitudinal direction.
@@ -109,7 +100,7 @@
       <replicate_along_axis>
         <direction phi="1"/>
         <width value="PHI" unit="deg"/>
-        <offset value="-PHI/2.0" unit="deg"/>
+        <offset value="0" unit="deg"/>
       </replicate_along_axis>
     </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
