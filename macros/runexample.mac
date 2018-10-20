@@ -4,7 +4,8 @@
 #/tracking/storeTrajectory 1
 
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother.gdml
+#/remoll/setgeofile geometry/mollerMother.gdml
+/remoll/setgeofile geometry/mollerMother_merged.gdml
 
 # This must be explicitly called
 /run/initialize
@@ -73,7 +74,7 @@
 /process/list
 
 # Specify random number seed
-/remoll/seed 123456
+#/remoll/seed 123456
 
 /remoll/filename remollout.root
 
