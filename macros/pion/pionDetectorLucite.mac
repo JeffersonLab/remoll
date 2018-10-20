@@ -1,0 +1,19 @@
+#  Example file
+
+# This must be called before initialize
+/remoll/geometry/setfile geometry/pionDetectorLucite.gdml
+
+# Enable optical physics
+/remoll/physlist/optical/enable
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/evgen/set beam
+/remoll/evgen/beam/origin (0,20,0) cm
+/remoll/evgen/beam/direction (0,-1,0)
+/remoll/evgen/beam/partName pi-
+
+/remoll/filename remollout.root
+
+/run/beamOn 100

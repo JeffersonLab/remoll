@@ -42,12 +42,6 @@
       </physvol>
 
       <physvol>
-        <file name="detectorDaughter_noShlds.gdml"/>
-        <positionref ref="detectorCenter"/>
-        <rotationref ref="identity"/>
-      </physvol>
-
-      <physvol>
         <file name="upstreamDaughter_noShlds.gdml"/>
 	<positionref ref="upstreamCenter"/>
     	<rotationref ref="identity"/>

@@ -15,6 +15,7 @@
 #include <sstream>
 
 std::list<remollGenericDetector*> remollGenericDetector::fGenericDetectors = std::list<remollGenericDetector*>();
+
 G4GenericMessenger* remollGenericDetector::fStaticMessenger = 0;
 
 remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
@@ -50,19 +51,7 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
       .SetParameterName("flag",true).SetDefaultValue(true);
 
   // Create static messenger
-  fStaticMessenger = new G4GenericMessenger(this,"/remoll/SD/","Remoll SD properties");
-  fStaticMessenger->DeclareMethod(
-    "enable_all",
-    &remollGenericDetector::SetAllEnabled,
-    "Enable recording of hits in all detectors");
-  fStaticMessenger->DeclareMethod(
-    "disable_all",
-    &remollGenericDetector::SetAllDisabled,
-    "Disable recording of hits in all detectors");
-  fStaticMessenger->DeclareMethod(
-    "print_all",
-    &remollGenericDetector::PrintAll,
-    "Print all detectors");
+  BuildStaticMessenger();
 
   // Add to static list
   InsertGenericDetector(this);
@@ -72,6 +61,45 @@ remollGenericDetector::~remollGenericDetector()
 {
   EraseGenericDetector(this);
   delete fMessenger;
+}
+
+void remollGenericDetector::BuildStaticMessenger()
+{
+  // Mutex before accessing static members
+  G4AutoLock lock(&remollGenericDetectorMutex);
+
+  // If already built, just return
+  if (fStaticMessenger) return;
+
+  fStaticMessenger = new G4GenericMessenger(this,"/remoll/SD/","Remoll SD properties");
+  fStaticMessenger->DeclareMethod(
+    "enable",
+    &remollGenericDetector::SetOneEnabled,
+    "Enable recording of hits in specified detectors");
+  fStaticMessenger->DeclareMethod(
+    "disable",
+    &remollGenericDetector::SetOneDisabled,
+    "Disable recording of hits in specified detectors");
+  fStaticMessenger->DeclareMethod(
+    "enable_all",
+    &remollGenericDetector::SetAllEnabled,
+    "Enable recording of hits in all detectors");
+  fStaticMessenger->DeclareMethod(
+    "disable_all",
+    &remollGenericDetector::SetAllDisabled,
+    "Disable recording of hits in all detectors");
+  fStaticMessenger->DeclareMethod(
+    "enable_range",
+    &remollGenericDetector::SetRangeEnabled,
+    "Enable recording of hits in range of detectors");
+  fStaticMessenger->DeclareMethod(
+    "disable_range",
+    &remollGenericDetector::SetRangeDisabled,
+    "Disable recording of hits in range of detectors");
+  fStaticMessenger->DeclareMethod(
+    "print_all",
+    &remollGenericDetector::PrintAll,
+    "Print all detectors");
 }
 
 void remollGenericDetector::Initialize(G4HCofThisEvent*)

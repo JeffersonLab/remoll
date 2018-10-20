@@ -45,12 +45,6 @@
       </physvol>
 
       <physvol>
-      <file name="detectorDaughter_merged.gdml"/>
-      <positionref ref="detectorCenter"/>
-      <rotationref ref="identity"/>
-      </physvol>
-
-      <physvol>
 	    <file name="upstreamDaughter_merged.gdml"/>
 	    <positionref ref="upstreamCenter"/>
     	<rotationref ref="identity"/>

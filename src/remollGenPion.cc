@@ -28,7 +28,7 @@ remollGenPion::remollGenPion()
 
     // Scott Mundy 4/14/2016, attempting to solve cross section issue by defining fPh_max and fPh_min
     fPh_min = 0.0*deg;
-    fPh_max = 359.9*deg;
+    fPh_max = 360.0*deg;
 
     fE_min = 0.0*MeV;
     fE_max = -1.0*GeV; // negative to automatically pick beam energy
@@ -44,9 +44,11 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt)
 {
     // Generate Pion event
 
+    // Use radiated beam vertex
     double beamE   = vert->GetBeamEnergy();
     // Use unradiated beam vertex
-    //double beamE = remollBeamTarget::GetBeamTarget()->fBeamE;
+    //double beamE = remollBeamTarget::GetBeamTarget()->fBeamEnergy;
+
     double rad_len = vert->GetRadiationLength();
 
     double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
@@ -67,7 +69,7 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt)
     //solid angle in steradians times the integral of pion energies from 0 to beamE -> int dE from 0 to beamE: rakitha Tue Sep 24 14:11:36 EDT 2013
 
 
-    double V = (fPh_max-fPh_min)*(cos(fTh_min) - cos(fTh_max))*true_emax;
+    double V = (fPh_max - fPh_min) * (cos(fTh_min) - cos(fTh_max)) * (true_emax - fE_min);
 
     double intrad = 2.0*alpha*log(beamE/electron_mass_c2)/pi;
 
@@ -118,8 +120,6 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt)
     evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0),
 	    G4ThreeVector(pf*cos(ph)*sin(th), pf*sin(ph)*sin(th), pf*cos(th)),
 	    piontypestr );
-    return;
-
 }
 
 

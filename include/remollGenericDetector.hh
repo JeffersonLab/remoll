@@ -2,6 +2,7 @@
 #define __REMOLLGENERICDETECTOR_HH
 
 #include "G4VSensitiveDetector.hh"
+#include "G4TwoVector.hh"
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
 
@@ -57,6 +58,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
               (*it)->PrintEnabled();
           }
         }
+
         void SetAllEnabled() {
           for (std::list<remollGenericDetector*>::iterator
             it  = fGenericDetectors.begin();
@@ -74,19 +76,59 @@ class remollGenericDetector : public G4VSensitiveDetector {
           }
         }
 
+        void SetOneEnabled(G4int det) {
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              if ((*it)->fDetNo == det)
+                (*it)->SetEnabled();
+          }
+        }
+        void SetOneDisabled(G4int det) {
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              if ((*it)->fDetNo == det)
+                (*it)->SetDisabled();
+          }
+        }
+
+        void SetRangeEnabled(G4TwoVector v) {
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              if ((*it)->fDetNo >= v.x() && (*it)->fDetNo <= v.y())
+                (*it)->SetEnabled();
+          }
+        }
+        void SetRangeDisabled(G4TwoVector v) {
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              if ((*it)->fDetNo >= v.x() && (*it)->fDetNo <= v.y())
+                (*it)->SetDisabled();
+          }
+        }
+
         static bool isBefore(const remollGenericDetector* left, const remollGenericDetector* right) {
           return (left? (right? (left->fDetNo < right->fDetNo): false): true);
         }
 
     public:
-	remollGenericDetector( G4String name, G4int detnum );
-	virtual ~remollGenericDetector();
+      remollGenericDetector( G4String name, G4int detnum );
+      virtual ~remollGenericDetector();
 
-	virtual void Initialize(G4HCofThisEvent*);
-	virtual G4bool ProcessHits(G4Step*,G4TouchableHistory*);
-	virtual void EndOfEvent(G4HCofThisEvent*);
+      virtual void Initialize(G4HCofThisEvent*);
+      virtual G4bool ProcessHits(G4Step*,G4TouchableHistory*);
+      virtual void EndOfEvent(G4HCofThisEvent*);
 
-    virtual void SetDetectorType(G4String det_type) {
+      void BuildStaticMessenger();
+
+      virtual void SetDetectorType(G4String det_type) {
         if (det_type.compareTo("charged",G4String::ignoreCase) == 0) {
             G4cout << SensitiveDetectorName << " detects charged particles" << G4endl;
             fDetectOpticalPhotons = false;
@@ -110,10 +152,10 @@ class remollGenericDetector : public G4VSensitiveDetector {
     }
 
     void SetEnabled(G4bool flag = true) {
-        fEnabled = flag; PrintEnabled();
+        fEnabled = flag;
     };
     void SetDisabled(G4bool flag = true) {
-        fEnabled = !flag; PrintEnabled();
+        fEnabled = !flag;
     };
     void PrintEnabled() const {
         G4cout << "Det " << GetName() << " (" << fDetNo << ") "

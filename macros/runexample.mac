@@ -6,6 +6,9 @@
 # This must be called before initialize
 #/remoll/setgeofile geometry/mollerMother.gdml
 /remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
 
 # This must be explicitly called
 /run/initialize
@@ -81,3 +84,4 @@
 #/tracking/verbose 2
 
 /run/beamOn 100
+

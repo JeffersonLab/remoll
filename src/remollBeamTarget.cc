@@ -284,6 +284,14 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
 remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 {
+    // Create vertex
+    remollVertex vertex;
+
+    // No sampling required
+    if (samp == kNoTargetVolume) {
+      return vertex;
+    }
+
     // Check if target mother volume exists
     if (fTargetMother == 0) {
       G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
@@ -298,9 +306,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
       exit(1);
     }
 
-    // Create vertex
-    remollVertex vertex;
-
     // Sample raster x and y positions on target
     // (assumed independent of z position)
     G4double rasx = G4RandFlat::shoot(fX0 - fRasterX/2.0, fX0 + fRasterX/2.0);
@@ -312,13 +317,17 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // Figure out how far along the target we got
     G4double total_effective_length = 0;
     switch( samp ){
-	case kActiveTargetVolume:
-	    total_effective_length = fActiveTargetEffectiveLength;
-	    break;
+        case kActiveTargetVolume:
+            total_effective_length = fActiveTargetEffectiveLength;
+            break;
 
-	case kAllTargetVolumes:
-	    total_effective_length = fTotalTargetEffectiveLength;
-	    break;
+        case kAllTargetVolumes:
+            total_effective_length = fTotalTargetEffectiveLength;
+            break;
+
+        case kNoTargetVolume:
+            // nothing to do, just avoid compilation warning
+            break;
     }
     G4double effective_position = G4RandFlat::shoot(0.0, total_effective_length);
 

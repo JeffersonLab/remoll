@@ -570,7 +570,7 @@
     <cone aunit="deg" deltaphi="360" lunit="mm" name="coll2trap" rmax1="COLL2_R4_U+1000" rmax2="COLL2_R4_D+1000" rmin1="0.0" rmin2="0.0" startphi="0" z="1"/>
 
 
-    <box lunit="mm" name="COIL_BOX"  x="XS_W1+100." y="COIL_STRAIGHT_L+100." z="COIL_STRAIGHT_L+100."/>
+    <box lunit="mm" name="US_COIL_BOX"  x="XS_W1+100." y="COIL_STRAIGHT_L+100." z="COIL_STRAIGHT_L+100."/>
     <trd lunit="mm" name="US_STRAIGHT_LONG"  x1="XS_W1" x2="XS_W2" y1="COIL_STRAIGHT_L" y2="COIL_STRAIGHT_L" z="XS_H"/>
     <trd lunit="mm" name="US_STRAIGHT_SHORT" x1="XS_W1" x2="XS_W2" y1="COIL_STRAIGHT_H" y2="COIL_STRAIGHT_H" z="XS_H"/>
 
@@ -639,7 +639,7 @@
     </subtraction>
 
     <intersection name ="uscoilunion_0">
-        <first ref="COIL_BOX"/>
+        <first ref="US_COIL_BOX"/>
         <second ref="US_STRAIGHT_LONG"/>
         <positionref ref="COIL_STRAIGHT_1"/>
         <rotationref ref="RotateIN"/>

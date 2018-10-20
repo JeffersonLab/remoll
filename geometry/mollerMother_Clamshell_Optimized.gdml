@@ -34,11 +34,6 @@
       <rotationref ref="identity"/>
       </physvol>
       <physvol>
-      <file name="detectorDaughter.gdml"/>
-      <positionref ref="detectorCenter"/>
-      <rotationref ref="identity"/>
-      </physvol>
-      <physvol>
       <file name="upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>

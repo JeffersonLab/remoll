@@ -41,12 +41,12 @@ G4Mutex inFileMutex2 = G4MUTEX_INITIALIZER; //files are being read so mutex is n
 
 remollGenTF1::remollGenTF1()
 : remollVEventGen("TF1"),
-    fRing(1), fSector(0), 
-    fType(),
     fFile(0),
     fFunc(0),fMollerFunc(0),
     fElasticFunc(0),
-    fInelasticFunc(0)
+    fInelasticFunc(0),
+    fType(),
+    fRing(1), fSector(0)
 {
     G4cerr << "Initializing TF1 generator" << G4endl;
     fApplyMultScatt = true;
@@ -178,7 +178,6 @@ void remollGenTF1::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 
   double pX, pY, pZ;
   double randTheta, randDeltaPhi, randPhi;
-  double tanth, tanph;
 
   randTheta = CLHEP::RandFlat::shoot( fTh_min, fTh_max );
   randPhi = CLHEP::RandFlat::shoot(fPh_min,fPh_max);
@@ -289,7 +288,6 @@ void remollGenTF1::getHist(G4String& fname){
     rad->GetXaxis()->SetTitle("Radius (mm)");
     rad->GetYaxis()->SetTitle("Rate (GeV/5 mm)");
 
-    int entry = 0;
     int entries = T->GetEntries();
     double rate;
     std::vector<remollGenericDetectorHit_t>* Hit = new std::vector<remollGenericDetectorHit_t>;

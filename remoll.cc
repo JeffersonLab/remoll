@@ -17,6 +17,7 @@ typedef G4RunManager RunManager;
 #include "G4Version.hh"
 #include "G4Types.hh"
 #include "G4UImanager.hh"
+#include "G4ParallelWorldPhysics.hh"
 
 #include "remollRun.hh"
 #include "remollRunData.hh"
@@ -74,14 +75,16 @@ int main(int argc, char** argv) {
     // Parse command line options
     G4String macro;
     G4String session;
-    G4String geometry;
+    G4String geometry_gdmlfile;
+    G4String parallel_gdmlfile;
 #ifdef G4MULTITHREADED
     G4int threads = 0;
 #endif
     //
     for (G4int i = 1; i < argc; ++i) {
       if      (G4String(argv[i]) == "-m") macro    = argv[++i];
-      else if (G4String(argv[i]) == "-g") geometry = argv[++i];
+      else if (G4String(argv[i]) == "-g") geometry_gdmlfile = argv[++i];
+      else if (G4String(argv[i]) == "-p") parallel_gdmlfile = argv[++i];
       else if (G4String(argv[i]) == "-u") session  = argv[++i];
       else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
 #ifdef G4MULTITHREADED
@@ -108,14 +111,17 @@ int main(int argc, char** argv) {
     G4Random::setTheSeed(seed);
 
     // Detector geometry
-    remollDetectorConstruction* detector = new remollDetectorConstruction(geometry);
+    G4String material_name = "material";
+    remollDetectorConstruction* detector = new remollDetectorConstruction(material_name, geometry_gdmlfile);
     // Parallel world geometry
-    remollParallelConstruction* parallel = new remollParallelConstruction();
+    G4String parallel_name = "parallel";
+    remollParallelConstruction* parallel = new remollParallelConstruction(parallel_name, parallel_gdmlfile);
     detector->RegisterParallelWorld(parallel);
     runManager->SetUserInitialization(detector);
 
     // Physics list
     remollPhysicsList* physlist = new remollPhysicsList();
+    physlist->RegisterPhysics(new G4ParallelWorldPhysics(parallel_name));
     runManager->SetUserInitialization(physlist);
 
     // Run action

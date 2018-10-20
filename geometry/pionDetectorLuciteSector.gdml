@@ -8,17 +8,8 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <constant name="N_P" value="14"/> <!-- also change in replicavol below -->
-  <constant name="PHI" value="360.0/7.0"/>
-
-  <!--
-    For enclosing volumes we merely scale up the actual volume by a small factor.
-  -->
-  <constant name="SCALE" value="0.01"/>
-  <constant name="SCALE_UP" value="1.0+SCALE"/>
-  <constant name="SCALE_DOWN" value="1.0-SCALE"/>
-  <scale name="scale_up" x="SCALE_UP" y="SCALE_UP" z="SCALE_UP"/>
-  <scale name="scale_down" x="SCALE_DOWN" y="SCALE_DOWN" z="SCALE_DOWN"/>
+  <constant name="N_P" value="14"/>
+  <constant name="PHI" value="360.0/N_P"/>
 
   <!--
     The radius is the full extent of the detector in the radial direction. We use
@@ -56,8 +47,8 @@
     pionDetectorLuciteSectorAngleBase is +90.0 degrees for the configuration with
     PMT radially outward; -90.0 degrees is with the PMT radially inward.
   -->
-  <quantity name="pionDetectorLuciteSectorAngleBase" type="angle" value="-90.0" unit="deg"/>
-  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="5.0" unit="deg"/>
+  <quantity name="pionDetectorLuciteSectorAngleBase" type="angle" value="+90.0" unit="deg"/>
+  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="0.0" unit="deg"/>
   
   <!--
     The lucite detector is placed radially in reference to the the center of the
@@ -76,18 +67,18 @@
     rmin="pionDetectorLuciteInnerRadius"
     rmax="pionDetectorLuciteOuterRadius"
     z="pionDetectorLuciteLength"
-    startphi="-PHI/4.0" deltaphi="PHI/2.0" aunit="deg"/>
+    startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
   <tube name="pionDetectorLuciteAllSectors_solid"
-    rmin="SCALE_DOWN*pionDetectorLuciteInnerRadius"
-    rmax="SCALE_UP*pionDetectorLuciteOuterRadius"
-    z="SCALE_UP*pionDetectorLuciteLength"
-    startphi="-PHI/4.0" deltaphi="N_P*PHI/2.0" aunit="deg"/>
+    rmin="pionDetectorLuciteInnerRadius"
+    rmax="pionDetectorLuciteOuterRadius"
+    z="pionDetectorLuciteLength"
+    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
 <structure>
   
   <volume name="pionDetectorLuciteSector_logical">
-    <materialref ref="Air"/>
+    <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
       <file name="pionDetectorLucite.gdml"/>
@@ -102,15 +93,14 @@
   </volume>
 
   <volume name="pionDetectorLuciteAllSectors_logical">
-    <materialref ref="Air"/>
+    <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorLuciteAllSectors_solid"/>
-    <replicavol number="14"> <!-- number of replicas has to fill mother volume exactly! -->
+    <replicavol number="N_P"> <!-- number of replicas has to fill mother volume exactly! -->
       <volumeref ref="pionDetectorLuciteSector_logical"/>
       <replicate_along_axis>
         <direction phi="1"/>
-        <!-- bug geant4.10.02.p02: unit must be a length, but mm == 1 -->
-        <width value="2.0*pi/14.0" unit="mm"/>
-        <offset value="-pi/14.0" unit="mm"/>
+        <width value="PHI" unit="deg"/>
+        <offset value="0" unit="deg"/>
       </replicate_along_axis>
     </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
