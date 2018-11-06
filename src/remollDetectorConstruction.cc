@@ -584,7 +584,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 
                   // Register detector IDs and names
                   remollIO* io = remollIO::GetInstance();
-                  io->RegisterDetector(det_name, det_no);
+                  io->RegisterDetector(myvol->GetName(), det_name, det_no);
 
                   thisdet = det;
               }
