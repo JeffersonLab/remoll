@@ -535,6 +535,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           vit != (*iter).second.end(); vit++) {
 
           if ((*vit).type == "SensDet") {
+              G4String det_name = (*vit).value;
 
               // Also allow specification of det number ///////////////////
               G4String det_type = "";
@@ -580,6 +581,10 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                   if (det_type.size() > 0) det->SetDetectorType(det_type);
 
                   SDman->AddNewDetector(det);
+
+                  // Register detector IDs and names
+                  remollIO* io = remollIO::GetInstance();
+                  io->RegisterDetector(det_name, det_no);
 
                   thisdet = det;
               }

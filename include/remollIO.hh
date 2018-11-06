@@ -61,6 +61,12 @@ class remollIO {
 
 	void GrabGDMLFiles( G4String fn );
 
+        void RegisterDetector(G4String name, G4int no) {
+          G4cout << "registering " << name << " with " << no << G4endl;
+          fDetNos.push_back(no);
+          fDetNames += (fDetNames.size() > 0? ":": "") + name + "/I";
+        }
+
     private:
 	TFile *fFile;
 	TTree *fTree;
@@ -85,6 +91,10 @@ class remollIO {
 
 	// Units
 	remollUnits_t fUnits;
+
+        // Detectors
+        std::vector<Int_t> fDetNos;
+        G4String fDetNames;
 
 	// Event data
 	Double_t fEvRate;

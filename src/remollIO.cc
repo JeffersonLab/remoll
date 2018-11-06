@@ -81,6 +81,9 @@ void remollIO::InitializeTree()
     // Units
     fTree->Branch("units",    &fUnits);
 
+    // Detectors
+    fTree->Branch("dets",     &fDetNos[0], fDetNames);
+
     // Event information
     fTree->Branch("rate",     &fEvRate,   "rate/D");
     fTree->Branch("ev",       &fEv);
