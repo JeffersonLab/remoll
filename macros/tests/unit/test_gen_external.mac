@@ -1,5 +1,7 @@
 /run/numberOfThreads 1
 
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
 /run/initialize
 
 /remoll/evgen/set moller
