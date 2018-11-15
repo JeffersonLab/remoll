@@ -40,8 +40,11 @@ class remollGenExternal : public remollVEventGen {
         virtual ~remollGenExternal();
 
         void SetGenExternalFile(G4String& filename);
+        void SetGenExternalZOffset(G4double tempzOffset) {
+            fzOffset = tempzOffset;
+        }
         void SetGenExternalDetID(const G4int detid) {
-          fDetectorID = detid;
+            fDetectorID = detid;
         }
         void SetGenExternalEntry(const G4int firstEventID){
             fEntry = ((firstEventID >= 0)? firstEventID : G4RandFlat::shoot(fEntries));
@@ -57,6 +60,7 @@ class remollGenExternal : public remollVEventGen {
         // Event and hit structures
         remollEvent_t* fEvent;
         std::vector<remollGenericDetectorHit_t>* fHit;
+        G4double fzOffset;
 
         // Detector ID to consider
         G4int fDetectorID;

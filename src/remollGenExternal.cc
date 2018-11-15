@@ -24,10 +24,12 @@ remollGenExternal::remollGenExternal()
   fFile(0), fTree(0),
   fEntry(0), fEntries(0),
   fEvent(0), fHit(0),
-  fDetectorID(28), fLoopID(1)
+  fzOffset(0), fDetectorID(28), fLoopID(1)
 {
+  fSampType = kNoTargetVolume;
   // Add to generic messenger
   fThisGenMessenger->DeclareMethod("file",&remollGenExternal::SetGenExternalFile,"External generator event filename");
+  fThisGenMessenger->DeclareMethod("zOffset",&remollGenExternal::SetGenExternalZOffset,"External generator zOffset");
   fThisGenMessenger->DeclareMethod("detid",&remollGenExternal::SetGenExternalDetID,"External generator detector ID");
   fThisGenMessenger->DeclareMethod("startEvent",&remollGenExternal::SetGenExternalEntry,"External generator starting event: -1 starts random,  n starts at n (default n=0)");
   G4cout << "Constructed remollGenExternal" << G4endl;
@@ -78,13 +80,14 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
     G4cerr << "Could not find branch hit in event file " << filename << G4endl;
     return;
   }
-  if (fTree->GetBranch("ev")) {
-    fTree->SetBranchAddress("ev", &fEvent);
-  } else {
-    G4cerr << "Could not find branch ev in event file " << filename << G4endl;
-    return;
-  }
-
+/* event tree removed by Cameron 11/15/2018
+*  if (fTree->GetBranch("ev")) {
+*    fTree->SetBranchAddress("ev", &fEvent);
+*  } else {
+*    G4cerr << "Could not find branch ev in event file " << filename << G4endl;
+*    return;
+*  }
+*/
 }
 
 void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt)
@@ -104,12 +107,17 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
         fEntry = 0;
     fTree->GetEntry(fEntry++);
     
-    // Weighting completely handled by event file
-    evt->SetEffCrossSection(fEvent->xs*microbarn);
-    evt->SetQ2(fEvent->Q2);
-    evt->SetW2(fEvent->W2);
-    evt->SetAsymmetry(fEvent->A*ppb);
-
+/* event tree removed by Cameron 11/15/2018
+*    // Weighting completely handled by event file
+*    evt->SetEffCrossSection(fEvent->xs*microbarn);
+*    evt->SetQ2(fEvent->Q2);
+*    evt->SetW2(fEvent->W2);
+*    evt->SetAsymmetry(fEvent->A*ppb);
+*/
+    evt->SetEffCrossSection(619.5*microbarn);
+    evt->SetQ2(0.0);
+    evt->SetW2(4e15);
+    evt->SetAsymmetry(-42.0*ppb);
     // Loop over all hits in this event
     for (size_t i = 0; i < fHit->size(); i++) {
       // Create local copy of this hit
@@ -125,7 +133,7 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
 
       // Throw new particle
       evt->ProduceNewParticle(
-          G4ThreeVector(hit.x, hit.y, hit.z),
+          G4ThreeVector(hit.x, hit.y, hit.z + fzOffset),
           G4ThreeVector(hit.px, hit.py, hit.pz),
           particlename);
       number_of_particles++;
