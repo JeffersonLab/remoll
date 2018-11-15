@@ -23,7 +23,7 @@
          <solidref ref="quartzSol_50001"/> 
          <auxiliary auxtype="Color" auxvalue="red"/> 
          <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
-         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
+         <auxiliary auxtype="DetType" auxvalue="boundaryhits"/> 
          <auxiliary auxtype="DetNo" auxvalue="50001"/>  
 </volume>
 <skinsurface name="quartzRecVol_50001_skin" surfaceproperty="Quartz" >

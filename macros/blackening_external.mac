@@ -9,8 +9,8 @@
 
 /process/list
 /remoll/printgeometry true
-#/remoll/beamene 11 GeV
-/remoll/beamene 855 MeV
+/remoll/beamene 11 GeV
+#/remoll/beamene 855 MeV
 
 # Blackening
 #/remoll/evgen/set blackening 
@@ -29,10 +29,10 @@
 /run/beamOn 100
 
 # External
-/remoll/evgen/set external
-/remoll/evgen/external/file remoll_moller_envelope_noCol4_noCoils_500k_LGtest_det28.root
-/remoll/evgen/external/detid 28
-/remoll/evgen/external/startEvent 0
-/remoll/evgen/external/zOffset -28550.0
-/remoll/filename remollout_r5o_external_default.root
-/run/beamOn 100
+#/remoll/evgen/set external
+#/remoll/evgen/external/file remoll_moller_envelope_noCol4_noCoils_500k_LGtest_det28.root
+#/remoll/evgen/external/detid 28
+#/remoll/evgen/external/startEvent 0
+#/remoll/evgen/external/zOffset -28550.0
+#/remoll/filename remollout_r5o_external_default.root
+#/run/beamOn 100

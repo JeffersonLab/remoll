@@ -4,7 +4,7 @@
 /remoll/physlist/optical/enable
 
 # This is the current working geometry
-/remoll/setgeofile geometry/mollerMother_5open.gdml
+/remoll/setgeofile geometry_tests/mollerMother_5open.gdml
 
 #/remoll/likekryptonite  true
 
