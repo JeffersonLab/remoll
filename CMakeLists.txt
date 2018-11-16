@@ -35,12 +35,20 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND
 # this is to ensure we find the header we need
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
+#----------------------------------------------------------------------------
+# generate dictionaries
 ROOT_GENERATE_DICTIONARY(
     remollDict                         # path to dictionary to generate
     "include/remolltypes.hh"           # list of classes to process
     "include/remollRunData.hh"
     "include/remollTextFile.hh"
     LINKDEF "include/remollLinkDef.h"  # ROOT linkDef file
+    OPTIONS -p
+)
+ROOT_GENERATE_DICTIONARY(
+    peDict                         # path to dictionary to generate
+    "analysis/include/petypes.hh"           # list of classes to process
+    LINKDEF "analysis/include/peLinkDef.h"  # ROOT linkDef file
     OPTIONS -p
 )
 
@@ -109,20 +117,6 @@ if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-field-initializers")
 endif()
 
-# C++11 standard if avialable
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++11 support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++0x support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
-endif()
-
 # C++11 standard if available
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
@@ -137,10 +131,8 @@ else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
 endif()
 
-#----------------------------------------------------------------------------
-# Generate dictionaries as well (so we can write objects to ROOT files
 
-include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
+include_directories(${PROJECT_SOURCE_DIR}/include ${PROJECT_SOURCE_DIR}/analysis/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
@@ -148,6 +140,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 #
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/remoll*.hh)
+file(GLOB peSources ${PROJECT_SOURCE_DIR}/analysis/src/pe*.cc)
+file(GLOB peHeaders ${PROJECT_SOURCE_DIR}/analysis/include/pe*.hh)
 if(HepMC_FOUND)
 	file(GLOB hepmc_sources ${PROJECT_SOURCE_DIR}/src/HepMC*.cc)
 	file(GLOB hepmc_headers ${PROJECT_SOURCE_DIR}/src/HepMC*.hh)
@@ -158,6 +152,8 @@ endif()
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
+#----------------------------------------------------------------------------
+# Generate dictionaries as well (so we can write objects to ROOT files
 add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
 set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
 target_link_libraries(remoll-lib
@@ -174,6 +170,19 @@ target_link_libraries(remoll-bin remoll-lib)
 add_executable(reroot-bin reroot.cc)
 set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
 target_link_libraries(reroot-bin remoll-lib)
+
+#---------------------------------------------------------------------------
+# Add sub-projects
+# 
+
+# pe counting script
+add_library(pe-lib SHARED ${peSources} ${peHeaders} peDict.cxx)
+set_target_properties(pe-lib PROPERTIES OUTPUT_NAME pe)
+target_link_libraries(pe-lib ${ROOT_LIBRARIES} )
+
+add_executable(pe-bin pe.cc)
+set_target_properties(pe-bin PROPERTIES OUTPUT_NAME pe)
+target_link_libraries(pe-bin pe-lib)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -210,5 +219,5 @@ add_custom_target(REMOLL DEPENDS remoll-bin)
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS remoll-bin reroot-bin DESTINATION bin)
-install(TARGETS remoll-lib DESTINATION lib)
+install(TARGETS remoll-bin reroot-bin pe-bin DESTINATION bin)
+install(TARGETS remoll-lib pe-lib DESTINATION lib)
