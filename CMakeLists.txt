@@ -182,7 +182,7 @@ target_link_libraries(pe-lib ${ROOT_LIBRARIES} )
 
 add_executable(pe-bin pe.cc)
 set_target_properties(pe-bin PROPERTIES OUTPUT_NAME pe)
-target_link_libraries(pe-bin pe-lib)
+target_link_libraries(pe-bin pe-lib remoll-lib)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we

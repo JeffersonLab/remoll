@@ -15,4 +15,15 @@
 #pragma link C++ struct PMTbulk_t+;
 #pragma link C++ struct elseX_t+;
 
+#pragma link C++ struct vector<catPEs_t>+;
+#pragma link C++ struct vector<Q_t>+;
+#pragma link C++ struct vector<Ref_t>+;
+#pragma link C++ struct vector<RefX_t>+;
+#pragma link C++ struct vector<Refair_t>+;
+#pragma link C++ struct vector<LG_t>+;
+#pragma link C++ struct vector<LGair_t>+;
+#pragma link C++ struct vector<PMTcat_t>+;
+#pragma link C++ struct vector<PMTbulk_t>+;
+#pragma link C++ struct vector<elseX_t>+;
+
 #endif
