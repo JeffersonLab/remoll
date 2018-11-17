@@ -17,9 +17,9 @@ make
 cd ..
 
 # Initialize Analyses
-# cp -p include/remolltypes.hh analysis/include/
-# cp -p build/libremoll.so analysis/
-# mkdir analysis/build
-# cd analysis/build
-# cmake ..
-# make
+cp -p include/remolltypes.hh analysis/include/
+cp -p build/libremoll.so analysis/
+mkdir analysis/build
+cd analysis/build
+cmake ..
+make
