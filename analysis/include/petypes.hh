@@ -20,13 +20,15 @@
 // Event structure
 
 struct catPEs_t { // The full spectrum regardless of source
-  int nPEs; // PE counts per event
-  std::vector<int> detIDs; // store the det IDs too
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  int npes; // PE counts per event
+  std::vector<int> detids; // store the source det IDs too
+  std::vector<int> mtrids; // store the source mtrids too
+  std::vector<int> pids; // store the source pids too
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 struct Q_t { // Quartz Hits
-  int nPEs;
+  int npes;
   int det;
   double r;
   double x;
@@ -35,11 +37,11 @@ struct Q_t { // Quartz Hits
   double px, py, pz;
   double p, e, m;
   double vx, vy, vz;
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 struct Ref_t { // Reflector Primary Hits
-  int nPEs;
+  int npes;
   int det;
   double r;
   double x;
@@ -48,11 +50,11 @@ struct Ref_t { // Reflector Primary Hits
   double px, py, pz;
   double p, e, m;
   double vx, vy, vz;
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 struct RefX_t { // Reflector Accidental Side Hits
-  int nPEs;
+  int npes;
   int det;
   double r;
   double x;
@@ -61,11 +63,11 @@ struct RefX_t { // Reflector Accidental Side Hits
   double px, py, pz;
   double p, e, m;
   double vx, vy, vz;
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 struct Refair_t { // Reflector Air Volume Hits
-  int nPEs;
+  int npes;
   int det;
   double r;
   double x;
@@ -74,11 +76,11 @@ struct Refair_t { // Reflector Air Volume Hits
   double px, py, pz;
   double p, e, m;
   double vx, vy, vz;
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 struct LG_t { // Light Guide Hits
-  int nPEs;
+  int npes;
   int det;
   double r;
   double x;
@@ -87,11 +89,11 @@ struct LG_t { // Light Guide Hits
   double px, py, pz;
   double p, e, m;
   double vx, vy, vz;
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 struct LGair_t { // Light Guide Air Volume Hits
-  int nPEs;
+  int npes;
   int det;
   double r;
   double x;
@@ -100,11 +102,11 @@ struct LGair_t { // Light Guide Air Volume Hits
   double px, py, pz;
   double p, e, m;
   double vx, vy, vz;
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 struct PMTcat_t { // PMT Cathode Hits
-  int nPEs;
+  int npes;
   int det;
   double r;
   double x;
@@ -113,11 +115,11 @@ struct PMTcat_t { // PMT Cathode Hits
   double px, py, pz;
   double p, e, m;
   double vx, vy, vz;
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 struct PMTbulk_t { // PMT Bulk Volume Hits
-  int nPEs;
+  int npes;
   int det;
   double r;
   double x;
@@ -126,12 +128,12 @@ struct PMTbulk_t { // PMT Bulk Volume Hits
   double px, py, pz;
   double p, e, m;
   double vx, vy, vz;
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 struct elseX_t { // PMT Bulk Volume Hits
-  int nPEs;
-  std::vector<double> catHitx, catHity, catHitz; //Cathode PE hit information
+  int npes;
+  std::vector<double> cathitx, cathity, cathitz; //Cathode PE hit information
 };
 
 

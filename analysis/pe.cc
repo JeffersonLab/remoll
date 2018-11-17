@@ -11,18 +11,20 @@
 
 #define pi 3.141592653589793238462643383279502884L
 
-catPEs_t catPEsTrim(std::vector<int> detids, size_t peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+catPEs_t catPEsTrim(std::vector<int> sourcedetids, std::vector<int> quartzpids, std::vector<int> quartzmtrids, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     catPEs_t newHit;
-    newHit.nPEs=peLen;
-    newHit.detIDs=detids;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.detids=sourcedetids;
+    newHit.pids=quartzpids;
+    newHit.mtrids=quartzmtrids;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
-Q_t QTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+Q_t QTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     Q_t newHit;
     newHit.det = hit.det;
@@ -39,14 +41,14 @@ Q_t QTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> catH
     newHit.vx=hit.vx;
     newHit.vy=hit.vy;
     newHit.vz=hit.vz;
-    newHit.nPEs=peLen;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
-Ref_t RefTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+Ref_t RefTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     Ref_t newHit;
     newHit.det = hit.det;
@@ -63,14 +65,14 @@ Ref_t RefTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> 
     newHit.vx=hit.vx;
     newHit.vy=hit.vy;
     newHit.vz=hit.vz;
-    newHit.nPEs=peLen;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
-RefX_t RefXTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+RefX_t RefXTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     RefX_t newHit;
     newHit.det = hit.det;
@@ -87,14 +89,14 @@ RefX_t RefXTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double
     newHit.vx=hit.vx;
     newHit.vy=hit.vy;
     newHit.vz=hit.vz;
-    newHit.nPEs=peLen;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
-Refair_t RefairTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+Refair_t RefairTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     Refair_t newHit;
     newHit.det = hit.det;
@@ -111,14 +113,14 @@ Refair_t RefairTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<do
     newHit.vx=hit.vx;
     newHit.vy=hit.vy;
     newHit.vz=hit.vz;
-    newHit.nPEs=peLen;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
-LG_t LGTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+LG_t LGTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     LG_t newHit;
     newHit.det = hit.det;
@@ -135,14 +137,14 @@ LG_t LGTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> ca
     newHit.vx=hit.vx;
     newHit.vy=hit.vy;
     newHit.vz=hit.vz;
-    newHit.nPEs=peLen;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
-LGair_t LGairTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+LGair_t LGairTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     LGair_t newHit;
     newHit.det = hit.det;
@@ -159,14 +161,14 @@ LGair_t LGairTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<doub
     newHit.vx=hit.vx;
     newHit.vy=hit.vy;
     newHit.vz=hit.vz;
-    newHit.nPEs=peLen;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
-PMTcat_t PMTcatTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+PMTcat_t PMTcatTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     PMTcat_t newHit;
     newHit.det = hit.det;
@@ -183,14 +185,14 @@ PMTcat_t PMTcatTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<do
     newHit.vx=hit.vx;
     newHit.vy=hit.vy;
     newHit.vz=hit.vz;
-    newHit.nPEs=peLen;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
-PMTbulk_t PMTbulkTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+PMTbulk_t PMTbulkTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     PMTbulk_t newHit;
     newHit.det = hit.det;
@@ -207,20 +209,20 @@ PMTbulk_t PMTbulkTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<
     newHit.vx=hit.vx;
     newHit.vy=hit.vy;
     newHit.vz=hit.vz;
-    newHit.nPEs=peLen;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
-elseX_t elseXTrim(int peLen, std::vector<double> catHitx, std::vector<double> catHity, std::vector<double> catHitz)
+elseX_t elseXTrim(int peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     elseX_t newHit;
-    newHit.nPEs=peLen;
-    newHit.catHitx=catHitx;
-    newHit.catHity=catHity;
-    newHit.catHitz=catHitz;
+    newHit.npes=peLen;
+    newHit.cathitx=cathitx;
+    newHit.cathity=cathity;
+    newHit.cathitz=cathitz;
     return newHit; 
 }
 
@@ -250,6 +252,16 @@ void pe(std::string file="tracking.root", int detid=50001)
     std::vector < PMTcat_t > *PMTcat = new std::vector < PMTcat_t > ;
     std::vector < PMTbulk_t > *PMTbulk = new std::vector < PMTbulk_t > ;
     std::vector < elseX_t > *elseX = new std::vector < elseX_t > ;
+    std::vector<int> eTRID;  
+    std::vector<int> DETID;
+    std::vector<int> PID;
+    std::vector<int> MTRID;
+    std::vector<int> peTRID;
+    int Qcounted = 0;
+    int Refaircounted = 0;
+    int LGaircounted = 0;
+    int PMTbulkcounted = 0;
+    int detSourcedPEs = 0;
 
     //TODO reading data into envelopes downstream could be sped up
     //by storing the data by Z instead of by hit
@@ -274,14 +286,10 @@ void pe(std::string file="tracking.root", int detid=50001)
         oldTree->GetEntry(j);
         //std::cout << "Hits: " << fHit->size() << std::endl;
         //std::cout << "Parts: " << fPart->size() << std::endl;
-        std::vector<int> eTRID;  
-        std::vector<int> eDETID;
-        std::vector<int> peTRID;
-        int detSourcedPEs = 0;
         //std::vector<double> x, y, z, px, py, pz, p, e, m, vx, vy, vz;
-        std::vector<double> catHitx, catHity, catHitz;
+        std::vector<double> cathitx, cathity, cathitz;
         // Log which electron track IDs (and other info) hit which detectors, and which PE IDs hit the cathode and where
-        // Attribute all npe counts and cathode hit positions to all eDETID branches that are hit during that event (in lieu of getting photon birth vertex properly down)
+        // Attribute all npe counts and cathode hit positions to all DETID branches that are hit during that event (in lieu of getting photon birth vertex properly down)
         // int npe = 0; // do this as peTRID->Size();
 
         for (size_t i = 0; i < fHit->size(); i++)
@@ -296,25 +304,22 @@ void pe(std::string file="tracking.root", int detid=50001)
             if (hit.pid == 11 && hit.mtrid == 0){ // Then this is our primary signal of interest
             // if you do mtrid == 1 then you get the delta rays! About a 1% contribution 
                 eTRID.push_back(hit.trid);
-                eDETID.push_back(hit.det);
-                /*x.push_back(hit.x);
-                y.push_back(hit.y);
-                z.push_back(hit.z);
-                px.push_back(hit.px);
-                py.push_back(hit.py);
-                pz.push_back(hit.pz);
-                vx.push_back(hit.vx);
-                vy.push_back(hit.vy);
-                vz.push_back(hit.vz);
-                p.push_back(hit.p);
-                e.push_back(hit.e);
-                m.push_back(hit.m);*/
+                DETID.push_back(hit.det);
+                if (i<30 && hit.det == 50001){
+                    std::cout<<"hit.trid of a hit.mtrid==0 and hit.pid==11 and hit.det==50001 (primary e on quartz): "<<hit.trid<<std::endl;
+                }
             }
-            if (hit.pid == 0 && hit.det == detid+700){ // Then this is an optical photon and we want to count ++ if it hits the PMT cathode
+            if (hit.det == detid) {
+                // If any particle hits the quartz detector then tell the particle ID and mother ID (so we can keep track of deltas) 
+                PID.push_back(hit.pid);
+                MTRID.push_back(hit.mtrid);
+            }
+            if (hit.pid == 0 && hit.det == detid+700){
+                // This is an optical photon and we want to count ++ if it hits the PMT cathode
                 peTRID.push_back(hit.trid);
-                catHitx.push_back(hit.x);
-                catHity.push_back(hit.y);
-                catHitz.push_back(hit.z);
+                cathitx.push_back(hit.x);
+                cathity.push_back(hit.y);
+                cathitz.push_back(hit.z);
             }
         }
 
@@ -326,40 +331,59 @@ void pe(std::string file="tracking.root", int detid=50001)
                 if (hit.trid == eTRID.at(k)) { // Then this electron hit a detector we should know about and store all of the info and cathode hits too
                     //std::cout << "electron TRID " << hit.trid << std::endl;
                     // Make the electron hit info go into the appropriate detector branch
-                    if (hit.det == detid) {     // quartz
-                        Q->push_back(QTrim(hit,peTRID.size(),catHitx,catHity,catHitz)); 
+                    // quartz
+                    if (hit.det == detid && Qcounted==0) {     
+                        Q->push_back(QTrim(hit,peTRID.size(),cathitx,cathity,cathitz)); 
+                        std::cout<<"hit.trid of a hit.mtrid==0 and hit.pid==11 and hit.det==50001 (primary e on quartz): "<<hit.trid<<", and NPE: "<<peTRID.size()<<std::endl;
+                        Qcounted++;
                     }
-                    if (hit.det == detid+100) { // reflector air
-                        Refair->push_back(RefairTrim(hit,peTRID.size(),catHitx,catHity,catHitz)); 
+                    // reflector air
+                    if (hit.det == detid+100 && Refaircounted==0) { 
+                        Refair->push_back(RefairTrim(hit,peTRID.size(),cathitx,cathity,cathitz)); 
+                        Refaircounted++;
                     }
-                    if (hit.det == detid+200) { // reflector skin
-                        Ref->push_back(RefTrim(hit,peTRID.size(),catHitx,catHity,catHitz)); 
+                    // reflector skin
+                    if (hit.det == detid+200) { 
+                        Ref->push_back(RefTrim(hit,peTRID.size(),cathitx,cathity,cathitz)); 
                     }
-                    if (hit.det == detid+300) { // reflector volume
-                        RefX->push_back(RefXTrim(hit,peTRID.size(),catHitx,catHity,catHitz));  
+                    // reflector volume
+                    if (hit.det == detid+300) { 
+                        RefX->push_back(RefXTrim(hit,peTRID.size(),cathitx,cathity,cathitz));  
                     }
-                    if (hit.det == detid+400) { // light guide air
-                        LGair->push_back(LGairTrim(hit,peTRID.size(),catHitx,catHity,catHitz));   
+                    // light guide air
+                    if (hit.det == detid+400 && LGaircounted==0) { 
+                        LGair->push_back(LGairTrim(hit,peTRID.size(),cathitx,cathity,cathitz));   
+                        LGaircounted++;
                     }
-                    if (hit.det == detid+500) { // light guide skin
-                        LG->push_back(LGTrim(hit,peTRID.size(),catHitx,catHity,catHitz));   
+                    // light guide skin
+                    if (hit.det == detid+500) { 
+                        LG->push_back(LGTrim(hit,peTRID.size(),cathitx,cathity,cathitz));   
                     }
-                    if (hit.det == detid+600) { // PMT bulk
-                        PMTbulk->push_back(PMTbulkTrim(hit,peTRID.size(),catHitx,catHity,catHitz));   
+                    // PMT bulk
+                    if (hit.det == detid+600 && PMTbulkcounted==0) {
+                        PMTbulk->push_back(PMTbulkTrim(hit,peTRID.size(),cathitx,cathity,cathitz));   
+                        PMTbulkcounted++;
                     }
-                    if (hit.det == detid+700) { // PMT cathode
-                        PMTcat->push_back(PMTcatTrim(hit,peTRID.size(),catHitx,catHity,catHitz));   
+                    // PMT cathode
+                    if (hit.det == detid+700) { 
+                        PMTcat->push_back(PMTcatTrim(hit,peTRID.size(),cathitx,cathity,cathitz));   
                     }
                     //break; //how is this useful?? I want to muliple count
                 }
             }   
         }
+        catPEs->push_back(catPEsTrim(DETID,PID,MTRID,(int)peTRID.size(),cathitx,cathity,cathitz)); 
         detSourcedPEs=(int)peTRID.size();
-        catPEs->push_back(catPEsTrim(eDETID,(int)peTRID.size(),catHitx,catHity,catHitz)); 
-        elseX->push_back(elseXTrim(((int)peTRID.size()-detSourcedPEs),catHitx,catHity,catHitz));
+        elseX->push_back(elseXTrim(((int)peTRID.size()-detSourcedPEs),cathitx,cathity,cathitz));
         if (catPEs->size() > 0){
             newTree->Fill();
 	    }
+        Qcounted=0;
+        Refaircounted=0;
+        LGaircounted=0;
+        PMTbulkcounted=0;
+        detSourcedPEs=0;
+        eTRID.clear();
         catPEs->clear();
         elseX->clear();
         Q->clear();
@@ -370,11 +394,12 @@ void pe(std::string file="tracking.root", int detid=50001)
         LG->clear();
         PMTbulk->clear();
         PMTcat->clear();
-        catHitx.clear();
-        catHity.clear();
-        catHitz.clear();
-        eTRID.clear();  
-        eDETID.clear();
+        cathitx.clear();
+        cathity.clear();
+        cathitz.clear();
+        DETID.clear();
+        PID.clear();
+        MTRID.clear();
         peTRID.clear();
     }
     newFile = newTree->GetCurrentFile();
