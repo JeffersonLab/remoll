@@ -66,13 +66,13 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-          <file name="targetDaughter_noShlds.gdml"/>
+      <file name="targetDaughter_noShlds.gdml"/>
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-          <file name="detector_mainz.gdml"/>
+      <file name="detector_mainz.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="rot"/>
       </physvol>

@@ -52,7 +52,7 @@
 
   <constant name="width_dump" value="6000."/> 
   <constant name="height_dump" value="height_wall"/> 
-  <constant name="length_dump" value="6000."/> 
+
 <!--  <constant name="center_dump" value="radius_of_hall+length_dump/2+thick_wall"/> -->
   <constant name="center_dump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
   <constant name="center_cyldump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>

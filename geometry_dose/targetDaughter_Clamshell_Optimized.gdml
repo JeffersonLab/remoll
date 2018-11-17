@@ -368,13 +368,13 @@
    </volume>
 
    <volume name="USAlTarg">
-     <materialref ref="Aluminum"/>
+     <materialref ref="Aluminium"/>
      <solidref ref="AlWindow"/>
      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
    </volume>
 
    <volume name="DSAlTarg">
-     <materialref ref="Aluminum"/>
+     <materialref ref="Aluminium"/>
      <solidref ref="AlWindow"/>
      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
    </volume>
@@ -482,21 +482,23 @@
      <materialref ref="VacuumTarg"/>
      <solidref ref="boxTargetMother"/>
 
+     <!--
      <physvol>
        <volumeref ref="USAlTarg"/>
        <position name="targ_upstream_window" unit="mm" x="0" y="YOFFSET_targ" z="-750"/>
      </physvol>
-
+-->
      <physvol>
        <volumeref ref="h2Targ"/>
        <position name="targ_center1" unit="mm" x="0" y="YOFFSET_targ" z="0"/>
      </physvol>
 
+<!--
      <physvol>
        <volumeref ref="DSAlTarg"/>
        <position name="targ_downstream_window" unit="mm" x="0" y="YOFFSET_targ" z="750"/>
      </physvol>
-
+-->
      <physvol>
        <volumeref ref="boxtgtShield1_logic"/>
        <positionref ref="boxtgtShield1_center"/>

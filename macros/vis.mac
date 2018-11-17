@@ -1,10 +1,10 @@
 # Use this open statement to create an OpenGL view:
 /vis/open OGL 600x600-0+0  
 
-#/vis/open OGLIQt 1200x800
+/remoll/physlist/optical/enable
 
 # This is the current working geometry
-/remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/setgeofile geometry_tests/mollerMother_5open.gdml
 
 #/remoll/likekryptonite  true
 
@@ -13,8 +13,12 @@
 
 #/remoll/setphysicslist QGSP_BERT_EMV
 
-
 /run/initialize
+
+
+#/remoll/beamene 11.0 GeV
+/remoll/beamene 855 MeV
+/remoll/beamcurr 50 microampere
 #/remoll/optical true
 #/remoll/addfield CLEO_rm.dat
 /control/execute vis/vis.mac
@@ -23,19 +27,25 @@
 
 # Raster is on by default with 5x5mm
 
-/remoll/rasx 0 mm
-/remoll/rasy 0 mm 
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm 
 
-
+## Beam generator
 /remoll/evgen/set beam
-#/remoll/thmin 0.0 deg
-#/remoll/thmax 0.0 deg
-#/remoll/phmin 0.0 deg
-#/remoll/phmax 0.0 deg
-#/remoll/emin  0 GeV
-#/remoll/emax 11.0 GeV
+/remoll/evgen/beam/x -987.5
+/remoll/evgen/beam/z -120.0
+/remoll/evgen/beam/px -0.0523
+/remoll/evgen/beam/pz 0.9986 
+/remoll/filename remollout_r5o_beam_default.root
 
 
-/remoll/beamene 11.0 GeV
-/remoll/beamcurr 50 microampere
+## External Generator
+#/remoll/evgen/set external
+#/remoll/evgen/external/file remoll_moller_envelope_noCol4_noCoils_500k_LGtest_det28.root
+#/remoll/evgen/external/detid 28
+#/remoll/evgen/external/startEvent 0
+#/remoll/evgen/external/zOffset -28550.0
+#/remoll/filename remollout_r5o_external_default.root
+
+
 #/run/beamOn 100
