@@ -1,230 +1,51 @@
 #include <sstream>
 #include <string>
 #include <iostream>
+#include <fstream>
+#include <vector> 
+
+#include <TApplication.h>
+#include <TRint.h>
+#include <TSystem.h>
+
+#include <TStyle.h>
+#include <TPaveStats.h>
+#include <TCanvas.h>
+#include <TGraph.h>
+#include <TMultiGraph.h>
+#include <TLegend.h>
+#include <TGraphErrors.h>
+#include <TFrame.h>
+#include <TObjArray.h>
+#include <TVector2.h>
+#include <TLatex.h>
+
+#include <TFile.h>
+#include <TChain.h>
+#include <TH2F.h>
+#include <TH2D.h>
 
 #include "TTree.h"
 #include "TFile.h"
 #include "remolltypes.hh"
 #include "petypes.hh"
-#include <vector> 
-
+#include "pe.hh"
 
 #define pi 3.141592653589793238462643383279502884L
 
-catPEs_t catPEsTrim(std::vector<int> sourcedetids, std::vector<int> quartzpids, std::vector<int> quartzmtrids, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
+void set_plot_style()
 {
-    catPEs_t newHit;
-    newHit.npes=peLen;
-    newHit.detids=sourcedetids;
-    newHit.pids=quartzpids;
-    newHit.mtrids=quartzmtrids;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
+    const Int_t NRGBs = 5;
+    const Int_t NCont = 255;
+    // See class TColor documentation and SetPalette() command
+    Double_t stops[NRGBs] = { 0.00, 0.34, 0.61, 0.84, 1.00 };
+    Double_t red[NRGBs]   = { 0.00, 0.00, 0.87, 1.00, 0.51 };
+    Double_t green[NRGBs] = { 0.00, 0.81, 1.00, 0.20, 0.00 };
+    Double_t blue[NRGBs]  = { 0.51, 1.00, 0.12, 0.00, 0.00 };
+    TColor::CreateGradientColorTable(NRGBs, stops, red, green, blue, NCont);
+    gStyle->SetNumberContours(NCont);
 }
 
-Q_t QTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
-{
-    Q_t newHit;
-    newHit.det = hit.det;
-    newHit.x=hit.x;
-    newHit.y=hit.y;
-    newHit.z=hit.z;
-    newHit.r=hit.r;
-    newHit.px=hit.px;
-    newHit.py=hit.py;
-    newHit.pz=hit.pz;
-    newHit.p=hit.p;
-    newHit.e=hit.e;
-    newHit.m=hit.m;
-    newHit.vx=hit.vx;
-    newHit.vy=hit.vy;
-    newHit.vz=hit.vz;
-    newHit.npes=peLen;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
-}
-
-Ref_t RefTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
-{
-    Ref_t newHit;
-    newHit.det = hit.det;
-    newHit.x=hit.x;
-    newHit.y=hit.y;
-    newHit.z=hit.z;
-    newHit.r=hit.r;
-    newHit.px=hit.px;
-    newHit.py=hit.py;
-    newHit.pz=hit.pz;
-    newHit.p=hit.p;
-    newHit.e=hit.e;
-    newHit.m=hit.m;
-    newHit.vx=hit.vx;
-    newHit.vy=hit.vy;
-    newHit.vz=hit.vz;
-    newHit.npes=peLen;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
-}
-
-RefX_t RefXTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
-{
-    RefX_t newHit;
-    newHit.det = hit.det;
-    newHit.x=hit.x;
-    newHit.y=hit.y;
-    newHit.z=hit.z;
-    newHit.r=hit.r;
-    newHit.px=hit.px;
-    newHit.py=hit.py;
-    newHit.pz=hit.pz;
-    newHit.p=hit.p;
-    newHit.e=hit.e;
-    newHit.m=hit.m;
-    newHit.vx=hit.vx;
-    newHit.vy=hit.vy;
-    newHit.vz=hit.vz;
-    newHit.npes=peLen;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
-}
-
-Refair_t RefairTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
-{
-    Refair_t newHit;
-    newHit.det = hit.det;
-    newHit.x=hit.x;
-    newHit.y=hit.y;
-    newHit.z=hit.z;
-    newHit.r=hit.r;
-    newHit.px=hit.px;
-    newHit.py=hit.py;
-    newHit.pz=hit.pz;
-    newHit.p=hit.p;
-    newHit.e=hit.e;
-    newHit.m=hit.m;
-    newHit.vx=hit.vx;
-    newHit.vy=hit.vy;
-    newHit.vz=hit.vz;
-    newHit.npes=peLen;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
-}
-
-LG_t LGTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
-{
-    LG_t newHit;
-    newHit.det = hit.det;
-    newHit.x=hit.x;
-    newHit.y=hit.y;
-    newHit.z=hit.z;
-    newHit.r=hit.r;
-    newHit.px=hit.px;
-    newHit.py=hit.py;
-    newHit.pz=hit.pz;
-    newHit.p=hit.p;
-    newHit.e=hit.e;
-    newHit.m=hit.m;
-    newHit.vx=hit.vx;
-    newHit.vy=hit.vy;
-    newHit.vz=hit.vz;
-    newHit.npes=peLen;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
-}
-
-LGair_t LGairTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
-{
-    LGair_t newHit;
-    newHit.det = hit.det;
-    newHit.x=hit.x;
-    newHit.y=hit.y;
-    newHit.z=hit.z;
-    newHit.r=hit.r;
-    newHit.px=hit.px;
-    newHit.py=hit.py;
-    newHit.pz=hit.pz;
-    newHit.p=hit.p;
-    newHit.e=hit.e;
-    newHit.m=hit.m;
-    newHit.vx=hit.vx;
-    newHit.vy=hit.vy;
-    newHit.vz=hit.vz;
-    newHit.npes=peLen;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
-}
-
-PMTcat_t PMTcatTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
-{
-    PMTcat_t newHit;
-    newHit.det = hit.det;
-    newHit.x=hit.x;
-    newHit.y=hit.y;
-    newHit.z=hit.z;
-    newHit.r=hit.r;
-    newHit.px=hit.px;
-    newHit.py=hit.py;
-    newHit.pz=hit.pz;
-    newHit.p=hit.p;
-    newHit.e=hit.e;
-    newHit.m=hit.m;
-    newHit.vx=hit.vx;
-    newHit.vy=hit.vy;
-    newHit.vz=hit.vz;
-    newHit.npes=peLen;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
-}
-
-PMTbulk_t PMTbulkTrim(remollGenericDetectorHit_t hit, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
-{
-    PMTbulk_t newHit;
-    newHit.det = hit.det;
-    newHit.x=hit.x;
-    newHit.y=hit.y;
-    newHit.z=hit.z;
-    newHit.r=hit.r;
-    newHit.px=hit.px;
-    newHit.py=hit.py;
-    newHit.pz=hit.pz;
-    newHit.p=hit.p;
-    newHit.e=hit.e;
-    newHit.m=hit.m;
-    newHit.vx=hit.vx;
-    newHit.vy=hit.vy;
-    newHit.vz=hit.vz;
-    newHit.npes=peLen;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
-}
-
-elseX_t elseXTrim(int peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
-{
-    elseX_t newHit;
-    newHit.npes=peLen;
-    newHit.cathitx=cathitx;
-    newHit.cathity=cathity;
-    newHit.cathitz=cathitz;
-    return newHit; 
-}
 
 void pe(std::string file="tracking.root", int detid=50001)
 {
@@ -306,7 +127,6 @@ void pe(std::string file="tracking.root", int detid=50001)
                 eTRID.push_back(hit.trid);
                 DETID.push_back(hit.det);
                 if (i<30 && hit.det == 50001){
-                    std::cout<<"hit.trid of a hit.mtrid==0 and hit.pid==11 and hit.det==50001 (primary e on quartz): "<<hit.trid<<std::endl;
                 }
             }
             if (hit.det == detid) {
@@ -334,7 +154,6 @@ void pe(std::string file="tracking.root", int detid=50001)
                     // quartz
                     if (hit.det == detid && Qcounted==0) {     
                         Q->push_back(QTrim(hit,peTRID.size(),cathitx,cathity,cathitz)); 
-                        std::cout<<"hit.trid of a hit.mtrid==0 and hit.pid==11 and hit.det==50001 (primary e on quartz): "<<hit.trid<<", and NPE: "<<peTRID.size()<<std::endl;
                         Qcounted++;
                     }
                     // reflector air
@@ -409,13 +228,197 @@ void pe(std::string file="tracking.root", int detid=50001)
     newFile->Close();
 }
 
+void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int detid=50001, std::string variable="reflectorAngle", double varVal=11.5, std::string unit="deg")
+{ 
+    TApplication theApp("App",&argcC,argvC);
+
+    int dotpos = fileP.rfind(".");   
+    std::ostringstream os;
+    std::ostringstream os2;
+    os << fileP.substr(0, dotpos) << "_PEs_"<<"det_"<<detid<<".root";
+    os2 << fileP.substr(0, dotpos) << "_PEs_"<<"det_"<<detid<<"_plots.root";
+    std::string fileName = os.str();
+    std::string fileNamePlots = os2.str();
+
+    TChain * Tmol =new TChain("T");
+    TString ttemp = TString(fileName);
+    Tmol->Add(ttemp);
+    TFile *plotsFile = new TFile(fileNamePlots.c_str(),"RECREATE", "", 1);
+    TTree* plotsTree = new TTree("T", "Tree of plots");
+    plotsFile->cd(); // Is this necessary?
+    //int nentries = (Int_t)newTree->GetEntries();
+    std::fstream file_out_rms;
+    std::ofstream file_out_mean;
+    std::ofstream file_out_res;
+    file_out_rms.open("rms.csv",std::ofstream::out | std::ofstream::app);
+    file_out_mean.open("mean.csv",std::ofstream::out | std::ofstream::app);
+    file_out_res.open("res.csv",std::ofstream::out | std::ofstream::app);
+
+    gROOT->SetStyle("Plain");
+    //gStyle->SetOptStat(0); 
+    gStyle->SetOptStat("eMR");
+    gStyle->SetNumberContours(255);
+
+    set_plot_style();
+
+    const int n_plots = 12;
+    TH1F *Histo[n_plots];
+    double RMS[n_plots];
+    double RMSerror[n_plots];
+    double Mean[n_plots];
+    double Meanerror[n_plots];
+    TCanvas * c1[n_plots];
+    std::string names[n_plots]={"Total Cathode Spectrum per event",
+                            "Cathode Spectrum from primary signal quartz electrons only",
+                            "Cathode Spectrum from quartz deltas",
+                            "Cathode Spectrum from all non-primary quartz signals",
+                            "e- hit radial hit spectrum on the reflector", // Consider adding photon xyz tracking too - would have to go beside the cathode xyz tracking feature
+                            "e- hit radial hit spectrum on the quartz-reflector holder",
+                            "Cathode Spectrum from the reflector air",
+                            "e- hit radial spectrum on the light guide walls",
+                            "Cathode Spectrum from the light guide air",
+                            "e- hit radial spectrum in the PMT bulk",
+                            "e- hit spectrum in the cathode",
+                            "Cathode Spectrum from elsewhere"}; 
+    std::string draws[n_plots]={"catpes.npes",
+                            "catpes.npes",
+                            "catpes.npes",
+                            "catpes.npes",
+                            "ref.r",
+                            "refx.r",
+                            "refair.npes",
+                            "lg.r",
+                            "lgair.npes",
+                            "pmtbulk.r",
+                            "pmtcat.r",
+                            "else.npes"};
+    std::string cuts[n_plots]={"",
+                            Form("catpes.detids==%d && catpes.pids==11 && catpes.mtrids==0",detid),
+                            Form("catpes.detids==%d && abs(catpes.pids)==11 && catpes.mtrids!=0",detid),
+                            Form("catpes.detids==%d && catpes.mtrids!=0",detid),
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            "",
+                            ""};
+    std::string xTitle[n_plots]={"PEs",
+                                 "PEs",
+                                 "PEs",
+                                 "PEs",
+                                 "Radial Hit Position (mm)",
+                                 "Radial Hit Position (mm)",
+                                 "PEs",
+                                 "Radial Hit Position (mm)",
+                                 "PEs",
+                                 "Radial Hit Position (mm)",
+                                 "Radial Hit Position (mm)",
+                                 "PEs"};
+    std::string yTitle[n_plots]={"Spectrum",
+                                 "Spectrum",
+                                 "Spectrum",
+                                 "Spectrum",
+                                 "Counts",
+                                 "Counts",
+                                 "Spectrum",
+                                 "Counts",
+                                 "Spectrum",
+                                 "Counts",
+                                 "Counts",
+                                 "Spectrum"};
+    int nbins[n_plots]={100,
+                        100,
+                        100,
+                        100,
+                        100,
+                        100,
+                        100,
+                        100,
+                        100,
+                        100,
+                        100,
+                        100};
+    double lowbin[n_plots]={
+                        0.0,
+                        0.0,
+                        0.0,
+                        0.0,
+                        900.0,
+                        900.0,
+                        0.0,
+                        950.0,
+                        0.0,
+                        1050.0,
+                        1050.0,
+                        0.0};
+    double highbin[n_plots]={
+                        100.0,
+                        100.0,
+                        100.0,
+                        100.0,
+                        1200.0,
+                        1200.0,
+                        100.0,
+                        1200.0,
+                        100.0,
+                        1400.0,
+                        1250.0,
+                        100.0};
+
+    for (int p=0;p<n_plots;p++){
+        c1[p]=new TCanvas(Form("%s_c%02d",names[p].c_str(),p),Form("canvas_%s_%02d",names[p].c_str(),p),1500,1500);
+        c1[p]->cd();
+        c1[p]->SetLogy();
+        Histo[p]=new TH1F(Form("Histo[%d]",p),Form("%s; %s; %s",names[p].c_str(),xTitle[p].c_str(),yTitle[p].c_str()),nbins[p],lowbin[p],highbin[p]);
+        //Histo[p]=new TH1F();
+        //Histo[p]->SetName(Form("Histo[%d]",p));
+        Tmol->Draw(Form("%s>>Histo[%d]",draws[p].c_str(),p),Form("%s",cuts[p].c_str()));
+
+        //Histo[p]->SetTitle(Form("%s",names[p].c_str()));
+        //Histo[p]->SetXTitle(Form("PEs/radius hit position; Spectrum"));
+        //Histo[p]->SetYTitle(Form("Spectrum"));
+
+        Histo[p]->SetStats(1111);
+        RMS[p] = 1.0*Histo[p]->GetRMS();
+        RMSerror[p] = 1.0*Histo[p]->GetRMSError();
+        Mean[p] = 1.0*Histo[p]->GetMean();
+        Meanerror[p] = 1.0*Histo[p]->GetMeanError();
+
+        //Plot_Name,x_axis_units,x_number,y_number,y_uncertainty
+        if (p==0){
+            file_out_rms<<names[p]<<" - Changed "<<variable<<" - RMS,"<<unit<<","<<varVal<<","<<RMS[p]<<","<<RMSerror[p]<<std::endl;
+            file_out_mean<<names[p]<<" - Changed "<<variable<<" - Mean,"<<unit<<","<<varVal<<","<<Mean[p]<<","<<Meanerror[p]<<std::endl;
+            file_out_res<<names[p]<<" - Changed "<<variable<<" - Resolution = RMS/Mean,"<<unit<<","<<varVal<<","<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
+        }
+
+        c1[p]->Write();
+        c1[p]->SaveAs(/*plotsFolder+*/Form("%s_%03.2f_%02d.png",variable.c_str(),varVal,p));
+    }
+
+    file_out_rms.close();
+    file_out_mean.close();
+    file_out_res.close();
+
+    plotsFile = plotsTree->GetCurrentFile();
+    plotsTree->Write("", TObject::kOverwrite);
+    plotsTree->Print();
+    plotsFile->Close();
+    theApp.Run();
+}
+
 int main(int argc, char **argv)
 {
     std::string fileString = "tracking.root";
+    std::string varString = "reflectorAngle";
+    std::string unitString = "deg";
+    bool reana = true;
     int detid=50001;
-    if (argc <= 1 || argc > 3)
+    double manipVar=11.5;
+    if (argc <= 1 || argc > 7)
     {
-        std::cerr << "Usage: ./pe char*:filename int:detid" << std::endl;
+        std::cerr << "Usage: ./pe char*:filename int:detid char*:manipulateVariable float:variableValue bool:reanalyze(y or n)" << std::endl;
         exit(0);
     }
     if (argc >= 2) 
@@ -427,7 +430,33 @@ int main(int argc, char **argv)
     {
         detid = atoi(argv[2]);    
     }
-    std::cout << "Running with file=" << fileString << ", detid=" << detid << std::endl; 
-    pe(fileString, detid);
+    if (argc >=4)
+    {
+        std::string varName(argv[3]); 
+        varString = varName;
+    }
+    if (argc >=5)
+    {
+        manipVar = atof(argv[4]);
+    }
+    if (argc >=6)
+    {
+        std::string unitName(argv[5]); 
+        unitString = unitName;
+    }
+    if (argc >=7)
+    {
+        if (argv[6][0]=='n'){
+            reana=false;
+        }
+    }
+    if (reana == true) {
+        std::cout << "Running with file=" << fileString << ", detid=" << detid << std::endl; 
+        pe(fileString, detid);
+    }
+    if (argc >=5){
+        std::cout << "Plotting previously analyzed file=" << fileString << " + PEs_det_" << detid << ".root" << std::endl; 
+        pePlots(argc, argv, fileString, detid, varString, manipVar, unitString);
+    }
 }
 
