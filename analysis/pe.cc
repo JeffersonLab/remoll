@@ -254,7 +254,7 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
     file_out_mean.open("mean.csv",std::ofstream::out | std::ofstream::app);
     file_out_res.open("res.csv",std::ofstream::out | std::ofstream::app);
 
-    gROOT->SetStyle("Plain");
+    //gROOT->SetStyle("Plain");
     //gStyle->SetOptStat(0); 
     gStyle->SetOptStat("eMR");
     gStyle->SetNumberContours(255);
@@ -387,7 +387,7 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
         Meanerror[p] = 1.0*Histo[p]->GetMeanError();
 
         //Plot_Name,x_axis_units,x_number,y_number,y_uncertainty
-        if (p==0){
+        if (p==1){ //then a primary electron hit the quartz and we want to see the spectrum
             file_out_rms<<names[p]<<" - Changed "<<variable<<" - RMS,"<<unit<<","<<varVal<<","<<RMS[p]<<","<<RMSerror[p]<<std::endl;
             file_out_mean<<names[p]<<" - Changed "<<variable<<" - Mean,"<<unit<<","<<varVal<<","<<Mean[p]<<","<<Meanerror[p]<<std::endl;
             file_out_res<<names[p]<<" - Changed "<<variable<<" - Resolution = RMS/Mean,"<<unit<<","<<varVal<<","<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
