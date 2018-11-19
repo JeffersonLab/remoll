@@ -158,8 +158,9 @@ void remollMagneticField::ReadFieldMap(){
 #endif
 
     if (!inputfile.good() ){
-	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
-	    << ": File " << fFilename << " could not open.  Aborting" << G4endl;
+	G4cerr << "Error " << __FILE__ << " line " << __LINE__ << G4endl << G4endl << G4endl << G4endl << G4endl 
+	    << ": File " << fFilename << " could not open.  Aborting" << G4endl
+	    << ": ERROR - Suggested MOLLER Field Map files available at http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/" << G4endl << G4endl << G4endl << G4endl << G4endl;
 	exit(1);
     }
 

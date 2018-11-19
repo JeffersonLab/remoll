@@ -2,7 +2,7 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define> 
-  <position name="hallCenter" x="0" y="0" z="4000."/>
+  <position name="hallCenter" x="0" y="0" z="6087."/>
   <position name="targetCenter" x="0" y="0" z="0"/>
   <position name="targetCenter_Clamshell" x="0" y="200./2" z="0"/>
   <position name="upstreamCenter" x="0" y="0" z="7000."/>
@@ -42,8 +42,9 @@
       <file name="hallDaughter_merged.gdml"/>
       <positionref ref="hallCenter"/>
       <rotationref ref="identity"/>
-      </physvol>
+      </physvol> 
 
+ 
       <physvol>
 	    <file name="upstreamDaughter_merged.gdml"/>
 	    <positionref ref="upstreamCenter"/>
