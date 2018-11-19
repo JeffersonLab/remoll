@@ -8,7 +8,7 @@
 
   <define>
 
-    <constant name="y_increase_targ" value="200.0"/>
+    <constant name="y_increase_targ" value="0.0"/>
     <constant name="YOFFSET_targ" value="-1*y_increase_targ/2"/>
 
     <constant name="tubeTarget_rmax" value="40"/>
@@ -17,7 +17,7 @@
 
     <!-- Mother volume parameters -->
     <constant name="boxTargetMother_width" value="9500"/>
-    <constant name="boxTargetMother_height" value="6000 - 100 + y_increase_targ"/>
+    <constant name="boxTargetMother_height" value="6000 - 100 + y_increase_targ + 200"/>
     <constant name="boxTargetMother_length" value="6400"/>
     <constant name="tubeBeampipeMother_sub_rmax" value="200"/>
     <!-- <constant name="tubeBeampipeMother_sub_length" value="250"/> -->
@@ -72,7 +72,10 @@
       <constant name="LeadFront_height" value="5000-500-400+200"/>
       <constant name="LeadFront_width" value="tgtShield_width - 2*tgtShield_side_thickness"/>
       <constant name="LeadFront_thickness" value="400"/>
-      <constant name="LeadFront_height_trim" value="1500"/>
+      <constant name="LeadFront_height_trim" value="2000"/>
+      <constant name="LeadFront_width_trim" value="1500"/>
+      <constant name="LeadTop_width_trim" value="1500"/>
+
       
   
     <!-- PolyShield for lead collar -->
@@ -102,11 +105,14 @@
     <position name="LeadCollar_center_1" unit="mm" x="0" y="YOFFSET_targ" z="shieldcoll_center + tgtPolyShield_LeadCollar_front_thickness/2"/>
     <position name="beampipe_sub_center" unit="mm" x="0" y="YOFFSET_targ" z="boxTargetMother_length/2 - tubeBeampipeMother_sub_length/2"/>
 
-    <position name="boxtgtShield_trans1" unit="mm" x="0" y="-1*tgtShield_top_thickness/2+50" z="0"/>
+    <position name="boxtgtShield_trans1" unit="mm" x="0" y="-1*tgtShield_top_thickness/2+50-50" z="0"/>
+    <position name="boxtgtShield_trans12" unit="mm" x="LeadTop_width/2 - LeadTop_width_trim/2 + 1" y="0" z="0"/>
     <position name="boxtgtShield_trans3" unit="mm" x="0-300" y="-1*400/2+200.1" z="0+200.1"/>
     <position name="boxtgtShield_trans2" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset-50-25" z="0"/>
     <position name="boxtgtShield_trans22" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset+450-100" z="0"/>
     <position name="boxtgtShield_trans23" unit="mm" x="0" y="-1*(5000-500-400+200)/2 + LeadFront_height_trim/2 - 1" z="0"/>
+    <position name="boxtgtShield_trans24" unit="mm" x="LeadFront_width/2 - LeadFront_width_trim/2 + 1" y="0" z="0"/>
+
     <position name="boxtgtShield_trans4" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset+250+200-100" z="0"/>
     <position name="boxtgtShield1_center" unit="mm" x="tgtShield_x_offset" y="tgtShield_y_offset+50+25+YOFFSET_targ" z="0"/>
 
@@ -145,7 +151,7 @@
     <position name="boxtgtPolyShield1_poly_center" unit="mm" x="tgtShield_x_offset" y="tgtPolyShield1_y_offset1+YOFFSET_targ-100" z="0-200"/>
     <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/> 
     <rotation name="scRot_2" unit="deg" x="270" y="0" z="0"/>
-
+    <position name="boxtgtMother_center_1" unit="mm" x="0" y="-1*(boxTargetMother_height)/2" z="0"/>
   </define>
 
   &materials;
@@ -154,9 +160,15 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1400" rmin="0" startphi="0" z="6000"/>
     <!--100 mm offset to prevent target mother volume overlapping with hall mother volume -->
     <box lunit="mm" name="boxTargetMother_1" x="boxTargetMother_width" y="boxTargetMother_height" z="boxTargetMother_length"/>
+    <box lunit="mm" name="boxTargetMother_2" x="boxTargetMother_width+1" y="150" z="boxTargetMother_length+1"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_sub" rmax="tubeBeampipeMother_sub_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_sub_length"/>
-    <subtraction name ="boxTargetMother">
+    <subtraction name ="boxTargetMother_3">
       <first ref="boxTargetMother_1"/>
+      <second ref="boxTargetMother_2"/>
+      <positionref ref="boxtgtMother_center_1" />
+    </subtraction>
+    <subtraction name ="boxTargetMother">
+      <first ref="boxTargetMother_3"/>
       <second ref="tubeBeampipe_sub"/>
       <positionref ref="beampipe_sub_center"/>
     </subtraction> 
@@ -241,14 +253,15 @@
 
    <!--Target Shielding hut solids-->
    <box lunit="mm" name="boxtgtShield_solid_1" x="tgtShield_width+2*100" y="tgtShield_height+100+50" z="tgtShield_length+2*100"/>
-   <box lunit="mm" name="boxtgtShield_solid_2" x="tgtShield_width - 2*tgtShield_side_thickness" y="tgtShield_height - tgtShield_top_thickness+200-50" z="tgtShield_length - 2*tgtShield_side_thickness"/>
+   <box lunit="mm" name="boxtgtShield_solid_2" x="tgtShield_width - 2*tgtShield_side_thickness" y="tgtShield_height - tgtShield_top_thickness+200-50+100" z="tgtShield_length - 2*tgtShield_side_thickness"/>
 
    <box lunit="mm" name="boxtgtShield_poly_solid_1" x="tgtShield_width - 2*tgtShield_side_thickness" y="tgtShield_height - tgtShield_top_thickness-400+200" z="tgtShield_length - 2*tgtShield_side_thickness-400"/>
 
-   
-   <box lunit="mm" name="box1_lead_solid_1"  x="LeadTop_width" y="LeadTop_thickness" z="LeadTop_length"/>
-   <box lunit="mm" name="box2_lead_solid_2"  x="LeadFront_width" y="LeadFront_height" z="LeadFront_thickness"/>
-   <box lunit="mm" name="box3_lead_solid_1"  x="LeadFront_width + 1" y="LeadFront_height_trim" z="LeadFront_thickness + 1"/>
+     <box lunit="mm" name="box1_lead_solid_0"  x="LeadTop_width" y="LeadTop_thickness" z="LeadTop_length"/>
+     <box lunit="mm" name="box1_lead_solid_2"  x="LeadTop_width_trim" y="LeadTop_thickness + 1" z="LeadTop_length + 1"/>
+     <box lunit="mm" name="box2_lead_solid_2"  x="LeadFront_width" y="LeadFront_height" z="LeadFront_thickness"/>
+     <box lunit="mm" name="box3_lead_solid_1"  x="LeadFront_width + 1" y="LeadFront_height_trim" z="LeadFront_thickness + 1"/>
+     <box lunit="mm" name="box4_lead_solid_1"  x="LeadFront_width_trim" y="LeadFront_height + 1" z="LeadFront_thickness + 1"/>
 
    <box lunit="mm" name="boxtgtShield_poly_solid_2" x="tgtShield_width - 2*tgtShield_side_thickness-2*400" y="tgtShield_height - tgtShield_top_thickness-400+200" z="tgtShield_length - 2*tgtShield_side_thickness-2*400"/>
 
@@ -267,11 +280,23 @@
      <positionref ref="boxtgtShield_trans2" />
    </subtraction>
 
-   <subtraction name ="box2_lead_solid_0">
+    <subtraction name ="box1_lead_solid_1">
+      <first ref="box1_lead_solid_0"/>
+      <second ref="box1_lead_solid_2"/>
+      <positionref ref="boxtgtShield_trans12" />
+    </subtraction>
+
+   <subtraction name ="box2_lead_solid_01">
      <first ref="box2_lead_solid_2"/>
      <second ref="box3_lead_solid_1"/>
      <positionref ref="boxtgtShield_trans23" />
    </subtraction>
+
+   <subtraction name ="box2_lead_solid_0">
+      <first ref="box2_lead_solid_01"/>
+      <second ref="box4_lead_solid_1"/>
+      <positionref ref="boxtgtShield_trans24" />
+    </subtraction>
 
    <subtraction name ="box2_lead_solid_1">
      <first ref="box2_lead_solid_0"/>
@@ -351,13 +376,13 @@
    <volume name="USAlTarg">
      <materialref ref="Aluminum"/>
      <solidref ref="AlWindow"/>
-     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+     <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
    </volume>
 
    <volume name="DSAlTarg">
      <materialref ref="Aluminum"/>
      <solidref ref="AlWindow"/>
-     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+     <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
    </volume>
 
    <volume name="TargShield_topdisk_logic">
@@ -436,10 +461,10 @@
    </volume>
 
    <volume name="cyll2_logic">
-     <materialref ref="Kryptonite"/>  
+     <materialref ref="Aluminium"/>  
      <solidref ref="cyll2"/>
      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-     <auxiliary auxtype="Color" auxvalue="brown"/>
+     <auxiliary auxtype="Color" auxvalue="silver"/>
      <auxiliary auxtype="DetNo" auxvalue="1"/>
    </volume>
 
@@ -465,7 +490,7 @@
 
      <physvol>
        <volumeref ref="USAlTarg"/>
-       <position name="targ_upstream_window" unit="mm" x="0" y="YOFFSET_targ" z="-750"/>
+       <position name="targ_upstream_window" unit="mm" x="0" y="YOFFSET_targ" z="-750-1"/>
      </physvol>
 
      <physvol>
@@ -475,7 +500,7 @@
 
      <physvol>
        <volumeref ref="DSAlTarg"/>
-       <position name="targ_downstream_window" unit="mm" x="0" y="YOFFSET_targ" z="750"/>
+       <position name="targ_downstream_window" unit="mm" x="0" y="YOFFSET_targ" z="750+1"/>
      </physvol>
 
      <physvol>
