@@ -60,7 +60,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;
 
   // Create GDML parser
-  fGDMLParser = new G4GDMLParser();
+  //fGDMLParser = new G4GDMLParser();
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");

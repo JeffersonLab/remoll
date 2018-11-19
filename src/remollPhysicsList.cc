@@ -1,6 +1,7 @@
 #include "remollPhysicsList.hh"
 
 #include "G4PhysListFactory.hh"
+#include "G4ParallelWorldPhysics.hh"
 #include "G4OpticalPhysics.hh"
 #include "G4GenericMessenger.hh"
 #include "G4RunManager.hh"
@@ -16,8 +17,11 @@
 
 remollPhysicsList::remollPhysicsList()
 : G4VModularPhysicsList(),
-  fReferencePhysList(0),fOpticalPhysics(0),
-  fPhysListMessenger(0),fBaseMessenger(0)
+  fReferencePhysList(0),
+  fParallelPhysics(0),
+  fOpticalPhysics(0),
+  fPhysListMessenger(0),
+  fBaseMessenger(0)
 {
   // Let users know to ignore the warning by Particle HP package
   G4cout << "remoll: Since the high precision neutron simulation in the default physics list" << G4endl;
@@ -37,6 +41,12 @@ remollPhysicsList::remollPhysicsList()
       "Remoll properties");
   // Create base commands
   fBaseMessenger->DeclareMethod(
+      "parallel",
+      &remollPhysicsList::SetParallelPhysics,
+      "Enable parallel physics")
+              .SetStates(G4State_PreInit)
+              .SetDefaultValue("true");
+  fBaseMessenger->DeclareMethod(
       "optical",
       &remollPhysicsList::SetOpticalPhysics,
       "Enable optical physics")
@@ -48,6 +58,9 @@ remollPhysicsList::remollPhysicsList()
   fPhysListMessenger = new G4GenericMessenger(this,
       "/remoll/physlist/",
       "Remoll physics list properties");
+  fParallelMessenger = new G4GenericMessenger(this,
+      "/remoll/physlist/parallel/",
+      "Remoll parallel physics properties");
   fOpticalMessenger = new G4GenericMessenger(this,
       "/remoll/physlist/optical/",
       "Remoll optical physics properties");
@@ -70,6 +83,17 @@ remollPhysicsList::remollPhysicsList()
       "list",
       &remollPhysicsList::ListReferencePhysLists,
       "List reference physics lists");
+
+  fParallelMessenger->DeclareMethod(
+      "enable",
+      &remollPhysicsList::EnableParallelPhysics,
+      "Enable parallel physics")
+              .SetStates(G4State_PreInit);
+  fParallelMessenger->DeclareMethod(
+      "disable",
+      &remollPhysicsList::DisableParallelPhysics,
+      "Disable parallel physics")
+              .SetStates(G4State_PreInit);
 
   fOpticalMessenger->DeclareMethod(
       "enable",
@@ -103,6 +127,7 @@ remollPhysicsList::~remollPhysicsList()
 
   if (fPhysListMessenger) delete fPhysListMessenger;
   if (fStepLimiterMessenger) delete fStepLimiterMessenger;
+  if (fParallelMessenger) delete fParallelMessenger;
   if (fOpticalMessenger) delete fOpticalMessenger;
   if (fBaseMessenger) delete fBaseMessenger;
 }
@@ -116,6 +141,50 @@ void remollPhysicsList::SetVerboseLevel(G4int level)
   G4HadronicProcessStore::Instance()->SetVerbose(level);
   G4ParticleHPManager::GetInstance()->SetVerboseLevel(level);
   G4cout << G4endl; // empty line after G4ParticleHPManager complaint
+}
+
+void remollPhysicsList::SetParallelPhysics(G4bool flag)
+{
+  if (flag) EnableParallelPhysics();
+  else     DisableParallelPhysics();
+}
+
+void remollPhysicsList::EnableParallelPhysics()
+{
+  if (fParallelPhysics) {
+    G4cout << "parallel physics already active" << G4endl;
+    return;
+  }
+
+  // Print output
+  if (GetVerboseLevel() > 0)
+    G4cout << "Registering parallel physics" << G4endl;
+
+  // Create Parallel physics
+  fParallelPhysics = new G4ParallelWorldPhysics("parallel");
+
+  // Register existing physics
+  //RegisterPhysics(new G4ParallelWorldPhysics(parallel_name));
+  RegisterPhysics(fParallelPhysics);
+}
+
+void remollPhysicsList::DisableParallelPhysics()
+{
+  if (!fParallelPhysics) {
+    G4cout << "Parallel physics not active" << G4endl;
+    return;
+  }
+
+  // Print output
+  if (GetVerboseLevel() > 0)
+    G4cout << "Removing parallel physics" << G4endl;
+
+  // Remove Parallel physics
+  RemovePhysics(fParallelPhysics);
+
+  // Delete Parallel physics
+  delete fParallelPhysics;
+  fParallelPhysics = 0;
 }
 
 void remollPhysicsList::SetOpticalPhysics(G4bool flag)
