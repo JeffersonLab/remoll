@@ -3,6 +3,7 @@
 /remoll/parallel/setfile geometry/mollerParallel.gdml
 
 # Enable optical photons and processes
+/remoll/physlist/parallel/enable 
 /remoll/physlist/optical/enable
 
 # This must be explicitly called
