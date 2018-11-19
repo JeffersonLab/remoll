@@ -5,7 +5,9 @@
 
 # This must be called before initialize
 /remoll/geometry/setfile geometry/mollerMother.gdml
-/remoll/parallel/setfile geometry/mollerParallel.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml # Parallel world geometry is optional - detector 28 (the primary detector array's idealize vacuum detector) is included in this parallel world now.
+/remoll/physlist/parallel/enable 
+#/remoll/physlist/optical/enable # if optical physics is turned on it will only work if parallel physics is not turned on.
 
 # This must be explicitly called
 /run/initialize
