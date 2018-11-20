@@ -38,6 +38,7 @@ endif()
 
 # ROOT path
 find_package(ROOT REQUIRED)
+include(${ROOT_USE_FILE})
 
 # Update header file
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" DEPENDS ${PROJECT_SOURCE_DIR}/pullgitinfo.py)
@@ -179,9 +180,9 @@ target_link_libraries(reroot-bin remoll-lib)
 # relies on these scripts being in the current working directory.
 #
 
-install(DIRECTORY geometry DESTINATION share/remoll)
-install(DIRECTORY macros DESTINATION share/remoll)
-install(DIRECTORY vis DESTINATION share/remoll)
+install(DIRECTORY geometry DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+install(DIRECTORY macros DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+install(DIRECTORY vis DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
 
 file(GLOB vis_macros RELATIVE ${PROJECT_SOURCE_DIR} vis/*.mac)
 set(REMOLL_SCRIPTS
@@ -234,16 +235,23 @@ file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/blockyHybrid_rm_3.0.txt
      ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
      EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e)
+install(FILES
+     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
+     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
+     DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
 
 #----------------------------------------------------------------------------
 # Build analysis subdirectory
 # FIXME: this doesn't work due to dependency on remoll-config at cmake time
-set(REMOLL_BINARY_DIR ${PROJECT_BINARY_DIR})
-find_package(exe)
-if(exe_FOUND)
-    message(STATUS "remoll already made, making analysis projects.")
-    add_subdirectory(analysis)
-endif()
+
+#----------------------------------------------------------------------------
+# Install cmake config file
+#
+install(FILES
+    ${PROJECT_SOURCE_DIR}/cmake/modules/remoll-config.cmake
+    ${PROJECT_SOURCE_DIR}/cmake/modules/remoll-use-file.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/remoll)
+
 #----------------------------------------------------------------------------
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
@@ -253,5 +261,5 @@ add_custom_target(REMOLL DEPENDS remoll-bin)
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS remoll-bin reroot-bin DESTINATION bin)
-install(TARGETS remoll-lib DESTINATION lib)
+install(TARGETS remoll-bin reroot-bin DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS remoll-lib DESTINATION ${CMAKE_INSTALL_LIBDIR})

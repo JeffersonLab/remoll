@@ -4,12 +4,11 @@
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(pe)
 
-set(REMOLL_INSTALL "../..")
-find_package(exe REQUIRED)
-include_directories(${REMOLL_INCLUDE_DIR})
+find_package(remoll REQUIRED HINTS "${PROJECT_SOURCE_DIR}/../..")
+include(${REMOLL_USE_FILE})
 
 find_package(ROOT REQUIRED)
-include_directories(${ROOT_INCLUDE_DIR})
+include(${ROOT_USE_FILE})
 
 #----------------------------------------------------------------------------
 # generate dictionaries
@@ -44,7 +43,7 @@ target_link_libraries(pe-lib ${ROOT_LIBRARIES} ${REMOLL_LIBRARIES})
 
 add_executable(pe-bin pe.cc)
 set_target_properties(pe-bin PROPERTIES OUTPUT_NAME pe)
-target_link_libraries(pe-bin ${REMOLL_BINARY_DIR}/libremoll.so pe-lib)
+target_link_libraries(pe-bin ${REMOLL_LIBRARIES} pe-lib)
 #target_link_libraries(pe-bin pe-lib ${REMOLL_LIBRARIES})
 
 #----------------------------------------------------------------------------
