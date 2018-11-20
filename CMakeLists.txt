@@ -5,15 +5,14 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
 
 # Default install path is the source directory
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
-    message(STATUS "    Use -DCMAKE_INSTALL_PREFIX=/usr/local to set to something else" )
-    set (CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}"
-         CACHE PATH "default install path" FORCE )
-endif()
+#if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+#    message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
+#    message(STATUS "    Use -DCMAKE_INSTALL_PREFIX=/usr/local to set to something else" )
+#    set (CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}"
+#         CACHE PATH "default install path" FORCE )
+#endif()
 
 include(GNUInstallDirs)
-
 
 #MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -105,7 +104,7 @@ endif()
 # Debugging symbols, warnings
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -pg")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Woverloaded-virtual")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic -Wno-overloaded-virtual")
 
 # Ignore warning of struct initialization { } for gcc < 5.0 (after that it is ignored internally)
 if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
@@ -113,20 +112,6 @@ if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
 endif()
 
 # C++11 standard if avialable
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++11 support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++0x support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
-endif()
-
-# C++11 standard if available
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -161,6 +146,8 @@ endif()
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}:${ROOT_LIBRARY_DIR}:${GEANT4_LIBRARY_DIR}")
+
 add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
 set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
 target_link_libraries(remoll-lib
@@ -229,15 +216,7 @@ endforeach()
 #----------------------------------------------------------------------------
 # Build analysis subdirectory
 #
-option(REMOLL_INSTALL_ANALYSIS "Install analysis code and documentation" OFF)
-mark_as_advanced(REMOLL_INSTALL_ANALYSIS)
 add_subdirectory(analysis EXCLUDE_FROM_ALL)
-if(REMOLL_INSTALL_ANALYSIS)
-  install(DIRECTORY analysis
-    DESTINATION bin
-    COMPONENT analysis
-    )
-endif()
 
 #----------------------------------------------------------------------------
 # For internal Geant4 use - but has no effect if you build this
