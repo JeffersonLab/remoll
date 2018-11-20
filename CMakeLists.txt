@@ -1,7 +1,7 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.11 FATAL_ERROR)
 project(REMOLL)
 
 # Default install path is the source directory
@@ -213,6 +213,20 @@ foreach(_template_in ${templates})
       WORLD_READ WORLD_EXECUTE
     )
 endforeach()
+
+#----------------------------------------------------------------------------
+# Download field maps subdirectory
+#
+set(REMOLL_DOWNLOADS http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/)
+set(REMOLL_MAP_DIR ${PROJECT_SOURCE_DIR}/map_directory)
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/blockyUpstream_rm_1.1.txt
+     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
+     EXPECTED_MD5 3e2338e1ba74b03da37545e98931f5f3)
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/blockyHybrid_rm_3.0.txt
+     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
+     EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e)
 
 #----------------------------------------------------------------------------
 # Build analysis subdirectory
