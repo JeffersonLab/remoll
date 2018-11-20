@@ -4,7 +4,7 @@
 # remoll_FOUND               If the remoll is found
 
 find_program(remoll NAMES remoll
-             PATHS ${PROJECT_SOURCE_DIR}/build/remoll)
+             PATHS ${PROJECT_BINARY_DIR}/remoll)
 if(remoll)
     set(remoll_FOUND TRUE)
 else()
