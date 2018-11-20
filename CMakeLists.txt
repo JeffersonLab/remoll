@@ -216,7 +216,7 @@ endforeach()
 #----------------------------------------------------------------------------
 # Build analysis subdirectory
 #
-add_subdirectory(analysis EXCLUDE_FROM_ALL)
+add_subdirectory(analysis)
 
 #----------------------------------------------------------------------------
 # For internal Geant4 use - but has no effect if you build this
