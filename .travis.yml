@@ -5,14 +5,14 @@ services:
 script:
 - docker build -t jeffersonlab/remoll .
 - for suite in unit commit release ; do
-    docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}"
-  done ;
+    docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" ;
+  done
 
 after_success:
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
 - if [ "$TRAVIS_BRANCH" == "master" ]; then
-    docker tag jeffersonlab/remoll jeffersonlab/remoll:latest && docker push jeffersonlab/remoll:latest;
+    docker tag jeffersonlab/remoll jeffersonlab/remoll:latest && docker push jeffersonlab/remoll:latest ;
   else
-    docker tag jeffersonlab/remoll jeffersonlab/remoll:$TRAVIS_BRANCH && docker push jeffersonlab/remoll:$TRAVIS_BRANCH;
+    docker tag jeffersonlab/remoll jeffersonlab/remoll:$TRAVIS_BRANCH && docker push jeffersonlab/remoll:$TRAVIS_BRANCH ;
   fi
 
