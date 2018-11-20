@@ -227,6 +227,19 @@ foreach(_template_in ${templates})
 endforeach()
 
 #----------------------------------------------------------------------------
+# Build analysis subdirectory
+#
+option(REMOLL_INSTALL_ANALYSIS "Install analysis code and documentation" OFF)
+mark_as_advanced(REMOLL_INSTALL_ANALYSIS)
+add_subdirectory(analysis EXCLUDE_FROM_ALL)
+if(REMOLL_INSTALL_ANALYSIS)
+  install(DIRECTORY analysis
+    DESTINATION bin
+    COMPONENT analysis
+    )
+endif()
+
+#----------------------------------------------------------------------------
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
 #
