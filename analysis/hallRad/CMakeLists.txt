@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(hallRad)
 
 set(REMOLL_INSTALL "../..")
-find_package(remoll REQUIRED)
+find_package(exe REQUIRED)
 include_directories(${REMOLL_INCLUDE_DIR})
 
 find_package(ROOT REQUIRED)

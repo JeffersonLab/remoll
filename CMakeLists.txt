@@ -239,8 +239,8 @@ file(DOWNLOAD
 # Build analysis subdirectory
 # FIXME: this doesn't work due to dependency on remoll-config at cmake time
 set(REMOLL_BINARY_DIR ${PROJECT_BINARY_DIR})
-find_package(remoll)
-if(remoll_FOUND)
+find_package(exe)
+if(exe_FOUND)
     message(STATUS "remoll already made, making analysis projects.")
     add_subdirectory(analysis)
 endif()
