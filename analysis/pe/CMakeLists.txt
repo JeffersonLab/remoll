@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(pe)
 
 set(REMOLL_INSTALL "../..")
-find_package(exe REQUIRED)
+find_package(EXE REQUIRED)
 include_directories(${REMOLL_INCLUDE_DIR})
 
 find_package(ROOT REQUIRED)
