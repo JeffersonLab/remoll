@@ -37,6 +37,6 @@ if(REMOLL_CONFIG)
 
 else()
   set(REMOLL_FOUND FALSE)
-  message(SEND_ERROR "NOT Found remoll: set REMOLL_INSTALL env var.")
+  message(STATUS "NOT Found remoll: set REMOLL_INSTALL env var.")
 
 endif()

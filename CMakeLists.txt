@@ -4,6 +4,14 @@
 cmake_minimum_required(VERSION 2.8.11 FATAL_ERROR)
 project(REMOLL)
 
+# Disallow in-source builds
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+  message(FATAL_ERROR "remoll requires an out-of-source build.")
+endif()
+
+# Prepend module search path
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
+
 # Default install path is the source directory
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
     message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
@@ -29,7 +37,6 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 endif()
 
 # ROOT path
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
 
 # Update header file
@@ -230,8 +237,8 @@ file(DOWNLOAD
 
 #----------------------------------------------------------------------------
 # Build analysis subdirectory
-#
-add_subdirectory(analysis)
+# FIXME: this doesn't work due to dependency on remoll-config at cmake time
+#add_subdirectory(analysis)
 
 #----------------------------------------------------------------------------
 # For internal Geant4 use - but has no effect if you build this
