@@ -201,6 +201,28 @@ foreach(_script ${REMOLL_SCRIPTS})
     )
 endforeach()
 
+
+#----------------------------------------------------------------------------
+# Templates
+#
+file(GLOB templates RELATIVE ${PROJECT_SOURCE_DIR} cmake/templates/*.in)
+foreach(_template_in ${templates})
+  string(REPLACE ".in" "" _template_out ${_template_in})
+  configure_file(
+    ${PROJECT_SOURCE_DIR}/${_template_in}
+    ${PROJECT_BINARY_DIR}/${_template_out}
+    @ONLY
+    )
+  install(FILES
+    ${PROJECT_BINARY_DIR}/${_template_out}
+    DESTINATION bin
+    PERMISSIONS
+      OWNER_READ OWNER_WRITE OWNER_EXECUTE
+      GROUP_READ GROUP_EXECUTE
+      WORLD_READ WORLD_EXECUTE
+    )
+endforeach()
+
 #----------------------------------------------------------------------------
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
