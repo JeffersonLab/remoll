@@ -238,8 +238,12 @@ file(DOWNLOAD
 #----------------------------------------------------------------------------
 # Build analysis subdirectory
 # FIXME: this doesn't work due to dependency on remoll-config at cmake time
-#add_subdirectory(analysis)
-
+set(REMOLL_BINARY_DIR ${PROJECT_BINARY_DIR})
+find_package(remoll)
+if(remoll_FOUND)
+    message(STATUS "remoll already made, making analysis projects.")
+    add_subdirectory(analysis)
+endif()
 #----------------------------------------------------------------------------
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
