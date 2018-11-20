@@ -53,6 +53,16 @@ macro commands:
 You can also load another macro in the `vis` directory, if
 you prefer another visualization driver.
 
+## Generating geometry from ROOT output
+
+The GDML tree is saved in the root output so that keeping the geometry files
+around is not required to visualize what was simulated
+To look at the geometry do:
+```
+ $ build/reroot -l remollout.root
+[] run_data->RecreateGDML()
+```
+
 ## Analyzing the output
 
 Though you can access the data field alone with a regular root
