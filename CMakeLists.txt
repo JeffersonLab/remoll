@@ -12,6 +12,9 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
          CACHE PATH "default install path" FORCE )
 endif()
 
+include(GNUInstallDirs)
+
+
 #MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_MACOSX_RPATH ON)
