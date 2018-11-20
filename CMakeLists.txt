@@ -5,16 +5,17 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(REMOLL)
 
 # Default install path is the source directory
-#if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-#    message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
-#    message(STATUS "    Use -DCMAKE_INSTALL_PREFIX=/usr/local to set to something else" )
-#    set (CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}"
-#         CACHE PATH "default install path" FORCE )
-#endif()
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
+    message(STATUS "    Use -DCMAKE_INSTALL_PREFIX=/usr/local to set to something else" )
+    set (CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}"
+         CACHE PATH "default install path" FORCE )
+endif()
 
+# Use GNU install dirs
 include(GNUInstallDirs)
 
-#MAC specific variable
+# MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_MACOSX_RPATH ON)
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
@@ -27,7 +28,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     endif()
 endif()
 
-#ROOT path
+# ROOT path
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
 find_package(ROOT REQUIRED)
 
