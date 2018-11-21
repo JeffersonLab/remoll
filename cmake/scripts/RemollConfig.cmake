@@ -5,6 +5,10 @@
 # REMOLL_INCLUDE_DIR         PATH to the include directory
 # REMOLL_LIBRARY_DIR         PATH to the library directory
 
+get_filename_component(_thisdir "${CMAKE_CURRENT_LIST_FILE}" PATH)
+get_filename_component(_remoll "${_thisdir}/../../.." ABSOLUTE)
+
+
 find_program(REMOLL_CONFIG NAMES remoll-config
              PATHS $ENV{REMOLL_INSTALL}/bin
                    ${REMOLL_INSTALL}/bin
@@ -37,6 +41,14 @@ if(REMOLL_CONFIG)
 
 else()
   set(REMOLL_FOUND FALSE)
-  message(SEND_ERROR "NOT Found remoll: set REMOLL_INSTALL env var.")
+  message(STATUS "Not found remoll: set REMOLL_INSTALL env var.")
+
+  message(STATUS "Setting directories relative to cmake file...")
+  set(REMOLL_BINARY_DIR ${_remoll}/bin)
+  set(REMOLL_INCLUDE_DIR ${_remoll}/include)
+  set(REMOLL_LIBRARY_DIR ${_remoll}/${CMAKE_INSTALL_LIBDIR})
+  set(REMOLL_LIBRARIES "-L${CMAKE_INSTALL_LIBDIR -lremoll")
 
 endif()
+
+set(REMOLL_USE_FILE "${_thisdir}/RemollUseFile.cmake")

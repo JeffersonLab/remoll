@@ -1,8 +1,16 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 2.8.11 FATAL_ERROR)
 project(REMOLL)
+
+# Disallow in-source builds
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+  message(FATAL_ERROR "remoll requires an out-of-source build.")
+endif()
+
+# Prepend module search path
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
 # Default install path is the source directory
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -12,10 +20,10 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
          CACHE PATH "default install path" FORCE )
 endif()
 
+# Use GNU install dirs
 include(GNUInstallDirs)
 
-
-#MAC specific variable
+# MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_MACOSX_RPATH ON)
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
@@ -28,9 +36,9 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     endif()
 endif()
 
-#ROOT path
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
+# ROOT path
 find_package(ROOT REQUIRED)
+include(${ROOT_USE_FILE})
 
 # Update header file
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" DEPENDS ${PROJECT_SOURCE_DIR}/pullgitinfo.py)
@@ -105,7 +113,7 @@ endif()
 # Debugging symbols, warnings
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -pg")
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Woverloaded-virtual")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic -Wno-overloaded-virtual")
 
 # Ignore warning of struct initialization { } for gcc < 5.0 (after that it is ignored internally)
 if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
@@ -113,20 +121,6 @@ if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
 endif()
 
 # C++11 standard if avialable
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++11 support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++0x support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
-endif()
-
-# C++11 standard if available
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -161,6 +155,8 @@ endif()
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
+set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}:${ROOT_LIBRARY_DIR}:${GEANT4_LIBRARY_DIR}")
+
 add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
 set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
 target_link_libraries(remoll-lib
@@ -184,9 +180,9 @@ target_link_libraries(reroot-bin remoll-lib)
 # relies on these scripts being in the current working directory.
 #
 
-install(DIRECTORY geometry DESTINATION share/remoll)
-install(DIRECTORY macros DESTINATION share/remoll)
-install(DIRECTORY vis DESTINATION share/remoll)
+install(DIRECTORY geometry DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+install(DIRECTORY macros DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+install(DIRECTORY vis DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
 
 file(GLOB vis_macros RELATIVE ${PROJECT_SOURCE_DIR} vis/*.mac)
 set(REMOLL_SCRIPTS
@@ -227,6 +223,36 @@ foreach(_template_in ${templates})
 endforeach()
 
 #----------------------------------------------------------------------------
+# Download field maps subdirectory
+#
+set(REMOLL_DOWNLOADS http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/)
+set(REMOLL_MAP_DIR ${PROJECT_SOURCE_DIR}/map_directory)
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/blockyUpstream_rm_1.1.txt
+     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
+     EXPECTED_MD5 3e2338e1ba74b03da37545e98931f5f3)
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/blockyHybrid_rm_3.0.txt
+     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
+     EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e)
+install(FILES
+     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
+     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
+     DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+
+#----------------------------------------------------------------------------
+# Build analysis subdirectory
+# FIXME: this doesn't work due to dependency on remoll-config at cmake time
+
+#----------------------------------------------------------------------------
+# Install cmake config file
+#
+install(FILES
+    ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollConfig.cmake
+    ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollUseFile.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/remoll)
+
+#----------------------------------------------------------------------------
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
 #
@@ -235,8 +261,8 @@ add_custom_target(REMOLL DEPENDS remoll-bin)
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS remoll-bin reroot-bin DESTINATION bin)
-install(TARGETS remoll-lib DESTINATION lib)
+install(TARGETS remoll-bin reroot-bin DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS remoll-lib DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 #----------------------------------------------------------------------------
 # Uninstall target
@@ -249,4 +275,3 @@ if(NOT TARGET uninstall)
   add_custom_target(uninstall
       COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
-
