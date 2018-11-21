@@ -4,11 +4,28 @@
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(pe)
 
+# Default install path is the source directory
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+    message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
+    message(STATUS "    Use -DCMAKE_INSTALL_PREFIX=/usr/local to set to something else" )
+    set (CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}"
+        CACHE PATH "default install path" FORCE )
+endif()
+
+# Use GNU install dirs
+include(GNUInstallDirs)
+
+#list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}")
+list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+
 find_package(remoll REQUIRED HINTS "${PROJECT_SOURCE_DIR}/../..")
 include(${REMOLL_USE_FILE})
 
+list(APPEND CMAKE_INSTALL_RPATH "${REMOLL_LIBRARY_DIR}/../..")
+
 find_package(ROOT REQUIRED)
 include(${ROOT_USE_FILE})
+
 
 #----------------------------------------------------------------------------
 # generate dictionaries

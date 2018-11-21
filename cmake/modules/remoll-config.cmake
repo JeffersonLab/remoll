@@ -46,8 +46,8 @@ else()
   message(STATUS "Setting directories relative to cmake file...")
   set(REMOLL_BINARY_DIR ${_remoll}/bin)
   set(REMOLL_INCLUDE_DIR ${_remoll}/include)
-  set(REMOLL_LIBRARY_DIR ${_remoll}/lib)
-  set(REMOLL_LIBRARIES "-L${_remoll}/lib -lremoll")
+  set(REMOLL_LIBRARY_DIR ${_remoll}/${CMAKE_INSTALL_LIBDIR})
+  set(REMOLL_LIBRARIES "-L${CMAKE_INSTALL_LIBDIR -lremoll")
 
 endif()
 
