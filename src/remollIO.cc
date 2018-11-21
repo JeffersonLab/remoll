@@ -203,7 +203,6 @@ void remollIO::GrabGDMLFiles(G4String fn)
     fGDMLFileNames.clear();
 
     remollRunData *rundata = remollRun::GetRunData();
-    rundata->ClearGDMLFiles();
 
     SearchGDMLforFiles(fn);
 

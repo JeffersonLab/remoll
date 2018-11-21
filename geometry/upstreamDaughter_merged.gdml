@@ -132,7 +132,7 @@
     <constant name="USBoxmother_extensionUS" value="1100"/>
     <constant name="USShield2_extension" value="370 - 90"/> <!-- subtract 90 to prevent overlaps?? -->
     <constant name="USBoxmother_extensionDS" value="0"/>
-    <constant name="boxUSShieldColl1_inner_rmax" value="100"/>
+    <constant name="boxUSShieldColl1_inner_rmax" value="100"/> <!-- FIXME this is marginally close to the acceptance defining collimator's outer radius of 98 mm and will consequently cause the concrete to absorb a significant amount of power that was otherwise intended for collimator 2-->
     <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET-USShield1_extension/2"/>
     <constant name="boxUSShieldColl2_inner_rmax" value="335"/>
     <!-- There is a gap between shld-2 and shld-3 and offset is a temp. fix to close it -->
