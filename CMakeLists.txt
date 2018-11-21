@@ -248,8 +248,8 @@ install(FILES
 # Install cmake config file
 #
 install(FILES
-    ${PROJECT_SOURCE_DIR}/cmake/modules/remoll-config.cmake
-    ${PROJECT_SOURCE_DIR}/cmake/modules/remoll-use-file.cmake
+    ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollConfig.cmake
+    ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollUseFile.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/remoll)
 
 #----------------------------------------------------------------------------

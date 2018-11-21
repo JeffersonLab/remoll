@@ -15,16 +15,17 @@ endif()
 # Use GNU install dirs
 include(GNUInstallDirs)
 
-#list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}")
 list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
 find_package(remoll REQUIRED HINTS "${PROJECT_SOURCE_DIR}/../..")
 include(${REMOLL_USE_FILE})
+list(APPEND CMAKE_INSTALL_RPATH "${REMOLL_LIBRARY_DIR}")
 
 list(APPEND CMAKE_INSTALL_RPATH "${REMOLL_LIBRARY_DIR}/../..")
 
 find_package(ROOT REQUIRED)
 include(${ROOT_USE_FILE})
+list(APPEND CMAKE_INSTALL_RPATH "${ROOT_LIBRARY_DIR}")
 
 
 #----------------------------------------------------------------------------
@@ -61,7 +62,6 @@ target_link_libraries(pe-lib ${ROOT_LIBRARIES} ${REMOLL_LIBRARIES})
 add_executable(pe-bin pe.cc)
 set_target_properties(pe-bin PROPERTIES OUTPUT_NAME pe)
 target_link_libraries(pe-bin ${REMOLL_LIBRARIES} pe-lib)
-#target_link_libraries(pe-bin pe-lib ${REMOLL_LIBRARIES})
 
 #----------------------------------------------------------------------------
 #

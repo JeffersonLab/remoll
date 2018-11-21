@@ -51,4 +51,4 @@ else()
 
 endif()
 
-set(REMOLL_USE_FILE "${_thisdir}/remoll-use-file.cmake")
+set(REMOLL_USE_FILE "${_thisdir}/RemollUseFile.cmake")
