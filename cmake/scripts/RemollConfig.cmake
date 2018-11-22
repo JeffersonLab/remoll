@@ -9,7 +9,7 @@ get_filename_component(_thisdir "${CMAKE_CURRENT_LIST_FILE}" PATH)
 get_filename_component(_remoll "${_thisdir}/../../.." ABSOLUTE)
 
 
-find_program(REMOLL_CONFIG NAMES remoll-config
+find_program(REMOLL_CONFIG NAMES Remoll-config
              PATHS $ENV{REMOLL_INSTALL}/bin
                    ${REMOLL_INSTALL}/bin
                    /usr/local/bin /opt/local/bin)
@@ -47,7 +47,7 @@ else()
   set(REMOLL_BINARY_DIR ${_remoll}/bin)
   set(REMOLL_INCLUDE_DIR ${_remoll}/include)
   set(REMOLL_LIBRARY_DIR ${_remoll}/${CMAKE_INSTALL_LIBDIR})
-  set(REMOLL_LIBRARIES "-L${CMAKE_INSTALL_LIBDIR -lremoll")
+  set(REMOLL_LIBRARIES "-L${CMAKE_INSTALL_LIBDIR} -lremoll")
 
 endif()
 

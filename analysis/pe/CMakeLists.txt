@@ -17,7 +17,7 @@ include(GNUInstallDirs)
 
 list(APPEND CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
 
-find_package(remoll REQUIRED HINTS "${PROJECT_SOURCE_DIR}/../..")
+find_package(Remoll REQUIRED HINTS "${PROJECT_SOURCE_DIR}/../..")
 include(${REMOLL_USE_FILE})
 list(APPEND CMAKE_INSTALL_RPATH "${REMOLL_LIBRARY_DIR}")
 
@@ -70,5 +70,5 @@ add_custom_target(pe DEPENDS pe-bin)
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS pe-bin DESTINATION bin)
-install(TARGETS pe-lib DESTINATION lib)
+install(TARGETS pe-bin DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS pe-lib DESTINATION ${CMAKE_INSTALL_LIBDIR})
