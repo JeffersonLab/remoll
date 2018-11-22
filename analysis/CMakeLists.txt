@@ -3,3 +3,4 @@ project(analysis)
 
 add_subdirectory(pe)
 add_subdirectory(hallRad)
+add_subdirectory(pruneTreeEnvelope)
