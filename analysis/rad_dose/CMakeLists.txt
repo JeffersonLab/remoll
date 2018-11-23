@@ -2,7 +2,7 @@
 # Setup the project
 #
 cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
-project(pe)
+project(rad_doserad_dose)
 
 # Default install path is the source directory
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
@@ -32,9 +32,9 @@ list(APPEND CMAKE_INSTALL_RPATH "${ROOT_LIBRARY_DIR}")
 # generate dictionaries
 #
 ROOT_GENERATE_DICTIONARY(
-    peDict                         # path to dictionary to generate
-    "include/petypes.hh"           # list of classes to process
-    LINKDEF "include/peLinkDef.h"  # ROOT linkDef file
+    rad_doseDict                         # path to dictionary to generate
+    "include/rad_dosetypes.hh"           # list of classes to process
+    LINKDEF "include/rad_doseLinkDef.h"  # ROOT linkDef file
     OPTIONS -p
 )
 
@@ -46,8 +46,8 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${REMOLL_INCLUDE_DIR})
 # Locate sources and headers for this project
 # NB: headers are included so they will show up in IDEs
 #
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/pe*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/pe*.hh)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
@@ -55,20 +55,20 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/pe*.hh)
 #----------------------------------------------------------------------------
 # Generate dictionaries as well (so we can write objects to ROOT files
 #
-add_library(pe-lib SHARED ${sources} ${headers} peDict.cxx)
-set_target_properties(pe-lib PROPERTIES OUTPUT_NAME pe)
-target_link_libraries(pe-lib ${ROOT_LIBRARIES} ${REMOLL_LIBRARIES})
+add_library(rad_dose-lib SHARED ${sources} ${headers} rad_doseDict.cxx)
+set_target_properties(rad_dose-lib PROPERTIES OUTPUT_NAME rad_dose)
+target_link_libraries(rad_dose-lib ${ROOT_LIBRARIES} ${REMOLL_LIBRARIES})
 
-add_executable(pe-bin pe.cc)
-set_target_properties(pe-bin PROPERTIES OUTPUT_NAME pe)
-target_link_libraries(pe-bin ${REMOLL_LIBRARIES} pe-lib)
+add_executable(rad_dose-bin rad_dose.cc)
+set_target_properties(rad_dose-bin PROPERTIES OUTPUT_NAME rad_dose)
+target_link_libraries(rad_dose-bin ${REMOLL_LIBRARIES} rad_dose-lib)
 
 #----------------------------------------------------------------------------
 #
-add_custom_target(pe DEPENDS pe-bin)
+add_custom_target(rad_dose DEPENDS rad_dose-bin)
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS pe-bin DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(TARGETS pe-lib DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS rad_dose-bin DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS rad_dose-lib DESTINATION ${CMAKE_INSTALL_LIBDIR})

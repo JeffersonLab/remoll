@@ -264,6 +264,12 @@ add_custom_target(REMOLL DEPENDS remoll-bin)
 install(TARGETS remoll-bin reroot-bin DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(TARGETS remoll-lib DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
+# Attempt at moving libremollDict_rdict.pcm to the bin so reroot doesn't error
+#add_custom_command(TARGET remoll-bin POST_BUILD
+#    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+#    "${PROJECT_BINARY_DIR}/libremollDict_rdict.pcm"
+#    ${CMAKE_INSTALL_BINDIR})
+
 #----------------------------------------------------------------------------
 # Uninstall target
 #

@@ -15,7 +15,7 @@ There is a [slack channel](https://jlab12gev.slack.com) available for general di
 The following packages are required to build `remoll`:
 * cmake > 2.6
 * Geant4 >= 4.9.6
-* ROOT
+* ROOT > 6.0.0
 * Python
 * git (optional)
 * boost (optional)
@@ -30,6 +30,8 @@ cd build
 cmake ..
 make
 ```
+
+See also initialze.sh script
 
 ## Magnetic field maps
 
@@ -132,6 +134,17 @@ for (size_t j = 0; j < Tree->GetEntries(); j++){
 ```
 ### Compiling
 
+To compile your own analysis alongside remoll it is easiest to
+mimic one of the existing analysis CMakeLists.txt procedures
+in one of the /analysis/ subfolders, with "pe" being the most
+comprehensive example included so far.
+
+You can also put your analysis alongside remoll in the primary
+build directory if you have problems linking things from within
+/analysis/, but please do not commit any such changes to
+remoll's baseline CMakeLists.txt, and here is what is needed:
+
+#### CMakeLists prescription
 In terms of compiling individual analyses against or next
 to remoll, it is easiest to use the same `cmake .. ; make`
 procedure. In the CMakeLists.txt file, to add your own analysis
@@ -174,7 +187,7 @@ Place the results:
 install(TARGETS ana-bin DESTINATION bin)
 install(TARGETS ana-lib DESTINATION lib)
 ```
-The CMakeLists.txt in the "analysis/" folder exemplifies this.
+The CMakeLists.txt in the "analysis/" sub-folders exemplify this.
 
 
 ## Troubleshooting
