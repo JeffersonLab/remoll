@@ -1476,7 +1476,6 @@
       <!-- <solidref ref="boxDSShieldColl1_solid"/> -->
       <solidref ref="boxDSShieldColl1_sub_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6020"/>
     </volume>
@@ -1490,7 +1489,6 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6021"/>
     </volume>
@@ -1504,7 +1502,6 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield2_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_4_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6025"/>
     </volume>
@@ -1514,7 +1511,6 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxDSShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_4_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6024"/>
     </volume>
@@ -1523,7 +1519,6 @@
       <materialref ref="Lead"/>
       <solidref ref="boxDSShield1_roof_solid"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Roof_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6027"/>
     </volume>
@@ -1532,7 +1527,6 @@
       <materialref ref="Polythene"/>
       <solidref ref="boxDSShield1_polyroof_solid"/>
       <auxiliary auxtype="Color" auxvalue="brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_PolyRoof_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6026"/>
     </volume>
@@ -1541,7 +1535,6 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxDSShield1_local_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6031"/>
     </volume>
@@ -1549,7 +1542,6 @@
       <materialref ref="Polythene"/>
       <solidref ref="boxDSShield1_polylocal_solid"/>
       <auxiliary auxtype="Color" auxvalue="brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6032"/>
     </volume>
@@ -1567,7 +1559,6 @@
       <materialref ref="Lead"/>
       <solidref ref="DSShield_Tube_solid_1"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Lead_shldtube"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6028"/>
     </volume>
@@ -1578,21 +1569,18 @@
       <materialref ref="Tungsten"/>
       <solidref ref="DSbeampipe_1"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
     <volume name="DSbeampipe_2_logic">
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="DSbeampipe_2"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
     <volume name="DSbeampipe_3_logic">
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="DSbeampipe_3"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
     <volume name="shield_DS_beampipe_logic">
@@ -1600,7 +1588,6 @@
       <materialref ref="Tungsten"/>
       <solidref ref="shield_DS_beampipe_solid"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
 
@@ -1631,6 +1618,7 @@
         <volumeref ref="shield_DS_beampipe_logic"/>
         <positionref ref="shield_DS_beampipe_center"/>
       </physvol>
+      <!--
 
       <physvol name="DScoil_0">
         <volumeref ref="logicDScoil_0"/>
@@ -1705,6 +1693,7 @@
         <rotationref ref="RotateZ_6"/>
       </physvol>
 
+      -->
       <!--Removing col-3 -->
       <!--
       <physvol name="DScoll_1">
@@ -1718,13 +1707,13 @@
         <positionref ref="posCOLL5"/>
 	    <rotationref ref="ARotateZ_0"/> 
       </physvol>
-
 <!-- Collimator 4 -->
+<!-- Turn off Col 4 for test
+     -->
       <physvol name="DScoll_6">
-	      <volumeref ref="logicPDScollunion_1"/>
+        <volumeref ref="logicPDScollunion_1"/>
         <positionref ref="posPCOLL2"/>
       </physvol>
-
 <!--pcoll2trap_phys is removed since this is overlapping with shblk 4 poly shielding -->
 <!--
 
@@ -1736,19 +1725,20 @@
     <!--
        Shielding collimators
       -->
-
+<!--
       <physvol>
         <volumeref ref="boxDSShieldColl1_logic"/>
         <positionref ref="DSshieldcoll_center_1"/>
       </physvol>       
-
+-->
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
+    <!-- 
       <physvol>
         <volumeref ref="boxDSPolyShield1_logic"/>
         <positionref ref="boxDSPolyShield1_center"/>
       </physvol>
-
+-->
       <!-- PolyShield2 will be outside shielding hut -->
 <!--
       <physvol>
@@ -1776,6 +1766,7 @@
         <positionref ref="boxDSShield1_polyroof_center"/>
       </physvol>
 -->
+<!--
       <physvol>
         <volumeref ref="boxDSShield_local_logic"/>
         <positionref ref="boxDSShield_local_center"/>
@@ -1784,7 +1775,7 @@
         <volumeref ref="boxDSShield_polylocal_logic"/>
         <positionref ref="boxDSShield_polylocal_center"/>
       </physvol>
-
+-->
       <physvol>
         <volumeref ref="boxAlCan_logic"/>
         <positionref ref="boxAlCan_center"/>
