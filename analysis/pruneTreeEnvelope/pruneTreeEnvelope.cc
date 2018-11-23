@@ -190,10 +190,10 @@ remollEventParticle_t interpolate(remollEventParticle_t part){
     newPart.trid = part.trid;
     int stepSize = 10;
     for(size_t z = 4500; z <= 30000; z+=stepSize){
-        if (z >= 12500)
-            stepSize = 500;
-        else if (z >= 10500)
-            stepSize = 200;
+        //if (z >= 12500)
+        //    stepSize = 500;
+        //else if (z >= 10500)
+        //    stepSize = 200;
         
         for(size_t i = 0; i < (part.tjx).size()-1; i++){
             double x, y, dx, dy, dz;
@@ -230,7 +230,7 @@ remollEventParticle_t interpolate(remollEventParticle_t part){
     return newPart;    
 }
 
-void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, bool forceSeptant=true)
+void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double energyCut=0.0, int ringCut=0, bool forceSeptant=true)
 {
     TTree::SetMaxTreeSize(Long64_t(1024)*1024*1024*200); //200 GB tree
     std::vector < remollGenericDetectorHit_t > *fHit = 0;
@@ -239,12 +239,52 @@ void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, bool forc
     std::ostringstream os;
     os << file.substr(0, dotPos) << "_envelope_det" << detid << ".root";
     std::string fileName = os.str();
-    bool mirror = true;
-    double lowR = 935.0;
-    double highR = 1100.0;
-    bool hitRcut = true;
-    double lowE = 1000.0;
-    bool lowEcut = true;
+    bool mirror = false;
+    if (forceSeptant=true){
+        mirror = true;
+    }
+    double lowR = 600.0;
+    double highR = 1500.0;
+    bool hitRcut = false;
+    if (ringCut>0){
+        hitRcut=true;
+        if (ringCut==6){
+            // Ring 6
+            lowR = 1100.0;
+            highR = 1200.0;
+        }
+        if (ringCut==6){
+            // Ring 5 mollers
+            lowR = 935.0;
+            highR = 1100.0;
+        }
+        if (ringCut==6){
+            // Ring 4 
+            lowR = 855.0;
+            highR = 935.0;
+        }
+        if (ringCut==6){
+            // Ring 3
+            lowR = 780.0;
+            highR = 855.0;
+        }
+        if (ringCut==6){
+            // Ring 2 ep elastics
+            lowR = 730.0;
+            highR = 780.0;
+        }
+        if (ringCut==6){
+            // Ring 1 ep super elastics
+            lowR = 690.0;
+            highR = 730.0;
+        }
+    }
+    double lowE = 0.0;
+    bool lowEcut = false;
+    if (energyCut>0){
+        lowE = energyCut;
+        lowEcut = true;
+    }
     TFile *old = new TFile(file.c_str());
     TTree *oldTree = (TTree*)old->Get("T");
     TFile *newFile = new TFile(fileName.c_str(),"RECREATE", "", 1);
@@ -338,10 +378,12 @@ int main(int argc, char **argv)
 {
     std::string fileString = "tracking.root";
     int detid = 28;
+    double energyCut = 0.0;
+    int ringRadialCut = 0;
     bool forceSeptant = true;
-    if (argc <= 1 || argc > 4)
+    if (argc <= 1 || argc > 6)
     {
-        std::cerr << "Usage: ./pruneTreeEnvelope char*:filename int:detid y/n:rotateIntoSeptant" << std::endl;
+        std::cerr << "Usage: ./pruneTreeEnvelope char*:filename int:detid(default 28) double:energyCut(MeV, default 0) int:ringRadialCut(default 0 = all) y/n:rotateIntoSeptant(default y)" << std::endl;
         exit(0);
     }
     if (argc >= 2) 
@@ -353,11 +395,19 @@ int main(int argc, char **argv)
     {
         detid = atoi(argv[2]);    
     }
-    if (argc >= 4)
+    if (argc >= 4) 
     {
-        forceSeptant = (argv[3][0] == 'y');
+        energyCut = atof(argv[3]); 
     }
-    std::cout << "Running with file=" << fileString << ", detid=" << detid <<", forceSeptant=" << forceSeptant << std::endl; 
-    pruneTreeEnvelope(fileString, detid, forceSeptant);
+    if (argc >= 5)
+    {
+        ringRadialCut = atoi(argv[4]);    
+    }
+    if (argc >= 6)
+    {
+        forceSeptant = (argv[5][0] == 'y');
+    }
+    std::cout << "Running with file=" << fileString << ", detid=" << detid << ", energyCut=" << energyCut << " MeV, ringRadialCut=" << ringRadialCut <<", forceSeptant=" << forceSeptant << std::endl; 
+    pruneTreeEnvelope(fileString, detid, energyCut, ringRadialCut, forceSeptant);
 }
 
