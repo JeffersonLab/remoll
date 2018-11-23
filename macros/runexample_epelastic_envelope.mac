@@ -2,7 +2,7 @@
 /remoll/physlist/steplimiter/enable
 # Macrofile
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother_acceptanceDefinition.gdml
+/remoll/setgeofile geometry/mollerMother_acceptanceDefinition_includeCol4.gdml
 /remoll/parallel/setfile geometry/mollerParallel.gdml
 /remoll/physlist/parallel/enable 
 
@@ -19,7 +19,7 @@
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
 /remoll/beamene 11 GeV
-/remoll/evgen/set moller
+/remoll/evgen/set elastic
 /remoll/beamcurr 85 microampere
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
@@ -27,5 +27,5 @@
 /process/list
 # Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
-/remoll/filename remoll_moller_envelope_500k.root
+/remoll/filename remoll_epelastic_envelope_500k.root
 /run/beamOn 500000

@@ -30,6 +30,7 @@ doc
 #install directories
 bin
 lib
+lib64
 share
 
 #ignore build and map directory
