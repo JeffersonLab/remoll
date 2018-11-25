@@ -6,7 +6,6 @@
 #include "TFile.h"
 #include "remolltypes.hh"
 #include <vector> 
-#include "pruneTreeEnvelopetypes.hh"
 
 
 #define pi 3.141592653589793238462643383279502884L
@@ -243,9 +242,10 @@ void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double en
     if (forceSeptant=true){
         mirror = true;
     }
+    // Default look at stuff hitting the entire detector array
+    bool hitRcut = true;
     double lowR = 600.0;
     double highR = 1500.0;
-    bool hitRcut = false;
     if (ringCut>0){
         hitRcut=true;
         if (ringCut==6){
@@ -253,27 +253,27 @@ void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double en
             lowR = 1100.0;
             highR = 1200.0;
         }
-        if (ringCut==6){
+        if (ringCut==5){
             // Ring 5 mollers
             lowR = 935.0;
             highR = 1100.0;
         }
-        if (ringCut==6){
+        if (ringCut==4){
             // Ring 4 
             lowR = 855.0;
             highR = 935.0;
         }
-        if (ringCut==6){
+        if (ringCut==3){
             // Ring 3
             lowR = 780.0;
             highR = 855.0;
         }
-        if (ringCut==6){
+        if (ringCut==2){
             // Ring 2 ep elastics
             lowR = 730.0;
             highR = 780.0;
         }
-        if (ringCut==6){
+        if (ringCut==1){
             // Ring 1 ep super elastics
             lowR = 690.0;
             highR = 730.0;
