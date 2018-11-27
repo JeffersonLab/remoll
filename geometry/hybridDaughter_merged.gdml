@@ -1441,6 +1441,7 @@
 <!--      <materialref ref="Kryptonite"/> -->
       <solidref ref="dscyl_1"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
       <auxiliary auxtype="DetNo" auxvalue="2003"/>
     </volume>
 
@@ -1449,6 +1450,7 @@
 <!--      <materialref ref="Kryptonite"/> -->
       <solidref ref="dscoll5union_5"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
       <auxiliary auxtype="DetNo" auxvalue="2005"/>
     </volume>
 
@@ -1457,6 +1459,7 @@
 <!--	<materialref ref="Kryptonite"/> -->
 	<solidref ref="pdscoll_union_6"/> 
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
 	<auxiliary auxtype="DetNo" auxvalue="2004"/>
     </volume>
 
@@ -1464,6 +1467,7 @@
 	<materialref ref="VacuumColl"/>
 	<solidref ref="pcoll2trap"/> 
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
 	<auxiliary auxtype="DetNo" auxvalue="201"/>
     </volume>
 
