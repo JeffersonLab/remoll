@@ -38,6 +38,14 @@
 #/remoll/beam_dph 0 mrad
 
 #/remoll/evgen/set beam
+# To hit Ring 5 open in septant 4
+#/remoll/evgen/beam/x -1300 mm
+#/remoll/evgen/beam/rasx -30 mm
+#/remoll/evgen/beam/origin -987.5 0 -50 mm
+#/remoll/evgen/beam/direction (-0.0523,0,0.9986)
+# Mainz test energy
+#/remoll/beamene 855 MeV
+
 /remoll/evgen/set moller
 #/remoll/evgen/thcommin 30.0 deg
 #/remoll/evgen/thcommax 150.0 deg

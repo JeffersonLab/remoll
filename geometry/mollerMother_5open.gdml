@@ -3,7 +3,7 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define> 
-  <position name="detectorCenter" x="0" y="0" z="125.0 + 0.0*28500."/>
+  <position name="detectorCenter" x="0" y="0" z="0.0*28500."/>
   <rotation name="identity"/>
   <rotation name="rot" unit="deg" x="0" y="90" z="0"/>
 </define>
