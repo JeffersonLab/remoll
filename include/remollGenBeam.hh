@@ -15,10 +15,12 @@ class remollGenBeam : public remollVEventGen {
     remollGenBeam();
     virtual ~remollGenBeam();
 
-    void SetOrigin(G4ThreeVector origin);
     void SetOriginX(double x);
     void SetOriginY(double y);
     void SetOriginZ(double z);
+
+    void SetRasterX(double RASx);
+    void SetRasterY(double RASy);
 
     void SetDirection(G4ThreeVector direction);
     void SetDirectionX(double dx);
@@ -35,17 +37,12 @@ class remollGenBeam : public remollVEventGen {
   private:
     void SamplePhysics(remollVertex *, remollEvent *);
 
-    double fXpos;
-    double fYpos;
-    double fZpos;
+    G4ThreeVector fOrigin;
+    G4ThreeVector fDirection;
+    G4ThreeVector fPolarization;
 
-    double fXdir;
-    double fYdir;
-    double fZdir;
-
-    double fXpol;
-    double fYpol;
-    double fZpol;
+    double fXras;
+    double fYras;
 
     G4String fParticleName;
 };
