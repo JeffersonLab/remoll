@@ -32,7 +32,7 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-      <file name="targetDaughter.gdml"/>
+      <file name="targetDaughter_Clamshell_Optimized.gdml"/>
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
