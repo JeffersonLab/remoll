@@ -4,7 +4,7 @@
 <define> 
   <position name="hallCenter" x="0" y="0" z="6087."/>
   <position name="targetCenter" x="0" y="0" z="0"/>
-  <position name="targetCenter_Clamshell" x="0" y="200./2" z="0"/>
+  <position name="targetCenter_Clamshell" x="0" y="0" z="0"/>
   <position name="upstreamCenter" x="0" y="0" z="7000."/>
   <position name="hybridCenter" x="0" y="0" z="13366.57"/>
   <position name="detectorCenter" x="0" y="0" z="28500."/>

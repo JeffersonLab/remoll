@@ -8,7 +8,7 @@
 
   <define>
 
-    <constant name="y_increase_targ" value="200.0"/>
+    <constant name="y_increase_targ" value="0.0"/>
     <constant name="YOFFSET_targ" value="-1*y_increase_targ/2"/>
 
     <constant name="tubeTarget_rmax" value="40"/>
@@ -17,7 +17,7 @@
 
     <!-- Mother volume parameters -->
     <constant name="boxTargetMother_width" value="9500"/>
-    <constant name="boxTargetMother_height" value="6000 - 100 + y_increase_targ"/>
+    <constant name="boxTargetMother_height" value="6000 - 100 + y_increase_targ + 200"/>
     <constant name="boxTargetMother_length" value="6400"/>
     <constant name="tubeBeampipeMother_sub_rmax" value="200"/>
     <!-- <constant name="tubeBeampipeMother_sub_length" value="250"/> -->
@@ -151,7 +151,7 @@
     <position name="boxtgtPolyShield1_poly_center" unit="mm" x="tgtShield_x_offset" y="tgtPolyShield1_y_offset1+YOFFSET_targ-100" z="0-200"/>
     <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/> 
     <rotation name="scRot_2" unit="deg" x="270" y="0" z="0"/>
-
+    <position name="boxtgtMother_center_1" unit="mm" x="0" y="-1*(boxTargetMother_height)/2" z="0"/>
   </define>
 
   &materials;
@@ -160,9 +160,15 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1400" rmin="0" startphi="0" z="6000"/>
     <!--100 mm offset to prevent target mother volume overlapping with hall mother volume -->
     <box lunit="mm" name="boxTargetMother_1" x="boxTargetMother_width" y="boxTargetMother_height" z="boxTargetMother_length"/>
+    <box lunit="mm" name="boxTargetMother_2" x="boxTargetMother_width+1" y="150" z="boxTargetMother_length+1"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_sub" rmax="tubeBeampipeMother_sub_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_sub_length"/>
-    <subtraction name ="boxTargetMother">
+    <subtraction name ="boxTargetMother_3">
       <first ref="boxTargetMother_1"/>
+      <second ref="boxTargetMother_2"/>
+      <positionref ref="boxtgtMother_center_1" />
+    </subtraction>
+    <subtraction name ="boxTargetMother">
+      <first ref="boxTargetMother_3"/>
       <second ref="tubeBeampipe_sub"/>
       <positionref ref="beampipe_sub_center"/>
     </subtraction> 
@@ -370,13 +376,13 @@
    <volume name="USAlTarg">
      <materialref ref="Aluminum"/>
      <solidref ref="AlWindow"/>
-     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+     <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
    </volume>
 
    <volume name="DSAlTarg">
      <materialref ref="Aluminum"/>
      <solidref ref="AlWindow"/>
-     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+     <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
    </volume>
 
    <volume name="TargShield_topdisk_logic">

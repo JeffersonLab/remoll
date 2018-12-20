@@ -1,6 +1,7 @@
 /run/numberOfThreads 1
 
 /remoll/parallel/setfile geometry/mollerParallel.gdml
+/remoll/physlist/parallel/enable 
 
 /run/initialize
 
