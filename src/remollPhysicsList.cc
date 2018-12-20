@@ -28,7 +28,7 @@ remollPhysicsList::remollPhysicsList()
   SetVerboseLevel(0);
 
   // Get default reference physics list
-  RegisterReferencePhysList("QGSP_BERT");
+  RegisterReferencePhysList("QGSP_BERT_HP");
 
   // TODO Backwards compatible, remove this on next major version change
   // Create base messenger
