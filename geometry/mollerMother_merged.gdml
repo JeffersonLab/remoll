@@ -32,7 +32,7 @@
 
       <physvol>
       <file name="targetDaughter_Clamshell_Optimized.gdml"/>
-      <positionref ref="targetCenter_Clamshell"/>
+      <positionref ref="targetCenter"/>
       <!--<file name="targetDaughter_merged.gdml"/>
       <positionref ref="targetCenter"/>-->
       <rotationref ref="identity"/>
