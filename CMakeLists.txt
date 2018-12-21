@@ -37,7 +37,7 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
 endif()
 
 # ROOT path
-find_package(ROOT REQUIRED)
+find_package(ROOT 6 REQUIRED)
 include(${ROOT_USE_FILE})
 
 # Update header file
