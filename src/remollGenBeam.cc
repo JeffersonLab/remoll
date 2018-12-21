@@ -21,7 +21,7 @@
 
 remollGenBeam::remollGenBeam()
 : remollVEventGen("beam"),
-  fOrigin(0.0*m,0.0*m,-2.0*m),
+  fOrigin(0.0*m,0.0*m,-5.0*m),
   fDirection(0.0,0.0,1.0),
   //fPolarization(0.0,0.0,0.0),
   fXras(0.0), fYras(0.0),
