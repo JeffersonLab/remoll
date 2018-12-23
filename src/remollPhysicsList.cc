@@ -1,4 +1,5 @@
 #include "remollPhysicsList.hh"
+#include "remollUserOptical.hh"
 
 #include "G4PhysListFactory.hh"
 #include "G4ParallelWorldPhysics.hh"
@@ -20,6 +21,7 @@ remollPhysicsList::remollPhysicsList()
   fReferencePhysList(0),
   fParallelPhysics(0),
   fOpticalPhysics(0),
+  fUserOptical(0),
   fPhysListMessenger(0),
   fBaseMessenger(0)
 {
@@ -52,6 +54,12 @@ remollPhysicsList::remollPhysicsList()
       "Enable optical physics")
               .SetStates(G4State_PreInit)
               .SetDefaultValue("true");
+  fBaseMessenger->DeclareMethod(
+      "useroptical",
+      &remollPhysicsList::SetUserOptical,
+      "Enable user optical physics")
+              .SetStates(G4State_PreInit)
+              .SetDefaultValue("true");
 
 
   // Create physlist messenger
@@ -64,6 +72,9 @@ remollPhysicsList::remollPhysicsList()
   fOpticalMessenger = new G4GenericMessenger(this,
       "/remoll/physlist/optical/",
       "Remoll optical physics properties");
+  fUserOpticalMessenger = new G4GenericMessenger(this,
+      "/remoll/physlist/useroptical/",
+      "Remoll useroptical physics properties");
   fStepLimiterMessenger = new G4GenericMessenger(this,
       "/remoll/physlist/steplimiter/",
       "Remoll step limiter properties");
@@ -105,6 +116,16 @@ remollPhysicsList::remollPhysicsList()
       &remollPhysicsList::DisableOpticalPhysics,
       "Disable optical physics")
               .SetStates(G4State_PreInit);
+  fUserOpticalMessenger->DeclareMethod(
+      "enable",
+      &remollPhysicsList::EnableUserOptical,
+      "Enable user optical physics")
+              .SetStates(G4State_PreInit);
+  fUserOpticalMessenger->DeclareMethod(
+      "disable",
+      &remollPhysicsList::DisableUserOptical,
+      "Disable user optical physics")
+              .SetStates(G4State_PreInit);
 
   fStepLimiterMessenger->DeclareMethod(
       "enable",
@@ -129,6 +150,7 @@ remollPhysicsList::~remollPhysicsList()
   if (fStepLimiterMessenger) delete fStepLimiterMessenger;
   if (fParallelMessenger) delete fParallelMessenger;
   if (fOpticalMessenger) delete fOpticalMessenger;
+  if (fUserOpticalMessenger) delete fUserOpticalMessenger;
   if (fBaseMessenger) delete fBaseMessenger;
 }
 
@@ -228,6 +250,49 @@ void remollPhysicsList::DisableOpticalPhysics()
   // Delete optical physics
   delete fOpticalPhysics;
   fOpticalPhysics = 0;
+}
+
+void remollPhysicsList::SetUserOptical(G4bool flag2)
+{
+  if (flag2) EnableUserOptical();
+  else     DisableUserOptical();
+}
+
+void remollPhysicsList::EnableUserOptical()
+{
+  if (fUserOptical) {
+    G4cout << "User Optical physics already active" << G4endl;
+    return;
+  }
+
+  // Print output
+  if (GetVerboseLevel() > 0)
+    G4cout << "Registering user optical physics" << G4endl;
+
+  // Create optical physics
+  fUserOptical = new remollUserOptical();
+
+  // Register existing physics
+  RegisterPhysics(fUserOptical);
+}
+
+void remollPhysicsList::DisableUserOptical()
+{
+  if (!fUserOptical) {
+    G4cout << "User Optical physics not active" << G4endl;
+    return;
+  }
+
+  // Print output
+  if (GetVerboseLevel() > 0)
+    G4cout << "Removing user optical physics" << G4endl;
+
+  // Remove optical physics
+  RemovePhysics(fUserOptical);
+
+  // Delete optical physics
+  delete fUserOptical;
+  fUserOptical = 0;
 }
 
 void remollPhysicsList::SetStepLimiterPhysics(G4bool flag)

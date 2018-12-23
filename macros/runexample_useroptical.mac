@@ -2,7 +2,8 @@
 
 # store tracks
 #/tracking/storeTrajectory 1
-/remoll/physlist/optical/enable 
+#/remoll/physlist/optical/enable 
+/remoll/physlist/useroptical/enable 
 
 # This must be called before initialize
 /remoll/setgeofile geometry/mollerMother_5open.gdml
@@ -18,6 +19,6 @@
 /remoll/evgen/beam/rasx 105 mm
 /remoll/evgen/beam/rasy 78 mm
 /remoll/beamene 855 MeV
-/remoll/filename remollout_optical.root
+/remoll/filename remollout_useroptical.root
 
 /run/beamOn 10000
