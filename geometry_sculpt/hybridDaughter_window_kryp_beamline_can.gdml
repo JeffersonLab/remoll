@@ -910,8 +910,8 @@
     <!-- Aluminum Can solids -->
     <box lunit="mm" name="boxAlCan_solid_1" x="AlCan_width" y="AlCan_height" z="AlCan_length"/>
     <box lunit="mm" name="boxAlCan_solid_2" x="AlCan_width - 2*AlCan_side_thickness" y="AlCan_height - AlCan_top_thickness - AlCan_bottom_thickness" z="AlCan_length - 2*AlCan_side_thickness"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_US_opening_solid" rmax="AlCan_US_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_DS_opening_solid" rmax="AlCan_DS_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_US_opening_solid" rmax="AlCan_US_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length + 5"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlCan_DS_opening_solid" rmax="AlCan_DS_Opening_Bore_R" rmin="0" startphi="0" z="AlCan_opening_sub_length + 5"/>
 
     <subtraction name ="boxAlCan_solid_3">
       <first ref="boxAlCan_solid_1"/>
@@ -1044,7 +1044,6 @@
     <volume name="logicBox3">
       <materialref ref="G4_AIR"/>
       <solidref ref="box3"/>
-
     </volume>
 
     <volume name="boxAlCan_logic">
@@ -1073,14 +1072,17 @@
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
       <solidref ref="tubeDownstream"/>
+
       <physvol name="window_US_phys">
         <volumeref ref="logicUS_window"/>
         <positionref ref="window_pos"/>
       </physvol>
+
       <physvol name="DSbeam_pipePhys">
         <volumeref ref="logicDSbeam_pipe"/>
         <positionref ref="DSbeam_pipe_pos"/>
       </physvol>
+
       <physvol name="box3Phys">
         <volumeref ref="logicBox3"/>
         <positionref ref="tubeDownstreamPos"/>

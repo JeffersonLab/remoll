@@ -44,7 +44,7 @@
       <rotationref ref="identity"/>
       </physvol>
       <physvol>
-      <file name="geometry_sculpt/hybridDaughter_window_kryp_beamline_can.gdml"/>
+      <file name="geometry_sculpt/hybridDaughter_window_kryp_beamline_HeAir.gdml"/>
       <positionref ref="hybridCenter"/>
       <rotationref ref="identity"/>
       </physvol> 
