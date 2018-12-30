@@ -312,7 +312,7 @@
     <constant name="box2_height" value="7000.0"/>
     <constant name="box2_length" value="10900.0"/>
 
-    <constant name="dsWin_thickness" value="0.5"/>
+    <constant name="dsWin_thickness" value="1.5"/>
     <!-- <constant name="dsWin_radius" value="860"/> -->
     <!-- <constant name="box2Mat_length" value="4823.59"/><!-\- This is supposed to be z= 22123 for tgt=0 -\-> -->
     <!-- <constant name="dsWin_radius" value="920"/> -->
@@ -457,6 +457,16 @@
     <material Z="11" name="Copper" state="solid">
       <D unit="g/cm3" value="8.96"/>
       <atom unit="g/mole" value="63.54"/>
+    </material>
+
+    <!-- X*0.00120479+(1-X)*0.000166322 -->
+    <material formula=" " name="HeAir">
+      <!-- <D unit="g/cm3" value="0.0002701688"/> <!-\- 90%He -\-> -->
+      <!-- <D unit="g/cm3" value="0.0003740156"/> <!-\- 80%He -\-> -->
+      <!-- <D unit="g/cm3" value="0.0004778624"/> <!-\- 70%He -\-> -->
+      <D unit="g/cm3" value="0.0005817092"/> <!-- 60%He -->
+      <fraction n="0.6" ref="G4_He" />
+      <fraction n="0.4" ref="G4_AIR" />
     </material>
   </materials>
 
@@ -754,8 +764,8 @@
     <box lunit="mm" name="box2Mat0" x="box2_width" y="box2_height" z="box2Mat_length"/>
     <box lunit="mm" name="box3Mat0" x="box2_width" y="box2_height" z="box3Mat_length"/>
 
-    <sphere name="DSwindow" aunit="deg" lunit="mm" rmin="dsWin_radius" rmax="dsWin_radius + dsWin_thickness"
-	    deltaphi="360" starttheta="90" deltatheta="80" />
+    <tube lunit="mm" aunit="deg" name="DSwindow" rmin="200" rmax="3000" z="0.13" deltaphi="360"/>
+
     <tube lunit="mm" aunit="deg" name="DSwinDet" rmin="200" rmax="2000" z="0.1" deltaphi="360"/>
 
     <tube lunit="mm" aunit="deg" name="DSwinShield" rmin="860" rmax="2500" z="0.1" deltaphi="360"/>
@@ -1061,7 +1071,8 @@
     </volume>
 
     <volume name="box2Mat_logic">
-      <materialref ref="G4_Galactic"/>
+      <materialref ref="HeAir"/>
+      <!-- <materialref ref="G4_Galactic"/> -->
       <solidref ref="box2Mat"/>
     </volume>
 
@@ -1090,9 +1101,9 @@
     </volume>
 
     <volume name="logicDownstream">
-      <!-- <materialref ref="G4_He"/> -->
+      <materialref ref="HeAir"/>
       <!-- <materialref ref="G4_AIR"/> -->
-      <materialref ref="G4_Galactic"/>
+      <!-- <materialref ref="G4_Galactic"/> -->
       <solidref ref="tubeDownstream"/>
 
       <physvol name="DSwindow_phys">
