@@ -9,7 +9,8 @@ include/gitinfo.hh
 *.so
 *.d
 
-#ignore output files
+#ignore output files and folder
+output
 *.root
 *.out
 *.pdf
