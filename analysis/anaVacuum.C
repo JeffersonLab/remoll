@@ -4,17 +4,17 @@ void writeHisto(TH1*, TFile*);
 void anaVacuum(){
   string process[3]={"Moller","epElastic","epInelastic"};
 
-  string simVer[3]={"","_beamline","_kryp_beamline"};
-  int nSim=2;
+  string simVer[4]={"","_beamline","_kryp_beamline","_window_kryp_beamline"};
+  int nSim=3;
 
   string allAcceptance = "&& hit.r>0.6 && hit.r<1.2";
   string r5Acceptance = "&& hit.r>0.935 && hit.r<1.1";
 
   //doAnalysis(process[0],simVer[nSim],r5Acceptance);
   //doAnalysis(process[1],simVer[nSim],r5Acceptance);
-  doAnalysis(process[2],simVer[nSim],r5Acceptance);
+  //doAnalysis(process[2],simVer[nSim],r5Acceptance);
 
-  //doAnalysis(process[0],simVer[nSim],allAcceptance);
+  doAnalysis(process[0],simVer[nSim],allAcceptance);
   //doAnalysis(process[1],simVer[nSim],allAcceptance);
   //doAnalysis(process[2],simVer[nSim],allAcceptance);
 }
@@ -24,8 +24,11 @@ void doAnalysis(string proc, string simVer, string rRangeCut){
   cout<<"Output goes into: "<<foutNm << endl;
   TFile *fout = new TFile(foutNm.c_str(),"RECREATE");
   TFile *finV = TFile::Open(Form("../output/remollout_VacTst_%s_Vac.root",proc.c_str()),"READ");
-  TFile *finC = TFile::Open(Form("../output/remollout_VacTst_%s%s_Can.root",proc.c_str(), simVer.c_str()),"READ");
-  TFile *finA = TFile::Open(Form("../output/remollout_VacTst_%s%s_Air.root",proc.c_str(), simVer.c_str()),"READ");
+  TFile *finC = TFile::Open(Form("../remollout_VacTst_%s%s_Can.root",proc.c_str(), simVer.c_str()),"READ");
+  TFile *finA = TFile::Open(Form("../remollout_VacTst_%s%s_Air.root",proc.c_str(), simVer.c_str()),"READ");
+  // TFile *finC = TFile::Open(Form("../output/remollout_VacTst_%s%s_Can.root",proc.c_str(), simVer.c_str()),"READ");
+  // TFile *finA = TFile::Open(Form("../output/remollout_VacTst_%s%s_He.root",proc.c_str(), simVer.c_str()),"READ");
+  //TFile *finA = TFile::Open(Form("../output/remollout_VacTst_%s%s_Air.root",proc.c_str(), simVer.c_str()),"READ");
 
   TTree *tV=(TTree*)finV->Get("T");
   TTree *tC=(TTree*)finC->Get("T");
@@ -117,7 +120,37 @@ void doAnalysis(string proc, string simVer, string rRangeCut){
   gPad->SetGridx(1);
   gPad->SetGridy(1);
 
-  //return;
+  TCanvas *c8=new TCanvas();
+  c8->Divide(3);
+  c8->cd(1);
+  TH2D *xzSrcV=new TH2D("xzSrcV",";z[m];x[m]",200,-1,30,200,-3,3);
+  tV->Project("xzSrcV","hit.vx:hit.vz",defaultCuts.c_str());
+  xzSrcV->GetZaxis()->SetRangeUser(1,zhigh);
+  xzSrcV->DrawCopy("colz");
+  writeHisto(xzSrcV,fout);
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  c8->cd(2);
+  TH2D *xzSrcC=new TH2D("xzSrcC",";z[m];x[m]",200,-1,30,200,-3,3);
+  tC->Project("xzSrcC","hit.vx:hit.vz",defaultCuts.c_str());
+  xzSrcC->GetZaxis()->SetRangeUser(1,zhigh);
+  xzSrcC->DrawCopy("colz");
+  writeHisto(xzSrcC,fout);
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  c8->cd(3);
+  TH2D *xzSrcA=new TH2D("xzSrcA",";z[m];x[m]",200,-1,30,200,-3,3);
+  tA->Project("xzSrcA","hit.vx:hit.vz",defaultCuts.c_str());
+  xzSrcA->GetZaxis()->SetRangeUser(1,zhigh);
+  xzSrcA->DrawCopy("colz");
+  writeHisto(xzSrcA,fout);
+  gPad->SetLogz(1);
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+
+  return;
   TCanvas *c6=new TCanvas();
   TH2D *erCorrDiff=(TH2D*)erCorrA->Clone("e-r correlation difference");
   erCorrDiff->Add(erCorrV,-1);
@@ -334,36 +367,6 @@ void doAnalysis(string proc, string simVer, string rRangeCut){
   tC->Draw("hit.vy:hit.vx:hit.vz","rate*(hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz>1)");
   c7->cd(3);
   tA->Draw("hit.vy:hit.vx:hit.vz","rate*(hit.det==28 && hit.pid==11 && hit.r>0.6 && hit.r<1.2 && hit.vz>1)");
-
-  TCanvas *c8=new TCanvas();
-  c8->Divide(3);
-  c8->cd(1);
-  TH2D *xzSrcV=new TH2D("xzSrcV",";z[m];x[m]",200,-1,30,200,-3,3);
-  tV->Project("xzSrcV","hit.vx:hit.vz",defaultCuts.c_str());
-  xzSrcV->GetZaxis()->SetRangeUser(1,zhigh);
-  xzSrcV->DrawCopy("colz");
-  writeHisto(xzSrcV,fout);
-  gPad->SetLogz(1);
-  gPad->SetGridx(1);
-  gPad->SetGridy(1);
-  c8->cd(2);
-  TH2D *xzSrcC=new TH2D("xzSrcC",";z[m];x[m]",200,-1,30,200,-3,3);
-  tC->Project("xzSrcC","hit.vx:hit.vz",defaultCuts.c_str());
-  xzSrcC->GetZaxis()->SetRangeUser(1,zhigh);
-  xzSrcC->DrawCopy("colz");
-  writeHisto(xzSrcC,fout);
-  gPad->SetLogz(1);
-  gPad->SetGridx(1);
-  gPad->SetGridy(1);
-  c8->cd(3);
-  TH2D *xzSrcA=new TH2D("xzSrcA",";z[m];x[m]",200,-1,30,200,-3,3);
-  tA->Project("xzSrcA","hit.vx:hit.vz",defaultCuts.c_str());
-  xzSrcA->GetZaxis()->SetRangeUser(1,zhigh);
-  xzSrcA->DrawCopy("colz");
-  writeHisto(xzSrcA,fout);
-  gPad->SetLogz(1);
-  gPad->SetGridx(1);
-  gPad->SetGridy(1);
 
   TCanvas *c9=new TCanvas();
   c9->Divide(3);
