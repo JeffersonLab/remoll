@@ -4,7 +4,8 @@
 #/tracking/storeTrajectory 1
 
 # This must be called before initialize
-/remoll/setgeofile geometry_sculpt/mollerMother_krypBeamline_3regions.gdml
+#/remoll/setgeofile geometry_sculpt/mollerMother_krypBeamline_3regions.gdml
+/remoll/setgeofile geometry_sculpt/mollerMother_krypBeamline_3regions_He.gdml
 
 # This must be explicitly called
 /run/initialize
@@ -63,8 +64,9 @@
 # Specify random number seed
 #/remoll/seed 123456
 
-/remoll/filename remollout_VacTst3reg_Moller_krypBeamline_USwin_movedDSwin_ABC-HAA.root
+/remoll/filename remollout_VacTst3reg_Moller_krypBeamline_DSwin0p13mmR1020_winShield_b3050_ABC-XXA_X-HeAir6040.root
+/run/beamOn 10000000
+#/remoll/filename o_deleteMe.root
+#/run/beamOn 1000
 
-#/tracking/verbose 2
 
-/run/beamOn 2000000
