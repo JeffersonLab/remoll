@@ -724,8 +724,6 @@
       <rotationref ref="RotateCOIL_F_3"/>
     </union>
 
-    <!-- NEW! FIXME Cameron 2/5/2018 -->
-
     <box lunit="mm" name="box1" x="box1_width" y="box1_height" z="box1_length"/>
     <box lunit="mm" name="box2" x="box2_width" y="box2_height" z="box2_length"/>
     <cone lunit="mm" aunit="deg" name="DSbeam_vac1" rmin1="0.0" rmax1="DSbeam_vac_r1U" rmin2="0.0" rmax2="DSbeam_vac_r1D" z="DSbeam_vac_z1" deltaphi="360" startphi="0"/>
@@ -737,22 +735,17 @@
       <positionref ref="DSbeam_vac_subpos"/>
     </union>
 
-    <union name="tubeDownstream_sub">
+    <union name="tubeDownstream">
       <first ref="box1"/>
       <second ref="box2"/>
       <positionref ref="tubeDownstreamPos"/>
     </union>
 
-    <subtraction name="tubeDownstream">
-      <first ref="tubeDownstream_sub"/>
-      <second ref="DSbeam_vac"/>
-      <positionref ref="DSbeam_vac_pos"/>
-    </subtraction>
-
     <tube lunit="mm" aunit="deg" name="USwindow" rmin="0" rmax="PCOLL2_R4_U" z="0.5" deltaphi="360"/>
 
     <box lunit="mm" name="box2Mat0" x="box2_width" y="box2_height" z="box2Mat_length"/>
     <box lunit="mm" name="box3Mat0" x="box2_width" y="box2_height" z="box3Mat_length"/>
+    <tube lunit="mm" aunit="deg" name="hybDSpipe" rmin="0" rmax="108.9" z="20000" deltaphi="360"/>
 
     <sphere name="DSwindow" aunit="deg" lunit="mm" rmin="dsWin_radius" rmax="dsWin_radius + dsWin_thickness"
 	    deltaphi="360" starttheta="90" deltatheta="80" />
@@ -762,8 +755,8 @@
 
     <subtraction name="box2Mat1">
       <first ref="box2Mat0"/>
-      <second ref="DSbeam_vac"/>
-      <position name="beamPipe_box2_relPos" z="Col4_offset/2 - box1_length/2 - box2Mat_length/2 "/>
+      <second ref="hybDSpipe"/>
+      <position name="beamPipe_box2_relPos" z="0"/>
     </subtraction>
     <subtraction name="box2Mat2">
       <first ref="box2Mat1"/>
@@ -783,8 +776,8 @@
 
     <subtraction name="box3Mat">
       <first ref="box3Mat0"/>
-      <second ref="DSbeam_vac"/>
-      <position name="beamPipe_box3_relPos" z="Col4_offset/2 - box1_length/2 - box2Mat_length - box3Mat_length/2 "/>
+      <second ref="hybDSpipe"/>
+      <position name="beamPipe_box3_relPos" z="0"/>
     </subtraction>
 
     <cone lunit="mm" aunit="deg" name="DSbeam_pipe1" rmin1="DSbeam_vac_r1U - 3.0" rmax1="DSbeam_vac_r1U - 0.1" rmin2="DSbeam_vac_r1D - 3.0" rmax2="DSbeam_vac_r1D - 0.1" z="DSbeam_vac_z1" deltaphi="360" startphi="0"/>
@@ -1226,7 +1219,7 @@
 
       <physvol>
 	<file name="geometry_sculpt/beampipe.gdml"/>
-        <position name="beamPipe_pos" unit="mm" x="0" y="0" z="-box1_length/2."/>
+        <position name="beamPipe_pos" unit="mm" x="0" y="0" z="10000 - DOFFSET"/>
       </physvol>
 
     </volume>
