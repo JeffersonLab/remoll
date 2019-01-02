@@ -1125,10 +1125,10 @@
         <position name="box3Mat_pos" unit="mm" z="box1_length/2 + box2Mat_length + box3Mat_length/2"/>
       </physvol>
 
-      <physvol name="DSbeam_pipe">
-        <volumeref ref="logicDSbeam_pipe"/>
-        <positionref ref="DSbeam_vac_pos"/>
-      </physvol>
+      <!-- <physvol name="DSbeam_pipe"> -->
+      <!--   <volumeref ref="logicDSbeam_pipe"/> -->
+      <!--   <positionref ref="DSbeam_vac_pos"/> -->
+      <!-- </physvol> -->
 
       <physvol name="DScoil_0">
         <volumeref ref="logicDScoil_0"/>
@@ -1222,6 +1222,11 @@
       <physvol name="pcoll2trap_phys">
         <volumeref ref="logicpcoll2trap"/>
         <positionref ref="posPCOLL2TRAP"/>
+      </physvol>
+
+      <physvol>
+	<file name="geometry_sculpt/beampipe.gdml"/>
+        <position name="beamPipe_pos" unit="mm" x="0" y="0" z="-box1_length/2."/>
       </physvol>
 
     </volume>
