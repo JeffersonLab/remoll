@@ -4,7 +4,6 @@
 
 <define> 
   <position name="detectorCenter" x="0" y="0" z="125.0 + 0.0*28500."/>
-     <position unit="mm" name="targetCenter" x="0" y="0" z="3000"/>
   <rotation name="identity"/>
   <rotation name="rot" unit="deg" x="0" y="90" z="0"/>
 </define>
@@ -19,7 +18,7 @@
 </materials>
 
 <solids>
-     <box lunit="mm" name="boxMother" x="200000" y="200000" z="200000"/>
+     <box lunit="mm" name="boxMother" x="1501" y="501" z="701"/>
 </solids>
 
   <structure>
@@ -32,12 +31,6 @@
       <file name="detector_5open.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="rot"/>
-      </physvol>
-
-      <physvol>
-      <file name="targetDaughter.gdml"/>
-      <positionref ref="targetCenter"/>
-      <rotationref ref="identity"/>
       </physvol>
 
     </volume>
