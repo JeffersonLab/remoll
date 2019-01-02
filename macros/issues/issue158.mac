@@ -1,0 +1,33 @@
+# Use this open statement to create an OpenGL view:
+/vis/open OGL 600x600-0+0  
+
+/remoll/physlist/optical/enable
+
+# This is the current working geometry
+/remoll/setgeofile macros/issues/issue158/mollerMother_5open.gdml
+
+/run/initialize
+
+#/remoll/beamene 11.0 GeV
+/remoll/beamene 855 MeV
+/remoll/beamcurr 50 microampere
+#/remoll/optical true
+#/remoll/addfield CLEO_rm.dat
+/control/execute vis/vis.mac
+#/gun/position 0.0 0.0 -0.1 m
+#/gun/momentum 0.5 1.0 2.0 GeV
+
+# Raster is on by default with 5x5mm
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm 
+
+## Beam generator
+/remoll/evgen/set beam
+/remoll/evgen/beam/x -987.5
+/remoll/evgen/beam/z -120.0
+/remoll/evgen/beam/px -0.0523
+/remoll/evgen/beam/pz 0.9986 
+/remoll/filename remollout_r5o_beam_default.root
+
+/run/beamOn 1
+
