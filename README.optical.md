@@ -51,7 +51,7 @@ For many processes there are additional macro commands. Often there is
 a macro command with `default` that can be used before initialization,
 and one without that can be used after initialization. Several macro
 commands have a version that is specific to a process, indicated by the
-`<process>` tag below, where `<process>` can be 'cerenkov`, `scintillation`,
+`<process>` tag below, where `<process>` can be `cerenkov`, `scintillation`,
 `wls`, `absorption`, `boundary`, `rayleigh`, or `mie`.
 
 #### Verbosity
