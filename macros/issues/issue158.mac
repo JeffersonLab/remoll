@@ -1,5 +1,6 @@
 # Use this open statement to create an OpenGL view:
-/vis/open OGL 600x600-0+0  
+/vis/open OGL 600x600-0+0
+/control/execute vis/vis.mac
 
 /remoll/physlist/optical/enable
 
@@ -10,11 +11,14 @@
 
 /remoll/beamene 855 MeV
 /remoll/beamcurr 50 microampere
-/control/execute vis/vis.mac
 
 /remoll/evgen/set beam
-/remoll/evgen/beam/px -0.0523
-/remoll/evgen/beam/pz 0.9986 
+/remoll/evgen/beam/x 0
+/remoll/evgen/beam/y 0
+/remoll/evgen/beam/z -10 cm
+/remoll/evgen/beam/px 0
+/remoll/evgen/beam/py 0
+/remoll/evgen/beam/pz 1
 
 /run/beamOn 1
 
