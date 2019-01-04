@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+  <matrix name="Vacuum_RINDEX"    coldim="2" values="0.1*eV 1.0 10.0*eV 1.0"/>
+  <matrix name="Vacuum_ABSLENGTH" coldim="2" values="0.1*eV 25.0*m 10.0*eV 25.0*m"/>
+</define>
+
+<materials>
+  <material Z="1" name="VacuumOptical" state="gas">
+    <T unit="K" value="2.73"/>
+    <P unit="pascal" value="3e-18"/>
+    <D unit="g/cm3" value="1e-25"/>
+    <atom unit="g/mole" value="1.01"/>
+    <property name="RINDEX" ref="Vacuum_RINDEX"/>
+    <property name="ABSLENGTH" ref="Vacuum_ABSLENGTH"/>
+  </material>
+</materials>
+
+<solids>
+  <box lunit="mm" name="ParallelWorld_solid" x="1501" y="501" z="701"/>
+</solids>
+
+<structure>
+  <volume name="ParallelWorld_logical">
+    <materialref ref="VacuumOptical"/>
+    <solidref ref="ParallelWorld_solid"/>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="ParallelWorld_logical"/>
+</setup>
+
+</gdml>

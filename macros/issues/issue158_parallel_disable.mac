@@ -1,0 +1,42 @@
+/remoll/physlist/verbose 1
+/remoll/physlist/steplimiter/enable
+/remoll/physlist/parallel/disable
+/remoll/physlist/optical/enable
+
+/remoll/geometry/setfile macros/issues/issue158/mollerMother_5open.gdml
+/remoll/parallel/setfile macros/issues/issue158/mollerParallel_5open.gdml
+
+/process/optical/processActivation Cerenkov		true
+/process/optical/processActivation OpBoundary		true
+
+/process/optical/processActivation Scintillation	false
+/process/optical/processActivation OpWLS		false
+/process/optical/processActivation OpAbsorption		false
+/process/optical/processActivation OpRayleigh		false
+/process/optical/processActivation OpMieHG		false
+
+/run/initialize
+
+/remoll/printgeometry true
+
+/process/optical/cerenkov/setMaxPhotons 1
+/process/optical/cerenkov/setTrackSecondariesFirst true
+
+/vis/open OGL 600x600-0+0
+/control/execute vis/vis.mac
+
+/remoll/beamene 855 MeV
+/remoll/beamcurr 50 microampere
+
+/remoll/evgen/set beam
+/remoll/evgen/beam/x 0
+/remoll/evgen/beam/y 0
+/remoll/evgen/beam/z -10 cm
+/remoll/evgen/beam/px 0
+/remoll/evgen/beam/py 0
+/remoll/evgen/beam/pz 1
+
+/remoll/seed 1234
+/tracking/verbose 1
+/run/beamOn 1
+
