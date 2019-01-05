@@ -1,3 +1,5 @@
+/run/verbose 2
+/control/verbose 2
 /remoll/physlist/verbose 1
 /remoll/physlist/steplimiter/enable
 /remoll/physlist/parallel/enable
@@ -20,7 +22,7 @@
 /remoll/printgeometry true
 
 /process/optical/cerenkov/setMaxPhotons 1
-/process/optical/cerenkov/setTrackSecondariesFirst true
+/process/optical/cerenkov/setTrackSecondariesFirst false
 
 /vis/open OGL 600x600-0+0
 /control/execute vis/vis.mac
@@ -37,6 +39,7 @@
 /remoll/evgen/beam/pz 1
 
 /remoll/seed 1234
-/tracking/verbose 1
+/tracking/verbose 3
+/event/verbose 1
 /run/beamOn 1
 
