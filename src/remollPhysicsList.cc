@@ -152,7 +152,7 @@ void remollPhysicsList::SetParallelPhysics(G4bool flag)
 void remollPhysicsList::EnableParallelPhysics()
 {
   if (fParallelPhysics) {
-    G4cout << "parallel physics already active" << G4endl;
+    G4cout << "Parallel physics already active" << G4endl;
     return;
   }
 
@@ -164,7 +164,6 @@ void remollPhysicsList::EnableParallelPhysics()
   fParallelPhysics = new G4ParallelWorldPhysics("parallel");
 
   // Register existing physics
-  //RegisterPhysics(new G4ParallelWorldPhysics(parallel_name));
   RegisterPhysics(fParallelPhysics);
 }
 

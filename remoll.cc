@@ -25,7 +25,6 @@ typedef G4RunManager RunManager;
 #include "remollPhysicsList.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
-#include "G4ParallelWorldPhysics.hh"
 #include "remollParallelConstruction.hh"
 
 #include "G4VisExecutive.hh"
@@ -121,7 +120,6 @@ int main(int argc, char** argv) {
 
     // Physics list
     remollPhysicsList* physlist = new remollPhysicsList();
-    //physlist->RegisterPhysics(new G4ParallelWorldPhysics(parallel_name));
     runManager->SetUserInitialization(physlist);
 
     // Run action
