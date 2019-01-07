@@ -41,6 +41,11 @@ struct remollBeamTarget_t {
   double th, ph;
 };
 
+// Particle trajectory structure
+struct remollTrajectoryPoint_t {
+  double x, y, z;
+};
+
 // Primary particle structure
 struct remollEventParticle_t {
   int pid;
