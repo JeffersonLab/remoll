@@ -113,7 +113,7 @@ int main(int argc, char** argv) {
     G4String material_name = "material";
     remollDetectorConstruction* detector = new remollDetectorConstruction(material_name, geometry_gdmlfile);
     // Parallel world geometry
-    G4String parallel_name = "parallel";
+    G4String parallel_name = "parallel"; // Note: name must correspond with name of G4ParallelWorldPhysics
     remollParallelConstruction* parallel = new remollParallelConstruction(parallel_name, parallel_gdmlfile);
     detector->RegisterParallelWorld(parallel);
     runManager->SetUserInitialization(detector);

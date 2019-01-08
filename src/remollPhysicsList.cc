@@ -162,6 +162,7 @@ void remollPhysicsList::EnableParallelPhysics()
 
   // Create Parallel physics
   fParallelPhysics = new G4ParallelWorldPhysics("parallel");
+  // Note: name must correspond with name of remollParallelConstruction
 
   // Register existing physics
   RegisterPhysics(fParallelPhysics);
