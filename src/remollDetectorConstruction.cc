@@ -758,10 +758,11 @@ void remollDetectorConstruction::PrintGeometryTree(
            << G4BestUnit(aVolume->GetLogicalVolume()->GetMass(true),"Mass");
   }
   // Print sensitive detector
-  if (print && aVolume->GetLogicalVolume()->GetSensitiveDetector())
+  G4VSensitiveDetector* sd = aVolume->GetLogicalVolume()->GetSensitiveDetector();
+  if (print && sd)
   {
-    G4cout << " " << aVolume->GetLogicalVolume()->GetSensitiveDetector()
-                            ->GetFullPathName();
+    remollGenericDetector* remollsd = dynamic_cast<remollGenericDetector*>(sd);
+    G4cout << " [" << remollsd->GetDetNo() << "]";
   }
   if (print) {
     G4cout << G4endl;
