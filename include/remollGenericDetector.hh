@@ -162,6 +162,9 @@ class remollGenericDetector : public G4VSensitiveDetector {
             << (fEnabled? "enabled" : "disabled") << G4endl;
     };
 
+    void  SetDetNo(G4int detno) { fDetNo = detno; }
+    G4int GetDetNo() const { return fDetNo; }
+
     private:
 	remollGenericDetectorHitCollection *fHitColl;
 	remollGenericDetectorSumCollection *fSumColl;

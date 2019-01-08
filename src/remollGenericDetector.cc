@@ -21,8 +21,8 @@ G4GenericMessenger* remollGenericDetector::fStaticMessenger = 0;
 remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
 : G4VSensitiveDetector(name),fHitColl(0),fSumColl(0),fEnabled(true)
 {
-  fDetNo = detnum;
-  assert( fDetNo > 0 );
+  assert(detnum > 0);
+  SetDetNo(detnum);
 
   fDetectSecondaries = true;
   fDetectOpticalPhotons = false;
