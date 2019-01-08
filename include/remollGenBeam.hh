@@ -26,6 +26,8 @@ class remollGenBeam : public remollVEventGen {
     void SetDirectionX(double dx);
     void SetDirectionY(double dy);
     void SetDirectionZ(double dz);
+    void SetDirectionPh(double ph);
+    void SetDirectionTh(double th);
 
     void SetPolarization(G4ThreeVector polarization);
     void SetPolarizationX(double sx);

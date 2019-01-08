@@ -40,6 +40,8 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetDirectionX,"x component of momentum direction");
     fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetDirectionY,"y component of momentum direction");
     fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"z component of momentum direction");
+    fThisGenMessenger->DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"theta angle of momentum direction");
+    fThisGenMessenger->DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"phi angle of momentum direction");
     fThisGenMessenger->DeclareMethod("polarization",&remollGenBeam::SetPolarization,"set polarization: (x,y,z)");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
     fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
@@ -56,12 +58,14 @@ void remollGenBeam::SetOriginZ(double z){ fOrigin.setZ(z); }
 void remollGenBeam::SetRasterX(double RASx){ fXras = RASx; }
 void remollGenBeam::SetRasterY(double RASy){ fYras = RASy; }
 
-void remollGenBeam::SetDirection(G4ThreeVector direction){ fDirection.setX(direction.x()); fDirection.setY(direction.y()); fDirection.setZ(direction.z()); }
+void remollGenBeam::SetDirection(G4ThreeVector direction){ fDirection = direction; }
 void remollGenBeam::SetDirectionX(double px){ fDirection.setX(px); }
 void remollGenBeam::SetDirectionY(double py){ fDirection.setY(py); }
 void remollGenBeam::SetDirectionZ(double pz){ fDirection.setZ(pz); }
+void remollGenBeam::SetDirectionPh(double ph){ fDirection.setPhi(ph); }
+void remollGenBeam::SetDirectionTh(double th){ fDirection.setTheta(th); }
 
-void remollGenBeam::SetPolarization(G4ThreeVector polarization){ fPolarization.setX(polarization.x()); fPolarization.setY(polarization.y()); fPolarization.setZ(polarization.z()); }
+void remollGenBeam::SetPolarization(G4ThreeVector polarization){ fPolarization = polarization; }
 void remollGenBeam::SetPolarizationX(double sx){ fPolarization.setX(sx); }
 void remollGenBeam::SetPolarizationY(double sy){ fPolarization.setY(sy); }
 void remollGenBeam::SetPolarizationZ(double sz){ fPolarization.setZ(sz); }
