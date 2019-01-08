@@ -13,9 +13,9 @@ There is a [slack channel](https://jlab12gev.slack.com) available for general di
 ## Dependencies 
 
 The following packages are required to build `remoll`:
-* cmake > 2.6
-* Geant4 >= 4.9.6
-* ROOT > 6.0.0
+* cmake > 2.8.11
+* Geant4 >= 4.10.00
+* ROOT >= 6.0.0
 * Python
 * git (optional)
 * boost (optional)
