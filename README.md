@@ -35,7 +35,9 @@ See also initialze.sh script
 
 ## Magnetic field maps
 
-Magnetic field maps are **required** to use the software and are available for download [here](http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/).
+Magnetic field maps are **required** to use the software and are available
+for download [here](http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/).
+They will be downloaded by the CMake script if not already available.
 
 
 ## Running remoll
@@ -58,11 +60,20 @@ you prefer another visualization driver.
 ## Generating geometry from ROOT output
 
 The GDML tree is saved in the root output so that keeping the geometry files
-around is not required to visualize what was simulated
-To look at the geometry do:
+around is not required to visualize what was simulated. To look at the geometry
+do:
 ```
  $ build/reroot -l remollout.root
 [] run_data->RecreateGDML()
+```
+
+## Generating macro from ROOT output
+
+The macro is save in the root output so that it is possible to determine how
+an output file was generated. To look at the macro contents, do:
+```
+ $ build/reroot -l remollout.root
+[] run_data->fMacro->Print()
 ```
 
 ## Analyzing the output
@@ -216,7 +227,8 @@ LIBGL_ALWAYS_INDIRECT=1 build/remoll
 
 ## Docker container
 
-**Note**: This image will allow you to use remoll in batch mode only. A separate image supporting the GUI mode will be available soon.
+**Note**: This image will allow you to use remoll in batch mode only. A separate
+image supporting the GUI mode will be available soon.
 
 ### Building
 
@@ -247,7 +259,7 @@ sudo singularity build remoll.img Singularity
 ## Running
 
 ```
-singularity pull shub://jeffersonlab/remoll-singularity
+singularity pull docker://jeffersonlab/remoll-singularity
 singularity run --bind `pwd`:/jlab/2.1/Linux_CentOS7.3.1611-x86_64-gcc4.8.5/remoll/rootfiles/ \
     jeffersonlab-remoll-singularity-master.simg \
     macros/tests/test_moller.mac
