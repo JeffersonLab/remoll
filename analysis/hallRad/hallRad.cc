@@ -206,7 +206,7 @@ void ProcessOne(string fnm){
                 hTotal[nHist][nPart][2]->Fill(energy,val);
                 valAvg[nHist][nPart][2]->Fill(energy,val);
             }
-        }     
+        }
         evNr++;
         delete fGenDetHit;
         fGenDetHit = 0;
@@ -341,7 +341,7 @@ void FinalizeAvg(){
                 for(int ib=1;ib<=nbins;ib++){
                     double d(0);
                     if(intAvg[id][ip][idmg][ib]>=2)
-                        d = sqrt(hAvg[id][ip][idmg]->GetBinError(ib)/(intAvg[id][ip][idmg][ib]-1))/sqrt(intAvg[id][ip][idmg][ib]);
+                        d = sqrt(hAvg[id][ip][idmg]->GetBinError(ib)/(intAvg[id][ip][idmg][ib]-1));
 
                     if(d==0){
                         hAvg[id][ip][idmg]->SetBinError(ib,0);
