@@ -21,27 +21,40 @@
 
 remollGenBeam::remollGenBeam()
 : remollVEventGen("beam"),
-  fOrigin(0.0*m,0.0*m,-5.0*m),
+  fOriginMean(0.0*m,0.0*m,-5.0*m),
+  fOriginSpread(0.0,0.0,0.0),
+  fOriginModelX(kOriginModelFlat),
+  fOriginModelY(kOriginModelFlat),
+  fOriginModelZ(kOriginModelFlat),
   fDirection(0.0,0.0,1.0),
-  //fPolarization(0.0,0.0,0.0),
-  fXras(0.0), fYras(0.0),
+  fPolarization(0.0,0.0,0.0),
+  fRaster(0.0,0.0,0.0),
   fParticleName("e-")
 {
     fSampType = kNoTargetVolume;
     fApplyMultScatt = true;
 
-    fThisGenMessenger->DeclarePropertyWithUnit("origin","mm",fOrigin,"set origin: x y z unit");
-    fThisGenMessenger->DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginX,"x coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethodWithUnit("y","mm",&remollGenBeam::SetOriginY,"y coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethodWithUnit("z","mm",&remollGenBeam::SetOriginZ,"z coordinate of origin for the beam");
-    fThisGenMessenger->DeclareMethodWithUnit("rasx","mm",&remollGenBeam::SetRasterX,"Raster x spread of origin for the beam");
-    fThisGenMessenger->DeclareMethodWithUnit("rasy","mm",&remollGenBeam::SetRasterY,"Raster y spread of origin for the beam");
-    fThisGenMessenger->DeclareMethod("direction",&remollGenBeam::SetDirection,"set momentum direction: (x,y,z)");
-    fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetDirectionX,"x component of momentum direction");
-    fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetDirectionY,"y component of momentum direction");
-    fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"z component of momentum direction");
-    fThisGenMessenger->DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"theta angle of momentum direction");
-    fThisGenMessenger->DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"phi angle of momentum direction");
+    fThisGenMessenger->DeclarePropertyWithUnit("origin","mm",fOriginMean,"origin position mean: x y z unit");
+    fThisGenMessenger->DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginXMean,"origin x position mean");
+    fThisGenMessenger->DeclareMethodWithUnit("y","mm",&remollGenBeam::SetOriginYMean,"origin y position mean");
+    fThisGenMessenger->DeclareMethodWithUnit("z","mm",&remollGenBeam::SetOriginZMean,"origin z position mean");
+    fThisGenMessenger->DeclarePropertyWithUnit("originspread","mm",fOriginSpread,"origin position spread: x y z unit");
+    fThisGenMessenger->DeclareMethodWithUnit("xspread","mm",&remollGenBeam::SetOriginXSpread,"origin x position spread");
+    fThisGenMessenger->DeclareMethodWithUnit("yspread","mm",&remollGenBeam::SetOriginYSpread,"origin y position spread");
+    fThisGenMessenger->DeclareMethodWithUnit("zspread","mm",&remollGenBeam::SetOriginZSpread,"origin z position spread");
+    fThisGenMessenger->DeclareMethod("xmodel",&remollGenBeam::SetOriginXModel,"origin x position model: flat, gauss");
+    fThisGenMessenger->DeclareMethod("ymodel",&remollGenBeam::SetOriginYModel,"origin y position model: flat, gauss");
+    fThisGenMessenger->DeclareMethod("zmodel",&remollGenBeam::SetOriginZModel,"origin z position model: flat, gauss");
+    fThisGenMessenger->DeclarePropertyWithUnit("raster","mm",fRaster,"raster of origin for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("rasx","mm",&remollGenBeam::SetRasterX,"raster x spread of origin for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("rasy","mm",&remollGenBeam::SetRasterY,"raster y spread of origin for the beam");
+    fThisGenMessenger->DeclareMethodWithUnit("rasz","mm",&remollGenBeam::SetRasterZ,"raster y spread of origin for the beam");
+    fThisGenMessenger->DeclareProperty("direction",fDirection,"direction vector (will be normalized): x y z");
+    fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetDirectionX,"direction x (vector will be normalized before use)");
+    fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetDirectionY,"direction y (vector will be normalized before use)");
+    fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"direction z (vector will be normalized before use)");
+    fThisGenMessenger->DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"direction vector theta angle");
+    fThisGenMessenger->DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"direction vector phi angle");
     fThisGenMessenger->DeclareMethod("polarization",&remollGenBeam::SetPolarization,"set polarization: (x,y,z)");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
     fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
@@ -51,12 +64,28 @@ remollGenBeam::remollGenBeam()
 
 remollGenBeam::~remollGenBeam() { }
 
-void remollGenBeam::SetOriginX(double x){ fOrigin.setX(x); }
-void remollGenBeam::SetOriginY(double y){ fOrigin.setY(y); }
-void remollGenBeam::SetOriginZ(double z){ fOrigin.setZ(z); }
+void remollGenBeam::SetOriginXMean(double x){ fOriginMean.setX(x); }
+void remollGenBeam::SetOriginYMean(double y){ fOriginMean.setY(y); }
+void remollGenBeam::SetOriginZMean(double z){ fOriginMean.setZ(z); }
 
-void remollGenBeam::SetRasterX(double RASx){ fXras = RASx; }
-void remollGenBeam::SetRasterY(double RASy){ fYras = RASy; }
+void remollGenBeam::SetOriginXSpread(double x){ fOriginSpread.setX(x); }
+void remollGenBeam::SetOriginYSpread(double y){ fOriginSpread.setY(y); }
+void remollGenBeam::SetOriginZSpread(double z){ fOriginSpread.setZ(z); }
+
+remollGenBeam::EOriginModel remollGenBeam::GetOriginModelFromString(G4String model) const {
+  std::transform(model.begin(), model.end(), model.begin(), ::tolower);
+  if (model == "flat")  return kOriginModelFlat;
+  if (model == "gauss") return kOriginModelGauss;
+  G4cerr << "remollGenBeam: did not recognize model, assuming flat." << G4endl;
+  return kOriginModelFlat;
+}
+void remollGenBeam::SetOriginXModel(G4String x){ fOriginModelX = GetOriginModelFromString(x); }
+void remollGenBeam::SetOriginYModel(G4String y){ fOriginModelY = GetOriginModelFromString(y); }
+void remollGenBeam::SetOriginZModel(G4String z){ fOriginModelZ = GetOriginModelFromString(z); }
+
+void remollGenBeam::SetRasterX(double x){ fRaster.setX(x); }
+void remollGenBeam::SetRasterY(double y){ fRaster.setY(y); }
+void remollGenBeam::SetRasterZ(double z){ fRaster.setZ(z); }
 
 void remollGenBeam::SetDirection(G4ThreeVector direction){ fDirection = direction; }
 void remollGenBeam::SetDirectionX(double px){ fDirection.setX(px); }
@@ -72,6 +101,25 @@ void remollGenBeam::SetPolarizationZ(double sz){ fPolarization.setZ(sz); }
 
 void remollGenBeam::SetPartName(G4String& name){ fParticleName = name; }
 
+G4double remollGenBeam::GetSpread(G4double spread, EOriginModel model)
+{
+  if (model == kOriginModelFlat)
+    return G4RandFlat::shoot(-spread/2.0, +spread/2.0);
+  if (model == kOriginModelGauss)
+    return G4RandGauss::shoot(0.0, spread);
+  else return 0.0;
+}
+
+G4ThreeVector remollGenBeam::GetSpread(G4ThreeVector spread,
+  EOriginModel x, EOriginModel y, EOriginModel z)
+{
+  G4ThreeVector sample(0.0,0.0,0.0);
+  sample.setX(GetSpread(spread.x(), x));
+  sample.setY(GetSpread(spread.y(), y));
+  sample.setZ(GetSpread(spread.z(), z));
+  return sample;
+}
+
 void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 {
     G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
@@ -86,20 +134,24 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     evt->fBeamMomentum = p * fDirection.unit();
     evt->fBeamPolarization = fPolarization;
 
-    // Override target sampling z
-    evt->fVertexPos.setX( 0.0 );
-    evt->fVertexPos.setY( 0.0 );
-    evt->fVertexPos.setZ( 0.0 );
+    // Start from mean position
+    G4ThreeVector origin(fOriginMean);
 
-    // Allow for simplistic raster/spreading in beam generator
-    G4double rasx = G4RandFlat::shoot(fOrigin.x() - fXras/2.0, fOrigin.x() + fXras/2.0);
-    G4double rasy = G4RandFlat::shoot(fOrigin.y() - fYras/2.0, fOrigin.y() + fYras/2.0);
-    G4double rasz = fOrigin.z();
+    // Add a spread based on chosen model
+    origin += GetSpread(fOriginSpread, fOriginModelX, fOriginModelY, fOriginModelZ);
+
+    // Allow for simplistic raster/spreading in beam generator, perpendicular to direction
+    G4ThreeVector raster(fRaster);
+    raster.rotateUz(fDirection.unit());
+    origin += GetSpread(raster);
+
+    // Override target sampling
+    evt->fVertexPos = origin;
 
     evt->ProduceNewParticle(
-	    G4ThreeVector(rasx, rasy, rasz),
-	    evt->fBeamMomentum,
-	    fParticleName,
+        evt->fVertexPos,
+        evt->fBeamMomentum,
+        fParticleName,
         evt->fBeamPolarization);
 
     evt->SetEffCrossSection(0.0);
