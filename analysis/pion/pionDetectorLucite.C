@@ -13,6 +13,7 @@ void pionDetectorLucite(const TString& files)
   T->SetBranchAddress("part", &parts);
 
   TH1F hpe("hpe","Photo-electrons on pion lucite detector photo-cathode",500,0,500);
+  TH1F hpe_t("hpe_t","Photo-electron arrival times on pion lucite detector photo-cathode",200,0,200);
   TH2F hpe_n("hpe_n","Number of events versus impact position on lucite",20,-200,+200,20,-200,+200);
   TH2F hpe_xy("hpe_xy","Photo-electrons versus impact position on lucite",20,-200,+200,20,-200,+200);
 
@@ -25,7 +26,10 @@ void pionDetectorLucite(const TString& files)
     Double_t vx, vy;
     for (size_t ihit = 0; ihit < hits->size(); ihit++) {
       remollGenericDetectorHit_t hit = hits->at(ihit);
-      if (hit.det == 8000 && hit.pid == 0) npe++;
+      if (hit.det == 8000 && hit.pid == 0) {
+        npe++;
+        hpe_t.Fill(hit.t);
+      }
     }
     for (size_t ipart = 0; ipart < parts->size(); ipart++) {
       remollEventParticle_t part = parts->at(ipart);
@@ -40,6 +44,8 @@ void pionDetectorLucite(const TString& files)
   TCanvas c;
   hpe.Draw();
   c.SaveAs("pionDetectorLucite_pe.png");
+  hpe_t.Draw();
+  c.SaveAs("pionDetectorLucite_pe_t.png");
   hpe_n.Draw("colz");
   c.SaveAs("pionDetectorLucite_pe_n.png");
   hpe_xy.Draw("colz");
