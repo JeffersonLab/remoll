@@ -40,21 +40,6 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   fHCID = -1;
   fSCID = -1;
 
-  // Create generic detector messenger
-  std::stringstream ss;
-  ss << fDetNo;
-  fMessenger = new G4GenericMessenger(this,"/remoll/SD/det_" + ss.str() + "/","Remoll SD properties for " + name);
-  fMessenger->DeclareMethod(
-      "enable",
-      &remollGenericDetector::SetEnabled,
-      "Enable recording of hits in this detector")
-      .SetParameterName("flag",true).SetDefaultValue(true);
-  fMessenger->DeclareMethod(
-      "disable",
-      &remollGenericDetector::SetDisabled,
-      "Disable recording of hits in this detector")
-      .SetParameterName("flag",true).SetDefaultValue(true);
-
   // Create static messenger
   BuildStaticMessenger();
 
@@ -65,7 +50,6 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
 remollGenericDetector::~remollGenericDetector()
 {
   EraseGenericDetector(this);
-  delete fMessenger;
 }
 
 void remollGenericDetector::BuildStaticMessenger()
@@ -129,8 +113,8 @@ G4bool remollGenericDetector::ProcessHits(G4Step *step, G4TouchableHistory *)
         G4cout << "remoll:   /remoll/SD/print_all" << G4endl;
         G4cout << "remoll:   /remoll/SD/enable_all" << G4endl;
         G4cout << "remoll:   /remoll/SD/disable_all" << G4endl;
-        G4cout << "remoll:   /remoll/SD/det_4001/enable" << G4endl;
-        G4cout << "remoll:   /remoll/SD/det_4001/disable" << G4endl;
+        G4cout << "remoll:   /remoll/SD/enable 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/disable 4001" << G4endl;
         has_been_warned = true;
       }
       return false;
