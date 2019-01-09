@@ -1,0 +1,47 @@
+# This must be called before initialize
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+# Enable optical photons and processes
+/remoll/physlist/optical/enable
+
+# This must be explicitly called
+/run/initialize
+
+# Magnetic fields
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite/set false
+
+# Only read detectors 28 and 30
+/remoll/SD/disable_all
+/remoll/SD/enable_range 0 100
+/remoll/SD/enable_range 7000 7999
+/remoll/SD/enable_range 8000 8999
+
+
+### negative pions
+
+/remoll/evgen/set pion
+/remoll/evgen/pion/settype pi-
+
+/remoll/evgen/emin  0.0 MeV
+/remoll/evgen/emax 11.0 GeV
+
+/remoll/evgen/phmin -25.7 deg
+/remoll/evgen/phmax +25.7 deg
+
+/remoll/evgen/thmin 0.0 deg
+/remoll/evgen/thmax 2.0 deg
+
+# Specify random number seed
+/remoll/seed %seedA% %seedB%
+
+# Filename
+/remoll/filename rootfiles/%name%/%name%_%jobid%_workdir/%name%_%jobid%.root
+
+# Number of events
+/run/beamOn %nevents%
