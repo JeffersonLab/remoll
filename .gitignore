@@ -16,6 +16,7 @@ output
 *.pdf
 *.log
 *.dot
+*.lst
 
 #ignore kdev files
 *.kdev4
