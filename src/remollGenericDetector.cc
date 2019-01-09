@@ -44,10 +44,15 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
   std::stringstream ss;
   ss << fDetNo;
   fMessenger = new G4GenericMessenger(this,"/remoll/SD/det_" + ss.str() + "/","Remoll SD properties for " + name);
-  fMessenger->DeclareProperty(
+  fMessenger->DeclareMethod(
       "enable",
-      fEnabled,
+      &remollGenericDetector::SetEnabled,
       "Enable recording of hits in this detector")
+      .SetParameterName("flag",true).SetDefaultValue(true);
+  fMessenger->DeclareMethod(
+      "disable",
+      &remollGenericDetector::SetDisabled,
+      "Disable recording of hits in this detector")
       .SetParameterName("flag",true).SetDefaultValue(true);
 
   // Create static messenger
