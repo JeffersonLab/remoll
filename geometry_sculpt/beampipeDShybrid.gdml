@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+
+  <define>
+    <constant name="globalPositionOffset" value="17810"/>
+    <constant name="world_Zlength" value="11140"/>
+    <constant name="positionOffset" value="globalPositionOffset + world_Zlength/2."/>
+
+    <constant name="lamShield_thickness" value="100"/>
+  </define>
+
+  <materials>
+  </materials>
+
+   <solids>
+
+     <tube lunit="mm" aunit="deg" name="beamPipeDShybrid_solid" deltaphi="360"
+	   rmin="525" rmax="1200" z="world_Zlength"/>
+
+     <tube lunit="mm" aunit="deg" name="lamShield1_solid" deltaphi="360"
+	   rmin="640.5" rmax="815" z="lamShield_thickness"/>
+
+     <tube lunit="mm" aunit="deg" name="lamShield2_solid" deltaphi="360"
+	   rmin="702" rmax="780" z="lamShield_thickness"/>
+
+     <tube lunit="mm" aunit="deg" name="lamShield3_solid" deltaphi="360"
+	   rmin="1072" rmax="1130" z="lamShield_thickness"/>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="beamPipeDS_solid1">
+      <zplane rmin="609.6" rmax="629.6" z="17920 - positionOffset"/>
+      <zplane rmin="609.6" rmax="629.6" z="18000 - positionOffset"/>
+      <zplane rmin="609.6" rmax="800.0" z="18000 - positionOffset"/>
+      <zplane rmin="609.6" rmax="800.0" z="18020 - positionOffset"/>
+      <zplane rmin="780.0" rmax="800.0" z="18020 - positionOffset"/>
+      <zplane rmin="780.0" rmax="800.0" z="18500 - positionOffset"/>
+      <zplane rmin="780.0" rmax="810.0" z="18500 - positionOffset"/>
+      <zplane rmin="780.0" rmax="810.0" z="18520 - positionOffset"/>
+      <zplane rmin="790.0" rmax="810.0" z="18520 - positionOffset"/>
+      <zplane rmin="790.0" rmax="810.0" z="19426 - positionOffset"/>
+      <zplane rmin="680.0" rmax="810.0" z="19426 - positionOffset"/>
+      <zplane rmin="680.0" rmax="810.0" z="19446 - positionOffset"/>
+      <zplane rmin="680.0" rmax="700.0" z="19446 - positionOffset"/>
+      <zplane rmin="680.0" rmax="700.0" z="19584 - positionOffset"/>
+      <zplane rmin="680.0" rmax="1120.0" z="19584 - positionOffset"/>
+      <zplane rmin="680.0" rmax="1120.0" z="19604 - positionOffset"/>
+      <zplane rmin="1100.0" rmax="1120.0" z="19604 - positionOffset"/>
+      <zplane rmin="1100.0" rmax="1120.0" z="23976 - positionOffset"/>
+      <zplane rmin="1050.0" rmax="1120.0" z="23976 - positionOffset"/>
+      <zplane rmin="1050.0" rmax="1120.0" z="23996 - positionOffset"/>
+      <zplane rmin="1050.0" rmax="1070.0" z="23996 - positionOffset"/>
+      <zplane rmin="1050.0" rmax="1070.0" z="24284 - positionOffset"/>
+      <zplane rmin="1050.0" rmax="1080.0" z="24284 - positionOffset"/>
+      <zplane rmin="1050.0" rmax="1080.0" z="24304 - positionOffset"/>
+      <zplane rmin="1060.0" rmax="1080.0" z="24304 - positionOffset"/>
+      <zplane rmin="1060.0" rmax="1080.0" z="24885 - positionOffset"/>
+      <zplane rmin="530.0" rmax="1080.0" z="24885 - positionOffset"/>
+      <zplane rmin="530.0" rmax="1080.0" z="24900 - positionOffset"/>
+      <zplane rmin="530.0" rmax="550.0" z="24900 - positionOffset"/>
+      <zplane rmin="530.0" rmax="550.0" z="26420 - positionOffset"/>
+      <zplane rmin="530.0" rmax="595.0" z="26420 - positionOffset"/>
+      <zplane rmin="530.0" rmax="595.0" z="26440 - positionOffset"/>
+      <zplane rmin="575.0" rmax="595.0" z="26440 - positionOffset"/>
+      <zplane rmin="575.0" rmax="595.0" z="28950 - positionOffset"/>
+    </polycone>
+
+   </solids>
+
+   <structure>
+
+     <volume name="lamShield1_logical">
+       <materialref ref="G4_Pb"/>
+       <solidref ref="lamShield1_solid"/>
+     </volume>
+
+     <volume name="lamShield2_logical">
+       <materialref ref="G4_Pb"/>
+       <solidref ref="lamShield2_solid"/>
+     </volume>
+
+     <volume name="lamShield3_logical">
+       <materialref ref="G4_Pb"/>
+       <solidref ref="lamShield3_solid"/>
+     </volume>
+
+     <volume name="beamPipeDS_logical">
+       <materialref ref="G4_Al"/>
+       <solidref ref="beamPipeDS_solid1"/>
+     </volume>
+
+     <volume name="beamPipeDShybrid_logical">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="beamPipeDShybrid_solid"/>
+
+      <physvol name="lamShield1_phys">
+        <volumeref ref="lamShield1_logical"/>
+        <position name="lamShield1_pos" unit="mm" z="17811 - positionOffset + lamShield_thickness/2."/>
+      </physvol>
+
+      <physvol name="lamShield2_phys">
+        <volumeref ref="lamShield2_logical"/>
+        <position name="lamShield2_pos" unit="mm" z="19500 - positionOffset + lamShield_thickness/2."/>
+      </physvol>
+
+      <physvol name="lamShield3_phys">
+        <volumeref ref="lamShield3_logical"/>
+        <position name="lamShield3_pos" unit="mm" z="24200 - positionOffset + lamShield_thickness/2."/>
+      </physvol>
+
+      <physvol name="beamPipeDS_phys">
+        <volumeref ref="beamPipeDS_logical"/>
+        <position name="beamPipeDS_pos" unit="mm" z="0"/>
+      </physvol>
+
+     </volume>
+
+  </structure>
+
+
+  <setup name="beamPipeDShybrid" version="1.0">
+    <world ref="beamPipeDShybrid_logical"/>
+  </setup>
+
+</gdml>
