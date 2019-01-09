@@ -146,10 +146,10 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     origin += GetSpread(raster);
 
     // Override target sampling
-    evt->fVertexPos = origin;
+    evt->fVertexPos = origin; // primary vertex
 
     evt->ProduceNewParticle(
-        evt->fVertexPos,
+        G4ThreeVector(0.0,0.0,0.0), // relative position to primary vertex
         evt->fBeamMomentum,
         fParticleName,
         evt->fBeamPolarization);
