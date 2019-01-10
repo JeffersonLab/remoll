@@ -20,6 +20,9 @@ The following packages are required to build `remoll`:
 * git (optional)
 * boost (optional)
 
+## Quickstart screencast
+
+[![asciicast](https://asciinema.org/a/220728.svg)](https://asciinema.org/a/220728)
 
 ## Build instructions
 
