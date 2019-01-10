@@ -225,8 +225,12 @@ endforeach()
 #----------------------------------------------------------------------------
 # Download field maps subdirectory
 #
+set(REMOLL_LOCATION /group/halla/www/hallaweb/html/12GeV/Moller/downloads/remoll/)
 set(REMOLL_DOWNLOADS http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/)
 set(REMOLL_MAP_DIR ${PROJECT_SOURCE_DIR}/map_directory)
+if(EXISTS ${REMOLL_LOCATION})
+  set(REMOLL_DOWNLOADS file://${REMOLL_LOCATION})
+endif()
 file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/blockyUpstream_rm_1.1.txt
      ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
