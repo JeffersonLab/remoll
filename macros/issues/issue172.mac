@@ -1,0 +1,21 @@
+/remoll/geometry/setfile geometry/issues/issue172.gdml
+
+/run/initialize
+
+/remoll/beamene 11 GeV
+/remoll/beamcurr 85 microampere
+/remoll/evgen/set beam
+
+/remoll/kryptonite/add G4_Pb
+/remoll/kryptonite/list
+
+/remoll/seed 1234
+/remoll/filename issue172_krypt.root
+/remoll/kryptonite/set true
+/run/beamOn 10
+
+
+/remoll/seed 1234
+/remoll/filename issue172_lead.root
+/remoll/kryptonite/set false
+/run/beamOn 10
