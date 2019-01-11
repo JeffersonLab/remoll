@@ -43,14 +43,14 @@ void pionDetectorLucite(const TString& files)
 
   TCanvas c;
   hpe.Draw();
-  c.SaveAs("pionDetectorLucite_pe.png");
+  c.SaveAs("images/pionDetectorLucite_pe.png");
   hpe_t.Draw();
-  c.SaveAs("pionDetectorLucite_pe_t.png");
+  c.SaveAs("images/pionDetectorLucite_pe_t.png");
   hpe_n.Draw("colz");
-  c.SaveAs("pionDetectorLucite_pe_n.png");
+  c.SaveAs("images/pionDetectorLucite_pe_n.png");
   hpe_xy.Draw("colz");
-  c.SaveAs("pionDetectorLucite_pe_xy.png");
+  c.SaveAs("images/pionDetectorLucite_pe_xy.png");
   hpe_xy.Divide(&hpe_n);
   hpe_xy.Draw("colz");
-  c.SaveAs("pionDetectorLucite_pe_xy_by_n.png");
+  c.SaveAs("images/pionDetectorLucite_pe_xy_by_n.png");
 }
