@@ -56,3 +56,4 @@ sample_gdml.*
 
 #ignore log files
 *.log
+callgrind.*
