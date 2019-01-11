@@ -4,7 +4,9 @@
 
 /remoll/beamene 11 GeV
 /remoll/beamcurr 85 microampere
+
 /remoll/evgen/set beam
+/remoll/evgen/beam/origin 0 0 -0.5 m
 
 /remoll/kryptonite/add G4_Pb
 /remoll/kryptonite/list

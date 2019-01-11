@@ -10,7 +10,7 @@
 
 <solids>
   <box name="world_solid" x="1.0" y="1.0" z="1.0" lunit="m"/>
-  <box name="krypt_solid" x="0.1" y="0.1" z="0.1" lunit="m"/>
+  <box name="krypt_solid" x="0.5" y="0.5" z="0.5" lunit="m"/>
 </solids>
 
 <structure>
