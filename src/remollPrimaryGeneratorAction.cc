@@ -85,6 +85,8 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
 {
+    fEvGenMap.clear();
+    fPriGenMap.clear();
     if (fEvGenMessenger) delete fEvGenMessenger;
     if (fMessenger) delete fMessenger;
     if (fBeamTarg)  delete fBeamTarg;
