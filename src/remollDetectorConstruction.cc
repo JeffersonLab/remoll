@@ -628,6 +628,29 @@ void remollDetectorConstruction::ConstructSDandField()
 
 
 void remollDetectorConstruction::SetUserLimits(
+    const G4String& set_type,
+    const G4String& name,
+    const G4String& value_units) const
+{
+  // Find volume
+  G4LogicalVolume* logical_volume = G4LogicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! logical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Remove starting "Set" used by commands
+  G4String type = set_type;
+  if (type.find("Set") == 0) type.erase(0,3);
+
+  if (fVerboseLevel > 0)
+    G4cout << "Setting user limit " << type << " for " << name << G4endl;
+
+  // Set user limits
+  SetUserLimits(logical_volume, type, value_units);
+}
+
+void remollDetectorConstruction::SetUserLimits(
     G4LogicalVolume* logical_volume,
     const G4String& type,
     const G4String& value_units) const
@@ -657,41 +680,18 @@ void remollDetectorConstruction::SetUserLimits(
   G4double value = G4UIcmdWithADoubleAndUnit::GetNewDoubleValue(value_space_units);
 
   // Compare with allowed types while ignoring case
-  if      (type.compareTo("usermaxallowedstep", G4String::ignoreCase))
+  if      (type.compareTo("usermaxallowedstep", G4String::ignoreCase) == 0)
     userlimits->SetMaxAllowedStep(value);
-  else if (type.compareTo("usermaxtracklength", G4String::ignoreCase))
+  else if (type.compareTo("usermaxtracklength", G4String::ignoreCase) == 0)
     userlimits->SetUserMaxTrackLength(value);
-  else if (type.compareTo("usermaxtime", G4String::ignoreCase))
+  else if (type.compareTo("usermaxtime", G4String::ignoreCase) == 0)
     userlimits->SetUserMaxTime(value);
-  else if (type.compareTo("userminekine", G4String::ignoreCase))
+  else if (type.compareTo("userminekine", G4String::ignoreCase) == 0)
     userlimits->SetUserMinEkine(value);
-  else if (type.compareTo("userminrange", G4String::ignoreCase))
+  else if (type.compareTo("userminrange", G4String::ignoreCase) == 0)
     userlimits->SetUserMinRange(value);
   else
     G4cerr << __FILE__ << " line " << __LINE__ << ": Warning user type " << type << " unknown" << G4endl;
-}
-
-void remollDetectorConstruction::SetUserLimits(
-    const G4String& set_type,
-    const G4String& name,
-    const G4String& value_units) const
-{
-  // Find volume
-  G4LogicalVolume* logical_volume = G4LogicalVolumeStore::GetInstance()->GetVolume(name);
-  if (! logical_volume) {
-    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
-    return;
-  }
-
-  // Remove starting "Set" used by commands
-  G4String type = set_type;
-  if (type.find("Set") == 0) type.erase(0,3);
-
-  if (fVerboseLevel > 0)
-    G4cout << "Setting user limit " << type << " for " << name << G4endl;
-
-  // Set user limits
-  SetUserLimits(logical_volume, type, value_units);
 }
 
 void remollDetectorConstruction::ReloadGeometry(const G4String gdmlfile)
