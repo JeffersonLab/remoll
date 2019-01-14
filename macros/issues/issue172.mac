@@ -1,4 +1,8 @@
+/remoll/geometry/verbose 1
 /remoll/geometry/setfile geometry/issues/issue172.gdml
+
+/remoll/physlist/verbose 1
+/remoll/physlist/steplimiter/enable
 
 /run/initialize
 
@@ -11,13 +15,25 @@
 /remoll/kryptonite/add G4_Pb
 /remoll/kryptonite/list
 
+
 /remoll/seed 1234
 /remoll/filename issue172_krypt.root
 /remoll/kryptonite/set true
-/run/beamOn 10
+/run/beamOn 1
 
 
 /remoll/seed 1234
 /remoll/filename issue172_lead.root
 /remoll/kryptonite/set false
-/run/beamOn 10
+/run/beamOn 1
+
+
+/remoll/seed 1234
+/remoll/filename issue172_userlimits.root
+/remoll/geometry/userlimits/usermaxallowedstep krypt_logical 0.1*mm
+/remoll/geometry/userlimits/usermaxtracklength krypt_logical 0.1*mm
+/remoll/geometry/userlimits/usermaxtime krypt_logical 0.1*ns
+/remoll/geometry/userlimits/userminekine krypt_logical 1000*GeV
+/remoll/geometry/userlimits/userminrange krypt_logical 1000*km
+/tracking/verbose 0
+/run/beamOn 1

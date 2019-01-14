@@ -36,6 +36,12 @@ void issue172()
 
   std::cout << "Krypt" << std::endl;
   Analyze(krypt);
+
+  TChain* userlimits = new TChain("T");
+  userlimits->Add("issue172_userlimits.root");
+
+  std::cout << "Userlimits" << std::endl;
+  Analyze(userlimits);
 }
 
 
