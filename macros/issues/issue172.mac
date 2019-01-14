@@ -30,9 +30,9 @@
 
 /remoll/seed 1234
 /remoll/filename issue172_userlimits.root
-/remoll/geometry/userlimits/usermaxallowedstep krypt_logical 0.1*mm
-/remoll/geometry/userlimits/usermaxtracklength krypt_logical 0.1*mm
-/remoll/geometry/userlimits/usermaxtime krypt_logical 0.1*ns
+/remoll/geometry/userlimits/usermaxallowedstep krypt_logical 0.0*mm
+/remoll/geometry/userlimits/usermaxtracklength krypt_logical 0.0*mm
+/remoll/geometry/userlimits/usermaxtime krypt_logical 0.0*ns
 /remoll/geometry/userlimits/userminekine krypt_logical 1000*GeV
 /remoll/geometry/userlimits/userminrange krypt_logical 1000*km
 /tracking/verbose 0

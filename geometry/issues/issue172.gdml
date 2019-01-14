@@ -19,13 +19,6 @@
     <solidref ref="krypt_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="krypt_SD"/>
     <auxiliary auxtype="DetNo"   auxvalue="1"/>
-    <!--
-    <auxiliary auxtype="UserMaxAllowedStep" auxvalue="0*mm"/>
-    <auxiliary auxtype="UserMaxTrackLength" auxvalue="0*mm"/>
-    <auxiliary auxtype="UserMaxTime" auxvalue="0*ns"/>
-    <auxiliary auxtype="UserMinEKine" auxvalue="1000*GeV"/>
-    <auxiliary auxtype="UserMinRange" auxvalue="1000*m"/>
-    -->
   </volume>
 
   <volume name="world_logical">
