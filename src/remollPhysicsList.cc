@@ -20,7 +20,10 @@ remollPhysicsList::remollPhysicsList()
   fReferencePhysList(0),
   fParallelPhysics(0),
   fOpticalPhysics(0),
+  fStepLimiterPhysics(0),
   fPhysListMessenger(0),
+  fOpticalMessenger(0),
+  fParallelMessenger(0),
   fBaseMessenger(0)
 {
   // Let users know to ignore the warning by Particle HP package
