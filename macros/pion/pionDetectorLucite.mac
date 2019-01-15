@@ -19,8 +19,8 @@
 /remoll/evgen/beam/origin 0 0 0 cm
 /remoll/evgen/beam/originspread 30 25 0 cm
 /remoll/evgen/beam/direction 0 0 1
-/remoll/evgen/beam/partName e-
+/remoll/evgen/beam/partName pi-
 
-/remoll/filename pionDetectorLucite_e.root
+/remoll/filename pionDetectorLucite_pi.root
 /remoll/seed 1234
 /run/beamOn 60
