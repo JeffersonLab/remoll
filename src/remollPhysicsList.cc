@@ -36,6 +36,7 @@ remollPhysicsList::remollPhysicsList()
 
   // Get default reference physics list
   RegisterReferencePhysList("QGSP_BERT");
+  EnableStepLimiterPhysics();
 
   // TODO Backwards compatible, remove this on next major version change
   // Create base messenger
