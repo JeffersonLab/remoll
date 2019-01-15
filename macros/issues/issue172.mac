@@ -27,8 +27,8 @@
 
 /remoll/seed 1234
 /remoll/filename issue172_lead_all.root
-/remoll/SD/type 1 lowenergyneutral
-/remoll/SD/type 1 secondaries
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
 /run/beamOn 1
 
 
