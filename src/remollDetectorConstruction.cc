@@ -187,10 +187,14 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   fKryptoniteMessenger = new G4GenericMessenger(this,
       "/remoll/kryptonite/",
       "Remoll kryptonite properties");
-  fKryptoniteMessenger->DeclareProperty(
+  fKryptoniteMessenger->DeclareMethod(
       "verbose",
-      fKryptoniteVerbose,
+      &remollDetectorConstruction::SetKryptoniteVerbose,
       "Set verbose level");
+  fKryptoniteMessenger->DeclareMethod(
+      "set",
+      &remollDetectorConstruction::SetKryptoniteEnable,
+      "Treat materials as kryptonite");
   fKryptoniteMessenger->DeclareMethod(
       "enable",
       &remollDetectorConstruction::EnableKryptonite,
@@ -207,6 +211,14 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       "list",
       &remollDetectorConstruction::ListKryptoniteCandidates,
       "List kryptonite candidate materials");
+}
+
+void remollDetectorConstruction::SetKryptoniteEnable(G4String flag)
+{
+  if (flag.compareTo("true", G4String::ignoreCase) == 0)
+    EnableKryptonite();
+  else
+    DisableKryptonite();
 }
 
 void remollDetectorConstruction::EnableKryptonite()
