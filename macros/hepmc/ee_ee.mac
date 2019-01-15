@@ -1,0 +1,17 @@
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+/remoll/physlist/parallel/enable
+
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+/remoll/kryptonite/set true
+
+/remoll/evgen/set hepmcAscii
+
+/generator/hepmcAscii/open generators/MG5/ee/ee_ee/Events/run_01/unweighted_events.hepmc
+
+/run/beamOn 50000
