@@ -15,4 +15,3 @@ define vl~ = ve~ vm~ vt~
 generate e- e- > e- e-
 output ee_ee
 shell cp template/* ee_ee/Cards
-launch ee_ee

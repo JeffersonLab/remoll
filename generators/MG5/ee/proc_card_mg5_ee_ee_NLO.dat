@@ -15,4 +15,3 @@ define vl~ = ve~ vm~ vt~
 generate e- e- > e- e- [virt=QED] QED<=4
 output ee_ee_NLO
 shell cp template/* ee_ee_NLO/Cards
-launch ee_ee_NLO

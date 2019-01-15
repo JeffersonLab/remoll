@@ -15,4 +15,3 @@ define vl~ = ve~ vm~ vt~
 generate e- p > e- p mu+ mu-
 output ep_epmumu
 shell cp template/* ep_epmumu/Cards
-launch ep_epmumu

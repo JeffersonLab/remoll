@@ -16,4 +16,3 @@ generate e- e- > e- e-
 add process e- e- > e- e- mu+ mu-
 output ee_ee_and_eemumu
 shell cp template/* ee_ee_and_eemumu/Cards
-launch ee_ee_and_eemumu

@@ -15,4 +15,3 @@ define vl~ = ve~ vm~ vt~
 generate e- p > e- p
 output ep_ep
 shell cp template/* ep_ep/Cards
-launch ep_ep
