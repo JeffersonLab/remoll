@@ -93,7 +93,7 @@ void remollGenericDetector::BuildStaticMessenger()
     "Print all detectors");
 
   fStaticMessenger->DeclareMethod(
-    "type",
+    "detect",
     &remollGenericDetector::SetOneDetectorType,
     "Set detector type");
 }
@@ -170,7 +170,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
         G4cout << "remoll: To save optical photon hits, use the following in gdml:" << G4endl;
         G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"opticalphoton\"/>" << G4endl;
         G4cout << "remoll: or use the following in your macro:" << G4endl;
-        G4cout << "remoll:   /remoll/SD/detect_opticalphoton 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/detect opticalphoton 4001" << G4endl;
         has_been_warned = true;
       }
       return false;
@@ -187,7 +187,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
         G4cout << "remoll: To save low energy neutral hits, use the following in gdml:" << G4endl;
         G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"lowenergyneutral\"/>" << G4endl;
         G4cout << "remoll: or use the following in your macro:" << G4endl;
-        G4cout << "remoll:   /remoll/SD/detect_lowenergyneutral 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/detect lowenergyneutral 4001" << G4endl;
         has_been_warned = true;
       }
       return false;
@@ -222,7 +222,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
         G4cout << "remoll: To save entry boundary hits alone, use the following in gdml:" << G4endl;
         G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"boundaryhits\"/>" << G4endl;
         G4cout << "remoll: or use the following in your macro:" << G4endl;
-        G4cout << "remoll:   /remoll/SD/detect_boundaryhits 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/detect boundaryhits 4001" << G4endl;
         has_been_warned = true;
       }
       return false;
@@ -239,7 +239,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
         G4cout << "remoll: To save secondary track hits too, use the following in gdml:" << G4endl;
         G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"secondaries\"/>" << G4endl;
         G4cout << "remoll: or use the following in your macro:" << G4endl;
-        G4cout << "remoll:   /remoll/SD/detect_secondaries 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/detect secondaries 4001" << G4endl;
         has_been_warned = true;
       }
       return false;
