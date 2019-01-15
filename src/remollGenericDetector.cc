@@ -180,6 +180,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     // Ignore neutral particles below 0.1 MeV (non optical photon) as set by DetType == lowenergyneutral
     G4double charge = particle->GetPDGCharge();
     if (! fDetectLowEnergyNeutrals
+        && particle != G4OpticalPhoton::OpticalPhotonDefinition()
         && charge == 0.0 && track->GetTotalEnergy() < 0.1*CLHEP::MeV) {
       static bool has_been_warned = false;
       if (! has_been_warned) {
