@@ -6,6 +6,7 @@
 #include "G4Types.hh"
 
 #include <vector>
+#include <set>
 
 class G4Tubs;
 class G4LogicalVolume;
@@ -23,12 +24,52 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     remollDetectorConstruction(const G4String& name, const G4String& gdmlfile);
     virtual ~remollDetectorConstruction();
 
+  private:
+
+    remollDetectorConstruction(const remollDetectorConstruction&);
+    remollDetectorConstruction& operator=(remollDetectorConstruction);
+
+
   public:
 
     G4VPhysicalVolume* Construct();
     void ConstructSDandField();
 
+
+  public:
+
+    void SetVerboseLevel(G4int verbose) { fVerboseLevel = verbose; };
+
+  private:
+
+    G4int fVerboseLevel;
+
+
+  private:
+
+    G4GDMLParser *fGDMLParser;
+
+    G4bool fGDMLValidate;
+    G4bool fGDMLOverlapCheck;
+
+    G4String fGDMLPath;
+    G4String fGDMLFile;
+
+    void SetGDMLFile(G4String gdmlfile) {
+      size_t i = gdmlfile.rfind('/');
+      if (i != std::string::npos) {
+        fGDMLPath = gdmlfile.substr(0,i);
+      } else fGDMLPath = ".";
+      fGDMLFile = gdmlfile.substr(i + 1);
+    }
+
+    G4GenericMessenger* fMessenger;
+    G4GenericMessenger* fGeometryMessenger;
+
     void ReloadGeometry(const G4String gdmlfile);
+
+
+  public:
 
     void SetUserLimits(const G4String& type, const G4String& name, const G4String& value_units) const;
     void SetUserLimits(G4LogicalVolume* logical_volume, const G4String& type, const G4String& value_units) const;
@@ -42,27 +83,30 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   private:
 
-    G4String fGDMLPath;
-    G4String fGDMLFile;
-
-    void SetGDMLFile(G4String gdmlfile) {
-      size_t i = gdmlfile.rfind('/');
-      if (i != std::string::npos) {
-        fGDMLPath = gdmlfile.substr(0,i);
-      } else fGDMLPath = ".";
-      fGDMLFile = gdmlfile.substr(i + 1);
-    }
-
-    G4GDMLParser *fGDMLParser;
-
-    G4bool fGDMLValidate;
-    G4bool fGDMLOverlapCheck;
-
-    G4GenericMessenger* fMessenger;
-    G4GenericMessenger* fGeometryMessenger;
     G4GenericMessenger* fUserLimitsMessenger;
 
-    G4int fVerboseLevel;
+
+  public:
+
+    void SetKryptoniteVerbose(G4int verbose) { fKryptoniteVerbose = verbose; }
+    void EnableKryptonite();
+    void DisableKryptonite();
+    void AddKryptoniteCandidate(const G4String& name);
+    void ListKryptoniteCandidates();
+
+  private:
+
+    G4GenericMessenger* fKryptoniteMessenger;
+    static G4UserLimits* fKryptoniteUserLimits;
+    G4bool fKryptoniteEnable;
+    G4int fKryptoniteVerbose;
+    std::set<G4String> fKryptoniteCandidates;
+    std::set<G4Material*> fKryptoniteMaterials;
+
+    void SetKryptoniteUserLimits(G4VPhysicalVolume* volume = 0);
+
+    void InitKryptoniteMaterials();
+
 
     //----------------------
     // global magnet section

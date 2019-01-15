@@ -25,6 +25,12 @@ void Analyze(TChain* T)
 
 void issue172()
 {
+  TChain* lead_all = new TChain("T");
+  lead_all->Add("issue172_lead_all.root");
+
+  std::cout << "Lead (all)" << std::endl;
+  Analyze(lead_all);
+
   TChain* lead = new TChain("T");
   lead->Add("issue172_lead.root");
 

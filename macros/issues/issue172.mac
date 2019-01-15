@@ -1,8 +1,8 @@
 /remoll/geometry/verbose 1
 /remoll/geometry/setfile geometry/issues/issue172.gdml
 
-/remoll/physlist/verbose 1
-/remoll/physlist/steplimiter/enable
+/remoll/kryptonite/verbose 1
+/remoll/kryptonite/add G4_Pb
 
 /run/initialize
 
@@ -12,19 +12,23 @@
 /remoll/evgen/set beam
 /remoll/evgen/beam/origin 0 0 -0.5 m
 
-/remoll/kryptonite/add G4_Pb
-/remoll/kryptonite/list
-
 
 /remoll/seed 1234
 /remoll/filename issue172_krypt.root
-/remoll/kryptonite/set true
+/remoll/kryptonite/enable
 /run/beamOn 1
 
 
 /remoll/seed 1234
 /remoll/filename issue172_lead.root
-/remoll/kryptonite/set false
+/remoll/kryptonite/disable
+/run/beamOn 1
+
+
+/remoll/seed 1234
+/remoll/filename issue172_lead_all.root
+/remoll/SD/type 1 lowenergyneutral
+/remoll/SD/type 1 secondaries
 /run/beamOn 1
 
 

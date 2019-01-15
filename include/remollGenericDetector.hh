@@ -118,6 +118,16 @@ class remollGenericDetector : public G4VSensitiveDetector {
           return (left? (right? (left->fDetNo < right->fDetNo): false): true);
         }
 
+        void SetOneDetectorType(G4int det, G4String type) {
+          for (std::list<remollGenericDetector*>::iterator
+            it  = fGenericDetectors.begin();
+            it != fGenericDetectors.end();
+            it++) {
+              if ((*it)->fDetNo == det)
+                (*it)->SetDetectorType(type);
+          }
+        }
+
     public:
       remollGenericDetector( G4String name, G4int detnum );
       virtual ~remollGenericDetector();
@@ -141,13 +151,14 @@ class remollGenericDetector : public G4VSensitiveDetector {
         if (det_type.compareTo("opticalphoton",G4String::ignoreCase) == 0) {
             G4cout << SensitiveDetectorName << " detects optical photons" << G4endl;
             fDetectOpticalPhotons = true;
-            fDetectLowEnergyNeutrals = true;
         }
         if (det_type.compareTo("boundaryhits",G4String::ignoreCase) == 0) {
-            G4cout << SensitiveDetectorName << " detects charged particle hits only on the entering boundary" << G4endl;
-            fDetectOpticalPhotons = false;
-            fDetectLowEnergyNeutrals = false;
-            fBoundaryHits = true;
+            G4cout << SensitiveDetectorName << " detects hits only on entry boundary" << G4endl;
+            fDetectBoundaryHits = true;
+        }
+        if (det_type.compareTo("secondaries",G4String::ignoreCase) == 0) {
+            G4cout << SensitiveDetectorName << " detects secondaries" << G4endl;
+            fDetectSecondaries = true;
         }
     }
 
@@ -176,7 +187,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
     G4bool fDetectSecondaries;
     G4bool fDetectOpticalPhotons;
     G4bool fDetectLowEnergyNeutrals;
-    G4bool fBoundaryHits;
+    G4bool fDetectBoundaryHits;
 
 	G4int fDetNo;
 

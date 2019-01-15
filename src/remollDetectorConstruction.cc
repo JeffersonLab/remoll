@@ -44,15 +44,21 @@ namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
+G4UserLimits* remollDetectorConstruction::fKryptoniteUserLimits = new G4UserLimits(0,0,0,DBL_MAX,DBL_MAX);
+
 remollDetectorConstruction::remollDetectorConstruction(const G4String& name, const G4String& gdmlfile)
-: fGDMLPath("geometry"),fGDMLFile("mollerMother.gdml"),
+: fVerboseLevel(0),
   fGDMLParser(0),
   fGDMLValidate(false),
   fGDMLOverlapCheck(true),
+  fGDMLPath("geometry"),
+  fGDMLFile("mollerMother.gdml"),
   fMessenger(0),
   fGeometryMessenger(0),
   fUserLimitsMessenger(0),
-  fVerboseLevel(0),
+  fKryptoniteMessenger(0),
+  fKryptoniteEnable(true),
+  fKryptoniteVerbose(0),
   fWorldVolume(0),
   fWorldName(name)
 {
@@ -60,7 +66,15 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;
 
   // Create GDML parser
-  //fGDMLParser = new G4GDMLParser();
+  fGDMLParser = new G4GDMLParser();
+
+  // Starter set of kryptonite materials
+  AddKryptoniteCandidate("VacuumKryptonite");
+  AddKryptoniteCandidate("Tungsten");
+  AddKryptoniteCandidate("CW95");
+  AddKryptoniteCandidate("Copper");
+  AddKryptoniteCandidate("Lead");
+  InitKryptoniteMaterials();
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -168,7 +182,121 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       &remollDetectorConstruction::SetUserMinRange,
       "Set user limit MinRange for logical volume")
       .SetStates(G4State_Idle);
+
+  // Create kryptonite messenger
+  fKryptoniteMessenger = new G4GenericMessenger(this,
+      "/remoll/kryptonite/",
+      "Remoll kryptonite properties");
+  fKryptoniteMessenger->DeclareProperty(
+      "verbose",
+      fKryptoniteVerbose,
+      "Set verbose level");
+  fKryptoniteMessenger->DeclareMethod(
+      "enable",
+      &remollDetectorConstruction::EnableKryptonite,
+      "Treat materials as kryptonite");
+  fKryptoniteMessenger->DeclareMethod(
+      "disable",
+      &remollDetectorConstruction::DisableKryptonite,
+      "Treat materials as regular");
+  fKryptoniteMessenger->DeclareMethod(
+      "add",
+      &remollDetectorConstruction::AddKryptoniteCandidate,
+      "Add specified material to list of kryptonite candidates");
+  fKryptoniteMessenger->DeclareMethod(
+      "list",
+      &remollDetectorConstruction::ListKryptoniteCandidates,
+      "List kryptonite candidate materials");
 }
+
+void remollDetectorConstruction::EnableKryptonite()
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Enabling kryptonite." << G4endl;
+
+  fKryptoniteEnable = true;
+
+  SetKryptoniteUserLimits(fWorldVolume);
+}
+
+void remollDetectorConstruction::DisableKryptonite()
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Disabling kryptonite." << G4endl;
+
+  fKryptoniteEnable = false;
+
+  SetKryptoniteUserLimits(fWorldVolume);
+}
+
+void remollDetectorConstruction::AddKryptoniteCandidate(const G4String& name)
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Adding " << name << " to list of kryptonite candidates." << G4endl;
+
+  fKryptoniteCandidates.insert(name);
+  InitKryptoniteMaterials();
+
+  SetKryptoniteUserLimits(fWorldVolume);
+}
+
+void remollDetectorConstruction::ListKryptoniteCandidates()
+{
+  G4cout << "List of kryptonite candidate materials:" << G4endl;
+  for (std::set<G4String>::const_iterator
+      it  = fKryptoniteCandidates.begin();
+      it != fKryptoniteCandidates.end();
+      it++)
+    G4cout << *it << G4endl;
+}
+
+void remollDetectorConstruction::InitKryptoniteMaterials()
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Regenerating table of kryptonite material candidate pointers..." << G4endl;
+
+  // Find kryptonite materials in material tables
+  G4MaterialTable* table = G4Material::GetMaterialTable();
+  fKryptoniteMaterials.clear();
+  for (G4MaterialTable::const_iterator
+      it  = table->begin();
+      it != table->end(); it++) {
+    if (fKryptoniteCandidates.find((*it)->GetName()) != fKryptoniteCandidates.end()) {
+      fKryptoniteMaterials.insert(*it);
+    }
+  }
+}
+
+void remollDetectorConstruction::SetKryptoniteUserLimits(G4VPhysicalVolume* volume)
+{
+  // If null volume, pick entire world
+  if (volume == 0) volume = fWorldVolume;
+  // If still null, give up
+  if (volume == 0) return;
+
+  // Get logical volume
+  G4LogicalVolume* logical_volume = volume->GetLogicalVolume();
+  G4Material* material = logical_volume->GetMaterial();
+
+  // Set user limits for all materials in kryptonite materials list
+  if (fKryptoniteMaterials.count(material) > 0) {
+    if (fKryptoniteVerbose > 0)
+      G4cout << "Setting kryptonite for " << logical_volume->GetName() << " to " <<
+        (fKryptoniteEnable?"on":"off") << G4endl;
+
+    if (fKryptoniteEnable)
+      logical_volume->SetUserLimits(fKryptoniteUserLimits);
+    else
+      logical_volume->SetUserLimits(0);
+  }
+
+  // Descend down the tree
+  for (int i = 0; i < logical_volume->GetNoDaughters(); i++) {
+    G4VPhysicalVolume* daughter = logical_volume->GetDaughter(i);
+    SetKryptoniteUserLimits(daughter);
+  }
+}
+
 
 // Set of functions that passes function name as string for further processing
 void remollDetectorConstruction::SetUserMaxAllowedStep(G4String name, G4String value_units)
@@ -197,6 +325,7 @@ remollDetectorConstruction::~remollDetectorConstruction()
     delete fGDMLParser;
     delete fMessenger;
     delete fGeometryMessenger;
+    delete fKryptoniteMessenger;
     delete fUserLimitsMessenger;
 }
 
@@ -220,9 +349,7 @@ void remollDetectorConstruction::PrintGDMLWarning() const
 G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 {
     // Clear parser
-    //fGDMLParser->Clear(); // FIXME doesn't clear auxmap, instead just recreate
-    if (fGDMLParser) delete fGDMLParser;
-    fGDMLParser = new G4GDMLParser();
+    fGDMLParser->Clear();
 
     // Print GDML warning
     PrintGDMLWarning();
@@ -231,6 +358,9 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     G4cout << "Reading " << fGDMLFile << G4endl;
     G4cout << "- schema validation " << (fGDMLValidate? "on": "off") << G4endl;
     G4cout << "- overlap check " << (fGDMLOverlapCheck? "on": "off") << G4endl;
+
+    // Get remollIO instance before chdir since remollIO creates root file
+    remollIO* io = remollIO::GetInstance();
 
     // Change directory
     char cwd[MAXPATHLEN];
@@ -266,7 +396,6 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
       PrintGeometryTree(worldvolume,0,true,false);
 
     // Add GDML files to IO
-    remollIO* io = remollIO::GetInstance();
     io->GrabGDMLFiles(fGDMLFile);
 
     // Change directory back
@@ -606,6 +735,10 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 
   // Set copy number of geometry tree
   UpdateCopyNo(fWorldVolume,1);
+
+  // Set kryptonite user limits
+  InitKryptoniteMaterials();
+  SetKryptoniteUserLimits(fWorldVolume);
 
   return fWorldVolume;
 }
