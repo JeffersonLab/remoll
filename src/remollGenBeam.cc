@@ -45,7 +45,7 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("xmodel",&remollGenBeam::SetOriginXModel,"origin x position model: flat, gauss");
     fThisGenMessenger->DeclareMethod("ymodel",&remollGenBeam::SetOriginYModel,"origin y position model: flat, gauss");
     fThisGenMessenger->DeclareMethod("zmodel",&remollGenBeam::SetOriginZModel,"origin z position model: flat, gauss");
-    fThisGenMessenger->DeclarePropertyWithUnit("raster","mm",fRaster,"raster of origin for the beam");
+    fThisGenMessenger->DeclarePropertyWithUnit("raster","mm",fRaster,"raster of origin for the beam: x y z unit");
     fThisGenMessenger->DeclareMethodWithUnit("rasx","mm",&remollGenBeam::SetRasterX,"raster x spread of origin for the beam");
     fThisGenMessenger->DeclareMethodWithUnit("rasy","mm",&remollGenBeam::SetRasterY,"raster y spread of origin for the beam");
     fThisGenMessenger->DeclareMethodWithUnit("rasz","mm",&remollGenBeam::SetRasterZ,"raster y spread of origin for the beam");
@@ -55,7 +55,7 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"direction z (vector will be normalized before use)");
     fThisGenMessenger->DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"direction vector theta angle");
     fThisGenMessenger->DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"direction vector phi angle");
-    fThisGenMessenger->DeclareMethod("polarization",&remollGenBeam::SetPolarization,"set polarization: (x,y,z)");
+    fThisGenMessenger->DeclareProperty("polarization",fPolarization,"polarization vector (will be normalized): x y z");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
     fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
     fThisGenMessenger->DeclareMethod("sz",&remollGenBeam::SetPolarizationZ,"z component of polarization");
@@ -87,14 +87,12 @@ void remollGenBeam::SetRasterX(double x){ fRaster.setX(x); }
 void remollGenBeam::SetRasterY(double y){ fRaster.setY(y); }
 void remollGenBeam::SetRasterZ(double z){ fRaster.setZ(z); }
 
-void remollGenBeam::SetDirection(G4ThreeVector direction){ fDirection = direction; }
 void remollGenBeam::SetDirectionX(double px){ fDirection.setX(px); }
 void remollGenBeam::SetDirectionY(double py){ fDirection.setY(py); }
 void remollGenBeam::SetDirectionZ(double pz){ fDirection.setZ(pz); }
 void remollGenBeam::SetDirectionPh(double ph){ fDirection.setPhi(ph); }
 void remollGenBeam::SetDirectionTh(double th){ fDirection.setTheta(th); }
 
-void remollGenBeam::SetPolarization(G4ThreeVector polarization){ fPolarization = polarization; }
 void remollGenBeam::SetPolarizationX(double sx){ fPolarization.setX(sx); }
 void remollGenBeam::SetPolarizationY(double sy){ fPolarization.setY(sy); }
 void remollGenBeam::SetPolarizationZ(double sz){ fPolarization.setZ(sz); }
