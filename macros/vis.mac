@@ -34,7 +34,7 @@
 #/remoll/evgen/beam/origin -987.5,0.0,-150.0 mm
 /remoll/evgen/beam/origin -987.5 0.0 -150.0 mm
 #/remoll/evgen/beam/x -987.5 mm
-/remoll/evgen/beam/direction (-0.0523,0.0,0.9986)
+/remoll/evgen/beam/direction -0.0523 0.0 0.9986
 /remoll/evgen/beam/rasx 105.0 mm
 /remoll/evgen/beam/rasy 78.0 mm
 #/remoll/evgen/beam/x -987.5 mm

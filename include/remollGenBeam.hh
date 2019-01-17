@@ -43,14 +43,12 @@ class remollGenBeam : public remollVEventGen {
       EOriginModel y = kOriginModelFlat,
       EOriginModel z = kOriginModelFlat);
 
-    void SetDirection(G4ThreeVector direction);
     void SetDirectionX(double dx);
     void SetDirectionY(double dy);
     void SetDirectionZ(double dz);
     void SetDirectionPh(double ph);
     void SetDirectionTh(double th);
 
-    void SetPolarization(G4ThreeVector polarization);
     void SetPolarizationX(double sx);
     void SetPolarizationY(double sy);
     void SetPolarizationZ(double sz);
