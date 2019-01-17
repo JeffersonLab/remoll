@@ -104,29 +104,6 @@
 # (note that etmiss/ptll/ptheavy/ht/sorted cuts always apply)
 #*********************************************************************
    False  = cut_decays    ! Cut decay products 
-#****************************************************************************** 
-# Fixed-Target Cuts
-# N.B. relevant lepton cuts not included: el/elmax, mmll/mmllmax, etal/etalmax..
-#******************************************************************************
-# 0.05 = elminsp      ! min E for l+ & at least one l-
-# 100.0 = elmaxsp     ! max E for l+ & at least one l-
-# 0.5 = eltotsp       ! min total E for l+ & at least one l-
-# 0.01 = mmllminsp    ! min invariant mass for at least one l+l- pair
-# 100.0 = mmllmaxsp   ! max invariant mass for at least one l+l- pair
-# 0.0 = thetalminsp   ! min angle (radial direction) for l+ and at least one l-
-# 100.0 = thetalmaxsp ! max angle (radial direction) for l+ and at least one l-
-# 0.0 = thetaxlminsp  ! min angle (x direction) for l+ and at least one l-
-# 100.0 = thetaxlmaxsp ! max angle (x direction) for l+ and at least one l-
-# 0.01 = thetaylminsp ! min angle (y direction) for l+ and at least one l-
-# 100.0 = thetaylmaxsp ! max angle (y direction) for l+ and at least one l-
-# 0.0 = elmins        ! min E for at least one l
-# 100.0 = elmaxs      ! max E for at least one l
-# 0.0 = thetalmins    ! min angle (radial direction) for at least one l
-# 100.0 = thetalmaxs  ! max angle (radial direction) for at least one l
-# 0.0  = thetaxlmins  ! min angle (x direction) for at least one l
-# 100.0 = thetaxlmaxs ! max angle (x direction) for at least one l
-# 0.0 = thetaylmins   ! min angle (y direction) for at least one l
-# 100.0 = thetaylmaxs ! max angle (y direction) for at least one l
 #*********************************************************************
 # Standard Cuts                                                      *
 #*********************************************************************
@@ -143,8 +120,8 @@
  -1.0  = ptamax    ! maximum pt for the photons
  -1.0  = ptlmax    ! maximum pt for the charged leptons
  -1.0  = missetmax ! maximum missing Et (sum of neutrino's momenta)
- {} = pt_min_pdg ! pt cut for other particles (use pdg code). Applied on particle and anti-particle
- {}     = pt_max_pdg ! pt cut for other particles (syntax e.g. {6: 100, 25: 50})
+ {}   = pt_min_pdg ! pt cut for other particles (use pdg code). Applied on particle and anti-particle
+ {}   = pt_max_pdg ! pt cut for other particles (syntax e.g. {6: 100, 25: 50})
 #*********************************************************************
 # Minimum and maximum E's (in the center of mass frame)              *
 #*********************************************************************
