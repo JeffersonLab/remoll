@@ -67,9 +67,22 @@ Now we can convert using
 ```
 lhef2hepmc unweighted_events.lhe unweighted_events.hepmc
 ```
-
-If there are any NaN values in the Les Houches event file, you will need to replace
-those with valid numbers before conversion.
+or, since we start from a gzipped file,
 ```
-sed -i 's/nan/0.0/g' unweighted_events.lhe
+zcat generators/MG5/ep/ep_ep/Events/run_01/unweighted_events.lhe.gz | lhef2hepmc > generators/MG5/ep/ep_ep/Events/run_01/unweighted_events.hepmc
+```
+
+There may be NaN values in the Les Houches event file (for alpha_s, when the scale is
+below Lambda_QCD), which you will need to replace with valid numbers before conversion.
+```
+sed -i 's/nan/0.0/g'
+```
+or
+```
+zcat generators/MG5/ep/ep_ep/Events/run_01/unweighted_events.lhe.gz | sed 's/nan/0.0/g' | lhef2hepmc > generators/MG5/ep/ep_ep/Events/run_01/unweighted_events.hepmc
+```
+
+A helper script is provided in `scripts/lhef2hepmc.sh`:
+```
+Usage: lhef2hepmc.sh input.lhe.gz output.hepmc
 ```

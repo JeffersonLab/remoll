@@ -12,6 +12,10 @@
 
 /remoll/evgen/set hepmcAscii
 
+/control/shell scripts/lhef2hepmc.sh generators/MG5/ee/ee_ee/Events/run_01/unweighted_events.lhe.gz generators/MG5/ee/ee_ee/Events/run_01/unweighted_events.hepmc
+
+/generator/hepmcAscii/verbose 1
 /generator/hepmcAscii/open generators/MG5/ee/ee_ee/Events/run_01/unweighted_events.hepmc
+
 /remoll/filename remollout_ee_ee.root
 /run/beamOn 50000
