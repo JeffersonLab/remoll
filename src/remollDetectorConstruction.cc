@@ -241,7 +241,7 @@ void remollDetectorConstruction::DisableKryptonite()
   SetKryptoniteUserLimits(fWorldVolume);
 }
 
-void remollDetectorConstruction::AddKryptoniteCandidate(const G4String& name)
+void remollDetectorConstruction::AddKryptoniteCandidate(G4String name)
 {
   if (fKryptoniteVerbose > 0)
     G4cout << "Adding " << name << " to list of kryptonite candidates." << G4endl;
