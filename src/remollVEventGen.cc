@@ -148,19 +148,6 @@ void remollVEventGen::PolishEvent(remollEvent *ev) {
     for( iter = ev->fPartPos.begin(); iter != ev->fPartPos.end(); iter++ ) {
         (*iter) += ev->fVertexPos;
     }
-    
-    // Get number of thrown events
-    remollRunData* rundata = remollRun::GetRunData();
-    G4double nthrown = rundata->GetNthrown();
-
-    // Calculate rate
-    if ( ev->fRate == 0 ){// If the rate is set to 0 then calculate it using the cross section
-    	ev->fRate  = ev->fEffXs*fBeamTarg->GetEffLumin()/nthrown;
-    }
-    else { // For LUND - calculate rate and cross section	
-    	ev->fEffXs = ev->fRate*nthrown/(fBeamTarg->GetEffLumin());
-    	ev->fRate = ev->fRate/nthrown;
-    }
 
     ev->fmAsym = ev->fAsym*fBeamTarg->fBeamPolarization;
 }
