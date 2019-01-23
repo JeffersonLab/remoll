@@ -18,9 +18,11 @@ void remollGenericDetectorSum::AddEDep(int pid, G4ThreeVector pos, double edep)
   fSumByPID[pid].edep += edep;
   G4double newedep = fSumByPID[pid].edep;
 
-  fSumByPID[pid].x = (oldedep * fSumByPID[pid].x + edep * pos.x()) / newedep;
-  fSumByPID[pid].y = (oldedep * fSumByPID[pid].y + edep * pos.y()) / newedep;
-  fSumByPID[pid].z = (oldedep * fSumByPID[pid].z + edep * pos.z()) / newedep;
+  if (newedep > 0.0) { // avoid division by zero for first hit with zero edep
+    fSumByPID[pid].x = (oldedep * fSumByPID[pid].x + edep * pos.x()) / newedep;
+    fSumByPID[pid].y = (oldedep * fSumByPID[pid].y + edep * pos.y()) / newedep;
+    fSumByPID[pid].z = (oldedep * fSumByPID[pid].z + edep * pos.z()) / newedep;
+  }
 }
 
 remollGenericDetectorSum::remollGenericDetectorSum(const remollGenericDetectorSum &right)
