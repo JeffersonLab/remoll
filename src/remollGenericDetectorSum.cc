@@ -12,7 +12,7 @@ void remollGenericDetectorSum::AddEDep(int pid, G4ThreeVector pos, double edep)
   fEdep += edep;
 
   if (fSumByPID.count(pid) == 0)
-    fSumByPID.at(pid) = {.x = 0, .y = 0, .z = 0, .edep = 0, .pid = pid};
+    fSumByPID[pid] = {.x = 0, .y = 0, .z = 0, .edep = 0, .pid = pid};
 
   G4double oldedep = fSumByPID[pid].edep;
   fSumByPID[pid].edep += edep;
