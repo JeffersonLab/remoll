@@ -21,7 +21,11 @@ void Analyze(TChain* T)
       std::cout << "sum: " << sum.edep << " MeV" << std::endl;
       for (size_t ipid = 0; ipid < sum.by_pid.size(); ipid++) {
         std::cout << "sum [pid = " << sum.by_pid[ipid].pid << "]: "
-                  << sum.by_pid[ipid].edep << " MeV" << std::endl;
+                  << sum.by_pid[ipid].edep << " MeV at ("
+                  << sum.by_pid[ipid].x << ", "
+                  << sum.by_pid[ipid].y << ", "
+                  << sum.by_pid[ipid].z << ") mm "
+                  << std::endl;
       }
     }
   }
