@@ -19,6 +19,10 @@ void Analyze(TChain* T)
     for (size_t isum = 0; isum < sums->size(); isum++) {
       remollGenericDetectorSum_t sum = sums->at(isum);
       std::cout << "sum: " << sum.edep << " MeV" << std::endl;
+      for (size_t ipid = 0; ipid < sum.by_pid.size(); ipid++) {
+        std::cout << "sum [pid = " << sum.by_pid[ipid].pid << "]: "
+                  << sum.by_pid[ipid].edep << " MeV" << std::endl;
+      }
     }
   }
 }
