@@ -38,7 +38,7 @@
      0        = lpp1    ! beam 1 type 
      0        = lpp2    ! beam 2 type
      11.0     = ebeam1  ! beam 1 total energy in GeV
-     0.000511 = ebeam2  ! beam 2 total energy in GeV
+     0.0002555 = ebeam2  ! beam 2 total energy in GeV
 #*********************************************************************
 # Beam polarization from -100 (left-handed) to 100 (right-handed)    *
 #*********************************************************************
