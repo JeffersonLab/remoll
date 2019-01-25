@@ -1,4 +1,4 @@
-/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/geometry/setfile geometry/mollerMother_merged.gdml
 /remoll/parallel/setfile geometry/mollerParallel.gdml
 
 /remoll/physlist/parallel/enable
@@ -17,7 +17,7 @@
 
 # Target position
 /remoll/targpos 0 cm
-/remoll/targlen 1 cm
+/remoll/targlen 1 mm
 
 # Raster
 /remoll/oldras true
@@ -25,20 +25,12 @@
 /remoll/rasy 0 mm
 
 #
-# Moller generator
-#
-/remoll/evgen/set moller
-
-/remoll/filename remollout_ee_ee_moller.root
-/run/beamOn 5000
-
-#
 # HepMC files from MG5
 #
 /remoll/evgen/set hepmcAscii
 /generator/hepmcAscii/verbose 0
-/generator/hepmcAscii/open generators/MG5/e-e-/ee_ee_QED/Events/run_18/unweighted_events.hepmc
-/remoll/evgen/sigma 1.77E+08 picobarn
+/generator/hepmcAscii/open generators/MG5/e-e-/ee_ee_QED/Events/run_21/unweighted_events.hepmc
+/remoll/evgen/sigma 3.54E+08 picobarn
 
 /remoll/filename remollout_ee_ee_hepmc.root
-/run/beamOn 5000
+/run/beamOn 50000
