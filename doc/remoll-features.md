@@ -84,14 +84,147 @@ recent changes to the code or geometry, you may want to use the `develop` branch
 ```
 git checkout develop
 ```
-You can see all available branches with `git branch` command.
+You can see all available branches with the `git branch` command. You can also
+see previous released versions with the `git tag` command (and check them out
+as if they are a branch).
 
-## Event generators
+We use a [semantic versioning and branching model](https://github.com/JeffersonLab/remoll/wiki/Semantic-Versioning-and-Branching-Model)
+which allows us to develop new features in a separate branch and merge them
+back into the `develop` branch easily. Periodically we release a new version.
+
+### Compiling
+
+We are using an "out of source" build system, which means that the directory
+where the build products (compiled files) are created is different from the
+directory with the source code. This keeps the directory with the source code
+clean and prevents generated files from accidentally being uploaded.
+
+To build you will first need to create the build directory. If you choose
+for example a build directory called `build` you would execute:
+```
+mkdir build
+cd build
+```
+Next, you will use `cmake` to configure the build system:
+```
+cmake ..
+```
+Finally, you build the entire simulation by running `make` in your build directory:
+```
+make
+```
+Pro tip: During development, it may be easier to run `make -C build` from the
+top of the source directory.
+
+### Downloading field maps (automatically done in recent versions)
+Some information for the simulation is not included in this repository and must
+be downloaded separately. In particular you will need field maps, which can be
+found on the [MOLLER downloads](http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/) page.
+Typically we place these field maps in a directory called `map_directory`.
+
+In the `develop` branch these files are automatically downloaded when you
+configure the build system. In older releases you may need to download the
+map files manually:
+```
+mkdir map_directory
+wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyHybrid_rm_3.0.txt
+wget --directory-prefix=map_directory http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/blockyUpstream_rm_1.1.txt
+```
+
+### Running remoll
+Finally, to run the simulation just execute the command `remoll` which will be
+located in your build directory:
+```
+build/remoll
+```
+This will bring up a graphical command interface. You can type geant4 commands
+in the bottom command line.
+
+You can choose a number of command line options. You can see which ones by
+passing the option `-h`, as in `build/remoll -h`:
+```
+Usage:
+ remoll [-g geometry] [-m macro] [-u UIsession] [-r seed] [-t nThreads] [macro]
+```
+In particular you can pass a macro, such as:
+```
+build/remoll macros/runexample.mac
+```
+which will run the simulation in batch mode (no graphics output).
+
+You can also run in single-threaded mode:
+```
+build/remoll -t 1
+```
+which sometimes helps in debugging.
+
+## Typical `remoll` session
+
+When running `remoll`, keep the state machine of geant4 in mind, in particular
+the `PreInit` and `Idle` states.
+- When `remoll` starts, you enter in the `PreInit` state.
+- First you setup the geometry and physics lists.
+- Next you initialize and transition from the `PreInit` to the `Idle` state.
+- Now you can start runs with the geometry and physics lists defined earlier.
+
+A minimal example session could be:
+```
+/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+/remoll/evgen/set moller
+
+/remoll/filename remollout.root
+
+/run/beamOn 100
+```
 
 ## Geometry
+Our geometry is stored in GDML format, an XML-based format for storing geometry
+[developed at CERN](http://gdml.web.cern.ch/GDML/). Details can be found in the
+[User Guide](http://gdml.web.cern.ch/GDML/doc/GDMLmanual.pdf).
+
+Geometries can be stored anywhere, but typically you will want to use the ones
+in the `geometry/` directory. You may be interested in just checking the
+geometry with a simple [gdml viewer](https://github.com/JeffersonLab/gdmlview).
+
+In remoll you can load the geometry with
+```
+/remoll/geometry/setfile <path/to/mother.gdml>
+```
+
+### Auxiliary tags in geometry files
+In plain Geant4 there is only support for materials and volumes in GDML. To add
+support for detectors and visualization features, we use the auxiliary tags that
+GDML supports. We do have to write the interpretation and parsers for this in
+remoll, though.
+```
+<auxiliary auxtype="SensDet" auxvalue="detectorName"/>
+<auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+<auxiliary auxtype="DetNo" auxvalue="4000"/>
+<auxiliary auxtype="Color" auxvalue="blue"/>
+<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+```
 
 ## Physics lists
+Several standard physics lists are provided by Geant4. We don't modify those,
+except for adding or removing specific processes:
+- optical photon physics,
+- step limiter physics (with associated auxiliary tags and macro commands),
+- parallel world physics.
+
+## Event generators
+Event generators don't do much more than adding a cross section weighting factor
+to each event. That's it. We almost always sample isotropically in theta, phi
+space. Exceptions are the beam generator.
 
 ## Detectors: hits and sums
+The concept of a hit in Geant4 is very different from what we call a hit in
+experimental contexts. One particle Hits in Geant4
 
 ## Output
