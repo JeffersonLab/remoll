@@ -60,6 +60,46 @@ macro commands:
 You can also load another macro in the `vis` directory, if
 you prefer another visualization driver.
 
+### To get repository
+Use this if you plan to do work and want to propagate changes to the repository for others to see (localFolderName will be "remoll" if not set):
+```
+  git clone git@github.com:JeffersonLab/remoll localFolderName
+```
+
+Are you getting an error? Do you need access to the repository? Contact cipriangal, paulmking or kpaschke.
+
+Alternately just get a copy that you just want to run (without making changes to the repository):
+  ```
+  git clone https://github.com/JeffersonLab/remoll
+  ```
+### To make modifications
+Before starting work make sure you have the latest changes from the remote repository:
+```
+git pull
+```
+
+Create a branch (see https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging for more details on branching) for the issue/improvement you are trying to add:
+ ```
+ git checkout -b issueName
+ ```
+  
+You are now in new branch named "issueName". If you want others to see your work make sure you setup tracking of this branch on the remote repository:
+  ```
+  git push -u origin remoteBranchName
+  ```
+Note that the remoteBranchName can be the same as the name you use on your local copy (i.e. the currently checked out branch), if remoteBranchName doesn't exist on the remote yet then a new branch with that name will be created there (but not on your local copy), and either way the local branch you have checked out currently will be set up to track this remote branch.
+
+Modfiy any file you need. For the modified files:
+  ```
+  git add folder/modifiedFile.hh
+  git commit -m "Message for this commit"
+  ```
+  
+At this point your code is tracked and committed on the local repository. To make changes available to others on a remote branch (can be the same as the name you use on your local copy):
+  ```
+  git push -u origin remoteBranchName
+  ```
+
 ## Generating geometry from ROOT output
 
 The GDML tree is saved in the root output so that keeping the geometry files
