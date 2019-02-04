@@ -1,31 +1,30 @@
-FROM jeffersonlab/jlabce:2.1
+FROM jeffersonlab/jlabce:2.3
 
-ENV JLAB_VERSION=2.1
+ENV JLAB_VERSION=2.3
 ENV JLAB_ROOT=/jlab
-ENV JLAB_SOFTWARE=/jlab/2.1/Linux_CentOS7.3.1611-x86_64-gcc4.8.5
+ENV JLAB_SOFTWARE=/jlab/2.3/Linux_CentOS7.2.1511-x86_64-gcc4.8.5
 
-ENV REMOLL=$JLAB_SOFTWARE/remoll
+ENV REMOLL=/jlab/remoll
 
 WORKDIR $REMOLL
+
 # Compile remoll
-# RUN git clone https://github.com/jeffersonlab/remoll $REMOLL
 ADD . .
 RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh && \
-    mkdir -p $REMOLL/build && cd $REMOLL/build && cmake .. && make
-
-# Download the map data files and place them in the correct directory
-RUN wget -r --no-parent -l1 -A txt http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/
-RUN mkdir map_directory && \
-    find ./hallaweb.jlab.org -mindepth 2 -type f -exec mv -t ./map_directory -i '{}' + && \
-    rm -rf hallaweb.jlab.org
+    mkdir -p $REMOLL/build && \
+    pushd $REMOLL/build && \
+    cmake .. && \
+    make -j$(nproc) && \
+    make install
 
 # Create entry point bash script
-RUN echo '#!/bin/bash'                                > /entrypoint.sh && \
-    echo 'unset OSRELEASE'                            >> /entrypoint.sh && \
-    echo 'source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh' >> /entrypoint.sh && \
-    echo 'cd $REMOLL && exec ./build/remoll $1'       >> /entrypoint.sh && \
-    chmod +x /entrypoint.sh
+RUN echo '#!/bin/bash'                                >  /usr/local/bin/entrypoint.sh && \
+    echo 'unset OSRELEASE'                            >> /usr/local/bin/entrypoint.sh && \
+    echo 'source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh' >> /usr/local/bin/entrypoint.sh && \
+    echo 'export PATH=${REMOLL}/bin:${PATH}'          >> /usr/local/bin/entrypoint.sh && \
+    echo 'export REMOLL=${REMOLL}'                    >> /usr/local/bin/entrypoint.sh && \
+    echo 'cd $REMOLL && exec $*'                      >> /usr/local/bin/entrypoint.sh && \
+    chmod +x /usr/local/bin/entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["macros/runexample.mac"]
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 

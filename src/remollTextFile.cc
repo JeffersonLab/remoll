@@ -55,7 +55,7 @@ const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
 
 remollTextFile::~remollTextFile(){
     if (fFilename) { delete[] fFilename; }
-    if (fBuffer) { delete[] fBuffer; }
+    if (fBuffer)   { delete[] fBuffer; }
 }
 
 void remollTextFile::copyFileIn(const char *fn){

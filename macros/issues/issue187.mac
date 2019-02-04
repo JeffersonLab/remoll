@@ -1,0 +1,8 @@
+/run/initialize
+
+/remoll/targpos 0 cm
+/remoll/targlen 0 cm
+
+/remoll/filename remollout.root
+
+/run/beamOn 100

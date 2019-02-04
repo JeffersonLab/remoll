@@ -1,0 +1,4 @@
+/run/initialize
+/remoll/evgen/set moller
+/remoll/evgen/printlimits
+/run/beamOn 1

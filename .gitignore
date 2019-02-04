@@ -1,9 +1,17 @@
+images
+
+# output from createHTML
+_remoll_*.html
+
+# backups etc
 *~
 *.swp
+
+# Mac
 *.DS_Store
 
 #ignore doxygen files for now
-include/gitinfo.hh
+doc
 
 #ignore libraries and helper files
 *.so
@@ -24,6 +32,7 @@ output
 #install directories
 bin
 lib
+lib64
 share
 
 #ignore build and map directory
@@ -31,5 +40,22 @@ build*
 bldXcode
 map_directory
 
+#ignore rad_dose radiation analysis work (another repository on sbujlab github)
+rad_analysis
+
 #ignore log files directory
 log
+
+#ignore project files for eclipse
+.cproject
+.project
+
+#ignore dot files
+*.dot
+
+#sample_gdml output
+sample_gdml.*
+
+#ignore log files
+*.log
+callgrind.*

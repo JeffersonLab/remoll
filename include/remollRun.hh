@@ -16,16 +16,14 @@ class remollRunData;
 class remollRun: public G4Run {
 
   public:
-    remollRun();
-    virtual ~remollRun();
+    remollRun(): G4Run() { };
+    virtual ~remollRun() { };
 
   // Static run data access
   private:
     static remollRunData* fRunData;
   public:
     static remollRunData* GetRunData();
-
-    static void UpdateSeed();
 };
 
 #endif //__REMOLLRUN_HH

@@ -1,60 +1,30 @@
-# This must be called before initialize
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
-
-# This must be explicitly called
 /run/initialize
 
-# Field maps
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+# Print all detectors
+/remoll/SD/print_all
 
-# Raster and initial angle stuff
-/remoll/oldras true
-/remoll/rasx 5 mm
-/remoll/rasy 5 mm
+# Disable all detectors
+/remoll/SD/disable_all
+/remoll/filename test_det_enable_3.root
+/run/beamOn 100
 
-# Beam energy
-/remoll/beamene 11 GeV
+# Enable all detectors
+/remoll/SD/enable_all
+/remoll/filename test_det_enable_4.root
+/run/beamOn 100
 
+# Disable range detectors
+/remoll/SD/disable_range 4000 5000
+/remoll/SD/print_all
 
-#/remoll/gen beam
-/remoll/gen moller
-#/remoll/thcommin 30.0 deg
-#/remoll/thcommax 150.0 deg
-#/remoll/gen elastic 
-#/remoll/emin 80.0 MeV
-#/remoll/gen inelastic 
-#/remoll/gen pion
-#/remoll/piontype pi-
-#/remoll/gen pion_LUND
-#/remoll/gen inelasticAl
-#/remoll/gen quasielasticAl
-#/remoll/gen elasticAl
+# Enable range detectors
+/remoll/SD/enable_range 4002 5000
+/remoll/SD/print_all
 
-# Generation limits
-# theta
-/remoll/thmin 0.5 deg
-/remoll/thmax 3.0 deg
+# Disable one detector
+/remoll/SD/disable 4004
+/remoll/SD/print_all
 
-# Beam current for rate
-/remoll/beamcurr 85 microampere
-
-/remoll/seed 123456
-
-# Output
-/remoll/filename test_det_enable_1.root
-
-# Run
-/run/beamOn 1000
-
-# Disable pion detectors
-/remoll/SD/det2001/enable false
-/remoll/SD/det2002/enable false
-/remoll/SD/det2003/enable false
-/remoll/SD/det2004/enable false
-
-# Output
-/remoll/filename test_det_enable_2.root
-
-# Run
-/run/beamOn 1000
+# Enable one detector
+/remoll/SD/enable 4000
+/remoll/SD/print_all

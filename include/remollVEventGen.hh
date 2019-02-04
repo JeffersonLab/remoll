@@ -34,15 +34,25 @@ class remollVEventGen {
 	remollVEventGen(G4String name);
 	virtual ~remollVEventGen();
 
-	void PrintEventGen();
+	virtual void PrintEventGen();
 
 	remollEvent *GenerateEvent();
 
 	G4String GetName() { return fName; }
 
+	void SetBeamTarget(remollBeamTarget* bt) {
+	  fBeamTarg = bt;
+	}
+
 	void SetSampType( SampType_t st ) { fSampType = st; }
 	void SetDoMultScatt( G4bool multscatt ){ fApplyMultScatt = multscatt; }
 
+        void SetEmin(double emin) { fE_min = emin; }
+        void SetEmax(double emax) { fE_max = emax; }
+        void SetPhmin(double phmin) { fPh_min = phmin; }
+        void SetPhmax(double phmax) { fPh_max = phmax; }
+        void SetThmin(double thmin) { fTh_min = thmin; }
+        void SetThmax(double thmax) { fTh_max = thmax; }
 
     protected:
 	// Generator name
@@ -50,10 +60,14 @@ class remollVEventGen {
 
     protected:
 	// Generation limits
-	G4double fThCoM_min, fThCoM_max;
-	G4double fTh_min, fTh_max;
-	G4double fPh_min, fPh_max;
-	G4double fE_min, fE_max;
+	static G4double fThCoM_min, fThCoM_max;
+	static G4double fTh_min, fTh_max;
+	static G4double fPh_min, fPh_max;
+	static G4double fE_min, fE_max;
+
+  G4String fBeamPol;
+public:
+  const G4String GetBeamPolarization(){return fBeamPol;}
 
     protected:
 	// Number of particles
@@ -67,10 +81,10 @@ class remollVEventGen {
         G4ParticleGun* GetParticleGun() const { return fParticleGun; }
 
     protected:
-	remollBeamTarget *fBeamTarg;
+	remollBeamTarget* fBeamTarg;
 
 	void PolishEvent(remollEvent *);
-	
+
 	// Pure virtual function that needs to be filled out
 	virtual void SamplePhysics(remollVertex *, remollEvent *) = 0;
 
@@ -79,9 +93,11 @@ class remollVEventGen {
 	SampType_t fSampType;
 	G4bool     fApplyMultScatt;
 
-    protected:
+    private:
 	// Generic messenger as protected to be used in derived classes
-	G4GenericMessenger* fMessenger;
+	G4GenericMessenger* fEvGenMessenger;
+    protected:
+	G4GenericMessenger* fThisGenMessenger;
 };
 
 

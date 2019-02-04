@@ -1,5 +1,5 @@
 # This must be called before initialize
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 
 # This must be explicitly called
 /run/initialize
@@ -17,31 +17,31 @@
 /remoll/beamene 11 GeV
 
 
-#/remoll/gen beam
-#/remoll/gen moller
-#/remoll/thcommin 30.0 deg
-#/remoll/thcommax 150.0 deg
-#/remoll/gen elastic 
-#/remoll/emin 80.0 MeV
-/remoll/gen inelastic 
-#/remoll/gen pion
+#/remoll/evgen/set beam
+#/remoll/evgen/set moller
+#/remoll/evgen/thcommin 30.0 deg
+#/remoll/evgen/thcommax 150.0 deg
+#/remoll/evgen/set elastic 
+#/remoll/evgen/emin 80.0 MeV
+/remoll/evgen/set inelastic 
+#/remoll/evgen/set pion
 #/remoll/piontype pi-
-#/remoll/gen pion_LUND
-#/remoll/gen inelasticAl
-#/remoll/gen quasielasticAl
-#/remoll/gen elasticAl
+#/remoll/evgen/set pion_LUND
+#/remoll/evgen/set inelasticAl
+#/remoll/evgen/set quasielasticAl
+#/remoll/evgen/set elasticAl
 
 # Generation limits
 # theta
-/remoll/thmin 0.5 deg
-/remoll/thmax 3.0 deg
+/remoll/evgen/thmin 0.5 deg
+/remoll/evgen/thmax 3.0 deg
 
 # Beam current for rate
 /remoll/beamcurr 85 microampere
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite true
+/remoll/kryptonite/set true
 
 /remoll/seed 123456
 

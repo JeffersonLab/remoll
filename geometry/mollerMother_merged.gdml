@@ -2,8 +2,9 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define> 
-  <position name="hallCenter" x="0" y="0" z="4000"/>
+  <position name="hallCenter" x="0" y="0" z="6087."/>
   <position name="targetCenter" x="0" y="0" z="0"/>
+  <position name="targetCenter_Clamshell" x="0" y="0" z="0"/>
   <position name="upstreamCenter" x="0" y="0" z="7000."/>
   <position name="hybridCenter" x="0" y="0" z="13366.57"/>
   <position name="detectorCenter" x="0" y="0" z="28500."/>
@@ -30,32 +31,28 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-      <file name="geometry_tests/targetDaughter_merged.gdml"/>
-      <positionref ref="targetCenter"/>
+      <file name="targetDaughter_Clamshell_Optimized.gdml"/>
+      <positionref ref="targetCenter_Clamshell"/>
+      <!--<file name="targetDaughter_merged.gdml"/>
+      <positionref ref="targetCenter"/>-->
       <rotationref ref="identity"/>
       </physvol>
 
-
       <physvol>
-      <file name="geometry_tests/hallDaughter_merged.gdml"/>
+      <file name="hallDaughter_merged.gdml"/>
       <positionref ref="hallCenter"/>
       <rotationref ref="identity"/>
-      </physvol>
+      </physvol> 
 
+ 
       <physvol>
-      <file name="geometry_tests/detectorDaughter_merged.gdml"/>
-      <positionref ref="detectorCenter"/>
-      <rotationref ref="identity"/>
-      </physvol>
-
-      <physvol>
-	    <file name="geometry_tests/upstreamDaughter_merged.gdml"/>
+	    <file name="upstreamDaughter_merged.gdml"/>
 	    <positionref ref="upstreamCenter"/>
     	<rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-    	<file name="geometry_tests/hybridDaughter_merged.gdml"/>
+    	<file name="hybridDaughter_merged.gdml"/>
 	    <positionref ref="hybridCenter"/>
     	<rotationref ref="identity"/>
       </physvol>    

@@ -10,65 +10,65 @@
 #include "remolltypes.hh"
 
 remollGenMoller::remollGenMoller()
-: remollVEventGen("moller") {
-    fThCoM_min =    30.0*deg;
-    fThCoM_max =   150.0*deg;
+  : remollVEventGen("moller") {
+  fThCoM_min =    30.0*deg;
+  fThCoM_max =   150.0*deg;
 
-    fApplyMultScatt = true;
+  fApplyMultScatt = true;
 }
 
 remollGenMoller::~remollGenMoller(){
 }
 
 void remollGenMoller::SamplePhysics(remollVertex *vert, remollEvent *evt){
-    // Generate Moller event
+  // Generate Moller event
 
-    double beamE = vert->GetBeamEnergy();
-    double me    = electron_mass_c2;
+  double beamE = vert->GetBeamEnergy();
+  double me    = electron_mass_c2;
 
-    double beta_com  = sqrt( (beamE - me)/(beamE + me) );
-    double gamma_com = 1.0/sqrt(1.0 - beta_com*beta_com);
+  double beta_com  = sqrt( (beamE - me)/(beamE + me) );
+  double gamma_com = 1.0/sqrt(1.0 - beta_com*beta_com);
 
-    double e_com = me*gamma_com;
-    double thcom = acos(G4RandFlat::shoot(cos(fThCoM_max), cos(fThCoM_min)));
-    double phcom = G4RandFlat::shoot(fPh_min, fPh_max);
+  double e_com = me*gamma_com;
+  double thcom = acos(G4RandFlat::shoot(cos(fThCoM_max), cos(fThCoM_min)));
+  double phcom = G4RandFlat::shoot(fPh_min, fPh_max);
 
-    double sigma = alpha*alpha*pow(3.0+cos(thcom)*cos(thcom),2.0)*hbarc*hbarc/pow(sin(thcom),4.0)/(2.0*me*beamE); // units of area
+  double sigma = alpha*alpha*pow(3.0+cos(thcom)*cos(thcom),2.0)*hbarc*hbarc/pow(sin(thcom),4.0)/(2.0*me*beamE); // units of area
 
-    double V = 2.0*pi*(cos(fThCoM_min) - cos(fThCoM_max));
+  double V = 2.0*pi*(cos(fThCoM_min) - cos(fThCoM_max));
 
-    //  Multiply by Z because we have Z electrons
-    //  here we must also divide by two because we are double covering 
-    //  phasespace because of identical particles
-    
-    evt->SetEffCrossSection(sigma*V*vert->GetMaterial()->GetZ()/2.0);
+  //  Multiply by Z because we have Z electrons
+  //  here we must also divide by two because we are double covering
+  //  phasespace because of identical particles
 
-    if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
-	G4cerr << __FILE__ << " line " << __LINE__ << 
-	    ": Error!  Some lazy programmer didn't account for complex materials in the moller process!" << G4endl;
-	exit(1);
-    }
+  evt->SetEffCrossSection(sigma*V*vert->GetMaterial()->GetZ()/2.0);
 
-    G4double APV = electron_mass_c2*beamE*GF*4.0*sin(thcom)*sin(thcom)*(QWe+QWe_rad)/(sqrt(2.0)*pi*alpha*pow(3.0+cos(thcom)*cos(thcom),2.0));
+  if( vert->GetMaterial()->GetNumberOfElements() != 1 ){
+    G4cerr << __FILE__ << " line " << __LINE__ <<
+      ": Error!  Some lazy programmer didn't account for complex materials in the moller process!" << G4endl;
+    exit(1);
+  }
 
-    evt->SetAsymmetry(APV);
-    evt->SetThCoM(thcom);
+  G4double APV = electron_mass_c2*beamE*GF*4.0*sin(thcom)*sin(thcom)*(QWe+QWe_rad)/(sqrt(2.0)*pi*alpha*pow(3.0+cos(thcom)*cos(thcom),2.0));
 
-    //evt->SetQ2( 2.0*e_com*e_com*(1.0-cos(thcom)) );
-    // Q2 is not actually well defined
-    evt->SetQ2( 0.0 );
+  evt->SetAsymmetry(APV);
+  evt->SetThCoM(thcom);
 
-    double pperp = e_com*sin(thcom);
-    double ppar  = e_com*cos(thcom);
+  //evt->SetQ2( 2.0*e_com*e_com*(1.0-cos(thcom)) );
+  // Q2 is not actually well defined
+  evt->SetQ2( 0.0 );
 
-    evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
-	                     G4ThreeVector(pperp*cos(phcom), pperp*sin(phcom), gamma_com*(ppar + e_com*beta_com) ), 
-			     "e-" );
+  double pperp = e_com*sin(thcom);
+  double ppar  = e_com*cos(thcom);
 
-    evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
-	                     G4ThreeVector(-pperp*cos(phcom), -pperp*sin(phcom), gamma_com*(-ppar + e_com*beta_com) ), 
-			     "e-" );
+  evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0),
+                           G4ThreeVector(pperp*cos(phcom), pperp*sin(phcom), gamma_com*(ppar + e_com*beta_com) ),
+                           "e-");
 
-    return;
+  evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0),
+                           G4ThreeVector(-pperp*cos(phcom), -pperp*sin(phcom), gamma_com*(-ppar + e_com*beta_com) ),
+                           "e-");
+
+  return;
 
 }

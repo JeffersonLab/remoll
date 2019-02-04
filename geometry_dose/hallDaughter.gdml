@@ -14,6 +14,11 @@
   <constant name="length_mother" value="90000."/>
 
   <!-- Hall - wall, floor and "dump" -->
+  <!-- <constant name="radius_of_hall" value="26517"/>
+  <constant name="width_wall" value="20000"/> 
+  <constant name="height_wall" value="7200."/>  
+  <constant name="thick_wall" value="1547.76"/> 
+  <constant name="center_wall" value="radius_of_hall+thick_wall/2"/>      Not in use anymore -->
   <constant name="radius_of_hall" value="26517"/>
   <constant name="width_wall" value="20000"/> 
   <constant name="height_wall" value="7200."/>  
@@ -31,13 +36,23 @@
   <constant name="center_cylwall" value="height_cylwall/2+bottom_cylwall"/>
   <constant name="trans_topwall" value="radius_topwall_out-(-center_topwall+bottom_cylwall+height_cylwall)"/> 
 
+  <!--  <constant name="thick_floor" value="500."/> 
+  <constant name="width_floor" value="20000."/> 
+  <constant name="floor_y_center" value="(-height_wall-thick_floor)/2"/>   
+
+  <constant name="width_dump" value="6000."/> 
+  <constant name="height_dump" value="height_wall"/>                       Not in use anymore--> 
+
+
+<!--  <constant name="center_dump" value="radius_of_hall+length_dump/2+thick_wall"/> -->
+  <constant name="length_dump" value="6000."/>
   <constant name="thick_floor" value="500."/> 
   <constant name="width_floor" value="20000."/> 
   <constant name="floor_y_center" value="(-height_wall-thick_floor)/2"/>
 
   <constant name="width_dump" value="6000."/> 
   <constant name="height_dump" value="height_wall"/> 
-  <constant name="length_dump" value="6000."/> 
+
 <!--  <constant name="center_dump" value="radius_of_hall+length_dump/2+thick_wall"/> -->
   <constant name="center_dump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
   <constant name="center_cyldump" value="radius_of_cylwall+length_dump/2+thick_cylwall"/>
@@ -202,11 +217,14 @@
       <materialref ref="Concrete"/>
       <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="cylwall_hole"/>
+      <!-- NEW Sensitive detector FIXME -->
+      <!-- <auxiliary auxtype="SensDet" auxvalue="Hall_Det"/> -->
+      <!-- <auxiliary auxtype="DetNo" auxvalue="6000"/> -->
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5009"/> -->
     </volume>
 
     <volume name="logicHall">
-      <materialref ref="Vacuum"/>
+      <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
       <!-- <solidref ref="boxHallMother_out"/> -->
 

@@ -25,6 +25,10 @@
 
 #define __MAX_MAT 100
 
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollBeamTargetMutex = G4MUTEX_INITIALIZER; }
+
 // Initialize static geometry objects
 G4String remollBeamTarget::fActiveTargetVolume = "h2Targ";
 G4VPhysicalVolume* remollBeamTarget::fTargetMother = 0;
@@ -41,8 +45,6 @@ remollBeamTarget::remollBeamTarget()
   fX0(0.0),fY0(0.0),fTh0(0.0),fPh0(0.0),
   fdTh(0.0),fdPh(0.0),fCorrTh(0.0),fCorrPh(0.0)
 {
-    UpdateInfo();
-
     // Create new multiple scattering
     fMS = new remollMultScatt();
 
@@ -57,6 +59,7 @@ remollBeamTarget::remollBeamTarget()
     fMessenger->DeclareMethod("targname",&remollBeamTarget::SetActiveTargetVolume,"Target name").SetStates(G4State_Idle);
     fMessenger->DeclareMethodWithUnit("targlen","cm",&remollBeamTarget::SetTargetLen,"Target length").SetStates(G4State_Idle);
     fMessenger->DeclareMethodWithUnit("targpos","cm",&remollBeamTarget::SetTargetPos,"Target position").SetStates(G4State_Idle);
+    fMessenger->DeclareMethod("printtargetinfo",&remollBeamTarget::PrintTargetInfo).SetStates(G4State_Idle);
 
     fMessenger->DeclarePropertyWithUnit("beamcurr","microampere",fBeamCurrent,"Beam current");
     fMessenger->DeclarePropertyWithUnit("beamene","GeV",fBeamEnergy,"Beam energy");
@@ -85,15 +88,45 @@ G4double remollBeamTarget::GetEffLumin(){
     return fEffectiveMaterialLength*fBeamCurrent/(e_SI*coulomb);
 }
 
+void remollBeamTarget::PrintTargetInfo()
+{
+    for (std::vector<G4VPhysicalVolume *>::iterator
+        it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
+
+        // Try to cast the target volume into its tubs solid
+        G4LogicalVolume* volume = (*it)->GetLogicalVolume();
+        G4Material* material = volume->GetMaterial();
+        G4VSolid* solid = volume->GetSolid();
+
+        G4cout << "Target volume " << (*it)->GetName() << ":" << G4endl;
+        G4cout << " volume:   " << volume->GetName() << G4endl;
+        G4cout << " material: " << material->GetName() << G4endl;
+        G4cout << " solid: "    << solid->GetName() << G4endl;
+
+	if( (*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
+            G4cout << " active volume: " << fActiveTargetVolume << G4endl;
+        }
+    }
+
+    G4cout << "Final target parameters: " << G4endl;
+    G4cout << " active target effective length: " << fActiveTargetEffectiveLength << G4endl;
+    G4cout << " active target relative position: " << fActiveTargetRelativePosition << G4endl;
+    G4cout << " total active length: " << fTotalTargetEffectiveLength << G4endl;
+}
+
 void remollBeamTarget::UpdateInfo()
 {
+    G4AutoLock lock(&remollBeamTargetMutex);
+
     fActiveTargetEffectiveLength  = -1e9;
     fMotherTargetAbsolutePosition = -1e9;
     fActiveTargetRelativePosition = -1e9;
     fTotalTargetEffectiveLength = 0.0;
 
-    // Can't calculate anything without mother
-    if( !fTargetMother ) return;
+    // Can't calculate anything without mother, let's hope we find one later on
+    if (!fTargetMother) {
+      return;
+    }
     fMotherTargetAbsolutePosition = fTargetMother->GetFrameTranslation().z();
 
     for (std::vector<G4VPhysicalVolume *>::iterator
@@ -134,14 +167,20 @@ void remollBeamTarget::UpdateInfo()
 
 void remollBeamTarget::SetActiveTargetVolume(G4String name)
 {
+  G4AutoLock lock(&remollBeamTargetMutex);
   fActiveTargetVolume = name;
+
+  lock.unlock();
   UpdateInfo();
 }
 
 
 void remollBeamTarget::SetTargetLen(G4double z)
 {
+    G4AutoLock lock(&remollBeamTargetMutex);
+
     // Loop over target volumes
+    G4bool active_target_volume_found = false;
     for (std::vector<G4VPhysicalVolume *>::iterator
         it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
 
@@ -154,39 +193,50 @@ void remollBeamTarget::SetTargetLen(G4double z)
             G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
             // Change the length of the target volume
             if (tubs) tubs->SetZHalfLength(z/2.0);
+            active_target_volume_found = true;
 
-	} else {
-
-	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": volume other than target has been specified, but handling not implemented" << G4endl;
-	    // Move position of all other volumes based on half length change
-
-	    /*
-	    G4ThreeVector pos = (*it)->GetFrameTranslation();
-
-	    if( pos.z() < fLH2pos ){
-		pos = pos + G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
-	    } else {
-		pos = pos - G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
-	    }
-
-	    (*it)->SetTranslation(pos);
-	    */
 	}
+
 	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
     }
 
+    if (!active_target_volume_found) {
+
+        G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+            ": volume other than target has been specified, but handling not implemented" << G4endl;
+
+        // Move position of all other volumes based on half length change
+
+        /*
+        G4ThreeVector pos = (*it)->GetFrameTranslation();
+
+        if( pos.z() < fLH2pos ){
+            pos = pos + G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
+        } else {
+            pos = pos - G4ThreeVector(0.0, 0.0, (fLH2Length-z)/2.0 );
+        }
+
+        (*it)->SetTranslation(pos);
+        */
+    }
 
     G4RunManager* runManager = G4RunManager::GetRunManager();
     runManager->GeometryHasBeenModified();
 
+    lock.unlock();
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetLen(z)" << G4endl;
 }
 
 void remollBeamTarget::SetTargetPos(G4double z)
 {
+    G4AutoLock lock(&remollBeamTargetMutex);
+
     //G4double zshift = z-(fZpos+fLH2pos);
 
+    // Loop over target volumes
+    G4bool active_target_volume_found = false;
     for (std::vector<G4VPhysicalVolume *>::iterator
         it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++ ) {
 
@@ -196,29 +246,36 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
 	    // Change the length of the target volume
 	    (*it)->SetTranslation(G4ThreeVector(0.0, 0.0, z-fMotherTargetAbsolutePosition));
+            active_target_volume_found = true;
 
-	} else {
-
-	    G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		": volume other than target has been specified, but handling not implemented" << G4endl;
-
-	    // Move position of all other volumes based on half length change
-
-	    /*
-	    G4ThreeVector prespos = (*it)->GetFrameTranslation();
-
-	    G4ThreeVector pos = prespos + G4ThreeVector(0.0, 0.0, zshift );
-
-	    (*it)->SetTranslation(prespos);
-	    */
 	}
+
 	G4GeometryManager::GetInstance()->CloseGeometry(true, false, (*it));
+    }
+
+    if (!active_target_volume_found) {
+
+        G4cerr << "WARNING " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+            ": volume other than target has been specified, but handling not implemented" << G4endl;
+
+        // Move position of all other volumes based on half length change
+
+        /*
+        G4ThreeVector prespos = (*it)->GetFrameTranslation();
+
+        G4ThreeVector pos = prespos + G4ThreeVector(0.0, 0.0, zshift );
+
+        (*it)->SetTranslation(prespos);
+        */
     }
 
     G4RunManager* runManager = G4RunManager::GetRunManager();
     runManager->GeometryHasBeenModified();
 
+    lock.unlock();
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetPos(z)" << G4endl;
 }
 
 
@@ -229,6 +286,25 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 {
     // Create vertex
     remollVertex vertex;
+
+    // No sampling required
+    if (samp == kNoTargetVolume) {
+      return vertex;
+    }
+
+    // Check if target mother volume exists
+    if (fTargetMother == 0) {
+      G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
+                "No target mother volume defined!" << G4endl;
+      exit(1);
+    }
+
+    // Check if target volume exists
+    if (fTargetVolumes.size() == 0) {
+      G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
+                "No target volume defined!" << G4endl;
+      exit(1);
+    }
 
     // Sample raster x and y positions on target
     // (assumed independent of z position)
@@ -241,13 +317,17 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // Figure out how far along the target we got
     G4double total_effective_length = 0;
     switch( samp ){
-	case kActiveTargetVolume:
-	    total_effective_length = fActiveTargetEffectiveLength;
-	    break;
+        case kActiveTargetVolume:
+            total_effective_length = fActiveTargetEffectiveLength;
+            break;
 
-	case kAllTargetVolumes:
-	    total_effective_length = fTotalTargetEffectiveLength;
-	    break;
+        case kAllTargetVolumes:
+            total_effective_length = fTotalTargetEffectiveLength;
+            break;
+
+        case kNoTargetVolume:
+            // nothing to do, just avoid compilation warning
+            break;
     }
     G4double effective_position = G4RandFlat::shoot(0.0, total_effective_length);
 
@@ -271,7 +351,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
         it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !found_active_volume; it++ ){
 
         // Relative position of this target volume in mother volume
-        G4double relative_position = (*it)->GetFrameTranslation().z();
+        //G4double relative_position = (*it)->GetFrameTranslation().z();
 
         // Try to cast the target volume into its tubs solid
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
@@ -382,7 +462,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	vertex.fMaterial = fDefaultMat;
 	vertex.fRadiationLength = 0.0;
     }
-    
 
     // Sample multiple scattering angles
     G4double msth = 0, msph = 0;
@@ -400,13 +479,13 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
       // Gaussian distribution with mean and sigma
       bmth = G4RandGauss::shoot(fTh0, fdTh);
       bmph = G4RandGauss::shoot(fPh0, fdPh);
-      
+
       if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
       if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
-      
+
       // Initial direction
       fDir = G4ThreeVector(0.0, 0.0, 1.0);
-      
+
       fDir.rotateY( bmth); // Positive th pushes to positive X (around Y-axis)
       fDir.rotateX(-bmph); // Positive ph pushes to positive Y (around X-axis)
     } else{
@@ -453,7 +532,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     }
 
     vertex.fBeamEnergy = fSampledEnergy;
-    assert( fBeamEnergy >= electron_mass_c2 );
+    //assert( fBeamEnergy >= electron_mass_c2 );
 
     return vertex;
 }

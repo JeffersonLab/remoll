@@ -51,7 +51,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
 	    G4cerr << __FILE__ << " line " << __LINE__ << ": WARNING could not find target" << G4endl;
 	    bypass_target = true;
-	}     
+	}
     } else {
 	bypass_target = true;
     }
@@ -178,7 +178,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     // Set event information to our new sampling
     evt->fBeamE = beamE;
-    evt->fBeamMomentum = evt->fBeamMomentum.unit()*sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2);;
+    evt->fBeamMomentum = evt->fBeamMomentum.unit()*sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2);
 
     ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -203,7 +203,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double ph = G4RandFlat::shoot(0.0, 2.0*pi);
 
-    double ef    = proton_mass_c2*beamE/(proton_mass_c2 + beamE*(1.0-cos(th)));;
+    double ef    = proton_mass_c2*beamE/(proton_mass_c2 + beamE*(1.0-cos(th)));
 
     double q2  = 2.0*beamE*ef*(1.0-cos(th));
     double tau = q2/(4.0*proton_mass_c2*proton_mass_c2);
@@ -266,7 +266,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // We're going to use the new kinematics for this guy
 
     int_bt = (alpha/pi)*( log( q2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
-    Ekin = ef - electron_mass_c2;;
+    Ekin = ef - electron_mass_c2;
     double env, ref;
 
     prob = 1.- pow(bremcut/Ekin, int_bt) - int_bt/(int_bt+1.)*(1.- pow(bremcut/Ekin,int_bt+1.))

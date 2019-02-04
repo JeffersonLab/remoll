@@ -1,0 +1,4 @@
+import model sm
+generate e+ e- > mu+ mu- / Z
+output ee_mumu_QED
+shell cp template/* ee_mumu_QED/Cards

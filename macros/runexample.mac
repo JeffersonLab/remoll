@@ -4,10 +4,19 @@
 #/tracking/storeTrajectory 1
 
 # This must be called before initialize
-/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+# Parallel world geometry is optional - detector 28 (the primary detector array's idealize vacuum detector) is included in this parallel world now.
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+
+#/remoll/physlist/register QGSP_BERT_HP
+/remoll/physlist/parallel/enable 
+# if optical physics is turned on it will only work if parallel physics is not turned on.
+#/remoll/physlist/optical/enable 
 
 # This must be explicitly called
 /run/initialize
+
+/remoll/printgeometry true
 
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
@@ -28,35 +37,53 @@
 #/remoll/beam_dth 0 mrad
 #/remoll/beam_dph 0 mrad
 
-#/remoll/gen beam
-/remoll/gen moller
-#/remoll/thcommin 30.0 deg
-#/remoll/thcommax 150.0 deg
-#/remoll/gen elastic 
-#/remoll/thmin 0.1 deg
-#/remoll/thmax 2.0 deg
-#/remoll/emin 80.0 MeV
-#/remoll/gen inelastic 
-#/remoll/gen pion
+#/remoll/evgen/set beam
+# To hit Ring 5 open in septant 4
+#/remoll/evgen/beam/x -1300 mm
+#/remoll/evgen/beam/rasx -30 mm
+#/remoll/evgen/beam/origin -987.5 0 -50 mm
+#/remoll/evgen/beam/direction (-0.0523,0,0.9986)
+# Mainz test energy
+#/remoll/beamene 855 MeV
+
+/remoll/evgen/set moller
+#/remoll/evgen/thcommin 30.0 deg
+#/remoll/evgen/thcommax 150.0 deg
+#/remoll/evgen/set elastic 
+#/remoll/evgen/thmin 0.1 deg
+#/remoll/evgen/thmax 2.0 deg
+#/remoll/evgen/emin 80.0 MeV
+#/remoll/evgen/set inelastic 
+#/remoll/evgen/set pion
 #/remoll/piontype pi+
-#/remoll/gen pion_LUND
-#/remoll/gen inelasticAl
-#/remoll/gen quasielasticAl
-#/remoll/gen elasticAl
+#/remoll/evgen/set pion_LUND
+#/remoll/evgen/set inelasticAl
+#/remoll/evgen/set quasielasticAl
+#/remoll/evgen/set elasticAl
+#/remoll/evgen/set external
+#/remoll/externalfile remollout.root
+#/remoll/externaldetid 4051
+
+/remoll/evgen/beamPolarization +L
+/remoll/field/equationtype 2
+/remoll/field/steppertype 2
+/remoll/field/print
 
 /remoll/beamene 11 GeV
 
+# For LH2
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
 
-/remoll/beamcurr 85 microampere
+# For carbon
+#/remoll/targpos 0.0 cm
+#/remoll/targlen 1.5 mm
 
-#Enable optical photons and processes
-#/remoll/optical true
+/remoll/beamcurr 85 microampere
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite true
+/remoll/kryptonite/set true
 
 /process/list
 
@@ -64,8 +91,7 @@
 /remoll/seed 123456
 
 /remoll/filename remollout.root
-#/remoll/LUND_filename hallD_pion_p_MOLLER_1M_1.lund
 
 #/tracking/verbose 2
 
-/run/beamOn 10000
+/run/beamOn 100

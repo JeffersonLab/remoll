@@ -92,7 +92,8 @@
 
     <!--    <position name="posCOLL2" unit="mm" x="0" y="0" z="5600-UOFFSET"/> -->
     <!-- main coll, adjust this -->
-    <position name="posCOLL2" unit="mm" x="0" y="0" z="5925-UOFFSET"/>
+    <constant name="posCOLL2z" value ="5925-UOFFSET"/>
+    <position name="posCOLL2" unit="mm" x="0" y="0" z="posCOLL2z"/>
     <!--Shielding beam pipe overlap with col-2 so I increased to bore radius in col-2 from 26.0 to 29.55 -->
     <constant name="COLL2_R1_U" value ="29.55"/>
     <constant name="COLL2_R1_D" value ="29.55"/>
@@ -109,7 +110,7 @@
     <constant name="TRAPOUTERR" value ="(COLL2_R4_U+COLL2_R3_D)/2"/>
     <constant name="TRAPINNERR" value ="(COLL2_R2_D+COLL2_R1_U)/2"/>
     <constant name="TRAPRADIUS" value ="TRAPOUTERR/2+TRAPINNERR/2"/>
-    <constant name="posCOLL2TRAP_Z" value ="5925-UOFFSET+COLL2_THICK/2.0+0.5"/>
+    <constant name="posCOLL2TRAP_Z" value ="posCOLL2z+COLL2_THICK/2.0+0.5"/>
     <position name="posCOLL2TRAP" unit="mm" x="0" y="0" z="posCOLL2TRAP_Z"/> 
 
     <constant name="COIL_ANGLE" value="0.14754"/>
@@ -131,7 +132,7 @@
     <constant name="USBoxmother_extensionUS" value="1100"/>
     <constant name="USShield2_extension" value="370 - 90"/> <!-- subtract 90 to prevent overlaps?? -->
     <constant name="USBoxmother_extensionDS" value="0"/>
-    <constant name="boxUSShieldColl1_inner_rmax" value="100"/>
+    <constant name="boxUSShieldColl1_inner_rmax" value="100"/> <!-- FIXME this is marginally close to the acceptance defining collimator's outer radius of 98 mm and will consequently cause the concrete to absorb a significant amount of power that was otherwise intended for collimator 2-->
     <position name="USshieldcoll_center_1" unit="mm" x="0" y="0" z="5330-UOFFSET-USShield1_extension/2"/>
     <constant name="boxUSShieldColl2_inner_rmax" value="335"/>
     <!-- There is a gap between shld-2 and shld-3 and offset is a temp. fix to close it -->
@@ -251,7 +252,12 @@
     <constant name="shield_US_beampipe_DS_rmin" value="31"/>
     <constant name="shield_US_beampipe_US_rmax" value="shield_US_beampipe_US_rmin+shield_US_beampipe_thickness"/>
     <constant name="shield_US_beampipe_DS_rmax" value="shield_US_beampipe_DS_rmin+shield_US_beampipe_thickness"/>
-    <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_length/2 + COLL1_z + COLL1_THICK/2 + 1"/>
+    <constant name="shield_US_beampipe_center_z" value="shield_US_beampipe_length/2 + COLL1_z + COLL1_THICK/2 + 1"/>
+    <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z"/>
+
+    <constant name="posCOLL2_det_z" value ="posCOLL2z+(COLL2_THICK/2.0) + 0.1"/>
+    <position name="posCOLL2_det_sub" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z - posCOLL2_det_z"/> <!-- this detector is directly after the acceptance defining collimator -->
+    <position name="posCOLL2_det" unit="mm" x="0" y="0" z="posCOLL2_det_z"/> <!-- this detector is directly after the acceptance defining collimator -->
     
 
     <!-- Neutron Shielding -->
@@ -343,6 +349,20 @@
 
     <!-- inner photon collimating beampipe near collimator 1 -->
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_1" rmax1="shield_US_beampipe_US_rmax" rmax2="shield_US_beampipe_DS_rmax" rmin1="shield_US_beampipe_US_rmin" rmin2="shield_US_beampipe_DS_rmin" startphi="0" z="shield_US_beampipe_length"/>
+    <!-- Detector after collimator 2 -->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="COLL2_det_solid_1" rmax="COLL2_R4_D" rmin="COLL2_R1_D" startphi="0" z="0.01"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="COLL2_det_inner_solid_1" rmax="COLL2_R1_D" rmin="0" startphi="0" z="0.01"/>
+    <subtraction name ="COLL2_det_solid">
+      <first ref="COLL2_det_solid_1"/>
+      <second ref="solid_shield_US_beampipe_1"/>
+      <positionref ref="posCOLL2_det_sub" />
+    </subtraction>
+    <subtraction name ="COLL2_det_inner_solid">
+      <first ref="COLL2_det_inner_solid_1"/>
+      <second ref="solid_shield_US_beampipe_1"/>
+      <positionref ref="posCOLL2_det_sub" />
+    </subtraction>
+
 
     <!-- New merged col-1 -->
     <!--R max will be same as before, I'm starting with bore radius of the exit bore for whole col-1 and then subtract appropriately -->
@@ -550,7 +570,7 @@
     <cone aunit="deg" deltaphi="360" lunit="mm" name="coll2trap" rmax1="COLL2_R4_U+1000" rmax2="COLL2_R4_D+1000" rmin1="0.0" rmin2="0.0" startphi="0" z="1"/>
 
 
-    <box lunit="mm" name="COIL_BOX"  x="XS_W1+100." y="COIL_STRAIGHT_L+100." z="COIL_STRAIGHT_L+100."/>
+    <box lunit="mm" name="US_COIL_BOX"  x="XS_W1+100." y="COIL_STRAIGHT_L+100." z="COIL_STRAIGHT_L+100."/>
     <trd lunit="mm" name="US_STRAIGHT_LONG"  x1="XS_W1" x2="XS_W2" y1="COIL_STRAIGHT_L" y2="COIL_STRAIGHT_L" z="XS_H"/>
     <trd lunit="mm" name="US_STRAIGHT_SHORT" x1="XS_W1" x2="XS_W2" y1="COIL_STRAIGHT_H" y2="COIL_STRAIGHT_H" z="XS_H"/>
 
@@ -619,7 +639,7 @@
     </subtraction>
 
     <intersection name ="uscoilunion_0">
-        <first ref="COIL_BOX"/>
+        <first ref="US_COIL_BOX"/>
         <second ref="US_STRAIGHT_LONG"/>
         <positionref ref="COIL_STRAIGHT_1"/>
         <rotationref ref="RotateIN"/>
@@ -713,11 +733,30 @@
 
 
 <structure>
+    <volume name="COLL2_det_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="COLL2_det_solid"/> 
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="220"/>
+    </volume>
+
+    <volume name="COLL2_det_inner_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="COLL2_det_inner_solid"/> 
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="DetNo" auxvalue="221"/>
+    </volume>
+
     <volume name="logicUScoll_1">
 	<!-- <materialref ref="Tungsten"/> -->
 	<materialref ref="CW95"/>
 	<solidref ref="col1_7"/>
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
 	<auxiliary auxtype="DetNo" auxvalue="2001"/>
     </volume>
 
@@ -727,6 +766,7 @@
 	<solidref ref="col1fin_15"/>
 	<auxiliary auxtype="Color" auxvalue="red"/>
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
 	<auxiliary auxtype="DetNo" auxvalue="2006"/>
     </volume>
 
@@ -734,6 +774,7 @@
       <materialref ref="CW95"/>
       <solidref ref="uscoll2_union_6"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
       <auxiliary auxtype="DetNo" auxvalue="2002"/>
     </volume>
 
@@ -741,6 +782,7 @@
       <materialref ref="VacuumColl"/>
       <solidref ref="coll2trap"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
       <auxiliary auxtype="DetNo" auxvalue="200"/>
     </volume>
 
@@ -808,6 +850,7 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl1_solid"/> 
       <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_1_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6010"/>
     </volume>
@@ -819,6 +862,7 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxUSShieldColl2_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_2_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6011"/>
     </volume>
@@ -832,6 +876,7 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxUSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_US_1_2_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6012"/>
     </volume>
@@ -841,6 +886,7 @@
       <materialref ref="Tungsten"/>
       <solidref ref="beampipe_1"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
     <volume name="beampipe_2_logic">
@@ -848,6 +894,7 @@
       <materialref ref="Tungsten"/>
       <solidref ref="beampipe_2"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
     <volume name="beampipe_3_logic">
@@ -855,6 +902,7 @@
       <materialref ref="Tungsten"/>
       <solidref ref="beampipe_3"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
 
@@ -862,13 +910,25 @@
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="solid_shield_US_beampipe_1"/>
-      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Color" auxvalue="yellow"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeUpstream"/> -->
       <solidref ref="boxUpstream"/>
+
+      <!-- Collimator 2 detector (right after acceptance defining collimator defined) for performing elaborate envelopes that dont care about where they end up - photon envelope especially
+      <physvol name="COLL2_det">
+        <volumeref ref="COLL2_det_logic"/>
+        <positionref ref="posCOLL2_det"/>
+      </physvol>
+
+      <physvol name="COLL2_inner_det">
+        <volumeref ref="COLL2_det_inner_logic"/>
+        <positionref ref="posCOLL2_det"/>
+      </physvol>-->
 
       <physvol name="UScoll_1">
         <volumeref ref="logicUScoll_1"/>

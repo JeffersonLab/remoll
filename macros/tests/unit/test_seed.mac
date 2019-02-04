@@ -21,3 +21,7 @@
 /remoll/seed 123456
 /run/beamOn 100
 
+/remoll/filename test_seed_4.root
+/random/setSeeds 44685444 30927891
+/run/beamOn 100
+
