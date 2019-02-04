@@ -1,0 +1,18 @@
+# Use this open statement to create an OpenGL view:
+/vis/open OGLSQt 1200x800-0+0
+
+##/remoll/physlist/optical/enable
+
+# This is the current working geometry
+/remoll/setgeofile geometry/mollerMother_merged.gdml
+
+
+/run/initialize
+
+
+/remoll/beamene 11.0 GeV
+/remoll/beamcurr 50 microampere
+/control/execute vis/vis.mac
+
+/vis/viewer/addCutawayPlane 0  0  0  cm 1 0 0
+
