@@ -219,8 +219,8 @@ void remollMagneticField::ReadFieldMap(){
     // Sanity check on header data
 
     if( !( fMin[kR] >= 0.0 && fMin[kR] < fMax[kR] &&
-	 	-180.0 < fMin[kPhi] && fMin[kPhi] < 180.0 && 
-	 	-180.0 < fMax[kPhi] && fMax[kPhi] < 180.0 && 
+	 	-180.0 <= fMin[kPhi] && fMin[kPhi] < 180.0 && //Beam Steering
+	 	-180.0 <= fMax[kPhi] && fMax[kPhi] < 180.0 && //Beam Steering
 	 	fMin[kPhi]  < fMax[kPhi] &&
 		fMin[kZ] < fMax[kZ] &&
 		fN[kR] > 0 && fN[kPhi] > 0 && fN[kZ] > 0 &&
