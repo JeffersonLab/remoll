@@ -188,50 +188,229 @@ remollEventParticle_t interpolate(remollEventParticle_t part){
     newPart.pid = part.pid;
     newPart.trid = part.trid;
     int stepSize = 10;
-    for(size_t z = 4500; z <= 30000; z+=stepSize){
+    for(size_t z = 4500; z <= 33000; z+=stepSize){
         //if (z >= 12500)
         //    stepSize = 500;
         //else if (z >= 10500)
         //    stepSize = 200;
         
-        for(size_t i = 0; i < (part.tjx).size()-1; i++){
+        if (newPart.tjz.size() >= 2 && z>=part.tjz[part.tjz.size()-1])
+        {   //extrapolate
+            int i = newPart.tjz.size()-2;
             double x, y, dx, dy, dz;
-            double xi = part.tjx[i];
-            double yi = part.tjy[i];
-            double zi = part.tjz[i];
-            double xf = part.tjx[i+1];
-            double yf = part.tjy[i+1];
-            double zf = part.tjz[i+1];
+            double xi = newPart.tjx[i];
+            double yi = newPart.tjy[i];
+            double zi = newPart.tjz[i];
+            double xf = newPart.tjx[i+1];
+            double yf = newPart.tjy[i+1];
+            double zf = newPart.tjz[i+1];
 
-            if(z==zi){
-                newPart.tjx.push_back(xi);
-                newPart.tjy.push_back(yi);
-                newPart.tjz.push_back(z);
+            dx = xf - xi;
+            dy = yf - yi;
+            dz = zf - zi;
+            x = xi + (dx/dz)*(z-zi);
+            y = yi + (dy/dz)*(z-zi);
+            newPart.tjx.push_back(x);
+            newPart.tjy.push_back(y);	
+            newPart.tjz.push_back(z);
+
+        }
+        else
+        {   //interpolate
+            for(size_t i = 0; i < (part.tjx).size()-1; i++)
+            {
+                double x, y, dx, dy, dz;
+                double xi = part.tjx[i];
+                double yi = part.tjy[i];
+                double zi = part.tjz[i];
+                double xf = part.tjx[i+1];
+                double yf = part.tjy[i+1];
+                double zf = part.tjz[i+1];
+
+                if(z==zi){
+                    newPart.tjx.push_back(xi);
+                    newPart.tjy.push_back(yi);
+                    newPart.tjz.push_back(z);
+                }
+                else if(z==zf){
+                    newPart.tjx.push_back(xf);
+                    newPart.tjy.push_back(yf);
+                    newPart.tjz.push_back(z);
+                }
+                else if(z>zi && z <zf){
+                    dx = xf - xi;
+                    dy = yf - yi;
+                    dz = zf - zi;
+                    x = xi + (dx/dz)*(z-zi);
+                    y = yi + (dy/dz)*(z-zi);
+                    newPart.tjx.push_back(x);
+                    newPart.tjy.push_back(y);	
+                    newPart.tjz.push_back(z);
+                }
+                else {}
             }
-            else if(z==zf){
-                newPart.tjx.push_back(xf);
-                newPart.tjy.push_back(yf);
-                newPart.tjz.push_back(z);
-            }
-            else if(z>zi && z <zf){
-                dx = xf - xi;
-                dy = yf - yi;
-                dz = zf - zi;
-                x = xi + (dx/dz)*(z-zi);
-                y = yi + (dy/dz)*(z-zi);
-                newPart.tjx.push_back(x);
-                newPart.tjy.push_back(y);	
-                newPart.tjz.push_back(z);
-            }
-            else {}
         }
     }
     return newPart;    
 }
+//apply user defined cuts
+//answers the question "Is this a valid track after applying all cuts?"
+bool isValid(remollEventParticle_t part){
+    int stepSize = 10;
 
-void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double energyCut=0.0, int ringCut=0, bool forceSeptant=true)
-{
-    TTree::SetMaxTreeSize(Long64_t(1024)*1024*1024*200); //200 GB tree
+    /*
+       bool invert = false;
+       int acceptZ = 5975; //Z value for the acceptance defining col
+       double lowR = 35.3; 
+       double highR = 98;
+
+       bool planeInvert = false;
+    //int planeZ = 28000;
+    int planeZ = 28228;//exact ring 6 location
+    double planeR = 1200;
+
+    bool planeInvertLow = false;
+    //int planeZ = 28000;
+    double planeRLow = 690;
+
+    bool planecoll5 = false;
+    int planecoll5Z = 12800;
+    double planecoll5R = 374.8;//to cut the ep elastic envelope which hits exit of al Can.
+
+    bool planeCanExit = false;
+    int planeCanExitZ = 17920;
+    double planeCanExitR = 625.0;//to cut the ep elastic envelope which hits exit of al Can.
+
+    bool planePbColler = false;
+    int planePbCollerZ = 19500;
+    double planePbCollerR = 680;//to cut the ep elastic envelope which hits exit of al Can.
+    */
+    for(size_t i = 0; i < (part.tjx).size()-1; i++){
+        double x, y, dx, dy, dz;
+        double xi = part.tjx[i];
+        double yi = part.tjy[i];
+        double zi = part.tjz[i];
+        double xf = part.tjx[i+1];
+        double yf = part.tjy[i+1];
+        double zf = part.tjz[i+1];
+
+        int cutLen = 4; //apply the first n cuts in the array
+        //              coll cut      ring cuts  
+        double cutR[] = {35.3,  98.0, 690,   1200,  374.8, 640.5, 680.0, 1054};
+        int cutZ[] =    {5975,  5975, 28228, 28228, 12800, 17811, 19500, 24200};
+        bool gte[] =    {false, true, false, true,  false, false, false, false};
+        //false -> include all particles radius > R
+        //true -> include all particles radius <= R
+        for (int j = 0; j < cutLen; j++)
+        {
+            if (zi <= cutZ[j] && cutZ[j] <= zf)
+            {
+                dx = xf - xi;
+                dy = yf - yi;
+                dz = zf - zi;
+                x = xi + (dx/dz)*(cutZ[j]-zi);
+                y = yi + (dy/dz)*(cutZ[j]-zi);
+                double radius = sqrt(x*x + y*y);
+                //xor is ^: false has no effect, true inverts < to >=
+                if (gte[j] ^ (radius < cutR[j]))
+                {
+                    //this part is cut out
+                    return false; 
+                }
+            }
+        }
+        /*
+           if (zi <= acceptZ && acceptZ <= zf)
+           {
+           dx = xf - xi;
+           dy = yf - yi;
+            dz = zf - zi;
+            x = xi + (dx/dz)*(acceptZ-zi);
+            y = yi + (dy/dz)*(acceptZ-zi);
+            double radius = sqrt(x*x + y*y);
+            //xor is ^
+            if (invert ^ (radius < lowR || radius > highR))
+            {
+                return false;
+            }
+        }
+      if (zi <= planecoll5Z && planecoll5Z <= zf)
+        {
+            dx = xf - xi;
+            dy = yf - yi;
+            dz = zf - zi;
+            x = xi + (dx/dz)*(planecoll5Z-zi);
+            y = yi + (dy/dz)*(planecoll5Z-zi);
+            double radius = sqrt(x*x + y*y);
+            //xor is ^
+            if (planecoll5 ^ (radius > planecoll5R))
+            {
+                return false;
+            }
+        }
+        if (zi <= planeCanExitZ && planeCanExitZ <= zf)
+        {
+            dx = xf - xi;
+            dy = yf - yi;
+            dz = zf - zi;
+            x = xi + (dx/dz)*(planeCanExitZ-zi);
+            y = yi + (dy/dz)*(planeCanExitZ-zi);
+            double radius = sqrt(x*x + y*y);
+            //xor is ^
+            if (planeCanExit ^ (radius > planeCanExitR))
+            {
+                return false;
+            }
+        }
+*/
+       /* if (zi <= planePbCollerZ && planePbCollerZ <= zf)
+        {
+            dx = xf - xi;
+            dy = yf - yi;
+            dz = zf - zi;
+            x = xi + (dx/dz)*(planePbCollerZ-zi);
+            y = yi + (dy/dz)*(planePbCollerZ-zi);
+            double radius = sqrt(x*x + y*y);
+            //xor is ^
+            if (planePbColler ^ (radius > planePbCollerR))
+            {
+                return false;
+            }
+        }
+        if (zi <= planeZ && planeZ <= zf)
+        {
+            dx = xf - xi;
+            dy = yf - yi;
+            dz = zf - zi;
+            x = xi + (dx/dz)*(planeZ-zi);
+            y = yi + (dy/dz)*(planeZ-zi);
+            double radius = sqrt(x*x + y*y);
+            //xor is ^
+            if (planeInvert ^ (radius > planeR))
+            {
+                return false;
+            }
+        }
+        if (zi <= planeZ && planeZ <= zf)
+        {
+            dx = xf - xi;
+            dy = yf - yi;
+            dz = zf - zi;
+            x = xi + (dx/dz)*(planeZ-zi);
+            y = yi + (dy/dz)*(planeZ-zi);
+            double radius = sqrt(x*x + y*y);
+            //xor is ^
+            if (planeInvertLow ^ (radius < planeRLow))
+            {
+                return false;
+            }
+        }*/
+    }
+    return true;
+}
+        void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double energyCut=0.0, int ringCut=0, bool forceSeptant=true)
+        {
+            TTree::SetMaxTreeSize(Long64_t(1024)*1024*1024*200); //200 GB tree
     std::vector < remollGenericDetectorHit_t > *fHit = 0;
     std::vector < remollEventParticle_t > *fPart = 0;
     int dotPos = file.rfind(".");   
@@ -246,6 +425,11 @@ void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double en
     bool hitRcut = true;
     double lowR = 600.0;
     double highR = 1500.0;
+    if (ringCut==-1){ //all rings
+        hitRcut=true;
+        lowR = 690.0;
+        highR = 1200.0;
+    }
     if (ringCut>0){
         hitRcut=true;
         if (ringCut==6){
@@ -336,11 +520,14 @@ void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double en
                 if (part.trid == goodTRID.at(k))
                 {
                     //std::cout << "good part TRID " << part.trid << std::endl;
-                    worthyTRID.push_back(part.trid);
 	                //Interpolate at z = 4,500mm to 30,000mm in increments of 10mm.
                     if (forceSeptant) part = interpolate(rotateVector(part, mirror));
                     else part = interpolate(part);
-                    partCopy->push_back(trim(part));
+                    if (isValid(part))
+                    {
+                        worthyTRID.push_back(part.trid);
+                        partCopy->push_back(trim(part));
+                    }
                     break;
                 }
             }   
@@ -378,12 +565,12 @@ int main(int argc, char **argv)
 {
     std::string fileString = "tracking.root";
     int detid = 28;
-    double energyCut = 0.0;
+    double energyCut = 10;
     int ringRadialCut = 0;
     bool forceSeptant = true;
     if (argc <= 1 || argc > 6)
     {
-        std::cerr << "Usage: ./pruneTreeEnvelope char*:filename int:detid(default 28) double:energyCut(MeV, default 0) int:ringRadialCut(default 0 = all) y/n:rotateIntoSeptant(default y)" << std::endl;
+        std::cerr << "Usage: ./pruneTreeEnvelope char*:filename int:detid(default " << detid<<") double:energyCut(MeV, default "<<energyCut<<") int:ringRadialCut(default 0 = all) y/n:rotateIntoSeptant(default y)" << std::endl;
         exit(0);
     }
     if (argc >= 2) 
