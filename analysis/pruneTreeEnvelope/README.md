@@ -28,8 +28,11 @@ remain/are deleted.
 
 Generating the envelope points:
 
-Use pruneTreeEnvelope (with cuts set in cut arrays).
+Use pruneTreeEnvelope (with cuts set in cut arrays) on ROOT output to
+generate a text file that can be read by SolidWorks VBAs.
 
 Simulation:
 
-Using macros and remoll.
+Create a ROOT simulation output using macros and remoll. See 
+runexample_limit_envelope.mac included here for an example of how 
+to optimially produce envelope simulation output in remoll
