@@ -38,7 +38,7 @@
     </volume>
     
     <volume name="shower_max_logical">
-      <materialref ref="W"/>
+      <materialref ref="G4_W"/>
       <solidref ref="Shower_max"/>
     </volume>
 
