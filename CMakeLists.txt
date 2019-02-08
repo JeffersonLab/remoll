@@ -242,9 +242,19 @@ file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/blockyHybrid_rm_3.0.txt
      ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
      EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e)
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/hybridSymmetric_sensR_0.0.txt
+     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
+     EXPECTED_MD5 0f6e9a3a8392d01c63f1609afc4e4c09)
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/upstreamSymmetric_sensR_0.0.txt
+     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
+     EXPECTED_MD5 4ca3d968cadd85a89b86148411eda678)
 install(FILES
      ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
      ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
+     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
+     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
 
 #----------------------------------------------------------------------------
