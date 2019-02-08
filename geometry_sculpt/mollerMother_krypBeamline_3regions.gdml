@@ -29,22 +29,22 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-      <file name="geometry_sculpt/targetDaughter.gdml"/>
+      <file name="targetDaughter.gdml"/>
       <positionref ref="targetCenter"/>
       <rotationref ref="identity"/>
       </physvol>
       <physvol>
-      <file name="geometry_sculpt/detectorDaughter.gdml"/>
+      <file name="detectorDaughter.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotationref ref="identity"/>
       </physvol>
       <physvol>
-      <file name="geometry_sculpt/upstreamDaughter.gdml"/>
+      <file name="upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
       <rotationref ref="identity"/>
       </physvol>
       <physvol>
-      <file name="geometry_sculpt/hybridDaughter_krypBeamline_3regions.gdml"/>
+      <file name="hybridDaughter_krypBeamline_3regions.gdml"/>
       <positionref ref="hybridCenter"/>
       <rotationref ref="identity"/>
       </physvol>
