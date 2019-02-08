@@ -295,10 +295,13 @@ bool isValid(remollEventParticle_t part){
         double zf = part.tjz[i+1];
 
         int cutLen = 8; //apply the first n cuts in the array
-        //              coll cut      ring cuts  
-        double cutR[] = {35.3,  98.0, 690,   1200,  374.8, 640.5, 680.0, 1054};
-        int cutZ[] =    {5975,  5975, 28228, 28228, 12800, 17811, 19500, 24200};
-        bool gte[] =    {false, true, false, true,  false, false, false, false};
+        //              coll cut         ring cuts         lintel cuts  
+        double cutR[] = {35.3  , 98.0  , 690.0  , 1200.0 , 374.8  , 640.5  , 680.0  , 1054.0 };
+        double cutZ[] = {5975.0, 5975.0, 28228.0, 28228.0, 12800.0, 17811.0, 19500.0, 24200.0};
+        bool gte[] =    {false , true  , false  , true   , true   , true   , true   , true   };
+        
+        //
+        //
         //false -> include all particles radius > R
         //true -> include all particles radius <= R
         for (int j = 0; j < cutLen; j++)
