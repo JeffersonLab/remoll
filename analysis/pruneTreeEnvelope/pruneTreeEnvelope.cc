@@ -294,7 +294,7 @@ bool isValid(remollEventParticle_t part){
         double yf = part.tjy[i+1];
         double zf = part.tjz[i+1];
 
-        int cutLen = 4; //apply the first n cuts in the array
+        int cutLen = 8; //apply the first n cuts in the array
         //              coll cut      ring cuts  
         double cutR[] = {35.3,  98.0, 690,   1200,  374.8, 640.5, 680.0, 1054};
         int cutZ[] =    {5975,  5975, 28228, 28228, 12800, 17811, 19500, 24200};
