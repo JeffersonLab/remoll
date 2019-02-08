@@ -749,17 +749,12 @@
 
     <sphere name="DSwindow" aunit="deg" lunit="mm" rmin="dsWin_radius" rmax="dsWin_radius + dsWin_thickness"
 	    deltaphi="360" starttheta="90" deltatheta="80" />
-    <tube lunit="mm" aunit="deg" name="DSwinDet" rmin="200" rmax="2000" z="0.1" deltaphi="360"/>
+    <tube lunit="mm" aunit="deg" name="DSwinDet" rmin="0" rmax="2000" z="0.1" deltaphi="360"/>
 
     <tube lunit="mm" aunit="deg" name="DSwinShield" rmin="860" rmax="2500" z="0.1" deltaphi="360"/>
 
-    <subtraction name="box2Mat1">
-      <first ref="box2Mat0"/>
-      <second ref="hybDSpipe"/>
-      <position name="beamPipe_box2_relPos" z="0"/>
-    </subtraction>
     <subtraction name="box2Mat2">
-      <first ref="box2Mat1"/>
+      <first ref="box2Mat0"/>
       <second ref="DSwindow"/>
       <position name="DSwindow_box2_relPos" z="box2Mat_length/2"/>
     </subtraction>
@@ -779,6 +774,25 @@
       <second ref="hybDSpipe"/>
       <position name="beamPipe_box3_relPos" z="0"/>
     </subtraction>
+
+    <tube lunit="mm" aunit="deg" z="0.1" deltaphi="360"
+	  name="beamLineDet01_solid" rmin="0" rmax="35.5"/>
+    <tube lunit="mm" aunit="deg" z="0.1" deltaphi="360"
+	  name="beamLineDet02_solid" rmin="0" rmax="41.5"/>
+    <tube lunit="mm" aunit="deg" z="0.1" deltaphi="360"
+	  name="beamLineDet03_solid" rmin="0" rmax="44.5"/>
+    <tube lunit="mm" aunit="deg" z="0.1" deltaphi="360"
+	  name="beamLineDet04_solid" rmin="0" rmax="45.4"/>
+    <tube lunit="mm" aunit="deg" z="0.1" deltaphi="360"
+	  name="beamLineDet05_solid" rmin="0" rmax="46.4"/>
+    <tube lunit="mm" aunit="deg" z="0.1" deltaphi="360"
+	  name="beamLineDet06_solid" rmin="0" rmax="53.8"/>
+    <tube lunit="mm" aunit="deg" z="0.1" deltaphi="360"
+	  name="beamLineDet07_solid" rmin="0" rmax="75.8"/>
+    <tube lunit="mm" aunit="deg" z="0.1" deltaphi="360"
+	  name="beamLineDet08_solid" rmin="0" rmax="115"/>
+    <tube lunit="mm" aunit="deg" z="0.1" deltaphi="360"
+	  name="beamLineDet09_solid" rmin="0" rmax="2000"/>
 
     <cone lunit="mm" aunit="deg" name="DSbeam_pipe1" rmin1="DSbeam_vac_r1U - 3.0" rmax1="DSbeam_vac_r1U - 0.1" rmin2="DSbeam_vac_r1D - 3.0" rmax2="DSbeam_vac_r1D - 0.1" z="DSbeam_vac_z1" deltaphi="360" startphi="0"/>
     <cone lunit="mm" aunit="deg" name="DSbeam_pipe2" rmin1="DSbeam_vac_r2 - 3" rmax1="DSbeam_vac_r2 - 0.1" rmin2="DSbeam_vac_r2 - 3" rmax2="DSbeam_vac_r2 - 0.1" z="DSbeam_vac_z2" deltaphi="360" startphi="0"/>
@@ -1036,8 +1050,71 @@
     <volume name="logicpcoll2trap">
       <materialref ref="VacuumColl"/>
       <solidref ref="pcoll2trap"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="collDet"/> -->
-      <!-- <auxiliary auxtype="DetNo" auxvalue="201"/> -->
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="201"/>
+    </volume>
+
+    <volume name="beamLineDet01_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="beamLineDet01_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="211"/>
+    </volume>
+
+    <volume name="beamLineDet02_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="beamLineDet02_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="212"/>
+    </volume>
+
+    <volume name="beamLineDet03_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="beamLineDet03_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="213"/>
+    </volume>
+
+    <volume name="beamLineDet04_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="beamLineDet04_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="214"/>
+    </volume>
+
+    <volume name="beamLineDet05_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="beamLineDet05_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="215"/>
+    </volume>
+
+    <volume name="beamLineDet06_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="beamLineDet06_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="216"/>
+    </volume>
+
+    <volume name="beamLineDet07_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="beamLineDet07_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="217"/>
+    </volume>
+
+    <volume name="beamLineDet08_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="beamLineDet08_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="218"/>
+    </volume>
+
+    <volume name="beamLineDet09_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="beamLineDet09_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="219"/>
     </volume>
 
 
@@ -1209,6 +1286,52 @@
         <volumeref ref="logicpcoll2trap"/>
         <positionref ref="posPCOLL2TRAP"/>
       </physvol>
+
+      <physvol name="beamLineDet01">
+        <volumeref ref="beamLineDet01_logic"/>
+        <position name="bLDet01_pos" x="0" y="0" z="10000 - DOFFSET" />
+      </physvol>
+
+      <physvol name="beamLineDet02">
+        <volumeref ref="beamLineDet02_logic"/>
+        <position name="bLDet02_pos" x="0" y="0" z="11000 - DOFFSET" />
+      </physvol>
+
+      <physvol name="beamLineDet03">
+        <volumeref ref="beamLineDet03_logic"/>
+        <position name="bLDet03_pos" x="0" y="0" z="12000 - DOFFSET" />
+      </physvol>
+
+      <physvol name="beamLineDet04">
+        <volumeref ref="beamLineDet04_logic"/>
+        <position name="bLDet04_pos" x="0" y="0" z="12818 - DOFFSET" />
+      </physvol>
+
+      <physvol name="beamLineDet05">
+        <volumeref ref="beamLineDet05_logic"/>
+        <position name="bLDet05_pos" x="0" y="0" z="13100 - DOFFSET" />
+      </physvol>
+
+      <physvol name="beamLineDet06">
+        <volumeref ref="beamLineDet06_logic"/>
+        <position name="bLDet06_pos" x="0" y="0" z="14000 - DOFFSET" />
+      </physvol>
+
+      <physvol name="beamLineDet07">
+        <volumeref ref="beamLineDet07_logic"/>
+        <position name="bLDet07_pos" x="0" y="0" z="15000 - DOFFSET" />
+      </physvol>
+
+      <physvol name="beamLineDet08">
+        <volumeref ref="beamLineDet08_logic"/>
+        <position name="bLDet08_pos" x="0" y="0" z="16000 - DOFFSET" />
+      </physvol>
+
+      <physvol name="beamLineDet09">
+        <volumeref ref="beamLineDet09_logic"/>
+        <position name="bLDet09_pos" x="0" y="0" z="17000 - DOFFSET" />
+      </physvol>
+
 
       <!-- <physvol> -->
       <!-- 	<file name="beampipe.gdml"/> -->
