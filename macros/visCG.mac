@@ -1,14 +1,9 @@
-# Use this open statement to create an OpenGL view:
 /vis/open OGLSQt 1200x800-0+0
 
-##/remoll/physlist/optical/enable
-
-# This is the current working geometry
-/remoll/setgeofile geometry/mollerMother_merged.gdml
-
+#/remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/setgeofile geometry_sculpt/mollerMother_krypBeamline_3regions.gdml
 
 /run/initialize
-
 
 /remoll/beamene 11.0 GeV
 /remoll/beamcurr 50 microampere
