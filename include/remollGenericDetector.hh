@@ -147,6 +147,11 @@ class remollGenericDetector : public G4VSensitiveDetector {
           fDetectOpticalPhotons = false;
           fDetectLowEnergyNeutrals = false;
         }
+        if (det_type.compareTo("all", G4String::ignoreCase) == 0) {
+          G4cout << GetName() << " detects all particles" << G4endl;
+          fDetectSecondaries = true;
+          fDetectLowEnergyNeutrals = true;
+        }
         if (det_type.compareTo("lowenergyneutral", G4String::ignoreCase) == 0) {
           G4cout << GetName() << " detects low energy neutrals" << G4endl;
           fDetectLowEnergyNeutrals = true;

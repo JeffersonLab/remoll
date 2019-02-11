@@ -756,7 +756,7 @@
 	<materialref ref="CW95"/>
 	<solidref ref="col1_7"/>
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+        <auxiliary auxtype="DetType" auxvalue="all"/>
 	<auxiliary auxtype="DetNo" auxvalue="2001"/>
     </volume>
 
@@ -766,7 +766,7 @@
 	<solidref ref="col1fin_15"/>
 	<auxiliary auxtype="Color" auxvalue="red"/>
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+        <auxiliary auxtype="DetType" auxvalue="all"/>
 	<auxiliary auxtype="DetNo" auxvalue="2006"/>
     </volume>
 
@@ -774,7 +774,7 @@
       <materialref ref="CW95"/>
       <solidref ref="uscoll2_union_6"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="all"/>
       <auxiliary auxtype="DetNo" auxvalue="2002"/>
     </volume>
 
@@ -782,7 +782,7 @@
       <materialref ref="VacuumColl"/>
       <solidref ref="coll2trap"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="all"/>
       <auxiliary auxtype="DetNo" auxvalue="200"/>
     </volume>
 
