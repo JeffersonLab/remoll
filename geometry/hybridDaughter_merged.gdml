@@ -1741,17 +1741,21 @@
        Shielding collimators
       -->
 
+      <!--remove by chandan
       <physvol>
         <volumeref ref="boxDSShieldColl1_logic"/>
         <positionref ref="DSshieldcoll_center_1"/>
       </physvol>       
+      upto here-->
 
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
+      <!--remove by chandan
       <physvol>
         <volumeref ref="boxDSPolyShield1_logic"/>
         <positionref ref="boxDSPolyShield1_center"/>
       </physvol>
+      upto here-->
 
       <!-- PolyShield2 will be outside shielding hut -->
 <!--
@@ -1780,6 +1784,7 @@
         <positionref ref="boxDSShield1_polyroof_center"/>
       </physvol>
 -->
+      <!--commented by chandan
       <physvol>
         <volumeref ref="boxDSShield_local_logic"/>
         <positionref ref="boxDSShield_local_center"/>
@@ -1788,6 +1793,7 @@
         <volumeref ref="boxDSShield_polylocal_logic"/>
         <positionref ref="boxDSShield_polylocal_center"/>
       </physvol>
+      upto here-->
 
       <physvol>
         <volumeref ref="boxAlCan_logic"/>

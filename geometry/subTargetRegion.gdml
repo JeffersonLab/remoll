@@ -13,7 +13,22 @@
     <constant name="targetChamber_thickness" value="13."/>
     <constant name="targetChamberLid_thickness" value="76."/>
     <constant name="targetChamberHat_L" value="3658."/>
-
+	    
+	    
+    <!--constant for shieldings - dimension from Alan design -->
+    <constant name="polyBoxx" value="7690."/>
+    <constant name="polyBoxy" value="9510."/>
+    <constant name="polyBoxz" value="6990."/>
+    <constant name="polyThickness" value="1550"/>
+    
+    <!--constant for lead shieldings - dimension from Alan design -->
+    <constant name="leadBoxx" value="3770."/>
+    <constant name="leadBoxy" value="2550."/>
+    <constant name="leadBoxz" value="400."/>
+    
+    <constant name="Shield_bore" value="400"/>
+    <constant name="Shield_length" value="polyBoxz+2"/>
+    
     <position name="origin" x="0" y="0" z="0"/>
 
     <rotation name="rot_x90" unit="deg" x="90"/>
@@ -83,7 +98,38 @@
      <second ref="collimator1InnerSub_solid"/>
      <positionref ref="origin" />
    </subtraction>
+  
+  
+   <!--shielding poly -->
+    <box lunit="mm" name="poly_outerbox" x="polyBoxx" y="polyBoxy" z="polyBoxz"/>
+    <box lunit="mm" name="poly_innerbox" x="polyBoxx-2*polyThickness" y="polyBoxy" z="polyBoxz-2*polyThickness"/>
 
+    <subtraction name="poly_sub1">
+    <first ref = "poly_outerbox"/>
+    <second ref = "poly_innerbox"/>
+    <position name ="polySub1" lunit="mm" x="0" y="-polyThickness" z="0" />
+    </subtraction>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
+   	  rmin="0" rmax="Shield_bore" z="Shield_length"/>
+
+    <subtraction name="poly_sub">
+    <first ref = "poly_sub1"/>
+    <second ref = "Shield_tube"/>
+    <position name ="polySub1" lunit="mm" x="polyBoxx/2.-3550" y="-1.*(polyBoxy/2.-3040)" z="0" />
+    </subtraction>
+
+   <!--shielding front lead -->
+    <box lunit="mm" name="lead_box" x="leadBoxx" y="leadBoxy" z="leadBoxz"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube_lead"
+   	  rmin="0" rmax="Shield_bore" z="leadBoxz+2"/>
+
+    <subtraction name="lead_sub">
+    <first ref = "lead_box"/>
+    <second ref = "Shield_tube_lead"/>
+    <position name ="leadSub1" lunit="mm" x="leadBoxx/2.-1880" y="-1.*(leadBoxy/2.-1150)" z="0" />
+    </subtraction>
+    
 
  </solids>
 
@@ -129,6 +175,18 @@
    </volume>
 
 
+   <!--Shielding-->
+   <volume name="PolyShield_target">
+   <materialref ref="Concrete"/>
+   <solidref ref="poly_sub"/>
+   <auxiliary auxtype="Color" auxvalue="Brown"/>
+   </volume>
+
+   <volume name="LeadShield_target">
+   <materialref ref="Lead"/>
+   <solidref ref="lead_sub"/>
+   <auxiliary auxtype="Color" auxvalue="Red"/>
+   </volume>
 
    <volume name="targetRegion">
      <materialref ref="VacuumTarg"/>
@@ -166,6 +224,17 @@
        <volumeref ref="collimator1_logic"/>
        <position name="collimator1_pos" unit="mm" x="0" y="0"
      		 z="2851 + 100"/>
+     </physvol>
+     
+     <!--shielding placement-->
+     <physvol>
+       <volumeref ref="PolyShield_target"/>
+       <position name="PolyShield_pos" unit="mm" x="-1.*(polyBoxx/2.-3550)" y="polyBoxy/2.-3040" z="0"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="LeadShield_target"/>
+       <position name="LeadShield_pos" unit="mm" x="-1.*(leadBoxx/2.-1880)" y="leadBoxy/2.-1150" z="1200+leadBoxz/2."/>
      </physvol>
 
      <auxiliary auxtype="TargetSystem" auxvalue=""/>
