@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
-  <define> 
+  <define>
     <position name="hallCenter" x="0" y="0" z="6087."/>
     <position name="targetCenter" x="0" y="0" z="0"/>
+    <position name="targetCenter_Clamshell" x="0" y="0" z="0"/>
     <position name="upstreamCenter" x="0" y="0" z="7000."/>
-    <position name="trackingCenter" x="0" y="0" z="26635."/>
     <position name="hybridCenter" x="0" y="0" z="13366.57"/>
     <position name="detectorCenter" x="0" y="0" z="28500."/>
-    <position name="showerMaxDetectorCenter" x="0" y="0" z="28750."/>
-    <position name="pionDetectorCenter" x="0" y="0" z="29600."/>
+    <rotation name="identity"/>
   </define>
 
   <materials>
+    <material Z="1" name="Vacuum" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
   </materials>
 
   <solids>
@@ -22,51 +27,36 @@
   <structure>
 
     <volume name="logicMother">
-      <materialref ref="G4_Galactic"/>
+      <materialref ref="Vacuum"/>
       <solidref ref="boxMother"/>
 
       <physvol>
-        <file name="targetDaughter_merged.gdml"/>
-        <positionref ref="targetCenter"/>
+        <file name="targetDaughter_Clamshell_Optimized.gdml"/>
+        <positionref ref="targetCenter_Clamshell"/>
+        <!--<file name="targetDaughter_merged.gdml"/>
+            <positionref ref="targetCenter"/>-->
+        <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
-        <file name="hallDaughter_dump.gdml"/>
+        <file name="hallDaughter_merged.gdml"/>
         <positionref ref="hallCenter"/>
+        <rotationref ref="identity"/>
       </physvol>
 
-<!--
-      <physvol>
-        <file name="detector_parametrized.gdml"/>
-        <rotation name="detector_rot" y="90" unit="deg"/>
-        <positionref ref="detectorCenter"/>
-      </physvol>
- -->
-
-      <physvol>
-        <file name="trackingDaughter.gdml"/>
-        <positionref ref="trackingCenter"/>
-      </physvol>
 
       <physvol>
         <file name="upstreamDaughter_merged.gdml"/>
         <positionref ref="upstreamCenter"/>
+        <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
         <file name="hybridDaughter_merged.gdml"/>
         <positionref ref="hybridCenter"/>
-      </physvol>    
-
-      <physvol>
-        <file name="showerMaxDetectorSystem.gdml"/>
-        <positionref ref="showerMaxDetectorCenter"/>
+        <rotationref ref="identity"/>
       </physvol>
 
-      <physvol>
-        <file name="pionDetectorSystem.gdml"/>
-        <positionref ref="pionDetectorCenter"/>
-      </physvol>
 
     </volume>
   </structure>
@@ -74,5 +64,5 @@
   <setup name="Default" version="1.0">
     <world ref="logicMother"/>
   </setup>
- 
-</gdml> 
+
+</gdml>
