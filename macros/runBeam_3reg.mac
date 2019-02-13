@@ -10,10 +10,10 @@
 # This must be explicitly called
 /run/initialize
 
-# /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-# /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
-/remoll/addfield map_directory/upstreamSymmetric_sensR_0.0.txt
-/remoll/addfield map_directory/hybridSymmetric_sensR_0.0.txt
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+#/remoll/addfield map_directory/upstreamSymmetric_sensR_0.0.txt
+#/remoll/addfield map_directory/hybridSymmetric_sensR_0.0.txt
 
 # Raster and initial angle stuff
 /remoll/oldras true
@@ -30,7 +30,7 @@
 
 /remoll/beamene 11 GeV
 
-/remoll/gen beam
+/remoll/evgen/set beam
 #/remoll/gen moller
 #/remoll/thcommin 30.0 deg
 #/remoll/thcommax 150.0 deg
@@ -56,15 +56,15 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite true
+/remoll/kryptonite/set true
 
 /process/list
 
 # Specify random number seed
 #/remoll/seed 123456
 
-/remoll/filename remollout_VacTst3reg_beam_DSwin1p5mmR1020_winShield_b3050_ABC-VVA.root
-/run/beamOn 1000
+/remoll/filename remollout_VacTst3reg_beam_DSwin1p5mmR1020_winShield_b3050_ABC-VVA_ogBfield.root
+/run/beamOn 1000000
 #/remoll/filename o_deleteMe.root
 #/run/beamOn 1000
 
