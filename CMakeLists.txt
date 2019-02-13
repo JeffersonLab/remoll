@@ -51,7 +51,7 @@ ROOT_GENERATE_DICTIONARY(
     "include/remolltypes.hh"           # list of classes to process
     "include/remollRunData.hh"
     "include/remollTextFile.hh"
-    LINKDEF "include/remollLinkDef.h"  # ROOT linkDef file
+    LINKDEF "include/remollLinkDef.hh" # ROOT linkDef file
     OPTIONS -p
 )
 
