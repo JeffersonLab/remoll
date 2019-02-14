@@ -83,9 +83,10 @@ build_root_dictionary(
 )
 list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
 
-#----------------------------------------------------------------------------
-# Find Boost libraries, in particular iostreams
 
+#----------------------------------------------------------------------------
+# Boost
+#
 if(USE_BOOST)
     find_package(Boost COMPONENTS iostreams)
     include_directories(${Boost_INCLUDE_DIRS})
@@ -115,8 +116,9 @@ endif()
 #
 include(${Geant4_USE_FILE})
 
+
 #----------------------------------------------------------------------------
-# Find HepMC (optional package)
+# HepMC (optional)
 #
 find_package(HepMC QUIET)
 if(HepMC_FOUND)
@@ -130,8 +132,9 @@ else()
   set(HEPMC_LIBRARIES "")
 endif()
 
+
 #----------------------------------------------------------------------------
-# Find Pythia6 (optional package)
+# Pythia6 (optional)
 #
 find_package(Pythia6 QUIET)
 if(PYTHIA6_FOUND)
@@ -141,60 +144,88 @@ else()
   set(PYTHIA6_LIBRARIES "")
 endif()
 
+
 #----------------------------------------------------------------------------
-# Debugging symbols, warnings
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -pg")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Woverloaded-virtual")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic -Wno-overloaded-virtual")
+# Compiler flags
+#
+set_compiler_flags("${ROOT_CXX_FLAGS}")
+set_diagnostic_flags(WALL WEXTRA)
+report_build_info()
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-shadow -Wno-pedantic")
 
 # Ignore warning of struct initialization { } for gcc < 5.0 (after that it is ignored internally)
 if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-field-initializers")
-endif()
-
-# C++11 standard if avialable
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++11 support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++0x support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-field-initializers")
 endif()
 
 #----------------------------------------------------------------------------
-# Generate dictionaries as well (so we can write objects to ROOT files
-
-include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
-
-
-#----------------------------------------------------------------------------
-# Add the executable, and link it to the Geant4 libraries
+# main library
 #
-set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}:${ROOT_LIBRARY_DIR}:${GEANT4_LIBRARY_DIR}")
-
 add_library(lib${PROJECT_NAME} SHARED ${sources} ${headers})
 add_dependencies(lib${PROJECT_NAME} check_git_repository)
-
 set_target_properties(lib${PROJECT_NAME} PROPERTIES OUTPUT_NAME remoll)
+
+target_include_directories(lib${PROJECT_NAME}
+  PUBLIC
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+  )
+
+target_compile_options(lib${PROJECT_NAME}
+  PUBLIC
+    ${${PROJECT_NAME_UC}_CXX_FLAGS_LIST}
+  PRIVATE
+    ${${PROJECT_NAME_UC}_DIAG_FLAGS_LIST}
+  )
+
 target_link_libraries(lib${PROJECT_NAME}
-  ${Geant4_LIBRARIES}
-  ${ROOT_LIBRARIES}
-  ${Boost_LIBRARIES}
-  ${HEPMC_LIBRARIES}
-  ${PYTHIA6_LIBRARIES})
+  PUBLIC
+    ROOT::Libraries
+    ${Geant4_LIBRARIES}
+    ${Boost_LIBRARIES}
+    ${HEPMC_LIBRARIES}
+    ${PYTHIA6_LIBRARIES}
+  )
 
-add_executable(remoll remoll.cc)
-set_target_properties(remoll PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll lib${PROJECT_NAME})
+install(TARGETS lib${PROJECT_NAME}
+  EXPORT ${MAIN_PROJECT_NAME_LC}-exports
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  )
+install(FILES ${headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-add_executable(reroot reroot.cc)
-set_target_properties(reroot PROPERTIES OUTPUT_NAME reroot)
-target_link_libraries(reroot lib${PROJECT_NAME})
+
+#----------------------------------------------------------------------------
+# executables
+#
+file(GLOB exefiles *.cc)
+foreach(file ${exefiles})
+  get_filename_component(filename ${file} NAME_WE)
+  string(TOLOWER ${filename} filelower)
+
+  add_executable(${filelower} ${file})
+
+  target_link_libraries(${filelower}
+    PRIVATE
+      lib${PROJECT_NAME}
+  )
+  target_compile_options(${filelower}
+    PUBLIC
+      ${${PROJECT_NAME_UC}_CXX_FLAGS_LIST}
+    PRIVATE
+      ${${PROJECT_NAME_UC}_DIAG_FLAGS_LIST}
+  )
+  if(${CMAKE_SYSTEM_NAME} MATCHES Linux)
+    target_compile_options(${filelower} PUBLIC -fPIC)
+  endif()
+
+  install(TARGETS ${filelower}
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+  )
+endforeach()
+
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -244,6 +275,7 @@ foreach(_template_in ${templates})
     )
 endforeach()
 
+
 #----------------------------------------------------------------------------
 # Download field maps subdirectory
 #
@@ -266,9 +298,6 @@ install(FILES
      ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
 
-#----------------------------------------------------------------------------
-# Build analysis subdirectory
-# FIXME: this doesn't work due to dependency on remoll-config at cmake time
 
 #----------------------------------------------------------------------------
 # Install cmake config file
@@ -278,26 +307,9 @@ install(FILES
     ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollUseFile.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/remoll)
 
-#----------------------------------------------------------------------------
-# For internal Geant4 use - but has no effect if you build this
-# example standalone
-#
-add_custom_target(REMOLL DEPENDS remoll)
 
 #----------------------------------------------------------------------------
-# Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
-#
-install(TARGETS remoll reroot DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(TARGETS lib${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-# Attempt at moving libremollDict_rdict.pcm to the bin so reroot doesn't error
-#add_custom_command(TARGET remoll POST_BUILD
-#    COMMAND ${CMAKE_COMMAND} -E copy_if_different
-#    "${PROJECT_BINARY_DIR}/libremollDict_rdict.pcm"
-#    ${CMAKE_INSTALL_BINDIR})
-
-#----------------------------------------------------------------------------
-# Uninstall target
+# uninstall
 #
 if(NOT TARGET uninstall)
   configure_file(
@@ -307,3 +319,4 @@ if(NOT TARGET uninstall)
   add_custom_target(uninstall
       COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
 endif()
+
