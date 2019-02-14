@@ -183,13 +183,13 @@ target_link_libraries(lib${PROJECT_NAME}
   ${HEPMC_LIBRARIES}
   ${PYTHIA6_LIBRARIES})
 
-add_executable(remoll-bin remoll.cc)
-set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-bin lib${PROJECT_NAME})
+add_executable(remoll remoll.cc)
+set_target_properties(remoll PROPERTIES OUTPUT_NAME remoll)
+target_link_libraries(remoll lib${PROJECT_NAME})
 
-add_executable(reroot-bin reroot.cc)
-set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
-target_link_libraries(reroot-bin lib${PROJECT_NAME})
+add_executable(reroot reroot.cc)
+set_target_properties(reroot PROPERTIES OUTPUT_NAME reroot)
+target_link_libraries(reroot lib${PROJECT_NAME})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -277,16 +277,16 @@ install(FILES
 # For internal Geant4 use - but has no effect if you build this
 # example standalone
 #
-add_custom_target(REMOLL DEPENDS remoll-bin)
+add_custom_target(REMOLL DEPENDS remoll)
 
 #----------------------------------------------------------------------------
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
-install(TARGETS remoll-bin reroot-bin DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(TARGETS remoll reroot DESTINATION ${CMAKE_INSTALL_BINDIR})
 install(TARGETS lib${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Attempt at moving libremollDict_rdict.pcm to the bin so reroot doesn't error
-#add_custom_command(TARGET remoll-bin POST_BUILD
+#add_custom_command(TARGET remoll POST_BUILD
 #    COMMAND ${CMAKE_COMMAND} -E copy_if_different
 #    "${PROJECT_BINARY_DIR}/libremollDict_rdict.pcm"
 #    ${CMAKE_INSTALL_BINDIR})
