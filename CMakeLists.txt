@@ -1,8 +1,8 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 2.8.11 FATAL_ERROR)
-project(REMOLL)
+cmake_minimum_required(VERSION 3.5)
+project(remoll VERSION 0.1 LANGUAGES CXX)
 
 # Disallow in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -20,6 +20,9 @@ if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
          CACHE PATH "default install path" FORCE )
 endif()
 
+# Use our modules and utility functions
+include(CMakeEnv)
+
 # Use GNU install dirs
 include(GNUInstallDirs)
 
@@ -36,9 +39,21 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     endif()
 endif()
 
-# ROOT path
-find_package(ROOT 6 REQUIRED)
-include(${ROOT_USE_FILE})
+
+#----------------------------------------------------------------------------
+# Locate sources and headers for this project
+#
+file(GLOB sources src/remoll*.cc)
+file(GLOB headers include/remoll*.hh)
+
+
+#----------------------------------------------------------------------------
+# ROOT
+#
+set(minimum_root_version 6.0)
+find_package(ROOT ${minimum_root_version} REQUIRED)
+config_add_dependency(ROOT ${minimum_root_version})
+
 
 # Update header file
 add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" DEPENDS ${PROJECT_SOURCE_DIR}/pullgitinfo.py)
@@ -46,14 +61,24 @@ add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND
 # this is to ensure we find the header we need
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
-ROOT_GENERATE_DICTIONARY(
-    remollDict                         # path to dictionary to generate
-    "include/remolltypes.hh"           # list of classes to process
-    "include/remollRunData.hh"
-    "include/remollTextFile.hh"
-    LINKDEF "include/remollLinkDef.hh" # ROOT linkDef file
-    OPTIONS -p
+#----------------------------------------------------------------------------
+# main dictionaries
+#
+message(STATUS "Generating ${PROJECT_NAME} dictionaries for ROOT ${ROOT_VERSION}...")
+foreach(file ${headers})
+  # Find the header files that have uncommented ClassDef lines
+  execute_process(COMMAND grep -l "[^/]ClassDef" ${file} OUTPUT_VARIABLE result)
+  if(result)
+    list(APPEND needsdict ${file})
+  endif()
+endforeach()
+build_root_dictionary(
+  ${PROJECT_NAME}
+  ${needsdict}
+  TARGETS ${PROJECT_NAME}
+  LINKDEF ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}LinkDef.hh
 )
+list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
 
 #----------------------------------------------------------------------------
 # Find Boost libraries, in particular iostreams
@@ -94,6 +119,10 @@ find_package(HepMC QUIET)
 if(HepMC_FOUND)
   message(STATUS "HepMC found --> building with HepMC enabled.")
   add_definitions(-DG4LIB_USE_HEPMC)
+  file(GLOB hepmc_sources ${PROJECT_SOURCE_DIR}/src/HepMC*.cc)
+  file(GLOB hepmc_headers ${PROJECT_SOURCE_DIR}/include/HepMC*.hh)
+  list(APPEND sources ${hepmc_sources})
+  list(APPEND headers ${hepmc_headers})
 else()
   set(HEPMC_LIBRARIES "")
 endif()
@@ -139,27 +168,15 @@ endif()
 
 include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
 
-#----------------------------------------------------------------------------
-# Locate sources and headers for this project
-# NB: headers are included so they will show up in IDEs
-#
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/remoll*.hh)
-if(HepMC_FOUND)
-	file(GLOB hepmc_sources ${PROJECT_SOURCE_DIR}/src/HepMC*.cc)
-	file(GLOB hepmc_headers ${PROJECT_SOURCE_DIR}/src/HepMC*.hh)
-	set(sources ${sources} ${hepmc_sources})
-	set(headers ${headers} ${hepmc_headers})
-endif()
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 #
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}:${ROOT_LIBRARY_DIR}:${GEANT4_LIBRARY_DIR}")
 
-add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
-set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-lib
+add_library(${PROJECT_NAME} SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
+set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME remoll)
+target_link_libraries(${PROJECT_NAME}
   ${Geant4_LIBRARIES}
   ${ROOT_LIBRARIES}
   ${Boost_LIBRARIES}
@@ -168,11 +185,11 @@ target_link_libraries(remoll-lib
 
 add_executable(remoll-bin remoll.cc)
 set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-bin remoll-lib)
+target_link_libraries(remoll-bin ${PROJECT_NAME})
 
 add_executable(reroot-bin reroot.cc)
 set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
-target_link_libraries(reroot-bin remoll-lib)
+target_link_libraries(reroot-bin ${PROJECT_NAME})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -266,7 +283,7 @@ add_custom_target(REMOLL DEPENDS remoll-bin)
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
 install(TARGETS remoll-bin reroot-bin DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(TARGETS remoll-lib DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Attempt at moving libremollDict_rdict.pcm to the bin so reroot doesn't error
 #add_custom_command(TARGET remoll-bin POST_BUILD
