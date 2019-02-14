@@ -55,11 +55,14 @@ find_package(ROOT ${minimum_root_version} REQUIRED)
 config_add_dependency(ROOT ${minimum_root_version})
 
 
-# Update header file
-add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" DEPENDS ${PROJECT_SOURCE_DIR}/pullgitinfo.py)
+#----------------------------------------------------------------------------
+# gitinfo.cc
+#
+set(PRE_CONFIGURE_FILE ${PROJECT_SOURCE_DIR}/cmake/templates/gitinfo.cc.in)
+set(POST_CONFIGURE_FILE ${CMAKE_BINARY_DIR}/gitinfo.cc)
+include(CMakeGitInfo)
+list(APPEND my_project_sources ${POST_CONFIGURE_FILE})
 
-# this is to ensure we find the header we need
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
 
 #----------------------------------------------------------------------------
 # main dictionaries
@@ -174,7 +177,9 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 #
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}:${ROOT_LIBRARY_DIR}:${GEANT4_LIBRARY_DIR}")
 
-add_library(lib${PROJECT_NAME} SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
+add_library(lib${PROJECT_NAME} SHARED ${sources} ${headers})
+add_dependencies(lib${PROJECT_NAME} check_git_repository)
+
 set_target_properties(lib${PROJECT_NAME} PROPERTIES OUTPUT_NAME remoll)
 target_link_libraries(lib${PROJECT_NAME}
   ${Geant4_LIBRARIES}
