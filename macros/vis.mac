@@ -1,10 +1,11 @@
 # Use this open statement to create an OpenGL view:
-/vis/open OGL 600x600-0+0  
+/vis/open OGL 600x600-0+0
 
 /remoll/physlist/optical/enable
 
 # This is the current working geometry
-/remoll/setgeofile geometry/mollerMother_5open.gdml
+#/remoll/setgeofile geometry/mollerMother_dump.gdml
+/remoll/setgeofile geometry/hallDaughter_merged.gdml
 
 #/remoll/likekryptonite  true
 
@@ -27,7 +28,7 @@
 
 # Raster is on by default with 5x5mm
 /remoll/rasx 5 mm
-/remoll/rasy 5 mm 
+/remoll/rasy 5 mm
 
 ## Beam generator
 /remoll/evgen/set beam
@@ -40,9 +41,10 @@
 #/remoll/evgen/beam/x -987.5 mm
 #/remoll/evgen/beam/z -150.0 mm
 #/remoll/evgen/beam/px -0.0523
-#/remoll/evgen/beam/pz 0.9986 
+#/remoll/evgen/beam/pz 0.9986
 /remoll/filename remollout_r5o_beam_default.root
 
+/vis/viewer/addCutawayPlane 0  0  0  cm 1 0 0
 
 ## External Generator
 #/remoll/evgen/set external
