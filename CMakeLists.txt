@@ -75,7 +75,7 @@ endforeach()
 build_root_dictionary(
   ${PROJECT_NAME}
   ${needsdict}
-  TARGETS ${PROJECT_NAME}
+  TARGETS lib${PROJECT_NAME}
   LINKDEF ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}LinkDef.hh
 )
 list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
@@ -174,9 +174,9 @@ include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CU
 #
 set(CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_FULL_LIBDIR}:${ROOT_LIBRARY_DIR}:${GEANT4_LIBRARY_DIR}")
 
-add_library(${PROJECT_NAME} SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
-set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(${PROJECT_NAME}
+add_library(lib${PROJECT_NAME} SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh)
+set_target_properties(lib${PROJECT_NAME} PROPERTIES OUTPUT_NAME remoll)
+target_link_libraries(lib${PROJECT_NAME}
   ${Geant4_LIBRARIES}
   ${ROOT_LIBRARIES}
   ${Boost_LIBRARIES}
@@ -185,11 +185,11 @@ target_link_libraries(${PROJECT_NAME}
 
 add_executable(remoll-bin remoll.cc)
 set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-bin ${PROJECT_NAME})
+target_link_libraries(remoll-bin lib${PROJECT_NAME})
 
 add_executable(reroot-bin reroot.cc)
 set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
-target_link_libraries(reroot-bin ${PROJECT_NAME})
+target_link_libraries(reroot-bin lib${PROJECT_NAME})
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -283,7 +283,7 @@ add_custom_target(REMOLL DEPENDS remoll-bin)
 # Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #
 install(TARGETS remoll-bin reroot-bin DESTINATION ${CMAKE_INSTALL_BINDIR})
-install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
+install(TARGETS lib${PROJECT_NAME} DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
 # Attempt at moving libremollDict_rdict.pcm to the bin so reroot doesn't error
 #add_custom_command(TARGET remoll-bin POST_BUILD
