@@ -185,4 +185,4 @@ const char *remollTextFile::GetBaseFile(const char *fp){
     return &(fp[idx]);
 }
 
-ClassImp(remollTextFile);
+ClassImp(remollTextFile)

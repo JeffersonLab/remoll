@@ -317,8 +317,8 @@ void remollParallelConstruction::ParseAuxiliarySensDetInfo()
               }
               /////////////////////////////////////////////////////////////
 
-              char det_no_str[10];
-              snprintf(det_no_str, 10, "%d", det_no);
+              char det_no_str[12];
+              snprintf(det_no_str, 12, "%d", det_no);
               G4String detectorname = "remoll/det_" + G4String(det_no_str);
 
               G4VSensitiveDetector* thisdet = SDman->FindSensitiveDetector(detectorname,(fVerboseLevel > 0));
