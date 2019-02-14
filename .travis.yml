@@ -16,3 +16,5 @@ after_success:
     docker tag jeffersonlab/remoll jeffersonlab/remoll:$TRAVIS_BRANCH && docker push jeffersonlab/remoll:$TRAVIS_BRANCH ;
   fi
 
+notifications:
+  slack: jlab12gev:PVp0QYADLTXmFdicK6WXkTGN
