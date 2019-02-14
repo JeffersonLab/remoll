@@ -61,7 +61,7 @@ config_add_dependency(ROOT ${minimum_root_version})
 set(PRE_CONFIGURE_FILE ${PROJECT_SOURCE_DIR}/cmake/templates/gitinfo.cc.in)
 set(POST_CONFIGURE_FILE ${CMAKE_BINARY_DIR}/gitinfo.cc)
 include(CMakeGitInfo)
-list(APPEND my_project_sources ${POST_CONFIGURE_FILE})
+list(APPEND sources ${POST_CONFIGURE_FILE})
 
 
 #----------------------------------------------------------------------------
