@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "materials.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+  <define>
+
+    <constant name="targetChamber_R" value="1981.0/2.0"/>
+    <constant name="targetChamber_L" value="1829."/>
+    <constant name="targetChamber_thickness" value="13."/>
+    <constant name="targetChamberLid_thickness" value="76."/>
+	    <!--<constant name="targetChamberHat_L" value="3658."/>-->
+    <constant name="targetChamberHat_L" value="1000."/>
+	    
+	    
+    <!--constant for shieldings - dimension from Alan design -->
+    <constant name="polyBoxx" value="7690."/>
+	    <!--<constant name="polyBoxy" value="9510."/>-->
+    <constant name="polyBoxy" value="6700."/>
+    <constant name="polyBoxz" value="6350."/>
+	    <!--<constant name="polyBoxz" value="6990."/>-->
+	    <!--<constant name="polyThickness" value="1550"/>-->
+    <constant name="polyThickness" value="1400"/>
+    
+    <!--constant for lead shieldings - dimension from Alan design -->
+    <constant name="leadBoxx" value="3770."/>
+    <constant name="leadBoxy" value="2550."/>
+    <constant name="leadBoxz" value="400."/>
+    
+    <constant name="Shield_bore" value="400"/>
+    <constant name="Shield_length" value="polyBoxz+2"/>
+    
+    <position name="origin" x="0" y="0" z="0"/>
+
+    <rotation name="rot_x90" unit="deg" x="90"/>
+  </define>
+
+  &materials;
+
+  <solids>
+
+    <box lunit="m" name="targetRegion_solid"
+	 x="10" y="10" z="6.36"/>
+
+    <tube aunit="deg" lunit="mm" deltaphi="360" name="target_solid"
+	  rmax="40" rmin="0" z="1500"/>
+
+    <tube aunit="deg" lunit="mm" deltaphi="360" name="AlWindow"
+	  rmax="40" rmin="0" z="0.127"/>
+
+    <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamber_solid1"
+	  rmin="targetChamber_R"
+	  rmax="targetChamber_R + targetChamber_thickness"
+	  z="targetChamber_L"/>
+    <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamberEntrancePort_solid"
+	  rmin="0" rmax="102" z="100"/>
+    <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamberExitPort_solid"
+	  rmin="0" rmax="204" z="100"/>
+    <subtraction name ="targetChamber_solid2">
+      <first ref="targetChamber_solid1"/>
+      <second ref="targetChamberEntrancePort_solid"/>
+      <position name="targetChamberEntrance_pos" x="0" z="0" y="targetChamber_R" />
+      <rotationref ref="rot_x90"/>
+    </subtraction>
+    <subtraction name ="targetChamber_solid3">
+      <first ref="targetChamber_solid2"/>
+      <second ref="targetChamberExitPort_solid"/>
+      <position name="targetChamberExit_pos" x="0" z="0" y="-targetChamber_R" />
+      <rotationref ref="rot_x90"/>
+    </subtraction>
+
+    <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamberLid_solid"
+	  rmin="0" rmax="targetChamber_R + targetChamber_thickness"
+	  z="targetChamberLid_thickness"/>
+    <union name ="targetChamber_solid4">
+        <first ref="targetChamber_solid3"/>
+        <second ref="targetChamberLid_solid"/>
+        <position name="targetChamberTop_pos"
+		  z="targetChamber_L/2. + targetChamberLid_thickness/2. - 1"/>
+    </union>
+    <union name ="targetChamber_solid">
+        <first ref="targetChamber_solid4"/>
+        <second ref="targetChamberLid_solid"/>
+        <position name="targetChamberBot_pos"
+		  z="-targetChamber_L/2. - targetChamberLid_thickness/2. + 1"/>
+    </union>
+
+    <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamberHat_solid"
+	  rmin="targetChamber_R" rmax="targetChamber_R + targetChamber_thickness"
+	  z="targetChamberHat_L"/>
+
+    <!-- Collimator 1 -->
+    <box lunit="mm" name="LeadCollar_solid1"
+   	 x="370" y="370" z="200"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollarInnerSub_solid"
+   	  rmin="0" rmax="74" z="300"/>
+   <subtraction name ="LeadCollar_solid">
+     <first ref="LeadCollar_solid1"/>
+     <second ref="LeadCollarInnerSub_solid"/>
+     <positionref ref="origin" />
+   </subtraction>
+  
+  
+   <!--shielding poly -->
+    <box lunit="mm" name="poly_outerbox" x="polyBoxx" y="polyBoxy" z="polyBoxz"/>
+    <box lunit="mm" name="poly_innerbox" x="polyBoxx-2*polyThickness" y="polyBoxy" z="polyBoxz-2*polyThickness"/>
+
+    <subtraction name="poly_sub1">
+    <first ref = "poly_outerbox"/>
+    <second ref = "poly_innerbox"/>
+    <position name ="polySub1" lunit="mm" x="0" y="-polyThickness" z="0" />
+    </subtraction>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
+   	  rmin="0" rmax="Shield_bore" z="Shield_length"/>
+
+    <subtraction name="poly_sub">
+    <first ref = "poly_sub1"/>
+    <second ref = "Shield_tube"/>
+    <position name ="polySub1" lunit="mm" x="polyBoxx/2.-3550" y="-1.*(polyBoxy/2.-3040)" z="0" />
+    </subtraction>
+
+   <!--shielding front lead -->
+    <box lunit="mm" name="lead_box" x="leadBoxx" y="leadBoxy" z="leadBoxz"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube_lead"
+   	  rmin="0" rmax="Shield_bore" z="leadBoxz+2"/>
+
+    <subtraction name="lead_sub">
+    <first ref = "lead_box"/>
+    <second ref = "Shield_tube_lead"/>
+    <position name ="leadSub1" lunit="mm" x="leadBoxx/2.-1880" y="-1.*(leadBoxy/2.-1150)" z="0" />
+    </subtraction>
+
+    <!--vacuum detectors for monitoring skyshine  chandan--> 
+    <box lunit="mm" name="skyshineVacuumDet1_solid"
+	    x="polyBoxx-polyThickness*2-1" y="1.0" z="polyBoxz-polyThickness*2-1.0"/>
+    <box lunit="mm" name="skyshineVacuumDet2_solid"
+	 x="polyBoxx+1000" y="1.0" z="polyBoxz"/>
+
+ </solids>
+
+ <structure>
+
+   <volume name="h2Targ">
+     <materialref ref="LiquidHydrogen"/>
+     <solidref ref="target_solid"/>
+     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+     <auxiliary auxtype="Color" auxvalue="blue"/>
+   </volume>
+
+   <volume name="USAlTarg">
+     <materialref ref="Aluminum"/>
+     <solidref ref="AlWindow"/>
+     <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
+     <auxiliary auxtype="Color" auxvalue="white"/>
+   </volume>
+
+   <volume name="DSAlTarg">
+     <materialref ref="Aluminum"/>
+     <solidref ref="AlWindow"/>
+     <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
+     <auxiliary auxtype="Color" auxvalue="white"/>
+   </volume>
+
+   <volume name="targetChamber">
+     <materialref ref="Aluminum"/>
+     <solidref ref="targetChamber_solid4"/>
+     <auxiliary auxtype="Color" auxvalue="white"/>
+   </volume>
+
+   <volume name="targetChamberHat">
+     <materialref ref="Aluminum"/>
+     <solidref ref="targetChamberHat_solid"/>
+     <auxiliary auxtype="Color" auxvalue="white"/>
+   </volume>
+
+   <volume name="LeadCollar_logic">
+     <materialref ref="Lead"/>
+     <solidref ref="LeadCollar_solid"/>
+     <auxiliary auxtype="Color" auxvalue="red"/>
+   </volume>
+
+
+   <!--Shielding-->
+   <volume name="PolyShield_target">
+   <materialref ref="Concrete"/>
+   <solidref ref="poly_sub"/>
+   <auxiliary auxtype="Color" auxvalue="Green"/>
+   <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+   </volume>
+
+   <volume name="LeadShield_target">
+   <materialref ref="Lead"/>
+   <solidref ref="lead_sub"/>
+   <auxiliary auxtype="Color" auxvalue="Red"/>
+   </volume>
+
+   <volume name="skyshineVacuumDet1_logic">
+   <materialref ref="VacuumDet"/>
+   <solidref ref="skyshineVacuumDet1_solid"/>
+   <auxiliary auxtype="Color" auxvalue="Blue"/>
+   <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_1"/>
+   <auxiliary auxtype="DetNo" auxvalue="5555"/>
+   </volume>
+
+   <volume name="skyshineVacuumDet2_logic">
+   <materialref ref="VacuumDet"/>
+   <solidref ref="skyshineVacuumDet2_solid"/>
+   <auxiliary auxtype="Color" auxvalue="Blue"/>
+   <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_2"/>
+   <auxiliary auxtype="DetNo" auxvalue="5556"/>
+   </volume>
+
+   <volume name="targetRegion">
+     <materialref ref="VacuumTarg"/>
+     <solidref ref="targetRegion_solid"/>
+
+     <physvol>
+       <volumeref ref="USAlTarg"/>
+       <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750-1"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="h2Targ"/>
+       <position name="targ_center1" unit="mm" x="0" y="0" z="0"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="DSAlTarg"/>
+       <position name="targ_downstream_window" unit="mm" x="0" y="0" z="750+1"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="targetChamber"/>
+       <position name="targetChamber_pos" unit="mm" x="0" y="0" z="0"/>
+       <rotationref ref="rot_x90"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="targetChamberHat"/>
+       <position name="targetChamberHat_pos" unit="mm" x="0" z="0"
+		 y="targetChamber_L/2 + targetChamberLid_thickness + targetChamberHat_L/2"/>
+       <rotationref ref="rot_x90"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="LeadCollar_logic"/>
+       <position name="LeadCollar_pos" unit="mm" x="0" y="0"
+     		 z="2851 + 100"/>
+     </physvol>
+     
+     <!--shielding placement-->
+     <physvol>
+       <volumeref ref="PolyShield_target"/>
+	       <position name="PolyShield_pos" unit="mm" x="-1.*(polyBoxx/2.-3550)" y="polyBoxy/2.-3040" z="0"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="LeadShield_target"/>
+       <position name="LeadShield_pos" unit="mm" x="-1.*(leadBoxx/2.-1880)" y="leadBoxy/2.-1150" z="1200+leadBoxz/2."/>
+     </physvol>
+
+     <!--placement of vacuum detector-->
+     <physvol>
+       <volumeref ref="skyshineVacuumDet1_logic"/>
+       <position name="shyshineVacuumDet1_pos" unit="mm" x="-1.*(polyBoxx/2.-3550)" y="targetChamber_L/2.+targetChamberHat_L+200" z="0"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="skyshineVacuumDet2_logic"/>
+       <position name="shyshineVacuumDet2_pos" unit="mm" x="-1.*(polyBoxx/2.-3550)" y="polyBoxy/2+500" z="0"/>
+     </physvol>
+
+     <auxiliary auxtype="TargetSystem" auxvalue=""/>
+   </volume>
+
+ </structure>
+
+ <setup name="Target" version="1.0">
+   <world ref="targetRegion"/>
+ </setup>
+
+</gdml>
