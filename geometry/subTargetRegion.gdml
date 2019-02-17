@@ -12,14 +12,18 @@
     <constant name="targetChamber_L" value="1829."/>
     <constant name="targetChamber_thickness" value="13."/>
     <constant name="targetChamberLid_thickness" value="76."/>
-    <constant name="targetChamberHat_L" value="3658."/>
+	    <!--<constant name="targetChamberHat_L" value="3658."/>-->
+    <constant name="targetChamberHat_L" value="1000."/>
 	    
 	    
     <!--constant for shieldings - dimension from Alan design -->
     <constant name="polyBoxx" value="7690."/>
-    <constant name="polyBoxy" value="9510."/>
-    <constant name="polyBoxz" value="6990."/>
-    <constant name="polyThickness" value="1550"/>
+	    <!--<constant name="polyBoxy" value="9510."/>-->
+    <constant name="polyBoxy" value="6700."/>
+    <constant name="polyBoxz" value="6350."/>
+	    <!--<constant name="polyBoxz" value="6990."/>-->
+	    <!--<constant name="polyThickness" value="1550"/>-->
+    <constant name="polyThickness" value="1400"/>
     
     <!--constant for lead shieldings - dimension from Alan design -->
     <constant name="leadBoxx" value="3770."/>
@@ -39,7 +43,7 @@
   <solids>
 
     <box lunit="m" name="targetRegion_solid"
-	 x="10" y="10" z="10"/>
+	 x="10" y="10" z="6.36"/>
 
     <tube aunit="deg" lunit="mm" deltaphi="360" name="target_solid"
 	  rmax="40" rmin="0" z="1500"/>
@@ -89,13 +93,13 @@
 	  z="targetChamberHat_L"/>
 
     <!-- Collimator 1 -->
-    <box lunit="mm" name="collimator1_solid1"
+    <box lunit="mm" name="LeadCollar_solid1"
    	 x="370" y="370" z="200"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="collimator1InnerSub_solid"
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollarInnerSub_solid"
    	  rmin="0" rmax="74" z="300"/>
-   <subtraction name ="collimator1_solid">
-     <first ref="collimator1_solid1"/>
-     <second ref="collimator1InnerSub_solid"/>
+   <subtraction name ="LeadCollar_solid">
+     <first ref="LeadCollar_solid1"/>
+     <second ref="LeadCollarInnerSub_solid"/>
      <positionref ref="origin" />
    </subtraction>
   
@@ -129,7 +133,12 @@
     <second ref = "Shield_tube_lead"/>
     <position name ="leadSub1" lunit="mm" x="leadBoxx/2.-1880" y="-1.*(leadBoxy/2.-1150)" z="0" />
     </subtraction>
-    
+
+    <!--vacuum detectors for monitoring skyshine  chandan--> 
+    <box lunit="mm" name="skyshineVacuumDet1_solid"
+	    x="polyBoxx-polyThickness*2-1" y="1.0" z="polyBoxz-polyThickness*2-1.0"/>
+    <box lunit="mm" name="skyshineVacuumDet2_solid"
+	 x="polyBoxx+1000" y="1.0" z="polyBoxz"/>
 
  </solids>
 
@@ -168,9 +177,9 @@
      <auxiliary auxtype="Color" auxvalue="white"/>
    </volume>
 
-   <volume name="collimator1_logic">
+   <volume name="LeadCollar_logic">
      <materialref ref="Lead"/>
-     <solidref ref="collimator1_solid"/>
+     <solidref ref="LeadCollar_solid"/>
      <auxiliary auxtype="Color" auxvalue="red"/>
    </volume>
 
@@ -179,13 +188,30 @@
    <volume name="PolyShield_target">
    <materialref ref="Concrete"/>
    <solidref ref="poly_sub"/>
-   <auxiliary auxtype="Color" auxvalue="Brown"/>
+   <auxiliary auxtype="Color" auxvalue="Green"/>
+   <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 
    <volume name="LeadShield_target">
    <materialref ref="Lead"/>
    <solidref ref="lead_sub"/>
    <auxiliary auxtype="Color" auxvalue="Red"/>
+   </volume>
+
+   <volume name="skyshineVacuumDet1_logic">
+   <materialref ref="VacuumDet"/>
+   <solidref ref="skyshineVacuumDet1_solid"/>
+   <auxiliary auxtype="Color" auxvalue="Blue"/>
+   <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_1"/>
+   <auxiliary auxtype="DetNo" auxvalue="5555"/>
+   </volume>
+
+   <volume name="skyshineVacuumDet2_logic">
+   <materialref ref="VacuumDet"/>
+   <solidref ref="skyshineVacuumDet2_solid"/>
+   <auxiliary auxtype="Color" auxvalue="Blue"/>
+   <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_2"/>
+   <auxiliary auxtype="DetNo" auxvalue="5556"/>
    </volume>
 
    <volume name="targetRegion">
@@ -221,20 +247,31 @@
      </physvol>
 
      <physvol>
-       <volumeref ref="collimator1_logic"/>
-       <position name="collimator1_pos" unit="mm" x="0" y="0"
+       <volumeref ref="LeadCollar_logic"/>
+       <position name="LeadCollar_pos" unit="mm" x="0" y="0"
      		 z="2851 + 100"/>
      </physvol>
      
      <!--shielding placement-->
      <physvol>
        <volumeref ref="PolyShield_target"/>
-       <position name="PolyShield_pos" unit="mm" x="-1.*(polyBoxx/2.-3550)" y="polyBoxy/2.-3040" z="0"/>
+	       <position name="PolyShield_pos" unit="mm" x="-1.*(polyBoxx/2.-3550)" y="polyBoxy/2.-3040" z="0"/>
      </physvol>
 
      <physvol>
        <volumeref ref="LeadShield_target"/>
        <position name="LeadShield_pos" unit="mm" x="-1.*(leadBoxx/2.-1880)" y="leadBoxy/2.-1150" z="1200+leadBoxz/2."/>
+     </physvol>
+
+     <!--placement of vacuum detector-->
+     <physvol>
+       <volumeref ref="skyshineVacuumDet1_logic"/>
+       <position name="shyshineVacuumDet1_pos" unit="mm" x="-1.*(polyBoxx/2.-3550)" y="targetChamber_L/2.+targetChamberHat_L+200" z="0"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="skyshineVacuumDet2_logic"/>
+       <position name="shyshineVacuumDet2_pos" unit="mm" x="-1.*(polyBoxx/2.-3550)" y="polyBoxy/2+500" z="0"/>
      </physvol>
 
      <auxiliary auxtype="TargetSystem" auxvalue=""/>
