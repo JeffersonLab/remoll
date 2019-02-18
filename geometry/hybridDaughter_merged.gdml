@@ -1480,7 +1480,7 @@
       <!-- <solidref ref="boxDSShieldColl1_solid"/> -->
       <solidref ref="boxDSShieldColl1_sub_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6020"/>
     </volume>
@@ -1494,7 +1494,7 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+	      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6021"/>
     </volume>
@@ -1545,7 +1545,7 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxDSShield1_local_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6031"/>
     </volume>
@@ -1553,7 +1553,7 @@
       <materialref ref="Polythene"/>
       <solidref ref="boxDSShield1_polylocal_solid"/>
       <auxiliary auxtype="Color" auxvalue="brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+	      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6032"/>
     </volume>
@@ -1741,21 +1741,17 @@
        Shielding collimators
       -->
 
-      <!--remove by chandan
       <physvol>
         <volumeref ref="boxDSShieldColl1_logic"/>
         <positionref ref="DSshieldcoll_center_1"/>
       </physvol>       
-      upto here-->
 
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
-      <!--remove by chandan
       <physvol>
         <volumeref ref="boxDSPolyShield1_logic"/>
         <positionref ref="boxDSPolyShield1_center"/>
       </physvol>
-      upto here-->
 
       <!-- PolyShield2 will be outside shielding hut -->
 <!--
@@ -1784,7 +1780,6 @@
         <positionref ref="boxDSShield1_polyroof_center"/>
       </physvol>
 -->
-      <!--commented by chandan
       <physvol>
         <volumeref ref="boxDSShield_local_logic"/>
         <positionref ref="boxDSShield_local_center"/>
@@ -1793,7 +1788,6 @@
         <volumeref ref="boxDSShield_polylocal_logic"/>
         <positionref ref="boxDSShield_polylocal_center"/>
       </physvol>
-      upto here-->
 
       <physvol>
         <volumeref ref="boxAlCan_logic"/>
