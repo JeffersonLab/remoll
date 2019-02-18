@@ -133,9 +133,7 @@ macro(set_diagnostic_flags)
     set(${PROJECT_NAME_UC}_DIAG_FLAGS "${${PROJECT_NAME_UC}_DIAG_FLAGS} -Wall")
   endif()
   if(SDF_WEXTRA)
-    set(${PROJECT_NAME_UC}_DIAG_FLAGS
-      "${${PROJECT_NAME_UC}_DIAG_FLAGS} -Wextra -Wno-missing-field-initializers -Wno-unused-parameter"
-      )
+    set(${PROJECT_NAME_UC}_DIAG_FLAGS "${${PROJECT_NAME_UC}_DIAG_FLAGS} -Wextra")
   endif()
   if(SDF_WERROR)
     set(${PROJECT_NAME_UC}_DIAG_FLAGS "${${PROJECT_NAME_UC}_DIAG_FLAGS} -Werror")

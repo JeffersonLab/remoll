@@ -12,19 +12,18 @@ endif()
 # Prepend module search path
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
 
-# Default install path is the source directory
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
-    message(STATUS "    Use -DCMAKE_INSTALL_PREFIX=/usr/local to set to something else" )
-    set (CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}"
-         CACHE PATH "default install path" FORCE )
-endif()
-
 # Use our modules and utility functions
+include(BuildType)
+include(PrefixDir)
 include(CMakeEnv)
 
 # Use GNU install dirs
 include(GNUInstallDirs)
+
+# Request C++11 standard
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+set(CMAKE_CXX_EXTENSIONS False)
 
 # MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
@@ -87,14 +86,16 @@ list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
 #----------------------------------------------------------------------------
 # Boost
 #
-if(USE_BOOST)
-    find_package(Boost COMPONENTS iostreams)
-    include_directories(${Boost_INCLUDE_DIRS})
-    link_directories(${Boost_LIBRARY_DIR})
-    ADD_DEFINITIONS(-D__USE_BOOST)
-    if(Boost_IOSTREAMS_FOUND)
-        ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
-    endif()
+find_package(Boost QUIET COMPONENTS iostreams)
+if(Boost_FOUND)
+  message(STATUS "Boost found --> building with boost enabled.")
+  include_directories(${Boost_INCLUDE_DIRS})
+  link_directories(${Boost_LIBRARY_DIR})
+  ADD_DEFINITIONS(-D__USE_BOOST)
+  if(Boost_IOSTREAMS_FOUND)
+    message(STATUS "Boost::iostreams found --> building with boost::iostreams enabled.")
+    ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+  endif()
 endif()
 
 
@@ -124,8 +125,8 @@ find_package(HepMC QUIET)
 if(HepMC_FOUND)
   message(STATUS "HepMC found --> building with HepMC enabled.")
   add_definitions(-DG4LIB_USE_HEPMC)
-  file(GLOB hepmc_sources ${PROJECT_SOURCE_DIR}/src/HepMC*.cc)
-  file(GLOB hepmc_headers ${PROJECT_SOURCE_DIR}/include/HepMC*.hh)
+  file(GLOB hepmc_sources src/HepMC*.cc)
+  file(GLOB hepmc_headers include/HepMC*.hh)
   list(APPEND sources ${hepmc_sources})
   list(APPEND headers ${hepmc_headers})
 else()
@@ -148,15 +149,24 @@ endif()
 #----------------------------------------------------------------------------
 # Compiler flags
 #
+# Set compiler flags to the set given by ROOT set
 set_compiler_flags("${ROOT_CXX_FLAGS}")
-set_diagnostic_flags(WALL WEXTRA)
-report_build_info()
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-shadow -Wno-pedantic")
-
-# Ignore warning of struct initialization { } for gcc < 5.0 (after that it is ignored internally)
+# FIXME: The following will at some point all disappear (yeah yeah, soon)
+# Ignore shadowing of CLHEP 1-letter units with 1-letter local variables
+string(APPEND ${PROJECT_NAME_UC}_DIAG_FLAGS " -Wno-shadow")
+# Ignore missing field initializers in structs
+string(APPEND ${PROJECT_NAME_UC}_DIAG_FLAGS " -Wno-missing-field-initializers")
+# Ignore unused parameters in many geant4 functions
+string(APPEND ${PROJECT_NAME_UC}_DIAG_FLAGS " -Wno-unused-parameter")
 if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-field-initializers")
+  # Ignore warning of struct initialization { } for gcc < 5.0 (after that it is ignored internally)
+  string(APPEND ${PROJECT_NAME_UC}_DIAG_FLAGS " -Wno-missing-field-initializers")
 endif()
+# Now add the standard WALL and WEXTRA sets
+set_diagnostic_flags(WALL WEXTRA)
+# Finally print what we use
+report_build_info()
+
 
 #----------------------------------------------------------------------------
 # main library
