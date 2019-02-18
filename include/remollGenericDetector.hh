@@ -178,7 +178,11 @@ class remollGenericDetector : public G4VSensitiveDetector {
       };
       void PrintEnabled() const {
         G4cout << "Det " << GetName() << " (" << fDetNo << ") "
-            << (fEnabled? "enabled" : "disabled") << G4endl;
+            << (fEnabled? "enabled" : "disabled")
+            << (fDetectLowEnergyNeutrals? " lowenergyneutral":"")
+            << (fDetectOpticalPhotons? " opticalphoton":"")
+            << (fDetectSecondaries? " secondaries":"")
+            << G4endl;
       };
 
       void  SetDetNo(G4int detno) { fDetNo = detno; }
