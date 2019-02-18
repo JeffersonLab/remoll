@@ -11,11 +11,17 @@
   <quantity name="pionDetectorGEMThickness" type="length" value="2.54" unit="cm"/>
   <quantity name="pionDetectorGEMWidth" type="length" value="60.0" unit="cm"/>
   <quantity name="pionDetectorGEMHeight" type="length" value="50.0" unit="cm"/>
-
-  &matrices;
 </define>
 
-&materials;
+<materials>
+  <material name="pionGEMGasMixture">
+    <!-- density CO2 at STP = 1.98 kg/m3 -->
+    <!-- density Ar at STP = 1.784 kg/m3 -->
+    <D value="1.882" unit="mg/cm3"/>
+    <fraction n="0.5" ref="G4_CARBON_DIOXIDE"/>
+    <fraction n="0.5" ref="G4_Ar"/>
+  </material>
+</materials>
 
 <solids>
   <!-- x in azimuthal direction -->
@@ -27,7 +33,7 @@
 <structure>
 
   <volume name="pionDetectorGEMSinglePlane_logical">
-    <materialref ref="GEMGasMixture"/>
+    <materialref ref="pionGEMGasMixture"/>
     <solidref ref="pionDetectorGEMPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionDetGEM"/>
     <auxiliary auxtype="DetNo" auxvalue="8002"/>

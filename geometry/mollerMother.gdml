@@ -29,19 +29,19 @@
       </physvol>
 
       <physvol name="trackingDetectors_physical">
-        <file name="trackingDaughter.gdml"/>
+        <file name="tracking/trackingDaughter.gdml"/>
         <positionref ref="trackingCenter"/>
       </physvol>
 
       <!-- ShowerMax Detectors -->
       <physvol>
-        <file name="showerMaxDetectorSystem.gdml"/>
+        <file name="showermax/showerMaxDetectorSystem.gdml"/>
         <positionref ref="showerMaxDetectorCenter"/>
       </physvol>
 
       <!-- Pion Detectors -->
       <physvol>
-        <file name="pionDetectorSystem.gdml"/>
+        <file name="pion/pionDetectorSystem.gdml"/>
         <positionref ref="pionDetectorCenter"/>
       </physvol>
 
