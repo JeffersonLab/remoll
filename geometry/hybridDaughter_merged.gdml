@@ -1480,7 +1480,7 @@
       <!-- <solidref ref="boxDSShieldColl1_solid"/> -->
       <solidref ref="boxDSShieldColl1_sub_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6020"/>
     </volume>
@@ -1494,7 +1494,7 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+	      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6021"/>
     </volume>
@@ -1545,7 +1545,7 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxDSShield1_local_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6031"/>
     </volume>
@@ -1553,7 +1553,7 @@
       <materialref ref="Polythene"/>
       <solidref ref="boxDSShield1_polylocal_solid"/>
       <auxiliary auxtype="Color" auxvalue="brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+	      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6032"/>
     </volume>
