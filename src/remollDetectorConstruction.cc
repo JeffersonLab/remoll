@@ -651,11 +651,6 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
 
 void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 {
-  //==========================
-  // Sensitive detectors
-  //==========================
-  G4SDManager* SDman = G4SDManager::GetSDMpointer();
-
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
@@ -665,73 +660,73 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
       if (fVerboseLevel > 0)
           G4cout << "Volume " << myvol->GetName() << G4endl;
 
-      for (G4GDMLAuxListType::const_iterator
-          vit  = (*iter).second.begin();
-          vit != (*iter).second.end(); vit++) {
+      // Find list entry with SensDet
+      G4GDMLAuxListType list = (*iter).second;
+      auto it_sensdet = std::find_if(list.begin(), list.end(),
+        [](const G4GDMLAuxStructType& element){
+          return element.type.compareTo("SensDet", G4String::ignoreCase) == 0;} );
 
-          if ((*vit).type == "SensDet") {
-              G4String det_name = (*vit).value;
+      // Found SensDet tag
+      remollGenericDetector* remollsd = 0;
+      if (it_sensdet != list.end()) {
 
-              // Also allow specification of det number ///////////////////
-              G4String det_type = "";
-              int det_no = -1;
-              for (G4GDMLAuxListType::const_iterator
-                  nit  = (*iter).second.begin();
-                  nit != (*iter).second.end(); nit++) {
+        // Find list entry with DetNo
+        auto it_detno = std::find_if(list.begin(), list.end(),
+          [](const G4GDMLAuxStructType& element){
+            return element.type.compareTo("DetNo", G4String::ignoreCase) == 0;} );
 
-                  if ((*nit).type == "DetNo") {
-                      det_no = atoi((*nit).value.data());
-                      if( det_no >= __MAX_DETS ){
-                          G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR detector number too high" << G4endl;
-                          exit(1);
-                      }
-                  }
+        // Found DetNo tag
+        int det_no = -1;
+        if (it_detno != list.end()) {
+          det_no = atoi(it_detno->value.data());
 
-                  if ((*nit).type == "DetType") {
-                      det_type = (*nit).value.data();
-                  }
-              }
-              if (det_no <= 0) {
-                  G4cerr << __FILE__ << " line " << __LINE__ << ": "
-                         << "Warning: detector number not set for volume " << myvol->GetName() << G4endl;
-                  G4cerr << "Skipping sensitive detector assignment." << G4endl;
-                  continue;
-              }
-              /////////////////////////////////////////////////////////////
+          std::stringstream det_name_ss;
+          det_name_ss << "remoll/det_" << det_no;
+          std::string det_name = det_name_ss.str();
 
-              char detectorname[__DET_STRLEN];
-              int retval = snprintf(detectorname, __DET_STRLEN, "remoll/det_%d", det_no);
+          // Try to find sensitive detector
+          G4SDManager* SDman = G4SDManager::GetSDMpointer();
+          G4VSensitiveDetector* sd = SDman->FindSensitiveDetector(det_name, (fVerboseLevel > 0));
 
-              assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
+          // No such detector yet
+          if (sd == 0) {
+            if (fVerboseLevel > 0)
+              G4cout << "  Creating sensitive detector "
+                     << "for volume " << myvol->GetName()
+                     <<  G4endl << G4endl;
 
-              G4VSensitiveDetector* thisdet = SDman->FindSensitiveDetector(detectorname,(fVerboseLevel > 0));
+            remollsd = new remollGenericDetector(det_name, det_no);
 
-              if( thisdet == 0 ) {
-                  if (fVerboseLevel > 0)
-                      G4cout << "  Creating sensitive detector "
-                          << "for volume " << myvol->GetName()
-                          <<  G4endl << G4endl;
+            // Register detector with SD manager
+            SDman->AddNewDetector(remollsd);
 
-                  remollGenericDetector* det = new remollGenericDetector(detectorname, det_no);
-                  if (det_type.size() > 0) det->SetDetectorType(det_type);
+            // Register detector with remollIO
+            remollIO* io = remollIO::GetInstance();
+            io->RegisterDetector(myvol->GetName(), it_sensdet->value, det_no);
 
-                  SDman->AddNewDetector(det);
-
-                  // Register detector IDs and names
-                  remollIO* io = remollIO::GetInstance();
-                  io->RegisterDetector(myvol->GetName(), det_name, det_no);
-
-                  thisdet = det;
-              }
-
-              myvol->SetSensitiveDetector(thisdet);
+          // Detector already exists, cast into remoll
+          } else {
+            remollsd = dynamic_cast<remollGenericDetector*>(sd);
           }
+
+          // Register detector with this volume
+          myvol->SetSensitiveDetector(sd);
+        }
+      }
+
+      // Find list entries with DetType
+      auto it_dettype = std::find_if(list.begin(), list.end(),
+        [](const G4GDMLAuxStructType& element){
+          return element.type.compareTo("DetType", G4String::ignoreCase) == 0;} );
+      // Loop over found DetType tags
+      for ( ; it_dettype != list.end(); it_dettype++) {
+        // Set detector type
+        if (remollsd) remollsd->SetDetectorType(it_dettype->value);
       }
   }
 
   if (fVerboseLevel > 0)
     G4cout << "Completed sensitive detector assignment" << G4endl;
-
 }
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct()
