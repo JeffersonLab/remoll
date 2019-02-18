@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE gdml [
-  <!ENTITY materials SYSTEM "pionMaterials.xml">
-  <!ENTITY matrices SYSTEM "pionMatrices.xml">
-]>
-
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
@@ -52,11 +47,10 @@
    <position name="pionDetectorTSBackPosition"      x="0"   y="0"   z="pionDetectorLuciteCenter+0.41*m"/> <!-- 0.10*m thick -->
    <position name="pionDetectorGEMBackPosition"     x="0"   y="0"   z="pionDetectorLuciteCenter+0.52*m"/> <!-- 0.10*m thick -->
    <position name="pionDetectorCalorimeterPosition" x="1*m" y="1*m" z="pionDetectorLuciteCenter+0.66*m"/>
-
-   &matrices;
 </define>
 
-&materials;
+<materials>
+</materials>
 
 <solids>
     <tube name="pionDetectorLeadDonut_solid"
@@ -89,7 +83,7 @@
       <solidref ref="pionDetectorSystem_solid"/>
 
       <physvol>
-        <file name="pionDetectorVirtualDet.gdml"
+        <file name="pion/pionDetectorVirtualDet.gdml"
            volname="pionDetectorVirtualDetVacuum_logical"/>
         <positionref ref="pionDetectorVirtualDetPositionFront"/>
       </physvol>
@@ -100,39 +94,39 @@
       </physvol>
 
       <physvol>
-        <file name="pionDetectorVirtualDet.gdml"
+        <file name="pion/pionDetectorVirtualDet.gdml"
            volname="pionDetectorVirtualDetVacuumKryptonite_logical"/>
         <positionref ref="pionDetectorVirtualDetPositionBack"/>
       </physvol>
 
       <physvol>
-        <file name="pionDetectorTSOpenSector.gdml"/>
+        <file name="pion/TS/pionDetectorTSOpenSector.gdml"/>
         <positionref ref="pionDetectorTSFrontPosition"/>
       </physvol>
 
       <physvol>
-        <file name="pionDetectorGEMOpenSector.gdml"/>
+        <file name="pion/GEM/pionDetectorGEMOpenSector.gdml"/>
         <positionref ref="pionDetectorGEMFrontPosition"/>
       </physvol>
 
       <physvol>
-        <file name="pionDetectorLuciteSector.gdml"/>
+        <file name="pion/Lucite/pionDetectorLuciteSector.gdml"/>
         <positionref ref="pionDetectorLucitePosition"/>
       </physvol>
 
       <physvol>
-        <file name="pionDetectorGEMOpenSector.gdml"/>
+        <file name="pion/GEM/pionDetectorGEMOpenSector.gdml"/>
         <positionref ref="pionDetectorGEMBackPosition"/>
       </physvol>
 
       <physvol>
-        <file name="pionDetectorTSOpenSector.gdml"/>
+        <file name="pion/TS/pionDetectorTSOpenSector.gdml"/>
         <positionref ref="pionDetectorTSBackPosition"/>
       </physvol>
 
 <!--
       <physvol>
-        <file name="pionDetectorCalorimeter.gdml"/>
+        <file name="pion/Calorimeter/pionDetectorCalorimeter.gdml"/>
         <positionref ref="pionDetectorCalorimeterPosition"/>
       </physvol>
 -->

@@ -96,7 +96,7 @@
     <solidref ref="showerMaxDetectorSingleSector_solid"/>
 
     <physvol name="showerMaxDetector_physical">
-      <file name="showerMaxDetector.gdml"/>
+      <file name="showermax/showerMaxDetector.gdml"/>
       <position name="showerMaxDetector_position"
         x="showerMaxDetectorInnerEdgeRadialPosition"/>
       <rotation name="showerMaxDetector_rotation"

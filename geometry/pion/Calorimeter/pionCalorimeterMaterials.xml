@@ -1,0 +1,35 @@
+<materials>
+  <material name="CsPhotocathode" state="solid" Z="39">
+    <property name="REFLECTIVITY" ref="REFLECTIVITY_CATHODE"/>
+    <property name="EFFICIENCY" ref="EFFICIENCY_CATHODE"/>
+    <MEE value="190" unit="eV"/>
+    <D value="5" unit="g/cm3"/>
+    <atom value="39.0983" unit="g/mole"/>
+  </material>
+ 
+  <element Z="1" formula="H" name="Hydrogen">
+    <atom value="1"/>
+  </element>
+  <element Z="6" formula="C" name="Carbon">
+    <atom value="12"/>
+  </element>
+  <element Z="7" formula="N" name="Nitrogen">
+    <atom value="14"/>
+  </element>
+  <element Z="8" formula="O" name="Oxygen">
+    <atom value="16"/>
+  </element>
+  <element Z="14" formula="Si" name="Silicon">
+    <atom value="28"/>
+  </element>
+
+  <material name="Calorimeter" formula="PbWO4">
+    <property name="ABSLENGTH" ref="ABSLENGTH_PBWO4"/>
+    <property name="RINDEX" ref="RINDEX_PBWO4"/>
+    <MEE value="125.663004061076" unit="eV"/>
+    <D value="1.18" unit="g/cm3"/>
+    <fraction n="0.080538" ref="Hydrogen"/>
+    <fraction n="0.599848" ref="Carbon"/>
+    <fraction n="0.319614" ref="Oxygen"/>
+  </material>
+</materials>
