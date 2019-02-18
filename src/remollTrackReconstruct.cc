@@ -43,7 +43,7 @@ void remollTrackReconstruct::AddHit(remollGenericDetectorHit* aHit){
   }
 
   aTrackHit.push_back(aHit);
-};
+}
 
 void remollTrackReconstruct::ClearTrack(){
 
@@ -54,7 +54,7 @@ void remollTrackReconstruct::ClearTrack(){
 
   recTrackXZ.clear(); // reconstructed track vector, holds (a,b) of chisq minimization
   recTrackYZ.clear(); // reconstructed track vector, holds (a,b) of chisq minimization
-};
+}
 
 
 void remollTrackReconstruct::PrintHitInfo(std::vector<remollGenericDetectorHit*> aHitVec){

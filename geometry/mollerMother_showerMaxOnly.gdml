@@ -39,7 +39,7 @@
       </physvol>    
 
       <physvol>
-        <file name="showerMaxDetectorSystem.gdml"/>
+        <file name="showermax/showerMaxDetectorSystem.gdml"/>
         <positionref ref="showerMaxDetectorCenter"/>
       </physvol>
 

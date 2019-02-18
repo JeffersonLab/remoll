@@ -2,7 +2,7 @@
 /remoll/physlist/steplimiter/enable
 # Macrofile
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother_acceptanceDefinition_includeCol4.gdml
+/remoll/setgeofile geometry/mollerMother_acceptanceDefinition.gdml
 /remoll/parallel/setfile geometry/mollerParallel.gdml
 /remoll/physlist/parallel/enable 
 

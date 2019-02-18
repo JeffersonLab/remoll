@@ -184,6 +184,7 @@ void remollGlobalField::SetChordFinder()
   if (fChordFinder) delete fChordFinder;
 
   fChordFinder = new G4ChordFinder(this,fMinStep,fStepper);
+  fChordFinder->GetIntegrationDriver()->SetVerboseLevel(0);
   fFieldManager->SetChordFinder(fChordFinder);
 }
 

@@ -337,5 +337,5 @@ double remollGenPion::wiserfit(double *x, double *par)
     }
 
     return 0.0;
-};
+}
 

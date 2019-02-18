@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE gdml [
-  <!ENTITY materials SYSTEM "pionMaterials.xml">
-  <!ENTITY matrices SYSTEM "pionMatrices.xml">
-]>
-
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
@@ -56,11 +51,10 @@
     with half the height (radial dimension) of the lucite blocks.
   -->
   <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="95.0+12.5" unit="cm"/>
-
-  &matrices;
 </define>
 
-&materials;
+<materials>
+</materials>
 
 <solids>
   <tube name="pionDetectorLuciteSector_solid"
@@ -81,7 +75,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
-      <file name="pionDetectorLucite.gdml"/>
+      <file name="pion/Lucite/pionDetectorLucite.gdml"/>
       <position name="pionDetectorLucite_position"
         x="pionDetectorLuciteInnerEdgeRadialPosition"/>
       <rotation name="pionDetectorLucite_rotation"
