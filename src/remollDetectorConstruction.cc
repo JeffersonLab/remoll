@@ -35,9 +35,6 @@
 #include <algorithm>
 #include <sys/param.h>
 
-#define __DET_STRLEN 200
-#define __MAX_DETS 100000
-
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
 namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
@@ -654,32 +651,29 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
+  // Loop over all volumes with auxiliary tags
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
+
       G4LogicalVolume* myvol = (*iter).first;
-      if (fVerboseLevel > 0)
-          G4cout << "Volume " << myvol->GetName() << G4endl;
-
-      // Find list entry with SensDet
       G4GDMLAuxListType list = (*iter).second;
-      auto it_sensdet = std::find_if(list.begin(), list.end(),
-        [](const G4GDMLAuxStructType& element){
-          return element.type.compareTo("SensDet", G4String::ignoreCase) == 0;} );
 
-      // Found SensDet tag
+      if (fVerboseLevel > 0)
+        G4cout << "Volume " << myvol->GetName() << G4endl;
+
       remollGenericDetector* remollsd = 0;
+
+      // Find first aux list entry with type SensDet
+      auto it_sensdet = NextAuxWithType(list.begin(), list.end(), "SensDet");
       if (it_sensdet != list.end()) {
 
-        // Find list entry with DetNo
-        auto it_detno = std::find_if(list.begin(), list.end(),
-          [](const G4GDMLAuxStructType& element){
-            return element.type.compareTo("DetNo", G4String::ignoreCase) == 0;} );
-
-        // Found DetNo tag
-        int det_no = -1;
+        // Find first aux list entry with type DetNo
+        auto it_detno = NextAuxWithType(list.begin(), list.end(), "DetNo");
         if (it_detno != list.end()) {
-          det_no = atoi(it_detno->value.data());
 
+          int det_no = atoi(it_detno->value.data());
+
+          // Construct detector name
           std::stringstream det_name_ss;
           det_name_ss << "remoll/det_" << det_no;
           std::string det_name = det_name_ss.str();
@@ -687,13 +681,16 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           // Try to find sensitive detector
           G4SDManager* SDman = G4SDManager::GetSDMpointer();
           G4VSensitiveDetector* sd = SDman->FindSensitiveDetector(det_name, (fVerboseLevel > 0));
+          // and cast into remoll sensitive detector
+          remollsd = dynamic_cast<remollGenericDetector*>(sd);
 
           // No such detector yet
-          if (sd == 0) {
+          if (remollsd == 0) {
+
             if (fVerboseLevel > 0)
               G4cout << "  Creating sensitive detector "
                      << "for volume " << myvol->GetName()
-                     <<  G4endl << G4endl;
+                     <<  G4endl;
 
             remollsd = new remollGenericDetector(det_name, det_no);
 
@@ -704,26 +701,27 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
             remollIO* io = remollIO::GetInstance();
             io->RegisterDetector(myvol->GetName(), it_sensdet->value, det_no);
 
-          // Detector already exists, cast into remoll
-          } else {
-            remollsd = dynamic_cast<remollGenericDetector*>(sd);
           }
 
           // Register detector with this volume
-          myvol->SetSensitiveDetector(sd);
-        }
-      }
+          myvol->SetSensitiveDetector(remollsd);
 
-      // Find list entries with DetType
-      auto it_dettype = std::find_if(list.begin(), list.end(),
-        [](const G4GDMLAuxStructType& element){
-          return element.type.compareTo("DetType", G4String::ignoreCase) == 0;} );
-      // Loop over found DetType tags
-      for ( ; it_dettype != list.end(); it_dettype++) {
+        } // end of if aux tag with type DetNo
+
+      } // end of if aux tag with type SensDet
+
+
+      // Find aux list entries with type DetType
+      for (auto it_dettype  = NextAuxWithType(list.begin(), list.end(), "DetType");
+                it_dettype != list.end();
+                it_dettype  = NextAuxWithType(++it_dettype, list.end(), "DetType")) {
+
         // Set detector type
         if (remollsd) remollsd->SetDetectorType(it_dettype->value);
+
       }
-  }
+
+  } // end of loop over volumes
 
   if (fVerboseLevel > 0)
     G4cout << "Completed sensitive detector assignment" << G4endl;
