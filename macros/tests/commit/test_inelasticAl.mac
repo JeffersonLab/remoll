@@ -41,7 +41,7 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite/set true
+/control/execute macros/kryptonite.mac
 
 /remoll/seed 123456
 
