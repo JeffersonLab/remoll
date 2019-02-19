@@ -3,6 +3,8 @@
 /remoll/parallel/setfile geometry/mollerParallel.gdml
 /remoll/physlist/parallel/enable 
 
+/control/execute macros/kryptonite.mac
+
 /run/initialize
 
 /remoll/evgen/set moller

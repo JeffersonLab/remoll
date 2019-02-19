@@ -1,5 +1,7 @@
 /run/initialize
 
+/control/execute macros/kryptonite.mac
+
 # Print all detectors
 /remoll/SD/print_all
 
