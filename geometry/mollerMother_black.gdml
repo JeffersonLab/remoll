@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 
 <!DOCTYPE gdml [
-    <!ENTITY materials_r5 SYSTEM "materialsOptical_mainz.xml">
+    <!ENTITY materials_r5 SYSTEM "materialsOptical.xml">
     <!ENTITY matrices_r5 SYSTEM "matrices_mainz.xml">
 ]> 
 
