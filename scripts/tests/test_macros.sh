@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit whenever non-zero exit code occurs
+set -euo pipefail
+
 # Determine absolute path of this script
 dir=`dirname $0`/../..
 dir=`readlink -f ${dir}`
