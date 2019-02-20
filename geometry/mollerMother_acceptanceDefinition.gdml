@@ -37,13 +37,13 @@
       <positionref ref="targetCenter"/>-->
       <rotationref ref="identity"/>
       </physvol>
-
+      <!--
       <physvol>
       <file name="hallDaughter_acceptanceDefinition.gdml"/>
       <positionref ref="hallCenter"/>
       <rotationref ref="identity"/>
       </physvol> 
-
+-->
  
       <physvol>
 	    <file name="upstreamDaughter_acceptanceDefinition.gdml"/>

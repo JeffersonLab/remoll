@@ -304,14 +304,14 @@ bool isValid(remollEventParticle_t part){
         */
 
         // Hits detector rings only cut 
-        int colCutLen = 6;   // these are radial cuts, above and below
-        int lintelCutLen = 4;// these are x axis cuts, above
-        double colCutR[] = {35.3  , 98.0  , 50.0  , 171.4 , 690.0  , 1200.0  };
-        double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0, 28228.0, 29228.0 };
-        bool colGte[] =    {false , true  , false , true , false  , true    };
-        double lintelCutX[] = {374.8  , 625.0  , 680.0  , 1050.0 };
-        double lintelCutZ[] = {12800.0, 17811.0, 19500.0, 24200.0};
-        bool lintelGte[] =    {true   , true   , true   , true   };
+        //int colCutLen = 6;   // these are radial cuts, above and below
+        //int lintelCutLen = 4;// these are x axis cuts, above
+        //double colCutR[] = {35.3  , 98.0  , 50.0  , 171.4 , 690.0  , 1200.0  };
+        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0, 28228.0, 28228.0 };
+        //bool colGte[] =    {false , true  , false , true , false  , true    };
+        //double lintelCutX[] = {374.8  , 625.0  , 680.0  , 1050.0 };
+        //double lintelCutZ[] = {12800.0, 17811.0, 19500.0, 24200.0};
+        //bool lintelGte[] =    {true   , true   , true   , true   };
         
         // Collimator 2 is 100mm thick and has DS face at 5975mm
         // Collimator 4 is 100mm thick and has DS face at 8375mm
@@ -322,14 +322,14 @@ bool isValid(remollEventParticle_t part){
         // Lintel 4 is at 24200
 
         // All particles through col 2 cut - to Col4
-        //int colCutLen = 2;
-        //int lintelCutLen = 0;
-        //double colCutR[] = {35.3  , 98.0  };
-        //double colCutZ[] = {5975.0, 5975.0};
-        //bool colGte[] =   {false , true  };
-        //double lintelCutX[] = {0.0};
-        //double lintelCutZ[] = {0.0};
-        //bool lintelGte[] =    {false};
+        int colCutLen = 2;
+        int lintelCutLen = 0;
+        double colCutR[] = {35.3  , 98.0  };
+        double colCutZ[] = {5975.0, 5975.0};
+        bool colGte[] =   {false , true  };
+        double lintelCutX[] = {0.0};
+        double lintelCutZ[] = {0.0};
+        bool lintelGte[] =    {false};
 
         // All particles through col 4 cut - to Lintel 1
         //int colCutLen = 4;
