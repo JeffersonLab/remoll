@@ -187,7 +187,7 @@ remollEventParticle_t interpolate(remollEventParticle_t part){
     remollEventParticle_t newPart;
     newPart.pid = part.pid;
     newPart.trid = part.trid;
-    int stepSize = 100;
+    int stepSize = 25;
     //int stepSize = 10;
     for(size_t z = 4500; z <= 33000; z+=stepSize){
         //if (z >= 12500)
