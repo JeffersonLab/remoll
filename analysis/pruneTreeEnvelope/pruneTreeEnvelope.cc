@@ -187,7 +187,8 @@ remollEventParticle_t interpolate(remollEventParticle_t part){
     remollEventParticle_t newPart;
     newPart.pid = part.pid;
     newPart.trid = part.trid;
-    int stepSize = 10;
+    int stepSize = 100;
+    //int stepSize = 10;
     for(size_t z = 4500; z <= 33000; z+=stepSize){
         //if (z >= 12500)
         //    stepSize = 500;
@@ -294,28 +295,127 @@ bool isValid(remollEventParticle_t part){
         double yf = part.tjy[i+1];
         double zf = part.tjz[i+1];
 
-        int cutLen = 8; //apply the first n cuts in the array
-        //              coll cut         ring cuts         lintel cuts  
-        double cutR[] = {35.3  , 98.0  , 690.0  , 1200.0 , 374.8  , 640.5  , 680.0  , 1054.0 };
-        double cutZ[] = {5975.0, 5975.0, 28228.0, 28228.0, 12800.0, 17811.0, 19500.0, 24200.0};
-        bool gte[] =    {false , true  , false  , true   , true   , true   , true   , true   };
+        /*
+        // Old cuts!      coll cut         ring cuts         lintel cuts  
+        //int cutLen = 8; //apply the first n cuts in the array
+        //double cutR[] = {35.3  , 98.0  , 690.0  , 1200.0 , 374.8  , 640.5  , 680.0  , 1054.0 };
+        //double cutZ[] = {5975.0, 5975.0, 28228.0, 28228.0, 12800.0, 17811.0, 19500.0, 24200.0};
+        //bool gte[] =    {false , true  , false  , true   , true   , true   , true   , true   };
+        */
+
+        // Hits detector rings only cut 
+        int colCutLen = 6;   // these are radial cuts, above and below
+        int lintelCutLen = 4;// these are x axis cuts, above
+        double colCutR[] = {35.3  , 98.0  , 50.0  , 171.4 , 690.0  , 1200.0  };
+        double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0, 28228.0, 29228.0 };
+        bool colGte[] =    {false , true  , false , true , false  , true    };
+        double lintelCutX[] = {374.8  , 625.0  , 680.0  , 1050.0 };
+        double lintelCutZ[] = {12800.0, 17811.0, 19500.0, 24200.0};
+        bool lintelGte[] =    {true   , true   , true   , true   };
         
-        //
-        //
+        // Collimator 2 is 100mm thick and has DS face at 5975mm
+        // Collimator 4 is 100mm thick and has DS face at 8375mm
+        // Collimator 5 is 70mm thick and has DS face at 12870mm
+        // Lintel 1 is at 12800
+        // Lintel 2 is at 17811
+        // Lintel 3 is at 19500
+        // Lintel 4 is at 24200
+
+        // All particles through col 2 cut - to Col4
+        //int colCutLen = 2;
+        //int lintelCutLen = 0;
+        //double colCutR[] = {35.3  , 98.0  };
+        //double colCutZ[] = {5975.0, 5975.0};
+        //bool colGte[] =   {false , true  };
+        //double lintelCutX[] = {0.0};
+        //double lintelCutZ[] = {0.0};
+        //bool lintelGte[] =    {false};
+
+        // All particles through col 4 cut - to Lintel 1
+        //int colCutLen = 4;
+        //int lintelCutLen = 0;
+        //double colCutR[] = {35.3  , 98.0  , 50.0  , 171.4 };
+        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0};
+        //bool colGte[] =   {false , true  , false , true  };
+        //double lintelCutX[] = {0.0};
+        //double lintelCutZ[] = {0.0};
+        //bool lintelGte[] =    {false};
+
+        // All particles through second lintel cut - to Lintel3
+
+        // All particles through first lintel cut - to Lintel 2
+        //int colCutLen = 4;
+        //int lintelCutLen = 1;
+        //double colCutR[] = {35.3  , 98.0  , 50.0  , 171.4 };
+        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0};
+        //bool colGte[] =    {false , true  , false , true };
+        //double lintelCutX[] = {374.8  };
+        //double lintelCutZ[] = {12800.0};
+        //bool lintelGte[] =    {true   };
+
+        // All particles through second lintel cut - to Lintel3
+        //int colCutLen = 4;
+        //int lintelCutLen = 2;
+        //double colCutR[] = {35.3  , 98.0  , 50.0  , 171.4 };
+        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0};
+        //bool colGte[] =    {false , true  , false , true };
+        //double lintelCutX[] = {374.8  , 625.0  };
+        //double lintelCutZ[] = {12800.0, 17811.0};
+        //bool lintelGte[] =    {true   , true   };
+        
+        // All particles through third lintel cut - to Lintel4
+        //int colCutLen = 4;
+        //int lintelCutLen = 3;
+        //double colCutR[] = {35.3  , 98.0  , 50.0  , 171.4 };
+        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0};
+        //bool colGte[] =    {false , true  , false , true };
+        //double lintelCutX[] = {374.8  , 625.0  , 680.0  };
+        //double lintelCutZ[] = {12800.0, 17811.0, 19500.0};
+        //bool lintelGte[] =    {true   , true   , true   };
+        
+        // All particles through fourth lintel cut - to Detector Plane
+        //int colCutLen = 4;
+        //int lintelCutLen = 4;
+        //double colCutR[] = {35.3  , 98.0  , 50.0  , 171.4 };
+        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0};
+        //bool colGte[] =    {false , true  , false , true };
+        //double lintelCutX[] = {374.8  , 625.0  , 680.0  , 1050.0 };
+        //double lintelCutZ[] = {12800.0, 17811.0, 19500.0, 24200.0};
+        //bool lintelGte[] =    {true   , true   , true   , true   };
+        
         //false -> include all particles radius > R
         //true -> include all particles radius <= R
-        for (int j = 0; j < cutLen; j++)
+
+        for (int j = 0; j < colCutLen; j++)
         {
-            if (zi <= cutZ[j] && cutZ[j] <= zf)
+            if (zi <= colCutZ[j] && colCutZ[j] <= zf)
             {
                 dx = xf - xi;
                 dy = yf - yi;
                 dz = zf - zi;
-                x = xi + (dx/dz)*(cutZ[j]-zi);
-                y = yi + (dy/dz)*(cutZ[j]-zi);
+                x = xi + (dx/dz)*(colCutZ[j]-zi);
+                y = yi + (dy/dz)*(colCutZ[j]-zi);
                 double radius = sqrt(x*x + y*y);
                 //xor is ^: false has no effect, true inverts < to >=
-                if (gte[j] ^ (radius < cutR[j]))
+                if (colGte[j] ^ (radius < colCutR[j]))
+                {
+                    //this part is cut out
+                    return false; 
+                }
+            }
+        }
+        for (int j = 0; j < lintelCutLen; j++)
+        {
+            if (zi <= lintelCutZ[j] && lintelCutZ[j] <= zf)
+            {
+                dx = xf - xi;
+                dy = yf - yi;
+                dz = zf - zi;
+                x = xi + (dx/dz)*(lintelCutZ[j]-zi);
+                y = yi + (dy/dz)*(lintelCutZ[j]-zi);
+                double radius = sqrt(x*x + y*y);
+                //xor is ^: false has no effect, true inverts < to >=
+                if (lintelGte[j] ^ (-1*x < lintelCutX[j]))
                 {
                     //this part is cut out
                     return false; 
@@ -411,11 +511,12 @@ bool isValid(remollEventParticle_t part){
     }
     return true;
 }
-        void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double energyCut=0.0, int ringCut=0, bool forceSeptant=true)
-        {
-            TTree::SetMaxTreeSize(Long64_t(1024)*1024*1024*200); //200 GB tree
+void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double energyCut=0.0, int ringCut=0, bool forceSeptant=true)
+    {
+    TTree::SetMaxTreeSize(Long64_t(1024)*1024*1024*200); //200 GB tree
     std::vector < remollGenericDetectorHit_t > *fHit = 0;
     std::vector < remollEventParticle_t > *fPart = 0;
+    Double_t fRate = 0;
     int dotPos = file.rfind(".");   
     std::ostringstream os;
     os << file.substr(0, dotPos) << "_envelope_det" << detid << ".root";
@@ -426,8 +527,10 @@ bool isValid(remollEventParticle_t part){
     }
     // Default look at stuff hitting the entire detector array
     bool hitRcut = true;
-    double lowR = 600.0;
-    double highR = 1500.0;
+    //double lowR = 600.0;
+    //double highR = 1500.0;
+    double lowR = 0.0;
+    double highR = 5000.0;
     if (ringCut==-1){ //all rings
         hitRcut=true;
         lowR = 690.0;
@@ -479,14 +582,17 @@ bool isValid(remollEventParticle_t part){
     TTree* newTree = new TTree("T", "Optimized Tree of Tracks");
     oldTree->SetBranchAddress("hit", &fHit); 
     oldTree->SetBranchAddress("part", &fPart); 
+    oldTree->SetBranchAddress("rate", &fRate); 
     std::vector < remollGenericDetectorHit_t > *hitCopy = new std::vector < remollGenericDetectorHit_t > ;
     std::vector < remollEventParticle_t > *partCopy = new std::vector < remollEventParticle_t > ;
+    Double_t rateCopy = 0.0;
 
     //TODO reading data into envelopes downstream could be sped up
     //by storing the data by Z instead of by hit
     
     newTree->Branch("hit", &hitCopy);
     newTree->Branch("part", &partCopy);
+    newTree->Branch("rate", &rateCopy);
     //newTree->AutoSave();
     //oldTree->Print();
     for (size_t j = 0; j < oldTree->GetEntries(); j++)
@@ -516,6 +622,7 @@ bool isValid(remollEventParticle_t part){
         for (size_t i = 0; i < fPart->size();i++)
         {
             remollEventParticle_t part = fPart->at(i);
+            Double_t rate = fRate;
             for (size_t k = 0; k < goodTRID.size(); k++)
             {
                 //Assume vector index of part vector is the track id, trid starts at 1
@@ -530,6 +637,7 @@ bool isValid(remollEventParticle_t part){
                     {
                         worthyTRID.push_back(part.trid);
                         partCopy->push_back(trim(part));
+                        rateCopy = rate;
                     }
                     break;
                 }
@@ -541,11 +649,13 @@ bool isValid(remollEventParticle_t part){
             for (size_t i = 0; i < fHit->size(); i++)
             {
                 remollGenericDetectorHit_t hit = fHit->at(i); 
+                Double_t rate = fRate;
                 //and save the corresponding hit aswell
                 if (trid == hit.trid)
                 {
                     if (forceSeptant) hit = rotateVector(hit, mirror);
                     hitCopy->push_back(trim(hit));
+                    rateCopy = rate;
                     break;
                 }
 
@@ -556,6 +666,7 @@ bool isValid(remollEventParticle_t part){
 	    }
         hitCopy->clear();
         partCopy->clear();
+        rateCopy=0;
     }
     newFile = newTree->GetCurrentFile();
     newTree->Write("", TObject::kOverwrite);

@@ -10,7 +10,7 @@
 /run/initialize
 /remoll/geometry/userlimits/usermaxallowedstep logicDownstream 10*cm
 /remoll/geometry/userlimits/usermaxallowedstep logicUpstream 10*cm
-/remoll/tracking/set 0
+/remoll/tracking/set 2
 /tracking/storeTrajectory 1
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
@@ -19,7 +19,7 @@
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
 /remoll/beamene 11 GeV
-/remoll/evgen/set elastic
+/remoll/evgen/set beam
 /remoll/beamcurr 85 microampere
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
@@ -27,5 +27,5 @@
 /process/list
 # Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
-/remoll/filename remoll_epelastic_envelope_10M.root
-/run/beamOn 10000000
+/remoll/filename remoll_photon_envelope_1M.root
+/run/beamOn 1000000
