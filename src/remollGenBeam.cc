@@ -27,6 +27,7 @@ remollGenBeam::remollGenBeam()
   fOriginModelY(kOriginModelFlat),
   fOriginModelZ(kOriginModelFlat),
   fDirection(0.0,0.0,1.0),
+  fCorrelation(0.0,0.0,0.0),
   fPolarization(0.0,0.0,0.0),
   fRaster(0.0,0.0,0.0),
   fParticleName("e-")
@@ -55,6 +56,8 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"direction z (vector will be normalized before use)");
     fThisGenMessenger->DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"direction vector theta angle");
     fThisGenMessenger->DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"direction vector phi angle");
+    fThisGenMessenger->DeclareMethod("corrx",&remollGenBeam::SetCorrelationX,"sensitivity of direction to position in x (in mrad/mm)");
+    fThisGenMessenger->DeclareMethod("corry",&remollGenBeam::SetCorrelationY,"sensitivity of direction to position in y (in mrad/mm)");
     fThisGenMessenger->DeclareProperty("polarization",fPolarization,"polarization vector (will be normalized): x y z");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
     fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
@@ -93,6 +96,9 @@ void remollGenBeam::SetDirectionZ(double pz){ fDirection.setZ(pz); }
 void remollGenBeam::SetDirectionPh(double ph){ fDirection.setPhi(ph); }
 void remollGenBeam::SetDirectionTh(double th){ fDirection.setTheta(th); }
 
+void remollGenBeam::SetCorrelationX(double cx){ fCorrelation.setX(cx); }
+void remollGenBeam::SetCorrelationY(double cy){ fCorrelation.setY(cy); }
+
 void remollGenBeam::SetPolarizationX(double sx){ fPolarization.setX(sx); }
 void remollGenBeam::SetPolarizationY(double sy){ fPolarization.setY(sy); }
 void remollGenBeam::SetPolarizationZ(double sz){ fPolarization.setZ(sz); }
@@ -128,22 +134,32 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     double m = particle->GetPDGMass();
     double p = sqrt(E*E - m*m);
 
-    evt->fBeamE = E;
-    evt->fBeamMomentum = p * fDirection.unit();
-    evt->fBeamPolarization = fPolarization;
-
     // Start from mean position
     G4ThreeVector origin(fOriginMean);
 
+    // Start from mean direction
+    G4ThreeVector direction(fDirection.unit());
+
     // Add a spread based on chosen model
-    origin += GetSpread(fOriginSpread, fOriginModelX, fOriginModelY, fOriginModelZ);
+    G4ThreeVector spread = GetSpread(fOriginSpread, fOriginModelX, fOriginModelY, fOriginModelZ);
 
     // Allow for simplistic raster/spreading in beam generator, perpendicular to direction
-    G4ThreeVector raster(fRaster);
-    raster.rotateUz(fDirection.unit());
-    origin += GetSpread(raster);
+    G4ThreeVector rasterdirection(fRaster);
+    rasterdirection.rotateUz(fDirection.unit());
+    G4ThreeVector raster = GetSpread(rasterdirection);
+
+    // Add raster position-angle correlation (which is a scaler in mrad/mm)
+    direction.setX(fCorrelation.x() * mrad/mm * raster.x());
+    direction.setY(fCorrelation.y() * mrad/mm * raster.y());
+
+    // Add spreads to origin
+    origin += raster;
+    origin += spread;
 
     // Override target sampling
+    evt->fBeamE = E;
+    evt->fBeamMomentum = p * direction;
+    evt->fBeamPolarization = fPolarization;
     evt->fVertexPos = origin; // primary vertex
 
     evt->ProduceNewParticle(
