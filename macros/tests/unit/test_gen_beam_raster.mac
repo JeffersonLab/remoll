@@ -2,9 +2,9 @@
 /remoll/evgen/set beam
 /remoll/evgen/beam/origin 0 0 -5 m
 /remoll/evgen/beam/direction 0 0 1
-/remoll/evgen/beam/rasx 5 mm
+/remoll/evgen/beam/rasx 8 mm
 /remoll/evgen/beam/rasy 5 mm
 # units of correlation in mrad/mm
 /remoll/evgen/beam/corrx 5
-/remoll/evgen/beam/corry 5
+/remoll/evgen/beam/corry 1
 /run/beamOn 1000
