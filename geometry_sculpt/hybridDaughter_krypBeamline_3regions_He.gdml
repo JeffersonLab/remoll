@@ -1235,6 +1235,12 @@
         <positionref ref="posPCOLL2TRAP"/>
       </physvol>
 
+      <physvol>
+      	<file name="subHeBeamPipe.gdml"/>
+        <position name="beamPipe_pos" unit="mm" x="0" y="0" z="10000 - DOFFSET"/>
+      </physvol>
+
+
     </volume>
   </structure>
 
