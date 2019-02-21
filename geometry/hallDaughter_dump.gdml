@@ -9,6 +9,8 @@
 <!--Used to resolve why hall detector missing any hits and how to include the detector+hall mother volume without making any volume overlaps or encapsulations -->
 <define>
 
+  <constant name="DumpOffset" value="6087."/>
+
   <constant name="i2cm" value="2.54"/>
   <constant name="width_mother" value="190000."/>
   <constant name="height_mother" value="190000."/>
@@ -455,7 +457,31 @@
       <positionref ref="tubeDumpWaterTank_trans"/>
       <rotationref ref="identity"/>
     </subtraction>
- 
+
+
+    <box lunit="cm" name="krypDumpWall_solid"
+	 x="200."
+	 y="200."
+	 z="1."/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpDet04_solid"
+          rmin="0" rmax="45.0" z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpDet05_solid"
+          rmin="0" rmax="29.8" z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpDet06_solid"
+          rmin="0" rmax="29.8" z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpDet07_solid"
+          rmin="0" rmax="29.8" z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpDet08_solid"
+          rmin="0" rmax="29.8" z="0.1"/>
+
+    <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpDet09_solid"
+          rmin="0" rmax="45.62" z="0.1"/>
+
   </solids>
 
 <structure>
@@ -511,7 +537,6 @@
 
     <volume name="topwall_logic">
       <materialref ref="Concrete"/>
-      <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="topwall_solid"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5010"/> -->
@@ -519,7 +544,6 @@
 
     <volume name="cylwall_logic">
       <materialref ref="Concrete"/>
-      <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="cylwall_hole"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Hall_Det"/> <!-- NEW Sensitive detector FIXME -->
@@ -682,8 +706,65 @@
       <auxiliary auxtype="DetNo" auxvalue="25"/>
     </volume>
 
+    <volume name="dumpDet04_logic">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="dumpDet04_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="534"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    </volume>
 
+    <volume name="dumpDet05_logic">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="dumpDet05_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="535"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    </volume>
 
+    <volume name="dumpDet06_logic">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="dumpDet06_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="536"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    </volume>
+
+    <volume name="dumpDet07_logic">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="dumpDet07_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="537"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    </volume>
+
+    <volume name="dumpDet08_logic">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="dumpDet08_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="538"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    </volume>
+
+    <volume name="dumpDet09_logic">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="dumpDet09_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="539"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    </volume>
+
+    <volume name="krypDumpWall_logic">
+      <materialref ref="Kryptonite"/>
+      <solidref ref="krypDumpWall_solid"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
+    </volume>
 
 
 
@@ -834,8 +915,45 @@
         <positionref ref="waterDumpWaterTank_center"/>
       </physvol>
 
+      <physvol name="diffuserPlate">
+	<file name="subDumpDiffuser.gdml"/>
+        <position name="diffuserPlate_pos" unit="cm" z="nitrogenAtmWall_center_z + 15" />
+      </physvol>
 
+      <physvol name="krypDumpWall">
+        <volumeref ref="krypDumpWall_logic"/>
+        <position name="krypDumpWall_pos" unit="cm" z="nitrogenAtmWall_center_z + 25" />
+      </physvol>
 
+      <physvol name="dumpDet04">
+        <volumeref ref="dumpDet04_logic"/>
+        <position name="dumpDet04_pos" unit="cm" z="2662" />
+      </physvol>
+
+      <physvol name="dumpDet05">
+        <volumeref ref="dumpDet05_logic"/>
+        <position name="dumpDet05_pos" unit="cm" z="2930" />
+      </physvol>
+
+      <physvol name="dumpDet06">
+        <volumeref ref="dumpDet06_logic"/>
+        <position name="dumpDet06_pos" unit="cm" z="2940" />
+      </physvol>
+
+      <physvol name="dumpDet07">
+        <volumeref ref="dumpDet07_logic"/>
+        <position name="dumpDet07_pos" unit="cm" z="3044.3" />
+      </physvol>
+
+      <physvol name="dumpDet08">
+        <volumeref ref="dumpDet08_logic"/>
+        <position name="dumpDet08_pos" unit="cm" z="3150" />
+      </physvol>
+
+      <physvol name="dumpDet09">
+        <volumeref ref="dumpDet09_logic"/>
+        <position name="dumpDet09_pos" unit="cm" z="nitrogenAtmWall_center_z + 5" />
+      </physvol>
 
 
     </volume>
