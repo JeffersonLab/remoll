@@ -1211,7 +1211,7 @@
       </physvol>
 
       <!-- <physvol> -->
-      <!-- 	<file name="beampipeDShybrid.gdml"/> -->
+      <!-- 	<file name="subBeamPipeDShybrid.gdml"/> -->
       <!--   <position name="beamPipeDShybrid_pos" unit="mm" z="17810 + 11140/2 - DOFFSET"/> -->
       <!-- </physvol> -->
 
