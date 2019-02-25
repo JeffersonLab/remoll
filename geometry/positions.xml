@@ -6,17 +6,31 @@
 
 -->
      
+<!-- Hall center position (MOLLER target is upstream of pivot) -->
 <position name="hallCenter" x="0" y="0" z="6087." unit="mm"/>
 
+<!-- Target position -->
 <position name="targetCenter" x="0" y="0" z="0" unit="mm"/>
 
+<!-- Upstream spectrometer position -->
 <position name="upstreamCenter" x="0" y="0" z="7000." unit="mm"/>
 
+<!-- Hybrid spectrometer position -->
 <position name="hybridCenter" x="0" y="0" z="13366.57" unit="mm"/>
 
+<!-- Physical tracking detector position -->
 <position name="trackingCenter" x="0" y="0" z="26635." unit="mm"/>
+<!-- Virtual planes in the parallel world -->
+<position name="trackingDetectorVirtualPlaneCenter_pos" z="25.635" unit="m"/>
+<position name="trackingDetectorVirtualPlaneFront1_pos" z="-1.45" unit="m"/>
+<position name="trackingDetectorVirtualPlaneFront2_pos" z="-1.25" unit="m"/>
+<position name="trackingDetectorVirtualPlaneBack1_pos"  z="+1.25" unit="m"/>
+<position name="trackingDetectorVirtualPlaneBack2_pos"  z="+1.45" unit="m"/>
 
+<!-- Physical main detector array position -->
 <position name="detectorCenter" x="0" y="0" z="28500." unit="mm"/>
+<!-- Virtual planes in the parallel world -->
+<position name="mainDetectorVirtualPlane_pos" z="28.500" unit="m"/>
 
 <!-- Z position of the plane about which the two arrays of showermax
 detectors are placed -->
