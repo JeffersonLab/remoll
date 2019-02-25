@@ -76,6 +76,13 @@ remollBeamTarget::remollBeamTarget()
     fMessenger->DeclarePropertyWithUnit("beam_corrth","deg",fCorrTh,"beam correlated angle (vertical)");
     fMessenger->DeclarePropertyWithUnit("beam_dph","deg",fdPh,"beam gaussian spread in x (horizontal)");
     fMessenger->DeclarePropertyWithUnit("beam_dth","deg",fdTh,"beam gaussian spread in y (vertical)");
+
+    // Create beam messenger
+    fBeamMessenger = new G4GenericMessenger(this,"/remoll/beam/","Remoll properties");
+    fBeamMessenger->DeclareMethodWithUnit("rasx","mm",&remollBeamTarget::SetRasterX,"raster x spread perpendicular to the beam at z = 0");
+    fBeamMessenger->DeclareMethodWithUnit("rasy","mm",&remollBeamTarget::SetRasterY,"raster y spread perpendicular to the beam at z = 0");
+    fBeamMessenger->DeclareMethod("corrx",&remollBeamTarget::SetCorrelationX,"sensitivity of direction to position in x (in mrad/mm)");
+    fBeamMessenger->DeclareMethod("corry",&remollBeamTarget::SetCorrelationY,"sensitivity of direction to position in y (in mrad/mm)");
 }
 
 remollBeamTarget::~remollBeamTarget()
@@ -287,6 +294,11 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // Create vertex
     remollVertex vertex;
 
+    // Sample raster x and y positions on target
+    // (assumed independent of z position)
+    G4double rasx = G4RandFlat::shoot(fX0 - fRasterX/2.0, fX0 + fRasterX/2.0);
+    G4double rasy = G4RandFlat::shoot(fY0 - fRasterY/2.0, fY0 + fRasterY/2.0);
+
     // No sampling required
     if (samp == kNoTargetVolume) {
       return vertex;
@@ -305,11 +317,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
                 "No target volume defined!" << G4endl;
       exit(1);
     }
-
-    // Sample raster x and y positions on target
-    // (assumed independent of z position)
-    G4double rasx = G4RandFlat::shoot(fX0 - fRasterX/2.0, fX0 + fRasterX/2.0);
-    G4double rasy = G4RandFlat::shoot(fY0 - fRasterY/2.0, fY0 + fRasterY/2.0);
 
     // Sample where along target weighted by density (which roughly corresponds to A
     // or the number of electrons, which is probably good enough for this

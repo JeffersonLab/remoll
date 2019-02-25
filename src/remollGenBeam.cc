@@ -60,11 +60,6 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
     fThisGenMessenger->DeclareMethod("sz",&remollGenBeam::SetPolarizationZ,"z component of polarization");
 
-    fThisGenMessenger->DeclareMethodWithUnit("rasx","mm",&remollGenBeam::SetRasterX,"raster x spread perpendicular to the beam at z = 0");
-    fThisGenMessenger->DeclareMethodWithUnit("rasy","mm",&remollGenBeam::SetRasterY,"raster y spread perpendicular to the beam at z = 0");
-    fThisGenMessenger->DeclareMethod("corrx",&remollGenBeam::SetCorrelationX,"sensitivity of direction to position in x (in mrad/mm)");
-    fThisGenMessenger->DeclareMethod("corry",&remollGenBeam::SetCorrelationY,"sensitivity of direction to position in y (in mrad/mm)");
-
     fThisGenMessenger->DeclareMethod("partName",&remollGenBeam::SetPartName,"name of particle to shoot");
 }
 
