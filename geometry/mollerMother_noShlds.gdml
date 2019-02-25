@@ -29,7 +29,7 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-        <file name="targetDaughter_noShlds.gdml"/>
+        <file name="target/targetDaughter_noShlds.gdml"/>
         <positionref ref="targetCenter"/>
       </physvol>
 
