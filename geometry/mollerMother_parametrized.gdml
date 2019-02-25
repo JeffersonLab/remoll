@@ -36,7 +36,7 @@
 
 
       <physvol>
-      <file name="hallDaughter.gdml"/>
+      <file name="hall/hallDaughter.gdml"/>
       <positionref ref="hallCenter"/>
       </physvol>
 -->
@@ -47,12 +47,12 @@
       </physvol>
 <!--
       <physvol>
-	    <file name="upstreamDaughter.gdml"/>
+	    <file name="upstream/upstreamDaughter.gdml"/>
 	    <positionref ref="upstreamCenter"/>
       </physvol>
 
       <physvol>
-    	<file name="hybridDaughter.gdml"/>
+    	<file name="hybrid/hybridDaughter.gdml"/>
 	    <positionref ref="hybridCenter"/>
       </physvol>    
 -->

@@ -32,11 +32,11 @@
       <positionref ref="targetCenter"/>
       </physvol>
       <physvol>
-      <file name="upstreamDaughter.gdml"/>
+      <file name="upstream/upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
       </physvol>
       <physvol>
-      <file name="hybridDaughter.gdml"/>
+      <file name="hybrid/hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
       </physvol> 
 

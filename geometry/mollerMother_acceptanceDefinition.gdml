@@ -37,18 +37,18 @@
       </physvol>
 
       <physvol>
-      <file name="hallDaughter_acceptanceDefinition.gdml"/>
+      <file name="hall/hallDaughter_acceptanceDefinition.gdml"/>
       <positionref ref="hallCenter"/>
       </physvol> 
 
  
       <physvol>
-	    <file name="upstreamDaughter_acceptanceDefinition.gdml"/>
+	    <file name="upstream/upstreamDaughter_acceptanceDefinition.gdml"/>
 	    <positionref ref="upstreamCenter"/>
       </physvol>
 
       <physvol>
-    	<file name="hybridDaughter_acceptanceDefinition.gdml"/>
+    	<file name="hybrid/hybridDaughter_acceptanceDefinition.gdml"/>
 	    <positionref ref="hybridCenter"/>
       </physvol>    
 

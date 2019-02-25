@@ -47,13 +47,13 @@
 
       <!-- Upstream Spectrometer -->
       <physvol>
-        <file name="upstreamDaughter.gdml"/>
+        <file name="upstream/upstreamDaughter.gdml"/>
         <positionref ref="upstreamCenter"/>
       </physvol>
 
       <!-- Hybrid Spectrometer -->
       <physvol>
-        <file name="hybridDaughter.gdml"/>
+        <file name="hybrid/hybridDaughter.gdml"/>
         <positionref ref="hybridCenter"/>
       </physvol> 
 
