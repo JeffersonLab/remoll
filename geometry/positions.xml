@@ -1,0 +1,26 @@
+<!--
+
+  Master positions file 
+
+  This file contains the positions of all included detector systems.
+
+-->
+     
+<position name="hallCenter" x="0" y="0" z="6087." unit="mm"/>
+
+<position name="targetCenter" x="0" y="0" z="0" unit="mm"/>
+
+<position name="upstreamCenter" x="0" y="0" z="7000." unit="mm"/>
+
+<position name="hybridCenter" x="0" y="0" z="13366.57" unit="mm"/>
+
+<position name="trackingCenter" x="0" y="0" z="26635." unit="mm"/>
+
+<position name="detectorCenter" x="0" y="0" z="28500." unit="mm"/>
+
+<!-- Z position of the plane about which the two arrays of showermax
+detectors are placed -->
+<position name="showerMaxDetectorCenter" x="0" y="0" z="28750." unit="mm"/>
+
+<!-- Z position of the center of the lucite stack of the pion detector. -->
+<position name="pionDetectorCenter" x="0" y="0" z="29600." unit="mm"/>
