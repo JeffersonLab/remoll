@@ -13,7 +13,6 @@
   <position name="upstreamCenter" x="0" y="0" z="7000."/>
   <position name="hybridCenter" x="0" y="0" z="13366.57"/>
   <position name="detectorCenter" x="0" y="0" z="0.0*28500."/>
-  <rotation name="identity"/>
   <rotation name="rot" unit="deg" x="0" y="90" z="0"/>
 </define>
 
@@ -68,7 +67,6 @@
       <physvol>
       <file name="targetDaughter_noShlds.gdml"/>
       <positionref ref="targetCenter"/>
-      <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
