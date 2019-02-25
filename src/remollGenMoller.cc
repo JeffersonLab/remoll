@@ -10,19 +10,20 @@
 #include "remolltypes.hh"
 
 remollGenMoller::remollGenMoller()
-  : remollVEventGen("moller") {
+  : remollVEventGen("moller")
+{
   fThCoM_min =    30.0*deg;
   fThCoM_max =   150.0*deg;
 
   fApplyMultScatt = true;
 }
 
-remollGenMoller::~remollGenMoller(){
-}
+remollGenMoller::~remollGenMoller()
+{ }
 
-void remollGenMoller::SamplePhysics(remollVertex *vert, remollEvent *evt){
+void remollGenMoller::SamplePhysics(remollVertex *vert, remollEvent *evt)
+{
   // Generate Moller event
-
   double beamE = vert->GetBeamEnergy();
   double me    = electron_mass_c2;
 
