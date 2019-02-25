@@ -27,9 +27,9 @@ remollGenBeam::remollGenBeam()
   fOriginModelY(kOriginModelFlat),
   fOriginModelZ(kOriginModelFlat),
   fDirection(0.0,0.0,1.0),
-  fCorrelation(0.0,0.0,0.0),
+  fCorrelation(0.136*mrad/mm,0.136*mrad/mm,0.0),
   fPolarization(0.0,0.0,0.0),
-  fRaster(0.0,0.0,0.0),
+  fRaster(2.5*mm,2.5*mm,0.0),
   fParticleName("e-")
 {
     fSampType = kNoTargetVolume;
