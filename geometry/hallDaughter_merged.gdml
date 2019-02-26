@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "matrices.xml">
 <!ENTITY materials SYSTEM "materials.xml">
 ]>
 
@@ -8,6 +9,7 @@
 
 <!--Used to resolve why hall detector missing any hits and how to include the detector+hall mother volume without making any volume overlaps or encapsulations -->
 <define>
+  &matrices;
 
   <constant name="width_mother" value="90000."/>
   <constant name="height_mother" value="90000."/>

@@ -7,6 +7,9 @@ script:
 - for suite in unit commit release ; do
     docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" || exit 1 ;
   done
+- for suite in load validate overlap ; do
+    docker run -t jeffersonlab/remoll "scripts/tests/test_geometries.sh ${suite}" ;
+  done
 
 after_success:
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
