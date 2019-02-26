@@ -29,6 +29,8 @@ typedef G4RunManager RunManager;
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
+#include "TROOT.h"
+
 #ifdef __APPLE__
 #include <unistd.h>
 #endif
