@@ -21,7 +21,6 @@ typedef G4RunManager RunManager;
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
-#include "remollIO.hh"
 #include "remollPhysicsList.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
