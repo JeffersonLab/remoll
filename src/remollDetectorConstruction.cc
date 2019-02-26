@@ -63,7 +63,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   fWorldName(name)
 {
   // If gdmlfile is non-empty
-  if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;
+  if (gdmlfile.length() > 0) SetGDMLFile(gdmlfile);
 
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
