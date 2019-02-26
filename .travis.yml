@@ -5,7 +5,7 @@ services:
 script:
 - docker build -t jeffersonlab/remoll .
 - for suite in unit commit release ; do
-    docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" ;
+    docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" || exit 1 ;
   done
 
 after_success:

@@ -14,7 +14,6 @@
 #endif
 #endif
 
-#include "remollIO.hh"
 #include "remollBeamTarget.hh"
 #include "remollVEventGen.hh"
 #include "remollEvent.hh"

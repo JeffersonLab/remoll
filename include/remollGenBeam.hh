@@ -49,6 +49,9 @@ class remollGenBeam : public remollVEventGen {
     void SetDirectionPh(double ph);
     void SetDirectionTh(double th);
 
+    void SetCorrelationX(double cx);
+    void SetCorrelationY(double cy);
+
     void SetPolarizationX(double sx);
     void SetPolarizationY(double sy);
     void SetPolarizationZ(double sz);
@@ -62,6 +65,7 @@ class remollGenBeam : public remollVEventGen {
     G4ThreeVector fOriginSpread;
     EOriginModel  fOriginModelX, fOriginModelY, fOriginModelZ;
     G4ThreeVector fDirection;
+    G4ThreeVector fCorrelation;
     G4ThreeVector fPolarization;
 
     G4ThreeVector fRaster;
