@@ -21,7 +21,7 @@
 
 remollGenBeam::remollGenBeam()
 : remollVEventGen("beam"),
-  fOriginMean(0.0*m,0.0*m,-5.0*m),
+  fOriginMean(0.0*m,0.0*m,-7.75*m),
   fOriginSpread(0.0,0.0,0.0),
   fOriginModelX(kOriginModelFlat),
   fOriginModelY(kOriginModelFlat),

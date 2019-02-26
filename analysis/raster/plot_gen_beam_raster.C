@@ -12,14 +12,18 @@ void plot_gen_beam_raster(const TString& files)
   T->SetBranchAddress("units", &units);
   T->SetBranchAddress("part", &parts);
 
-  TH2F hvxvy_at_z0("hvxvy_at_z0","v_x vs v_y at z = 0",200,-5.0,+5.0,200,-5.0,+5.0);
-  TH2F hpxpy_at_z0("hpxpy_at_z0","p_x vs p_y at z = 0",200,-0.05,+0.05,200,-0.05,+0.05);
-  TH2F hvxpx_at_z0("hvxpx_at_z0","v_x vs p_x at z = 0",200,-5.0,+5.0,200,-0.05,+0.05);
-  TH2F hvypy_at_z0("hvypy_at_z0","v_y vs p_y at z = 0",200,-5.0,+5.0,200,-0.05,+0.05);
-  TH2F hvxvy_at_zg("hvxvy_at_zg","v_x vs v_y at z = z_gen",200,-5.0,+5.0,200,-5.0,+5.0);
-  TH2F hpxpy_at_zg("hpxpy_at_zg","p_x vs p_y at z = z_gen",200,-0.05,+0.05,200,-0.05,+0.05);
-  TH2F hvxpx_at_zg("hvxpx_at_zg","v_x vs p_x at z = z_gen",200,-5.0,+5.0,200,-0.05,+0.05);
-  TH2F hvypy_at_zg("hvypy_at_zg","v_y vs p_y at z = z_gen",200,-5.0,+5.0,200,-0.05,+0.05);
+  // Axis sizes
+  Double_t pos = 5.0;
+  Double_t dir = 0.001;
+
+  TH2F hvxvy_at_z0("hvxvy_at_z0","v_x vs v_y at z = 0",200,-pos,+pos,200,-pos,+pos);
+  TH2F hpxpy_at_z0("hpxpy_at_z0","p_x vs p_y at z = 0",200,-dir,+dir,200,-dir,+dir);
+  TH2F hvxpx_at_z0("hvxpx_at_z0","v_x vs p_x at z = 0",200,-pos,+pos,200,-dir,+dir);
+  TH2F hvypy_at_z0("hvypy_at_z0","v_y vs p_y at z = 0",200,-pos,+pos,200,-dir,+dir);
+  TH2F hvxvy_at_zg("hvxvy_at_zg","v_x vs v_y at z = z_gen",200,-pos,+pos,200,-pos,+pos);
+  TH2F hpxpy_at_zg("hpxpy_at_zg","p_x vs p_y at z = z_gen",200,-dir,+dir,200,-dir,+dir);
+  TH2F hvxpx_at_zg("hvxpx_at_zg","v_x vs p_x at z = z_gen",200,-pos,+pos,200,-dir,+dir);
+  TH2F hvypy_at_zg("hvypy_at_zg","v_y vs p_y at z = z_gen",200,-pos,+pos,200,-dir,+dir);
 
   // Loop over events
   for (size_t iev = 0; iev < T->GetEntries(); iev++) {
