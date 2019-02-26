@@ -33,6 +33,7 @@
     <property name="RINDEX" ref="Quartz_RINDEX"/> 
     <property name="ABSLENGTH" ref="Quartz_ABSLENGTH"/> 
     <MEE unit="eV" value="125.663004061076"/>
+
     <D unit="g/cm3" value="2.2"/>
     <fraction n="0.467465468463971" ref="Silicon"/>
     <fraction n="0.532534531536029" ref="Oxygen"/>
@@ -66,8 +67,9 @@
 </material>
 
 <material Z="19" name="Photocathode" state="solid">
-      <MEE unit="eV" value="190"/>
-      <D unit="g/cm3" value="5"/>
+    <property name="EFFICIENCY" ref="Cathode_Surf_Efficiency"/>
+    <MEE unit="eV" value="190"/>
+    <D unit="g/cm3" value="5"/> 
       <atom unit="g/mole" value="39.0983"/>
 </material>
 </materials>

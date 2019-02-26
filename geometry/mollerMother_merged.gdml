@@ -8,7 +8,6 @@
   <position name="upstreamCenter" x="0" y="0" z="7000."/>
   <position name="hybridCenter" x="0" y="0" z="13366.57"/>
   <position name="detectorCenter" x="0" y="0" z="28500."/>
-  <rotation name="identity"/>
 </define>
 
 <materials>
@@ -31,30 +30,27 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-      <file name="targetDaughter_Clamshell_Optimized.gdml"/>
+	      <!--<file name="targetDaughter_Clamshell_Optimized.gdml"/>-->
+      <file name="subTargetRegion.gdml"/>
       <positionref ref="targetCenter_Clamshell"/>
       <!--<file name="targetDaughter_merged.gdml"/>
       <positionref ref="targetCenter"/>-->
-      <rotationref ref="identity"/>
       </physvol>
 
       <physvol>
       <file name="hallDaughter_merged.gdml"/>
       <positionref ref="hallCenter"/>
-      <rotationref ref="identity"/>
       </physvol> 
 
  
       <physvol>
 	    <file name="upstreamDaughter_merged.gdml"/>
 	    <positionref ref="upstreamCenter"/>
-    	<rotationref ref="identity"/>
       </physvol>
 
       <physvol>
     	<file name="hybridDaughter_merged.gdml"/>
 	    <positionref ref="hybridCenter"/>
-    	<rotationref ref="identity"/>
       </physvol>    
 
 

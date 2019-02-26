@@ -6,7 +6,6 @@
      <position name="upstreamCenter" x="0" y="0" z="7000."/>
      <position name="hybridCenter" x="0" y="0" z="13366.57"/>
      <position name="detectorCenter" x="0" y="0" z="28500."/>
-     <rotation name="identity"/>
 </define>
 
 <materials>
@@ -31,17 +30,14 @@
       <physvol>
       <file name="targetDaughter_Clamshell_Optimized.gdml"/>
       <positionref ref="targetCenter"/>
-      <rotationref ref="identity"/>
       </physvol>
       <physvol>
       <file name="upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
-      <rotationref ref="identity"/>
       </physvol>
       <physvol>
       <file name="hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
-      <rotationref ref="identity"/>
       </physvol> 
 
     </volume>

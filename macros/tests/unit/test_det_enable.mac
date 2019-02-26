@@ -28,3 +28,10 @@
 # Enable one detector
 /remoll/SD/enable 4000
 /remoll/SD/print_all
+
+# Enable specific sensitivity
+/remoll/SD/enable_all
+/remoll/SD/detect lowenergyneutral 4000
+/remoll/SD/detect opticalphoton 4001
+/remoll/SD/detect all 4002
+/remoll/SD/print_all
