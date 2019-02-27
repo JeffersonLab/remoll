@@ -25,22 +25,22 @@
     <solidref ref="world_solid"/>
 
     <physvol>
-      <file name="targetDaughter_noShlds.gdml"/>
+      <file name="target/targetDaughter_noShlds.gdml"/>
       <positionref ref="targetCenter"/>
     </physvol>
 
     <physvol>
-      <file name="hallDaughter_noShlds.gdml"/>
+      <file name="hall/hallDaughter_noShlds.gdml"/>
       <positionref ref="hallCenter"/>
     </physvol>
 
     <physvol>
-      <file name="upstreamDaughter_noShlds.gdml"/>
+      <file name="upstream/upstreamDaughter_noShlds.gdml"/>
       <positionref ref="upstreamCenter"/>
     </physvol>
 
     <physvol>
-      <file name="hybridDaughter_noShlds.gdml"/>
+      <file name="hybrid/hybridDaughter_noShlds.gdml"/>
       <positionref ref="hybridCenter"/>
     </physvol>    
 

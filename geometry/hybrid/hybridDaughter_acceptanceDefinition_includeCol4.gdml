@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-<!ENTITY matrices SYSTEM "matrices.xml">
-<!ENTITY materials SYSTEM "materials.xml">
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
@@ -42,11 +42,11 @@
     <constant name="PCOLL2_R1_U" value ="30"/> <!-- Was 38.0" for no good reason/> -->
     <constant name="PCOLL2_R1_D" value ="30"/> <!-- 8.0"/> -->
     <!-- coll sep, inner rad, adjust this -->
-    <constant name="PCOLL2_R2_U" value ="52.5"/>  <!-- was 64"/> -->
-    <constant name="PCOLL2_R2_D" value ="52.5"/>
+    <constant name="PCOLL2_R2_U" value ="50.0"/>  <!-- was 64, then was 52.5 for US col 4 but still bad envelope -->
+    <constant name="PCOLL2_R2_D" value ="50.0"/>
     <!-- coll sep, outer rad, adjust this -->
-    <constant name="PCOLL2_R3_U" value ="165.5"/> <!-- was 221"/> -->
-    <constant name="PCOLL2_R3_D" value ="165.5"/>
+    <constant name="PCOLL2_R3_U" value ="171.4"/> <!-- was 221, then was 165.5 for US col 4 but still bad envelope -->
+    <constant name="PCOLL2_R3_D" value ="171.4"/>
     <constant name="PCOLL2_R4_U" value ="300"/>
     <constant name="PCOLL2_R4_D" value ="300"/>
     <constant name="PCOLL2_THICK" value ="100.0"/>
@@ -268,6 +268,7 @@
     <constant name="PCOLL2_SCULPT_P4_X" value ="228.0"/>
     <constant name="PCOLL2_SCULPT_P4_Y" value ="55.0"/>
     -->
+    <!-- new z position, old sculpt envelopes
     <constant name="PCOLL2_SCULPT_P1_X" value ="50.8"/>
     <constant name="PCOLL2_SCULPT_P1_Y" value ="13.4"/>
     <constant name="PCOLL2_SCULPT_P2_X" value ="87.6"/>
@@ -276,6 +277,16 @@
     <constant name="PCOLL2_SCULPT_P3_Y" value ="27.2"/>
     <constant name="PCOLL2_SCULPT_P4_X" value ="163.9"/>
     <constant name="PCOLL2_SCULPT_P4_Y" value ="36.3"/>
+    -->
+    <!-- new z position, new sculpt envelopes -->
+    <constant name="PCOLL2_SCULPT_P1_X" value ="50.1"/>
+    <constant name="PCOLL2_SCULPT_P1_Y" value ="10.5"/>
+    <constant name="PCOLL2_SCULPT_P2_X" value ="120.94"/>
+    <constant name="PCOLL2_SCULPT_P2_Y" value ="28.1"/>
+    <constant name="PCOLL2_SCULPT_P3_X" value ="152.3"/>
+    <constant name="PCOLL2_SCULPT_P3_Y" value ="38.0"/>
+    <constant name="PCOLL2_SCULPT_P4_X" value ="166.6"/>
+    <constant name="PCOLL2_SCULPT_P4_Y" value ="36.5"/>
 
 
     <position name="PCOLL2_lcut1" unit="mm" x="PCOLL2_SCULPT_P1_X" y="-PCOLL2_SCULPT_P1_Y" z="-PCOLL2_THICK/2-5"/> 
@@ -1702,12 +1713,10 @@
 <!-- Collimator 4 -->
 <!-- Turn off Col 4 for test
      -->
-<!--
       <physvol name="DScoll_6">
         <volumeref ref="logicPDScollunion_1"/>
         <positionref ref="posPCOLL2"/>
       </physvol>
--->
 <!--pcoll2trap_phys is removed since this is overlapping with shblk 4 poly shielding -->
 <!--
 
@@ -1727,7 +1736,7 @@
 -->
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
-    <!--
+    <!-- 
       <physvol>
         <volumeref ref="boxDSPolyShield1_logic"/>
         <positionref ref="boxDSPolyShield1_center"/>

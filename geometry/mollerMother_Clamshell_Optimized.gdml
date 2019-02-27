@@ -25,15 +25,15 @@
     <solidref ref="world_solid"/>
 
     <physvol>
-      <file name="targetDaughter_Clamshell_Optimized.gdml"/>
+      <file name="target/targetDaughter_Clamshell_Optimized.gdml"/>
       <positionref ref="targetCenter"/>
     </physvol>
     <physvol>
-      <file name="upstreamDaughter.gdml"/>
+      <file name="upstream/upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
     </physvol>
     <physvol>
-      <file name="hybridDaughter.gdml"/>
+      <file name="hybrid/hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
     </physvol> 
 

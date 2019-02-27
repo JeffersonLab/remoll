@@ -24,7 +24,7 @@
     <solidref ref="world_solid"/>
 
     <physvol>
-      <file name="targetDaughter.gdml"/>
+      <file name="target/targetDaughter.gdml"/>
       <positionref ref="targetCenter"/>
     </physvol>
 
@@ -47,13 +47,13 @@
 
     <!-- Upstream Spectrometer -->
     <physvol>
-      <file name="upstreamDaughter.gdml"/>
+      <file name="upstream/upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
     </physvol>
 
     <!-- Hybrid Spectrometer -->
     <physvol>
-      <file name="hybridDaughter.gdml"/>
+      <file name="hybrid/hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
     </physvol> 
 

@@ -25,25 +25,25 @@
       <solidref ref="world_solid"/>
 
       <physvol>
-      <file name="targetDaughter_acceptanceDefinition.gdml"/>
+      <file name="target/targetDaughter_acceptanceDefinition.gdml"/>
       <positionref ref="targetCenter"/>
-      <!--<file name="targetDaughter_merged.gdml"/>
+      <!--<file name="target/targetDaughter_merged.gdml"/>
       <positionref ref="targetCenter"/>-->
       </physvol>
 
       <physvol>
-      <file name="hallDaughter_acceptanceDefinition.gdml"/>
+      <file name="hall/hallDaughter_acceptanceDefinition.gdml"/>
       <positionref ref="hallCenter"/>
       </physvol> 
 
  
       <physvol>
-      <file name="upstreamDaughter_acceptanceDefinition.gdml"/>
+      <file name="upstream/upstreamDaughter_acceptanceDefinition.gdml"/>
       <positionref ref="upstreamCenter"/>
       </physvol>
 
       <physvol>
-      <file name="hybridDaughter_acceptanceDefinition_includeCol4.gdml"/>
+      <file name="hybrid/hybridDaughter_acceptanceDefinition_includeCol4.gdml"/>
       <positionref ref="hybridCenter"/>
       </physvol>    
 
