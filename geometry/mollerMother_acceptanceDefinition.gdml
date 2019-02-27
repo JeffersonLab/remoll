@@ -26,7 +26,7 @@
 
       <physvol>
       <file name="targetDaughter_acceptanceDefinition.gdml"/>
-      <positionref ref="targetCenter_Clamshell"/>
+      <positionref ref="targetCenter"/>
       <!--<file name="targetDaughter_merged.gdml"/>
       <positionref ref="targetCenter"/>-->
       </physvol>
