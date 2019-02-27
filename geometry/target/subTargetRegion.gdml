@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "../matrices.xml">
+<!ENTITY matrices SYSTEM "../matrices.xml">
 <!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
