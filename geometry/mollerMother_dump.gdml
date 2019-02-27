@@ -1,29 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY world SYSTEM "solids/world.xml">
+<!ENTITY positions SYSTEM "positions.xml">
+]>
+
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
-  <define> 
-    <position name="hallCenter" x="0" y="0" z="6087."/>
-    <position name="targetCenter" x="0" y="0" z="0"/>
-    <position name="upstreamCenter" x="0" y="0" z="7000."/>
-    <position name="trackingCenter" x="0" y="0" z="26635."/>
-    <position name="hybridCenter" x="0" y="0" z="13366.57"/>
-    <position name="detectorCenter" x="0" y="0" z="28500."/>
-    <position name="showerMaxDetectorCenter" x="0" y="0" z="28750."/>
-    <position name="pionDetectorCenter" x="0" y="0" z="29600."/>
-  </define>
+<define>
+  &positions;
+</define>
 
-  <materials>
-  </materials>
+<materials>
+</materials>
 
-  <solids>
-    <box lunit="mm" name="boxMother" x="200000" y="200000" z="200000"/>
-  </solids>
+<solids>
+  &world;
+</solids>
 
-  <structure>
+<structure>
 
-    <volume name="logicMother">
-      <materialref ref="G4_Galactic"/>
-      <solidref ref="boxMother"/>
+  <volume name="logicMother">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="world_solid"/>
 
       <physvol>
         <file name="target/targetDaughter_merged.gdml"/>
@@ -36,11 +35,11 @@
       </physvol>
 
 <!--
-      <physvol>
-        <file name="detector_parametrized.gdml"/>
-        <rotation name="detector_rot" y="90" unit="deg"/>
-        <positionref ref="detectorCenter"/>
-      </physvol>
+    <physvol>
+      <file name="detector_parametrized.gdml"/>
+      <rotation name="detector_rot" y="90" unit="deg"/>
+      <positionref ref="detectorCenter"/>
+    </physvol>
  -->
 
       <physvol>

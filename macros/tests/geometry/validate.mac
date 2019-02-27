@@ -1,0 +1,3 @@
+/remoll/geometry/validate true
+/remoll/geometry/overlapcheck false
+/run/initialize

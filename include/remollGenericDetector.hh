@@ -147,6 +147,11 @@ class remollGenericDetector : public G4VSensitiveDetector {
           fDetectOpticalPhotons = false;
           fDetectLowEnergyNeutrals = false;
         }
+        if (det_type.compareTo("all", G4String::ignoreCase) == 0) {
+          G4cout << GetName() << " detects all particles" << G4endl;
+          fDetectSecondaries = true;
+          fDetectLowEnergyNeutrals = true;
+        }
         if (det_type.compareTo("lowenergyneutral", G4String::ignoreCase) == 0) {
           G4cout << GetName() << " detects low energy neutrals" << G4endl;
           fDetectLowEnergyNeutrals = true;
@@ -173,7 +178,11 @@ class remollGenericDetector : public G4VSensitiveDetector {
       };
       void PrintEnabled() const {
         G4cout << "Det " << GetName() << " (" << fDetNo << ") "
-            << (fEnabled? "enabled" : "disabled") << G4endl;
+            << (fEnabled? "enabled" : "disabled")
+            << (fDetectLowEnergyNeutrals? " lowenergyneutral":"")
+            << (fDetectOpticalPhotons? " opticalphoton":"")
+            << (fDetectSecondaries? " secondaries":"")
+            << G4endl;
       };
 
       void  SetDetNo(G4int detno) { fDetNo = detno; }

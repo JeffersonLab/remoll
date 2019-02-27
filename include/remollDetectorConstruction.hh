@@ -2,6 +2,7 @@
 #define __MOLLERDETECTORCONSTRUCTION_HH
 
 #include "G4GDMLParser.hh"
+#include "G4GDMLAuxStructType.hh"
 #include "G4VUserDetectorConstruction.hh"
 #include "G4Types.hh"
 
@@ -141,6 +142,20 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     void PrintGDMLWarning() const;
 
     G4VPhysicalVolume* ParseGDMLFile();
+
+    G4bool HasAuxWithType(const G4GDMLAuxListType& list, const G4String& type)
+    {
+      return NextAuxWithType(list.begin(), list.end(), type) != list.end();
+    }
+    G4GDMLAuxListType::const_iterator NextAuxWithType(
+        const G4GDMLAuxListType::const_iterator& begin,
+        const G4GDMLAuxListType::const_iterator& end,
+        const G4String& type)
+    {
+      return std::find_if(begin, end,
+        [type](const G4GDMLAuxStructType& element) {
+          return element.type.compareTo(type, G4String::ignoreCase) == 0;} );
+    }
 
     void PrintAuxiliaryInfo() const;
     void ParseAuxiliaryTargetInfo();
