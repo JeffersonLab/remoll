@@ -27,8 +27,6 @@
     <physvol>
       <file name="target/subTargetRegion.gdml"/>
       <positionref ref="targetCenter"/>
-      <!--<file name="target/targetDaughter_merged.gdml"/>
-      <positionref ref="targetCenter"/>-->
     </physvol>
 
     <physvol>
