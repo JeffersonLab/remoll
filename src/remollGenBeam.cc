@@ -29,7 +29,8 @@ remollGenBeam::remollGenBeam()
   fDirection(0.0,0.0,1.0),
   fCorrelation(0.136*mrad/mm,0.136*mrad/mm,0.0),
   fPolarization(0.0,0.0,0.0),
-  fRaster(2.5*mm,2.5*mm,0.0),
+  fRaster(5*mm,5*mm,0.0),
+  fRasterRefZ(-0.75*m),
   fParticleName("e-")
 {
     fSampType = kNoTargetVolume;
@@ -60,6 +61,7 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
     fThisGenMessenger->DeclareMethod("sz",&remollGenBeam::SetPolarizationZ,"z component of polarization");
 
+    fThisGenMessenger->DeclareMethodWithUnit("rasrefz","mm",&remollGenBeam::SetRasterRefZ,"reference z position where raster is defined");
     fThisGenMessenger->DeclareMethodWithUnit("rasx","mm",&remollGenBeam::SetRasterX,"raster x spread perpendicular to the beam at z = 0");
     fThisGenMessenger->DeclareMethodWithUnit("rasy","mm",&remollGenBeam::SetRasterY,"raster y spread perpendicular to the beam at z = 0");
     fThisGenMessenger->DeclareMethod("corrx",&remollGenBeam::SetCorrelationX,"sensitivity of direction to position in x (in mrad/mm)");
@@ -91,6 +93,7 @@ void remollGenBeam::SetOriginZModel(G4String z){ fOriginModelZ = GetOriginModelF
 
 void remollGenBeam::SetRasterX(double x){ fRaster.setX(x); }
 void remollGenBeam::SetRasterY(double y){ fRaster.setY(y); }
+void remollGenBeam::SetRasterRefZ(double z){ fRasterRefZ = z; }
 
 void remollGenBeam::SetDirectionX(double px){ fDirection.setX(px); }
 void remollGenBeam::SetDirectionY(double py){ fDirection.setY(py); }
@@ -155,8 +158,8 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     direction.rotateX(- fCorrelation.y() * raster.y()); // Rotate around X by Y amount
 
     // Project raster back to origin
-    raster.setX(raster.x() - direction.x() * origin.z());
-    raster.setY(raster.y() - direction.y() * origin.z());
+    raster.setX(raster.x() + direction.x() * (origin.z() - fRasterRefZ));
+    raster.setY(raster.y() + direction.y() * (origin.z() - fRasterRefZ));
 
     // Add spreads to origin
     origin += raster;
