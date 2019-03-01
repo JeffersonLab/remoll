@@ -1,0 +1,4 @@
+import model sm
+generate e- e- > e- e- a / Z, a > e+ e-
+output ee_eea__a_ee
+shell cp template/* ee_eea__a_ee/Cards

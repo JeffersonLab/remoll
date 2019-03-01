@@ -4,8 +4,11 @@ services:
 
 script:
 - docker build -t jeffersonlab/remoll .
+- for suite in load validate overlap ; do
+    docker run -t jeffersonlab/remoll "scripts/tests/test_geometries.sh ${suite}" ;
+  done
 - for suite in unit commit release ; do
-    docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" ;
+    docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" || exit 1 ;
   done
 
 after_success:
@@ -16,3 +19,5 @@ after_success:
     docker tag jeffersonlab/remoll jeffersonlab/remoll:$TRAVIS_BRANCH && docker push jeffersonlab/remoll:$TRAVIS_BRANCH ;
   fi
 
+notifications:
+  slack: jlab12gev:PVp0QYADLTXmFdicK6WXkTGN

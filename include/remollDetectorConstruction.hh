@@ -2,10 +2,12 @@
 #define __MOLLERDETECTORCONSTRUCTION_HH
 
 #include "G4GDMLParser.hh"
+#include "G4GDMLAuxStructType.hh"
 #include "G4VUserDetectorConstruction.hh"
 #include "G4Types.hh"
 
 #include <vector>
+#include <set>
 
 class G4Tubs;
 class G4LogicalVolume;
@@ -23,23 +25,33 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     remollDetectorConstruction(const G4String& name, const G4String& gdmlfile);
     virtual ~remollDetectorConstruction();
 
+  private:
+
+    remollDetectorConstruction(const remollDetectorConstruction&);
+    remollDetectorConstruction& operator=(remollDetectorConstruction);
+
+
   public:
 
     G4VPhysicalVolume* Construct();
     void ConstructSDandField();
 
-    void ReloadGeometry(const G4String gdmlfile);
 
-    void SetUserLimits(G4String type, G4String name, G4String value_units);
-    void SetUserLimit(G4UserLimits* userlimits, const G4String limit, const G4String value_units);
+  public:
 
-    void SetUserMaxAllowedStep(G4String name, G4String value_units);
-    void SetUserMaxTrackLength(G4String name, G4String value_units);
-    void SetUserMaxTime(G4String name, G4String value_units);
-    void SetUserMinEkine(G4String name, G4String value_units);
-    void SetUserMinRange(G4String name, G4String value_units);
+    void SetVerboseLevel(G4int verbose) { fVerboseLevel = verbose; };
 
   private:
+
+    G4int fVerboseLevel;
+
+
+  private:
+
+    G4GDMLParser *fGDMLParser;
+
+    G4bool fGDMLValidate;
+    G4bool fGDMLOverlapCheck;
 
     G4String fGDMLPath;
     G4String fGDMLFile;
@@ -52,16 +64,51 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
       fGDMLFile = gdmlfile.substr(i + 1);
     }
 
-    G4GDMLParser *fGDMLParser;
-
-    G4bool fGDMLValidate;
-    G4bool fGDMLOverlapCheck;
-
     G4GenericMessenger* fMessenger;
     G4GenericMessenger* fGeometryMessenger;
+
+    void ReloadGeometry(const G4String gdmlfile);
+
+
+  public:
+
+    void SetUserLimits(const G4String& type, const G4String& name, const G4String& value_units) const;
+    void SetUserLimits(G4LogicalVolume* logical_volume, const G4String& type, const G4String& value_units) const;
+    void SetUserLimits(G4UserLimits* userlimits, const G4String& type, const G4String& value_units) const;
+
+    void SetUserMaxAllowedStep(G4String name, G4String value_units);
+    void SetUserMaxTrackLength(G4String name, G4String value_units);
+    void SetUserMaxTime(G4String name, G4String value_units);
+    void SetUserMinEkine(G4String name, G4String value_units);
+    void SetUserMinRange(G4String name, G4String value_units);
+
+  private:
+
     G4GenericMessenger* fUserLimitsMessenger;
 
-    G4int fVerboseLevel;
+
+  public:
+
+    void SetKryptoniteVerbose(G4int verbose) { fKryptoniteVerbose = verbose; }
+    void SetKryptoniteEnable(G4String flag);
+    void EnableKryptonite();
+    void DisableKryptonite();
+    void AddKryptoniteCandidate(G4String name);
+    void ListKryptoniteCandidates();
+
+  private:
+
+    G4GenericMessenger* fKryptoniteMessenger;
+    static G4UserLimits* fKryptoniteUserLimits;
+    G4bool fKryptoniteEnable;
+    G4int fKryptoniteVerbose;
+    std::set<G4String> fKryptoniteCandidates;
+    std::set<G4Material*> fKryptoniteMaterials;
+
+    void SetKryptoniteUserLimits(G4VPhysicalVolume* volume = 0);
+
+    void InitKryptoniteMaterials();
+
 
     //----------------------
     // global magnet section
@@ -95,6 +142,20 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     void PrintGDMLWarning() const;
 
     G4VPhysicalVolume* ParseGDMLFile();
+
+    G4bool HasAuxWithType(const G4GDMLAuxListType& list, const G4String& type)
+    {
+      return NextAuxWithType(list.begin(), list.end(), type) != list.end();
+    }
+    G4GDMLAuxListType::const_iterator NextAuxWithType(
+        const G4GDMLAuxListType::const_iterator& begin,
+        const G4GDMLAuxListType::const_iterator& end,
+        const G4String& type)
+    {
+      return std::find_if(begin, end,
+        [type](const G4GDMLAuxStructType& element) {
+          return element.type.compareTo(type, G4String::ignoreCase) == 0;} );
+    }
 
     void PrintAuxiliaryInfo() const;
     void ParseAuxiliaryTargetInfo();

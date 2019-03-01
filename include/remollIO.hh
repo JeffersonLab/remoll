@@ -5,6 +5,8 @@
 #include "TObject.h"
 
 #include "G4Run.hh"
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
 
 #include "remolltypes.hh"
 #include "remollSystemOfUnits.hh"
@@ -21,6 +23,8 @@ class G4GenericMessenger;
 class remollGenericDetectorHit;
 class remollGenericDetectorSum;
 class remollEvent;
+
+namespace { G4Mutex remollIOMutex = G4MUTEX_INITIALIZER; }
 
 //FIXME: forward declares not possible since xerces uses a
 // namespace alias and requires upstream knowledge or a pre-
@@ -62,6 +66,7 @@ class remollIO {
 	void GrabGDMLFiles( G4String fn );
 
         void RegisterDetector(G4String lvname, G4String sdname, G4int no) {
+          G4AutoLock lock(&remollIOMutex);
           fDetNos.push_back(no);
           fDetLVNames += (fDetLVNames.size() > 0? ":": "") + lvname + "/I";
           fDetSDNames += (fDetSDNames.size() > 0? ":": "") + sdname + "/I";

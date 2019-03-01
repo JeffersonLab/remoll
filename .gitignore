@@ -23,6 +23,7 @@ doc
 *.pdf
 *.log
 *.dot
+*.lst
 
 #ignore kdev files
 *.kdev4
@@ -33,10 +34,11 @@ lib
 lib64
 share
 
-#ignore build and map directory
+#ignore build, output and map directory
 build*
 bldXcode
 map_directory
+output
 
 #ignore rad_dose radiation analysis work (another repository on sbujlab github)
 rad_analysis
@@ -56,3 +58,4 @@ sample_gdml.*
 
 #ignore log files
 *.log
+callgrind.*

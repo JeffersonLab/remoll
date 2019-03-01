@@ -1,0 +1,14 @@
+/*
+    Generated automatically by cmake process
+*/
+
+extern const char* const gGitInfo = R"gitinfo(
+@GIT_LOG@
+@GIT_STATUS@
+Geant4 version @GEANT_VERSION@
+  ROOT version @ROOT_VERSION@
+ CMake version @CMAKE_VERSION@
+Generated at @DATE@
+Source dir @CMAKE_BINARY_DIR@
+Build  dir @CMAKE_SOURCE_DIR@
+)gitinfo";

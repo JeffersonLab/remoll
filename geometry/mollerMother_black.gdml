@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 
 <!DOCTYPE gdml [
-    <!ENTITY materials_r5 SYSTEM "materialsOptical_mainz.xml">
-    <!ENTITY matrices_r5 SYSTEM "matrices_mainz.xml">
+    <!ENTITY materials SYSTEM "materials.xml">
+    <!ENTITY matrices SYSTEM "matrices.xml">
 ]> 
 
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
@@ -13,14 +13,13 @@
   <position name="upstreamCenter" x="0" y="0" z="7000."/>
   <position name="hybridCenter" x="0" y="0" z="13366.57"/>
   <position name="detectorCenter" x="0" y="0" z="0.0*28500."/>
-  <rotation name="identity"/>
   <rotation name="rot" unit="deg" x="0" y="90" z="0"/>
 </define>
 
 <define>
-&matrices_r5;
+&matrices;
 </define>
-&materials_r5;
+&materials;
 
 <materials>
     <element Z="8" name="Oxygen">
@@ -66,9 +65,8 @@
       <solidref ref="boxMother"/>
 
       <physvol>
-      <file name="targetDaughter_noShlds.gdml"/>
+      <file name="target/targetDaughter_noShlds.gdml"/>
       <positionref ref="targetCenter"/>
-      <rotationref ref="identity"/>
       </physvol>
 
       <physvol>

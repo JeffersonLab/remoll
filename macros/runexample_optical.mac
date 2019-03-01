@@ -13,10 +13,10 @@
 /remoll/evgen/set beam
 # To hit Ring 5 open in septant 4
 /remoll/evgen/beam/origin -987.5 0.0 -150.0 mm
-/remoll/evgen/beam/direction (-0.0523,0.0,0.9986)
+/remoll/evgen/beam/direction -0.0523 0.0 0.9986
 /remoll/evgen/beam/rasx 105 mm
 /remoll/evgen/beam/rasy 78 mm
 /remoll/beamene 855 MeV
 /remoll/filename remollout_optical.root
 
-/run/beamOn 100
+/run/beamOn 10000

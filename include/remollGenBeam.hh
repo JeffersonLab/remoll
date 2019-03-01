@@ -15,19 +15,43 @@ class remollGenBeam : public remollVEventGen {
     remollGenBeam();
     virtual ~remollGenBeam();
 
-    void SetOriginX(double x);
-    void SetOriginY(double y);
-    void SetOriginZ(double z);
+    void SetOriginXMean(double x);
+    void SetOriginYMean(double y);
+    void SetOriginZMean(double z);
 
-    void SetRasterX(double RASx);
-    void SetRasterY(double RASy);
+    void SetOriginXSpread(double x);
+    void SetOriginYSpread(double y);
+    void SetOriginZSpread(double z);
 
-    void SetDirection(G4ThreeVector direction);
+    enum EOriginModel {
+      kOriginModelFlat,
+      kOriginModelGauss
+    };
+
+    EOriginModel GetOriginModelFromString(G4String model) const;
+    void SetOriginXModel(G4String x);
+    void SetOriginYModel(G4String y);
+    void SetOriginZModel(G4String z);
+
+    void SetRasterX(double x);
+    void SetRasterY(double y);
+    void SetRasterRefZ(double z);
+
+    G4double GetSpread(G4double spread, EOriginModel model);
+    G4ThreeVector GetSpread(G4ThreeVector spread,
+      EOriginModel x = kOriginModelFlat,
+      EOriginModel y = kOriginModelFlat,
+      EOriginModel z = kOriginModelFlat);
+
     void SetDirectionX(double dx);
     void SetDirectionY(double dy);
     void SetDirectionZ(double dz);
+    void SetDirectionPh(double ph);
+    void SetDirectionTh(double th);
 
-    void SetPolarization(G4ThreeVector polarization);
+    void SetCorrelationX(double cx);
+    void SetCorrelationY(double cy);
+
     void SetPolarizationX(double sx);
     void SetPolarizationY(double sy);
     void SetPolarizationZ(double sz);
@@ -37,12 +61,15 @@ class remollGenBeam : public remollVEventGen {
   private:
     void SamplePhysics(remollVertex *, remollEvent *);
 
-    G4ThreeVector fOrigin;
+    G4ThreeVector fOriginMean;
+    G4ThreeVector fOriginSpread;
+    EOriginModel  fOriginModelX, fOriginModelY, fOriginModelZ;
     G4ThreeVector fDirection;
+    G4ThreeVector fCorrelation;
     G4ThreeVector fPolarization;
 
-    double fXras;
-    double fYras;
+    G4ThreeVector fRaster;
+    Double_t fRasterRefZ;
 
     G4String fParticleName;
 };

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define> 
+  <rotation name="rot" unit="deg" x="0" y="90" z="0"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box lunit="mm" name="boxMother" x="501" y="501" z="501"/>
+</solids>
+
+  <structure>
+
+    <volume name="logicMother">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="boxMother"/>
+
+      <physvol>
+      <file name="detector_5open.gdml"/>
+      <rotationref ref="rot"/>
+      </physvol>
+
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="logicMother"/>
+  </setup>
+
+</gdml>

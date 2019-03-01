@@ -21,15 +21,15 @@ typedef G4RunManager RunManager;
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
-#include "remollIO.hh"
 #include "remollPhysicsList.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
-#include "G4ParallelWorldPhysics.hh"
 #include "remollParallelConstruction.hh"
 
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
+
+#include "TROOT.h"
 
 #ifdef __APPLE__
 #include <unistd.h>
@@ -114,14 +114,13 @@ int main(int argc, char** argv) {
     G4String material_name = "material";
     remollDetectorConstruction* detector = new remollDetectorConstruction(material_name, geometry_gdmlfile);
     // Parallel world geometry
-    G4String parallel_name = "parallel";
+    G4String parallel_name = "parallel"; // Note: name must correspond with name of G4ParallelWorldPhysics
     remollParallelConstruction* parallel = new remollParallelConstruction(parallel_name, parallel_gdmlfile);
     detector->RegisterParallelWorld(parallel);
     runManager->SetUserInitialization(detector);
 
     // Physics list
     remollPhysicsList* physlist = new remollPhysicsList();
-    //physlist->RegisterPhysics(new G4ParallelWorldPhysics(parallel_name));
     runManager->SetUserInitialization(physlist);
 
     // Run action

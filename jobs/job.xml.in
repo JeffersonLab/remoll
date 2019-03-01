@@ -1,15 +1,15 @@
 <Request>
-  <Email email="%user%@jlab.org" request="false" job="true"/>
+  <Email email="%user%@jlab.org" request="false" job="false"/>
   <Project name="moller12gev"/>
   <Track name="simulation"/>
   <Name name="%name%_%jobid%"/>
   <OS name="centos7"/>
   <Command><![CDATA[
 cd %remoll%
-mkdir -p rootfiles
-ln -sf $WORKDIR rootfiles/%name%_%jobid%_workdir
-build/remoll macros/jobs/%name%_%jobid%.mac
-rm -f rootfiles/%name%_%jobid%_workdir
+mkdir -p rootfiles/%name%/
+ln -sf $WORKDIR rootfiles/%name%/%name%_%jobid%_workdir
+build/remoll macros/jobs/%name%/%name%_%jobid%.mac
+rm -f rootfiles/%name%/%name%_%jobid%_workdir
   ]]></Command>
 
   <Memory space="4096" unit="MB"/>

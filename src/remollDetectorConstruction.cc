@@ -35,32 +35,43 @@
 #include <algorithm>
 #include <sys/param.h>
 
-#define __DET_STRLEN 200
-#define __MAX_DETS 100000
-
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
 namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
 
 G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
+G4UserLimits* remollDetectorConstruction::fKryptoniteUserLimits = new G4UserLimits(0,0,0,DBL_MAX,DBL_MAX);
+
 remollDetectorConstruction::remollDetectorConstruction(const G4String& name, const G4String& gdmlfile)
-: fGDMLPath("geometry"),fGDMLFile("mollerMother.gdml"),
+: fVerboseLevel(0),
   fGDMLParser(0),
   fGDMLValidate(false),
   fGDMLOverlapCheck(true),
+  fGDMLPath("geometry"),
+  fGDMLFile("mollerMother.gdml"),
   fMessenger(0),
   fGeometryMessenger(0),
   fUserLimitsMessenger(0),
-  fVerboseLevel(0),
+  fKryptoniteMessenger(0),
+  fKryptoniteEnable(true),
+  fKryptoniteVerbose(0),
   fWorldVolume(0),
   fWorldName(name)
 {
   // If gdmlfile is non-empty
-  if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;
+  if (gdmlfile.length() > 0) SetGDMLFile(gdmlfile);
 
   // Create GDML parser
-  //fGDMLParser = new G4GDMLParser();
+  fGDMLParser = new G4GDMLParser();
+
+  // Starter set of kryptonite materials
+  AddKryptoniteCandidate("VacuumKryptonite");
+  AddKryptoniteCandidate("Tungsten");
+  AddKryptoniteCandidate("CW95");
+  AddKryptoniteCandidate("Copper");
+  AddKryptoniteCandidate("Lead");
+  InitKryptoniteMaterials();
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -168,8 +179,135 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       &remollDetectorConstruction::SetUserMinRange,
       "Set user limit MinRange for logical volume")
       .SetStates(G4State_Idle);
+
+  // Create kryptonite messenger
+  fKryptoniteMessenger = new G4GenericMessenger(this,
+      "/remoll/kryptonite/",
+      "Remoll kryptonite properties");
+  fKryptoniteMessenger->DeclareMethod(
+      "verbose",
+      &remollDetectorConstruction::SetKryptoniteVerbose,
+      "Set verbose level");
+  fKryptoniteMessenger->DeclareMethod(
+      "set",
+      &remollDetectorConstruction::SetKryptoniteEnable,
+      "Treat materials as kryptonite");
+  fKryptoniteMessenger->DeclareMethod(
+      "enable",
+      &remollDetectorConstruction::EnableKryptonite,
+      "Treat materials as kryptonite");
+  fKryptoniteMessenger->DeclareMethod(
+      "disable",
+      &remollDetectorConstruction::DisableKryptonite,
+      "Treat materials as regular");
+  fKryptoniteMessenger->DeclareMethod(
+      "add",
+      &remollDetectorConstruction::AddKryptoniteCandidate,
+      "Add specified material to list of kryptonite candidates");
+  fKryptoniteMessenger->DeclareMethod(
+      "list",
+      &remollDetectorConstruction::ListKryptoniteCandidates,
+      "List kryptonite candidate materials");
 }
 
+void remollDetectorConstruction::SetKryptoniteEnable(G4String flag)
+{
+  if (flag.compareTo("true", G4String::ignoreCase) == 0)
+    EnableKryptonite();
+  else
+    DisableKryptonite();
+}
+
+void remollDetectorConstruction::EnableKryptonite()
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Enabling kryptonite." << G4endl;
+
+  fKryptoniteEnable = true;
+
+  SetKryptoniteUserLimits(fWorldVolume);
+}
+
+void remollDetectorConstruction::DisableKryptonite()
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Disabling kryptonite." << G4endl;
+
+  fKryptoniteEnable = false;
+
+  SetKryptoniteUserLimits(fWorldVolume);
+}
+
+void remollDetectorConstruction::AddKryptoniteCandidate(G4String name)
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Adding " << name << " to list of kryptonite candidates." << G4endl;
+
+  fKryptoniteCandidates.insert(name);
+  InitKryptoniteMaterials();
+
+  SetKryptoniteUserLimits(fWorldVolume);
+}
+
+void remollDetectorConstruction::ListKryptoniteCandidates()
+{
+  G4cout << "List of kryptonite candidate materials:" << G4endl;
+  for (std::set<G4String>::const_iterator
+      it  = fKryptoniteCandidates.begin();
+      it != fKryptoniteCandidates.end();
+      it++)
+    G4cout << *it << G4endl;
+}
+
+void remollDetectorConstruction::InitKryptoniteMaterials()
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Regenerating table of kryptonite material candidate pointers..." << G4endl;
+
+  // Find kryptonite materials in material tables
+  G4MaterialTable* table = G4Material::GetMaterialTable();
+  fKryptoniteMaterials.clear();
+  for (G4MaterialTable::const_iterator
+      it  = table->begin();
+      it != table->end(); it++) {
+    if (fKryptoniteCandidates.find((*it)->GetName()) != fKryptoniteCandidates.end()) {
+      fKryptoniteMaterials.insert(*it);
+    }
+  }
+}
+
+void remollDetectorConstruction::SetKryptoniteUserLimits(G4VPhysicalVolume* volume)
+{
+  // If null volume, pick entire world
+  if (volume == 0) volume = fWorldVolume;
+  // If still null, give up
+  if (volume == 0) return;
+
+  // Get logical volume
+  G4LogicalVolume* logical_volume = volume->GetLogicalVolume();
+  G4Material* material = logical_volume->GetMaterial();
+
+  // Set user limits for all materials in kryptonite materials list
+  if (fKryptoniteMaterials.count(material) > 0) {
+    if (fKryptoniteVerbose > 0)
+      G4cout << "Setting kryptonite for " << logical_volume->GetName() << " to " <<
+        (fKryptoniteEnable?"on":"off") << G4endl;
+
+    if (fKryptoniteEnable)
+      logical_volume->SetUserLimits(fKryptoniteUserLimits);
+    else
+      logical_volume->SetUserLimits(0);
+  }
+
+  // Descend down the tree
+  for (int i = 0; i < logical_volume->GetNoDaughters(); i++) {
+    G4VPhysicalVolume* daughter = logical_volume->GetDaughter(i);
+    SetKryptoniteUserLimits(daughter);
+  }
+}
+
+
+// Set of functions that passes function name as string for further processing
 void remollDetectorConstruction::SetUserMaxAllowedStep(G4String name, G4String value_units)
 {
   SetUserLimits(__FUNCTION__,name,value_units);
@@ -196,6 +334,7 @@ remollDetectorConstruction::~remollDetectorConstruction()
     delete fGDMLParser;
     delete fMessenger;
     delete fGeometryMessenger;
+    delete fKryptoniteMessenger;
     delete fUserLimitsMessenger;
 }
 
@@ -219,9 +358,7 @@ void remollDetectorConstruction::PrintGDMLWarning() const
 G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 {
     // Clear parser
-    //fGDMLParser->Clear(); // FIXME doesn't clear auxmap, instead just recreate
-    if (fGDMLParser) delete fGDMLParser;
-    fGDMLParser = new G4GDMLParser();
+    fGDMLParser->Clear();
 
     // Print GDML warning
     PrintGDMLWarning();
@@ -230,6 +367,9 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     G4cout << "Reading " << fGDMLFile << G4endl;
     G4cout << "- schema validation " << (fGDMLValidate? "on": "off") << G4endl;
     G4cout << "- overlap check " << (fGDMLOverlapCheck? "on": "off") << G4endl;
+
+    // Get remollIO instance before chdir since remollIO creates root file
+    remollIO* io = remollIO::GetInstance();
 
     // Change directory
     char cwd[MAXPATHLEN];
@@ -265,7 +405,6 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
       PrintGeometryTree(worldvolume,0,true,false);
 
     // Add GDML files to IO
-    remollIO* io = remollIO::GetInstance();
     io->GrabGDMLFiles(fGDMLFile);
 
     // Change directory back
@@ -403,18 +542,11 @@ void remollDetectorConstruction::ParseAuxiliaryUserLimits()
         G4cout << "--> Type: " << (*vit).type
 	       << " Value: "   << (*vit).value << std::endl;
 
-      // Skip if not starting with User
-      if ((*vit).type.find("User") != 0) continue;
+      // Skip if not starting with "User"
+      if (! (*vit).type.contains("User")) continue;
 
-      // Get existing or create new user limits
-      G4UserLimits* userlimits = logical_volume->GetUserLimits();
-      if (! userlimits) {
-        userlimits = new G4UserLimits();
-        logical_volume->SetUserLimits(userlimits);
-      }
-
-      // Set based on type
-      SetUserLimit(userlimits,(*vit).type,(*vit).value);
+      // Set user limits
+      SetUserLimits(logical_volume, (*vit).type, (*vit).value);
     }
   }
 
@@ -516,87 +648,83 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
 
 void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 {
-  //==========================
-  // Sensitive detectors
-  //==========================
-  G4SDManager* SDman = G4SDManager::GetSDMpointer();
-
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
+  // Loop over all volumes with auxiliary tags
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
+
       G4LogicalVolume* myvol = (*iter).first;
+      G4GDMLAuxListType list = (*iter).second;
+
       if (fVerboseLevel > 0)
-          G4cout << "Volume " << myvol->GetName() << G4endl;
+        G4cout << "Volume " << myvol->GetName() << G4endl;
 
-      for (G4GDMLAuxListType::const_iterator
-          vit  = (*iter).second.begin();
-          vit != (*iter).second.end(); vit++) {
+      remollGenericDetector* remollsd = 0;
 
-          if ((*vit).type == "SensDet") {
-              G4String det_name = (*vit).value;
+      // Find first aux list entry with type SensDet
+      auto it_sensdet = NextAuxWithType(list.begin(), list.end(), "SensDet");
+      if (it_sensdet != list.end()) {
 
-              // Also allow specification of det number ///////////////////
-              G4String det_type = "";
-              int det_no = -1;
-              for (G4GDMLAuxListType::const_iterator
-                  nit  = (*iter).second.begin();
-                  nit != (*iter).second.end(); nit++) {
+        // Find first aux list entry with type DetNo
+        auto it_detno = NextAuxWithType(list.begin(), list.end(), "DetNo");
+        if (it_detno != list.end()) {
 
-                  if ((*nit).type == "DetNo") {
-                      det_no = atoi((*nit).value.data());
-                      if( det_no >= __MAX_DETS ){
-                          G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR detector number too high" << G4endl;
-                          exit(1);
-                      }
-                  }
+          int det_no = atoi(it_detno->value.data());
 
-                  if ((*nit).type == "DetType") {
-                      det_type = (*nit).value.data();
-                  }
-              }
-              if (det_no <= 0) {
-                  G4cerr << __FILE__ << " line " << __LINE__ << ": "
-                         << "Warning: detector number not set for volume " << myvol->GetName() << G4endl;
-                  G4cerr << "Skipping sensitive detector assignment." << G4endl;
-                  continue;
-              }
-              /////////////////////////////////////////////////////////////
+          // Construct detector name
+          std::stringstream det_name_ss;
+          det_name_ss << "remoll/det_" << det_no;
+          std::string det_name = det_name_ss.str();
 
-              char detectorname[__DET_STRLEN];
-              int retval = snprintf(detectorname, __DET_STRLEN, "remoll/det_%d", det_no);
+          // Try to find sensitive detector
+          G4SDManager* SDman = G4SDManager::GetSDMpointer();
+          G4VSensitiveDetector* sd = SDman->FindSensitiveDetector(det_name, (fVerboseLevel > 0));
+          // and cast into remoll sensitive detector
+          remollsd = dynamic_cast<remollGenericDetector*>(sd);
 
-              assert( 0 < retval && retval < __DET_STRLEN ); // Ensure we're writing reasonable strings
+          // No such detector yet
+          if (remollsd == 0) {
 
-              G4VSensitiveDetector* thisdet = SDman->FindSensitiveDetector(detectorname,(fVerboseLevel > 0));
+            if (fVerboseLevel > 0)
+              G4cout << "  Creating sensitive detector "
+                     << "for volume " << myvol->GetName()
+                     <<  G4endl;
 
-              if( thisdet == 0 ) {
-                  if (fVerboseLevel > 0)
-                      G4cout << "  Creating sensitive detector "
-                          << "for volume " << myvol->GetName()
-                          <<  G4endl << G4endl;
+            remollsd = new remollGenericDetector(det_name, det_no);
 
-                  remollGenericDetector* det = new remollGenericDetector(detectorname, det_no);
-                  if (det_type.size() > 0) det->SetDetectorType(det_type);
+            // Register detector with SD manager
+            SDman->AddNewDetector(remollsd);
 
-                  SDman->AddNewDetector(det);
+            // Register detector with remollIO
+            remollIO* io = remollIO::GetInstance();
+            io->RegisterDetector(myvol->GetName(), it_sensdet->value, det_no);
 
-                  // Register detector IDs and names
-                  remollIO* io = remollIO::GetInstance();
-                  io->RegisterDetector(myvol->GetName(), det_name, det_no);
-
-                  thisdet = det;
-              }
-
-              myvol->SetSensitiveDetector(thisdet);
           }
+
+          // Register detector with this volume
+          myvol->SetSensitiveDetector(remollsd);
+
+        } // end of if aux tag with type DetNo
+
+      } // end of if aux tag with type SensDet
+
+
+      // Find aux list entries with type DetType
+      for (auto it_dettype  = NextAuxWithType(list.begin(), list.end(), "DetType");
+                it_dettype != list.end();
+                it_dettype  = NextAuxWithType(++it_dettype, list.end(), "DetType")) {
+
+        // Set detector type
+        if (remollsd) remollsd->SetDetectorType(it_dettype->value);
+
       }
-  }
+
+  } // end of loop over volumes
 
   if (fVerboseLevel > 0)
     G4cout << "Completed sensitive detector assignment" << G4endl;
-
 }
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct()
@@ -612,6 +740,10 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 
   // Set copy number of geometry tree
   UpdateCopyNo(fWorldVolume,1);
+
+  // Set kryptonite user limits
+  InitKryptoniteMaterials();
+  SetKryptoniteUserLimits(fWorldVolume);
 
   return fWorldVolume;
 }
@@ -633,25 +765,11 @@ void remollDetectorConstruction::ConstructSDandField()
 }
 
 
-void remollDetectorConstruction::SetUserLimit(G4UserLimits* userlimits, const G4String type, const G4String value_units)
+void remollDetectorConstruction::SetUserLimits(
+    const G4String& set_type,
+    const G4String& name,
+    const G4String& value_units) const
 {
-  G4double value = G4UIcmdWithADoubleAndUnit::GetNewDoubleValue(value_units);
-  G4String type_lower = type;
-  std::transform(type_lower.begin(), type_lower.end(), type_lower.begin(), ::tolower);
-  if      (type_lower == "usermaxallowedstep") userlimits->SetMaxAllowedStep(value);
-  else if (type_lower == "usermaxtracklength") userlimits->SetUserMaxTrackLength(value);
-  else if (type_lower == "usermaxtime")        userlimits->SetUserMaxTime(value);
-  else if (type_lower == "userminekine")       userlimits->SetUserMinEkine(value);
-  else if (type_lower == "userminrange")       userlimits->SetUserMinRange(value);
-  else G4cerr << __FILE__ << " line " << __LINE__ << ": Warning user type " << type << " unknown" << G4endl;
-}
-
-void remollDetectorConstruction::SetUserLimits(G4String type, G4String name, G4String value_units)
-{
-  // Parse arguments
-  if (type.find("Set") == 0) type.erase(0,3);
-  std::replace(value_units.begin(),value_units.end(), '*', ' ');
-
   // Find volume
   G4LogicalVolume* logical_volume = G4LogicalVolumeStore::GetInstance()->GetVolume(name);
   if (! logical_volume) {
@@ -659,6 +777,22 @@ void remollDetectorConstruction::SetUserLimits(G4String type, G4String name, G4S
     return;
   }
 
+  // Remove starting "Set" used by commands
+  G4String type = set_type;
+  if (type.find("Set") == 0) type.erase(0,3);
+
+  if (fVerboseLevel > 0)
+    G4cout << "Setting user limit " << type << " for " << name << G4endl;
+
+  // Set user limits
+  SetUserLimits(logical_volume, type, value_units);
+}
+
+void remollDetectorConstruction::SetUserLimits(
+    G4LogicalVolume* logical_volume,
+    const G4String& type,
+    const G4String& value_units) const
+{
   // Get user limits
   G4UserLimits* userlimits = logical_volume->GetUserLimits();
   if (! userlimits) {
@@ -667,7 +801,35 @@ void remollDetectorConstruction::SetUserLimits(G4String type, G4String name, G4S
   }
 
   // Set user limits
-  SetUserLimit(userlimits,type,value_units);
+  SetUserLimits(userlimits, type, value_units);
+}
+
+void remollDetectorConstruction::SetUserLimits(
+    G4UserLimits* userlimits,
+    const G4String& type,
+    const G4String& value_units) const
+{
+  if (fVerboseLevel > 0)
+    G4cout << "Setting user limit " << type << " to " << value_units << G4endl;
+
+  // Resolve units in value_units
+  G4String value_space_units = value_units;
+  std::replace(value_space_units.begin(), value_space_units.end(), '*', ' ');
+  G4double value = G4UIcmdWithADoubleAndUnit::GetNewDoubleValue(value_space_units);
+
+  // Compare with allowed types while ignoring case
+  if      (type.compareTo("usermaxallowedstep", G4String::ignoreCase) == 0)
+    userlimits->SetMaxAllowedStep(value);
+  else if (type.compareTo("usermaxtracklength", G4String::ignoreCase) == 0)
+    userlimits->SetUserMaxTrackLength(value);
+  else if (type.compareTo("usermaxtime", G4String::ignoreCase) == 0)
+    userlimits->SetUserMaxTime(value);
+  else if (type.compareTo("userminekine", G4String::ignoreCase) == 0)
+    userlimits->SetUserMinEkine(value);
+  else if (type.compareTo("userminrange", G4String::ignoreCase) == 0)
+    userlimits->SetUserMinRange(value);
+  else
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning user type " << type << " unknown" << G4endl;
 }
 
 void remollDetectorConstruction::ReloadGeometry(const G4String gdmlfile)
@@ -758,10 +920,11 @@ void remollDetectorConstruction::PrintGeometryTree(
            << G4BestUnit(aVolume->GetLogicalVolume()->GetMass(true),"Mass");
   }
   // Print sensitive detector
-  if (print && aVolume->GetLogicalVolume()->GetSensitiveDetector())
+  G4VSensitiveDetector* sd = aVolume->GetLogicalVolume()->GetSensitiveDetector();
+  if (print && sd)
   {
-    G4cout << " " << aVolume->GetLogicalVolume()->GetSensitiveDetector()
-                            ->GetFullPathName();
+    remollGenericDetector* remollsd = dynamic_cast<remollGenericDetector*>(sd);
+    G4cout << " [" << remollsd->GetDetNo() << "]";
   }
   if (print) {
     G4cout << G4endl;

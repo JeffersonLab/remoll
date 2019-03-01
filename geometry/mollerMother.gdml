@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY world SYSTEM "solids/world.xml">
+<!ENTITY positions SYSTEM "positions.xml">
+]>
+
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-     <position unit="mm" name="targetCenter" x="0" y="0" z="0"/>
-     <position unit="mm" name="upstreamCenter" x="0" y="0" z="7000."/>
-     <position unit="mm" name="hybridCenter" x="0" y="0" z="13366.57"/>
-     <position unit="mm" name="trackingCenter" x="0" y="0" z="26635."/>
-     <position unit="mm" name="detectorCenter" x="0" y="0" z="28500."/>
-     <position unit="mm" name="showerMaxDetectorCenter" x="0" y="0" z="28750."/>
-     <position unit="mm" name="pionDetectorCenter" x="0" y="0" z="29600."/>
+  &positions;
 </define>
 
 <materials>
 </materials>
 
 <solids>
-  <box lunit="mm" name="world_solid" x="4000" y="4000" z="80000"/>
+  &world;
 </solids>
 
-  <structure>
-    <volume name="world_logic">
-      <materialref ref="G4_Galactic"/>
-      <solidref ref="world_solid"/>
+<structure>
+  <volume name="world_logic">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="world_solid"/>
 
-      <physvol>
-        <file name="targetDaughter.gdml"/>
-        <positionref ref="targetCenter"/>
-      </physvol>
+    <physvol>
+      <file name="target/targetDaughter.gdml"/>
+      <positionref ref="targetCenter"/>
+    </physvol>
 
-      <physvol name="trackingDetectors_physical">
-        <file name="trackingDaughter.gdml"/>
-        <positionref ref="trackingCenter"/>
-      </physvol>
+    <physvol name="trackingDetectors_physical">
+      <file name="tracking/trackingDaughter.gdml"/>
+      <positionref ref="trackingCenter"/>
+    </physvol>
 
-      <!-- ShowerMax Detectors -->
-      <physvol>
-        <file name="showerMaxDetectorSystem.gdml"/>
-        <positionref ref="showerMaxDetectorCenter"/>
-      </physvol>
+    <!-- ShowerMax Detectors -->
+    <physvol>
+      <file name="showermax/showerMaxDetectorSystem.gdml"/>
+      <positionref ref="showerMaxDetectorCenter"/>
+    </physvol>
 
-      <!-- Pion Detectors -->
-      <physvol>
-        <file name="pionDetectorSystem.gdml"/>
-        <positionref ref="pionDetectorCenter"/>
-      </physvol>
+    <!-- Pion Detectors -->
+    <physvol>
+      <file name="pion/pionDetectorSystem.gdml"/>
+      <positionref ref="pionDetectorCenter"/>
+    </physvol>
 
-      <!-- Upstream Spectrometer -->
-      <physvol>
-        <file name="upstreamDaughter.gdml"/>
-        <positionref ref="upstreamCenter"/>
-      </physvol>
+    <!-- Upstream Spectrometer -->
+    <physvol>
+      <file name="upstream/upstreamDaughter.gdml"/>
+      <positionref ref="upstreamCenter"/>
+    </physvol>
 
-      <!-- Hybrid Spectrometer -->
-      <physvol>
-        <file name="hybridDaughter.gdml"/>
-        <positionref ref="hybridCenter"/>
-      </physvol> 
+    <!-- Hybrid Spectrometer -->
+    <physvol>
+      <file name="hybrid/hybridDaughter.gdml"/>
+      <positionref ref="hybridCenter"/>
+    </physvol> 
 
-    </volume>
-  </structure>
+  </volume>
+</structure>
 
-  <setup name="Default" version="1.0">
-    <world ref="world_logic"/>
-  </setup>
+<setup name="Default" version="1.0">
+  <world ref="world_logic"/>
+</setup>
 
 </gdml>

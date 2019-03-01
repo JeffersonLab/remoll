@@ -1,0 +1,4 @@
+import model loop_qcd_qed_sm
+generate e- e- > e- e- / Z [virt=QED] QED<=4
+output ee_ee_NLO
+shell cp template/* ee_ee_NLO/Cards

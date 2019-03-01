@@ -1,5 +1,4 @@
 #include "remollRunData.hh"
-#include "gitinfo.hh"
 
 #include "G4ios.hh"
 
@@ -9,6 +8,9 @@
 #ifdef __APPLE__
 #include <unistd.h>
 #endif
+
+// External objects
+extern const char* const gGitInfo;
 
 remollRunData::remollRunData()
 {

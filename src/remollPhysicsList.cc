@@ -20,7 +20,10 @@ remollPhysicsList::remollPhysicsList()
   fReferencePhysList(0),
   fParallelPhysics(0),
   fOpticalPhysics(0),
+  fStepLimiterPhysics(0),
   fPhysListMessenger(0),
+  fOpticalMessenger(0),
+  fParallelMessenger(0),
   fBaseMessenger(0)
 {
   // Let users know to ignore the warning by Particle HP package
@@ -32,7 +35,12 @@ remollPhysicsList::remollPhysicsList()
   SetVerboseLevel(0);
 
   // Get default reference physics list
+<<<<<<< HEAD
   RegisterReferencePhysList("QGSP_BERT_HP");
+=======
+  RegisterReferencePhysList("QGSP_BERT");
+  EnableStepLimiterPhysics();
+>>>>>>> da542e93f4f1ae03738da727c196577a07b6dddc
 
   // TODO Backwards compatible, remove this on next major version change
   // Create base messenger
@@ -152,7 +160,7 @@ void remollPhysicsList::SetParallelPhysics(G4bool flag)
 void remollPhysicsList::EnableParallelPhysics()
 {
   if (fParallelPhysics) {
-    G4cout << "parallel physics already active" << G4endl;
+    G4cout << "Parallel physics already active" << G4endl;
     return;
   }
 
@@ -162,9 +170,9 @@ void remollPhysicsList::EnableParallelPhysics()
 
   // Create Parallel physics
   fParallelPhysics = new G4ParallelWorldPhysics("parallel");
+  // Note: name must correspond with name of remollParallelConstruction
 
   // Register existing physics
-  //RegisterPhysics(new G4ParallelWorldPhysics(parallel_name));
   RegisterPhysics(fParallelPhysics);
 }
 

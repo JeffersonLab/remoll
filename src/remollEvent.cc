@@ -12,7 +12,14 @@
 #include "G4ParticleTable.hh"
 
 remollEvent::remollEvent()
-: fBeamTarget(0)
+: fBeamTarget(0),
+  fBeamMomentum(0,0,0),
+  fBeamPolarization(0,0,0),
+  fVertexPos(0,0,0),
+  fBeamE(0),fRate(0),fEffXs(0),
+  fAsym(0),fmAsym(0),
+  fQ2(0),fW2(0),fXbj(0),
+  fThCoM(0)
 {
     Reset();
 }
