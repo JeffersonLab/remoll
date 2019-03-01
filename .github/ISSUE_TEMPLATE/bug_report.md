@@ -1,3 +1,9 @@
+---
+name: Bug report
+about: Create a report to help us improve
+
+---
+
 ### Environment: (where does this bug occur, have you tried other environments)
 - branch (master for latest released): 
 - revision (HEAD for most recent): 
