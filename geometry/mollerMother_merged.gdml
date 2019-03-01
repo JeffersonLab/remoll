@@ -55,7 +55,13 @@
     	<file name="hybridDaughter_merged.gdml"/>
 	    <positionref ref="hybridCenter"/>
     	<rotationref ref="identity"/>
-      </physvol>    
+      </physvol>
+      
+      <physvol>
+      <file name="detectorDaughter.gdml"/>
+      <positionref ref="detectorCenter"/>
+      <rotationref ref="identity"/>
+      </physvol>
 
 
     </volume>

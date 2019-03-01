@@ -6,6 +6,7 @@
 # This is the current working geometry
 /remoll/setgeofile geometry/mollerMother_5open.gdml
 
+
 #/remoll/likekryptonite  true
 
 #Below the this energy, the tracks are killed
@@ -53,4 +54,3 @@
 #/remoll/filename remollout_r5o_external_default.root
 
 
-#/run/beamOn 100
