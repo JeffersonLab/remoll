@@ -99,7 +99,7 @@ void writeHist(TString files){
 
   fout->Close();
   delete fout;
-  drawHist(files);
+  drawHist(fnm);
 }
 
 void drawHist(TString files){
