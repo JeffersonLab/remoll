@@ -15,10 +15,13 @@
 /remoll/tracking/set 2
 /tracking/storeTrajectory 1
 
-/remoll/addfield map_directory/hybridSymmetric_sensR_0.0.txt
-/remoll/addfield map_directory/upstreamSymmetric_sensR_0.0.txt
-#/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-#/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+#/remoll/addfield map_directory/hybridSymmetric_sensR_0.0.txt
+#/remoll/addfield map_directory/upstreamSymmetric_sensR_0.0.txt
+#/remoll/addfield map_directory/blockyHybrid_rm_3.0_restricted.txt
+#/remoll/addfield map_directory/blockyUpstream_rm_1.1_restricted.txt
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
 # Raster and initial angle stuff
 /remoll/oldras true
@@ -35,5 +38,7 @@
 # Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
 
-/remoll/filename remoll_beam_dump.root
-/run/beamOn 500000
+##/remoll/filename remoll_beam_dump_Bfield0-7cmSym_2e6.root
+##/remoll/filename remoll_beam_dump_Bfield0-7cmSym_7-35cmSym_2e6.root
+/remoll/filename remoll_beam_dump_Bfield1.5-35cmSym_2e6.root
+/run/beamOn 2000000
