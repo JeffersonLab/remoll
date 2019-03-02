@@ -16,10 +16,18 @@ void plot_gen_beam_raster(const TString& files)
   Double_t pos = 5.0;
   Double_t dir = 0.001;
 
+  TH2F hvxvy_at_zu("hvxvy_at_zu","v_x vs v_y at z = US",200,-pos,+pos,200,-pos,+pos);
+  TH2F hpxpy_at_zu("hpxpy_at_zu","p_x vs p_y at z = US",200,-dir,+dir,200,-dir,+dir);
+  TH2F hvxpx_at_zu("hvxpx_at_zu","v_x vs p_x at z = US",200,-pos,+pos,200,-dir,+dir);
+  TH2F hvypy_at_zu("hvypy_at_zu","v_y vs p_y at z = US",200,-pos,+pos,200,-dir,+dir);
   TH2F hvxvy_at_z0("hvxvy_at_z0","v_x vs v_y at z = 0",200,-pos,+pos,200,-pos,+pos);
   TH2F hpxpy_at_z0("hpxpy_at_z0","p_x vs p_y at z = 0",200,-dir,+dir,200,-dir,+dir);
   TH2F hvxpx_at_z0("hvxpx_at_z0","v_x vs p_x at z = 0",200,-pos,+pos,200,-dir,+dir);
   TH2F hvypy_at_z0("hvypy_at_z0","v_y vs p_y at z = 0",200,-pos,+pos,200,-dir,+dir);
+  TH2F hvxvy_at_zd("hvxvy_at_zd","v_x vs v_y at z = DS",200,-pos,+pos,200,-pos,+pos);
+  TH2F hpxpy_at_zd("hpxpy_at_zd","p_x vs p_y at z = DS",200,-dir,+dir,200,-dir,+dir);
+  TH2F hvxpx_at_zd("hvxpx_at_zd","v_x vs p_x at z = DS",200,-pos,+pos,200,-dir,+dir);
+  TH2F hvypy_at_zd("hvypy_at_zd","v_y vs p_y at z = DS",200,-pos,+pos,200,-dir,+dir);
   TH2F hvxvy_at_zg("hvxvy_at_zg","v_x vs v_y at z = z_gen",200,-pos,+pos,200,-pos,+pos);
   TH2F hpxpy_at_zg("hpxpy_at_zg","p_x vs p_y at z = z_gen",200,-dir,+dir,200,-dir,+dir);
   TH2F hvxpx_at_zg("hvxpx_at_zg","v_x vs p_x at z = z_gen",200,-pos,+pos,200,-dir,+dir);
@@ -44,10 +52,23 @@ void plot_gen_beam_raster(const TString& files)
       hvxpx_at_zg.Fill(vx,thx);
       hvypy_at_zg.Fill(vy,thy);
 
-      hvxvy_at_z0.Fill(vx+vz*tan(thx),vy+vz*tan(thy));
+      Double_t z0 = 0*units->m;
+      hvxvy_at_z0.Fill(vx+(z0-vz)*tan(thx),vy+(z0-vz)*tan(thy));
       hpxpy_at_z0.Fill(thx,thy);
-      hvxpx_at_z0.Fill(vx+vz*tan(thx),thx);
-      hvypy_at_z0.Fill(vy+vz*tan(thy),thy);
+      hvxpx_at_z0.Fill(vx+(z0-vz)*tan(thx),thx);
+      hvypy_at_z0.Fill(vy+(z0-vz)*tan(thy),thy);
+
+      Double_t zu = -0.75*units->m;
+      hvxvy_at_zu.Fill(vx+(zu-vz)*tan(thx),vy+(zu-vz)*tan(thy));
+      hpxpy_at_zu.Fill(thx,thy);
+      hvxpx_at_zu.Fill(vx+(zu-vz)*tan(thx),thx);
+      hvypy_at_zu.Fill(vy+(zu-vz)*tan(thy),thy);
+
+      Double_t zd = +0.75*units->m;
+      hvxvy_at_zd.Fill(vx+(zd-vz)*tan(thx),vy+(zd-vz)*tan(thy));
+      hpxpy_at_zd.Fill(thx,thy);
+      hvxpx_at_zd.Fill(vx+(zd-vz)*tan(thx),thx);
+      hvypy_at_zd.Fill(vy+(zd-vz)*tan(thy),thy);
     }
   }
 
@@ -74,4 +95,28 @@ void plot_gen_beam_raster(const TString& files)
   c2.cd(4);
   hvypy_at_z0.Draw();
   c2.SaveAs("images/raster_correlation_z0.png");
+
+  TCanvas c3;
+  c3.Divide(2,2);
+  c3.cd(1);
+  hvxvy_at_zu.Draw();
+  c3.cd(2);
+  hpxpy_at_zu.Draw();
+  c3.cd(3);
+  hvxpx_at_zu.Draw();
+  c3.cd(4);
+  hvypy_at_zu.Draw();
+  c3.SaveAs("images/raster_correlation_zu.png");
+
+  TCanvas c4;
+  c4.Divide(2,2);
+  c4.cd(1);
+  hvxvy_at_zd.Draw();
+  c4.cd(2);
+  hpxpy_at_zd.Draw();
+  c4.cd(3);
+  hvxpx_at_zd.Draw();
+  c4.cd(4);
+  hvypy_at_zd.Draw();
+  c4.SaveAs("images/raster_correlation_zd.png");
 }

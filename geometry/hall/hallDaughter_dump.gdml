@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "materials.xml">
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <!--Used to resolve why hall detector missing any hits and how to include the detector+hall mother volume without making any volume overlaps or encapsulations -->
 <define>
+  &matrices;
 
   <constant name="i2cm" value="2.54"/>
   <constant name="width_mother" value="190000."/>

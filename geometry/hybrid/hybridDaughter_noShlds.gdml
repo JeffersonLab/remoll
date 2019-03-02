@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "materials.xml">
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
+    &matrices;
+
     <constant name="PI" value="1.*pi"/>
     <constant name="DOFFSET" value="13366.57"/>
     <constant name="DEGRAD" value="PI/180."/>
@@ -39,11 +42,11 @@
     <constant name="PCOLL2_R1_U" value ="30"/> <!-- Was 38.0" for no good reason/> -->
     <constant name="PCOLL2_R1_D" value ="30"/> <!-- 8.0"/> -->
     <!-- coll sep, inner rad, adjust this -->
-    <constant name="PCOLL2_R2_U" value ="50.0"/>  <!-- was 64, then was 52.5 for US col 4 but still bad envelope -->
-    <constant name="PCOLL2_R2_D" value ="50.0"/>
+    <constant name="PCOLL2_R2_U" value ="52.5"/>  <!-- was 64"/> -->
+    <constant name="PCOLL2_R2_D" value ="52.5"/>
     <!-- coll sep, outer rad, adjust this -->
-    <constant name="PCOLL2_R3_U" value ="171.4"/> <!-- was 221, then was 165.5 for US col 4 but still bad envelope -->
-    <constant name="PCOLL2_R3_D" value ="171.4"/>
+    <constant name="PCOLL2_R3_U" value ="165.5"/> <!-- was 221"/> -->
+    <constant name="PCOLL2_R3_D" value ="165.5"/>
     <constant name="PCOLL2_R4_U" value ="300"/>
     <constant name="PCOLL2_R4_D" value ="300"/>
     <constant name="PCOLL2_THICK" value ="100.0"/>
@@ -265,7 +268,6 @@
     <constant name="PCOLL2_SCULPT_P4_X" value ="228.0"/>
     <constant name="PCOLL2_SCULPT_P4_Y" value ="55.0"/>
     -->
-    <!-- new z position, old sculpt envelopes
     <constant name="PCOLL2_SCULPT_P1_X" value ="50.8"/>
     <constant name="PCOLL2_SCULPT_P1_Y" value ="13.4"/>
     <constant name="PCOLL2_SCULPT_P2_X" value ="87.6"/>
@@ -274,16 +276,6 @@
     <constant name="PCOLL2_SCULPT_P3_Y" value ="27.2"/>
     <constant name="PCOLL2_SCULPT_P4_X" value ="163.9"/>
     <constant name="PCOLL2_SCULPT_P4_Y" value ="36.3"/>
-    -->
-    <!-- new z position, new sculpt envelopes -->
-    <constant name="PCOLL2_SCULPT_P1_X" value ="50.1"/>
-    <constant name="PCOLL2_SCULPT_P1_Y" value ="10.5"/>
-    <constant name="PCOLL2_SCULPT_P2_X" value ="120.94"/>
-    <constant name="PCOLL2_SCULPT_P2_Y" value ="28.1"/>
-    <constant name="PCOLL2_SCULPT_P3_X" value ="152.3"/>
-    <constant name="PCOLL2_SCULPT_P3_Y" value ="38.0"/>
-    <constant name="PCOLL2_SCULPT_P4_X" value ="166.6"/>
-    <constant name="PCOLL2_SCULPT_P4_Y" value ="36.5"/>
 
 
     <position name="PCOLL2_lcut1" unit="mm" x="PCOLL2_SCULPT_P1_X" y="-PCOLL2_SCULPT_P1_Y" z="-PCOLL2_THICK/2-5"/> 
@@ -1012,9 +1004,8 @@
       <zplane rmin="DSbeampipe_3_part4_rmin" rmax="DSbeampipe_3_part4_rmax" z="DSbeampipe_3_part1_length + 0.1 + DSbeampipe_3_part2_length + 0.1 + DSbeampipe_3_part3_length + 0.1"/> 
       <zplane rmin="DSbeampipe_3_part4_rmin" rmax="DSbeampipe_3_part4_rmax" z="DSbeampipe_3_part1_length + 0.1 + DSbeampipe_3_part2_length + 0.1 + DSbeampipe_3_part3_length + 0.1 + DSbeampipe_3_part4_length"/>
     </polycone>
+
     <!--End of beampipe that is not in use -->
-
-
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="shield_DS_beampipe_solid"> 
       <zplane rmin="shield_DS_beampipe_p1_US_rmin" rmax="shield_DS_beampipe_p1_US_rmax" z="0"/> 
       <zplane rmin="shield_DS_beampipe_p1_DS_rmin" rmax="shield_DS_beampipe_p1_DS_rmax" z="shield_DS_beampipe_p1_length"/> 
@@ -1441,7 +1432,6 @@
 <!--      <materialref ref="Kryptonite"/> -->
       <solidref ref="dscyl_1"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
       <auxiliary auxtype="DetNo" auxvalue="2003"/>
     </volume>
 
@@ -1450,7 +1440,6 @@
 <!--      <materialref ref="Kryptonite"/> -->
       <solidref ref="dscoll5union_5"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
       <auxiliary auxtype="DetNo" auxvalue="2005"/>
     </volume>
 
@@ -1459,7 +1448,6 @@
 <!--	<materialref ref="Kryptonite"/> -->
 	<solidref ref="pdscoll_union_6"/> 
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
 	<auxiliary auxtype="DetNo" auxvalue="2004"/>
     </volume>
 
@@ -1467,7 +1455,6 @@
 	<materialref ref="VacuumColl"/>
 	<solidref ref="pcoll2trap"/> 
 	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
 	<auxiliary auxtype="DetNo" auxvalue="201"/>
     </volume>
 
@@ -1480,7 +1467,6 @@
       <!-- <solidref ref="boxDSShieldColl1_solid"/> -->
       <solidref ref="boxDSShieldColl1_sub_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6020"/>
     </volume>
@@ -1494,7 +1480,6 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-	      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6021"/>
     </volume>
@@ -1508,7 +1493,6 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield2_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_4_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6025"/>
     </volume>
@@ -1518,7 +1502,6 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxDSShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_4_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6024"/>
     </volume>
@@ -1527,7 +1510,6 @@
       <materialref ref="Lead"/>
       <solidref ref="boxDSShield1_roof_solid"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Roof_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6027"/>
     </volume>
@@ -1536,7 +1518,6 @@
       <materialref ref="Polythene"/>
       <solidref ref="boxDSShield1_polyroof_solid"/>
       <auxiliary auxtype="Color" auxvalue="brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_PolyRoof_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6026"/>
     </volume>
@@ -1545,7 +1526,6 @@
       <materialref ref="Concrete"/>
       <solidref ref="boxDSShield1_local_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6031"/>
     </volume>
@@ -1553,7 +1533,6 @@
       <materialref ref="Polythene"/>
       <solidref ref="boxDSShield1_polylocal_solid"/>
       <auxiliary auxtype="Color" auxvalue="brown"/>
-	      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6032"/>
     </volume>
@@ -1571,7 +1550,6 @@
       <materialref ref="Lead"/>
       <solidref ref="DSShield_Tube_solid_1"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Lead_shldtube"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6028"/>
     </volume>
@@ -1582,21 +1560,18 @@
       <materialref ref="Tungsten"/>
       <solidref ref="DSbeampipe_1"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
     <volume name="DSbeampipe_2_logic">
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="DSbeampipe_2"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
     <volume name="DSbeampipe_3_logic">
       <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="DSbeampipe_3"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
     <volume name="shield_DS_beampipe_logic">
@@ -1604,7 +1579,6 @@
       <materialref ref="Tungsten"/>
       <solidref ref="shield_DS_beampipe_solid"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
 
@@ -1631,10 +1605,12 @@
 -->
 
 <!-- Downstream of coll4 central collimating beampipe -->
+<!-- FIXME -noShlds 
       <physvol>
         <volumeref ref="shield_DS_beampipe_logic"/>
         <positionref ref="shield_DS_beampipe_center"/>
       </physvol>
+-->
 
       <physvol name="DScoil_0">
         <volumeref ref="logicDScoil_0"/>
@@ -1741,18 +1717,20 @@
        Shielding collimators
       -->
 
+<!-- FIXME -noShlds
       <physvol>
         <volumeref ref="boxDSShieldColl1_logic"/>
         <positionref ref="DSshieldcoll_center_1"/>
       </physvol>       
-
+-->
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
-      <physvol>
+<!-- FIXME -noShlds 
+    <physvol>
         <volumeref ref="boxDSPolyShield1_logic"/>
         <positionref ref="boxDSPolyShield1_center"/>
       </physvol>
-
+-->
       <!-- PolyShield2 will be outside shielding hut -->
 <!--
       <physvol>
@@ -1780,6 +1758,8 @@
         <positionref ref="boxDSShield1_polyroof_center"/>
       </physvol>
 -->
+
+<!-- FIXME -noShlds
       <physvol>
         <volumeref ref="boxDSShield_local_logic"/>
         <positionref ref="boxDSShield_local_center"/>
@@ -1788,12 +1768,12 @@
         <volumeref ref="boxDSShield_polylocal_logic"/>
         <positionref ref="boxDSShield_polylocal_center"/>
       </physvol>
+-->
 
       <physvol>
         <volumeref ref="boxAlCan_logic"/>
         <positionref ref="boxAlCan_center"/>
       </physvol>
-
    </volume>
 </structure>
 

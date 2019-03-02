@@ -7,7 +7,7 @@
 
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
-<define>
+<define> 
   &positions;
 </define>
 
@@ -19,49 +19,44 @@
 </solids>
 
 <structure>
-  <volume name="world_logic">
+
+  <volume name="logicMother">
     <materialref ref="G4_Galactic"/>
     <solidref ref="world_solid"/>
-
+<!--
     <physvol>
       <file name="target/targetDaughter.gdml"/>
       <positionref ref="targetCenter"/>
     </physvol>
 
-    <physvol name="trackingDetectors_physical">
-      <file name="tracking/trackingDaughter.gdml"/>
-      <positionref ref="trackingCenter"/>
-    </physvol>
 
-    <!-- ShowerMax Detectors -->
     <physvol>
-      <file name="showermax/showerMaxDetectorSystem.gdml"/>
-      <positionref ref="showerMaxDetectorCenter"/>
+      <file name="hall/hallDaughter.gdml"/>
+      <positionref ref="hallCenter"/>
     </physvol>
-
-    <!-- Pion Detectors -->
+-->
     <physvol>
-      <file name="pion/pionDetectorSystem.gdml"/>
-      <positionref ref="pionDetectorCenter"/>
+      <file name="detector_parametrized.gdml"/>
+      <position name="detectorCenter" x="0" y="0" z="0."/><!-- 28500."/> -->
+      <rotation name="detectorRot" x="0" y="3.14159/2" z="0"/>
     </physvol>
-
-    <!-- Upstream Spectrometer -->
+<!--
     <physvol>
       <file name="upstream/upstreamDaughter.gdml"/>
       <positionref ref="upstreamCenter"/>
     </physvol>
 
-    <!-- Hybrid Spectrometer -->
     <physvol>
       <file name="hybrid/hybridDaughter.gdml"/>
       <positionref ref="hybridCenter"/>
-    </physvol> 
+    </physvol>    
+-->
 
   </volume>
 </structure>
 
 <setup name="Default" version="1.0">
-  <world ref="world_logic"/>
+  <world ref="logicMother"/>
 </setup>
-
-</gdml>
+ 
+</gdml> 

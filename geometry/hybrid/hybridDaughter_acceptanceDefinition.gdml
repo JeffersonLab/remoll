@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "materials.xml">
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
+    &matrices;
+
     <constant name="PI" value="1.*pi"/>
     <constant name="DOFFSET" value="13366.57"/>
     <constant name="DEGRAD" value="PI/180."/>

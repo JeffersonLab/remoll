@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "materials.xml">
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
+  &matrices;
 
   <constant name="tubeTarget_rmax" value="40"/>
   <constant name="tubeTarget_length" value="1500"/>
@@ -235,19 +237,16 @@
     <volume name="TargShield_topdisk_logic">
       <materialref ref="Borated_Concrete"/>
       <solidref ref="TargShield_topdisk_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
     
     <volume name="TargShield_bottomdisk_logic">
       <materialref ref="Borated_Concrete"/>
       <solidref ref="TargShield_bottomdisk_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
     <!--    <volume name="TargShield_logic">
       <materialref ref="Concrete"/>
       <solidref ref="TargShield_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>                                       old cylindrical shielding -->
 
     <volume name="boxtgtShield1_logic">
@@ -260,7 +259,6 @@
       <solidref ref="boxtgtShield1_solid"/>
 <!--       <auxiliary auxtype="Color" auxvalue="green"/> -->
       <auxiliary auxtype="Color" auxvalue="red"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Lead_Shield_Hut_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6003"/>
     </volume>
@@ -273,7 +271,6 @@
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxtgtPolyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Lead_PolyShield_Hut_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6004"/>
     </volume>
@@ -284,7 +281,6 @@
       <materialref ref="Lead"/>
       <solidref ref="boxShieldColl1_solid"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Lead_Collar_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6007"/>
    </volume>
@@ -294,7 +290,6 @@
       <materialref ref="Polythene"/>
       <solidref ref="boxPolyShield_LeadCollar_solid_4"/>
       <auxiliary auxtype="Color" auxvalue="brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Lead_Collar_Poly_Shield_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6008"/>
     </volume>
@@ -306,7 +301,7 @@
 
       <physvol>
         <volumeref ref="USAlTarg"/>
-        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-(AlWindowTarget_length+tubeTarget_length)/2.0"/>
+        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750"/>
       </physvol>
 
       <physvol>
@@ -316,7 +311,7 @@
 
       <physvol>
         <volumeref ref="DSAlTarg"/>
-        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="+(AlWindowTarget_length+tubeTarget_length)/2.0"/>
+        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="750"/>
       </physvol>
 
       <!--Shown below are initial target shielding cylinder - Rakitha  -->
@@ -339,15 +334,17 @@
 	<rotationref ref="scRot_1"/>
       </physvol>
       -->
-
+<!-- FIXME -noShlds
       <physvol>
         <volumeref ref="boxtgtShield1_logic"/>
         <positionref ref="boxtgtShield1_center"/>
       </physvol>
+-->
 
       <!-- Neutron Poly Shielding -->
       <!-- PolyShield1 will be outside shielding -->
 
+<!-- FIXME -noShlds
       <physvol>
         <volumeref ref="boxtgtPolyShield1_logic"/>
         <positionref ref="boxtgtPolyShield1_center"/>
@@ -362,9 +359,7 @@
         <volumeref ref="boxPolyShield_LeadCollar_logic"/>
         <positionref ref="LeadCollar_center_1"/>
       </physvol>
-
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-
+-->
       <auxiliary auxtype="TargetSystem" auxvalue=""/>
     </volume>
 

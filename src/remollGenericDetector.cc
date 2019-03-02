@@ -194,7 +194,6 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
       return false;
     }
 
-
     // First step in volume?
     G4bool firststepinvolume = false;
     // if prepoint status is fGeomBoundary it's easy
