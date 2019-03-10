@@ -8,7 +8,7 @@ TH1D *h1D[nDet][4];
 
 void initHist();
 void writeHist(TString files);
-void drawHist(TString files);
+void drawHist(TString files, int det=0);
 
 void drawBeamLine(const TString& files)
 {
@@ -102,13 +102,14 @@ void writeHist(TString files){
   drawHist(fnm);
 }
 
-void drawHist(TString files){
+void drawHist(TString files, int det=0){
   TCanvas *c1D[nDet],*c2D1[nDet], *c2D2[nDet];
   TH1D *h1;TH2D *h2;
   TFile *fin=TFile::Open(files,"READ");
 
   gStyle->SetOptStat("eMRi");
   for(int i=0;i<nDet;i++){
+    if(det!=0 && det!=detNr[i]) continue;
     c1D[i]=new TCanvas(Form("c1D_%d",i*nDet),Form("%d",detNr[i]),1400,800);
     c1D[i]->Divide(2,2);
     c2D1[i]=new TCanvas(Form("c2D1_%d",i*nDet),Form("%d",detNr[i]),1400,800);
