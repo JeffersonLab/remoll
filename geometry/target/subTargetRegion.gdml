@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-<!ENTITY matrices SYSTEM "../matrices.xml">
 <!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
   <define>
-    &matrices;
-
     <constant name="targetChamber_R" value="1981.0/2.0"/>
     <constant name="targetChamber_L" value="1829."/>
     <constant name="targetChamber_thickness" value="13."/>
@@ -228,14 +225,14 @@
    <materialref ref="Concrete"/>
    <solidref ref="concrete_sub"/>
    <auxiliary auxtype="Color" auxvalue="Green"/>
-	   <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
+   <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 	   
    <volume name="HatConcreteShield_target">
    <materialref ref="Concrete"/>
    <solidref ref="concreteHat_solid"/>
    <auxiliary auxtype="Color" auxvalue="Green"/>
-	   <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
+   <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 
    <volume name="LeadShield_target">
@@ -249,6 +246,7 @@
    <solidref ref="skyshineVacuumDet1_solid"/>
    <auxiliary auxtype="Color" auxvalue="Blue"/>
    <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_1"/>
+   <auxiliary auxtype="DetType" auxvalue="all"/>
    <auxiliary auxtype="DetNo" auxvalue="5555"/>
    </volume>
 
@@ -257,6 +255,7 @@
    <solidref ref="skyshineVacuumDet2_solid"/>
    <auxiliary auxtype="Color" auxvalue="Blue"/>
    <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_2"/>
+   <auxiliary auxtype="DetType" auxvalue="all"/>
    <auxiliary auxtype="DetNo" auxvalue="5556"/>
    </volume>
 
