@@ -6,7 +6,7 @@ They represent the code as of 19-Jun-2013 (accessed 16-Jul-2018).
 In order to create the code which produces the lambda distribution file (x,y,v,px,py,pz,weight) simply
 compile 
 ```
-g++ hyperon-gen.cpp
+g++ -o hyperon-gen hyperon-gen.cpp
 ```
 
 There is an input file used by hyperon-gen.cpp called hyperon-gen.h. You can set the parameters used in the code here.
