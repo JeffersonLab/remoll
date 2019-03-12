@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "materials.xml">
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
+
   <define>
+    &matrices;
     <!--Dimension of single iron block-->
     <constant name="IronBlock_x" value="1320"/>
     <constant name="IronBlock_y" value="1320"/>
@@ -16,9 +19,6 @@
     <constant name="SteelBlock_y" value="60"/>
     <constant name="SteelBlock_z" value="1220"/>
 
-    <position name="origin" x="0" y="0" z="0"/>
-
-    <rotation name="rot_x90" unit="deg" x="90"/>
   </define>
 
   &materials;
@@ -128,7 +128,6 @@
       </physvol>
 
 
-      <auxiliary auxtype="sbsBunker" auxvalue=""/>
     </volume>
 
   </structure>
