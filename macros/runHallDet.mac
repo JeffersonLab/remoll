@@ -1,0 +1,42 @@
+##/remoll/geometry/setfile geometry/moller_clamOptHallDet.gdml
+/remoll/geometry/setfile geometry/moller_mergedHallDet.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+/remoll/physlist/parallel/enable
+
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+
+
+/remoll/evgen/set beam
+
+/remoll/evgen/beamPolarization +L
+/remoll/field/equationtype 2
+/remoll/field/steppertype 2
+/remoll/field/print
+
+/remoll/beamene 11 GeV
+
+# For LH2
+/remoll/targpos   0 cm
+/remoll/targlen 150 cm
+
+/remoll/beamcurr 85 microampere
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite/set true
+
+/process/list
+
+# Specify random number seed
+#/remoll/seed 123456
+
+##/remoll/filename remollout_clamOptHallDet_2e6.root
+/remoll/filename remollout_mergedHallDet_0p5TgtConcSide_2e6.root
+/run/beamOn 2000000

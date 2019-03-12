@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY world SYSTEM "solids/world.xml">
+<!ENTITY positions SYSTEM "positions.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+  <define>
+    &positions;
+  </define>
+
+  <materials>
+  </materials>
+
+  <solids>
+    &world;
+    <box lunit="mm" name="hallDet_S" x="1000" y="1000" z="1000"/>
+
+  </solids>
+
+  <structure>
+
+    <volume name="hallDet1_L">
+     <materialref ref="G4_Galactic"/>
+     <solidref ref="hallDet_S"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="SensDet" auxvalue="hallDet1"/>
+     <auxiliary auxtype="DetType" auxvalue="all"/>
+     <auxiliary auxtype="DetNo" auxvalue="5557"/>
+   </volume>
+   <volume name="hallDet2_L">
+     <materialref ref="G4_Galactic"/>
+     <solidref ref="hallDet_S"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="SensDet" auxvalue="hallDet2"/>
+     <auxiliary auxtype="DetType" auxvalue="all"/>
+     <auxiliary auxtype="DetNo" auxvalue="5558"/>
+   </volume>
+
+    <volume name="logicMother">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="world_solid"/>
+
+      <physvol>
+        <file name="target/subTargetRegion.gdml"/>
+        <positionref ref="targetCenter"/>
+      </physvol>
+
+      <physvol>
+        <file name="hall/hallDaughter_merged.gdml"/>
+        <positionref ref="hallCenter"/>
+      </physvol>
+
+      <physvol>
+        <file name="upstream/upstreamDaughter_merged.gdml"/>
+        <positionref ref="upstreamCenter"/>
+      </physvol>
+
+      <physvol>
+        <file name="hybrid/hybridDaughter_merged.gdml"/>
+        <positionref ref="hybridCenter"/>
+      </physvol>
+
+      <physvol>
+    	<file name="electronics/subSBSbunker.gdml"/>
+	<position name="sbsBunker_pos" x="8740" y="-3000+1980" z="6087.-15180."/>
+    	<rotation name="rot_y30" unit="deg" y="30"/>
+      </physvol>
+
+      <physvol>
+    	<volumeref ref="hallDet1_L"/>
+	<position lunit="mm" name="hallDet1_pos" x="10000"/>
+      </physvol>
+
+      <physvol>
+    	<volumeref ref="hallDet2_L"/>
+	<position lunit="mm" name="hallDet2_pos" x="1000.*sqrt(50.)" y="0." z="1000.*sqrt(50.)"/>
+    	<rotation name="hallDet2_R" unit="deg" y="45"/>
+      </physvol>
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="logicMother"/>
+  </setup>
+
+</gdml>
