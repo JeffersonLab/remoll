@@ -1,0 +1,11 @@
+/run/initialize
+/remoll/evgen/set hyperon
+
+/remoll/evgen/hyperon/runit 1 cm
+/remoll/evgen/hyperon/punit 1 GeV
+
+/remoll/evgen/hyperon/file generators/aniol/lambda-pi.dat
+/remoll/evgen/hyperon/skip 2
+/remoll/evgen/hyperon/particle pi-
+
+/run/beamOn 1
