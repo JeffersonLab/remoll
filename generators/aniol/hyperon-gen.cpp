@@ -24,7 +24,7 @@ double HyperonMomentum(double pL[], double pK[],  double, double);
 double randf();
 std::string doubleToString(double );
 
-main()
+int main(int argc, char** argv)
 {
 double var,pLmag,range,dEQsiginv,weight,beta,gamma;
 double cstheta, theta, sntheta,pKz, phi, x,dTprotons;
