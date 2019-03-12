@@ -638,12 +638,12 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
   motherVisAtt->SetForceWireframe(true);
   fWorldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
 
-  // Set all immediate daughters of the world volume to wireframe
-  G4VisAttributes* daughterVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  daughterVisAtt->SetForceWireframe(true);
-  for (int i = 0; i < fWorldVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
-    fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
-  }
+  // // Set all immediate daughters of the world volume to wireframe
+  // G4VisAttributes* daughterVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
+  // daughterVisAtt->SetForceWireframe(true);
+  // for (int i = 0; i < fWorldVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
+  //   fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
+  // }
 }
 
 void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
