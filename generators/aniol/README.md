@@ -1,6 +1,10 @@
 Note: this directory and included files are obtained from Konrad Aniol's personal page at:
   https://userweb.jlab.org/~aniol/moller/scripts/readme.dat
+
 They represent the code as of 19-Jun-2013 (accessed 16-Jul-2018).
+
+Since the order of output of these codes is strongly correlated with physical parameters
+(in particular position in target), it makes sense to shuffle the data before using it.
 ---
 
 In order to create the code which produces the lambda distribution file (x,y,v,px,py,pz,weight) simply
@@ -32,7 +36,7 @@ edit lambda_decay.cpp to set the electron helicity, h. This is found in the foll
 ```
 
 ```
-g++ lambda_decay.cpp
+g++ -o lambda_decay lambda_decay.cpp
 ```
 
 The include file, hyperon_decay.h must be adjusted to indicate the desired decay products. 
