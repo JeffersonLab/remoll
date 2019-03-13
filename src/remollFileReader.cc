@@ -21,18 +21,17 @@ remollFileEvent remollFileReader::GetAnEvent()
 {
   if (fEventList.size() == 0)
   {
-    for (int i = 0; i < 100; i++)
+    for (int i = 0; i < 100 && !fInputFile.eof(); i++)
     {
-      while (!fInputFile.eof()) {
-        G4double vx, vy, vz, px, py, pz, w;
-        while ((fInputFile >> vx >> vy >> vz >> px >> py >> pz >> w)) {
-          fEventList.push_back(remollFileEvent(G4ThreeVector(vx,vy,vz),G4ThreeVector(px,py,pz),w));
-        }
-        fInputFile.clear();
-        std::string line;
-        std::getline(fInputFile, line);
-        G4cout << "Skipping: " << line << G4endl;
+      G4double vx, vy, vz, px, py, pz, w;
+      while ((fInputFile >> vx >> vy >> vz >> px >> py >> pz >> w)) {
+        fEventList.push_back(remollFileEvent(G4ThreeVector(vx,vy,vz),G4ThreeVector(px,py,pz),w));
       }
+      fInputFile.clear();
+      std::string line;
+      std::getline(fInputFile, line);
+      if (!fInputFile.eof()) G4cout << "Skipping: " << line << G4endl;
+      else G4cout << "EOF reached." << G4endl;
     }
   }
   remollFileEvent event = fEventList.front();
