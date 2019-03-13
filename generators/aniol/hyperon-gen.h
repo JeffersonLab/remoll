@@ -12,12 +12,11 @@ double sL[4], sL0, sLx, sLy, sLz;	// hyperon polarization 4 vector in lab
 double sR[4], sR0 = 0., sRx, sRy, sRz;	//hyperon polariztion 4 vector in rest frame
 double k0 = 11.;		// incident electron energy and bremsstrahlung end point
 double beta11 = 0.9214, gamma11 = 2.5733;	// beta and gamma for k0=11 GeV: beta11=k0/(k0+mp), gamma11=1/sqrt(1-beta11*beta11)
-double mlambda = 1.115683, mproton = 0.938272, mkaon = 0.493677, me =
-  0.000511, mgamma = 0.;
-double tgtLength = 150., rhoLH2 = .07085, X0 = 63.04;	// LH2 target length, density,radiation length
+double mlambda = 1.115683, mproton = 0.938272, mkaon = 0.493677, me = 0.000511, mgamma = 0.;
+double tgtLength = 150., rhoLH2 = .07085, X0 = 63.04;	// LH2 target length, density, radiation length
 double Dt = 0.1, rho_p = 4.267e22;	// step length in z axis and proton density
 double microbarn = 1.e-30;	// units in cm^2
-double rastx = 0.4, rasty = 0.4;	//raster full widths
+double rastx = 0.5, rasty = 0.5;//raster full widths
 double pKmin = 1.;		// minimum kaon lab momentum
 double pKmax;			//maximum kaon lab momentum
 double pi = 3.14159, twopi = 6.283185;
@@ -32,12 +31,16 @@ double dPt = 0.05, dPk = 0.1;	// bin size for transverse and total kaon momentum
 //
 //ctau needed for range of hyperon from vertex to decay point in Lab
 
-//double mhyp = 1.115683, ctau=7.89, Frac = 0.5;// lambda parameters
 
-//double mhyp = 1.18937, ctau=2.404, Frac = 0.167;// sigma plus parameters
+// parameters for   lambda,  sigma+,   sigma-
+int hyp = 0;
+const
+char*  name[] = { "lambda", "sigma+", "sigma-" };
+double mhyp[] = { 1.115683,  1.18937, 1.192642 };
+double ctau[] = {     7.89,    2.404,     7.89 };
+double Frac[] = {      0.5,    0.167,    0.333 };
 
-double mhyp = 1.192642, ctau = 7.89, Frac = 0.333;	// sigma zero parameters
 
-long int Nvertex;		//number of kaon vertex generations
+long int Nvertex;		// number of kaon vertex generations
 long int Ngamma = 50;		// number of gamma energies between Kmin and k0
 long int Ncnt = 50;		// count off the number of events

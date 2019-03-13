@@ -17,20 +17,60 @@
 double randf ();
 double Lorentz (double pL[], double LT[][4], double);
 
-main ()
+int main (int argc, char** argv)
 {
+  if (argc <= 1) exit(-1);
+
+  int decay = strtoul(argv[1], 0, 0);
+
   double cnts, r, x, theta, sntheta, rad = 57.295, phi, beta, gamma;
   double kmag, ka[4], con;
   double xv, yv, zv, weight;
   double pL0[4], kgam[4], kcm, cstheta;	// use this line for pi0 decay
 
-// setup for lambda->proton+piminus
-//double alpha=0.645,Sr=0.75,h=-1.,frac=0.64,mhyp=mLambda,ma=mpion,mb=mproton,sign=-1.;
+  std::string name;
+  double alpha, Sr, h, frac, mhyp, ma, mb, sign;
+  switch (decay) {
+  case 0:
+    // setup for lambda -> proton + piminus, follow pi-
+    name = "lambda-pim.dat";
+    alpha = 0.645;
+    Sr = 0.75;
+    h = -1.;
+    frac = 0.64;
+    mhyp = mLambda;
+    ma = mpion;
+    mb = mproton;
+    sign = -1.;
+    break;
+  case 1:
+    // setup for lambda -> neutron + pi0, follow pi0
+    name = "lambda-pi0.dat";
+    alpha = 0.645;
+    Sr = 0.75;
+    h = 1.;
+    frac = 0.36;
+    mhyp = mLambda;
+    ma = mpi0;
+    mb = mneutron;
+    sign = -1.;
+    break;
+  case 2:
+    // setup for lambda -> neutron + pi0, follow neutron
+    name = "lambda-n.dat";
+    alpha = 0.645;
+    Sr = 0.75;
+    h = 1.;
+    frac = 0.36;
+    mhyp = mLambda;
+    ma = mneutron;
+    mb = mpi0;
+    sign = -1.;
+    break;
+  default:
+    exit(-1);
+  }
 
-//setup for lambda->neutron+pi0
-  double alpha = 0.645, Sr = 0.75, h = 1., frac = 0.36, mhyp = mLambda, ma = mpi0, mb = mneutron, sign = -1.;	//follow mpi0
-
-//double alpha=0.645,Sr=0.75,h= 1.,frac=0.36,mhyp=mLambda,ma=mneutron,mb=mpi0,sign=-1.;//follow neutron
 
   char str1[40], str2[40], str3[40], str4[40], str5[40], str6[40], str7[40];
   char str8[40], str9[40], str10[40], str11[40];
@@ -39,8 +79,8 @@ main ()
   char bl = ' ', eol = '\n';
   int icnts = 0, j, ncnts = 10000;
 
-  std::ifstream hyperons ("../hyperons/hyperon_outp.dat");
-  std::ofstream ofile ("hyperon_particle_decays.dat");
+  std::ifstream hyperons("lambda.dat");
+  std::ofstream ofile(name);
   hyperons >> str1 >> str2 >> str3 >> str4 >> str5 >> str6 >> str7 >> str8 >>
     str9 >> str10;
   std::
@@ -60,8 +100,12 @@ main ()
   std::cout << "kmag = " << kmag << eol;
   while (!hyperons.eof ())
     {
-      hyperons >> xv >> yv >> zv >> pL[1] >> pL[2] >> pL[3] >> weight;
-//std::cout<<xv<<bl<<yv<<bl<<zv<<bl<<pL[1]<<bl<<pL[2]<<bl<<pL[3]<<bl<<weight<<eol;
+      while (!(hyperons >> xv >> yv >> zv >> pL[1] >> pL[2] >> pL[3] >> weight)) {
+        hyperons.clear();
+        std::string line;
+        std::getline(hyperons, line);
+        if (hyperons.eof()) break;
+      }
 //setup hyperon Lab 4 momentum
       pL[0] =
 	sqrt (pL[1] * pL[1] + pL[2] * pL[2] + pL[3] * pL[3] + mhyp * mhyp);

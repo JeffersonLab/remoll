@@ -25,9 +25,12 @@ double HyperonMomentum (double pL[], double pK[], double, double);
 double randf ();
 std::string doubleToString (double);
 
-int
-main (int argc, char **argv)
+int main (int argc, char **argv)
 {
+  if (argc <= 1) exit(-1);
+
+  hyp = strtoul(argv[1], 0, 0);
+
   double var, pLmag, range, dEQsiginv, weight, beta, gamma;
   double cstheta, theta, sntheta, pKz, phi, x, dTprotons;
   double mp, mkplus, pTmax, dgamma, kgamma, sumgamma;
@@ -35,16 +38,17 @@ main (int argc, char **argv)
   std::string pos0, pos1, pos2, pL1, pL2, pL3, wt;
   char bl = ' ', eol = '\n';
 
-  std::ofstream ofile ("hyperon_outp.dat");
+  std::string filename = name[hyp];
+  std::ofstream ofile(filename + ".dat");
   if (Ngamma > 100)
     Ngamma = 100;		// Photons[100] is set in hyperon.h
   mp = mproton;
   mkplus = mkaon;
   s11 = (mp + k0) * (mp + k0) - k0 * k0;	// s for k0=11 GeV
   x =
-    s11 * s11 + (mkplus * mkplus - mhyp * mhyp) * (mkplus * mkplus -
-						   mhyp * mhyp);
-  x = (x - 2. * (mkplus * mkplus + mhyp * mhyp) * s11) / 4. / s11;
+    s11 * s11 + (mkplus * mkplus - mhyp[hyp] * mhyp[hyp]) * (mkplus * mkplus -
+						   mhyp[hyp] * mhyp[hyp]);
+  x = (x - 2. * (mkplus * mkplus + mhyp[hyp] * mhyp[hyp]) * s11) / 4. / s11;
   pcmax11 = sqrt (x);		//maximum cm momentum for k0=11 GeV
   pKmax =
     gamma11 * (pcmax11 + beta11 * sqrt (mkplus * mkplus + pcmax11 * pcmax11));
@@ -52,19 +56,19 @@ main (int argc, char **argv)
   Nvertex = tgtLength / Dt;
 /*
 // calculate pKmin
-kgamma = ((mhyp+mkaon)*(mhyp+mkaon)-mproton*mproton)/2./mproton;
+kgamma = ((mhyp[hyp]+mkaon)*(mhyp[hyp]+mkaon)-mproton*mproton)/2./mproton;
 beta=kgamma/(kgamma+mproton);
 gamma = 1./sqrt(1.-beta*beta);
 pKmin = gamma*beta*mkaon;
 */
 
-  std::cout << "mass hyperon = " << mhyp << eol;
+  std::cout << "mass hyperon = " << mhyp[hyp] << eol;
   std::cout << "pKmax " << pKmax << " pKmin " << pKmin << eol;
   std::cout << "pcmax11 " << pcmax11 << eol;
   std::cout << "Nvertex " << Nvertex << eol;
 
   ofile << "pKmax = " << pKmax << " GeV/c" << bl << "pTmax = " << bl <<
-    pcmax11 << bl << "mass_hyperon = " << mhyp << eol;
+    pcmax11 << bl << "mass_hyperon = " << mhyp[hyp] << eol;
   ofile <<
     "(x,y,z) in cm,     (px,py,pz) in GeV/c,      hyperons per electron" <<
     eol;
@@ -97,7 +101,7 @@ pKmin = gamma*beta*mkaon;
 								       cos
 								       (theta))
 		* dEQsiginv;
-	      weight = Frac * weight;	// modify weight in ratio 3/2/1 for lambda/sigmap/sigma0 production
+	      weight = Frac[hyp] * weight;	// modify weight in ratio 3/2/1 for lambda/sigmap/sigma0 production
 
 //std::cout<<"Kaon 4 vector "<<pK[0]<<bl<<pK[1]<<bl<<pK[2]<<bl<<pK[3]<<eol;
 //std::cout<<"dEQsiginv weight "<<dEQsiginv<<bl<<weight<<eol;
@@ -127,7 +131,7 @@ pKmin = gamma*beta*mkaon;
 
 //std::cout<<"pKmag pKtrans Kmin kgamma mx "<<pKmag<<bl<<pKtrans<<bl<<Kmin<<bl<<kgamma<<bl<<mx<<eol;
 
-	      range = Displacement (pL, ctau);	// determine the range to the decay point of hyperon
+	      range = Displacement (pL, ctau[hyp]);	// determine the range to the decay point of hyperon
 	      pLmag = sqrt (pL[1] * pL[1] + pL[2] * pL[2] + pL[3] * pL[3]);
 	      pos[0] = vertex[0] + range * pL[1] / pLmag;
 	      pos[1] = vertex[1] + range * pL[2] / pLmag;
@@ -202,7 +206,7 @@ Displacement (double pL[], double ctau)
 {
   double gamma, range, z, pLmag, beta;
   pLmag = sqrt (pL[1] * pL[1] + pL[2] * pL[2] + pL[3] * pL[3]);
-  beta = pLmag / sqrt (pLmag * pLmag + mhyp * mhyp);
+  beta = pLmag / sqrt (pLmag * pLmag + mhyp[hyp] * mhyp[hyp]);
   gamma = 1. / sqrt (1. - beta * beta);
   z = randf ();			// select random number between 0 and 1
   range = -beta * gamma * ctau * log (1. - z);
@@ -242,7 +246,7 @@ SigInv (double pK[], double vertex[])
   ekplus = pK[0];
   theta = asin (pT / pLab);
   kmin =
-    (mhyp * mhyp - mkplus * mkplus - mp * mp + 2. * mp * ekplus) / 2. / (mp -
+    (mhyp[hyp] * mhyp[hyp] - mkplus * mkplus - mp * mp + 2. * mp * ekplus) / 2. / (mp -
 									 ekplus
 									 +
 									 pLab
@@ -325,12 +329,12 @@ HyperonMomentum (double pL[], double pK[], double kgamma, double pKz)
   gammax = 1. / sqrt (1. - betax * betax);
 
 // check X center of mass values, X = Lambda + Q
-  mQmax = mx - mhyp;
+  mQmax = mx - mhyp[hyp];
   mQ = randf () * mQmax;	// randomly select mQ in X cm
 //here is the Xcm momentum
   pcmx =
-    sqrt (((mhyp * mhyp + mQ * mQ - sx) * (mhyp * mhyp + mQ * mQ - sx) -
-	   4. * mhyp * mhyp * mQ * mQ) / 4. / sx);
+    sqrt (((mhyp[hyp] * mhyp[hyp] + mQ * mQ - sx) * (mhyp[hyp] * mhyp[hyp] + mQ * mQ - sx) -
+	   4. * mhyp[hyp] * mhyp[hyp] * mQ * mQ) / 4. / sx);
   phiX = twopi * randf ();
   csthetaX = 2. * randf () - 1.;
   thetaX = acos (csthetaX);
@@ -339,7 +343,7 @@ HyperonMomentum (double pL[], double pK[], double kgamma, double pKz)
   pLX[2] = pcmx * sin (thetaX) * sin (phiX);
   pLX[3] = pcmx * csthetaX;
   pLX[0] =
-    sqrt (mhyp * mhyp + pLX[1] * pLX[1] + pLX[2] * pLX[2] + pLX[3] * pLX[3]);
+    sqrt (mhyp[hyp] * mhyp[hyp] + pLX[1] * pLX[1] + pLX[2] * pLX[2] + pLX[3] * pLX[3]);
 //Calculate the Lorentz transformation from X -> Lab frame
   sign = -1;			// sign = -1 for X->Lab frame
   var = Lorentz (px, LT, sign);
@@ -354,12 +358,12 @@ HyperonMomentum (double pL[], double pK[], double kgamma, double pKz)
   for (j = 0; j < 4; j++)
     pL[3] = pL[3] + LT[3][j] * pLX[j];
 
-  if (mhyp == 1.192642)
+  if (mhyp[hyp] == 1.192642)
     {
       for (i = 0; i < 4; i++)
 	pL0[i] = pL[i];		// store sigma0 lab momentum
 //go into sigma0 center of mass
-      kcm = (mhyp * mhyp - mlambda * mlambda) / 2. / mhyp;	// lambda momentum in sigma0 cm
+      kcm = (mhyp[hyp] * mhyp[hyp] - mlambda * mlambda) / 2. / mhyp[hyp];	// lambda momentum in sigma0 cm
       phiX = twopi * randf ();
       csthetaX = 2. * randf () - 1.;
       thetaX = acos (csthetaX);
