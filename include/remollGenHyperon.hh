@@ -22,6 +22,7 @@ class remollGenHyperon : public remollVEventGen {
     G4int fSkip;
     G4double fRUnit;
     G4double fPUnit;
+    G4double fWUnit;
 };
 
 #endif //__REMOLLGENHYPERON_HH

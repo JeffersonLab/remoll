@@ -23,7 +23,9 @@ namespace { G4Mutex remollGenHyperonMutex = G4MUTEX_INITIALIZER; }
 remollFileReader* remollGenHyperon::fFileReader = 0;
 
 remollGenHyperon::remollGenHyperon()
-: remollVEventGen("hyperon"),fFile(""),fParticle("pi-"),fRUnit(cm),fPUnit(GeV)
+: remollVEventGen("hyperon"),
+  fFile("generators/aniol/hyperon_outp.dat"),fParticle("lambda"),
+  fRUnit(cm),fPUnit(GeV),fWUnit(barn)
 {
   // Add to generic messenger
   fThisGenMessenger->DeclareProperty("file",fFile,"Input filename");
@@ -31,6 +33,7 @@ remollGenHyperon::remollGenHyperon()
   fThisGenMessenger->DeclareProperty("particle",fParticle,"Particle name");
   fThisGenMessenger->DeclarePropertyWithUnit("runit","cm",fRUnit,"Units of position");
   fThisGenMessenger->DeclarePropertyWithUnit("punit","GeV",fPUnit,"Units of momentum");
+  fThisGenMessenger->DeclarePropertyWithUnit("wunit","barn",fWUnit,"Units of weight");
 }
 
 remollGenHyperon::~remollGenHyperon()
