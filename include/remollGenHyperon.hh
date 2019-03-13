@@ -15,6 +15,7 @@ class remollGenHyperon : public remollVEventGen {
     void SamplePhysics(remollVertex*, remollEvent*);
 
     static remollFileReader* fFileReader;
+    remollFileReader* GetFileReader() const;
 
     std::string fFile;
     G4String fParticle;

@@ -3,11 +3,13 @@
 remollFileReader::remollFileReader(G4String filename, G4int skip)
 {
   fInputFile.open(filename.data());
+  G4cout << "Opening " << filename << G4endl;
   while (skip-- > 0) {
     std::string line;
     std::getline(fInputFile, line);
-    G4cout << line << G4endl;
+    G4cout << "Skipping: " << line << G4endl;
   }
+  G4cout << filename << " opened." << G4endl;
 }
 
 remollFileReader::~remollFileReader()
@@ -21,9 +23,16 @@ remollFileEvent remollFileReader::GetAnEvent()
   {
     for (int i = 0; i < 100; i++)
     {
-      G4double vx, vy, vz, px, py, pz, w;
-      fInputFile >> vx >> vy >> vz >> px >> py >> pz >> w;
-      fEventList.push_back(remollFileEvent(G4ThreeVector(vx,vy,vz),G4ThreeVector(px,py,pz),w));
+      while (!fInputFile.eof()) {
+        G4double vx, vy, vz, px, py, pz, w;
+        while ((fInputFile >> vx >> vy >> vz >> px >> py >> pz >> w)) {
+          fEventList.push_back(remollFileEvent(G4ThreeVector(vx,vy,vz),G4ThreeVector(px,py,pz),w));
+        }
+        fInputFile.clear();
+        std::string line;
+        std::getline(fInputFile, line);
+        G4cout << "Skipping: " << line << G4endl;
+      }
     }
   }
   remollFileEvent event = fEventList.front();

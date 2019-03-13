@@ -6,14 +6,13 @@
 class remollFileEvent
 {
   public:
-    remollFileEvent();
-    remollFileEvent(G4ThreeVector r, G4ThreeVector p, G4double w)
+    remollFileEvent(G4ThreeVector r = {0,0,0}, G4ThreeVector p = {0,0,0}, G4double w = 0)
     : fR(r),fP(p),fW(w) { }
     ~remollFileEvent() { }
 
-    G4ThreeVector GetR() const { return fR; }
-    G4ThreeVector GetP() const { return fP; }
-    G4double GetW() const { return fW; }
+    G4ThreeVector r() const { return fR; }
+    G4ThreeVector p() const { return fP; }
+    G4double w() const { return fW; }
 
   private:
     G4ThreeVector fR, fP;
