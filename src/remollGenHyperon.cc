@@ -64,8 +64,8 @@ void remollGenHyperon::SamplePhysics(remollVertex* /*vert*/, remollEvent* evt)
   }
 
   // Create event
-  evt->SetRate(event.w());
+  evt->SetRate(event.w() / fWUnit);
   evt->SetAsymmetry(0.0);
   evt->SetEffCrossSection(1.0);
-  evt->ProduceNewParticle(event.r() * fRUnit, event.p() * fPUnit, fParticle);
+  evt->ProduceNewParticle(event.r() / fRUnit, event.p() / fPUnit, fParticle);
 }
