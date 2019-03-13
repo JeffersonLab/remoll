@@ -24,10 +24,12 @@ remollFileReader* remollGenHyperon::fFileReader = 0;
 
 remollGenHyperon::remollGenHyperon()
 : remollVEventGen("hyperon"),
+  fDebugLevel(0),
   fFile("generators/aniol/hyperon_outp.dat"),fParticle("lambda"),
   fRUnit(cm),fPUnit(GeV),fWUnit(barn)
 {
   // Add to generic messenger
+  fThisGenMessenger->DeclareProperty("debug",fDebugLevel,"Debug level");
   fThisGenMessenger->DeclareProperty("file",fFile,"Input filename");
   fThisGenMessenger->DeclareProperty("skip",fSkip,"Number of lines to skip");
   fThisGenMessenger->DeclareProperty("particle",fParticle,"Particle name");
@@ -45,8 +47,9 @@ remollGenHyperon::~remollGenHyperon()
 remollFileReader* remollGenHyperon::GetFileReader() const
 {
   G4AutoLock lock(&remollGenHyperonMutex);
-  if (! fFileReader)
-    fFileReader = new remollFileReader(fFile,fSkip);
+  if (! fFileReader) {
+    fFileReader = new remollFileReader(fFile,fSkip,fDebugLevel);
+  }
   return fFileReader;
 }
 

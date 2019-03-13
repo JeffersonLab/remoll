@@ -22,12 +22,16 @@ class remollFileEvent
 class remollFileReader
 {
   public:
-    remollFileReader(G4String filename, G4int skip = 0);
+    remollFileReader(G4String filename, G4int skip = 0, G4int debuglevel = 0);
     ~remollFileReader();
 
     remollFileEvent GetAnEvent();
 
+    void SetDebugLevel(int level) { fDebugLevel = level; }
+    int  GetDebugLevel() const { return fDebugLevel; }
+
   private:
+    int fDebugLevel;
     std::ifstream fInputFile;
     std::list<remollFileEvent> fEventList;
 };

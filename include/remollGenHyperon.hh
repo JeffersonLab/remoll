@@ -17,6 +17,7 @@ class remollGenHyperon : public remollVEventGen {
     static remollFileReader* fFileReader;
     remollFileReader* GetFileReader() const;
 
+    G4int fDebugLevel;
     std::string fFile;
     G4String fParticle;
     G4int fSkip;

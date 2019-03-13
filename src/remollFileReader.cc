@@ -1,15 +1,22 @@
 #include "remollFileReader.hh"
 
-remollFileReader::remollFileReader(G4String filename, G4int skip)
+remollFileReader::remollFileReader(G4String filename, G4int skip, G4int debuglevel)
+: fDebugLevel(debuglevel)
 {
   fInputFile.open(filename.data());
-  G4cout << "Opening " << filename << G4endl;
+
+  if (fDebugLevel > 0)
+    G4cout << "Opening " << filename << G4endl;
+
   while (skip-- > 0) {
     std::string line;
     std::getline(fInputFile, line);
-    G4cout << "Skipping: " << line << G4endl;
+    if (fDebugLevel > 1)
+      G4cout << "Skipping: " << line << G4endl;
   }
-  G4cout << filename << " opened." << G4endl;
+
+  if (fDebugLevel > 0)
+    G4cout << filename << " opened." << G4endl;
 }
 
 remollFileReader::~remollFileReader()
@@ -30,8 +37,10 @@ remollFileEvent remollFileReader::GetAnEvent()
       fInputFile.clear();
       std::string line;
       std::getline(fInputFile, line);
-      if (!fInputFile.eof()) G4cout << "Skipping: " << line << G4endl;
-      else G4cout << "EOF reached." << G4endl;
+      if (fDebugLevel > 1) {
+        if (!fInputFile.eof()) G4cout << "Skipping: " << line << G4endl;
+        else G4cout << "EOF reached." << G4endl;
+      }
     }
   }
   remollFileEvent event = fEventList.front();
