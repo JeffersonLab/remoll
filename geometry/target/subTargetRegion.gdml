@@ -219,6 +219,7 @@
   <volume name="targetRegion">
     <materialref ref="VacuumTarg"/>
     <solidref ref="targetRegion_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
     <physvol>
       <volumeref ref="USAlTarg"/>

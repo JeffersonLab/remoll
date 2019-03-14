@@ -1615,6 +1615,7 @@
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
       <solidref ref="boxDownstream"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
 <!-- Old beampipe design not in use now -->
 <!-- 
