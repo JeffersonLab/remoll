@@ -44,8 +44,18 @@
 
 <solids>
 
-  <box lunit="m" name="targetRegion_solid"
-       x="10" y="10" z="6.36"/>
+  <box lunit="m" name="targetRegion_solid1"
+       x="10" y="15" z="6.36"/>
+
+  <box lunit="m" name="targetRegion_solid2"
+	  x="11" y="5" z="6.4"/>
+
+  <subtraction name ="targetRegion_solid">
+     <first ref="targetRegion_solid1"/>
+     <second ref="targetRegion_solid2"/>
+     <position name="MotherSub_pos" lunit="mm" x="0" y="-3000-5000./2." z="0" />
+             <!--3000 mm is the distance of beam center from the hall floor-->
+   </subtraction>
 
   <tube aunit="deg" lunit="mm" deltaphi="360" name="target_solid"
         rmax="40" rmin="0" z="1500"/>
