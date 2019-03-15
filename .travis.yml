@@ -16,6 +16,7 @@ script:
     docker cp $(docker ps -l -q):"remolltest.${suite}.analysis.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"remolltest.${suite}.analysis.png.tar.gz" . ;
     docker cp $(docker ps -l -q):"remolltest.${suite}.analysis.root.tar.gz" . ;
+    docker stop $(docker ps -l -q) ;
   done
 
 after_success:
