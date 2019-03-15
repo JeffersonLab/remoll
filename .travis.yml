@@ -9,6 +9,7 @@ script:
   done
 - for suite in unit commit release ; do
     docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" || exit 1 ;
+    docker start $(docker ps -l -q) ;
     docker exec $(docker ps -l -q) "scripts/tests/targz_macros.sh ${suite}" ;
     docker cp $(docker ps -l -q):"remolltest.${suite}.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"remolltest.${suite}.root.tar.gz" . ;
