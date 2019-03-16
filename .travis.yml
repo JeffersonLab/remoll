@@ -11,11 +11,11 @@ script:
     docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" || exit 1 ;
     docker start $(docker ps -l -q) ;
     docker exec $(docker ps -l -q) scripts/tests/targz_macros.sh ${suite} ;
-    docker cp $(docker ps -l -q):"remolltest.${suite}.log.tar.gz" . ;
-    docker cp $(docker ps -l -q):"remolltest.${suite}.root.tar.gz" . ;
-    docker cp $(docker ps -l -q):"remolltest.${suite}.analysis.log.tar.gz" . ;
-    docker cp $(docker ps -l -q):"remolltest.${suite}.analysis.png.tar.gz" . ;
-    docker cp $(docker ps -l -q):"remolltest.${suite}.analysis.root.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.log.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.root.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.log.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.png.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.root.tar.gz" . ;
     docker stop $(docker ps -l -q) ;
   done
 
