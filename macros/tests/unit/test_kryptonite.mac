@@ -1,7 +1,6 @@
 /run/initialize
 /remoll/filename test_kryptonite.root
 
-/remoll/kryptonite/del Lead
 /remoll/kryptonite/add G4_Pb
 /remoll/kryptonite/list
 
