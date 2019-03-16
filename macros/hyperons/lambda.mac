@@ -1,0 +1,31 @@
+# This must be called before initialize
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+# Enable optical photons and processes
+/remoll/physlist/parallel/enable
+/remoll/physlist/optical/disable
+
+# This must be explicitly called
+/run/initialize
+
+# Magnetic fields
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite/set false
+
+# Hyperon generator
+/remoll/evgen/set hyperon
+/remoll/evgen/hyperon/runit 1 cm
+/remoll/evgen/hyperon/punit 1 GeV
+/remoll/evgen/hyperon/wunit 1 microbarn
+/remoll/evgen/hyperon/file generators/aniol/lambda.dat
+/remoll/evgen/hyperon/skip 2
+/remoll/evgen/hyperon/particle lambda
+
+/remoll/filename hyperon_lambda_2M.root
+/run/beamOn 2000000
+
