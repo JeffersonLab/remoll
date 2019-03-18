@@ -15,5 +15,5 @@ tar -czvf remolltest.${suite}.log.tar.gz            --transform 's|logfiles/test
 tar -czvf remolltest.${suite}.analysis.log.tar.gz   --transform 's|logfiles/tests/||g'      logfiles/tests/${suite}/analysis/*.log
 # Pack analysis products
 tar -czvf remolltest.${suite}.root.tar.gz           --transform 's|rootfiles/tests/||g'     rootfiles/tests/${suite}/*.root
-tar -czvf remolltest.${suite}.analysis.png.tar.gz   --transform 's|rootfiles/tests/||g'     rootfiles/tests/${suite}/analysis/*.png
+tar -czvf remolltest.${suite}.analysis.pdf.tar.gz   --transform 's|rootfiles/tests/||g'     rootfiles/tests/${suite}/analysis/*.pdf
 tar -czvf remolltest.${suite}.analysis.root.tar.gz  --transform 's|rootfiles/tests/||g'     rootfiles/tests/${suite}/analysis/*.root
