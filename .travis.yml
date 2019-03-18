@@ -14,7 +14,7 @@ script:
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.root.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.log.tar.gz" . ;
-    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.png.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.pdf.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.root.tar.gz" . ;
     docker stop $(docker ps -l -q) ;
   done
@@ -43,7 +43,7 @@ deploy:
   - remolltest.release.log.tar.gz
   - remolltest.release.root.tar.gz
   - remolltest.release.analysis.log.tar.gz
-  - remolltest.release.analysis.png.tar.gz
+  - remolltest.release.analysis.pdf.tar.gz
   - remolltest.release.analysis.root.tar.gz
   skip_cleanup: true
   on:
