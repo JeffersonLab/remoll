@@ -72,9 +72,9 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt)
     }
 
     // Shoot
-    double pf = G4RandFlat::shoot(fE_min, true_emax);
+    double pf = G4RandFlat::shoot(true_emin, true_emax);
 
-    if (!(pf > 0.0) || !(pf < beamE)) {
+    if (!(pf >= 0.0) || !(pf <= beamE)) {
       G4cout << "remollGenPion::SamplePhysics: ERROR"
              << " fE_min, fE_max = [" << fE_min << "," << fE_max << "] "
              << " true_emin, true_emax = [" << true_emin << "," << true_emax << "] "
