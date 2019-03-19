@@ -21,8 +21,12 @@ void test_general (const TString& inputdir, const TString& inputname)
   c1.SaveAs(outputdir + "/" + inputname + "_" + "h_hit_pid.pdf");
   T.Draw("hit.det >> h_hit_det(4500,0,4500)","",hopt);
   c1.SaveAs(outputdir + "/" + inputname + "_" + "h_hit_det.pdf");
-  T.Draw("hit.r/m >> h_hit_r(150,0.0,1.5)","hit.det==28",hopt);
+  T.Draw("hit.r/m >> h_hit_r_fwd(150,0.0,1.5)","hit.det==28 && hit.pid != 22 && hit.pz > 0.0*MeV",hopt);
+  T.Draw("hit.r/m >> h_hit_r_bwd(150,0.0,1.5)","hit.det==28 && hit.pid != 22 && hit.pz < 0.0*MeV",hopt+",SAME");
   c1.SaveAs(outputdir + "/" + inputname + "_" + "h_hit_r.pdf");
+  T.Draw("hit.r/m >> h_hit_r_bwd_gamma(150,0.0,1.5)","hit.det==28 && hit.pid == 22 && hit.pz < -1.0*MeV",hopt);
+  T.Draw("hit.r/m >> h_hit_r_fwd_gamma(150,0.0,1.5)","hit.det==28 && hit.pid == 22 && hit.pz > +1.0*MeV",hopt+",SAME");
+  c1.SaveAs(outputdir + "/" + inputname + "_" + "h_hit_r_gamma.pdf");
   T.Draw("part.vx/m >> h_vx(200,-0.010,+0.010)","",hopt);
   c1.SaveAs(outputdir + "/" + inputname + "_" + "h_vx.pdf");
   T.Draw("part.vy/m >> h_vy(200,-0.010,+0.010)","",hopt);
