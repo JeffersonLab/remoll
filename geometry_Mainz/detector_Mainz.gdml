@@ -28,99 +28,85 @@
       <skinsurface name="quartzRecVol_50002_skin" surfaceproperty="Quartz" >
         <volumeref ref="quartzRecVol_50002"/>
       </skinsurface>
-
-
       <volume name="refVol_50002">
-                <materialref ref="Air"/>
-        <solidref ref="refSol1_50002"/> 
-        <auxiliary auxtype="Color" auxvalue="green"/> 
-      </volume>
-
-      <volume name="refVolSkin_50002">
-        <materialref ref="Aluminium"/>
-        <solidref ref="refSolSkin1_50002"/> 
-        <auxiliary auxtype="Color" auxvalue="brown"/> 
-        <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
-        <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
-        <auxiliary auxtype="DetNo" auxvalue="50102"/>  
-      </volume>
-
-      <skinsurface name="refVolSkin_50002_skin" surfaceproperty="Mylar" >
-        <volumeref ref="refVolSkin_50002"/>
-      </skinsurface>
-
-      <volume name="reflectorVol_50002">
-        <materialref ref="Aluminium"/>
-        <solidref ref="reflectorSol_50002"/> 
-        <auxiliary auxtype="Color" auxvalue="red"/> 
-        <auxiliary auxtype="Color" auxvalue="brown"/> 
-        <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
-        <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
-        <auxiliary auxtype="DetNo" auxvalue="50202"/>  
-      </volume>
-
+            <materialref ref="Air"/>
+            <solidref ref="refSol1_50002"/> 
+            <auxiliary auxtype="Color" auxvalue="green"/> 
+            <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+            <auxiliary auxtype="DetType" auxvalue="boundaryhits"/> 
+            <auxiliary auxtype="DetNo" auxvalue="50102"/>  
+        </volume>
+        <volume name="refVolSkin_50002">
+            <materialref ref="Aluminium"/>
+            <solidref ref="refSolSkin1_50002"/> 
+            <auxiliary auxtype="Color" auxvalue="brown"/> 
+            <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+            <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
+            <auxiliary auxtype="DetNo" auxvalue="50202"/>  
+        </volume>
+        <skinsurface name="refVolSkin_50002_skin" surfaceproperty="Mylar" >
+            <volumeref ref="refVolSkin_50002"/>
+        </skinsurface>
+        <volume name="reflectorVol_50002">
+            <materialref ref="Aluminium"/>
+            <solidref ref="reflectorSol_50002"/> 
+            <auxiliary auxtype="Color" auxvalue="red"/> 
+            <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+            <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
+            <auxiliary auxtype="DetNo" auxvalue="50302"/>  
+        </volume>
       <skinsurface name="reflectorVol_50002_skin" surfaceproperty="Mylar" >
         <volumeref ref="reflectorVol_50002"/>
       </skinsurface>
-      
       <volume name="lgVol_50002">
         <materialref ref="Air"/>
         <solidref ref="lgSol_50002"/> 
         <auxiliary auxtype="Color" auxvalue="blue"/> 
+         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+         <auxiliary auxtype="DetType" auxvalue="boundaryhits"/> 
+         <auxiliary auxtype="DetNo" auxvalue="50402"/>  
       </volume>
-      
       <volume name="lgVolSkin_50002">
         <materialref ref="Aluminium"/>
         <solidref ref="lgSolSkin_50002"/> 
         <auxiliary auxtype="Color" auxvalue="brown"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
-        <auxiliary auxtype="DetNo" auxvalue="50302"/>  
+        <auxiliary auxtype="DetNo" auxvalue="50502"/>  
       </volume>
-      
       <skinsurface name="lgVolSkin_50002_skin" surfaceproperty="Mylar" >
         <volumeref ref="lgVolSkin_50002"/>
       </skinsurface>
-      
       <volume name="pmtVol_50002">
         <materialref ref="Aluminium"/>
         <solidref ref="pmtSol_50002"/> 
         <auxiliary auxtype="Color" auxvalue="red"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
         <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
-        <auxiliary auxtype="DetNo" auxvalue="50402"/>  
+        <auxiliary auxtype="DetNo" auxvalue="50602"/>  
       </volume>
-      
       <skinsurface name="pmtVol_50002_skin" surfaceproperty="Aluminium" >
         <volumeref ref="pmtVol_50002"/>
       </skinsurface>
-      
-      
-      
       <volume name="pmtCathodeVol_50002">
         <materialref ref="Photocathode"/>
         <solidref ref="pmtCathodeSol_50002"/> 
         <auxiliary auxtype="Color" auxvalue="green"/> 
         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
-        <auxiliary auxtype="DetNo" auxvalue="50502"/>  
+        <auxiliary auxtype="DetNo" auxvalue="50702"/>  
       </volume>
-      
       <skinsurface name="pmtCathodeVol_50002_skin" surfaceproperty="Cathode" >
         <volumeref ref="pmtCathodeVol_50002"/>
       </skinsurface>
-      
-      
-      <volume name="pmtSkinVol_50002">        
+      <volume name="pmtSkinVol_50002">
         <materialref ref="Aluminium"/>
         <solidref ref="pmtSkinSol_50002"/> 
         <auxiliary auxtype="Color" auxvalue="grey"/> 
       </volume>
-
       <skinsurface name="pmtSkinVol_50002_skin" surfaceproperty="Aluminium" >
         <volumeref ref="pmtSkinVol_50002"/>
       </skinsurface>
-      
       <volume name="quartzVol_50002">
         <materialref ref="Air"/>
         <solidref ref="quartzLogicSol_50002"/> 
