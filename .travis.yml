@@ -38,7 +38,7 @@ deploy:
   - remolltest.commit.log.tar.gz
   - remolltest.commit.root.tar.gz
   - remolltest.commit.analysis.log.tar.gz
-  - remolltest.commit.analysis.png.tar.gz
+  - remolltest.commit.analysis.pdf.tar.gz
   - remolltest.commit.analysis.root.tar.gz
   - remolltest.release.log.tar.gz
   - remolltest.release.root.tar.gz
