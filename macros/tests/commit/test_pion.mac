@@ -4,6 +4,7 @@
 /remoll/physlist/parallel/enable
 
 # This must be explicitly called
+/run/numberOfThreads 1
 /run/initialize
 
 # Field maps
