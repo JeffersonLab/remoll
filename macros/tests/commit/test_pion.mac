@@ -2,6 +2,7 @@
 /remoll/setgeofile geometry/mollerMother.gdml
 
 # This must be explicitly called
+/run/numberOfThreads 1
 /run/initialize
 
 # Field maps
