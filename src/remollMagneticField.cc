@@ -219,16 +219,29 @@ void remollMagneticField::ReadFieldMap(){
     // Sanity check on header data
 
     if( !( fMin[kR] >= 0.0 && fMin[kR] < fMax[kR] &&
-	 	-180.0 < fMin[kPhi] && fMin[kPhi] < 180.0 && 
-	 	-180.0 < fMax[kPhi] && fMax[kPhi] < 180.0 && 
-	 	fMin[kPhi]  < fMax[kPhi] &&
-		fMin[kZ] < fMax[kZ] &&
-		fN[kR] > 0 && fN[kPhi] > 0 && fN[kZ] > 0 &&
-		fNxtant > 0
+	   -180.0 <= fMin[kPhi] && fMin[kPhi] < 180.0 && 
+	   -180.0 <= fMax[kPhi] && fMax[kPhi] < 180.0 && 
+	   fMin[kPhi]  < fMax[kPhi] &&
+	   fMin[kZ] < fMax[kZ] &&
+	   fN[kR] > 0 && fN[kPhi] > 0 && fN[kZ] > 0 &&
+	   fNxtant > 0
        	 )
       ){
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 	    << ": File " << fFilename << " contains invalid header data.  Aborting" << G4endl;
+	G4cerr<<"fMin[kR] >= 0.0: "<<bool(fMin[kR] >= 0.0)<<" "<<fMin[kR]<<G4endl
+	      <<"fMin[kR] <= fMax[kR]: "<<bool( fMin[kR] <= fMax[kR])<<" "<<fMax[kR]<<G4endl
+	      <<"-180.0 < fMin[kPhi]: "<<bool( -180.0 < fMin[kPhi])<<" "<<fMin[kPhi]<<G4endl
+	      <<"fMin[kPhi] < 180.0: "<<bool(fMin[kPhi] < 180.0)<<G4endl
+	      <<"-180.0 <= fMax[kPhi]: "<<bool(-180.0 <= fMax[kPhi])<<" "<<fMax[kPhi]<<G4endl
+	      <<"fMax[kPhi] < 180.0: "<<bool(fMax[kPhi] < 180.0 )<<G4endl
+	      <<"fMin[kPhi]  < fMax[kPhi]: "<<bool(fMin[kPhi]  < fMax[kPhi] )<<G4endl
+	      <<"fMin[kZ] < fMax[kZ]: "<<bool(fMin[kZ] < fMax[kZ] )<<" "<<fMin[kZ]<<" "<<fMax[kZ]<<G4endl
+	      <<"fN[kR] > 0: "<<bool(fN[kR] > 0 )<<" "<<fN[kR]<<G4endl
+	      <<"fN[kPhi] > 0: "<<bool(fN[kPhi] > 0 )<<" "<<fN[kPhi]<<G4endl
+	      <<"fN[kZ] > 0: "<<bool(fN[kZ] > 0 )<<" "<<fN[kZ]<<G4endl
+	      <<"fNxtant > 0: "<<bool(fNxtant > 0 )<<" "<<fNxtant<<G4endl<<G4endl;
+
 	exit(1);
     }
     

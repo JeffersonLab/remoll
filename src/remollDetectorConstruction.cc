@@ -47,7 +47,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
 : fVerboseLevel(0),
   fGDMLParser(0),
   fGDMLValidate(false),
-  fGDMLOverlapCheck(true),
+  fGDMLOverlapCheck(false),
   fGDMLPath("geometry"),
   fGDMLFile("mollerMother.gdml"),
   fMessenger(0),
@@ -384,7 +384,11 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 
     // Parse GDML file
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
+    // hide output if not validating or checking ovelaps
+    if (! fGDMLOverlapCheck && ! fGDMLValidate)
+      G4cout.setstate(std::ios_base::failbit);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+    G4cout.clear();
     G4VPhysicalVolume* worldvolume = fGDMLParser->GetWorldVolume();
 
     // Print tolerances

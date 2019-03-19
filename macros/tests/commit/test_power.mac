@@ -13,6 +13,7 @@
 # Beam energy
 /remoll/evgen/set beam
 /remoll/beamene 11 GeV
+/remoll/beamcurr 85 microampere
 
 # Output
 /remoll/filename test_power.root
