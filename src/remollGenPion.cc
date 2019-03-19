@@ -64,8 +64,11 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt)
 
     double pf = G4RandFlat::shoot(fE_min, true_emax);
 
-    assert( pf > 0.0 );
-    assert( pf < beamE );
+    if (!(pf > 0.0) || !(pf < beamE)) {
+      G4cout << "remollGenPion::SamplePhysics: ERROR fE_min, fE_max = [" << fE_min << "," << fE_max << "] with beamE = " << beamE
+             << " but pf = " << pf << G4endl;
+      exit(-1);
+    }
     //solid angle in steradians times the integral of pion energies from 0 to beamE -> int dE from 0 to beamE: rakitha Tue Sep 24 14:11:36 EDT 2013
 
 
