@@ -85,7 +85,7 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt)
     //solid angle in steradians times the integral of pion energies from 0 to beamE -> int dE from 0 to beamE: rakitha Tue Sep 24 14:11:36 EDT 2013
 
 
-    double V = (fPh_max - fPh_min) * (cos(fTh_min) - cos(fTh_max)) * (true_emax - true_min);
+    double V = (fPh_max - fPh_min) * (cos(fTh_min) - cos(fTh_max)) * (true_emax - true_emin);
 
     double intrad = 2.0*alpha*log(beamE/electron_mass_c2)/pi;
 
