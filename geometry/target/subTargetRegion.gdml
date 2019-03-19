@@ -108,7 +108,10 @@
 
   <!--shielding concrete -->
   <box lunit="mm" name="concrete_outerbox" x="concreteBoxx" y="concreteBoxy" z="concreteBoxz"/>
-  <box lunit="mm" name="concrete_innerbox" x="concreteBoxx-2*concreteThickness" y="concreteBoxy" z="concreteBoxz-2*concreteThickness"/>
+  <box lunit="mm" name="concrete_innerbox"
+       x="concreteBoxx-2*concreteThickness"
+       y="concreteBoxy"
+       z="concreteBoxz-2*concreteThickness"/>
 
   <subtraction name="concrete_sub1">
     <first ref = "concrete_outerbox"/>
