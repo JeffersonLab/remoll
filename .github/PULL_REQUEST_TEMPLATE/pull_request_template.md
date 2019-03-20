@@ -15,6 +15,6 @@ about: Create a pull request to merge bug fixes or new features
 - [ ] Documentation has been added / uodated
 - [ ] Changes have been communicated to collaborators
 
-### Does this PR introduce breaking changes? What changes might users nerd to make to their code? 
+### Does this PR introduce breaking changes? What changes might users need to make to their code? 
 
 ### Does this PR change default behavior? 
