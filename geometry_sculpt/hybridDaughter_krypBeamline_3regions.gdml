@@ -450,6 +450,19 @@
       <D unit="g/cm3" value="1e-25"/>
       <atom unit="g/mole" value="1.01"/>
     </material>
+
+    <material Z="1" name="GoodVacuum" state="gas">
+      <T unit="K" value="300"/>
+      <D unit="kg/m3" value="1.54e-9"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
+    <material Z="1" name="BadVacuum" state="gas">
+      <T unit="K" value="300"/>
+      <D unit="kg/m3" value="1.54e-8"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+
     <material Z="74" name="Tungsten" state="solid">
       <D unit="g/cm3" value="19.3"/>
       <atom unit="g/mole" value="183.85"/>
@@ -1054,7 +1067,9 @@
     </volume>
 
     <volume name="box2Mat_logic">
-      <materialref ref="G4_Galactic"/>
+      <!-- <materialref ref="GoodVacuum"/> -->
+      <materialref ref="BadVacuum"/>
+      <!-- <materialref ref="G4_Galactic"/> -->
       <solidref ref="box2Mat"/>
     </volume>
 
@@ -1083,7 +1098,9 @@
     </volume>
 
     <volume name="logicDownstream">
-      <materialref ref="G4_Galactic"/>
+      <!-- <materialref ref="GoodVacuum"/> -->
+      <materialref ref="BadVacuum"/>
+      <!-- <materialref ref="G4_Galactic"/> -->
       <solidref ref="tubeDownstream"/>
 
       <physvol name="DSwindow_phys">
@@ -1210,6 +1227,10 @@
         <positionref ref="posPCOLL2TRAP"/>
       </physvol>
 
+      <physvol name="DSbeam_pipe">
+        <volumeref ref="logicDSbeam_pipe"/>
+        <positionref ref="DSbeam_vac_pos"/>
+      </physvol>
       <!-- <physvol> -->
       <!-- 	<file name="subBeamPipeDShybrid.gdml"/> -->
       <!--   <position name="beamPipeDShybrid_pos" unit="mm" z="17810 + 11140/2 - DOFFSET"/> -->
