@@ -45,8 +45,8 @@
 	<rotationref ref="identity"/>
       </physvol>
       <physvol>
-	<!-- <file name="hybridDaughter_krypBeamline_3regions.gdml"/> -->
-	<file name="hybridDaughter_krypBeamline_3regions_LowEScat.gdml"/>
+	<file name="hybridDaughter_krypBeamline_3regions.gdml"/>
+	<!-- <file name="hybridDaughter_krypBeamline_3regions_LowEScat.gdml"/> -->
 	<positionref ref="hybridCenter"/>
 	<rotationref ref="identity"/>
       </physvol>
