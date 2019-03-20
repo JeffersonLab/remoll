@@ -10,9 +10,9 @@ about: Create a pull request to merge bug fixes or new features
 - [ ] Documentation update 
 - [ ] Other: __
 
-### Please check if this PR fulfills the followimg:
+### Please check if this PR fulfills the following:
 - [ ] Tests for the changes have been added
-- [ ] Documentation has been added / uodated
+- [ ] Documentation has been added / updated
 - [ ] Changes have been communicated to collaborators
 
 ### Does this PR introduce breaking changes? What changes might users need to make to their code? 
