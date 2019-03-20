@@ -236,6 +236,18 @@ foreach(file ${exefiles})
   )
 endforeach()
 
+#
+# custom targets
+#
+add_custom_target(create-manual
+  COMMAND ./remoll -g ${PROJECT_SOURCE_DIR}/geometry/mollerMother.gdml ${PROJECT_SOURCE_DIR}/macros/manual.mac | awk '/Command directory path/,/Graphics systems deleted/' > manual.txt
+  BYPRODUCTS manual.txt
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  DEPENDS remoll)
+add_custom_target(check-manual
+  COMMAND diff ${PROJECT_SOURCE_DIR}/manual.txt manual.txt || true
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  DEPENDS create-manual)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
