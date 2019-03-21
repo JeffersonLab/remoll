@@ -16,7 +16,7 @@ script:
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.pdf.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.root.tar.gz" . ;
-    docker exec $(docker ps -l -q) scripts/tests/watermark.sh rootfiles/tests/${suite}/analysis" ;
+    docker exec $(docker ps -l -q) scripts/tests/watermark.sh rootfiles/tests/${suite}/analysis ;
     docker cp $(docker ps -l -q):"/jlab/remoll/rootfiles_tests_${suite}_analysis.pdf" . ;
     docker stop $(docker ps -l -q) ;
   done
