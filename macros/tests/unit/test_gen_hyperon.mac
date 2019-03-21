@@ -1,0 +1,14 @@
+/run/initialize
+/remoll/evgen/set hyperon
+
+/remoll/evgen/hyperon/runit 1 cm
+/remoll/evgen/hyperon/punit 1 GeV
+/remoll/evgen/hyperon/wunit 1 microbarn
+
+/remoll/evgen/hyperon/debug 2
+/remoll/evgen/hyperon/file macros/tests/unit/test_gen_hyperon.dat
+/remoll/evgen/hyperon/skip 2
+/remoll/evgen/hyperon/particle pi-
+
+/run/beamOn 20
+

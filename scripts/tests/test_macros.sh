@@ -92,7 +92,7 @@ for macro in ${macros}/${macroglob} ; do
 	echo "Starting analysis..." | tee ${logfiles}/analysis/${name}.log
 	for rootmacro in ${analysis1}/${analysisglob} ${analysis2}/${analysisglob} ; do
 		echo "Running analysis macro `basename ${rootmacro} .C`..."
-		root -q -b -l "${rootmacro}+(\"${rootfiles}\",\"${name}\")" 2>&1 | tee -a ${logfiles}/analysis/${name}.log
+		build/reroot -q -b -l "${rootmacro}+(\"${rootfiles}\",\"${name}\")" 2>&1 | tee -a ${logfiles}/analysis/${name}.log
 	done
 
 done

@@ -9,6 +9,14 @@ script:
   done
 - for suite in unit commit release ; do
     docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" || exit 1 ;
+    docker start $(docker ps -l -q) ;
+    docker exec $(docker ps -l -q) scripts/tests/targz_macros.sh ${suite} ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.log.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.root.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.log.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.pdf.tar.gz" . ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.root.tar.gz" . ;
+    docker stop $(docker ps -l -q) ;
   done
 
 after_success:
@@ -21,3 +29,24 @@ after_success:
 
 notifications:
   slack: jlab12gev:PVp0QYADLTXmFdicK6WXkTGN
+
+deploy:
+  provider: releases
+  api_key:
+    secure: MzvvPA8KxYjEVa8C9rNtAQbtD+mDx2Wn3Em02JKMtwv953Htnv3zRcyGPfF++sLV80RvZ8NZ8pN3WfiAPTBHatUSgWh9w+GRv0G366wxKrAS4O+9BVy96U7A0gFkaXRwXirJWo4u2lJscQ1hC2IDbI2dGAS/VF5Lt1TLjWcPUL8LPcKgF80FG8+9+BUH1cRiW8mULT36EeVAB1K+vwO6Qob5k4ef66eHjkbdpuUktDr6wrehoyGXtFiBfl+XWotvcrer/51J6wn85UqCc/A+KYrVshBH/gKCD7/w6D2akNM2/sJcFdLzv5WkaQOwplsAYuzLn1cNRUKbWay5ClCSm6rsoHGfaagW4/wXk9TxqJhcdmNZ+eeAvNXAxJIeRvb82pwANlSJ658FBw2ov75p3Y6rjvc8CUPsxBXZkw3dzOgwTdjmJI9q+aD4GuVeGiq9MdyJDgXUjxlP2qEtcLJfvvF9q5Bnzy+hoAV+A5yHg0lR0VjsUem2+CdexuHb/LJLx4YVkSrCSyEELAsfyJTCYNLaMKrWKujelqtKwXy4H/rwzaja6IBP77gkisNI82bvnrzn/QsvnueGyWSu/Z2HC2M/d6WAQAl3Et9W6kOb7MK+NAmEMOTW7tzaxjD+lq8aOiLJYndrOYaymin5GLNk3F2iqZMkhMCRC2YcstNr61w=
+  file:
+  - remolltest.commit.log.tar.gz
+  - remolltest.commit.root.tar.gz
+  - remolltest.commit.analysis.log.tar.gz
+  - remolltest.commit.analysis.png.tar.gz
+  - remolltest.commit.analysis.root.tar.gz
+  - remolltest.release.log.tar.gz
+  - remolltest.release.root.tar.gz
+  - remolltest.release.analysis.log.tar.gz
+  - remolltest.release.analysis.pdf.tar.gz
+  - remolltest.release.analysis.root.tar.gz
+  skip_cleanup: true
+  on:
+    repo: JeffersonLab/remoll
+    tags: true
+
