@@ -1498,12 +1498,12 @@
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
     <volume name="boxDSPolyShield1_logic">
-<!--  <materialref ref="Concrete"/> -->
+      <materialref ref="Concrete"/> 
 <!--  <materialref ref="Tungsten"/> -->
-      <materialref ref="Polythene"/>
+<!--      <materialref ref="Polythene"/> -->
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield1_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
 	      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6021"/>
@@ -1511,13 +1511,13 @@
 
 <!-- PolyShield1 will be outside shielding hut -->
     <volume name="boxDSPolyShield2_logic">
-<!--  <materialref ref="Concrete"/> -->
+       <materialref ref="Concrete"/>
 <!--  <materialref ref="Tungsten"/> -->
 <!--  <materialref ref="Borated_Concrete"/ -->
-      <materialref ref="Polythene"/>
+ <!--     <materialref ref="Polythene"/ >  -->
 <!--        <materialref ref="Kryptonite"/> -->
       <solidref ref="boxDSPolyShield2_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_4_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6025"/>
