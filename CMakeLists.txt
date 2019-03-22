@@ -307,6 +307,23 @@ install(FILES
      ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
      ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+if(ADDITIONAL_FIELDS)
+  message(STATUS "Ensuring additional fields are available")
+  file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/upstreamSymmetric_sensR_0.0.txt
+     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
+     EXPECTED_MD5 4ca3d968cadd85a89b86148411eda678)
+  file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/hybridSymmetric_sensR_0.0.txt
+     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
+     EXPECTED_MD5 0f6e9a3a8392d01c63f1609afc4e4c09)
+  install(FILES
+     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
+     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
+     DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+else()
+  message(STATUS "Download additional fields with '-DADDITIONAL_FIELDS=ON'.")
+endif()
 
 
 #----------------------------------------------------------------------------
