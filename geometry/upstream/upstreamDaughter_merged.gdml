@@ -733,6 +733,9 @@
       <positionref ref="boxUSPolyShield1_trans2" />
     </subtraction>
 
+    <!-- vacuum det infront of collimator 1 -->
+i   <tube aunit="deg" deltaphi="360" lunit="mm" name="USvacdet_s" rmax="90" rmin="10" startphi="0" z="1.0"/>
+
 </solids>
 
 
@@ -922,6 +925,29 @@
 	    <!--  <auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
     </volume>
 
+    <volume name="USvacdet1_l">
+     <materialref ref="VacuumDet"/>
+     <solidref ref="USvacdet_s"/>
+     <auxiliary auxtype="Color" auxvalue="blue"/>
+     <auxiliary auxtype="SensDet" auxvalue="USvacuumdet1"/>
+     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+     <auxiliary auxtype="DetNo" auxvalue="2008"/>
+      <!-- <auxiliary auxtype="Alpha" auxvalue="0.1"/> -->
+   </volume>
+
+    <volume name="USvacdet2_l">
+     <materialref ref="VacuumDet"/>
+     <solidref ref="USvacdet_s"/>
+     <auxiliary auxtype="Color" auxvalue="blue"/>
+     <auxiliary auxtype="SensDet" auxvalue="USvacuumdet2"/>
+     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+     <auxiliary auxtype="DetNo" auxvalue="2009"/>
+      <!-- <auxiliary auxtype="Alpha" auxvalue="0.1"/> -->
+   </volume>
+
+
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeUpstream"/> -->
@@ -1046,6 +1072,18 @@
         <volumeref ref="shield_US_beampipe_1_logic"/>
         <positionref ref="shield_US_beampipe_center"/>
       </physvol>
+	      
+      <physvol>
+        <volumeref ref="USvacdet1_l"/>
+	<position name="USvacdet1_pos" lunit="mm" x="0" y="0" z="COLL1_z-COLL1_THICK/2 -0.55"/>
+      </physvol>
+	      
+      <physvol>
+        <volumeref ref="USvacdet2_l"/>
+        <position name="USvacdet2_pos" lunit="mm" x="0" y="0" z="COLL1_z+COLL1_THICK/2 +0.55"/>
+      </physvol>
+
+
    </volume>
 </structure>
 

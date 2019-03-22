@@ -58,7 +58,9 @@
    </subtraction>
 
   <tube aunit="deg" lunit="mm" deltaphi="360" name="target_solid"
-        rmax="40" rmin="0" z="1500"/>
+	  rmax="40" rmin="0" z="1500"/>
+	  <!-- rmax="40" rmin="0" z="1250"/> -->
+
 
   <tube aunit="deg" lunit="mm" deltaphi="360" name="AlWindow"
         rmax="40" rmin="0" z="0.127"/>
@@ -233,7 +235,8 @@
 
     <physvol>
       <volumeref ref="USAlTarg"/>
-      <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750-1"/>
+	      <!-- <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-625-1"/> -->
+     <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750-1"/>
     </physvol>
 
     <physvol>
@@ -243,6 +246,7 @@
 
     <physvol>
       <volumeref ref="DSAlTarg"/>
+	      <!-- <position name="targ_downstream_window" unit="mm" x="0" y="0" z="625+1"/> -->
       <position name="targ_downstream_window" unit="mm" x="0" y="0" z="750+1"/>
     </physvol>
 
