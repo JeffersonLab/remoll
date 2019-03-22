@@ -85,6 +85,7 @@ remollGlobalField::remollGlobalField()
     fGlobalFieldMessenger->DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
     fGlobalFieldMessenger->DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
     fGlobalFieldMessenger->DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
+    fGlobalFieldMessenger->DeclareMethod("value",&remollGlobalField::PrintFieldValue,"Print the field value at a given point (in m)");
 }
 
 remollGlobalField::~remollGlobalField()
@@ -251,7 +252,19 @@ remollMagneticField* remollGlobalField::GetFieldByName(const G4String& name)
     }
 }
 
-void remollGlobalField::GetFieldValue( const G4double p[], G4double *resB) const
+void remollGlobalField::PrintFieldValue(const G4ThreeVector& r)
+{
+    G4double B[__GLOBAL_NDIM];
+    G4double p[] = {r.x()*m, r.y()*m, r.z()*m, 0.0};
+    GetFieldValue(p, B);
+    G4cout << "At r" << r << " [m]: B = ";
+    for (int i = 0; i < __GLOBAL_NDIM; i++) {
+        G4cout << B[i] << " ";
+    }
+    G4cout << "T" << G4endl;
+}
+
+void remollGlobalField::GetFieldValue(const G4double p[], G4double *resB) const
 {
     G4double Bsum [__GLOBAL_NDIM], thisB[__GLOBAL_NDIM];
 

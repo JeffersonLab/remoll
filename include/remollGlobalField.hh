@@ -7,6 +7,7 @@
 */
 
 #include "G4MagneticField.hh"
+#include "G4ThreeVector.hh"
 
 #include <vector>
 
@@ -34,6 +35,7 @@ class remollGlobalField : public G4MagneticField {
         void SetMagnetCurrentByString(G4String& name_scale);
 	void SetMagnetCurrent(const G4String& name, G4double scale);
 
+	void PrintFieldValue(const G4ThreeVector&);
 	void GetFieldValue(const G4double[], G4double*) const;
 
     private:
