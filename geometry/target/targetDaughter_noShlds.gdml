@@ -11,7 +11,7 @@
   &matrices;
 
   <constant name="tubeTarget_rmax" value="40"/>
-  <constant name="tubeTarget_length" value="1500"/>
+  <constant name="tubeTarget_length" value="1250"/>
   <constant name="AlWindowTarget_length" value="0.127"/>
 
   <!-- Mother volume parameters -->
@@ -301,7 +301,7 @@
 
       <physvol>
         <volumeref ref="USAlTarg"/>
-        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750"/>
+        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-(AlWindowTarget_length+tubeTarget_length)/2"/>
       </physvol>
 
       <physvol>
@@ -311,7 +311,7 @@
 
       <physvol>
         <volumeref ref="DSAlTarg"/>
-        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="750"/>
+        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="+(AlWindowTarget_length+tubeTarget_length)/2"/>
       </physvol>
 
       <!--Shown below are initial target shielding cylinder - Rakitha  -->
