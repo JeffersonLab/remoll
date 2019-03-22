@@ -8,9 +8,15 @@
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
-/remoll/oldras true
-/remoll/rasx 5 mm
-/remoll/rasy 5 mm
+/remoll/oldras false
+/remoll/evgen/beam/origin 0 0 -5 m
+/remoll/evgen/beam/direction 0 0 1
+/remoll/evgen/beam/rasx 8 mm
+/remoll/evgen/beam/rasy 5 mm
+/remoll/evgen/beam/rasrefz -0.75 m
+# units of correlation in mrad/mm
+/remoll/evgen/beam/corrx 0.5
+/remoll/evgen/beam/corry 0.1
 
 
 /remoll/evgen/set beam
@@ -37,6 +43,6 @@
 # Specify random number seed
 #/remoll/seed 123456
 
-##/remoll/filename remollout_clamOptHallDet_2e6.root
-/remoll/filename remollout_mergedHallDet_0p5TgtConcSide_2e6.root
-/run/beamOn 2000000
+##/remoll/filename remollout_clamOptHallDet_2e7.root
+/remoll/filename remollout_mergedHallDet_TgtConcSide_2e7.root
+/run/beamOn 20000000
