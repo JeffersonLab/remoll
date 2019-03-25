@@ -310,13 +310,13 @@ install(FILES
 if(ADDITIONAL_FIELDS)
   message(STATUS "Ensuring additional fields are available")
   file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/upstreamSymmetric_sensR_0.0.txt
-     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
-     EXPECTED_MD5 4ca3d968cadd85a89b86148411eda678)
+     ${REMOLL_DOWNLOADS}/upstreamSymmetric_sensR_0.1.txt
+     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.1.txt
+     EXPECTED_MD5 849d9dc5abab0842fc13fef7f4918648)
   file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/hybridSymmetric_sensR_0.0.txt
-     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
-     EXPECTED_MD5 0f6e9a3a8392d01c63f1609afc4e4c09)
+     ${REMOLL_DOWNLOADS}/hybridSymmetric_sensR_0.1.txt
+     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.1.txt
+     EXPECTED_MD5 78fad2ffa5b5ae129df11bdf0ce25333)
   install(FILES
      ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
      ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
