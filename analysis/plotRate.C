@@ -35,9 +35,9 @@ void doOne(string fnm,int ring5toggle=1, int print=0){
   TFile *fin = TFile::Open(fnm.c_str(),"READ");
   TTree *t = (TTree *)fin->Get("T");
 
-  string rSelect="&& hit.r>0.6 && hit.r<1.2";//all det
+  string rSelect="&& hit.r>600 && hit.r<1200";//all det
   if(ring5toggle==1)
-    rSelect="&& hit.r>0.935 && hit.r<1.1";
+    rSelect="&& hit.r>935 && hit.r<1100";
 
   long nEntries = t->GetEntries();
   int nLoop = nEntries / 1000000;
