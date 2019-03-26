@@ -65,7 +65,7 @@
 
       <physvol>
     	<file name="electronics/subSBSbunker.gdml"/>
-	<position name="sbsBunker_pos" x="8740" y="-3000+1980" z="6087.-15180."/>
+	<position name="sbsBunker_pos" x="8740" y="-3000 + 2000" z="6087. - 15180."/>
     	<rotation name="rot_y30" unit="deg" y="30"/>
       </physvol>
 

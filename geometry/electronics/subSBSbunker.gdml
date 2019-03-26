@@ -98,27 +98,41 @@
 
       <physvol>
         <volumeref ref="IronShieldType2_l"/>
-        <position name="IronShieldType2_p1" unit="mm" x="2.5*IronBlock_x+0.5*IronBlock_x" y="-0.25*IronBlock_y" z="2.5*IronBlock_x+0.5*IronBlock_z"/>
+        <position name="IronShieldType2_p1" unit="mm"
+		  x="2.5*IronBlock_x+0.5*IronBlock_x"
+		  y="-0.25*IronBlock_y"
+		  z="2.5*IronBlock_x+0.5*IronBlock_z"/>
       </physvol>
 
       <physvol>
         <volumeref ref="IronShieldType2_l"/>
-        <position name="IronShieldType2_p2" unit="mm" x="-2.5*IronBlock_x-0.5*IronBlock_x" y="-0.25*IronBlock_y" z="2.5*IronBlock_x+0.5*IronBlock_z"/>
+        <position name="IronShieldType2_p2" unit="mm"
+		  x="-2.5*IronBlock_x-0.5*IronBlock_x"
+		  y="-0.25*IronBlock_y"
+		  z="2.5*IronBlock_x+0.5*IronBlock_z"/>
       </physvol>
 
       <physvol>
         <volumeref ref="IronShieldType3_l"/>
-        <position name="IronShieldType3_p1" unit="mm" x="2.5*IronBlock_x+1.*IronBlock_x" y="-0.25*IronBlock_y" z="7*IronBlock_z-5*IronBlock_z-2*IronBlock_z"/>
+        <position name="IronShieldType3_p1" unit="mm"
+		  x="2.5*IronBlock_x+1.*IronBlock_x"
+		  y="-0.25*IronBlock_y"
+		  z="7*IronBlock_z-5*IronBlock_z-2*IronBlock_z"/>
       </physvol>
 
       <physvol>
         <volumeref ref="IronShieldType3_l"/>
-        <position name="IronShieldType3_p2" unit="mm" x="-2.5*IronBlock_x-1.*IronBlock_x" y="-0.25*IronBlock_y" z="7*IronBlock_z-5.*IronBlock_z-2*IronBlock_z"/>
+        <position name="IronShieldType3_p2" unit="mm"
+		  x="-2.5*IronBlock_x-1.*IronBlock_x"
+		  y="-0.25*IronBlock_y"
+		  z="7*IronBlock_z-5.*IronBlock_z-2*IronBlock_z"/>
       </physvol>
 
       <physvol>
         <volumeref ref="SteelShield_l"/>
-        <position name="SteelShield_p" unit="mm" x="0" y="1.*IronBlock_y+SteelBlock_y" z="7*IronBlock_z-2.*SteelBlock_z-1.75*IronBlock_z"/>
+        <position name="SteelShield_p" unit="mm" x="0"
+		  y="1.*IronBlock_y+SteelBlock_y"
+		  z="7*IronBlock_z-2.*SteelBlock_z-1.75*IronBlock_z"/>
       </physvol>
 
       <!--placement of vacuum detector-->

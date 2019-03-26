@@ -948,8 +948,8 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="4500" rmin="0" startphi="0" z="7865.68 + 2*950"/>
     <!--100 mm offset to prevent target mother volume overlapping with hall mother volume length is increased by 900 (modify this 900 = poly_extend) at the end to include poly shielding-->
     <!-- <box lunit="mm" name="boxDownstream" x="2*4500" y="6000 - 100" z="7865.68 + 2*950 + poly_extend"/> -->
-    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here - centered at union_2_center -->
-    <box lunit="mm" name="boxDownstream_sub" x="boxDSMother_width" y="100+1" z="boxDSMother_length + 1"/>
+    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length - 60"/> <!-- Define the placement of the mother volume box here - centered at union_2_center -->
+    <box lunit="mm" name="boxDownstream_sub" x="boxDSMother_width + 1" y="100+1" z="boxDSMother_length + 1"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="DSmothertubeBeampipe_sub" rmax="DSmothertubeBeampipeMother_sub_rmax" rmin="0" startphi="0" z="DSmothertubeBeampipeMother_sub_length"/>    
     <subtraction name ="boxDownstream_3"> <!-- _2"> -->
       <first ref="boxDownstream_1"/>

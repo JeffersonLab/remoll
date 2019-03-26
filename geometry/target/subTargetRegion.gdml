@@ -45,7 +45,7 @@
 <solids>
 
   <box lunit="m" name="targetRegion_solid1"
-       x="10" y="15" z="6.36"/>
+       x="10" y="15" z="6.38"/>
 
   <box lunit="m" name="targetRegion_solid2"
 	  x="11" y="5" z="6.4"/>
@@ -53,7 +53,7 @@
   <subtraction name ="targetRegion_solid">
      <first ref="targetRegion_solid1"/>
      <second ref="targetRegion_solid2"/>
-     <position name="MotherSub_pos" lunit="mm" x="0" y="-3000-5000./2." z="0" />
+     <position name="MotherSub_pos" lunit="mm" x="0" y=" - 3000 - 5000./2. + 20" z="0" />
              <!--3000 mm is the distance of beam center from the hall floor-->
    </subtraction>
 
@@ -105,7 +105,6 @@
         rmin="targetChamber_R" rmax="targetChamber_R + targetChamber_thickness"
         z="targetChamberHat_L"/>
 
-  <!-- Collimator 1 -->
   <box lunit="mm" name="LeadCollar_solid1"
        x="370" y="370" z="200"/>
   <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollarInnerSub_solid"
@@ -205,7 +204,7 @@
     <materialref ref="Concrete"/>
     <solidref ref="concrete_sub"/>
     <auxiliary auxtype="Color" auxvalue="Green"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.3"/>
+    <auxiliary auxtype="Alpha" auxvalue="1.0"/>
   </volume>
 
   <volume name="LeadShield_target">
@@ -274,7 +273,7 @@
     <!--shielding placement-->
     <physvol>
       <volumeref ref="ConcreteShield_target"/>
-      <position name="ConcerteShield_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="concreteBoxy/2.-3040" z="0"/>
+      <position name="ConcerteShield_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="concreteBoxy/2.-2975" z="0"/>
     </physvol>
 
     <physvol>

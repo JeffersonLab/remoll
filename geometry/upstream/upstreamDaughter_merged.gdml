@@ -212,7 +212,7 @@
     <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS+USBoxmother_extensionDS"/>
 
     <constant name="USTubemothersubtract_length" value="1000"/>
-    <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS+USBoxmother_extensionDS)/2"/>
+    <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS+USBoxmother_extensionDS)/2 - 20"/>
     <constant name="USBoxmotherunion_length" value="1000"/>
     <position name="USmothersubtract_center_1" unit="mm" x="0" y="0" z="USTubemother_length/2 - USTubemothersubtract_length/2"/>
     <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2"/>
