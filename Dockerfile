@@ -1,5 +1,10 @@
 FROM jeffersonlab/jlabce:2.3
 
+# Install libgcj and pdftk
+RUN wget https://copr.fedorainfracloud.org/coprs/robert/gcj/repo/epel-7/robert-gcj-epel-7.repo -P /etc/yum.repos.d && \
+    wget https://copr.fedorainfracloud.org/coprs/robert/pdftk/repo/epel-7/robert-pdftk-epel-7.repo -P /etc/yum.repos.d && \
+    yum install -y pdftk
+
 ENV JLAB_VERSION=2.3
 ENV JLAB_ROOT=/jlab
 ENV JLAB_SOFTWARE=/jlab/2.3/Linux_CentOS7.2.1511-x86_64-gcc4.8.5
