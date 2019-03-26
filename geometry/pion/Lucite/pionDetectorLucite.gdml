@@ -43,6 +43,12 @@
     pionDetectorLuciteWedgeAngle should be at least as large as pionDetectorLuciteTheta when on the downstream side
   -->
 
+  <quantity name="pionDetectorLuciteReflectorThickness" type="length" value="1.0" unit="mm"/>
+  <quantity name="pionDetectorLuciteReflectorHeight" type="length" value="10.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteReflectorWidth" type="length" value="40.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteReflectorDepth" type="length" value="5.0*2.54" unit="cm"/>
+  <quantity name="pionDetectorLuciteReflectorTheta" type="angle" value="-10" unit="deg"/>
+
   <quantity name="pionDetectorLuciteLightGuideThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLuciteLightGuideHeight" type="length" value="25.0" unit="cm"/>
   <quantity name="pionDetectorLuciteLightGuideTheta" type="angle" value="0" unit="deg"/>
@@ -86,6 +92,8 @@
             value="-pionDetectorLuciteWedgeSide*atan(pionDetectorLuciteWedgeBase/pionDetectorLuciteWedgeHeight)"/>
 
   <!-- derived quantities for lightguide -->
+  <quantity name="pionDetectorLuciteReflectorThicknessInY"
+            value="pionDetectorLuciteReflectorThickness/cos(pionDetectorLuciteReflectorTheta)"/>
   <quantity name="pionDetectorLuciteLightGuideThicknessInY"
             value="pionDetectorLuciteLightGuideThickness/cos(pionDetectorLuciteLightGuideTheta)"/>
   <quantity name="pionDetectorLuciteLightGuideSlopeInX"
@@ -227,7 +235,7 @@
       y="pionDetectorLuciteMylarThickness/2.0*tan(pionDetectorLuciteTheta)"
       z="pionDetectorLuciteMylarThickness/2.0"/>
   </subtraction>
-<!-- scaledSolid not supported until geant4 4.10.3
+  <!-- scaledSolid not supported until geant4 4.10.3
   <scaledSolid name="pionDetectorLuciteAllPlanesWedgeGlueMylarScaled_solid">
     <solidref ref="pionDetectorLuciteAllPlanesWedgeGlueMylar_solid"/>
     <scaleref ref="scale_up"/>
@@ -254,24 +262,62 @@
         +pionDetectorLuciteWedgeHeight
         +pionDetectorLuciteMylarThickness)"/>
 
+
+  <trap name="pionDetectorLuciteReflectorInside_solid"
+    alpha1="0.0" alpha2="0.0"
+    theta="pionDetectorLuciteReflectorTheta" phi="90.0*deg"
+    x1="pionDetectorLuciteOutsideWidth"
+    x2="pionDetectorLuciteOutsideWidth"
+    x3="pionDetectorLuciteReflectorWidth"
+    x4="pionDetectorLuciteReflectorWidth"
+    y1="pionDetectorLuciteAllPlanesGlueThicknessInY"
+    y2="pionDetectorLuciteReflectorDepth"
+     z="pionDetectorLuciteReflectorHeight"/>
+  <trap name="pionDetectorLuciteReflectorOutside_solid"
+    alpha1="0.0" alpha2="0.0"
+    theta="pionDetectorLuciteReflectorTheta" phi="90.0*deg"
+    x1="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteReflectorThickness"
+    x2="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteReflectorThickness"
+    x3="pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteReflectorThickness"
+    x4="pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteReflectorThickness"
+    y1="pionDetectorLuciteAllPlanesGlueThicknessInY
+        +2.0*pionDetectorLuciteReflectorThicknessInY"
+    y2="pionDetectorLuciteReflectorDepth
+        +2.0*pionDetectorLuciteReflectorThicknessInY"
+     z="pionDetectorLuciteReflectorHeight"/>
+  <subtraction name="pionDetectorLuciteReflectorShell_solid">
+    <first ref="pionDetectorLuciteReflectorOutside_solid"/>
+    <second ref="pionDetectorLuciteReflectorInside_solid"/>
+  </subtraction>
+  <trap name="pionDetectorLuciteReflectorOutsideScaled_solid"
+    alpha1="0.0" alpha2="0.0"
+    theta="pionDetectorLuciteReflectorTheta" phi="90.0*deg"
+    x1="SCALE_UP*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteReflectorThickness)"
+    x2="SCALE_UP*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteReflectorThickness)"
+    x3="SCALE_UP*(pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteReflectorThickness)"
+    x4="SCALE_UP*(pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteReflectorThickness)"
+    y1="SCALE_UP*(pionDetectorLuciteAllPlanesGlueThicknessInY+2.0*pionDetectorLuciteReflectorThicknessInY)"
+    y2="SCALE_UP*(pionDetectorLuciteReflectorDepth+2.0*pionDetectorLuciteReflectorThicknessInY)"
+     z="SCALE_UP*(pionDetectorLuciteReflectorHeight)"/>
+
   <trap name="pionDetectorLuciteLightGuideInside_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteLightGuideTheta" phi="90.0*deg"
-    x1="pionDetectorLuciteOutsideWidth"
-    x2="pionDetectorLuciteOutsideWidth"
+    x1="pionDetectorLuciteReflectorWidth"
+    x2="pionDetectorLuciteReflectorWidth"
     x3="pionDetectorLucitePMTDiameter"
     x4="pionDetectorLucitePMTDiameter"
-    y1="pionDetectorLuciteAllPlanesGlueThicknessInY"
+    y1="pionDetectorLuciteReflectorDepth"
     y2="pionDetectorLucitePMTDiameter"
      z="pionDetectorLuciteLightGuideHeight"/>
   <trap name="pionDetectorLuciteLightGuideOutside_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteLightGuideTheta" phi="90.0*deg"
-    x1="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness"
-    x2="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness"
+    x1="pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteLightGuideThickness"
+    x2="pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteLightGuideThickness"
     x3="pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
     x4="pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
-    y1="pionDetectorLuciteAllPlanesGlueThicknessInY
+    y1="pionDetectorLuciteReflectorDepth
         +2.0*pionDetectorLuciteLightGuideThicknessInY"
     y2="pionDetectorLucitePMTDiameter
         +2.0*pionDetectorLuciteLightGuideThicknessInY"
@@ -305,51 +351,49 @@
               z="(+pionDetectorLuciteLightGuideHeight-pionDetectorLuciteLightGuideExitDetectorThickness)/2.0"/>
   </intersection>
 
-  <trap name="pionDetectorLuciteLightGuideOutsidePMT_solid"
-    alpha1="0.0" alpha2="0.0"
-    theta="pionDetectorLuciteLightGuideTheta" phi="90.0*deg"
-    x1="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness"
-    x2="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness"
-    x3="pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
-    x4="pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
-    y1="pionDetectorLuciteAllPlanesGlueThicknessInY+2.0*pionDetectorLuciteLightGuideThickness"
-    y2="pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
-     z="pionDetectorLuciteLightGuideHeight+pionDetectorLucitePMTThickness"/>
-<!-- scaledSolid not supported until geant4 4.10.3
-  <scaledSolid name="pionDetectorLuciteLightGuideOutsidePMTScaled_solid">
-    <solidref ref="pionDetectorLuciteLightGuideOutsidePMT_solid"/>
-    <scaleref ref="scale_up"/>
-  </scaledSolid>
- -->
   <trap name="pionDetectorLuciteLightGuideOutsidePMTScaled_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteLightGuideTheta" phi="90.0*deg"
-    x1="SCALE_UP*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness)"
-    x2="SCALE_UP*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteLightGuideThickness)"
+    x1="SCALE_UP*(pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteLightGuideThickness)"
+    x2="SCALE_UP*(pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteLightGuideThickness)"
     x3="SCALE_UP*(pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
     x4="SCALE_UP*(pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
-    y1="SCALE_UP*(pionDetectorLuciteAllPlanesGlueThicknessInY+2.0*pionDetectorLuciteLightGuideThickness)"
+    y1="SCALE_UP*(pionDetectorLuciteReflectorDepth+2.0*pionDetectorLuciteLightGuideThickness)"
     y2="SCALE_UP*(pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
      z="SCALE_UP*(pionDetectorLuciteLightGuideHeight+pionDetectorLucitePMTThickness)"/>
   
   <!-- Wish we could use multiUnion but requires new uSolids -->
-  <union name="pionDetectorLucitePlanesLightGuideScaled_solid">
+  <union name="pionDetectorLucitePlanesReflectorScaled_solid">
     <first ref="pionDetectorLuciteAllPlanesWedgeGlueMylarScaled_solid"/>
-    <second ref="pionDetectorLuciteLightGuideOutsidePMTScaled_solid"/>
-    <position name="pionDetectorLucitePlanesLightGuideScaled_union_position"
+    <second ref="pionDetectorLuciteReflectorOutsideScaled_solid"/>
+    <position name="pionDetectorLucitePlanesRefelctorScaled_union_position"
       y="(pionDetectorLuciteMylarThickness+pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0*tan(pionDetectorLuciteTheta)
+              +(pionDetectorLuciteReflectorHeight)/2.0*tan(pionDetectorLuciteReflectorTheta)"
+      z="(pionDetectorLuciteMylarThickness+pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
+              +(pionDetectorLuciteReflectorHeight)/2.0"/>
+  </union>
+  <union name="pionDetectorLucitePlanesReflectorLightGuideScaled_solid">
+    <first ref="pionDetectorLucitePlanesReflectorScaled_solid"/>
+    <second ref="pionDetectorLuciteLightGuideOutsidePMTScaled_solid"/>
+    <position name="pionDetectorLucitePlanesReflectorLightGuideScaled_union_position"
+      y="(pionDetectorLuciteMylarThickness+pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0*tan(pionDetectorLuciteTheta)
+              +(pionDetectorLuciteReflectorHeight)*tan(pionDetectorLuciteReflectorTheta)
               +(pionDetectorLuciteLightGuideHeight)/2.0*tan(pionDetectorLuciteLightGuideTheta)"
       z="(pionDetectorLuciteMylarThickness+pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
+              +(pionDetectorLuciteReflectorHeight)
               +(pionDetectorLuciteLightGuideHeight)/2.0"/>
   </union>
   <union name="pionDetectorLucite_solid">
-    <first ref="pionDetectorLucitePlanesLightGuideScaled_solid"/>
+    <first ref="pionDetectorLucitePlanesReflectorLightGuideScaled_solid"/>
     <second ref="pionDetectorLucitePMTOutsideHousingScaled_solid"/>
     <position name="pionDetectorLucite_union_position"
       y="(pionDetectorLuciteMylarThickness+pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0*tan(pionDetectorLuciteTheta)
+              +(pionDetectorLuciteReflectorHeight)*tan(pionDetectorLuciteReflectorTheta)
               +(pionDetectorLuciteLightGuideHeight)*tan(pionDetectorLuciteLightGuideTheta)"
       z="(pionDetectorLuciteMylarThickness+pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
-              +pionDetectorLuciteLightGuideHeight+pionDetectorLucitePMTHousingHeight/2.0"/>
+              +(pionDetectorLuciteReflectorHeight)
+              +(pionDetectorLuciteLightGuideHeight)
+              +pionDetectorLucitePMTHousingHeight/2.0"/>
   </union>
 
   <opticalsurface
@@ -423,6 +467,26 @@
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteMylar"/>
     <auxiliary auxtype="DetNo" auxvalue="8030"/>
     <auxiliary auxtype="Alpha" auxvalue="0.9"/>
+  </volume>
+  <volume name="pionDetectorLuciteReflectorShell_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="pionDetectorLuciteReflectorShell_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLuciteReflectorShell"/>
+    <auxiliary auxtype="DetNo" auxvalue="8041"/>
+    <auxiliary auxtype="Color" auxvalue="Gray"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.9"/>
+  </volume>
+  <skinsurface name="pionDetectorLuciteReflectorShell_skin"
+    surfaceproperty="Mylar_surface">
+    <volumeref ref="pionDetectorLuciteReflectorShell_logical"/>
+  </skinsurface>
+
+  <volume name="pionDetectorLuciteReflectorOutside_logical">
+    <materialref ref="Air"/>
+    <solidref ref="pionDetectorLuciteReflectorOutside_solid"/>
+    <physvol name="pionDetectorLuciteReflectorShell_physical">
+      <volumeref ref="pionDetectorLuciteReflectorShell_logical"/>
+    </physvol>
   </volume>
 
   <volume name="pionDetectorLuciteLightGuideShell_logical">
@@ -515,12 +579,23 @@
       <position name="pionDetectorLuciteAllPlanesWedgeGlue_position"/>
     </physvol>
 
+    <physvol name="pionDetectorLuciteReflectorOutside_physical">
+      <volumeref ref="pionDetectorLuciteReflectorOutside_logical"/>
+      <position name="pionDetectorLuciteReflectorOutside_position"
+        y="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0*tan(pionDetectorLuciteTheta)
+                +pionDetectorLuciteReflectorHeight/2.0*tan(pionDetectorLuciteReflectorTheta)"
+        z="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
+                +pionDetectorLuciteReflectorHeight/2.0"/>
+    </physvol>
+    
     <physvol name="pionDetectorLuciteLightGuideOutside_physical">
       <volumeref ref="pionDetectorLuciteLightGuideOutside_logical"/>
       <position name="pionDetectorLuciteLightGuideOutside_position"
         y="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0*tan(pionDetectorLuciteTheta)
+                +pionDetectorLuciteReflectorHeight*tan(pionDetectorLuciteReflectorTheta)
                 +pionDetectorLuciteLightGuideHeight/2.0*tan(pionDetectorLuciteLightGuideTheta)"
         z="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
+                +pionDetectorLuciteReflectorHeight
                 +pionDetectorLuciteLightGuideHeight/2.0"/>
     </physvol>
     
@@ -528,8 +603,10 @@
       <volumeref ref="pionDetectorLucitePMTOutsideHousing_logical"/>
       <position name="pionDetectorLucitePMTOutsideHousing_position"
         y="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0*tan(pionDetectorLuciteTheta)
+                +pionDetectorLuciteReflectorHeight*tan(pionDetectorLuciteReflectorTheta)
                 +pionDetectorLuciteLightGuideHeight*tan(pionDetectorLuciteLightGuideTheta)"
         z="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
+                +pionDetectorLuciteReflectorHeight
                 +pionDetectorLuciteLightGuideHeight
                 +pionDetectorLucitePMTHousingHeight/2.0"/>
     </physvol>
