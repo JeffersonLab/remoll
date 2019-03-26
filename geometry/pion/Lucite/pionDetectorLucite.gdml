@@ -397,20 +397,29 @@
   </union>
 
   <opticalsurface
-    name="pionDetectorLucite_PlaneWedge_or_Glue_to_LightGuideInside_opticalsurface"
-    model="glisur" finish="polished" type="dielectric_dielectric" value="0.997"/>
+    name="Lucite_surface"
+    model="glisur" finish="ground" type="dielectric_dielectric" value="0.97">
+    <property name="RINDEX" ref="RINDEX_LUCITE"/>
+    <property name="SPECULARLOBECONSTANT"  ref="SPECLOBE_LUCITE"/>
+    <property name="SPECULARSPIKECONSTANT" ref="SPECSPIKE_LUCITE"/>
+    <property name="BACKSCATTERCONSTANT"   ref="BACKSCATTER_LUCITE"/>
+  </opticalsurface>
   <opticalsurface
-    name="pionDetectorLucite_LightGuideInside_to_PMT_opticalsurface"
-    model="glisur" finish="polished" type="dielectric_metal" value="0.997">
+    name="Mylar_surface"
+    model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
+    <property name="REFLECTIVITY" ref="REFLECTIVITY_MYLAR"/>
+  </opticalsurface>
+  <opticalsurface
+    name="Aluminum_surface"
+    model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
+    <property name="REFLECTIVITY" ref="REFLECTIVITY_ALUMINUM"/>
+  </opticalsurface>
+  <opticalsurface
+    name="CsPhotocathode_surface"
+    model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
     <property name="REFLECTIVITY" ref="REFLECTIVITY_CATHODE"/>
     <property name="EFFICIENCY"   ref="EFFICIENCY_CATHODE"/>
   </opticalsurface>
-  <opticalsurface
-    name="pionDetectorLucite_PlaneWedge_or_Glue_to_Mylar_opticalsurface"
-    model="glisur" finish="polished" type="dielectric_metal" value="1.0"/>
-  <opticalsurface
-    name="pionDetectorLucite_LightGuideInside_to_LightGuideShell_opticalsurface"
-    model="glisur" finish="polished" type="dielectric_metal" value="1.0"/>
 
 </solids>
 
@@ -430,6 +439,10 @@
     <auxiliary auxtype="Color" auxvalue="Blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
+  <skinsurface name="pionDetectorLucitePlaneWedge_skin"
+    surfaceproperty="Lucite_surface">
+    <volumeref ref="pionDetectorLucitePlaneWedge_logical"/>
+  </skinsurface>
   <volume name="pionDetectorLucitePlaneWedgeGlue_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLucitePlaneWedgeGlue_solid"/>
@@ -468,6 +481,11 @@
     <auxiliary auxtype="DetNo" auxvalue="8030"/>
     <auxiliary auxtype="Alpha" auxvalue="0.9"/>
   </volume>
+  <skinsurface name="pionDetectorLuciteMylar_skin"
+    surfaceproperty="Mylar_surface">
+    <volumeref ref="pionDetectorLuciteMylar_logical"/>
+  </skinsurface>
+
   <volume name="pionDetectorLuciteReflectorShell_logical">
     <materialref ref="G4_Al"/>
     <solidref ref="pionDetectorLuciteReflectorShell_solid"/>
@@ -497,6 +515,11 @@
     <auxiliary auxtype="Color" auxvalue="Gray"/>
     <auxiliary auxtype="Alpha" auxvalue="0.9"/>
   </volume>
+  <skinsurface name="pionDetectorLuciteLightGuideShell_skin"
+    surfaceproperty="Mylar_surface">
+    <volumeref ref="pionDetectorLuciteLightGuideShell_logical"/>
+  </skinsurface>
+
   <volume name="pionDetectorLuciteLightGuideInsideEntryDetector_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuideInsideEntryDetector_intersection_solid"/>
@@ -515,6 +538,7 @@
     <auxiliary auxtype="Color" auxvalue="White"/>
     <auxiliary auxtype="Alpha" auxvalue="0.2"/>
   </volume>
+
   <volume name="pionDetectorLuciteLightGuideOutside_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteLightGuideOutside_solid"/>
@@ -538,6 +562,11 @@
     <auxiliary auxtype="Color" auxvalue="White"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
+  <skinsurface name="pionDetectorLucitePMTWindow_skin"
+    surfaceproperty="CsPhotocathode_surface">
+    <volumeref ref="pionDetectorLucitePMTWindow_logical"/>
+  </skinsurface>
+
   <volume name="pionDetectorLucitePMTInsideHousing_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="pionDetectorLucitePMTInsideHousing_solid"/>
@@ -613,54 +642,6 @@
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
-
-  <bordersurface name="pionDetectorLucite_PlaneWedge_to_Mylar_bordersurface"
-    surfaceproperty="pionDetectorLucite_PlaneWedge_or_Glue_to_Mylar_opticalsurface">
-    <physvolref ref="pionDetectorLucitePlaneWedge_physical"/>
-    <physvolref ref="pionDetectorLuciteMylar_physical"/>
-  </bordersurface>
-
-  <bordersurface name="pionDetectorLucite_Glue_to_Mylar_bordersurface"
-    surfaceproperty="pionDetectorLucite_PlaneWedge_or_Glue_to_Mylar_opticalsurface">
-    <physvolref ref="pionDetectorLuciteGlue_physical"/>
-    <physvolref ref="pionDetectorLuciteMylar_physical"/>
-  </bordersurface>
-
-  <bordersurface name="pionDetectorLucite_PlaneWedge_to_LightGuideInsideEntryDetector_bordersurface"
-    surfaceproperty="pionDetectorLucite_PlaneWedge_or_Glue_to_LightGuideInside_opticalsurface">
-    <physvolref ref="pionDetectorLucitePlaneWedge_physical"/>
-    <physvolref ref="pionDetectorLuciteLightGuideInsideEntryDetector_physical"/>
-  </bordersurface>
-
-  <bordersurface name="pionDetectorLucite_Glue_to_LightGuideInsideEntryDetector_bordersurface"
-    surfaceproperty="pionDetectorLucite_PlaneWedge_or_Glue_to_LightGuideInside_opticalsurface">
-    <physvolref ref="pionDetectorLuciteGlue_physical"/>
-    <physvolref ref="pionDetectorLuciteLightGuideInsideEntryDetector_physical"/>
-  </bordersurface>
-
-  <bordersurface name="pionDetectorLucite_LightGuideInsideEntryDetector_to_LightGuideShell_bordersurface"
-    surfaceproperty="pionDetectorLucite_LightGuideInside_to_LightGuideShell_opticalsurface">
-    <physvolref ref="pionDetectorLuciteLightGuideInsideEntryDetector_physical"/>
-    <physvolref ref="pionDetectorLuciteLightGuideShell_physical"/>
-  </bordersurface>
-
-  <bordersurface name="pionDetectorLucite_LightGuideOutside_to_LightGuideShell_bordersurface"
-    surfaceproperty="pionDetectorLucite_LightGuideInside_to_LightGuideShell_opticalsurface">
-    <physvolref ref="pionDetectorLuciteLightGuideOutside_physical"/>
-    <physvolref ref="pionDetectorLuciteLightGuideShell_physical"/>
-  </bordersurface>
-
-  <bordersurface name="pionDetectorLucite_LightGuideInsideExitDetector_to_LightGuideShell_bordersurface"
-    surfaceproperty="pionDetectorLucite_LightGuideInside_to_LightGuideShell_opticalsurface">
-    <physvolref ref="pionDetectorLuciteLightGuideInsideExitDetector_physical"/>
-    <physvolref ref="pionDetectorLuciteLightGuideShell_physical"/>
-  </bordersurface>
-
-  <bordersurface name="pionDetectorLucite_LightGuideInsideExitDetector_to_PMT_bordersurface"
-    surfaceproperty="pionDetectorLucite_LightGuideInside_to_PMT_opticalsurface">
-    <physvolref ref="pionDetectorLuciteLightGuideInsideExitDetector_physical"/>
-    <physvolref ref="pionDetectorLucitePMTWindow_physical"/>
-  </bordersurface>
 
 </structure>
 
