@@ -3,7 +3,7 @@
 
 <define>
   <constant name="tubeTarget_rmax" value="40"/>
-  <constant name="tubeTarget_length" value="1500"/>
+  <constant name="tubeTarget_length" value="1250"/>
   <constant name="AlWindowTarget_length" value="0.127"/>
 
   <position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>

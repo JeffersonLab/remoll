@@ -11,7 +11,7 @@
   &matrices;
 
   <constant name="tubeTarget_rmax" value="40"/>
-  <constant name="tubeTarget_length" value="1500"/>
+  <constant name="tubeTarget_length" value="1250"/>
   <constant name="AlWindowTarget_length" value="0.127"/>
 
   <!-- Mother volume parameters -->
