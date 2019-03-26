@@ -15,7 +15,9 @@
 /remoll/beamene  10 GeV
 /remoll/beamcurr 50 microampere
 
+# Lightguide entry and exit detectors
 /remoll/SD/disable 8010
+/remoll/SD/disable 8011
 
 # Set beam generator
 /remoll/evgen/set beam
