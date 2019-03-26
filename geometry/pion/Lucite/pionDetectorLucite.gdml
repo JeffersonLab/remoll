@@ -8,7 +8,7 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <constant name="N_P" value="5"/> <!-- also change in replicavol or loop below -->
+  <constant name="N_P" value="3"/>
   <variable name="i_p" value="1"/>
 
   <!--
