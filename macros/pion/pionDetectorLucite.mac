@@ -1,8 +1,10 @@
 # This must be called before initialize
-/remoll/geometry/setfile geometry/pionDetectorLucite_world.gdml
+/remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml
 
 # Enable optical physics
+/remoll/physlist/parallel/disable
 /remoll/physlist/optical/enable
+/remoll/physlist/steplimiter/enable
 
 # This must be explicitly called
 /run/initialize
@@ -15,10 +17,15 @@
 
 /remoll/SD/disable 8010
 
+# Set beam generator
 /remoll/evgen/set beam
 /remoll/evgen/beam/origin 0 0 0 cm
 /remoll/evgen/beam/originspread 30 25 0 cm
 /remoll/evgen/beam/direction 0 0 1
+/remoll/evgen/beam/rasx 0
+/remoll/evgen/beam/rasy 0
+/remoll/evgen/beam/corrx 0
+/remoll/evgen/beam/corry 0
 /remoll/evgen/beam/partName pi-
 
 /remoll/filename pionDetectorLucite_pi.root
