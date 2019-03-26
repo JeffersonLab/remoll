@@ -135,7 +135,7 @@
   <subtraction name="concrete_sub">
     <first ref = "concrete_sub1"/>
     <second ref = "Shield_tube"/>
-    <position name ="concreteSub1" lunit="mm" x="concreteBoxx/2.-3550" y="-1.*(concreteBoxy/2.-3040)" z="0" />
+    <position name ="concreteSub1" lunit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />
   </subtraction>
 
   <!--shielding front lead -->
@@ -154,6 +154,16 @@
        x="concreteBoxx-concreteThickness*2-1" y="1.0" z="concreteBoxz-concreteThickness*2-1.0"/>
   <box lunit="mm" name="skyshineVacuumDet2_solid"
        x="concreteBoxx+1000" y="1.0" z="concreteBoxz"/>
+
+    <box lunit="mm" name="tgtOuterDetyz_solid"
+       x="1" y="concreteBoxy" z="concreteBoxz"/>
+    <box lunit="mm" name="tgtOuterDetxy_solid0"
+       x="concreteBoxx" y="concreteBoxy" z="1"/>
+    <subtraction name="tgtOuterDetxy_solid">
+      <first ref = "tgtOuterDetxy_solid0"/>
+      <second ref = "Shield_tube"/>
+      <position name ="detSub" lunit="mm" x="0" y="-390" z="0" />
+    </subtraction>
 
 </solids>
 
@@ -229,6 +239,47 @@
     <auxiliary auxtype="DetNo" auxvalue="5556"/>
   </volume>
 
+  <volume name="tgtOuterDet0_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtOuterDetyz_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5540"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtOuterDet1_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtOuterDetyz_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5541"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+
+  <volume name="tgtOuterDet2_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtOuterDetxy_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5542"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtOuterDet3_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtOuterDetxy_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5543"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
   <volume name="targetRegion">
     <materialref ref="VacuumTarg"/>
     <solidref ref="targetRegion_solid"/>
@@ -273,7 +324,8 @@
     <!--shielding placement-->
     <physvol>
       <volumeref ref="ConcreteShield_target"/>
-      <position name="ConcerteShield_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="concreteBoxy/2.-2975" z="0"/>
+      <position name="ConcerteShield_pos" unit="mm" x="0" y="concreteBoxy/2.-2975" z="0"/>
+      <!-- <position name="ConcerteShield_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="concreteBoxy/2.-2975" z="0"/> -->
     </physvol>
 
     <physvol>
@@ -284,12 +336,32 @@
     <!--placement of vacuum detector-->
     <physvol>
       <volumeref ref="skyshineVacuumDet1_logic"/>
-      <position name="shyshineVacuumDet1_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="targetChamber_L/2.+targetChamberHat_L+200" z="0"/>
+      <position name="shyshineVacuumDet1_pos" unit="mm" x="0" y="targetChamber_L/2.+targetChamberHat_L+200" z="0"/>
     </physvol>
 
     <physvol>
       <volumeref ref="skyshineVacuumDet2_logic"/>
-      <position name="shyshineVacuumDet2_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="concreteBoxy/2+500" z="0"/>
+      <position name="shyshineVacuumDet2_pos" unit="mm" x="0" y="concreteBoxy/2+500" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtOuterDet0_logic"/>
+      <position name="tgtOuterDet0_pos" unit="mm" x="concreteBoxx/2 + 1" y="450" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtOuterDet1_logic"/>
+      <position name="tgtOuterDet1_pos" unit="mm" x="-concreteBoxx/2 - 1" y="450" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtOuterDet2_logic"/>
+      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="450" z="-concreteBoxz/2 - 1"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtOuterDet3_logic"/>
+      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="450" z="concreteBoxz/2 + 1"/>
     </physvol>
 
     <auxiliary auxtype="TargetSystem" auxvalue=""/>
