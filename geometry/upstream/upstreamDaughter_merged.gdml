@@ -733,8 +733,20 @@
       <positionref ref="boxUSPolyShield1_trans2" />
     </subtraction>
 
-    <!-- vacuum det infront of collimator 1 -->
-i   <tube aunit="deg" deltaphi="360" lunit="mm" name="USvacdet_s" rmax="90" rmin="10" startphi="0" z="1.0"/>
+    <!-- vacuum det around of collimator 1 -->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="USvacdet_s" rmax="90" rmin="10" startphi="0" z="1.0"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="coll1SideDet_s" rmax="91" rmin="90" startphi="0" z="COLL1_THICK"/>
+
+    <box lunit="mm" name="coll1OuterDetyz_s" x="1" y="USPolyShield1_height" z="USPolyShield1_length"/>
+    <box lunit="mm" name="coll1OuterDetxz_s" x="USPolyShield1_width" y="1" z="USPolyShield1_length"/>
+
+    <box lunit="mm" name="coll1OuterDetxy_s0" x="USPolyShield1_width" y="USPolyShield1_height" z="1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="vacDet_s" rmax="10" rmin="0" startphi="0" z="30"/>
+    <subtraction name ="coll1OuterDetxy_s">
+      <first ref="coll1OuterDetxy_s0"/>
+      <second ref="vacDet_s"/>
+      <position name="coll1OuterDetSub_pos" x="0" z="0" y="USPolyShield1_y_offset"/>
+    </subtraction>
 
 </solids>
 
@@ -947,6 +959,63 @@ i   <tube aunit="deg" deltaphi="360" lunit="mm" name="USvacdet_s" rmax="90" rmin
       <!-- <auxiliary auxtype="Alpha" auxvalue="0.1"/> -->
    </volume>
 
+    <volume name="coll1SideDet_l">
+     <materialref ref="VacuumDet"/>
+     <solidref ref="coll1SideDet_s"/>
+     <auxiliary auxtype="Color" auxvalue="blue"/>
+     <auxiliary auxtype="SensDet" auxvalue="coll1SideDet"/>
+     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+     <auxiliary auxtype="DetNo" auxvalue="2010"/>
+      <!-- <auxiliary auxtype="Alpha" auxvalue="0.1"/> -->
+   </volume>
+
+   <volume name="coll1OuterDet1_l">
+     <materialref ref="VacuumDet"/>
+     <solidref ref="coll1OuterDetyz_s"/>
+     <auxiliary auxtype="Color" auxvalue="blue"/>
+     <auxiliary auxtype="SensDet" auxvalue="coll1OuterDet1"/>
+     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+     <auxiliary auxtype="DetNo" auxvalue="2011"/>
+      <!-- <auxiliary auxtype="Alpha" auxvalue="0.1"/> -->
+   </volume>
+
+   <volume name="coll1OuterDet2_l">
+     <materialref ref="VacuumDet"/>
+     <solidref ref="coll1OuterDetyz_s"/>
+     <auxiliary auxtype="Color" auxvalue="blue"/>
+     <auxiliary auxtype="SensDet" auxvalue="coll1OuterDet2"/>
+     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+     <auxiliary auxtype="DetNo" auxvalue="2012"/>
+      <!-- <auxiliary auxtype="Alpha" auxvalue="0.1"/> -->
+   </volume>
+
+   <volume name="coll1OuterDet3_l">
+     <materialref ref="VacuumDet"/>
+     <solidref ref="coll1OuterDetxy_s"/>
+     <auxiliary auxtype="Color" auxvalue="blue"/>
+     <auxiliary auxtype="SensDet" auxvalue="coll1OuterDet3"/>
+     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+     <auxiliary auxtype="DetNo" auxvalue="2013"/>
+      <!-- <auxiliary auxtype="Alpha" auxvalue="0.1"/> -->
+   </volume>
+
+
+   <volume name="coll1OuterDet4_l">
+     <materialref ref="VacuumDet"/>
+     <solidref ref="coll1OuterDetxz_s"/>
+     <auxiliary auxtype="Color" auxvalue="blue"/>
+     <auxiliary auxtype="SensDet" auxvalue="coll1OuterDet4"/>
+     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+     <auxiliary auxtype="DetNo" auxvalue="2014"/>
+      <!-- <auxiliary auxtype="Alpha" auxvalue="0.1"/> -->
+   </volume>
+
+
 
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
@@ -1072,17 +1141,43 @@ i   <tube aunit="deg" deltaphi="360" lunit="mm" name="USvacdet_s" rmax="90" rmin
         <volumeref ref="shield_US_beampipe_1_logic"/>
         <positionref ref="shield_US_beampipe_center"/>
       </physvol>
-	      
+
       <physvol>
         <volumeref ref="USvacdet1_l"/>
 	<position name="USvacdet1_pos" lunit="mm" x="0" y="0" z="COLL1_z-COLL1_THICK/2 -0.55"/>
       </physvol>
-	      
+
       <physvol>
         <volumeref ref="USvacdet2_l"/>
         <position name="USvacdet2_pos" lunit="mm" x="0" y="0" z="COLL1_z+COLL1_THICK/2 +0.55"/>
       </physvol>
 
+      <physvol>
+        <volumeref ref="coll1SideDet_l"/>
+        <position name="coll1SideDet_pos" lunit="mm" x="0" y="0" z="COLL1_z"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="coll1OuterDet1_l"/>
+        <position name="coll1OuterDet1_pos" lunit="mm" x="-USPolyShield1_width/2. -1" y="USPolyShield1_y_offset" z=" - 1380"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="coll1OuterDet2_l"/>
+        <position name="coll1OuterDet2_pos" lunit="mm" x="+USPolyShield1_width/2. +1" y="USPolyShield1_y_offset" z=" - 1380"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="coll1OuterDet3_l"/>
+        <position name="coll1OuterDet3_pos" lunit="mm" x="0" y="USPolyShield1_y_offset"
+		  z="2420 - 1380"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="coll1OuterDet4_l"/>
+        <position name="coll1OuterDet4_pos" lunit="mm" x="0"
+		  y="USPolyShield1_y_offset + USPolyShield1_height/2. + 1" z=" - 1380"/>
+      </physvol>
 
    </volume>
 </structure>
