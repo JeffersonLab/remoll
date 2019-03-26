@@ -32,7 +32,7 @@
 /remoll/targpos   0 cm
 /remoll/targlen 150 cm
 
-/remoll/beamcurr 85 microampere
+/remoll/beamcurr 70 microampere
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
@@ -40,9 +40,15 @@
 
 /process/list
 
+/remoll/SD/disable_all
+/remoll/SD/enable 28
+/remoll/SD/enable_range 99 101
+/remoll/SD/enable_range 2008 2013
+/remoll/SD/enable_range 5540 5558
+
 # Specify random number seed
 #/remoll/seed 123456
 
 ##/remoll/filename remollout_clamOptHallDet_2e7.root
-/remoll/filename remollout_mergedHallDet_TgtConcSide_2e7.root
-/run/beamOn 20000000
+/remoll/filename remollout_mergedHallDet_TgtConcSide.root
+/run/beamOn 4000000
