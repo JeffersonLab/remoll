@@ -155,14 +155,27 @@
   <box lunit="mm" name="skyshineVacuumDet2_solid"
        x="concreteBoxx+1000" y="1.0" z="concreteBoxz"/>
 
+  <tube aunit="deg" deltaphi="360" lunit="mm" name="tgtDet_sub"
+        rmin="0" rmax="Shield_bore/2" z="leadBoxz+2"/>
+
     <box lunit="mm" name="tgtOuterDetyz_solid"
        x="1" y="concreteBoxy" z="concreteBoxz"/>
     <box lunit="mm" name="tgtOuterDetxy_solid0"
        x="concreteBoxx" y="concreteBoxy" z="1"/>
     <subtraction name="tgtOuterDetxy_solid">
       <first ref = "tgtOuterDetxy_solid0"/>
-      <second ref = "Shield_tube"/>
-      <position name ="detSub" lunit="mm" x="0" y="-390" z="0" />
+      <second ref = "tgtDet_sub"/>
+      <position name ="detSub1" lunit="mm" x="0" y="-390" z="0" />
+    </subtraction>
+
+    <box lunit="mm" name="tgtInnerDetyz_solid"
+       x="1" y="3000" z="2200"/>
+    <box lunit="mm" name="tgtInnerDetxy_solid0"
+       x="2200" y="3000" z="1"/>
+    <subtraction name="tgtInnerDetxy_solid">
+      <first ref = "tgtInnerDetxy_solid0"/>
+      <second ref = "tgtDet_sub"/>
+      <position name ="detSub2" lunit="mm" x="0" y="-390" z="0" />
     </subtraction>
 
 </solids>
@@ -280,6 +293,47 @@
     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
   </volume>
 
+  <volume name="tgtInnerDet0_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtInnerDetyz_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5544"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtInnerDet1_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtInnerDetyz_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5545"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+
+  <volume name="tgtInnerDet2_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtInnerDetxy_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5546"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtInnerDet3_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtInnerDetxy_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5547"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
   <volume name="targetRegion">
     <materialref ref="VacuumTarg"/>
     <solidref ref="targetRegion_solid"/>
@@ -362,6 +416,26 @@
     <physvol>
       <volumeref ref="tgtOuterDet3_logic"/>
       <position name="tgtOuterDet3_pos" unit="mm" x="0" y="450" z="concreteBoxz/2 + 1"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtInnerDet0_logic"/>
+      <position name="tgtInnerDet0_pos" unit="mm" x="1101" y="450" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtInnerDet1_logic"/>
+      <position name="tgtInnerDet1_pos" unit="mm" x="-1101" y="450" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtInnerDet2_logic"/>
+      <position name="tgtInnerDet2_pos" unit="mm" x="0" y="450" z="-1101"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtInnerDet3_logic"/>
+      <position name="tgtInnerDet3_pos" unit="mm" x="0" y="450" z="1101"/>
     </physvol>
 
     <auxiliary auxtype="TargetSystem" auxvalue=""/>
