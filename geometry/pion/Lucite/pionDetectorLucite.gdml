@@ -35,13 +35,9 @@
   <quantity name="pionDetectorLuciteHeight" type="length" value="25.0" unit="cm"/>
   <quantity name="pionDetectorLuciteTheta" type="angle" value="0.0" unit="deg"/>
 
-  <constant name="pionDetectorLuciteWedgeSide" value="1.0"/>
-  <quantity name="pionDetectorLuciteWedgeAngle" type="angle" value="45.0" unit="deg"/>
-  <quantity name="pionDetectorLuciteWedgeBevel" type="length" value="0.1" unit="mm"/>
-  <!--
-    pionDetectorLuciteWedgeSide = -1 for upstream, +1 for downstream
-    pionDetectorLuciteWedgeAngle should be at least as large as pionDetectorLuciteTheta when on the downstream side
-  -->
+  <constant name="pionDetectorLuciteWedgeSide" value="0.0"/> <!-- in [-1, +1] -->
+  <constant name="pionDetectorLuciteWedgeBevelFraction" value="0.01"/> <!-- in ]0, 1[ -->
+  <constant name="pionDetectorLuciteWedgeHeightFraction" value="0.5"/> <!-- in ]0, inf[ -->
 
   <quantity name="pionDetectorLuciteReflectorThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLuciteReflectorHeight" type="length" value="10.0" unit="cm"/>
@@ -79,20 +75,19 @@
             value="(pionDetectorLuciteOutsideWidth-pionDetectorLuciteInsideWidth)/pionDetectorLuciteHeight"/>
 
   <!-- derived quantities for lucite wedge -->
-  <!-- face of the wedge, i.e. for 0 degree wedge angle or 90 cut angle this is equal to the plane thickness -->
-  <quantity name="pionDetectorLuciteWedgeFace"
-            value="pionDetectorLucitePlaneThickness/cos(pionDetectorLuciteWedgeAngle)"/>
+  <!-- size of the bevel at the top of the wedge -->
+  <quantity name="pionDetectorLuciteWedgeBevel"
+            value="pionDetectorLuciteWedgeBevelFraction*pionDetectorLucitePlaneThickness"/>
   <!-- height of the wedge, i.e. how far does the wedge extend perpendicularly above the cut parallel to the bottom face -->
   <quantity name="pionDetectorLuciteWedgeHeight"
-            value="pionDetectorLuciteWedgeFace*sin(pionDetectorLuciteWedgeSide*pionDetectorLuciteTheta+pionDetectorLuciteWedgeAngle)"/>
+            value="pionDetectorLuciteWedgeHeightFraction*pionDetectorLucitePlaneThickness"/>
   <!-- length from point perpendicular under point of the wedge to the center of the cut parallel to the bottom face -->
   <quantity name="pionDetectorLuciteWedgeBase"
-            value="pionDetectorLucitePlaneThicknessInY/2.0
-            -pionDetectorLuciteWedgeSide*pionDetectorLuciteWedgeHeight*tan(pionDetectorLuciteTheta)
-            -pionDetectorLuciteWedgeBevel/2.0"/>
+            value="pionDetectorLuciteWedgeSide*(pionDetectorLucitePlaneThicknessInY-pionDetectorLuciteWedgeBevel)/2.0
+            +pionDetectorLuciteWedgeHeight*tan(pionDetectorLuciteTheta)"/>
   <!-- angle from center of cut parallel to the bottom face to point of the wedge -->
   <quantity name="pionDetectorLuciteWedgeTheta"
-            value="-pionDetectorLuciteWedgeSide*atan(pionDetectorLuciteWedgeBase/pionDetectorLuciteWedgeHeight)"/>
+            value="atan(pionDetectorLuciteWedgeBase/pionDetectorLuciteWedgeHeight)"/>
 
   <!-- derived quantities for lightguide -->
   <quantity name="pionDetectorLuciteReflectorThicknessInY"
