@@ -327,8 +327,8 @@
     <second ref="pionDetectorLuciteLightGuideInside_solid"/>
   </subtraction>
   <box name="pionDetectorLuciteLightGuideInsideEntryDetectorSlab_solid"
-       x="2.0*pionDetectorLuciteOutsideWidth"
-       y="2.0*pionDetectorLuciteAllPlanesGlueThicknessInY"
+       x="2.0*pionDetectorLuciteReflectorWidth"
+       y="2.0*pionDetectorLuciteReflectorDepth"
        z="pionDetectorLuciteLightGuideEntryDetectorThickness"/>
   <intersection name="pionDetectorLuciteLightGuideInsideEntryDetector_intersection_solid">
     <first ref="pionDetectorLuciteLightGuideInside_solid"/>
