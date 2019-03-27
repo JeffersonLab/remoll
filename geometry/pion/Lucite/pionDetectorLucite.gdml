@@ -49,6 +49,9 @@
   <quantity name="pionDetectorLuciteReflectorDepth" type="length" value="5.0*2.54" unit="cm"/>
   <quantity name="pionDetectorLuciteReflectorTheta" type="angle" value="-10" unit="deg"/>
 
+  <quantity name="pionDetectorLuciteReflectorEntryDetectorThickness" type="length" value="1.0" unit="mm"/>
+  <quantity name="pionDetectorLuciteReflectorExitDetectorThickness" type="length" value="1.0" unit="mm"/>
+
   <quantity name="pionDetectorLuciteLightGuideThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLuciteLightGuideHeight" type="length" value="25.0" unit="cm"/>
   <quantity name="pionDetectorLuciteLightGuideTheta" type="angle" value="0" unit="deg"/>
@@ -289,6 +292,31 @@
     <first ref="pionDetectorLuciteReflectorOutside_solid"/>
     <second ref="pionDetectorLuciteReflectorInside_solid"/>
   </subtraction>
+  <box name="pionDetectorLuciteReflectorInsideEntryDetectorSlab_solid"
+       x="2.0*pionDetectorLuciteOutsideWidth"
+       y="2.0*pionDetectorLuciteAllPlanesGlueThicknessInY"
+       z="pionDetectorLuciteReflectorEntryDetectorThickness"/>
+  <intersection name="pionDetectorLuciteReflectorInsideEntryDetector_intersection_solid">
+    <first ref="pionDetectorLuciteReflectorInside_solid"/>
+    <second ref="pionDetectorLuciteReflectorInsideEntryDetectorSlab_solid"/>
+    <position name="pionDetectorLuciteReflectorInsideEntryDetector_intersection_position"
+              y="(-pionDetectorLuciteReflectorHeight+pionDetectorLuciteReflectorEntryDetectorThickness)/2.0
+              *tan(pionDetectorLuciteReflectorTheta)"
+              z="(-pionDetectorLuciteReflectorHeight+pionDetectorLuciteReflectorEntryDetectorThickness)/2.0"/>
+  </intersection>
+  <box name="pionDetectorLuciteReflectorInsideExitDetectorSlab_solid"
+       x="2.0*pionDetectorLuciteReflectorWidth"
+       y="2.0*pionDetectorLuciteReflectorDepth"
+       z="pionDetectorLuciteReflectorExitDetectorThickness"/>
+  <intersection name="pionDetectorLuciteReflectorInsideExitDetector_intersection_solid">
+    <first ref="pionDetectorLuciteReflectorInside_solid"/>
+    <second ref="pionDetectorLuciteReflectorInsideExitDetectorSlab_solid"/>
+    <position name="pionDetectorLuciteReflectorInsideExitDetector_intersection_position"
+              y="(+pionDetectorLuciteReflectorHeight-pionDetectorLuciteReflectorExitDetectorThickness)/2.0
+              *tan(pionDetectorLuciteReflectorTheta)"
+              z="(+pionDetectorLuciteReflectorHeight-pionDetectorLuciteReflectorExitDetectorThickness)/2.0"/>
+  </intersection>
+
   <trap name="pionDetectorLuciteReflectorOutsideScaled_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteReflectorTheta" phi="90.0*deg"
@@ -499,11 +527,36 @@
     <volumeref ref="pionDetectorLuciteReflectorShell_logical"/>
   </skinsurface>
 
+  <volume name="pionDetectorLuciteReflectorInsideEntryDetector_logical">
+    <materialref ref="Air"/>
+    <solidref ref="pionDetectorLuciteReflectorInsideEntryDetector_intersection_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLuciteReflectorEntry"/>
+    <auxiliary auxtype="DetNo" auxvalue="8008"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+    <auxiliary auxtype="Color" auxvalue="White"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.2"/>
+  </volume>
+  <volume name="pionDetectorLuciteReflectorInsideExitDetector_logical">
+    <materialref ref="Air"/>
+    <solidref ref="pionDetectorLuciteReflectorInsideExitDetector_intersection_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionLuciteReflectorExit"/>
+    <auxiliary auxtype="DetNo" auxvalue="8009"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+    <auxiliary auxtype="Color" auxvalue="White"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.2"/>
+  </volume>
+
   <volume name="pionDetectorLuciteReflectorOutside_logical">
     <materialref ref="Air"/>
     <solidref ref="pionDetectorLuciteReflectorOutside_solid"/>
     <physvol name="pionDetectorLuciteReflectorShell_physical">
       <volumeref ref="pionDetectorLuciteReflectorShell_logical"/>
+    </physvol>
+    <physvol name="pionDetectorLuciteReflectorInsideEntryDetector_physical">
+      <volumeref ref="pionDetectorLuciteReflectorInsideEntryDetector_logical"/>
+    </physvol>
+    <physvol name="pionDetectorLuciteReflectorInsideExitDetector_physical">
+      <volumeref ref="pionDetectorLuciteReflectorInsideExitDetector_logical"/>
     </physvol>
   </volume>
 
