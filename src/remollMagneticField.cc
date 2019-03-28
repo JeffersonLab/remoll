@@ -219,8 +219,8 @@ void remollMagneticField::ReadFieldMap(){
     // Sanity check on header data
 
     if( !( fMin[kR] >= 0.0 && fMin[kR] < fMax[kR] &&
-	   -180.0 <= fMin[kPhi] && fMin[kPhi] < 180.0 && 
-	   -180.0 <= fMax[kPhi] && fMax[kPhi] < 180.0 && 
+	   -180.0 <= fMin[kPhi] && fMin[kPhi] <= 180.0 &&
+	   -180.0 <= fMax[kPhi] && fMax[kPhi] <= 180.0 &&
 	   fMin[kPhi]  < fMax[kPhi] &&
 	   fMin[kZ] < fMax[kZ] &&
 	   fN[kR] > 0 && fN[kPhi] > 0 && fN[kZ] > 0 &&
@@ -276,7 +276,6 @@ void remollMagneticField::ReadFieldMap(){
 
     ///////////////////////////////////
 
-
     if( !( fMin[kPhi] >= -pi && fMin[kPhi] <= pi ) ){
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 	    << ": File " << fFilename << " header contains invalid phi range.  Aborting" << G4endl;
@@ -284,8 +283,16 @@ void remollMagneticField::ReadFieldMap(){
     }
 
     if( fabs( fabs((mapphirange - fxtantSize)/mapphirange)) > 0.03 ){
-	G4cerr << "Warning " << __FILE__ << " line " << __LINE__ 
-	    << ": File " << fFilename << " header contains too narrow phi range for given xtants." << G4endl <<  "Warning:   Proceeding assuming null field in non-described regions" << G4endl << (fMax[kPhi] - fMin[kPhi])/degree << " deg range < " <<  fxtantSize/degree << " deg xtant" << G4endl;
+	G4cerr << "Warning " << __FILE__ << " line " << __LINE__ << G4endl
+	    << "File " << fFilename << " header contains too narrow phi range for given xtants." << G4endl
+            << "Warning:   Proceeding assuming null field in non-described regions" << G4endl
+            << (fMax[kPhi] - fMin[kPhi])/degree << " deg range < " <<  fxtantSize/degree << " deg xtant" << G4endl;
+    }
+
+    if( fabs(fabs(mapphirange - fxtantSize) / (mapphirange/fN[kPhi]) - 1) < 0.03 ){
+	G4cerr << "Warning " << __FILE__ << " line " << __LINE__ << G4endl
+	    << "File " << fFilename << " header contains a gap in the phi range which seems" << G4endl
+            << "to correspond perfectly with a slice in phi. This will result in a gap in coverage." << G4endl;
     }
 
 
