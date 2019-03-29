@@ -67,7 +67,7 @@ void doOne(string fnm,int ring5toggle=1, int print=0){
       c1->Print(onm.c_str(),"pdf");
     }
 
-    //cout<<i<<"\t"<<hitAvg<<"\t"<<hitUncert<<"\t"<<rateAvg<<"\t"<<rateUncert<<endl;
+    cout<<i<<"\t"<<hitAvg<<"\t"<<hitUncert<<"\t"<<rateAvg<<"\t"<<rateUncert<<endl;
     delete hr;
     delete hh;
   }
@@ -95,6 +95,7 @@ void doOne(string fnm,int ring5toggle=1, int print=0){
   }
 
   t->Project("h2","rate",Form("rate*(hit.det==28 && hit.e>0.001 && hit.pid==11 %s)",rSelect.c_str()),"h");
+  //cout<<Form("rate*(hit.det==28 && hit.e>0.001 && hit.pid==11 %s)",rSelect.c_str())<<endl;
   bf = h2->Integral(1,b1);
   tot = h2->Integral();
   if(print){
