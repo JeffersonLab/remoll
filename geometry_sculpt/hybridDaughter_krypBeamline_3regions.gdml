@@ -453,13 +453,13 @@
 
     <material Z="1" name="GoodVacuum" state="gas">
       <T unit="K" value="300"/>
-      <D unit="kg/m3" value="1.54e-9"/>
+      <D unit="kg/m3" value="1.54e-9"/><!-- 1e-6 Torr vacuum -->
       <atom unit="g/mole" value="1.01"/>
     </material>
 
     <material Z="1" name="BadVacuum" state="gas">
       <T unit="K" value="300"/>
-      <D unit="kg/m3" value="1.54e-8"/>
+      <D unit="kg/m3" value="1.54e-3"/><!-- 1 Torr vacuum -->
       <atom unit="g/mole" value="1.01"/>
     </material>
 
