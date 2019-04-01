@@ -3,6 +3,9 @@ images
 # output from createHTML
 _remoll_*.html
 
+# Jupyter checkpoints
+.ipynb_checkpoints
+
 # backups etc
 *~
 *.swp

@@ -4,7 +4,6 @@
 # Enable optical physics
 /remoll/physlist/parallel/disable
 /remoll/physlist/optical/enable
-/remoll/physlist/steplimiter/enable
 
 # This must be explicitly called
 /run/initialize
@@ -12,8 +11,7 @@
 #/vis/open OGL 600x600-0+0
 #/control/execute vis/vis.mac
 
-/remoll/beamene  10 GeV
-/remoll/beamcurr 50 microampere
+/remoll/beamene 11 GeV
 
 # Lightguide entry and exit detectors
 /remoll/SD/disable 8010
