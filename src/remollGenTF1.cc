@@ -48,7 +48,6 @@ remollGenTF1::remollGenTF1()
     fType(),
     fRing(1), fSector(0)
 {
-    G4cerr << "Initializing TF1 generator" << G4endl;
     fApplyMultScatt = true;
     r_t = G4RandFlat::shoot(600,1200);
     fZpos = (28.5*m - 0.52*m);
