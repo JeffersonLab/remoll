@@ -11,8 +11,7 @@
 #include "G4Event.hh"
 
 #include "remollVEventGen.hh"
-#include "CLHEP/Random/RandFlat.h"
-#include "CLHEP/Random/RandGauss.h"
+#include "Randomize.hh"
 #include "G4AutoLock.hh"
 
 #include <math.h>
