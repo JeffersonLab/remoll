@@ -63,10 +63,10 @@ remollGenTF1::remollGenTF1()
     fThisGenMessenger->DeclareMethod("sector",&remollGenTF1::SetSector,"Sector number: 1,2,or 3, or 0 for all");
     fThisGenMessenger->DeclareMethod("radOffset",&remollGenTF1::SetRadOffset,"Radial offset to center detectors: boolean");
     fThisGenMessenger->DeclareMethod("ring",&remollGenTF1::SetRing,"Detector ring number (1-6)");
-    SetScatteringType(*new G4String("all"));
+    SetScatteringType("all");
     SetSector(0);
     SetRadOffset(false);
-    SetGenFunctionFile(*new G4String("remollGenFunctions.root:elastic_0"));
+    SetGenFunctionFile("remollGenFunctions.root:elastic_0");
 }
 
 remollGenTF1::~remollGenTF1() {
@@ -90,12 +90,11 @@ void remollGenTF1::SetRing(G4int num){ fRing = num; }
 
 void remollGenTF1::SetRadOffset(G4bool offset){ fBoffsetR = offset; }
 
-void remollGenTF1::SetScatteringType(G4String& input){ fType = input; }
+void remollGenTF1::SetScatteringType(G4String input){ fType = input; }
 
 void remollGenTF1::SetSector(const G4int secnum){ fSector = secnum; }
 
-void remollGenTF1::SetGenFunctionFile(G4String& input) {
-    G4cout << "File name set to " << input << G4endl;
+void remollGenTF1::SetGenFunctionFile(G4String input) {
     if(input == "genDefault"){ //input for generating input files using moller, elastic, and inelastic generators and then performing fits to use as TF1 input
         G4cerr << "Reading generated default output files." << G4endl;
         distAnalysis();
@@ -249,26 +248,26 @@ void remollGenTF1::distAnalysis(){
     //Pulls hit radius data from the root files and puts it into histograms, and then fits 
     //those histograms with parameterized functions that are output into remollGenFunctions.root
     if (fType == "moller" || fType == "all"){
-        G4String* fname = new G4String("remollout_moller.root");
-        getHist(*fname);
-        fitHist(*new G4String("moller"));
+        G4String fname("remollout_moller.root");
+        getHist(fname);
+        fitHist("moller");
         if(fType == "moller")
             fFunc = fMollerFunc;
     }if (fType == "elastic" || fType == "all"){
-        getHist(*new G4String("remollout_elastic.root"));
-        fitHist(*new G4String("elastic"));
+        getHist("remollout_elastic.root");
+        fitHist("elastic");
         if (fType == "elastic")
             fFunc = fElasticFunc;
     }if (fType == "inelastic" || fType == "all"){
-        getHist(*new G4String("remollout_inelastic.root"));
-        fitHist(*new G4String("inelastic"));
+        getHist("remollout_inelastic.root");
+        fitHist("inelastic");
         if (fType == "inelastic")
             fFunc = fInelasticFunc;
     }
 }
 
 
-void remollGenTF1::getHist(G4String& fname){
+void remollGenTF1::getHist(G4String fname){
     G4AutoLock inFileLock(&inFileMutex2);
     
     G4cout << "Opening file " << fname << G4endl;
@@ -346,7 +345,7 @@ void remollGenTF1::getHist(G4String& fname){
     
 }
 
-void remollGenTF1::fitHist(G4String& type){
+void remollGenTF1::fitHist(G4String type){
     TF1* fit;
      
     //fit histograms of all sectors
