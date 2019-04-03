@@ -23,6 +23,9 @@
 // System headers
 #include <vector>
 
+#include "G4AutoLock.hh"
+#include "Randomize.hh"
+
 // Forward declarations
 class TFile;
 class TTree;
@@ -37,13 +40,18 @@ class remollGenExternal : public remollVEventGen {
         virtual ~remollGenExternal();
 
         void SetGenExternalFile(G4String& filename);
+        void SetGenExternalZOffset(G4double tempzOffset) {
+            fzOffset = tempzOffset;
+        }
         void SetGenExternalDetID(const G4int detid) {
-          fDetectorID = detid;
+            fDetectorID = detid;
+        }
+        void SetGenExternalEntry(const G4int firstEventID){
+            fEntry = ((firstEventID >= 0)? firstEventID : G4RandFlat::shoot(fEntries));
         }
 
     private:
         void SamplePhysics(remollVertex *, remollEvent *);
-
         // External event file and tree, entry number
         TFile* fFile;
         TTree* fTree;
@@ -52,9 +60,11 @@ class remollGenExternal : public remollVEventGen {
         // Event and hit structures
         remollEvent_t* fEvent;
         std::vector<remollGenericDetectorHit_t>* fHit;
+        G4double fzOffset;
 
         // Detector ID to consider
         G4int fDetectorID;
+        G4int fLoopID;
 
 };
 

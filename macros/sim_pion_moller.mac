@@ -15,8 +15,8 @@
 
 # Only read detectors 28 and 30
 /remoll/SD/disable_all
-/remoll/SD/det_28/enable true
-/remoll/SD/det_30/enable true
+/remoll/SD/enable 28
+/remoll/SD/enable 30
 /remoll/SD/print_all
 
 /remoll/seed 3000

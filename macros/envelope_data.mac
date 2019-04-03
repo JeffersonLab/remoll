@@ -1,0 +1,74 @@
+# File for creating the output files needed to feed into envelope fitting analysis. 
+
+# store tracks
+/tracking/storeTrajectory 1
+
+# This must be called before initialize
+/remoll/setgeofile geometry/mollerMother_merged.gdml
+
+# This must be explicitly called
+/run/initialize
+
+/process/list
+
+#create ray tracing (no B fields) output file (for photon line-of-sight testing)
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 10 cm
+/remoll/rasy 10 cm
+
+/remoll/beamene 100 MeV
+/remoll/evgen/set beam
+/run/beamOn 0
+/remoll/filename remollout_raytrace_100k.root
+/run/beamOn 100000
+
+
+
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
+#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+
+/remoll/beamene 11 GeV
+
+/remoll/beamcurr 85 microampere
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+#/remoll/kryptonite/set true
+
+
+#create moller output file
+/remoll/evgen/set moller
+/run/beamOn 0
+/remoll/filename remollout_moller_100k.root
+/run/beamOn 10000
+
+#create elastic output file
+/remoll/evgen/set elastic
+/run/beamOn 0
+/remoll/filename remollout_elastic_100k.root
+/run/beamOn 100000
+
+#create inelastic output file
+/remoll/evgen/set inelastic
+/run/beamOn 0
+/remoll/filename remollout_inelastic_100k.root
+/run/beamOn 100000
+
+#create beam generator output file (for all types of scattering together)
+/remoll/evgen/set beam
+/run/beamOn 0
+/remoll/filename remollout_beam_100k.root
+/run/beamOn 100000
+
+

@@ -5,6 +5,8 @@
 #include "TObject.h"
 
 #include "G4Run.hh"
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
 
 #include "remolltypes.hh"
 #include "remollSystemOfUnits.hh"
@@ -22,17 +24,20 @@ class remollGenericDetectorHit;
 class remollGenericDetectorSum;
 class remollEvent;
 
-#include <xercesc/dom/DOMElement.hpp>
+namespace { G4Mutex remollIOMutex = G4MUTEX_INITIALIZER; }
 
+//FIXME: forward declares not possible since xerces uses a
+// namespace alias and requires upstream knowledge or a pre-
+// processor directive, which in turn requires another header
+// so there's no gain...
+//#include <xercesc/dom/DOMElement.hpp>
+// or
+#include <xercesc/util/XercesDefs.hpp>
+XERCES_CPP_NAMESPACE_BEGIN
+class DOMElement;
+XERCES_CPP_NAMESPACE_END
 
 #define __FILENAMELEN 255
-
-// Units for output
-#define __E_UNIT GeV
-#define __L_UNIT m
-#define __T_UNIT ns
-#define __ANG_UNIT rad
-#define __ASYMM_SCALE 1e-9 // ppb
 
 class remollIO {
     private:
@@ -60,6 +65,13 @@ class remollIO {
 
 	void GrabGDMLFiles( G4String fn );
 
+        void RegisterDetector(G4String lvname, G4String sdname, G4int no) {
+          G4AutoLock lock(&remollIOMutex);
+          fDetNos.push_back(no);
+          fDetLVNames += (fDetLVNames.size() > 0? ":": "") + lvname + "/I";
+          fDetSDNames += (fDetSDNames.size() > 0? ":": "") + sdname + "/I";
+        }
+
     private:
 	TFile *fFile;
 	TTree *fTree;
@@ -85,6 +97,11 @@ class remollIO {
 	// Units
 	remollUnits_t fUnits;
 
+        // Detectors
+        std::vector<Int_t> fDetNos;
+        G4String fDetLVNames;
+        G4String fDetSDNames;
+
 	// Event data
 	Double_t fEvRate;
 	TString fEvSeed;
@@ -102,8 +119,6 @@ class remollIO {
 	void AddGenericDetectorHit(remollGenericDetectorHit *);
     private:
 	std::vector<remollGenericDetectorHit_t> fGenDetHit;
-
-	Int_t fCollCut;
 
 	//  GenericDetectorSum
     public:

@@ -1,16 +1,30 @@
 #include "remollPhysicsList.hh"
 
 #include "G4PhysListFactory.hh"
+#include "G4ParallelWorldPhysics.hh"
 #include "G4OpticalPhysics.hh"
 #include "G4GenericMessenger.hh"
 #include "G4RunManager.hh"
 #include "G4HadronicProcessStore.hh"
 #include "G4ParticleHPManager.hh"
 
+#include "G4Version.hh"
+#if G4VERSION_NUMBER < 1000
+#include "G4StepLimiterBuilder.hh"
+#else
+#include "G4StepLimiterPhysics.hh"
+#endif
+
 remollPhysicsList::remollPhysicsList()
 : G4VModularPhysicsList(),
-  fReferencePhysList(0),fOpticalPhysics(0),
-  fPhysListMessenger(0),fBaseMessenger(0)
+  fReferencePhysList(0),
+  fParallelPhysics(0),
+  fOpticalPhysics(0),
+  fStepLimiterPhysics(0),
+  fPhysListMessenger(0),
+  fOpticalMessenger(0),
+  fParallelMessenger(0),
+  fBaseMessenger(0)
 {
   // Let users know to ignore the warning by Particle HP package
   G4cout << "remoll: Since the high precision neutron simulation in the default physics list" << G4endl;
@@ -21,7 +35,8 @@ remollPhysicsList::remollPhysicsList()
   SetVerboseLevel(0);
 
   // Get default reference physics list
-  RegisterReferencePhysList("QGSP_BERT_HP");
+  RegisterReferencePhysList("QGSP_BERT");
+  EnableStepLimiterPhysics();
 
   // TODO Backwards compatible, remove this on next major version change
   // Create base messenger
@@ -29,6 +44,12 @@ remollPhysicsList::remollPhysicsList()
       "/remoll/",
       "Remoll properties");
   // Create base commands
+  fBaseMessenger->DeclareMethod(
+      "parallel",
+      &remollPhysicsList::SetParallelPhysics,
+      "Enable parallel physics")
+              .SetStates(G4State_PreInit)
+              .SetDefaultValue("true");
   fBaseMessenger->DeclareMethod(
       "optical",
       &remollPhysicsList::SetOpticalPhysics,
@@ -41,9 +62,15 @@ remollPhysicsList::remollPhysicsList()
   fPhysListMessenger = new G4GenericMessenger(this,
       "/remoll/physlist/",
       "Remoll physics list properties");
+  fParallelMessenger = new G4GenericMessenger(this,
+      "/remoll/physlist/parallel/",
+      "Remoll parallel physics properties");
   fOpticalMessenger = new G4GenericMessenger(this,
       "/remoll/physlist/optical/",
       "Remoll optical physics properties");
+  fStepLimiterMessenger = new G4GenericMessenger(this,
+      "/remoll/physlist/steplimiter/",
+      "Remoll step limiter properties");
 
   // Create commands
   fPhysListMessenger->DeclareMethod(
@@ -61,6 +88,17 @@ remollPhysicsList::remollPhysicsList()
       &remollPhysicsList::ListReferencePhysLists,
       "List reference physics lists");
 
+  fParallelMessenger->DeclareMethod(
+      "enable",
+      &remollPhysicsList::EnableParallelPhysics,
+      "Enable parallel physics")
+              .SetStates(G4State_PreInit);
+  fParallelMessenger->DeclareMethod(
+      "disable",
+      &remollPhysicsList::DisableParallelPhysics,
+      "Disable parallel physics")
+              .SetStates(G4State_PreInit);
+
   fOpticalMessenger->DeclareMethod(
       "enable",
       &remollPhysicsList::EnableOpticalPhysics,
@@ -71,6 +109,15 @@ remollPhysicsList::remollPhysicsList()
       &remollPhysicsList::DisableOpticalPhysics,
       "Disable optical physics")
               .SetStates(G4State_PreInit);
+
+  fStepLimiterMessenger->DeclareMethod(
+      "enable",
+      &remollPhysicsList::EnableStepLimiterPhysics,
+      "Enable step limiter");
+  fStepLimiterMessenger->DeclareMethod(
+      "disable",
+      &remollPhysicsList::DisableStepLimiterPhysics,
+      "Disable step limiter");
 }
 
 remollPhysicsList::~remollPhysicsList()
@@ -83,6 +130,8 @@ remollPhysicsList::~remollPhysicsList()
   //fReferencePhysicsListToDelete.clear();
 
   if (fPhysListMessenger) delete fPhysListMessenger;
+  if (fStepLimiterMessenger) delete fStepLimiterMessenger;
+  if (fParallelMessenger) delete fParallelMessenger;
   if (fOpticalMessenger) delete fOpticalMessenger;
   if (fBaseMessenger) delete fBaseMessenger;
 }
@@ -96,6 +145,50 @@ void remollPhysicsList::SetVerboseLevel(G4int level)
   G4HadronicProcessStore::Instance()->SetVerbose(level);
   G4ParticleHPManager::GetInstance()->SetVerboseLevel(level);
   G4cout << G4endl; // empty line after G4ParticleHPManager complaint
+}
+
+void remollPhysicsList::SetParallelPhysics(G4bool flag)
+{
+  if (flag) EnableParallelPhysics();
+  else     DisableParallelPhysics();
+}
+
+void remollPhysicsList::EnableParallelPhysics()
+{
+  if (fParallelPhysics) {
+    G4cout << "Parallel physics already active" << G4endl;
+    return;
+  }
+
+  // Print output
+  if (GetVerboseLevel() > 0)
+    G4cout << "Registering parallel physics" << G4endl;
+
+  // Create Parallel physics
+  fParallelPhysics = new G4ParallelWorldPhysics("parallel");
+  // Note: name must correspond with name of remollParallelConstruction
+
+  // Register existing physics
+  RegisterPhysics(fParallelPhysics);
+}
+
+void remollPhysicsList::DisableParallelPhysics()
+{
+  if (!fParallelPhysics) {
+    G4cout << "Parallel physics not active" << G4endl;
+    return;
+  }
+
+  // Print output
+  if (GetVerboseLevel() > 0)
+    G4cout << "Removing parallel physics" << G4endl;
+
+  // Remove Parallel physics
+  RemovePhysics(fParallelPhysics);
+
+  // Delete Parallel physics
+  delete fParallelPhysics;
+  fParallelPhysics = 0;
 }
 
 void remollPhysicsList::SetOpticalPhysics(G4bool flag)
@@ -139,6 +232,53 @@ void remollPhysicsList::DisableOpticalPhysics()
   // Delete optical physics
   delete fOpticalPhysics;
   fOpticalPhysics = 0;
+}
+
+void remollPhysicsList::SetStepLimiterPhysics(G4bool flag)
+{
+  if (flag) EnableStepLimiterPhysics();
+  else     DisableStepLimiterPhysics();
+}
+
+void remollPhysicsList::EnableStepLimiterPhysics()
+{
+  if (fStepLimiterPhysics) {
+    G4cout << "Step limiter already active" << G4endl;
+    return;
+  }
+
+  // Print output
+  if (GetVerboseLevel() > 0)
+    G4cout << "Registering step limiter physics" << G4endl;
+
+  // Create step limiter physics
+  #if G4VERSION_NUMBER < 1000
+  fStepLimiterPhysics = new G4StepLimiterBuilder(GetVerboseLevel());
+  #else
+  fStepLimiterPhysics = new G4StepLimiterPhysics(GetVerboseLevel());
+  #endif
+
+  // Register existing physics
+  RegisterPhysics(fStepLimiterPhysics);
+}
+
+void remollPhysicsList::DisableStepLimiterPhysics()
+{
+  if (!fStepLimiterPhysics) {
+    G4cout << "Step limiter physics not active" << G4endl;
+    return;
+  }
+
+  // Print output
+  if (GetVerboseLevel() > 0)
+    G4cout << "Removing step limiter physics" << G4endl;
+
+  // Remove step limiter physics
+  RemovePhysics(fStepLimiterPhysics);
+
+  // Delete step limiter physics
+  delete fStepLimiterPhysics;
+  fStepLimiterPhysics = 0;
 }
 
 void remollPhysicsList::ListReferencePhysLists()

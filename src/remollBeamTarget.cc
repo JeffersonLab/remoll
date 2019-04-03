@@ -225,6 +225,8 @@ void remollBeamTarget::SetTargetLen(G4double z)
 
     lock.unlock();
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetLen(z)" << G4endl;
 }
 
 void remollBeamTarget::SetTargetPos(G4double z)
@@ -272,6 +274,8 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
     lock.unlock();
     UpdateInfo();
+
+    //  G4cout << "\nLeaving remollBeamTarget::SetTargetPos(z)" << G4endl;
 }
 
 
@@ -280,6 +284,14 @@ void remollBeamTarget::SetTargetPos(G4double z)
 
 remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 {
+    // Create vertex
+    remollVertex vertex;
+
+    // No sampling required
+    if (samp == kNoTargetVolume) {
+      return vertex;
+    }
+
     // Check if target mother volume exists
     if (fTargetMother == 0) {
       G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
@@ -294,9 +306,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
       exit(1);
     }
 
-    // Create vertex
-    remollVertex vertex;
-
     // Sample raster x and y positions on target
     // (assumed independent of z position)
     G4double rasx = G4RandFlat::shoot(fX0 - fRasterX/2.0, fX0 + fRasterX/2.0);
@@ -308,13 +317,17 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     // Figure out how far along the target we got
     G4double total_effective_length = 0;
     switch( samp ){
-	case kActiveTargetVolume:
-	    total_effective_length = fActiveTargetEffectiveLength;
-	    break;
+        case kActiveTargetVolume:
+            total_effective_length = fActiveTargetEffectiveLength;
+            break;
 
-	case kAllTargetVolumes:
-	    total_effective_length = fTotalTargetEffectiveLength;
-	    break;
+        case kAllTargetVolumes:
+            total_effective_length = fTotalTargetEffectiveLength;
+            break;
+
+        case kNoTargetVolume:
+            // nothing to do, just avoid compilation warning
+            break;
     }
     G4double effective_position = G4RandFlat::shoot(0.0, total_effective_length);
 
@@ -338,7 +351,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
         it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !found_active_volume; it++ ){
 
         // Relative position of this target volume in mother volume
-        G4double relative_position = (*it)->GetFrameTranslation().z();
+        //G4double relative_position = (*it)->GetFrameTranslation().z();
 
         // Try to cast the target volume into its tubs solid
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
@@ -449,7 +462,6 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	vertex.fMaterial = fDefaultMat;
 	vertex.fRadiationLength = 0.0;
     }
-    
 
     // Sample multiple scattering angles
     G4double msth = 0, msph = 0;
@@ -467,13 +479,13 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
       // Gaussian distribution with mean and sigma
       bmth = G4RandGauss::shoot(fTh0, fdTh);
       bmph = G4RandGauss::shoot(fPh0, fdPh);
-      
+
       if( fRasterX > 0 ){ bmth += fCorrTh*(rasx-fX0)/fRasterX/2; }
       if( fRasterY > 0 ){ bmph += fCorrPh*(rasy-fY0)/fRasterY/2; }
-      
+
       // Initial direction
       fDir = G4ThreeVector(0.0, 0.0, 1.0);
-      
+
       fDir.rotateY( bmth); // Positive th pushes to positive X (around Y-axis)
       fDir.rotateX(-bmph); // Positive ph pushes to positive Y (around X-axis)
     } else{
@@ -520,7 +532,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     }
 
     vertex.fBeamEnergy = fSampledEnergy;
-    assert( fBeamEnergy >= electron_mass_c2 );
+    //assert( fBeamEnergy >= electron_mass_c2 );
 
     return vertex;
 }

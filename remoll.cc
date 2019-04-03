@@ -21,7 +21,6 @@ typedef G4RunManager RunManager;
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
-#include "remollIO.hh"
 #include "remollPhysicsList.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
@@ -29,6 +28,8 @@ typedef G4RunManager RunManager;
 
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
+
+#include "TROOT.h"
 
 #ifdef __APPLE__
 #include <unistd.h>
@@ -40,7 +41,7 @@ typedef G4RunManager RunManager;
 namespace {
   void PrintUsage() {
     G4cerr << "Usage: " << G4endl;
-    G4cerr << " remoll [-m macro ] [-u UIsession] [-r seed] ";
+    G4cerr << " remoll [-g geometry] [-m macro] [-u UIsession] [-r seed] ";
 #ifdef G4MULTITHREADED
     G4cerr << "[-t nThreads] ";
 #endif
@@ -48,12 +49,16 @@ namespace {
   }
 }
 
-
 int main(int argc, char** argv) {
 
     // Running time measurement: start
     clock_t tStart = clock();
 
+    #if ROOT_VERSION_CODE >= ROOT_VERSION(6,0,0)
+    // Fix for #40: avoids LLVM/GL errors, but only for ROOT 6:
+    // make sure gROOT is loaded before LLVM by using it first
+    gROOT->Reset();
+    #endif
 
     // Initialize the random seed
     G4long seed = time(0) + (int) getpid();
@@ -63,22 +68,27 @@ int main(int argc, char** argv) {
     if (urandom) {
       urandom.read(reinterpret_cast<char*>(&seed), sizeof(seed));
       urandom.close();
+      seed = labs(seed);
     } else G4cerr << "Can't read /dev/urandom." << G4endl;
 
 
     // Parse command line options
     G4String macro;
     G4String session;
+    G4String geometry_gdmlfile;
+    G4String parallel_gdmlfile;
 #ifdef G4MULTITHREADED
     G4int threads = 0;
 #endif
     //
     for (G4int i = 1; i < argc; ++i) {
-      if      (G4String(argv[i]) == "-m") macro   = argv[++i];
-      else if (G4String(argv[i]) == "-u") session = argv[++i];
-      else if (G4String(argv[i]) == "-r") seed    = atoi(argv[++i]);
+      if      (G4String(argv[i]) == "-m") macro    = argv[++i];
+      else if (G4String(argv[i]) == "-g") geometry_gdmlfile = argv[++i];
+      else if (G4String(argv[i]) == "-p") parallel_gdmlfile = argv[++i];
+      else if (G4String(argv[i]) == "-u") session  = argv[++i];
+      else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
 #ifdef G4MULTITHREADED
-      else if (G4String(argv[i]) == "-t") threads = atoi(argv[++i]);
+      else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
 #endif
       else if (argv[i][0] != '-') macro = argv[i];
       else {
@@ -101,9 +111,11 @@ int main(int argc, char** argv) {
     G4Random::setTheSeed(seed);
 
     // Detector geometry
-    remollDetectorConstruction* detector = new remollDetectorConstruction();
+    G4String material_name = "material";
+    remollDetectorConstruction* detector = new remollDetectorConstruction(material_name, geometry_gdmlfile);
     // Parallel world geometry
-    remollParallelConstruction* parallel = new remollParallelConstruction();
+    G4String parallel_name = "parallel"; // Note: name must correspond with name of G4ParallelWorldPhysics
+    remollParallelConstruction* parallel = new remollParallelConstruction(parallel_name, parallel_gdmlfile);
     detector->RegisterParallelWorld(parallel);
     runManager->SetUserInitialization(detector);
 

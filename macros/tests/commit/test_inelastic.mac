@@ -1,5 +1,7 @@
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother.gdml
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+/remoll/physlist/parallel/enable
 
 # This must be explicitly called
 /run/initialize
@@ -19,10 +21,10 @@
 
 #/remoll/evgen/set beam
 #/remoll/evgen/set moller
-#/remoll/thcommin 30.0 deg
-#/remoll/thcommax 150.0 deg
+#/remoll/evgen/thcommin 30.0 deg
+#/remoll/evgen/thcommax 150.0 deg
 #/remoll/evgen/set elastic 
-#/remoll/emin 80.0 MeV
+#/remoll/evgen/emin 80.0 MeV
 /remoll/evgen/set inelastic 
 #/remoll/evgen/set pion
 #/remoll/piontype pi-
@@ -33,8 +35,8 @@
 
 # Generation limits
 # theta
-/remoll/thmin 0.5 deg
-/remoll/thmax 3.0 deg
+/remoll/evgen/thmin 0.5 deg
+/remoll/evgen/thmax 3.0 deg
 
 # Beam current for rate
 /remoll/beamcurr 85 microampere

@@ -36,6 +36,11 @@ class remollSteppingAction : public G4UserSteppingAction
 
   public:
     inline void SetDrawFlag(G4bool val) { fDrawFlag = val; };
+
+  private:
+    G4int fVerbose;
+  public:
+    void SetVerboseLevel(G4int verbose) { fVerbose = verbose; }
 };
 
 #endif//__REMOLLSTEPPINGACTION_HH

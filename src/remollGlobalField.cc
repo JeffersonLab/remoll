@@ -59,14 +59,14 @@ remollGlobalField::remollGlobalField()
     fFieldPropagator = transportationmanager->GetPropagatorInField();
     fFieldManager = transportationmanager->GetFieldManager();
 
-    // Connect field manager to this global field
-    fFieldManager->SetDetectorField(this);
-
     // Create equation, stepper, and chordfinder
     SetEquation();
     SetStepper();
     SetChordFinder();
     SetAccuracyParameters();
+
+    // Connect field manager to this global field
+    fFieldManager->SetDetectorField(this);
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -76,7 +76,7 @@ remollGlobalField::remollGlobalField()
 
     // Create global field messenger
     fGlobalFieldMessenger = new G4GenericMessenger(this,"/remoll/field/","Remoll global field properties");
-    fGlobalFieldMessenger->DeclareMethod("equationtype",&remollGlobalField::SetEquationType,"Set equation type: \n 0: B-field, no spin (default); \n 1: EM-field, no spin; \n 2: B-field, with spin; \n 3: EM-field, with spin");
+    fGlobalFieldMessenger->DeclareMethod("equationtype",&remollGlobalField::SetEquationType,"Set equation type: \n 0: B-field, no spin (default); \n 2: B-field, with spin");
     fGlobalFieldMessenger->DeclareMethod("steppertype",&remollGlobalField::SetStepperType,"Set stepper type: \n 0: ExplicitEuler; \n 1: ImplicitEuler; \n 2: SimpleRunge; \n 3: SimpleHeum; \n 4: ClassicalRK4 (default); \n 5: CashKarpRKF45");
     fGlobalFieldMessenger->DeclareMethod("print",&remollGlobalField::PrintAccuracyParameters,"Print the accuracy parameters");
     fGlobalFieldMessenger->DeclareProperty("epsmin",fEpsMin,"Set the minimum epsilon of the field propagator");
@@ -132,19 +132,9 @@ void remollGlobalField::SetEquation()
       fEquation = new G4Mag_UsualEqRhs(this);
       fEquationDoF = 6;
       break;
-    case 1:
-      G4cout << "G4EqMagElectricField is called with 6 dof" << G4endl;
-      fEquation = new G4EqMagElectricField(this);
-      fEquationDoF = 6;
-      break;
     case 2:
       G4cout << "G4Mag_SpinEqRhs is called with 12 dof" << G4endl;
       fEquation = new G4Mag_SpinEqRhs(this);
-      fEquationDoF = 12;
-      break;
-    case 3:
-      G4cout << "G4EqEMFieldWithSpin is called with 12 dof" << G4endl;
-      fEquation = new G4EqEMFieldWithSpin(this);
       fEquationDoF = 12;
       break;
     default: fEquation = 0;
@@ -194,6 +184,7 @@ void remollGlobalField::SetChordFinder()
   if (fChordFinder) delete fChordFinder;
 
   fChordFinder = new G4ChordFinder(this,fMinStep,fStepper);
+  fChordFinder->GetIntegrationDriver()->SetVerboseLevel(0);
   fFieldManager->SetChordFinder(fChordFinder);
 }
 

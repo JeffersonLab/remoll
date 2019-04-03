@@ -1,6 +1,10 @@
 #include "remollTrackingAction.hh"
 
+// remoll includes
+#include "remollUserTrackInformation.hh"
+
 // geant4 includes
+#include "G4Version.hh"
 #include "G4TrackingManager.hh"
 #include "G4OpticalPhoton.hh"
 #include "G4GenericMessenger.hh"
@@ -27,6 +31,15 @@ remollTrackingAction::~remollTrackingAction()
 
 void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 {
+  G4VUserTrackInformation* usertrackinfo = aTrack->GetUserInformation();
+  if (! usertrackinfo) {
+    #if G4VERSION_NUMBER >= 1030
+    aTrack->SetUserInformation(new remollUserTrackInformation());
+    #else
+    const_cast<G4Track*>(aTrack)->SetUserInformation(new remollUserTrackInformation());
+    #endif
+  }
+
   // Track primary electron only
   if (fTrackingFlag == 0) {
     if (aTrack->GetParentID() == 0) {
@@ -61,5 +74,15 @@ void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
   }
 }
 
-void remollTrackingAction::PostUserTrackingAction(const G4Track* /*aTrack*/) { }
-
+void remollTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
+{
+  G4VUserTrackInformation* usertrackinfo = aTrack->GetUserInformation();
+  if (usertrackinfo) {
+    remollUserTrackInformation* remollusertrackinfo =
+        dynamic_cast<remollUserTrackInformation*>(usertrackinfo);
+    if (remollusertrackinfo) {
+      G4StepStatus stepstatus = aTrack->GetStep()->GetPostStepPoint()->GetStepStatus();
+      remollusertrackinfo->SetStepStatus(stepstatus);
+    }
+  }
+}

@@ -1,0 +1,36 @@
+/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+/remoll/physlist/parallel/enable
+
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+/remoll/kryptonite/enable
+
+/remoll/SD/disable_range 7000 10000
+
+# Beam current
+/remoll/beamcurr 85 microampere
+
+# Target position
+/remoll/targpos 0 cm
+/remoll/targlen 1 mm
+
+# Raster
+/remoll/oldras true
+/remoll/rasx 0 mm
+/remoll/rasy 0 mm
+
+#
+# HepMC files from MG5
+#
+/remoll/evgen/set hepmcAscii
+/generator/hepmcAscii/verbose 0
+/generator/hepmcAscii/open generators/MG5/e-e-/ee_ee_QED/Events/run_21/unweighted_events.hepmc
+/remoll/evgen/sigma 3.54E+08 picobarn
+
+/remoll/filename remollout_ee_ee_hepmc.root
+/run/beamOn 50000

@@ -1,0 +1,28 @@
+#  Example file
+
+/remoll/setgeofile geometry_sculpt_less_hybshld/mollerMother.gdml
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+
+/remoll/gen beam
+
+/remoll/beamcurr 75 microampere
+
+#Enable optical photons and processes
+#/remoll/optical true
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite   false
+
+/remoll/filename dose_output.root
+
+# run for ~4 hours
+/run/beamOn 1000000
+#/run/beamOn 1000
+

@@ -1,0 +1,43 @@
+/remoll/geometry/verbose 1
+/remoll/geometry/setfile geometry/issues/issue172.gdml
+
+/remoll/kryptonite/verbose 1
+/remoll/kryptonite/add G4_Pb
+
+/run/initialize
+
+/remoll/beamene 11 GeV
+/remoll/beamcurr 85 microampere
+
+/remoll/evgen/set beam
+/remoll/evgen/beam/origin 0 0 -0.5 m
+
+
+/remoll/seed 1234
+/remoll/filename issue172_krypt.root
+/remoll/kryptonite/enable
+/run/beamOn 1
+
+
+/remoll/seed 1234
+/remoll/filename issue172_lead.root
+/remoll/kryptonite/disable
+/run/beamOn 1
+
+
+/remoll/seed 1234
+/remoll/filename issue172_lead_all.root
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
+/run/beamOn 1
+
+
+/remoll/seed 1234
+/remoll/filename issue172_userlimits.root
+/remoll/geometry/userlimits/usermaxallowedstep krypt_logical 0.0*mm
+/remoll/geometry/userlimits/usermaxtracklength krypt_logical 0.0*mm
+/remoll/geometry/userlimits/usermaxtime krypt_logical 0.0*ns
+/remoll/geometry/userlimits/userminekine krypt_logical 1000*GeV
+/remoll/geometry/userlimits/userminrange krypt_logical 1000*km
+/tracking/verbose 0
+/run/beamOn 1

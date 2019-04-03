@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
   
 <!DOCTYPE gdml [
-<!ENTITY materials SYSTEM "materials.xml">
+  <!ENTITY matrices SYSTEM "matrices.xml">
+  <!ENTITY materials SYSTEM "materials.xml">
 ]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
   <define>
+    &matrices;
+
     <!-- Commonly adjusted parameters -->
     <!-- Units are in cm, and are NOT half-lengths -->
     <constant name="i2cm" value="2.54"/>
@@ -71,8 +76,8 @@
 
     <constant name="thick_floor" value="50.0"/>
     <constant name="width_floor" value="2000.0"/>
-    <constant name="length_floor" value="(center_wall+thick_wall/2-(prex_target_center-deltaz_sc-outer_r_sc))"/>
-    <constant name="floor_z_center" value="length_floor/2+(prex_target_center-deltaz_sc-outer_r_sc)"/>
+    <!-- <constant name="length_floor" value="(center_wall+thick_wall/2-(prex_target_center-deltaz_sc-outer_r_sc))"/> -->
+    <!-- <constant name="floor_z_center" value="length_floor/2+(prex_target_center-deltaz_sc-outer_r_sc)"/> -->
     <constant name="floor_y_center" value="(-height_wall-thick_floor)/2"/>
 
     <constant name="width_dump" value="600.0"/>
@@ -120,7 +125,7 @@
     <constant name="dumpExt_length" value="1335.0875 - 450.0 + 135.0 - 20.0"/>
     <constant name="dumpExt_offset" value="0"/>
     <constant name="dumpExt_center_z" value="hall_cylwall_radius - dumpExt_length/2 - dumpExt_offset"/>
-    <position unit="cm" name="dumpExt_trans" x="0" y="0" z="tempdet_center_z - hall_cylwall_radius + dumpExt_length/2 + dumpExt_offset"/> 
+    <!-- <position unit="cm" name="dumpExt_trans" x="0" y="0" z="tempdet_center_z - hall_cylwall_radius + dumpExt_length/2 + dumpExt_offset"/> -->
 
     <!-- Dump --> 
 
@@ -250,7 +255,7 @@
     <position unit="cm" name="targ_center" x="0" y="0" z="center_targ"/>
     <position unit="cm" name="crex_targ_center" x="0" y="0" z="crex_target_center"/>
 
-    <position unit="cm" name="tempdet_position" x="0" y="0" z="tempdet_center_z"/>
+    <!-- <position unit="cm" name="tempdet_position" x="0" y="0" z="tempdet_center_z"/> -->
     <position unit="cm" name="hall_top_center" x="0" y="hall_top_center_y" z="0"/>
     <position unit="cm" name="hall_cylwall_center" x="0" y="hall_cylwall_center_y" z="0"/>
     <position unit="cm" name="hall_floor_center" x="0" y="hall_floor_center_y" z="0"/>
@@ -324,11 +329,13 @@
 
     <tube aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="dumpExt_1" rmin="dumpExt_r_min" rmax="dumpExt_r_max" z="dumpExt_length"/>
 
+    <!--
     <subtraction name ="dumpExt_solid">
       <first ref="dumpExt_1"/>
       <second ref="tempdet_solid"/>
       <positionref ref="dumpExt_trans"/>
     </subtraction>
+    -->
 
   <!-- Dump Enclosure -->
 
@@ -474,7 +481,7 @@
     
     <!-- Water Tank Dump (should have rounded tank ends, but using cylinder for now) -->
 
-    <tube name="tubeDumpWaterTank" 
+    <tube name="tubeDumpWaterTank_solid" 
           aunit="deg" startphi="0" deltaphi="360" 
           lunit="cm" rmin="dumpWaterTank_r" rmax="dumpWaterTank_r + dumpWaterTank_thickness"
           z="dumpWaterTank_length + 2*dumpWaterTank_thickness"/>
@@ -484,8 +491,8 @@
           lunit="cm" rmin="0.0" rmax="dumpWaterTank_r"
           z="dumpWaterTank_length"/>
         
-    <subtraction name="tubeDumpWaterTank_solid">
-      <first ref="tubeDumpWaterTank"/>
+    <subtraction name="tubeDumpWaterTank_subtraction_solid">
+      <first ref="tubeDumpWaterTank_solid"/>
       <second ref="waterDumpWaterTank_solid"/>
       <positionref ref="tubeDumpWaterTank_trans"/>
       <rotationref ref="identity"/>
@@ -519,6 +526,7 @@
       <auxiliary auxtype="DetNo" auxvalue="8"/>
     </volume>
 
+    <!--
     <volume name="dumpExt_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="dumpExt_solid"/>
@@ -526,6 +534,7 @@
       <auxiliary auxtype="SensDet" auxvalue="DumpExt"/>
       <auxiliary auxtype="DetNo" auxvalue="51"/>
     </volume>
+    -->
     
     <volume name="dump_logic">
       <materialref ref="Concrete"/>
@@ -649,7 +658,7 @@
     
     <volume name="tubeDumpWaterTank_logic">
       <materialref ref="Aluminum"/>
-      <solidref ref="tubeDumpWaterTank_solid"/>
+      <solidref ref="tubeDumpWaterTank_subtraction_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Can"/>
       <auxiliary auxtype="DetNo" auxvalue="24"/>
@@ -776,7 +785,15 @@
         <positionref ref="waterDumpWaterTank_center"/>
       </physvol>
 
-      <!-- FIXME This dump configuration was used as a double check against the dump implementation in Ciprian's prexSim for PREXII - and so it leaves out many details and has rough approximations which should all be checked again - it was developed from the engineering files made available in http://hallaweb.jlab.org/parity/prex/beamline/ - it also refers to the CAD documents in the Hall A engineering CAD - a copy of which is available at /work/halla/parity/disk1/CAD_Storage or /mss/halla/parity/moller12gev/CAD_Backups/
+      <!-- FIXME
+           This dump configuration was used as a double check against the dump implementation
+           in Ciprian's prexSim for PREXII - and so it leaves out many details and has rough
+           approximations which should all be checked again - it was developed from the
+           engineering files made available in http://hallaweb.jlab.org/parity/prex/beamline/
+           It also refers to the CAD documents in the Hall A engineering CAD - a copy of which
+           is available at /work/halla/parity/disk1/CAD_Storage or
+           /mss/halla/parity/moller12gev/CAD_Backups/
+       -->
 
     </volume>
   </structure>
