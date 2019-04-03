@@ -56,6 +56,13 @@ class remollMagneticField : public G4MagneticField {
 
 	G4bool IsInit(){ return fInit; }
 
+        G4bool IsInBoundingBox(const G4double* p) const {
+          if (p[2] - fZoffset < fMin[kZ] || p[2] - fZoffset > fMax[kZ]) return false;
+          if (p[0] < -fMax[kR] || p[0] > fMax[kR]) return false;
+          if (p[1] < -fMax[kR] || p[1] > fMax[kR]) return false;
+          return true;
+        }
+
     private:
 	G4String fFilename;
 

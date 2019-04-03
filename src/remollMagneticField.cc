@@ -397,6 +397,8 @@ void remollMagneticField::ReadFieldMap(){
 }
 
 void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfield ) const {
+    // Check the bounding box
+    if (! IsInBoundingBox(Point)) return;
 
     // First we have to translate into polar or cylindric coordinates
     // since the field maps are given in cylindric coordinates and the 
