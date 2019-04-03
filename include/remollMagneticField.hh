@@ -40,14 +40,14 @@ class remollMagneticField : public G4MagneticField {
 	remollMagneticField( G4String );
 	virtual ~remollMagneticField();
 
-	void GetFieldValue( const   G4double Point[4], G4double *Bfield ) const;  
+	void GetFieldValue(const G4double Point[4], G4double *Bfield) const;
 
 	void InitializeGrid();
 	void ReadFieldMap();
 
 	void SetFieldScale(G4double s);
 	void SetMagnetCurrent(G4double s);
-	    				
+
 	void SetZoffset(G4double z){ fZoffset= z; }
 
 	G4String GetName();
