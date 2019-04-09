@@ -33,13 +33,11 @@
 
 #define __GLOBAL_NDIM 3
 
-G4ThreadLocal remollGlobalField* remollGlobalField::fObject = 0;
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollGlobalFieldMutex = G4MUTEX_INITIALIZER; }
 
-remollGlobalField* remollGlobalField::GetObject()
-{
-  if (!fObject) new remollGlobalField();
-  return fObject;
-}
+std::vector<remollMagneticField*> remollGlobalField::fFields;
 
 remollGlobalField::remollGlobalField()
 // NOTE: when changing defaults below, also change guidance in messenger commands
@@ -51,9 +49,6 @@ remollGlobalField::remollGlobalField()
   fFieldManager(0),fFieldPropagator(0),
   fStepper(0),fChordFinder(0)
 {
-    // Set static pointer
-    fObject = this;
-
     // Get field propagator and managers
     G4TransportationManager* transportationmanager = G4TransportationManager::GetTransportationManager();
     fFieldPropagator = transportationmanager->GetPropagatorInField();
@@ -191,65 +186,58 @@ void remollGlobalField::SetChordFinder()
 
 void remollGlobalField::AddNewField(G4String& name)
 {
-    remollMagneticField *thisfield = new remollMagneticField(name);
+  // Lock mutex to ensure only 1 thread is loading a field
+  G4AutoLock lock(&remollGlobalFieldMutex);
 
-    if (thisfield->IsInit()) {
-        fFields.push_back(thisfield);
+  // If this field has already been loaded
+  if (GetFieldByName(name) != 0) return;
+  
+  // Load new field
+  remollMagneticField *thisfield = new remollMagneticField(name);
+  if (thisfield->IsInit()) {
+    fFields.push_back(thisfield);
 
-        // I don't know why it's necessary to do the following - SPR 1/24/13
-        // Recreating the chord finder makes stepping bearable
-        // in cases where you change the geometry.
-        G4TransportationManager::GetTransportationManager()->GetFieldManager()->CreateChordFinder(this);
+    G4cout << __FUNCTION__ << ": field " << name << " was added." << G4endl;
 
-        G4cout << __FUNCTION__ << ": field " << name << " was added." << G4endl;
+    // Add file data to output data stream
 
-        // Add file data to output data stream
+    remollRunData *rd = remollRun::GetRunData();
 
-        remollRunData *rd = remollRun::GetRunData();
+    // FIXME disabled TMD5 functionality as long as CentOS 7.2 is common
+    // due to kernel bug when running singularity containers
 
-        // FIXME disabled TMD5 functionality as long as CentOS 7.2 is common
-        // due to kernel bug when running singularity containers
+    //TMD5 *md5 = TMD5::FileChecksum(name.data());
 
-        //TMD5 *md5 = TMD5::FileChecksum(name.data());
+    filedata_t fdata;
 
-        filedata_t fdata;
+    strcpy(fdata.filename, name.data());
+    strcpy(fdata.hashsum, "no hash" ); // md5->AsString() );
 
-        strcpy(fdata.filename, name.data());
-        strcpy(fdata.hashsum, "no hash" ); // md5->AsString() );
+    //G4cout << "MD5 checksum " << md5->AsString() << G4endl;
 
-        //G4cout << "MD5 checksum " << md5->AsString() << G4endl;
+    //delete md5;
 
-        //delete md5;
+    struct stat fs;
+    stat(name.data(), &fs);
+    fdata.timestamp = TTimeStamp( fs.st_mtime );
 
-        struct stat fs;
-        stat(name.data(), &fs);
-        fdata.timestamp = TTimeStamp( fs.st_mtime );
+    G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
 
-        G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
+    rd->AddMagData(fdata);
 
-        rd->AddMagData(fdata);
-
-    } else {
-        G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-            << ": field " << name << " was not initialized." << G4endl;
-    }
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " was not initialized." << G4endl;
+  }
 }
 
-remollMagneticField* remollGlobalField::GetFieldByName(const G4String& name)
+remollMagneticField* remollGlobalField::GetFieldByName(const G4String& name) const
 {
-    std::vector<remollMagneticField*>::iterator it = fFields.begin();
-    while (it != fFields.end()) {
-        if ((*it)->GetName() == name) break;
-        it++;
-    }
+    for (auto it = fFields.begin(); it != fFields.end(); it++)
+        if ((*it)->GetName() == name)
+          return (*it);
 
-    if (it != fFields.end()) {
-        return (*it);
-    } else {
-        G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-            << ": field " << name << " not found." << G4endl;
-        return NULL;
-    }
+    return 0;
 }
 
 void remollGlobalField::PrintFieldValue(const G4ThreeVector& r)
@@ -299,13 +287,14 @@ void remollGlobalField::SetFieldScaleByString(G4String& name_scale)
 
 void remollGlobalField::SetFieldScale(const G4String& name, G4double scale)
 {
-    remollMagneticField *field = GetFieldByName(name);
-    if (field) {
-        field->SetFieldScale(scale);
-    } else {
-        G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-            << ": field " << name << " scaling failed" << G4endl;
-    }
+  remollMagneticField *field = GetFieldByName(name);
+  if (field) {
+    G4AutoLock lock(&remollGlobalFieldMutex);
+    field->SetFieldScale(scale);
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " scaling failed" << G4endl;
+  }
 }
 
 void remollGlobalField::SetMagnetCurrentByString(G4String& name_scale)
@@ -329,11 +318,12 @@ void remollGlobalField::SetMagnetCurrentByString(G4String& name_scale)
 
 void remollGlobalField::SetMagnetCurrent(const G4String& name, G4double scale)
 {
-    remollMagneticField *field = GetFieldByName(name);
-    if (field) {
-        field->SetMagnetCurrent(scale);
-    } else {
-        G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-            << ": field " << name << " scaling failed" << G4endl;
-    }
+  remollMagneticField *field = GetFieldByName(name);
+  if (field) {
+    G4AutoLock lock(&remollGlobalFieldMutex);
+    field->SetMagnetCurrent(scale);
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " scaling failed" << G4endl;
+  }
 }
