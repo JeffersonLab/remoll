@@ -29,9 +29,7 @@ remollMagneticField::remollMagneticField( G4String filename ){
 
     fFilename = filename;
 
-    /*!  Initialize grid variables
-     */
-
+    // Initialize grid variables
     for( int cidx = kR; cidx < kZ; cidx++ ){
 	fN[cidx] = -1;
 	fMin[cidx] = -1e9;
