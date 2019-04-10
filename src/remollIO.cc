@@ -202,18 +202,33 @@ void remollIO::GrabGDMLFiles(G4String fn)
 {
     // Reset list
     fGDMLFileNames.clear();
+    fXMLFileNames.clear();
 
     remollRunData *rundata = remollRun::GetRunData();
 
     SearchGDMLforFiles(fn);
 
+    // Resolve relative path location/..
+    for(unsigned int idx = 0; idx < fXMLFileNames.size(); idx++ ){
+      size_t pos = std::string::npos;
+      while ((pos = fXMLFileNames[idx].find("/..")) != std::string::npos) {
+        auto begin = fXMLFileNames[idx].begin();
+        fXMLFileNames[idx].erase(begin + fXMLFileNames[idx].find_last_of("/", pos - 1), begin + pos + 3);
+      }
+    }
 
-    // Store filename
+    // Remove non-unique XML filenames
+    std::sort(fXMLFileNames.begin(), fXMLFileNames.end());
+    fXMLFileNames.erase(std::unique(fXMLFileNames.begin(), fXMLFileNames.end()), fXMLFileNames.end());
 
-    // Copy into buffers
+    // Store filename and copy content into buffers
     for(unsigned int idx = 0; idx < fGDMLFileNames.size(); idx++ ){
         G4cout << "Found GDML file " << fGDMLFileNames[idx] << G4endl;
         rundata->AddGDMLFile(fGDMLFileNames[idx]);
+    }
+    for(unsigned int idx = 0; idx < fXMLFileNames.size(); idx++ ){
+        G4cout << "Found XML file " << fXMLFileNames[idx] << G4endl;
+        rundata->AddGDMLFile(fXMLFileNames[idx]);
     }
 }
 
@@ -241,9 +256,12 @@ void remollIO::SearchGDMLforFiles(G4String fn)
     // Get document
     xercesc::DOMDocument* xmlDoc = xmlParser->getDocument();
     const XMLCh* docURI = xmlDoc->getDocumentURI();
-    char* str_docURI = xercesc::XMLString::transcode(docURI);
-    G4cout << "docURI: " << str_docURI << G4endl;
-    xercesc::XMLString::release(&str_docURI);
+    char* cstr_docURI = xercesc::XMLString::transcode(docURI);
+    G4String str_docURI(cstr_docURI);
+    xercesc::XMLString::release(&cstr_docURI);
+    // remove filename at end, and file:// at start of URI
+    str_docURI.erase(str_docURI.find_last_of('/') + 1);
+    str_docURI.erase(str_docURI.begin(), str_docURI.begin() + str_docURI.find_first_of(':') + 3);
 
     // Get doctype and entities
     xercesc::DOMDocumentType* xmlDocType = xmlDoc->getDoctype();
@@ -255,10 +273,12 @@ void remollIO::SearchGDMLforFiles(G4String fn)
                 if (currentNode->getNodeType() == xercesc::DOMNode::ENTITY_NODE) { // is entity
                     xercesc::DOMEntity* currentEntity
                       = dynamic_cast< xercesc::DOMEntity* >( currentNode );
-                    const XMLCh* systemID = currentEntity->getSystemId();
-                    char* str_systemID = xercesc::XMLString::transcode(systemID);
-                    G4cout << "entity: " << str_systemID << G4endl;
-                    xercesc::XMLString::release(&str_systemID);
+                    const XMLCh* systemId = currentEntity->getSystemId();
+                    char* cstr_systemId = xercesc::XMLString::transcode(systemId);
+                    G4String str_systemId(cstr_systemId);
+                    xercesc::XMLString::release(&cstr_systemId);
+                    // Add this xml file to list to save
+                    fXMLFileNames.push_back(str_docURI + str_systemId);
                 }
             }
         }
