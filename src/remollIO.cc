@@ -22,6 +22,7 @@
 #include <xercesc/dom/DOMEntityReference.hpp>
 #include <xercesc/dom/DOMEntity.hpp>
 #include <xercesc/dom/DOMElement.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 
@@ -235,9 +236,31 @@ void remollIO::SearchGDMLforFiles(G4String fn)
     xercesc::XMLPlatformUtils::Initialize();
 
     xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser();
-    const xercesc::EntityResolver *xmlParser->getEntityResolver();
     xmlParser->parse(fn.data());
+
+    // Get document
     xercesc::DOMDocument* xmlDoc = xmlParser->getDocument();
+    const XMLCh* docURI = xmlDoc->getDocumentURI();
+    char* str_docURI = xercesc::XMLString::transcode(docURI);
+    G4cout << "docURI: " << str_docURI << G4endl;
+    xercesc::XMLString::release(&str_docURI);
+
+    // Get doctype and entities
+    xercesc::DOMDocumentType* xmlDocType = xmlDoc->getDoctype();
+    xercesc::DOMNamedNodeMap* xmlNamedNodeMap = xmlDocType->getEntities();
+    for (XMLSize_t xx = 0; xx < xmlNamedNodeMap->getLength(); ++xx ){
+        xercesc::DOMNode* currentNode = xmlNamedNodeMap->item(xx);
+        if (currentNode->getNodeType() == xercesc::DOMNode::ENTITY_NODE) { // is entity
+            xercesc::DOMEntity* currentEntity
+              = dynamic_cast< xercesc::DOMEntity* >( currentNode );
+            const XMLCh* systemID = currentEntity->getSystemId();
+            char* str_systemID = xercesc::XMLString::transcode(systemID);
+            G4cout << "entity: " << str_systemID << G4endl;
+            xercesc::XMLString::release(&str_systemID);
+        }
+    }
+
+    // Get root element
     xercesc::DOMElement* elementRoot = xmlDoc->getDocumentElement();
 
     TraverseChildren( elementRoot );
@@ -255,29 +278,6 @@ void remollIO::TraverseChildren( xercesc::DOMElement *thisel )
     for( XMLSize_t xx = 0; xx < nodeCount; ++xx ){
         xercesc::DOMNode* currentNode = children->item(xx);
         if( currentNode->getNodeType() ){   // true is not NULL
-
-            G4cout << currentNode->getNodeType() << G4endl;
-            const XMLCh* text = currentNode->getNodeName();
-            char* str_text = xercesc::XMLString::transcode(text);
-            G4cout << "node: " << str_text << G4endl;
-            xercesc::XMLString::release(&str_text);
-
-            if (currentNode->getNodeType() == xercesc::DOMNode::ENTITY_REFERENCE_NODE) { // is entity
-                xercesc::DOMEntityReference* currentEntityReference
-                  = dynamic_cast< xercesc::DOMEntityReference* >( currentNode );
-                const XMLCh* text = currentEntityReference->getNodeName();
-                char* str_text = xercesc::XMLString::transcode(text);
-                G4cout << "entity reference: " << str_text << G4endl;
-                xercesc::XMLString::release(&str_text);
-
-                xercesc::DOMNode* childNode = currentEntityReference->getFirstChild();
-                if( childNode ){
-                    const XMLCh* text = childNode->getNodeValue();
-                    char* str_text = xercesc::XMLString::transcode(text);
-                    G4cout << "child: " << str_text << G4endl;
-                    xercesc::XMLString::release(&str_text);
-                }
-            }
 
             if (currentNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE) { // is element
                 xercesc::DOMElement* currentElement
