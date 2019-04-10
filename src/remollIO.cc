@@ -14,6 +14,7 @@
 #include "remollRunData.hh"
 #include "remollBeamTarget.hh"
 
+#include <sys/param.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
@@ -208,12 +209,18 @@ void remollIO::GrabGDMLFiles(G4String fn)
 
     SearchGDMLforFiles(fn);
 
-    // Resolve relative path location/..
+    // Resolve relative path, turn daughter/../ into nothing
     for(unsigned int idx = 0; idx < fXMLFileNames.size(); idx++ ){
       size_t pos = std::string::npos;
-      while ((pos = fXMLFileNames[idx].find("/..")) != std::string::npos) {
+      // as long as there is a ../ keep replacing
+      while ((pos = fXMLFileNames[idx].find("/../")) != std::string::npos) {
         auto begin = fXMLFileNames[idx].begin();
-        fXMLFileNames[idx].erase(begin + fXMLFileNames[idx].find_last_of("/", pos - 1), begin + pos + 3);
+        // find last / before /../, cut from character after that /
+        size_t parent = fXMLFileNames[idx].find_last_of("/", pos - 1) + 1;
+        // if not found, we have daughter/../file.xml, so cut from 0
+        if (parent == std::string::npos) parent = 0;
+        // cut until 4 characters after start of /../
+        fXMLFileNames[idx].erase(begin + parent, begin + pos + 4);
       }
     }
 
@@ -259,9 +266,15 @@ void remollIO::SearchGDMLforFiles(G4String fn)
     char* cstr_docURI = xercesc::XMLString::transcode(docURI);
     G4String str_docURI(cstr_docURI);
     xercesc::XMLString::release(&cstr_docURI);
-    // remove filename at end, and file:// at start of URI
-    str_docURI.erase(str_docURI.find_last_of('/') + 1);
+    // remove file:// at begin of URI
     str_docURI.erase(str_docURI.begin(), str_docURI.begin() + str_docURI.find_first_of(':') + 3);
+    // remove filename at end
+    str_docURI.erase(str_docURI.find_last_of('/') + 1);
+    // remove cwd at begin
+    char cwd[MAXPATHLEN];
+    if (getcwd(cwd,MAXPATHLEN) && str_docURI.find(cwd) == 0) {
+      str_docURI.erase(0, strlen(cwd) + 1);
+    }
 
     // Get doctype and entities
     xercesc::DOMDocumentType* xmlDocType = xmlDoc->getDoctype();
