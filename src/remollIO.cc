@@ -247,16 +247,20 @@ void remollIO::SearchGDMLforFiles(G4String fn)
 
     // Get doctype and entities
     xercesc::DOMDocumentType* xmlDocType = xmlDoc->getDoctype();
-    xercesc::DOMNamedNodeMap* xmlNamedNodeMap = xmlDocType->getEntities();
-    for (XMLSize_t xx = 0; xx < xmlNamedNodeMap->getLength(); ++xx ){
-        xercesc::DOMNode* currentNode = xmlNamedNodeMap->item(xx);
-        if (currentNode->getNodeType() == xercesc::DOMNode::ENTITY_NODE) { // is entity
-            xercesc::DOMEntity* currentEntity
-              = dynamic_cast< xercesc::DOMEntity* >( currentNode );
-            const XMLCh* systemID = currentEntity->getSystemId();
-            char* str_systemID = xercesc::XMLString::transcode(systemID);
-            G4cout << "entity: " << str_systemID << G4endl;
-            xercesc::XMLString::release(&str_systemID);
+    if (xmlDocType) {
+        xercesc::DOMNamedNodeMap* xmlNamedNodeMap = xmlDocType->getEntities();
+        if (xmlNamedNodeMap) {
+            for (XMLSize_t xx = 0; xx < xmlNamedNodeMap->getLength(); ++xx) {
+                xercesc::DOMNode* currentNode = xmlNamedNodeMap->item(xx);
+                if (currentNode->getNodeType() == xercesc::DOMNode::ENTITY_NODE) { // is entity
+                    xercesc::DOMEntity* currentEntity
+                      = dynamic_cast< xercesc::DOMEntity* >( currentNode );
+                    const XMLCh* systemID = currentEntity->getSystemId();
+                    char* str_systemID = xercesc::XMLString::transcode(systemID);
+                    G4cout << "entity: " << str_systemID << G4endl;
+                    xercesc::XMLString::release(&str_systemID);
+                }
+            }
         }
     }
 
