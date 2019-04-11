@@ -31,6 +31,8 @@
 <position name="detectorCenter" x="0" y="0" z="28500." unit="mm"/>
 <!-- Virtual planes in the parallel world -->
 <position name="mainDetectorVirtualPlane_pos" z="28.500" unit="m"/>
+<position name="mainDetectorVirtualPlane1_pos" z="27.000" unit="m"/>
+<position name="mainDetectorVirtualPlane2_pos" z="26.000" unit="m"/>
 
 <!-- Z position of the plane about which the two arrays of showermax
 detectors are placed -->

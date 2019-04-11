@@ -41,6 +41,20 @@
     <auxiliary auxtype="DetNo" auxvalue="28"/>
   </volume>
 
+  <volume name="mainDetectorVirtualPlane1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="27"/>
+  </volume>
+
+  <volume name="mainDetectorVirtualPlane2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="26"/>
+  </volume>
+
   <volume name="trackingDetectorVirtualPlanes_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingDetectorVirtualPlanes_solid"/>
@@ -74,9 +88,14 @@
       <positionref ref="trackingDetectorVirtualPlaneCenter_pos"/>
     </physvol>
 
-    <physvol name="mainDetectorVirtualPlane_phys">
-      <volumeref ref="mainDetectorVirtualPlane_log"/>
-      <positionref ref="mainDetectorVirtualPlane_pos"/>
+    <physvol name="mainDetectorVirtualPlane1_phys">
+      <volumeref ref="mainDetectorVirtualPlane1_log"/>
+      <positionref ref="mainDetectorVirtualPlane1_pos"/>
+    </physvol>
+
+    <physvol name="mainDetectorVirtualPlane2_phys">
+      <volumeref ref="mainDetectorVirtualPlane2_log"/>
+      <positionref ref="mainDetectorVirtualPlane2_pos"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
