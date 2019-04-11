@@ -10,6 +10,7 @@
 <define>
   &matrices;
 
+  <constant name="targetCenterZ" value="500"/>
   <constant name="tubeTarget_rmax" value="40"/>
   <constant name="tubeTarget_length" value="1250"/>
   <constant name="AlWindowTarget_length" value="0.127"/>
@@ -308,17 +309,17 @@
 
       <physvol>
         <volumeref ref="USAlTarg"/>
-        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-(AlWindowTarget_length+tubeTarget_length)/2.0"/>
+        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="targetCenterZ-(AlWindowTarget_length+tubeTarget_length)/2.0"/>
       </physvol>
 
       <physvol>
         <volumeref ref="h2Targ"/>
-        <position name="targ_center1" unit="mm" x="0" y="0" z="0"/>
+        <position name="targ_center1" unit="mm" x="0" y="0" z="targetCenterZ"/>
       </physvol>
 
       <physvol>
         <volumeref ref="DSAlTarg"/>
-        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="+(AlWindowTarget_length+tubeTarget_length)/2.0"/>
+        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="targetCenterZ+(AlWindowTarget_length+tubeTarget_length)/2.0"/>
       </physvol>
 
       <!--Shown below are initial target shielding cylinder - Rakitha  -->
