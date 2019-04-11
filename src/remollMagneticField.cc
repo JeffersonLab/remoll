@@ -29,9 +29,7 @@ remollMagneticField::remollMagneticField( G4String filename ){
 
     fFilename = filename;
 
-    /*!  Initialize grid variables
-     */
-
+    // Initialize grid variables
     for( int cidx = kR; cidx < kZ; cidx++ ){
 	fN[cidx] = -1;
 	fMin[cidx] = -1e9;
@@ -219,8 +217,8 @@ void remollMagneticField::ReadFieldMap(){
     // Sanity check on header data
 
     if( !( fMin[kR] >= 0.0 && fMin[kR] < fMax[kR] &&
-	   -180.0 <= fMin[kPhi] && fMin[kPhi] < 180.0 && 
-	   -180.0 <= fMax[kPhi] && fMax[kPhi] < 180.0 && 
+	   -180.0 <= fMin[kPhi] && fMin[kPhi] <= 180.0 &&
+	   -180.0 <= fMax[kPhi] && fMax[kPhi] <= 180.0 &&
 	   fMin[kPhi]  < fMax[kPhi] &&
 	   fMin[kZ] < fMax[kZ] &&
 	   fN[kR] > 0 && fN[kPhi] > 0 && fN[kZ] > 0 &&
@@ -276,7 +274,6 @@ void remollMagneticField::ReadFieldMap(){
 
     ///////////////////////////////////
 
-
     if( !( fMin[kPhi] >= -pi && fMin[kPhi] <= pi ) ){
 	G4cerr << "Error " << __FILE__ << " line " << __LINE__ 
 	    << ": File " << fFilename << " header contains invalid phi range.  Aborting" << G4endl;
@@ -284,8 +281,16 @@ void remollMagneticField::ReadFieldMap(){
     }
 
     if( fabs( fabs((mapphirange - fxtantSize)/mapphirange)) > 0.03 ){
-	G4cerr << "Warning " << __FILE__ << " line " << __LINE__ 
-	    << ": File " << fFilename << " header contains too narrow phi range for given xtants." << G4endl <<  "Warning:   Proceeding assuming null field in non-described regions" << G4endl << (fMax[kPhi] - fMin[kPhi])/degree << " deg range < " <<  fxtantSize/degree << " deg xtant" << G4endl;
+	G4cerr << "Warning " << __FILE__ << " line " << __LINE__ << G4endl
+	    << "File " << fFilename << " header contains too narrow phi range for given xtants." << G4endl
+            << "Warning:   Proceeding assuming null field in non-described regions" << G4endl
+            << (fMax[kPhi] - fMin[kPhi])/degree << " deg range < " <<  fxtantSize/degree << " deg xtant" << G4endl;
+    }
+
+    if( fabs(fabs(mapphirange - fxtantSize) / (mapphirange/fN[kPhi]) - 1) < 0.03 ){
+	G4cerr << "Warning " << __FILE__ << " line " << __LINE__ << G4endl
+	    << "File " << fFilename << " header contains a gap in the phi range which seems" << G4endl
+            << "to correspond perfectly with a slice in phi. This will result in a gap in coverage." << G4endl;
     }
 
 
@@ -389,94 +394,108 @@ void remollMagneticField::ReadFieldMap(){
 
 }
 
-void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfield ) const {
+void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfield ) const
+{
+    // Check the bounding box
+    if (! IsInBoundingBox(Point)) return;
 
     // First we have to translate into polar or cylindric coordinates
-    // since the field maps are given in cylindric coordinates and the 
+    // since the field maps are given in cylindric coordinates and the
     // interpolation will be done in cylindric coordinates as well.
 
     // Then we need to translate to cartesian components to give them
     // back to the field manager
 
-    G4double r, phi, z, dxtant;
-    G4double   x[__NDIM], didx[__NDIM];
-    G4int    idx[__NDIM], xtant;
-    G4double dphi, lphi; 
+    // 1. First calculate r and z
+    G4double r = sqrt(Point[0]*Point[0] + Point[1]*Point[1]);
+    G4double z = Point[2] - fZoffset;
 
-    phi = atan2(Point[1],Point[0]);
-    r   = sqrt(Point[0]*Point[0] + Point[1]*Point[1]);
-    z   = Point[2] - fZoffset;
-
-    if( std::isnan(phi) || std::isinf(phi) ||
-	    std::isnan(r) || std::isinf(r) ||
-	    std::isnan(z) || std::isinf(z) ){
+    // Check that the point is a valid number
+    if( std::isnan(r) || std::isinf(r) ||
+	std::isnan(z) || std::isinf(z) ){
 
 	G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR bad conversion to cylindrical coordinates" << G4endl;
 	G4cerr << "Point  ( " << Point[0]/m << ", " << Point[1]/m << ", " << Point[2]/m << " ) m" << G4endl;
 
 	exit(1);
     }
-	
+
+    // Check that the point is within the defined region
+    if( r > fMax[kR] || r < fMin[kR] ||
+	z > fMax[kZ] || z < fMin[kZ] ){
+	return;
+    }
+
+    // Ensure we're going to get our grid indices correct
+    assert( fMin[kR] <= r && r <= fMax[kR] );
+    assert( fMin[kZ] <= z && z <= fMax[kZ] );
+
+    // 2. Next calculate phi (slower)
+    G4double phi = atan2(Point[1],Point[0]);
+
+    // Check that the point is a valid number
+    if( std::isnan(phi) || std::isinf(phi) ){
+
+	G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR bad conversion to cylindrical coordinates" << G4endl;
+	G4cerr << "Point  ( " << Point[0]/m << ", " << Point[1]/m << ", " << Point[2]/m << " ) m" << G4endl;
+
+	exit(1);
+    }
 
     // Get xtant number and fraction into xtant
-    dphi = 
-	phi - fPhiLow >= 0.0 ? modf( (phi - fPhiLow)/fxtantSize, &dxtant ) : 
-	modf( ( (2.0*pi + phi) - fPhiLow)/fxtantSize, &dxtant ); // Wrap around
+    G4double dxtant;
+    G4double dphi =
+	phi - fPhiLow >= 0.0 ?
+		modf( (  phi           - fPhiLow)/fxtantSize, &dxtant ):
+		modf( ( (2.0*pi + phi) - fPhiLow)/fxtantSize, &dxtant ); // Wrap around
 
-    xtant = (G4int) dxtant;
+    G4int xtant = (G4int) dxtant;
 
     // Local phi (in file coordinates)
-    lphi = dphi*fxtantSize + fPhiLow - fPhiMapOffset;
+    G4double lphi = dphi*fxtantSize + fPhiLow - fPhiMapOffset;
     if( lphi < -pi ){ lphi += 2.0*pi; }
     if( lphi >  pi ){ lphi -= 2.0*pi; }
 
     if( !( xtant >= 0 && xtant < fNxtant ) ){
-	G4cerr << "Error:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":" << G4endl << "  xtant calculation failed. xtant " <<  xtant << " ( " << dxtant << " )  found where " << fNxtant << " is specified.  phi = " << phi/deg << " deg" << G4endl;
+
+	G4cerr << "Error:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ":" << G4endl
+               << "  xtant calculation failed. xtant " <<  xtant << " ( " << dxtant << " )  found where "
+               << fNxtant << " is specified.  phi = " << phi/deg << " deg" << G4endl;
+
 	exit(1);
     }
 
     // Check that the point is within the defined region
     // before interpolation.  If it is outside, the field is zero
-
-    if( r >= fMax[kR] || r < fMin[kR] ||
-	    lphi >= fFileMax[kPhi] || lphi < fFileMin[kPhi] ||
-	    z    >= fMax[kZ]   || z    < fMin[kZ] ) {
-
-	Bfield[0] = 0.0;
-	Bfield[1] = 0.0;
-	Bfield[2] = 0.0;
-
+    if( lphi > fFileMax[kPhi] || lphi < fFileMin[kPhi] ){
 	return;
     }
 
     // Ensure we're going to get our grid indices correct
-    assert( fMin[kR]   <= r    &&    r < fMax[kR] );
-    assert( fFileMin[kPhi] <= lphi && lphi < fFileMax[kPhi] );
-    assert( fMin[kZ]   <= z    &&    z < fMax[kZ] );
+    assert( fFileMin[kPhi] <= lphi && lphi <= fFileMax[kPhi] );
 
-    int cidx;
 
-    // Get interoplation variables
+    // 3. Get interoplation variables
     // the N-1 here is fencepost problem
+    G4double x[__NDIM] = {0};
+    G4double didx[__NDIM] = {0};
     x[kR]   = modf( ( r - fMin[kR] )*(fN[kR]-1)/( fMax[kR] - fMin[kR] ),            &(didx[kR])   );
     x[kPhi] = modf( ( lphi - fFileMin[kPhi] )*(fN[kPhi]-1)/( fFileMax[kPhi] - fFileMin[kPhi] ), &(didx[kPhi]) );
     x[kZ]   = modf( ( z - fMin[kZ] )*(fN[kZ]-1)/( fMax[kZ] - fMin[kZ] ),            &(didx[kZ])   );
 
     // Cast these to integers for indexing and check
-    for( cidx = 0; cidx < __NDIM; cidx++ ){ idx[cidx] = (G4int) didx[cidx]; }
+    G4int idx[__NDIM] = {0};
+    for(int cidx = 0; cidx < __NDIM; cidx++ ){ idx[cidx] = (G4int) didx[cidx]; }
 
     assert( 0 <= idx[kR]   && idx[kR]   < fN[kR] );
     assert( 0 <= idx[kPhi] && idx[kPhi] < fN[kPhi] );
     assert( 0 <= idx[kZ]   && idx[kZ]   < fN[kZ] );
 
     // Interpolate
-    for( cidx = 0; cidx < __NDIM; cidx++ ){ idx[cidx] = (G4int) didx[cidx]; }
+    G4double Bint[__NDIM] = {0};
+    for(int cidx = 0; cidx < __NDIM; cidx++ ){
 
-    G4double Bint[__NDIM];
-    G4double c00, c10, c01, c11, c0, c1;
-
-    for( cidx = 0; cidx < __NDIM; cidx++ ){ 
-
+        G4double c00, c10, c01, c11;
 	c00 = fBFieldData[cidx][idx[kR]][idx[kPhi]][idx[kZ]]*(1.0-x[kR])
 	    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]][idx[kZ]]*x[kR];
 	c10 = fBFieldData[cidx][idx[kR]][idx[kPhi]+1][idx[kZ]]*(1.0-x[kR])
@@ -486,6 +505,7 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
 	c11 = fBFieldData[cidx][idx[kR]][idx[kPhi]+1][idx[kZ]+1]*(1.0-x[kR])
 	    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]+1][idx[kZ]+1]*x[kR];
 
+        G4double c0, c1;
 	c0  = c00*(1.0-x[kPhi]) + c10*x[kPhi];
 	c1  = c01*(1.0-x[kPhi]) + c11*x[kPhi];
 
@@ -500,6 +520,6 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     Bfield[0] = Bcart.x()*fFieldScale;
     Bfield[1] = Bcart.y()*fFieldScale;
     Bfield[2] = Bcart.z()*fFieldScale;
-} 
+}
 
 

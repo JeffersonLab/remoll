@@ -48,9 +48,8 @@ remollGenTF1::remollGenTF1()
     fType(),
     fRing(1), fSector(0)
 {
-    G4cerr << "Initializing TF1 generator" << G4endl;
     fApplyMultScatt = true;
-    r_t = CLHEP::RandFlat::shoot(600,1200);
+    r_t = G4RandFlat::shoot(600,1200);
     fZpos = (28.5*m - 0.52*m);
     fThisGenMessenger->DeclarePropertyWithUnit("rmax","mm",fR_max,"Maximum generation radial hit position (mm) for Remoll generator");
     fThisGenMessenger->DeclarePropertyWithUnit("rmin","mm",fR_min,"Minimum generation radial hit position (mm) for Remoll generator");
@@ -64,10 +63,10 @@ remollGenTF1::remollGenTF1()
     fThisGenMessenger->DeclareMethod("sector",&remollGenTF1::SetSector,"Sector number: 1,2,or 3, or 0 for all");
     fThisGenMessenger->DeclareMethod("radOffset",&remollGenTF1::SetRadOffset,"Radial offset to center detectors: boolean");
     fThisGenMessenger->DeclareMethod("ring",&remollGenTF1::SetRing,"Detector ring number (1-6)");
-    SetScatteringType(*new G4String("all"));
+    SetScatteringType("all");
     SetSector(0);
     SetRadOffset(false);
-    SetGenFunctionFile(*new G4String("remollGenFunctions.root:elastic_0"));
+    SetGenFunctionFile("remollGenFunctions.root:elastic_0");
 }
 
 remollGenTF1::~remollGenTF1() {
@@ -91,12 +90,11 @@ void remollGenTF1::SetRing(G4int num){ fRing = num; }
 
 void remollGenTF1::SetRadOffset(G4bool offset){ fBoffsetR = offset; }
 
-void remollGenTF1::SetScatteringType(G4String& input){ fType = input; }
+void remollGenTF1::SetScatteringType(G4String input){ fType = input; }
 
 void remollGenTF1::SetSector(const G4int secnum){ fSector = secnum; }
 
-void remollGenTF1::SetGenFunctionFile(G4String& input) {
-    G4cout << "File name set to " << input << G4endl;
+void remollGenTF1::SetGenFunctionFile(G4String input) {
     if(input == "genDefault"){ //input for generating input files using moller, elastic, and inelastic generators and then performing fits to use as TF1 input
         G4cerr << "Reading generated default output files." << G4endl;
         distAnalysis();
@@ -172,16 +170,16 @@ void remollGenTF1::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 //  zPos = fZ;
 
   // Get initial Remoll energy instead of using other sampling
-  double E = CLHEP::RandFlat::shoot( fE_min, fE_max );
+  double E = G4RandFlat::shoot( fE_min, fE_max );
   double mass = electron_mass_c2;
   double p = sqrt(E*E - mass*mass);
 
   double pX, pY, pZ;
   double randTheta, randDeltaPhi, randPhi;
 
-  randTheta = CLHEP::RandFlat::shoot( fTh_min, fTh_max );
-  randPhi = CLHEP::RandFlat::shoot(fPh_min,fPh_max);
-  randDeltaPhi = CLHEP::RandFlat::shoot(fDeltaPh_min,fDeltaPh_max); // FIXME define min/max angle spread in phi direction
+  randTheta = G4RandFlat::shoot( fTh_min, fTh_max );
+  randPhi = G4RandFlat::shoot(fPh_min,fPh_max);
+  randDeltaPhi = G4RandFlat::shoot(fDeltaPh_min,fDeltaPh_max); // FIXME define min/max angle spread in phi direction
   pX = cos(randPhi)*sin(randTheta)*p + sin(randPhi)*sin(randDeltaPhi)*p;
   pY = sin(randPhi)*sin(randTheta)*p - cos(randPhi)*sin(randDeltaPhi)*p;
   pZ = cos(randDeltaPhi)*cos(randTheta)*p;
@@ -224,7 +222,7 @@ void remollGenTF1::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 double remollGenTF1::RadSpectrum(){
     //generate radius from TF1, radius in millimeters!
     if (fR_max>0.0 && fBoffsetR==true) {
-        double flatRad = CLHEP::RandFlat::shoot(fR_min,fR_max);
+        double flatRad = G4RandFlat::shoot(fR_min,fR_max);
         return flatRad;
     }
   
@@ -232,14 +230,14 @@ double remollGenTF1::RadSpectrum(){
     double r, a, u; 
   //r_t is the previous hit, r is the proposed new hit, a is their relative
   //probabilities, and u is the deciding probability.
-    r = CLHEP::RandGauss::shoot(r_t,100); //generate proposed r with gaussian around previous
+    r = G4RandGauss::shoot(r_t,100); //generate proposed r with gaussian around previous
     
     if (fType == "all" && !fFile){
         a = (fMollerFunc->Eval(r) + fElasticFunc->Eval(r) + fInelasticFunc->Eval(r)) / (fMollerFunc->Eval(r_t) + fElasticFunc->Eval(r_t) + fInelasticFunc->Eval(r_t));
     }else{
         a = fFunc->Eval(r) / fFunc->Eval(r_t);
     }
-    u = CLHEP::RandFlat::shoot(0.0,1.0);
+    u = G4RandFlat::shoot(0.0,1.0);
     if (u <= a)
         r_t = r;
     return  r_t;
@@ -250,26 +248,26 @@ void remollGenTF1::distAnalysis(){
     //Pulls hit radius data from the root files and puts it into histograms, and then fits 
     //those histograms with parameterized functions that are output into remollGenFunctions.root
     if (fType == "moller" || fType == "all"){
-        G4String* fname = new G4String("remollout_moller.root");
-        getHist(*fname);
-        fitHist(*new G4String("moller"));
+        G4String fname("remollout_moller.root");
+        getHist(fname);
+        fitHist("moller");
         if(fType == "moller")
             fFunc = fMollerFunc;
     }if (fType == "elastic" || fType == "all"){
-        getHist(*new G4String("remollout_elastic.root"));
-        fitHist(*new G4String("elastic"));
+        getHist("remollout_elastic.root");
+        fitHist("elastic");
         if (fType == "elastic")
             fFunc = fElasticFunc;
     }if (fType == "inelastic" || fType == "all"){
-        getHist(*new G4String("remollout_inelastic.root"));
-        fitHist(*new G4String("inelastic"));
+        getHist("remollout_inelastic.root");
+        fitHist("inelastic");
         if (fType == "inelastic")
             fFunc = fInelasticFunc;
     }
 }
 
 
-void remollGenTF1::getHist(G4String& fname){
+void remollGenTF1::getHist(G4String fname){
     G4AutoLock inFileLock(&inFileMutex2);
     
     G4cout << "Opening file " << fname << G4endl;
@@ -347,7 +345,7 @@ void remollGenTF1::getHist(G4String& fname){
     
 }
 
-void remollGenTF1::fitHist(G4String& type){
+void remollGenTF1::fitHist(G4String type){
     TF1* fit;
      
     //fit histograms of all sectors

@@ -11,8 +11,7 @@
 #include "G4Event.hh"
 
 #include "remollVEventGen.hh"
-#include "CLHEP/Random/RandFlat.h"
-#include "CLHEP/Random/RandGauss.h"
+#include "Randomize.hh"
 #include "G4AutoLock.hh"
 
 #include <math.h>
@@ -45,13 +44,13 @@ class remollGenTF1 : public remollVEventGen {
     
     void SetRing(G4int num);
     void SetRadOffset(G4bool offset);
-    void SetGenFunctionFile(G4String& filename);
+    void SetGenFunctionFile(G4String filename);
     void SetSector(int secnum);
-    void SetScatteringType(G4String& input);
+    void SetScatteringType(G4String input);
 
     void distAnalysis();
-    void getHist(G4String& fname);
-    void fitHist(G4String& type);
+    void getHist(G4String fname);
+    void fitHist(G4String type);
     static double elasticFit(double *x, double *par);
     static double inelasticFit(double *x, double *par);
     static double lorentzFit(double *x, double *par);
