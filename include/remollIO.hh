@@ -81,6 +81,7 @@ class remollIO {
         G4String fFilename;
 
 	std::vector<G4String> fGDMLFileNames;
+	std::vector<G4String> fXMLFileNames;
 
 	void SearchGDMLforFiles(G4String );
 	void TraverseChildren(  xercesc::DOMElement * );
