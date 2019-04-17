@@ -53,6 +53,9 @@ log
 .cproject
 .project
 
+#ignore build type file
+.buildtype
+
 #ignore dot files
 *.dot
 

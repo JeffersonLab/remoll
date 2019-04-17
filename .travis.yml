@@ -16,6 +16,8 @@ script:
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.pdf.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.root.tar.gz" . ;
+    docker exec $(docker ps -l -q) scripts/tests/watermark.sh rootfiles/tests/${suite}/analysis ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/rootfiles_tests_${suite}_analysis.pdf" . ;
     docker stop $(docker ps -l -q) ;
   done
 
@@ -40,11 +42,13 @@ deploy:
   - remolltest.commit.analysis.log.tar.gz
   - remolltest.commit.analysis.pdf.tar.gz
   - remolltest.commit.analysis.root.tar.gz
+  - rootfiles_tests_release_analysis.pdf
   - remolltest.release.log.tar.gz
   - remolltest.release.root.tar.gz
   - remolltest.release.analysis.log.tar.gz
   - remolltest.release.analysis.pdf.tar.gz
   - remolltest.release.analysis.root.tar.gz
+  - rootfiles_tests_release_analysis.pdf
   skip_cleanup: true
   on:
     repo: JeffersonLab/remoll

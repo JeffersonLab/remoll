@@ -55,8 +55,6 @@ class remollBeamTarget {
         static std::vector<G4VPhysicalVolume*> GetTargetVolumes(){ return fTargetVolumes; }
 
         void SetActiveTargetVolume(G4String name);
-        void SetTargetPos(G4double z);
-        void SetTargetLen(G4double l);
 
         void PrintTargetInfo();
 
