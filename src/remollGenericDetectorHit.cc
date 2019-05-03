@@ -18,6 +18,7 @@ remollGenericDetectorHit::remollGenericDetectorHit(G4int det, G4int copy)
   fP  = -1.0;
   fE  = -1.0;
   fM  = -1.0;
+  fK  = -1.0;
 
   f3XRec = G4ThreeVector(-1e9, -1e9, -1e9);
   f3dPRec = G4ThreeVector(-1e9, -1e9, -1e9);
@@ -52,6 +53,7 @@ remollGenericDetectorHit::remollGenericDetectorHit(const remollGenericDetectorHi
   fP      = right.fP;
   fE      = right.fE;
   fM      = right.fM;
+  fK      = right.fK;
 
   f3XRec  = right.f3XRec;
   f3dPRec = right.f3dPRec;

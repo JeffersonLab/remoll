@@ -281,6 +281,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     hit->fP = track->GetMomentum().mag();
     hit->fE = track->GetTotalEnergy();
     hit->fM = particle->GetPDGMass();
+    hit->fK = track->GetKineticEnergy();
 
     hit->fTrID  = track->GetTrackID();
     hit->fmTrID = track->GetParentID();
