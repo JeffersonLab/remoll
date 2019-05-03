@@ -1,0 +1,69 @@
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<define>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box name="world_solid" x="1.0" y="1.0" z="1.00" lunit="m"/>
+  <box name="lead_solid"  x="0.5" y="0.5" z="0.10" lunit="m"/>
+  <box name="mod_solid"   x="0.5" y="0.5" z="0.10" lunit="m"/>
+  <box name="plane_solid" x="0.5" y="0.5" z="0.01" lunit="m"/>
+  <tube name="hole_solid" z="0.02" rmax="0.05" deltaphi="2.0*pi" lunit="m"/>
+  <subtraction name="det_solid">
+   <first ref="plane_solid"/>
+   <second ref="hole_solid"/>
+  </subtraction>
+</solids>
+
+<structure>
+  <volume name="lead_logical">
+    <materialref ref="G4_Pb"/>
+    <solidref ref="lead_solid"/>
+  </volume>
+
+  <volume name="mod_logical">
+    <materialref ref="G4_POLYETHYLENE"/>
+    <solidref ref="mod_solid"/>
+  </volume>
+
+  <volume name="det_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="det_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="SD"/>
+    <auxiliary auxtype="DetNo"   auxvalue="1"/>
+    <auxiliary auxtype="DetType" auxvalue="all"/>
+  </volume>
+
+  <volume name="world_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="world_solid"/>
+
+<!--
+    <physvol name="lead_physical">
+      <volumeref ref="lead_logical"/>
+      <position name="lead_pos" z="-0.44" unit="m"/>
+    </physvol>
+-->
+
+    <physvol name="mod_physical">
+      <volumeref ref="mod_logical"/>
+    </physvol>
+
+    <physvol name="det_physical">
+      <volumeref ref="det_logical"/>
+      <position name="det_pos" z="0.44" unit="m"/>
+    </physvol>
+
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="world_logical"/>
+</setup>
+
+</gdml>

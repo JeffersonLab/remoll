@@ -1,0 +1,17 @@
+/remoll/geometry/setfile geometry/issues/issue248.gdml
+
+/remoll/physlist/parallel/disable
+
+/remoll/physlist/register QGSP_BERT_HP
+
+/run/initialize
+
+/remoll/evgen/set beam
+/remoll/evgen/beam/partName neutron
+/remoll/beamene 940 MeV
+
+/remoll/kryptonite/set false
+
+/remoll/filename issue248.root
+
+/run/beamOn 10000
