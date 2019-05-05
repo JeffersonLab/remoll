@@ -7,34 +7,34 @@
 -->
      
 <!-- Hall center position (MOLLER target is upstream of pivot) -->
-<position name="hallCenter" x="0" y="0" z="6087." unit="mm"/>
+<position name="hallCenter" x="0.0" y="0.0" z="0.0" unit="mm"/>
 
 <!-- Target position -->
-<position name="targetCenter" x="0" y="0" z="0" unit="mm"/>
+<position name="targetCenter" x="0.0" y="0.0" z="-6087.00" unit="mm"/>
 
 <!-- Upstream spectrometer position -->
-<position name="upstreamCenter" x="0" y="0" z="7000." unit="mm"/>
+<position name="upstreamCenter" x="0.0" y="0.0" z="913.00" unit="mm"/>
 
 <!-- Hybrid spectrometer position -->
-<position name="hybridCenter" x="0" y="0" z="13366.57" unit="mm"/>
+<position name="hybridCenter" x="0.0" y="0.0" z="7279.57" unit="mm"/>
 
 <!-- Physical tracking detector position -->
-<position name="trackingCenter" x="0" y="0" z="26635." unit="mm"/>
+<position name="trackingCenter" x="0.0" y="0.0" z="20548.00" unit="mm"/>
 <!-- Virtual planes in the parallel world -->
-<position name="trackingDetectorVirtualPlaneCenter_pos" z="25.635" unit="m"/>
+<position name="trackingDetectorVirtualPlaneCenter_pos" z="20548.00" unit="mm"/>
 <position name="trackingDetectorVirtualPlaneFront1_pos" z="-1.45" unit="m"/>
 <position name="trackingDetectorVirtualPlaneFront2_pos" z="-1.25" unit="m"/>
 <position name="trackingDetectorVirtualPlaneBack1_pos"  z="+1.25" unit="m"/>
 <position name="trackingDetectorVirtualPlaneBack2_pos"  z="+1.45" unit="m"/>
 
 <!-- Physical main detector array position -->
-<position name="detectorCenter" x="0" y="0" z="28500." unit="mm"/>
+<position name="detectorCenter" x="0.0" y="0.0" z="22413.00" unit="mm"/>
 <!-- Virtual planes in the parallel world -->
-<position name="mainDetectorVirtualPlane_pos" z="28.500" unit="m"/>
+<position name="mainDetectorVirtualPlane_pos" z="22413.00" unit="mm"/>
 
 <!-- Z position of the plane about which the two arrays of showermax
 detectors are placed -->
-<position name="showerMaxDetectorCenter" x="0" y="0" z="28750." unit="mm"/>
+<position name="showerMaxDetectorCenter" x="0.0" y="0.0" z="22663.00" unit="mm"/>
 
 <!-- Z position of the center of the lucite stack of the pion detector. -->
-<position name="pionDetectorCenter" x="0" y="0" z="29600." unit="mm"/>
+<position name="pionDetectorCenter" x="0.0" y="0.0" z="23513.00" unit="mm"/>
