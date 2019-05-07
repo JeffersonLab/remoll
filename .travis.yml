@@ -8,10 +8,10 @@ script:
     docker run --rm -t jeffersonlab/remoll scripts/tests/test_geometries.sh ${suite} ;
   done
 - for suite in unit commit release ; do
-    docker run -t jeffersonlab/remoll sh -c " \
-      scripts/tests/test_macros.sh ${suite} && \
-      scripts/tests/targz_macros.sh ${suite} && \
-      scripts/tests/watermark.sh rootfiles/tests/${suite}/analysis \
+    docker run -t jeffersonlab/remoll sh -c "
+      scripts/tests/test_macros.sh ${suite} &&
+      scripts/tests/targz_macros.sh ${suite} &&
+      scripts/tests/watermark.sh rootfiles/tests/${suite}/analysis
     " || exit 1 ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.root.tar.gz" . ;
