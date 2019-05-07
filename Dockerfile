@@ -33,4 +33,4 @@ RUN echo '#!/bin/bash'                                >  /entrypoint.sh && \
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["build/remoll -h"]
+CMD ["build/remoll","-h"]
