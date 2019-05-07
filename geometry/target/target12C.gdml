@@ -2,7 +2,7 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
   <define>
-    <constant name="targetCenterZ" value="500"/>
+    <constant name="targetCenterZ" value="0"/>
   </define>
   
   <materials>

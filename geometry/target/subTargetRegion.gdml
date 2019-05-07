@@ -10,7 +10,7 @@
   <define>
     &matrices;
 
-   <constant name="targetCenterZ" value="500"/>
+   <constant name="targetCenterZ" value="0"/>
    <constant name="tubeTarget_length" value="1250"/>
    <constant name="AlWindowTarget_length" value="0.127"/>
 
