@@ -194,6 +194,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
       G4int fHCID, fSCID;
 
+      std::map<int, remollGenericDetectorSum *> fRunningSumMap;
       std::map<int, remollGenericDetectorSum *> fSumMap;
 
       G4bool fDetectSecondaries;
