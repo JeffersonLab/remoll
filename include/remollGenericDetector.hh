@@ -62,6 +62,16 @@ class remollGenericDetector : public G4VSensitiveDetector {
       }
     }
 
+    void PrintSummary(G4int det) {
+      for (std::list<remollGenericDetector*>::iterator
+        it  = fGenericDetectors.begin();
+        it != fGenericDetectors.end();
+        it++) {
+          if ((*it)->fDetNo == det)
+            (*it)->PrintSummary();
+      }
+    }
+
     void SetAllEnabled() {
       for (std::list<remollGenericDetector*>::iterator
         it  = fGenericDetectors.begin();
