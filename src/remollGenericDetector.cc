@@ -93,6 +93,11 @@ void remollGenericDetector::BuildStaticMessenger()
     "Print all detectors");
 
   fStaticMessenger->DeclareMethod(
+    "summary",
+    &remollGenericDetector::PrintSummary,
+    "Print all detectors");
+
+  fStaticMessenger->DeclareMethod(
     "detect",
     &remollGenericDetector::SetOneDetectorType,
     "Set detector type");
