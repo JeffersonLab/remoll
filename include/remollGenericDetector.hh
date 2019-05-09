@@ -185,6 +185,14 @@ class remollGenericDetector : public G4VSensitiveDetector {
             << G4endl;
       };
 
+      void PrintSummary() const {
+        for (auto it = fRunningSumMap.begin(); it != fRunningSumMap.end(); it++) {
+          G4cout << "Det no " << fDetNo << ", "
+                 << "copy no " << it->first << ": " << G4endl;
+          it->second->PrintSummary();
+        }
+      };
+
       void  SetDetNo(G4int detno) { fDetNo = detno; }
       G4int GetDetNo() const { return fDetNo; }
 
