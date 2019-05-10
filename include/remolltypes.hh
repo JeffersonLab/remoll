@@ -73,7 +73,7 @@ struct remollGenericDetectorHit_t {
   double px, py, pz;
   double pxl, pyl, pzl;
   double sx, sy, sz;
-  double p, e, m;
+  double p, e, m, k;
   double vx, vy, vz;
   double edep;
 };
