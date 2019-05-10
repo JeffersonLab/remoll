@@ -115,7 +115,6 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     //   individual hit
     // - if we do write an individual hit we return true
 
-
     // Ignore this detector if disabled as set by /remoll/SD/disable
     if (! fEnabled) {
       static bool has_been_warned = false;
@@ -181,7 +180,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     G4double charge = particle->GetPDGCharge();
     if (! fDetectLowEnergyNeutrals
         && particle != G4OpticalPhoton::OpticalPhotonDefinition()
-        && charge == 0.0 && track->GetTotalEnergy() < 0.1*CLHEP::MeV) {
+        && charge == 0.0 && track->GetKineticEnergy() < 0.1*CLHEP::MeV) {
       static bool has_been_warned = false;
       if (! has_been_warned) {
         G4cout << "remoll: <0.1 MeV neutrals simulated but not stored for some detectors." << G4endl;
