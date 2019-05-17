@@ -21,7 +21,7 @@
 <!-- Physical tracking detector position -->
 <position name="trackingCenter" x="0.0" y="0.0" z="20548.00" unit="mm"/>
 <!-- Virtual planes in the parallel world -->
-<position name="trackingDetectorVirtualPlaneCenter_pos" z="20548.00" unit="mm"/>
+<position name="trackingDetectorVirtualPlaneCenter_pos" z="19548.00" unit="mm"/>
 <position name="trackingDetectorVirtualPlaneFront1_pos" z="-1.45" unit="m"/>
 <position name="trackingDetectorVirtualPlaneFront2_pos" z="-1.25" unit="m"/>
 <position name="trackingDetectorVirtualPlaneBack1_pos"  z="+1.25" unit="m"/>
@@ -30,7 +30,7 @@
 <!-- Physical main detector array position -->
 <position name="detectorCenter" x="0.0" y="0.0" z="22413.00" unit="mm"/>
 <!-- Virtual planes in the parallel world -->
-<position name="mainDetectorVirtualPlane_pos" z="22413.00" unit="mm"/>
+<position name="mainDetectorVirtualPlane_pos" z="22.41300" unit="m"/>
 
 <!-- Z position of the plane about which the two arrays of showermax
 detectors are placed -->
