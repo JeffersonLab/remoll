@@ -21,7 +21,7 @@
 <!-- Physical tracking detector position -->
 <position name="trackingCenter" x="0.0" y="0.0" z="20048.00" unit="mm"/>
 <!-- Virtual planes in the parallel world -->
-<position name="trackingDetectorVirtualPlaneCenter_pos" z="20048.00" unit="mm"/>
+<position name="trackingDetectorVirtualPlaneCenter_pos" z="19048.00" unit="mm"/>
 <position name="trackingDetectorVirtualPlaneFront1_pos" z="-1.45" unit="m"/>
 <position name="trackingDetectorVirtualPlaneFront2_pos" z="-1.25" unit="m"/>
 <position name="trackingDetectorVirtualPlaneBack1_pos"  z="+1.25" unit="m"/>
