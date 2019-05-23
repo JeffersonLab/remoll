@@ -93,6 +93,11 @@ void remollGenericDetector::BuildStaticMessenger()
     "Print all detectors");
 
   fStaticMessenger->DeclareMethod(
+    "summary",
+    &remollGenericDetector::PrintSummary,
+    "Print all detectors");
+
+  fStaticMessenger->DeclareMethod(
     "detect",
     &remollGenericDetector::SetOneDetectorType,
     "Set detector type");
@@ -145,20 +150,29 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     G4int copyID = volume->GetCopyNo();
 
 
+    // Add energy deposit to detector sum
+    G4int pid = particle->GetPDGEncoding();
+    G4ThreeVector pos = prepoint->GetPosition();
+    G4double edep = step->GetTotalEnergyDeposit();
+
     // Create a detector sum for this detector, if necessary
     if (! fSumMap.count(copyID)) {
       remollGenericDetectorSum* sum = new remollGenericDetectorSum(fDetNo, copyID);
       fSumMap[copyID] = sum;
       fSumColl->insert(sum);
     }
-
-    // Add energy deposit to detector sum
-    G4int pid = particle->GetPDGEncoding();
-    G4ThreeVector pos = prepoint->GetPosition();
-    G4double edep = step->GetTotalEnergyDeposit();
+    // Add to sum for this event only
     remollGenericDetectorSum* sum = fSumMap[copyID];
     sum->AddEDep(pid, pos, edep);
 
+    // Create a running sum for this detector, if necessary
+    if (! fRunningSumMap.count(copyID)) {
+      remollGenericDetectorSum* sum = new remollGenericDetectorSum(fDetNo, copyID);
+      fRunningSumMap[copyID] = sum;
+    }
+    // Add to running sum of all events
+    remollGenericDetectorSum* runningsum = fRunningSumMap[copyID];
+    runningsum->AddEDep(pid, pos, edep);
 
     // Ignore optical photons as hits as set by DetType == opticalphoton
     if (! fDetectOpticalPhotons

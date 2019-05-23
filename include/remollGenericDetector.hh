@@ -62,6 +62,16 @@ class remollGenericDetector : public G4VSensitiveDetector {
       }
     }
 
+    void PrintSummary(G4int det) {
+      for (std::list<remollGenericDetector*>::iterator
+        it  = fGenericDetectors.begin();
+        it != fGenericDetectors.end();
+        it++) {
+          if ((*it)->fDetNo == det)
+            (*it)->PrintSummary();
+      }
+    }
+
     void SetAllEnabled() {
       for (std::list<remollGenericDetector*>::iterator
         it  = fGenericDetectors.begin();
@@ -185,6 +195,14 @@ class remollGenericDetector : public G4VSensitiveDetector {
             << G4endl;
       };
 
+      void PrintSummary() const {
+        for (auto it = fRunningSumMap.begin(); it != fRunningSumMap.end(); it++) {
+          G4cout << "Det no " << fDetNo << ", "
+                 << "copy no " << it->first << ": " << G4endl;
+          it->second->PrintSummary();
+        }
+      };
+
       void  SetDetNo(G4int detno) { fDetNo = detno; }
       G4int GetDetNo() const { return fDetNo; }
 
@@ -194,6 +212,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
       G4int fHCID, fSCID;
 
+      std::map<int, remollGenericDetectorSum *> fRunningSumMap;
       std::map<int, remollGenericDetectorSum *> fSumMap;
 
       G4bool fDetectSecondaries;
