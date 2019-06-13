@@ -5,20 +5,24 @@ services:
 script:
 - docker build -t jeffersonlab/remoll .
 - for suite in load validate overlap ; do
-    docker run -t jeffersonlab/remoll "scripts/tests/test_geometries.sh ${suite}" ;
+    docker run --rm -t jeffersonlab/remoll scripts/tests/test_geometries.sh ${suite} ;
   done
-- for suite in unit commit release ; do
-    docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" || exit 1 ;
-    docker start $(docker ps -l -q) ;
-    docker exec $(docker ps -l -q) scripts/tests/targz_macros.sh ${suite} ;
+- for suite in unit ; do
+    docker run --rm -t jeffersonlab/remoll scripts/tests/test_macros.sh ${suite} ;
+  done
+- for suite in commit release ; do
+    docker run -t jeffersonlab/remoll sh -c "
+      scripts/tests/test_macros.sh ${suite} &&
+      scripts/tests/targz_macros.sh ${suite} &&
+      scripts/tests/watermark.sh rootfiles/tests/${suite}/analysis
+    " || exit 1 ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.root.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.pdf.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.root.tar.gz" . ;
-    docker exec $(docker ps -l -q) scripts/tests/watermark.sh rootfiles/tests/${suite}/analysis ;
     docker cp $(docker ps -l -q):"/jlab/remoll/rootfiles_tests_${suite}_analysis.pdf" . ;
-    docker stop $(docker ps -l -q) ;
+    docker rm $(docker ps -l -q) ;
   done
 
 after_success:

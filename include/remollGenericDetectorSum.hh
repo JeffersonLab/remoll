@@ -28,8 +28,10 @@ class remollGenericDetectorSum : public G4VHit {
 	G4int    fDetID;
 	G4int    fCopyID;
 	G4double fEdep;
+        G4int    fNhit;
 
 	void AddEDep(int pid, G4ThreeVector x, double edep);
+        void PrintSummary() const;
 
 	std::map<int,remollGenericDetectorSumByPID_t> fSumByPID;
 
@@ -39,6 +41,7 @@ class remollGenericDetectorSum : public G4VHit {
         sum.det = fDetID;
         sum.vid = fCopyID;
         sum.edep = fEdep;
+        sum.n = fNhit;
         for (std::map<int,remollGenericDetectorSumByPID_t>::const_iterator
             it  = fSumByPID.begin();
             it != fSumByPID.end(); ++it) {

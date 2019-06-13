@@ -1,5 +1,7 @@
 #!/bin/bash
 
+shopt -s nullglob
+
 # Exit whenever non-zero exit code occurs
 set -euo pipefail
 
