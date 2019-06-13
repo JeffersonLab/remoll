@@ -1,5 +1,14 @@
 #!/bin/bash
 
+export JLAB_VERSION=2.3
+export JLAB_ROOT=/jlab
+export REMOLL=/jlab/remoll
+for entrypoint in /entrypoint.sh /usr/local/bin/entrypoint.sh ; do
+  if [ -f $entrypoint ] ; then
+    source $entrypoint ""
+  fi
+done
+
 nevents=100
 macro=macros/osg/run.mac
 geometry=geometry/mollerMother.gdml
