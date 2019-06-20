@@ -153,7 +153,7 @@
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
     <constant name="USPolyShield1_front_thickness" value="400 + 400"/>
-    <constant name="USPolyShield1_back_thickness" value="400 + 400"/>
+    <constant name="USPolyShield1_back_thickness" value="394 + 400"/>
     <constant name="USPolyShield1_side_thickness" value="400 + 400"/>
     <constant name="USPolyShield1_top_thickness" value="400 + 400"/>
     <constant name="USPolyShield1_bottom_thickness" value="400 + 400"/>
