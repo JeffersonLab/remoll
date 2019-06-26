@@ -5,18 +5,24 @@ services:
 script:
 - docker build -t jeffersonlab/remoll .
 - for suite in load validate overlap ; do
-    docker run -t jeffersonlab/remoll "scripts/tests/test_geometries.sh ${suite}" ;
+    docker run --rm -t jeffersonlab/remoll scripts/tests/test_geometries.sh ${suite} ;
   done
-- for suite in unit commit release ; do
-    docker run -t jeffersonlab/remoll "scripts/tests/test_macros.sh ${suite}" || exit 1 ;
-    docker start $(docker ps -l -q) ;
-    docker exec $(docker ps -l -q) scripts/tests/targz_macros.sh ${suite} ;
+- for suite in unit ; do
+    docker run --rm -t jeffersonlab/remoll scripts/tests/test_macros.sh ${suite} ;
+  done
+- for suite in commit release ; do
+    docker run -t jeffersonlab/remoll sh -c "
+      scripts/tests/test_macros.sh ${suite} &&
+      scripts/tests/targz_macros.sh ${suite} &&
+      scripts/tests/watermark.sh rootfiles/tests/${suite}/analysis
+    " || exit 1 ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.root.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.pdf.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.${suite}.analysis.root.tar.gz" . ;
-    docker stop $(docker ps -l -q) ;
+    docker cp $(docker ps -l -q):"/jlab/remoll/rootfiles_tests_${suite}_analysis.pdf" . ;
+    docker rm $(docker ps -l -q) ;
   done
 
 after_success:
@@ -38,13 +44,15 @@ deploy:
   - remolltest.commit.log.tar.gz
   - remolltest.commit.root.tar.gz
   - remolltest.commit.analysis.log.tar.gz
-  - remolltest.commit.analysis.png.tar.gz
+  - remolltest.commit.analysis.pdf.tar.gz
   - remolltest.commit.analysis.root.tar.gz
+  - rootfiles_tests_release_analysis.pdf
   - remolltest.release.log.tar.gz
   - remolltest.release.root.tar.gz
   - remolltest.release.analysis.log.tar.gz
   - remolltest.release.analysis.pdf.tar.gz
   - remolltest.release.analysis.root.tar.gz
+  - rootfiles_tests_release_analysis.pdf
   skip_cleanup: true
   on:
     repo: JeffersonLab/remoll

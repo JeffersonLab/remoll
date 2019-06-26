@@ -50,10 +50,6 @@
 #/remoll/evgen/phmin -20.0 deg
 #/remoll/evgen/phmax +20.0 deg
 
-# Target positioning
-#/remoll/targpos  10 cm
-#/remoll/targlen 100 cm
-
 # Beam current for rate
 /remoll/beamcurr 85 microampere
 

@@ -35,7 +35,7 @@ void remollGenMoller::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
   double sigma = alpha*alpha*pow(3.0+cos(thcom)*cos(thcom),2.0)*hbarc*hbarc/pow(sin(thcom),4.0)/(2.0*me*beamE); // units of area
 
-  double V = 2.0*pi*(cos(fThCoM_min) - cos(fThCoM_max));
+  double V = (fPh_max - fPh_min)*(cos(fThCoM_min) - cos(fThCoM_max));
 
   //  Multiply by Z because we have Z electrons
   //  here we must also divide by two because we are double covering

@@ -1,0 +1,2043 @@
+Command directory path : /remoll/
+
+
+Guidance :
+Remoll properties
+
+ Sub-directories : 
+   /remoll/geometry/   Remoll geometry properties
+   /remoll/kryptonite/   Remoll kryptonite properties
+   /remoll/parallel/   Remoll parallel geometry properties
+   /remoll/physlist/   Remoll physics list properties
+   /remoll/SD/   Remoll SD properties
+   /remoll/field/   Remoll global field properties
+   /remoll/tracking/ @ Remoll tracking properties
+   /remoll/evgen/ @ Remoll event generator properties
+ Commands : 
+   setgeofile * Set geometry GDML file
+   printgeometry * Print the geometry tree
+   printelements * Print the elements
+   printmaterials * Print the materials
+   parallel * Enable parallel physics
+   optical * Enable optical physics
+   seed * Set random engine seed
+   interval * Print this many progress points (i.e. 100 -> every 1%)
+   filename * Output filename
+   addfield * Add magnetic field
+   scalefield * Scale magnetic field
+   magcurrent * Scale magnetic field by current
+   targname @ Target name
+   targlen @ Target length
+   targpos @ Target position
+   printtargetinfo @ ...Title not available...
+   beamcurr @ Beam current
+   beamene @ Beam energy
+   oldras @ Old (no ang corln) or new (ang corl) raster
+   rasx @ Square raster width x (horizontal)
+   rasy @ Square raster width y (vertical)
+   beam_x0 @ beam initial position in x (horizontal)
+   beam_y0 @ beam initial position in y (vertical)
+   beam_ph0 @ beam initial direction in x (horizontal)
+   beam_th0 @ beam initial direction in y (vertical)
+   beam_corrph @ beam correlated angle (horizontal)
+   beam_corrth @ beam correlated angle (vertical)
+   beam_dph @ beam gaussian spread in x (horizontal)
+   beam_dth @ beam gaussian spread in y (vertical)
+
+
+Command /remoll/setgeofile
+Guidance :
+Set geometry GDML file
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/printgeometry
+Guidance :
+Print the geometry tree
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+ Default value   : false
+
+
+
+Command /remoll/printelements
+Guidance :
+Print the elements
+
+
+
+Command /remoll/printmaterials
+Guidance :
+Print the materials
+
+
+
+Command /remoll/parallel
+Guidance :
+Enable parallel physics
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+ Default value   : true
+
+
+
+Command /remoll/optical
+Guidance :
+Enable optical physics
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+ Default value   : true
+
+
+
+Command /remoll/seed
+Guidance :
+Set random engine seed
+
+Parameter : seed
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/interval
+Guidance :
+Print this many progress points (i.e. 100 -> every 1%)
+
+Parameter : interval
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/filename
+Guidance :
+Output filename
+
+Parameter : value
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/addfield
+Guidance :
+Add magnetic field
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/scalefield
+Guidance :
+Scale magnetic field
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/magcurrent
+Guidance :
+Scale magnetic field by current
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/targname
+    ---- available only in worker thread
+Guidance :
+Target name
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/targlen
+    ---- available only in worker thread
+Guidance :
+Target length
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : cm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/targpos
+    ---- available only in worker thread
+Guidance :
+Target position
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : cm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/printtargetinfo
+    ---- available only in worker thread
+Guidance :
+
+
+
+Command /remoll/beamcurr
+    ---- available only in worker thread
+Guidance :
+Beam current
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : microampere
+ Candidates      : A mA muA nA ampere milliampere microampere nanoampere
+
+
+
+Command /remoll/beamene
+    ---- available only in worker thread
+Guidance :
+Beam energy
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : GeV
+ Candidates      : eV keV MeV GeV TeV PeV J electronvolt kiloelectronvolt megaelectronvolt gigaelectronvolt teraelectronvolt petaelectronvolt joule
+
+
+
+Command /remoll/oldras
+    ---- available only in worker thread
+Guidance :
+Old (no ang corln) or new (ang corl) raster
+
+Parameter : value
+ Parameter type  : b
+ Omittable       : False
+
+
+
+Command /remoll/rasx
+    ---- available only in worker thread
+Guidance :
+Square raster width x (horizontal)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : cm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/rasy
+    ---- available only in worker thread
+Guidance :
+Square raster width y (vertical)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : cm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/beam_x0
+    ---- available only in worker thread
+Guidance :
+beam initial position in x (horizontal)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : cm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/beam_y0
+    ---- available only in worker thread
+Guidance :
+beam initial position in y (vertical)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : cm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/beam_ph0
+    ---- available only in worker thread
+Guidance :
+beam initial direction in x (horizontal)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/beam_th0
+    ---- available only in worker thread
+Guidance :
+beam initial direction in y (vertical)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/beam_corrph
+    ---- available only in worker thread
+Guidance :
+beam correlated angle (horizontal)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/beam_corrth
+    ---- available only in worker thread
+Guidance :
+beam correlated angle (vertical)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/beam_dph
+    ---- available only in worker thread
+Guidance :
+beam gaussian spread in x (horizontal)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/beam_dth
+    ---- available only in worker thread
+Guidance :
+beam gaussian spread in y (vertical)
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+Command directory path : /remoll/geometry/
+
+
+Guidance :
+Remoll geometry properties
+
+ Sub-directories : 
+   /remoll/geometry/userlimits/   Remoll geometry properties
+ Commands : 
+   setfile * Set geometry GDML file
+   verbose * Set geometry verbose level
+   validate * Set GMDL validate flag
+   overlapcheck * Set GMDL overlap check flag
+   load * Reload the geometry
+   printelements * Print the elements
+   printmaterials * Print the materials
+   printgeometry * Print the geometry tree
+   printoverlaps * Print the geometry overlap
+
+
+Command /remoll/geometry/setfile
+Guidance :
+Set geometry GDML file
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/geometry/verbose
+Guidance :
+Set geometry verbose level
+
+Parameter : value
+ Parameter type  : i
+ Omittable       : False
+
+
+
+Command /remoll/geometry/validate
+Guidance :
+Set GMDL validate flag
+
+Parameter : value
+ Parameter type  : b
+ Omittable       : False
+ Default value   : true
+
+
+
+Command /remoll/geometry/overlapcheck
+Guidance :
+Set GMDL overlap check flag
+
+Parameter : value
+ Parameter type  : b
+ Omittable       : False
+ Default value   : true
+
+
+
+Command /remoll/geometry/load
+Guidance :
+Reload the geometry
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/geometry/printelements
+Guidance :
+Print the elements
+
+
+
+Command /remoll/geometry/printmaterials
+Guidance :
+Print the materials
+
+
+
+Command /remoll/geometry/printgeometry
+Guidance :
+Print the geometry tree
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+ Default value   : false
+
+
+
+Command /remoll/geometry/printoverlaps
+Guidance :
+Print the geometry overlap
+
+Command directory path : /remoll/geometry/userlimits/
+
+
+Guidance :
+Remoll geometry properties
+
+ Sub-directories : 
+ Commands : 
+   usermaxallowedstep * Set user limit MaxAllowedStep for logical volume
+   usermaxtracklength * Set user limit MaxTrackLength for logical volume
+   usermaxtime * Set user limit MaxTime for logical volume
+   userminekine * Set user limit MinEkine for logical volume
+   userminrange * Set user limit MinRange for logical volume
+
+
+Command /remoll/geometry/userlimits/usermaxallowedstep
+Guidance :
+Set user limit MaxAllowedStep for logical volume
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/geometry/userlimits/usermaxtracklength
+Guidance :
+Set user limit MaxTrackLength for logical volume
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/geometry/userlimits/usermaxtime
+Guidance :
+Set user limit MaxTime for logical volume
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/geometry/userlimits/userminekine
+Guidance :
+Set user limit MinEkine for logical volume
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/geometry/userlimits/userminrange
+Guidance :
+Set user limit MinRange for logical volume
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Command directory path : /remoll/kryptonite/
+
+
+Guidance :
+Remoll kryptonite properties
+
+ Sub-directories : 
+ Commands : 
+   verbose * Set verbose level
+   set * Treat materials as kryptonite
+   enable * Treat materials as kryptonite
+   disable * Treat materials as regular
+   add * Add specified material to list of kryptonite candidates
+   list * List kryptonite candidate materials
+
+
+Command /remoll/kryptonite/verbose
+Guidance :
+Set verbose level
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/kryptonite/set
+Guidance :
+Treat materials as kryptonite
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/kryptonite/enable
+Guidance :
+Treat materials as kryptonite
+
+
+
+Command /remoll/kryptonite/disable
+Guidance :
+Treat materials as regular
+
+
+
+Command /remoll/kryptonite/add
+Guidance :
+Add specified material to list of kryptonite candidates
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/kryptonite/list
+Guidance :
+List kryptonite candidate materials
+
+Command directory path : /remoll/parallel/
+
+
+Guidance :
+Remoll parallel geometry properties
+
+ Sub-directories : 
+ Commands : 
+   setfile * Set parallel geometry GDML file
+   verbose * Set geometry verbose level
+   validate * Set GMDL validate flag
+   overlapcheck * Set GMDL overlap check flag
+
+
+Command /remoll/parallel/setfile
+Guidance :
+Set parallel geometry GDML file
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/parallel/verbose
+Guidance :
+Set geometry verbose level
+
+Parameter : value
+ Parameter type  : i
+ Omittable       : False
+
+
+
+Command /remoll/parallel/validate
+Guidance :
+Set GMDL validate flag
+
+Parameter : value
+ Parameter type  : b
+ Omittable       : False
+ Default value   : true
+
+
+
+Command /remoll/parallel/overlapcheck
+Guidance :
+Set GMDL overlap check flag
+
+Parameter : value
+ Parameter type  : b
+ Omittable       : False
+ Default value   : true
+
+Command directory path : /remoll/physlist/
+
+
+Guidance :
+Remoll physics list properties
+
+ Sub-directories : 
+   /remoll/physlist/parallel/   Remoll parallel physics properties
+   /remoll/physlist/optical/   Remoll optical physics properties
+   /remoll/physlist/steplimiter/   Remoll step limiter properties
+ Commands : 
+   verbose * Set physics list verbose level
+   register * Register reference physics list
+   list * List reference physics lists
+
+
+Command /remoll/physlist/verbose
+Guidance :
+Set physics list verbose level
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/physlist/register
+Guidance :
+Register reference physics list
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/physlist/list
+Guidance :
+List reference physics lists
+
+Command directory path : /remoll/physlist/parallel/
+
+
+Guidance :
+Remoll parallel physics properties
+
+ Sub-directories : 
+ Commands : 
+   enable * Enable parallel physics
+   disable * Disable parallel physics
+
+
+Command /remoll/physlist/parallel/enable
+Guidance :
+Enable parallel physics
+
+
+
+Command /remoll/physlist/parallel/disable
+Guidance :
+Disable parallel physics
+
+Command directory path : /remoll/physlist/optical/
+
+
+Guidance :
+Remoll optical physics properties
+
+ Sub-directories : 
+ Commands : 
+   enable * Enable optical physics
+   disable * Disable optical physics
+
+
+Command /remoll/physlist/optical/enable
+Guidance :
+Enable optical physics
+
+
+
+Command /remoll/physlist/optical/disable
+Guidance :
+Disable optical physics
+
+Command directory path : /remoll/physlist/steplimiter/
+
+
+Guidance :
+Remoll step limiter properties
+
+ Sub-directories : 
+ Commands : 
+   enable * Enable step limiter
+   disable * Disable step limiter
+
+
+Command /remoll/physlist/steplimiter/enable
+Guidance :
+Enable step limiter
+
+
+
+Command /remoll/physlist/steplimiter/disable
+Guidance :
+Disable step limiter
+
+Command directory path : /remoll/SD/
+
+
+Guidance :
+Remoll SD properties
+
+ Sub-directories : 
+ Commands : 
+   enable * Enable recording of hits in specified detectors
+   disable * Disable recording of hits in specified detectors
+   enable_all * Enable recording of hits in all detectors
+   disable_all * Disable recording of hits in all detectors
+   enable_range * Enable recording of hits in range of detectors
+   disable_range * Disable recording of hits in range of detectors
+   print_all * Print all detectors
+   detect * Set detector type
+
+
+Command /remoll/SD/enable
+Guidance :
+Enable recording of hits in specified detectors
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/SD/disable
+Guidance :
+Disable recording of hits in specified detectors
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/SD/enable_all
+Guidance :
+Enable recording of hits in all detectors
+
+
+
+Command /remoll/SD/disable_all
+Guidance :
+Disable recording of hits in all detectors
+
+
+
+Command /remoll/SD/enable_range
+Guidance :
+Enable recording of hits in range of detectors
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/SD/disable_range
+Guidance :
+Disable recording of hits in range of detectors
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/SD/print_all
+Guidance :
+Print all detectors
+
+
+
+Command /remoll/SD/detect
+Guidance :
+Set detector type
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Command directory path : /remoll/field/
+
+
+Guidance :
+Remoll global field properties
+
+ Sub-directories : 
+ Commands : 
+   equationtype * Set equation type: 
+ 0: B-field, no spin (default); 
+ 2: B-field, with spin
+   steppertype * Set stepper type: 
+ 0: ExplicitEuler; 
+ 1: ImplicitEuler; 
+ 2: SimpleRunge; 
+ 3: SimpleHeum; 
+ 4: ClassicalRK4 (default); 
+ 5: CashKarpRKF45
+   print * Print the accuracy parameters
+   epsmin * Set the minimum epsilon of the field propagator
+   epsmax * Set the maximum epsilon of the field propagator
+   minstep * Set the minimum step of the chord finder
+   deltachord * Set delta chord for the chord finder
+   deltaonestep * Set delta one step for the field manager
+   deltaintersection * Set delta intersection for the field manager
+
+
+Command /remoll/field/equationtype
+Guidance :
+Set equation type: 
+ 0: B-field, no spin (default); 
+ 2: B-field, with spin
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/field/steppertype
+Guidance :
+Set stepper type: 
+ 0: ExplicitEuler; 
+ 1: ImplicitEuler; 
+ 2: SimpleRunge; 
+ 3: SimpleHeum; 
+ 4: ClassicalRK4 (default); 
+ 5: CashKarpRKF45
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/field/print
+Guidance :
+Print the accuracy parameters
+
+
+
+Command /remoll/field/epsmin
+Guidance :
+Set the minimum epsilon of the field propagator
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+
+
+Command /remoll/field/epsmax
+Guidance :
+Set the maximum epsilon of the field propagator
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+
+
+Command /remoll/field/minstep
+Guidance :
+Set the minimum step of the chord finder
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+
+
+Command /remoll/field/deltachord
+Guidance :
+Set delta chord for the chord finder
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+
+
+Command /remoll/field/deltaonestep
+Guidance :
+Set delta one step for the field manager
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+
+
+Command /remoll/field/deltaintersection
+Guidance :
+Set delta intersection for the field manager
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Command directory path : /remoll/tracking/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll tracking properties
+
+ Sub-directories : 
+ Commands : 
+   set @ Select tracking flag
+
+
+Command /remoll/tracking/set
+    ---- available only in worker thread
+Guidance :
+Select tracking flag
+ 0 : Track primary electrons only
+ 1 : Track primary electrons and optical photons only
+ 2 : Track all particles except optical photons
+ 3 : Track all particles
+ Range of parameters : flag >=0 && flag <= 3
+
+Parameter : flag
+ Parameter type  : i
+ Omittable       : False
+
+Command directory path : /remoll/evgen/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll event generator properties
+
+ Sub-directories : 
+   /remoll/evgen/moller/ @ Remoll moller generator properties
+   /remoll/evgen/elastic/ @ Remoll elastic generator properties
+   /remoll/evgen/inelastic/ @ Remoll inelastic generator properties
+   /remoll/evgen/pion/ @ Remoll pion generator properties
+   /remoll/evgen/beam/ @ Remoll beam generator properties
+   /remoll/evgen/flat/ @ Remoll flat generator properties
+   /remoll/evgen/TF1/ @ Remoll TF1 generator properties
+   /remoll/evgen/elasticAl/ @ Remoll elasticAl generator properties
+   /remoll/evgen/quasielasticAl/ @ Remoll quasielasticAl generator properties
+   /remoll/evgen/inelasticAl/ @ Remoll inelasticAl generator properties
+   /remoll/evgen/external/ @ Remoll external generator properties
+   /remoll/evgen/pion_LUND/ @ Remoll pion_LUND generator properties
+   /remoll/evgen/carbon/ @ Remoll carbon generator properties
+ Commands : 
+   emax @ Maximum generation energy
+   emin @ Minimum generation energy
+   thmax @ Maximum generation theta angle
+   thmin @ Minimum generation theta angle
+   phmax @ Maximum generation phi angle
+   phmin @ Minimum generation phi angle
+   thcommax @ Maximum CoM generation theta angle
+   thcommin @ Minimum CoM generation theta angle
+   beamPolarization @ Polarization direction: +L, +H, +V, -L, -H, -V, 0
+   printlimits @ Print the event generator limits
+   set @ Select physics generator
+   sigma @ Set effective cross section
+
+
+Command /remoll/evgen/emax
+    ---- available only in worker thread
+Guidance :
+Maximum generation energy
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : GeV
+ Candidates      : eV keV MeV GeV TeV PeV J electronvolt kiloelectronvolt megaelectronvolt gigaelectronvolt teraelectronvolt petaelectronvolt joule
+
+
+
+Command /remoll/evgen/emin
+    ---- available only in worker thread
+Guidance :
+Minimum generation energy
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : GeV
+ Candidates      : eV keV MeV GeV TeV PeV J electronvolt kiloelectronvolt megaelectronvolt gigaelectronvolt teraelectronvolt petaelectronvolt joule
+
+
+
+Command /remoll/evgen/thmax
+    ---- available only in worker thread
+Guidance :
+Maximum generation theta angle
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/thmin
+    ---- available only in worker thread
+Guidance :
+Minimum generation theta angle
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/phmax
+    ---- available only in worker thread
+Guidance :
+Maximum generation phi angle
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/phmin
+    ---- available only in worker thread
+Guidance :
+Minimum generation phi angle
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/thcommax
+    ---- available only in worker thread
+Guidance :
+Maximum CoM generation theta angle
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/thcommin
+    ---- available only in worker thread
+Guidance :
+Minimum CoM generation theta angle
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/beamPolarization
+    ---- available only in worker thread
+Guidance :
+Polarization direction: +L, +H, +V, -L, -H, -V, 0
+
+Parameter : value
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/printlimits
+    ---- available only in worker thread
+Guidance :
+Print the event generator limits
+
+
+
+Command /remoll/evgen/set
+    ---- available only in worker thread
+Guidance :
+Select physics generator
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/sigma
+    ---- available only in worker thread
+Guidance :
+Set effective cross section
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : picobarn
+ Candidates      : km2 m2 cm2 mm2 barn mbarn mubarn nbarn pbarn kilometer2 meter2 centimeter2 millimeter2 barn millibarn microbarn nanobarn picobarn
+
+Command directory path : /remoll/evgen/moller/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll moller generator properties
+
+ Sub-directories : 
+ Commands : 
+Command directory path : /remoll/evgen/elastic/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll elastic generator properties
+
+ Sub-directories : 
+ Commands : 
+Command directory path : /remoll/evgen/inelastic/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll inelastic generator properties
+
+ Sub-directories : 
+ Commands : 
+Command directory path : /remoll/evgen/pion/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll pion generator properties
+
+ Sub-directories : 
+ Commands : 
+   piontype @ Generate pion type
+   settype @ Generate pion type
+
+
+Command /remoll/evgen/pion/piontype
+    ---- available only in worker thread
+Guidance :
+Generate pion type
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/pion/settype
+    ---- available only in worker thread
+Guidance :
+Generate pion type
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Command directory path : /remoll/evgen/beam/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll beam generator properties
+
+ Sub-directories : 
+ Commands : 
+   origin @ origin position mean: x y z unit
+   x @ origin x position mean
+   y @ origin y position mean
+   z @ origin z position mean
+   originspread @ origin position spread: x y z unit
+   xspread @ origin x position spread
+   yspread @ origin y position spread
+   zspread @ origin z position spread
+   xmodel @ origin x position model: flat, gauss
+   ymodel @ origin y position model: flat, gauss
+   zmodel @ origin z position model: flat, gauss
+   direction @ direction vector (will be normalized): x y z
+   px @ direction x (vector will be normalized before use)
+   py @ direction y (vector will be normalized before use)
+   pz @ direction z (vector will be normalized before use)
+   th @ direction vector theta angle
+   ph @ direction vector phi angle
+   polarization @ polarization vector (will be normalized): x y z
+   sx @ x component of polarization
+   sy @ y component of polarization
+   sz @ z component of polarization
+   rasrefz @ reference z position where raster is defined
+   rasx @ raster x spread perpendicular to the beam at z = 0
+   rasy @ raster y spread perpendicular to the beam at z = 0
+   corrx @ sensitivity of direction to position in x (in mrad/mm)
+   corry @ sensitivity of direction to position in y (in mrad/mm)
+   partName @ name of particle to shoot
+
+
+Command /remoll/evgen/beam/origin
+    ---- available only in worker thread
+Guidance :
+origin position mean: x y z unit
+
+Parameter : valueX
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : valueY
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : valueZ
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/x
+    ---- available only in worker thread
+Guidance :
+origin x position mean
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/y
+    ---- available only in worker thread
+Guidance :
+origin y position mean
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/z
+    ---- available only in worker thread
+Guidance :
+origin z position mean
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/originspread
+    ---- available only in worker thread
+Guidance :
+origin position spread: x y z unit
+
+Parameter : valueX
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : valueY
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : valueZ
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/xspread
+    ---- available only in worker thread
+Guidance :
+origin x position spread
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/yspread
+    ---- available only in worker thread
+Guidance :
+origin y position spread
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/zspread
+    ---- available only in worker thread
+Guidance :
+origin z position spread
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/xmodel
+    ---- available only in worker thread
+Guidance :
+origin x position model: flat, gauss
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/ymodel
+    ---- available only in worker thread
+Guidance :
+origin y position model: flat, gauss
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/zmodel
+    ---- available only in worker thread
+Guidance :
+origin z position model: flat, gauss
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/direction
+    ---- available only in worker thread
+Guidance :
+direction vector (will be normalized): x y z
+
+Parameter : value
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/px
+    ---- available only in worker thread
+Guidance :
+direction x (vector will be normalized before use)
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/py
+    ---- available only in worker thread
+Guidance :
+direction y (vector will be normalized before use)
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/pz
+    ---- available only in worker thread
+Guidance :
+direction z (vector will be normalized before use)
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/th
+    ---- available only in worker thread
+Guidance :
+direction vector theta angle
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/beam/ph
+    ---- available only in worker thread
+Guidance :
+direction vector phi angle
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/beam/polarization
+    ---- available only in worker thread
+Guidance :
+polarization vector (will be normalized): x y z
+
+Parameter : value
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/sx
+    ---- available only in worker thread
+Guidance :
+x component of polarization
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/sy
+    ---- available only in worker thread
+Guidance :
+y component of polarization
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/sz
+    ---- available only in worker thread
+Guidance :
+z component of polarization
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/rasrefz
+    ---- available only in worker thread
+Guidance :
+reference z position where raster is defined
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/rasx
+    ---- available only in worker thread
+Guidance :
+raster x spread perpendicular to the beam at z = 0
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/rasy
+    ---- available only in worker thread
+Guidance :
+raster y spread perpendicular to the beam at z = 0
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/beam/corrx
+    ---- available only in worker thread
+Guidance :
+sensitivity of direction to position in x (in mrad/mm)
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/corry
+    ---- available only in worker thread
+Guidance :
+sensitivity of direction to position in y (in mrad/mm)
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/beam/partName
+    ---- available only in worker thread
+Guidance :
+name of particle to shoot
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Command directory path : /remoll/evgen/flat/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll flat generator properties
+
+ Sub-directories : 
+ Commands : 
+Command directory path : /remoll/evgen/TF1/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll TF1 generator properties
+
+ Sub-directories : 
+ Commands : 
+   rmax @ Maximum generation radial hit position (mm) for Remoll generator
+   rmin @ Minimum generation radial hit position (mm) for Remoll generator
+   deltaphmax @ Upward Phi spread limit
+   deltaphmin @ Downward Phi spread limit
+   BoffsetR @ Boolean for offsetting detector to the side (and flat radial distribution if R_max =/= 0)
+   sector @ Integer sector number for Remoll generator
+   ring @ Integer ring number for Remoll generator
+   setFileFunction @ ROOT filename:function name
+   scattType @ Scattering type: moller, elastic, inelastic, or all
+   radOffset @ Radial offset to center detectors: boolean
+
+
+Command /remoll/evgen/TF1/rmax
+    ---- available only in worker thread
+Guidance :
+Maximum generation radial hit position (mm) for Remoll generator
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/TF1/rmin
+    ---- available only in worker thread
+Guidance :
+Minimum generation radial hit position (mm) for Remoll generator
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : mm
+ Candidates      : pc km m cm mm um nm Ang fm parsec kilometer meter centimeter millimeter micrometer nanometer angstrom fermi
+
+
+
+Command /remoll/evgen/TF1/deltaphmax
+    ---- available only in worker thread
+Guidance :
+Upward Phi spread limit
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/TF1/deltaphmin
+    ---- available only in worker thread
+Guidance :
+Downward Phi spread limit
+
+Parameter : value
+ Parameter type  : d
+ Omittable       : False
+
+Parameter : Unit
+ Parameter type  : s
+ Omittable       : True
+ Default value   : deg
+ Candidates      : rad mrad deg radian milliradian degree
+
+
+
+Command /remoll/evgen/TF1/BoffsetR
+    ---- available only in worker thread
+Guidance :
+Boolean for offsetting detector to the side (and flat radial distribution if R_max =/= 0)
+
+Parameter : value
+ Parameter type  : b
+ Omittable       : False
+
+
+
+Command /remoll/evgen/TF1/sector
+    ---- available only in worker thread
+Guidance :
+Integer sector number for Remoll generator
+
+Parameter : value
+ Parameter type  : i
+ Omittable       : False
+
+
+
+Command /remoll/evgen/TF1/ring
+    ---- available only in worker thread
+Guidance :
+Integer ring number for Remoll generator
+
+Parameter : value
+ Parameter type  : i
+ Omittable       : False
+
+
+
+Command /remoll/evgen/TF1/setFileFunction
+    ---- available only in worker thread
+Guidance :
+ROOT filename:function name
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/TF1/scattType
+    ---- available only in worker thread
+Guidance :
+Scattering type: moller, elastic, inelastic, or all
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/TF1/radOffset
+    ---- available only in worker thread
+Guidance :
+Radial offset to center detectors: boolean
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Command directory path : /remoll/evgen/elasticAl/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll elasticAl generator properties
+
+ Sub-directories : 
+ Commands : 
+Command directory path : /remoll/evgen/quasielasticAl/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll quasielasticAl generator properties
+
+ Sub-directories : 
+ Commands : 
+Command directory path : /remoll/evgen/inelasticAl/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll inelasticAl generator properties
+
+ Sub-directories : 
+ Commands : 
+Command directory path : /remoll/evgen/external/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll external generator properties
+
+ Sub-directories : 
+ Commands : 
+   file @ External generator event filename
+   zOffset @ External generator zOffset
+   detid @ External generator detector ID
+   startEvent @ External generator starting event: -1 starts random,  n starts at n (default n=0)
+
+
+Command /remoll/evgen/external/file
+    ---- available only in worker thread
+Guidance :
+External generator event filename
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/external/zOffset
+    ---- available only in worker thread
+Guidance :
+External generator zOffset
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/external/detid
+    ---- available only in worker thread
+Guidance :
+External generator detector ID
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+
+
+Command /remoll/evgen/external/startEvent
+    ---- available only in worker thread
+Guidance :
+External generator starting event: -1 starts random,  n starts at n (default n=0)
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Command directory path : /remoll/evgen/pion_LUND/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll pion_LUND generator properties
+
+ Sub-directories : 
+ Commands : 
+   LUND_filename @ LUND Input filename
+
+
+Command /remoll/evgen/pion_LUND/LUND_filename
+    ---- available only in worker thread
+Guidance :
+LUND Input filename
+
+Parameter : arg
+ Parameter type  : s
+ Omittable       : False
+
+Command directory path : /remoll/evgen/carbon/
+
+
+    ---- available only in worker thread
+Guidance :
+Remoll carbon generator properties
+
+ Sub-directories : 
+ Commands : 
+Graphics systems deleted.
