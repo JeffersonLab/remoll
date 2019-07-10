@@ -7,14 +7,15 @@
   <position name="trackingDetectorVirtualPlaneFront2_pos" z="-1.25" unit="m"/>
   <position name="trackingDetectorVirtualPlaneBack1_pos"  z="+1.25" unit="m"/>
   <position name="trackingDetectorVirtualPlaneBack2_pos"  z="+1.45" unit="m"/>
-  <position name="mainDetectorVirtualPlane_pos" z="28.500" unit="m"/>
-  <position name="col2USVirtualPlane_pos" z="5875.0" unit="mm"/>
-  <position name="col2DSVirtualPlane_pos" z="5975.0" unit="mm"/>
-  <position name="col4USVirtualPlane_pos" z="8275.0" unit="mm"/>
-  <position name="col4DSVirtualPlane_pos" z="8375.0" unit="mm"/>
+  <!-- <position name="mainDetectorVirtualPlane_pos" z="28.500" unit="m"/> -->
+  <position name="mainDetectorVirtualPlane_pos" z="27.0" unit="m"/>
+  <position name="col2USVirtualPlane_pos" z="5823.0" unit="mm"/>
+  <position name="col2DSVirtualPlane_pos" z="5977.0" unit="mm"/>
+  <position name="col4USVirtualPlane_pos" z="8223.0" unit="mm"/>
+  <position name="col4DSVirtualPlane_pos" z="8377.0" unit="mm"/>
   <position name="lintel1USVirtualPlane_pos" z="12795.0" unit="mm"/>
-  <position name="col5USVirtualPlane_pos" z="12800.0" unit="mm"/>
-  <position name="col5DSVirtualPlane_pos" z="12870.0" unit="mm"/>
+  <position name="col5USVirtualPlane_pos" z="12798.0" unit="mm"/>
+  <position name="col5DSVirtualPlane_pos" z="12872.0" unit="mm"/>
   <position name="lintel2USVirtualPlane_pos" z="17811.0" unit="mm"/>
   <position name="lintel3USVirtualPlane_pos" z="19500.0" unit="mm"/>
   <position name="lintel4USVirtualPlane_pos" z="24200.0" unit="mm"/>
