@@ -28,10 +28,6 @@
 /remoll/thmin 0.1 deg
 /remoll/thmax 2.0 deg
 
-# Only have this AFTER we've initalized geometry
-/remoll/targpos 0.0 cm
-/remoll/targlen 1.5 mm
-
 /remoll/beamcurr 85 microampere
 
 #Enable optical photons and processes

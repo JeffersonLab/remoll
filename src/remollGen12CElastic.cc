@@ -228,7 +228,7 @@ void remollGen12CElastic::SamplePhysics(remollVertex *vert, remollEvent *evt)
     //    double sigma = sigma_mott*(ef/beamE)*(ffpart1 + ffpart2);
     double sigma = sigma_mott*(ef/beamE);
 
-    double V = 2.0*pi*(cthmin - cthmax)*samp_fact;
+    double V = (fPh_max - fPh_min) * (cthmin - cthmax) * samp_fact;
 
     // Suppress too low angles from being generated
     // If we're in the multiple-scattering regime
