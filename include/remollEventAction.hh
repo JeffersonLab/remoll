@@ -9,7 +9,6 @@
 class G4Event;
 
 class remollPrimaryGeneratorAction;
-class remollIO;
 class remollTrackReconstruct;
 
 class remollEventAction : public G4UserEventAction
@@ -25,7 +24,6 @@ class remollEventAction : public G4UserEventAction
   private:
     // Pointer to primary generator action
     remollPrimaryGeneratorAction* fPrimaryGeneratorAction;
-    remollIO *fIO;
     remollTrackReconstruct* rTrack;
 
     // Timer for benchmarking of simulation time per event

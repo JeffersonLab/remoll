@@ -35,7 +35,7 @@ class remollGenBeam : public remollVEventGen {
 
     void SetRasterX(double x);
     void SetRasterY(double y);
-    void SetRasterZ(double z);
+    void SetRasterRefZ(double z);
 
     G4double GetSpread(G4double spread, EOriginModel model);
     G4ThreeVector GetSpread(G4ThreeVector spread,
@@ -48,6 +48,9 @@ class remollGenBeam : public remollVEventGen {
     void SetDirectionZ(double dz);
     void SetDirectionPh(double ph);
     void SetDirectionTh(double th);
+
+    void SetCorrelationX(double cx);
+    void SetCorrelationY(double cy);
 
     void SetPolarizationX(double sx);
     void SetPolarizationY(double sy);
@@ -62,9 +65,11 @@ class remollGenBeam : public remollVEventGen {
     G4ThreeVector fOriginSpread;
     EOriginModel  fOriginModelX, fOriginModelY, fOriginModelZ;
     G4ThreeVector fDirection;
+    G4ThreeVector fCorrelation;
     G4ThreeVector fPolarization;
 
     G4ThreeVector fRaster;
+    Double_t fRasterRefZ;
 
     G4String fParticleName;
 };

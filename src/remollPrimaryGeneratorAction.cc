@@ -14,7 +14,6 @@
 #endif
 #endif
 
-#include "remollIO.hh"
 #include "remollBeamTarget.hh"
 #include "remollVEventGen.hh"
 #include "remollEvent.hh"
@@ -34,6 +33,7 @@
 #include "remollGenExternal.hh"
 #include "remollGenAl.hh"
 #include "remollGenLUND.hh"
+#include "remollGenHyperon.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
 : fEventGen(0),fPriGen(0),fParticleGun(0),fBeamTarg(0),fEvent(0),fMessenger(0),fEffCrossSection(0)
@@ -60,6 +60,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     fEvGenMap["external"] = new remollGenExternal();
     fEvGenMap["pion_LUND"] = new remollGenLUND();
     fEvGenMap["carbon"] = new remollGen12CElastic();
+    fEvGenMap["hyperon"] = new remollGenHyperon();
 
     // Populate map with all possible primary generators
     fPriGenMap["particlegun"] = new G4ParticleGun();

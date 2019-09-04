@@ -1,23 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY world SYSTEM "solids/world.xml">
+<!ENTITY positions SYSTEM "positions.xml">
+]>
+
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
-  <position name="trackingDetectorVirtualPlaneCenter_pos" z="25.635" unit="m"/>
-  <position name="trackingDetectorVirtualPlaneFront1_pos" z="-1.45" unit="m"/>
-  <position name="trackingDetectorVirtualPlaneFront2_pos" z="-1.25" unit="m"/>
-  <position name="trackingDetectorVirtualPlaneBack1_pos"  z="+1.25" unit="m"/>
-  <position name="trackingDetectorVirtualPlaneBack2_pos"  z="+1.45" unit="m"/>
-  <position name="mainDetectorVirtualPlane_pos" z="28.500" unit="m"/>
+  &positions;
 </define>
 
 <materials>
 </materials>
 
 <solids>
-  <tube
-    name="ParallelWorld_solid"
-    startphi="0" deltaphi="360" aunit="deg"
-    rmax="2000" rmin="0" z="80000" lunit="mm"/>
+  &world;
   <tube
     name="trackingDetectorVirtualPlanes_solid"
     startphi="0" deltaphi="360" aunit="deg"
@@ -69,7 +67,7 @@
 
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="ParallelWorld_solid"/>
+    <solidref ref="parallel_solid"/>
 
     <physvol name="trackingDetectorVirtualPlane_phys">
       <volumeref ref="trackingDetectorVirtualPlanes_log"/>

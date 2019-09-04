@@ -21,7 +21,6 @@ typedef G4RunManager RunManager;
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
-#include "remollIO.hh"
 #include "remollPhysicsList.hh"
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
@@ -29,6 +28,8 @@ typedef G4RunManager RunManager;
 
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
+
+#include "TROOT.h"
 
 #ifdef __APPLE__
 #include <unistd.h>

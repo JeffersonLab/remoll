@@ -19,8 +19,6 @@
 /remoll/gen elasticAl
 
 /remoll/targname DSAlTarg
-#/remoll/targpos   +75.0 cm
-#/remoll/targlen  0.0127 cm
 
 /remoll/beamcurr 85 microampere
 

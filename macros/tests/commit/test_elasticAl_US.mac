@@ -1,5 +1,7 @@
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother.gdml
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+/remoll/physlist/parallel/enable
 
 # This must be explicitly called
 /run/initialize
@@ -21,8 +23,6 @@
 /remoll/evgen/set elasticAl
 
 /remoll/targname USAlTarg
-#/remoll/targpos   -75.0 cm
-#/remoll/targlen  0.0127 cm
 
 # Generation limits
 # theta

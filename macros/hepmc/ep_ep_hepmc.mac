@@ -15,10 +15,6 @@
 # Beam current
 /remoll/beamcurr 85 microampere
 
-# Target position
-/remoll/targpos 0 cm
-/remoll/targlen 1 mm
-
 # Raster
 /remoll/oldras true
 /remoll/rasx 0 mm

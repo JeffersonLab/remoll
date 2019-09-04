@@ -62,6 +62,16 @@ class remollGenericDetector : public G4VSensitiveDetector {
       }
     }
 
+    void PrintSummary(G4int det) {
+      for (std::list<remollGenericDetector*>::iterator
+        it  = fGenericDetectors.begin();
+        it != fGenericDetectors.end();
+        it++) {
+          if ((*it)->fDetNo == det)
+            (*it)->PrintSummary();
+      }
+    }
+
     void SetAllEnabled() {
       for (std::list<remollGenericDetector*>::iterator
         it  = fGenericDetectors.begin();
@@ -147,6 +157,11 @@ class remollGenericDetector : public G4VSensitiveDetector {
           fDetectOpticalPhotons = false;
           fDetectLowEnergyNeutrals = false;
         }
+        if (det_type.compareTo("all", G4String::ignoreCase) == 0) {
+          G4cout << GetName() << " detects all particles" << G4endl;
+          fDetectSecondaries = true;
+          fDetectLowEnergyNeutrals = true;
+        }
         if (det_type.compareTo("lowenergyneutral", G4String::ignoreCase) == 0) {
           G4cout << GetName() << " detects low energy neutrals" << G4endl;
           fDetectLowEnergyNeutrals = true;
@@ -173,7 +188,19 @@ class remollGenericDetector : public G4VSensitiveDetector {
       };
       void PrintEnabled() const {
         G4cout << "Det " << GetName() << " (" << fDetNo << ") "
-            << (fEnabled? "enabled" : "disabled") << G4endl;
+            << (fEnabled? "enabled" : "disabled")
+            << (fDetectLowEnergyNeutrals? " lowenergyneutral":"")
+            << (fDetectOpticalPhotons? " opticalphoton":"")
+            << (fDetectSecondaries? " secondaries":"")
+            << G4endl;
+      };
+
+      void PrintSummary() const {
+        for (auto it = fRunningSumMap.begin(); it != fRunningSumMap.end(); it++) {
+          G4cout << "Det no " << fDetNo << ", "
+                 << "copy no " << it->first << ": " << G4endl;
+          it->second->PrintSummary();
+        }
       };
 
       void  SetDetNo(G4int detno) { fDetNo = detno; }
@@ -185,6 +212,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
       G4int fHCID, fSCID;
 
+      std::map<int, remollGenericDetectorSum *> fRunningSumMap;
       std::map<int, remollGenericDetectorSum *> fSumMap;
 
       G4bool fDetectSecondaries;

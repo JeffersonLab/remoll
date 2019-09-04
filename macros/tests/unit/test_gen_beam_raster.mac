@@ -1,0 +1,15 @@
+/run/initialize
+/remoll/evgen/set beam
+/remoll/filename remollout_default_raster.root
+/run/beamOn 1000
+
+/remoll/evgen/beam/origin 0 0 -5 m
+/remoll/evgen/beam/direction 0 0 1
+/remoll/evgen/beam/rasx 8 mm
+/remoll/evgen/beam/rasy 5 mm
+/remoll/evgen/beam/rasrefz -0.75 m
+# units of correlation in mrad/mm
+/remoll/evgen/beam/corrx 0.5
+/remoll/evgen/beam/corry 0.1
+/remoll/filename remollout_strange_raster.root
+/run/beamOn 1000

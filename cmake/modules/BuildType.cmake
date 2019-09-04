@@ -1,7 +1,10 @@
 # Set a default build type if none was specified
 set(DEFAULT_CMAKE_BUILD_TYPE "Release")
 if (EXISTS "${CMAKE_SOURCE_DIR}/.git")
-  set(DEFAULT_CMAKE_BUILD_TYPE "Debug")
+  set(DEFAULT_CMAKE_BUILD_TYPE "RelWithDebInfo")
+endif()
+if (EXISTS "${CMAKE_SOURCE_DIR}/.buildtype")
+  file(STRINGS "${CMAKE_SOURCE_DIR}/.buildtype" DEFAULT_CMAKE_BUILD_TYPE)
 endif()
 if (NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   message(STATUS "Setting build type to '${DEFAULT_CMAKE_BUILD_TYPE}' as none was specified.")

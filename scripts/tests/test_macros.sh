@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit whenever non-zero exit code occurs
+set -euo pipefail
+
 # Determine absolute path of this script
 dir=`dirname $0`/../..
 dir=`readlink -f ${dir}`
@@ -89,7 +92,7 @@ for macro in ${macros}/${macroglob} ; do
 	echo "Starting analysis..." | tee ${logfiles}/analysis/${name}.log
 	for rootmacro in ${analysis1}/${analysisglob} ${analysis2}/${analysisglob} ; do
 		echo "Running analysis macro `basename ${rootmacro} .C`..."
-		time root -q -b -l "${rootmacro}+(\"${rootfiles}\",\"${name}\")" 2>&1 | tee -a ${logfiles}/analysis/${name}.log
+		time build/reroot -q -b -l "${rootmacro}+(\"${rootfiles}\",\"${name}\")" 2>&1 | tee -a ${logfiles}/analysis/${name}.log
 	done
 
 done

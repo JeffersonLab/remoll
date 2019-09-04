@@ -1,5 +1,7 @@
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother.gdml
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+/remoll/physlist/parallel/enable
 
 # This must be explicitly called
 /run/initialize
