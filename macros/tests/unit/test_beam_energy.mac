@@ -1,5 +1,7 @@
 # This will produce four files test_moller_$E.root, $E = 8,9,10,11 GeV.
 
+/control/execute macros/kryptonite.mac
+
 /run/initialize
 
 /remoll/filename test_moller_8.root
