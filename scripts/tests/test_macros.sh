@@ -18,14 +18,17 @@ macroglob="${2:-*.mac}"
 shopt -s nullglob
 analysisglob="${3:-*.C}"
 
+# The branch name is used to avoid clobbering comparative output
+branch=`git rev-parse --abbrev-ref HEAD`
+
 # Set test suite input directories
 macros=${dir}/macros/tests/${suite}
 analysis1=${dir}/analysis/tests
 analysis2=${dir}/analysis/tests/${suite}
 
 # Set test suite output directories
-rootfiles=${dir}/rootfiles/tests/${suite}
-logfiles=${dir}/logfiles/tests/${suite}
+rootfiles=${dir}/rootfiles/tests/${suite}/${branch}
+logfiles=${dir}/logfiles/tests/${suite}/${branch}
 mkdir -p ${logfiles} ${rootfiles} ${rootfiles}/analysis
 
 
