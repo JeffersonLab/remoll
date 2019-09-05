@@ -90,7 +90,6 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
   public:
 
     void SetKryptoniteVerbose(G4int verbose) { fKryptoniteVerbose = verbose; }
-    void SetKryptoniteEnable(G4String flag);
     void EnableKryptonite();
     void DisableKryptonite();
     void AddKryptoniteCandidate(G4String name);
