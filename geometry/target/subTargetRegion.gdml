@@ -10,6 +10,10 @@
   <define>
     &matrices;
 
+   <constant name="targetCenterZ" value="0"/>
+   <constant name="tubeTarget_length" value="1250"/>
+   <constant name="AlWindowTarget_length" value="0.127"/>
+
     <constant name="targetChamber_R" value="1981.0/2.0"/>
     <constant name="targetChamber_L" value="1829."/>
     <constant name="targetChamber_thickness" value="13."/>
@@ -64,10 +68,10 @@
    </subtraction>
 
    <tube aunit="deg" lunit="mm" deltaphi="360" name="target_solid"
-	  rmax="40" rmin="0" z="1500"/>
+	  rmax="40" rmin="0" z="tubeTarget_length"/>
 
     <tube aunit="deg" lunit="mm" deltaphi="360" name="AlWindow"
-	  rmax="40" rmin="0" z="0.127"/>
+	  rmax="40" rmin="0" z="AlWindowTarget_length"/>
 
     <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamber_solid1"
 	  rmin="targetChamber_R"
@@ -266,17 +270,17 @@
 
      <physvol>
        <volumeref ref="USAlTarg"/>
-       <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-750-1"/>
+       <position name="targ_upstream_window" unit="mm" x="0" y="0" z="targetCenterZ-(AlWindowTarget_length+tubeTarget_length)/2"/>
      </physvol>
 
      <physvol>
        <volumeref ref="h2Targ"/>
-       <position name="targ_center1" unit="mm" x="0" y="0" z="0"/>
+       <position name="targ_center1" unit="mm" x="0" y="0" z="targetCenterZ"/>
      </physvol>
 
      <physvol>
        <volumeref ref="DSAlTarg"/>
-       <position name="targ_downstream_window" unit="mm" x="0" y="0" z="750+1"/>
+       <position name="targ_downstream_window" unit="mm" x="0" y="0" z="targetCenterZ+(AlWindowTarget_length+tubeTarget_length)/2"/>
      </physvol>
 
      <physvol>

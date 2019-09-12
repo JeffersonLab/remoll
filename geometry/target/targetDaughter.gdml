@@ -2,11 +2,10 @@
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
+  <constant name="targetCenterZ" value="0"/>
   <constant name="tubeTarget_rmax" value="40"/>
-  <constant name="tubeTarget_length" value="1500"/>
+  <constant name="tubeTarget_length" value="1250"/>
   <constant name="AlWindowTarget_length" value="0.127"/>
-
-  <position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
 </define>
 
   <materials>
@@ -29,7 +28,7 @@
   </materials>
 
 <solids>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1000" rmin="0" startphi="0" z="2000"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1000" rmin="0" startphi="0" z="2400"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="tubeTarget_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="AlWindow" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="AlWindowTarget_length"/>
 </solids>
@@ -61,17 +60,17 @@
 
       <physvol>
         <volumeref ref="USAlTarg"/>
-        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-(AlWindowTarget_length+tubeTarget_length)/2.0"/>
+        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="targetCenterZ-(AlWindowTarget_length+tubeTarget_length)/2.0"/>
       </physvol>
 
       <physvol>
         <volumeref ref="h2Targ"/>
-        <position name="targ_center" unit="mm" x="0" y="0" z="0"/>
+        <position name="targ_center" unit="mm" x="0" y="0" z="targetCenterZ"/>
       </physvol>
       
       <physvol>
         <volumeref ref="DSAlTarg"/>
-        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="+(AlWindowTarget_length+tubeTarget_length)/2.0"/>
+        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="targetCenterZ+(AlWindowTarget_length+tubeTarget_length)/2.0"/>
       </physvol>
 
       <auxiliary auxtype="TargetSystem" auxvalue=""/>

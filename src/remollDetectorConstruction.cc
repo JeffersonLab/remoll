@@ -47,7 +47,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
 : fVerboseLevel(0),
   fGDMLParser(0),
   fGDMLValidate(false),
-  fGDMLOverlapCheck(true),
+  fGDMLOverlapCheck(false),
   fGDMLPath("geometry"),
   fGDMLFile("mollerMother.gdml"),
   fMessenger(0),
@@ -64,14 +64,6 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
 
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
-
-  // Starter set of kryptonite materials
-  AddKryptoniteCandidate("VacuumKryptonite");
-  AddKryptoniteCandidate("Tungsten");
-  AddKryptoniteCandidate("CW95");
-  AddKryptoniteCandidate("Copper");
-  AddKryptoniteCandidate("Lead");
-  InitKryptoniteMaterials();
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -189,10 +181,6 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       &remollDetectorConstruction::SetKryptoniteVerbose,
       "Set verbose level");
   fKryptoniteMessenger->DeclareMethod(
-      "set",
-      &remollDetectorConstruction::SetKryptoniteEnable,
-      "Treat materials as kryptonite");
-  fKryptoniteMessenger->DeclareMethod(
       "enable",
       &remollDetectorConstruction::EnableKryptonite,
       "Treat materials as kryptonite");
@@ -208,14 +196,6 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       "list",
       &remollDetectorConstruction::ListKryptoniteCandidates,
       "List kryptonite candidate materials");
-}
-
-void remollDetectorConstruction::SetKryptoniteEnable(G4String flag)
-{
-  if (flag.compareTo("true", G4String::ignoreCase) == 0)
-    EnableKryptonite();
-  else
-    DisableKryptonite();
 }
 
 void remollDetectorConstruction::EnableKryptonite()
@@ -384,7 +364,11 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 
     // Parse GDML file
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
+    // hide output if not validating or checking ovelaps
+    if (! fGDMLOverlapCheck && ! fGDMLValidate)
+      G4cout.setstate(std::ios_base::failbit);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+    G4cout.clear();
     G4VPhysicalVolume* worldvolume = fGDMLParser->GetWorldVolume();
 
     // Print tolerances
