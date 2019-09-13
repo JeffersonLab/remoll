@@ -244,7 +244,7 @@ remollEventParticle_t interpolate(remollEventParticle_t part){
     newPart.tpy=0;
     newPart.tpz=0;
     //int stepSize = 25;
-    int stepSize = 10;
+    int stepSize = 100;
     for(size_t z = 4500; z <= 33000; z+=stepSize){
         //if (z >= 12500)
         //    stepSize = 500;
@@ -317,7 +317,7 @@ bool isValid(remollEventParticle_t part){
 
     /*
        bool invert = false;
-       int acceptZ = 5975; //Z value for the acceptance defining col
+       int acceptZ = 5900; //Z value for the acceptance defining col
        double lowR = 35.0; 
        double highR = 98;
 
@@ -356,25 +356,25 @@ bool isValid(remollEventParticle_t part){
         /*
         // Old cuts!      coll cut         ring cuts         lintel cuts  
         //int cutLen = 8; //apply the first n cuts in the array
-        //double cutR[] = {35.0  , 104.0  , 690.0  , 1200.0 , 374.8  , 640.5  , 680.0  , 1054.0 };
-        //double cutZ[] = {5975.0, 5975.0, 28228.0, 28228.0, 12800.0, 17811.0, 19500.0, 24200.0};
+        //double cutR[] = {35.0  , 103.0  , 690.0  , 1200.0 , 374.8  , 640.5  , 680.0  , 1054.0 };
+        //double cutZ[] = {5900.0, 5900.0, 28228.0, 28228.0, 12800.0, 17811.0, 19500.0, 24200.0};
         //bool gte[] =    {false , true  , false  , true   , true   , true   , true   , true   };
         */
 
         // Hits detector rings only cut 
         /*int colCutLen = 9;
         int lintelCutLen = 1;
-        //double colCutR[] = {35.0  , 104.0  , 53.0  , 190.9 , 625.0  , 680.0  , 1050.0 , 690.0, 1200.0 };
-        double colCutR[] = {35.0  , 104.0  , 53.0  , 190.9 , 625.0  , 680.0  , 925.0 , 690.0, 1200.0 };
-        double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0, 17811.0, 19500.0, 24200.0, 28228.0, 28228.0 };
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 625.0  , 680.0  , 1050.0 , 690.0, 1200.0 };
+        double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 625.0  , 680.0  , 925.0 , 690.0, 1200.0 };
+        double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 17811.0, 19500.0, 24200.0, 28228.0, 28228.0 };
         bool colGte[] =    {false , true  , false , true  , true   , true   , true , false, true };
         double lintelCutX[] = {374.8  };
         double lintelCutZ[] = {12800.0};
         bool lintelGte[] =    {true   };  Cameron July 6 - this would normally be the full series of cuts*/
         //int colCutLen = 6;   // these are radial cuts, above and below
         //int lintelCutLen = 4;// these are x axis cuts, above
-        //double colCutR[] = {35.0  , 104.0  , 53.0  , 190.9 , 690.0  , 1200.0  };
-        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0, 28228.0, 28228.0 };
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 690.0  , 1200.0  };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 28228.0, 28228.0 };
         //bool colGte[] =    {false , true  , false , true , false  , true    };
         //double lintelCutX[] = {374.8  , 625.0  , 680.0  , 1050.0 };
         //double lintelCutZ[] = {12800.0, 17811.0, 19500.0, 24200.0};
@@ -389,72 +389,82 @@ bool isValid(remollEventParticle_t part){
         // Lintel 4 is at 24200
 
         // All particles through col 2 cut - to Col4
-        int colCutLen = 2;
-        int lintelCutLen = 0;
-        double colCutR[] = {35.0  , 104.0  }; // 104 is the new outter radius.
-        double colCutZ[] = {5975.0, 5975.0};
-        bool colGte[] =   {false , true   };
-        double lintelCutX[] = {0.0};
-        double lintelCutZ[] = {0.0};
-        bool lintelGte[] =    {false};
+        //int colCutLen = 2;
+        //int lintelCutLen = 0;
+        //double colCutR[] = {35.0  , 103.0  }; // 103 is the new outter radius.
+        //double colCutZ[] = {5900.0, 5900.0};
+        //bool colGte[] =   {false , true   };
+        //double lintelCutX[] = {0.0};
+        //double lintelCutZ[] = {0.0};
+        //bool lintelGte[] =    {false};
 
-/*
         // All particles through col 4 cut - to Lintel 1
-        int colCutLen = 4;
-        int lintelCutLen = 0;
-        double colCutR[] = {35.0  , 104.0  , 53.0  , 190.9 };
-        double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0};
-        bool colGte[] =   {false , true  , false , true   };
-        double lintelCutX[] = {0.0};
-        double lintelCutZ[] = {0.0};
-        bool lintelGte[] =    {false};
-
-*/
-
-        // All particles through second lintel cut - to Lintel3
+        //int colCutLen = 4;
+        //int lintelCutLen = 0;
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0};
+        //bool colGte[] =   {false , true  , false , true   };
+        //double lintelCutX[] = {0.0};
+        //double lintelCutZ[] = {0.0};
+        //bool lintelGte[] =    {false};
 
         // All particles through first lintel cut - to Lintel 2
+        //
         //int colCutLen = 4;
         //int lintelCutLen = 1;
-        //double colCutR[] = {35.0  , 104.0  , 53.0  , 190.9 };
-        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0};
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0};
         //bool colGte[] =    {false , true  , false , true  };
-        //double lintelCutX[] = {374.8  };
+        //double lintelCutX[] = {404.0  };
         //double lintelCutZ[] = {12800.0};
         //bool lintelGte[] =    {true   };
 
         // All particles through second lintel cut - to Lintel3
         //int colCutLen = 5;
         //int lintelCutLen = 1;
-        //double colCutR[] = {35.0  , 104.0  , 53.0  , 190.9 , 625.0  };
-        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0, 17811.0};
+        //double colCutR[] = {35.0  , 103.0 , 53.5  , 196.5 , 650.0  };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 17811.0};
         //bool colGte[] =    {false , true  , false , true  , true   };
-        //double lintelCutX[] = {374.8  };
+        //double lintelCutX[] = {404.0  };
         //double lintelCutZ[] = {12800.0};
         //bool lintelGte[] =    {true   };
         
         // All particles through third lintel cut - to Lintel4
         //int colCutLen = 6;
         //int lintelCutLen = 1;
-        //double colCutR[] = {35.0  , 104.0  , 53.0  , 190.9 , 625.0  , 680.0  };
-        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0, 17811.0, 19500.0};
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 650.0  , 732.0  };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 17811.0, 19500.0};
         //bool colGte[] =    {false , true  , false , true  , true   , true   };
-        //double lintelCutX[] = {374.8  };
+        //double lintelCutX[] = {404.0  };
         //double lintelCutZ[] = {12800.0};
         //bool lintelGte[] =    {true   };
         
         // All particles through fourth lintel cut - to Detector Plane
-        //int colCutLen = 7;
-        //int lintelCutLen = 1;
-        //double colCutR[] = {35.0  , 104.0  , 53.0  , 190.9 , 625.0  , 680.0  , 1050.0 };
-        //// Lower R
-        ////double colCutR[] = {35.0  , 104.0  , 53.0  , 190.9 , 625.0  , 680.0  , 925.0 };
-        //double colCutZ[] = {5975.0, 5975.0, 8375.0, 8375.0, 17811.0, 19500.0, 24200.0};
-        //bool colGte[] =    {false , true  , false , true  , true   , true   , true   };
-        //double lintelCutX[] = {374.8  };
-        //double lintelCutZ[] = {12800.0};
-        //bool lintelGte[] =    {true   };
+        int colCutLen = 7;
+        int lintelCutLen = 1;
+        double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 650.0  , 732.0  , 928.0 };
+        double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 17811.0, 19500.0, 23500.0};
+        bool colGte[] =    {false , true  , false , true  , true   , true   , true   };
+        double lintelCutX[] = {404.0  };
+        double lintelCutZ[] = {12800.0};
+        bool lintelGte[] =    {true   };
         
+
+
+        // OLD Stuff
+        /*
+        int colCutLen = 4;
+        int lintelCutLen = 1;
+        double cutR[] = {35.3  , 98.0  , 53.0, 190.9, 640.5  , 680.0  , 1054.0 };
+        double cutZ[] = {5975.0, 5975.0, 8375, 8375, 17811.0, 19500.0, 24200.0};
+        bool gte[] =    {false , true  , false  , true   , true   , true   , true   , true   };
+        bool colGte[] =    {false , true  , false , true  };
+        double lintelCutX[] = {374.8  };
+        double lintelCutZ[] = {12800.0};
+        bool lintelGte[] =    {true   };
+*/
+
+
         //false -> include all particles radius > R
         //true -> include all particles radius <= R
 
@@ -606,11 +616,13 @@ void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double en
     double highR = 5000.0;
     if (ringCut==-1){ //all rings
         hitRcut=true;
-        lowR = 690.0;
+        //lowR = 690.0;
+        lowR = 630.0;
         highR = 1200.0;
     }
     if (ringCut>0){
         hitRcut=true;
+        // These definitions are inaccurate now (need to chage with shorter experiment definition)
         if (ringCut==6){
             // Ring 6
             lowR = 1100.0;
