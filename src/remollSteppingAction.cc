@@ -16,5 +16,4 @@ remollSteppingAction::~remollSteppingAction()
 
 void remollSteppingAction::UserSteppingAction(const G4Step *aStep)
 {
-    G4cout << "in remollSteppingAction::UserSteppingAction " << G4endl;
 }
