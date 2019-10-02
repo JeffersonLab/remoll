@@ -21,9 +21,6 @@
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
-/remoll/field/zoffset map_directory/blockyHybrid_rm_3.0.txt -5087.
-/remoll/field/zoffset map_directory/blockyUpstream_rm_1.1.txt -5087.
-
 #/remoll/field/scale map_directory/blockyHybrid_rm_3.0.txt 1.0
 #/remoll/field/current map_directory/blockyHybrid_rm_3.0.txt 1000.0
 
