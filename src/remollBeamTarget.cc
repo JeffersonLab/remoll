@@ -125,7 +125,7 @@ void remollBeamTarget::UpdateInfo()
     if (!fTargetMother) {
       return;
     }
-    fMotherTargetAbsolutePosition = fTargetMother->GetFrameTranslation().z();
+    fMotherTargetAbsolutePosition = fTargetMother->GetTranslation().z();
 
     for (std::vector<G4VPhysicalVolume *>::iterator
         it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
@@ -154,7 +154,7 @@ void remollBeamTarget::UpdateInfo()
 	    fActiveTargetEffectiveLength = tubs->GetZHalfLength()*2.0
 		* material->GetDensity();
 
-	    fActiveTargetRelativePosition = (*it)->GetFrameTranslation().z();
+	    fActiveTargetRelativePosition = (*it)->GetTranslation().z();
 
 	    fTotalTargetEffectiveLength += tubs->GetZHalfLength()*2.0
 		* material->GetDensity();
@@ -245,7 +245,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
         it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !found_active_volume; it++ ){
 
         // Relative position of this target volume in mother volume
-        //G4double relative_position = (*it)->GetFrameTranslation().z();
+        G4double volume_relative_position = (*it)->GetTranslation().z();
 
         // Try to cast the target volume into its tubs solid
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
@@ -304,9 +304,10 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	    // For our own info
 	    fTravelledLength = actual_position_in_volume;
 	    fRadiationLength = cumulative_radiation_length;
-	    fVer    = G4ThreeVector( rasx, rasy, 
-		      actual_position_in_volume - (*it)->GetFrameTranslation().z() + fMotherTargetAbsolutePosition
-		       - tubs->GetZHalfLength() );
+	    fVer    = G4ThreeVector( rasx, rasy,
+		      fMotherTargetAbsolutePosition
+                      + volume_relative_position - tubs->GetZHalfLength()
+                      + actual_position_in_volume );
 
 	    G4double masssum = 0.0;
 	    const G4int *atomvec = material->GetAtomsVector();

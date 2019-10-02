@@ -66,8 +66,6 @@ remollGlobalField::remollGlobalField()
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
     fMessenger->DeclareMethod("addfield",&remollGlobalField::AddNewField,"Add magnetic field");
-    fMessenger->DeclareMethod("scalefield",&remollGlobalField::SetFieldScaleByString,"Scale magnetic field");
-    fMessenger->DeclareMethod("magcurrent",&remollGlobalField::SetMagnetCurrentByString,"Scale magnetic field by current");
 
     // Create global field messenger
     fGlobalFieldMessenger = new G4GenericMessenger(this,"/remoll/field/","Remoll global field properties");
@@ -80,6 +78,9 @@ remollGlobalField::remollGlobalField()
     fGlobalFieldMessenger->DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
     fGlobalFieldMessenger->DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
     fGlobalFieldMessenger->DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
+    fGlobalFieldMessenger->DeclareMethod("zoffset",&remollGlobalField::SetZOffset,"Set magnetic field z offset");
+    fGlobalFieldMessenger->DeclareMethod("scale",&remollGlobalField::SetFieldScale,"Scale magnetic field by factor");
+    fGlobalFieldMessenger->DeclareMethod("current",&remollGlobalField::SetMagnetCurrent,"Scale magnetic field by current");
     fGlobalFieldMessenger->DeclareMethod("value",&remollGlobalField::PrintFieldValue,"Print the field value at a given point (in m)");
 }
 
@@ -271,16 +272,16 @@ void remollGlobalField::GetFieldValue(const G4double p[], G4double *resB) const
     }
 }
 
-void remollGlobalField::SetFieldScaleByString(G4String& name_scale)
+void remollGlobalField::SetZOffset(const G4String& name, G4double offset)
 {
-  std::istringstream iss(name_scale);
-
-  G4String name, scalestr;
-  iss >> name;
-  iss >> scalestr;
-
-  G4double scaleval = atof(scalestr);
-  SetFieldScale(name, scaleval);
+  remollMagneticField *field = GetFieldByName(name);
+  if (field) {
+    G4AutoLock lock(&remollGlobalFieldMutex);
+    field->SetZoffset(offset);
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " offset failed" << G4endl;
+  }
 }
 
 void remollGlobalField::SetFieldScale(const G4String& name, G4double scale)
@@ -295,31 +296,12 @@ void remollGlobalField::SetFieldScale(const G4String& name, G4double scale)
   }
 }
 
-void remollGlobalField::SetMagnetCurrentByString(G4String& name_scale)
-{
-  std::istringstream iss(name_scale);
-
-  G4String name, scalestr, scaleunit;
-  iss >> name;
-  iss >> scalestr;
-  iss >> scaleunit;
-
-  if (scaleunit != "A") {
-    // FIXME: less snark and more functionality?
-    G4cerr << __FILE__ << " line " << __LINE__ <<  ":\n\tGraaaah - just put the current for " <<  name <<  " in amps..." << G4endl;
-    exit(1);
-  }
-
-  G4double scaleval = atof(scalestr);
-  SetMagnetCurrent(name, scaleval);
-}
-
-void remollGlobalField::SetMagnetCurrent(const G4String& name, G4double scale)
+void remollGlobalField::SetMagnetCurrent(const G4String& name, G4double current)
 {
   remollMagneticField *field = GetFieldByName(name);
   if (field) {
     G4AutoLock lock(&remollGlobalFieldMutex);
-    field->SetMagnetCurrent(scale);
+    field->SetMagnetCurrent(current);
   } else {
     G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
            << ": field " << name << " scaling failed" << G4endl;
