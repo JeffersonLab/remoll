@@ -410,7 +410,7 @@
   <opticalsurface
     name="Lucite_surface"
     model="glisur" finish="ground" type="dielectric_dielectric" value="0.97">
-    <property name="RINDEX" ref="RINDEX_LUCITE"/>
+    <property name="RINDEX" ref="RINDEX_LUCITE_surf"/>
     <property name="SPECULARLOBECONSTANT"  ref="SPECLOBE_LUCITE"/>
     <property name="SPECULARSPIKECONSTANT" ref="SPECSPIKE_LUCITE"/>
     <property name="BACKSCATTERCONSTANT"   ref="BACKSCATTER_LUCITE"/>

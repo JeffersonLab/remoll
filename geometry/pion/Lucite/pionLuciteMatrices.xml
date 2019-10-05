@@ -88,7 +88,7 @@
 
   <matrix name="RINDEX_LUCITE_surf" coldim="2" values="
     2.038*eV 1.46
-    4.144*eV 1.54"/>
+    4.144*eV 1.46"/>
   <matrix name="SPECLOBE_LUCITE" coldim="2" values="
     2.038*eV 0.3
     4.144*eV 0.3"/>
