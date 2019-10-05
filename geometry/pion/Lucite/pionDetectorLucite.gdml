@@ -124,12 +124,6 @@
     rmax="pionDetectorLucitePMTDiameter/2.0"
     z="pionDetectorLucitePMTHousingHeight"
     deltaphi="360.0" aunit="deg"/>
-<!-- scaledSolid not supported until geant4 4.10.3
-  <scaledSolid name="pionDetectorLucitePMTOutsideHousingScaled_solid">
-    <solidref ref="pionDetectorLucitePMTOutsideHousing_solid"/>
-    <scaleref ref="scale_up"/>
-  </scaledSolid>
- -->
   <tube name="pionDetectorLucitePMTOutsideHousingScaled_solid"
     rmin="0.0"
     rmax="SCALE_UP*pionDetectorLucitePMTDiameter/2.0"
@@ -233,12 +227,6 @@
       y="pionDetectorLuciteMylarThickness/2.0*tan(pionDetectorLuciteTheta)"
       z="pionDetectorLuciteMylarThickness/2.0"/>
   </subtraction>
-  <!-- scaledSolid not supported until geant4 4.10.3
-  <scaledSolid name="pionDetectorLuciteAllPlanesWedgeGlueMylarScaled_solid">
-    <solidref ref="pionDetectorLuciteAllPlanesWedgeGlueMylar_solid"/>
-    <scaleref ref="scale_up"/>
-  </scaledSolid>
- -->
   <trap name="pionDetectorLuciteAllPlanesWedgeGlueMylarScaled_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteTheta" phi="90.0*deg"
