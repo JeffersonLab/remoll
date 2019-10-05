@@ -138,7 +138,7 @@ void remollIO::WriteTree()
         exit(1);
     }
 
-    G4cout << "Writing output to " << fFile->GetName() << "... ";
+    G4cout << "Writing output to " << fFile->GetName() << " ... ";
 
     fFile->cd();
 
@@ -154,7 +154,7 @@ void remollIO::WriteTree()
     delete fFile;
     fFile = NULL;
 
-    G4cout << "written" << G4endl;
+    G4cout << "done" << G4endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
