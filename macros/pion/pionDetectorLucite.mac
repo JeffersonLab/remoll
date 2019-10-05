@@ -1,3 +1,5 @@
+# /control/execute macros/pion/pionDetectorLucite.mac
+
 # This must be called before initialize
 /remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml
 
@@ -8,16 +10,19 @@
 # This must be explicitly called
 /run/initialize
 
+# Viewer
 #/vis/open OGL 600x600-0+0
 #/control/execute vis/vis.mac
 
-/remoll/beamene 11 GeV
-
+# Reflector entry and exit detectors
+/remoll/SD/disable 8008
+/remoll/SD/disable 8009
 # Lightguide entry and exit detectors
 /remoll/SD/disable 8010
 /remoll/SD/disable 8011
 
 # Set beam generator
+/remoll/beamene 11 GeV
 /remoll/evgen/set beam
 /remoll/evgen/beam/origin 0 0 0 cm
 /remoll/evgen/beam/originspread 30 25 0 cm
@@ -28,6 +33,9 @@
 /remoll/evgen/beam/corry 0
 /remoll/evgen/beam/partName pi-
 
+# Only focus on primary tracks and optical photons
+/remoll/tracking/set 1
+
 /remoll/filename pionDetectorLucite_pi.root
 /remoll/seed 1234
-/run/beamOn 60
+/run/beamOn 1000
