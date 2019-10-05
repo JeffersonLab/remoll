@@ -27,7 +27,7 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite/set false
+/remoll/kryptonite/disable
 
 /remoll/SD/disable_all
 /remoll/SD/enable 28

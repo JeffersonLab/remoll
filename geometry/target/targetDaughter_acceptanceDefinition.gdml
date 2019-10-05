@@ -13,7 +13,7 @@
     <constant name="y_increase_targ" value="0.0"/>
     <constant name="YOFFSET_targ" value="-1*y_increase_targ/2"/>
 
-    <constant name="targetCenterZ" value="500"/>
+    <constant name="targetCenterZ" value="0"/>
     <constant name="tubeTarget_rmax" value="40"/>
     <constant name="tubeTarget_length" value="1250"/>
     <constant name="AlWindowTarget_length" value="0.127"/>
