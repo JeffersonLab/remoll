@@ -88,7 +88,7 @@ void remollIO::InitializeTree()
     fTree->Branch("dets.lv",  &fDetNos, fDetLVNames);
 
     // Event information
-    fTree->Branch("rate",     &fEvRate,   "rate/D");
+    fTree->Branch("rate",     &fRate,   "rate/D");
     fTree->Branch("ev",       &fEv);
     fTree->Branch("bm",       &fBm);
     fTree->Branch("part",     &fEvPart);
@@ -173,7 +173,7 @@ void remollIO::SetEventData(const remollEvent *ev)
 {
   if (! ev) return;
 
-  fEvRate   = ev->fRate*s;
+  fRate   = ev->fRate*s;
 
   // Event variables
   fEv     = ev->GetEventIO();

@@ -104,8 +104,8 @@ class remollIO {
         G4String fDetSDNames;
 
 	// Event data
-	Double_t fEvRate;
 	TString fEvSeed;
+	Double_t fRate;
 	remollEvent_t fEv;
 	remollBeamTarget_t fBm;
 
