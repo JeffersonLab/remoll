@@ -48,7 +48,7 @@ class remollSeed_t: public TObject {
     TString fSeed; //< random engine state, a.k.a. seed (but not really)
   public:
     // Default constructor
-    remollSeed_t(): TObject() { };
+    remollSeed_t(): TObject() { fRunNo = 0; fEvtNo = 0; fSeed = ""; };
     // Copy constructor (not implemented)
     remollSeed_t(const remollSeed_t& orig);
     // Virtual destructor
