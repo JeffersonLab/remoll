@@ -1,5 +1,13 @@
 images
 
+# random seed files
+G4Master_run*.rndm
+G4Worker?_run*.rndm
+G4Worker?_run*evt*.rndm
+run*evt*.rndm
+currentEvent.rndm
+currentRun.rndm
+
 # output from createHTML
 _remoll_*.html
 
