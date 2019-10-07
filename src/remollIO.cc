@@ -27,6 +27,8 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 
+ClassImp(remollSeed_t)
+
 // Singleton
 remollIO* remollIO::gInstance = 0;
 remollIO* remollIO::GetInstance() {
