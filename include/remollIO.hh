@@ -121,7 +121,10 @@ class remollIO {
 
 	// Event data
     public:
-	void SetEventSeed(const G4String& seed);
+	void SetEventSeed(const Int_t& run, const Int_t& evt, const G4String& seed) {
+          fSeed.SetSeed(run, evt, seed);
+        }
+
 	void SetEventData(const remollEvent *);
     private:
 
@@ -134,8 +137,8 @@ class remollIO {
         G4String fDetSDNames;
 
 	// Event data
-	TString fEvSeed;
 	Double_t fRate;
+	remollSeed_t fSeed;
 	remollEvent_t fEv;
 	remollBeamTarget_t fBm;
 

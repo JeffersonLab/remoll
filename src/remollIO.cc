@@ -90,6 +90,7 @@ void remollIO::InitializeTree()
     fTree->Branch("dets.lv",  &fDetNos, fDetLVNames);
 
     // Event information
+    fTree->Branch("seed",     &fSeed);
     fTree->Branch("rate",     &fRate,   "rate/D");
     fTree->Branch("ev",       &fEv);
     fTree->Branch("bm",       &fBm);
@@ -161,13 +162,6 @@ void remollIO::WriteTree()
 
 ///////////////////////////////////////////////////////////////////////////////
 // Interfaces to output section ///////////////////////////////////////////////
-
-// Event seed
-void remollIO::SetEventSeed(const G4String& seed)
-{
-  fEvSeed = seed;
-}
-
 
 // Event Data
 
