@@ -1,4 +1,4 @@
-FROM jeffersonlab/jlabce:2.3
+FROM jeffersonlab/jlabce:2.3-mt
 
 # Install libgcj and pdftk
 RUN wget https://copr.fedorainfracloud.org/coprs/robert/gcj/repo/epel-7/robert-gcj-epel-7.repo -P /etc/yum.repos.d && \
