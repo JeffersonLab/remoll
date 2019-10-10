@@ -40,8 +40,14 @@
   <constant name="pionDetectorLuciteWedgeBevelFraction" value="0.01"/> <!-- in ]0, 1[ -->
   <constant name="pionDetectorLuciteWedgeHeightFraction" value="0.5"/> <!-- in ]0, inf[ -->
 
+  <quantity name="pionDetectorLuciteReflectorLightGuideHeight" type="length" value="40.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteReflectorHeightFraction" value="0.5"/>
+  <quantity name="pionDetectorLuciteLightGuideHeightFraction"
+            value="1.0-pionDetectorLuciteReflectorHeightFraction"/>
+
   <quantity name="pionDetectorLuciteReflectorThickness" type="length" value="1.0" unit="mm"/>
-  <quantity name="pionDetectorLuciteReflectorHeight" type="length" value="10.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteReflectorHeight"
+            value="pionDetectorLuciteReflectorLightGuideHeight*pionDetectorLuciteReflectorHeightFraction"/>
   <quantity name="pionDetectorLuciteReflectorWidth" type="length" value="40.0" unit="cm"/>
   <quantity name="pionDetectorLuciteReflectorDepth" type="length" value="5.0*2.54" unit="cm"/>
   <quantity name="pionDetectorLuciteReflectorTheta" type="angle" value="-10" unit="deg"/>
@@ -50,7 +56,8 @@
   <quantity name="pionDetectorLuciteReflectorExitDetectorThickness" type="length" value="1.0" unit="mm"/>
 
   <quantity name="pionDetectorLuciteLightGuideThickness" type="length" value="1.0" unit="mm"/>
-  <quantity name="pionDetectorLuciteLightGuideHeight" type="length" value="25.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteLightGuideHeight"
+            value="pionDetectorLuciteReflectorLightGuideHeight*pionDetectorLuciteLightGuideHeightFraction"/>
   <quantity name="pionDetectorLuciteLightGuideTheta" type="angle" value="0" unit="deg"/>
 
   <quantity name="pionDetectorLuciteLightGuideEntryDetectorThickness" type="length" value="1.0" unit="mm"/>
