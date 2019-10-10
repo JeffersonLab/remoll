@@ -11,7 +11,7 @@ _remoll_*.html
 *.DS_Store
 
 #ignore doxygen files for now
-doc
+Doxygen
 
 #ignore libraries and helper files
 *.so
