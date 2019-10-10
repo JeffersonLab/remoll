@@ -38,3 +38,5 @@ detectors are placed -->
 
 <!-- Z position of the center of the lucite stack of the pion detector. -->
 <position name="pionDetectorCenter" x="0.0" y="0.0" z="23013.00" unit="mm"/>
+<!-- Virtual planes in the parallel world -->
+<position name="pionDetectorVirtualPlane_pos" z="23013.00" unit="mm"/>
