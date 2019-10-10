@@ -3,14 +3,14 @@
 # Macrofile
 # This must be called before initialize
 /remoll/setgeofile geometry/mollerMother_acceptanceDefinition_includeCol4.gdml
-/remoll/parallel/setfile geometry/mollerParallel_envelopes.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
 /remoll/physlist/parallel/enable 
 
 # This must be explicitly called
 /run/initialize
 /remoll/geometry/userlimits/usermaxallowedstep logicDownstream 10*cm
 /remoll/geometry/userlimits/usermaxallowedstep logicUpstream 10*cm
-/remoll/tracking/set 0
+/remoll/tracking/set 2
 /tracking/storeTrajectory 1
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
@@ -19,13 +19,13 @@
 /remoll/rasx 5 mm
 /remoll/rasy 5 mm
 /remoll/beamene 11 GeV
-/remoll/evgen/set moller
+/remoll/evgen/set beam
 /remoll/beamcurr 85 microampere
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/control/execute macros/kryptonite.mac
+/remoll/kryptonite/set true
 /process/list
 # Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
-/remoll/filename remoll_moller_envelope_500k.root
-/run/beamOn 500000
+/remoll/filename remoll_photon_envelope_1M.root
+/run/beamOn 1000000
