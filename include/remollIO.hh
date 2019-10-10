@@ -14,6 +14,7 @@
 #include "G4String.hh"
 
 #include <vector>
+#include <fstream>
 
 class TFile;
 class TTree;
@@ -38,6 +39,35 @@ class DOMElement;
 XERCES_CPP_NAMESPACE_END
 
 #define __FILENAMELEN 255
+
+// Helper class to save seed and provide Save functionality
+class remollSeed_t: public TObject {
+  private:
+    Int_t fRunNo; //< run number
+    Int_t fEvtNo; //< evt number
+    TString fSeed; //< random engine state, a.k.a. seed (but not really)
+  public:
+    // Default constructor
+    remollSeed_t(): TObject() { fRunNo = 0; fEvtNo = 0; fSeed = ""; };
+    // Copy constructor (not implemented)
+    remollSeed_t(const remollSeed_t& orig);
+    // Virtual destructor
+    virtual ~remollSeed_t() { };
+    // Setter for run, evt, seed
+    void SetSeed(const Int_t& run, const Int_t& evt, const TString& seed)
+    { fRunNo = run; fEvtNo = evt; fSeed = seed; };
+    // Assignment operator (not implemented)
+    remollSeed_t& operator=(const remollSeed_t& orig);
+    // Save function for use in ROOT tree
+    int Save() const {
+      std::stringstream name;
+      name << "run" << fRunNo << "evt" << fEvtNo << ".rndm";
+      std::ofstream file(name.str());
+      file << fSeed;
+      return fSeed.Length();
+    };
+  ClassDef(remollSeed_t,1);
+};
 
 class remollIO {
     private:
@@ -91,7 +121,10 @@ class remollIO {
 
 	// Event data
     public:
-	void SetEventSeed(const G4String& seed);
+	void SetEventSeed(const Int_t& run, const Int_t& evt, const G4String& seed) {
+          fSeed.SetSeed(run, evt, seed);
+        }
+
 	void SetEventData(const remollEvent *);
     private:
 
@@ -104,8 +137,8 @@ class remollIO {
         G4String fDetSDNames;
 
 	// Event data
-	Double_t fEvRate;
-	TString fEvSeed;
+	Double_t fRate;
+	remollSeed_t fSeed;
 	remollEvent_t fEv;
 	remollBeamTarget_t fBm;
 

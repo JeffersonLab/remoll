@@ -10,6 +10,7 @@
 
 #pragma link C++ struct remollUnits_t+;
 
+#pragma link C++ struct remollSeed_t+;
 #pragma link C++ struct remollEvent_t+;
 #pragma link C++ struct remollBeamTarget_t+;
 #pragma link C++ struct remollEventParticle_t+;

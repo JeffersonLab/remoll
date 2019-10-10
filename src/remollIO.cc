@@ -27,6 +27,8 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 
+ClassImp(remollSeed_t)
+
 // Singleton
 remollIO* remollIO::gInstance = 0;
 remollIO* remollIO::GetInstance() {
@@ -88,7 +90,8 @@ void remollIO::InitializeTree()
     fTree->Branch("dets.lv",  &fDetNos, fDetLVNames);
 
     // Event information
-    fTree->Branch("rate",     &fEvRate,   "rate/D");
+    fTree->Branch("seed",     &fSeed);
+    fTree->Branch("rate",     &fRate,   "rate/D");
     fTree->Branch("ev",       &fEv);
     fTree->Branch("bm",       &fBm);
     fTree->Branch("part",     &fEvPart);
@@ -160,20 +163,13 @@ void remollIO::WriteTree()
 ///////////////////////////////////////////////////////////////////////////////
 // Interfaces to output section ///////////////////////////////////////////////
 
-// Event seed
-void remollIO::SetEventSeed(const G4String& seed)
-{
-  fEvSeed = seed;
-}
-
-
 // Event Data
 
 void remollIO::SetEventData(const remollEvent *ev)
 {
   if (! ev) return;
 
-  fEvRate   = ev->fRate*s;
+  fRate   = ev->fRate*s;
 
   // Event variables
   fEv     = ev->GetEventIO();
