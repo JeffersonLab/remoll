@@ -95,25 +95,26 @@
 
     <!--    <position name="posCOLL2" unit="mm" x="0" y="0" z="5600-UOFFSET"/> -->
     <!-- main coll, adjust this -->
-    <constant name="posCOLL2z" value ="5925-UOFFSET"/>
+    <position name="posCOLL2z" value ="5925-UOFFSET-50/2 - 75"/> <!--subtracting 75 to move it upstream to buy space - subtracting 50/2 from z to compensate for increased thickness so that downstream end still ends at the same point as before, subtracting 50/2 for the increased thickness-->
     <position name="posCOLL2" unit="mm" x="0" y="0" z="posCOLL2z"/>
     <!--Shielding beam pipe overlap with col-2 so I increased to bore radius in col-2 from 26.0 to 29.55 -->
     <constant name="COLL2_R1_U" value ="29.55"/>
     <constant name="COLL2_R1_D" value ="29.55"/>
     <!-- coll sep, inner rad, adjust this -->
-    <constant name="COLL2_R2_U" value ="35.3"/>
-    <constant name="COLL2_R2_D" value ="35.3"/>
+    <constant name="COLL2_R2_U" value ="35.0"/>
+    <constant name="COLL2_R2_D" value ="35.0"/>
     <!-- coll sep, outer rad, adjust this -->
-    <constant name="COLL2_R3_U" value ="98.0"/>
-    <constant name="COLL2_R3_D" value ="98.0"/>
+    <constant name="COLL2_R3_U" value ="103.0"/>
+    <constant name="COLL2_R3_D" value ="103.0"/>
     <constant name="COLL2_R4_U" value ="300"/>
     <constant name="COLL2_R4_D" value ="300"/>
 
-    <constant name="COLL2_THICK" value ="100.0"/>
+    <constant name="COLL2_THICK" value ="150.0"/> <!--Making collimator thicker to avoid punch through-->
     <constant name="TRAPOUTERR" value ="(COLL2_R4_U+COLL2_R3_D)/2"/>
     <constant name="TRAPINNERR" value ="(COLL2_R2_D+COLL2_R1_U)/2"/>
     <constant name="TRAPRADIUS" value ="TRAPOUTERR/2+TRAPINNERR/2"/>
     <constant name="posCOLL2TRAP_Z" value ="posCOLL2z+COLL2_THICK/2.0+0.5"/>
+    <!-- This is unused, all commented out below... -->
     <position name="posCOLL2TRAP" unit="mm" x="0" y="0" z="posCOLL2TRAP_Z"/> 
 
     <constant name="COIL_ANGLE" value="0.14754"/>
@@ -258,10 +259,12 @@
     <constant name="shield_US_beampipe_DS_rmin" value="31"/>
     <constant name="shield_US_beampipe_US_rmax" value="shield_US_beampipe_US_rmin+shield_US_beampipe_thickness"/>
     <constant name="shield_US_beampipe_DS_rmax" value="shield_US_beampipe_DS_rmin+shield_US_beampipe_thickness"/>
-	    <!--<constant name="shield_US_beampipe_center_z" value="shield_US_beampipe_length/2 + COLL1_z + COLL1_THICK/2 + 1"/>-->
-    <constant name="shield_US_beampipe_center_z" value="shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2+0.001"/>
+    <!-- <constant name="shield_US_beampipe_center_z" value="shield_US_beampipe_length/2 + COLL1_z + COLL1_THICK/2 + 1"/>--> <!-- Original --> 
+    <constant name="shield_US_beampipe_center_z" value="shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2 + 0.001-50/2 - 75.0"/> <!-- Using collimator 2 as the shielding beam pipe definition, on the way to merged col 1 and 2 -->
+    <!--need to subtract 50/2 to accomdate for the beampipe moving downstream due to collimator thickness increasing-->
     <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z"/>
 
+    <!-- Obsolete, this is commented out now/should be done in parallel world anyway -->
     <constant name="posCOLL2_det_z" value ="posCOLL2z+(COLL2_THICK/2.0) + 0.1"/>
     <position name="posCOLL2_det_sub" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z - posCOLL2_det_z"/> <!-- this detector is directly after the acceptance defining collimator -->
     <position name="posCOLL2_det" unit="mm" x="0" y="0" z="posCOLL2_det_z"/> <!-- this detector is directly after the acceptance defining collimator -->
@@ -571,8 +574,10 @@
           rmax2="COLL2_R3_D+DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
           rmin1="COLL2_R2_U-DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" 
           rmin2="COLL2_R2_D+DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" startphi="-SEPTANT/4" z="COLL2_THICK+DELTAT*2"/>
-
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>
+      <!--Increasing collimator radius to prevent high radius particles-->
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U+1700" rmax2="COLL2_R4_D+1700" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>
+      <!-- Realistic one here -->
+    <!--<cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>-->
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="coll2trap" rmax1="COLL2_R4_U+1000" rmax2="COLL2_R4_D+1000" rmin1="0.0" rmin2="0.0" startphi="0" z="1"/>
 
