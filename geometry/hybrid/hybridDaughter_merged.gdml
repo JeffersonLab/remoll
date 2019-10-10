@@ -37,19 +37,19 @@
 
     <!-- main collimator number 4, adjust this -->
     <constant name="col4shift" value ="1500"/>
-    <constant name="posPCOLL2_z" value ="9825-DOFFSET-col4shift"/>
+    <constant name="posPCOLL2_z" value ="9825-DOFFSET-col4shift-50.0/2"/> <!--subtracting 50/2 from z to compensate for increased thickness so that downstream end still ends at the same point as before-->
     <position name="posPCOLL2" unit="mm" x="0" y="0" z="posPCOLL2_z"/>
     <constant name="PCOLL2_R1_U" value ="30"/> <!-- Was 38.0" for no good reason/> -->
     <constant name="PCOLL2_R1_D" value ="30"/> <!-- 8.0"/> -->
     <!-- coll sep, inner rad, adjust this -->
-    <constant name="PCOLL2_R2_U" value ="50.0"/>  <!-- was 64, then was 52.5 for US col 4 but still bad envelope -->
-    <constant name="PCOLL2_R2_D" value ="50.0"/>
+    <constant name="PCOLL2_R2_U" value ="53.5"/>  <!-- was 64, then 52.5 but still had bad envelope"/> then was 50 for shorter exp-->
+    <constant name="PCOLL2_R2_D" value ="53.5"/>
     <!-- coll sep, outer rad, adjust this -->
-    <constant name="PCOLL2_R3_U" value ="171.4"/> <!-- was 221, then was 165.5 for US col 4 but still bad envelope -->
-    <constant name="PCOLL2_R3_D" value ="171.4"/>
+    <constant name="PCOLL2_R3_U" value ="196.5"/> <!-- was 221, then 165.5 but still bad envelope"/> then was 171.4 for old target and longer exp-->
+    <constant name="PCOLL2_R3_D" value ="196.5"/>
     <constant name="PCOLL2_R4_U" value ="300"/>
     <constant name="PCOLL2_R4_D" value ="300"/>
-    <constant name="PCOLL2_THICK" value ="100.0"/>
+    <constant name="PCOLL2_THICK" value ="150"/><!--100.0"/> increased the thickness by 50% to prevent punch through-->
 
 <!-- original numbers: FIXME also, this does not do the correct envelope matching that Tyler's envelopes suggests
     <constant name="PCOLL2_R1_U" value ="38.0"/>
@@ -174,7 +174,7 @@
     <constant name="DSbeampipe_union_1_thickness" value="10"/>
     <constant name="DSbeampipe_union_1_part1_rmax" value="boxShield_DS_beam_bore + 501"/>
     <constant name="DSbeampipe_union_1_part1_rmin" value="0"/>
-    <constant name="DSbeampipe_union_1_part2_length" value="4000"/>
+    <constant name="DSbeampipe_union_1_part2_length" value="3000"/> <!--sakib hybrid changed value from 4000 to 3000 to allow enough expanding plane detector radial range-->
     <constant name="DSbeampipe_union_1_part2_rmax" value="498"/>
     <constant name="DSbeampipe_union_1_part2_rmin" value="0"/>
     <constant name="DSbeampipe_union_1_length" value="DSbeampipe_union_1_part1_length + DSbeampipe_union_1_part2_length"/>
@@ -268,7 +268,7 @@
     <constant name="PCOLL2_SCULPT_P4_X" value ="228.0"/>
     <constant name="PCOLL2_SCULPT_P4_Y" value ="55.0"/>
     -->
-    <!-- new z position, old sculpt envelopes
+     <!--
     <constant name="PCOLL2_SCULPT_P1_X" value ="50.8"/>
     <constant name="PCOLL2_SCULPT_P1_Y" value ="13.4"/>
     <constant name="PCOLL2_SCULPT_P2_X" value ="87.6"/>
@@ -277,16 +277,25 @@
     <constant name="PCOLL2_SCULPT_P3_Y" value ="27.2"/>
     <constant name="PCOLL2_SCULPT_P4_X" value ="163.9"/>
     <constant name="PCOLL2_SCULPT_P4_Y" value ="36.3"/>
-    -->
-    <!-- new z position, new sculpt envelopes -->
+    
     <constant name="PCOLL2_SCULPT_P1_X" value ="50.1"/>
     <constant name="PCOLL2_SCULPT_P1_Y" value ="10.5"/>
     <constant name="PCOLL2_SCULPT_P2_X" value ="120.94"/>
     <constant name="PCOLL2_SCULPT_P2_Y" value ="28.1"/>
     <constant name="PCOLL2_SCULPT_P3_X" value ="152.3"/>
-    <constant name="PCOLL2_SCULPT_P3_Y" value ="38.0"/>
+    <constant name="PCOLL2_SCULPT_P3_Y" value ="38"/>
     <constant name="PCOLL2_SCULPT_P4_X" value ="166.6"/>
     <constant name="PCOLL2_SCULPT_P4_Y" value ="36.5"/>
+    -->
+    <!-- New shifted target and shrunk experiment mode col4 sculpt -->
+    <constant name="PCOLL2_SCULPT_P1_X" value ="53.3"/>
+    <constant name="PCOLL2_SCULPT_P1_Y" value ="10.3"/>
+    <constant name="PCOLL2_SCULPT_P2_X" value ="88.60"/>
+    <constant name="PCOLL2_SCULPT_P2_Y" value ="17.68"/>
+    <constant name="PCOLL2_SCULPT_P3_X" value ="123.25"/>
+    <constant name="PCOLL2_SCULPT_P3_Y" value ="28.48"/>
+    <constant name="PCOLL2_SCULPT_P4_X" value ="187.22"/>
+    <constant name="PCOLL2_SCULPT_P4_Y" value ="45.04"/>
 
 
     <position name="PCOLL2_lcut1" unit="mm" x="PCOLL2_SCULPT_P1_X" y="-PCOLL2_SCULPT_P1_Y" z="-PCOLL2_THICK/2-5"/> 
@@ -319,6 +328,7 @@
     <position name="PCOLL2_rcut12" unit="mm" x="20" y="70" z="PCOLL2_THICK/2+5"/> 
 
 
+    <!-- Original Collimator 5, pre-shortened experiment
     <constant name="COLL5_P1_X" value ="105.5"/>
     <constant name="COLL5_P1_Y" value ="8.5"/>
     <constant name="COLL5_P2_X" value ="178.0"/>
@@ -327,6 +337,19 @@
     <constant name="COLL5_P3_Y" value ="55.0"/>
     <constant name="COLL5_P4_X" value ="72"/>
     <constant name="COLL5_P4_Y" value ="13.0"/>
+
+    The new, shorter experiment version below also expands the 
+    size of collimator 5 (based on moller envelope shadow)
+    and tries to maintain relative shape of original col5  -->
+
+    <constant name="COLL5_P1_X" value ="116.38"/>
+    <constant name="COLL5_P1_Y" value ="12.75"/>
+    <constant name="COLL5_P2_X" value ="180.22"/>
+    <constant name="COLL5_P2_Y" value ="29.15"/>
+    <constant name="COLL5_P3_X" value ="180.22"/>
+    <constant name="COLL5_P3_Y" value ="54.15"/>
+    <constant name="COLL5_P4_X" value ="74.22"/>
+    <constant name="COLL5_P4_Y" value ="18.25"/>
 
     <position name="COLL5_1" unit="mm" x="COLL5_P1_X" y="COLL5_P1_Y" z="-COLL5_THICK/2"/> 
     <position name="COLL5_2" unit="mm" x="COLL5_P2_X" y="COLL5_P2_Y" z="-COLL5_THICK/2"/> 
@@ -949,13 +972,22 @@
     <!--100 mm offset to prevent target mother volume overlapping with hall mother volume length is increased by 900 (modify this 900 = poly_extend) at the end to include poly shielding-->
     <!-- <box lunit="mm" name="boxDownstream" x="2*4500" y="6000 - 100" z="7865.68 + 2*950 + poly_extend"/> -->
     <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here - centered at union_2_center -->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeSubtracted" rmin="525" rmax="1250" startphi="0" z="1000"/>
+    <subtraction name ="boxDownstream"> 
+      <first ref="boxDownstream_1"/>
+      <second ref="tubeSubtracted"/>
+      <position name="tubeSubtracted_pos" unit="mm" x="0" y="0" z="boxDSMother_length/2-1000/2" />
+    </subtraction> 
+
+<!--
     <box lunit="mm" name="boxDownstream_sub" x="boxDSMother_width" y="100+1" z="boxDSMother_length + 1"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="DSmothertubeBeampipe_sub" rmax="DSmothertubeBeampipeMother_sub_rmax" rmin="0" startphi="0" z="DSmothertubeBeampipeMother_sub_length"/>    
-    <subtraction name ="boxDownstream_3"> <!-- _2"> -->
+    <subtraction name ="boxDownstream_3"> 
       <first ref="boxDownstream_1"/>
       <second ref="boxDownstream_sub"/>
       <positionref ref="DSmothersubtract_center_1" />
     </subtraction>
+-->
                                                         <!--FIXME 9/20/2017 remove the logical volumes for the intermediate beampipes (not implemented right now)
     <subtraction name ="boxDownstream_3">
       <first ref="boxDownstream_2"/>
@@ -1030,9 +1062,9 @@
     </polycone>
 
     <tessellated name="leftpcolcut">
-	<triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
-	<quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut3" vertex4="PCOLL2_lcut5" type="ABSOLUTE"/>
-	<triangular vertex1="PCOLL2_lcut3" vertex2="PCOLL2_lcut4" vertex3="PCOLL2_lcut5" type="ABSOLUTE"/>
+        <triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
+        <quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut3" vertex4="PCOLL2_lcut5" type="ABSOLUTE"/>
+        <triangular vertex1="PCOLL2_lcut3" vertex2="PCOLL2_lcut4" vertex3="PCOLL2_lcut5" type="ABSOLUTE"/>
 
 	<quadrangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut6" vertex3="PCOLL2_lcut12" vertex4="PCOLL2_lcut7" type="ABSOLUTE"/>
 	<quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut5" vertex3="PCOLL2_lcut11" vertex4="PCOLL2_lcut12" type="ABSOLUTE"/>
@@ -1088,7 +1120,10 @@
 	<quadrangular vertex1="COLL5_6" vertex2="COLL5_7" vertex3="COLL5_15" vertex4="COLL5_14" type="ABSOLUTE"/>
     </tessellated>
 
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/>
+    <!-- Original, smaller radius collimator --> 
+    <!-- <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/> -->
+    <!-- New, large radius collimator to block high radius junk -->
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U+1700" rmax2="PCOLL2_R4_D+1700" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="pcoll2trap" rmax1="PCOLL2_R4_U+1000" rmax2="PCOLL2_R4_D+1000" rmin1="0" rmin2="0" startphi="0" z="1.0"/>
 
