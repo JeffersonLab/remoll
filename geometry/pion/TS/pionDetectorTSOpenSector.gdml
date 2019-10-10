@@ -26,7 +26,7 @@
     rmin="pionDetectorTSInnerRadius"
     rmax="pionDetectorTSOuterRadius"
        z="pionDetectorTSLength"
-    startphi="0.0" deltaphi="360.0" aunit="deg"/>
+    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
 <structure>
@@ -50,7 +50,7 @@
       <replicate_along_axis>
         <direction phi="1"/>
         <width value="PHI" unit="deg"/>
-        <offset value="PHI/2.0" unit="deg"/>
+        <offset value="-PHI/2.0" unit="deg"/>
       </replicate_along_axis>
     </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
