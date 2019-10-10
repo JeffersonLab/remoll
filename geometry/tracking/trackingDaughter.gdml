@@ -3,13 +3,13 @@
 
 <define>
   <constant name="PHI" value="360.0/7.0"/>
-  <quantity name="PHI1" type="angle" value="1*PHI" unit="deg"/>
-  <quantity name="PHI2" type="angle" value="2*PHI" unit="deg"/>
-  <quantity name="PHI3" type="angle" value="3*PHI" unit="deg"/>
-  <quantity name="PHI4" type="angle" value="4*PHI" unit="deg"/>
-  <quantity name="PHI5" type="angle" value="5*PHI" unit="deg"/>
-  <quantity name="PHI6" type="angle" value="6*PHI" unit="deg"/>
-  <quantity name="PHI7" type="angle" value="7*PHI" unit="deg"/>
+  <quantity name="PHI1" type="angle" value="0.5*PHI" unit="deg"/>
+  <quantity name="PHI2" type="angle" value="1.5*PHI" unit="deg"/>
+  <quantity name="PHI3" type="angle" value="2.5*PHI" unit="deg"/>
+  <quantity name="PHI4" type="angle" value="3.5*PHI" unit="deg"/>
+  <quantity name="PHI5" type="angle" value="4.5*PHI" unit="deg"/>
+  <quantity name="PHI6" type="angle" value="5.5*PHI" unit="deg"/>
+  <quantity name="PHI7" type="angle" value="6.5*PHI" unit="deg"/>
 
   <quantity name="GEMThickness"   type="length" value="30" unit="mm"/>
 

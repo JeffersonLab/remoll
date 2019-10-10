@@ -65,28 +65,28 @@
 
 <solids>
   <tube name="showerMaxDetectorSingleSector_solid"
-    rmin="showerMaxDetectorInnerRadius"
-    rmax="showerMaxDetectorOuterRadius"
-    z="showerMaxDetectorLength"
-    startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
+    rmin="SCALE_UP*showerMaxDetectorInnerRadius"
+    rmax="SCALE_DOWN*showerMaxDetectorOuterRadius"
+    z="SCALE_DOWN*showerMaxDetectorLength"
+    startphi="-SCALE_DOWN*PHI/2.0" deltaphi="SCALE_DOWN*PHI" aunit="deg"/>
 
   <tube name="showerMaxDetectorAllSectorsFront_solid"
     rmin="showerMaxDetectorInnerRadius"
     rmax="showerMaxDetectorOuterRadius"
     z="showerMaxDetectorLength"
-    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
+    startphi="0.0" deltaphi="360.0" aunit="deg"/>
 
   <tube name="showerMaxDetectorAllSectorsBack_solid"
     rmin="showerMaxDetectorInnerRadius"
     rmax="showerMaxDetectorOuterRadius"
     z="showerMaxDetectorLength"
-    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
+    startphi="0.0" deltaphi="360.0" aunit="deg"/>
 
   <tube name="showerMaxDetectorAllSectorsFrontBack_solid"
     rmin="SCALE_DOWN*showerMaxDetectorInnerRadius"
     rmax="SCALE_UP*showerMaxDetectorOuterRadius"
     z="SCALE_UP*(2.0*showerMaxDetectorLength)"
-    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
+    startphi="0.0" deltaphi="360.0" aunit="deg"/>
 </solids>
 
 <structure>

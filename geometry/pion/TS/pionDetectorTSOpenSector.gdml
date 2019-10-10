@@ -18,10 +18,10 @@
 
 <solids>
   <tube name="pionDetectorTSOpenSector_solid"
-    rmin="pionDetectorTSInnerRadius"
-    rmax="pionDetectorTSOuterRadius"
-       z="pionDetectorTSLength"
-    startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
+    rmin="1.01*pionDetectorTSInnerRadius"
+    rmax="0.99*pionDetectorTSOuterRadius"
+       z="0.99*pionDetectorTSLength"
+    startphi="-0.99*PHI/2.0" deltaphi="0.99*PHI" aunit="deg"/>
   <tube name="pionDetectorTSAllSectors_solid"
     rmin="pionDetectorTSInnerRadius"
     rmax="pionDetectorTSOuterRadius"
@@ -50,7 +50,7 @@
       <replicate_along_axis>
         <direction phi="1"/>
         <width value="PHI" unit="deg"/>
-        <offset value="0" unit="deg"/>
+        <offset value="-PHI/2.0" unit="deg"/>
       </replicate_along_axis>
     </replicavol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
