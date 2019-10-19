@@ -308,6 +308,12 @@ if(EXISTS ${REMOLL_LOCATION})
   set(REMOLL_DOWNLOADS file://${REMOLL_LOCATION})
 endif()
 file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/hybridJLAB.txt
+     ${REMOLL_MAP_DIR}/hybridJLAB.txt)
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/upstreamJLAB_1.25.txt
+     ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt)
+file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/blockyUpstream_rm_1.1.txt
      ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
      EXPECTED_MD5 3e2338e1ba74b03da37545e98931f5f3)
@@ -316,6 +322,8 @@ file(DOWNLOAD
      ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
      EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e)
 install(FILES
+     ${REMOLL_MAP_DIR}/hybridJLAB.txt
+     ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt
      ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
      ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
