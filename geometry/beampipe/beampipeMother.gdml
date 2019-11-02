@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "/home/j/jmammei/rahmans/geometry/geometry_optics_beam/materials.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="/home/j/jmammei/rahmans/geometry/geometry_optics_beam/schema/gdml.xsd">
+
+  <define>
+    <constant name="globalPositionOffset" value="17810"/>
+    <constant name="world_Zlength" value="11140"/>
+    <constant name="positionOffset" value="globalPositionOffset + world_Zlength/2."/>
+
+    <constant name="lamShield_thickness" value="100"/>
+  </define>
+
+
+  <solids>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Dbeampipe_vacuum">
+      <zplane rmin="0" rmax="506" z="24000.0"/>
+      <zplane rmin="0" rmax="506" z="25000.0"/>
+      <zplane rmin="0" rmax="506" z="25000.0"/>
+      <zplane rmin="0" rmax="506" z="25006.0"/>
+      <zplane rmin="0" rmax="540" z="25006.0"/>
+      <zplane rmin="0" rmax="540" z="26500.0"/>
+      <zplane rmin="0" rmax="540" z="26500.0"/>
+      <zplane rmin="0" rmax="540" z="26506.0"/>
+      <zplane rmin="0" rmax="595" z="26506.0"/>
+      <zplane rmin="0" rmax="595" z="29000.0"/>
+      <zplane rmin="0" rmax="595" z="29000.0"/>
+      <zplane rmin="0" rmax="595" z="29006.0"/>
+      <zplane rmin="0" rmax="650" z="29006.0"/>
+      <zplane rmin="0" rmax="650" z="30300.0"/>
+    </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Dbeampipe">
+      <zplane rmin="506" rmax="509" z="24000.0"/>
+      <zplane rmin="506" rmax="509" z="25000.0"/>
+      <zplane rmin="506" rmax="546" z="25000.0"/>
+      <zplane rmin="506" rmax="546" z="25006.0"/>
+      <zplane rmin="540" rmax="546" z="25006.0"/>
+      <zplane rmin="540" rmax="546" z="26500.0"/>
+      <zplane rmin="540" rmax="601" z="26500.0"/>
+      <zplane rmin="540" rmax="601" z="26506.0"/>
+      <zplane rmin="595" rmax="601" z="26506.0"/>
+      <zplane rmin="595" rmax="601" z="29000.0"/>
+      <zplane rmin="595" rmax="656" z="29000.0"/>
+      <zplane rmin="595" rmax="656" z="29006.0"/>
+      <zplane rmin="650" rmax="656" z="29006.0"/>
+      <zplane rmin="650" rmax="656" z="30300.0"/>
+    </polycone>
+
+    
+    
+  </solids>
+
+  <structure>
+
+    <volume name="logicDbeampipe">
+	<materialref ref="G4_Al"/>
+      <solidref ref="solid_Dbeampipe"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="53"/>
+    </volume>
+
+    <volume name="logicDbeampipe_vacuum">
+      <materialref ref="Vacuum"/>
+      <solidref ref="solid_Dbeampipe_vacuum"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+
+    <volume name="beampipeMother">
+      <materialref ref="G4_Al"/>
+      <solidref ref="solid_Dbeampipe"/>
+
+      <physvol name="Dbeampipe_vacuum">
+        <volumeref ref="logicDbeampipe_vacuum"/>
+        <positionref ref="pipeCenter"/>
+      </physvol>
+      
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="53"/>
+
+    </structure>
+
+
+  <setup name="beamPipeDShybrid" version="1.0">
+    <world ref="beamPipeDShybrid_logical"/>
+  </setup>
+
+</gdml>
