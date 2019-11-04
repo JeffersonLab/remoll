@@ -258,8 +258,9 @@
     <constant name="shield_US_beampipe_DS_rmin" value="31"/>
     <constant name="shield_US_beampipe_US_rmax" value="shield_US_beampipe_US_rmin+shield_US_beampipe_thickness"/>
     <constant name="shield_US_beampipe_DS_rmax" value="shield_US_beampipe_DS_rmin+shield_US_beampipe_thickness"/>
-    <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2 + 0.001-50/2-75"/>
+    <constant name="shield_US_beampipe_center_z" value="shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2+0.001-50/2-75"/>
     <!--need to subtract 50/2 to accomdate for the beampipe moving downstream due to collimator thickness increasing. An additional 75 mm subtracted to move the beampipe upstream.-->
+    <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z"/>
 
     <constant name="posCOLL2_det_z" value ="posCOLL2z+(COLL2_THICK/2.0) + 0.1"/>
     <position name="posCOLL2_det_sub" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z - posCOLL2_det_z"/> <!-- this detector is directly after the acceptance defining collimator -->
