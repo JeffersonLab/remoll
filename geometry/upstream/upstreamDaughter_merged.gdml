@@ -1098,9 +1098,10 @@
         <rotationref ref="RotateZ_6"/>
       </physvol>
 
-    <!--
+      <!--
        Shielding collimators
       -->
+      <!-- FIXME 2019-11-03 wdc: overlap when merging Sakib's updated geometry
       <physvol>
         <volumeref ref="boxUSShieldColl1_logic"/>
         <positionref ref="USshieldcoll_center_1"/>
@@ -1109,13 +1110,15 @@
         <volumeref ref="boxUSShieldColl2_logic"/>
         <positionref ref="USshieldcoll_center_2"/>
       </physvol>
+      -->
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
+      <!-- FIXME 2019-11-03 wdc: overlap when merging Sakib's updated geometry
       <physvol>
         <volumeref ref="boxUSPolyShield1_logic"/>
         <positionref ref="boxUSPolyShield1_center"/>
       </physvol>
-
+      -->
 <!-- Old beampipe design not in use now -->
 <!-- 
       <physvol>
