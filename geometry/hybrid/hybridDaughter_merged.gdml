@@ -2088,19 +2088,21 @@
     <!--
        Shielding collimators
       -->
-
+      <!-- FIXME 2019-11-03 wdc: disabled shielding due to overlap after merging Sakib's geometry
       <physvol>
         <volumeref ref="boxDSShieldColl1_logic"/>
         <positionref ref="DSshieldcoll_center_1"/>
-      </physvol>       
+      </physvol>
+      -->
 
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
+      <!-- FIXME 2019-11-03 wdc: disabled shielding due to overlap after merging Sakib's geometry
       <physvol>
         <volumeref ref="boxDSPolyShield1_logic"/>
         <positionref ref="boxDSPolyShield1_center"/>
       </physvol>
-
+      -->
       <!-- PolyShield2 will be outside shielding hut -->
 <!--
       <physvol>
@@ -2128,6 +2130,7 @@
         <positionref ref="boxDSShield1_polyroof_center"/>
       </physvol>
 -->
+      <!-- FIXME 2019-11-03 wdc: disabled shielding due to overlap after merging Sakib's geometry
       <physvol>
         <volumeref ref="boxDSShield_local_logic"/>
         <positionref ref="boxDSShield_local_center"/>
@@ -2141,7 +2144,7 @@
         <volumeref ref="boxAlCan_logic"/>
         <positionref ref="boxAlCan_center"/>
       </physvol>
-
+      -->
    </volume>
 </structure>
 
