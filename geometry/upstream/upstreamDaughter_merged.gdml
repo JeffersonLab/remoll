@@ -41,7 +41,7 @@
     <constant name="COLL1_R4_D" value ="31.703"/>
 
     <!-- Set of Radial rings to keep constant edep each will be 10 cm radius quoted here is the inner radius of each ring-->
-    <constant name="COLL1_Ring1_R_U" value ="22.1/>
+    <constant name="COLL1_Ring1_R_U" value ="22.1"/>
     <constant name="COLL1_Ring1_R_D" value ="22.1"/>
     <constant name="COLL1_Ring1_Length" value ="100.0"/>
     <constant name="COLL1_Ring2_R_U" value ="18.489"/>
