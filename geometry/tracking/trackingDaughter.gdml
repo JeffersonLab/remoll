@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
   <constant name="PHI" value="360.0/7.0"/>
@@ -27,10 +29,10 @@
 
   <quantity name="GEMPositionRadius" type="length" value="0.85" unit="m"/>
 
-  <position name="GEMTrackingPlaneFront1_pos" z="-1.45" unit="m"/>
-  <position name="GEMTrackingPlaneFront2_pos" z="-1.25" unit="m"/>
-  <position name="GEMTrackingPlaneBack1_pos"  z="+1.25" unit="m"/>
-  <position name="GEMTrackingPlaneBack2_pos"  z="+1.45" unit="m"/>
+  <position name="GEMTrackingPlaneFront1_pos" z="-1.30" unit="m"/>
+  <position name="GEMTrackingPlaneFront2_pos" z="-1.10" unit="m"/>
+  <position name="GEMTrackingPlaneBack1_pos"  z="+1.10" unit="m"/>
+  <position name="GEMTrackingPlaneBack2_pos"  z="+1.30" unit="m"/>
 </define>
 
 <materials>
