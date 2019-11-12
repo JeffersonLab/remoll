@@ -57,12 +57,13 @@
 </materials>
 
 <solids>
-  <box name="GEMTrackingBoundingBox_sol"
-    x="4000" y="4000" z="3000" lunit="mm"/>
+  <tube name="GEMTrackingWorld_sol"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="605" rmax="2000" z="2750" lunit="mm"/>
 
   <tube name="GEMTrackingPlane_sol"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="0" rmax="1.9*m" z="10.0*cm"/>
+    rmin="610" rmax="1900" z="100" lunit="mm"/>
 
   <box name="GEMDetector_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="10.0*cm"/>
 
@@ -180,9 +181,9 @@
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
-  <volume name="GEMTrackingBoundingBox_log">
+  <volume name="GEMTrackingWorld_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="GEMTrackingBoundingBox_sol"/>
+    <solidref ref="GEMTrackingWorld_sol"/>
 
     <physvol name="GEMTrackingPlaneFront1_phys">
       <volumeref ref="GEMTrackingPlane_log"/>
@@ -207,7 +208,7 @@
 </structure>
 
 <setup name="Default" version="1.0">
-  <world ref="GEMTrackingBoundingBox_log"/>
+  <world ref="GEMTrackingWorld_log"/>
 </setup>
 
 </gdml>
