@@ -132,7 +132,7 @@
     <!-- Default value before check3 -->
     <!-- <constant name="boxUSShieldColl1_inner_rmax" value="140"/>  -->
     <constant name="USShield1_extension" value="829.5 - 50"/> <!-- subtract 50 to prevent overlaps? - make this parametrized in the future to avoid arbitrariness -->
-    <constant name="USBoxmother_extensionUS" value="1100"/>
+    <constant name="USBoxmother_extensionUS" value="0"/>
     <constant name="USShield2_extension" value="370 - 90"/> <!-- subtract 90 to prevent overlaps?? -->
     <constant name="USBoxmother_extensionDS" value="0"/>
     <constant name="boxUSShieldColl1_inner_rmax" value="100"/>
@@ -252,6 +252,7 @@
     <position name="beampipe_3_center" unit="mm" x="0" y="0" z="COLL1_z + COLL1_THICK/2 + 1"/>
 
     <!--CAD based shielding beampipe for col-1 to end of US magnet -->
+    
     <constant name="shield_US_beampipe_length" value="1945"/>
     <constant name="shield_US_beampipe_thickness" value="3"/>
     <constant name="shield_US_beampipe_US_rmin" value="25.5"/>
@@ -355,8 +356,10 @@
     <!--End of beampipe design that is not in use -->
 
     <!-- inner photon collimating beampipe near collimator 1 -->
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_1" rmax1="shield_US_beampipe_US_rmax" rmax2="shield_US_beampipe_DS_rmax" rmin1="shield_US_beampipe_US_rmin" rmin2="shield_US_beampipe_DS_rmin" startphi="0" z="shield_US_beampipe_length"/>
-    <!-- Detector after collimator 2 -->
+   <!-- <cone aunit="deg" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_1" rmax1="shield_US_beampipe_US_rmax" rmax2="shield_US_beampipe_DS_rmax" rmin1="shield_US_beampipe_US_rmin" rmin2="shield_US_beampipe_DS_rmin" startphi="0" z="shield_US_beampipe_length"/>
+   -->
+
+    <!-- Detector after collimator 2 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="COLL2_det_solid_1" rmax="COLL2_R4_D" rmin="COLL2_R1_D" startphi="0" z="0.01"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="COLL2_det_inner_solid_1" rmax="COLL2_R1_D" rmin="0" startphi="0" z="0.01"/>
     <subtraction name ="COLL2_det_solid">
@@ -369,7 +372,7 @@
       <second ref="solid_shield_US_beampipe_1"/>
       <positionref ref="posCOLL2_det_sub" />
     </subtraction>
-
+   -->
 
     <!-- New merged col-1 -->
     <!--R max will be same as before, I'm starting with bore radius of the exit bore for whole col-1 and then subtract appropriately -->
@@ -740,8 +743,8 @@
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher2" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_USwindow">
-      <zplane rmin="0" rmax="500" z="3200-UOFFSET"/>
-      <zplane rmin="0" rmax="500" z="3200.5-UOFFSET"/>
+      <zplane rmin="0" rmax="500" z="4300-UOFFSET"/>
+      <zplane rmin="0" rmax="500" z="4300.5-UOFFSET"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_USbeampipe_col12">
@@ -760,7 +763,7 @@
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solUSTracker">
-    <zplane rmin="2050" rmax="2060" z="3200-UOFFSET"/>
+    <zplane rmin="2050" rmax="2060" z="4300-UOFFSET"/>
     <zplane rmin="2050" rmax="2060" z="8025-UOFFSET"/>
     </polycone>
 
@@ -776,12 +779,13 @@
       <auxiliary auxtype="DetNo" auxvalue="91"/>
     </volume>
 
+<!--
     <volume name="COLL2_det_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="COLL2_det_solid"/> 
       <auxiliary auxtype="Color" auxvalue="red"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/>
       <auxiliary auxtype="DetNo" auxvalue="220"/>
     </volume>
 
@@ -790,9 +794,10 @@
       <solidref ref="COLL2_det_inner_solid"/> 
       <auxiliary auxtype="Color" auxvalue="red"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> <!-- NEW Sensitive detector FIXME -->
+      <auxiliary auxtype="SensDet" auxvalue="COLL2_DET"/> 
       <auxiliary auxtype="DetNo" auxvalue="221"/>
     </volume>
+-->   
 
     <volume name="logicUScoll_1">
       <!-- <materialref ref="Tungsten"/> -->
@@ -952,17 +957,15 @@
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
-
+<!--
     <volume name="shield_US_beampipe_1_logic">
-      <!-- <materialref ref="Aluminum"/> -->
       <materialref ref="Tungsten"/>
       <solidref ref="solid_shield_US_beampipe_1"/>
       <auxiliary auxtype="Color" auxvalue="yellow"/>
-      <!--  <auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="55"/>
     </volume>
-
+-->
     <volume name="logicUSbeampipe_col12">
       <materialref ref="Aluminum"/>
       <solidref ref="solid_USbeampipe_col12"/>
@@ -1138,7 +1141,7 @@
 -->
 
       <physvol>
-        <volumeref ref="shield_US_beampipe_1_logic"/>
+        <file name="upstream/upstreamBeampipe.gdml"/>
         <positionref ref="shield_US_beampipe_center"/>
       </physvol>
    </volume>

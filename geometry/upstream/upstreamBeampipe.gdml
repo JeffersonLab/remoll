@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+
+<define>
+<!--CAD based shielding beampipe for col-1 to end of US magnet -->
+    <constant name="shield_US_beampipe_length" value="1945"/>
+    <constant name="shield_US_beampipe_thickness" value="3"/>
+    <constant name="shield_US_beampipe_US_rmin" value="25.5"/>
+    <constant name="shield_US_beampipe_DS_rmin" value="31"/>
+    <constant name="shield_US_beampipe_US_rmax" value="shield_US_beampipe_US_rmin+shield_US_beampipe_thickness"/>
+    <constant name="shield_US_beampipe_DS_rmax" value="shield_US_beampipe_DS_rmin+shield_US_beampipe_thickness"/>
+</define>
+
+
+<materials>
+</materials>
+
+
+<solids>
+<!-- inner photon collimating beampipe near collimator 1 -->
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_1" rmax1="shield_US_beampipe_US_rmax" rmax2="shield_US_beampipe_DS_rmax" rmin1="shield_US_beampipe_US_rmin" rmin2="shield_US_beampipe_DS_rmin" startphi="0" z="shield_US_beampipe_length"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_mother" rmax1="shield_US_beampipe_US_rmax" rmax2="shield_US_beampipe_DS_rmax" rmin1="0" rmin2="0" startphi="0" z="shield_US_beampipe_length"/>
+
+</solids>
+
+
+<structure>
+ <volume name="shield_US_beampipe_1_logic">
+      <materialref ref="Tungsten"/>
+      <solidref ref="solid_shield_US_beampipe_1"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="55"/>
+ </volume>
+ 
+  <volume name="logicUpstreamBeampipe">
+      <materialref ref="Vacuum"/>
+      <solidref ref="solid_shield_US_beampipe_mother"/> 
+
+      <physvol name="shield_US_beampipe">
+        <volumeref ref="shield_US_beampipe_1_logic"/>
+        <position name="shield_US_beampipe_1_pos" unit="mm" x="0" y="0" z="0"/>
+      </physvol>
+      
+  </volume>
+
+</structure>
+
+
+<setup name="Default" version="1.0">
+        <world ref="logicUpstreamBeampipe"/>
+</setup>
+
+</gdml>
