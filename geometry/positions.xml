@@ -19,12 +19,12 @@
 <position name="hybridCenter" x="0.0" y="0.0" z="11016.865" unit="mm"/>
 
 <!-- Physical tracking detector position -->
-<position name="trackingCenter" x="0.0" y="0.0" z="20375.00" unit="mm"/>
+<position name="trackingCenter" x="0.0" y="0.0" z="20250.00" unit="mm"/>
 <!-- Virtual planes in the parallel world -->
-<position name="trackingDetectorVirtualPlaneFront1_pos" z="20.375-1.3" unit="m"/>
-<position name="trackingDetectorVirtualPlaneFront2_pos" z="20.375-1.1" unit="m"/>
-<position name="trackingDetectorVirtualPlaneBack1_pos"  z="20.375+1.1" unit="m"/>
-<position name="trackingDetectorVirtualPlaneBack2_pos"  z="20.375+1.3" unit="m"/>
+<position name="trackingDetectorVirtualPlaneFront1_pos" z="20.250-1.1" unit="m"/>
+<position name="trackingDetectorVirtualPlaneFront2_pos" z="20.250-0.9" unit="m"/>
+<position name="trackingDetectorVirtualPlaneBack1_pos"  z="20.250+0.9" unit="m"/>
+<position name="trackingDetectorVirtualPlaneBack2_pos"  z="20.250+1.1" unit="m"/>
 
 <!-- Physical main detector array position -->
 <position name="detectorCenter" x="0.0" y="0.0" z="22000.00" unit="mm"/>
