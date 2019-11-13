@@ -59,6 +59,13 @@
       <positionref ref="trackingCenter"/>
     </physvol>
 
+    <!-- Main Detectors -->
+    <physvol>
+      <file name="detector/detector.gdml"/>
+      <positionref ref="detectorCenter"/>
+      <rotation name="detectorRot" x="0" y="90" z="0" unit="deg"/>
+    </physvol>
+
     <!-- ShowerMax Detectors -->
     <physvol>
       <file name="showermax/showerMaxDetectorSystem.gdml"/>
