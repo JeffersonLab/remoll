@@ -29,10 +29,10 @@
 
   <quantity name="GEMPositionRadius" type="length" value="0.85" unit="m"/>
 
-  <position name="GEMTrackingPlaneFront1_pos" z="-1.30" unit="m"/>
-  <position name="GEMTrackingPlaneFront2_pos" z="-1.10" unit="m"/>
-  <position name="GEMTrackingPlaneBack1_pos"  z="+1.10" unit="m"/>
-  <position name="GEMTrackingPlaneBack2_pos"  z="+1.30" unit="m"/>
+  <position name="GEMTrackingPlaneFront1_pos" z="-1.10" unit="m"/>
+  <position name="GEMTrackingPlaneFront2_pos" z="-0.90" unit="m"/>
+  <position name="GEMTrackingPlaneBack1_pos"  z="+0.90" unit="m"/>
+  <position name="GEMTrackingPlaneBack2_pos"  z="+1.10" unit="m"/>
 </define>
 
 <materials>
@@ -61,7 +61,7 @@
 <solids>
   <tube name="GEMTrackingWorld_sol"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="605" rmax="2000" z="2750" lunit="mm"/>
+    rmin="605" rmax="2000" z="2500" lunit="mm"/>
 
   <tube name="GEMTrackingPlane_sol"
     startphi="0" deltaphi="360" aunit="deg"
