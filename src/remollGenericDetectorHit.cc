@@ -7,11 +7,12 @@ G4ThreadLocal G4Allocator<remollGenericDetectorHit>* remollGenericDetectorHitAll
 remollGenericDetectorHit::remollGenericDetectorHit(G4int det, G4int copy)
 : fDetID(det),fCopyID(copy)
 {
-  f3X = G4ThreeVector(-1e9, -1e9, -1e9);
+  f3X  = G4ThreeVector(-1e9, -1e9, -1e9);
   f3Xl = G4ThreeVector(-1e9, -1e9, -1e9);
-  f3P = G4ThreeVector(-1e9, -1e9, -1e9);
-  f3S = G4ThreeVector(-1e9, -1e9, -1e9);
-  f3V = G4ThreeVector(-1e9, -1e9, -1e9);
+  f3P  = G4ThreeVector(-1e9, -1e9, -1e9);
+  f3Pl = G4ThreeVector(-1e9, -1e9, -1e9);
+  f3S  = G4ThreeVector(-1e9, -1e9, -1e9);
+  f3V  = G4ThreeVector(-1e9, -1e9, -1e9);
 
   fTime = 0.0;
 
@@ -45,6 +46,7 @@ remollGenericDetectorHit::remollGenericDetectorHit(const remollGenericDetectorHi
   f3X     = right.f3X;
   f3Xl    = right.f3Xl;
   f3P     = right.f3P;
+  f3Pl    = right.f3Pl;
   f3S     = right.f3S;
   f3V     = right.f3V;
 
