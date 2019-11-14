@@ -346,7 +346,7 @@
 
     <physvol>
       <volumeref ref="h2Targ"/>
-      <position name="targ_center1" unit="mm" x="0" y="0" z="500"/>
+      <position name="targ_center1" unit="mm" x="0" y="0" z="0"/>
     </physvol>
 
     <physvol>
