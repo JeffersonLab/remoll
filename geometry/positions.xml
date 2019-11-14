@@ -16,7 +16,7 @@
 <position name="upstreamCenter" x="0.0" y="0.0" z="2000.00" unit="mm"/>
 
 <!-- Hybrid spectrometer position -->
-<position name="hybridCenter" x="0.0" y="0.0" z="11016.865-8.73/2" unit="mm"/>
+<position name="hybridCenter" x="0.0" y="0.0" z="11016.865" unit="mm"/>
 
 <!-- Physical tracking detector position -->
 <position name="trackingCenter" x="0.0" y="0.0" z="20250.00" unit="mm"/>
