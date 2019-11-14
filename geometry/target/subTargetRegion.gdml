@@ -341,7 +341,7 @@
 
     <physvol>
       <volumeref ref="USAlTarg"/>
-      <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-125-1"/>
+      <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-625-1"/>
     </physvol>
 
     <physvol>
@@ -351,7 +351,7 @@
 
     <physvol>
       <volumeref ref="DSAlTarg"/>
-	<position name="targ_downstream_window" unit="mm" x="0" y="0" z="1125+1"/>
+	<position name="targ_downstream_window" unit="mm" x="0" y="0" z="625+1"/>
     </physvol>
 
     <physvol>
