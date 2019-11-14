@@ -40,7 +40,7 @@ remollMagneticField::remollMagneticField( G4String filename ){
 
     // Default offset for field maps in reference frame with
     // the hall pivot at z = 0.
-    fZoffset = -4000.0;
+    fZoffset = -5000.0;
 
     fInit = false;
     fMagCurrent0 = -1e9;
