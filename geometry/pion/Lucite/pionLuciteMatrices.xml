@@ -22,15 +22,15 @@
 
   <!-- Photocathode -->
   <matrix coldim="2" name="REFLECTIVITY_CATHODE" values="
-      1.54986*eV 0.25
-      1.77127*eV 0.25
-      2.06648*eV 0.25
-      2.47978*eV 0.25
-      3.09973*eV 0.25
-      4.13297*eV 0.25
-      4.95956*eV 0.25
-      5.51063*eV 0.25
-      5.90424*eV 0.25"/>
+      1.54986*eV 0.0
+      1.77127*eV 0.0
+      2.06648*eV 0.0
+      2.47978*eV 0.0
+      3.09973*eV 0.0
+      4.13297*eV 0.0
+      4.95956*eV 0.0
+      5.51063*eV 0.0
+      5.90424*eV 0.0"/>
   <matrix coldim="2" name="EFFICIENCY_CATHODE" values="
       1.54986*eV 0.0080
       1.77127*eV 0.0298
@@ -86,6 +86,19 @@
     5.51063*eV 1.52422
     5.90424*eV 1.53842"/>
 
+  <matrix name="RINDEX_LUCITE_surf" coldim="2" values="
+    2.038*eV 1.46
+    4.144*eV 1.46"/>
+  <matrix name="SPECLOBE_LUCITE" coldim="2" values="
+    2.038*eV 0.3
+    4.144*eV 0.3"/>
+  <matrix name="SPECSPIKE_LUCITE" coldim="2" values="
+    2.038*eV 0.2
+    4.144*eV 0.2"/>
+  <matrix name="BACKSCATTER_LUCITE" coldim="2" values="
+    2.038*eV 0.2
+    4.144*eV 0.2"/>
+
   <!-- Glue -->
   <matrix coldim="2" name="ABSLENGTH_GLUE" values="
     1.54986*eV 263160*mm
@@ -108,15 +121,26 @@
     5.51063*eV 1.405
     5.90424*eV 1.405"/>
 
-
   <!-- Mylar -->
   <matrix coldim="2" name="REFLECTIVITY_MYLAR" values="
-    1.54986*eV 1.0
-    1.77127*eV 1.0
-    2.06648*eV 1.0
-    2.47978*eV 1.0
-    3.09973*eV 1.0
-    4.13297*eV 1.0
-    4.95956*eV 1.0
-    5.51063*eV 1.0
-    5.90424*eV 1.0"/>
+    1.54986*eV 0.9
+    1.77127*eV 0.9
+    2.06648*eV 0.9
+    2.47978*eV 0.9
+    3.09973*eV 0.9
+    4.13297*eV 0.9
+    4.95956*eV 0.9
+    5.51063*eV 0.9
+    5.90424*eV 0.9"/>
+
+  <!-- Aluminum -->
+  <matrix coldim="2" name="REFLECTIVITY_ALUMINUM" values="
+    1.54986*eV 0.5
+    1.77127*eV 0.5
+    2.06648*eV 0.5
+    2.47978*eV 0.5
+    3.09973*eV 0.5
+    4.13297*eV 0.5
+    4.95956*eV 0.5
+    5.51063*eV 0.5
+    5.90424*eV 0.5"/>

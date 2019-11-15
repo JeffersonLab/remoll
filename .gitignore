@@ -1,7 +1,18 @@
 images
 
+# random seed files
+G4Master_run*.rndm
+G4Worker?_run*.rndm
+G4Worker?_run*evt*.rndm
+run*evt*.rndm
+currentEvent.rndm
+currentRun.rndm
+
 # output from createHTML
 _remoll_*.html
+
+# Jupyter checkpoints
+.ipynb_checkpoints
 
 # backups etc
 *~
@@ -11,7 +22,7 @@ _remoll_*.html
 *.DS_Store
 
 #ignore doxygen files for now
-doc
+Doxygen
 
 #ignore libraries and helper files
 *.so
@@ -49,6 +60,9 @@ log
 #ignore project files for eclipse
 .cproject
 .project
+
+#ignore build type file
+.buildtype
 
 #ignore dot files
 *.dot

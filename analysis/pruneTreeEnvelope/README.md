@@ -2,7 +2,7 @@ Envelope production:
 
 simulation -> prune tree envelope -> (new statistics optimization 
 with FOAM or machine learning or just using rate weighting) -> 
-envelope.sh -> VBA macro -> manual fixes.
+envelope.sh/reader.cc(manual.cc) -> VBA macro -> manual fixes.
 
 
 Final product results in SolidWorks:

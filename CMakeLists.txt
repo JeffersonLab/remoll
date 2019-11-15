@@ -236,6 +236,18 @@ foreach(file ${exefiles})
   )
 endforeach()
 
+#
+# custom targets
+#
+add_custom_target(create-manual
+  COMMAND ./remoll -g ${PROJECT_SOURCE_DIR}/geometry/mollerMother.gdml ${PROJECT_SOURCE_DIR}/macros/manual.mac | awk '/Command directory path/,/Graphics systems deleted/' > manual.txt
+  BYPRODUCTS manual.txt
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  DEPENDS remoll)
+add_custom_target(check-manual
+  COMMAND diff ${PROJECT_SOURCE_DIR}/manual.txt manual.txt || true
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  DEPENDS create-manual)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -296,6 +308,12 @@ if(EXISTS ${REMOLL_LOCATION})
   set(REMOLL_DOWNLOADS file://${REMOLL_LOCATION})
 endif()
 file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/hybridJLAB.txt
+     ${REMOLL_MAP_DIR}/hybridJLAB.txt)
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/upstreamJLAB_1.25.txt
+     ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt)
+file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/blockyUpstream_rm_1.1.txt
      ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
      EXPECTED_MD5 3e2338e1ba74b03da37545e98931f5f3)
@@ -304,9 +322,28 @@ file(DOWNLOAD
      ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
      EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e)
 install(FILES
+     ${REMOLL_MAP_DIR}/hybridJLAB.txt
+     ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt
      ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
      ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+if(ADDITIONAL_FIELDS)
+  message(STATUS "Ensuring additional fields are available")
+  file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/upstreamSymmetric_sensR_0.1.txt
+     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.1.txt
+     EXPECTED_MD5 849d9dc5abab0842fc13fef7f4918648)
+  file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/hybridSymmetric_sensR_0.1.txt
+     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.1.txt
+     EXPECTED_MD5 78fad2ffa5b5ae129df11bdf0ce25333)
+  install(FILES
+     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
+     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
+     DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+else()
+  message(STATUS "Download additional fields with '-DADDITIONAL_FIELDS=ON'.")
+endif()
 
 
 #----------------------------------------------------------------------------

@@ -10,6 +10,7 @@
 #include "remollRunAction.hh"
 #include "remollEventAction.hh"
 #include "remollTrackingAction.hh"
+#include "remollSteppingAction.hh"
 #include "remollPrimaryGeneratorAction.hh"
 
 void remollActionInitialization::Build() const
@@ -25,6 +26,10 @@ void remollActionInitialization::Build() const
   // Tracking action
   remollTrackingAction* tracking_action = new remollTrackingAction();
   SetUserAction(tracking_action);
+
+  // Stepping action
+  remollSteppingAction* stepping_action = new remollSteppingAction();
+  SetUserAction(stepping_action);
 
   // Primary generator action
   remollPrimaryGeneratorAction* gen_action = new remollPrimaryGeneratorAction();

@@ -14,14 +14,20 @@
 #include "remollRunData.hh"
 #include "remollBeamTarget.hh"
 
+#include <sys/param.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <errno.h>
 
 #include <xercesc/parsers/XercesDOMParser.hpp>
+#include <xercesc/dom/DOMEntityReference.hpp>
+#include <xercesc/dom/DOMEntity.hpp>
 #include <xercesc/dom/DOMElement.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMNode.hpp>
+
+ClassImp(remollSeed_t)
 
 // Singleton
 remollIO* remollIO::gInstance = 0;
@@ -84,7 +90,8 @@ void remollIO::InitializeTree()
     fTree->Branch("dets.lv",  &fDetNos, fDetLVNames);
 
     // Event information
-    fTree->Branch("rate",     &fEvRate,   "rate/D");
+    fTree->Branch("seed",     &fSeed);
+    fTree->Branch("rate",     &fRate,   "rate/D");
     fTree->Branch("ev",       &fEv);
     fTree->Branch("bm",       &fBm);
     fTree->Branch("part",     &fEvPart);
@@ -134,7 +141,7 @@ void remollIO::WriteTree()
         exit(1);
     }
 
-    G4cout << "Writing output to " << fFile->GetName() << "... ";
+    G4cout << "Writing output to " << fFile->GetName() << " ... ";
 
     fFile->cd();
 
@@ -150,18 +157,11 @@ void remollIO::WriteTree()
     delete fFile;
     fFile = NULL;
 
-    G4cout << "written" << G4endl;
+    G4cout << "done" << G4endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Interfaces to output section ///////////////////////////////////////////////
-
-// Event seed
-void remollIO::SetEventSeed(const G4String& seed)
-{
-  fEvSeed = seed;
-}
-
 
 // Event Data
 
@@ -169,7 +169,7 @@ void remollIO::SetEventData(const remollEvent *ev)
 {
   if (! ev) return;
 
-  fEvRate   = ev->fRate*s;
+  fRate   = ev->fRate*s;
 
   // Event variables
   fEv     = ev->GetEventIO();
@@ -199,18 +199,39 @@ void remollIO::GrabGDMLFiles(G4String fn)
 {
     // Reset list
     fGDMLFileNames.clear();
+    fXMLFileNames.clear();
 
     remollRunData *rundata = remollRun::GetRunData();
 
     SearchGDMLforFiles(fn);
 
+    // Resolve relative path, turn daughter/../ into nothing
+    for(unsigned int idx = 0; idx < fXMLFileNames.size(); idx++ ){
+      size_t pos = std::string::npos;
+      // as long as there is a ../ keep replacing
+      while ((pos = fXMLFileNames[idx].find("/../")) != std::string::npos) {
+        auto begin = fXMLFileNames[idx].begin();
+        // find last / before /../, cut from character after that /
+        size_t parent = fXMLFileNames[idx].find_last_of("/", pos - 1) + 1;
+        // if not found, we have daughter/../file.xml, so cut from 0
+        if (parent == std::string::npos) parent = 0;
+        // cut until 4 characters after start of /../
+        fXMLFileNames[idx].erase(begin + parent, begin + pos + 4);
+      }
+    }
 
-    // Store filename
+    // Remove non-unique XML filenames
+    std::sort(fXMLFileNames.begin(), fXMLFileNames.end());
+    fXMLFileNames.erase(std::unique(fXMLFileNames.begin(), fXMLFileNames.end()), fXMLFileNames.end());
 
-    // Copy into buffers
+    // Store filename and copy content into buffers
     for(unsigned int idx = 0; idx < fGDMLFileNames.size(); idx++ ){
         G4cout << "Found GDML file " << fGDMLFileNames[idx] << G4endl;
         rundata->AddGDMLFile(fGDMLFileNames[idx]);
+    }
+    for(unsigned int idx = 0; idx < fXMLFileNames.size(); idx++ ){
+        G4cout << "Found XML file " << fXMLFileNames[idx] << G4endl;
+        rundata->AddGDMLFile(fXMLFileNames[idx]);
     }
 }
 
@@ -234,7 +255,45 @@ void remollIO::SearchGDMLforFiles(G4String fn)
 
     xercesc::XercesDOMParser *xmlParser = new xercesc::XercesDOMParser();
     xmlParser->parse(fn.data());
+
+    // Get document
     xercesc::DOMDocument* xmlDoc = xmlParser->getDocument();
+    const XMLCh* docURI = xmlDoc->getDocumentURI();
+    char* cstr_docURI = xercesc::XMLString::transcode(docURI);
+    G4String str_docURI(cstr_docURI);
+    xercesc::XMLString::release(&cstr_docURI);
+    // remove file:// at begin of URI
+    str_docURI.erase(str_docURI.begin(), str_docURI.begin() + str_docURI.find_first_of(':') + 3);
+    // remove filename at end
+    str_docURI.erase(str_docURI.find_last_of('/') + 1);
+    // remove cwd at begin
+    char cwd[MAXPATHLEN];
+    if (getcwd(cwd,MAXPATHLEN) && str_docURI.find(cwd) == 0) {
+      str_docURI.erase(0, strlen(cwd) + 1);
+    }
+
+    // Get doctype and entities
+    xercesc::DOMDocumentType* xmlDocType = xmlDoc->getDoctype();
+    if (xmlDocType) {
+        xercesc::DOMNamedNodeMap* xmlNamedNodeMap = xmlDocType->getEntities();
+        if (xmlNamedNodeMap) {
+            for (XMLSize_t xx = 0; xx < xmlNamedNodeMap->getLength(); ++xx) {
+                xercesc::DOMNode* currentNode = xmlNamedNodeMap->item(xx);
+                if (currentNode->getNodeType() == xercesc::DOMNode::ENTITY_NODE) { // is entity
+                    xercesc::DOMEntity* currentEntity
+                      = dynamic_cast< xercesc::DOMEntity* >( currentNode );
+                    const XMLCh* systemId = currentEntity->getSystemId();
+                    char* cstr_systemId = xercesc::XMLString::transcode(systemId);
+                    G4String str_systemId(cstr_systemId);
+                    xercesc::XMLString::release(&cstr_systemId);
+                    // Add this xml file to list to save
+                    fXMLFileNames.push_back(str_docURI + str_systemId);
+                }
+            }
+        }
+    }
+
+    // Get root element
     xercesc::DOMElement* elementRoot = xmlDoc->getDocumentElement();
 
     TraverseChildren( elementRoot );
