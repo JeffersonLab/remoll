@@ -1162,12 +1162,12 @@
 
       <physvol>
         <volumeref ref="coll1OuterDet1_l"/>
-        <position name="coll1OuterDet1_pos" lunit="mm" x="-USPolyShield1_width/2. -1" y="USPolyShield1_y_offset" z=" - 1380"/>
+        <position name="coll1OuterDet1_pos" lunit="mm" x="-USPolyShield1_width/2. -1" y="USPolyShield1_y_offset" z=" - 1080"/>
       </physvol>
 
       <physvol>
         <volumeref ref="coll1OuterDet2_l"/>
-        <position name="coll1OuterDet2_pos" lunit="mm" x="+USPolyShield1_width/2. +1" y="USPolyShield1_y_offset" z=" - 1380"/>
+        <position name="coll1OuterDet2_pos" lunit="mm" x="+USPolyShield1_width/2. +1" y="USPolyShield1_y_offset" z=" - 1080"/>
       </physvol>
 
       <physvol>
@@ -1179,7 +1179,7 @@
       <physvol>
         <volumeref ref="coll1OuterDet4_l"/>
         <position name="coll1OuterDet4_pos" lunit="mm" x="0"
-		  y="USPolyShield1_y_offset + USPolyShield1_height/2. + 1" z=" - 1380"/>
+		  y="USPolyShield1_y_offset + USPolyShield1_height/2. + 1" z=" - 1080"/>
       </physvol>
 
    </volume>
