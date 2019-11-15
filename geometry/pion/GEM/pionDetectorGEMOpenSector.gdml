@@ -6,8 +6,8 @@
   <constant name="N_P" value="2"/>
   <constant name="PHI" value="360.0/N_P"/>
 
-  <quantity name="pionDetectorGEMInnerRadius" type="length" value="0.6" unit="m"/>
-  <quantity name="pionDetectorGEMOuterRadius" type="length" value="1.5" unit="m"/>
+  <quantity name="pionDetectorGEMInnerRadius" type="length" value="0.665" unit="m"/>
+  <quantity name="pionDetectorGEMOuterRadius" type="length" value="1.500" unit="m"/>
   <quantity name="pionDetectorGEMLength" type="length" value="0.1" unit="m"/>
 
   <quantity name="pionDetectorGEMRadialPosition" type="length" value="105.0" unit="cm"/>

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
 
 <define>
   <constant name="PHI" value="360.0/7.0"/>
@@ -27,10 +29,10 @@
 
   <quantity name="GEMPositionRadius" type="length" value="0.85" unit="m"/>
 
-  <position name="GEMTrackingPlaneFront1_pos" z="-1.45" unit="m"/>
-  <position name="GEMTrackingPlaneFront2_pos" z="-1.25" unit="m"/>
-  <position name="GEMTrackingPlaneBack1_pos"  z="+1.25" unit="m"/>
-  <position name="GEMTrackingPlaneBack2_pos"  z="+1.45" unit="m"/>
+  <position name="GEMTrackingPlaneFront1_pos" z="-1.10" unit="m"/>
+  <position name="GEMTrackingPlaneFront2_pos" z="-0.90" unit="m"/>
+  <position name="GEMTrackingPlaneBack1_pos"  z="+0.90" unit="m"/>
+  <position name="GEMTrackingPlaneBack2_pos"  z="+1.10" unit="m"/>
 </define>
 
 <materials>
@@ -57,12 +59,13 @@
 </materials>
 
 <solids>
-  <box name="GEMTrackingBoundingBox_sol"
-    x="4000" y="4000" z="3000" lunit="mm"/>
+  <tube name="GEMTrackingWorld_sol"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="605" rmax="2000" z="2500" lunit="mm"/>
 
   <tube name="GEMTrackingPlane_sol"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="0" rmax="1.9*m" z="10.0*cm"/>
+    rmin="610" rmax="1900" z="100" lunit="mm"/>
 
   <box name="GEMDetector_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="10.0*cm"/>
 
@@ -180,9 +183,9 @@
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
-  <volume name="GEMTrackingBoundingBox_log">
+  <volume name="GEMTrackingWorld_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="GEMTrackingBoundingBox_sol"/>
+    <solidref ref="GEMTrackingWorld_sol"/>
 
     <physvol name="GEMTrackingPlaneFront1_phys">
       <volumeref ref="GEMTrackingPlane_log"/>
@@ -207,7 +210,7 @@
 </structure>
 
 <setup name="Default" version="1.0">
-  <world ref="GEMTrackingBoundingBox_log"/>
+  <world ref="GEMTrackingWorld_log"/>
 </setup>
 
 </gdml>
