@@ -1,3 +1,0 @@
-[submodule "geometry/detector"]
-	path = geometry/detector
-	url = https://github.com/JeffersonLab/remoll-detector-generator.git
