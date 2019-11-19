@@ -52,6 +52,7 @@
       <positionref ref="pionDetectorCenter"/>
     </physvol>
 
+    <!-- Main Detectors -->
     <physvol>
       <file name="detector/detector.gdml"/>
       <positionref ref="detectorCenter"/>
