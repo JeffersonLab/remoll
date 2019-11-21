@@ -94,6 +94,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     void DisableKryptonite();
     void AddKryptoniteCandidate(G4String name);
     void ListKryptoniteCandidates();
+    void EnableKryptoniteVolume(G4String name);
 
   private:
 
