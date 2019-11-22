@@ -131,6 +131,15 @@ class remollGenericDetector : public G4VSensitiveDetector {
       return (left? (right? (left->fDetNo < right->fDetNo): false): true);
     }
 
+    void SetRangeDetectorType(G4String type, G4TwoVector v) {
+      for (std::list<remollGenericDetector*>::iterator
+        it  = fGenericDetectors.begin();
+        it != fGenericDetectors.end();
+        it++) {
+          if ((*it)->fDetNo >= v.x() && (*it)->fDetNo <= v.y())
+            (*it)->SetDetectorType(type);
+      }
+    }
     void SetOneDetectorType(G4String type, G4int det) {
       for (std::list<remollGenericDetector*>::iterator
         it  = fGenericDetectors.begin();
