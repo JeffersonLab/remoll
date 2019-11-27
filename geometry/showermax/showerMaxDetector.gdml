@@ -19,12 +19,12 @@
     <quantity name="ShowerMaxDetectorTungstenHeight"    type="length" value="ShowerMaxDetectorQuartzWidth"/>
     <quantity name="ShowerMaxDetectorTungstenWidth"     type="length" value="ShowerMaxDetectorQuartzHeightShort"/>
 
-    <quantity name="ShowerMaxDetectorMirrorThickness" type="length" value="0.5" lunit="mm"/>
+    <quantity name="ShowerMaxDetectorMirrorThickness" type="length" value="0.5" unit="mm"/>
 
-    <quantity name="ShowerMaxDetectorPMTRadius"    type="length" value="38.1" lunit="mm"/>
-    <quantity name="ShowerMaxDetectorPMTThickness" type="length" value="3.0"  lunit="mm"/>
-    <quantity name="ShowerMaxDetectorPMTPosition"  type="length" value="311.5"  lunit="mm"/> <!-- should be calculable -->
-    <quantity name="ShowerMaxDetectorCathodeThickness" type="length" value="0.2" lunit="mm"/>
+    <quantity name="ShowerMaxDetectorPMTRadius"    type="length" value="38.1" unit="mm"/>
+    <quantity name="ShowerMaxDetectorPMTThickness" type="length" value="3.0"  unit="mm"/>
+    <quantity name="ShowerMaxDetectorPMTPosition"  type="length" value="311.5"  unit="mm"/> <!-- should be calculable -->
+    <quantity name="ShowerMaxDetectorCathodeThickness" type="length" value="0.2" unit="mm"/>
     <quantity name="ShowerMaxDetectorCathodePosition"  type="length" value="ShowerMaxDetectorPMTPosition+0.5*(ShowerMaxDetectorPMTThickness+ShowerMaxDetectorCathodeThickness)"/>
 
     <!-- alternating orientation for prisms -->
