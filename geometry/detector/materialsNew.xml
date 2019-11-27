@@ -1,0 +1,61 @@
+<materials>
+
+<material Z="82" name="Lead" state="solid">
+      <MEE unit="eV" value="823"/>
+      <D unit="g/cm3" value="11.35"/>
+      <atom unit="g/mole" value="207.19"/>
+</material>
+    
+<element Z="1" name="Hydrogen">
+    <atom unit="g/mole" value="1.01"/>
+</element>
+
+<element Z="6" name="Carbon">
+    <atom unit="g/mole" value="12.011"/>
+</element>
+
+<material name="Tyvek" state="solid">
+    <MEE unit="eV" value="56.5182975271737"/> 
+    <D unit="g/cm3" value="0.96"/>
+    <fraction n="0.14396693036847" ref="Hydrogen"/>
+    <fraction n="0.85603306963153" ref="Carbon"/>
+</material>
+
+<element Z="14" name="Silicon">
+    <atom unit="g/mole" value="28.09"/>
+</element>
+
+<element Z="8" name="Oxygen">
+    <atom unit="g/mole" value="16"/>
+</element>
+
+<material name="Quartz" state="solid">
+    <MEE unit="eV" value="125.663004061076"/>
+    <D unit="g/cm3" value="2.2"/>
+    <fraction n="0.467465468463971" ref="Silicon"/>
+    <fraction n="0.532534531536029" ref="Oxygen"/>
+</material>
+
+<element Z="7" name="Nitrogen">
+    <atom unit="g/mole" value="14.01"/>
+</element>
+
+<material name="Air" state="gas">
+    <MEE unit="eV" value="85.7030667332999"/>
+    <D unit="g/cm3" value="0.00129"/>
+    <fraction n="0.7" ref="Nitrogen"/>
+    <fraction n="0.3" ref="Oxygen"/>
+</material>
+
+<material Z="13" name="Aluminium" state="solid">
+    <MEE unit="eV" value="166"/>
+    <D unit="g/cm3" value="2.7"/>
+    <atom unit="g/mole" value="26.98"/>
+</material>
+
+<material Z="19" name="Photocathode" state="solid">
+      <MEE unit="eV" value="190"/>
+      <D unit="g/cm3" value="5"/>
+      <atom unit="g/mole" value="39.0983"/>
+</material>
+</materials>
