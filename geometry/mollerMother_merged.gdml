@@ -21,7 +21,7 @@
 <structure>
 
   <volume name="logicMother">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="world_solid"/>
 
     <!-- Target region -->
