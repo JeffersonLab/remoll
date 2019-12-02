@@ -353,7 +353,7 @@
       <volumeref ref="DSAlTarg"/>
 	<position name="targ_downstream_window" unit="mm" x="0" y="0" z="625+1"/>
     </physvol>
-
+<!--
     <physvol>
       <volumeref ref="targetChamber"/>
       <position name="targetChamber_pos" unit="mm" x="0" y="0" z="0"/>
@@ -372,20 +372,20 @@
       <position name="LeadCollar_pos" unit="mm" x="0" y="0"
                 z="2851 + 100"/>
     </physvol>
-
-    <!--shielding placement-->
+-->
+    <!--shielding placement
     <physvol>
       <volumeref ref="ConcreteShield_target"/>
       <position name="ConcerteShield_pos" unit="mm" x="0" y="concreteBoxy/2.-2975" z="0"/>
-      <!-- <position name="ConcerteShield_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="concreteBoxy/2.-2975" z="0"/> -->
+      <position name="ConcerteShield_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="concreteBoxy/2.-2975" z="0"/> 
     </physvol>
 
     <physvol>
       <volumeref ref="LeadShield_target"/>
       <position name="LeadShield_pos" unit="mm" x="-1.*(leadBoxx/2.-1880)" y="leadBoxy/2.-1150" z="1200+leadBoxz/2."/>
     </physvol>
-
-    <!--placement of vacuum detector-->
+    -->
+    <!--placement of vacuum detector
     <physvol>
       <volumeref ref="skyshineVacuumDet1_logic"/>
       <position name="shyshineVacuumDet1_pos" unit="mm" x="0" y="targetChamber_L/2.+targetChamberHat_L+200" z="0"/>
@@ -435,7 +435,7 @@
       <volumeref ref="tgtInnerDet3_logic"/>
       <position name="tgtInnerDet3_pos" unit="mm" x="0" y="450" z="1101"/>
     </physvol>
-
+    -->
     <auxiliary auxtype="TargetSystem" auxvalue=""/>
   </volume>
 

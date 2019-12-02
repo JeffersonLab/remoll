@@ -53,12 +53,12 @@
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
 
-    <!-- Tracking Detectors -->
+    <!-- Tracking Detectors 
     <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
       <positionref ref="trackingCenter"/>
     </physvol>
-
+   -->
     <!-- Main Detectors -->
    <!--
     <physvol>
@@ -68,18 +68,18 @@
     </physvol>
     -->
 
-    <!-- ShowerMax Detectors -->
+    <!-- ShowerMax Detectors 
     <physvol>
       <file name="showermax/showerMaxDetectorSystem.gdml"/>
       <positionref ref="showerMaxDetectorCenter"/>
     </physvol>
-
-    <!-- Pion Detectors -->
+   -->
+    <!-- Pion Detectors 
     <physvol>
       <file name="pion/pionDetectorSystem.gdml"/>
       <positionref ref="pionDetectorCenter"/>
     </physvol>
-
+   -->
   </volume>
 </structure>
 
