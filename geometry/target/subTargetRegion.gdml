@@ -192,14 +192,14 @@
   <volume name="USAlTarg">
     <materialref ref="Aluminum"/>
     <solidref ref="AlWindow"/>
-    <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     <auxiliary auxtype="Color" auxvalue="white"/>
   </volume>
 
   <volume name="DSAlTarg">
     <materialref ref="Aluminum"/>
     <solidref ref="AlWindow"/>
-    <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     <auxiliary auxtype="Color" auxvalue="white"/>
   </volume>
 
