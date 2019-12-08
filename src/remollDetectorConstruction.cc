@@ -196,6 +196,10 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       "list",
       &remollDetectorConstruction::ListKryptoniteCandidates,
       "List kryptonite candidate materials");
+  fKryptoniteMessenger->DeclareMethod(
+      "volume",
+      &remollDetectorConstruction::EnableKryptoniteVolume,
+      "Treat volume as kryptonite");
 }
 
 void remollDetectorConstruction::EnableKryptonite()
@@ -216,6 +220,23 @@ void remollDetectorConstruction::DisableKryptonite()
   fKryptoniteEnable = false;
 
   SetKryptoniteUserLimits(fWorldVolume);
+}
+
+void remollDetectorConstruction::EnableKryptoniteVolume(G4String name)
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Enabling kryptonite on volume" << name << "." << G4endl;
+
+  // Find volume
+  G4LogicalVolume* logical_volume = G4LogicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! logical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  fKryptoniteEnable = true;
+
+  logical_volume->SetUserLimits(fKryptoniteUserLimits);
 }
 
 void remollDetectorConstruction::AddKryptoniteCandidate(G4String name)

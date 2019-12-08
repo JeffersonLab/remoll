@@ -101,6 +101,10 @@ void remollGenericDetector::BuildStaticMessenger()
     "detect",
     &remollGenericDetector::SetOneDetectorType,
     "Set detector type");
+  fStaticMessenger->DeclareMethod(
+    "detect_range",
+    &remollGenericDetector::SetRangeDetectorType,
+    "Set detector type");
 }
 
 void remollGenericDetector::Initialize(G4HCofThisEvent*)
