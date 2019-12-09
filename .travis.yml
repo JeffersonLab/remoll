@@ -6,27 +6,23 @@ script:
 - time docker build -t jeffersonlab/remoll .
 - for suite in load validate overlap ; do
     echo "=== scripts/tests/test_geometries.sh ${suite} ===" ;
-    time docker run --rm -t jeffersonlab/remoll scripts/tests/test_geometries.sh ${suite} ;
+    mkdir -p ${PWD}/logfiles ${PWD}/rootfiles ;
+    time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll scripts/tests/test_geometries.sh ${suite} ;
   done
 - for suite in unit ; do
     echo "=== scripts/tests/test_macros.sh ${suite} ===" ;
-    time docker run --rm -t jeffersonlab/remoll scripts/tests/test_macros.sh ${suite} ;
+    mkdir -p ${PWD}/logfiles ${PWD}/rootfiles ; 
+    time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll scripts/tests/test_macros.sh ${suite} ;
   done
 - for suite in commit release ; do
     echo "=== scripts/tests/test_macros.sh ${suite} ===" ;
-    time docker run -t jeffersonlab/remoll sh -c "
+    mkdir -p ${PWD}/logfiles ${PWD}/rootfiles ;
+    time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll sh -c "
       scripts/tests/test_macros.sh ${suite} &&
       scripts/tests/targz_macros.sh ${suite} &&
       scripts/tests/watermark.sh ${suite} &&
       ls -al /jlab/remoll/
-    " || exit 1 ;
-    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.*.*.log.tar.gz" . ;
-    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.*.*.root.tar.gz" . ;
-    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.*.*.analysis.log.tar.gz" . ;
-    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.*.*.analysis.pdf.tar.gz" . ;
-    docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.*.*.analysis.root.tar.gz" . ;
-    docker cp $(docker ps -l -q):"/jlab/remoll/rootfiles_tests_*_*_analysis.pdf" . ;
-    docker rm $(docker ps -l -q) ;
+    " ;
   done
 
 after_success:
