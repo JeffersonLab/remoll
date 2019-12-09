@@ -3,18 +3,22 @@ services:
 - docker
 
 script:
-- docker build -t jeffersonlab/remoll .
+- time docker build -t jeffersonlab/remoll .
 - for suite in load validate overlap ; do
-    docker run --rm -t jeffersonlab/remoll scripts/tests/test_geometries.sh ${suite} ;
+    echo "=== scripts/tests/test_geometries.sh ${suite} ===" ;
+    time docker run --rm -t jeffersonlab/remoll scripts/tests/test_geometries.sh ${suite} ;
   done
 - for suite in unit ; do
-    docker run --rm -t jeffersonlab/remoll scripts/tests/test_macros.sh ${suite} ;
+    echo "=== scripts/tests/test_macros.sh ${suite} ===" ;
+    time docker run --rm -t jeffersonlab/remoll scripts/tests/test_macros.sh ${suite} ;
   done
 - for suite in commit release ; do
-    docker run -t jeffersonlab/remoll sh -c "
+    echo "=== scripts/tests/test_macros.sh ${suite} ===" ;
+    time docker run -t jeffersonlab/remoll sh -c "
       scripts/tests/test_macros.sh ${suite} &&
       scripts/tests/targz_macros.sh ${suite} &&
-      scripts/tests/watermark.sh ${suite}
+      scripts/tests/watermark.sh ${suite} &&
+      ls -al /jlab/remoll/
     " || exit 1 ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.*.*.log.tar.gz" . ;
     docker cp $(docker ps -l -q):"/jlab/remoll/remolltest.*.*.root.tar.gz" . ;
