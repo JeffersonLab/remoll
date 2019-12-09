@@ -41,6 +41,8 @@ while [ $# -gt 0 ] ; do
     stamp $file | pdftk - stamp $file output $file.new && mv $file.new $file
   done
   # Concatenate them all
-  pdftk ${rootfiles}/analysis/*.pdf cat output ${rootfiles}/${rootfiles//\//_}.pdf
+  name=${rootfiles##*tests/}
+  name=${name//\//_}_analysis_book
+  pdftk ${rootfiles}/analysis/*.pdf cat output rootfiles/${name}.pdf
   shift
 done
