@@ -22,7 +22,7 @@ script:
       scripts/tests/targz_macros.sh ${suite} &&
       scripts/tests/watermark.sh ${suite}
     " ;
-  done
+  done ; ls -al ${PWD}/logfiles ${PWD}/rootfiles
 
 after_success:
 - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
