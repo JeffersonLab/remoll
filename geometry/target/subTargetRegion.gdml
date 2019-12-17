@@ -5,7 +5,7 @@
 <!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
   &matrices;
@@ -192,14 +192,14 @@
   <volume name="USAlTarg">
     <materialref ref="Aluminum"/>
     <solidref ref="AlWindow"/>
-    <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     <auxiliary auxtype="Color" auxvalue="white"/>
   </volume>
 
   <volume name="DSAlTarg">
     <materialref ref="Aluminum"/>
     <solidref ref="AlWindow"/>
-    <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     <auxiliary auxtype="Color" auxvalue="white"/>
   </volume>
 

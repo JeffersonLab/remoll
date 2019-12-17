@@ -6,6 +6,8 @@
 
 */
 
+#include "G4Types.hh"
+
 #ifdef G4MULTITHREADED
 #include "G4MTRunManager.hh"
 typedef G4MTRunManager RunManager;
@@ -15,7 +17,6 @@ typedef G4RunManager RunManager;
 #endif
 
 #include "G4Version.hh"
-#include "G4Types.hh"
 #include "G4UImanager.hh"
 
 #include "remollRun.hh"
