@@ -11,7 +11,8 @@ RUN echo '#!/bin/bash'                                >  /entrypoint.sh && \
     echo 'source /jlab/2.3/ce/jlab.sh'                >> /entrypoint.sh && \
     echo 'export PATH=/jlab/remoll/bin:${PATH}'       >> /entrypoint.sh && \
     echo 'export REMOLL=/jlab/remoll'                 >> /entrypoint.sh && \
-    echo 'cd /jlab/remoll && exec "$@"'               >> /entrypoint.sh && \
+    echo 'cd /jlab/remoll'                            >> /entrypoint.sh && \
+    echo 'test $# -gt 1 && exec "$@"'                 >> /entrypoint.sh && \
     chmod +x /entrypoint.sh
 
 # Compile remoll
