@@ -1,0 +1,51 @@
+# This must be called before initialize
+/remoll/physlist/register QGSP_BERT
+
+/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+/remoll/physlist/parallel/enable 
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/printgeometry false
+
+/remoll/addfield map_directory/hybridJLAB.txt
+/remoll/addfield map_directory/upstreamJLAB_1.25.txt
+
+# Raster and initial angle stuff
+/remoll/oldras false
+/remoll/beam_corrph 0.02134
+/remoll/beam_corrth 0.02134
+
+#/remoll/evgen/set elastic
+#/remoll/evgen/set inelastic
+/remoll/evgen/set pion
+#/remoll/evgen/set pion_LUND
+
+/remoll/beamene 11 GeV
+/remoll/beamcurr 65 microampere
+
+#/remoll/targname USAlTarg
+/remoll/targname h2Targ
+#/remoll/targname DSAlTarg
+
+##write out only det 28
+/remoll/SD/disable_all
+/remoll/SD/enable 28
+#/remoll/SD/detect lowenergyneutral 28
+#/remoll/SD/detect secondaries 28
+/remoll/SD/detect boundaryhits 28
+
+/remoll/kryptonite/volume logicUSTracker
+/remoll/kryptonite/volume logicDSTracker
+/remoll/kryptonite/volume logicWasher_12
+/remoll/kryptonite/enable
+
+# Specify random number seed
+/remoll/seed 123456
+
+/remoll/filename remollout_pion.root
+
+/remoll/printtargetinfo
+/run/beamOn 20000
