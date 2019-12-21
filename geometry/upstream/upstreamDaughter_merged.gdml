@@ -103,8 +103,8 @@
     <constant name="COLL2_R2_U" value ="35"/>
     <constant name="COLL2_R2_D" value ="35"/>
     <!-- coll sep, outer rad, adjust this -->
-    <constant name="COLL2_R3_U" value ="103"/>
-    <constant name="COLL2_R3_D" value ="103"/>
+    <constant name="COLL2_R3_U" value ="101"/>
+    <constant name="COLL2_R3_D" value ="101"/>
     <constant name="COLL2_R4_U" value ="300"/>
     <constant name="COLL2_R4_D" value ="300"/>
 
