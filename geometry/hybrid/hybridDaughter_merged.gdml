@@ -1893,7 +1893,7 @@
         <volumeref ref="logicDSwindow"/>
         <positionref ref="CENTER"/>
       </physvol>
-
+<!--
       <physvol name="planeDet_12">
         <volumeref ref="logicWasher_12"/>
         <position name="wash_phys_12_pos" unit="mm" x="0" y="0" z="23995-DOFFSET"/>
@@ -1903,7 +1903,7 @@
         <volumeref ref="logicDSTracker"/>
         <position name="DStracker_pos" unit="mm" x="0" y="0" z="0"/>
       </physvol>
-
+-->
 
 
       <physvol name="collar1">
