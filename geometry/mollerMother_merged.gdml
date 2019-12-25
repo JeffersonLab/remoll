@@ -49,10 +49,11 @@
     </physvol>
 
     <!-- Downstream beampipe -->
+    <!-- chandan Dec 22 2019
     <physvol>
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
-
+    chandan -->
     <!-- Tracking Detectors 
     <physvol>
       <file name="tracking/trackingDaughter.gdml"/>

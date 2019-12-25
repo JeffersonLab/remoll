@@ -217,10 +217,11 @@
     <!--End of old prototype beam pipe-->
 
     <!--CAD based shielding beampipe for col-4 to end of hybrid magnet -->
-    <constant name="shield_DS_beampipe_p1_length" value="125 + col4shift"/> <!-- FIXME Added length to col 4's beampipe in an arbitrary way!! FIXME -->
+    <!-- <constant name="shield_DS_beampipe_p1_length" value="125 + col4shift"/> FIXME Added length to col 4's beampipe in an arbitrary way!! FIXME -->
+    <constant name="shield_DS_beampipe_p1_length" value="2000"/> 
     <constant name="shield_DS_beampipe_thickness" value="3"/>
-    <constant name="shield_DS_beampipe_p1_US_rmin" value="33"/>
-    <constant name="shield_DS_beampipe_p1_DS_rmin" value="33"/>
+    <constant name="shield_DS_beampipe_p1_US_rmin" value="35.5"/>
+    <constant name="shield_DS_beampipe_p1_DS_rmin" value="35.5"/>
     <constant name="shield_DS_beampipe_p1_US_rmax" value="shield_DS_beampipe_p1_US_rmin + shield_DS_beampipe_thickness"/>
     <constant name="shield_DS_beampipe_p1_DS_rmax" value="shield_DS_beampipe_p1_DS_rmin + shield_DS_beampipe_thickness"/>
     <constant name="shield_DS_beampipe_p2_length" value="1400 + 400"/>
@@ -1049,12 +1050,13 @@
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="shield_DS_beampipe_solid"> 
       <zplane rmin="shield_DS_beampipe_p1_US_rmin" rmax="shield_DS_beampipe_p1_US_rmax" z="0"/> 
       <zplane rmin="shield_DS_beampipe_p1_DS_rmin" rmax="shield_DS_beampipe_p1_DS_rmax" z="shield_DS_beampipe_p1_length"/> 
-
+      <!-- chandan Dec 23 2019
       <zplane rmin="shield_DS_beampipe_p2_US_rmin" rmax="shield_DS_beampipe_p2_US_rmax" z="shield_DS_beampipe_p1_length + 0.01"/> 
       <zplane rmin="shield_DS_beampipe_p2_DS_rmin" rmax="shield_DS_beampipe_p2_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length"/>
 
       <zplane rmin="shield_DS_beampipe_p3_US_rmin" rmax="shield_DS_beampipe_p3_US_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + 0.01"/> 
-      <zplane rmin="shield_DS_beampipe_p3_DS_rmin" rmax="shield_DS_beampipe_p3_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + shield_DS_beampipe_p3_length"/>
+      <zplane rmin="shield_DS_beampipe_p3_DS_rmin" rmax="shield_DS_beampipe_p3_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + shield_DS_beampipe_p3_length"/> 
+	      chandan -->
     </polycone>
 
     <tessellated name="leftpcolcut">
@@ -1905,7 +1907,7 @@
       </physvol>
 -->
 
-
+      <!-- chandan Dec 22 2019
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
         <position lunit="mm" name="collar1pos" x="0" y="0" z="17861-DOFFSET"/>
@@ -1963,7 +1965,9 @@
  	<volumeref ref="logicLintel7"/>
  	<position name="lintel7pos" x="-259.995247375" y="326.023728189" z="12850-DOFFSET"/>
  	<rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
-      </physvol>
+</physvol>
+
+	chandan	-->
 <!-- Old beampipe design not in use now -->
 <!-- 
       <physvol>
