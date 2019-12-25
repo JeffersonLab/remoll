@@ -217,10 +217,11 @@
     <!--End of old prototype beam pipe-->
 
     <!--CAD based shielding beampipe for col-4 to end of hybrid magnet -->
-    <constant name="shield_DS_beampipe_p1_length" value="125 + col4shift"/> <!-- FIXME Added length to col 4's beampipe in an arbitrary way!! FIXME -->
+    <!-- <constant name="shield_DS_beampipe_p1_length" value="125 + col4shift"/> FIXME Added length to col 4's beampipe in an arbitrary way!! FIXME -->
+    <constant name="shield_DS_beampipe_p1_length" value="2000"/> 
     <constant name="shield_DS_beampipe_thickness" value="3"/>
-    <constant name="shield_DS_beampipe_p1_US_rmin" value="33"/>
-    <constant name="shield_DS_beampipe_p1_DS_rmin" value="33"/>
+    <constant name="shield_DS_beampipe_p1_US_rmin" value="35.5"/>
+    <constant name="shield_DS_beampipe_p1_DS_rmin" value="35.5"/>
     <constant name="shield_DS_beampipe_p1_US_rmax" value="shield_DS_beampipe_p1_US_rmin + shield_DS_beampipe_thickness"/>
     <constant name="shield_DS_beampipe_p1_DS_rmax" value="shield_DS_beampipe_p1_DS_rmin + shield_DS_beampipe_thickness"/>
     <constant name="shield_DS_beampipe_p2_length" value="1400 + 400"/>
@@ -1049,12 +1050,13 @@
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="shield_DS_beampipe_solid"> 
       <zplane rmin="shield_DS_beampipe_p1_US_rmin" rmax="shield_DS_beampipe_p1_US_rmax" z="0"/> 
       <zplane rmin="shield_DS_beampipe_p1_DS_rmin" rmax="shield_DS_beampipe_p1_DS_rmax" z="shield_DS_beampipe_p1_length"/> 
-
+      <!-- chandan Dec 23 2019
       <zplane rmin="shield_DS_beampipe_p2_US_rmin" rmax="shield_DS_beampipe_p2_US_rmax" z="shield_DS_beampipe_p1_length + 0.01"/> 
       <zplane rmin="shield_DS_beampipe_p2_DS_rmin" rmax="shield_DS_beampipe_p2_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length"/>
 
       <zplane rmin="shield_DS_beampipe_p3_US_rmin" rmax="shield_DS_beampipe_p3_US_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + 0.01"/> 
-      <zplane rmin="shield_DS_beampipe_p3_DS_rmin" rmax="shield_DS_beampipe_p3_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + shield_DS_beampipe_p3_length"/>
+      <zplane rmin="shield_DS_beampipe_p3_DS_rmin" rmax="shield_DS_beampipe_p3_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + shield_DS_beampipe_p3_length"/> 
+	      chandan -->
     </polycone>
 
     <tessellated name="leftpcolcut">
@@ -1905,61 +1907,6 @@
         <position name="DStracker_pos" unit="mm" x="0" y="0" z="0"/>
       </physvol>
 
-
-<!--
-      <physvol name="collar1">
-        <volumeref ref="logicCollar1"/>
-        <position lunit="mm" name="collar1pos" x="0" y="0" z="17861-DOFFSET"/>
-        <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
-      </physvol>
-
-      <physvol name="collar2">
-        <volumeref ref="logicCollar2"/>
-        <position lunit="mm" name="collar2pos" x="0" y="0" z="19550-DOFFSET"/>
-        <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
-      </physvol>
-      <physvol name="collar3">
-        <volumeref ref="logicCollar3"/>
-        <position lunit="mm" name="collar3pos" x="0" y="0" z="23550-DOFFSET"/>
-        <rotation aunit="rad" name="collar3rot" x="0" y="0" z="0"/>
-      </physvol>
-
-      <physvol name="lintel1">
-        <volumeref ref="logicLintel1"/>
-        <position name="lintel1pos" x="-454.0" y="5.55989646813e-14" z="12850-DOFFSET"/>
-        <rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
-      </physvol>
-      <physvol name="lintel2">
-        <volumeref ref="logicLintel2"/>
-        <position name="lintel2pos" x="-283.064370044" y="-354.95149304" z="12850-DOFFSET"/>
-        <rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
-      </physvol>
-      <physvol name="lintel3">
-        <volumeref ref="logicLintel3"/>
-        <position name="lintel3pos" x="101.024504016" y="-442.617272131" z="12850-DOFFSET"/>
-        <rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
-      </physvol>
-      <physvol name="lintel4">
-        <volumeref ref="logicLintel4"/>
-        <position name="lintel4pos" x="409.039866028" y="-196.983217559" z="12850-DOFFSET"/>
-        <rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
-      </physvol>
-      <physvol name="lintel5">
-        <volumeref ref="logicLintel5"/>
-        <position name="lintel5pos" x="409.039866028" y="196.983217559" z="12850-DOFFSET"/>
-        <rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
-      </physvol>
-      <physvol name="lintel6">
-        <volumeref ref="logicLintel6"/>
-        <position name="lintel6pos" x="101.024504016" y="442.617272131" z="12850-DOFFSET"/>
-        <rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
-      </physvol>
-      <physvol name="lintel7">
-        <volumeref ref="logicLintel7"/>
-        <position name="lintel7pos" x="-283.064370044" y="354.95149304" z="12850-DOFFSET"/>
-        <rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
-      </physvol>
--->
 
 <!-- Old beampipe design not in use now -->
 <!-- 
