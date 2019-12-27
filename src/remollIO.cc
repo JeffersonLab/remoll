@@ -39,7 +39,7 @@ remollIO* remollIO::GetInstance() {
 }
 
 remollIO::remollIO()
-: fFile(0),fTree(0),fFilename("remollout.root")
+: fFile(0),fTree(0),fFilename("remollout.root"),fRate(0)
 {
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
