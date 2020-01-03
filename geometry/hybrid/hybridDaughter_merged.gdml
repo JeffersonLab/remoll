@@ -1363,8 +1363,9 @@
      <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher4" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
 
 
-    <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="650" rmax1="682" rmin2="650" rmax2="682" z="100"/>
-    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="732" rmax1="750" rmin2="732" rmax2="750" z="100"/>
+    <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="640" rmax1="710" rmin2="640" rmax2="710" z="100"/>
+    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="910" rmax1="960" rmin2="910" rmax2="960" z="100"/>
+
     <cone name="solidCollar3" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="928" rmax1="980" rmin2="928" rmax2="980" z="100"/>
 
 <xtru name="solidLintel1" lunit="mm">
@@ -1907,18 +1908,18 @@
       </physvol>
 -->
 
-      <!-- chandan Dec 22 2019
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
-        <position lunit="mm" name="collar1pos" x="0" y="0" z="17861-DOFFSET"/>
+        <position lunit="mm" name="collar1pos" x="0" y="0" z="18450-DOFFSET"/>
         <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
-        <position lunit="mm" name="collar2pos" x="0" y="0" z="19550-DOFFSET"/>
+        <position lunit="mm" name="collar2pos" x="0" y="0" z="23450-DOFFSET"/>
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
+      <!-- chandan Dec 22 2019
       <physvol name="collar3">
         <volumeref ref="logicCollar3"/>
         <position lunit="mm" name="collar3pos" x="0" y="0" z="23550-DOFFSET"/>
