@@ -1050,13 +1050,6 @@
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="shield_DS_beampipe_solid"> 
       <zplane rmin="shield_DS_beampipe_p1_US_rmin" rmax="shield_DS_beampipe_p1_US_rmax" z="0"/> 
       <zplane rmin="shield_DS_beampipe_p1_DS_rmin" rmax="shield_DS_beampipe_p1_DS_rmax" z="shield_DS_beampipe_p1_length"/> 
-      <!-- chandan Dec 23 2019
-      <zplane rmin="shield_DS_beampipe_p2_US_rmin" rmax="shield_DS_beampipe_p2_US_rmax" z="shield_DS_beampipe_p1_length + 0.01"/> 
-      <zplane rmin="shield_DS_beampipe_p2_DS_rmin" rmax="shield_DS_beampipe_p2_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length"/>
-
-      <zplane rmin="shield_DS_beampipe_p3_US_rmin" rmax="shield_DS_beampipe_p3_US_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + 0.01"/> 
-      <zplane rmin="shield_DS_beampipe_p3_DS_rmin" rmax="shield_DS_beampipe_p3_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + shield_DS_beampipe_p3_length"/> 
-	      chandan -->
     </polycone>
 
     <tessellated name="leftpcolcut">
@@ -1919,7 +1912,7 @@
         <position lunit="mm" name="collar2pos" x="0" y="0" z="23450-DOFFSET"/>
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
-      <!-- chandan Dec 22 2019
+      <!-- Dec 22 2019
       <physvol name="collar3">
         <volumeref ref="logicCollar3"/>
         <position lunit="mm" name="collar3pos" x="0" y="0" z="23550-DOFFSET"/>
@@ -1968,7 +1961,7 @@
  	<rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
 </physvol>
 
-	chandan	-->
+	Dec 2019	-->
 <!-- Old beampipe design not in use now -->
 <!-- 
       <physvol>
