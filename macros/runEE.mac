@@ -1,93 +1,51 @@
-#  Example file
+/remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/physlist/register QGSP_BERT_HP
+/remoll/physlist/parallel/enable
+/remoll/parallel/setfile geometry/mollerParallel.gdml
 
-# store tracks
-#/tracking/storeTrajectory 1
-
-# This must be called before initialize
-/remoll/geometry/setfile geometry/mollerMother_merged.gdml
-# Parallel world geometry is optional - detector 28 (the primary detector array's idealize vacuum detector) is included in this parallel world now.
-/remoll/parallel/setfile geometry/mollerParallel.gdml 
-
-#/remoll/physlist/register QGSP_BERT_HP
-/remoll/physlist/parallel/enable 
-# if optical physics is turned on it will only work if parallel physics is not turned on.
-#/remoll/physlist/optical/enable 
-
-# This must be explicitly called
 /run/initialize
-
-/remoll/printgeometry true
-
 /remoll/addfield map_directory/hybridJLAB.txt
 /remoll/addfield map_directory/upstreamJLAB_1.25.txt
 
-#/remoll/field/scale map_directory/blockyHybrid_rm_3.0.txt 1.0
-#/remoll/field/current map_directory/blockyHybrid_rm_3.0.txt 1000.0
-
-# Raster and initial angle stuff
-/remoll/oldras true
-/remoll/rasx 5 mm
-/remoll/rasy 5 mm
-#/remoll/beam_x0 0 mm
-#/remoll/beam_y0 0 mm
-# initial angle
-#/remoll/beam_th0 0 mrad
-#/remoll/beam_ph0 0 mrad
-# gaussian spread widths
-#/remoll/beam_dth 0 mrad
-#/remoll/beam_dph 0 mrad
-
-#/remoll/evgen/set beam
-# To hit Ring 5 open in septant 4
-#/remoll/evgen/beam/x -1300 mm
-#/remoll/evgen/beam/rasx -30 mm
-#/remoll/evgen/beam/origin -987.5 0 -50 mm
-#/remoll/evgen/beam/direction (-0.0523,0,0.9986)
-# Mainz test energy
-#/remoll/beamene 855 MeV
-
 /remoll/evgen/set moller
-#/remoll/evgen/thcommin 30.0 deg
-#/remoll/evgen/thcommax 150.0 deg
-#/remoll/evgen/set elastic 
-#/remoll/evgen/thmin 0.1 deg
-#/remoll/evgen/thmax 2.0 deg
-#/remoll/evgen/emin 80.0 MeV
-#/remoll/evgen/set inelastic 
-#/remoll/evgen/set pion
-#/remoll/piontype pi+
-#/remoll/evgen/set pion_LUND
-#/remoll/evgen/set inelasticAl
-#/remoll/evgen/set quasielasticAl
-#/remoll/evgen/set elasticAl
-#/remoll/evgen/set external
-#/remoll/externalfile remollout.root
-#/remoll/externaldetid 4051
 
-/remoll/evgen/beamPolarization +L
-/remoll/field/equationtype 2
-/remoll/field/steppertype 2
-/remoll/field/print
+/remoll/oldras false
+/remoll/beam_corrph 0.02134
+/remoll/beam_corrth 0.02134
 
 /remoll/beamene 11 GeV
-
 /remoll/beamcurr 65 microampere
 
-# Make interactions with W, Cu, and Pb
-# realistic rather than pure absorbers
-/control/execute macros/kryptonite.mac
-
-/process/list
-
-##write out only det 28
 /remoll/SD/disable_all
 /remoll/SD/enable 28
+/remoll/SD/detect lowenergyneutral 28
+/remoll/SD/detect secondaries 28
+/remoll/SD/detect boundaryhits 28
 
-# Specify random number seed
-/remoll/seed 123456
+/remoll/SD/enable 91
+/remoll/SD/detect lowenergyneutral 91
+/remoll/SD/detect secondaries 91
+/remoll/SD/detect boundaryhits 91
 
-/remoll/filename remollout_ee_XY10-0mm.root
+/remoll/SD/enable 92
+/remoll/SD/detect lowenergyneutral 92
+/remoll/SD/detect secondaries 92
+/remoll/SD/detect boundaryhits 92
 
-#/tracking/verbose 2
-/remoll/printtargetinfo
+/remoll/SD/enable 5547
+/remoll/SD/detect lowenergyneutral 5547
+/remoll/SD/detect secondaries 5547
+/remoll/SD/detect boundaryhits 5547
+
+/remoll/SD/enable 5543
+/remoll/SD/detect lowenergyneutral 5543
+/remoll/SD/detect secondaries 5543
+/remoll/SD/detect boundaryhits 5543
+
+/remoll/kryptonite/volume logicUSTracker
+/remoll/kryptonite/volume logicDSTracker
+/remoll/kryptonite/volume logicWasher_12
+/remoll/kryptonite/enable
+
+/remoll/filename o_M_pbShield_ee_1e4.root
 /run/beamOn 10000
