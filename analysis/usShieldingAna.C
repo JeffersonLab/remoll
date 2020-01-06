@@ -14,7 +14,7 @@ TH1D *hScatAngP1,*hScatAngP2;
 TH1D *hRate,*rRate, *rRateAsym,*r,*sourceZ,*eRateAsym;
 TH1D *sourceZg,*sourceZgEwght;
 TH2D *hXY,*hXYrate, *hXYrateAsym;
-TH2D *hgXY,*hgXYrate, *hgXYrateAsym;
+TH2D *hgXY,*hgXYrate,*hgXYrateEwght, *hgXYrateAsym;
 TH2D *hVtxAngR, *hAfterColl2AngR;
 TH2D *hVtxAngRrate, *hAfterColl2AngRrate;
 TH2D *hVtxAngE, *hAfterColl2AngE;
@@ -134,6 +134,7 @@ void initHisto(){
 
   hgXY = new TH2D("hgXY","2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
   hgXYrate = new TH2D("hgXYrate","rate weighted 2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
+  hgXYrateEwght = new TH2D("hgXYrateEwght","rate*E weighted 2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
   hgXYrateAsym = new TH2D("hgXYrateAsym","rate*asym weighted 2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
   sourceZg = new TH1D("sourceZg","initial vertex for hit ;z position [m]",5000,-6500,25500);
   sourceZgEwght = new TH1D("sourceZgEwght","E weighted initial vertex for hit ;z position [m]",5000,-6500,25500);
@@ -279,6 +280,7 @@ long processOne(string fnm){
 	sourceZgEwght->Fill(hit->at(j).vz,hit->at(j).e);
 	hgXY->Fill(hit->at(j).x,hit->at(j).y);
 	hgXYrate->Fill(hit->at(j).x,hit->at(j).y,rate);
+	hgXYrateEwght->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
 	hgXYrateAsym->Fill(hit->at(j).x,hit->at(j).y,rate*asym);
       }
 
@@ -446,6 +448,9 @@ void writeOutput(){
 
   hgXYrate->Scale(1./nFiles);
   hgXYrate->Write();
+
+  hgXYrateEwght->Scale(1./nFiles);
+  hgXYrateEwght->Write();
 
   hgXYrateAsym->Scale(1./nFiles);
   hgXYrateAsym->Write();
