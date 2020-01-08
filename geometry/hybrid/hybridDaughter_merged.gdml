@@ -217,10 +217,11 @@
     <!--End of old prototype beam pipe-->
 
     <!--CAD based shielding beampipe for col-4 to end of hybrid magnet -->
-    <constant name="shield_DS_beampipe_p1_length" value="125 + col4shift"/> <!-- FIXME Added length to col 4's beampipe in an arbitrary way!! FIXME -->
+    <!-- <constant name="shield_DS_beampipe_p1_length" value="125 + col4shift"/> FIXME Added length to col 4's beampipe in an arbitrary way!! FIXME -->
+    <constant name="shield_DS_beampipe_p1_length" value="2000"/> 
     <constant name="shield_DS_beampipe_thickness" value="3"/>
-    <constant name="shield_DS_beampipe_p1_US_rmin" value="33"/>
-    <constant name="shield_DS_beampipe_p1_DS_rmin" value="33"/>
+    <constant name="shield_DS_beampipe_p1_US_rmin" value="35.5"/>
+    <constant name="shield_DS_beampipe_p1_DS_rmin" value="35.5"/>
     <constant name="shield_DS_beampipe_p1_US_rmax" value="shield_DS_beampipe_p1_US_rmin + shield_DS_beampipe_thickness"/>
     <constant name="shield_DS_beampipe_p1_DS_rmax" value="shield_DS_beampipe_p1_DS_rmin + shield_DS_beampipe_thickness"/>
     <constant name="shield_DS_beampipe_p2_length" value="1400 + 400"/>
@@ -1049,12 +1050,6 @@
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="shield_DS_beampipe_solid"> 
       <zplane rmin="shield_DS_beampipe_p1_US_rmin" rmax="shield_DS_beampipe_p1_US_rmax" z="0"/> 
       <zplane rmin="shield_DS_beampipe_p1_DS_rmin" rmax="shield_DS_beampipe_p1_DS_rmax" z="shield_DS_beampipe_p1_length"/> 
-
-      <zplane rmin="shield_DS_beampipe_p2_US_rmin" rmax="shield_DS_beampipe_p2_US_rmax" z="shield_DS_beampipe_p1_length + 0.01"/> 
-      <zplane rmin="shield_DS_beampipe_p2_DS_rmin" rmax="shield_DS_beampipe_p2_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length"/>
-
-      <zplane rmin="shield_DS_beampipe_p3_US_rmin" rmax="shield_DS_beampipe_p3_US_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + 0.01"/> 
-      <zplane rmin="shield_DS_beampipe_p3_DS_rmin" rmax="shield_DS_beampipe_p3_DS_rmax" z="shield_DS_beampipe_p1_length + 0.01 + shield_DS_beampipe_p2_length + shield_DS_beampipe_p3_length"/>
     </polycone>
 
     <tessellated name="leftpcolcut">
@@ -1361,8 +1356,9 @@
      <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher4" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
 
 
-    <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="650" rmax1="682" rmin2="650" rmax2="682" z="100"/>
-    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="732" rmax1="750" rmin2="732" rmax2="750" z="100"/>
+    <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="640" rmax1="1100" rmin2="640" rmax2="1100" z="100"/>
+    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="910" rmax1="1100" rmin2="910" rmax2="1100" z="100"/>
+
     <cone name="solidCollar3" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="928" rmax1="980" rmin2="928" rmax2="980" z="100"/>
 
 <xtru name="solidLintel1" lunit="mm">
@@ -1905,18 +1901,18 @@
       </physvol>
 -->
 
-
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
-        <position lunit="mm" name="collar1pos" x="0" y="0" z="17861-DOFFSET"/>
+        <position lunit="mm" name="collar1pos" x="0" y="0" z="18450-DOFFSET"/>
         <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
-        <position lunit="mm" name="collar2pos" x="0" y="0" z="19550-DOFFSET"/>
+        <position lunit="mm" name="collar2pos" x="0" y="0" z="23450-DOFFSET"/>
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
+      <!-- Dec 22 2019
       <physvol name="collar3">
         <volumeref ref="logicCollar3"/>
         <position lunit="mm" name="collar3pos" x="0" y="0" z="23550-DOFFSET"/>
@@ -1963,7 +1959,9 @@
  	<volumeref ref="logicLintel7"/>
  	<position name="lintel7pos" x="-259.995247375" y="326.023728189" z="12850-DOFFSET"/>
  	<rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
-      </physvol>
+</physvol>
+
+	Dec 2019	-->
 <!-- Old beampipe design not in use now -->
 <!-- 
       <physvol>

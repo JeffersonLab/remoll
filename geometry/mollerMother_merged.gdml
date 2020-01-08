@@ -49,10 +49,11 @@
     </physvol>
 
     <!-- Downstream beampipe -->
+    <!-- 
     <physvol>
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
-
+    -->
     <!-- Tracking Detectors 
     <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
