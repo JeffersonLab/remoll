@@ -1111,7 +1111,7 @@
 	<quadrangular vertex1="COLL5_6" vertex2="COLL5_7" vertex3="COLL5_15" vertex4="COLL5_14" type="ABSOLUTE"/>
     </tessellated>
 
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U+1700" rmax2="PCOLL2_R4_D+1700" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="pcoll2trap" rmax1="PCOLL2_R4_U+1000" rmax2="PCOLL2_R4_D+1000" rmin1="0" rmin2="0" startphi="0" z="1.0"/>
 
@@ -1226,7 +1226,7 @@
 
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
-    <box lunit="mm" name="boxDSPolyShield1_solid_1" x="DSPolyShield1_width" y="DSPolyShield1_height" z="DSPolyShield1_length"/>
+    <box lunit="mm" name="boxDSPolyShield1_solid_1" x="DSPolyShield1_height" y="DSPolyShield1_height" z="DSPolyShield1_length"/>
     <box lunit="mm" name="boxDSPolyShield1_solid_2" x="DSPolyShield1_width - 2*DSPolyShield1_side_thickness + 1" y="DSPolyShield1_height - DSPolyShield1_top_thickness - DSPolyShield1_bottom_thickness + 1" z="DSPolyShield1_length - 1*DSPolyShield1_side_thickness + 1"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="DSPolyShield1_beamTube_solid" rmax="boxDSShieldColl1_inner_rmax" rmin="0" startphi="0" z="DSPolyShield1_length+10"/>
 
@@ -1237,7 +1237,7 @@
     </subtraction> 
 <!-- modified to skip the next subtraction... -->
     <subtraction name ="boxDSPolyShield1_solid">
-      <first ref="boxDSPolyShield1_solid_3"/>
+      <first ref="boxDSPolyShield1_solid_1"/>
       <second ref="DSPolyShield1_beamTube_solid"/>
       <positionref ref="boxDSPolyShield1_trans2" />
     </subtraction>    
@@ -1689,13 +1689,9 @@
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
     <volume name="boxDSPolyShield1_logic">
-<!--  <materialref ref="Concrete"/> -->
-<!--  <materialref ref="Tungsten"/> -->
-      <materialref ref="Polythene"/>
-<!--        <materialref ref="Kryptonite"/> -->
+      <materialref ref="Concrete"/>
       <solidref ref="boxDSPolyShield1_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
+      <auxiliary auxtype="Color" auxvalue="green"/>
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6021"/>
     </volume>
@@ -1743,9 +1739,9 @@
     </volume>
 
     <volume name="boxDSShield_local_logic">
-      <materialref ref="Concrete"/>
+      <materialref ref="Lead"/>
       <solidref ref="boxDSShield1_local_solid"/>
-      <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
       <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6031"/>
@@ -1919,11 +1915,12 @@
         <position name="wash_phys_12_pos" unit="mm" x="0" y="0" z="23995-DOFFSET"/>
       </physvol>
 
+      <!--
       <physvol name="DStracker">
         <volumeref ref="logicDSTracker"/>
         <position name="DStracker_pos" unit="mm" x="0" y="0" z="0"/>
       </physvol>
--->
+      -->
 
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
@@ -1985,23 +1982,6 @@
  	<rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
 </physvol>
 
-	Dec 2019	-->
-<!-- Old beampipe design not in use now -->
-<!-- 
-      <physvol>
-        <volumeref ref="DSbeampipe_1_logic"/>
-        <positionref ref="DSbeampipe_1_center"/>
-      </physvol>
-      <physvol>
-        <volumeref ref="DSbeampipe_2_logic"/>
-        <positionref ref="DSbeampipe_2_center"/>
-      </physvol>
-
-      <physvol>
-        <volumeref ref="DSbeampipe_3_logic"/>
-        <positionref ref="DSbeampipe_3_center"/>
-      </physvol>
--->
 
 <!-- Downstream of coll4 central collimating beampipe -->
       <physvol>
@@ -2098,78 +2078,22 @@
 
 <!-- Collimator 4 -->
       <physvol name="DScoll_6">
-	      <volumeref ref="logicPDScollunion_1"/>
+	<volumeref ref="logicPDScollunion_1"/>
         <positionref ref="posPCOLL2"/>
       </physvol>
 
-<!--pcoll2trap_phys is removed since this is overlapping with shblk 4 poly shielding -->
-<!--
 
-      <physvol name="pcoll2trap_phys">
-	      <volumeref ref="logicpcoll2trap"/>
-        <positionref ref="posPCOLL2TRAP"/>
-      </physvol>
--->
-    <!--
-       Shielding collimators
-      -->
-      <!-- FIXME 2019-11-03 wdc: disabled shielding due to overlap after merging Sakib's geometry
-      <physvol>
-        <volumeref ref="boxDSShieldColl1_logic"/>
-        <positionref ref="DSshieldcoll_center_1"/>
-      </physvol>
-      -->
-
-    <!-- Neutron Poly Shielding -->
-    <!-- PolyShield1 will be outside shielding block 4 -->
-      <!-- FIXME 2019-11-03 wdc: disabled shielding due to overlap after merging Sakib's geometry
       <physvol>
         <volumeref ref="boxDSPolyShield1_logic"/>
         <positionref ref="boxDSPolyShield1_center"/>
       </physvol>
-      -->
-      <!-- PolyShield2 will be outside shielding hut -->
-<!--
-      <physvol>
-        <volumeref ref="boxDSPolyShield2_logic"/>
-        <positionref ref="boxDSPolyShield2_center"/>
-      </physvol>
--->
-<!-- Lead photon collimator around coll4 
-      <physvol>
-        <volumeref ref="DSShield_Tube_logic"/>
-        <positionref ref="DSshieldcollSubstract_CENTER_4"/>
-      </physvol>
--->
-<!--  <physvol>
-        <volumeref ref="boxDSShield1_logic"/>
-        <positionref ref="boxDSShield1_center"/>
-      </physvol>
-      <physvol>
-        <volumeref ref="boxDSShield1_roof_logic"/>
-        <positionref ref="boxDSShield1_roof_center"/>
-      </physvol>
 
-      <physvol>
-        <volumeref ref="boxDSShield1_polyroof_logic"/>
-        <positionref ref="boxDSShield1_polyroof_center"/>
-      </physvol>
--->
-      <!-- FIXME 2019-11-03 wdc: disabled shielding due to overlap after merging Sakib's geometry
+      <!-- Lead wall DS of collimator 4 -->
       <physvol>
         <volumeref ref="boxDSShield_local_logic"/>
         <positionref ref="boxDSShield_local_center"/>
       </physvol>
-      <physvol>
-        <volumeref ref="boxDSShield_polylocal_logic"/>
-        <positionref ref="boxDSShield_polylocal_center"/>
-      </physvol>
-
-      <physvol>
-        <volumeref ref="boxAlCan_logic"/>
-        <positionref ref="boxAlCan_center"/>
-      </physvol>
-      -->
+      
    </volume>
 </structure>
 
