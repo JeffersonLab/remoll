@@ -103,8 +103,8 @@
     <constant name="COLL2_R2_U" value ="35"/>
     <constant name="COLL2_R2_D" value ="35"/>
     <!-- coll sep, outer rad, adjust this -->
-    <constant name="COLL2_R3_U" value ="103"/>
-    <constant name="COLL2_R3_D" value ="103"/>
+    <constant name="COLL2_R3_U" value ="101"/>
+    <constant name="COLL2_R3_D" value ="101"/>
     <constant name="COLL2_R4_U" value ="300"/>
     <constant name="COLL2_R4_D" value ="300"/>
 
@@ -1005,12 +1005,14 @@
         <positionref ref="CENTER"/>
       </physvol>
       -->
-      
-      <!-- <physvol name="UStracker"> -->
-      <!--   <volumeref ref="logicUSTracker"/> -->
-      <!--   <position name="UStracker_pos" unit="mm" x="0" y="0" z="0"/> -->
-      <!-- </physvol> -->
-      
+
+     <!-- 
+      <physvol name="UStracker">
+        <volumeref ref="logicUSTracker"/>
+        <position name="UStracker_pos" unit="mm" x="0" y="0" z="0"/>
+      </physvol>
+     --> 
+
       <physvol name="USwindow">
         <volumeref ref="logicUSwindow"/>
         <positionref ref="CENTER"/>
