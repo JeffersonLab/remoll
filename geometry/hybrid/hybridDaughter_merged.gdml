@@ -1356,8 +1356,8 @@
      <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher4" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
 
 
-    <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="640" rmax1="1100" rmin2="640" rmax2="1100" z="100"/>
-    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="910" rmax1="1100" rmin2="910" rmax2="1100" z="100"/>
+    <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="600" rmax1="750" rmin2="600" rmax2="750" z="100"/>
+    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="952" rmax1="1200" rmin2="952" rmax2="1200" z="100"/>
 
     <cone name="solidCollar3" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="928" rmax1="980" rmin2="928" rmax2="980" z="100"/>
 
@@ -1473,6 +1473,16 @@
       <zplane rmin="73.152" rmax="101.6" z="17004.7498-DOFFSET"/>
       <zplane rmin="96.8502" rmax="101.6" z="17004.7498-DOFFSET"/>
       <zplane rmin="96.8502" rmax="101.6" z="18699.41-DOFFSET"/>
+    </polycone>
+
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Vacbeampipe">
+      <zplane rmin="600" rmax="1320" z="17405-DOFFSET"/>
+      <zplane rmin="600" rmax="1320" z="17475-DOFFSET"/>
+      <zplane rmin="1250" rmax="1320" z="17475-DOFFSET"/>
+      <zplane rmin="1250" rmax="1320" z="23825-DOFFSET"/>
+      <zplane rmin="952" rmax="1320" z="23825-DOFFSET"/>
+      <zplane rmin="952" rmax="1320" z="23895-DOFFSET"/>
     </polycone>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher12" rmax1="2050" rmax2="2050" rmin1="925" rmin2="925" startphi="0" z="10"/>
@@ -1864,6 +1874,14 @@
       <auxiliary auxtype="DetNo" auxvalue="52"/>
     </volume>
 
+    <volume name="logicVacbeampipe">
+      <materialref ref="Aluminum"/>
+      <solidref ref="solid_Vacbeampipe"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+	      <!--<auxiliary auxtype="DetNo" auxvalue="52"/>-->
+    </volume>
+
     <volume name="logicDSwindow">
       <materialref ref="G4_Al"/>^M
       <solidref ref="solid_DSwindow"/>
@@ -1885,6 +1903,12 @@
           <positionref ref="CENTER"/>
         </physvol>
       -->
+
+      <physvol name="DSbeampipe">
+          <volumeref ref="logicVacbeampipe"/>
+          <positionref ref="CENTER"/>
+        </physvol>
+
       <physvol name="DSwindow">
         <volumeref ref="logicDSwindow"/>
         <positionref ref="CENTER"/>
@@ -1903,13 +1927,13 @@
 
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
-        <position lunit="mm" name="collar1pos" x="0" y="0" z="18450-DOFFSET"/>
+        <position lunit="mm" name="collar1pos" x="0" y="0" z="17350-DOFFSET"/>
         <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
-        <position lunit="mm" name="collar2pos" x="0" y="0" z="23450-DOFFSET"/>
+        <position lunit="mm" name="collar2pos" x="0" y="0" z="23950-DOFFSET"/>
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
       <!-- Dec 22 2019
