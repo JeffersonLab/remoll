@@ -1909,12 +1909,12 @@
         <volumeref ref="logicDSwindow"/>
         <positionref ref="CENTER"/>
       </physvol>
-<!--
+      <!--
       <physvol name="planeDet_12">
         <volumeref ref="logicWasher_12"/>
         <position name="wash_phys_12_pos" unit="mm" x="0" y="0" z="23995-DOFFSET"/>
       </physvol>
-
+      -->
       <!--
       <physvol name="DStracker">
         <volumeref ref="logicDSTracker"/>
@@ -1933,7 +1933,7 @@
         <position lunit="mm" name="collar2pos" x="0" y="0" z="23950-DOFFSET"/>
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
-      <!-- Dec 22 2019
+      <!-- Dec 22 2019 -->
       <physvol name="collar3">
         <volumeref ref="logicCollar3"/>
         <position lunit="mm" name="collar3pos" x="0" y="0" z="23550-DOFFSET"/>
