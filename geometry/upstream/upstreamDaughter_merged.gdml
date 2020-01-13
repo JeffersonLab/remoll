@@ -309,7 +309,6 @@
 
     <box lunit="mm" name="boxUpstream_1" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmother_length"/>
     <box lunit="mm" name="boxUpstream_2" x="USBoxmother_width + 1" y="USBoxmother_height + 1" z="USBoxmothersubtract_length"/>
-    <box lunit="mm" name="boxUpstream_3" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmotherunion_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_1_union" rmax="tubeBeampipeMother_1_union_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_1_union_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_2_union" rmax="tubeBeampipeMother_2_union_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_2_union_length"/>
     <subtraction name="boxUpstream"> <!-- originally was _4"> -->
@@ -575,7 +574,7 @@
           rmin1="COLL2_R2_U-DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" 
           rmin2="COLL2_R2_D+DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" startphi="-SEPTANT/4" z="COLL2_THICK+DELTAT*2"/>
 
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U+1700" rmax2="COLL2_R4_D+1700" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="coll2trap" rmax1="COLL2_R4_U+1000" rmax2="COLL2_R4_D+1000" rmin1="0.0" rmin2="0.0" startphi="0" z="1"/>
 
@@ -703,8 +702,12 @@
     <!--
        Shielding collimators
       -->
-    <box lunit="mm" name="boxUSShieldColl1_solid_1" x="USShield1_width" y="USShield1_height" z="USShield1_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="USShield_subTube_solid_1" rmax="boxUSShieldColl1_inner_rmax" rmin="0" startphi="0" z="USShield1_length + 50"/>
+    <!-- <box lunit="mm" name="boxUSShieldColl1_solid_1" x="USShield1_width" y="USShield1_height" z="USShield1_length"/> ERASEME -->
+    <box lunit="mm" name="boxUSShieldColl1_solid_1" x="2*(500+1400)" y="2*(500+1400)" z="USBoxmother_length - USBoxmothersubtract_length - 10"/>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" rmin="0" startphi="0" name="USShield_subTube_solid_1"
+	  rmax="COLL2_R4_U+200"
+	  z="USBoxmother_length"/>
 
     <subtraction name ="boxUSShieldColl1_solid">
       <first ref="boxUSShieldColl1_solid_1"/>
@@ -1002,12 +1005,14 @@
         <positionref ref="CENTER"/>
       </physvol>
       -->
+
      <!-- 
       <physvol name="UStracker">
         <volumeref ref="logicUSTracker"/>
         <position name="UStracker_pos" unit="mm" x="0" y="0" z="0"/>
       </physvol>
      --> 
+
       <physvol name="USwindow">
         <volumeref ref="logicUSwindow"/>
         <positionref ref="CENTER"/>
@@ -1101,44 +1106,10 @@
         <rotationref ref="RotateZ_6"/>
       </physvol>
 
-      <!--
-       Shielding collimators
-      -->
-      <!-- FIXME 2019-11-03 wdc: overlap when merging Sakib's updated geometry
       <physvol>
         <volumeref ref="boxUSShieldColl1_logic"/>
-        <positionref ref="USshieldcoll_center_1"/>
+        <position name="bosUSShieldColl1_pos" unit="mm" x="0" y="0" z="- USBoxmothersubtract_length/2"/>
       </physvol>
-      <physvol>
-        <volumeref ref="boxUSShieldColl2_logic"/>
-        <positionref ref="USshieldcoll_center_2"/>
-      </physvol>
-      -->
-    <!-- Neutron Poly Shielding -->
-    <!-- PolyShield1 will be outside shielding blocks 2 and 3 -->
-      <!-- FIXME 2019-11-03 wdc: overlap when merging Sakib's updated geometry
-      <physvol>
-        <volumeref ref="boxUSPolyShield1_logic"/>
-        <positionref ref="boxUSPolyShield1_center"/>
-      </physvol>
-      -->
-<!-- Old beampipe design not in use now -->
-<!-- 
-      <physvol>
-        <volumeref ref="beampipe_1_logic"/>
-        <positionref ref="beampipe_1_center"/>
-      </physvol>
- 
-     <physvol>
-        <volumeref ref="beampipe_2_logic"/>
-        <positionref ref="beampipe_2_center"/>
-      </physvol>
-
-     <physvol>
-        <volumeref ref="beampipe_3_logic"/>
-        <positionref ref="beampipe_3_center"/>
-      </physvol>
--->
 
       <physvol>
         <file name="upstream/upstreamBeampipe.gdml"/>

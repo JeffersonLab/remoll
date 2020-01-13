@@ -1111,7 +1111,7 @@
 	<quadrangular vertex1="COLL5_6" vertex2="COLL5_7" vertex3="COLL5_15" vertex4="COLL5_14" type="ABSOLUTE"/>
     </tessellated>
 
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U+1700" rmax2="PCOLL2_R4_D+1700" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="pcoll2trap" rmax1="PCOLL2_R4_U+1000" rmax2="PCOLL2_R4_D+1000" rmin1="0" rmin2="0" startphi="0" z="1.0"/>
 
@@ -1226,7 +1226,7 @@
 
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
-    <box lunit="mm" name="boxDSPolyShield1_solid_1" x="DSPolyShield1_width" y="DSPolyShield1_height" z="DSPolyShield1_length"/>
+    <box lunit="mm" name="boxDSPolyShield1_solid_1" x="DSPolyShield1_height" y="DSPolyShield1_height" z="DSPolyShield1_length"/>
     <box lunit="mm" name="boxDSPolyShield1_solid_2" x="DSPolyShield1_width - 2*DSPolyShield1_side_thickness + 1" y="DSPolyShield1_height - DSPolyShield1_top_thickness - DSPolyShield1_bottom_thickness + 1" z="DSPolyShield1_length - 1*DSPolyShield1_side_thickness + 1"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="DSPolyShield1_beamTube_solid" rmax="boxDSShieldColl1_inner_rmax" rmin="0" startphi="0" z="DSPolyShield1_length+10"/>
 
@@ -1237,7 +1237,7 @@
     </subtraction> 
 <!-- modified to skip the next subtraction... -->
     <subtraction name ="boxDSPolyShield1_solid">
-      <first ref="boxDSPolyShield1_solid_3"/>
+      <first ref="boxDSPolyShield1_solid_1"/>
       <second ref="DSPolyShield1_beamTube_solid"/>
       <positionref ref="boxDSPolyShield1_trans2" />
     </subtraction>    
@@ -1362,64 +1362,64 @@
     <cone name="solidCollar3" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="928" rmax1="980" rmin2="928" rmax2="980" z="100"/>
 
 <xtru name="solidLintel1" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel2" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel3" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel4" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel5" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel6" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel7" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
@@ -1689,13 +1689,9 @@
     <!-- Neutron Poly Shielding -->
     <!-- PolyShield1 will be outside shielding block 4 -->
     <volume name="boxDSPolyShield1_logic">
-<!--  <materialref ref="Concrete"/> -->
-<!--  <materialref ref="Tungsten"/> -->
-      <materialref ref="Polythene"/>
-<!--        <materialref ref="Kryptonite"/> -->
+      <materialref ref="Concrete"/>
       <solidref ref="boxDSPolyShield1_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
+      <auxiliary auxtype="Color" auxvalue="green"/>
       <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6021"/>
     </volume>
@@ -1743,9 +1739,9 @@
     </volume>
 
     <volume name="boxDSShield_local_logic">
-      <materialref ref="Concrete"/>
+      <materialref ref="Lead"/>
       <solidref ref="boxDSShield1_local_solid"/>
-      <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
       <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
       <auxiliary auxtype="DetNo" auxvalue="6031"/>
@@ -1913,17 +1909,18 @@
         <volumeref ref="logicDSwindow"/>
         <positionref ref="CENTER"/>
       </physvol>
-<!--
+      <!--
       <physvol name="planeDet_12">
         <volumeref ref="logicWasher_12"/>
         <position name="wash_phys_12_pos" unit="mm" x="0" y="0" z="23995-DOFFSET"/>
       </physvol>
-
+      -->
+      <!--
       <physvol name="DStracker">
         <volumeref ref="logicDSTracker"/>
         <position name="DStracker_pos" unit="mm" x="0" y="0" z="0"/>
       </physvol>
--->
+      -->
 
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
@@ -1936,72 +1933,48 @@
         <position lunit="mm" name="collar2pos" x="0" y="0" z="23950-DOFFSET"/>
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
-      <!-- Dec 22 2019
+      <!-- Dec 22 2019 
       <physvol name="collar3">
         <volumeref ref="logicCollar3"/>
         <position lunit="mm" name="collar3pos" x="0" y="0" z="23550-DOFFSET"/>
         <rotation aunit="rad" name="collar3rot" x="0" y="0" z="0"/>
       </physvol>
-
-      <physvol name="lintel1">
-        <volumeref ref="logicLintel1"/>
- 	<position name="lintel1pos" x="-417.0" y="5.10677715244e-14" z="12850-DOFFSET"/>
- 	<rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
-      </physvol>
-
-      <physvol name="lintel2">
- 	<volumeref ref="logicLintel2"/>
- 	<position name="lintel2pos" x="-259.995247375" y="-326.023728189" z="12850-DOFFSET"/>
- 	<rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
-      </physvol>
-
-      <physvol name="lintel3">
- 	<volumeref ref="logicLintel3"/>
- 	<position name="lintel3pos" x="92.7912294598" y="-406.54493938" z="12850-DOFFSET"/>
- 	<rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
-      </physvol>
-
-      <physvol name="lintel4">
- 	<volumeref ref="logicLintel4"/>
-	<position name="lintel4pos" x="375.704017915" y="-180.929519212" z="12850-DOFFSET"/>
- 	<rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
-      </physvol>
-
-      <physvol name="lintel5">
- 	<volumeref ref="logicLintel5"/>
- 	<position name="lintel5pos" x="375.704017915" y="180.929519212" z="12850-DOFFSET"/>
- 	<rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
-      </physvol>
-
-      <physvol name="lintel6">
-	<volumeref ref="logicLintel6"/>
-	<position name="lintel6pos" x="92.7912294598" y="406.54493938" z="12850-DOFFSET"/>
-	<rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
-      </physvol>
-
-      <physvol name="lintel7">
- 	<volumeref ref="logicLintel7"/>
- 	<position name="lintel7pos" x="-259.995247375" y="326.023728189" z="12850-DOFFSET"/>
- 	<rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
+      --> 
+<physvol name="lintel1">
+ <volumeref ref="logicLintel1"/>
+ <position name="lintel1pos" x="-542.0" y="6.63758565138e-14" z="12835-DOFFSET"/>
+ <rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
 </physvol>
-
-	Dec 2019	-->
-<!-- Old beampipe design not in use now -->
-<!-- 
-      <physvol>
-        <volumeref ref="DSbeampipe_1_logic"/>
-        <positionref ref="DSbeampipe_1_center"/>
-      </physvol>
-      <physvol>
-        <volumeref ref="DSbeampipe_2_logic"/>
-        <positionref ref="DSbeampipe_2_center"/>
-      </physvol>
-
-      <physvol>
-        <volumeref ref="DSbeampipe_3_logic"/>
-        <positionref ref="DSbeampipe_3_center"/>
-      </physvol>
--->
+<physvol name="lintel2">
+ <volumeref ref="logicLintel2"/>
+ <position name="lintel2pos" x="-337.931472607" y="-423.752663498" z="12835-DOFFSET"/>
+ <rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
+</physvol>
+<physvol name="lintel3">
+ <volumeref ref="logicLintel3"/>
+ <position name="lintel3pos" x="120.606346204" y="-528.410928403" z="12835-DOFFSET"/>
+ <rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
+</physvol>
+<physvol name="lintel4">
+ <volumeref ref="logicLintel4"/>
+ <position name="lintel4pos" x="488.325126403" y="-235.164986602" z="12835-DOFFSET"/>
+ <rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
+</physvol>
+<physvol name="lintel5">
+ <volumeref ref="logicLintel5"/>
+ <position name="lintel5pos" x="488.325126403" y="235.164986602" z="12835-DOFFSET"/>
+ <rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
+</physvol>
+<physvol name="lintel6">
+ <volumeref ref="logicLintel6"/>
+ <position name="lintel6pos" x="120.606346204" y="528.410928403" z="12835-DOFFSET"/>
+ <rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
+</physvol>
+<physvol name="lintel7">
+ <volumeref ref="logicLintel7"/>
+ <position name="lintel7pos" x="-337.931472607" y="423.752663498" z="12835-DOFFSET"/>
+ <rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
+</physvol>
 
 <!-- Downstream of coll4 central collimating beampipe -->
       <physvol>
@@ -2098,78 +2071,22 @@
 
 <!-- Collimator 4 -->
       <physvol name="DScoll_6">
-	      <volumeref ref="logicPDScollunion_1"/>
+	<volumeref ref="logicPDScollunion_1"/>
         <positionref ref="posPCOLL2"/>
       </physvol>
 
-<!--pcoll2trap_phys is removed since this is overlapping with shblk 4 poly shielding -->
-<!--
 
-      <physvol name="pcoll2trap_phys">
-	      <volumeref ref="logicpcoll2trap"/>
-        <positionref ref="posPCOLL2TRAP"/>
-      </physvol>
--->
-    <!--
-       Shielding collimators
-      -->
-      <!-- FIXME 2019-11-03 wdc: disabled shielding due to overlap after merging Sakib's geometry
-      <physvol>
-        <volumeref ref="boxDSShieldColl1_logic"/>
-        <positionref ref="DSshieldcoll_center_1"/>
-      </physvol>
-      -->
-
-    <!-- Neutron Poly Shielding -->
-    <!-- PolyShield1 will be outside shielding block 4 -->
-      <!-- FIXME 2019-11-03 wdc: disabled shielding due to overlap after merging Sakib's geometry
       <physvol>
         <volumeref ref="boxDSPolyShield1_logic"/>
         <positionref ref="boxDSPolyShield1_center"/>
       </physvol>
-      -->
-      <!-- PolyShield2 will be outside shielding hut -->
-<!--
-      <physvol>
-        <volumeref ref="boxDSPolyShield2_logic"/>
-        <positionref ref="boxDSPolyShield2_center"/>
-      </physvol>
--->
-<!-- Lead photon collimator around coll4 
-      <physvol>
-        <volumeref ref="DSShield_Tube_logic"/>
-        <positionref ref="DSshieldcollSubstract_CENTER_4"/>
-      </physvol>
--->
-<!--  <physvol>
-        <volumeref ref="boxDSShield1_logic"/>
-        <positionref ref="boxDSShield1_center"/>
-      </physvol>
-      <physvol>
-        <volumeref ref="boxDSShield1_roof_logic"/>
-        <positionref ref="boxDSShield1_roof_center"/>
-      </physvol>
 
-      <physvol>
-        <volumeref ref="boxDSShield1_polyroof_logic"/>
-        <positionref ref="boxDSShield1_polyroof_center"/>
-      </physvol>
--->
-      <!-- FIXME 2019-11-03 wdc: disabled shielding due to overlap after merging Sakib's geometry
+      <!-- Lead wall DS of collimator 4 -->
       <physvol>
         <volumeref ref="boxDSShield_local_logic"/>
         <positionref ref="boxDSShield_local_center"/>
       </physvol>
-      <physvol>
-        <volumeref ref="boxDSShield_polylocal_logic"/>
-        <positionref ref="boxDSShield_polylocal_center"/>
-      </physvol>
-
-      <physvol>
-        <volumeref ref="boxAlCan_logic"/>
-        <positionref ref="boxAlCan_center"/>
-      </physvol>
-      -->
+      
    </volume>
 </structure>
 
