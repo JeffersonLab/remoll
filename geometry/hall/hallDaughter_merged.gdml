@@ -76,7 +76,7 @@
 
 <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallWall" rmax="radius_of_cylwall" rmin="radius_of_cylwall - thick_cylwall" startphi="0" z="height_cylwall"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallMother_1" rmax="radius_of_cylwall - 110." rmin="0" startphi="0" z="height_cylwall - thick_cylwall*2"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallMother_1" rmax="radius_of_cylwall" rmin="0" startphi="0" z="height_cylwall - thick_cylwall*2"/>
     <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
     <box lunit="mm" name="boxHallMother_in" x="width_mother - 2500." y="height_mother - 2500." z="length_mother - 2000."/>
 
@@ -215,12 +215,13 @@
       <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
       <!-- <solidref ref="boxHallMother_out"/> -->
-
+<!--
       <physvol>
         <volumeref ref="cylHallDet_1_logic"/>
         <positionref ref="cylHallDet_1_center"/>
 	<rotationref ref="scRot_1"/>
       </physvol>
+
       <physvol>
         <volumeref ref="cylHallDet_2_logic"/>
         <positionref ref="cylHallDet_2_center"/>
@@ -238,7 +239,7 @@
         <positionref ref="cylwall_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
-
+-->
 
 <!-- The concrete floor is added to simulation and cylHallDet_3 is no longer used -->
 <!--
