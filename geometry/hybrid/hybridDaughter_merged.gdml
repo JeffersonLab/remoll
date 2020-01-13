@@ -1425,8 +1425,8 @@
 </xtru>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSwindow">
-      <zplane rmin="509" rmax="925" z="24000-2.286-DOFFSET"/>
-      <zplane rmin="509" rmax="925" z="24000-DOFFSET"/>
+      <zplane rmin="509" rmax="952" z="24000-2.286-DOFFSET"/>
+      <zplane rmin="509" rmax="952" z="24000-DOFFSET"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSbeampipe_col4">
