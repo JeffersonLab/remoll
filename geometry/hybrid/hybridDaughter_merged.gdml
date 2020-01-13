@@ -1477,12 +1477,12 @@
 
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Vacbeampipe">
-      <zplane rmin="600" rmax="1320" z="17405-DOFFSET"/>
-      <zplane rmin="600" rmax="1320" z="17475-DOFFSET"/>
-      <zplane rmin="1250" rmax="1320" z="17475-DOFFSET"/>
-      <zplane rmin="1250" rmax="1320" z="23825-DOFFSET"/>
-      <zplane rmin="952" rmax="1320" z="23825-DOFFSET"/>
-      <zplane rmin="952" rmax="1320" z="23895-DOFFSET"/>
+      <zplane rmin="600" rmax="1262.7" z="17405-DOFFSET"/>
+      <zplane rmin="600" rmax="1262.7" z="17443.1-DOFFSET"/>
+      <zplane rmin="1250" rmax="1262.7" z="17443.1-DOFFSET"/>
+      <zplane rmin="1250" rmax="1262.7" z="23856.9-DOFFSET"/>
+      <zplane rmin="952" rmax="1262.7" z="23856.9-DOFFSET"/>
+      <zplane rmin="952" rmax="1262.7" z="23895-DOFFSET"/>
     </polycone>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher12" rmax1="2050" rmax2="2050" rmin1="925" rmin2="925" startphi="0" z="10"/>
