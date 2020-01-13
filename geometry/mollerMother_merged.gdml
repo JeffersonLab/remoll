@@ -74,13 +74,14 @@
       <file name="showermax/showerMaxDetectorSystem.gdml"/>
       <positionref ref="showerMaxDetectorCenter"/>
     </physvol>
-   -->
-    <!-- Pion Detectors 
+    -->
+
+    <!-- Pion Detectors -->
     <physvol>
       <file name="pion/pionDetectorSystem.gdml"/>
       <positionref ref="pionDetectorCenter"/>
     </physvol>
-   -->
+   
   </volume>
 </structure>
 
