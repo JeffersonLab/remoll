@@ -13,13 +13,13 @@ TFile *fout;
 const int nSp=5;// [e/pi,e/pi E>1,gamma,neutron]
 const string spTit[nSp]={"e/#pi","e/#pi E>1","#gamma","neutron","primary e E>1"};
 const string spH[nSp]={"e","e1","g","n","eP1"};
-const map<int,int> spM {{11,1},{211,1},{22,3},{2112,4}};
+map<int,int> spM {{11,1},{211,1},{22,3},{2112,4}};
 
 const int nDet=3; //[26,27,28]
 const string detH[nDet]={"det26","det27","det28"};
-const map<int,int> dtM {{26,1},{27,2},{28,3}};
+map<int,int> dtM {{26,1},{27,2},{28,3}};
 
-TH1D *hRate;
+TH1D *hRate[nSp];
 TH1D *drate[nSp][nDet], *drRate[nSp][nDet], *drRateAsym[nSp][nDet], *dZ0[nSp][nDet];
 TH1D *drRatePZL0[nSp][nDet],*drRatePZG0[nSp][nDet];
 TH2D *dXY[nSp][nDet], *dXYrate[nSp][nDet], *dXYrateE[nSp][nDet];
@@ -37,7 +37,7 @@ void process();
 int findDetector(int &sector, double phi, double r);
 void writeOutput();
 
-void basicAna(const string& finName = "./remollout.root"){
+void shieldingAna(const string& finName = "./remollout.root"){
   fin = finName;
   initHisto();
   process();
@@ -71,21 +71,22 @@ void process(){
 }
 
 void initHisto(){
-  string foutNm = Form("%s_bkgAnaV4.root",fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("%s_shldAna.root",fin.substr(0,fin.find(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
   for(int j=0;j<nDet;j++){
     fout->mkdir(detH[j].c_str(),Form("%s plane",detH[j].c_str()));
     fout->cd(detH[j].c_str());
-    if(j==2){
-      hRate = new TH1D("hRate","Sums for all rings and sectors",21,0,21);
-      const string secNm[3]={"closed","transition","open"};
-      for(int i=1;i<=21;i++)
-	hRate->GetXaxis()->SetBinLabel(i,Form("R%d %s",(i-1-(i-1)%3)/3+1,secNm[(i-1)%3].c_str()));
-    }
-
     for(int i=0;i<nSp;i++){
+
+      if(j==2){
+	hRate[i] = new TH1D(Form("hRate_%s",spH[i].c_str()),Form("Sums for all rings and sectors %s",spTit[i].c_str()),21,0,21);
+	const string secNm[3]={"closed","transition","open"};
+	for(int k=1;k<=21;k++)
+	  hRate[i]->GetXaxis()->SetBinLabel(k,Form("R%d %s",(k-1-(k-1)%3)/3+1,secNm[(k-1)%3].c_str()));
+      }
+
       drate[i][j]=new TH1D(Form("%srate_%s",detH[j].c_str(),spH[i].c_str()),
 			   Form("log10 of rate for %s",spTit[i].c_str()),
 			   100,0,20);
@@ -115,7 +116,7 @@ void initHisto(){
 			     Form("hits*rate for %s;x[mm];y[mm]",spTit[i].c_str()),
 			     200,-2000,2000,
 			     200,-2000,2000);
-      dXYrateE[i][j]=new TH2D(Form("%sXYrate_%s",detH[j].c_str(),spH[i].c_str()),
+      dXYrateE[i][j]=new TH2D(Form("%sXYrateE_%s",detH[j].c_str(),spH[i].c_str()),
 			      Form("hits*rate*E for %s;x[mm];y[mm]",spTit[i].c_str()),
 			      200,-2000,2000,
 			      200,-2000,2000);
@@ -173,14 +174,14 @@ long processOne(string fnm){
     double asym = ev->A;
     for(int j=0;j<hit->size();j++){
 
-      if(isnan(rate) || isinf(rate)) continue;
+      if(std::isnan(rate) || std::isinf(rate)) continue;
       if(rate==0) {rate=1;asym=0;}
       double lgRate=log10(rate);
 
-      int sp = stM[abs(hit->at(j).pid)]-1;
+      int sp = spM[int(abs(hit->at(j).pid))]-1;
       if(sp==-1) continue;
 
-      int dt = dtM[hit->at(j).det]-1;
+      int dt = dtM[int(hit->at(j).det)]-1;
       if(dt==-1) continue;
 
       drate[sp][dt]->Fill(lgRate);
@@ -191,11 +192,11 @@ long processOne(string fnm){
 	drRatePZG0[sp][dt]->Fill(hit->at(j).r,rate);
       drRateAsym[sp][dt]->Fill(hit->at(j).r,rate*asym);
 
-      dZ0[sp][dt]->Fill(hit->at(j).z0,rate);
+      dZ0[sp][dt]->Fill(hit->at(j).vz,rate);
 
       dXY[sp][dt]->Fill(hit->at(j).x,hit->at(j).y);
       dXYrate[sp][dt]->Fill(hit->at(j).x,hit->at(j).y,rate);
-      dXYrate[sp][dt]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
+      dXYrateE[sp][dt]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
 
       double r0=sqrt(pow(hit->at(j).vx,2)+pow(hit->at(j).vy,2));
       dZ0R0[sp][dt]->Fill(hit->at(j).vz,r0,rate);
@@ -209,12 +210,12 @@ long processOne(string fnm){
 	else
 	  drRatePZG0[1][dt]->Fill(hit->at(j).r,rate);
 	drRateAsym[1][dt]->Fill(hit->at(j).r,rate*asym);
-	dZ0[1][dt]->Fill(hit->at(j).z0,rate);
+	dZ0[1][dt]->Fill(hit->at(j).vz,rate);
 	dXY[1][dt]->Fill(hit->at(j).x,hit->at(j).y);
 	dXYrate[1][dt]->Fill(hit->at(j).x,hit->at(j).y,rate);
-	dXYrate[1][dt]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
+	dXYrateE[1][dt]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
 	dZ0R0[1][dt]->Fill(hit->at(j).vz,r0,rate);
-	dZ0R0[1][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
+	dZ0X0[1][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
 	  drate[4][dt]->Fill(lgRate);
@@ -224,12 +225,12 @@ long processOne(string fnm){
 	  else
 	    drRatePZG0[4][dt]->Fill(hit->at(j).r,rate);
 	  drRateAsym[4][dt]->Fill(hit->at(j).r,rate*asym);
-	  dZ0[4][dt]->Fill(hit->at(j).z0,rate);
+	  dZ0[4][dt]->Fill(hit->at(j).vz,rate);
 	  dXY[4][dt]->Fill(hit->at(j).x,hit->at(j).y);
 	  dXYrate[4][dt]->Fill(hit->at(j).x,hit->at(j).y,rate);
-	  dXYrate[4][dt]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
+	  dXYrateE[4][dt]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
 	  dZ0R0[4][dt]->Fill(hit->at(j).vz,r0,rate);
-	  dZ0R0[4][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
+	  dZ0X0[4][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 	}
       }
 
@@ -238,8 +239,9 @@ long processOne(string fnm){
       int foundRing = findDetector(sector, phi, hit->at(j).r);
       if(foundRing==-1) continue;
 
-      hRate->SetBinContent(foundRing*3+sector+1,
-			   rate + hRate->GetBinContent(foundRing*3+sector+1));
+      if(dt==2)
+	hRate[sp]->SetBinContent(foundRing*3+sector+1,
+				 rate + hRate[sp]->GetBinContent(foundRing*3+sector+1));
     }
   }
   fin->Close();
@@ -251,12 +253,13 @@ void writeOutput(){
   fout->cd();
   for(int j=0;j<nDet;j++){
     fout->cd(detH[j].c_str());
-    if(j==2){
-      hRate->Scale(1./nFiles);
-      hRate->Write();
-    }
 
     for(int i=0;i<nSp;i++){
+      if(j==2){
+	hRate[i]->Scale(1./nFiles);
+	hRate[i]->Write();
+      }
+
       drate[i][j]->Write();
 
       drRate[i][j]->Scale(1./nFiles);
