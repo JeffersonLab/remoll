@@ -75,7 +75,7 @@ void process(){
 }
 
 void initHisto(){
-  string foutNm = Form("%s_shldAna.root",fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("%s_shldAnaV3.root",fin.substr(0,fin.find(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -212,6 +212,11 @@ long processOne(string fnm){
       dZ0R0[sp][dt]->Fill(hit->at(j).vz,r0,rate);
       dZ0R0[sp][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 
+      double phi = atan2(hit->at(j).y,hit->at(j).x);
+      if(phi<0) phi+=2*pi;
+      int foundRing = findDetector(sector, phi, hit->at(j).r);
+      if(foundRing==-1) continue;
+
       if(hit->at(j).e>1 && (abs(hit->at(j).pid)==11 || abs(hit->at(j).pid)==211)){
 	eRate[1][dt]->Fill(hit->at(j).e,rate);
 	drate[1][dt]->Fill(lgRate);
@@ -253,11 +258,6 @@ long processOne(string fnm){
 
 	}
       }
-
-      double phi = atan2(hit->at(j).y,hit->at(j).x);
-      if(phi<0) phi+=2*pi;
-      int foundRing = findDetector(sector, phi, hit->at(j).r);
-      if(foundRing==-1) continue;
 
       if(dt==2)
 	hRate[sp]->SetBinContent(foundRing*3+sector+1,
@@ -382,5 +382,5 @@ void niceLogBins(TH1*h)
     new_bins[i] = pow(10, from + i * width);
   }
   axis->Set(bins, new_bins);
-  delete new_bins;
+  delete[] new_bins;
 }
