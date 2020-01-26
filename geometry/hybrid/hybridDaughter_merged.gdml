@@ -1930,7 +1930,7 @@
         <volumeref ref="shield_DS_beampipe_logic"/>
         <positionref ref="shield_DS_beampipe_center"/>
       </physvol>
-
+<!--
       <physvol name="DScoil_0">
         <volumeref ref="logicDScoil_0"/>
         <positionref ref="CENTER"/>
@@ -2003,7 +2003,7 @@
         <positionref ref="CENTER"/>
         <rotationref ref="RotateZ_6"/>
       </physvol>
-
+-->
       <!--Removing col-3 -->
       <!--
       <physvol name="DScoll_1">
