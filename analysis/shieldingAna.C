@@ -167,7 +167,7 @@ long processOne(string fnm){
 
   long nEntries = t->GetEntries();
   cout<<"\tTotal events: "<<nEntries<<endl;
-  float currentProc=1,procStep=10;
+  float currentProc=1,procStep=30;
   vector<int> procID;
   int sector(-1);
   double pi = acos(-1);
