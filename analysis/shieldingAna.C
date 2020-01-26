@@ -20,6 +20,7 @@ const string detH[nDet]={"det26","det27","det28"};
 map<int,int> dtM {{26,1},{27,2},{28,3}};
 
 TH1D *hRate[nSp];
+TH1D *eRate[nSp][nDet];
 TH1D *drate[nSp][nDet], *drRate[nSp][nDet], *drRateAsym[nSp][nDet], *dZ0[nSp][nDet];
 TH1D *drRatePZL0[nSp][nDet],*drRatePZG0[nSp][nDet];
 TH2D *dXY[nSp][nDet], *dXYrate[nSp][nDet], *dXYrateE[nSp][nDet];
@@ -30,6 +31,9 @@ int nFiles(0);
 long currentEvNr(0);
 
 const double pi = acos(-1);
+
+//log X axis histograms
+void niceLogBins(TH1*);
 
 void initHisto();
 long processOne(string);
@@ -87,6 +91,11 @@ void initHisto(){
 	  hRate[i]->GetXaxis()->SetBinLabel(k,Form("R%d %s",(k-1-(k-1)%3)/3+1,secNm[(k-1)%3].c_str()));
       }
 
+      eRate[i][j]=new TH1D(Form("%seRate_%s",detH[j].c_str(),spH[i].c_str()),
+			   Form("rate weighted for %s;E [MeV]",spTit[i].c_str()),
+			   121,-8,4.1);
+      niceLogBins(eRate[i][j]);
+      
       drate[i][j]=new TH1D(Form("%srate_%s",detH[j].c_str(),spH[i].c_str()),
 			   Form("log10 of rate for %s",spTit[i].c_str()),
 			   100,0,20);
@@ -171,7 +180,7 @@ long processOne(string fnm){
       currentProc+=procStep;
     }
 
-    double asym = ev->A;
+    double asym = abs(ev->A);
     for(int j=0;j<hit->size();j++){
 
       if(std::isnan(rate) || std::isinf(rate)) continue;
@@ -184,6 +193,7 @@ long processOne(string fnm){
       int dt = dtM[int(hit->at(j).det)]-1;
       if(dt==-1) continue;
 
+      eRate[sp][dt]->Fill(hit->at(j).e,rate);
       drate[sp][dt]->Fill(lgRate);
       drRate[sp][dt]->Fill(hit->at(j).r,rate);
       if(hit->at(j).pz<=0)
@@ -203,6 +213,7 @@ long processOne(string fnm){
       dZ0R0[sp][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 
       if(hit->at(j).e>1 && (abs(hit->at(j).pid)==11 || abs(hit->at(j).pid)==211)){
+	eRate[1][dt]->Fill(hit->at(j).e,rate);
 	drate[1][dt]->Fill(lgRate);
 	drRate[1][dt]->Fill(hit->at(j).r,rate);
 	if(hit->at(j).pz<=0)
@@ -217,7 +228,12 @@ long processOne(string fnm){
 	dZ0R0[1][dt]->Fill(hit->at(j).vz,r0,rate);
 	dZ0X0[1][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 
+	if(dt==2)
+	  hRate[1]->SetBinContent(foundRing*3+sector+1,
+				  rate + hRate[1]->GetBinContent(foundRing*3+sector+1));
+
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
+	  eRate[4][dt]->Fill(hit->at(j).e,rate);
 	  drate[4][dt]->Fill(lgRate);
 	  drRate[4][dt]->Fill(hit->at(j).r,rate);
 	  if(hit->at(j).pz<=0)
@@ -231,6 +247,10 @@ long processOne(string fnm){
 	  dXYrateE[4][dt]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
 	  dZ0R0[4][dt]->Fill(hit->at(j).vz,r0,rate);
 	  dZ0X0[4][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
+	  if(dt==2)
+	    hRate[4]->SetBinContent(foundRing*3+sector+1,
+				    rate + hRate[4]->GetBinContent(foundRing*3+sector+1));
+
 	}
       }
 
@@ -261,6 +281,9 @@ void writeOutput(){
       }
 
       drate[i][j]->Write();
+
+      eRate[i][j]->Scale(1./nFiles);
+      eRate[i][j]->Write();
 
       drRate[i][j]->Scale(1./nFiles);
       drRate[i][j]->Write();
@@ -335,7 +358,7 @@ int findDetector(int &sector, double phi, double r){
 				   { 855.0,  900.0,  915.0},
 				   {1070.0, 1060.0, 1055.0},
 				   {1170.0, 1170.0, 1170.0},
-				   {1900.0, 1900.0, 1900.0}
+				   {1500.0, 1500.0, 1500.0}
   };
 
   for(int i=0;i<nRings;i++)
@@ -345,3 +368,19 @@ int findDetector(int &sector, double phi, double r){
   return -1;
 }
 
+void niceLogBins(TH1*h)
+{
+  TAxis *axis = h->GetXaxis();
+  int bins = axis->GetNbins();
+
+  double from = axis->GetXmin();
+  double to = axis->GetXmax();
+  double width = (to - from) / bins;
+  double *new_bins = new double[bins + 1];
+
+  for (int i = 0; i <= bins; i++) {
+    new_bins[i] = pow(10, from + i * width);
+  }
+  axis->Set(bins, new_bins);
+  delete new_bins;
+}
