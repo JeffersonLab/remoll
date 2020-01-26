@@ -210,7 +210,7 @@ long processOne(string fnm){
 
       double r0=sqrt(pow(hit->at(j).vx,2)+pow(hit->at(j).vy,2));
       dZ0R0[sp][dt]->Fill(hit->at(j).vz,r0,rate);
-      dZ0R0[sp][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
+      dZ0X0[sp][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 
       double phi = atan2(hit->at(j).y,hit->at(j).x);
       if(phi<0) phi+=2*pi;
