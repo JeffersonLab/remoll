@@ -193,7 +193,7 @@ long processOne(string fnm){
       int dt = dtM[int(hit->at(j).det)]-1;
       if(dt==-1) continue;
 
-      eRate[sp][dt]->Fill(hit->at(j).e,rate);
+      eRate[sp][dt]->Fill(hit->at(j).p,rate);
       drate[sp][dt]->Fill(lgRate);
       drRate[sp][dt]->Fill(hit->at(j).r,rate);
       if(hit->at(j).pz<=0)
@@ -218,7 +218,7 @@ long processOne(string fnm){
       if(foundRing==-1) continue;
 
       if(hit->at(j).e>1 && (abs(hit->at(j).pid)==11 || abs(hit->at(j).pid)==211)){
-	eRate[1][dt]->Fill(hit->at(j).e,rate);
+	eRate[1][dt]->Fill(hit->at(j).p,rate);
 	drate[1][dt]->Fill(lgRate);
 	drRate[1][dt]->Fill(hit->at(j).r,rate);
 	if(hit->at(j).pz<=0)
@@ -238,7 +238,7 @@ long processOne(string fnm){
 				  rate + hRate[1]->GetBinContent(foundRing*3+sector+1));
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
-	  eRate[4][dt]->Fill(hit->at(j).e,rate);
+	  eRate[4][dt]->Fill(hit->at(j).p,rate);
 	  drate[4][dt]->Fill(lgRate);
 	  drRate[4][dt]->Fill(hit->at(j).r,rate);
 	  if(hit->at(j).pz<=0)
