@@ -27,7 +27,7 @@
     the radius along with the angle of the detector to increase the length in the
     longitudinal direction.
   -->
-  <quantity name="showerMaxDetectorInnerRadius" type="length" value="0.605" unit="m"/>
+  <quantity name="showerMaxDetectorInnerRadius" type="length" value="0.670" unit="m"/>
   <quantity name="showerMaxDetectorOuterRadius" type="length" value="1.900" unit="m"/>
 
   <!--
