@@ -11,7 +11,7 @@
     <quantity name="ShowerMaxDetectorQuartzAngle" type="angle" value="-26.565051177078" unit="deg"/>
     <quantity name="ShowerMaxDetectorQuartzWidth" type="length" value="246" unit="mm"/>
     <quantity name="ShowerMaxDetectorQuartzThickness" type="length" value="10" unit="mm"/>
-    <quantity name="ShowerMaxDetectorQuartzHeightShort" type="length" value="105" unit="mm"/>
+    <quantity name="ShowerMaxDetectorQuartzHeightShort" type="length" value="215" unit="mm"/>
     <quantity name="ShowerMaxDetectorQuartzHeightDiff"  type="length" value="ShowerMaxDetectorQuartzThickness"/> <!-- 45 deg angle -->
     <quantity name="ShowerMaxDetectorQuartzHeightLong"  type="length" value="ShowerMaxDetectorQuartzHeightShort+ShowerMaxDetectorQuartzHeightDiff"/>
 
@@ -34,7 +34,7 @@
     <rotation name="ShowerMaxDetectorQuartz_3_rot" x="-90" unit="deg"/>
 
     <!-- shift in zero of coordinate system -->
-    <quantity name="x0" type="length" value="-0.3*(ShowerMaxDetectorCathodePosition+0.5*ShowerMaxDetectorQuartzHeightLong)"/>
+    <quantity name="x0" type="length" value="855-1100+215.0/2"/> <!-- Inner edge of quartz-Center of mother+height of quartz/2 -->
     <quantity name="z0" type="length" value="1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
 
     <!-- layers from back to front: zero z defined as center of last quartz plane, zero x defined as center of quartz plane -->
@@ -87,7 +87,7 @@
 
   <solids>
     <box name="ShowerMaxDetectorSector_solid"
-      x="420" y="250" z="120" lunit="mm"/>
+      x="600" y="250" z="120" lunit="mm"/>
 
     <trap name="ShowerMaxDetectorQuartz_solid"
       alpha1="ShowerMaxDetectorQuartzAngle" alpha2="ShowerMaxDetectorQuartzAngle" phi="0" theta="0"
