@@ -303,10 +303,10 @@ void writeOutput(){
 	hRate[i]->Scale(1./nFiles);
 	hRate[i]->Write();
 	for(int k=0;k<3;k++){
-	  drRateS[i]->Scale(1./nFiles);
-	  drRateS[i]->Write();
-	  drRateAsymS[i]->Scale(1./nFiles);
-	  drRateAsymS[i]->Write();
+	  drRateS[i][k]->Scale(1./nFiles);
+	  drRateS[i][k]->Write();
+	  drRateAsymS[i][k]->Scale(1./nFiles);
+	  drRateAsymS[i][k]->Write();
 	}
       }
 
