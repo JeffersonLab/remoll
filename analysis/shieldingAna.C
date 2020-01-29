@@ -26,6 +26,10 @@ TH1D *drRatePZL0[nSp][nDet],*drRatePZG0[nSp][nDet];
 TH2D *dXY[nSp][nDet], *dXYrate[nSp][nDet], *dXYrateE[nSp][nDet];
 TH2D *dZ0R0[nSp][nDet],*dZ0X0[nSp][nDet];
 
+const int nSec=3; //  //0,1,2 == closed, transition, open
+const string secH[nSec]={"closed","trans","open"};
+TH1D *drRateS[nSp][nSec], *drRateAsymS[nSp][nSec];
+
 string fin;
 int nFiles(0);
 long currentEvNr(0);
@@ -75,7 +79,7 @@ void process(){
 }
 
 void initHisto(){
-  string foutNm = Form("%s_shldAnaV3.root",fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("%s_shldAnaV4.root",fin.substr(0,fin.find(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -89,6 +93,17 @@ void initHisto(){
 	const string secNm[3]={"closed","transition","open"};
 	for(int k=1;k<=21;k++)
 	  hRate[i]->GetXaxis()->SetBinLabel(k,Form("R%d %s",(k-1-(k-1)%3)/3+1,secNm[(k-1)%3].c_str()));
+	for(int k=0;k<nSec;k++){
+	  drRateS[i][k]=new TH1D(Form("det28_rRate_S%d_%s",k,spH[i].c_str()),
+				 Form("rate weighted %s for %s;r[mm]",
+				      spTit[i].c_str(),secH[k].c_str()),
+				 600,600,1200);
+	  drRateAsymS[i][k]=new TH1D(Form("det28_rRateAsym_S%d_%s",k,spH[i].c_str()),
+				     Form("rate*asym weighted %s for %s;r[mm]",
+					  spTit[i].c_str(),secH[k].c_str()),
+				     600,600,1200);
+	  
+	}
       }
 
       eRate[i][j]=new TH1D(Form("%seRate_%s",detH[j].c_str(),spH[i].c_str()),
@@ -233,9 +248,12 @@ long processOne(string fnm){
 	dZ0R0[1][dt]->Fill(hit->at(j).vz,r0,rate);
 	dZ0X0[1][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 
-	if(dt==2)
+	if(dt==2){
 	  hRate[1]->SetBinContent(foundRing*3+sector+1,
 				  rate + hRate[1]->GetBinContent(foundRing*3+sector+1));
+	  drRateS[1][sector]->Fill(hit->at(j).r,rate);
+	  drRateAsymS[1][sector]->Fill(hit->at(j).r,rate*asym);
+	}
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
 	  eRate[4][dt]->Fill(hit->at(j).p,rate);
@@ -252,16 +270,22 @@ long processOne(string fnm){
 	  dXYrateE[4][dt]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
 	  dZ0R0[4][dt]->Fill(hit->at(j).vz,r0,rate);
 	  dZ0X0[4][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
-	  if(dt==2)
+	  if(dt==2){
 	    hRate[4]->SetBinContent(foundRing*3+sector+1,
 				    rate + hRate[4]->GetBinContent(foundRing*3+sector+1));
+	    drRateS[4][sector]->Fill(hit->at(j).r,rate);
+	    drRateAsymS[4][sector]->Fill(hit->at(j).r,rate*asym);
+	  }
 
 	}
       }
 
-      if(dt==2)
+      if(dt==2){
 	hRate[sp]->SetBinContent(foundRing*3+sector+1,
 				 rate + hRate[sp]->GetBinContent(foundRing*3+sector+1));
+	drRateS[sp][sector]->Fill(hit->at(j).r,rate);
+	drRateAsymS[sp][sector]->Fill(hit->at(j).r,rate*asym);
+      }
     }
   }
   fin->Close();
@@ -278,6 +302,12 @@ void writeOutput(){
       if(j==2){
 	hRate[i]->Scale(1./nFiles);
 	hRate[i]->Write();
+	for(int k=0;k<3;k++){
+	  drRateS[i]->Scale(1./nFiles);
+	  drRateS[i]->Write();
+	  drRateAsymS[i]->Scale(1./nFiles);
+	  drRateAsymS[i]->Write();
+	}
       }
 
       drate[i][j]->Write();
