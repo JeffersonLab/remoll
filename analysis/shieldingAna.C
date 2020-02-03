@@ -9,6 +9,7 @@
 
 
 TFile *fout;
+vector<vector<TH1D*>> hAsym_e1,hAsym_eP1;
 
 const int nSp=5;// [e/pi,e/pi E>1,gamma,neutron]
 const string spTit[nSp]={"e/#pi","e/#pi E>1","#gamma","neutron","primary e E>1"};
@@ -79,10 +80,33 @@ void process(){
 }
 
 void initHisto(){
-  string foutNm = Form("%s_shldAnaV4.root",fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("%s_shldAnaV5.root",fin.substr(0,fin.find(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
+  fout->mkdir("deconvolution");
+  fout->cd("deconvolution");
+  for(int i=0;i<6;i++){
+    vector<TH1D*> dt;
+    for(int j=0;j<3;j++){
+      TH1D *h = new TH1D(Form("hAsym_e1_R%d_S%d",i+1,j),
+			 Form("rate weighted Asyms for Ring %d Sector %s;asymmetry [ppb]",i+1,secNm[j].c_str()),
+			 100,-1000000,1000000);
+      dt.push_back(h);
+    }
+    hAsym_e1.push_back(dt);
+  }
+  for(int i=0;i<6;i++){
+    vector<TH1D*> dt;
+    for(int j=0;j<3;j++){
+      TH1D *h = new TH1D(Form("hAsym_eP1_R%d_S%d",i+1,j),
+			 Form("rate weighted Asyms for Ring %d Sector %s;asymmetry [ppb]",i+1,secNm[j].c_str()),
+			 100,-1000000,1000000);
+      dt.push_back(h);
+    }
+    hAsym_eP1.push_back(dt);
+  }
+  
   for(int j=0;j<nDet;j++){
     fout->mkdir(detH[j].c_str(),Form("%s plane",detH[j].c_str()));
     fout->cd(detH[j].c_str());
@@ -249,6 +273,7 @@ long processOne(string fnm){
 	dZ0X0[1][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 
 	if(dt==2){
+	  hAsym_e1[foundRing][sector]->Fill(asym,rate);//for primary+secondaries
 	  hRate[1]->SetBinContent(foundRing*3+sector+1,
 				  rate + hRate[1]->GetBinContent(foundRing*3+sector+1));
 	  drRateS[1][sector]->Fill(hit->at(j).r,rate);
@@ -271,6 +296,7 @@ long processOne(string fnm){
 	  dZ0R0[4][dt]->Fill(hit->at(j).vz,r0,rate);
 	  dZ0X0[4][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 	  if(dt==2){
+	    hAsym_eP1[foundRing][sector]->Fill(asym,rate);//for primary only
 	    hRate[4]->SetBinContent(foundRing*3+sector+1,
 				    rate + hRate[4]->GetBinContent(foundRing*3+sector+1));
 	    drRateS[4][sector]->Fill(hit->at(j).r,rate);
@@ -294,7 +320,15 @@ long processOne(string fnm){
 };
 
 void writeOutput(){
-  fout->cd();
+  fout->cd("deconvolution");
+  for(int i=0;i<6;i++)
+    for(int j=0;j<3;j++){
+      hAsym_e1[i][j]->Scale(1./nFiles);
+      hAsym_e1[i][j]->Write();
+      hAsym_eP1[i][j]->Scale(1./nFiles);
+      hAsym_eP1[i][j]->Write();
+    }
+
   for(int j=0;j<nDet;j++){
     fout->cd(detH[j].c_str());
 
