@@ -84,29 +84,24 @@ void initHisto(){
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
-  fout->mkdir("deconvolution");
+  fout->mkdir("deconvolution","histos for deconvolution analysis");
   fout->cd("deconvolution");
 
   const string secNm[3]={"closed","transition","open"};
   for(int i=0;i<6;i++){
-    vector<TH1D*> dt;
+    vector<TH1D*> dt1,dt2;
     for(int j=0;j<3;j++){
-      TH1D *h = new TH1D(Form("hAsym_e1_R%d_S%d",i+1,j),
-			 Form("rate weighted Asyms for Ring %d Sector %s;asymmetry [ppb]",i+1,secNm[j].c_str()),
-			 100,-1000000,1000000);
-      dt.push_back(h);
+      dt1.push_back(new TH1D(Form("hAsym_e1_R%d_S%d",i+1,j),
+			     Form("rate weighted Asyms for Ring %d Sector %s;asymmetry [ppb]",i+1,secNm[j].c_str()),
+			     100,-1000000,1000000));
+      dt2.push_back(new TH1D(Form("hAsym_eP1_R%d_S%d",i+1,j),
+			     Form("rate weighted Asyms for Ring %d Sector %s;asymmetry [ppb]",i+1,secNm[j].c_str()),
+			     100,-1000000,1000000));
     }
-    hAsym_e1.push_back(dt);
-  }
-  for(int i=0;i<6;i++){
-    vector<TH1D*> dt;
-    for(int j=0;j<3;j++){
-      TH1D *h = new TH1D(Form("hAsym_eP1_R%d_S%d",i+1,j),
-			 Form("rate weighted Asyms for Ring %d Sector %s;asymmetry [ppb]",i+1,secNm[j].c_str()),
-			 100,-1000000,1000000);
-      dt.push_back(h);
-    }
-    hAsym_eP1.push_back(dt);
+    hAsym_e1.push_back(dt1);
+    hAsym_eP1.push_back(dt2);
+    dt1.clear();
+    dt2.clear();
   }
   
   for(int j=0;j<nDet;j++){
@@ -275,6 +270,8 @@ long processOne(string fnm){
 	dZ0X0[1][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 
 	if(dt==2){
+	  //cout<<foundRing<<" "<<sector<<endl;
+	  //cout<<hAsym_e1.size()<<endl;
 	  hAsym_e1[foundRing][sector]->Fill(asym,rate);//for primary+secondaries
 	  hRate[1]->SetBinContent(foundRing*3+sector+1,
 				  rate + hRate[1]->GetBinContent(foundRing*3+sector+1));
