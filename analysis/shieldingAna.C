@@ -272,7 +272,8 @@ long processOne(string fnm){
 	if(dt==2){
 	  //cout<<foundRing<<" "<<sector<<endl;
 	  //cout<<hAsym_e1.size()<<endl;
-	  hAsym_e1[foundRing][sector]->Fill(asym,rate);//for primary+secondaries
+	  if(foundRing<6)
+	    hAsym_e1[foundRing][sector]->Fill(asym,rate);//for primary+secondaries
 	  hRate[1]->SetBinContent(foundRing*3+sector+1,
 				  rate + hRate[1]->GetBinContent(foundRing*3+sector+1));
 	  drRateS[1][sector]->Fill(hit->at(j).r,rate);
@@ -295,7 +296,8 @@ long processOne(string fnm){
 	  dZ0R0[4][dt]->Fill(hit->at(j).vz,r0,rate);
 	  dZ0X0[4][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 	  if(dt==2){
-	    hAsym_eP1[foundRing][sector]->Fill(asym,rate);//for primary only
+	    if(foundRing<6)
+	      hAsym_eP1[foundRing][sector]->Fill(asym,rate);//for primary only
 	    hRate[4]->SetBinContent(foundRing*3+sector+1,
 				    rate + hRate[4]->GetBinContent(foundRing*3+sector+1));
 	    drRateS[4][sector]->Fill(hit->at(j).r,rate);
