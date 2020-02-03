@@ -86,6 +86,8 @@ void initHisto(){
 
   fout->mkdir("deconvolution");
   fout->cd("deconvolution");
+
+  const string secNm[3]={"closed","transition","open"};
   for(int i=0;i<6;i++){
     vector<TH1D*> dt;
     for(int j=0;j<3;j++){
