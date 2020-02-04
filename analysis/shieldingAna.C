@@ -20,7 +20,11 @@ const int nDet=3; //[26,27,28]
 const string detH[nDet]={"det26","det27","det28"};
 map<int,int> dtM {{26,1},{27,2},{28,3}};
 
-TH1D *hRate[nSp];
+const int nSecDet = 21; // 7(ring, including pmts) x 3 (sectors)
+TH1D *hRate[nSp], *hRateAsym[nSp];
+TH1D *hQ2[nSp][nSecDet],*hW2[nSp][nSecDet];
+TH2D *hQ2W2[nSp][nSecDet];
+
 TH1D *eRate[nSp][nDet];
 TH1D *drate[nSp][nDet], *drRate[nSp][nDet], *drRateAsym[nSp][nDet], *dZ0[nSp][nDet];
 TH1D *drRatePZL0[nSp][nDet],*drRatePZG0[nSp][nDet];
@@ -80,7 +84,7 @@ void process(){
 }
 
 void initHisto(){
-  string foutNm = Form("%s_shldAnaV5.root",fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("%s_shldAnaV6.root",fin.substr(0,fin.find(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -110,10 +114,26 @@ void initHisto(){
     for(int i=0;i<nSp;i++){
 
       if(j==2){
-	hRate[i] = new TH1D(Form("hRate_%s",spH[i].c_str()),Form("Sums for all rings and sectors %s",spTit[i].c_str()),21,0,21);
+	hRate[i] = new TH1D(Form("hRate_%s",spH[i].c_str()),Form("Sums for all rings and sectors %s",spTit[i].c_str()),nSecDet,0,nSecDet);
+	hRateAsym[i] = new TH1D(Form("hRateAsym_%s",spH[i].c_str()),
+				Form("sum(rate*Asym) for all rings and sectors %s",spTit[i].c_str()),nSecDet,0,nSecDet);
 	const string secNm[3]={"closed","transition","open"};
-	for(int k=1;k<=21;k++)
-	  hRate[i]->GetXaxis()->SetBinLabel(k,Form("R%d %s",(k-1-(k-1)%3)/3+1,secNm[(k-1)%3].c_str()));
+	for(int k=1;k<=nSecDet;k++){
+	  int ring= (k-1-(k-1)%3)/3+1;
+	  int sector = (k-1)%3;
+	  hRate[i]->GetXaxis()->SetBinLabel(k,Form("R%d %s",ring,secNm[sector].c_str()));
+	  hRateAsym[i]->GetXaxis()->SetBinLabel(k,Form("R%d %s",ring,secNm[sector].c_str()));
+	  hQ2[i][k-1] = new TH1D(Form("hQ2_R%d_S%d_%s",ring,sector,spTit[i].c_str()),
+				 Form("Q2 R%d S%s for %s",ring,secNm[sector].c_str(),spTit[i].c_str()),
+				 200,0,150000);
+	  hW2[i][k-1] = new TH1D(Form("hW2_R%d_S%d_%s",ring,sector,spTit[i].c_str()),
+				 Form("W2 R%d S%s for %s",ring,secNm[sector].c_str(),spTit[i].c_str()),
+				 200,0,22000000);
+	  hQ2W2[i][k-1] = new TH2D(Form("hQ2W2_R%d_S%d_%s",ring,sector,spTit[i].c_str()),
+				   Form("Q2xW2 R%d S%s for %s",ring,secNm[sector].c_str(),spTit[i].c_str()),
+				   200,0,150000,
+				   200,0,22000000);
+	}
 	for(int k=0;k<nSec;k++){
 	  drRateS[i][k]=new TH1D(Form("det28_rRate_S%d_%s",k,spH[i].c_str()),
 				 Form("rate weighted %s for %s;r[mm]",
@@ -276,6 +296,11 @@ long processOne(string fnm){
 	    hAsym_e1[foundRing][sector]->Fill(asym,rate);//for primary+secondaries
 	  hRate[1]->SetBinContent(foundRing*3+sector+1,
 				  rate + hRate[1]->GetBinContent(foundRing*3+sector+1));
+	  hRateAsym[1]->SetBinContent(foundRing*3+sector+1,
+				      rate*abs(asym) + hRateAsym[1]->GetBinContent(foundRing*3+sector+1));
+	  hQ2[1][foundRing]->Fill(ev->Q2,rate);
+	  hW2[1][foundRing]->Fill(ev->W2,rate);
+	  hQ2W2[1][foundRing]->Fill(ev->Q2,ev->W2,rate);
 	  drRateS[1][sector]->Fill(hit->at(j).r,rate);
 	  drRateAsymS[1][sector]->Fill(hit->at(j).r,rate*asym);
 	}
@@ -300,6 +325,11 @@ long processOne(string fnm){
 	      hAsym_eP1[foundRing][sector]->Fill(asym,rate);//for primary only
 	    hRate[4]->SetBinContent(foundRing*3+sector+1,
 				    rate + hRate[4]->GetBinContent(foundRing*3+sector+1));
+	    hRateAsym[4]->SetBinContent(foundRing*3+sector+1,
+				      rate*abs(asym) + hRateAsym[4]->GetBinContent(foundRing*3+sector+1));
+	    hQ2[4][foundRing]->Fill(ev->Q2,rate);
+	    hW2[4][foundRing]->Fill(ev->W2,rate);
+	    hQ2W2[4][foundRing]->Fill(ev->Q2,ev->W2,rate);
 	    drRateS[4][sector]->Fill(hit->at(j).r,rate);
 	    drRateAsymS[4][sector]->Fill(hit->at(j).r,rate*asym);
 	  }
@@ -310,6 +340,11 @@ long processOne(string fnm){
       if(dt==2){
 	hRate[sp]->SetBinContent(foundRing*3+sector+1,
 				 rate + hRate[sp]->GetBinContent(foundRing*3+sector+1));
+	hRateAsym[sp]->SetBinContent(foundRing*3+sector+1,
+				    rate*abs(asym) + hRateAsym[sp]->GetBinContent(foundRing*3+sector+1));
+	hQ2[sp][foundRing]->Fill(ev->Q2,rate);
+	hW2[sp][foundRing]->Fill(ev->W2,rate);
+	hQ2W2[sp][foundRing]->Fill(ev->Q2,ev->W2,rate);
 	drRateS[sp][sector]->Fill(hit->at(j).r,rate);
 	drRateAsymS[sp][sector]->Fill(hit->at(j).r,rate*asym);
       }
@@ -337,6 +372,16 @@ void writeOutput(){
       if(j==2){
 	hRate[i]->Scale(1./nFiles);
 	hRate[i]->Write();
+	hRateAsym[i]->Scale(1./nFiles);
+	hRateAsym[i]->Write();
+	for(int k=0;k<nSecDet;k++){
+	  hQ2[i][k]->Scale(1./nFiles);
+	  hQ2[i][k]->Write();
+	  hW2[i][k]->Scale(1./nFiles);
+	  hW2[i][k]->Write();
+	  hQ2W2[i][k]->Scale(1./nFiles);
+	  hQ2W2[i][k]->Write();
+	}
 	for(int k=0;k<3;k++){
 	  drRateS[i][k]->Scale(1./nFiles);
 	  drRateS[i][k]->Write();
