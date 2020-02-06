@@ -313,11 +313,11 @@ long processOne(string fnm){
 	int wRegion=-1;
 	if(separateW){
 	  double wVal = sqrt(ev->W2)/1000;//MeV to GeV
-	  if( wVal => 1 && wVal < 1.4)
+	  if( wVal >= 1 && wVal < 1.4)
 	    wRegion = 0;
-	  else if(wVal => 1.4 && wVal <2.5)
+	  else if(wVal >= 1.4 && wVal <2.5)
 	    wRegion = 1;
-	  else if(wVal => 2.5 && wVal <6.0)
+	  else if(wVal >= 2.5 && wVal <6.0)
 	    wRegion = 2;
 	}
 
