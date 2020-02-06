@@ -312,7 +312,7 @@ long processOne(string fnm){
 
 	int wRegion=-1;
 	if(separateW){
-	  double wVal = sqrt(hit->at(j).W2)/1000;//MeV to GeV
+	  double wVal = sqrt(hit->W2)/1000;//MeV to GeV
 	  if( wVal => 1 && wVal < 1.4)
 	    wRegion = 0;
 	  else if(wVal => 1.4 && wVal <2.5)
