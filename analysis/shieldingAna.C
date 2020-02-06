@@ -10,6 +10,8 @@
 
 TFile *fout;
 vector<vector<TH1D*>> hAsym_e1,hAsym_eP1;
+vector<vector<vector<TH1D*>>> hAsymW_e1,hAsymW_eP1;
+int separateW=0;
 
 const int nSp=5;// [e/pi,e/pi E>1,gamma,neutron]
 const string spTit[nSp]={"e/#pi","e/#pi E>1","#gamma","neutron","primary e E>1"};
@@ -50,7 +52,8 @@ void process();
 int findDetector(int &sector, double phi, double r);
 void writeOutput();
 
-void shieldingAna(const string& finName = "./remollout.root"){
+void shieldingAna(const string& finName = "./remollout.root", int wRegions=0){
+  separateW = wRegions;
   fin = finName;
   initHisto();
   process();
@@ -104,9 +107,27 @@ void initHisto(){
     }
     hAsym_e1.push_back(dt1);
     hAsym_eP1.push_back(dt2);
-    dt1.clear();
-    dt2.clear();
   }
+
+  if(separateW)
+    for(int k=0;k<3;k++){
+      vector<vector<TH1D*>> dtt1,dtt2;
+      for(int i=0;i<6;i++){
+	vector<TH1D*> dt1,dt2;
+	for(int j=0;j<3;j++){
+	  dt1.push_back(new TH1D(Form("hAsym_W%d_e1_R%d_S%d",k+1,i+1,j),
+				 Form("rate weighted Asyms for Ring %d Sector %s W reg %d;asymmetry [ppb]",i+1,secNm[j].c_str(),k+1),
+				 100,-1000000,1000000));
+	  dt2.push_back(new TH1D(Form("hAsym_W%d_eP1_R%d_S%d",k+1,i+1,j),
+				 Form("rate weighted Asyms for Ring %d Sector %s W reg %d;asymmetry [ppb]",i+1,secNm[j].c_str(),k+1),
+				 100,-1000000,1000000));
+	}
+	dtt1.push_back(dt1);
+	dtt2.push_back(dt2);
+      }
+      hAsymW_e1.push_back(dtt1);
+      hAsymW_eP1.push_back(dtt2);
+    }
   
   for(int j=0;j<nDet;j++){
     fout->mkdir(detH[j].c_str(),Form("%s plane",detH[j].c_str()));
@@ -123,13 +144,13 @@ void initHisto(){
 	  int sector = (k-1)%3;
 	  hRate[i]->GetXaxis()->SetBinLabel(k,Form("R%d %s",ring,secNm[sector].c_str()));
 	  hRateAsym[i]->GetXaxis()->SetBinLabel(k,Form("R%d %s",ring,secNm[sector].c_str()));
-	  hQ2[i][k-1] = new TH1D(Form("hQ2_R%d_S%d_%s",ring,sector,spTit[i].c_str()),
+	  hQ2[i][k-1] = new TH1D(Form("hQ2_R%d_S%d_%s",ring,sector,spH[i].c_str()),
 				 Form("Q2 R%d S%s for %s",ring,secNm[sector].c_str(),spTit[i].c_str()),
 				 200,0,150000);
-	  hW2[i][k-1] = new TH1D(Form("hW2_R%d_S%d_%s",ring,sector,spTit[i].c_str()),
+	  hW2[i][k-1] = new TH1D(Form("hW2_R%d_S%d_%s",ring,sector,spH[i].c_str()),
 				 Form("W2 R%d S%s for %s",ring,secNm[sector].c_str(),spTit[i].c_str()),
 				 200,0,22000000);
-	  hQ2W2[i][k-1] = new TH2D(Form("hQ2W2_R%d_S%d_%s",ring,sector,spTit[i].c_str()),
+	  hQ2W2[i][k-1] = new TH2D(Form("hQ2W2_R%d_S%d_%s",ring,sector,spH[i].c_str()),
 				   Form("Q2xW2 R%d S%s for %s",ring,secNm[sector].c_str(),spTit[i].c_str()),
 				   200,0,150000,
 				   200,0,22000000);
@@ -289,11 +310,25 @@ long processOne(string fnm){
 	dZ0R0[1][dt]->Fill(hit->at(j).vz,r0,rate);
 	dZ0X0[1][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 
+	int wRegion=-1;
+	if(separateW){
+	  double wVal = hit->at(j).W;
+	  if( wVal => 1 && wVal < 1.4)
+	    wRegion = 0;
+	  else if(wVal => 1.4 && wVal <2.5)
+	    wRegion = 1;
+	  else if(wVal => 2.5 && wVal <6.0)
+	    wRegion = 2;
+	}
+
 	if(dt==2){
 	  //cout<<foundRing<<" "<<sector<<endl;
 	  //cout<<hAsym_e1.size()<<endl;
-	  if(foundRing<6)
+	  if(foundRing<6){
 	    hAsym_e1[foundRing][sector]->Fill(asym,rate);//for primary+secondaries
+	    if(wRegion!=-1)
+	      hAsymW_e1[wRegion][foundRing][sector]->Fill(asym,rate);//for primary+secondaries
+	  }
 	  hRate[1]->SetBinContent(foundRing*3+sector+1,
 				  rate + hRate[1]->GetBinContent(foundRing*3+sector+1));
 	  hRateAsym[1]->SetBinContent(foundRing*3+sector+1,
@@ -321,8 +356,11 @@ long processOne(string fnm){
 	  dZ0R0[4][dt]->Fill(hit->at(j).vz,r0,rate);
 	  dZ0X0[4][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
 	  if(dt==2){
-	    if(foundRing<6)
+	    if(foundRing<6){
 	      hAsym_eP1[foundRing][sector]->Fill(asym,rate);//for primary only
+	      if(wRegion!=-1)
+		hAsymW_eP1[wRegion][foundRing][sector]->Fill(asym,rate);//for primary+secondaries
+	    }
 	    hRate[4]->SetBinContent(foundRing*3+sector+1,
 				    rate + hRate[4]->GetBinContent(foundRing*3+sector+1));
 	    hRateAsym[4]->SetBinContent(foundRing*3+sector+1,
@@ -365,6 +403,17 @@ void writeOutput(){
       hAsym_eP1[i][j]->Write();
     }
 
+  if(separateW){
+  for(int k=0;k<3;k++)
+    for(int i=0;i<6;i++)
+      for(int j=0;j<3;j++){
+	hAsymW_e1[k][i][j]->Scale(1./nFiles);
+	hAsymW_e1[k][i][j]->Write();
+	hAsymW_eP1[k][i][j]->Scale(1./nFiles);
+	hAsymW_eP1[k][i][j]->Write();
+      }
+  }
+  
   for(int j=0;j<nDet;j++){
     fout->cd(detH[j].c_str());
 
