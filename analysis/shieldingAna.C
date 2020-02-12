@@ -11,7 +11,7 @@
 TFile *fout;
 vector<vector<TH1D*>> hAsym_e1,hAsym_eP1;
 vector<vector<vector<TH1D*>>> hAsymW_e1,hAsymW_eP1;
-vecotr<vector<TH1D*>> hRateW;//rate for each W region for epInelastic
+vector<vector<TH1D*>> hRateW;//rate for each W region for epInelastic
 int separateW=0;
 
 const int nSp=5;// [e/pi,e/pi E>1,gamma,neutron]
@@ -110,13 +110,13 @@ void initHisto(){
     hAsym_eP1.push_back(dt2);
   }
 
+  const double wReg[3][2]={{1,1.4},{1.4,2.5},{2.5,6.0}};
   if(separateW)
-    const double wReg[3][2]={{1,1.4},{1.4,2.5},{2.5,6.0}};
     for(int k=0;k<3;k++){
       vector<TH1D*> dtt1;
       for(int i=0;i<nSp;i++){
 	dtt1.push_back(new TH1D(Form("hRateW%d_%s",k+1,spH[i].c_str()),
-				Form("Sums for all rings and sectors %s %4.sf<W<%4.2f",spTit[i].c_str(),wReg[k][0],wReg[k][1]),
+				Form("Sums for all rings and sectors %s %4.2f<W<%4.2f",spTit[i].c_str(),wReg[k][0],wReg[k][1]),
 				nSecDet,0,nSecDet));
 	for(int k=1;k<=nSecDet;k++){
 	  int ring= (k-1-(k-1)%3)/3+1;
@@ -124,7 +124,7 @@ void initHisto(){
 	  dtt1[i]->GetXaxis()->SetBinLabel(k,Form("R%d %s",ring,secNm[sector].c_str()));
 	}
       }
-      hRateW.push_back(dt1);
+      hRateW.push_back(dtt1);
     }
 		       
     for(int k=0;k<3;k++){
@@ -173,7 +173,7 @@ void initHisto(){
 				   200,0,22000000);
 	}
 	for(int k=0;k<nSec;k++){
-/	  drRateS[i][k]=new TH1D(Form("det28_rRate_S%d_%s",k,spH[i].c_str()),
+	  drRateS[i][k]=new TH1D(Form("det28_rRate_S%d_%s",k,spH[i].c_str()),
 				 Form("rate weighted %s for %s;r[mm]",
 				      spTit[i].c_str(),secH[k].c_str()),
 				 600,600,1200);
@@ -311,6 +311,17 @@ long processOne(string fnm){
       int foundRing = findDetector(sector, phi, hit->at(j).r);
       if(foundRing==-1) continue;
 
+      int wRegion=-1;
+      if(separateW){
+	double wVal = sqrt(ev->W2)/1000;//MeV to GeV
+	if( wVal >= 1 && wVal < 1.4)
+	  wRegion = 0;
+	else if(wVal >= 1.4 && wVal <2.5)
+	  wRegion = 1;
+	else if(wVal >= 2.5 && wVal <6.0)
+	  wRegion = 2;
+      }
+
       if(hit->at(j).e>1 && (abs(hit->at(j).pid)==11 || abs(hit->at(j).pid)==211)){
 	eRate[1][dt]->Fill(hit->at(j).p,rate);
 	drate[1][dt]->Fill(lgRate);
@@ -326,17 +337,6 @@ long processOne(string fnm){
 	dXYrateE[1][dt]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).e);
 	dZ0R0[1][dt]->Fill(hit->at(j).vz,r0,rate);
 	dZ0X0[1][dt]->Fill(hit->at(j).vz,hit->at(j).vx,rate);
-
-	int wRegion=-1;
-	if(separateW){
-	  double wVal = sqrt(ev->W2)/1000;//MeV to GeV
-	  if( wVal >= 1 && wVal < 1.4)
-	    wRegion = 0;
-	  else if(wVal >= 1.4 && wVal <2.5)
-	    wRegion = 1;
-	  else if(wVal >= 2.5 && wVal <6.0)
-	    wRegion = 2;
-	}
 
 	if(dt==2){
 	  //cout<<foundRing<<" "<<sector<<endl;
