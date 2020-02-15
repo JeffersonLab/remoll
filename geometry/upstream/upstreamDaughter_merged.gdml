@@ -1144,6 +1144,11 @@
       </physvol>
 -->
 
+<!--
+      <physvol name="UScoil">
+        <file name= "upstream/upstreamToroid.gdml"/>
+      </physvol>
+-->
       <physvol>
         <file name="upstream/upstreamBeampipe.gdml"/>
         <positionref ref="shield_US_beampipe_center"/>

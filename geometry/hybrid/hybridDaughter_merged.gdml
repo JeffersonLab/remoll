@@ -2012,11 +2012,20 @@
       </physvol>
       -->
 
+<!--
+      <physvol name="DScoil">
+        <file name="hybrid/hybridToroid.gdml"/>
+        <position name="pos_hybridToroid" x="0" y="0" z="13370.3653846-DOFFSET"/>
+      </physvol>
+-->
+
+
       <physvol name="DScoll_5">
         <volumeref ref="logicDScoll_5"/>
         <positionref ref="posCOLL5"/>
 	    <rotationref ref="ARotateZ_0"/> 
       </physvol>
+
 
 <!-- Collimator 4 -->
       <physvol name="DScoll_6">
