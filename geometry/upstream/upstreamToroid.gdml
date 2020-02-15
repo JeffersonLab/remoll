@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+
+<define>
+</define>
+
+<materials>
+	<material name="G4_CW95" state="solid">
+		<D value="18.0" unit="g/cm3"/>
+		<fraction n="0.9500" ref="G4_W"/>
+		<fraction n="0.015" ref="G4_Cu"/>
+		<fraction n="0.035" ref="G4_Ni"/>
+	</material>
+</materials>
+
+
+<solids>
+	<box name="solid_s_arm_low" lunit="mm" x="48.66" y="10.1" z="1783.00590804"/>
+	<box name="solid_s_arm_up" lunit="mm" x="48.66" y="10.1" z="1783.00590804"/>
+	<tube name="solid_s_frontNose" rmin="60.44"  rmax="109.1" z="10.1" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+	<tube name="solid_s_endNose" rmin="60.44"  rmax="109.1" z="10.1" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+	<box name="solid_ucoil" lunit="mm" x="218.2" y="2001.20590804" z="10.1"/>
+	<union name="solid_s_1">
+		<first ref="solid_s_frontNose"/>
+		<second ref="solid_s_arm_up"/>
+		<position name="pos_s_1" x="84.77" y="-891.502954019" z="0"/>
+		<rotation name="rot_s_1" x="pi/2" y="0" z="0"/>
+	</union>
+	<union name="solid_s_2">
+		<first ref="solid_s_1"/>
+		<second ref="solid_s_arm_low"/>
+		<position name="pos_s_2" x="-84.77" y="-891.502954019" z="0"/>
+		<rotation name="rot_s_2" x="pi/2" y="0" z="0"/>
+	</union>
+	<union name="solid_s">
+		<first ref="solid_s_2"/>
+		<second ref="solid_s_endNose"/>
+		<position name="pos_s_3" x="0" y="-1783.00590804" z="0"/>
+		<rotation name="rot_s_3" x="-pi" y="0" z="0"/>
+	</union>
+	<cone name="solid_upstreamToroidMother" rmin1="28.78"  rmax1="252.6" rmin2="33.37" rmax2="252.6"  z="2021.20590804" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+</solids>
+
+
+<structure>
+	<volume name="logic_s_0">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_s"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4001"/>
+	</volume>
+	<volume name="logic_ucoil_0">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_ucoil"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		<physvol name="s_0">
+			<volumeref ref="logic_s_0"/>
+			<position name="pos_logic_s_0" x="0" y="891.502954019" z="0"/>
+			<rotation name="rot_logic_s_0" x="0" y="0" z="0"/>
+		</physvol>
+	</volume>
+	<volume name="logic_s_1">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_s"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4002"/>
+	</volume>
+	<volume name="logic_ucoil_1">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_ucoil"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		<physvol name="s_1">
+			<volumeref ref="logic_s_1"/>
+			<position name="pos_logic_s_1" x="0" y="891.502954019" z="0"/>
+			<rotation name="rot_logic_s_1" x="0" y="0" z="0"/>
+		</physvol>
+	</volume>
+	<volume name="logic_s_2">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_s"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4003"/>
+	</volume>
+	<volume name="logic_ucoil_2">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_ucoil"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		<physvol name="s_2">
+			<volumeref ref="logic_s_2"/>
+			<position name="pos_logic_s_2" x="0" y="891.502954019" z="0"/>
+			<rotation name="rot_logic_s_2" x="0" y="0" z="0"/>
+		</physvol>
+	</volume>
+	<volume name="logic_s_3">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_s"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4004"/>
+	</volume>
+	<volume name="logic_ucoil_3">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_ucoil"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		<physvol name="s_3">
+			<volumeref ref="logic_s_3"/>
+			<position name="pos_logic_s_3" x="0" y="891.502954019" z="0"/>
+			<rotation name="rot_logic_s_3" x="0" y="0" z="0"/>
+		</physvol>
+	</volume>
+	<volume name="logic_s_4">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_s"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4005"/>
+	</volume>
+	<volume name="logic_ucoil_4">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_ucoil"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		<physvol name="s_4">
+			<volumeref ref="logic_s_4"/>
+			<position name="pos_logic_s_4" x="0" y="891.502954019" z="0"/>
+			<rotation name="rot_logic_s_4" x="0" y="0" z="0"/>
+		</physvol>
+	</volume>
+	<volume name="logic_s_5">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_s"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4006"/>
+	</volume>
+	<volume name="logic_ucoil_5">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_ucoil"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		<physvol name="s_5">
+			<volumeref ref="logic_s_5"/>
+			<position name="pos_logic_s_5" x="0" y="891.502954019" z="0"/>
+			<rotation name="rot_logic_s_5" x="0" y="0" z="0"/>
+		</physvol>
+	</volume>
+	<volume name="logic_s_6">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_s"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4007"/>
+	</volume>
+	<volume name="logic_ucoil_6">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_ucoil"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		<physvol name="s_6">
+			<volumeref ref="logic_s_6"/>
+			<position name="pos_logic_s_6" x="0" y="891.502954019" z="0"/>
+			<rotation name="rot_logic_s_6" x="0" y="0" z="0"/>
+		</physvol>
+	</volume>
+	<volume name="upstreamToroidMother">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_upstreamToroidMother"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		<physvol name="ucoil_0">
+			<volumeref ref="logic_ucoil_0"/>
+			<position name="pos_ucoil_0" x="140.674638494" y="0.0" z="0"/>
+			<rotation name="rot_ucoil_0" x="pi/2" y="0.0" z="-0.00257430726898"/>
+		</physvol>
+		<physvol name="ucoil_1">
+			<volumeref ref="logic_ucoil_1"/>
+			<position name="pos_ucoil_1" x="87.7092024813" y="109.98386116" z="0"/>
+			<rotation name="rot_ucoil_1" x="pi/2" y="0.897597901026" z="-0.00257430726898"/>
+		</physvol>
+		<physvol name="ucoil_2">
+			<volumeref ref="logic_ucoil_2"/>
+			<position name="pos_ucoil_2" x="-31.3030519417" y="137.147631604" z="0"/>
+			<rotation name="rot_ucoil_2" x="pi/2" y="1.79519580205" z="-0.00257430726898"/>
+		</physvol>
+		<physvol name="ucoil_3">
+			<volumeref ref="logic_ucoil_3"/>
+			<position name="pos_ucoil_3" x="-126.743469787" y="61.0364381489" z="0"/>
+			<rotation name="rot_ucoil_3" x="pi/2" y="2.69279370308" z="-0.00257430726898"/>
+		</physvol>
+		<physvol name="ucoil_4">
+			<volumeref ref="logic_ucoil_4"/>
+			<position name="pos_ucoil_4" x="-126.743469787" y="-61.0364381489" z="0"/>
+			<rotation name="rot_ucoil_4" x="pi/2" y="3.5903916041" z="-0.00257430726898"/>
+		</physvol>
+		<physvol name="ucoil_5">
+			<volumeref ref="logic_ucoil_5"/>
+			<position name="pos_ucoil_5" x="-31.3030519417" y="-137.147631604" z="0"/>
+			<rotation name="rot_ucoil_5" x="pi/2" y="4.48798950513" z="-0.00257430726898"/>
+		</physvol>
+		<physvol name="ucoil_6">
+			<volumeref ref="logic_ucoil_6"/>
+			<position name="pos_ucoil_6" x="87.7092024813" y="-109.98386116" z="0"/>
+			<rotation name="rot_ucoil_6" x="pi/2" y="5.38558740615" z="-0.00257430726898"/>
+		</physvol>
+	</volume>
+</structure>
+<setup name="upstreamToroidWorld" version="1.0">
+	<world ref="upstreamToroidMother"/>
+</setup>
+</gdml>

@@ -1066,6 +1066,7 @@
         <position name="wash_phys_2_pos" unit="mm" x="0" y="0" z="1015"/>
       </physvol>
   -->
+<!--
       <physvol name="UScoil_0">
         <volumeref ref="logicUScoilunion_0"/>
         <positionref ref="CENTER"/>
@@ -1107,6 +1108,13 @@
         <volumeref ref="logicUScoilunion_6"/>
         <positionref ref="CENTER"/>
         <rotationref ref="RotateZ_6"/>
+      </physvol>
+-->
+
+
+
+      <physvol name="UScoil">
+        <file name= "upstream/upstreamToroid.gdml"/>
       </physvol>
 
       <physvol>
