@@ -27,7 +27,7 @@
     the radius along with the angle of the detector to increase the length in the
     longitudinal direction.
   -->
-  <quantity name="showerMaxDetectorInnerRadius" type="length" value="0.605" unit="m"/>
+  <quantity name="showerMaxDetectorInnerRadius" type="length" value="0.670" unit="m"/>
   <quantity name="showerMaxDetectorOuterRadius" type="length" value="1.900" unit="m"/>
 
   <!--
@@ -56,7 +56,7 @@
      blocks. This means that the position of the inner edge must be augmented
     with half the height (radial dimension) of the  blocks.
   -->
-  <quantity name="showerMaxDetectorInnerEdgeRadialPosition" type="length" value="95.0+12.5" unit="cm"/>
+  <quantity name="showerMaxDetectorInnerEdgeRadialPosition" type="length" value="80.0+30.0" unit="cm"/>
 
   &matrices;
 </define>

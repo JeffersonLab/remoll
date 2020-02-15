@@ -67,12 +67,12 @@
     </physvol>
     -->
 
-    <!-- ShowerMax Detectors 
+    <!-- ShowerMax Detectors --> 
     <physvol>
       <file name="showermax/showerMaxDetectorSystem.gdml"/>
       <positionref ref="showerMaxDetectorCenter"/>
     </physvol>
-    -->
+    
 
     <!-- Pion Detectors -->
     <physvol>
