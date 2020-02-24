@@ -5,7 +5,7 @@
 //
 // //Load in the script, and run it
 // >.L analysis/shieldingAna.C
-// > shieldingAna(<remoll output file>)
+// > shieldingAna(<remoll output file>,<0 fot std analysis, 1 for 3 separate W2 regions>)
 
 
 TFile *fout;
