@@ -384,7 +384,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
       fDir.rotateY( bmth); // Positive th pushes to positive X (around Y-axis)
       fDir.rotateX(-bmph); // Positive ph pushes to positive Y (around X-axis)
     } else{
-      G4ThreeVector bmVec = G4ThreeVector(fVer.x(),fVer.y(),-1*(-8000.0*mm-fVer.z())); // in mm
+      G4ThreeVector bmVec = G4ThreeVector(fVer.x(),fVer.y(),-1*(-19810.0*mm-fVer.z())); // in mm
       fDir = G4ThreeVector(bmVec.unit());
     }
 
