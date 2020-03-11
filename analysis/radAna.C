@@ -1,0 +1,391 @@
+// Run commands in this order:
+//
+// //Start reroot
+// >/path/to/build/reroot
+//
+// //Load in the script, and run it
+// > .L radDamage.cc+
+// > gSystem->Load("radDamage_cc.so");
+//
+// //Load in the script, and run it
+// >.L radAna.C
+// > radAna(<remoll output file>,<1 for beam generator, 0 else>)
+
+#include "radDamage.hh"
+#include "histogramUtilities.h"
+#include "mainDetUtilities.h"
+
+TFile *fout;
+const int nSp=5;// [e/pi,e/pi E>1,gamma,neutron]
+const string spTit[nSp]={"e/#pi","e/#pi E>1","#gamma","neutron","primary e E>1"};
+const string spH[nSp]={"e","e1","g","n","eP1"};
+map<int,int> spM {{11,1},{211,1},{22,3},{2112,4}};
+
+const int nDet=3;
+const string detH[nDet]={"det28","det26","det27"};
+map<int,int> dtM {{26,2},{27,3},{28,1}};
+
+TH1D *energy[nSp][nDet], *energyNIEL[nSp][nDet];
+TH1D *z0[nSp][nDet], *z0E[nSp][nDet],*z0NIEL[nSp][nDet];
+TH2D *xy[nSp][nDet], *xyE[nSp][nDet],*xyNIEL[nSp][nDet];
+TH2D *z0r0[nSp][nDet],*z0r0E[nSp][nDet],*z0r0NIEL[nSp][nDet];
+TH2D *z0x0[nSp][nDet],*z0x0E[nSp][nDet],*z0x0NIEL[nSp][nDet];
+
+//for det28 only
+const int nSecDet = 21; // 7(ring, including pmts) x 3 (sectors)
+const int nErange = 4; //all, E<=0.1MeV; 0.1<E<=10MeV; 10MeV<E;
+const string eRgTit[nErange]={"all E","E<=0.1","0.1<E<=10","10<E"};
+TH1D *mdHits[nSp][nErange]; //number of hits for each species; bins are different sectors and rings in det 28;
+TH1D *mdHitsE[nSp][nErange],*mdHitsNIEL[nSp][nErange];
+
+radDamage radDmg;
+
+string fin;
+int beamGen(1);
+long nTotEv(0);
+int nFiles(0);
+long currentEvNr(0);
+
+const double pi = acos(-1);
+
+void initHisto();
+void writeOutput();
+long processOne(string);
+void process();
+
+void radAna(const string& finName = "./remollout.root", int beamGenerator=1){
+  fin = finName;
+  beamGen = beamGenerator;
+
+  initHisto();
+  process();
+  writeOutput();
+}
+
+void process(){
+
+  if(fin==""){
+    cout<<"\t did not find input file. Quitting!"<<endl;
+    return 2;
+  }
+
+  if( fin.find(".root") < fin.size() ){
+    cout<<"Processing single file:\n\t"<<fin<<endl;
+    nTotEv+=processOne(fin);
+    nFiles=1;
+  }else{
+    cout<<"Attempting to process list of output from\n\t"<<fin<<endl;
+    ifstream ifile(fin.c_str());
+    string data;
+    while(ifile>>data){
+      cout<<" processing: "<<data<<endl;
+      nTotEv+=processOne(data);
+      nFiles++;
+    }
+  }
+
+  cout<<"\nFinished processing a total of "<<nTotEv<<endl;
+}
+
+long processOne(string fnm){
+  TFile *fin=TFile::Open(fnm.c_str(),"READ");
+  if(!fin->IsOpen() || fin->IsZombie()){
+    cout<<"Problem: can't find file: "<<fnm<<endl;
+    fin->Close();
+    delete fin;
+    return 0;
+  }
+  TTree *t=(TTree*)fin->Get("T");
+  if (t == 0) return 0;
+  Double_t rate=0;
+  remollEvent_t *ev=0;
+  remollBeamTarget_t *bm=0;
+  std::vector<remollEventParticle_t> *part=0;
+  std::vector<remollGenericDetectorHit_t> *hit=0;
+  //std::vector<remollGenericDetectorSum_t> *sum;
+  t->SetBranchAddress("rate", &rate);
+  t->SetBranchAddress("bm", &bm);
+  t->SetBranchAddress("ev", &ev);
+  t->SetBranchAddress("part", &part);
+  t->SetBranchAddress("hit", &hit);
+  //t->SetBranchAddress("sum", &sum);
+
+  long nEntries = t->GetEntries();
+  cout<<"\tTotal events: "<<nEntries<<endl;
+  float currentProc=1,procStep=30;
+  vector<int> procID;
+  int sector(-1);
+
+  //for (Long64_t event = 0; event < 5; t->GetEntry(event++)) {
+  for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
+    currentEvNr++;
+    if( float(event+1)/nEntries*100 > currentProc){
+      cout<<"at tree entry\t"<<event<<"\t"<< float(event+1)/nEntries*100<<endl;
+      currentProc+=procStep;
+    }
+
+    for(int j=0;j<hit->size();j++){
+
+      if(std::isnan(rate) || std::isinf(rate)) continue;
+      if(rate==0) {rate=1;}
+
+      int sp = spM[int(abs(hit->at(j).pid))]-1;
+      if(sp==-1) continue;
+
+      int dt = dtM[int(hit->at(j).det)]-1;
+      if(dt==-1) continue;
+
+      double kinE = hit->at(j).p;
+      double niel = radDmg.GetNIEL(hit->at(j).pid,kinE,0);
+      double vz0 = hit->at(j).vz;
+      double vx0 = hit->at(j).vx;
+      double vr0=sqrt(pow(hit->at(j).vx,2)+pow(hit->at(j).vy,2));
+
+      energy[sp][dt]->Fill(kinE,rate);
+      energyNIEL[sp][dt]->Fill(kinE,rate*niel);
+
+      z0[sp][dt]->Fill(vz0,rate);
+      z0E[sp][dt]->Fill(vz0,rate*kinE);
+      z0NIEL[sp][dt]->Fill(vz0,rate*niel);
+
+      z0r0[sp][dt]->Fill(vz0,vr0,rate);
+      z0r0E[sp][dt]->Fill(vz0,vr0,rate*kinE);
+      z0r0NIEL[sp][dt]->Fill(vz0,vr0,rate*niel);
+
+      z0x0[sp][dt]->Fill(vz0,vx0,rate);
+      z0x0E[sp][dt]->Fill(vz0,vx0,rate*kinE);
+      z0x0NIEL[sp][dt]->Fill(vz0,vx0,rate*niel);
+
+      if(sp==0 && hit->at(j).p>1){
+	energy[1][dt]->Fill(kinE,rate);
+	energyNIEL[1][dt]->Fill(kinE,rate*niel);
+	
+	z0[1][dt]->Fill(vz0,rate);
+	z0E[1][dt]->Fill(vz0,rate*kinE);
+	z0NIEL[1][dt]->Fill(vz0,rate*niel);
+	
+	z0r0[1][dt]->Fill(vz0,vr0,rate);
+	z0r0E[1][dt]->Fill(vz0,vr0,rate*kinE);
+	z0r0NIEL[1][dt]->Fill(vz0,vr0,rate*niel);
+	
+	z0x0[1][dt]->Fill(vz0,vx0,rate);
+	z0x0E[1][dt]->Fill(vz0,vx0,rate*kinE);
+	z0x0NIEL[1][dt]->Fill(vz0,vx0,rate*niel);
+
+	if(hit->at(j).trid==1 || hit->at(j).trid==2){
+	  energy[4][dt]->Fill(kinE,rate);
+	  energyNIEL[4][dt]->Fill(kinE,rate*niel);
+	  
+	  z0[4][dt]->Fill(vz0,rate);
+	  z0E[4][dt]->Fill(vz0,rate*kinE);
+	  z0NIEL[4][dt]->Fill(vz0,rate*niel);
+	  
+	  z0r0[4][dt]->Fill(vz0,vr0,rate);
+	  z0r0E[4][dt]->Fill(vz0,vr0,rate*kinE);
+	  z0r0NIEL[4][dt]->Fill(vz0,vr0,rate*niel);
+	  
+	  z0x0[4][dt]->Fill(vz0,vx0,rate);
+	  z0x0E[4][dt]->Fill(vz0,vx0,rate*kinE);
+	  z0x0NIEL[4][dt]->Fill(vz0,vx0,rate*niel);
+	}
+
+      }
+
+      if(dt!=0) continue;
+      
+      double phi = atan2(hit->at(j).y,hit->at(j).x);
+      if(phi<0) phi+=2*pi;
+      int foundRing = findDetector(sector, phi, hit->at(j).r,1);
+      if(foundRing==-1) continue;
+
+      mdHits[sp][0]->SetBinContent(foundRing*3+sector+1,
+				   rate + mdHits[sp][0]->GetBinContent(foundRing*3+sector+1));
+      mdHitsE[sp][0]->SetBinContent(foundRing*3+sector+1,
+				    rate*kinE + mdHitsE[sp][0]->GetBinContent(foundRing*3+sector+1));
+      mdHitsNIEL[sp][0]->SetBinContent(foundRing*3+sector+1,
+				       rate*niel + mdHitsNIEL[sp][0]->GetBinContent(foundRing*3+sector+1));
+
+      if(kinE<=0.1){
+	mdHits[sp][1]->SetBinContent(foundRing*3+sector+1,
+				     rate + mdHits[sp][1]->GetBinContent(foundRing*3+sector+1));
+	mdHitsE[sp][1]->SetBinContent(foundRing*3+sector+1,
+				      rate*kinE + mdHitsE[sp][1]->GetBinContent(foundRing*3+sector+1));
+	mdHitsNIEL[sp][1]->SetBinContent(foundRing*3+sector+1,
+					 rate*niel + mdHitsNIEL[sp][1]->GetBinContent(foundRing*3+sector+1));
+      }else if(kinE<=10){
+	mdHits[sp][2]->SetBinContent(foundRing*3+sector+1,
+				     rate + mdHits[sp][2]->GetBinContent(foundRing*3+sector+1));
+	mdHitsE[sp][2]->SetBinContent(foundRing*3+sector+1,
+				      rate*kinE + mdHitsE[sp][2]->GetBinContent(foundRing*3+sector+1));
+	mdHitsNIEL[sp][2]->SetBinContent(foundRing*3+sector+1,
+					 rate*niel + mdHitsNIEL[sp][2]->GetBinContent(foundRing*3+sector+1));
+      }else{
+	mdHits[sp][3]->SetBinContent(foundRing*3+sector+1,
+				     rate + mdHits[sp][3]->GetBinContent(foundRing*3+sector+1));
+	mdHitsE[sp][3]->SetBinContent(foundRing*3+sector+1,
+				      rate*kinE + mdHitsE[sp][3]->GetBinContent(foundRing*3+sector+1));
+	mdHitsNIEL[sp][3]->SetBinContent(foundRing*3+sector+1,
+				       rate*niel + mdHitsNIEL[sp][3]->GetBinContent(foundRing*3+sector+1));
+      }
+    }
+  }
+
+  fin->Close();
+  delete fin;
+  return nEntries;
+};
+
+
+void initHisto(){
+  string foutNm = Form("%s_radAna.root",fin.substr(0,fin.find(".")).c_str());
+
+  fout = new TFile(foutNm.c_str(),"RECREATE");
+
+  fout->mkdir("deconvolution","histos for deconvolution analysis");
+  fout->cd("deconvolution");
+
+  for(int j=0;j<nDet;j++){
+    fout->mkdir(detH[j].c_str(),Form("%s plane",detH[j].c_str()));
+    fout->cd(detH[j].c_str());
+    for(int i=0;i<nSp;i++){
+      energy[i][j]=new TH1D(Form("%s_energy_%s",detH[j].c_str(),spH[i].c_str()),
+			    Form("rate weighted for %s;E [MeV]",spTit[i].c_str()),
+			    121,-8,4.1);
+      niceLogXBins(energy[i][j]);
+
+      energyNIEL[i][j]=new TH1D(Form("%s_energyNEIL_%s",detH[j].c_str(),spH[i].c_str()),
+				Form("rate weighted for %s;E [MeV]",spTit[i].c_str()),
+				121,-8,4.1);
+      niceLogXBins(energyNIEL[i][j]);
+
+      z0[i][j]=new TH1D(Form("%s_z0_%s",detH[j].c_str(),spH[i].c_str()),
+			Form("rate weighted %s;z0[mm]",spTit[i].c_str()),
+			2000,-6000,32000);
+      z0E[i][j]=new TH1D(Form("%s_z0E_%s",detH[j].c_str(),spH[i].c_str()),
+			 Form("rate*E weighted %s;z0[mm]",spTit[i].c_str()),
+			 2000,-6000,32000);
+      z0NIEL[i][j]=new TH1D(Form("%s_z0NIEL_%s",detH[j].c_str(),spH[i].c_str()),
+			    Form("rate*NEIL weighted %s;z0[mm]",spTit[i].c_str()),
+			    2000,-6000,32000);
+
+      xy[i][j]=new TH2D(Form("%s_xy_%s",detH[j].c_str(),spH[i].c_str()),
+			Form("rate for %s;x[mm];y[mm]",spTit[i].c_str()),
+			200,-2000,2000,
+			200,-2000,2000);
+      xyE[i][j]=new TH2D(Form("%s_xyE_%s",detH[j].c_str(),spH[i].c_str()),
+			 Form("rate*E for %s;x[mm];y[mm]",spTit[i].c_str()),
+			 200,-2000,2000,
+			 200,-2000,2000);
+      xyNIEL[i][j]=new TH2D(Form("%s_xyNIEL_%s",detH[j].c_str(),spH[i].c_str()),
+			    Form("rate*NIEL for %s;x[mm];y[mm]",spTit[i].c_str()),
+			    200,-2000,2000,
+			    200,-2000,2000);
+
+      z0r0[i][j]=new TH2D(Form("%s_z0r0_%s",detH[j].c_str(),spH[i].c_str()),
+			  Form("rate for %s;z0[mm];r0[mm]",spTit[i].c_str()),
+			  2000,-6000,32000,
+			  200,0,3000);
+      z0r0E[i][j]=new TH2D(Form("%s_z0r0E_%s",detH[j].c_str(),spH[i].c_str()),
+			   Form("rate*E for %s;z0[mm];r0[mm]",spTit[i].c_str()),
+			   2000,-6000,32000,
+			   200,0,3000);
+      z0r0NIEL[i][j]=new TH2D(Form("%s_z0r0NIEL_%s",detH[j].c_str(),spH[i].c_str()),
+			      Form("rate*NIEL for %s;z0[mm];r0[mm]",spTit[i].c_str()),
+			      2000,-6000,32000,
+			      200,0,3000);
+
+      z0x0[i][j]=new TH2D(Form("%s_z0x0_%s",detH[j].c_str(),spH[i].c_str()),
+			  Form("rate for %s;z0[mm];x0[mm]",spTit[i].c_str()),
+			  2000,-6000,32000,
+			  200,-3000,3000);
+      z0x0E[i][j]=new TH2D(Form("%s_z0x0E_%s",detH[j].c_str(),spH[i].c_str()),
+			   Form("rate*E for %s;z0[mm];x0[mm]",spTit[i].c_str()),
+			   2000,-6000,32000,
+			   200,-3000,3000);
+      z0x0NIEL[i][j]=new TH2D(Form("%s_z0x0NIEL_%s",detH[j].c_str(),spH[i].c_str()),
+			      Form("rate*NIEL for %s;z0[mm];x0[mm]",spTit[i].c_str()),
+			      2000,-6000,32000,
+			      200,-3000,3000);
+      if(j==0){
+	for(int k=0;k<nErange;k++){
+	  mdHits[i][k]=new TH1D(Form("mdHits_%s_ER%d",spH[i].c_str(),k),
+				Form("rate per electron for %s with %s",spTit[i].c_str(),eRgTit[k].c_str()),
+				nSecDet,0,nSecDet);
+	  mdHitsE[i][k]=new TH1D(Form("mdHitsE_%s_ER%d",spH[i].c_str(),k),
+				 Form("rate*E per electron for %s with %s",spTit[i].c_str(),eRgTit[k].c_str()),
+				 nSecDet,0,nSecDet);
+	  mdHitsNIEL[i][k]=new TH1D(Form("mdHitsNIEL_%s_ER%d",spH[i].c_str(),k),
+				    Form("rate*NIEL per electron for %s with %s",spTit[i].c_str(),eRgTit[k].c_str()),
+				    nSecDet,0,nSecDet);				    
+
+	  const string secNm[3]={"closed","transition","open"};
+	  for(int kk=1;kk<=nSecDet;kk++){
+	    int ring= (kk-1-(kk-1)%3)/3+1;
+	    int sector = (kk-1)%3;
+	    mdHits[i][k]->GetXaxis()->SetBinLabel(kk,Form("R%d %s",ring,secNm[sector].c_str()));
+	    mdHitsE[i][k]->GetXaxis()->SetBinLabel(kk,Form("R%d %s",ring,secNm[sector].c_str()));
+	    mdHitsNIEL[i][k]->GetXaxis()->SetBinLabel(kk,Form("R%d %s",ring,secNm[sector].c_str()));
+	  }
+	}
+      }
+    }
+  }
+}
+
+void writeOutput(){
+
+  double scaleFactor = 1./nFiles;
+  if(beamGen)
+    scaleFactor = 1./nTotEv;
+
+  for(int j=0;j<nDet;j++){
+    fout->cd(detH[j].c_str());
+    for(int i=0;i<nSp;i++){
+      energy[i][j]->Scale(scaleFactor);
+      energy[i][j]->Write();
+  
+      energyNIEL[i][j]->Scale(scaleFactor);
+      energyNIEL[i][j]->Write();
+
+      z0[i][j]->Scale(scaleFactor);
+      z0[i][j]->Write();
+
+      z0E[i][j]->Scale(scaleFactor);
+      z0E[i][j]->Write();
+
+      z0NIEL[i][j]->Scale(scaleFactor);
+      z0NIEL[i][j]->Write();
+
+      xy[i][j]->Scale(scaleFactor);
+      xy[i][j]->Write();
+      
+      xyE[i][j]->Scale(scaleFactor);
+      xyE[i][j]->Write();
+      
+      xyNIEL[i][j]->Scale(scaleFactor);
+      xyNIEL[i][j]->Write();
+
+      z0r0[i][j]->Scale(scaleFactor);
+      z0r0[i][j]->Write();
+
+      z0r0E[i][j]->Scale(scaleFactor);
+      z0r0E[i][j]->Write();
+      
+      z0r0NIEL[i][j]->Scale(scaleFactor);
+      z0r0NIEL[i][j]->Write();
+
+      if(j==0)
+	for(int k=0;k<nErange;k++){
+	  mdHits[i][k]->Scale(scaleFactor);
+	  mdHits[i][k]->Write();
+
+	  mdHitsE[i][k]->Scale(scaleFactor);
+	  mdHitsE[i][k]->Write();
+
+	  mdHitsNIEL[i][k]->Scale(scaleFactor);
+	  mdHitsNIEL[i][k]->Write();
+	}
+    }
+  }
+  fout->Close();
+}
