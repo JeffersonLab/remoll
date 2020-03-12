@@ -40,7 +40,7 @@ TH1D *mdHitsE[nSp][nErange],*mdHitsNIEL[nSp][nErange];
 
 radDamage radDmg;
 
-string fin;
+string fileNm;
 int beamGen(1);
 long nTotEv(0);
 int nFiles(0);
@@ -54,7 +54,7 @@ long processOne(string);
 void process();
 
 void radAna(const string& finName = "./remollout.root", int beamGenerator=1){
-  fin = finName;
+  fileNm = finName;
   beamGen = beamGenerator;
 
   initHisto();
@@ -64,18 +64,18 @@ void radAna(const string& finName = "./remollout.root", int beamGenerator=1){
 
 void process(){
 
-  if(fin==""){
+  if(fileNm==""){
     cout<<"\t did not find input file. Quitting!"<<endl;
     return 2;
   }
 
-  if( fin.find(".root") < fin.size() ){
-    cout<<"Processing single file:\n\t"<<fin<<endl;
-    nTotEv+=processOne(fin);
+  if( fileNm.find(".root") < fin.size() ){
+    cout<<"Processing single file:\n\t"<<fileNm<<endl;
+    nTotEv+=processOne(fileNm);
     nFiles=1;
   }else{
-    cout<<"Attempting to process list of output from\n\t"<<fin<<endl;
-    ifstream ifile(fin.c_str());
+    cout<<"Attempting to process list of output from\n\t"<<fileNm<<endl;
+    ifstream ifile(fileNm.c_str());
     string data;
     while(ifile>>data){
       cout<<" processing: "<<data<<endl;
@@ -137,6 +137,7 @@ long processOne(string fnm){
 
       double kinE = hit->at(j).p;
       double niel = radDmg.GetNIEL(hit->at(j).pid,kinE,0);
+      if(niel<0) niel=0;
       double vz0 = hit->at(j).vz;
       double vx0 = hit->at(j).vx;
       double vr0=sqrt(pow(hit->at(j).vx,2)+pow(hit->at(j).vy,2));
@@ -156,6 +157,12 @@ long processOne(string fnm){
       z0x0E[sp][dt]->Fill(vz0,vx0,rate*kinE);
       z0x0NIEL[sp][dt]->Fill(vz0,vx0,rate*niel);
 
+      double xx = hit->at(j).x;
+      double yy = hit->at(j).y;
+      xy[sp][dt]->Fill(xx,yy,rate);
+      xyE[sp][dt]->Fill(xx,yy,rate*kinE);
+      xyNIEL[sp][dt]->Fill(xx,yy,rate*niel);
+
       if(sp==0 && hit->at(j).p>1){
 	energy[1][dt]->Fill(kinE,rate);
 	energyNIEL[1][dt]->Fill(kinE,rate*niel);
@@ -172,6 +179,10 @@ long processOne(string fnm){
 	z0x0E[1][dt]->Fill(vz0,vx0,rate*kinE);
 	z0x0NIEL[1][dt]->Fill(vz0,vx0,rate*niel);
 
+	xy[1][dt]->Fill(xx,yy,rate);
+	xyE[1][dt]->Fill(xx,yy,rate*kinE);
+	xyNIEL[1][dt]->Fill(xx,yy,rate*niel);
+
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
 	  energy[4][dt]->Fill(kinE,rate);
 	  energyNIEL[4][dt]->Fill(kinE,rate*niel);
@@ -187,6 +198,11 @@ long processOne(string fnm){
 	  z0x0[4][dt]->Fill(vz0,vx0,rate);
 	  z0x0E[4][dt]->Fill(vz0,vx0,rate*kinE);
 	  z0x0NIEL[4][dt]->Fill(vz0,vx0,rate*niel);
+
+	  xy[4][dt]->Fill(xx,yy,rate);
+	  xyE[4][dt]->Fill(xx,yy,rate*kinE);
+	  xyNIEL[4][dt]->Fill(xx,yy,rate*niel);
+
 	}
 
       }
@@ -225,8 +241,74 @@ long processOne(string fnm){
 	mdHitsE[sp][3]->SetBinContent(foundRing*3+sector+1,
 				      rate*kinE + mdHitsE[sp][3]->GetBinContent(foundRing*3+sector+1));
 	mdHitsNIEL[sp][3]->SetBinContent(foundRing*3+sector+1,
-				       rate*niel + mdHitsNIEL[sp][3]->GetBinContent(foundRing*3+sector+1));
+					 rate*niel + mdHitsNIEL[sp][3]->GetBinContent(foundRing*3+sector+1));
       }
+
+      if(sp==0 && hit->at(j).p>1){
+	mdHits[sp][0]->SetBinContent(foundRing*3+sector+1,
+				     rate + mdHits[sp][0]->GetBinContent(foundRing*3+sector+1));
+	mdHitsE[sp][0]->SetBinContent(foundRing*3+sector+1,
+				      rate*kinE + mdHitsE[sp][0]->GetBinContent(foundRing*3+sector+1));
+	mdHitsNIEL[sp][0]->SetBinContent(foundRing*3+sector+1,
+					 rate*niel + mdHitsNIEL[sp][0]->GetBinContent(foundRing*3+sector+1));
+
+	if(kinE<=0.1){
+	  mdHits[1][1]->SetBinContent(foundRing*3+sector+1,
+				      rate + mdHits[1][1]->GetBinContent(foundRing*3+sector+1));
+	  mdHitsE[1][1]->SetBinContent(foundRing*3+sector+1,
+				       rate*kinE + mdHitsE[1][1]->GetBinContent(foundRing*3+sector+1));
+	  mdHitsNIEL[1][1]->SetBinContent(foundRing*3+sector+1,
+					  rate*niel + mdHitsNIEL[1][1]->GetBinContent(foundRing*3+sector+1));
+	}else if(kinE<=10){
+	  mdHits[1][2]->SetBinContent(foundRing*3+sector+1,
+				      rate + mdHits[1][2]->GetBinContent(foundRing*3+sector+1));
+	  mdHitsE[1][2]->SetBinContent(foundRing*3+sector+1,
+				       rate*kinE + mdHitsE[1][2]->GetBinContent(foundRing*3+sector+1));
+	  mdHitsNIEL[1][2]->SetBinContent(foundRing*3+sector+1,
+					  rate*niel + mdHitsNIEL[1][2]->GetBinContent(foundRing*3+sector+1));
+	}else{
+	  mdHits[1][3]->SetBinContent(foundRing*3+sector+1,
+				      rate + mdHits[1][3]->GetBinContent(foundRing*3+sector+1));
+	  mdHitsE[1][3]->SetBinContent(foundRing*3+sector+1,
+				       rate*kinE + mdHitsE[1][3]->GetBinContent(foundRing*3+sector+1));
+	  mdHitsNIEL[1][3]->SetBinContent(foundRing*3+sector+1,
+					  rate*niel + mdHitsNIEL[1][3]->GetBinContent(foundRing*3+sector+1));
+	}
+
+	if(hit->at(j).trid==1 || hit->at(j).trid==2){
+	  mdHits[4][0]->SetBinContent(foundRing*3+sector+1,
+				      rate + mdHits[4][0]->GetBinContent(foundRing*3+sector+1));
+	  mdHitsE[4][0]->SetBinContent(foundRing*3+sector+1,
+				       rate*kinE + mdHitsE[4][0]->GetBinContent(foundRing*3+sector+1));
+	  mdHitsNIEL[4][0]->SetBinContent(foundRing*3+sector+1,
+					  rate*niel + mdHitsNIEL[4][0]->GetBinContent(foundRing*3+sector+1));
+
+	  if(kinE<=0.1){
+	    mdHits[4][1]->SetBinContent(foundRing*3+sector+1,
+					rate + mdHits[4][1]->GetBinContent(foundRing*3+sector+1));
+	    mdHitsE[4][1]->SetBinContent(foundRing*3+sector+1,
+					 rate*kinE + mdHitsE[4][1]->GetBinContent(foundRing*3+sector+1));
+	    mdHitsNIEL[4][1]->SetBinContent(foundRing*3+sector+1,
+					    rate*niel + mdHitsNIEL[4][1]->GetBinContent(foundRing*3+sector+1));
+	  }else if(kinE<=10){
+	    mdHits[4][2]->SetBinContent(foundRing*3+sector+1,
+					rate + mdHits[4][2]->GetBinContent(foundRing*3+sector+1));
+	    mdHitsE[4][2]->SetBinContent(foundRing*3+sector+1,
+					 rate*kinE + mdHitsE[4][2]->GetBinContent(foundRing*3+sector+1));
+	    mdHitsNIEL[4][2]->SetBinContent(foundRing*3+sector+1,
+					    rate*niel + mdHitsNIEL[4][2]->GetBinContent(foundRing*3+sector+1));
+	  }else{
+	    mdHits[4][3]->SetBinContent(foundRing*3+sector+1,
+					rate + mdHits[4][3]->GetBinContent(foundRing*3+sector+1));
+	    mdHitsE[4][3]->SetBinContent(foundRing*3+sector+1,
+					 rate*kinE + mdHitsE[4][3]->GetBinContent(foundRing*3+sector+1));
+	    mdHitsNIEL[4][3]->SetBinContent(foundRing*3+sector+1,
+					    rate*niel + mdHitsNIEL[4][3]->GetBinContent(foundRing*3+sector+1));
+	  }
+
+	}
+      }
+
     }
   }
 
@@ -237,7 +319,7 @@ long processOne(string fnm){
 
 
 void initHisto(){
-  string foutNm = Form("%s_radAna.root",fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("%s_radAna.root",fin.substr(0,fileNm.find_last_of(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
