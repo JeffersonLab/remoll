@@ -27,6 +27,9 @@ map<int,int> dtM {{26,2},{27,3},{28,1}};
 
 TH1D *energy[nSp][nDet], *energyNIEL[nSp][nDet];
 TH1D *z0[nSp][nDet], *z0E[nSp][nDet],*z0NIEL[nSp][nDet];
+TH1D *z0R5[nSp][nDet], *z0R5E[nSp][nDet],*z0R5NIEL[nSp][nDet];
+TH1D *z0HE[nSp][nDet], *z0HEE[nSp][nDet],*z0HENIEL[nSp][nDet];
+
 TH2D *xy[nSp][nDet], *xyE[nSp][nDet],*xyNIEL[nSp][nDet];
 TH2D *z0r0[nSp][nDet],*z0r0E[nSp][nDet],*z0r0NIEL[nSp][nDet];
 TH2D *z0x0[nSp][nDet],*z0x0E[nSp][nDet],*z0x0NIEL[nSp][nDet];
@@ -149,6 +152,13 @@ long processOne(string fnm){
       z0E[sp][dt]->Fill(vz0,rate*kinE);
       z0NIEL[sp][dt]->Fill(vz0,rate*niel);
 
+      double rr=hit->at(j).r;
+      if(hit->at(j).p>10 && rr>500 && rr<1500){
+	z0HE[sp][dt]->Fill(vz0,rate);
+	z0HEE[sp][dt]->Fill(vz0,rate*kinE);
+	z0HENIEL[sp][dt]->Fill(vz0,rate*niel);
+      }
+      
       z0r0[sp][dt]->Fill(vz0,vr0,rate);
       z0r0E[sp][dt]->Fill(vz0,vr0,rate*kinE);
       z0r0NIEL[sp][dt]->Fill(vz0,vr0,rate*niel);
@@ -214,6 +224,12 @@ long processOne(string fnm){
       int foundRing = findDetector(sector, phi, hit->at(j).r,1);
       if(foundRing==-1) continue;
 
+      if(foundRing==4){
+	z0R5[sp][dt]->Fill(vz0,rate);
+	z0R5E[sp][dt]->Fill(vz0,rate*kinE);
+	z0R5NIEL[sp][dt]->Fill(vz0,rate*niel);
+      }
+      
       mdHits[sp][0]->SetBinContent(foundRing*3+sector+1,
 				   rate + mdHits[sp][0]->GetBinContent(foundRing*3+sector+1));
       mdHitsE[sp][0]->SetBinContent(foundRing*3+sector+1,
@@ -244,12 +260,12 @@ long processOne(string fnm){
 					 rate*niel + mdHitsNIEL[sp][3]->GetBinContent(foundRing*3+sector+1));
       }
 
-      if(sp==0 && hit->at(j).p>1){
-	mdHits[sp][0]->SetBinContent(foundRing*3+sector+1,
+      if(sp==0 && hit->at(j).p>1){//species should be all 1
+	mdHits[1][0]->SetBinContent(foundRing*3+sector+1,
 				     rate + mdHits[sp][0]->GetBinContent(foundRing*3+sector+1));
-	mdHitsE[sp][0]->SetBinContent(foundRing*3+sector+1,
+	mdHitsE[1][0]->SetBinContent(foundRing*3+sector+1,
 				      rate*kinE + mdHitsE[sp][0]->GetBinContent(foundRing*3+sector+1));
-	mdHitsNIEL[sp][0]->SetBinContent(foundRing*3+sector+1,
+	mdHitsNIEL[1][0]->SetBinContent(foundRing*3+sector+1,
 					 rate*niel + mdHitsNIEL[sp][0]->GetBinContent(foundRing*3+sector+1));
 
 	if(kinE<=0.1){
@@ -319,12 +335,9 @@ long processOne(string fnm){
 
 
 void initHisto(){
-  string foutNm = Form("%s_radAna.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_radAnaV1.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
-
-  fout->mkdir("deconvolution","histos for deconvolution analysis");
-  fout->cd("deconvolution");
 
   for(int j=0;j<nDet;j++){
     fout->mkdir(detH[j].c_str(),Form("%s plane",detH[j].c_str()));
@@ -349,6 +362,26 @@ void initHisto(){
       z0NIEL[i][j]=new TH1D(Form("%s_z0NIEL_%s",detH[j].c_str(),spH[i].c_str()),
 			    Form("rate*NEIL weighted %s;z0[mm]",spTit[i].c_str()),
 			    2000,-6000,32000);
+
+      z0R5[i][j]=new TH1D(Form("%s_z0R5_%s",detH[j].c_str(),spH[i].c_str()),
+			  Form("rate weighted %s;z0[mm]",spTit[i].c_str()),
+			  2000,-6000,32000);
+      z0R5E[i][j]=new TH1D(Form("%s_z0R5E_%s",detH[j].c_str(),spH[i].c_str()),
+			   Form("rate*E weighted %s;z0[mm]",spTit[i].c_str()),
+			   2000,-6000,32000);
+      z0R5NIEL[i][j]=new TH1D(Form("%s_z0R5NIEL_%s",detH[j].c_str(),spH[i].c_str()),
+			      Form("rate*NEIL weighted %s;z0[mm]",spTit[i].c_str()),
+			      2000,-6000,32000);
+
+      z0HE[i][j]=new TH1D(Form("%s_z0HE_%s",detH[j].c_str(),spH[i].c_str()),
+			  Form("rate weighted %s 500<R<1500;z0[mm]",spTit[i].c_str()),
+			  2000,-6000,32000);
+      z0HEE[i][j]=new TH1D(Form("%s_z0HEE_%s",detH[j].c_str(),spH[i].c_str()),
+			   Form("rate*E weighted %s 500<R<1500;z0[mm]",spTit[i].c_str()),
+			   2000,-6000,32000);
+      z0HENIEL[i][j]=new TH1D(Form("%s_z0HENIEL_%s",detH[j].c_str(),spH[i].c_str()),
+			      Form("rate*NEIL weighted %s 500<R<1500;z0[mm]",spTit[i].c_str()),
+			      2000,-6000,32000);
 
       xy[i][j]=new TH2D(Form("%s_xy_%s",detH[j].c_str(),spH[i].c_str()),
 			Form("rate for %s;x[mm];y[mm]",spTit[i].c_str()),
@@ -431,12 +464,24 @@ void writeOutput(){
 
       z0[i][j]->Scale(scaleFactor);
       z0[i][j]->Write();
-
       z0E[i][j]->Scale(scaleFactor);
       z0E[i][j]->Write();
-
       z0NIEL[i][j]->Scale(scaleFactor);
       z0NIEL[i][j]->Write();
+
+      z0R5[i][j]->Scale(scaleFactor);
+      z0R5[i][j]->Write();
+      z0R5E[i][j]->Scale(scaleFactor);
+      z0R5E[i][j]->Write();
+      z0R5NIEL[i][j]->Scale(scaleFactor);
+      z0R5NIEL[i][j]->Write();
+
+      z0HE[i][j]->Scale(scaleFactor);
+      z0HE[i][j]->Write();
+      z0HEE[i][j]->Scale(scaleFactor);
+      z0HEE[i][j]->Write();
+      z0HENIEL[i][j]->Scale(scaleFactor);
+      z0HENIEL[i][j]->Write();
 
       xy[i][j]->Scale(scaleFactor);
       xy[i][j]->Write();
