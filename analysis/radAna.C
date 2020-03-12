@@ -69,7 +69,7 @@ void process(){
     return 2;
   }
 
-  if( fileNm.find(".root") < fin.size() ){
+  if( fileNm.find(".root") < fileNm.size() ){
     cout<<"Processing single file:\n\t"<<fileNm<<endl;
     nTotEv+=processOne(fileNm);
     nFiles=1;
@@ -319,7 +319,7 @@ long processOne(string fnm){
 
 
 void initHisto(){
-  string foutNm = Form("%s_radAna.root",fin.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_radAna.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
