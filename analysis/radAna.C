@@ -28,6 +28,7 @@ map<int,int> dtM {{26,2},{27,3},{28,1}};
 TH1D *energy[nSp][nDet], *energyNIEL[nSp][nDet];
 TH1D *z0[nSp][nDet], *z0E[nSp][nDet],*z0NIEL[nSp][nDet];
 TH1D *z0R5[nSp][nDet], *z0R5E[nSp][nDet],*z0R5NIEL[nSp][nDet];
+TH1D *z0R7[nSp][nDet], *z0R7E[nSp][nDet],*z0R7NIEL[nSp][nDet];
 TH1D *z0HE[nSp][nDet], *z0HEE[nSp][nDet],*z0HENIEL[nSp][nDet];
 
 TH2D *xy[nSp][nDet], *xyE[nSp][nDet],*xyNIEL[nSp][nDet];
@@ -36,8 +37,8 @@ TH2D *z0x0[nSp][nDet],*z0x0E[nSp][nDet],*z0x0NIEL[nSp][nDet];
 
 //for det28 only
 const int nSecDet = 21; // 7(ring, including pmts) x 3 (sectors)
-const int nErange = 4; //all, E<=0.1MeV; 0.1<E<=10MeV; 10MeV<E;
-const string eRgTit[nErange]={"all E","E<=0.1","0.1<E<=10","10<E"};
+const int nErange = 4; //all, E<=1MeV; 1<E<=10MeV; 10MeV<E;
+const string eRgTit[nErange]={"all E","E<=1","1<E<=10","10<E"};
 TH1D *mdHits[nSp][nErange]; //number of hits for each species; bins are different sectors and rings in det 28;
 TH1D *mdHitsE[nSp][nErange],*mdHitsNIEL[nSp][nErange];
 
@@ -153,7 +154,7 @@ long processOne(string fnm){
       z0NIEL[sp][dt]->Fill(vz0,rate*niel);
 
       double rr=hit->at(j).r;
-      if(hit->at(j).p>10 && rr>500 && rr<1500){
+      if(kinE>10 && rr>500 && rr<1500){
 	z0HE[sp][dt]->Fill(vz0,rate);
 	z0HEE[sp][dt]->Fill(vz0,rate*kinE);
 	z0HENIEL[sp][dt]->Fill(vz0,rate*niel);
@@ -173,7 +174,7 @@ long processOne(string fnm){
       xyE[sp][dt]->Fill(xx,yy,rate*kinE);
       xyNIEL[sp][dt]->Fill(xx,yy,rate*niel);
 
-      if(sp==0 && hit->at(j).p>1){
+      if(sp==0 && kinE>1){
 	energy[1][dt]->Fill(kinE,rate);
 	energyNIEL[1][dt]->Fill(kinE,rate*niel);
 	
@@ -228,6 +229,32 @@ long processOne(string fnm){
 	z0R5[sp][dt]->Fill(vz0,rate);
 	z0R5E[sp][dt]->Fill(vz0,rate*kinE);
 	z0R5NIEL[sp][dt]->Fill(vz0,rate*niel);
+
+	if(sp==0 && kinE>1){
+	  z0R5[1][dt]->Fill(vz0,rate);
+	  z0R5E[1][dt]->Fill(vz0,rate*kinE);
+	  z0R5NIEL[1][dt]->Fill(vz0,rate*niel);
+	  if(hit->at(j).trid==1 || hit->at(j).trid==2){
+	    z0R5[4][dt]->Fill(vz0,rate);
+	    z0R5E[4][dt]->Fill(vz0,rate*kinE);
+	    z0R5NIEL[4][dt]->Fill(vz0,rate*niel);
+	  }
+	}	
+      }else if(foundRing==6){
+	z0R7[sp][dt]->Fill(vz0,rate);
+	z0R7E[sp][dt]->Fill(vz0,rate*kinE);
+	z0R7NIEL[sp][dt]->Fill(vz0,rate*niel);
+
+	if(sp==0 && kinE>1){
+	  z0R7[1][dt]->Fill(vz0,rate);
+	  z0R7E[1][dt]->Fill(vz0,rate*kinE);
+	  z0R7NIEL[1][dt]->Fill(vz0,rate*niel);
+	  if(hit->at(j).trid==1 || hit->at(j).trid==2){
+	    z0R7[4][dt]->Fill(vz0,rate);
+	    z0R7E[4][dt]->Fill(vz0,rate*kinE);
+	    z0R7NIEL[4][dt]->Fill(vz0,rate*niel);
+	  }
+	}	
       }
       
       mdHits[sp][0]->SetBinContent(foundRing*3+sector+1,
@@ -237,7 +264,7 @@ long processOne(string fnm){
       mdHitsNIEL[sp][0]->SetBinContent(foundRing*3+sector+1,
 				       rate*niel + mdHitsNIEL[sp][0]->GetBinContent(foundRing*3+sector+1));
 
-      if(kinE<=0.1){
+      if(kinE<=1){
 	mdHits[sp][1]->SetBinContent(foundRing*3+sector+1,
 				     rate + mdHits[sp][1]->GetBinContent(foundRing*3+sector+1));
 	mdHitsE[sp][1]->SetBinContent(foundRing*3+sector+1,
@@ -260,7 +287,7 @@ long processOne(string fnm){
 					 rate*niel + mdHitsNIEL[sp][3]->GetBinContent(foundRing*3+sector+1));
       }
 
-      if(sp==0 && hit->at(j).p>1){//species should be all 1
+      if(sp==0 && kinE>1){//species should be all 1
 	mdHits[1][0]->SetBinContent(foundRing*3+sector+1,
 				     rate + mdHits[sp][0]->GetBinContent(foundRing*3+sector+1));
 	mdHitsE[1][0]->SetBinContent(foundRing*3+sector+1,
@@ -268,7 +295,7 @@ long processOne(string fnm){
 	mdHitsNIEL[1][0]->SetBinContent(foundRing*3+sector+1,
 					 rate*niel + mdHitsNIEL[sp][0]->GetBinContent(foundRing*3+sector+1));
 
-	if(kinE<=0.1){
+	if(kinE<=1){
 	  mdHits[1][1]->SetBinContent(foundRing*3+sector+1,
 				      rate + mdHits[1][1]->GetBinContent(foundRing*3+sector+1));
 	  mdHitsE[1][1]->SetBinContent(foundRing*3+sector+1,
@@ -299,7 +326,7 @@ long processOne(string fnm){
 	  mdHitsNIEL[4][0]->SetBinContent(foundRing*3+sector+1,
 					  rate*niel + mdHitsNIEL[4][0]->GetBinContent(foundRing*3+sector+1));
 
-	  if(kinE<=0.1){
+	  if(kinE<=1){
 	    mdHits[4][1]->SetBinContent(foundRing*3+sector+1,
 					rate + mdHits[4][1]->GetBinContent(foundRing*3+sector+1));
 	    mdHitsE[4][1]->SetBinContent(foundRing*3+sector+1,
@@ -364,23 +391,33 @@ void initHisto(){
 			    2000,-6000,32000);
 
       z0R5[i][j]=new TH1D(Form("%s_z0R5_%s",detH[j].c_str(),spH[i].c_str()),
-			  Form("rate weighted %s;z0[mm]",spTit[i].c_str()),
+			  Form("R5 rate weighted %s;z0[mm]",spTit[i].c_str()),
 			  2000,-6000,32000);
       z0R5E[i][j]=new TH1D(Form("%s_z0R5E_%s",detH[j].c_str(),spH[i].c_str()),
-			   Form("rate*E weighted %s;z0[mm]",spTit[i].c_str()),
+			   Form("R5 rate*E weighted %s;z0[mm]",spTit[i].c_str()),
 			   2000,-6000,32000);
       z0R5NIEL[i][j]=new TH1D(Form("%s_z0R5NIEL_%s",detH[j].c_str(),spH[i].c_str()),
-			      Form("rate*NEIL weighted %s;z0[mm]",spTit[i].c_str()),
+			      Form("R5 rate*NEIL weighted %s;z0[mm]",spTit[i].c_str()),
+			      2000,-6000,32000);
+
+      z0R7[i][j]=new TH1D(Form("%s_z0R7_%s",detH[j].c_str(),spH[i].c_str()),
+			  Form("R7 rate weighted %s;z0[mm]",spTit[i].c_str()),
+			  2000,-6000,32000);
+      z0R7E[i][j]=new TH1D(Form("%s_z0R7E_%s",detH[j].c_str(),spH[i].c_str()),
+			   Form("R7 rate*E weighted %s;z0[mm]",spTit[i].c_str()),
+			   2000,-6000,32000);
+      z0R7NIEL[i][j]=new TH1D(Form("%s_z0R7NIEL_%s",detH[j].c_str(),spH[i].c_str()),
+			      Form("R7 rate*NEIL weighted %s;z0[mm]",spTit[i].c_str()),
 			      2000,-6000,32000);
 
       z0HE[i][j]=new TH1D(Form("%s_z0HE_%s",detH[j].c_str(),spH[i].c_str()),
-			  Form("rate weighted %s 500<R<1500;z0[mm]",spTit[i].c_str()),
+			  Form("E>10MeV rate weighted %s 500<R<1500;z0[mm]",spTit[i].c_str()),
 			  2000,-6000,32000);
       z0HEE[i][j]=new TH1D(Form("%s_z0HEE_%s",detH[j].c_str(),spH[i].c_str()),
-			   Form("rate*E weighted %s 500<R<1500;z0[mm]",spTit[i].c_str()),
+			   Form("E>10MeV rate*E weighted %s 500<R<1500;z0[mm]",spTit[i].c_str()),
 			   2000,-6000,32000);
       z0HENIEL[i][j]=new TH1D(Form("%s_z0HENIEL_%s",detH[j].c_str(),spH[i].c_str()),
-			      Form("rate*NEIL weighted %s 500<R<1500;z0[mm]",spTit[i].c_str()),
+			      Form("E>10MeV rate*NEIL weighted %s 500<R<1500;z0[mm]",spTit[i].c_str()),
 			      2000,-6000,32000);
 
       xy[i][j]=new TH2D(Form("%s_xy_%s",detH[j].c_str(),spH[i].c_str()),
@@ -475,6 +512,13 @@ void writeOutput(){
       z0R5E[i][j]->Write();
       z0R5NIEL[i][j]->Scale(scaleFactor);
       z0R5NIEL[i][j]->Write();
+
+      z0R7[i][j]->Scale(scaleFactor);
+      z0R7[i][j]->Write();
+      z0R7E[i][j]->Scale(scaleFactor);
+      z0R7E[i][j]->Write();
+      z0R7NIEL[i][j]->Scale(scaleFactor);
+      z0R7NIEL[i][j]->Write();
 
       z0HE[i][j]->Scale(scaleFactor);
       z0HE[i][j]->Write();
