@@ -362,7 +362,7 @@ long processOne(string fnm){
 
 
 void initHisto(){
-  string foutNm = Form("%s_radAnaV1.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_radAnaV2.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
