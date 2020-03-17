@@ -121,14 +121,17 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,rate*niel};
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
-
-      fillHisto_det28(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
+      int det = hit->at(j).det;
+      if(det==28)
+	fillHisto_det28(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 
       if((sp==0 || sp==5) && kinE>1){
-	fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
+	if(det==28)
+	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
-	  fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
+	  if(det==28)
+	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 	}
       }
       
@@ -137,13 +140,16 @@ long processOne(string fnm){
       int foundRing = findDetector(sector, phi, hit->at(j).r,1);
       if(foundRing==-1) continue;
 
-      fillHisto_det28(sp,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+      if(det==28)
+	fillHisto_det28(sp,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
 
       if((sp==0 || sp==5) && kinE>1){
-	fillHisto_det28(1,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	if(det==28)
+	  fillHisto_det28(1,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
-	  fillHisto_det28(4,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	  if(det==28)
+	    fillHisto_det28(4,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
 	}
       }
 
