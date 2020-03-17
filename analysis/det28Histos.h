@@ -111,7 +111,7 @@ void fillHisto_det28(int sp, int ring,double rdDmg[3],
 		     double kinE, int sector){
   
   double vr0=sqrt(vx0*vx0+vy0*vy0);
-  for(int kk=0;kk<nDmg;kk){
+  for(int kk=0;kk<nDmg;kk++){
     d28_z0[sp][ring][kk]->Fill(vz0,rdDmg[kk]);
     if(kinE>10)
       d28_z0HE[sp][ring][kk]->Fill(vz0,rdDmg[kk]);
@@ -138,7 +138,7 @@ void fillHisto_det28(int sp, int ring,double rdDmg[3],
       d28_mdHits[sp][0][kk]->SetBinContent(foundRing*3+sector+1,
 					    rdDmg[kk] + d28_mdHits[sp][0][kk]->GetBinContent(foundRing*3+sector+1));
 
-      for(int ll = nErange - 1;ll>=1;ll--)
+      for(int ll = 1; ll<nErange ; ll++)
 	if(kinE<eRanges[ll] && kinE>=eRanges[ll-1])
 	  d28_mdHits[sp][ll][kk]->SetBinContent(foundRing*3+sector+1,
 						rdDmg[kk] + d28_mdHits[sp][ll][kk]->GetBinContent(foundRing*3+sector+1));
