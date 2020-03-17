@@ -95,6 +95,11 @@ void initHisto_det28(TFile *fout){
 				   Form("%s R%d for %s;z0[mm];r0[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
 				   2000,-6000,32000,
 				   200,0,3000);
+
+	d28_z0x0[i][j][k]=new TH2D(Form("d28_z0x0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
+				   Form("%s R%d for %s;z0[mm];x0[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
+				   2000,-6000,32000,
+				   200,-3000,3000);
       }
     }
   }
@@ -179,6 +184,9 @@ void writeOutput_det28(TFile *fout, double scaleFactor){
       
 	d28_z0r0[i][j][k]->Scale(scaleFactor);
 	d28_z0r0[i][j][k]->Write();
+
+	d28_z0x0[i][j][k]->Scale(scaleFactor);
+	d28_z0x0[i][j][k]->Write();
       }
     }
  
