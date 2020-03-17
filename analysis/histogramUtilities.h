@@ -1,3 +1,6 @@
+#ifndef __HISTOUTIL_H
+#define __HISTOUTIL_H
+
 #include "TAxis.h"
 #include "TH1.h"
 
@@ -17,3 +20,5 @@ void niceLogXBins(TH1*h)
   axis->Set(bins, new_bins);
   delete[] new_bins;
 }
+
+#endif //__HISTOUTIL_H

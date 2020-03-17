@@ -1,12 +1,13 @@
-const int nRings = 7;
-const int nSec = 3;
-std::vector<std::vector<double>> rMin, rMax;
+#ifndef __MAINEDETUTIL_H
+#define __MAINEDETUTIL_H
 
+#include "anaConst.h"
+
+std::vector<std::vector<double>> rMin, rMax;
 void initRadialConfiguration(int k);
 
 int findDetector(int &sector, double phi, double r, int rConfig){
   initRadialConfiguration(rConfig);
-  const double pi = acos(-1);
   const double secPhi = fmod(phi, 2*pi/7);
   
   //0,1,2 == closed, transition, open
@@ -23,6 +24,7 @@ int findDetector(int &sector, double phi, double r, int rConfig){
 
   // this will jsut pick up the first hit and ignore the rest
 
+  const int nRings = 7;
   for(int i=0;i<nRings;i++)
     if(r >= rMin[i][sector] && r <= rMax[i][sector])
       return i;
@@ -74,3 +76,4 @@ void initRadialConfiguration(int k=0){
     };
   }
 }
+#endif // __MAINDETUTIL_H
