@@ -129,7 +129,7 @@ long processOne(string fnm){
 	if(det==28)
 	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 
-	if(hit->at(j).trid==1 || hit->at(j).trid==2){
+	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
 	  if(det==28)
 	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 	}
