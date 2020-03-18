@@ -32,7 +32,7 @@
     <zplane rmin="0" rmax="713" z="25000.0"/>
     <zplane rmin="0" rmax="713" z="25003.0"/>
     <zplane rmin="0" rmax="713" z="25003.0"/>
-    <zplane rmin="0" rmax="713" z="26517.6"/>
+    <zplane rmin="0" rmax="713" z="26500"/>
   </polycone>
 
   <polycone name="solid_DSbeampipe_aluminum"
@@ -59,7 +59,7 @@
     <zplane rmin="660" rmax="713" z="25000.0"/>
     <zplane rmin="660" rmax="713" z="25003.0"/>
     <zplane rmin="710" rmax="713" z="25003.0"/>
-    <zplane rmin="710" rmax="713" z="26517.6"/>
+    <zplane rmin="710" rmax="713" z="26500"/>
   </polycone>
   
 </solids>

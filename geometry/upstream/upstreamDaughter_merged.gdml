@@ -61,7 +61,8 @@
 
     <!--Remove/leave space from outer radius of merged col-1 for water cooling  -->
     <constant name="COLL1_remove_Ring1_DeltaR" value ="3.0"/>
-    <constant name="COLL1_remove_Ring1_Length" value ="100.0"/>
+	    <!--<constant name="COLL1_remove_Ring1_Length" value ="100.0"/>-->
+    <constant name="COLL1_remove_Ring1_Length" value ="200.0"/>
     <constant name="COLL1_remove_Ring2_DeltaR" value ="5.0"/>
     <constant name="COLL1_remove_Ring2_Length" value ="300.0"/>
 
@@ -72,7 +73,8 @@
     <constant name="col1fin_Length" value ="COLL1_Ring1_Length"/>
     <constant name="col1fin_RMax" value ="COLL1_R4_U+col1fin_DeltaR"/>
     <constant name="sub_col1fin_RMax" value ="3.2"/>
-    <constant name="col1fin_RMin" value ="COLL1_R4_U+0.0001"/>
+	    <!--<constant name="col1fin_RMin" value ="COLL1_R4_U+0.0001"/>-->
+    <constant name="col1fin_RMin" value ="COLL1_R4_U-3.0+0.001"/>
 <!--    <constant name="col1fin_Delta_SEPTANT" value ="30.0"/> --> <!--for theta_fin = 21.4 -->
     <constant name="col1fin_Delta_SEPTANT" value ="17.4"/> <!--for theta_fin = 17 -->
     <!--col1fin_SEPTANT is the angular area to be removed -->
@@ -89,7 +91,8 @@
     <position name="trans_COL1_5" unit="mm" x="0" y="0" z="COLL1_Ring1_Length + COLL1_Ring2_Length/2 - COLL1_THICK/2"/>
     <position name="trans_COL1_6" unit="mm" x="0" y="0" z="COLL1_Ring1_Length + COLL1_Ring2_Length + COLL1_Ring3_Length/2 - COLL1_THICK/2"/>
     <!--Remove/leave space from outer radius of merged col-1 for water cooling -->
-    <position name="trans_COL1_7" unit="mm" x="0" y="0" z="COLL1_remove_Ring1_Length/2 - COLL1_THICK/2 + 100"/>
+	    <!--<position name="trans_COL1_7" unit="mm" x="0" y="0" z="COLL1_remove_Ring1_Length/2 - COLL1_THICK/2 + 100"/>-->
+    <position name="trans_COL1_7" unit="mm" x="0" y="0" z="COLL1_remove_Ring1_Length/2 - COLL1_THICK/2"/>
     <position name="trans_COL1_8" unit="mm" x="0" y="0" z="COLL1_remove_Ring2_Length/2 - COLL1_THICK/2 + 200"/>
     
 
@@ -428,7 +431,7 @@
     </subtraction>
 
      <!--Remove/leave space from outer radius of merged col-1 for water cooling  -->
-     <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_remove_Ring1_sub" rmax="COLL1_R4_U + 0.1" rmin="COLL1_R4_U - COLL1_remove_Ring1_DeltaR" startphi="0" z="COLL1_remove_Ring1_Length"/>
+     <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_remove_Ring1_sub" rmax="COLL1_R4_U + 0.1" rmin="COLL1_R4_U - COLL1_remove_Ring1_DeltaR" startphi="0" z="COLL1_remove_Ring1_Length+5"/>
      <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_remove_Ring2_sub" rmax="COLL1_R4_U + 0.1" rmin="COLL1_R4_U - COLL1_remove_Ring2_DeltaR" startphi="0" z="COLL1_remove_Ring2_Length + 0.1"/>
 
      <subtraction name ="col1_6">
@@ -1063,6 +1066,7 @@
         <position name="wash_phys_2_pos" unit="mm" x="0" y="0" z="1015"/>
       </physvol>
   -->
+<!--
       <physvol name="UScoil_0">
         <volumeref ref="logicUScoilunion_0"/>
         <positionref ref="CENTER"/>
@@ -1104,6 +1108,13 @@
         <volumeref ref="logicUScoilunion_6"/>
         <positionref ref="CENTER"/>
         <rotationref ref="RotateZ_6"/>
+      </physvol>
+-->
+
+
+
+      <physvol name="UScoil">
+        <file name= "upstream/upstreamToroid.gdml"/>
       </physvol>
 
       <physvol>
