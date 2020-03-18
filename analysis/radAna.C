@@ -109,7 +109,7 @@ long processOne(string fnm){
       int sp = spM[int(hit->at(j).pid)]-1;
       if(sp==-1) continue;
 
-      double kinE = hit->at(j).p;
+      double kinE = hit->at(j).k;
       double niel = radDmg.GetNIEL(hit->at(j).pid,kinE,0);
       if(niel<0) niel=0;
       double vz0 = hit->at(j).vz;
