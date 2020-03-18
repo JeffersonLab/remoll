@@ -5,7 +5,7 @@
 //
 // //Load in the script, and run it
 // >.L analysis/shieldingAna.C
-// > shieldingAna(<remoll output file>)
+// > shieldingAna(<remoll output file>,<0 fot std analysis, 1 for 3 separate W2 regions>)
 
 
 TFile *fout;
@@ -29,6 +29,7 @@ TH1D *hQ2[nSp][nSecDet],*hW2[nSp][nSecDet];
 TH2D *hQ2W2[nSp][nSecDet];
 
 TH1D *eRate[nSp][nDet];
+TH1D *eRtPMT[nSp];
 TH1D *drate[nSp][nDet], *drRate[nSp][nDet], *drRateAsym[nSp][nDet], *dZ0[nSp][nDet];
 TH1D *drRatePZL0[nSp][nDet],*drRatePZG0[nSp][nDet];
 TH2D *dXY[nSp][nDet], *dXYrate[nSp][nDet], *dXYrateE[nSp][nDet];
@@ -152,6 +153,11 @@ void initHisto(){
     for(int i=0;i<nSp;i++){
 
       if(j==2){
+	eRtPMT[i]=new TH1D(Form("eRtPMT_%s",spH[i].c_str()),
+			   Form("rate weighted for %s;E [MeV]",spTit[i].c_str()),
+			   121,-8,4.1);
+	niceLogBins(eRtPMT[i]);
+
 	hRate[i] = new TH1D(Form("hRate_%s",spH[i].c_str()),Form("Sums for all rings and sectors %s",spTit[i].c_str()),nSecDet,0,nSecDet);
 	hRateAsym[i] = new TH1D(Form("hRateAsym_%s",spH[i].c_str()),
 				Form("sum(rate*Asym) for all rings and sectors %s",spTit[i].c_str()),nSecDet,0,nSecDet);
@@ -322,6 +328,10 @@ long processOne(string fnm){
 	  wRegion = 2;
       }
 
+      if(foundRing==6){
+	eRtPMT[sp]->Fill(hit->at(j).p,rate);
+      }
+
       if(hit->at(j).e>1 && (abs(hit->at(j).pid)==11 || abs(hit->at(j).pid)==211)){
 	eRate[1][dt]->Fill(hit->at(j).p,rate);
 	drate[1][dt]->Fill(lgRate);
@@ -346,7 +356,10 @@ long processOne(string fnm){
 	    if(wRegion!=-1){
 	      hAsymW_e1[wRegion][foundRing][sector]->Fill(asym,rate);//for primary+secondaries
 	    }
+	  }else if(foundRing==6){
+	    eRtPMT[1]->Fill(hit->at(j).p,rate);
 	  }
+
 	  if(wRegion!=-1){
 	    hRateW[wRegion][1]->SetBinContent(foundRing*3+sector+1,
 					      rate + hRateW[wRegion][1]->GetBinContent(foundRing*3+sector+1));
@@ -383,6 +396,8 @@ long processOne(string fnm){
 	      if(wRegion!=-1){
 		hAsymW_eP1[wRegion][foundRing][sector]->Fill(asym,rate);//for primary+secondaries
 	      }
+	    }else if(foundRing==6){
+	      eRtPMT[4]->Fill(hit->at(j).p,rate);
 	    }
 	    if(wRegion!=-1){
 	      hRateW[wRegion][4]->SetBinContent(foundRing*3+sector+1,
@@ -456,6 +471,8 @@ void writeOutput(){
 
     for(int i=0;i<nSp;i++){
       if(j==2){
+	eRtPMT[i]->Scale(1./nFiles);
+	eRtPMT[i]->Write();
 	hRate[i]->Scale(1./nFiles);
 	hRate[i]->Write();
 	hRateAsym[i]->Scale(1./nFiles);
