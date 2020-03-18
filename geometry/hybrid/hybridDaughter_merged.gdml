@@ -1362,71 +1362,71 @@
     <cone name="solidCollar3" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="928" rmax1="980" rmin2="928" rmax2="980" z="100"/>
 
 <xtru name="solidLintel1" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel2" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel3" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel4" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel5" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel6" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
 <xtru name="solidLintel7" lunit="mm">
- <twoDimVertex x="13" y="206.878948389" />
- <twoDimVertex x="13" y="-206.878948389" />
- <twoDimVertex x="-13" y="-194.369988719" />
- <twoDimVertex x="-13" y="194.369988719" />
+ <twoDimVertex x="107" y="160" />
+ <twoDimVertex x="107" y="-160" />
+ <twoDimVertex x="-107" y="-130" />
+ <twoDimVertex x="-107" y="130" />
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSwindow">
-      <zplane rmin="509" rmax="925" z="24000-1.5-DOFFSET"/>
-      <zplane rmin="509" rmax="925" z="24000-DOFFSET"/>
+      <zplane rmin="509" rmax="952" z="24000-2.286-DOFFSET"/>
+      <zplane rmin="509" rmax="952" z="24000-DOFFSET"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSbeampipe_col4">
@@ -1477,12 +1477,12 @@
 
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Vacbeampipe">
-      <zplane rmin="600" rmax="1320" z="17405-DOFFSET"/>
-      <zplane rmin="600" rmax="1320" z="17475-DOFFSET"/>
-      <zplane rmin="1250" rmax="1320" z="17475-DOFFSET"/>
-      <zplane rmin="1250" rmax="1320" z="23825-DOFFSET"/>
-      <zplane rmin="952" rmax="1320" z="23825-DOFFSET"/>
-      <zplane rmin="952" rmax="1320" z="23895-DOFFSET"/>
+      <zplane rmin="600" rmax="1262.7" z="17405-DOFFSET"/>
+      <zplane rmin="600" rmax="1262.7" z="17443.1-DOFFSET"/>
+      <zplane rmin="1250" rmax="1262.7" z="17443.1-DOFFSET"/>
+      <zplane rmin="1250" rmax="1262.7" z="23856.9-DOFFSET"/>
+      <zplane rmin="952" rmax="1262.7" z="23856.9-DOFFSET"/>
+      <zplane rmin="952" rmax="1262.7" z="23895-DOFFSET"/>
     </polycone>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher12" rmax1="2050" rmax2="2050" rmin1="925" rmin2="925" startphi="0" z="10"/>
@@ -1909,12 +1909,12 @@
         <volumeref ref="logicDSwindow"/>
         <positionref ref="CENTER"/>
       </physvol>
-<!--
+      <!--
       <physvol name="planeDet_12">
         <volumeref ref="logicWasher_12"/>
         <position name="wash_phys_12_pos" unit="mm" x="0" y="0" z="23995-DOFFSET"/>
       </physvol>
-
+      -->
       <!--
       <physvol name="DStracker">
         <volumeref ref="logicDSTracker"/>
@@ -1933,55 +1933,48 @@
         <position lunit="mm" name="collar2pos" x="0" y="0" z="23950-DOFFSET"/>
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
-      <!-- Dec 22 2019
+      <!-- Dec 22 2019 
       <physvol name="collar3">
         <volumeref ref="logicCollar3"/>
         <position lunit="mm" name="collar3pos" x="0" y="0" z="23550-DOFFSET"/>
         <rotation aunit="rad" name="collar3rot" x="0" y="0" z="0"/>
       </physvol>
-
-      <physvol name="lintel1">
-        <volumeref ref="logicLintel1"/>
- 	<position name="lintel1pos" x="-417.0" y="5.10677715244e-14" z="12850-DOFFSET"/>
- 	<rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
-      </physvol>
-
-      <physvol name="lintel2">
- 	<volumeref ref="logicLintel2"/>
- 	<position name="lintel2pos" x="-259.995247375" y="-326.023728189" z="12850-DOFFSET"/>
- 	<rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
-      </physvol>
-
-      <physvol name="lintel3">
- 	<volumeref ref="logicLintel3"/>
- 	<position name="lintel3pos" x="92.7912294598" y="-406.54493938" z="12850-DOFFSET"/>
- 	<rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
-      </physvol>
-
-      <physvol name="lintel4">
- 	<volumeref ref="logicLintel4"/>
-	<position name="lintel4pos" x="375.704017915" y="-180.929519212" z="12850-DOFFSET"/>
- 	<rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
-      </physvol>
-
-      <physvol name="lintel5">
- 	<volumeref ref="logicLintel5"/>
- 	<position name="lintel5pos" x="375.704017915" y="180.929519212" z="12850-DOFFSET"/>
- 	<rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
-      </physvol>
-
-      <physvol name="lintel6">
-	<volumeref ref="logicLintel6"/>
-	<position name="lintel6pos" x="92.7912294598" y="406.54493938" z="12850-DOFFSET"/>
-	<rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
-      </physvol>
-
-      <physvol name="lintel7">
- 	<volumeref ref="logicLintel7"/>
- 	<position name="lintel7pos" x="-259.995247375" y="326.023728189" z="12850-DOFFSET"/>
- 	<rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
+      --> 
+<physvol name="lintel1">
+ <volumeref ref="logicLintel1"/>
+ <position name="lintel1pos" x="-542.0" y="6.63758565138e-14" z="12835-DOFFSET"/>
+ <rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
 </physvol>
-
+<physvol name="lintel2">
+ <volumeref ref="logicLintel2"/>
+ <position name="lintel2pos" x="-337.931472607" y="-423.752663498" z="12835-DOFFSET"/>
+ <rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
+</physvol>
+<physvol name="lintel3">
+ <volumeref ref="logicLintel3"/>
+ <position name="lintel3pos" x="120.606346204" y="-528.410928403" z="12835-DOFFSET"/>
+ <rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
+</physvol>
+<physvol name="lintel4">
+ <volumeref ref="logicLintel4"/>
+ <position name="lintel4pos" x="488.325126403" y="-235.164986602" z="12835-DOFFSET"/>
+ <rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
+</physvol>
+<physvol name="lintel5">
+ <volumeref ref="logicLintel5"/>
+ <position name="lintel5pos" x="488.325126403" y="235.164986602" z="12835-DOFFSET"/>
+ <rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
+</physvol>
+<physvol name="lintel6">
+ <volumeref ref="logicLintel6"/>
+ <position name="lintel6pos" x="120.606346204" y="528.410928403" z="12835-DOFFSET"/>
+ <rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
+</physvol>
+<physvol name="lintel7">
+ <volumeref ref="logicLintel7"/>
+ <position name="lintel7pos" x="-337.931472607" y="423.752663498" z="12835-DOFFSET"/>
+ <rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
+</physvol>
 
 <!-- Downstream of coll4 central collimating beampipe -->
       <physvol>
@@ -1989,6 +1982,7 @@
         <positionref ref="shield_DS_beampipe_center"/>
       </physvol>
 
+<!--
       <physvol name="DScoil_0">
         <volumeref ref="logicDScoil_0"/>
         <positionref ref="CENTER"/>
@@ -2061,7 +2055,7 @@
         <positionref ref="CENTER"/>
         <rotationref ref="RotateZ_6"/>
       </physvol>
-
+-->
       <!--Removing col-3 -->
       <!--
       <physvol name="DScoll_1">
@@ -2069,12 +2063,19 @@
         <positionref ref="posCOLL1"/>
       </physvol>
       -->
-
+<!--
       <physvol name="DScoll_5">
         <volumeref ref="logicDScoll_5"/>
         <positionref ref="posCOLL5"/>
 	    <rotationref ref="ARotateZ_0"/> 
       </physvol>
+-->
+
+      <physvol name="DScoil">
+        <file name="hybrid/hybridToroid.gdml"/>
+        <position name="pos_hybridToroid" x="0" y="0" z="13370.3653846-DOFFSET"/>
+      </physvol>
+
 
 <!-- Collimator 4 -->
       <physvol name="DScoll_6">
