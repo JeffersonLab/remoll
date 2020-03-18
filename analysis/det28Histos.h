@@ -123,7 +123,7 @@ void fillHisto_det28(int sp, int ring,double rdDmg[3],
   }
 
   d28_energy[sp][ring]->Fill(kinE,rdDmg[0]);
-  d28_energyNIEL[sp][ring]->Fill(kineE,rdDmg[2]);
+  d28_energyNIEL[sp][ring]->Fill(kinE,rdDmg[2]);
 
   if(ring==0){
     for(int ii=0;ii<nZcut;ii++)
