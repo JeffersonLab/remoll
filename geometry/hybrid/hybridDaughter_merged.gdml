@@ -969,12 +969,28 @@
     <!--100 mm offset to prevent target mother volume overlapping with hall mother volume length is increased by 900 (modify this 900 = poly_extend) at the end to include poly shielding-->
     <!-- <box lunit="mm" name="boxDownstream" x="2*4500" y="6000 - 100" z="7865.68 + 2*950 + poly_extend"/> -->
     <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here - centered at union_2_center -->
+	   
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="HybridMotherSub"> 
+      <zplane rmin="0" rmax="1000" z="0"/> 
+      <zplane rmin="0" rmax="1000" z="330"/> 
+      <zplane rmin="0" rmax="950" z="330"/> 
+      <zplane rmin="0" rmax="950" z="500"/> 
+    </polycone>
+
+    <subtraction name="boxDownstream_2">
+      <first ref="boxDownstream_1"/>
+      <second ref="HybridMotherSub"/>
+      <position name="HybridMotherSub_pos" unit="mm" x="0" y="0" z="boxDSMother_length/2-490" />
+    </subtraction> 
+
+    <!-- This is not used; should be deleted --> 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeSubtracted" rmin="525" rmax="1250" startphi="0" z="1000"/>
     <subtraction name ="boxDownstream"> 
       <first ref="boxDownstream_1"/>
       <second ref="tubeSubtracted"/>
       <position name="tubeSubtracted_pos" unit="mm" x="0" y="0" z="boxDSMother_length/2-1000/2" />
     </subtraction> 
+
 <!--
     <box lunit="mm" name="boxDownstream_sub" x="boxDSMother_width" y="100+1" z="boxDSMother_length + 1"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="DSmothertubeBeampipe_sub" rmax="DSmothertubeBeampipeMother_sub_rmax" rmin="0" startphi="0" z="DSmothertubeBeampipeMother_sub_length"/>    
@@ -1359,7 +1375,6 @@
     <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="600" rmax1="750" rmin2="600" rmax2="750" z="100"/>
     <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="952" rmax1="1200" rmin2="952" rmax2="1200" z="100"/>
 
-    <cone name="solidCollar3" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="928" rmax1="980" rmin2="928" rmax2="980" z="100"/>
 
 <xtru name="solidLintel1" lunit="mm">
  <twoDimVertex x="107" y="160" />
@@ -1423,12 +1438,12 @@
  <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
  <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
 </xtru>
-
+<!--
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSwindow">
-      <zplane rmin="509" rmax="952" z="24000-2.286-DOFFSET"/>
-      <zplane rmin="509" rmax="952" z="24000-DOFFSET"/>
+      <zplane rmin="504.76" rmax="507.14125" z="boxDSMother_length/2-484.88"/>
+      <zplane rmin="988" rmax="990.38125" z="boxDSMother_length/2-484.88+280.4"/>
     </polycone>
-
+	    -->
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSbeampipe_col4">
       <zplane rmin="31" rmax="32" z="8025.0-DOFFSET"/>
       <zplane rmin="31" rmax="32" z="8225.0-DOFFSET"/>
@@ -1806,11 +1821,6 @@
       <solidref ref="solidCollar2"/>
     </volume>
 
-    <volume name="logicCollar3">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="solidCollar3"/>
-    </volume>
-
     <volume name="logicLintel1">
       <materialref ref="G4_Pb"/>
       <solidref ref="solidLintel1"/>
@@ -1878,16 +1888,10 @@
 	      <!--<auxiliary auxtype="DetNo" auxvalue="52"/>-->
     </volume>
 
-    <volume name="logicDSwindow">
-      <materialref ref="G4_Al"/>^M
-      <solidref ref="solid_DSwindow"/>
-      <auxiliary auxtype="Color" auxvalue="magenta"/>^M
-    </volume>
-
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
-      <solidref ref="boxDownstream_1"/>
+      <solidref ref="boxDownstream_2"/>
       <!-- 
         <physvol name="DSbeampipe_col4">
           <volumeref ref="logicDSbeampipe_col4"/>
@@ -1905,10 +1909,6 @@
           <positionref ref="CENTER"/>
         </physvol>
 
-      <physvol name="DSwindow">
-        <volumeref ref="logicDSwindow"/>
-        <positionref ref="CENTER"/>
-      </physvol>
       <!--
       <physvol name="planeDet_12">
         <volumeref ref="logicWasher_12"/>
@@ -1933,13 +1933,7 @@
         <position lunit="mm" name="collar2pos" x="0" y="0" z="23950-DOFFSET"/>
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
-      <!-- Dec 22 2019 
-      <physvol name="collar3">
-        <volumeref ref="logicCollar3"/>
-        <position lunit="mm" name="collar3pos" x="0" y="0" z="23550-DOFFSET"/>
-        <rotation aunit="rad" name="collar3rot" x="0" y="0" z="0"/>
-      </physvol>
-      --> 
+
 <physvol name="lintel1">
  <volumeref ref="logicLintel1"/>
  <position name="lintel1pos" x="-542.0" y="6.63758565138e-14" z="12835-DOFFSET"/>
@@ -2056,13 +2050,6 @@
         <rotationref ref="RotateZ_6"/>
       </physvol>
 -->
-      <!--Removing col-3 -->
-      <!--
-      <physvol name="DScoll_1">
-        <volumeref ref="logicDScoll_1"/>
-        <positionref ref="posCOLL1"/>
-      </physvol>
-      -->
 <!--
       <physvol name="DScoll_5">
         <volumeref ref="logicDScoll_5"/>
