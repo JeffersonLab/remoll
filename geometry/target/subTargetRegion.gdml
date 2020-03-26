@@ -183,7 +183,7 @@
 <structure>
 
   <volume name="h2Targ">
-    <materialref ref="LiquidHydrogen"/>
+    <materialref ref="G4_lH2"/>
     <solidref ref="target_solid"/>
     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     <auxiliary auxtype="Color" auxvalue="blue"/>

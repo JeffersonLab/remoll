@@ -371,7 +371,7 @@
  <structure>
 
    <volume name="h2Targ">
-     <materialref ref="LiquidHydrogen"/>
+     <materialref ref="G4_lH2"/>
      <solidref ref="tubeTarget"/>
      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
    </volume>
