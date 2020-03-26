@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
+  &matrices;
+
   <constant name="targetCenterZ" value="0"/>
   <constant name="tubeTarget_rmax" value="40"/>
   <constant name="tubeTarget_length" value="1250"/>
   <constant name="AlWindowTarget_length" value="0.127"/>
 </define>
 
-  <materials>
-    <material Z="1" name="VacuumTarg" state="gas">
-      <T unit="K" value="2.73"/>
-      <P unit="pascal" value="3e-18"/>
-      <D unit="g/cm3" value="1e-25"/>
-      <atom unit="g/mole" value="1.01"/>
-    </material>
-    <material Z="1" name="LiquidHydrogen" state="liquid">
-      <T unit="K" value="20.27"/>
-      <D unit="g/cm3" value="0.0708"/>
-      <atom unit="g/mole" value="1.00794"/>
-    </material>
-    <material Z="13" name="Aluminum" state="solid">
-      <T unit="K" value="20.27"/>
-      <D unit="g/cm3" value="2.7"/>
-      <atom unit="g/mole" value="26.98"/>
-    </material>
-  </materials>
+&materials;
 
 <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1000" rmin="0" startphi="0" z="2400"/>
@@ -36,7 +27,7 @@
 <structure>
 
     <volume name="h2Targ">
-      <materialref ref="LiquidHydrogen"/>
+      <materialref ref="G4_lH2"/>
       <solidref ref="tubeTarget"/>
       <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     </volume>
