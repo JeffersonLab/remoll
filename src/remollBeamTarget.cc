@@ -315,14 +315,10 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	    const G4double *fracvec = material->GetFractionVector();
 
 	    for( unsigned int i = 0; i < elvec->size(); i++ ){
-		// FIXME:  Not sure why AtomsVector would ever return null
-		// but it does - SPR 2/5/13.  Just going to assume unit
-		// weighting for now if that is the case
-		if( atomvec ){
-		    masssum += (*elvec)[i]->GetA()*atomvec[i];
-		} else {
-		    masssum += (*elvec)[i]->GetA();
-		}
+		// Not sure why AtomsVector would ever return null
+		// but it does - SPR 2/5/13.
+		assert( atomvec );
+		masssum += (*elvec)[i]->GetA()*atomvec[i];
 		msthick[nmsmat] = material->GetDensity()*actual_position_in_volume*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
