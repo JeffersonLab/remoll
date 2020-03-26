@@ -33,13 +33,13 @@
     </volume>
  
     <volume name="USAlTarg">
-      <materialref ref="Aluminum"/>
+      <materialref ref="G4_Al"/>
       <solidref ref="AlWindow"/>
       <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     </volume>
 
     <volume name="DSAlTarg">
-      <materialref ref="Aluminum"/>
+      <materialref ref="G4_Al"/>
       <solidref ref="AlWindow"/>
       <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     </volume>
