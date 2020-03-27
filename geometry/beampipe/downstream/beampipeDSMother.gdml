@@ -10,102 +10,14 @@
   <polycone name="solid_DSbeampipe_vacuum"
             aunit="deg" startphi="0" deltaphi="360"
             lunit="mm">
-    <zplane rmin="0" rmax="1000" z="18510"/>
-    <zplane rmin="0" rmax="1000" z="18510+330"/>
-    <zplane rmin="0" rmax="950" z="18510+330"/>
     <zplane rmin="0" rmax="950" z="19000.0"/>
     <zplane rmin="0" rmax="600" z="19000.0"/>
     <zplane rmin="0" rmax="770" z="26500"/>
-    <!--<zplane rmin="0" rmax="600" z="21500.0"/>
-    <zplane rmin="0" rmax="618" z="21500.0"/>
-    <zplane rmin="0" rmax="618" z="21503.0"/>
-    <zplane rmin="0" rmax="618" z="21503.0"/>
-    <zplane rmin="0" rmax="618" z="23000.0"/>
-    <zplane rmin="0" rmax="663" z="23000.0"/>
-    <zplane rmin="0" rmax="663" z="23003.0"/>
-    <zplane rmin="0" rmax="663" z="23003.0"/>
-    <zplane rmin="0" rmax="663" z="25000.0"/>
-    <zplane rmin="0" rmax="713" z="25000.0"/>
-    <zplane rmin="0" rmax="713" z="25003.0"/>
-    <zplane rmin="0" rmax="713" z="25003.0"/>
-    <zplane rmin="0" rmax="713" z="26500"/>-->
   </polycone>
 
-  <polycone name="solid_DSbeampipe_aluminum"
-            aunit="deg" startphi="0" deltaphi="360"
-            lunit="mm">
-    <zplane rmin="522" rmax="525" z="19000.0"/>
-    <zplane rmin="522" rmax="525" z="19500.0"/>
-    <zplane rmin="522" rmax="553" z="19500.0"/>
-    <zplane rmin="522" rmax="553" z="19503.0"/>
-    <zplane rmin="550" rmax="553" z="19503.0"/>
-    <zplane rmin="550" rmax="553" z="20500.0"/>
-    <zplane rmin="550" rmax="587" z="20500.0"/>
-    <zplane rmin="550" rmax="587" z="20503.0"/>
-    <zplane rmin="584" rmax="587" z="20503.0"/>
-    <zplane rmin="584" rmax="587" z="21500.0"/>
-    <zplane rmin="584" rmax="618" z="21500.0"/>
-    <zplane rmin="584" rmax="618" z="21503.0"/>
-    <zplane rmin="615" rmax="618" z="21503.0"/>
-    <zplane rmin="615" rmax="618" z="23000.0"/>
-    <zplane rmin="615" rmax="663" z="23000.0"/>
-    <zplane rmin="615" rmax="663" z="23003.0"/>
-    <zplane rmin="660" rmax="663" z="23003.0"/>
-    <zplane rmin="660" rmax="663" z="25000.0"/>
-    <zplane rmin="660" rmax="713" z="25000.0"/>
-    <zplane rmin="660" rmax="713" z="25003.0"/>
-    <zplane rmin="710" rmax="713" z="25003.0"/>
-    <zplane rmin="710" rmax="713" z="26500"/>
-  </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSwindow">
-      <zplane rmin="504.76" rmax="507.14125" z="18515.12"/>
-      <zplane rmin="988" rmax="990.38125" z="18515.12+280.4"/><!-- These numbers are from DK's design -->
-    </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe1">
-      <zplane rmin="500" rmax="504.7625" z="18510.0"/>
-      <zplane rmin="500" rmax="504.7625" z="18744.0"/><!-- These numbers are from DK's design -->
-    </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe1_flange">
-      <zplane rmin="497.0" rmax="499.5" z="18739.0"/>
-      <zplane rmin="497.0" rmax="499.5" z="18739.0+5"/>
-      <zplane rmin="497.0" rmax="505.0" z="18739.0+5"/>
-      <zplane rmin="497.0" rmax="505.0" z="18739.0+5+8"/>
-      <zplane rmin="497.0" rmax="529.0" z="18739.0+5+8"/>
-      <zplane rmin="497.0" rmax="529.0" z="18739.0+5+8+12"/>
-    </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe1_bellow">
-      <zplane rmin="500.0" rmax="529.0" z="18764.0"/>
-      <zplane rmin="500.0" rmax="529.0" z="18764.0+6.35"/>
-      <zplane rmin="500.0" rmax="506.35" z="18764.0+6.35"/>
-      <zplane rmin="500.0" rmax="506.35" z="18764.0+6.35+27.3"/>
-      <zplane rmin="500.0" rmax="529.0" z="18764.0+6.35+27.3"/>
-      <zplane rmin="500.0" rmax="529.0" z="18764.0+6.35+27.3+6.35"/>
-      <zplane rmin="500.0" rmax="528.6" z="18764.0+6.35+27.3+6.35"/>
-      <zplane rmin="500.0" rmax="528.6" z="18764.0+6.35+27.3+6.35+100"/>
-      <zplane rmin="500.0" rmax="529.76" z="18764.0+6.35+27.3+6.35+100"/>
-      <zplane rmin="500.0" rmax="529.76" z="18764.0+6.35+27.3+6.35+100+6.35"/>
-      <zplane rmin="500.0" rmax="506.5" z="18764.0+6.35+27.3+6.35+100+6.35"/>
-      <zplane rmin="500.0" rmax="506.5" z="18764.0+6.35+27.3+6.35+100+6.35+27.3"/>
-      <zplane rmin="500.0" rmax="529.76" z="18764.0+6.35+27.3+6.35+100+6.35+27.3"/>
-      <zplane rmin="500.76" rmax="529.76" z="18764.0+6.35+27.3+6.35+100+6.35+27.3+6.35"/>
-    </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_USplate">
-      <zplane rmin="500.76" rmax="529.75" z="18944.0"/>
-      <zplane rmin="501.1608" rmax="529.75" z="18944.0+12"/>
-      <zplane rmin="501.1608" rmax="505.565" z="18944.0+12"/>
-      <zplane rmin="501.428" rmax="505.565" z="18944.0+12+8"/>
-      <zplane rmin="501.428" rmax="504.925" z="18944.0+12+8"/>
-      <zplane rmin="501.595" rmax="504.925" z="18944.0+12+8+5"/>
-    </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2">
-      <zplane rmin="504.775" rmax="509.5375" z="18964.0"/>
-      <zplane rmin="528.33" rmax="533.0925" z="18964.0+630.4"/>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_2">
+      <zplane rmin="504.775" rmax="509.5375" z="19000.0"/>
+      <zplane rmin="528.33" rmax="533.0925" z="19000.0+630.4-36"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_DSplate">
@@ -147,49 +59,9 @@
 </solids>
 
 <structure>
-
-  <volume name="logic_DSbeampipe_aluminum">
+  <volume name="logic_DSpipe2_2">
     <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSbeampipe_aluminum"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="53"/>
-  </volume>
-
-  <volume name="logicDSwindow">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSwindow"/>
-    <auxiliary auxtype="Color" auxvalue="magenta"/>
-  </volume>
-
-  <volume name="logic_DSpipe1">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe1"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-  </volume>
-
-  <volume name="logic_DSpipe1_flange">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe1_flange"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-  </volume>
-
-  <volume name="logic_DSpipe1_bellow">
-    <materialref ref="G4_STAINLESS-STEEL"/>
-    <solidref ref="solid_DSpipe1_bellow"/>
-    <auxiliary auxtype="Color" auxvalue="Brown"/>
-  </volume>
-
-  <volume name="logic_DSpipe2_USplate">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe2_USplate"/>
-    <auxiliary auxtype="Color" auxvalue="Blue"/>
-  </volume>
-
-  <volume name="logic_DSpipe2">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe2"/>
+    <solidref ref="solid_DSpipe2_2"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
   </volume>
 
@@ -214,33 +86,9 @@
   <volume name="DSbeampipeMother">
     <materialref ref="G4_Galactic"/>
     <solidref ref="solid_DSbeampipe_vacuum"/>
-    <!--	    
-    <physvol name="DSbeampipe_vacuum">
-      <volumeref ref="logic_DSbeampipe_aluminum"/>
-    </physvol>
-    -->
-    <physvol name="DSwindow">
-      <volumeref ref="logicDSwindow"/>
-    </physvol>
 
-    <physvol name="DSpipe1">
-      <volumeref ref="logic_DSpipe1"/>
-    </physvol>
-
-    <physvol name="DSpipe1_flange">
-      <volumeref ref="logic_DSpipe1_flange"/>
-    </physvol>
-
-    <physvol name="DSpipe1_bellow">
-      <volumeref ref="logic_DSpipe1_bellow"/>
-    </physvol>
-
-    <physvol name="DSpipe2_USplate">
-      <volumeref ref="logic_DSpipe2_USplate"/>
-    </physvol>
-
-    <physvol name="DSpipe2_DSpipe">
-      <volumeref ref="logic_DSpipe2"/>
+    <physvol name="DSpipe2_DSpipe2_2">
+      <volumeref ref="logic_DSpipe2_2"/>
     </physvol>
 
     <physvol name="DSpipe2_DSplate">
