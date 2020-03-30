@@ -4,9 +4,10 @@
 #/tracking/storeTrajectory 1
 
 # This must be called before initialize
-/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+/remoll/geometry/setfile geometry/mollerMother_Offsets.gdml
 # Parallel world geometry is optional - detector 28 (the primary detector array's idealize vacuum detector) is included in this parallel world now.
-/remoll/parallel/setfile geometry/mollerParallel.gdml 
+#/remoll/parallel/setfile geometry/mollerParallel.gdml 
+/remoll/parallel/setfile geometry/mollerParallel_posOffsets.gdml 
 
 #/remoll/physlist/register QGSP_BERT_HP
 /remoll/physlist/parallel/enable 
@@ -86,4 +87,4 @@
 
 #/tracking/verbose 2
 /remoll/printtargetinfo
-/run/beamOn 100
+/run/beamOn 1
