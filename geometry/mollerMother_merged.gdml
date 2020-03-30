@@ -31,10 +31,10 @@
     </physvol>
 
     <!-- Hall -->
-    <physvol>
+    <!-- <physvol>
       <file name="hall/hallDaughter_merged.gdml"/>
       <positionref ref="hallCenter"/>
-    </physvol> 
+    </physvol> -->
 
     <!-- Upstream region -->
     <physvol>
@@ -49,11 +49,11 @@
     </physvol>
 
     <!-- Downstream beampipe -->
-     
+    
     <physvol>
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
-    
+   
     <!-- Tracking Detectors 
     <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
@@ -69,6 +69,20 @@
     </physvol>
     -->
 
+    <!-- electronics hut for left side --> 
+    <physvol>
+      <file name="huts/lefthut.gdml"/>
+      <positionref ref="lefthut_pos"/>
+      <rotation name="lefthut_rot" unit="deg" y="-45"/>
+    </physvol>
+    
+    <!-- electronics hut for right side --> 
+    <physvol>
+      <file name="huts/righthut.gdml"/>
+      <positionref ref="righthut_pos"/>
+      <rotation name="righthut_rot" unit="deg" y="45"/>
+    </physvol>
+    
     <!-- ShowerMax Detectors--> 
     <physvol>
       <file name="showermax/showerMaxGen.gdml"/>
