@@ -1,0 +1,54 @@
+<!--
+
+  Master positions file 
+
+  This file contains the positions of all included detector systems.
+
+-->
+
+
+<constant name="xOffset" value="1.0"/>
+<constant name="xAngOffset" value="0.000"/> <!-- rad -->
+<constant name="zTgt2HallCenter" value="4500."/>
+     
+<!-- Hall center position (MOLLER target is upstream of pivot) -->
+<position name="hallCenter" x="xOffset + zTgt2HallCenter * tan(xAngOffset)" y="0.0" z="0.0" unit="mm"/>
+<rotation name="hallCenter_rot" unit="deg" y="xAngOffset * 180/pi"/>
+
+<!-- Target position -->
+<position name="targetCenter" x="xOffset" y="0.0" z="-4500.00" unit="mm"/>
+
+<!-- Upstream spectrometer position -->
+<position name="upstreamCenter" x="xOffset + (zTgt2HallCenter - 2000) * tan(xAngOffset)" y="0.0" z="2000.00" unit="mm"/>
+<rotation name="upstreamCenter_rot" unit="deg" y="xAngOffset * 180/pi"/>
+
+<!-- Hybrid spectrometer position -->
+<position name="hybridCenter" x="xOffset + (zTgt2HallCenter - (11016.865-8.73/2)) * tan(xAngOffset)" 
+	  y="0.0" z="11016.865-8.73/2" unit="mm"/>
+<rotation name="hybridCenter_rot" unit="deg" y="xAngOffset * 180/pi"/>
+
+<!-- Physical tracking detector position -->
+<position name="trackingCenter" x="xOffset" y="0.0" z="20250.00" unit="mm"/>
+<!-- Virtual planes in the parallel world -->
+<position name="trackingDetectorVirtualPlaneFront1_pos" x="xOffset" z="20.250-1.1" unit="m"/>
+<position name="trackingDetectorVirtualPlaneFront2_pos" x="xOffset" z="20.250-0.9" unit="m"/>
+<position name="trackingDetectorVirtualPlaneBack1_pos"  x="xOffset" z="20.250+0.9" unit="m"/>
+<position name="trackingDetectorVirtualPlaneBack2_pos"  x="xOffset" z="20.250+1.1" unit="m"/>
+
+<!-- Physical main detector array position -->
+<position name="detectorCenter" x="xOffset" y="0.0" z="22000.00" unit="mm"/>
+<!-- Virtual planes in the parallel world -->
+<position name="mainDetectorVirtualPlane_pos" x="xOffset + (zTgt2HallCenter - 22000.0) * tan(xAngOffset)" z="22000.00" unit="mm"/>
+<rotation name="mainDetectorVirtualPlane_rot" unit="deg" y="xAngOffset * 180/pi"/>
+
+<!-- Z position of the plane about which the two arrays of showermax
+detectors are placed -->
+<position name="showerMaxDetectorCenter" x="xOffset" y="0.0" z="23000.00" unit="mm"/>
+
+<!-- Z position of the center of the lucite stack of the pion detector. -->
+<position name="pionDetectorCenter" x="xOffset + (zTgt2HallCenter - 24250.0) * tan(xAngOffset)" y="0.0" z="24250.00" unit="mm"/>
+<rotation name="pionDetectorCenter_rot" unit="deg" y="xAngOffset * 180/pi"/>
+
+
+<!-- Virtual planes in the parallel world -->
+<position name="pionDetectorVirtualPlane_pos" x="xOffset" z="24250.00" unit="mm"/>

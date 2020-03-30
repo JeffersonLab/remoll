@@ -49,11 +49,11 @@
 
 <!-- Physical main detector array position -->
 <position name="detectorCenter" x="xOffset + (zTgt2HallCenter - 22000.0) * tan(xAngOffset)" y="0.0" z="22000.00" unit="mm"/>
-<rotation name="detectorCenter_rot" unit="deg" y="xAngOffset * 180/pi"/>
+<rotation name="detectorCenter_rot" unit="deg" y="xAngOffset * 180/pi"/> 
 
 <!-- Virtual planes in the parallel world -->
-<position name="mainDetectorVirtualPlane_pos" x="xOffsett + (zTgt2HallCenter - 22000.0) * tan(xAngOffset)" z="22000.00" unit="mm"/>
-<rotation name="mainDetectorVirtualPlane_rot" unit="deg" y="xAngOffset * 180/pi"/>
+<position name="mainDetectorVirtualPlane_pos" x="xOffset + (zTgt2HallCenter - 22000.0) * tan(xAngOffset)" z="22000.00" unit="mm"/>
+<rotation name="mainDetectorVirtualPlane_rot" unit="deg" y="xAngOffset * 180/pi"/><!-- FIXMECG -->
 
 <!-- Z position of the plane about which the two arrays of showermax
 detectors are placed -->
