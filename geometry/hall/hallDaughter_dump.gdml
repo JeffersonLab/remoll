@@ -108,17 +108,17 @@
     
     <constant name="ndDonut_outer_r_min" value="23.37*i2cm/2"/>
     <constant name="ndDonut_outer_r_max" value="25.38*i2cm/2"/>
-    <constant name="ndDonut_outer_thickness" value=".787*i2cm*i2cm"/><!--1.*i2cm"/>-->
+    <constant name="ndDonut_outer_thickness" value=".787*i2cm"/><!--1.*i2cm"/>-->
     <constant name="ndDonut_outer_center_z" value="ndPipeUS_center_z + ndPipeUS_length/2 + ndDonut_outer_thickness/2"/>
 
     <constant name="ndDonut_inner_r_min" value="3.25*i2cm/2"/>
     <constant name="ndDonut_inner_r_max" value="11.8*i2cm/2"/>
-    <constant name="ndDonut_inner_thickness" value=".787*i2cm*i2cm"/><!--.79*i2cm"/>-->
+    <constant name="ndDonut_inner_thickness" value=".787*i2cm"/><!--.79*i2cm"/>-->
     <constant name="ndDonut_inner_center_z" value="ndPipeUS_center_z + ndPipeUS_length/2 + ndDonut_outer_thickness/2"/>
 
     <constant name="ndDonut_middle_r_min" value="11.81*i2cm/2"/>
     <constant name="ndDonut_middle_r_max" value="23.37*i2cm/2"/>
-    <constant name="ndDonut_middle_thickness" value=".787*i2cm*i2cm"/><!--.39*i2cm"/>-->
+    <constant name="ndDonut_middle_thickness" value=".787*i2cm"/><!--.39*i2cm"/>-->
     <constant name="ndDonut_middle_center_z" value="ndPipeUS_center_z + ndPipeUS_length/2 + ndDonut_outer_thickness/2"/>
     
     <constant name="ndPipeDS_r_min" value="12.12*i2cm"/>
