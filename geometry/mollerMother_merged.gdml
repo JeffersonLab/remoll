@@ -31,10 +31,10 @@
     </physvol>
 
     <!-- Hall -->
-    <!-- <physvol>
+    <physvol>
       <file name="hall/hallDaughter_merged.gdml"/>
       <positionref ref="hallCenter"/>
-    </physvol> -->
+    </physvol>
 
     <!-- Upstream region -->
     <physvol>
