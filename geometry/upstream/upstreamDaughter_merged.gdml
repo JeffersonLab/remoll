@@ -748,11 +748,6 @@
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher1" rmax1="1900" rmax2="1900" rmin1="shield_US_beampipe_DS_rmax+1" rmin2="shield_US_beampipe_DS_rmax+1" startphi="0" z="10"/>
     <cone aunit="deg" deltaphi="360" lunit="mm" name="solWasher2" rmax1="1900" rmax2="1900" rmin1="0" rmin2="0" startphi="0" z="10"/>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_USwindow">
-      <zplane rmin="0" rmax="500" z="3690-UOFFSET"/>
-      <zplane rmin="0" rmax="500" z="3690.5-UOFFSET"/>
-    </polycone>
-
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_USbeampipe_col12">
     <zplane rmin="26.703" rmax="29.703" z="5675.0-UOFFSET"/>
     <zplane rmin="26.703" rmax="29.703" z="5700.0-UOFFSET"/>
@@ -986,12 +981,6 @@
       <auxiliary auxtype="DetNo" auxvalue="51"/>
     </volume>
 
-    <volume  name="logicUSwindow">
-      <materialref ref="G4_Al"/>
-      <solidref ref="solid_USwindow"/>
-      <auxiliary auxtype="Color" auxvalue="magenta"/>
-    </volume>
-
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeUpstream"/> -->
@@ -1015,11 +1004,6 @@
         <position name="UStracker_pos" unit="mm" x="0" y="0" z="0"/>
       </physvol>
      --> 
-
-      <physvol name="USwindow">
-        <volumeref ref="logicUSwindow"/>
-        <positionref ref="CENTER"/>
-      </physvol>
 
       <!-- Collimator 2 detector (right after acceptance defining collimator defined) for performing elaborate envelopes that dont care about where they end up - photon envelope especially
       <physvol name="COLL2_det">

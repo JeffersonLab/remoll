@@ -178,6 +178,34 @@
       <position name ="detSub2" lunit="mm" x="0" y="-390" z="0" />
     </subtraction>
 
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s1"
+        rmin="0" rmax="5.95" z="0.1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s2"
+        rmin="5.95" rmax="14.2" z="0.2"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s3"
+        rmin="14.2" rmax="38.6" z="0.3"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s4"
+        rmin="38.6" rmax="400" z="0.5"/>
+
+  <union name ="window_solid1">
+    <first ref="window_s1"/>
+    <second ref="window_s2"/>
+    <position name="window_pos1"
+              z="0.05"/>
+  </union>
+  <union name ="window_solid2">
+    <first ref="window_solid1"/>
+    <second ref="window_s3"/>
+    <position name="window_pos2"
+              z="0.1"/>
+  </union>
+  <union name ="TargWindow_solid">
+    <first ref="window_solid2"/>
+    <second ref="window_s4"/>
+    <position name="window_pos3"
+              z="0.2"/>
+  </union>
+
 </solids>
 
 <structure>
@@ -334,10 +362,25 @@
     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
   </volume>
 
+  <volume name="TargWindow_logic">
+    <materialref ref="Aluminum"/>
+    <solidref ref="TargWindow_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Magenta"/>
+    <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="3340"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
   <volume name="targetRegion">
     <materialref ref="VacuumTarg"/>
     <solidref ref="targetRegion_solid"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+    <physvol>
+      <volumeref ref="TargWindow_logic"/>
+      <position name="targ_vac_window" unit="mm" x="0" y="0" z="1500"/>
+    </physvol>
 
     <physvol>
       <volumeref ref="USAlTarg"/>
