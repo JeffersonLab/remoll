@@ -161,8 +161,8 @@
 
     <!--Mother volume -->
     <constant name="poly_extend" value="DSPolyShield1_length/2-DSShield_side_thickness/2"/> <!-- 900-152.5"/> FIXME NEW: originally 900, arbitrary length extension that lets the poly shielding fit in the mother volume -->
-    <constant name="boxDSMother_width" value="2*4500"/>
-    <constant name="boxDSMother_height" value="5900"/>
+    <constant name="boxDSMother_width" value="4100"/>
+    <constant name="boxDSMother_height" value="4100"/>
     <!-- <constant name="boxDSMother_length" value="7865.68 + boxDSShieldColl1_length+2*DSPolyShield1_side_thickness+DSShield_Tube_solid_1_length + poly_extend"/> FIXME this is giving me some trouble. How to make the size and place of the mother volume a function of the placement and sizes of tfhe objects place inside of it (hybrid and shielding blocks)?-->
     <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73"/> 
     <constant name="DSmothertubeBeampipeMother_sub_rmax" value="boxDSShieldColl1_inner_rmax - 0.1"/>
