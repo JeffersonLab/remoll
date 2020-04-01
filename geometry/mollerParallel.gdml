@@ -36,6 +36,11 @@
     startphi="0" deltaphi="360" aunit="deg"
     rmax="307" rmin="0" z="1" lunit="mm"/>
 
+  <tube
+    name="gemVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="1350" rmin="1450" z="2700" lunit="mm"/>
+
 </solids>
 
 <structure>
@@ -72,6 +77,13 @@
     <solidref ref="collarVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="41"/>
+  </volume>
+
+  <volume name="gemVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="gemVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="50"/>
   </volume>
 
   <volume name="SAMusVirtualPlane_log">
@@ -152,6 +164,11 @@
     <physvol name="collar2VirtualPlane_phys">
       <volumeref ref="collar2VirtualPlane_log"/>
       <positionref ref="collar2VirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="gemVirtualPlane_phys">
+      <volumeref ref="gemVirtualPlane_log"/>
+      <positionref ref="gemVirtualPlane_pos"/>
     </physvol>
 
     <physvol name="SAMusVirtualPlane_phys">
