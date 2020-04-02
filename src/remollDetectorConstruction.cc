@@ -458,8 +458,9 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
 
         // Found target mother logical volume
         G4LogicalVolume* mother_logical_volume = logical_volume;
-        G4cout << "Found target mother logical volume "
-               << mother_logical_volume->GetName() << "." << G4endl;
+        if (fVerboseLevel > 0)
+          G4cout << "Found target mother logical volume "
+                 << mother_logical_volume->GetName() << "." << G4endl;
 
         // Now find target mother physical volume
         G4VPhysicalVolume* mother_physical_volume = 0;
@@ -473,8 +474,9 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
           remollBeamTarget::ResetTargetVolumes();
           remollBeamTarget::SetMotherVolume(mother_physical_volume);
 
-          G4cout << "Found target mother physical volume "
-                 << mother_physical_volume->GetName() << "." << G4endl;
+          if (fVerboseLevel > 0)
+            G4cout << "Found target mother physical volume "
+                   << mother_physical_volume->GetName() << "." << G4endl;
         } else {
           G4cout << "Target mother logical volume does not occur "
                  << "*exactly once* as a physical volume." << G4endl;
