@@ -19,7 +19,7 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
   fGDMLPath("geometry"),fGDMLFile(""),
   fGDMLParser(0),
   fGDMLValidate(false),
-  fGDMLOverlapCheck(true),
+  fGDMLOverlapCheck(false),
   fVerboseLevel(0),
   fParallelMessenger(0),
   fWorldVolume(0),
@@ -143,7 +143,11 @@ G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
 
   // Parse GDML file
   fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
+  // hide output if not validating or checking ovelaps
+  if (! fGDMLOverlapCheck && ! fGDMLValidate)
+    G4cout.setstate(std::ios_base::failbit);
   fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+  G4cout.clear();
   G4VPhysicalVolume* parallelvolume = fGDMLParser->GetWorldVolume();
   G4LogicalVolume* parallellogical = parallelvolume->GetLogicalVolume();
 
