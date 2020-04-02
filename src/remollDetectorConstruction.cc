@@ -724,6 +724,10 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
         // Set detector type
         if (remollsd) remollsd->SetDetectorType(it_dettype->value);
 
+        // Print detector type
+        if (fVerboseLevel > 0)
+          if (remollsd) remollsd->PrintDetectorType();
+
       }
 
   } // end of loop over volumes
