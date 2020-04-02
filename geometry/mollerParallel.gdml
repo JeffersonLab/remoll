@@ -39,7 +39,7 @@
   <tube
     name="gemVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmax="1350" rmin="1450" z="2700" lunit="mm"/>
+    rmin="1350" rmax="1450" z="2700" lunit="mm"/>
 
 </solids>
 
