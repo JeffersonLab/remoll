@@ -22,6 +22,11 @@
     rmax="1900" rmin="0" z="1" lunit="mm"/>
 
   <tube
+    name="trackingVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="1400" rmin="0" z="1" lunit="mm"/>
+
+  <tube
     name="collarVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
     rmax="1200" rmin="0" z="1" lunit="mm"/>
@@ -46,7 +51,7 @@
 <structure>
   <volume name="trackingDetectorVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="30"/>
   </volume>
