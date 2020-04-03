@@ -108,8 +108,8 @@
     <!-- coll sep, outer rad, adjust this -->
     <constant name="COLL2_R3_U" value ="101"/>
     <constant name="COLL2_R3_D" value ="101"/>
-    <constant name="COLL2_R4_U" value ="300"/>
-    <constant name="COLL2_R4_D" value ="300"/>
+    <constant name="COLL2_R4_U" value ="150"/>
+    <constant name="COLL2_R4_D" value ="150"/>
 
     <constant name="COLL2_THICK" value ="150.0"/>  <!--Making collimator thicker to avoid punch through-->
     <constant name="TRAPOUTERR" value ="(COLL2_R4_U+COLL2_R3_D)/2"/>

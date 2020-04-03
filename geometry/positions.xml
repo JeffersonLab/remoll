@@ -30,10 +30,10 @@
 <position name="detectorCenter" x="0.0" y="0.0" z="22000.00" unit="mm"/>
 
 <!--position of right electronics shield hut -->
-<position name="righthut_pos" x="-5000" y="-3000.+3600./2" z="22000"/> <!--Beam height from hall floor is 3m; 3600mm is det hut height.-->
+<position name="righthut_pos" x="-5000" y="-3000.+3600./2+20" z="22000"/> <!--Beam height from hall floor is 3m; 3600mm is det hut height.-->
 	
 <!--position of left electronics shield hut -->
-<position name="lefthut_pos" x="5000" y="-3000.+3600./2" z="22000"/> <!--Beam height from hall floor is 3m; 3600mm is det hut height.-->
+<position name="lefthut_pos" x="5000" y="-3000.+3600./2+20" z="22000"/> <!--Beam height from hall floor is 3m; 3600mm is det hut height.-->
 	
 <!-- Virtual planes in the parallel world -->
 <position name="mainDetectorVirtualPlane_pos" z="22000.00" unit="mm"/>

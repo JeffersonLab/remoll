@@ -32,7 +32,7 @@
   <constant name="leadBoxy" value="2550."/>
   <constant name="leadBoxz" value="400."/>
 
-  <constant name="Shield_bore" value="400"/>
+  <constant name="Shield_bore" value="140"/>
   <constant name="Shield_length" value="concreteBoxz+2"/>
 
   <position name="origin" x="0" y="0" z="0"/>
@@ -54,7 +54,7 @@
      <first ref="targetRegion_solid1"/>
      <second ref="targetRegion_solid2"/>
      <position name="MotherSub_pos" lunit="mm" x="0" y=" - 3000 - 5000./2. + 20" z="0" />
-             <!--3000 mm is the distance of beam center from the hall floor-->
+             <!--2980 mm is the distance of beam center from the hall floor-->
    </subtraction>
 
   <tube aunit="deg" lunit="mm" deltaphi="360" name="target_solid"
@@ -105,8 +105,10 @@
         rmin="targetChamber_R" rmax="targetChamber_R + targetChamber_thickness"
         z="targetChamberHat_L"/>
 
-  <box lunit="mm" name="LeadCollar_solid1"
-       x="370" y="370" z="200"/>
+  <!--<box lunit="mm" name="LeadCollar_solid1"
+	  x="370" y="370" z="200"/>-->
+  <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollar_solid1"
+        rmin="0" rmax="330" z="200"/>
   <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollarInnerSub_solid"
         rmin="0" rmax="74" z="300"/>
   <subtraction name ="LeadCollar_solid">
@@ -130,12 +132,13 @@
   </subtraction>
 
   <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
-        rmin="0" rmax="Shield_bore" z="Shield_length"/>
+        rmin="0" rmax="Shield_bore+200" z="Shield_length"/>
 
   <subtraction name="concrete_sub">
     <first ref = "concrete_sub1"/>
     <second ref = "Shield_tube"/>
-    <position name ="concreteSub1" lunit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />
+	    <!--<position name ="concreteSub1" lunit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />-->
+    <position name ="concreteSub1" lunit="mm" x="0" y="-370" z="0" />
   </subtraction>
 
   <!--shielding front lead -->
@@ -185,7 +188,7 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s3"
         rmin="14.2" rmax="38.6" z="0.3"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s4"
-        rmin="38.6" rmax="400" z="0.5"/>
+        rmin="38.6" rmax="140-0.01" z="0.5"/>
 
   <union name ="window_solid1">
     <first ref="window_s1"/>
@@ -247,6 +250,10 @@
     <materialref ref="Lead"/>
     <solidref ref="LeadCollar_solid"/>
     <auxiliary auxtype="Color" auxvalue="gray"/>
+    <auxiliary auxtype="SensDet" auxvalue="CollDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="3342"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
   </volume>
 
 
@@ -262,6 +269,10 @@
     <materialref ref="Lead"/>
     <solidref ref="lead_sub"/>
     <auxiliary auxtype="Color" auxvalue="gray"/>
+    <auxiliary auxtype="SensDet" auxvalue="CollDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="3341"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
   </volume>
 
   <volume name="skyshineVacuumDet1_logic">
@@ -441,42 +452,42 @@
 
     <physvol>
       <volumeref ref="tgtOuterDet0_logic"/>
-      <position name="tgtOuterDet0_pos" unit="mm" x="concreteBoxx/2 + 1" y="450" z="0"/>
+      <position name="tgtOuterDet0_pos" unit="mm" x="concreteBoxx/2 + 1" y="375" z="0"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet1_logic"/>
-      <position name="tgtOuterDet1_pos" unit="mm" x="-concreteBoxx/2 - 1" y="450" z="0"/>
+      <position name="tgtOuterDet1_pos" unit="mm" x="-concreteBoxx/2 - 1" y="375" z="0"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet2_logic"/>
-      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="450" z="-concreteBoxz/2 - 1"/>
+      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="375" z="-concreteBoxz/2 - 1"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet3_logic"/>
-      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="450" z="concreteBoxz/2 + 1"/>
+      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="375" z="concreteBoxz/2 + 1"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtInnerDet0_logic"/>
-      <position name="tgtInnerDet0_pos" unit="mm" x="1101" y="450" z="0"/>
+      <position name="tgtInnerDet0_pos" unit="mm" x="1101" y="390" z="0"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtInnerDet1_logic"/>
-      <position name="tgtInnerDet1_pos" unit="mm" x="-1101" y="450" z="0"/>
+      <position name="tgtInnerDet1_pos" unit="mm" x="-1101" y="390" z="0"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtInnerDet2_logic"/>
-      <position name="tgtInnerDet2_pos" unit="mm" x="0" y="450" z="-1101"/>
+      <position name="tgtInnerDet2_pos" unit="mm" x="0" y="390" z="-1101"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtInnerDet3_logic"/>
-      <position name="tgtInnerDet3_pos" unit="mm" x="0" y="450" z="1101"/>
+      <position name="tgtInnerDet3_pos" unit="mm" x="0" y="390" z="1101"/>
     </physvol>
 
     <auxiliary auxtype="TargetSystem" auxvalue=""/>

@@ -47,8 +47,8 @@
     <!-- coll sep, outer rad, adjust this -->
     <constant name="PCOLL2_R3_U" value ="196.5"/> <!-- was 221, then was 165.5 for US col 4 but still bad envelope, then settled on 171.4 but now improved -->
     <constant name="PCOLL2_R3_D" value ="196.5"/>
-    <constant name="PCOLL2_R4_U" value ="300"/>
-    <constant name="PCOLL2_R4_D" value ="300"/>
+    <constant name="PCOLL2_R4_U" value ="250"/>
+    <constant name="PCOLL2_R4_D" value ="250"/>
     <constant name="PCOLL2_THICK" value ="150.0"/> <!--100.0 increased the thickness by 50% to prevent punch through-->
 
 <!-- original numbers: FIXME also, this does not do the correct envelope matching that Tyler's envelopes suggests
@@ -124,13 +124,13 @@
     <position name="boxDSShield1_polyroof_center" unit="mm" x="0*DSShield_x_offset" y="DSShield_y_offset + DSShield_height/2 + (DSShield_roof_thickness + DSShield_polyroof_thickness)/2 + 5" z="1*DSShield_side_thickness+DSPolyShield1_side_thickness-DSShield_length/4"/>
 
 
-    <constant name="DSShield_local_height" value="4000"/>
+    <constant name="DSShield_local_height" value="2400"/>
     <constant name="DSShield_local_length" value="250"/>
-    <constant name="DSShield_local_width" value="4000"/>
+    <constant name="DSShield_local_width" value="2400"/>
     <constant name="DSShield_polylocal_height" value="4000"/>
     <constant name="DSShield_polylocal_length" value="250"/>
     <constant name="DSShield_polylocal_width" value="4000"/>
-    <constant name="DSShield_local_inner_rmax" value="boxDSShieldColl1_inner_rmax"/>
+    <constant name="DSShield_local_inner_rmax" value="boxDSShieldColl1_inner_rmax-135"/>
     <constant name="DSShield_polylocal_inner_rmax" value="boxDSShieldColl1_inner_rmax"/>
     
     <position name="boxDSShield_local_center" unit="mm" x="0" y="0" z="9020-DOFFSET - coll4shield_shift/2 + DSPolyShield1_length/2 + DSShield_local_length/2 + 10"/>
@@ -161,8 +161,8 @@
 
     <!--Mother volume -->
     <constant name="poly_extend" value="DSPolyShield1_length/2-DSShield_side_thickness/2"/> <!-- 900-152.5"/> FIXME NEW: originally 900, arbitrary length extension that lets the poly shielding fit in the mother volume -->
-    <constant name="boxDSMother_width" value="4100"/>
-    <constant name="boxDSMother_height" value="4100"/>
+    <constant name="boxDSMother_width" value="2700"/>
+    <constant name="boxDSMother_height" value="2700"/>
     <!-- <constant name="boxDSMother_length" value="7865.68 + boxDSShieldColl1_length+2*DSPolyShield1_side_thickness+DSShield_Tube_solid_1_length + poly_extend"/> FIXME this is giving me some trouble. How to make the size and place of the mother volume a function of the placement and sizes of tfhe objects place inside of it (hybrid and shielding blocks)?-->
     <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73"/> 
     <constant name="DSmothertubeBeampipeMother_sub_rmax" value="boxDSShieldColl1_inner_rmax - 0.1"/>
@@ -1244,7 +1244,7 @@
     <!-- PolyShield1 will be outside shielding block 4 -->
     <box lunit="mm" name="boxDSPolyShield1_solid_1" x="DSPolyShield1_height" y="DSPolyShield1_height" z="DSPolyShield1_length"/>
     <box lunit="mm" name="boxDSPolyShield1_solid_2" x="DSPolyShield1_width - 2*DSPolyShield1_side_thickness + 1" y="DSPolyShield1_height - DSPolyShield1_top_thickness - DSPolyShield1_bottom_thickness + 1" z="DSPolyShield1_length - 1*DSPolyShield1_side_thickness + 1"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSPolyShield1_beamTube_solid" rmax="boxDSShieldColl1_inner_rmax" rmin="0" startphi="0" z="DSPolyShield1_length+10"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSPolyShield1_beamTube_solid" rmax="boxDSShieldColl1_inner_rmax-84" rmin="0" startphi="0" z="DSPolyShield1_length+10"/>
 
     <subtraction name ="boxDSPolyShield1_solid_3">
       <first ref="boxDSPolyShield1_solid_1"/>
@@ -1448,48 +1448,6 @@
       <zplane rmin="31" rmax="32" z="8025.0-DOFFSET"/>
       <zplane rmin="31" rmax="32" z="8225.0-DOFFSET"/>
     </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSbeampipe">
-      <zplane rmin="36.6" rmax="39.6" z="11850.01-DOFFSET"/>
-      <zplane rmin="36.6" rmax="39.6" z="11900-DOFFSET"/>
-      <zplane rmin="36.6" rmax="42.8625" z="11900.0-DOFFSET"/>
-      <zplane rmin="36.6" rmax="42.8625" z="11901.651-DOFFSET"/>
-      <zplane rmin="41.2115" rmax="42.8625" z="11901.651-DOFFSET"/>
-      <zplane rmin="41.2115" rmax="42.8625" z="12300.0-DOFFSET"/>
-      <zplane rmin="41.2115" rmax="44.45" z="12300.0-DOFFSET"/>
-      <zplane rmin="41.2115" rmax="44.45" z="12301.651-DOFFSET"/>
-      <zplane rmin="42.799" rmax="44.45" z="12301.651-DOFFSET"/>
-      <zplane rmin="42.799" rmax="44.45" z="12700.0-DOFFSET"/>
-      <zplane rmin="42.799" rmax="46.0375" z="12700.0-DOFFSET"/>
-      <zplane rmin="42.799" rmax="46.0375" z="12701.651-DOFFSET"/>
-      <zplane rmin="44.3865" rmax="46.0375" z="12701.651-DOFFSET"/>
-      <zplane rmin="44.3865" rmax="46.0375" z="13200.0-DOFFSET"/>
-      <zplane rmin="44.3865" rmax="47.625" z="13200.0-DOFFSET"/>
-      <zplane rmin="44.3865" rmax="47.625" z="13201.651-DOFFSET"/>
-      <zplane rmin="45.974" rmax="47.625" z="13201.651-DOFFSET"/>
-      <zplane rmin="45.974" rmax="47.625" z="13600.0-DOFFSET"/>
-      <zplane rmin="45.974" rmax="50.8" z="13600.0-DOFFSET"/>
-      <zplane rmin="45.974" rmax="50.8" z="13601.651-DOFFSET"/>
-      <zplane rmin="49.149" rmax="50.8" z="13601.651-DOFFSET"/>
-      <zplane rmin="49.149" rmax="50.8" z="13800.0-DOFFSET"/>
-      <zplane rmin="49.149" rmax="57.15" z="13800.0-DOFFSET"/>
-      <zplane rmin="49.149" rmax="57.15" z="13802.1082-DOFFSET"/>
-      <zplane rmin="55.0418" rmax="57.15" z="13802.1082-DOFFSET"/>
-      <zplane rmin="55.0418" rmax="57.15" z="14250.0-DOFFSET"/>
-      <zplane rmin="55.0418" rmax="63.5" z="14250.0-DOFFSET"/>
-      <zplane rmin="55.0418" rmax="63.5" z="14252.1082-DOFFSET"/>
-      <zplane rmin="61.3918" rmax="63.5" z="14252.1082-DOFFSET"/>
-      <zplane rmin="61.3918" rmax="63.5" z="15000.0-DOFFSET"/>
-      <zplane rmin="61.3918" rmax="76.2" z="15000.0-DOFFSET"/>
-      <zplane rmin="61.3918" rmax="76.2" z="15003.048-DOFFSET"/>
-      <zplane rmin="73.152" rmax="76.2" z="15003.048-DOFFSET"/>
-      <zplane rmin="73.152" rmax="76.2" z="17000.0-DOFFSET"/>
-      <zplane rmin="73.152" rmax="101.6" z="17000.0-DOFFSET"/>
-      <zplane rmin="73.152" rmax="101.6" z="17004.7498-DOFFSET"/>
-      <zplane rmin="96.8502" rmax="101.6" z="17004.7498-DOFFSET"/>
-      <zplane rmin="96.8502" rmax="101.6" z="18699.41-DOFFSET"/>
-    </polycone>
-
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Vacbeampipe">
       <zplane rmin="600" rmax="1262.7" z="0.0"/>
@@ -1931,13 +1889,6 @@
       <auxiliary auxtype="DetNo" auxvalue="54"/>
     </volume>
 
-    <volume name="logicDSbeampipe">
-      <materialref ref="Aluminum"/>
-      <solidref ref="solid_DSbeampipe"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="52"/>
-    </volume>
-
     <volume name="logicVacbeampipe">
       <materialref ref="Aluminum"/>
       <solidref ref="solid_Vacbeampipe"/>
@@ -1999,11 +1950,6 @@
           <volumeref ref="logicDSbeampipe_col4"/>
           <positionref ref="CENTER"/>
         </physvol>
-  
-      <physvol name="DSbeampipe">
-          <volumeref ref="logicDSbeampipe"/>
-          <positionref ref="CENTER"/>
-        </physvol>
       -->
 
       <physvol name="DSbeampipe">
@@ -2036,41 +1982,41 @@
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
 
-<physvol name="lintel1">
- <volumeref ref="logicLintel1"/>
- <position name="lintel1pos" x="-542.0" y="6.63758565138e-14" z="12835-DOFFSET"/>
- <rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
-</physvol>
-<physvol name="lintel2">
- <volumeref ref="logicLintel2"/>
- <position name="lintel2pos" x="-337.931472607" y="-423.752663498" z="12835-DOFFSET"/>
- <rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
-</physvol>
-<physvol name="lintel3">
- <volumeref ref="logicLintel3"/>
- <position name="lintel3pos" x="120.606346204" y="-528.410928403" z="12835-DOFFSET"/>
- <rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
-</physvol>
-<physvol name="lintel4">
- <volumeref ref="logicLintel4"/>
- <position name="lintel4pos" x="488.325126403" y="-235.164986602" z="12835-DOFFSET"/>
- <rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
-</physvol>
-<physvol name="lintel5">
- <volumeref ref="logicLintel5"/>
- <position name="lintel5pos" x="488.325126403" y="235.164986602" z="12835-DOFFSET"/>
- <rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
-</physvol>
-<physvol name="lintel6">
- <volumeref ref="logicLintel6"/>
- <position name="lintel6pos" x="120.606346204" y="528.410928403" z="12835-DOFFSET"/>
- <rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
-</physvol>
-<physvol name="lintel7">
- <volumeref ref="logicLintel7"/>
- <position name="lintel7pos" x="-337.931472607" y="423.752663498" z="12835-DOFFSET"/>
- <rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
-</physvol>
+      <physvol name="lintel1">
+       <volumeref ref="logicLintel1"/>
+       <position name="lintel1pos" x="-542.0" y="6.63758565138e-14" z="12835-DOFFSET"/>
+       <rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
+      </physvol>
+      <physvol name="lintel2">
+       <volumeref ref="logicLintel2"/>
+       <position name="lintel2pos" x="-337.931472607" y="-423.752663498" z="12835-DOFFSET"/>
+       <rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
+      </physvol>
+      <physvol name="lintel3">
+       <volumeref ref="logicLintel3"/>
+       <position name="lintel3pos" x="120.606346204" y="-528.410928403" z="12835-DOFFSET"/>
+       <rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
+      </physvol>
+      <physvol name="lintel4">
+       <volumeref ref="logicLintel4"/>
+       <position name="lintel4pos" x="488.325126403" y="-235.164986602" z="12835-DOFFSET"/>
+       <rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
+      </physvol>
+      <physvol name="lintel5">
+       <volumeref ref="logicLintel5"/>
+       <position name="lintel5pos" x="488.325126403" y="235.164986602" z="12835-DOFFSET"/>
+       <rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
+      </physvol>
+      <physvol name="lintel6">
+       <volumeref ref="logicLintel6"/>
+       <position name="lintel6pos" x="120.606346204" y="528.410928403" z="12835-DOFFSET"/>
+       <rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
+      </physvol>
+      <physvol name="lintel7">
+       <volumeref ref="logicLintel7"/>
+       <position name="lintel7pos" x="-337.931472607" y="423.752663498" z="12835-DOFFSET"/>
+       <rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
+      </physvol>
 
 <!-- Downstream of coll4 central collimating beampipe -->
       <physvol>
