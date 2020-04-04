@@ -10,8 +10,8 @@
 
    <!-- Lead donut dimensions -->
    <quantity name="pionDetectorLeadDonutThickness" type="length" value="0.25" unit="m"/>
-   <quantity name="pionDetectorLeadDonutInnerRadius" type="length" value="0.663" unit="m"/>
-   <quantity name="pionDetectorLeadDonutOuterRadius" type="length" value="1.90" unit="m"/>
+   <quantity name="pionDetectorLeadDonutInnerRadius" type="length" value="0.830" unit="m"/>
+   <quantity name="pionDetectorLeadDonutOuterRadius" type="length" value="1.050" unit="m"/>
 
    <!-- Virtual detector dimensions (before and after lead donut) -->
    <quantity name="pionDetectorVirtualDetThickness" type="length" value="1.0" unit="cm"/>
