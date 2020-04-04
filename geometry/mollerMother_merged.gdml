@@ -32,7 +32,7 @@
 
     <!-- Hall -->
     <physvol>
-      <file name="hall/hallDaughter_merged.gdml"/>
+      <file name="hall/hallDaughter_dump.gdml"/>
       <positionref ref="hallCenter"/>
     </physvol>
 
@@ -53,21 +53,24 @@
     <physvol>
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
+
    
-    <!-- Tracking Detectors 
+    <!-- Tracking Detectors--> 
+    <!--
     <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
       <positionref ref="trackingCenter"/>
     </physvol>
-   -->
+    -->
     <!-- Main Detectors -->
-   <!--
+    <!--
     <physvol>
       <file name="detector/detector.gdml"/>
       <positionref ref="detectorCenter"/>
       <rotation name="detectorRot" x="0" y="90" z="0" unit="deg"/>
     </physvol>
     -->
+
 
     <!-- electronics hut for left side --> 
     <physvol>

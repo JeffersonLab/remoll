@@ -16,13 +16,6 @@
   <constant name="height_mother" value="190000."/>
   <constant name="length_mother" value="190000."/>
 
-  <!-- Hall - wall, floor and "dump" -->
-  <!-- <constant name="radius_of_hall" value="26517"/>
-  <constant name="width_wall" value="20000"/> 
-  <constant name="height_wall" value="7200."/>  
-  <constant name="thick_wall" value="1547.76"/> 
-  <constant name="center_wall" value="radius_of_hall+thick_wall/2"/>      Not in use anymore -->
-
   <constant name="radius_of_cylwall" value="26517.6"/><!--25460."/>-->
   <constant name="hall_cylwall_radius" value="radius_of_cylwall/10"/>
   <constant name="thick_cylwall" value="1487."/>  
@@ -38,17 +31,12 @@
   <constant name="center_cylwall" value="1*(height_cylwall/2+bottom_cylwall)"/>
   <constant name="trans_topwall" value="radius_topwall_out-(-center_topwall+bottom_cylwall+height_cylwall)"/> 
 
-  <!--  <constant name="thick_floor" value="500."/> 
-  <constant name="width_floor" value="20000."/> 
-  <constant name="floor_y_center" value="(-height_wall-thick_floor)/2"/>  Not in use anymore--> 
-
   <constant name="radius_max_cylHallDet" value="radius_of_cylwall - 100"/>
   <constant name="height_cylHallDet" value="height_cylwall - thick_cylwall - 1"/>
 
   <position name="cylHallDet_center" unit="mm" x="0" y="0" z="0"/>
   <position name="cylHallDet_1_center" x="0" y="1.*center_cylwall + thick_cylwall/2" z="0" unit="mm"/>
   <position name="cylHallDet_2_center" x="0" y="center_cylwall + height_cylwall/2" z="0" unit="mm"/>
-  <position name="cylHallDet_3_center" x="0" y="center_cylwall - height_cylwall/2 + thick_cylwall + 1" z="0" unit="mm"/>
 
   <position unit="mm" name="cylwallTrans_1"    x="0" y="0"     z="thick_cylwall/2"/>
   <!--<position unit="mm" name="cylwallTrans_2"    x="0" y="-1.0*radius_of_cylwall-0.5*thick_cylwall" z="dump_hole_y_center - center_cylwall"/>-->
@@ -120,17 +108,17 @@
     
     <constant name="ndDonut_outer_r_min" value="23.37*i2cm/2"/>
     <constant name="ndDonut_outer_r_max" value="25.38*i2cm/2"/>
-    <constant name="ndDonut_outer_thickness" value=".787*i2cm*i2cm"/><!--1.*i2cm"/>-->
+    <constant name="ndDonut_outer_thickness" value=".787*i2cm"/><!--1.*i2cm"/>-->
     <constant name="ndDonut_outer_center_z" value="ndPipeUS_center_z + ndPipeUS_length/2 + ndDonut_outer_thickness/2"/>
 
     <constant name="ndDonut_inner_r_min" value="3.25*i2cm/2"/>
     <constant name="ndDonut_inner_r_max" value="11.8*i2cm/2"/>
-    <constant name="ndDonut_inner_thickness" value=".787*i2cm*i2cm"/><!--.79*i2cm"/>-->
+    <constant name="ndDonut_inner_thickness" value=".787*i2cm"/><!--.79*i2cm"/>-->
     <constant name="ndDonut_inner_center_z" value="ndPipeUS_center_z + ndPipeUS_length/2 + ndDonut_outer_thickness/2"/>
 
     <constant name="ndDonut_middle_r_min" value="11.81*i2cm/2"/>
     <constant name="ndDonut_middle_r_max" value="23.37*i2cm/2"/>
-    <constant name="ndDonut_middle_thickness" value=".787*i2cm*i2cm"/><!--.39*i2cm"/>-->
+    <constant name="ndDonut_middle_thickness" value=".787*i2cm"/><!--.39*i2cm"/>-->
     <constant name="ndDonut_middle_center_z" value="ndPipeUS_center_z + ndPipeUS_length/2 + ndDonut_outer_thickness/2"/>
     
     <constant name="ndPipeDS_r_min" value="12.12*i2cm"/>
@@ -238,12 +226,12 @@
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_2" rmax="radius_max_cylHallDet" rmin="0" startphi="0" z="0.1"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_3" rmax="radius_max_cylHallDet" rmin="0" startphi="0" z="0.1"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_4" rmax="radius_max_cylHallDet - 5000" rmin="radius_max_cylHallDet - 5000 - 0.1" startphi="0" z="height_cylHallDet"/>
 
     <!--Hall A top wall -->
-  <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  rmin="radius_topwall_in" rmax="radius_topwall_out"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="hall_top_sub" rmin="0.0" rmax="radius_topwall_out+10" z="2*radius_topwall_out" />
+  <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  
+	  rmin="radius_topwall_in" rmax="radius_topwall_out"/>
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="hall_top_sub" rmin="0.0" 
+	rmax="radius_topwall_out+10" z="2*radius_topwall_out" />
  
   <subtraction name ="topwall_solid">
       <first ref="hall_top_shell"/>
@@ -276,25 +264,6 @@
       <first ref="halldet_top_shell"/>
       <second ref="halldet_top_sub"/>
       <positionref ref="topwallTrans_1"/>
-  </subtraction>
-
-  <!--Hall A side wall detector -->
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="out_cylwalldet" rmin="0.0" rmax="radius_of_cylwall + 1.*thick_cylwall +  10 + 3" z="height_cylwall" />
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="in_cylwalldet" rmin="0.0" rmax="radius_of_cylwall + 1.*thick_cylwall + 10" z="height_cylwall+10" />
-<!--
-     <box lunit="mm" name="wall_cylholedet" x="width_dump_hole" y="height_dump_hole" z="3.0*thick_cylwall"/>
--->
-
-  <subtraction name ="cylwalldet_full">
-      <first ref="out_cylwalldet"/>
-      <second ref="in_cylwalldet"/>
-      <positionref ref="cylwallTrans_3"/>
-  </subtraction>
-  <subtraction name ="cylwalldet_hole">
-      <first ref="cylwalldet_full"/>
-      <second ref="hall_dumphole"/> 
-      <positionref ref="hall_dumphole_sub_trans"/>
-      <!--    <rotationref ref="scRot_1"/> -->
   </subtraction>
 
   <!-- Dump Enclosure -->
@@ -462,7 +431,7 @@
 
 <structure>
 
-    <volume name="cylHallDet_1_logic">
+    <volume name="hallVerticalWallDet_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cylHallDet_1"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
@@ -470,7 +439,7 @@
       <auxiliary auxtype="DetNo" auxvalue="99"/>
     </volume>
 
-    <volume name="cylHallDet_2_logic">
+    <volume name="hallFlatLidDet_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="cylHallDet_2"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
@@ -478,55 +447,25 @@
       <auxiliary auxtype="DetNo" auxvalue="101"/>
     </volume>
 
-    <volume name="cylHallDet_3_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="cylHallDet_3"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="103"/>
-    </volume>
-
-    <!--Not in use due to volume overlap -->
-    <volume name="cylHallDet_4_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="cylHallDet_4"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="105"/>
-    </volume>
-
-    <volume name="topwalldet_logic">
+    <volume name="topWallOuterDet_logic">
       <materialref ref="Vacuum"/>
       <solidref ref="topwalldet_solid"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="107"/>
     </volume>
-    <volume name="cylwalldet_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="cylwalldet_hole"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="109"/>
-    </volume>
 
 
     <volume name="topwall_logic">
       <materialref ref="Concrete"/>
-      <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="topwall_solid"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5010"/> -->
     </volume>
 
     <volume name="cylwall_logic">
       <materialref ref="Concrete"/>
-      <!-- <materialref ref="Kryptonite"/> -->
       <solidref ref="cylwall_hole"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Hall_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6000"/>
-      <!-- <auxiliary auxtype="SensDet" auxvalue="volumeN5009"/> -->
     </volume>
 
 
@@ -536,8 +475,6 @@
       <solidref ref="dump_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-<!--  <auxiliary auxtype="SensDet" auxvalue="Dump"/> -->
-      <auxiliary auxtype="DetNo" auxvalue="9"/>
     </volume>
     
     <volume name="dumpTempShield_left_logic">
@@ -545,8 +482,6 @@
       <solidref ref="dumpTempShield_left_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Dump_Temp_Shield_left"/>
-      <auxiliary auxtype="DetNo" auxvalue="10"/>
     </volume>
     
     <volume name="dumpTempShield_right_logic">
@@ -554,8 +489,6 @@
       <solidref ref="dumpTempShield_right_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Dump_Temp_Shield_right"/>
-      <auxiliary auxtype="DetNo" auxvalue="11"/>
     </volume>
     
     <volume name="ndFlangeUS_logic">
@@ -563,8 +496,6 @@
       <solidref ref="ndFlangeUS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Flange_US"/>
-      <auxiliary auxtype="DetNo" auxvalue="12"/>
     </volume>
     
     <volume name="ndConeUS_logic">
@@ -572,8 +503,6 @@
       <solidref ref="ndConeUS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Cone_US"/>
-      <auxiliary auxtype="DetNo" auxvalue="13"/>
     </volume>
     
     <volume name="ndPipeUS_logic">
@@ -581,8 +510,6 @@
       <solidref ref="ndPipeUS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Pipe_US"/>
-      <auxiliary auxtype="DetNo" auxvalue="14"/>
     </volume>
     
     <volume name="ndDonut_inner_logic">
@@ -590,8 +517,6 @@
       <solidref ref="ndDonut_inner_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Donut_Inner_US"/>
-      <auxiliary auxtype="DetNo" auxvalue="15"/>
     </volume>
     
     <volume name="ndDonut_middle_logic">
@@ -599,8 +524,6 @@
       <solidref ref="ndDonut_middle_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Donut_Middle_US"/>
-      <auxiliary auxtype="DetNo" auxvalue="16"/>
     </volume>
     
     <volume name="ndDonut_outer_logic">
@@ -608,17 +531,13 @@
       <solidref ref="ndDonut_outer_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Donut_Outer_US"/>
-      <auxiliary auxtype="DetNo" auxvalue="17"/>
-    </volume>
+   </volume>
     
     <volume name="ndPipeDS_logic">
       <materialref ref="Aluminum"/>
       <solidref ref="ndPipeDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Pipe_DS"/>
-      <auxiliary auxtype="DetNo" auxvalue="18"/>
     </volume>
     
     <volume name="ndConeDS_logic">
@@ -626,8 +545,6 @@
       <solidref ref="ndConeDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Cone_DS"/>
-      <auxiliary auxtype="DetNo" auxvalue="19"/>
     </volume>
     
     <volume name="ndPipeDDS_logic">
@@ -635,8 +552,6 @@
       <solidref ref="ndPipeDDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Pipe_DDS"/>
-      <auxiliary auxtype="DetNo" auxvalue="20"/>
     </volume>
  
     <volume name="ndFlangeDS_logic">
@@ -644,8 +559,6 @@
       <solidref ref="ndFlangeDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Neck_Down_Flange_DS"/>
-      <auxiliary auxtype="DetNo" auxvalue="21"/>
     </volume>
 
     <volume name="nitrogenAtmWall_logic">
@@ -653,8 +566,6 @@
       <solidref ref="nitrogenAtmWall_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Nitrogen_Atmosphere_Wall"/>
-      <auxiliary auxtype="DetNo" auxvalue="22"/>
     </volume>
     
     <volume name="dumpPipeDS_logic">
@@ -662,8 +573,6 @@
       <solidref ref="dumpPipeDS_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="Dump_DS_Pipe"/>
-      <auxiliary auxtype="DetNo" auxvalue="23"/>
     </volume>
     
     <volume name="tubeDumpWaterTank_logic">
@@ -671,8 +580,6 @@
       <solidref ref="tubeDumpWaterTank_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-<!--  <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Can"/> -->
-      <auxiliary auxtype="DetNo" auxvalue="24"/>
     </volume>
     
     <volume name="waterDumpWaterTank_logic">
@@ -680,64 +587,33 @@
       <solidref ref="waterDumpWaterTank_solid"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-<!--  <auxiliary auxtype="SensDet" auxvalue="Dump_Water_Tank_Water"/> -->
-      <auxiliary auxtype="DetNo" auxvalue="25"/>
     </volume>
-
-
-
-
-
 
     <volume name="logicHall">
       <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
       <!-- <solidref ref="boxHallMother_out"/> -->
 
-      <physvol>
-        <volumeref ref="cylHallDet_1_logic"/>
+      <physvol name="hallVerticalWallDet">
+        <volumeref ref="hallVerticalWallDet_logic"/>
         <positionref ref="cylHallDet_1_center"/>
 	<rotationref ref="scRot_1"/>
       </physvol>
-      <physvol>
-        <volumeref ref="cylHallDet_2_logic"/>
+
+      <physvol name="hallFlatLidDet">
+        <volumeref ref="hallFlatLidDet_logic"/> <!-- this should be removed once we fix the hall lid CG -->
         <positionref ref="cylHallDet_2_center"/>
 	<rotationref ref="scRot_1"/>
       </physvol>
 
-      <physvol name="topwalldet">
-        <volumeref ref="topwalldet_logic"/>
+      <physvol name="topWall">
+        <volumeref ref="topwall_logic"/>
         <positionref ref="topwall_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
 
-      <physvol name="cylwalldet">
-        <volumeref ref="cylwalldet_logic"/>
-        <positionref ref="cylwall_center"/>
-        <rotationref ref="scRot_1"/>
-      </physvol>
-
-
-<!-- The concrete floor is added to simulation and cylHallDet_3 is no longer used -->
-<!--
-      <physvol>
-        <volumeref ref="cylHallDet_3_logic"/>
-        <positionref ref="cylHallDet_3_center"/>
-	<rotationref ref="scRot_1"/>
-      </physvol>
--->
-
-<!--This detector needs hall mother volume setup in very complecated way so that detector volume is not overlapped by the hall volume -->
-<!--
-      <physvol>
-        <volumeref ref="cylHallDet_4_logic"/>
-        <positionref ref="cylHallDet_1_center"/>
-	<rotationref ref="scRot_1"/>
-      </physvol>
--->
-
-      <physvol name="topwall">
-        <volumeref ref="topwall_logic"/>
+      <physvol name="topWallOuterDet">
+        <volumeref ref="topWallOuterDet_logic"/>
         <positionref ref="topwall_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
@@ -747,8 +623,6 @@
         <positionref ref="cylwall_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
-
-
 
 
       <physvol name="dump">

@@ -7,14 +7,14 @@
 
 const int nSpecies=6;
 const string spTit[nSpecies]={"e-/pi-","e/#pi E>1","#gamma","neutron","primary e E>1","e+/pi+"};
-const string spH[nSpecies]={"e","e1","g","n","eP1","e+"};
-std::map<int,int> spM {{11,1},{-211,1},{22,3},{2112,4},{-11,5},{211,5}};
+const string spH[nSpecies]={"em","e1","g","n","eP1","ep"};
+std::map<int,int> spM {{11,1},{-211,1},{22,3},{2112,4},{-11,6},{211,6}};
 
 const int nErange=4; //all, E<=1MeV; 1<E<=10MeV; 10MeV<E;
 const string eRgTit[nErange]={"all E","E<=1","1<E<=10","10<E"};
 const double eRanges[nErange]={0,1,10,1e6};
 
-const int nDmg=4;
+const int nDmg=3;
 const string dmgTit[nDmg]={"rate","rate*E","rate*NIEL"};
 
 const int nZcut=10;

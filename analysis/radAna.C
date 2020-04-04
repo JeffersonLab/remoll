@@ -109,7 +109,7 @@ long processOne(string fnm){
       int sp = spM[int(hit->at(j).pid)]-1;
       if(sp==-1) continue;
 
-      double kinE = hit->at(j).p;
+      double kinE = hit->at(j).k;
       double niel = radDmg.GetNIEL(hit->at(j).pid,kinE,0);
       if(niel<0) niel=0;
       double vz0 = hit->at(j).vz;
@@ -129,7 +129,7 @@ long processOne(string fnm){
 	if(det==28)
 	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 
-	if(hit->at(j).trid==1 || hit->at(j).trid==2){
+	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
 	  if(det==28)
 	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 	}

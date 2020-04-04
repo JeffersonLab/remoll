@@ -46,3 +46,16 @@ detectors are placed -->
 <position name="pionDetectorCenter" x="0.0" y="0.0" z="24250.00" unit="mm"/>
 <!-- Virtual planes in the parallel world -->
 <position name="pionDetectorVirtualPlane_pos" z="24250.00" unit="mm"/>
+
+<!-- Beamline detectors for radiation -->
+<position name="collar1VirtualPlane_pos" z="12250.00" unit="mm"/>
+<position name="collar2VirtualPlane_pos" z="18900.00" unit="mm"/>
+<position name="gemVirtualPlane_pos" z="20375.00" unit="mm"/>
+<position name="SAMusVirtualPlane_pos" z="24970.00" unit="mm"/>
+<position name="dumpEntranceVirtualPlane_pos" z="26500.00" unit="mm"/>
+<position name="donutUSVirtualPlane_pos" z="29330.00" unit="mm"/>
+<position name="donutDSVirtualPlane_pos" z="29360.00" unit="mm"/>
+<position name="n2atmoVirtualPlane_pos" z="31525.00" unit="mm"/>
+
+
+

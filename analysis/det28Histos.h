@@ -87,8 +87,8 @@ void initHisto_det28(TFile *fout){
 
 	d28_xy[i][j][k]=new TH2D(Form("d28_xy_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				 Form("%s R%d for %s;x[mm];y[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
-				 200,-2000,2000,
-				 200,-2000,2000);
+				 800,-2000,2000,
+				 800,-2000,2000);
       
       
 	d28_z0r0[i][j][k]=new TH2D(Form("d28_z0r0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
@@ -122,8 +122,8 @@ void fillHisto_det28(int sp, int ring,double rdDmg[3],
     
   }
 
-  d28_energy[sp][ring]->Fill(rdDmg[0]);
-  d28_energyNIEL[sp][ring]->Fill(rdDmg[2]);
+  d28_energy[sp][ring]->Fill(kinE,rdDmg[0]);
+  d28_energyNIEL[sp][ring]->Fill(kinE,rdDmg[2]);
 
   if(ring==0){
     for(int ii=0;ii<nZcut;ii++)
