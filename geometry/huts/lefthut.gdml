@@ -63,7 +63,7 @@
   </volume>
 
   <volume name="lefthut_Det_inside_logic">
-    <materialref ref="Vacuum"/>
+    <materialref ref="G4_Bi"/>
     <solidref ref="lefthut_Det_inside_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
     <auxiliary auxtype="SensDet" auxvalue="hutDet"/>
