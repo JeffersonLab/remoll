@@ -39,8 +39,8 @@ void drawQuartzOutline(TVirtualPad *pad){
 
   Float_t degrad= acos(-1)/180.;
 
-  Float_t detinnerr[11]= {640, 680, 730, 805,  855, 855/* 90.0*/,  855/* 91.5*/,  1070,  640,  500};
-  Float_t detouterr[11]= {680, 730, 805, 855, 1070,1070/* 106.0*/,1070 /*105.5*/, 1170, 1170, 1050};
+  Float_t detinnerr[11]= {640, 680, 750, 855,  935, 920/* 90.0*/,  875/* 91.5*/,  1080,  640,  500};
+  Float_t detouterr[11]= {680, 750, 855, 920, 1075,1080/* 106.0*/,1090 /*105.5*/, 1190, 1170, 1050};
 
   Float_t detnum;
   Float_t detcenterphi;
