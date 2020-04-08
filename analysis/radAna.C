@@ -15,6 +15,7 @@
 #include "histogramUtilities.h"
 #include "mainDetUtilities.h"
 #include "det28Histos.h"
+#include "beamLineDetHistos.h"
 
 TFile *fout;
 string fileNm;
@@ -124,14 +125,21 @@ long processOne(string fnm){
       int det = hit->at(j).det;
       if(det==28)
 	fillHisto_det28(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
+      else if(det>=40 && det<=46)
+	fillHisto_beamLine(det, sp, rdDmg, xx, yy, kinE);
 
       if((sp==0 || sp==5) && kinE>1){
 	if(det==28)
 	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
+	else if(det>=40 && det<=46)
+	  fillHisto_beamLine(det, 1, rdDmg, xx, yy, kinE);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
 	  if(det==28)
 	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
+	  else if(det>=40 && det<=46)
+	    fillHisto_beamLine(det, 4, rdDmg, xx, yy, kinE);
+
 	}
       }
       
@@ -163,10 +171,17 @@ long processOne(string fnm){
 
 
 void initHisto(){
-  string foutNm = Form("%s_radAnaV3.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_radAnaV4.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
   initHisto_det28(fout);
+  initHisto_beamLine(fout,40,"BL: front collar1");
+  initHisto_beamLine(fout,41,"BL: front collar2");
+  initHisto_beamLine(fout,42,"BL: front sam");
+  initHisto_beamLine(fout,43,"BL: front dump tunnel");
+  initHisto_beamLine(fout,44,"BL: front donut");
+  initHisto_beamLine(fout,45,"BL: back donut");
+  initHisto_beamLine(fout,46,"BL: front Al-wall");
 
 }
 
@@ -177,6 +192,13 @@ void writeOutput(){
     scaleFactor = 1./nTotEv;
 
   writeOutput_det28(fout,scaleFactor);
+  writeOutput_beamLine(fout,40,scaleFactor);
+  writeOutput_beamLine(fout,41,scaleFactor);
+  writeOutput_beamLine(fout,42,scaleFactor);
+  writeOutput_beamLine(fout,43,scaleFactor);
+  writeOutput_beamLine(fout,44,scaleFactor);
+  writeOutput_beamLine(fout,45,scaleFactor);
+  writeOutput_beamLine(fout,46,scaleFactor);
 
   fout->Close();
 }
