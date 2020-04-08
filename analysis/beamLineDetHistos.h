@@ -28,8 +28,8 @@ void initHisto_beamLine(TFile *fout,int detID, string detNm){
     for(int j=0;j<nDmg;j++){
       dBL_xy[i][j].push_back(new TH2D(Form("d%d_xy_%s_Dmg%d",detID,spH[i].c_str(),j),
 				      Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
-				      800,-1000,1000,
-				      800,-1000,1000));
+				      800,-1300,1300,
+				      800,-1300,1300));
     }
   }
 }
