@@ -32,7 +32,9 @@ TH1D *d28_mdHits[nSpecies][nErange][nDmg];
 const int nSecDet = 21; // 7(ring, including pmts) x 3 (sectors)
 
 void initHisto_det28(TFile *fout){
+  fout->cd();
   fout->mkdir("det28","main detector plane");
+  fout->cd("det28");
 
   for(int i=0;i<nSpecies;i++){
     for(int k=0;k<nZcut;k++){
