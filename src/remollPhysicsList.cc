@@ -131,9 +131,11 @@ void remollPhysicsList::SetVerboseLevel(G4int level)
   G4VModularPhysicsList::SetVerboseLevel(level);
 
   // Set verbose level of precompound deexcitation
+  #if G4VERSION_NUMBER >= 1060
   if (auto nuclearleveldata = G4NuclearLevelData::GetInstance())
     if (auto param = nuclearleveldata->GetParameters())
       param->SetVerbose(level);
+  #endif
 
   // Set verbose level of HadronicProcessStore
   G4HadronicProcessStore::Instance()->SetVerbose(level);
