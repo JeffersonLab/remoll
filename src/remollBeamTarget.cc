@@ -287,6 +287,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 		    cumulative_effective_length += effective_length;
 		}
 		break;
+            case kNoTargetVolume:
+                // nothing to do, just avoid compilation warning
+                break;
 	}
 
 	if( material->GetBaseMaterial() ){
