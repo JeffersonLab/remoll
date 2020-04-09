@@ -80,11 +80,11 @@ void initHisto_det28(TFile *fout){
       for(int k=0;k<nDmg;k++){
 	d28_z0[i][j][k]=new TH1D(Form("d28_z0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				 Form("%s weighted R%d %s;z0[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
-				 2000,-6000,32000);
+				 3000,-6000,45000);
       
 	d28_z0HE[i][j][k]=new TH1D(Form("d28_z0HE_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				   Form("%s weighted R%d %s;z0HE[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
-				   2000,-6000,32000);
+				   3000,-6000,45000);
       
 
 	d28_xy[i][j][k]=new TH2D(Form("d28_xy_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
@@ -95,13 +95,13 @@ void initHisto_det28(TFile *fout){
       
 	d28_z0r0[i][j][k]=new TH2D(Form("d28_z0r0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				   Form("%s R%d for %s;z0[mm];r0[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
-				   2000,-6000,32000,
-				   200,0,3000);
+				   3000,-6000,45000,
+				   400,0,6000);
 
 	d28_z0x0[i][j][k]=new TH2D(Form("d28_z0x0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				   Form("%s R%d for %s;z0[mm];x0[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
-				   2000,-6000,32000,
-				   200,-3000,3000);
+				   3000,-6000,45000,
+				   400,-6000,6000);
       }
     }
   }
