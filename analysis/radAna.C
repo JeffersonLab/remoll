@@ -123,22 +123,23 @@ long processOne(string fnm){
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
       int det = hit->at(j).det;
+      double pz = hit->at(j).pz;
       if(det==28)
 	fillHisto_det28(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
       else if(det>=40 && det<=46)
-	fillHisto_beamLine(det, sp, rdDmg, xx, yy, kinE);
+	fillHisto_beamLine(det, sp, rdDmg, pz, xx, yy, kinE);
 
       if((sp==0 || sp==5) && kinE>1){
 	if(det==28)
 	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 	else if(det>=40 && det<=46)
-	  fillHisto_beamLine(det, 1, rdDmg, xx, yy, kinE);
+	  fillHisto_beamLine(det, 1, rdDmg, pz, xx, yy, kinE);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
 	  if(det==28)
 	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 	  else if(det>=40 && det<=46)
-	    fillHisto_beamLine(det, 4, rdDmg, xx, yy, kinE);
+	    fillHisto_beamLine(det, 4, rdDmg, pz, xx, yy, kinE);
 
 	}
       }
