@@ -13,21 +13,21 @@
 #include "anaConst.h"
 
 const int nRing=8; //all, and the actual 7 rings
-TH1D *d28_energy[nSpecies][nRing], *d28_energyNIEL[nSpecies][nRing];
+TH1F *d28_energy[nSpecies][nRing], *d28_energyNIEL[nSpecies][nRing];
 
-TH1D *d28_z0[nSpecies][nRing][nDmg];
-TH1D *d28_z0HE[nSpecies][nRing][nDmg];
+TH1F *d28_z0[nSpecies][nRing][nDmg];
+TH1F *d28_z0HE[nSpecies][nRing][nDmg];
 
-TH2D *d28_xy[nSpecies][nRing][nDmg];
-TH2D *d28_z0r0[nSpecies][nRing][nDmg];
-TH2D *d28_z0x0[nSpecies][nRing][nDmg];
+TH2F *d28_xy[nSpecies][nRing][nDmg];
+TH2F *d28_z0r0[nSpecies][nRing][nDmg];
+TH2F *d28_z0x0[nSpecies][nRing][nDmg];
 
 //source plots for different z cuts
-TH2D *d28_x0y0Zcut[nSpecies][nZcut];
-TH2D *d28_MDx0y0Zcut[nSpecies][nZcut];
+TH2F *d28_x0y0Zcut[nSpecies][nZcut];
+TH2F *d28_MDx0y0Zcut[nSpecies][nZcut];
 
 //bins are different sectors and rings in det 28;
-TH1D *d28_mdHits[nSpecies][nErange][nDmg];
+TH1I *d28_mdHits[nSpecies][nErange][nDmg];
 
 const int nSecDet = 21; // 7(ring, including pmts) x 3 (sectors)
 
@@ -38,12 +38,12 @@ void initHisto_det28(TFile *fout){
 
   for(int i=0;i<nSpecies;i++){
     for(int k=0;k<nZcut;k++){
-      d28_x0y0Zcut[i][k]=new TH2D(Form("d28_x0y0Zcut_%s_ZC%d",spH[i].c_str(),k),
+      d28_x0y0Zcut[i][k]=new TH2F(Form("d28_x0y0Zcut_%s_ZC%d",spH[i].c_str(),k),
 				  Form("hits per electron for %s %s;x0[mm];y0[mm]",
 				       spTit[i].c_str(),zCutTit[k].c_str()),
 				  300,-5000,5000,
 				  300,-5000,5000);
-      d28_MDx0y0Zcut[i][k]=new TH2D(Form("d28_MDx0y0Zcut_%s_ZC%d",spH[i].c_str(),k),
+      d28_MDx0y0Zcut[i][k]=new TH2F(Form("d28_MDx0y0Zcut_%s_ZC%d",spH[i].c_str(),k),
 				    Form("hits per electron for %s %s;x0[mm];y0[mm]",
 					 spTit[i].c_str(),zCutTit[k].c_str()),
 				    300,-5000,5000,
@@ -52,7 +52,7 @@ void initHisto_det28(TFile *fout){
 
     for(int k=0;k<nErange;k++)
       for(int j=0;j<nDmg;j++){
-	d28_mdHits[i][k][j]=new TH1D(Form("d28_mdHits_%s_ER%d_Dmg%d",spH[i].c_str(),k,j),
+	d28_mdHits[i][k][j]=new TH1I(Form("d28_mdHits_%s_ER%d_Dmg%d",spH[i].c_str(),k,j),
 				     Form("%s per electron for %s with %s",
 					  dmgTit[j].c_str(),spTit[i].c_str(),eRgTit[k].c_str()),
 				     nSecDet,0,nSecDet);
@@ -66,39 +66,39 @@ void initHisto_det28(TFile *fout){
     }
 
     for(int j=0;j<nRing;j++){
-      d28_energy[i][j]=new TH1D(Form("d28_energy_R%d_%s",j,spH[i].c_str()),
+      d28_energy[i][j]=new TH1F(Form("d28_energy_R%d_%s",j,spH[i].c_str()),
 				Form("rate weighted R%d for %s;E [MeV]",j,spTit[i].c_str()),
 				121,-8,4.1);
       niceLogXBins(d28_energy[i][j]);
 
-      d28_energyNIEL[i][j]=new TH1D(Form("d28_energyNEIL_R%d_%s",j,spH[i].c_str()),
+      d28_energyNIEL[i][j]=new TH1F(Form("d28_energyNEIL_R%d_%s",j,spH[i].c_str()),
 				    Form("rate weighted R%d for %s;E [MeV]",j,spTit[i].c_str()),
 				    121,-8,4.1);
       niceLogXBins(d28_energyNIEL[i][j]);
 
 
       for(int k=0;k<nDmg;k++){
-	d28_z0[i][j][k]=new TH1D(Form("d28_z0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
+	d28_z0[i][j][k]=new TH1F(Form("d28_z0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				 Form("%s weighted R%d %s;z0[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
 				 3000,-6000,45000);
       
-	d28_z0HE[i][j][k]=new TH1D(Form("d28_z0HE_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
+	d28_z0HE[i][j][k]=new TH1F(Form("d28_z0HE_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				   Form("%s weighted R%d %s;z0HE[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
 				   3000,-6000,45000);
       
 
-	d28_xy[i][j][k]=new TH2D(Form("d28_xy_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
+	d28_xy[i][j][k]=new TH2F(Form("d28_xy_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				 Form("%s R%d for %s;x[mm];y[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
 				 800,-2000,2000,
 				 800,-2000,2000);
       
       
-	d28_z0r0[i][j][k]=new TH2D(Form("d28_z0r0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
+	d28_z0r0[i][j][k]=new TH2F(Form("d28_z0r0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				   Form("%s R%d for %s;z0[mm];r0[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
 				   3000,-6000,45000,
 				   400,0,6000);
 
-	d28_z0x0[i][j][k]=new TH2D(Form("d28_z0x0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
+	d28_z0x0[i][j][k]=new TH2F(Form("d28_z0x0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				   Form("%s R%d for %s;z0[mm];x0[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
 				   3000,-6000,45000,
 				   400,-6000,6000);

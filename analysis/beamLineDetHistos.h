@@ -7,9 +7,9 @@
 */
 #include "anaConst.h"
 
-std::vector<TH2D*> dBL_xy[nSpecies][nDmg][nFB];
-std::vector<TH1D*> dBL_r[nSpecies][nDmg][nFB];
-std::vector<TH1D*> dBL_energy[nSpecies][nFB];
+std::vector<TH2F*> dBL_xy[nSpecies][nDmg][nFB];
+std::vector<TH1F*> dBL_r[nSpecies][nDmg][nFB];
+std::vector<TH1F*> dBL_energy[nSpecies][nFB];
 std::map<int, int> dBL_ID2entry;
 
 void initHisto_beamLine(TFile *fout,int detID, string detNm){
@@ -21,17 +21,17 @@ void initHisto_beamLine(TFile *fout,int detID, string detNm){
   dBL_ID2entry.insert(std::pair<int, int>(detID,dBL_ID2entry.size()));
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
-      dBL_energy[i][k].push_back(new TH1D(Form("d%d_energy_%s_%s",detID,fbH[k].c_str(),spH[i].c_str()),
+      dBL_energy[i][k].push_back(new TH1F(Form("d%d_energy_%s_%s",detID,fbH[k].c_str(),spH[i].c_str()),
 					  Form("energy distribution %s %s",fbH[k].c_str(),spH[i].c_str()),
 					  121,-8,4.1));
       niceLogXBins(dBL_energy[i][k][dBL_ID2entry[detID]]);
       
       for(int j=0;j<nDmg;j++){
-	dBL_xy[i][j][k].push_back(new TH2D(Form("d%d_xy_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
+	dBL_xy[i][j][k].push_back(new TH2F(Form("d%d_xy_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
 					   Form("%s for %s %s;x[mm];y[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 					   800,-1300,1300,
 					   800,-1300,1300));
-	dBL_r[i][j][k].push_back(new TH1D(Form("d%d_r_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
+	dBL_r[i][j][k].push_back(new TH1F(Form("d%d_r_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
 					  Form("%s for %s %s;x[mm];y[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 					  800,0,1300));
       }
