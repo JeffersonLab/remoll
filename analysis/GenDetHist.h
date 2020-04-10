@@ -37,13 +37,13 @@ void initHisto_gendet(TFile *fout){
       gendet_x0y0Zcut[i][k]=new TH2D(Form("gendet_x0y0Zcut_%s_ZC%d",spH[i].c_str(),k),
 				  Form("hits per electron for %s %s;x0[mm];y0[mm]",
 				       spTit[i].c_str(),zCutTit[k].c_str()),
-				  300,-5000,5000,
-				  300,-5000,5000);
+				  400,-8000,8000,
+				  400,-8000,8000);
       gendet_MDx0y0Zcut[i][k]=new TH2D(Form("gendet_MDx0y0Zcut_%s_ZC%d",spH[i].c_str(),k),
 				    Form("hits per electron for %s %s;x0[mm];y0[mm]",
 					 spTit[i].c_str(),zCutTit[k].c_str()),
-				    300,-5000,5000,
-				    300,-5000,5000);
+				    400,-8000,8000,
+				    400,-8000,8000);
     }
 
 
@@ -70,19 +70,19 @@ void initHisto_gendet(TFile *fout){
 
 	gendet_xy[i][k]=new TH2D(Form("gendet_xy_%s_Dmg%d",spH[i].c_str(),k),
 				 Form("%s for %s;x[mm];y[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				 800,-2000,2000,
-				 800,-2000,2000);
+				 800,-8000,8000,
+				 800,-8000,8000);
       
       
 	gendet_z0r0[i][k]=new TH2D(Form("gendet_z0r0_%s_Dmg%d",spH[i].c_str(),k),
 				   Form("%s for %s;z0[mm];r0[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
 				   2000,-6000,32000,
-				   200,0,3000);
+				   200,0,8000);
 
 	gendet_z0x0[i][k]=new TH2D(Form("gendet_z0x0_%s_Dmg%d",spH[i].c_str(),k),
 				   Form("%s for %s;z0[mm];x0[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
 				   2000,-6000,32000,
-				   200,-3000,3000);
+				   200,-8000,8000);
       }
   }
 }
