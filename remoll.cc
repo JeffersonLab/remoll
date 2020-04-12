@@ -102,7 +102,6 @@ int main(int argc, char** argv) {
     //-------------------------------
     // Initialization of Run manager
     //-------------------------------
-    G4cout << "RunManager construction starting...." << G4endl;
     RunManager* runManager = new RunManager;
     #ifdef G4MULTITHREADED
     if (threads > 0) runManager->SetNumberOfThreads(threads);
