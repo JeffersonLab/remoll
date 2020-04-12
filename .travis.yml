@@ -6,21 +6,23 @@ jobs:
   include:
     - stage: build docker image
       script:
-      - docker build -t jeffersonlab/remoll .
-      - docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD" ;
-        if [ "$TRAVIS_BRANCH" == "master" ]; then
-          docker tag jeffersonlab/remoll jeffersonlab/remoll:latest ;
-          docker push jeffersonlab/remoll:latest ;
-        else
-          docker tag jeffersonlab/remoll jeffersonlab/remoll:$TRAVIS_BRANCH ;
-          docker push jeffersonlab/remoll:$TRAVIS_BRANCH ;
+      - docker build -t jeffersonlab/remoll:$TRAVIS_BRANCH .
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin ;
+        if [ "${TRAVIS_PULL_REQUEST}" == "false" ]; then
+          if [ "$TRAVIS_BRANCH" == "master" ]; then
+            docker tag jeffersonlab/remoll:$TRAVIS_BRANCH jeffersonlab/remoll:latest ;
+            docker push jeffersonlab/remoll:latest ;
+            docker tag jeffersonlab/remoll:latest jeffersonlab/remoll:$TRAVIS_BRANCH ;
+          else
+            docker push jeffersonlab/remoll:$TRAVIS_BRANCH ;
+          fi
         fi
     - stage: tests
       script:
       - for suite in load validate overlap ; do
           echo "=== scripts/tests/test_geometries.sh ${suite} ===" ;
           mkdir -p ${PWD}/logfiles ${PWD}/rootfiles ;
-          time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll sh -c "
+          time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll:$TRAVIS_BRANCH sh -c "
             scripts/tests/test_geometries.sh ${suite}
           " ;
         done ;
@@ -29,7 +31,7 @@ jobs:
       - for suite in unit ; do
           echo "=== scripts/tests/test_macros.sh ${suite} ===" ;
           mkdir -p ${PWD}/logfiles ${PWD}/rootfiles ;
-          time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll sh -c "
+          time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll:$TRAVIS_BRANCH sh -c "
             scripts/tests/test_macros.sh ${suite}
         " ;
         done ;
@@ -38,7 +40,7 @@ jobs:
       - for suite in commit ; do
           echo "=== scripts/tests/test_macros.sh ${suite} ===" ;
           mkdir -p ${PWD}/logfiles ${PWD}/rootfiles ;
-          time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll sh -c "
+          time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll:$TRAVIS_BRANCH sh -c "
             scripts/tests/test_macros.sh ${suite} &&
             scripts/tests/targz_macros.sh ${suite} &&
             scripts/tests/watermark.sh ${suite}
