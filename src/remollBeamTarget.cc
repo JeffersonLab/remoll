@@ -370,7 +370,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     }
     assert( !std::isnan(msth) && !std::isnan(msph) );
     assert( !std::isinf(msth) && !std::isinf(msph) );
-    assert( msth==-1e9 && msph==-1e9 );
+    assert( msth!=-1e9 && msph!=-1e9 );
 
     // Sample raster angles
     G4double bmth = 0, bmph = 0;
