@@ -13,6 +13,7 @@
 
 #include "G4String.hh"
 
+#include <map>
 #include <vector>
 #include <fstream>
 
@@ -97,9 +98,18 @@ class remollIO {
 
         void RegisterDetector(G4String lvname, G4String sdname, G4int no) {
           G4AutoLock lock(&remollIOMutex);
-          fDetNos.push_back(no);
-          fDetLVNames += (fDetLVNames.size() > 0? ":": "") + lvname + "/I";
-          fDetSDNames += (fDetSDNames.size() > 0? ":": "") + sdname + "/I";
+          static std::map<G4String,G4int> fDetLVMap;
+          if (fDetLVMap.count(lvname) == 0) {
+            fDetLVMap[lvname] = no;
+            fDetLVNos.push_back(no);
+            fDetLVNames += (fDetLVNames.size() > 0? ":": "") + lvname + "/I";
+          }
+          static std::map<G4String,G4int> fDetSDMap;
+          if (fDetSDMap.count(sdname) == 0) {
+            fDetSDMap[sdname] = no;
+            fDetSDNos.push_back(no);
+            fDetSDNames += (fDetSDNames.size() > 0? ":": "") + sdname + "/I";
+          }
         }
 
     private:
@@ -132,8 +142,9 @@ class remollIO {
 	remollUnits_t fUnits;
 
         // Detectors
-        std::vector<Int_t> fDetNos;
+        std::vector<Int_t> fDetLVNos;
         G4String fDetLVNames;
+        std::vector<Int_t> fDetSDNos;
         G4String fDetSDNames;
 
 	// Event data
