@@ -656,6 +656,9 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
+  // Duplication map
+  std::map<int, G4LogicalVolume*> detnomap;
+
   // Loop over all volumes with auxiliary tags
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
@@ -683,6 +686,12 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           det_name_ss << "remoll/det_" << det_no;
           std::string det_name = det_name_ss.str();
 
+          // Check for duplication
+          if (detnomap.count(det_no) != 0) {
+            G4cerr << "remoll: DetNo " << det_no << " for " << myvol->GetName() << G4endl;
+            G4cerr << "remoll: already used by " << detnomap[det_no]->GetName() << G4endl;
+          }
+
           // Try to find sensitive detector
           G4SDManager* SDman = G4SDManager::GetSDMpointer();
           G4VSensitiveDetector* sd = SDman->FindSensitiveDetector(det_name, (fVerboseLevel > 0));
@@ -701,6 +710,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 
             // Register detector with SD manager
             SDman->AddNewDetector(remollsd);
+            detnomap[det_no] = myvol;
 
             // Register detector with remollIO
             remollIO* io = remollIO::GetInstance();
