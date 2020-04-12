@@ -453,11 +453,9 @@ double remollGenTF1::elasticFit(double *x, double *par){
 }
 
 double remollGenTF1::inelasticFit(double *x, double *par){
-    double g;
-    double e;
-
     double arg = (fabs(par[2])>1e-6)? (x[0] - (par[1]))/par[2] : 0.0;
-    g = par[0]*exp(-0.5*arg*arg)/(par[2]*sqrt(2.0*TMath::Pi()));
+    double g = par[0]*exp(-0.5*arg*arg)/(par[2]*sqrt(2.0*TMath::Pi()));
+    double e = 0;
     if (x[0] > (par[1]))
         e = par[3]/TMath::Power(x[0],par[4]);/* + par[5];*/
     if (g > e){

@@ -311,22 +311,22 @@ file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/hybridJLAB.txt
      ${REMOLL_MAP_DIR}/hybridJLAB.txt
      EXPECTED_MD5 c2da18fd7ab80cc4abe7eafc487963dc
-     SHOW_PROGRESS)
+     )
 file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/upstreamJLAB_1.25.txt
      ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt
      EXPECTED_MD5 af06ed35516c17640e89ba3aa0f5b200
-     SHOW_PROGRESS)
+     )
 file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/blockyUpstream_rm_1.1.txt
      ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
      EXPECTED_MD5 3e2338e1ba74b03da37545e98931f5f3
-     SHOW_PROGRESS)
+     )
 file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/blockyHybrid_rm_3.0.txt
      ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
      EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e
-     SHOW_PROGRESS)
+     )
 install(FILES
      ${REMOLL_MAP_DIR}/hybridJLAB.txt
      ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt
@@ -339,12 +339,12 @@ if(ADDITIONAL_FIELDS)
      ${REMOLL_DOWNLOADS}/upstreamSymmetric_sensR_0.1.txt
      ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.1.txt
      EXPECTED_MD5 849d9dc5abab0842fc13fef7f4918648
-     SHOW_PROGRESS)
+     )
   file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/hybridSymmetric_sensR_0.1.txt
      ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.1.txt
      EXPECTED_MD5 78fad2ffa5b5ae129df11bdf0ce25333
-     SHOW_PROGRESS)
+     )
   install(FILES
      ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
      ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
