@@ -9,7 +9,10 @@
 //
 // //Load in the script, and run it
 // >.L radAna.C
-// > radAna(<remoll output file>,<1 for MD, 2 for beamline, 4 for hall Det>, <1 for beam generator, 0 else>)
+// > radAna(<remoll output file>,
+//          <1 for MD, 2 for beamline, 4 for hall Det>, 
+//          <0 to update the file, 1 to recreate>, 
+//          <1 for beam generator, 0 else>)
 
 #include "radDamage.hh"
 #include "histogramUtilities.h"
@@ -28,12 +31,12 @@ int analyzeDet(0);
 
 radDamage radDmg;
 
-void initHisto();
+void initHisto(int);
 void writeOutput();
 long processOne(string);
 void process();
 
-void radAna(const string& finName = "./remollout.root", int anaDet=1, int beamGenerator=1){
+void radAna(const string& finName = "./remollout.root", int anaDet=1, int overWriteFile = 1, int beamGenerator=1){
   fileNm = finName;
   beamGen = beamGenerator;
 
@@ -51,7 +54,7 @@ void radAna(const string& finName = "./remollout.root", int anaDet=1, int beamGe
     return;
   }
 
-  initHisto();
+  initHisto(overWriteFile);
   process();
   writeOutput();
 }
@@ -194,10 +197,11 @@ long processOne(string fnm){
 };
 
 
-void initHisto(){
+void initHisto(int fileType){
   string foutNm = Form("%s_radAnaV4.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
-  fout = new TFile(foutNm.c_str(),"RECREATE");
+  const string fTp[2]={"UPDATE","REACREATE"};
+  fout = new TFile(foutNm.c_str(),fTp[fileType].c_str());
   if( (analyzeDet & 1) == 1)
     initHisto_det28(fout);
   if( (analyzeDet & 2) == 2){
