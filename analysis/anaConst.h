@@ -17,6 +17,9 @@ const double eRanges[nErange]={0,1,10,1e6};
 const int nDmg=3;
 const string dmgTit[nDmg]={"rate","rate*E","rate*NIEL"};
 
+const int nFB=3; //Pz cut; 
+const string fbH[nFB]={"allP","Pg1","Pl1"};
+
 const int nZcut=10;
 const string zCutTit[nZcut]={"tgt region", "coll1", "coll2", "US", "coll4+Pb", "lintel+coll5", "collar1", "collar2", "air+pipe","SM+Absorber"};
 const int zCuts[nZcut][2]={

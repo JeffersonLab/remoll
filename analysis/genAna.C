@@ -8,14 +8,14 @@
 // > gSystem->Load("radDamage_cc.so");
 //
 // //Load in the script, and run it
-// >.L radAna.C
-// > radAna(<remoll output file>,<1 for beam generator, 0 else>)
+// >.L genAna.C
+// > genAna(<remoll output file>,<1 for beam generator, 0 else>)
 
 #include "radDamage.hh"
 #include "histogramUtilities.h"
 #include "mainDetUtilities.h"
-#include "det28Histos.h"
-#include "beamLineDetHistos.h"
+//#include "det28Histos.h"
+#include "GenDetHist.h"
 
 TFile *fout;
 string fileNm;
@@ -23,7 +23,7 @@ int beamGen(1);
 long nTotEv(0);
 int nFiles(0);
 long currentEvNr(0);
-
+int detUT = 6668;
 radDamage radDmg;
 
 void initHisto();
@@ -31,7 +31,7 @@ void writeOutput();
 long processOne(string);
 void process();
 
-void radAna(const string& finName = "./remollout.root", int beamGenerator=1){
+void genAna(const string& finName = "./remollout.root", int beamGenerator=1){
   fileNm = finName;
   beamGen = beamGenerator;
 
@@ -95,7 +95,7 @@ long processOne(string fnm){
   int sector(-1);
 
   //for (Long64_t event = 0; event < 5; t->GetEntry(event++)) {
-  for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
+  for (Long64_t event = 0; event < nEntries/1.; t->GetEntry(event++)) {
     currentEvNr++;
     if( float(event+1)/nEntries*100 > currentProc){
       cout<<"at tree entry\t"<<event<<"\t"<< float(event+1)/nEntries*100<<endl;
@@ -123,42 +123,32 @@ long processOne(string fnm){
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
       int det = hit->at(j).det;
-      double pz = hit->at(j).pz;
-      if(det==28)
-	fillHisto_det28(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
-      else if(det>=40 && det<=46)
-	fillHisto_beamLine(det, sp, rdDmg, pz, xx, yy, kinE);
+      if(det==detUT)
+	fillHisto_gendet(sp,rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 
       if((sp==0 || sp==5) && kinE>1){
-	if(det==28)
-	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
-	else if(det>=40 && det<=46)
-	  fillHisto_beamLine(det, 1, rdDmg, pz, xx, yy, kinE);
+	if(det==detUT)
+	  fillHisto_gendet(1,rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
-	  if(det==28)
-	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
-	  else if(det>=40 && det<=46)
-	    fillHisto_beamLine(det, 4, rdDmg, pz, xx, yy, kinE);
-
+	  if(det==detUT)
+	    fillHisto_gendet(4,rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 	}
       }
       
       double phi = atan2(hit->at(j).y,hit->at(j).x);
       if(phi<0) phi+=2*pi;
-      int foundRing = findDetector(sector, phi, hit->at(j).r,1);
-      if(foundRing==-1) continue;
 
-      if(det==28)
-	fillHisto_det28(sp,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+      if(det==detUT)
+	fillHisto_gendet(sp, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
 
       if((sp==0 || sp==5) && kinE>1){
-	if(det==28)
-	  fillHisto_det28(1,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	if(det==detUT)
+	  fillHisto_gendet(1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
-	  if(det==28)
-	    fillHisto_det28(4,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	  if(det==detUT)
+	    fillHisto_gendet(4, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
 	}
       }
 
@@ -175,14 +165,7 @@ void initHisto(){
   string foutNm = Form("%s_radAnaV4.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
-  initHisto_det28(fout);
-  initHisto_beamLine(fout,40,"BL: front collar1");
-  initHisto_beamLine(fout,41,"BL: front collar2");
-  initHisto_beamLine(fout,42,"BL: front sam");
-  initHisto_beamLine(fout,43,"BL: front dump tunnel");
-  initHisto_beamLine(fout,44,"BL: front donut");
-  initHisto_beamLine(fout,45,"BL: back donut");
-  initHisto_beamLine(fout,46,"BL: front Al-wall");
+  initHisto_gendet(fout);
 
 }
 
@@ -192,14 +175,7 @@ void writeOutput(){
   if(beamGen)
     scaleFactor = 1./nTotEv;
 
-  writeOutput_det28(fout,scaleFactor);
-  writeOutput_beamLine(fout,40,scaleFactor);
-  writeOutput_beamLine(fout,41,scaleFactor);
-  writeOutput_beamLine(fout,42,scaleFactor);
-  writeOutput_beamLine(fout,43,scaleFactor);
-  writeOutput_beamLine(fout,44,scaleFactor);
-  writeOutput_beamLine(fout,45,scaleFactor);
-  writeOutput_beamLine(fout,46,scaleFactor);
+  writeOutput_gendet(fout,scaleFactor);
 
   fout->Close();
 }
