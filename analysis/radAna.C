@@ -200,7 +200,8 @@ long processOne(string fnm){
 void initHisto(int fileType){
   string foutNm = Form("%s_radAnaV4.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
-  const string fTp[2]={"UPDATE","REACREATE"};
+  const string fTp[2]={"UPDATE","RECREATE"};
+  cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
   fout = new TFile(foutNm.c_str(),fTp[fileType].c_str());
   if( (analyzeDet & 1) == 1)
     initHisto_det28(fout);
