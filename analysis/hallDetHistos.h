@@ -48,7 +48,7 @@ void initHisto_hall(TFile *fout){
 				     2000,-pi,pi,//0 is positive z direction
 				     2000,-4000,14000);
 
-      dHL_Wall_z0x0[i][k] = new TH2F(Form("dHL_Roof_z0x0_%s_Dmg%d",spH[i].c_str(),k),
+      dHL_Wall_z0x0[i][k] = new TH2F(Form("dHL_Wall_z0x0_%s_Dmg%d",spH[i].c_str(),k),
 				     Form("%s for %s;z0[mm];x0[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
 				     2000,-27000,45000,
 				     2000,-27000,27000);
