@@ -16,6 +16,7 @@
 #include "mainDetUtilities.h"
 #include "det28Histos.h"
 #include "beamLineDetHistos.h"
+#include "hallDetHistos.h"
 
 TFile *fout;
 string fileNm;
@@ -137,24 +138,31 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,rate*niel};
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
+      double zz = hit->at(j).z;
       int det = hit->at(j).det;
       double pz = hit->at(j).pz;
       if(det==28  && ( (analyzeDet & 1) ==1))
 	fillHisto_det28(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
       else if(det>=40 && det<=46  && ( (analyzeDet & 2) ==2))
 	fillHisto_beamLine(det, sp, rdDmg, pz, xx, yy, kinE);
+      else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
+	fillHisto_hall(det,sp,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
       if((sp==0 || sp==5) && kinE>1){
 	if(det==28 && ( (analyzeDet & 1) ==1))
 	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 	else if(det>=40 && det<=46  && ( (analyzeDet & 2) ==2))
 	  fillHisto_beamLine(det, 1, rdDmg, pz, xx, yy, kinE);
+	else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
+	  fillHisto_hall(det,1,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
 	  if(det==28 && ( (analyzeDet & 1) ==1))
 	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
 	  else if(det>=40 && det<=46  && ( (analyzeDet & 2) ==2))
 	    fillHisto_beamLine(det, 4, rdDmg, pz, xx, yy, kinE);
+	  else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
+	    fillHisto_hall(det,4,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
 	}
       }
@@ -202,7 +210,7 @@ void initHisto(){
     initHisto_beamLine(fout,46,"BL: front Al-wall");
     initHisto_beamLine(fout,51,"BL: behind diffuser");
   }  else if( (analyzeDet & 4) == 4){
-    cout<<"FIXME"<<endl;
+    initHisto_hall(fout);
   }
 }
 
@@ -225,7 +233,7 @@ void writeOutput(){
     writeOutput_beamLine(fout,46,scaleFactor);
     writeOutput_beamLine(fout,51,scaleFactor);
   }  else if( (analyzeDet & 4) == 4){
-    cout<<"FIXME"<<endl;
+    writeOutput_hall(fout,scaleFactor);
   }
 
   fout->Close();
