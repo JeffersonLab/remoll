@@ -10,24 +10,24 @@
 <solids>
 	<tube name="solid_pmt_window" rmin="0" rmax="38.1" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
 	<tube name="solid_pmt_cathode" rmin="0" rmax="38.1" z="3e-06" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
-	<box name="solid_mirror_box_tungstenquartz_1" lunit="mm" x="170.0" y="253.492" z="78.604"/>
-	<box name="solid_mirror_box_tungstenquartz_2" lunit="mm" x="171.0" y="246.888" z="72.0"/>
+	<box name="solid_mirror_box_tungstenquartz_1" lunit="mm" x="160.0" y="244.604" z="78.604"/>
+	<box name="solid_mirror_box_tungstenquartz_2" lunit="mm" x="161.0" y="238" z="72.0"/>
 	<subtraction name="solid_mirror_box_tungstenquartz">
 		<first ref="solid_mirror_box_tungstenquartz_1"/>
 		<second ref="solid_mirror_box_tungstenquartz_2"/>
 		<position name="pos_subtract_mirror_box_tungstenquartz_12" x="0" y="0" z="0"/>
 		<rotation name="rot_subtract_mirror_box_tungstenquartz_12" x="0" y="0" z="0"/>
 	</subtraction>
-	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="78.604"  x2="172.486" y1="253.492"  y2="253.492" z="116.586"/>
-	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="72.0"  x2="165.882" y1="246.888"  y2="246.888" z="117.586"/>
+	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="78.604"  x2="172.486" y1="244.604"  y2="244.604" z="61.722"/>
+	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="72.0"  x2="165.882" y1="238"  y2="238" z="62.722"/>
 	<subtraction name="solid_mirror_box_bot">
 		<first ref="solid_mirror_box_bot_1"/>
 		<second ref="solid_mirror_box_bot_2"/>
 		<position name="pos_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
 		<rotation name="rot_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
 	</subtraction>
-	<trd name="solid_mirror_box_top_1" lunit="mm" x1="172.486"  x2="54.002" y1="253.492"  y2="54.002" z="247.390811611"/>
-	<trd name="solid_mirror_box_top_2" lunit="mm" x1="72.0"  x2="47.398" y1="246.888"  y2="47.398" z="248.390811611"/>
+	<trd name="solid_mirror_box_top_1" lunit="mm" x1="172.486"  x2="54.002" y1="244.604"  y2="54.002" z="130.971606147"/>
+	<trd name="solid_mirror_box_top_2" lunit="mm" x1="72.0"  x2="47.398" y1="238"  y2="47.398" z="131.971606147"/>
 	<subtraction name="solid_mirror_box_top">
 		<first ref="solid_mirror_box_top_1"/>
 		<second ref="solid_mirror_box_top_2"/>
@@ -35,20 +35,20 @@
 		<rotation name="rot_subtract_mirror_box_top_12" x="0" y="0" z="0"/>
 	</subtraction>
 	<xtru name="solid_quartz" lunit="mm">
-		<twoDimVertex x="-85.0" y="5.0"/>
-		<twoDimVertex x="-85.0" y="-5.0"/>
-		<twoDimVertex x="95.0" y="-5.0"/>
-		<twoDimVertex x="85.0" y="5.0"/>
-		<section zOrder="1" zPosition="-123.444" xOffset="0" yOffset="0" scalingFactor="1"/>		<section zOrder="2" zPosition="123.444" xOffset="0" yOffset="0" scalingFactor="1"/>	</xtru>
-	<box name="solid_tungsten" lunit="mm" x="170.0" y="246.888" z="8.0"/>
-	<box name="solid_logic_mirror_box" lunit="mm" x="366.976814611" y="253.492" z="172.486"/>
+		<twoDimVertex x="-80.0" y="5.0"/>
+		<twoDimVertex x="-80.0" y="-5.0"/>
+		<twoDimVertex x="90.0" y="-5.0"/>
+		<twoDimVertex x="80.0" y="5.0"/>
+		<section zOrder="1" zPosition="-119" xOffset="0" yOffset="0" scalingFactor="1"/>		<section zOrder="2" zPosition="119" xOffset="0" yOffset="0" scalingFactor="1"/>	</xtru>
+	<box name="solid_tungsten" lunit="mm" x="160.0" y="238" z="8.0"/>
+	<box name="solid_logic_mirror_box" lunit="mm" x="195.693609147" y="244.604" z="172.486"/>
 	<union name="solid_logic_mirror_box_union">
 		<first ref="solid_mirror_box_tungstenquartz_1"/>
 		<second ref="solid_logic_mirror_box"/>
-		<position name="pos_logic_mirror_box_union" x="268.488407306" y="0" z="0"/>
+		<position name="pos_logic_mirror_box_union" x="177.846804574" y="0" z="0"/>
 		<rotation name="rot_logic_mirror_box_union" x="0" y="0" z="0"/>
 	</union>
-	<cone name="solid_showerMaxMother" rmin1="750"  rmax1="1900" rmin2="750" rmax2="1900"  z="509.25" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<cone name="solid_showerMaxMother" rmin1="600"  rmax1="1900" rmin2="600" rmax2="1900"  z="416.764" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 </solids>
 
 
@@ -140,22 +140,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_0">
 			<volumeref ref="logic_mirror_box_bot_0"/>
-			<position name="pos_logic_mirror_box_bot_0" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_0" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_0">
 			<volumeref ref="logic_mirror_box_top_0"/>
-			<position name="pos_logic_mirror_box_top_0" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_0" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_0">
 			<volumeref ref="logic_pmt_window_0"/>
-			<position name="pos_logic_pmt_window_0" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_0" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_0">
 			<volumeref ref="logic_pmt_cathode_0"/>
-			<position name="pos_logic_pmt_cathode_0" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_0" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_0_0">
@@ -270,22 +270,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_1">
 			<volumeref ref="logic_mirror_box_bot_1"/>
-			<position name="pos_logic_mirror_box_bot_1" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_1" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_1">
 			<volumeref ref="logic_mirror_box_top_1"/>
-			<position name="pos_logic_mirror_box_top_1" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_1" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_1">
 			<volumeref ref="logic_pmt_window_1"/>
-			<position name="pos_logic_pmt_window_1" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_1" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_1">
 			<volumeref ref="logic_pmt_cathode_1"/>
-			<position name="pos_logic_pmt_cathode_1" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_1" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_1_0">
@@ -400,22 +400,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_2">
 			<volumeref ref="logic_mirror_box_bot_2"/>
-			<position name="pos_logic_mirror_box_bot_2" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_2" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_2">
 			<volumeref ref="logic_mirror_box_top_2"/>
-			<position name="pos_logic_mirror_box_top_2" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_2" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_2">
 			<volumeref ref="logic_pmt_window_2"/>
-			<position name="pos_logic_pmt_window_2" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_2" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_2">
 			<volumeref ref="logic_pmt_cathode_2"/>
-			<position name="pos_logic_pmt_cathode_2" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_2" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_2_0">
@@ -530,22 +530,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_3">
 			<volumeref ref="logic_mirror_box_bot_3"/>
-			<position name="pos_logic_mirror_box_bot_3" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_3" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_3">
 			<volumeref ref="logic_mirror_box_top_3"/>
-			<position name="pos_logic_mirror_box_top_3" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_3" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_3">
 			<volumeref ref="logic_pmt_window_3"/>
-			<position name="pos_logic_pmt_window_3" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_3" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_3">
 			<volumeref ref="logic_pmt_cathode_3"/>
-			<position name="pos_logic_pmt_cathode_3" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_3" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_3_0">
@@ -660,22 +660,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_4">
 			<volumeref ref="logic_mirror_box_bot_4"/>
-			<position name="pos_logic_mirror_box_bot_4" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_4" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_4">
 			<volumeref ref="logic_mirror_box_top_4"/>
-			<position name="pos_logic_mirror_box_top_4" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_4" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_4">
 			<volumeref ref="logic_pmt_window_4"/>
-			<position name="pos_logic_pmt_window_4" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_4" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_4">
 			<volumeref ref="logic_pmt_cathode_4"/>
-			<position name="pos_logic_pmt_cathode_4" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_4" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_4_0">
@@ -790,22 +790,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_5">
 			<volumeref ref="logic_mirror_box_bot_5"/>
-			<position name="pos_logic_mirror_box_bot_5" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_5" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_5">
 			<volumeref ref="logic_mirror_box_top_5"/>
-			<position name="pos_logic_mirror_box_top_5" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_5" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_5">
 			<volumeref ref="logic_pmt_window_5"/>
-			<position name="pos_logic_pmt_window_5" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_5" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_5">
 			<volumeref ref="logic_pmt_cathode_5"/>
-			<position name="pos_logic_pmt_cathode_5" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_5" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_5_0">
@@ -920,22 +920,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_6">
 			<volumeref ref="logic_mirror_box_bot_6"/>
-			<position name="pos_logic_mirror_box_bot_6" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_6" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_6">
 			<volumeref ref="logic_mirror_box_top_6"/>
-			<position name="pos_logic_mirror_box_top_6" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_6" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_6">
 			<volumeref ref="logic_pmt_window_6"/>
-			<position name="pos_logic_pmt_window_6" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_6" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_6">
 			<volumeref ref="logic_pmt_cathode_6"/>
-			<position name="pos_logic_pmt_cathode_6" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_6" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_6_0">
@@ -1050,22 +1050,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_7">
 			<volumeref ref="logic_mirror_box_bot_7"/>
-			<position name="pos_logic_mirror_box_bot_7" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_7" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_7">
 			<volumeref ref="logic_mirror_box_top_7"/>
-			<position name="pos_logic_mirror_box_top_7" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_7" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_7">
 			<volumeref ref="logic_pmt_window_7"/>
-			<position name="pos_logic_pmt_window_7" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_7" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_7">
 			<volumeref ref="logic_pmt_cathode_7"/>
-			<position name="pos_logic_pmt_cathode_7" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_7" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_7_0">
@@ -1180,22 +1180,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_8">
 			<volumeref ref="logic_mirror_box_bot_8"/>
-			<position name="pos_logic_mirror_box_bot_8" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_8" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_8">
 			<volumeref ref="logic_mirror_box_top_8"/>
-			<position name="pos_logic_mirror_box_top_8" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_8" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_8">
 			<volumeref ref="logic_pmt_window_8"/>
-			<position name="pos_logic_pmt_window_8" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_8" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_8">
 			<volumeref ref="logic_pmt_cathode_8"/>
-			<position name="pos_logic_pmt_cathode_8" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_8" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_8_0">
@@ -1310,22 +1310,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_9">
 			<volumeref ref="logic_mirror_box_bot_9"/>
-			<position name="pos_logic_mirror_box_bot_9" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_9" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_9">
 			<volumeref ref="logic_mirror_box_top_9"/>
-			<position name="pos_logic_mirror_box_top_9" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_9" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_9">
 			<volumeref ref="logic_pmt_window_9"/>
-			<position name="pos_logic_pmt_window_9" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_9" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_9">
 			<volumeref ref="logic_pmt_cathode_9"/>
-			<position name="pos_logic_pmt_cathode_9" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_9" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_9_0">
@@ -1440,22 +1440,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_10">
 			<volumeref ref="logic_mirror_box_bot_10"/>
-			<position name="pos_logic_mirror_box_bot_10" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_10" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_10">
 			<volumeref ref="logic_mirror_box_top_10"/>
-			<position name="pos_logic_mirror_box_top_10" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_10" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_10">
 			<volumeref ref="logic_pmt_window_10"/>
-			<position name="pos_logic_pmt_window_10" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_10" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_10">
 			<volumeref ref="logic_pmt_cathode_10"/>
-			<position name="pos_logic_pmt_cathode_10" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_10" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_10_0">
@@ -1570,22 +1570,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_11">
 			<volumeref ref="logic_mirror_box_bot_11"/>
-			<position name="pos_logic_mirror_box_bot_11" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_11" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_11">
 			<volumeref ref="logic_mirror_box_top_11"/>
-			<position name="pos_logic_mirror_box_top_11" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_11" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_11">
 			<volumeref ref="logic_pmt_window_11"/>
-			<position name="pos_logic_pmt_window_11" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_11" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_11">
 			<volumeref ref="logic_pmt_cathode_11"/>
-			<position name="pos_logic_pmt_cathode_11" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_11" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_11_0">
@@ -1700,22 +1700,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_12">
 			<volumeref ref="logic_mirror_box_bot_12"/>
-			<position name="pos_logic_mirror_box_bot_12" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_12" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_12">
 			<volumeref ref="logic_mirror_box_top_12"/>
-			<position name="pos_logic_mirror_box_top_12" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_12" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_12">
 			<volumeref ref="logic_pmt_window_12"/>
-			<position name="pos_logic_pmt_window_12" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_12" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_12">
 			<volumeref ref="logic_pmt_cathode_12"/>
-			<position name="pos_logic_pmt_cathode_12" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_12" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_12_0">
@@ -1830,22 +1830,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_13">
 			<volumeref ref="logic_mirror_box_bot_13"/>
-			<position name="pos_logic_mirror_box_bot_13" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_13" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_13">
 			<volumeref ref="logic_mirror_box_top_13"/>
-			<position name="pos_logic_mirror_box_top_13" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_13" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_13">
 			<volumeref ref="logic_pmt_window_13"/>
-			<position name="pos_logic_pmt_window_13" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_13" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_13">
 			<volumeref ref="logic_pmt_cathode_13"/>
-			<position name="pos_logic_pmt_cathode_13" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_13" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_13_0">
@@ -1960,22 +1960,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_14">
 			<volumeref ref="logic_mirror_box_bot_14"/>
-			<position name="pos_logic_mirror_box_bot_14" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_14" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_14">
 			<volumeref ref="logic_mirror_box_top_14"/>
-			<position name="pos_logic_mirror_box_top_14" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_14" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_14">
 			<volumeref ref="logic_pmt_window_14"/>
-			<position name="pos_logic_pmt_window_14" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_14" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_14">
 			<volumeref ref="logic_pmt_cathode_14"/>
-			<position name="pos_logic_pmt_cathode_14" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_14" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_14_0">
@@ -2090,22 +2090,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_15">
 			<volumeref ref="logic_mirror_box_bot_15"/>
-			<position name="pos_logic_mirror_box_bot_15" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_15" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_15">
 			<volumeref ref="logic_mirror_box_top_15"/>
-			<position name="pos_logic_mirror_box_top_15" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_15" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_15">
 			<volumeref ref="logic_pmt_window_15"/>
-			<position name="pos_logic_pmt_window_15" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_15" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_15">
 			<volumeref ref="logic_pmt_cathode_15"/>
-			<position name="pos_logic_pmt_cathode_15" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_15" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_15_0">
@@ -2220,22 +2220,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_16">
 			<volumeref ref="logic_mirror_box_bot_16"/>
-			<position name="pos_logic_mirror_box_bot_16" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_16" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_16">
 			<volumeref ref="logic_mirror_box_top_16"/>
-			<position name="pos_logic_mirror_box_top_16" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_16" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_16">
 			<volumeref ref="logic_pmt_window_16"/>
-			<position name="pos_logic_pmt_window_16" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_16" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_16">
 			<volumeref ref="logic_pmt_cathode_16"/>
-			<position name="pos_logic_pmt_cathode_16" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_16" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_16_0">
@@ -2350,22 +2350,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_17">
 			<volumeref ref="logic_mirror_box_bot_17"/>
-			<position name="pos_logic_mirror_box_bot_17" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_17" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_17">
 			<volumeref ref="logic_mirror_box_top_17"/>
-			<position name="pos_logic_mirror_box_top_17" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_17" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_17">
 			<volumeref ref="logic_pmt_window_17"/>
-			<position name="pos_logic_pmt_window_17" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_17" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_17">
 			<volumeref ref="logic_pmt_cathode_17"/>
-			<position name="pos_logic_pmt_cathode_17" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_17" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_17_0">
@@ -2480,22 +2480,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_18">
 			<volumeref ref="logic_mirror_box_bot_18"/>
-			<position name="pos_logic_mirror_box_bot_18" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_18" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_18">
 			<volumeref ref="logic_mirror_box_top_18"/>
-			<position name="pos_logic_mirror_box_top_18" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_18" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_18">
 			<volumeref ref="logic_pmt_window_18"/>
-			<position name="pos_logic_pmt_window_18" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_18" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_18">
 			<volumeref ref="logic_pmt_cathode_18"/>
-			<position name="pos_logic_pmt_cathode_18" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_18" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_18_0">
@@ -2610,22 +2610,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_19">
 			<volumeref ref="logic_mirror_box_bot_19"/>
-			<position name="pos_logic_mirror_box_bot_19" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_19" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_19">
 			<volumeref ref="logic_mirror_box_top_19"/>
-			<position name="pos_logic_mirror_box_top_19" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_19" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_19">
 			<volumeref ref="logic_pmt_window_19"/>
-			<position name="pos_logic_pmt_window_19" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_19" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_19">
 			<volumeref ref="logic_pmt_cathode_19"/>
-			<position name="pos_logic_pmt_cathode_19" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_19" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_19_0">
@@ -2740,22 +2740,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_20">
 			<volumeref ref="logic_mirror_box_bot_20"/>
-			<position name="pos_logic_mirror_box_bot_20" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_20" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_20">
 			<volumeref ref="logic_mirror_box_top_20"/>
-			<position name="pos_logic_mirror_box_top_20" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_20" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_20">
 			<volumeref ref="logic_pmt_window_20"/>
-			<position name="pos_logic_pmt_window_20" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_20" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_20">
 			<volumeref ref="logic_pmt_cathode_20"/>
-			<position name="pos_logic_pmt_cathode_20" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_20" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_20_0">
@@ -2870,22 +2870,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_21">
 			<volumeref ref="logic_mirror_box_bot_21"/>
-			<position name="pos_logic_mirror_box_bot_21" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_21" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_21">
 			<volumeref ref="logic_mirror_box_top_21"/>
-			<position name="pos_logic_mirror_box_top_21" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_21" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_21">
 			<volumeref ref="logic_pmt_window_21"/>
-			<position name="pos_logic_pmt_window_21" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_21" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_21">
 			<volumeref ref="logic_pmt_cathode_21"/>
-			<position name="pos_logic_pmt_cathode_21" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_21" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_21_0">
@@ -3000,22 +3000,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_22">
 			<volumeref ref="logic_mirror_box_bot_22"/>
-			<position name="pos_logic_mirror_box_bot_22" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_22" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_22">
 			<volumeref ref="logic_mirror_box_top_22"/>
-			<position name="pos_logic_mirror_box_top_22" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_22" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_22">
 			<volumeref ref="logic_pmt_window_22"/>
-			<position name="pos_logic_pmt_window_22" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_22" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_22">
 			<volumeref ref="logic_pmt_cathode_22"/>
-			<position name="pos_logic_pmt_cathode_22" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_22" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_22_0">
@@ -3130,22 +3130,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_23">
 			<volumeref ref="logic_mirror_box_bot_23"/>
-			<position name="pos_logic_mirror_box_bot_23" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_23" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_23">
 			<volumeref ref="logic_mirror_box_top_23"/>
-			<position name="pos_logic_mirror_box_top_23" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_23" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_23">
 			<volumeref ref="logic_pmt_window_23"/>
-			<position name="pos_logic_pmt_window_23" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_23" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_23">
 			<volumeref ref="logic_pmt_cathode_23"/>
-			<position name="pos_logic_pmt_cathode_23" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_23" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_23_0">
@@ -3260,22 +3260,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_24">
 			<volumeref ref="logic_mirror_box_bot_24"/>
-			<position name="pos_logic_mirror_box_bot_24" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_24" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_24">
 			<volumeref ref="logic_mirror_box_top_24"/>
-			<position name="pos_logic_mirror_box_top_24" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_24" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_24">
 			<volumeref ref="logic_pmt_window_24"/>
-			<position name="pos_logic_pmt_window_24" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_24" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_24">
 			<volumeref ref="logic_pmt_cathode_24"/>
-			<position name="pos_logic_pmt_cathode_24" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_24" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_24_0">
@@ -3390,22 +3390,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_25">
 			<volumeref ref="logic_mirror_box_bot_25"/>
-			<position name="pos_logic_mirror_box_bot_25" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_25" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_25">
 			<volumeref ref="logic_mirror_box_top_25"/>
-			<position name="pos_logic_mirror_box_top_25" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_25" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_25">
 			<volumeref ref="logic_pmt_window_25"/>
-			<position name="pos_logic_pmt_window_25" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_25" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_25">
 			<volumeref ref="logic_pmt_cathode_25"/>
-			<position name="pos_logic_pmt_cathode_25" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_25" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_25_0">
@@ -3520,22 +3520,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_26">
 			<volumeref ref="logic_mirror_box_bot_26"/>
-			<position name="pos_logic_mirror_box_bot_26" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_26" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_26">
 			<volumeref ref="logic_mirror_box_top_26"/>
-			<position name="pos_logic_mirror_box_top_26" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_26" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_26">
 			<volumeref ref="logic_pmt_window_26"/>
-			<position name="pos_logic_pmt_window_26" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_26" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_26">
 			<volumeref ref="logic_pmt_cathode_26"/>
-			<position name="pos_logic_pmt_cathode_26" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_26" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_26_0">
@@ -3650,22 +3650,22 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_27">
 			<volumeref ref="logic_mirror_box_bot_27"/>
-			<position name="pos_logic_mirror_box_bot_27" x="143.293" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_bot_27" x="110.861" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_bot_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_27">
 			<volumeref ref="logic_mirror_box_top_27"/>
-			<position name="pos_logic_mirror_box_top_27" x="325.281405806" y="0" z="0"/>
+			<position name="pos_logic_mirror_box_top_27" x="207.207803074" y="0" z="0"/>
 			<rotation name="rot_logic_mirror_box_top_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_27">
 			<volumeref ref="logic_pmt_window_27"/>
-			<position name="pos_logic_pmt_window_27" x="450.476811611" y="0" z="0"/>
+			<position name="pos_logic_pmt_window_27" x="274.193606147" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_window_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_27">
 			<volumeref ref="logic_pmt_cathode_27"/>
-			<position name="pos_logic_pmt_cathode_27" x="451.976813111" y="0" z="0"/>
+			<position name="pos_logic_pmt_cathode_27" x="275.693607647" y="0" z="0"/>
 			<rotation name="rot_logic_pmt_cathode_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="quartz_27_0">
@@ -3715,142 +3715,142 @@
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="singledet_0">
 			<volumeref ref="logic_singledet_0"/>
-			<position name="pos_singledet_0" x="-940.0" y="1.1511679912e-13" z="-86.243"/>
+			<position name="pos_singledet_0" x="-1012.5" y="1.23995488414e-13" z="-40.0"/>
 			<rotation name="rot_singledet_0" x="-0.0" y="-0.0" z="-3.14159265359"/>
 		</physvol>
 		<physvol name="singledet_1">
 			<volumeref ref="logic_singledet_1"/>
-			<position name="pos_singledet_1" x="-916.432237451" y="-209.169677919" z="86.243"/>
+			<position name="pos_singledet_1" x="-987.114511084" y="-225.302445631" z="40.0"/>
 			<rotation name="rot_singledet_1" x="0.0" y="-0.0" z="-3.36599212885"/>
 		</physvol>
 		<physvol name="singledet_2">
 			<volumeref ref="logic_singledet_2"/>
-			<position name="pos_singledet_2" x="-846.910735828" y="-407.850714771" z="-86.243"/>
+			<position name="pos_singledet_2" x="-912.230978751" y="-439.307285857" z="-40.0"/>
 			<rotation name="rot_singledet_2" x="0.0" y="-0.0" z="-3.5903916041"/>
 		</physvol>
 		<physvol name="singledet_3">
 			<volumeref ref="logic_singledet_3"/>
-			<position name="pos_singledet_3" x="-734.92159352" y="-586.080413747" z="86.243"/>
+			<position name="pos_singledet_3" x="-791.604375999" y="-631.283424382" z="40.0"/>
 			<rotation name="rot_singledet_3" x="0.0" y="-0.0" z="-3.81479107936"/>
 		</physvol>
 		<physvol name="singledet_4">
 			<volumeref ref="logic_singledet_4"/>
-			<position name="pos_singledet_4" x="-586.080413747" y="-734.92159352" z="-86.243"/>
+			<position name="pos_singledet_4" x="-631.283424382" y="-791.604375999" z="-40.0"/>
 			<rotation name="rot_singledet_4" x="0.0" y="-0.0" z="-4.03919055462"/>
 		</physvol>
 		<physvol name="singledet_5">
 			<volumeref ref="logic_singledet_5"/>
-			<position name="pos_singledet_5" x="-407.850714771" y="-846.910735828" z="86.243"/>
+			<position name="pos_singledet_5" x="-439.307285857" y="-912.230978751" z="40.0"/>
 			<rotation name="rot_singledet_5" x="0.0" y="-0.0" z="-4.26359002987"/>
 		</physvol>
 		<physvol name="singledet_6">
 			<volumeref ref="logic_singledet_6"/>
-			<position name="pos_singledet_6" x="-209.169677919" y="-916.432237451" z="-86.243"/>
+			<position name="pos_singledet_6" x="-225.302445631" y="-987.114511084" z="-40.0"/>
 			<rotation name="rot_singledet_6" x="0.0" y="-0.0" z="-4.48798950513"/>
 		</physvol>
 		<physvol name="singledet_7">
 			<volumeref ref="logic_singledet_7"/>
-			<position name="pos_singledet_7" x="-1.7267519868e-13" y="-940.0" z="86.243"/>
+			<position name="pos_singledet_7" x="-1.85993232621e-13" y="-1012.5" z="40.0"/>
 			<rotation name="rot_singledet_7" x="0.0" y="-0.0" z="-4.71238898038"/>
 		</physvol>
 		<physvol name="singledet_8">
 			<volumeref ref="logic_singledet_8"/>
-			<position name="pos_singledet_8" x="209.169677919" y="-916.432237451" z="-86.243"/>
+			<position name="pos_singledet_8" x="225.302445631" y="-987.114511084" z="-40.0"/>
 			<rotation name="rot_singledet_8" x="0.0" y="0.0" z="-4.93678845564"/>
 		</physvol>
 		<physvol name="singledet_9">
 			<volumeref ref="logic_singledet_9"/>
-			<position name="pos_singledet_9" x="407.850714771" y="-846.910735828" z="86.243"/>
+			<position name="pos_singledet_9" x="439.307285857" y="-912.230978751" z="40.0"/>
 			<rotation name="rot_singledet_9" x="0.0" y="0.0" z="-5.1611879309"/>
 		</physvol>
 		<physvol name="singledet_10">
 			<volumeref ref="logic_singledet_10"/>
-			<position name="pos_singledet_10" x="586.080413747" y="-734.92159352" z="-86.243"/>
+			<position name="pos_singledet_10" x="631.283424382" y="-791.604375999" z="-40.0"/>
 			<rotation name="rot_singledet_10" x="0.0" y="0.0" z="-5.38558740615"/>
 		</physvol>
 		<physvol name="singledet_11">
 			<volumeref ref="logic_singledet_11"/>
-			<position name="pos_singledet_11" x="734.92159352" y="-586.080413747" z="86.243"/>
+			<position name="pos_singledet_11" x="791.604375999" y="-631.283424382" z="40.0"/>
 			<rotation name="rot_singledet_11" x="0.0" y="0.0" z="-5.60998688141"/>
 		</physvol>
 		<physvol name="singledet_12">
 			<volumeref ref="logic_singledet_12"/>
-			<position name="pos_singledet_12" x="846.910735828" y="-407.850714771" z="-86.243"/>
+			<position name="pos_singledet_12" x="912.230978751" y="-439.307285857" z="-40.0"/>
 			<rotation name="rot_singledet_12" x="0.0" y="0.0" z="-5.83438635667"/>
 		</physvol>
 		<physvol name="singledet_13">
 			<volumeref ref="logic_singledet_13"/>
-			<position name="pos_singledet_13" x="916.432237451" y="-209.169677919" z="86.243"/>
+			<position name="pos_singledet_13" x="987.114511084" y="-225.302445631" z="40.0"/>
 			<rotation name="rot_singledet_13" x="0.0" y="0.0" z="-6.05878583192"/>
 		</physvol>
 		<physvol name="singledet_14">
 			<volumeref ref="logic_singledet_14"/>
-			<position name="pos_singledet_14" x="940.0" y="-2.3023359824e-13" z="-86.243"/>
+			<position name="pos_singledet_14" x="1012.5" y="-2.47990976827e-13" z="-40.0"/>
 			<rotation name="rot_singledet_14" x="0.0" y="0.0" z="-6.28318530718"/>
 		</physvol>
 		<physvol name="singledet_15">
 			<volumeref ref="logic_singledet_15"/>
-			<position name="pos_singledet_15" x="916.432237451" y="209.169677919" z="86.243"/>
+			<position name="pos_singledet_15" x="987.114511084" y="225.302445631" z="40.0"/>
 			<rotation name="rot_singledet_15" x="-0.0" y="0.0" z="-6.50758478244"/>
 		</physvol>
 		<physvol name="singledet_16">
 			<volumeref ref="logic_singledet_16"/>
-			<position name="pos_singledet_16" x="846.910735828" y="407.850714771" z="-86.243"/>
+			<position name="pos_singledet_16" x="912.230978751" y="439.307285857" z="-40.0"/>
 			<rotation name="rot_singledet_16" x="-0.0" y="0.0" z="-6.73198425769"/>
 		</physvol>
 		<physvol name="singledet_17">
 			<volumeref ref="logic_singledet_17"/>
-			<position name="pos_singledet_17" x="734.92159352" y="586.080413747" z="86.243"/>
+			<position name="pos_singledet_17" x="791.604375999" y="631.283424382" z="40.0"/>
 			<rotation name="rot_singledet_17" x="-0.0" y="0.0" z="-6.95638373295"/>
 		</physvol>
 		<physvol name="singledet_18">
 			<volumeref ref="logic_singledet_18"/>
-			<position name="pos_singledet_18" x="586.080413747" y="734.92159352" z="-86.243"/>
+			<position name="pos_singledet_18" x="631.283424382" y="791.604375999" z="-40.0"/>
 			<rotation name="rot_singledet_18" x="-0.0" y="0.0" z="-7.18078320821"/>
 		</physvol>
 		<physvol name="singledet_19">
 			<volumeref ref="logic_singledet_19"/>
-			<position name="pos_singledet_19" x="407.850714771" y="846.910735828" z="86.243"/>
+			<position name="pos_singledet_19" x="439.307285857" y="912.230978751" z="40.0"/>
 			<rotation name="rot_singledet_19" x="-0.0" y="0.0" z="-7.40518268346"/>
 		</physvol>
 		<physvol name="singledet_20">
 			<volumeref ref="logic_singledet_20"/>
-			<position name="pos_singledet_20" x="209.169677919" y="916.432237451" z="-86.243"/>
+			<position name="pos_singledet_20" x="225.302445631" y="987.114511084" z="-40.0"/>
 			<rotation name="rot_singledet_20" x="-0.0" y="0.0" z="-7.62958215872"/>
 		</physvol>
 		<physvol name="singledet_21">
 			<volumeref ref="logic_singledet_21"/>
-			<position name="pos_singledet_21" x="2.877919978e-13" y="940.0" z="86.243"/>
+			<position name="pos_singledet_21" x="3.09988721034e-13" y="1012.5" z="40.0"/>
 			<rotation name="rot_singledet_21" x="-0.0" y="0.0" z="-7.85398163397"/>
 		</physvol>
 		<physvol name="singledet_22">
 			<volumeref ref="logic_singledet_22"/>
-			<position name="pos_singledet_22" x="-209.169677919" y="916.432237451" z="-86.243"/>
+			<position name="pos_singledet_22" x="-225.302445631" y="987.114511084" z="-40.0"/>
 			<rotation name="rot_singledet_22" x="-0.0" y="-0.0" z="-8.07838110923"/>
 		</physvol>
 		<physvol name="singledet_23">
 			<volumeref ref="logic_singledet_23"/>
-			<position name="pos_singledet_23" x="-407.850714771" y="846.910735828" z="86.243"/>
+			<position name="pos_singledet_23" x="-439.307285857" y="912.230978751" z="40.0"/>
 			<rotation name="rot_singledet_23" x="-0.0" y="-0.0" z="-8.30278058449"/>
 		</physvol>
 		<physvol name="singledet_24">
 			<volumeref ref="logic_singledet_24"/>
-			<position name="pos_singledet_24" x="-586.080413747" y="734.92159352" z="-86.243"/>
+			<position name="pos_singledet_24" x="-631.283424382" y="791.604375999" z="-40.0"/>
 			<rotation name="rot_singledet_24" x="-0.0" y="-0.0" z="-8.52718005974"/>
 		</physvol>
 		<physvol name="singledet_25">
 			<volumeref ref="logic_singledet_25"/>
-			<position name="pos_singledet_25" x="-734.92159352" y="586.080413747" z="86.243"/>
+			<position name="pos_singledet_25" x="-791.604375999" y="631.283424382" z="40.0"/>
 			<rotation name="rot_singledet_25" x="-0.0" y="-0.0" z="-8.751579535"/>
 		</physvol>
 		<physvol name="singledet_26">
 			<volumeref ref="logic_singledet_26"/>
-			<position name="pos_singledet_26" x="-846.910735828" y="407.850714771" z="-86.243"/>
+			<position name="pos_singledet_26" x="-912.230978751" y="439.307285857" z="-40.0"/>
 			<rotation name="rot_singledet_26" x="-0.0" y="-0.0" z="-8.97597901026"/>
 		</physvol>
 		<physvol name="singledet_27">
 			<volumeref ref="logic_singledet_27"/>
-			<position name="pos_singledet_27" x="-916.432237451" y="209.169677919" z="86.243"/>
+			<position name="pos_singledet_27" x="-987.114511084" y="225.302445631" z="40.0"/>
 			<rotation name="rot_singledet_27" x="-0.0" y="-0.0" z="-9.20037848551"/>
 		</physvol>
 	</volume>
