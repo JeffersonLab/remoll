@@ -710,7 +710,10 @@
         <positionref ref="waterDumpWaterTank_center"/>
       </physvol>
 
-
+      <physvol name="diffuserPlate">
+	<file name="hall/subDumpDiffuser.gdml"/>
+        <position name="diffuserPlate_pos" unit="cm" z="nitrogenAtmWall_center_z + 15" />
+      </physvol>
 
 
 
