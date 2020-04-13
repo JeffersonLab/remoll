@@ -200,7 +200,7 @@ void initHisto(){
   fout = new TFile(foutNm.c_str(),"RECREATE");
   if( (analyzeDet & 1) == 1)
     initHisto_det28(fout);
-  else if( (analyzeDet & 2) == 2){
+  if( (analyzeDet & 2) == 2){
     initHisto_beamLine(fout,40,"BL: front collar1");
     initHisto_beamLine(fout,41,"BL: front collar2");
     initHisto_beamLine(fout,42,"BL: front sam");
@@ -209,7 +209,8 @@ void initHisto(){
     initHisto_beamLine(fout,45,"BL: back donut");
     initHisto_beamLine(fout,46,"BL: front Al-wall");
     initHisto_beamLine(fout,51,"BL: behind diffuser");
-  }  else if( (analyzeDet & 4) == 4){
+  }
+  if( (analyzeDet & 4) == 4){
     initHisto_hall(fout);
   }
 }
@@ -223,7 +224,7 @@ void writeOutput(){
 
   if( (analyzeDet & 1) == 1)
     writeOutput_det28(fout,scaleFactor);
-  else if( (analyzeDet & 2) == 2){
+  if( (analyzeDet & 2) == 2){
     writeOutput_beamLine(fout,40,scaleFactor);
     writeOutput_beamLine(fout,41,scaleFactor);
     writeOutput_beamLine(fout,42,scaleFactor);
@@ -232,7 +233,8 @@ void writeOutput(){
     writeOutput_beamLine(fout,45,scaleFactor);
     writeOutput_beamLine(fout,46,scaleFactor);
     writeOutput_beamLine(fout,51,scaleFactor);
-  }  else if( (analyzeDet & 4) == 4){
+  }
+  if( (analyzeDet & 4) == 4){
     writeOutput_hall(fout,scaleFactor);
   }
 
