@@ -27,7 +27,7 @@ TH2F *d28_x0y0Zcut[nSpecies][nZcut];
 TH2F *d28_MDx0y0Zcut[nSpecies][nZcut];
 
 //bins are different sectors and rings in det 28;
-TH1I *d28_mdHits[nSpecies][nErange][nDmg];
+TH1F *d28_mdHits[nSpecies][nErange][nDmg];
 
 const int nSecDet = 21; // 7(ring, including pmts) x 3 (sectors)
 
@@ -52,7 +52,7 @@ void initHisto_det28(TFile *fout){
 
     for(int k=0;k<nErange;k++)
       for(int j=0;j<nDmg;j++){
-	d28_mdHits[i][k][j]=new TH1I(Form("d28_mdHits_%s_ER%d_Dmg%d",spH[i].c_str(),k,j),
+	d28_mdHits[i][k][j]=new TH1F(Form("d28_mdHits_%s_ER%d_Dmg%d",spH[i].c_str(),k,j),
 				     Form("%s per electron for %s with %s",
 					  dmgTit[j].c_str(),spTit[i].c_str(),eRgTit[k].c_str()),
 				     nSecDet,0,nSecDet);

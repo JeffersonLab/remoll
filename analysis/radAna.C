@@ -9,13 +9,17 @@
 //
 // //Load in the script, and run it
 // >.L radAna.C
-// > radAna(<remoll output file>,<1 for beam generator, 0 else>)
+// > radAna(<remoll output file>,
+//          <1 for MD, 2 for beamline, 4 for hall Det>, 
+//          <0 to update the file, 1 to recreate>, 
+//          <1 for beam generator, 0 else>)
 
 #include "radDamage.hh"
 #include "histogramUtilities.h"
 #include "mainDetUtilities.h"
 #include "det28Histos.h"
 #include "beamLineDetHistos.h"
+#include "hallDetHistos.h"
 
 TFile *fout;
 string fileNm;
@@ -23,19 +27,34 @@ int beamGen(1);
 long nTotEv(0);
 int nFiles(0);
 long currentEvNr(0);
+int analyzeDet(0);
 
 radDamage radDmg;
 
-void initHisto();
+void initHisto(int);
 void writeOutput();
 long processOne(string);
 void process();
 
-void radAna(const string& finName = "./remollout.root", int beamGenerator=1){
+void radAna(const string& finName = "./remollout.root", int anaDet=1, int overWriteFile = 1, int beamGenerator=1){
   fileNm = finName;
   beamGen = beamGenerator;
 
-  initHisto();
+  analyzeDet = anaDet;
+  int foundDet(0);
+  const string anaNm[3]={"MD","beamline","hall"};
+  for(int i=0;i<3;i++)
+    if( (analyzeDet & int(pow(2,i))) == int(pow(2,i)) ){
+      cout<<"You decided to analyze "<<anaNm[i]<<endl;
+      foundDet++;
+    }
+  if(!foundDet){
+    cout<<"For now you can only analyze\n\tthe main Detector: anaDet=1\n\tbeamline detectors: anaDet=2\n\thall detector: anaDet=4"<<endl;
+    cout<<"You provided "<<anaDet<<" Quitting!!"<<endl;
+    return;
+  }
+
+  initHisto(overWriteFile);
   process();
   writeOutput();
 }
@@ -122,24 +141,31 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,rate*niel};
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
+      double zz = hit->at(j).z;
       int det = hit->at(j).det;
       double pz = hit->at(j).pz;
-      if(det==28)
+      if(det==28  && ( (analyzeDet & 1) ==1))
 	fillHisto_det28(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
-      else if(det>=40 && det<=46)
+      else if(det>=40 && det<=46  && ( (analyzeDet & 2) ==2))
 	fillHisto_beamLine(det, sp, rdDmg, pz, xx, yy, kinE);
+      else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
+	fillHisto_hall(det,sp,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
       if((sp==0 || sp==5) && kinE>1){
-	if(det==28)
+	if(det==28 && ( (analyzeDet & 1) ==1))
 	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
-	else if(det>=40 && det<=46)
+	else if(det>=40 && det<=46  && ( (analyzeDet & 2) ==2))
 	  fillHisto_beamLine(det, 1, rdDmg, pz, xx, yy, kinE);
+	else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
+	  fillHisto_hall(det,1,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
-	  if(det==28)
+	  if(det==28 && ( (analyzeDet & 1) ==1))
 	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
-	  else if(det>=40 && det<=46)
+	  else if(det>=40 && det<=46  && ( (analyzeDet & 2) ==2))
 	    fillHisto_beamLine(det, 4, rdDmg, pz, xx, yy, kinE);
+	  else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
+	    fillHisto_hall(det,4,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
 	}
       }
@@ -149,15 +175,15 @@ long processOne(string fnm){
       int foundRing = findDetector(sector, phi, hit->at(j).r,1);
       if(foundRing==-1) continue;
 
-      if(det==28)
+      if(det==28 && ( (analyzeDet & 1) ==1))
 	fillHisto_det28(sp,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
 
       if((sp==0 || sp==5) && kinE>1){
-	if(det==28)
+	if(det==28 && ( (analyzeDet & 1) ==1))
 	  fillHisto_det28(1,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
-	  if(det==28)
+	  if(det==28 && ( (analyzeDet & 1) ==1))
 	    fillHisto_det28(4,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
 	}
       }
@@ -171,19 +197,27 @@ long processOne(string fnm){
 };
 
 
-void initHisto(){
+void initHisto(int fileType){
   string foutNm = Form("%s_radAnaV4.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
-  fout = new TFile(foutNm.c_str(),"RECREATE");
-  initHisto_det28(fout);
-  initHisto_beamLine(fout,40,"BL: front collar1");
-  initHisto_beamLine(fout,41,"BL: front collar2");
-  initHisto_beamLine(fout,42,"BL: front sam");
-  initHisto_beamLine(fout,43,"BL: front dump tunnel");
-  initHisto_beamLine(fout,44,"BL: front donut");
-  initHisto_beamLine(fout,45,"BL: back donut");
-  initHisto_beamLine(fout,46,"BL: front Al-wall");
-
+  const string fTp[2]={"UPDATE","RECREATE"};
+  cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
+  fout = new TFile(foutNm.c_str(),fTp[fileType].c_str());
+  if( (analyzeDet & 1) == 1)
+    initHisto_det28(fout);
+  if( (analyzeDet & 2) == 2){
+    initHisto_beamLine(fout,40,"BL: front collar1");
+    initHisto_beamLine(fout,41,"BL: front collar2");
+    initHisto_beamLine(fout,42,"BL: front sam");
+    initHisto_beamLine(fout,43,"BL: front dump tunnel");
+    initHisto_beamLine(fout,44,"BL: front donut");
+    initHisto_beamLine(fout,45,"BL: back donut");
+    initHisto_beamLine(fout,46,"BL: front Al-wall");
+    initHisto_beamLine(fout,51,"BL: behind diffuser");
+  }
+  if( (analyzeDet & 4) == 4){
+    initHisto_hall(fout);
+  }
 }
 
 void writeOutput(){
@@ -192,14 +226,22 @@ void writeOutput(){
   if(beamGen)
     scaleFactor = 1./nTotEv;
 
-  writeOutput_det28(fout,scaleFactor);
-  writeOutput_beamLine(fout,40,scaleFactor);
-  writeOutput_beamLine(fout,41,scaleFactor);
-  writeOutput_beamLine(fout,42,scaleFactor);
-  writeOutput_beamLine(fout,43,scaleFactor);
-  writeOutput_beamLine(fout,44,scaleFactor);
-  writeOutput_beamLine(fout,45,scaleFactor);
-  writeOutput_beamLine(fout,46,scaleFactor);
+
+  if( (analyzeDet & 1) == 1)
+    writeOutput_det28(fout,scaleFactor);
+  if( (analyzeDet & 2) == 2){
+    writeOutput_beamLine(fout,40,scaleFactor);
+    writeOutput_beamLine(fout,41,scaleFactor);
+    writeOutput_beamLine(fout,42,scaleFactor);
+    writeOutput_beamLine(fout,43,scaleFactor);
+    writeOutput_beamLine(fout,44,scaleFactor);
+    writeOutput_beamLine(fout,45,scaleFactor);
+    writeOutput_beamLine(fout,46,scaleFactor);
+    writeOutput_beamLine(fout,51,scaleFactor);
+  }
+  if( (analyzeDet & 4) == 4){
+    writeOutput_hall(fout,scaleFactor);
+  }
 
   fout->Close();
 }
