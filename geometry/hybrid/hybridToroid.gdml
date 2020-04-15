@@ -308,6 +308,9 @@
 	<volume name="logic_photon_collimator_2">
 		<materialref ref="G4_CW95"/>
 		<solidref ref="solid_photon_collimator"/>
+                <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+                <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+                <auxiliary auxtype="DetNo" auxvalue="2005"/>
 	</volume>
 
 	<volume name="logic_s1_s2_s3_s4_3">
