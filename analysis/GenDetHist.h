@@ -12,77 +12,69 @@
 */
 #include "anaConst.h"
 
-TH1D *gendet_energy[nSpecies], *gendet_energyNIEL[nSpecies];
+TH1F *gendet_energy[nSpecies], *gendet_energyNIEL[nSpecies];
 
-TH1D *gendet_z0[nSpecies][nDmg];
-TH1D *gendet_z0HE[nSpecies][nDmg];
+TH1F *gendet_z0[nSpecies][nDmg];
+TH1F *gendet_z0HE[nSpecies][nDmg];
 
-TH2D *gendet_xy[nSpecies][nDmg];
-TH2D *gendet_z0r0[nSpecies][nDmg];
-TH2D *gendet_z0x0[nSpecies][nDmg];
+TH2F *gendet_xy[nSpecies][nDmg];
+TH2F *gendet_z0r0[nSpecies][nDmg];
+TH2F *gendet_z0x0[nSpecies][nDmg];
 
 //source plots for different z cuts
-TH2D *gendet_x0y0Zcut[nSpecies][nZcut];
-TH2D *gendet_MDx0y0Zcut[nSpecies][nZcut];
+TH2F *gendet_x0y0Zcut[nSpecies][nZcut];
 
 
-const int nSecDet = 21; // 7(ring, including pmts) x 3 (sectors)
-
-void initHisto_gendet(TFile *fout){
+void initHisto_gendet(int detId, TFile *fout){
   //fout->mkdir("det28","main detector plane");
-  fout->mkdir("gendet","Genearal detector");
+  fout->mkdir(Form("det%d",detId),Form("Genearal detector %d",detId));
 
   for(int i=0;i<nSpecies;i++){
     for(int k=0;k<nZcut;k++){
-      gendet_x0y0Zcut[i][k]=new TH2D(Form("gendet_x0y0Zcut_%s_ZC%d",spH[i].c_str(),k),
+      gendet_x0y0Zcut[i][k]=new TH2F(Form("det%d_x0y0Zcut_%s_ZC%d",detId,spH[i].c_str(),k),
 				  Form("hits per electron for %s %s;x0[mm];y0[mm]",
 				       spTit[i].c_str(),zCutTit[k].c_str()),
 				  400,-8000,8000,
 				  400,-8000,8000);
-      gendet_MDx0y0Zcut[i][k]=new TH2D(Form("gendet_MDx0y0Zcut_%s_ZC%d",spH[i].c_str(),k),
-				    Form("hits per electron for %s %s;x0[mm];y0[mm]",
-					 spTit[i].c_str(),zCutTit[k].c_str()),
-				    400,-8000,8000,
-				    400,-8000,8000);
     }
 
 
-      gendet_energy[i]=new TH1D(Form("gendet_energy_%s",spH[i].c_str()),
+      gendet_energy[i]=new TH1F(Form("det%d_energy_%s",detId,spH[i].c_str()),
 				Form("rate weighted for %s;E [MeV]",spTit[i].c_str()),
 				121,-8,4.1);
       niceLogXBins(gendet_energy[i]);
 
-      gendet_energyNIEL[i]=new TH1D(Form("gendet_energyNEIL_%s",spH[i].c_str()),
+      gendet_energyNIEL[i]=new TH1F(Form("det%d_energyNEIL_%s",detId,spH[i].c_str()),
 				    Form("rate weighted for %s;E [MeV]",spTit[i].c_str()),
 				    121,-8,4.1);
       niceLogXBins(gendet_energyNIEL[i]);
 
 
       for(int k=0;k<nDmg;k++){
-	gendet_z0[i][k]=new TH1D(Form("gendet_z0_%s_Dmg%d",spH[i].c_str(),k),
+	gendet_z0[i][k]=new TH1F(Form("det%d_z0_%s_Dmg%d",detId,spH[i].c_str(),k),
 				 Form("%s weighted %s;z0[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				 2000,-6000,32000);
+				 1900,-6000,32000);
       
-	gendet_z0HE[i][k]=new TH1D(Form("gendet_z0HE_%s_Dmg%d",spH[i].c_str(),k),
+	gendet_z0HE[i][k]=new TH1F(Form("det%d_z0HE_%s_Dmg%d",detId,spH[i].c_str(),k),
 				   Form("%s weighted %s;z0HE[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				   2000,-6000,32000);
+				   1900,-6000,32000);
       
 
-	gendet_xy[i][k]=new TH2D(Form("gendet_xy_%s_Dmg%d",spH[i].c_str(),k),
+	gendet_xy[i][k]=new TH2F(Form("det%d_xy_%s_Dmg%d",detId,spH[i].c_str(),k),
 				 Form("%s for %s;x[mm];y[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				 800,-8000,8000,
-				 800,-8000,8000);
+				 400,-8000,8000,
+				 400,-8000,8000);
       
       
-	gendet_z0r0[i][k]=new TH2D(Form("gendet_z0r0_%s_Dmg%d",spH[i].c_str(),k),
+	gendet_z0r0[i][k]=new TH2F(Form("det%d_z0r0_%s_Dmg%d",detId,spH[i].c_str(),k),
 				   Form("%s for %s;z0[mm];r0[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				   2000,-6000,32000,
+				   1900,-6000,32000,
 				   200,0,8000);
 
-	gendet_z0x0[i][k]=new TH2D(Form("gendet_z0x0_%s_Dmg%d",spH[i].c_str(),k),
+	gendet_z0x0[i][k]=new TH2F(Form("det%d_z0x0_%s_Dmg%d",detId,spH[i].c_str(),k),
 				   Form("%s for %s;z0[mm];x0[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				   2000,-6000,32000,
-				   200,-8000,8000);
+				   1900,-6000,32000,
+				   400,-8000,8000);
       }
   }
 }
@@ -110,19 +102,15 @@ void fillHisto_gendet(int sp, double rdDmg[3],
     for(int ii=0;ii<nZcut;ii++)
       if(vz0>zCuts[ii][0] && vz0<zCuts[ii][1]){
 	gendet_x0y0Zcut[sp][ii]->Fill(vx0,vy0,rdDmg[0]);
-	if(rr>500 && rr<1500)
-	  gendet_MDx0y0Zcut[sp][ii]->Fill(vx0,vy0,rdDmg[0]);
       }
 }
 
-void writeOutput_gendet(TFile *fout, double scaleFactor){
-  fout->cd("gendet");
+void writeOutput_gendet(int detId, TFile *fout, double scaleFactor){
+  fout->cd(Form("det%d",detId));
   for(int i=0;i<nSpecies;i++){
     for(int k=0;k<nZcut;k++){
       gendet_x0y0Zcut[i][k]->Scale(scaleFactor);
       gendet_x0y0Zcut[i][k]->Write();
-      gendet_MDx0y0Zcut[i][k]->Scale(scaleFactor);
-      gendet_MDx0y0Zcut[i][k]->Write();
     }
 
     

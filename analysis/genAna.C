@@ -9,12 +9,11 @@
 //
 // //Load in the script, and run it
 // >.L genAna.C
-// > genAna(<remoll output file>,<1 for beam generator, 0 else>)
+// > genAna(<remoll output file>,<1 for beam generator, 0 else>, det numner)
+// run for detnumber 6666,6667,6668,6669
 
 #include "radDamage.hh"
 #include "histogramUtilities.h"
-#include "mainDetUtilities.h"
-//#include "det28Histos.h"
 #include "GenDetHist.h"
 
 TFile *fout;
@@ -23,7 +22,7 @@ int beamGen(1);
 long nTotEv(0);
 int nFiles(0);
 long currentEvNr(0);
-int detUT = 6668;
+int detUT(0);
 radDamage radDmg;
 
 void initHisto();
@@ -31,10 +30,10 @@ void writeOutput();
 long processOne(string);
 void process();
 
-void genAna(const string& finName = "./remollout.root", int beamGenerator=1){
+void genAna(const string& finName = "./remollout.root", int beamGenerator=1, int testdet=0){
   fileNm = finName;
   beamGen = beamGenerator;
-
+  detUT = testdet;
   initHisto();
   process();
   writeOutput();
@@ -162,10 +161,10 @@ long processOne(string fnm){
 
 
 void initHisto(){
-  string foutNm = Form("%s_radAnaV4.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_det_%d.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str(),detUT);
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
-  initHisto_gendet(fout);
+  initHisto_gendet(detUT,fout);
 
 }
 
@@ -175,7 +174,7 @@ void writeOutput(){
   if(beamGen)
     scaleFactor = 1./nTotEv;
 
-  writeOutput_gendet(fout,scaleFactor);
+  writeOutput_gendet(detUT,fout,scaleFactor);
 
   fout->Close();
 }
