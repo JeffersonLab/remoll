@@ -138,18 +138,6 @@ long processOne(string fnm){
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
       int det = hit->at(j).det;
-      if(det==detUT)
-	fillHisto_gemdet(sp,rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
-
-      if((sp==0 || sp==5) && kinE>1){
-	if(det==detUT)
-	  fillHisto_gemdet(1,rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
-
-	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
-	  if(det==detUT)
-	    fillHisto_gemdet(4,rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
-	}
-      }
       
       double phi = atan2(hit->at(j).y,hit->at(j).x);
       if(phi<0) phi+=2*pi;
