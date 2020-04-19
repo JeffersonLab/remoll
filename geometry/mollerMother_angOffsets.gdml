@@ -28,6 +28,7 @@
     <physvol>
       <file name="target/subTargetRegion.gdml"/>
       <positionref ref="targetCenter"/>
+      <rotationref ref="targetCenter_rot"/>
     </physvol>
 
     <!-- Hall -->
