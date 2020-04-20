@@ -32,6 +32,7 @@ TH1F *gemdet_z0HE[nSpecies][nDmg];
 TH2F *gemdet_xy[nSpecies][nDmg];
 TH2F *gemdet_z0r0[nSpecies][nDmg];
 TH2F *gemdet_z0x0[nSpecies][nDmg];
+TH2F *gemdet_rph[nSpecies];
 
 //source plots for different z cuts
 TH2F *gemdet_x0y0Zcut[nSpecies][nZcut];
@@ -111,6 +112,7 @@ long processOne(string fnm){
 
 
   for (Long64_t event = 0; event < nEntries/1.; t->GetEntry(event++)) {
+  //for (Long64_t event = 0; event < 100.; t->GetEntry(event++)) {
     currentEvNr++;
     if( float(event+1)/nEntries*100 > currentProc){
       cout<<"at tree entry\t"<<event<<"\t"<< float(event+1)/nEntries*100<<endl;
@@ -139,8 +141,6 @@ long processOne(string fnm){
       double yy = hit->at(j).y;
       int det = hit->at(j).det;
       
-      double phi = atan2(hit->at(j).y,hit->at(j).x);
-      if(phi<0) phi+=2*pi;
 
       if(det==detUT)
 	fillHisto_gemdet(sp, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
@@ -189,16 +189,20 @@ void initHisto(){
 				    Form("rate weighted for %s;E [MeV]",spTit[i].c_str()),
 				    121,-8,4.1);
       niceLogXBins(gemdet_energyNIEL[i]);
+	
+      gemdet_rph[i]=new TH2F(Form("gemdet_rph_%s",spH[i].c_str()),
+                    Form("Rate weighted %s;ph[deg]",spTit[i].c_str()),380,-190,190,
+				 300,1440,1470);
 
 
       for(int k=0;k<nDmg;k++){
 	gemdet_z0[i][k]=new TH1F(Form("gemdet_z0_%s_Dmg%d",spH[i].c_str(),k),
 				 Form("%s weighted %s;z0[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				 2000,-6000,32000);
+				 2550,-6000,45000);
       
 	gemdet_z0HE[i][k]=new TH1F(Form("gemdet_z0HE_%s_Dmg%d",spH[i].c_str(),k),
 				   Form("%s weighted %s;z0HE[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				   2000,-6000,32000);
+				   2550,-6000,45000);
       
 
 	gemdet_xy[i][k]=new TH2F(Form("gemdet_xy_%s_Dmg%d",spH[i].c_str(),k),
@@ -209,12 +213,12 @@ void initHisto(){
       
 	gemdet_z0r0[i][k]=new TH2F(Form("gemdet_z0r0_%s_Dmg%d",spH[i].c_str(),k),
 				   Form("%s for %s;z0[mm];r0[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				   2000,-6000,32000,
+				   2550,-6000,45000,
 				   200,1440,1470);
 
 	gemdet_z0x0[i][k]=new TH2F(Form("gemdet_z0x0_%s_Dmg%d",spH[i].c_str(),k),
 				   Form("%s for %s;z0[mm];x0[mm]",dmgTit[k].c_str(),spTit[i].c_str()),
-				   2000,-6000,32000,
+				   2550,-6000,45000,
 				   200,-1470,1470);
       }
   }
@@ -238,7 +242,8 @@ void fillHisto_gemdet(int sp, double rdDmg[3],
 		     double xx, double yy, double vx0,
 		     double vy0, double vz0, double rr, 
 		     double kinE, int sector){
-  
+  double phi = (180./pi)*atan2(yy,xx);
+  //phi = phi*180./pi;
   double vr0=sqrt(vx0*vx0+vy0*vy0);
   for(int kk=0;kk<nDmg;kk++){
     gemdet_z0[sp][kk]->Fill(vz0,rdDmg[kk]);
@@ -251,6 +256,7 @@ void fillHisto_gemdet(int sp, double rdDmg[3],
     
   }
 
+  gemdet_rph[sp]->Fill(phi,rr,rdDmg[0]);
   gemdet_energy[sp]->Fill(kinE,rdDmg[0]);
   gemdet_energyNIEL[sp]->Fill(kinE,rdDmg[2]);
 
@@ -274,6 +280,9 @@ void writeOutput_gemdet(TFile *fout, double scaleFactor){
 
       gemdet_energyNIEL[i]->Scale(scaleFactor);
       gemdet_energyNIEL[i]->Write();
+    
+      gemdet_rph[i]->Scale(scaleFactor);
+      gemdet_rph[i]->Write();
 
       for(int k=0;k<nDmg;k++){
 	gemdet_z0[i][k]->Scale(scaleFactor);
