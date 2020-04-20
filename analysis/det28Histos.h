@@ -71,7 +71,7 @@ void initHisto_det28(TFile *fout){
 				121,-8,4.1);
       niceLogXBins(d28_energy[i][j]);
 
-      d28_energyNIEL[i][j]=new TH1F(Form("d28_energyNEIL_R%d_%s",j,spH[i].c_str()),
+      d28_energyNIEL[i][j]=new TH1F(Form("d28_energyNIEL_R%d_%s",j,spH[i].c_str()),
 				    Form("rate weighted R%d for %s;E [MeV]",j,spTit[i].c_str()),
 				    121,-8,4.1);
       niceLogXBins(d28_energyNIEL[i][j]);
