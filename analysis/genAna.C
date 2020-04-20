@@ -110,6 +110,12 @@ long processOne(string fnm){
       if(sp==-1) continue;
 
       double kinE = hit->at(j).k;
+      double Edep = hit->at(j).edep;
+      int det = hit->at(j).det;
+ 
+      if(det==6666 || det==6668)//this is done because these two dets are kryptonite
+	kinE=Edep;
+
       double niel = radDmg.GetNIEL(hit->at(j).pid,kinE,0);
       if(niel<0) niel=0;
       double vz0 = hit->at(j).vz;
@@ -121,22 +127,21 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,rate*niel};
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
-      int det = hit->at(j).det;
+      double zz = hit->at(j).z;
       //if(det==6666 || det==6668 || det==6667 || det==6669)
-	//std::cout<<"Det  "<<det<<"  kinE  "<<kinE<<" hit.e  "<<hit->at(j).e<<"  hit.m "<<hit->at(j).m<<std::endl; 
-      double phi = atan2(hit->at(j).y,hit->at(j).x);
-      if(phi<0) phi+=2*pi;
+      //if(det==6666 || det==6668)
+      //std::cout<<"Det  "<<det<<"  kinE  "<<kinE<<" hit.e  "<<hit->at(j).e<<"  hit.m "<<hit->at(j).m<<" hit.edep "<<hit->at(j).edep<<"  hit.x  "<<hit->at(j).x<<"  hit.vx "<<hit->at(j).vx<<std::endl; 
 
       if(det==detUT)
-	fillHisto_gendet(sp, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	fillHisto_gendet(sp, rdDmg, xx, yy, zz, vx0, vy0, vz0,rr,kinE,sector,det);
 
       if((sp==0 || sp==5) && kinE>1){
 	if(det==detUT)
-	  fillHisto_gendet(1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	  fillHisto_gendet(1, rdDmg, xx, yy, zz, vx0, vy0, vz0,rr,kinE,sector,det);
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
 	  if(det==detUT)
-	    fillHisto_gendet(4, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	    fillHisto_gendet(4, rdDmg, xx, yy, zz, vx0, vy0, vz0,rr,kinE,sector,det);
 	}
       }
 
