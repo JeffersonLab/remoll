@@ -18,10 +18,10 @@ const int nDmg=3;
 const string dmgTit[nDmg]={"rate","rate*E","rate*NIEL"};
 
 const int nFB=3; //Pz cut; 
-const string fbH[nFB]={"allP","Pg1","Pl1"};
+const string fbH[nFB]={"allPZ","pzG0","pzL0"};
 
-const int nZcut=10;
-const string zCutTit[nZcut]={"tgt region", "coll1", "coll2", "US", "coll4+Pb", "lintel+coll5", "collar1", "collar2", "air+pipe","SM+Absorber"};
+const int nZcut=11;
+const string zCutTit[nZcut]={"tgt region", "coll1", "coll2", "US", "coll4+Pb", "lintel+coll5", "collar1", "drift pipe", "collar2", "air+pipe","SM+Absorber"};
 const int zCuts[nZcut][2]={
   {-5125,-1800},
   {175,675},
@@ -30,6 +30,7 @@ const int zCuts[nZcut][2]={
   {3225,6850},
   {7800,7900},
   {12200,12500},
+  {12500,18700},
   {18700,19000},
   {19000,22000},
   {22700,23700}};
