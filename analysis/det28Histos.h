@@ -13,10 +13,9 @@
 #include "anaConst.h"
 
 const int nRing=8; //all, and the actual 7 rings
-TH1F *d28_energy[nSpecies][nRing], *d28_energyNIEL[nSpecies][nRing];
+TH1F *d28_energy[nSpecies][nRing][nFB], *d28_energyNIEL[nSpecies][nRing][nFB];
 
-TH1F *d28_z0[nSpecies][nRing][nDmg];
-TH1F *d28_z0HE[nSpecies][nRing][nDmg];
+TH1F *d28_z0[nSpecies][nRing][nDmg][nErange];
 
 TH2F *d28_xy[nSpecies][nRing][nDmg];
 TH2F *d28_z0r0[nSpecies][nRing][nDmg];
@@ -66,26 +65,25 @@ void initHisto_det28(TFile *fout){
     }
 
     for(int j=0;j<nRing;j++){
-      d28_energy[i][j]=new TH1F(Form("d28_energy_R%d_%s",j,spH[i].c_str()),
-				Form("rate weighted R%d for %s;E [MeV]",j,spTit[i].c_str()),
-				121,-8,4.1);
-      niceLogXBins(d28_energy[i][j]);
+      for(int k=0;k<nFB;k++){
+	d28_energy[i][j][k]=new TH1F(Form("d28_energy_R%d_%s_%s",j,spH[i].c_str(),fbH[k].c_str()),
+				     Form("rate weighted R%d for %s %s;E [MeV]",j,spTit[i].c_str(),fbH[k].c_str()),
+				     121,-8,4.1);
+	niceLogXBins(d28_energy[i][j][k]);
 
-      d28_energyNIEL[i][j]=new TH1F(Form("d28_energyNEIL_R%d_%s",j,spH[i].c_str()),
-				    Form("rate weighted R%d for %s;E [MeV]",j,spTit[i].c_str()),
-				    121,-8,4.1);
-      niceLogXBins(d28_energyNIEL[i][j]);
+	d28_energyNIEL[i][j][k]=new TH1F(Form("d28_energyNIEL_R%d_%s_%s",j,spH[i].c_str(),fbH[k].c_str()),
+				      Form("rate weighted R%d for %s %s;E [MeV]",j,spTit[i].c_str(),fbH[k].c_str()),
+				      121,-8,4.1);
+	niceLogXBins(d28_energyNIEL[i][j][k]);
+      }
 
 
       for(int k=0;k<nDmg;k++){
-	d28_z0[i][j][k]=new TH1F(Form("d28_z0_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
-				 Form("%s weighted R%d %s;z0[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
-				 3000,-6000,45000);
-      
-	d28_z0HE[i][j][k]=new TH1F(Form("d28_z0HE_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
-				   Form("%s weighted R%d %s;z0HE[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
-				   3000,-6000,45000);
-      
+	for(int e=0;e<nErange;e++){
+	  d28_z0[i][j][k][e]=new TH1F(Form("d28_z0_R%d_%s_Dmg%d_Erg%d",j,spH[i].c_str(),k,e),
+				      Form("%s weighted %s R%d %s;z0[mm]",dmgTit[k].c_str(),eRgTit[e].c_str(),j,spTit[i].c_str()),
+				      3000,-6000,45000);
+	}      
 
 	d28_xy[i][j][k]=new TH2F(Form("d28_xy_R%d_%s_Dmg%d",j,spH[i].c_str(),k),
 				 Form("%s R%d for %s;x[mm];y[mm]",dmgTit[k].c_str(),j,spTit[i].c_str()),
@@ -110,22 +108,31 @@ void initHisto_det28(TFile *fout){
 void fillHisto_det28(int sp, int ring,double rdDmg[3],
 		     double xx, double yy, double vx0,
 		     double vy0, double vz0, double rr, 
-		     double kinE, int sector){
+		     double kinE, double pz, int sector){
   
   double vr0=sqrt(vx0*vx0+vy0*vy0);
   for(int kk=0;kk<nDmg;kk++){
-    d28_z0[sp][ring][kk]->Fill(vz0,rdDmg[kk]);
-    if(kinE>10)
-      d28_z0HE[sp][ring][kk]->Fill(vz0,rdDmg[kk]);
-    
+    d28_z0[sp][ring][kk][0]->Fill(vz0,rdDmg[kk]);    
+    for(int ll = 1; ll<nErange ; ll++)
+      if(kinE<eRanges[ll] && kinE>=eRanges[ll-1])
+	d28_z0[sp][ring][kk][ll]->Fill(vz0,rdDmg[kk]);    
+
     d28_xy[sp][ring][kk]->Fill(xx,yy,rdDmg[kk]);
     d28_z0r0[sp][ring][kk]->Fill(vz0,vr0,rdDmg[kk]);
     d28_z0x0[sp][ring][kk]->Fill(vz0,vx0,rdDmg[kk]);
     
   }
 
-  d28_energy[sp][ring]->Fill(kinE,rdDmg[0]);
-  d28_energyNIEL[sp][ring]->Fill(kinE,rdDmg[2]);
+  d28_energy[sp][ring][0]->Fill(kinE,rdDmg[0]);
+  d28_energyNIEL[sp][ring][0]->Fill(kinE,rdDmg[2]);
+  if(pz>=0){
+    d28_energy[sp][ring][1]->Fill(kinE,rdDmg[0]);
+    d28_energyNIEL[sp][ring][1]->Fill(kinE,rdDmg[2]);
+  }else{
+    d28_energy[sp][ring][2]->Fill(kinE,rdDmg[0]);
+    d28_energyNIEL[sp][ring][2]->Fill(kinE,rdDmg[2]);
+  }
+
 
   if(ring==0){
     for(int ii=0;ii<nZcut;ii++)
@@ -166,19 +173,18 @@ void writeOutput_det28(TFile *fout, double scaleFactor){
       }
     
     for(int j=0;j<nRing;j++){
-      d28_energy[i][j]->Scale(scaleFactor);
-      d28_energy[i][j]->Write();
+      for(int k=0;k<nFB;k++){
+	d28_energy[i][j][k]->Scale(scaleFactor);
+	d28_energy[i][j][k]->Write();
 
-      d28_energyNIEL[i][j]->Scale(scaleFactor);
-      d28_energyNIEL[i][j]->Write();
-
+	d28_energyNIEL[i][j][k]->Scale(scaleFactor);
+	d28_energyNIEL[i][j][k]->Write();
+      }
       for(int k=0;k<nDmg;k++){
-	d28_z0[i][j][k]->Scale(scaleFactor);
-	d28_z0[i][j][k]->Write();
-
-	d28_z0HE[i][j][k]->Scale(scaleFactor);
-	d28_z0HE[i][j][k]->Write();
-      
+	for(int e=0;e<nErange;e++){
+	  d28_z0[i][j][k][e]->Scale(scaleFactor);
+	  d28_z0[i][j][k][e]->Write();
+	}
 
 	d28_xy[i][j][k]->Scale(scaleFactor);
 	d28_xy[i][j][k]->Write();

@@ -21,6 +21,19 @@ void niceLogXBins(TH1*h)
   delete[] new_bins;
 }
 
+TH1* dNdXscaleLogX(TH1*h){
+  TH1* h2=(TH1*)h->Clone(Form("%s_dNdX",h->GetName()));
+  h2->GetYaxis()->SetTitle("dN/dX");
+
+  int bins = h2->GetXaxis()->GetNbins();
+  for(int i=1;i<=bins;i++){
+    h2->SetBinContent(i,h->GetBinContent(i)/h->GetBinWidth(i));
+    //h2->SetBinError(i,h->GetBinError(i));
+    h2->SetBinError(i,0);
+  }
+  return h2;
+}
+
 void drawQuartzOutline(TVirtualPad *pad){
 
   pad->SetMargin(0.13,0.13,0.13,0.13);

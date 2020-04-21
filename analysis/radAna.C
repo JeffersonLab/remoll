@@ -145,7 +145,7 @@ long processOne(string fnm){
       int det = hit->at(j).det;
       double pz = hit->at(j).pz;
       if(det==28  && ( (analyzeDet & 1) ==1))
-	fillHisto_det28(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
+	fillHisto_det28(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
       else if(det>=40 && det<=46  && ( (analyzeDet & 2) ==2))
 	fillHisto_beamLine(det, sp, rdDmg, pz, xx, yy, kinE);
       else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
@@ -153,7 +153,7 @@ long processOne(string fnm){
 
       if((sp==0 || sp==5) && kinE>1){
 	if(det==28 && ( (analyzeDet & 1) ==1))
-	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
+	  fillHisto_det28(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
 	else if(det>=40 && det<=46  && ( (analyzeDet & 2) ==2))
 	  fillHisto_beamLine(det, 1, rdDmg, pz, xx, yy, kinE);
 	else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
@@ -161,7 +161,7 @@ long processOne(string fnm){
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
 	  if(det==28 && ( (analyzeDet & 1) ==1))
-	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,0);
+	    fillHisto_det28(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
 	  else if(det>=40 && det<=46  && ( (analyzeDet & 2) ==2))
 	    fillHisto_beamLine(det, 4, rdDmg, pz, xx, yy, kinE);
 	  else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
@@ -176,15 +176,15 @@ long processOne(string fnm){
       if(foundRing==-1) continue;
 
       if(det==28 && ( (analyzeDet & 1) ==1))
-	fillHisto_det28(sp,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	fillHisto_det28(sp,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,sector);
 
       if((sp==0 || sp==5) && kinE>1){
 	if(det==28 && ( (analyzeDet & 1) ==1))
-	  fillHisto_det28(1,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	  fillHisto_det28(1,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,sector);
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
 	  if(det==28 && ( (analyzeDet & 1) ==1))
-	    fillHisto_det28(4,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	    fillHisto_det28(4,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,sector);
 	}
       }
 
@@ -198,7 +198,7 @@ long processOne(string fnm){
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_radAnaV4.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_radAnaV5.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const string fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
