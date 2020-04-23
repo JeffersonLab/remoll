@@ -21,7 +21,7 @@
 <structure>
 
   <volume name="logicMother">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="world_solid"/>
 
     <!-- Target region -->
@@ -32,9 +32,9 @@
 
     <!-- Hall -->
     <physvol>
-      <file name="hall/hallDaughter_merged.gdml"/>
+      <file name="hall/hallDaughter_dump.gdml"/>
       <positionref ref="hallCenter"/>
-    </physvol> 
+    </physvol>
 
     <!-- Upstream region -->
     <physvol>
@@ -49,18 +49,21 @@
     </physvol>
 
     <!-- Downstream beampipe -->
+    
     <physvol>
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
 
-    <!-- Tracking Detectors -->
+   
+    <!-- Tracking Detectors--> 
+    <!--
     <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
       <positionref ref="trackingCenter"/>
     </physvol>
-
+    -->
     <!-- Main Detectors -->
-   <!--
+    <!--
     <physvol>
       <file name="detector/detector.gdml"/>
       <positionref ref="detectorCenter"/>
@@ -68,18 +71,34 @@
     </physvol>
     -->
 
-    <!-- ShowerMax Detectors -->
+
+    <!-- electronics hut for left side --> 
     <physvol>
-      <file name="showermax/showerMaxDetectorSystem.gdml"/>
+      <file name="huts/lefthut.gdml"/>
+      <positionref ref="lefthut_pos"/>
+      <rotation name="lefthut_rot" unit="deg" y="-45"/>
+    </physvol>
+    
+    <!-- electronics hut for right side --> 
+    <physvol>
+      <file name="huts/righthut.gdml"/>
+      <positionref ref="righthut_pos"/>
+      <rotation name="righthut_rot" unit="deg" y="45"/>
+    </physvol>
+    
+    <!-- ShowerMax Detectors--> 
+    <physvol>
+      <file name="showermax/showerMaxGen.gdml"/>
       <positionref ref="showerMaxDetectorCenter"/>
     </physvol>
+    
 
     <!-- Pion Detectors -->
     <physvol>
       <file name="pion/pionDetectorSystem.gdml"/>
       <positionref ref="pionDetectorCenter"/>
     </physvol>
-
+   
   </volume>
 </structure>
 
