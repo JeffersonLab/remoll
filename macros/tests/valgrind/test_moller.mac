@@ -18,7 +18,7 @@
 
 
 #/remoll/gen beam
-/remoll/gen moller
+/remoll/evgen/set moller
 #/remoll/evgen/thcommin 30.0 deg
 #/remoll/evgen/thcommax 150.0 deg
 #/remoll/gen elastic 
