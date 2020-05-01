@@ -346,8 +346,8 @@ if(ADDITIONAL_FIELDS)
      EXPECTED_MD5 78fad2ffa5b5ae129df11bdf0ce25333
      )
   install(FILES
-     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
-     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
+     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.1.txt
+     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.1.txt
      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
 else()
   message(STATUS "Download additional fields with '-DADDITIONAL_FIELDS=ON'.")
