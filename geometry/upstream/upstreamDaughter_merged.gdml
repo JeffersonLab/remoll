@@ -9,6 +9,8 @@
 
 <define>
     &matrices;
+    
+    <variable name="i_septant" value="0"/>
 
     <constant name="PI" value="1.*pi"/>
     <constant name="UOFFSET" value="7000.00"/>
@@ -332,6 +334,30 @@
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>
 
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_inner_ring_sol" 
+          rmax1="COLL2_R2_U-DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" 
+          rmax2="COLL2_R2_D+DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" 
+          rmin1="COLL2_R1_U" 
+          rmin2="COLL2_R1_D" 
+          startphi="0"
+          z="COLL2_THICK"/>
+
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_outer_ring_sol" 
+          rmax1="COLL2_R4_U" 
+          rmax2="COLL2_R4_D" 
+          rmin1="COLL2_R3_U-DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
+          rmin2="COLL2_R3_D+DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
+          startphi="0"
+          z="COLL2_THICK"/>
+    
+    <cone aunit="deg" deltaphi="SEPTANT/2" lunit="mm" name="uscyl_slice_sol" 
+          rmax1="COLL2_R3_U-DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
+          rmax2="COLL2_R3_D+DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
+          rmin1="COLL2_R2_U-DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" 
+          rmin2="COLL2_R2_D+DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)"
+          startphi="-SEPTANT/4"
+          z="COLL2_THICK"/>
+    
     <cone aunit="deg" deltaphi="360" lunit="mm" name="coll2trap" rmax1="COLL2_R4_U+1000" rmax2="COLL2_R4_D+1000" rmin1="0.0" rmin2="0.0" startphi="0" z="1"/>
 
 
@@ -422,7 +448,13 @@
       <auxiliary auxtype="DetNo" auxvalue="2006"/>
     </volume>
 
-   <volume name="logicUScollunion_1">
+    <volume name="logicUScol1fin_2">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="col1fin_15"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
+    </volume>
+
+    <volume name="logicUScollunion_1">
       <materialref ref="CW95"/>
       <solidref ref="uscoll2_union_6"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -431,7 +463,49 @@
       <auxiliary auxtype="DetNo" auxvalue="2002"/>
     </volume>
 
-   <volume name="logiccoll2trap">
+    <volume name="uscyl_inner_ring_lv">
+      <materialref ref="CW95"/>
+      <solidref ref="uscyl_inner_ring_sol"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetNo" auxvalue="2002"/>
+      </volume>
+    <volume name="uscyl_outer_ring_lv">
+      <materialref ref="CW95"/>
+      <solidref ref="uscyl_outer_ring_sol"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetNo" auxvalue="2002"/>
+    </volume>
+    <volume name="uscyl_slice_lv">
+      <materialref ref="CW95"/>
+      <solidref ref="uscyl_slice_sol"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetNo" auxvalue="2002"/>
+    </volume>
+    <volume name="logicUScollunion_2">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="uscyl_2"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
+      <physvol name="uscyl_inner_ring_pv">
+        <volumeref ref="uscyl_inner_ring_lv"/>
+      </physvol>
+      <physvol name="uscyl_outer_ring_pv">
+        <volumeref ref="uscyl_outer_ring_lv"/>
+      </physvol>
+      <loop for="i_septant" to="6" step="1">
+        <physvol name="uscyl_slice_pv[i_septant]">
+          <volumeref ref="uscyl_slice_lv"/>
+          <rotation z="SEPTANT*(i_septant)" unit="deg"/>
+        </physvol>
+      </loop>
+    </volume>
+
+    <volume name="logiccoll2trap">
       <materialref ref="VacuumColl"/>
       <solidref ref="coll2trap"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -466,8 +540,8 @@
         <positionref ref="poscol1fin"/>
       </physvol>
 
-      <physvol name="UScollunion_1">
-        <volumeref ref="logicUScollunion_1"/>
+      <physvol name="UScollunion_2">
+        <volumeref ref="logicUScollunion_2"/>
         <positionref ref="posCOLL2"/>
       </physvol>
 
