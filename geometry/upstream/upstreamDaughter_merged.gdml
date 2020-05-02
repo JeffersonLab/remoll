@@ -147,6 +147,8 @@
     </subtraction>
 
     <!-- New merged col-1 -->
+    <!--fully enclosing volume, no overlaps with fins -->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_0_enc" rmax="COLL1_R4_U-COLL1_remove_Ring1_DeltaR" rmin="0" startphi="0" z="COLL1_THICK"/>
     <!--R max will be same as before, I'm starting with bore radius of the exit bore for whole col-1 and then subtract appropriately -->
     <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_0" rmax="COLL1_R4_U" rmin="0" startphi="0" z="COLL1_THICK"/>
     <!-- Subtract the reverese tapered bore (this was the first design of merged col1) from front face till 40 cm (leaving last 10 cm with R of  COLL1_Ring4_R_D -->
@@ -321,7 +323,6 @@
 	<position name="col1fin_15_pos" x="0" y="0" z="-1/2*col1fin_Length + 30/2" unit="mm"/>
     </subtraction>
 
-
     <box lunit="mm" name="COLL_BOX"  x="1000" y="1000" z="1000"/>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>
@@ -383,6 +384,7 @@
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="91"/>
     </volume>
+
     <volume name="logicUScoll_1">
       <!-- <materialref ref="Tungsten"/> -->
       <materialref ref="CW95"/>
@@ -392,7 +394,15 @@
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2001"/>
     </volume>
-
+    <volume name="logicUScoll_2">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="col1_0_enc"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <physvol name="logicUScoll_1_pv">
+        <volumeref ref="logicUScoll_1"/>
+      </physvol>
+    </volume>
+      
     <volume name="logicUScol1fin_1">
       <materialref ref="CW95"/>
       <solidref ref="col1fin_15"/>
@@ -402,11 +412,13 @@
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2006"/>
     </volume>
-
     <volume name="logicUScol1fin_2">
       <materialref ref="G4_Galactic"/>
-      <solidref ref="col1fin_15"/>
+      <solidref ref="col1fin_0"/>
       <auxiliary auxtype="Alpha" auxvalue="0.0"/>
+      <physvol name="logicUScol1fin_1_pv">
+        <volumeref ref="logicUScol1fin_1"/>
+      </physvol>
     </volume>
 
     <volume name="uscyl_inner_ring_lv">
@@ -476,13 +488,13 @@
       <materialref ref="VacuumColl"/>
       <solidref ref="boxUpstream"/>
 
-      <physvol name="UScoll_1">
-        <volumeref ref="logicUScoll_1"/>
+      <physvol name="UScoll_2">
+        <volumeref ref="logicUScoll_2"/>
         <positionref ref="posCOLL1"/>
       </physvol>
 
-      <physvol name="UScol1fin_1">
-        <volumeref ref="logicUScol1fin_1"/>
+      <physvol name="UScol1fin_2">
+        <volumeref ref="logicUScol1fin_2"/>
         <positionref ref="poscol1fin"/>
       </physvol>
 
