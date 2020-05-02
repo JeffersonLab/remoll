@@ -324,14 +324,6 @@
 
     <box lunit="mm" name="COLL_BOX"  x="1000" y="1000" z="1000"/>
 
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_1" rmax1="COLL1_R4_U" rmax2="COLL1_R4_D" rmin1="COLL1_R1_U" rmin2="COLL1_R1_D" startphi="0" z="COLL1_THICK"/>
-
-    <cone aunit="deg" deltaphi="SEPTANT/2" lunit="mm" name="cons_1" 
-          rmax1="COLL2_R3_U-DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
-          rmax2="COLL2_R3_D+DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
-          rmin1="COLL2_R2_U-DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" 
-          rmin2="COLL2_R2_D+DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" startphi="-SEPTANT/4" z="COLL2_THICK+DELTAT*2"/>
-
     <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_U" rmin2="COLL2_R1_D" startphi="0" z="COLL2_THICK"/>
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_inner_ring_sol" 
@@ -350,52 +342,15 @@
           startphi="0"
           z="COLL2_THICK"/>
     
-    <cone aunit="deg" deltaphi="SEPTANT/2" lunit="mm" name="uscyl_slice_sol" 
-          rmax1="COLL2_R3_U-DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
-          rmax2="COLL2_R3_D+DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
-          rmin1="COLL2_R2_U-DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)" 
+    <cone aunit="deg" deltaphi="SEPTANT/2" lunit="mm" name="uscyl_slice_sol"
+          rmax1="COLL2_R3_U-DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)"
+          rmax2="COLL2_R3_D+DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)"
+          rmin1="COLL2_R2_U-DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)"
           rmin2="COLL2_R2_D+DELTAT*((COLL2_R2_D-COLL2_R2_U)/COLL2_THICK)"
           startphi="-SEPTANT/4"
           z="COLL2_THICK"/>
     
     <cone aunit="deg" deltaphi="360" lunit="mm" name="coll2trap" rmax1="COLL2_R4_U+1000" rmax2="COLL2_R4_D+1000" rmin1="0.0" rmin2="0.0" startphi="0" z="1"/>
-
-
-    <subtraction name ="uscoll2_union_0">
-        <first ref="uscyl_2"/>
-        <second ref="cons_1"/>
-        <rotation name="uscoll_rot1" x="0" y="0" z="SEPTANT*(0+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_union_1">
-        <first ref="uscoll2_union_0"/>
-        <second ref="cons_1"/>
-        <rotation name="uscoll_rot2" x="0" y="0" z="SEPTANT*(1+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_union_2">
-        <first ref="uscoll2_union_1"/>
-        <second ref="cons_1"/>
-        <rotation name="uscoll_rot3" x="0" y="0" z="SEPTANT*(2+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_union_3">
-        <first ref="uscoll2_union_2"/>
-        <second ref="cons_1"/>
-        <rotation name="uscoll_rot4" x="0" y="0" z="SEPTANT*(3+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_union_4">
-        <first ref="uscoll2_union_3"/>
-        <second ref="cons_1"/>
-        <rotation name="uscoll_rot5" x="0" y="0" z="SEPTANT*(4+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_union_5">
-        <first ref="uscoll2_union_4"/>
-        <second ref="cons_1"/>
-        <rotation name="uscoll_rot6" x="0" y="0" z="SEPTANT*(5+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_union_6">
-        <first ref="uscoll2_union_5"/>
-        <second ref="cons_1"/>
-        <rotation name="uscoll_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
-    </subtraction>
 
     <!--
        Shielding collimators
@@ -452,15 +407,6 @@
       <materialref ref="G4_Galactic"/>
       <solidref ref="col1fin_15"/>
       <auxiliary auxtype="Alpha" auxvalue="0.0"/>
-    </volume>
-
-    <volume name="logicUScollunion_1">
-      <materialref ref="CW95"/>
-      <solidref ref="uscoll2_union_6"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
-      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
-      <auxiliary auxtype="DetNo" auxvalue="2002"/>
     </volume>
 
     <volume name="uscyl_inner_ring_lv">
