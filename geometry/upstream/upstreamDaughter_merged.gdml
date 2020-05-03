@@ -455,7 +455,7 @@
       <physvol name="uscyl_outer_ring_pv">
         <volumeref ref="uscyl_outer_ring_lv"/>
       </physvol>
-      <loop for="i_septant" to="6" step="1">
+      <loop for="i_septant" from="0" to="6" step="1">
         <physvol name="uscyl_slice_pv[i_septant]">
           <volumeref ref="uscyl_slice_lv"/>
           <rotation z="SEPTANT*(i_septant)" unit="deg"/>
