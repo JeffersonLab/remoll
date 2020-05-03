@@ -205,6 +205,15 @@
      <!--Fins for col-1 -->
      <tube aunit="deg" deltaphi="360" lunit="mm" name="col1fin_0" rmax="col1fin_RMax" rmin="col1fin_RMin" startphi="0" z="col1fin_Length"/>
 
+     <tube name="col1fin_0_slice"
+           aunit="deg"
+           deltaphi="(SEPTANT - col1fin_Delta_SEPTANT)/2" 
+           startphi="-(SEPTANT - col1fin_Delta_SEPTANT)/4"
+           lunit="mm" 
+           rmax="col1fin_RMax" 
+           rmin="col1fin_RMin" 
+           z="col1fin_Length"/>
+
      <cone aunit="deg" deltaphi="col1fin_SEPTANT/2" lunit="mm" name="col1fin_cons_1" 
           rmax1="COLL2_R3_U-DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
           rmax2="COLL2_R3_D+DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
@@ -265,7 +274,10 @@
 	<positionref ref="trans_col1fin"/>
      </union>
 
-
+    <subtraction name ="col1fin_0_slice_sub_1">
+        <first ref="col1fin_0_slice"/>
+        <second ref="sub_col1fin_cons_2"/>
+    </subtraction>
 
     <subtraction name ="col1fin_8">
         <first ref="col1fin_7"/>
@@ -316,6 +328,12 @@
            rmax2="col1fin_RMax+2" 
 	   startphi="0" z="31"
 	   />
+
+     <subtraction name ="col1fin_0_slice_sub_2">
+        <first ref="col1fin_0_slice_sub_1"/>
+        <second ref="sub_col1fin_cons_3"/>
+	<position z="-1/2*col1fin_Length + 30/2" unit="mm"/>
+     </subtraction>
 
      <subtraction name ="col1fin_15">
         <first ref="col1fin_14"/>
@@ -412,13 +430,33 @@
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2006"/>
     </volume>
+    <volume name="col1fin_0_slice_sub_lv">
+      <materialref ref="CW95"/>
+      <solidref ref="col1fin_0_slice_sub_2"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetNo" auxvalue="2006"/>
+    </volume>
+    <volume name="col1fin_0_slice_lv">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="col1fin_0_slice"/>
+      <physvol name="col1fin_0_slice_sub_pv[i_septant]">
+        <volumeref ref="col1fin_0_slice_sub_lv"/>
+        <rotation z="SEPTANT*(i_septant)" unit="deg"/>
+      </physvol>
+    </volume>
     <volume name="logicUScol1fin_2">
       <materialref ref="G4_Galactic"/>
       <solidref ref="col1fin_0"/>
       <auxiliary auxtype="Alpha" auxvalue="0.0"/>
-      <physvol name="logicUScol1fin_1_pv">
-        <volumeref ref="logicUScol1fin_1"/>
-      </physvol>
+      <loop for="i_septant" from="0" to="6" step="1">
+        <physvol name="col1fin_0_slice_pv[i_septant]">
+          <volumeref ref="col1fin_0_slice_lv"/>
+          <rotation z="SEPTANT*(i_septant)" unit="deg"/>
+        </physvol>
+      </loop>
     </volume>
 
     <volume name="uscyl_inner_ring_lv">
