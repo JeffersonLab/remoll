@@ -293,18 +293,53 @@ The ROOT files produced by remoll will be present in the output directory.
 
 ## Singularity container
 
-### Building
+If you are starting from scratch you'll need to install singularity first.
 
+### Installing singularity
+Go to and follow instructions https://github.com/sylabs/singularity/blob/v3.5.3/INSTALL.md
+- install dependencies
+-- install golang (sudo apt get install golang) mine went to /usr/bin
+-- create directory ~/go
+-- add these lines to ~/.bashrc: (replace USERNAME with your username -- basically where you created the go folder above)
 ```
-sudo singularity build remoll.img Singularity
+export GOPATH=/home/USERNAME/go
+export PATH=$PATH:$GOPATH/bin
 ```
+-- install golangci-lint: copy the command in the instructions (you may have to isntall curl)
+-- use command there to get the singularity repo
+-- build singularity using the command given. You should get a "DONE" at the end.
 
-## Running
+### Installing the remoll container
+The workflow for now should be the following:
+- download the remoll repository (see above)
+- download and setup singularity container
+- have singularity container use the macros and geometry files in the downloaded repo;
 
+Download singularity container (line 1 below), build (line 2 below). For line 2 you can replace "develop" with any other branch.
 ```
 singularity pull docker://jeffersonlab/remoll-singularity
-singularity run --bind `pwd`:/jlab/2.1/Linux_CentOS7.3.1611-x86_64-gcc4.8.5/remoll/rootfiles/ \
-    jeffersonlab-remoll-singularity-master.simg \
-    macros/tests/test_moller.mac
+singularity run remoll_develop.sif
+```
+If you want to run a macro
+```
+singularity run remoll_develop.sif  build/remoll macros/runexample.mac
+```
+To start an interactive shell:
+```
+ singularity shell remoll_develop.sif
+ source /jlab/2.3/ce/jlab.sh
+ cd /jlab/remoll
+ build/remoll
+```
+The last line should pop up a visualizer with the setup in the branch you downloaded.
+
+To run a different geometry you will need to change the geometry inclusion line in the vis.mac to something like this:
+```
+/remoll/geometry/setfile /home/USERNAME/remoll/geometry/mollerMother_merged.gdml
+```
+
+To output the files to a place outside the container you will need to change to a full path in the macro
+```
+/remoll/filename /home/USERNAME/remollout.root
 ```
 
