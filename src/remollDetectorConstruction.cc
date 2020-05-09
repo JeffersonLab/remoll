@@ -301,7 +301,8 @@ void remollDetectorConstruction::SetKryptoniteUserLimits(G4VPhysicalVolume* volu
   }
 
   // Descend down the tree
-  for (int i = 0; i < logical_volume->GetNoDaughters(); i++) {
+  auto n = logical_volume->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     G4VPhysicalVolume* daughter = logical_volume->GetDaughter(i);
     SetKryptoniteUserLimits(daughter);
   }
@@ -484,7 +485,8 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
         }
 
         // Loop over target mother logical volume daughters
-        for (int i = 0; i < mother_logical_volume->GetNoDaughters(); i++) {
+        auto n = mother_logical_volume->GetNoDaughters();
+        for (decltype(n) i = 0; i < n; i++) {
 
           // Get daughter physical and logical volumes
           G4VPhysicalVolume* target_physical_volume = mother_logical_volume->GetDaughter(i);
@@ -648,7 +650,8 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
   // Set all immediate daughters of the world volume to wireframe
   G4VisAttributes* daughterVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   daughterVisAtt->SetForceWireframe(true);
-  for (int i = 0; i < fWorldVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
+  auto n = fWorldVolume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
   }
 }
@@ -876,7 +879,8 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
       }
       index++;
       //}else {
-    for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++){
+    auto n = aVolume->GetLogicalVolume()->GetNoDaughters();
+    for(decltype(n) i=0;i<n;i++){
       index = UpdateCopyNo(aVolume->GetLogicalVolume()->GetDaughter(i),index);
     }
     //}
@@ -907,7 +911,8 @@ std::vector<G4VPhysicalVolume*> remollDetectorConstruction::GetPhysicalVolumes(
   }
 
   // Descend down the tree
-  for (int i = 0; i < physical_volume->GetLogicalVolume()->GetNoDaughters(); i++)
+  auto n = physical_volume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++)
   {
     // Get results for daughter volumes
     std::vector<G4VPhysicalVolume*> daughter_list =
@@ -955,7 +960,8 @@ void remollDetectorConstruction::PrintGeometryTree(
   if (surfchk) aVolume->CheckOverlaps(1000,1.0*mm,false);
 
   // Descend down the tree
-  for (int i = 0; i < aVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
+  auto n = aVolume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     PrintGeometryTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk,print);
   }
 }
