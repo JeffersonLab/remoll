@@ -38,11 +38,12 @@ EOF
 while [ $# -gt 0 ] ; do
   # Stamp all pdf files in directory
   for file in ${rootfiles}/analysis/*.pdf ; do
-    stamp $file | pdftk - stamp $file output $file.new && mv $file.new $file
+    stamp $file > $file.stamp
+    qpdf --no-warn --overlay $file.stamp -- $file $file.new && mv $file.new $file
   done
   # Concatenate them all
   name=${rootfiles##*tests/}
   name=${name//\//_}_analysis_book
-  pdftk ${rootfiles}/analysis/*.pdf cat output rootfiles/${name}.pdf
+  qpdf --empty --pages ${rootfiles}/analysis/*.pdf -- rootfiles/${name}.pdf
   shift
 done
