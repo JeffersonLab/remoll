@@ -1,3 +1,19 @@
+# Instructions for building remoll, a Docker image for the MOLLER experiment.
+#
+# Instructions for building the remoll image: 
+#   docker build -t jeffersonlab/remoll:latest .
+# Instructions for building the remoll image without cache: 
+#   docker build --no-cache -t jeffersonlab/remoll:latest .
+# Sharing the remoll image on DockerHub: 
+#   docker push jeffersonlab/remoll:latest
+#
+# Running the container with docker:
+#   docker run --rm -it jeffersonlab/remoll:latest remoll macros/runexample.mac
+#
+# Running the container with singularity:
+#   singularity build --disable-cache --fix-perms --sandbox remoll:latest docker-daemon://jeffersonlab/remoll:latest
+#   singularity run remoll:latest remoll macros/runexample.mac
+
 FROM jeffersonlab/jlabce:2.3-mt
 
 # Install libgcj and pdftk
