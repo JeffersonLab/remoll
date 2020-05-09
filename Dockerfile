@@ -13,6 +13,10 @@
 # Running the container with singularity:
 #   singularity build --disable-cache --fix-perms --sandbox remoll:latest docker-daemon://jeffersonlab/remoll:latest
 #   singularity run remoll:latest remoll macros/runexample.mac
+# Note: building a sandbox image may not work on all filesystem or on
+# hyperlinked directories. Make sure you are in an actual directory with:
+#   cd `readlink -f .`
+#
 
 FROM jeffersonlab/jlabce:2.3-mt
 
