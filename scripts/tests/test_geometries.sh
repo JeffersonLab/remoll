@@ -41,5 +41,5 @@ for geometry in ${geom}/${geomglob} ; do
 
   # Run remoll macro
   mkdir -p ${logfiles}
-  build/remoll -g ${geometry} -m macros/tests/geometry/${suite}.mac 2>&1 | tee ${logfiles}/${name}.log || exit -1
+  remoll -g ${geometry} -m macros/tests/geometry/${suite}.mac 2>&1 | tee ${logfiles}/${name}.log || exit -1
 done
