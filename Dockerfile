@@ -51,4 +51,4 @@ RUN ln -sf $REMOLL/bin/remoll.sh /etc/profile.d/remoll.sh
 # Entry point loads the environment
 ENTRYPOINT ["/tini", "--", "bash", "-c", "source /etc/profile && \"$@\"", "-s"]
 
-CMD ["build/remoll","-h"]
+CMD ["remoll"]
