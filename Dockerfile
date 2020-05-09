@@ -36,7 +36,8 @@ RUN source /etc/profile && \
     pushd $REMOLL/build && \
     cmake .. && \
     make -j$(nproc) && \
-    make install
+    make install && \
+    make clean
 
 # Create environment point bash script
 RUN echo '#!/bin/bash'                                >  /entrypoint.sh && \
