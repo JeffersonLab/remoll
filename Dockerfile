@@ -46,6 +46,9 @@ RUN echo '#!/bin/bash'                                >  /entrypoint.sh && \
     echo 'export REMOLL=${REMOLL}'                    >> /entrypoint.sh && \
     echo 'cd $REMOLL && exec "$@"'                    >> /entrypoint.sh && \
     chmod +x /entrypoint.sh
+# Environment through /etc/profile
+RUN ln -sf $REMOLL/bin/remoll.csh /etc/profile.d/remoll.csh
+RUN ln -sf $REMOLL/bin/remoll.sh /etc/profile.d/remoll.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 
