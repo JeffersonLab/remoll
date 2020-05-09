@@ -18,12 +18,10 @@
 #   cd `readlink -f .`
 #
 
-FROM jeffersonlab/jlabce:2.3-mt
+FROM jeffersonlab/jlabce:devel
 
-# Install libgcj and pdftk
-RUN wget -q https://copr.fedorainfracloud.org/coprs/robert/gcj/repo/epel-7/robert-gcj-epel-7.repo -P /etc/yum.repos.d && \
-    wget -q https://copr.fedorainfracloud.org/coprs/robert/pdftk/repo/epel-7/robert-pdftk-epel-7.repo -P /etc/yum.repos.d && \
-    yum install -q -y pdftk ghostscript
+# Install pdf tools and boost
+RUN dnf install -q -y qpdf ghostscript boost-iostreams
 
 # Add Tini entry point
 ENV TINI_VERSION v0.19.0
@@ -31,7 +29,7 @@ ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
 RUN chmod +x /tini
 
 # Set JLab CE version
-ENV JLAB_VERSION=2.3
+ENV JLAB_VERSION=devel
 ENV JLAB_ROOT=/jlab
 
 # Set remoll location
