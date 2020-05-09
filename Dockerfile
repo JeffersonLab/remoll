@@ -21,17 +21,17 @@ RUN wget -q https://copr.fedorainfracloud.org/coprs/robert/gcj/repo/epel-7/rober
     wget -q https://copr.fedorainfracloud.org/coprs/robert/pdftk/repo/epel-7/robert-pdftk-epel-7.repo -P /etc/yum.repos.d && \
     yum install -q -y pdftk ghostscript
 
+# Set JLab CE version
 ENV JLAB_VERSION=2.3
 ENV JLAB_ROOT=/jlab
-ENV JLAB_SOFTWARE=/jlab/2.3/Linux_CentOS7.2.1511-x86_64-gcc4.8.5
 
+# Set remoll location
 ENV REMOLL=/jlab/remoll
 
-WORKDIR $REMOLL
-
 # Compile remoll
-ADD . .
-RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh && \
+WORKDIR $REMOLL
+COPY . .
+RUN source /etc/profile && \
     mkdir -p $REMOLL/build && \
     pushd $REMOLL/build && \
     cmake .. && \
