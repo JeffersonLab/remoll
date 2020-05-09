@@ -44,18 +44,11 @@ RUN source /etc/profile && \
     make install && \
     make clean
 
-# Create environment point bash script
-RUN echo '#!/bin/bash'                                >  /entrypoint.sh && \
-    echo 'unset OSRELEASE'                            >> /entrypoint.sh && \
-    echo 'source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh' >> /entrypoint.sh && \
-    echo 'export PATH=${REMOLL}/bin:${PATH}'          >> /entrypoint.sh && \
-    echo 'export REMOLL=${REMOLL}'                    >> /entrypoint.sh && \
-    echo 'cd $REMOLL && exec "$@"'                    >> /entrypoint.sh && \
-    chmod +x /entrypoint.sh
 # Environment through /etc/profile
 RUN ln -sf $REMOLL/bin/remoll.csh /etc/profile.d/remoll.csh
 RUN ln -sf $REMOLL/bin/remoll.sh /etc/profile.d/remoll.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+# Entry point loads the environment
+ENTRYPOINT ["/tini", "--", "bash", "-c", "source /etc/profile && \"$@\"", "-s"]
 
 CMD ["build/remoll","-h"]
