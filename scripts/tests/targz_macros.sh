@@ -13,7 +13,7 @@ dir=`readlink -f ${dir}`
 suite="${1:-commit}"
 
 # The branch name is used to avoid clobbering comparative output
-branch=`git rev-parse --abbrev-ref HEAD`
+branch=`git rev-parse --abbrev-ref HEAD || echo "HEAD"`
 
 # Pack log files
 tar -czvf logfiles/remoll.${suite}.${branch}.log.tar.gz           --transform 's|logfiles/tests/||g'  logfiles/tests/${suite}/${branch}/*.log

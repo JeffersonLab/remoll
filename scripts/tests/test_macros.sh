@@ -19,7 +19,7 @@ shopt -s nullglob
 analysisglob="${3:-*.C}"
 
 # The branch name is used to avoid clobbering comparative output
-branch=`git rev-parse --abbrev-ref HEAD`
+branch=`git rev-parse --abbrev-ref HEAD || echo "HEAD"`
 
 # Set test suite input directories
 macros=${dir}/macros/tests/${suite}
