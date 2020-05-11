@@ -18,12 +18,14 @@
 TMPF=`mktemp`
 # start with empty environment
 env -i tcsh ${TCSH_ARG} -c "
-    set JLAB_ROOT=${JLAB_ROOT} ;
-    set JLAB_VERSION=${JLAB_VERSION} ;
-    set PATH=${PATH} ;
-    set LD_LIBRARY_PATH=${LD_LIBRARY_PATH} ;
-    set DYLD_LIBRARY_PATH=${DYLD_LIBRARY_PATH} ;
     set home=${HOME} ;
+    setenv JLAB_ROOT ${JLAB_ROOT} ;
+    setenv JLAB_VERSION ${JLAB_VERSION} ;
+    setenv OSTYPE ${OSTYPE}
+    setenv TERM ${TERM} ;
+    setenv PATH ${PATH} ;
+    setenv LD_LIBRARY_PATH ${LD_LIBRARY_PATH} ;
+    setenv DYLD_LIBRARY_PATH ${DYLD_LIBRARY_PATH} ;
     source ${JLAB_ROOT}/${JLAB_VERSION}/ce/jlab.csh $1 ;
     printenv" | perl -e '
   my %IGNORE;
