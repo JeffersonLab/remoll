@@ -52,6 +52,9 @@ RUN source /etc/profile && \
 RUN ln -sf $REMOLL/bin/remoll.csh /etc/profile.d/remoll.csh
 RUN ln -sf $REMOLL/bin/remoll.sh /etc/profile.d/remoll.sh
 
+# Override JLab CE environment for container use
+COPY docker/jlab.sh /jlab/${JLAB_VERSION}/ce/jlab.sh
+
 # Entry point loads the environment
 ENTRYPOINT ["/tini", "--", "bash", "-c", "source /etc/profile && \"$@\"", "-s"]
 
