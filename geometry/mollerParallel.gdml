@@ -46,6 +46,11 @@
     startphi="0" deltaphi="360" aunit="deg"
     rmin="1450" rmax="1460" z="2700" lunit="mm"/>
 
+  <tube
+    name="EnvelopeDet_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="0" rmax="5000" z="1" lunit="mm"/>
+
 </solids>
 
 <structure>
@@ -126,6 +131,90 @@
     <auxiliary auxtype="DetNo" auxvalue="46"/>
   </volume>
 
+  <volume name="col2USVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="47"/>
+  </volume>
+  
+  <volume name="col2DSVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="48"/>
+  </volume>
+  
+  <volume name="col4USVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="49"/>
+  </volume>
+  
+  <volume name="col4DSVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="50"/>
+  </volume>
+  
+  <volume name="HybridPbUSVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="51"/>
+  </volume>
+  
+  <volume name="HybridPbDSVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="52"/>
+  </volume>
+  
+  <volume name="col5USVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="53"/>
+  </volume>
+  
+  <volume name="col5DSVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="54"/>
+  </volume>
+
+  <volume name="coll1USVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="55"/>
+  </volume>
+
+  <volume name="coll1DSVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="56"/>
+  </volume>
+
+  <volume name="coll2USVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="57"/>
+  </volume>
+
+  <volume name="coll2DSVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="58"/>
+  </volume>
+
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
@@ -199,6 +288,66 @@
     <physvol name="n2atmoVirtualPlane_phys">
       <volumeref ref="n2atmoVirtualPlane_log"/>
       <positionref ref="n2atmoVirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="col2USVirtualDet_phys">
+      <volumeref ref="col2USVirtualDet_log"/>
+      <position name="col2USVirtualDet_pos" z="750-0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="col2DSVirtualDet_phys">
+      <volumeref ref="col2DSVirtualDet_log"/>
+      <position name="col2DSVirtualDet_pos" z="900+0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="col4USVirtualDet_phys">
+      <volumeref ref="col4USVirtualDet_log"/>
+      <position name="col4USVirtualDet_pos" z="3225-0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="col4DSVirtualDet_phys">
+      <volumeref ref="col4DSVirtualDet_log"/>
+      <position name="col4DSVirtualDet_pos" z="3375+0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="HybridPbUSVirtualDet_phys">
+      <volumeref ref="HybridPbUSVirtualDet_log"/>
+      <position name="HybridPbUSVirtualDet_pos" z="4430.5-0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="HybridPbDSVirtualDet_phys">
+      <volumeref ref="HybridPbDSVirtualDet_log"/>
+      <position name="HybridPbDSVirtualDet_pos" z="4680.5+0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="col5USVirtualDet_phys">
+      <volumeref ref="col5USVirtualDet_log"/>
+      <position name="col5USVirtualDet_pos" z="7785-0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="col5DSVirtualDet_phys">
+      <volumeref ref="col5DSVirtualDet_log"/>
+      <position name="col5DSVirtualDet_pos" z="7885+0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="coll1USVirtualDet_phys">
+      <volumeref ref="coll1USVirtualDet_log"/>
+      <position name="coll1USVirtualDet_pos" z="12250-0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="coll1DSVirtualDet_phys">
+      <volumeref ref="coll1DSVirtualDet_log"/>
+      <position name="coll1DSVirtualDet_pos" z="12400+0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="coll2USVirtualDet_phys">
+      <volumeref ref="coll2USVirtualDet_log"/>
+      <position name="coll2USVirtualDet_pos" z="18850-0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="coll2DSVirtualDet_phys">
+      <volumeref ref="coll2DSVirtualDet_log"/>
+      <position name="coll2DSVirtualDet_pos" z="19000+0.6" unit="mm"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
