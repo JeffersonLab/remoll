@@ -33,12 +33,13 @@ TH2F *gemdet_xy[nSpecies][nDmg];
 TH2F *gemdet_z0r0[nSpecies][nDmg];
 TH2F *gemdet_z0x0[nSpecies][nDmg];
 TH2F *gemdet_rph[nSpecies];
+TH2F *gemdet_zph[nSpecies];
 
 //source plots for different z cuts
 TH2F *gemdet_x0y0Zcut[nSpecies][nZcut];
 
 void fillHisto_gemdet(int sp, double rdDmg[3],
-		     double xx, double yy, double vx0,
+		     double xx, double yy, double zz, double vx0,
 		     double vy0, double vz0, double rr, 
 		     double kinE, int sector);
 void writeOutput_gemdet(TFile *fout, double scaleFactor);
@@ -139,19 +140,20 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,rate*niel};
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
+      double zz = hit->at(j).z;
       int det = hit->at(j).det;
       
 
       if(det==detUT)
-	fillHisto_gemdet(sp, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	fillHisto_gemdet(sp, rdDmg, xx, yy, zz, vx0, vy0, vz0,rr,kinE,sector);
 
       if((sp==0 || sp==5) && kinE>1){
 	if(det==detUT)
-	  fillHisto_gemdet(1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	  fillHisto_gemdet(1, rdDmg, xx, yy, zz, vx0, vy0, vz0,rr,kinE,sector);
 
 	if(hit->at(j).trid==1 || hit->at(j).trid==2){
 	  if(det==detUT)
-	    fillHisto_gemdet(4, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,sector);
+	    fillHisto_gemdet(4, rdDmg, xx, yy, zz, vx0, vy0, vz0,rr,kinE,sector);
 	}
       }
 
@@ -191,9 +193,10 @@ void initHisto(){
       niceLogXBins(gemdet_energyNIEL[i]);
 	
       gemdet_rph[i]=new TH2F(Form("gemdet_rph_%s",spH[i].c_str()),
-                    Form("Rate weighted %s;ph[deg]",spTit[i].c_str()),380,-190,190,
-				 300,1440,1470);
+                    Form("Rate*NEIL weighted %s;ph[deg]",spTit[i].c_str()),380,-190,190,300,1440,1470);
 
+      gemdet_zph[i]=new TH2F(Form("gemdet_zph_%s",spH[i].c_str()),
+                    Form("Rate*NEIL weighted %s;ph[deg]",spTit[i].c_str()),380,-190,190,310,18825,21925);
 
       for(int k=0;k<nDmg;k++){
 	gemdet_z0[i][k]=new TH1F(Form("gemdet_z0_%s_Dmg%d",spH[i].c_str(),k),
@@ -239,7 +242,7 @@ void writeOutput(){
 
 
 void fillHisto_gemdet(int sp, double rdDmg[3],
-		     double xx, double yy, double vx0,
+		     double xx, double yy, double zz, double vx0,
 		     double vy0, double vz0, double rr, 
 		     double kinE, int sector){
   double phi = (180./pi)*atan2(yy,xx);
@@ -256,7 +259,8 @@ void fillHisto_gemdet(int sp, double rdDmg[3],
     
   }
 
-  gemdet_rph[sp]->Fill(phi,rr,rdDmg[0]);
+  gemdet_rph[sp]->Fill(phi,rr,rdDmg[2]);
+  gemdet_zph[sp]->Fill(phi,zz,rdDmg[2]);
   gemdet_energy[sp]->Fill(kinE,rdDmg[0]);
   gemdet_energyNIEL[sp]->Fill(kinE,rdDmg[2]);
 
@@ -283,6 +287,9 @@ void writeOutput_gemdet(TFile *fout, double scaleFactor){
     
       gemdet_rph[i]->Scale(scaleFactor);
       gemdet_rph[i]->Write();
+    
+      gemdet_zph[i]->Scale(scaleFactor);
+      gemdet_zph[i]->Write();
 
       for(int k=0;k<nDmg;k++){
 	gemdet_z0[i][k]->Scale(scaleFactor);
