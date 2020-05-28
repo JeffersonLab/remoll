@@ -102,7 +102,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       "verbose",
       fVerboseLevel,
       "Set geometry verbose level")
-          .SetStates(G4State_PreInit);
+          .SetStates(G4State_PreInit,G4State_Idle);
   fGeometryMessenger->DeclareProperty(
       "validate",
       fGDMLValidate,
