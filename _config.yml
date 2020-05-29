@@ -1,0 +1,21 @@
+title: remoll
+description: Simulations for the MOLLER Experiment at Jefferson Lab
+
+# Build settings
+theme: minima
+
+# Start from README.md
+plugins:
+  - jekyll-readme-index
+
+readme_index:
+  enabled:          true
+  remove_originals: true
+  with_frontmatter: false
+
+# Exclude from processing.
+exclude:
+  - src
+  - include
+  - Gemfile
+  - Gemfile.lock
