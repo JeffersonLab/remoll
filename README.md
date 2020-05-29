@@ -4,7 +4,7 @@
 
 ## Community
 
-Simulations are coordinated on the [12gevmoller_sim@jlab.org](https://mailman.jlab.org/mailman/listinfo/12gevmoller_sim) mailing list and the [JLab 12 GeV Slack workspace](https://jlab12gev.slack.com) (in particular, the `#moller_simulation` channel). Anyone with a jlab.org email address can join without invitation.
+Simulations are coordinated on the [12gevmoller_sim@jlab.org](https://mailman.jlab.org/mailman/listinfo/12gevmoller_sim) mailing list and the [JLab 12 GeV Slack workspace](https://jlab12gev.slack.com) (in particular, the `#moller_simulation` channel). Anyone with a jlab.org email address can join without invitation. Feel free to contact developers there with questions.
 
 ## Preparing to run simulations
 
@@ -12,6 +12,7 @@ There are several options for running simulations:
 - [downloading and compiling the code](README.Compiling.md),
 - [using a docker container on any operating system](README.Docker.md),
 - [using a singularity container on linux systems](README.Singularity.md).
+
 Detailed information can be found at each of the links.
 
 ## Running simulations
