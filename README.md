@@ -9,9 +9,9 @@ Simulations are coordinated on the [12gevmoller_sim@jlab.org](https://mailman.jl
 ## Preparing to run simulations
 
 There are several options for running simulations:
-- (downloading and compiling the code)[README.Compiling.md],
-- (using a docker container on any operating system)[README.Docker.md],
-- (using a singularity container on linux systems)[README.Singularity.md].
+- [downloading and compiling the code](README.Compiling.md),
+- [using a docker container on any operating system](README.Docker.md),
+- [using a singularity container on linux systems](README.Singularity.md).
 Detailed information can be found at each of the links.
 
 ## Running simulations
