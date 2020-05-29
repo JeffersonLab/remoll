@@ -1,4 +1,4 @@
-# Analysis macros
+# Analysis Macros
 
 ## Simulation data structures
 
