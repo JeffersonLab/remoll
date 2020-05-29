@@ -14,6 +14,14 @@ plugins:
   - jekyll-readme-index
   - jekyll-titles-from-headings
 
+# Markdown parser
+markdown: kramdown
+kramdown:
+ input: GFM
+ auto_ids: true
+ hard_wrap: false
+ syntax_highlighter: rouge
+
 header_pages: 
  - README.Running.md
  - geometry/README.md
