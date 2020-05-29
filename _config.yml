@@ -14,6 +14,12 @@ plugins:
   - jekyll-readme-index
   - jekyll-titles-from-headings
 
+header_pages: 
+ - README.Running.md
+ - geometry/README.md
+ - macros/README.md
+ - analysis/README.md
+
 # Settings
 readme_index:
   enabled:          true
