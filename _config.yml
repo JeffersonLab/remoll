@@ -1,21 +1,39 @@
 title: remoll
 description: Simulations for the MOLLER Experiment at Jefferson Lab
+baseurl: "/remoll"
+github_username: jeffersonlab
 
 # Build settings
 theme: minima
 
 # Start from README.md
 plugins:
+  - jekyll-sitemap
+  - jekyll-mentions
+  - jekyll-redirect-from
   - jekyll-readme-index
+  - jekyll-titles-from-headings
 
+# Settings
 readme_index:
   enabled:          true
   remove_originals: true
   with_frontmatter: false
 
-# Exclude from processing.
+titles_from_headings:
+  enabled:     true
+  strip_title: true
+  collections: true
+
+# Exclude from processing
 exclude:
   - src
   - include
+  - build
+  - bin
+  - lib
+  - share
+  - logfiles
+  - rootfiles
   - Gemfile
   - Gemfile.lock
