@@ -1,4 +1,4 @@
-# Visualization macros
+# Visualization Macros
 
 The macros in the `vis` directory aid in visualization of simulations.
 
