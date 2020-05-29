@@ -34,10 +34,14 @@ Several other [visualization macros](vis/README.md) are available.
 ### Batch mode
 
 If you specify arguments, the simulation will run in batch mode without graphical user interface. You can specify the following arguments:
+```
+Usage:
+ remoll [-g geometry] [-m macro] [-u session] [-r seed] [-t nthreads] [macro]
+```
 
 To execute the macro `macros/runexample.mac` with random seed 1234 and 4 threads, just run:
 ```
-remoll -s 1234 -t 4 macros/runexample.mac
+remoll -r 1234 -t 4 macros/runexample.mac
 ```
 
 Several other [example macros](macros/README.md) are available.
