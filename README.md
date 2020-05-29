@@ -44,7 +44,7 @@ Several other [example macros](macros/README.md) are available.
 
 ## Analyzing the output
 
-You can access the output file with a regular root installation (it will warn about non-perfect support). A listing of the [output variables](README.variable.md) is available for reference.
+You can access the output file with a regular root installation (it will warn about non-perfect support). A listing of the [output variables](README.variables.md) is available for reference.
 
 To take advantage of dedicated functionality for the data types in the output file, you will need to follow the more detailed [analysis instructions](analysis/README.md). To simplify this, you can also use the helper executable `reroot` which is available wherever `remoll` is available.
 
