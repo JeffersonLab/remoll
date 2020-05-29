@@ -27,6 +27,7 @@ header_pages:
  - geometry/README.md
  - macros/README.md
  - analysis/README.md
+ - README.FAQ.md
 
 # Settings
 readme_index:

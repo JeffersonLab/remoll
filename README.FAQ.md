@@ -1,4 +1,4 @@
-# Frequently Asked Questions
+# FAQ
 
 We compile a list of frequently asked questions which will be integrated in the documentation at a future time.
 
