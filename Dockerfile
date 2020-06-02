@@ -59,3 +59,9 @@ COPY docker/jlab.sh /jlab/${JLAB_VERSION}/ce/jlab.sh
 ENTRYPOINT ["/tini", "--", "bash", "-c", "source /etc/profile && \"$@\"", "-s"]
 
 CMD ["remoll"]
+
+# some extra singularity stuff
+COPY .singularity.d /.singularity.d
+
+# build info
+RUN echo "Timestamp:" `date --utc` | tee /image-build-info.txt
