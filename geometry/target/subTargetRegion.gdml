@@ -32,7 +32,8 @@
   <constant name="leadBoxy" value="2550."/>
   <constant name="leadBoxz" value="400."/>
 
-  <constant name="Shield_bore" value="140"/>
+  <constant name="Shield_bore" value="150"/>
+  <constant name="Shield_bore_concrete" value="340"/>
   <constant name="Shield_length" value="concreteBoxz+2"/>
 
   <position name="origin" x="0" y="0" z="0"/>
@@ -132,7 +133,7 @@
   </subtraction>
 
   <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
-        rmin="0" rmax="Shield_bore+200" z="Shield_length"/>
+        rmin="0" rmax="Shield_bore_concrete" z="Shield_length"/>
 
   <subtraction name="concrete_sub">
     <first ref = "concrete_sub1"/>
