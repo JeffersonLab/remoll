@@ -80,13 +80,6 @@
       <rotation name="lefthut_rot" unit="deg" y="-45"/>
     </physvol>
     
-    <!-- electronics hut for right side --> 
-    <physvol>
-      <file name="huts/righthut.gdml"/>
-      <positionref ref="righthut_pos"/>
-      <rotation name="righthut_rot" unit="deg" y="45"/>
-    </physvol>
-    
     <!-- ShowerMax Detectors--> 
     <physvol>
       <file name="showermax/showerMaxGen.gdml"/>
