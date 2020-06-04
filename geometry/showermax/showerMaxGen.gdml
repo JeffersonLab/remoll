@@ -48,7 +48,7 @@
 		<position name="pos_logic_mirror_box_union" x="177.846804574" y="0" z="0"/>
 		<rotation name="rot_logic_mirror_box_union" x="0" y="0" z="0"/>
 	</union>
-	<cone name="solid_showerMaxMother" rmin1="600"  rmax1="1900" rmin2="600" rmax2="1900"  z="416.764" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<cone name="solid_showerMaxMother" rmin1="700"  rmax1="1900" rmin2="700" rmax2="1900"  z="416.764" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 </solids>
 
 
