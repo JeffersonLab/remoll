@@ -685,6 +685,8 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
         if (it_detno != list.end()) {
 
           int det_no = atoi(it_detno->value.data());
+          bool enabled = (det_no > 0)? false : true;
+          det_no = std::abs(det_no);
 
           // Construct detector name
           std::stringstream det_name_ss;
@@ -712,6 +714,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                      <<  G4endl;
 
             remollsd = new remollGenericDetector(det_name, det_no);
+            remollsd->SetEnabled(enabled);
 
             // Register detector with SD manager
             SDman->AddNewDetector(remollsd);
