@@ -463,12 +463,12 @@
 
     <physvol>
       <volumeref ref="tgtOuterDet2_logic"/>
-      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="375+1" z="-concreteBoxz/2 - 1"/>
+      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="390" z="-concreteBoxz/2 - 1"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet3_logic"/>
-      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="375+1" z="concreteBoxz/2 + 1"/>
+      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="390" z="concreteBoxz/2 + 1"/>
     </physvol>
 
     <physvol>
