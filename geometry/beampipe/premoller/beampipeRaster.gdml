@@ -10,13 +10,13 @@
   <polycone name="raster_beampipe_outer_solid"
             aunit="deg" startphi="0" deltaphi="360"
             lunit="mm">
-    <zplane rmin="0" rmax="102" z="-18000.0"/>
+    <zplane rmin="0" rmax="102" z="-20000.0"/>
     <zplane rmin="0" rmax="102" z="-7690.0"/>
   </polycone>
   <polycone name="raster_beampipe_inner_solid"
             aunit="deg" startphi="0" deltaphi="360"
             lunit="mm">
-    <zplane rmin="0" rmax="100" z="-18000.0"/>
+    <zplane rmin="0" rmax="100" z="-20000.0"/>
     <zplane rmin="0" rmax="100" z="-7690.0"/>
   </polycone>
 </solids>
