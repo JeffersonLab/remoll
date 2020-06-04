@@ -481,22 +481,22 @@
 
     <physvol>
       <volumeref ref="tgtOuterDet0_logic"/>
-      <position name="tgtOuterDet0_pos" unit="mm" x="concreteBoxx/2 + 1" y="375+1" z="0"/>
+      <position name="tgtOuterDet0_pos" unit="mm" x="concreteBoxx/2 + 1" y="390" z="0"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet1_logic"/>
-      <position name="tgtOuterDet1_pos" unit="mm" x="-concreteBoxx/2 - 1" y="375+1" z="0"/>
+      <position name="tgtOuterDet1_pos" unit="mm" x="-concreteBoxx/2 - 1" y="390" z="0"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet2_logic"/>
-      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="375+1" z="-concreteBoxz/2 - 1"/>
+      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="390" z="-concreteBoxz/2 - 1"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet3_logic"/>
-      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="375+1" z="concreteBoxz/2 + 1"/>
+      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="390" z="concreteBoxz/2 + 1"/>
     </physvol>
 
     <physvol>
