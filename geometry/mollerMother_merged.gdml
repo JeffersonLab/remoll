@@ -32,7 +32,7 @@
 
     <!-- Hall -->
     <physvol>
-      <file name="hall/hallDaughter_merged.gdml"/>
+      <file name="hall/hallDaughter_dump.gdml"/>
       <positionref ref="hallCenter"/>
     </physvol>
 
