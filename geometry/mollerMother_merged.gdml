@@ -51,6 +51,9 @@
     <!-- Downstream beampipe -->
     
     <physvol>
+      <file name="beampipe/premoller/beampipeRaster.gdml"/>
+    </physvol>
+    <physvol>
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
 
