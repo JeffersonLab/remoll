@@ -60,6 +60,7 @@ log
 #ignore project files for eclipse
 .cproject
 .project
+.settings
 
 #ignore build type file
 .buildtype

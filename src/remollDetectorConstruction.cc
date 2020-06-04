@@ -301,7 +301,8 @@ void remollDetectorConstruction::SetKryptoniteUserLimits(G4VPhysicalVolume* volu
   }
 
   // Descend down the tree
-  for (int i = 0; i < logical_volume->GetNoDaughters(); i++) {
+  auto n = logical_volume->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     G4VPhysicalVolume* daughter = logical_volume->GetDaughter(i);
     SetKryptoniteUserLimits(daughter);
   }
@@ -458,8 +459,9 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
 
         // Found target mother logical volume
         G4LogicalVolume* mother_logical_volume = logical_volume;
-        G4cout << "Found target mother logical volume "
-               << mother_logical_volume->GetName() << "." << G4endl;
+        if (fVerboseLevel > 0)
+          G4cout << "Found target mother logical volume "
+                 << mother_logical_volume->GetName() << "." << G4endl;
 
         // Now find target mother physical volume
         G4VPhysicalVolume* mother_physical_volume = 0;
@@ -473,8 +475,9 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
           remollBeamTarget::ResetTargetVolumes();
           remollBeamTarget::SetMotherVolume(mother_physical_volume);
 
-          G4cout << "Found target mother physical volume "
-                 << mother_physical_volume->GetName() << "." << G4endl;
+          if (fVerboseLevel > 0)
+            G4cout << "Found target mother physical volume "
+                   << mother_physical_volume->GetName() << "." << G4endl;
         } else {
           G4cout << "Target mother logical volume does not occur "
                  << "*exactly once* as a physical volume." << G4endl;
@@ -482,7 +485,8 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
         }
 
         // Loop over target mother logical volume daughters
-        for (int i = 0; i < mother_logical_volume->GetNoDaughters(); i++) {
+        auto n = mother_logical_volume->GetNoDaughters();
+        for (decltype(n) i = 0; i < n; i++) {
 
           // Get daughter physical and logical volumes
           G4VPhysicalVolume* target_physical_volume = mother_logical_volume->GetDaughter(i);
@@ -646,7 +650,8 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
   // Set all immediate daughters of the world volume to wireframe
   G4VisAttributes* daughterVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   daughterVisAtt->SetForceWireframe(true);
-  for (int i = 0; i < fWorldVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
+  auto n = fWorldVolume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
   }
 }
@@ -655,6 +660,9 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 {
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
+
+  // Duplication map
+  std::map<int, G4LogicalVolume*> detnomap;
 
   // Loop over all volumes with auxiliary tags
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
@@ -677,11 +685,19 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
         if (it_detno != list.end()) {
 
           int det_no = atoi(it_detno->value.data());
+          bool enabled = (det_no > 0)? false : true;
+          det_no = std::abs(det_no);
 
           // Construct detector name
           std::stringstream det_name_ss;
           det_name_ss << "remoll/det_" << det_no;
           std::string det_name = det_name_ss.str();
+
+          // Check for duplication
+          if (detnomap.count(det_no) != 0) {
+            G4cerr << "remoll: DetNo " << det_no << " for " << myvol->GetName() << G4endl;
+            G4cerr << "remoll: already used by " << detnomap[det_no]->GetName() << G4endl;
+          }
 
           // Try to find sensitive detector
           G4SDManager* SDman = G4SDManager::GetSDMpointer();
@@ -698,9 +714,11 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                      <<  G4endl;
 
             remollsd = new remollGenericDetector(det_name, det_no);
+            remollsd->SetEnabled(enabled);
 
             // Register detector with SD manager
             SDman->AddNewDetector(remollsd);
+            detnomap[det_no] = myvol;
 
             // Register detector with remollIO
             remollIO* io = remollIO::GetInstance();
@@ -723,6 +741,10 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 
         // Set detector type
         if (remollsd) remollsd->SetDetectorType(it_dettype->value);
+
+        // Print detector type
+        if (fVerboseLevel > 0)
+          if (remollsd) remollsd->PrintDetectorType();
 
       }
 
@@ -860,7 +882,8 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
       }
       index++;
       //}else {
-    for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++){
+    auto n = aVolume->GetLogicalVolume()->GetNoDaughters();
+    for(decltype(n) i=0;i<n;i++){
       index = UpdateCopyNo(aVolume->GetLogicalVolume()->GetDaughter(i),index);
     }
     //}
@@ -891,7 +914,8 @@ std::vector<G4VPhysicalVolume*> remollDetectorConstruction::GetPhysicalVolumes(
   }
 
   // Descend down the tree
-  for (int i = 0; i < physical_volume->GetLogicalVolume()->GetNoDaughters(); i++)
+  auto n = physical_volume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++)
   {
     // Get results for daughter volumes
     std::vector<G4VPhysicalVolume*> daughter_list =
@@ -939,7 +963,8 @@ void remollDetectorConstruction::PrintGeometryTree(
   if (surfchk) aVolume->CheckOverlaps(1000,1.0*mm,false);
 
   // Descend down the tree
-  for (int i = 0; i < aVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
+  auto n = aVolume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     PrintGeometryTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk,print);
   }
 }

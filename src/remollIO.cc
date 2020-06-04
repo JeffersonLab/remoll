@@ -39,7 +39,7 @@ remollIO* remollIO::GetInstance() {
 }
 
 remollIO::remollIO()
-: fFile(0),fTree(0),fFilename("remollout.root")
+: fFile(0),fTree(0),fFilename("remollout.root"),fRate(0)
 {
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -86,8 +86,8 @@ void remollIO::InitializeTree()
     fTree->Branch("units",    &fUnits);
 
     // Detectors
-    fTree->Branch("dets.sd",  &fDetNos, fDetSDNames);
-    fTree->Branch("dets.lv",  &fDetNos, fDetLVNames);
+    fTree->Branch("dets.sd",  &fDetSDNos, fDetSDNames);
+    fTree->Branch("dets.lv",  &fDetLVNos, fDetLVNames);
 
     // Event information
     fTree->Branch("seed",     &fSeed);

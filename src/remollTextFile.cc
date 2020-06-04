@@ -11,8 +11,9 @@ remollTextFile::remollTextFile()
     fFilenameSize = 0;
     fFilename = NULL;
 
-    fBufferSize = 0;
-    fBuffer = NULL;
+    fBufferSize = 1;
+    fBuffer = new char[1];
+    fBuffer[0] = '\0';
 }
 
 remollTextFile::remollTextFile(const char *fn)
@@ -20,8 +21,9 @@ remollTextFile::remollTextFile(const char *fn)
     fFilenameSize = 0;
     fFilename = NULL;
 
-    fBufferSize = 0;
-    fBuffer = NULL;
+    fBufferSize = 1;
+    fBuffer = new char[1];
+    fBuffer[0] = '\0';
 
     copyFileIn(fn);
 }
@@ -74,9 +76,10 @@ void remollTextFile::copyFileIn(const char *fn){
 	fFilename = new char[fFilenameSize];
 	strncpy(fFilename, fn, fFilenameSize);
 
-	fBufferSize = filedata.st_size;
-	fBuffer = new char[filedata.st_size];
+	fBufferSize = filedata.st_size+1;
+	fBuffer = new char[fBufferSize];
 	size_t size = fread(fBuffer, sizeof(char), filedata.st_size, fd);
+	fBuffer[fBufferSize-1] = '\0';
 	if( (long int) size != filedata.st_size ){
 	    fprintf(stderr, "%s line %d: ERROR file %s cannot be fully read (%lld of %lld read)\n",
 		    __PRETTY_FUNCTION__, __LINE__, fn,(unsigned long long int)  size, (unsigned long long int)  filedata.st_size);

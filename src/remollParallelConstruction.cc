@@ -19,7 +19,7 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
   fGDMLPath("geometry"),fGDMLFile(""),
   fGDMLParser(0),
   fGDMLValidate(false),
-  fGDMLOverlapCheck(true),
+  fGDMLOverlapCheck(false),
   fVerboseLevel(0),
   fParallelMessenger(0),
   fWorldVolume(0),
@@ -143,7 +143,11 @@ G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
 
   // Parse GDML file
   fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
+  // hide output if not validating or checking ovelaps
+  if (! fGDMLOverlapCheck && ! fGDMLValidate)
+    G4cout.setstate(std::ios_base::failbit);
   fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+  G4cout.clear();
   G4VPhysicalVolume* parallelvolume = fGDMLParser->GetWorldVolume();
   G4LogicalVolume* parallellogical = parallelvolume->GetLogicalVolume();
 
@@ -266,7 +270,8 @@ void remollParallelConstruction::ParseAuxiliaryVisibilityInfo()
   // Set all immediate daughters of the world volume to wireframe
   G4VisAttributes* daughterVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   daughterVisAtt->SetForceWireframe(true);
-  for (int i = 0; i < fWorldVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
+  auto n = fWorldVolume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
   }
 }

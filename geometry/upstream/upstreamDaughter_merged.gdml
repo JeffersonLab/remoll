@@ -9,6 +9,8 @@
 
 <define>
     &matrices;
+    
+    <variable name="i_septant" value="0"/>
 
     <constant name="PI" value="1.*pi"/>
     <constant name="UOFFSET" value="7000.00"/>
@@ -419,7 +421,6 @@
 	<positionref ref="posCOLL2_Cu_sub" />
         <rotation name="uscoll_Cu_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
     </subtraction>
-
     <!--
        Shielding collimators
       -->
@@ -460,7 +461,7 @@
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2001"/>
     </volume>
-
+  
     <volume name="col1_h20_logic1">
       <materialref ref="G4_WATER"/>
       <solidref ref="col1_h20_solid1"/>
@@ -470,6 +471,7 @@
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2009"/>
     </volume>
+  
     <volume name="col1_h20_logic2">
       <materialref ref="G4_WATER"/>
       <solidref ref="col1_h20_solid2"/>
@@ -490,17 +492,8 @@
       <auxiliary auxtype="DetNo" auxvalue="2011"/>
     </volume>
 
-    <volume name="col1_jacket_logic">
-      <materialref ref="Copper"/>
-      <solidref ref="col1_jacket_solid"/>
-      <auxiliary auxtype="Color" auxvalue="magenta"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
-      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
-      <auxiliary auxtype="DetNo" auxvalue="2012"/>
-    </volume>
 
-   <volume name="logicUScollunion_1">
+    <volume name="logicUScollunion_1">
       <materialref ref="CW95"/>
       <solidref ref="uscoll2_CW_6"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
@@ -508,6 +501,32 @@
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2002"/>
+      </volume>
+
+    <volume name="uscyl_slice_lv">
+      <materialref ref="CW95"/>
+      <solidref ref="uscyl_slice_sol"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetNo" auxvalue="2002"/>
+    </volume>
+    <volume name="logicUScollunion_2">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="uscyl_2"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
+      <physvol name="uscyl_inner_ring_pv">
+        <volumeref ref="uscyl_inner_ring_lv"/>
+      </physvol>
+      <physvol name="uscyl_outer_ring_pv">
+        <volumeref ref="uscyl_outer_ring_lv"/>
+      </physvol>
+      <loop for="i_septant" from="0" to="6" step="1">
+        <physvol name="uscyl_slice_pv[i_septant]">
+          <volumeref ref="uscyl_slice_lv"/>
+          <rotation z="SEPTANT*(i_septant)" unit="deg"/>
+        </physvol>
+      </loop>
     </volume>
 
    <volume name="logicUScollunion_2">
@@ -536,8 +555,8 @@
       <materialref ref="VacuumColl"/>
       <solidref ref="boxUpstream"/>
 
-      <physvol name="UScoll_1">
-        <volumeref ref="logicUScoll_1"/>
+      <physvol name="UScoll_2">
+        <volumeref ref="logicUScoll_2"/>
         <positionref ref="posCOLL1"/>
       </physvol>
 

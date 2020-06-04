@@ -215,21 +215,21 @@
 <structure>
 
   <volume name="h2Targ">
-    <materialref ref="LiquidHydrogen"/>
+    <materialref ref="G4_lH2"/>
     <solidref ref="target_solid"/>
     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
   </volume>
 
   <volume name="USAlTarg">
-    <materialref ref="Aluminum"/>
+    <materialref ref="G4_Al"/>
     <solidref ref="AlWindow"/>
     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     <auxiliary auxtype="Color" auxvalue="white"/>
   </volume>
 
   <volume name="DSAlTarg">
-    <materialref ref="Aluminum"/>
+    <materialref ref="G4_Al"/>
     <solidref ref="AlWindow"/>
     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
     <auxiliary auxtype="Color" auxvalue="white"/>

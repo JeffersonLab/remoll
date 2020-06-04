@@ -13,7 +13,7 @@ dir=`readlink -f ${dir}`
 suite="${1:-commit}"
 
 # The branch name is used to avoid clobbering comparative output
-branch=`git rev-parse --abbrev-ref HEAD`
+branch=`git rev-parse --abbrev-ref HEAD || echo "HEAD"`
 
 # Set test suite output directories
 rootfiles="rootfiles/tests/${suite}/${branch}"
@@ -41,6 +41,8 @@ while [ $# -gt 0 ] ; do
     stamp $file | pdftk - stamp $file output $file.new && mv $file.new $file
   done
   # Concatenate them all
-  pdftk ${rootfiles}/analysis/*.pdf cat output ${rootfiles//\//_}.pdf
+  name=${rootfiles##*tests/}
+  name=${name//\//_}_analysis_book
+  pdftk ${rootfiles}/analysis/*.pdf cat output rootfiles/${name}.pdf
   shift
 done

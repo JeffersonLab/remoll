@@ -51,7 +51,8 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
 
   // Traverse all hit collections, sort by output type
   G4HCofThisEvent *HCE = aEvent->GetHCofThisEvent();
-  for (int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++) {
+  auto n = HCE->GetCapacity();
+  for (decltype(n) hcidx = 0; hcidx < n; hcidx++) {
     G4VHitsCollection* thiscol = HCE->GetHC(hcidx);
     if (thiscol){ // This is NULL if nothing is stored
 

@@ -5,6 +5,7 @@
 #include "G4OpticalPhysics.hh"
 #include "G4GenericMessenger.hh"
 #include "G4RunManager.hh"
+#include "G4NuclearLevelData.hh"
 #include "G4HadronicProcessStore.hh"
 #include "G4ParticleHPManager.hh"
 
@@ -128,6 +129,13 @@ void remollPhysicsList::SetVerboseLevel(G4int level)
 {
   // Let upstream handle this first
   G4VModularPhysicsList::SetVerboseLevel(level);
+
+  // Set verbose level of precompound deexcitation
+  #if G4VERSION_NUMBER >= 1060
+  if (auto nuclearleveldata = G4NuclearLevelData::GetInstance())
+    if (auto param = nuclearleveldata->GetParameters())
+      param->SetVerbose(level);
+  #endif
 
   // Set verbose level of HadronicProcessStore
   G4HadronicProcessStore::Instance()->SetVerbose(level);
