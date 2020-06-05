@@ -215,6 +215,69 @@
     <auxiliary auxtype="DetNo" auxvalue="58"/>
   </volume>
 
+  <volume name="GEM1VirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="59"/>
+  </volume>
+
+  <volume name="GEM2VirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="60"/>
+  </volume>
+
+  <volume name="GEM3VirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="61"/>
+  </volume>
+
+  <volume name="GEM4VirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="62"/>
+  </volume>
+
+  <volume name="SMVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="63"/>
+  </volume>
+
+  <volume name="PIONVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="64"/>
+  </volume>
+
+  <volume name="NeckDownVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="65"/>
+  </volume>
+
+  <volume name="SAMVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="66"/>
+  </volume>
+
+  <volume name="wallVirtualDet_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="EnvelopeDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="67"/>
+  </volume>
+
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
@@ -259,12 +322,12 @@
       <volumeref ref="collar2VirtualPlane_log"/>
       <positionref ref="collar2VirtualPlane_pos"/>
     </physvol>
-
+    <!--
     <physvol name="gemVirtualPlane_phys">
       <volumeref ref="gemVirtualPlane_log"/>
       <positionref ref="gemVirtualPlane_pos"/>
     </physvol>
-
+    -->
     <physvol name="SAMusVirtualPlane_phys">
       <volumeref ref="SAMusVirtualPlane_log"/>
       <positionref ref="SAMusVirtualPlane_pos"/>
@@ -332,7 +395,7 @@
 
     <physvol name="coll1USVirtualDet_phys">
       <volumeref ref="coll1USVirtualDet_log"/>
-      <position name="coll1USVirtualDet_pos" z="12250-0.6" unit="mm"/>
+      <position name="coll1USVirtualDet_pos" z="12250-1.0" unit="mm"/>
     </physvol>
 
     <physvol name="coll1DSVirtualDet_phys">
@@ -348,6 +411,49 @@
     <physvol name="coll2DSVirtualDet_phys">
       <volumeref ref="coll2DSVirtualDet_log"/>
       <position name="coll2DSVirtualDet_pos" z="19000+0.6" unit="mm"/>
+    </physvol>
+
+    <physvol name="GEM1VirtualDet_phys">
+      <volumeref ref="GEM1VirtualDet_log"/>
+      <position name="GEM1VirtualDet_pos" z="19075" unit="mm"/>
+    </physvol>
+
+    <physvol name="GEM2VirtualDet_phys">
+      <volumeref ref="GEM2VirtualDet_log"/>
+      <position name="GEM2VirtualDet_pos" z="19275" unit="mm"/>
+    </physvol>
+    <physvol name="GEM3VirtualDet_phys">
+      <volumeref ref="GEM3VirtualDet_log"/>
+      <position name="GEM3VirtualDet_pos" z="21475" unit="mm"/>
+    </physvol>
+    <physvol name="GEM4VirtualDet_phys">
+      <volumeref ref="GEM4VirtualDet_log"/>
+      <position name="GEM4VirtualDet_pos" z="21675" unit="mm"/>
+    </physvol>
+
+    <physvol name="SMVirtualDet_phys">
+      <volumeref ref="SMVirtualDet_log"/>
+      <position name="SMVirtualDet_pos" z="24000" unit="mm"/>
+    </physvol>
+
+    <physvol name="PIONVirtualDet_phys">
+      <volumeref ref="PIONVirtualDet_log"/>
+      <position name="PIONVirtualDet_pos" z="25200" unit="mm"/>
+    </physvol>
+
+    <physvol name="NeckDownVirtualDet_phys">
+      <volumeref ref="NeckDownVirtualDet_log"/>
+      <position name="NeckDownVirtualDet_pos" z="25198" unit="mm"/>
+    </physvol>
+
+    <physvol name="SAMVirtualDet_phys">
+      <volumeref ref="SAMVirtualDet_log"/>
+      <position name="SAMVirtualDet_pos" z="26048" unit="mm"/>
+    </physvol>
+
+    <physvol name="wallVirtualDet_phys">
+      <volumeref ref="wallVirtualDet_log"/>
+      <position name="wallVirtualDet_pos" z="26517" unit="mm"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
