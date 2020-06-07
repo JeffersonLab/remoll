@@ -210,6 +210,19 @@
               z="0.2"/>
   </union>
 
+  <!-- Target upstream beampipe -->
+  <polycone name="targetUSBeamPipeOuter_solid"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="0" rmax="70" z="-3190.0"/>
+    <zplane rmin="0" rmax="70" z="-1000.0"/>
+  </polycone>
+  <polycone name="targetUSBeamPipeInner_solid"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="0" rmax="68" z="-3190.0"/>
+    <zplane rmin="0" rmax="68" z="-1000.0"/>
+  </polycone>
 </solids>
 
 <structure>
@@ -247,6 +260,18 @@
     <auxiliary auxtype="Color" auxvalue="white"/>
   </volume>
 
+  <volume name="targetUSBeamPipeVacuum">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="targetUSBeamPipeInner_solid"/>
+  </volume>
+  <volume name="targetUSBeamPipe">
+    <materialref ref="G4_Al"/>
+    <solidref ref="targetUSBeamPipeOuter_solid"/>
+    <physvol>
+      <volumeref ref="targetUSBeamPipeVacuum"/>
+    </physvol>
+  </volume>
+  
   <volume name="LeadCollar_logic">
     <materialref ref="Lead"/>
     <solidref ref="LeadCollar_solid"/>
@@ -422,6 +447,10 @@
       <rotationref ref="rot_x90"/>
     </physvol>
 
+    <physvol>
+      <volumeref ref="targetUSBeamPipe"/>
+    </physvol>
+    
     <physvol>
       <volumeref ref="LeadCollar_logic"/>
       <position name="LeadCollar_pos" unit="mm" x="0" y="0"
