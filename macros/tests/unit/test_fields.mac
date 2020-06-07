@@ -5,28 +5,8 @@
 /remoll/field/value 0.0 -0.16 9.55
 /remoll/field/value +0.16 0.0 9.55
 /remoll/field/value -0.16 0.0 9.55
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+/control/execute macros/load_magnetic_fieldmaps.mac
 /remoll/field/value 0.0 +0.16 9.55
 /remoll/field/value 0.0 -0.16 9.55
 /remoll/field/value +0.16 0.0 9.55
 /remoll/field/value -0.16 0.0 9.55
-
-/remoll/field/value +0.00037 +0.014 9.55
-/remoll/field/value +0.00037 -0.014 9.55
-/remoll/field/value +0.014 +0.00037 9.55
-/remoll/field/value -0.014 +0.00037 9.55
-/remoll/field/value -0.00037 +0.014 9.55
-/remoll/field/value -0.00037 -0.014 9.55
-/remoll/field/value +0.014 -0.00037 9.55
-/remoll/field/value -0.014 -0.00037 9.55
-#/remoll/addfield map_directory/hybridSymmetric_sensR_0.0.txt
-#/remoll/addfield map_directory/upstreamSymmetric_sensR_0.0.txt
-/remoll/field/value +0.00037 +0.014 9.55
-/remoll/field/value +0.00037 -0.014 9.55
-/remoll/field/value +0.014 +0.00037 9.55
-/remoll/field/value -0.014 +0.00037 9.55
-/remoll/field/value -0.00037 +0.014 9.55
-/remoll/field/value -0.00037 -0.014 9.55
-/remoll/field/value +0.014 -0.00037 9.55
-/remoll/field/value -0.014 -0.00037 9.55
