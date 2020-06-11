@@ -54,22 +54,38 @@ void remollGenPion::SamplePhysics(remollVertex *vert, remollEvent *evt)
     double th = acos(G4RandFlat::shoot(cos(fTh_max), cos(fTh_min)));
     double ph = G4RandFlat::shoot(fPh_min, fPh_max);
 
+    // For pion generation we don't set fE_min and fE_max so for now true_emax = beamE : rakitha Wed Sep 25 10:43:57 EDT 2013
     double true_emax = 0.0;
-    //For pion generation we don't set fE_min and fE_max so for now true_emax = beamE : rakitha Wed Sep 25 10:43:57 EDT 2013
-    if( fE_max < 0.0 || fE_max > beamE ){
+    if (fE_max < 0.0 || fE_max > beamE) {
 	true_emax = beamE;
     } else {
 	true_emax = fE_max;
     }
+    // If we radiated so much that beamE < fE_min, we just set true_emin to beamE and have zero phase space
+    double true_emin = 0.0;
+    if (fE_min > 0.0 && fE_min < true_emax) {
+        true_emin = fE_min;
+    } else if (fE_min > 0.0 && fE_min > true_emax) {
+        true_emin = true_emax;
+    } else {
+        true_emin = 0.0;
+    }
 
-    double pf = G4RandFlat::shoot(fE_min, true_emax);
+    // Shoot
+    double pf = G4RandFlat::shoot(true_emin, true_emax);
 
-    assert( pf > 0.0 );
-    assert( pf < beamE );
+    if (!(pf >= 0.0) || !(pf <= beamE)) {
+      G4cout << "remollGenPion::SamplePhysics: ERROR"
+             << " fE_min, fE_max = [" << fE_min << "," << fE_max << "] "
+             << " true_emin, true_emax = [" << true_emin << "," << true_emax << "] "
+             << " with beamE = " << beamE
+             << " but pf = " << pf << G4endl;
+      exit(-1);
+    }
     //solid angle in steradians times the integral of pion energies from 0 to beamE -> int dE from 0 to beamE: rakitha Tue Sep 24 14:11:36 EDT 2013
 
 
-    double V = (fPh_max - fPh_min) * (cos(fTh_min) - cos(fTh_max)) * (true_emax - fE_min);
+    double V = (fPh_max - fPh_min) * (cos(fTh_min) - cos(fTh_max)) * (true_emax - true_emin);
 
     double intrad = 2.0*alpha*log(beamE/electron_mass_c2)/pi;
 

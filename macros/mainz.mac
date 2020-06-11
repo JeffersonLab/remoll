@@ -25,7 +25,7 @@
 #----------------------------------------
 
 # Kill tracks on interactions with W, Cu, and Pb
-/remoll/kryptonite/set true
+/control/execute macros/kryptonite.mac
 
 /process/list
 

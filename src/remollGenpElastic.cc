@@ -45,10 +45,10 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     std::vector<G4VPhysicalVolume *>::iterator it = targVols.begin();
     if( targVols.size() > 0 ){
-	while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" 
+	while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" 
 		&& it != targVols.end() ){ it++; }
 
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" ){
 	    G4cerr << __FILE__ << " line " << __LINE__ << ": WARNING could not find target" << G4endl;
 	    bypass_target = true;
 	}
@@ -221,7 +221,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double sigma = sigma_mott*(ef/beamE)*(ffpart1 + ffpart2);
 
-    double V = 2.0*pi*(cthmin - cthmax)*samp_fact;
+    double V = (fPh_max - fPh_min) * (cthmin - cthmax) * samp_fact;
 
     // Suppress too low angles from being generated
     // If we're in the multiple-scattering regime

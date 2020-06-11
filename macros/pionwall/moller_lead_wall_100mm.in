@@ -48,9 +48,6 @@
 #/remoll/gen quasielasticAl
 #/remoll/gen elasticAl
 
-/remoll/targpos   0 cm
-/remoll/targlen 150 cm
-
 /remoll/beamcurr 85 microampere
 
 # Make interactions with W, Cu, and Pb

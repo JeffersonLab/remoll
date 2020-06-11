@@ -25,9 +25,10 @@
 /gui/addButton geom geometry/mollerMother.gdml               "/remoll/geometry/setfile geometry/mollerMother.gdml"
 /gui/addButton geom geometry/mollerMother_dump.gdml          "/remoll/geometry/setfile geometry/mollerMother_dump.gdml"
 /gui/addButton geom geometry/mollerMother_empty.gdml         "/remoll/geometry/setfile geometry/mollerMother_empty.gdml"
+/gui/addButton geom geometry/mollerMother_merged.gdml        "/remoll/geometry/setfile geometry/mollerMother_merged.gdml"
 /gui/addButton geom geometry/mollerMother_trackingOnly.gdml  "/remoll/geometry/setfile geometry/mollerMother_trackingOnly.gdml"
 /gui/addButton geom geometry/mollerMother_showerMaxOnly.gdml "/remoll/geometry/setfile geometry/mollerMother_showerMaxOnly.gdml"
-/gui/addButton geom geometry/pionDetectorLucite.gdml         "/remoll/geometry/setfile geometry/pionDetectorLucite.gdml"
+/gui/addButton geom geometry/pionDetectorLucite.gdml         "/remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml"
 /gui/addButton geom geometry/showerMaxDetector.gdml          "/remoll/geometry/setfile geometry/showerMaxDetector.gdml"
 /gui/addButton geom geometry/mollerParallel.gdml             "/remoll/parallel/setfile geometry/mollerParallel.gdml"
 #

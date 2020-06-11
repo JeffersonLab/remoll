@@ -1,5 +1,7 @@
 /run/initialize
 
+/control/execute macros/kryptonite.mac
+
 /remoll/tracking/set 0
 /remoll/filename test_tracking_flag_0.root
 /run/beamOn 100

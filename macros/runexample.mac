@@ -18,11 +18,7 @@
 
 /remoll/printgeometry true
 
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
-
-#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
-#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+/control/execute macros/load_magnetic_fieldmaps.mac
 
 # Raster and initial angle stuff
 /remoll/oldras true
@@ -71,19 +67,11 @@
 
 /remoll/beamene 11 GeV
 
-# For LH2
-/remoll/targpos   0 cm
-/remoll/targlen 150 cm
-
-# For carbon
-#/remoll/targpos 0.0 cm
-#/remoll/targlen 1.5 mm
-
 /remoll/beamcurr 85 microampere
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite/set true
+/control/execute macros/kryptonite.mac
 
 /process/list
 
@@ -93,5 +81,5 @@
 /remoll/filename remollout.root
 
 #/tracking/verbose 2
-
+/remoll/printtargetinfo
 /run/beamOn 100

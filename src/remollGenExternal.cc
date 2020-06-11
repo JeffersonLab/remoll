@@ -32,7 +32,6 @@ remollGenExternal::remollGenExternal()
   fThisGenMessenger->DeclareMethod("zOffset",&remollGenExternal::SetGenExternalZOffset,"External generator zOffset");
   fThisGenMessenger->DeclareMethod("detid",&remollGenExternal::SetGenExternalDetID,"External generator detector ID");
   fThisGenMessenger->DeclareMethod("startEvent",&remollGenExternal::SetGenExternalEntry,"External generator starting event: -1 starts random,  n starts at n (default n=0)");
-  G4cout << "Constructed remollGenExternal" << G4endl;
 }
 
 remollGenExternal::~remollGenExternal()

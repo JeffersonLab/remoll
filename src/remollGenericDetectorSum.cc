@@ -1,14 +1,29 @@
 #include "remollGenericDetectorSum.hh"
 
+#include "remollSystemOfUnits.hh"
+
 G4ThreadLocal G4Allocator<remollGenericDetectorSum>* remollGenericDetectorSumAllocator = 0;
 
 remollGenericDetectorSum::remollGenericDetectorSum(int detid, int copyid)
-: fDetID(detid),fCopyID(copyid),fEdep(0.0) { }
+: fDetID(detid),fCopyID(copyid),fEdep(0.0),fNhit(0) { }
 
 remollGenericDetectorSum::~remollGenericDetectorSum() { }
 
+void remollGenericDetectorSum::PrintSummary() const
+{
+  G4cout << "all: edep " << fEdep/MeV << " MeV in " << fNhit << " hits:" << G4endl;
+  for (auto it = fSumByPID.begin(); it != fSumByPID.end(); it++) {
+    G4cout << "pid " << it->first << ": "
+           << "edep " << it->second.edep/MeV << " MeV"
+           << " in " << it->second.n << " hits"
+           << " (avg " << it->second.edep/MeV / it->second.n << " MeV / hit)"
+           << G4endl;
+  }
+}
+
 void remollGenericDetectorSum::AddEDep(int pid, G4ThreeVector pos, double edep)
 {
+  fNhit += 1;
   fEdep += edep;
 
   if (fSumByPID.count(pid) == 0)
@@ -16,6 +31,7 @@ void remollGenericDetectorSum::AddEDep(int pid, G4ThreeVector pos, double edep)
 
   G4double oldedep = fSumByPID[pid].edep;
   fSumByPID[pid].edep += edep;
+  fSumByPID[pid].n++;
   G4double newedep = fSumByPID[pid].edep;
 
   if (newedep > 0.0) { // avoid division by zero for first hit with zero edep

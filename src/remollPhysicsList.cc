@@ -5,6 +5,7 @@
 #include "G4OpticalPhysics.hh"
 #include "G4GenericMessenger.hh"
 #include "G4RunManager.hh"
+#include "G4NuclearLevelData.hh"
 #include "G4HadronicProcessStore.hh"
 #include "G4ParticleHPManager.hh"
 
@@ -27,36 +28,24 @@ remollPhysicsList::remollPhysicsList()
   fBaseMessenger(0)
 {
   // Let users know to ignore the warning by Particle HP package
-  G4cout << "remoll: Since the high precision neutron simulation in the default physics list" << G4endl;
+  G4cout << "remoll: Since the high precision neutron simulation in the some physics lists  " << G4endl;
   G4cout << "remoll: generates a lot of warnings that cannot be avoided, we are setting the " << G4endl;
   G4cout << "remoll: physics list verbose level to zero. Use /remoll/physlist/verbose to set" << G4endl;
   G4cout << "remoll: the verbose level to a non-zero value." << G4endl << G4endl;
   //
   SetVerboseLevel(0);
 
-  // Get default reference physics list
+  // Set and print default reference physics list
   RegisterReferencePhysList("QGSP_BERT");
+  G4cout << "remoll: loaded reference physics list " << fReferencePhysListName << G4endl;
+
+  // Set and print default status of other physics
   EnableStepLimiterPhysics();
-
-  // TODO Backwards compatible, remove this on next major version change
-  // Create base messenger
-  fBaseMessenger = new G4GenericMessenger(this,
-      "/remoll/",
-      "Remoll properties");
-  // Create base commands
-  fBaseMessenger->DeclareMethod(
-      "parallel",
-      &remollPhysicsList::SetParallelPhysics,
-      "Enable parallel physics")
-              .SetStates(G4State_PreInit)
-              .SetDefaultValue("true");
-  fBaseMessenger->DeclareMethod(
-      "optical",
-      &remollPhysicsList::SetOpticalPhysics,
-      "Enable optical physics")
-              .SetStates(G4State_PreInit)
-              .SetDefaultValue("true");
-
+  EnableParallelPhysics();
+  DisableOpticalPhysics();
+  G4cout << "remoll: step limiter physics is " << (fStepLimiterPhysics? "enabled":"disabled") << G4endl;
+  G4cout << "remoll: parallel physics is "     << (fParallelPhysics?    "enabled":"disabled") << G4endl;
+  G4cout << "remoll: optical physics is "      << (fOpticalPhysics?     "enabled":"disabled") << G4endl;
 
   // Create physlist messenger
   fPhysListMessenger = new G4GenericMessenger(this,
@@ -140,6 +129,13 @@ void remollPhysicsList::SetVerboseLevel(G4int level)
 {
   // Let upstream handle this first
   G4VModularPhysicsList::SetVerboseLevel(level);
+
+  // Set verbose level of precompound deexcitation
+  #if G4VERSION_NUMBER >= 1060
+  if (auto nuclearleveldata = G4NuclearLevelData::GetInstance())
+    if (auto param = nuclearleveldata->GetParameters())
+      param->SetVerbose(level);
+  #endif
 
   // Set verbose level of HadronicProcessStore
   G4HadronicProcessStore::Instance()->SetVerbose(level);

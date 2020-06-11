@@ -40,14 +40,14 @@ class remollMagneticField : public G4MagneticField {
 	remollMagneticField( G4String );
 	virtual ~remollMagneticField();
 
-	void GetFieldValue( const   G4double Point[4], G4double *Bfield ) const;  
+	void GetFieldValue(const G4double Point[4], G4double *Bfield) const;
 
 	void InitializeGrid();
 	void ReadFieldMap();
 
 	void SetFieldScale(G4double s);
 	void SetMagnetCurrent(G4double s);
-	    				
+
 	void SetZoffset(G4double z){ fZoffset= z; }
 
 	G4String GetName();
@@ -55,6 +55,13 @@ class remollMagneticField : public G4MagneticField {
 	enum Coord_t { kR, kPhi, kZ };
 
 	G4bool IsInit(){ return fInit; }
+
+        G4bool IsInBoundingBox(const G4double* p) const {
+          if (p[2] - fZoffset < fMin[kZ] || p[2] - fZoffset > fMax[kZ]) return false;
+          if (p[0] < -fMax[kR] || p[0] > fMax[kR]) return false;
+          if (p[1] < -fMax[kR] || p[1] > fMax[kR]) return false;
+          return true;
+        }
 
     private:
 	G4String fFilename;

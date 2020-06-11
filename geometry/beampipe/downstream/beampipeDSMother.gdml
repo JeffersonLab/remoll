@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+</define>
+
+<solids>
+  <polycone name="solid_DSbeampipe_vacuum"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="0" rmax="950" z="19000.0"/>
+    <zplane rmin="0" rmax="600" z="19000.0"/>
+    <zplane rmin="0" rmax="770" z="26500"/>
+  </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_2">
+      <zplane rmin="504.775" rmax="509.5375" z="19000.0"/>
+      <zplane rmin="528.33" rmax="533.0925" z="19000.0+630.4-36"/>
+    </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_DSplate">
+      <zplane rmin="523.5" rmax="528.15" z="19589.0"/>
+      <zplane rmin="523.67" rmax="528.15" z="19589.0+5"/>
+      <zplane rmin="523.67" rmax="533.05" z="19589.0+5"/>
+      <zplane rmin="523.942" rmax="533.05" z="19589.0+5+8"/>
+      <zplane rmin="523.942" rmax="553.325" z="19589.0+5+8"/>
+      <zplane rmin="524.35" rmax="553.325" z="19589.0+5+8+12"/>
+    </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_bellow">
+      <zplane rmin="524.335" rmax="553.335" z="19614.0"/>
+      <zplane rmin="524.4556" rmax="553.335" z="19614.0+6.35"/>
+      <zplane rmin="524.4556" rmax="524.4556+6.35" z="19614.0+6.35"/>
+      <zplane rmin="524.9744" rmax="524.4556+6.35" z="19614.0+6.35+27.3"/>
+      <zplane rmin="524.9744" rmax="553.335" z="19614.0+6.35+27.3"/>
+      <zplane rmin="525.095" rmax="553.335" z="19614.0+6.35+27.3+6.35"/>
+      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35"/>
+      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100"/>
+      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100"/>
+      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100+4.8"/>
+      <zplane rmin="525.0" rmax="525.0+4.8" z="19614.0+6.35+27.3+6.35+100+4.8"/>
+      <zplane rmin="525.0" rmax="525.0+4.8" z="19614.0+6.35+27.3+6.35+100+4.8+30.4"/>
+      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100+4.8+30.4"/>
+      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100+4.8+30.4+4.8"/>
+    </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3">
+      <zplane rmin="525.0" rmax="553.6" z="19794.0"/>
+      <zplane rmin="526.6" rmax="553.6" z="19794.0+12.7"/>
+      <zplane rmin="526.6" rmax="532.95" z="19794.0+12.7"/>
+      <zplane rmin="550.0" rmax="556.35" z="19794.0+12.7+187.3"/>
+      <zplane rmin="550.0" rmax="569.05" z="19794.0+12.7+187.3"/>
+      <zplane rmin="746.471" rmax="765.521" z="19794.0+12.7+187.3+6506"/>
+    </polycone>
+
+  
+</solids>
+
+<structure>
+  <volume name="logic_DSpipe2_2">
+    <materialref ref="G4_Al"/>
+    <solidref ref="solid_DSpipe2_2"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+  <volume name="logic_DSpipe2_DSplate">
+    <materialref ref="G4_Al"/>
+    <solidref ref="solid_DSpipe2_DSplate"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+  <volume name="logic_DSpipe2_bellow">
+    <materialref ref="G4_STAINLESS-STEEL"/>
+    <solidref ref="solid_DSpipe2_bellow"/>
+    <auxiliary auxtype="Color" auxvalue="Brown"/>
+  </volume>
+
+  <volume name="logic_DSpipe3">
+    <materialref ref="G4_Al"/>
+    <solidref ref="solid_DSpipe3"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+  <volume name="DSbeampipeMother">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_DSbeampipe_vacuum"/>
+
+    <physvol name="DSpipe2_DSpipe2_2">
+      <volumeref ref="logic_DSpipe2_2"/>
+    </physvol>
+
+    <physvol name="DSpipe2_DSplate">
+      <volumeref ref="logic_DSpipe2_DSplate"/>
+    </physvol>
+
+    <physvol name="DSpipe2_bellow">
+      <volumeref ref="logic_DSpipe2_bellow"/>
+    </physvol>
+
+    <physvol name="DSpipe3_DSpipe">
+      <volumeref ref="logic_DSpipe3"/>
+    </physvol>
+
+
+  </volume>
+
+</structure>
+
+<setup name="beamPipeDShybrid" version="1.0">
+  <world ref="DSbeampipeMother"/>
+</setup>
+
+</gdml>

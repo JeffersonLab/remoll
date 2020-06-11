@@ -23,14 +23,11 @@
 /remoll/evgen/thmin 0.00 deg
 /remoll/evgen/thmax 2.00 deg
 
-/remoll/targpos   0 cm
-/remoll/targlen 150 cm
-
 /remoll/beamcurr 85 microampere
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite/set false
+/remoll/kryptonite/disable
 
 /remoll/SD/disable_all
 /remoll/SD/enable 28

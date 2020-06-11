@@ -6,9 +6,11 @@ void pionDetectorLucite(const TString& files)
   TChain* T = new TChain("T");
   T->Add(files);
 
+  Double_t rate = 0;
   std::vector<remollEventParticle_t>* parts = 0;
   std::vector<remollGenericDetectorHit_t>* hits = 0;
 
+  T->SetBranchAddress("rate", &rate);
   T->SetBranchAddress("hit", &hits);
   T->SetBranchAddress("part", &parts);
 

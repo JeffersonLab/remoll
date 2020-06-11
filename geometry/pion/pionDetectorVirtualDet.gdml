@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
   <quantity name="pionDetectorVirtualDetThickness" type="length" value="10" unit="mm"/>
@@ -17,7 +17,7 @@
 
 <solids>
   <tube aunit="deg" deltaphi="360.0" name="pionDetectorVirtualDet_solid"
-        rmin="600*mm" rmax="1900*mm" startphi="0" z="pionDetectorVirtualDetThickness"/>
+        rmin="665*mm" rmax="1900*mm" startphi="0" z="pionDetectorVirtualDetThickness"/>
 </solids>
 
 <structure>

@@ -14,11 +14,14 @@ suite="${1:-load}"
 shopt -s nullglob
 geomglob="${2:-mollerMother*.gdml}"
 
+# The branch name is used to avoid clobbering comparative output
+branch=`git rev-parse --abbrev-ref HEAD || echo "HEAD"`
+
 # Set test suite input directories
 geom=${dir}/geometry
 
 # Set test suite output directories
-logfiles=${dir}/logfiles/tests/geometry/${suite}
+logfiles=${dir}/logfiles/tests/geometry/${suite}/${branch}
 mkdir -p ${logfiles}
 
 # Usage information
@@ -38,5 +41,5 @@ for geometry in ${geom}/${geomglob} ; do
 
   # Run remoll macro
   mkdir -p ${logfiles}
-  build/remoll -g ${geometry} -m macros/tests/geometry/${suite}.mac 2>&1 | tee ${logfiles}/${name}.log || exit -1
+  remoll -g ${geometry} -m macros/tests/geometry/${suite}.mac 2>&1 | tee ${logfiles}/${name}.log || exit -1
 done

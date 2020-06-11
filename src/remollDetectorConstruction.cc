@@ -13,6 +13,7 @@
 #include "G4UIcmdWithADoubleAndUnit.hh"
 #include "G4UserLimits.hh"
 
+#include "G4PhysicalVolumeStore.hh"
 #include "G4LogicalVolumeStore.hh"
 #include "G4LogicalVolume.hh"
 #include "globals.hh"
@@ -47,7 +48,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
 : fVerboseLevel(0),
   fGDMLParser(0),
   fGDMLValidate(false),
-  fGDMLOverlapCheck(true),
+  fGDMLOverlapCheck(false),
   fGDMLPath("geometry"),
   fGDMLFile("mollerMother.gdml"),
   fMessenger(0),
@@ -64,14 +65,6 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
 
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
-
-  // Starter set of kryptonite materials
-  AddKryptoniteCandidate("VacuumKryptonite");
-  AddKryptoniteCandidate("Tungsten");
-  AddKryptoniteCandidate("CW95");
-  AddKryptoniteCandidate("Copper");
-  AddKryptoniteCandidate("Lead");
-  InitKryptoniteMaterials();
 
   // Create generic messenger
   fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -110,7 +103,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       "verbose",
       fVerboseLevel,
       "Set geometry verbose level")
-          .SetStates(G4State_PreInit);
+          .SetStates(G4State_PreInit,G4State_Idle);
   fGeometryMessenger->DeclareProperty(
       "validate",
       fGDMLValidate,
@@ -149,6 +142,26 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       &remollDetectorConstruction::PrintOverlaps,
       "Print the geometry overlap")
       .SetStates(G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "absolute_position",
+      &remollDetectorConstruction::AbsolutePosition,
+      "Set the position of volume in parent frame [mm]")
+      .SetStates(G4State_PreInit,G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "relative_position",
+      &remollDetectorConstruction::RelativePosition,
+      "Position a volume relative to current position [mm]")
+      .SetStates(G4State_PreInit,G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "absolute_rotation",
+      &remollDetectorConstruction::AbsoluteRotation,
+      "Set the rotation of volume in parent frame [deg]")
+      .SetStates(G4State_PreInit,G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "relative_rotation",
+      &remollDetectorConstruction::RelativeRotation,
+      "Rotate a volume relative to current orientation [deg]")
+      .SetStates(G4State_PreInit,G4State_Idle);
 
   // Create user limits messenger
   fUserLimitsMessenger = new G4GenericMessenger(this,
@@ -189,10 +202,6 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       &remollDetectorConstruction::SetKryptoniteVerbose,
       "Set verbose level");
   fKryptoniteMessenger->DeclareMethod(
-      "set",
-      &remollDetectorConstruction::SetKryptoniteEnable,
-      "Treat materials as kryptonite");
-  fKryptoniteMessenger->DeclareMethod(
       "enable",
       &remollDetectorConstruction::EnableKryptonite,
       "Treat materials as kryptonite");
@@ -208,14 +217,10 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       "list",
       &remollDetectorConstruction::ListKryptoniteCandidates,
       "List kryptonite candidate materials");
-}
-
-void remollDetectorConstruction::SetKryptoniteEnable(G4String flag)
-{
-  if (flag.compareTo("true", G4String::ignoreCase) == 0)
-    EnableKryptonite();
-  else
-    DisableKryptonite();
+  fKryptoniteMessenger->DeclareMethod(
+      "volume",
+      &remollDetectorConstruction::EnableKryptoniteVolume,
+      "Treat volume as kryptonite");
 }
 
 void remollDetectorConstruction::EnableKryptonite()
@@ -236,6 +241,23 @@ void remollDetectorConstruction::DisableKryptonite()
   fKryptoniteEnable = false;
 
   SetKryptoniteUserLimits(fWorldVolume);
+}
+
+void remollDetectorConstruction::EnableKryptoniteVolume(G4String name)
+{
+  if (fKryptoniteVerbose > 0)
+    G4cout << "Enabling kryptonite on volume" << name << "." << G4endl;
+
+  // Find volume
+  G4LogicalVolume* logical_volume = G4LogicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! logical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  fKryptoniteEnable = true;
+
+  logical_volume->SetUserLimits(fKryptoniteUserLimits);
 }
 
 void remollDetectorConstruction::AddKryptoniteCandidate(G4String name)
@@ -300,7 +322,8 @@ void remollDetectorConstruction::SetKryptoniteUserLimits(G4VPhysicalVolume* volu
   }
 
   // Descend down the tree
-  for (int i = 0; i < logical_volume->GetNoDaughters(); i++) {
+  auto n = logical_volume->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     G4VPhysicalVolume* daughter = logical_volume->GetDaughter(i);
     SetKryptoniteUserLimits(daughter);
   }
@@ -337,6 +360,137 @@ remollDetectorConstruction::~remollDetectorConstruction()
     delete fKryptoniteMessenger;
     delete fUserLimitsMessenger;
 }
+
+void remollDetectorConstruction::AbsolutePosition(G4String name, G4ThreeVector position)
+{
+  // Units
+  position *= CLHEP::mm;
+
+  // Find volume
+  G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! physical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Print verbose
+  if (fVerboseLevel > 0)
+    G4cout << "Setting position in mother volume "
+           << "from " << physical_volume->GetTranslation() << " "
+           << "to " << position << " for " << name << G4endl;
+
+  // Set position for volume
+  physical_volume->SetTranslation(position);
+
+  // Reoptimize geometry
+  G4RunManager* run_manager = G4RunManager::GetRunManager();
+  run_manager->GeometryHasBeenModified();
+}
+
+void remollDetectorConstruction::RelativePosition(G4String name, G4ThreeVector position)
+{
+  // Units
+  position *= CLHEP::mm;
+
+  // Find volume
+  G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! physical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Print verbose
+  if (fVerboseLevel > 0)
+    G4cout << "Changing position in mother volume "
+           << "from " << physical_volume->GetTranslation() << " "
+           << "by " << position << " for " << name << G4endl;
+
+  // Set position for volume
+  physical_volume->SetTranslation(physical_volume->GetTranslation() + position);
+
+  // Reoptimize geometry
+  G4RunManager* run_manager = G4RunManager::GetRunManager();
+  run_manager->GeometryHasBeenModified();
+}
+
+void remollDetectorConstruction::AbsoluteRotation(G4String name, G4ThreeVector rotation_xyz)
+{
+  // Units
+  rotation_xyz *= CLHEP::deg;
+
+  // Find volume
+  G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! physical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Construct rotation matrix
+  G4RotationMatrix* rotation = new G4RotationMatrix();
+  rotation->rotateX(rotation_xyz.x());
+  rotation->rotateY(rotation_xyz.y());
+  rotation->rotateZ(rotation_xyz.z());
+
+  // Get previous rotation matrix
+  G4RotationMatrix* old_rotation = physical_volume->GetRotation();
+  if (old_rotation == 0) old_rotation = new G4RotationMatrix();
+
+  // Print verbose
+  if (fVerboseLevel > 0)
+    G4cout << "Setting rotation in mother volume "
+           << "from " << *old_rotation << " "
+           << "to " << *rotation << " for " << name << G4endl;
+
+  // Set position for volume
+  physical_volume->SetRotation(rotation);
+
+  // Delete old rotation matrix
+  delete old_rotation;
+
+  // Reoptimize geometry
+  G4RunManager* run_manager = G4RunManager::GetRunManager();
+  run_manager->GeometryHasBeenModified();
+}
+
+void remollDetectorConstruction::RelativeRotation(G4String name, G4ThreeVector rotation_xyz)
+{
+  // Units
+  rotation_xyz *= CLHEP::deg;
+
+  // Find volume
+  G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! physical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Get previous rotation matrix
+  G4RotationMatrix* old_rotation = physical_volume->GetRotation();
+  if (old_rotation == 0) old_rotation = new G4RotationMatrix();
+
+  // Apply relative rotation
+  G4RotationMatrix* rotation = new G4RotationMatrix(*old_rotation);
+  rotation->rotateX(rotation_xyz.x());
+  rotation->rotateY(rotation_xyz.y());
+  rotation->rotateZ(rotation_xyz.z());
+
+  // Print verbose
+  if (fVerboseLevel > 0)
+    G4cout << "Setting rotation in mother volume "
+           << "from " << *old_rotation << " "
+           << "to " << *rotation << " for " << name << G4endl;
+
+  // Set position for volume
+  physical_volume->SetRotation(rotation);
+
+  // Delete old rotation matrix
+  delete old_rotation;
+
+  // Reoptimize geometry
+  G4RunManager* run_manager = G4RunManager::GetRunManager();
+  run_manager->GeometryHasBeenModified();
+}
+
 
 void remollDetectorConstruction::PrintGDMLWarning() const
 {
@@ -384,7 +538,11 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 
     // Parse GDML file
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
+    // hide output if not validating or checking ovelaps
+    if (! fGDMLOverlapCheck && ! fGDMLValidate)
+      G4cout.setstate(std::ios_base::failbit);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+    G4cout.clear();
     G4VPhysicalVolume* worldvolume = fGDMLParser->GetWorldVolume();
 
     // Print tolerances
@@ -453,8 +611,9 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
 
         // Found target mother logical volume
         G4LogicalVolume* mother_logical_volume = logical_volume;
-        G4cout << "Found target mother logical volume "
-               << mother_logical_volume->GetName() << "." << G4endl;
+        if (fVerboseLevel > 0)
+          G4cout << "Found target mother logical volume "
+                 << mother_logical_volume->GetName() << "." << G4endl;
 
         // Now find target mother physical volume
         G4VPhysicalVolume* mother_physical_volume = 0;
@@ -468,8 +627,9 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
           remollBeamTarget::ResetTargetVolumes();
           remollBeamTarget::SetMotherVolume(mother_physical_volume);
 
-          G4cout << "Found target mother physical volume "
-                 << mother_physical_volume->GetName() << "." << G4endl;
+          if (fVerboseLevel > 0)
+            G4cout << "Found target mother physical volume "
+                   << mother_physical_volume->GetName() << "." << G4endl;
         } else {
           G4cout << "Target mother logical volume does not occur "
                  << "*exactly once* as a physical volume." << G4endl;
@@ -477,7 +637,8 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
         }
 
         // Loop over target mother logical volume daughters
-        for (int i = 0; i < mother_logical_volume->GetNoDaughters(); i++) {
+        auto n = mother_logical_volume->GetNoDaughters();
+        for (decltype(n) i = 0; i < n; i++) {
 
           // Get daughter physical and logical volumes
           G4VPhysicalVolume* target_physical_volume = mother_logical_volume->GetDaughter(i);
@@ -641,7 +802,8 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
   // Set all immediate daughters of the world volume to wireframe
   G4VisAttributes* daughterVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   daughterVisAtt->SetForceWireframe(true);
-  for (int i = 0; i < fWorldVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
+  auto n = fWorldVolume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
   }
 }
@@ -650,6 +812,9 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 {
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
+
+  // Duplication map
+  std::map<int, G4LogicalVolume*> detnomap;
 
   // Loop over all volumes with auxiliary tags
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
@@ -672,11 +837,19 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
         if (it_detno != list.end()) {
 
           int det_no = atoi(it_detno->value.data());
+          bool enabled = (det_no > 0)? false : true;
+          det_no = std::abs(det_no);
 
           // Construct detector name
           std::stringstream det_name_ss;
           det_name_ss << "remoll/det_" << det_no;
           std::string det_name = det_name_ss.str();
+
+          // Check for duplication
+          if (detnomap.count(det_no) != 0) {
+            G4cerr << "remoll: DetNo " << det_no << " for " << myvol->GetName() << G4endl;
+            G4cerr << "remoll: already used by " << detnomap[det_no]->GetName() << G4endl;
+          }
 
           // Try to find sensitive detector
           G4SDManager* SDman = G4SDManager::GetSDMpointer();
@@ -693,9 +866,11 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                      <<  G4endl;
 
             remollsd = new remollGenericDetector(det_name, det_no);
+            remollsd->SetEnabled(enabled);
 
             // Register detector with SD manager
             SDman->AddNewDetector(remollsd);
+            detnomap[det_no] = myvol;
 
             // Register detector with remollIO
             remollIO* io = remollIO::GetInstance();
@@ -718,6 +893,10 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 
         // Set detector type
         if (remollsd) remollsd->SetDetectorType(it_dettype->value);
+
+        // Print detector type
+        if (fVerboseLevel > 0)
+          if (remollsd) remollsd->PrintDetectorType();
 
       }
 
@@ -855,7 +1034,8 @@ G4int remollDetectorConstruction::UpdateCopyNo(G4VPhysicalVolume* aVolume,G4int 
       }
       index++;
       //}else {
-    for(int i=0;i<aVolume->GetLogicalVolume()->GetNoDaughters();i++){
+    auto n = aVolume->GetLogicalVolume()->GetNoDaughters();
+    for(decltype(n) i=0;i<n;i++){
       index = UpdateCopyNo(aVolume->GetLogicalVolume()->GetDaughter(i),index);
     }
     //}
@@ -886,7 +1066,8 @@ std::vector<G4VPhysicalVolume*> remollDetectorConstruction::GetPhysicalVolumes(
   }
 
   // Descend down the tree
-  for (int i = 0; i < physical_volume->GetLogicalVolume()->GetNoDaughters(); i++)
+  auto n = physical_volume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++)
   {
     // Get results for daughter volumes
     std::vector<G4VPhysicalVolume*> daughter_list =
@@ -934,7 +1115,8 @@ void remollDetectorConstruction::PrintGeometryTree(
   if (surfchk) aVolume->CheckOverlaps(1000,1.0*mm,false);
 
   // Descend down the tree
-  for (int i = 0; i < aVolume->GetLogicalVolume()->GetNoDaughters(); i++) {
+  auto n = aVolume->GetLogicalVolume()->GetNoDaughters();
+  for (decltype(n) i = 0; i < n; i++) {
     PrintGeometryTree(aVolume->GetLogicalVolume()->GetDaughter(i),depth+1,surfchk,print);
   }
 }
