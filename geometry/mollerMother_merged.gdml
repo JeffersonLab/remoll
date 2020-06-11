@@ -36,6 +36,13 @@
       <positionref ref="hallCenter"/>
     </physvol>
 
+    <!-- SBS Bunker -->
+    <physvol>
+      <file name="electronics/subSBSbunker.gdml"/>
+      <position name="sbsBunker_pos" x="8740" y="-3000 + 2000" z="-15180."/>
+      <rotation name="rot_y30" unit="deg" y="30"/>
+    </physvol>
+ 
     <!-- Upstream region -->
     <physvol>
       <file name="upstream/upstreamDaughter_merged.gdml"/>
