@@ -798,14 +798,6 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
   G4VisAttributes* motherVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   motherVisAtt->SetForceWireframe(true);
   fWorldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
-
-  // Set all immediate daughters of the world volume to wireframe
-  G4VisAttributes* daughterVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  daughterVisAtt->SetForceWireframe(true);
-  auto n = fWorldVolume->GetLogicalVolume()->GetNoDaughters();
-  for (decltype(n) i = 0; i < n; i++) {
-    fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
-  }
 }
 
 void remollDetectorConstruction::ParseAuxiliarySensDetInfo()

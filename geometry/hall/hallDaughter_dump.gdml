@@ -592,7 +592,7 @@
     <volume name="logicHall">
       <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
-      <!-- <solidref ref="boxHallMother_out"/> -->
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="hallVerticalWallDet">
         <volumeref ref="hallVerticalWallDet_logic"/>

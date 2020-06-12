@@ -538,6 +538,7 @@
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
       <solidref ref="boxUpstream"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="UScoll_1">
         <volumeref ref="logicUScoll_1"/>
