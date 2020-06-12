@@ -6,11 +6,7 @@
 # This must be explicitly called
 /run/initialize
 
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
-
-#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
-#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+/control/execute macros/load_magnetic_fieldmaps.mac
 
 # Raster and initial angle stuff
 /remoll/rasx 0 mm
@@ -27,10 +23,6 @@
 /remoll/gen carbon
 /remoll/thmin 0.1 deg
 /remoll/thmax 2.0 deg
-
-# Only have this AFTER we've initalized geometry
-/remoll/targpos 0.0 cm
-/remoll/targlen 1.5 mm
 
 /remoll/beamcurr 85 microampere
 

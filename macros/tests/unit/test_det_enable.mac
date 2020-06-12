@@ -1,5 +1,7 @@
 /run/initialize
 
+/control/execute macros/kryptonite.mac
+
 # Print all detectors
 /remoll/SD/print_all
 
@@ -34,4 +36,5 @@
 /remoll/SD/detect lowenergyneutral 4000
 /remoll/SD/detect opticalphoton 4001
 /remoll/SD/detect all 4002
+/remoll/SD/detect_range all 4002 5000
 /remoll/SD/print_all

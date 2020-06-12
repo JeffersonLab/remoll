@@ -51,9 +51,6 @@
 #/remoll/gen quasielasticAl
 #/remoll/gen elasticAl
 
-/remoll/targpos   0 cm
-/remoll/targlen 150 cm
-
 /remoll/beamcurr 85 microampere
 
 #Enable optical photons and processes
@@ -61,7 +58,7 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-/remoll/kryptonite/set true
+/control/execute macros/kryptonite.mac
 
 /process/list
 

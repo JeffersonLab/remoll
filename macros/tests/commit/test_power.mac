@@ -1,0 +1,21 @@
+# This must be called before initialize
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+/remoll/physlist/parallel/enable
+
+# This must be explicitly called
+/run/initialize
+
+# Field maps
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+# Beam energy
+/remoll/evgen/set beam
+/remoll/beamene 11 GeV
+/remoll/beamcurr 85 microampere
+
+# Output
+/remoll/filename test_power.root
+
+# Shoot
+/run/beamOn 10000

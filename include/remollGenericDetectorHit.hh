@@ -30,9 +30,13 @@ class remollGenericDetectorHit : public G4VHit {
 
 	// Position and momentum in lab coordinates
 	G4ThreeVector f3X;
-	G4ThreeVector f3Xl;
 	G4ThreeVector f3P;
 	G4ThreeVector f3S;
+
+	// Position and momentum in local volume coordinate system
+	G4ThreeVector f3Pl; 
+	G4ThreeVector f3Xl;
+
         // Global time
         G4double fTime;
         // direction
@@ -43,8 +47,8 @@ class remollGenericDetectorHit : public G4VHit {
 	G4ThreeVector f3dPRec;
         G4double fThRec;
 
-	// Total momentum, energy, mass
-	G4double fP, fE, fM;
+	// Total momentum, energy, mass, kinetic energy
+	G4double fP, fE, fM, fK;
 	// Origin
 	G4ThreeVector f3V;
 	// Geant4 track ID, particle type, and mother ID
@@ -75,6 +79,9 @@ class remollGenericDetectorHit : public G4VHit {
         hit.px  = f3P.x();
         hit.py  = f3P.y();
         hit.pz  = f3P.z();
+        hit.pxl  = f3Pl.x();
+        hit.pyl  = f3Pl.y();
+        hit.pzl  = f3Pl.z();
         hit.sx  = f3S.x();
         hit.sy  = f3S.y();
         hit.sz  = f3S.z();
@@ -84,6 +91,7 @@ class remollGenericDetectorHit : public G4VHit {
         hit.p  = fP;
         hit.e  = fE;
         hit.m  = fM;
+        hit.k  = fK;
         hit.edep = fEdep;
         return hit;
       };

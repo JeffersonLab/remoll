@@ -8,10 +8,6 @@
 /remoll/evgen/set beam
 /remoll/beamene 11 GeV
 /remoll/kryptonite/set true
-/remoll/kryptonite/del Lead
-/remoll/kryptonite/del CW95
-/remoll/kryptonite/del Tungsten
-/remoll/kryptonite/del Copper
 /remoll/kryptonite/add Lead_kryp
 /process/list
 /remoll/filename remollout1.root

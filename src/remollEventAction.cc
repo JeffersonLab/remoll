@@ -7,6 +7,8 @@
 #include "G4HCofThisEvent.hh"
 #include "G4VHitsCollection.hh"
 
+#include "G4RunManager.hh"
+
 #include "remollIO.hh"
 #include "remollEvent.hh"
 #include "remollTrackReconstruct.hh"
@@ -16,7 +18,7 @@
 namespace { G4Mutex remollEventActionMutex = G4MUTEX_INITIALIZER; }
 
 remollEventAction::remollEventAction()
-  : fPrimaryGeneratorAction(0),fEventSeed("") { }
+  : fPrimaryGeneratorAction(0) { }
 
 remollEventAction::~remollEventAction() { }
 
@@ -33,8 +35,12 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
   remollIO* io = remollIO::GetInstance();
 
   // Store random seed
-  //fEventSeed = aEvent->GetRandomNumberStatus();
-  io->SetEventSeed(fEventSeed);
+  static G4RunManager* run_manager = G4RunManager::GetRunManager();
+  if (run_manager->GetFlagRandomNumberStatusToG4Event() % 2 == 1) {
+    Int_t run = run_manager->GetCurrentRun()->GetRunID();
+    Int_t evt = aEvent->GetEventID();
+    io->SetEventSeed(run, evt, aEvent->GetRandomNumberStatus());
+  }
 
   // Get primary event action information
   const remollEvent* event = fPrimaryGeneratorAction->GetEvent();
@@ -45,7 +51,8 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
 
   // Traverse all hit collections, sort by output type
   G4HCofThisEvent *HCE = aEvent->GetHCofThisEvent();
-  for (int hcidx = 0; hcidx < HCE->GetCapacity(); hcidx++) {
+  auto n = HCE->GetCapacity();
+  for (decltype(n) hcidx = 0; hcidx < n; hcidx++) {
     G4VHitsCollection* thiscol = HCE->GetHC(hcidx);
     if (thiscol){ // This is NULL if nothing is stored
 
