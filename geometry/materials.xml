@@ -422,6 +422,21 @@
     <fraction n="0.015" ref="Copper"/>
     <fraction n="0.035" ref="Nickel"/>
   </material>
+
+  <!-- Defined for the next material "Water-CW" for Col1 water channel -->
+  <material name="Water" state="liquid">
+    <D value="1.0" unit="g/cm3"/>
+    <fraction n="0.667" ref="Hydrogen"/>
+    <fraction n="0.333" ref="Oxygen"/>
+  </material>
+
+  <!--The following material is defined to aviod complicated coll1 design
+  The matrial is defined by 44% of H2O and 56% of CW95 -->
+  <material name="Water_CW" state="solid">
+    <D value="10.52" unit="g/cm3"/>
+    <fraction n="0.44" ref="Water"/>
+    <fraction n="0.56" ref="CW95"/>
+  </material>
   
   <material name="Tyvek" state="solid">
     <MEE unit="eV" value="56.5182975271737"/> 

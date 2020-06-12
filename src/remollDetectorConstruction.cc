@@ -13,6 +13,7 @@
 #include "G4UIcmdWithADoubleAndUnit.hh"
 #include "G4UserLimits.hh"
 
+#include "G4PhysicalVolumeStore.hh"
 #include "G4LogicalVolumeStore.hh"
 #include "G4LogicalVolume.hh"
 #include "globals.hh"
@@ -102,7 +103,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       "verbose",
       fVerboseLevel,
       "Set geometry verbose level")
-          .SetStates(G4State_PreInit);
+          .SetStates(G4State_PreInit,G4State_Idle);
   fGeometryMessenger->DeclareProperty(
       "validate",
       fGDMLValidate,
@@ -141,6 +142,26 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       &remollDetectorConstruction::PrintOverlaps,
       "Print the geometry overlap")
       .SetStates(G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "absolute_position",
+      &remollDetectorConstruction::AbsolutePosition,
+      "Set the position of volume in parent frame [mm]")
+      .SetStates(G4State_PreInit,G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "relative_position",
+      &remollDetectorConstruction::RelativePosition,
+      "Position a volume relative to current position [mm]")
+      .SetStates(G4State_PreInit,G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "absolute_rotation",
+      &remollDetectorConstruction::AbsoluteRotation,
+      "Set the rotation of volume in parent frame [deg]")
+      .SetStates(G4State_PreInit,G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "relative_rotation",
+      &remollDetectorConstruction::RelativeRotation,
+      "Rotate a volume relative to current orientation [deg]")
+      .SetStates(G4State_PreInit,G4State_Idle);
 
   // Create user limits messenger
   fUserLimitsMessenger = new G4GenericMessenger(this,
@@ -339,6 +360,137 @@ remollDetectorConstruction::~remollDetectorConstruction()
     delete fKryptoniteMessenger;
     delete fUserLimitsMessenger;
 }
+
+void remollDetectorConstruction::AbsolutePosition(G4String name, G4ThreeVector position)
+{
+  // Units
+  position *= CLHEP::mm;
+
+  // Find volume
+  G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! physical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Print verbose
+  if (fVerboseLevel > 0)
+    G4cout << "Setting position in mother volume "
+           << "from " << physical_volume->GetTranslation() << " "
+           << "to " << position << " for " << name << G4endl;
+
+  // Set position for volume
+  physical_volume->SetTranslation(position);
+
+  // Reoptimize geometry
+  G4RunManager* run_manager = G4RunManager::GetRunManager();
+  run_manager->GeometryHasBeenModified();
+}
+
+void remollDetectorConstruction::RelativePosition(G4String name, G4ThreeVector position)
+{
+  // Units
+  position *= CLHEP::mm;
+
+  // Find volume
+  G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! physical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Print verbose
+  if (fVerboseLevel > 0)
+    G4cout << "Changing position in mother volume "
+           << "from " << physical_volume->GetTranslation() << " "
+           << "by " << position << " for " << name << G4endl;
+
+  // Set position for volume
+  physical_volume->SetTranslation(physical_volume->GetTranslation() + position);
+
+  // Reoptimize geometry
+  G4RunManager* run_manager = G4RunManager::GetRunManager();
+  run_manager->GeometryHasBeenModified();
+}
+
+void remollDetectorConstruction::AbsoluteRotation(G4String name, G4ThreeVector rotation_xyz)
+{
+  // Units
+  rotation_xyz *= CLHEP::deg;
+
+  // Find volume
+  G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! physical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Construct rotation matrix
+  G4RotationMatrix* rotation = new G4RotationMatrix();
+  rotation->rotateX(rotation_xyz.x());
+  rotation->rotateY(rotation_xyz.y());
+  rotation->rotateZ(rotation_xyz.z());
+
+  // Get previous rotation matrix
+  G4RotationMatrix* old_rotation = physical_volume->GetRotation();
+  if (old_rotation == 0) old_rotation = new G4RotationMatrix();
+
+  // Print verbose
+  if (fVerboseLevel > 0)
+    G4cout << "Setting rotation in mother volume "
+           << "from " << *old_rotation << " "
+           << "to " << *rotation << " for " << name << G4endl;
+
+  // Set position for volume
+  physical_volume->SetRotation(rotation);
+
+  // Delete old rotation matrix
+  delete old_rotation;
+
+  // Reoptimize geometry
+  G4RunManager* run_manager = G4RunManager::GetRunManager();
+  run_manager->GeometryHasBeenModified();
+}
+
+void remollDetectorConstruction::RelativeRotation(G4String name, G4ThreeVector rotation_xyz)
+{
+  // Units
+  rotation_xyz *= CLHEP::deg;
+
+  // Find volume
+  G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
+  if (! physical_volume) {
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
+    return;
+  }
+
+  // Get previous rotation matrix
+  G4RotationMatrix* old_rotation = physical_volume->GetRotation();
+  if (old_rotation == 0) old_rotation = new G4RotationMatrix();
+
+  // Apply relative rotation
+  G4RotationMatrix* rotation = new G4RotationMatrix(*old_rotation);
+  rotation->rotateX(rotation_xyz.x());
+  rotation->rotateY(rotation_xyz.y());
+  rotation->rotateZ(rotation_xyz.z());
+
+  // Print verbose
+  if (fVerboseLevel > 0)
+    G4cout << "Setting rotation in mother volume "
+           << "from " << *old_rotation << " "
+           << "to " << *rotation << " for " << name << G4endl;
+
+  // Set position for volume
+  physical_volume->SetRotation(rotation);
+
+  // Delete old rotation matrix
+  delete old_rotation;
+
+  // Reoptimize geometry
+  G4RunManager* run_manager = G4RunManager::GetRunManager();
+  run_manager->GeometryHasBeenModified();
+}
+
 
 void remollDetectorConstruction::PrintGDMLWarning() const
 {
@@ -685,6 +837,8 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
         if (it_detno != list.end()) {
 
           int det_no = atoi(it_detno->value.data());
+          bool enabled = (det_no > 0)? false : true;
+          det_no = std::abs(det_no);
 
           // Construct detector name
           std::stringstream det_name_ss;
@@ -712,6 +866,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                      <<  G4endl;
 
             remollsd = new remollGenericDetector(det_name, det_no);
+            remollsd->SetEnabled(enabled);
 
             // Register detector with SD manager
             SDman->AddNewDetector(remollsd);

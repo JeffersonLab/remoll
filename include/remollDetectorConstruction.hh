@@ -110,6 +110,13 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     void InitKryptoniteMaterials();
 
 
+  public:
+
+    void AbsolutePosition(G4String name, G4ThreeVector position);
+    void RelativePosition(G4String name, G4ThreeVector position);
+    void AbsoluteRotation(G4String name, G4ThreeVector rotation);
+    void RelativeRotation(G4String name, G4ThreeVector rotation);
+
     //----------------------
     // global magnet section
     //----------------------

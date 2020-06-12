@@ -32,7 +32,8 @@
   <constant name="leadBoxy" value="2550."/>
   <constant name="leadBoxz" value="400."/>
 
-  <constant name="Shield_bore" value="140"/>
+  <constant name="Shield_bore" value="150"/>
+  <constant name="Shield_bore_concrete" value="340"/>
   <constant name="Shield_length" value="concreteBoxz+2"/>
 
   <position name="origin" x="0" y="0" z="0"/>
@@ -132,7 +133,7 @@
   </subtraction>
 
   <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
-        rmin="0" rmax="Shield_bore+200" z="Shield_length"/>
+        rmin="0" rmax="Shield_bore_concrete" z="Shield_length"/>
 
   <subtraction name="concrete_sub">
     <first ref = "concrete_sub1"/>
@@ -209,6 +210,19 @@
               z="0.2"/>
   </union>
 
+  <!-- Target upstream beampipe -->
+  <polycone name="targetUSBeamPipeOuter_solid"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="0" rmax="70" z="-3190.0"/>
+    <zplane rmin="0" rmax="70" z="-1000.0"/>
+  </polycone>
+  <polycone name="targetUSBeamPipeInner_solid"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="0" rmax="68" z="-3190.0"/>
+    <zplane rmin="0" rmax="68" z="-1000.0"/>
+  </polycone>
 </solids>
 
 <structure>
@@ -246,6 +260,18 @@
     <auxiliary auxtype="Color" auxvalue="white"/>
   </volume>
 
+  <volume name="targetUSBeamPipeVacuum">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="targetUSBeamPipeInner_solid"/>
+  </volume>
+  <volume name="targetUSBeamPipe">
+    <materialref ref="G4_Al"/>
+    <solidref ref="targetUSBeamPipeOuter_solid"/>
+    <physvol>
+      <volumeref ref="targetUSBeamPipeVacuum"/>
+    </physvol>
+  </volume>
+  
   <volume name="LeadCollar_logic">
     <materialref ref="Lead"/>
     <solidref ref="LeadCollar_solid"/>
@@ -422,6 +448,10 @@
     </physvol>
 
     <physvol>
+      <volumeref ref="targetUSBeamPipe"/>
+    </physvol>
+    
+    <physvol>
       <volumeref ref="LeadCollar_logic"/>
       <position name="LeadCollar_pos" unit="mm" x="0" y="0"
                 z="2851 + 100"/>
@@ -452,22 +482,22 @@
 
     <physvol>
       <volumeref ref="tgtOuterDet0_logic"/>
-      <position name="tgtOuterDet0_pos" unit="mm" x="concreteBoxx/2 + 1" y="375+1" z="0"/>
+      <position name="tgtOuterDet0_pos" unit="mm" x="concreteBoxx/2 + 1" y="390" z="0"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet1_logic"/>
-      <position name="tgtOuterDet1_pos" unit="mm" x="-concreteBoxx/2 - 1" y="375+1" z="0"/>
+      <position name="tgtOuterDet1_pos" unit="mm" x="-concreteBoxx/2 - 1" y="390" z="0"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet2_logic"/>
-      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="375+1" z="-concreteBoxz/2 - 1"/>
+      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="390" z="-concreteBoxz/2 - 1"/>
     </physvol>
 
     <physvol>
       <volumeref ref="tgtOuterDet3_logic"/>
-      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="375+1" z="concreteBoxz/2 + 1"/>
+      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="390" z="concreteBoxz/2 + 1"/>
     </physvol>
 
     <physvol>

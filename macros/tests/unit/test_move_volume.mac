@@ -1,0 +1,11 @@
+/run/initialize
+/remoll/geometry/verbose 2
+/remoll/geometry/absolute_position h2Targ_PV (0,0,-5)
+/run/beamOn 10
+/remoll/geometry/relative_position h2Targ_PV (0,0,+5)
+/run/beamOn 10
+/remoll/geometry/absolute_rotation h2Targ_PV (0,90,0)
+/run/beamOn 10
+/remoll/geometry/relative_rotation h2Targ_PV (0,30,0)
+/run/beamOn 10
+

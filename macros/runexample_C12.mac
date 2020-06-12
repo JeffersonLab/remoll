@@ -6,11 +6,7 @@
 # This must be explicitly called
 /run/initialize
 
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
-
-#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
-#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+/control/execute macros/load_magnetic_fieldmaps.mac
 
 # Raster and initial angle stuff
 /remoll/rasx 0 mm
