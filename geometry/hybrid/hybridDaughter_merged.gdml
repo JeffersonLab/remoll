@@ -237,6 +237,9 @@
 	<second ref="pcons_sculpt_2"/> 
 	<rotation name="pdscoll_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
     </subtraction>
+ 
+    <!--Inner collimator 5-->
+    <tube name="sol_coll5_inner" aunit="deg" lunit="mm" startphi="0" deltaphi="360" rmin="25" rmax="40" z="150"/>
 
     <!--concrete shield -->
     <box lunit="mm" name="boxDSConcreteShield1_solid_1" x="DSConcreteShield1_height" y="DSConcreteShield1_height" z="DSConcreteShield1_length"/>
@@ -417,6 +420,14 @@
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
       <auxiliary auxtype="DetNo" auxvalue="2004"/>
     </volume>
+
+    <volume name="logic_coll5_inner">
+        <materialref ref="CW95"/>
+	<solidref ref="sol_coll5_inner"/>
+	<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+	<auxiliary auxtype="DetNo" auxvalue="2005"/>	 
+    </volume>
+
 
     <volume name="boxDSConcreteShield1_logic">
       <materialref ref="Concrete"/>
@@ -624,6 +635,12 @@
 	<volumeref ref="logicPDScollunion_1"/>
         <positionref ref="posPCOLL2"/>
       </physvol>
+
+      <physvol name="coll5_inner">
+        <volumeref ref="logic_coll5_inner"/>
+	<position  name="pos_coll5_inner" x="0" y="0" z="12875-DOFFSET"/>
+      </physvol>
+
 
 
       <physvol>
