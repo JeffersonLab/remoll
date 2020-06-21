@@ -615,7 +615,7 @@
 
       <physvol name="DScoil">
         <file name="hybrid/hybridToroid.gdml"/>
-        <position name="pos_hybridToroid" x="0" y="0" z="13370.3653846-DOFFSET"/>
+        <position name="pos_hybridToroid" x="0" y="0" z="13335.194-DOFFSET"/>
       </physvol>
 
 
