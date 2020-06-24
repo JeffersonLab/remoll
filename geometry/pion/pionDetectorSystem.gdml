@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
    <!-- Full pion detector system dimensions -->
-   <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.5" unit="m"/>
-   <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.0" unit="m"/>
+   <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.82" unit="m"/>
+   <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.00" unit="m"/>
    <quantity name="pionDetectorSystemLength" type="length" value="1.45" unit="m"/>
 
    <!-- Lead donut dimensions -->
-   <quantity name="pionDetectorLeadDonutThickness" type="length" value="0.25" unit="m"/>
-   <quantity name="pionDetectorLeadDonutInnerRadius" type="length" value="0.55" unit="m"/>
-   <quantity name="pionDetectorLeadDonutOuterRadius" type="length" value="1.90" unit="m"/>
+   <quantity name="pionDetectorLeadDonutThickness" type="length" value="0.20" unit="m"/>
+   <quantity name="pionDetectorLeadDonutInnerRadius" type="length" value="0.960" unit="m"/>
+   <quantity name="pionDetectorLeadDonutOuterRadius" type="length" value="1.160" unit="m"/>
 
    <!-- Virtual detector dimensions (before and after lead donut) -->
    <quantity name="pionDetectorVirtualDetThickness" type="length" value="1.0" unit="cm"/>
@@ -81,18 +81,19 @@
     <volume name="pionDetectorSystem_logical">
       <materialref ref="G4_Galactic"/>
       <solidref ref="pionDetectorSystem_solid"/>
-
+<!--
       <physvol>
         <file name="pion/pionDetectorVirtualDet.gdml"
            volname="pionDetectorVirtualDetVacuum_logical"/>
         <positionref ref="pionDetectorVirtualDetPositionFront"/>
       </physvol>
-
+-->
       <physvol>
         <volumeref ref="pionDetectorLeadDonut_logical"/>
         <positionref ref="pionDetectorLeadDonutPosition"/>
       </physvol>
 
+<!--
       <physvol>
         <file name="pion/pionDetectorVirtualDet.gdml"
            volname="pionDetectorVirtualDetVacuumKryptonite_logical"/>
@@ -123,6 +124,7 @@
         <file name="pion/TS/pionDetectorTSOpenSector.gdml"/>
         <positionref ref="pionDetectorTSBackPosition"/>
       </physvol>
+-->
 
 <!--
       <physvol>

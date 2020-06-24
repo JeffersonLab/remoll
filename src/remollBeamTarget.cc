@@ -287,6 +287,9 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 		    cumulative_effective_length += effective_length;
 		}
 		break;
+            case kNoTargetVolume:
+                // nothing to do, just avoid compilation warning
+                break;
 	}
 
 	if( material->GetBaseMaterial() ){
@@ -315,14 +318,10 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	    const G4double *fracvec = material->GetFractionVector();
 
 	    for( unsigned int i = 0; i < elvec->size(); i++ ){
-		// FIXME:  Not sure why AtomsVector would ever return null
-		// but it does - SPR 2/5/13.  Just going to assume unit
-		// weighting for now if that is the case
-		if( atomvec ){
-		    masssum += (*elvec)[i]->GetA()*atomvec[i];
-		} else {
-		    masssum += (*elvec)[i]->GetA();
-		}
+		// Not sure why AtomsVector would ever return null
+		// but it does - SPR 2/5/13.
+		assert( atomvec );
+		masssum += (*elvec)[i]->GetA()*atomvec[i];
 		msthick[nmsmat] = material->GetDensity()*actual_position_in_volume*fracvec[i];
 		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
 		msZ[nmsmat] = (*elvec)[i]->GetZ();
@@ -366,7 +365,8 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 	msph = fMS->GenerateMSPlane();
     }
     assert( !std::isnan(msth) && !std::isnan(msph) );
-
+    assert( !std::isinf(msth) && !std::isinf(msph) );
+    assert( msth!=-1e9 && msph!=-1e9 );
 
     // Sample raster angles
     G4double bmth = 0, bmph = 0;
@@ -384,7 +384,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
       fDir.rotateY( bmth); // Positive th pushes to positive X (around Y-axis)
       fDir.rotateX(-bmph); // Positive ph pushes to positive Y (around X-axis)
     } else{
-      G4ThreeVector bmVec = G4ThreeVector(fVer.x(),fVer.y(),-1*(-8000.0*mm-fVer.z())); // in mm
+      G4ThreeVector bmVec = G4ThreeVector(fVer.x(),fVer.y(),-1*(-19810.0*mm-fVer.z())); // in mm
       fDir = G4ThreeVector(bmVec.unit());
     }
 

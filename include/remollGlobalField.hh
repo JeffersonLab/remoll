@@ -46,6 +46,9 @@ class remollGlobalField : public G4MagneticField {
         void SetChordFinder();
 
     public:
+        /// Set verbose level
+        void SetVerboseLevel(G4int i) { fVerboseLevel = i; }
+
         /// Set the stepper types
         void SetEquationType(G4int i) { fEquationType = i; SetEquation(); }
 
@@ -102,6 +105,8 @@ class remollGlobalField : public G4MagneticField {
 
         G4GenericMessenger* fMessenger;
         G4GenericMessenger* fGlobalFieldMessenger;
+
+        G4int fVerboseLevel;
 
 };
 

@@ -101,6 +101,10 @@ void remollGenericDetector::BuildStaticMessenger()
     "detect",
     &remollGenericDetector::SetOneDetectorType,
     "Set detector type");
+  fStaticMessenger->DeclareMethod(
+    "detect_range",
+    &remollGenericDetector::SetRangeDetectorType,
+    "Set detector type");
 }
 
 void remollGenericDetector::Initialize(G4HCofThisEvent*)
@@ -282,9 +286,13 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     G4ThreeVector local_position = point->GetTouchable()->GetHistory()->GetTopTransform().TransformPoint(global_position);
     hit->f3X  = global_position;
     hit->f3Xl = local_position;
-
     hit->f3V  = track->GetVertexPosition();
-    hit->f3P  = track->GetMomentum();
+    
+    G4ThreeVector global_momentum = track->GetMomentum();
+    //just do the rotation without the translation
+    hit->f3Pl = point->GetTouchable()->GetHistory()->GetTopTransform().TransformAxis(global_momentum);
+    hit->f3P  = global_momentum;
+
     hit->f3S  = track->GetPolarization();
 
     hit->fTime = point->GetGlobalTime();

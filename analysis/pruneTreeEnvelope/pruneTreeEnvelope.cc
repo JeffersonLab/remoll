@@ -14,34 +14,35 @@ remollGenericDetectorHit_t trim(remollGenericDetectorHit_t hit)
 {
     remollGenericDetectorHit_t newHit;
     newHit.det = hit.det;
+    //std::cout << "Test 2: detid = " << newHit.det << std::endl;
     newHit.id = hit.id;
-    newHit.trid=0;
+    newHit.trid=hit.trid;//new
     newHit.pid = hit.pid;
-    newHit.gen=0;
+    newHit.gen=hit.gen;//new
     newHit.mtrid=hit.mtrid;
-    newHit.x=0;
-    newHit.y=0;
-    newHit.z=0;
+    newHit.x=hit.x;//new
+    newHit.y=hit.y;//new
+    newHit.z=hit.z;//new
     newHit.xl=0;
     newHit.yl=0;
     newHit.zl=0;
-    newHit.r=0;
+    newHit.r=hit.r;//new
     newHit.ph=0;
-    newHit.px=0;
-    newHit.py=0;
-    newHit.pz=0;
+    newHit.px=hit.px;//new
+    newHit.py=hit.py;//new
+    newHit.pz=hit.pz;//new
     newHit.pxl=0;
     newHit.pyl=0;
     newHit.pzl=0;
     newHit.sx=0;
     newHit.sy=0;
     newHit.sz=0;
-    newHit.p=0;
-    newHit.e=0;
-    newHit.m=0;
-    newHit.vx=0;
-    newHit.vy=0;
-    newHit.vz=0;
+    newHit.p=hit.p;//new
+    newHit.e=hit.e;//new
+    newHit.m=hit.m;//new
+    newHit.vx=hit.vx;//
+    newHit.vy=hit.vy;//
+    newHit.vz=hit.vz;//
     return newHit; 
 }
 
@@ -50,18 +51,18 @@ remollEventParticle_t trim(remollEventParticle_t part)
     remollEventParticle_t newPart;
     newPart.trid = part.trid;
     newPart.pid = part.pid;
-    newPart.vx=0;
-    newPart.vy=0;
-    newPart.vz=0;
-    newPart.px=0;
-    newPart.py=0;
-    newPart.pz=0;
+    newPart.vx=part.vx;//new
+    newPart.vy=part.vy;//new
+    newPart.vz=part.vz;//new
+    newPart.px=part.px;//new
+    newPart.py=part.py;//new
+    newPart.pz=part.pz;//new
     newPart.sx=0;
     newPart.sy=0;
     newPart.sz=0;
     newPart.th=0;
     newPart.ph=0;
-    newPart.p=0;
+    newPart.p=part.p;//
     newPart.tpx=0;
     newPart.tpy=0;
     newPart.tpz=0;
@@ -87,6 +88,21 @@ remollEventParticle_t rotateVector(remollEventParticle_t part, bool mir)
     remollEventParticle_t newPart;
     newPart.pid = part.pid;
     newPart.trid = part.trid;
+    newPart.vx=part.vx;//new
+    newPart.vy=part.vy;//new
+    newPart.vz=part.vz;//new
+    newPart.px=part.px;//new
+    newPart.py=part.py;//new
+    newPart.pz=part.pz;//new
+    newPart.sx=0;
+    newPart.sy=0;
+    newPart.sz=0;
+    newPart.th=0;
+    newPart.ph=0;
+    newPart.p=part.p;//
+    newPart.tpx=0;
+    newPart.tpy=0;
+    newPart.tpz=0;
     double startZ = 5880;//5980; //right after the end of the acceptance defining collimator
     double x, y;
     bool rot = false;
@@ -154,11 +170,36 @@ remollEventParticle_t rotateVector(remollEventParticle_t part, bool mir)
 remollGenericDetectorHit_t rotateVector(remollGenericDetectorHit_t hit, bool mir)
 {
     remollGenericDetectorHit_t newHit;// = new remollGenericDetectorHit_t();
-    newHit.z = hit.z;
-    newHit.pz = hit.pz;
-    newHit.id = hit.id;
     newHit.det = hit.det;
-    newHit.pid = hit.pid;
+    //std::cout << "Test 3: detid = " << newHit.det << std::endl;
+    newHit.pid   = hit.pid;
+    newHit.id    = hit.id;
+    newHit.trid  = hit.trid;//new
+    newHit.gen   = hit.gen;//new
+    newHit.mtrid = hit.mtrid;
+    newHit.x  = hit.x;//new
+    newHit.y  = hit.y;//new
+    newHit.z  = hit.z;//new
+    newHit.xl = 0;
+    newHit.yl = 0;
+    newHit.zl = 0;
+    newHit.r  = hit.r;//new
+    newHit.ph = 0;
+    newHit.px = hit.px;//new
+    newHit.py = hit.py;//new
+    newHit.pz = hit.pz;//new
+    newHit.pxl= 0;
+    newHit.pyl= 0;
+    newHit.pzl= 0;
+    newHit.sx = 0;
+    newHit.sy = 0;
+    newHit.sz = 0;
+    newHit.p  = hit.p;//new
+    newHit.e  = hit.e;//new
+    newHit.m  = hit.m;//new
+    newHit.vx = hit.vx;//
+    newHit.vy = hit.vy;//
+    newHit.vz = hit.vz;//
 
     double x, y;
     x = hit.x;
@@ -187,7 +228,23 @@ remollEventParticle_t interpolate(remollEventParticle_t part){
     remollEventParticle_t newPart;
     newPart.pid = part.pid;
     newPart.trid = part.trid;
-    int stepSize = 10;
+    newPart.vx=part.vx;//new
+    newPart.vy=part.vy;//new
+    newPart.vz=part.vz;//new
+    newPart.px=part.px;//new
+    newPart.py=part.py;//new
+    newPart.pz=part.pz;//new
+    newPart.sx=0;
+    newPart.sy=0;
+    newPart.sz=0;
+    newPart.th=0;
+    newPart.ph=0;
+    newPart.p=part.p;//
+    newPart.tpx=0;
+    newPart.tpy=0;
+    newPart.tpz=0;
+    //int stepSize = 25;
+    int stepSize = 100;
     for(size_t z = 4500; z <= 33000; z+=stepSize){
         //if (z >= 12500)
         //    stepSize = 500;
@@ -260,8 +317,8 @@ bool isValid(remollEventParticle_t part){
 
     /*
        bool invert = false;
-       int acceptZ = 5975; //Z value for the acceptance defining col
-       double lowR = 35.3; 
+       int acceptZ = 5900; //Z value for the acceptance defining col
+       double lowR = 35.0; 
        double highR = 98;
 
        bool planeInvert = false;
@@ -294,28 +351,153 @@ bool isValid(remollEventParticle_t part){
         double yf = part.tjy[i+1];
         double zf = part.tjz[i+1];
 
-        int cutLen = 8; //apply the first n cuts in the array
-        //              coll cut         ring cuts         lintel cuts  
-        double cutR[] = {35.3  , 98.0  , 690.0  , 1200.0 , 374.8  , 640.5  , 680.0  , 1054.0 };
-        double cutZ[] = {5975.0, 5975.0, 28228.0, 28228.0, 12800.0, 17811.0, 19500.0, 24200.0};
-        bool gte[] =    {false , true  , false  , true   , true   , true   , true   , true   };
+        if (part.pid!=11) { return false; } // Only allow electrons
+
+        /*
+        // Old cuts!      coll cut         ring cuts         lintel cuts  
+        //int cutLen = 8; //apply the first n cuts in the array
+        //double cutR[] = {35.0  , 103.0  , 690.0  , 1200.0 , 374.8  , 640.5  , 680.0  , 1054.0 };
+        //double cutZ[] = {5900.0, 5900.0, 28228.0, 28228.0, 12800.0, 17811.0, 19500.0, 24200.0};
+        //bool gte[] =    {false , true  , false  , true   , true   , true   , true   , true   };
+        */
+
+        // Hits detector rings only cut 
+        /*int colCutLen = 9;
+        int lintelCutLen = 1;
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 625.0  , 680.0  , 1050.0 , 690.0, 1200.0 };
+        double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 625.0  , 680.0  , 925.0 , 690.0, 1200.0 };
+        double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 17811.0, 19500.0, 24200.0, 28228.0, 28228.0 };
+        bool colGte[] =    {false , true  , false , true  , true   , true   , true , false, true };
+        double lintelCutX[] = {374.8  };
+        double lintelCutZ[] = {12800.0};
+        bool lintelGte[] =    {true   };  Cameron July 6 - this would normally be the full series of cuts*/
+        //int colCutLen = 6;   // these are radial cuts, above and below
+        //int lintelCutLen = 4;// these are x axis cuts, above
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 690.0  , 1200.0  };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 28228.0, 28228.0 };
+        //bool colGte[] =    {false , true  , false , true , false  , true    };
+        //double lintelCutX[] = {374.8  , 625.0  , 680.0  , 1050.0 };
+        //double lintelCutZ[] = {12800.0, 17811.0, 19500.0, 24200.0};
+        //bool lintelGte[] =    {true   , true   , true   , true   };
         
+        // Collimator 2 is 100mm thick and has DS face at 5975mm
+        // Collimator 4 is 100mm thick and has DS face at 8375mm
+        // Collimator 5 is 70mm thick and has DS face at 12870mm
+        // Lintel 1 is at 12800
+        // Lintel 2 is at 17811
+        // Lintel 3 is at 19500
+        // Lintel 4 is at 24200
+
+        // All particles through col 2 cut - to Col4
+        //int colCutLen = 2;
+        //int lintelCutLen = 0;
+        //double colCutR[] = {35.0  , 103.0  }; // 103 is the new outter radius.
+        //double colCutZ[] = {5900.0, 5900.0};
+        //bool colGte[] =   {false , true   };
+        //double lintelCutX[] = {0.0};
+        //double lintelCutZ[] = {0.0};
+        //bool lintelGte[] =    {false};
+
+        // All particles through col 4 cut - to Lintel 1
+        //int colCutLen = 4;
+        //int lintelCutLen = 0;
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0};
+        //bool colGte[] =   {false , true  , false , true   };
+        //double lintelCutX[] = {0.0};
+        //double lintelCutZ[] = {0.0};
+        //bool lintelGte[] =    {false};
+
+        // All particles through first lintel cut - to Lintel 2
         //
-        //
+        //int colCutLen = 4;
+        //int lintelCutLen = 1;
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0};
+        //bool colGte[] =    {false , true  , false , true  };
+        //double lintelCutX[] = {404.0  };
+        //double lintelCutZ[] = {12800.0};
+        //bool lintelGte[] =    {true   };
+
+        // All particles through second lintel cut - to Lintel3
+        //int colCutLen = 5;
+        //int lintelCutLen = 1;
+        //double colCutR[] = {35.0  , 103.0 , 53.5  , 196.5 , 650.0  };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 17811.0};
+        //bool colGte[] =    {false , true  , false , true  , true   };
+        //double lintelCutX[] = {404.0  };
+        //double lintelCutZ[] = {12800.0};
+        //bool lintelGte[] =    {true   };
+        
+        // All particles through third lintel cut - to Lintel4
+        //int colCutLen = 6;
+        //int lintelCutLen = 1;
+        //double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 650.0  , 732.0  };
+        //double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 17811.0, 19500.0};
+        //bool colGte[] =    {false , true  , false , true  , true   , true   };
+        //double lintelCutX[] = {404.0  };
+        //double lintelCutZ[] = {12800.0};
+        //bool lintelGte[] =    {true   };
+        
+        // All particles through fourth lintel cut - to Detector Plane
+        int colCutLen = 7;
+        int lintelCutLen = 1;
+        double colCutR[] = {35.0  , 103.0  , 53.5  , 196.5 , 650.0  , 732.0  , 928.0 };
+        double colCutZ[] = {5900.0, 5900.0, 8375.0, 8375.0, 17811.0, 19500.0, 23500.0};
+        bool colGte[] =    {false , true  , false , true  , true   , true   , true   };
+        double lintelCutX[] = {404.0  };
+        double lintelCutZ[] = {12800.0};
+        bool lintelGte[] =    {true   };
+        
+
+
+        // OLD Stuff
+        /*
+        int colCutLen = 4;
+        int lintelCutLen = 1;
+        double cutR[] = {35.3  , 98.0  , 53.0, 190.9, 640.5  , 680.0  , 1054.0 };
+        double cutZ[] = {5975.0, 5975.0, 8375, 8375, 17811.0, 19500.0, 24200.0};
+        bool gte[] =    {false , true  , false  , true   , true   , true   , true   , true   };
+        bool colGte[] =    {false , true  , false , true  };
+        double lintelCutX[] = {374.8  };
+        double lintelCutZ[] = {12800.0};
+        bool lintelGte[] =    {true   };
+*/
+
+
         //false -> include all particles radius > R
         //true -> include all particles radius <= R
-        for (int j = 0; j < cutLen; j++)
+
+        for (int j = 0; j < colCutLen; j++)
         {
-            if (zi <= cutZ[j] && cutZ[j] <= zf)
+            if (zi <= colCutZ[j] && colCutZ[j] <= zf)
             {
                 dx = xf - xi;
                 dy = yf - yi;
                 dz = zf - zi;
-                x = xi + (dx/dz)*(cutZ[j]-zi);
-                y = yi + (dy/dz)*(cutZ[j]-zi);
+                x = xi + (dx/dz)*(colCutZ[j]-zi);
+                y = yi + (dy/dz)*(colCutZ[j]-zi);
                 double radius = sqrt(x*x + y*y);
                 //xor is ^: false has no effect, true inverts < to >=
-                if (gte[j] ^ (radius < cutR[j]))
+                if (colGte[j] ^ (radius < colCutR[j]))
+                {
+                    //this part is cut out
+                    return false; 
+                }
+            }
+        }
+        for (int j = 0; j < lintelCutLen; j++)
+        {
+            if (zi <= lintelCutZ[j] && lintelCutZ[j] <= zf)
+            {
+                dx = xf - xi;
+                dy = yf - yi;
+                dz = zf - zi;
+                x = xi + (dx/dz)*(lintelCutZ[j]-zi);
+                y = yi + (dy/dz)*(lintelCutZ[j]-zi);
+                double radius = sqrt(x*x + y*y);
+                //xor is ^: false has no effect, true inverts < to >=
+                if (lintelGte[j] ^ (-1*x < lintelCutX[j]))
                 {
                     //this part is cut out
                     return false; 
@@ -411,11 +593,13 @@ bool isValid(remollEventParticle_t part){
     }
     return true;
 }
-        void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double energyCut=0.0, int ringCut=0, bool forceSeptant=true)
-        {
-            TTree::SetMaxTreeSize(Long64_t(1024)*1024*1024*200); //200 GB tree
+void pruneTreeEnvelope(std::string file="tracking.root", int detid=28, double energyCut=0.0, int ringCut=0, bool forceSeptant=true)
+    {
+    TTree::SetMaxTreeSize(Long64_t(1024)*1024*1024*200); //200 GB tree
     std::vector < remollGenericDetectorHit_t > *fHit = 0;
     std::vector < remollEventParticle_t > *fPart = 0;
+    Double_t fRate;
+    fRate = 0.0;
     int dotPos = file.rfind(".");   
     std::ostringstream os;
     os << file.substr(0, dotPos) << "_envelope_det" << detid << ".root";
@@ -426,15 +610,19 @@ bool isValid(remollEventParticle_t part){
     }
     // Default look at stuff hitting the entire detector array
     bool hitRcut = true;
-    double lowR = 600.0;
-    double highR = 1500.0;
+    //double lowR = 600.0;
+    //double highR = 1500.0;
+    double lowR = 0.0;
+    double highR = 5000.0;
     if (ringCut==-1){ //all rings
         hitRcut=true;
-        lowR = 690.0;
+        //lowR = 690.0;
+        lowR = 630.0;
         highR = 1200.0;
     }
     if (ringCut>0){
         hitRcut=true;
+        // These definitions are inaccurate now (need to chage with shorter experiment definition)
         if (ringCut==6){
             // Ring 6
             lowR = 1100.0;
@@ -479,14 +667,18 @@ bool isValid(remollEventParticle_t part){
     TTree* newTree = new TTree("T", "Optimized Tree of Tracks");
     oldTree->SetBranchAddress("hit", &fHit); 
     oldTree->SetBranchAddress("part", &fPart); 
+    oldTree->SetBranchAddress("rate", &fRate); 
     std::vector < remollGenericDetectorHit_t > *hitCopy = new std::vector < remollGenericDetectorHit_t > ;
     std::vector < remollEventParticle_t > *partCopy = new std::vector < remollEventParticle_t > ;
+    Double_t rateCopy;
+    rateCopy = 0.0;
 
     //TODO reading data into envelopes downstream could be sped up
     //by storing the data by Z instead of by hit
     
     newTree->Branch("hit", &hitCopy);
     newTree->Branch("part", &partCopy);
+    newTree->Branch("rate", &rateCopy);
     //newTree->AutoSave();
     //oldTree->Print();
     for (size_t j = 0; j < oldTree->GetEntries(); j++)
@@ -501,14 +693,16 @@ bool isValid(remollEventParticle_t part){
         //std::cout << "Parts: " << fPart->size() << std::endl;
         std::vector<int> goodTRID;  
         std::vector<int> worthyTRID;
+        rateCopy = fRate;
 
         for (size_t i = 0; i < fHit->size(); i++)
         {
             remollGenericDetectorHit_t hit = fHit->at(i); 
+            //std::cout << "Test 3: detid = " << hit.det << " == " << detid << " ??? " << std::endl;
             //Get all track ids that hit into desired det
-            if (hit.det == detid && (!lowEcut || !(hit.e<lowE)) && (!hitRcut || !(hit.r<lowR || hit.r>highR)))
+            if (hit.pid==11 && hit.det == detid && (!lowEcut || !(hit.e<lowE)) && (!hitRcut || !(hit.r<lowR || hit.r>highR)))
             {
-                //std::cout << "good trid" << hit.trid << std::endl;
+                //std::cout << "good trid: " << hit.trid << ", detid = " << hit.det << std::endl;
                 goodTRID.push_back(hit.trid);
             }
         }
@@ -531,7 +725,7 @@ bool isValid(remollEventParticle_t part){
                         worthyTRID.push_back(part.trid);
                         partCopy->push_back(trim(part));
                     }
-                    break;
+                    //break;
                 }
             }   
         }
@@ -541,12 +735,14 @@ bool isValid(remollEventParticle_t part){
             for (size_t i = 0; i < fHit->size(); i++)
             {
                 remollGenericDetectorHit_t hit = fHit->at(i); 
+                //std::cout << "Test 5: detid = " << hit.det << ", trid = " << hit.trid << std::endl;
                 //and save the corresponding hit aswell
                 if (trid == hit.trid)
                 {
                     if (forceSeptant) hit = rotateVector(hit, mirror);
+                    //std::cout << "Test 4: detid = " << hit.det << std::endl;
                     hitCopy->push_back(trim(hit));
-                    break;
+                    //break;
                 }
 
             }
@@ -598,6 +794,8 @@ int main(int argc, char **argv)
         forceSeptant = (argv[5][0] == 'y');
     }
     std::cout << "Running with file=" << fileString << ", detid=" << detid << ", energyCut=" << energyCut << " MeV, ringRadialCut=" << ringRadialCut <<", forceSeptant=" << forceSeptant << std::endl; 
+    //std::cout << "Test 1: detid = " << detid << std::endl;
     pruneTreeEnvelope(fileString, detid, energyCut, ringRadialCut, forceSeptant);
+    //std::cout << "Test final: detid = " << detid << std::endl;
 }
 

@@ -1,3 +1,19 @@
-build
-map_directory
+# install destinations
+bin/*
+lib/*
+share/*
+
+# develop directories
+.git/*
+build/*
+
+# large content
+rootfiles/*
+
+# large directory
+# but cheaper to copy than download
+#map_directory/*
+
+# large content
+*.root
 

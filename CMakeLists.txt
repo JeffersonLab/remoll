@@ -2,7 +2,7 @@
 # Setup the project
 #
 cmake_minimum_required(VERSION 3.5)
-project(remoll VERSION 0.1 LANGUAGES CXX)
+project(remoll VERSION 0.1 LANGUAGES CXX C)
 
 # Disallow in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -305,33 +305,70 @@ set(REMOLL_LOCATION /group/halla/www/hallaweb/html/12GeV/Moller/downloads/remoll
 set(REMOLL_DOWNLOADS http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/)
 set(REMOLL_MAP_DIR ${PROJECT_SOURCE_DIR}/map_directory)
 if(EXISTS ${REMOLL_LOCATION})
+  message(STATUS "Copying files directly from directory...")
   set(REMOLL_DOWNLOADS file://${REMOLL_LOCATION})
+else()
+  message(STATUS "Fieldmaps will be downloaded from web...")
 endif()
 file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/blockyUpstream_rm_1.1.txt
-     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
-     EXPECTED_MD5 3e2338e1ba74b03da37545e98931f5f3)
+     ${REMOLL_DOWNLOADS}/hybridJLAB.txt
+     ${REMOLL_MAP_DIR}/hybridJLAB.txt
+     EXPECTED_MD5 c2da18fd7ab80cc4abe7eafc487963dc
+     )
 file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/blockyHybrid_rm_3.0.txt
-     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
-     EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e)
+     ${REMOLL_DOWNLOADS}/upstreamJLAB_1.25.txt
+     ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt
+     EXPECTED_MD5 af06ed35516c17640e89ba3aa0f5b200
+     )
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/hybridJLAB_v2.txt
+     ${REMOLL_MAP_DIR}/hybridJLAB_v2.txt
+     EXPECTED_MD5 4a0d1abc9b80cf5f2c3dd495a1133e26
+     )
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/segmentedJLAB_v2.txt
+     ${REMOLL_MAP_DIR}/segmentedJLAB_v2.txt
+     EXPECTED_MD5 2a21b540f6496e3f554302f369646bbb
+     )
+file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/upstreamJLAB_v2.txt
+     ${REMOLL_MAP_DIR}/upstreamJLAB_v2.txt
+     EXPECTED_MD5 bed73f2ea44135c52222bc8e767e1954
+     )
 install(FILES
-     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
-     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
+     ${REMOLL_MAP_DIR}/hybridJLAB.txt
+     ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt
+     ${REMOLL_MAP_DIR}/hybridJLAB_v2.txt
+     ${REMOLL_MAP_DIR}/segmentedJLAB_v2.txt
+     ${REMOLL_MAP_DIR}/upstreamJLAB_v2.txt
      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
 if(ADDITIONAL_FIELDS)
   message(STATUS "Ensuring additional fields are available")
   file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/blockyUpstream_rm_1.1.txt
+     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
+     EXPECTED_MD5 3e2338e1ba74b03da37545e98931f5f3
+     )
+  file(DOWNLOAD
+     ${REMOLL_DOWNLOADS}/blockyHybrid_rm_3.0.txt
+     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
+     EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e
+     )
+  file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/upstreamSymmetric_sensR_0.1.txt
      ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.1.txt
-     EXPECTED_MD5 849d9dc5abab0842fc13fef7f4918648)
+     EXPECTED_MD5 849d9dc5abab0842fc13fef7f4918648
+     )
   file(DOWNLOAD
      ${REMOLL_DOWNLOADS}/hybridSymmetric_sensR_0.1.txt
      ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.1.txt
-     EXPECTED_MD5 78fad2ffa5b5ae129df11bdf0ce25333)
+     EXPECTED_MD5 78fad2ffa5b5ae129df11bdf0ce25333
+     )
   install(FILES
-     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.0.txt
-     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.0.txt
+     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
+     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
+     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.1.txt
+     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.1.txt
      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
 else()
   message(STATUS "Download additional fields with '-DADDITIONAL_FIELDS=ON'.")

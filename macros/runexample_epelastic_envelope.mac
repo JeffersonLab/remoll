@@ -3,7 +3,7 @@
 # Macrofile
 # This must be called before initialize
 /remoll/setgeofile geometry/mollerMother_acceptanceDefinition_includeCol4.gdml
-/remoll/parallel/setfile geometry/mollerParallel.gdml
+/remoll/parallel/setfile geometry/mollerParallel_envelopes.gdml
 /remoll/physlist/parallel/enable 
 
 # This must be explicitly called
@@ -27,5 +27,5 @@
 /process/list
 # Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
 #/remoll/seed 123456
-/remoll/filename remoll_epelastic_envelope_2M.root
-/run/beamOn 2000000
+/remoll/filename remoll_epelastic_envelope_10M.root
+/run/beamOn 10000000

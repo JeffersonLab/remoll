@@ -47,7 +47,8 @@ remollGlobalField::remollGlobalField()
   fEpsMin(1.0e-5*mm),fEpsMax(1.0e-4*mm),
   fEquation(0),fEquationDoF(0),
   fFieldManager(0),fFieldPropagator(0),
-  fStepper(0),fChordFinder(0)
+  fStepper(0),fChordFinder(0),
+  fVerboseLevel(0)
 {
     // Get field propagator and managers
     G4TransportationManager* transportationmanager = G4TransportationManager::GetTransportationManager();
@@ -82,6 +83,7 @@ remollGlobalField::remollGlobalField()
     fGlobalFieldMessenger->DeclareMethod("scale",&remollGlobalField::SetFieldScale,"Scale magnetic field by factor");
     fGlobalFieldMessenger->DeclareMethod("current",&remollGlobalField::SetMagnetCurrent,"Scale magnetic field by current");
     fGlobalFieldMessenger->DeclareMethod("value",&remollGlobalField::PrintFieldValue,"Print the field value at a given point (in m)");
+    fGlobalFieldMessenger->DeclareProperty("verbose",fVerboseLevel,"Set the verbose level");
 }
 
 remollGlobalField::~remollGlobalField()
@@ -125,12 +127,12 @@ void remollGlobalField::SetEquation()
   switch (fEquationType)
   {
     case 0:
-      G4cout << "G4Mag_UsualEqRhs is called with 6 dof" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4Mag_UsualEqRhs is called with 6 dof" << G4endl;
       fEquation = new G4Mag_UsualEqRhs(this);
       fEquationDoF = 6;
       break;
     case 2:
-      G4cout << "G4Mag_SpinEqRhs is called with 12 dof" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4Mag_SpinEqRhs is called with 12 dof" << G4endl;
       fEquation = new G4Mag_SpinEqRhs(this);
       fEquationDoF = 12;
       break;
@@ -148,27 +150,27 @@ void remollGlobalField::SetStepper()
   {
     case 0:
       fStepper = new G4ExplicitEuler(fEquation, fEquationDoF);
-      G4cout << "G4ExplicitEuler is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4ExplicitEuler is called" << G4endl;
       break;
     case 1:
       fStepper = new G4ImplicitEuler(fEquation, fEquationDoF);
-      G4cout << "G4ImplicitEuler is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4ImplicitEuler is called" << G4endl;
       break;
     case 2:
       fStepper = new G4SimpleRunge(fEquation, fEquationDoF);
-      G4cout << "G4SimpleRunge is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4SimpleRunge is called" << G4endl;
       break;
     case 3:
       fStepper = new G4SimpleHeum(fEquation, fEquationDoF);
-      G4cout << "G4SimpleHeum is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4SimpleHeum is called" << G4endl;
       break;
     case 4:
       fStepper = new G4ClassicalRK4(fEquation, fEquationDoF);
-      G4cout << "G4ClassicalRK4 (default) is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4ClassicalRK4 (default) is called" << G4endl;
       break;
     case 5:
       fStepper = new G4CashKarpRKF45(fEquation, fEquationDoF);
-      G4cout << "G4CashKarpRKF45 is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4CashKarpRKF45 is called" << G4endl;
       break;
     default: fStepper = 0;
   }
@@ -198,7 +200,8 @@ void remollGlobalField::AddNewField(G4String& name)
   if (thisfield->IsInit()) {
     fFields.push_back(thisfield);
 
-    G4cout << __FUNCTION__ << ": field " << name << " was added." << G4endl;
+    if (fVerboseLevel > 0)
+      G4cout << __FUNCTION__ << ": field " << name << " was added." << G4endl;
 
     // Add file data to output data stream
 
@@ -222,7 +225,8 @@ void remollGlobalField::AddNewField(G4String& name)
     stat(name.data(), &fs);
     fdata.timestamp = TTimeStamp( fs.st_mtime );
 
-    G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
+    if (fVerboseLevel > 0)
+      G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
 
     rd->AddMagData(fdata);
 

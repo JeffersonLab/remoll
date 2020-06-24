@@ -27,6 +27,8 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/dom/DOMNode.hpp>
 
+ClassImp(remollSeed_t)
+
 // Singleton
 remollIO* remollIO::gInstance = 0;
 remollIO* remollIO::GetInstance() {
@@ -37,7 +39,7 @@ remollIO* remollIO::GetInstance() {
 }
 
 remollIO::remollIO()
-: fFile(0),fTree(0),fFilename("remollout.root")
+: fFile(0),fTree(0),fFilename("remollout.root"),fRate(0)
 {
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
@@ -84,11 +86,12 @@ void remollIO::InitializeTree()
     fTree->Branch("units",    &fUnits);
 
     // Detectors
-    fTree->Branch("dets.sd",  &fDetNos, fDetSDNames);
-    fTree->Branch("dets.lv",  &fDetNos, fDetLVNames);
+    fTree->Branch("dets.sd",  &fDetSDNos, fDetSDNames);
+    fTree->Branch("dets.lv",  &fDetLVNos, fDetLVNames);
 
     // Event information
-    fTree->Branch("rate",     &fEvRate,   "rate/D");
+    fTree->Branch("seed",     &fSeed);
+    fTree->Branch("rate",     &fRate,   "rate/D");
     fTree->Branch("ev",       &fEv);
     fTree->Branch("bm",       &fBm);
     fTree->Branch("part",     &fEvPart);
@@ -138,7 +141,7 @@ void remollIO::WriteTree()
         exit(1);
     }
 
-    G4cout << "Writing output to " << fFile->GetName() << "... ";
+    G4cout << "Writing output to " << fFile->GetName() << " ... ";
 
     fFile->cd();
 
@@ -154,18 +157,11 @@ void remollIO::WriteTree()
     delete fFile;
     fFile = NULL;
 
-    G4cout << "written" << G4endl;
+    G4cout << "done" << G4endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Interfaces to output section ///////////////////////////////////////////////
-
-// Event seed
-void remollIO::SetEventSeed(const G4String& seed)
-{
-  fEvSeed = seed;
-}
-
 
 // Event Data
 
@@ -173,7 +169,7 @@ void remollIO::SetEventData(const remollEvent *ev)
 {
   if (! ev) return;
 
-  fEvRate   = ev->fRate*s;
+  fRate   = ev->fRate*s;
 
   // Event variables
   fEv     = ev->GetEventIO();

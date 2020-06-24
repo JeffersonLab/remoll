@@ -207,7 +207,7 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   effectiveXsection = xsect;
 
   ///~~~ Aymmetry calculation
-  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (QWp);
+  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2 * (QWp);
 }
 
 void remollGenAl::GenElastic(G4double beamE,G4double theta,
@@ -252,5 +252,5 @@ void remollGenAl::GenElastic(G4double beamE,G4double theta,
   fWeight = effectiveXsection*sin(theta);  
   
   ///~~~ Aymmetry calculation
-  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (QWp + QWn*(A-Z)/Z);
+  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2 * (QWp + QWn*(A-Z)/Z);
 }
