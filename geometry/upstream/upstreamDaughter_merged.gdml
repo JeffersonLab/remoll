@@ -584,13 +584,11 @@
         <volumeref ref="boxUSShieldColl1_logic"/>
         <position name="bosUSShieldColl1_pos" unit="mm" x="0" y="0" z="- USBoxmothersubtract_length/2"/>
       </physvol>
-      
-      <!--
+
       <physvol>
         <file name="upstream/upstreamBeampipe.gdml"/>
         <positionref ref="shield_US_beampipe_center"/>
       </physvol>
-      -->
    </volume>
 </structure>
 
