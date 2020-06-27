@@ -109,7 +109,7 @@
 		<rotation name="rotation_node_solid_inner_E" x="-pi"/>
 	</union>
 
-	<cone name="solid_US_toroidMother" rmin1="30.142"  rmax1="245.899" rmin2="30.4304375" rmax2="245.899" z="2100.862" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<cone name="solid_US_toroidMother" rmin1="30.142"  rmax1="245.899" rmin2="30.4304375" rmax2="245.899" z="2048.862" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 
 </solids>
 
