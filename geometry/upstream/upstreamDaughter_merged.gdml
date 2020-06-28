@@ -98,6 +98,7 @@
     <constant name="COLL2_R1_Cu_D2" value ="16."/>
     <constant name="COLL2_R1_Cu_U3" value ="16."/>
     <constant name="COLL2_R1_Cu_D3" value ="16."/>
+
     <!-- coll sep, inner rad, adjust this -->
     <constant name="COLL2_R2_U" value ="35"/>
     <constant name="COLL2_R2_D" value ="35"/>
