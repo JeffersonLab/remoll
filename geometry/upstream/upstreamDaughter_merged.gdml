@@ -88,16 +88,16 @@
     <position name="posCOLL2_CW" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75-50"/> <!-- upstream end of CW piece is 5250mm with respect to target center -->
     <position name="posCOLL2_Cu" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75+75-25"/> <!-- upstream end of Cu piece is 5350mm with respect to target center -->
     <!--Shielding beam pipe overlap with col-2 so I increased to bore radius in col-2 from 26.0 to 29.55 -->
-    <constant name="COLL2_R1_CW_U1" value ="13.629"/>
-    <constant name="COLL2_R1_CW_D1" value ="13.629"/>
-    <constant name="COLL2_R1_CW_U2" value ="13.629"/>
-    <constant name="COLL2_R1_CW_D2" value ="13.629"/>
-    <constant name="COLL2_R1_Cu_U1" value ="13.629"/>
-    <constant name="COLL2_R1_Cu_D1" value ="13.629"/>
-    <constant name="COLL2_R1_Cu_U2" value ="13.629"/>
-    <constant name="COLL2_R1_Cu_D2" value ="13.629"/>
-    <constant name="COLL2_R1_Cu_U3" value ="13.629"/>
-    <constant name="COLL2_R1_Cu_D3" value ="13.629"/>
+    <constant name="COLL2_R1_CW_U1" value ="16."/>
+    <constant name="COLL2_R1_CW_D1" value ="16."/>
+    <constant name="COLL2_R1_CW_U2" value ="16."/>
+    <constant name="COLL2_R1_CW_D2" value ="16."/>
+    <constant name="COLL2_R1_Cu_U1" value ="16."/>
+    <constant name="COLL2_R1_Cu_D1" value ="16."/>
+    <constant name="COLL2_R1_Cu_U2" value ="16."/>
+    <constant name="COLL2_R1_Cu_D2" value ="16."/>
+    <constant name="COLL2_R1_Cu_U3" value ="16."/>
+    <constant name="COLL2_R1_Cu_D3" value ="16."/>
     <!-- coll sep, inner rad, adjust this -->
     <constant name="COLL2_R2_U" value ="35"/>
     <constant name="COLL2_R2_D" value ="35"/>
