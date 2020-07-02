@@ -36,6 +36,13 @@
       <positionref ref="hallCenter"/>
     </physvol>
 
+    <!-- SBS Bunker -->
+    <physvol>
+      <file name="electronics/subSBSbunker.gdml"/>
+      <position name="sbsBunker_pos" x="8740" y="-3000 + 2000" z="-15180."/>
+      <rotation name="rot_y30" unit="deg" y="30"/>
+    </physvol>
+ 
     <!-- Upstream region -->
     <physvol>
       <file name="upstream/upstreamDaughter_merged.gdml"/>
@@ -50,6 +57,9 @@
 
     <!-- Downstream beampipe -->
     
+    <physvol>
+      <file name="beampipe/premoller/beampipeRaster.gdml"/>
+    </physvol>
     <physvol>
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
@@ -77,13 +87,6 @@
       <file name="huts/lefthut.gdml"/>
       <positionref ref="lefthut_pos"/>
       <rotation name="lefthut_rot" unit="deg" y="-45"/>
-    </physvol>
-    
-    <!-- electronics hut for right side --> 
-    <physvol>
-      <file name="huts/righthut.gdml"/>
-      <positionref ref="righthut_pos"/>
-      <rotation name="righthut_rot" unit="deg" y="45"/>
     </physvol>
     
     <!-- ShowerMax Detectors--> 

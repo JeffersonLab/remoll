@@ -53,4 +53,4 @@
 #/remoll/filename remollout_r5o_external_default.root
 
 
-#/run/beamOn 100
+/run/beamOn 1

@@ -21,16 +21,16 @@
 
 remollGenBeam::remollGenBeam()
 : remollVEventGen("beam"),
-  fOriginMean(0.0*m,0.0*m,-11.787*m),
+  fOriginMean(0.0*m,0.0*m,-19.81*m),
   fOriginSpread(0.0,0.0,0.0),
   fOriginModelX(kOriginModelFlat),
   fOriginModelY(kOriginModelFlat),
   fOriginModelZ(kOriginModelFlat),
   fDirection(0.0,0.0,1.0),
-  fCorrelation(0.149*mrad/mm,0.149*mrad/mm,0.0),
+  fCorrelation(0.0653*mrad/mm,0.0653*mrad/mm,0.0),
   fPolarization(0.0,0.0,0.0),
   fRaster(5*mm,5*mm,0.0),
-  fRasterRefZ(-4.587*m),
+  fRasterRefZ(-4.5*m),
   fParticleName("e-")
 {
     fSampType = kNoTargetVolume;

@@ -545,6 +545,7 @@
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
       <solidref ref="boxDownstream_1"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="Driftpipe">
           <volumeref ref="logicDriftpipe"/>

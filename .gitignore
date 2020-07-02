@@ -74,3 +74,11 @@ sample_gdml.*
 #ignore log files
 *.log
 callgrind.*
+
+# jekyll
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+Gemfile.lock
