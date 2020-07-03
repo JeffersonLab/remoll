@@ -96,6 +96,9 @@
     <auxiliary auxtype="Color" auxvalue="magenta"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     <auxiliary auxtype="DetNo" auxvalue="1001"/>
   </volume>
   <volume name="sieve_hole2_logic">
@@ -104,6 +107,9 @@
     <auxiliary auxtype="Color" auxvalue="magenta"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     <auxiliary auxtype="DetNo" auxvalue="1002"/>
   </volume>
   <volume name="sieve_hole3_logic">
@@ -112,6 +118,9 @@
     <auxiliary auxtype="Color" auxvalue="magenta"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     <auxiliary auxtype="DetNo" auxvalue="1003"/>
   </volume>
 
@@ -123,6 +132,7 @@
       <volumeref ref="sieve_hole1_logic"/>
       <position x="sieve_hole1_radial_position"/>
     </physvol>
+
     <physvol name="sieve_hole2_physical">
       <volumeref ref="sieve_hole2_logic"/>
       <position
@@ -130,6 +140,7 @@
         y="sieve_hole2_radial_position*sin(sieve_hole2_angular_offset_phi)"
         />
     </physvol>
+
     <physvol name="sieve_hole3_physical">
       <volumeref ref="sieve_hole3_logic"/>
       <position
@@ -147,11 +158,16 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="sieve_system_solid"/>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    <loop for="i" from="0" to="6" step="1">
+    <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetNo" auxvalue="1000"/>
+    <loop for="i" from="1" to="7" step="1">
       <physvol name="sieve_sector_physical[i]">
         <volumeref ref="sieve_sector_logic"/>
         <rotation unit="deg"
-          z="-360.0/7.0*i"
+          z="360.0/14.0+360.0/7.0*(i-1)"
           />
       </physvol>
     </loop>
