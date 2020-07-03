@@ -126,6 +126,13 @@
     <auxiliary auxtype="DetNo" auxvalue="46"/>
   </volume>
 
+  <volume name="sieveVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="60"/>
+  </volume>
+
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
@@ -199,6 +206,11 @@
     <physvol name="n2atmoVirtualPlane_phys">
       <volumeref ref="n2atmoVirtualPlane_log"/>
       <positionref ref="n2atmoVirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="sieveVirtualPlane_phys">
+      <volumeref ref="sieveVirtualPlane_log"/>
+      <positionref ref="sieveVirtualPlane_pos"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
