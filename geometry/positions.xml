@@ -57,5 +57,9 @@ detectors are placed -->
 <position name="donutDSVirtualPlane_pos" z="29360.00" unit="mm"/>
 <position name="n2atmoVirtualPlane_pos" z="31525.00" unit="mm"/>
 
+<!-- Sieve position -->
+<position name="sieveActualCenter_pos" z="-1375.00" x="200" unit="mm"/>
+<position name="sieveVirtualPlane_pos" z="-1375.00" unit="mm"/>
+
 
 
