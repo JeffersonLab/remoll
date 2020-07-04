@@ -30,6 +30,9 @@ TH2F *dBL_thZ[nSpecies][nDmg];
 TH2F *dBL_phE[nSpecies][nDmg];
 TH2F *dBL_phZ[nSpecies][nDmg];
 
+TH1F *dBL_vZ[nSpecies];
+TH2F *dBL_vRZ[nSpecies];
+
 void initHisto(int);
 void writeOutput();
 long processOne(string);
@@ -126,8 +129,8 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,0};
       double zz = hit->at(j).z;
       
-      //if( rr > 90 ) continue;
-      if( rr > 90 || zz<1500 || zz>2500) continue;
+      if( rr > 90 ) continue;
+      //if( rr > 90 || zz<1500 || zz>2500) continue;
       for(int kk=0;kk<3;kk++)
 	dCoil_rz[sp][kk]->Fill(zz,rr,rdDmg[kk]);
 
@@ -170,6 +173,8 @@ long processOne(string fnm){
 	dBL_thZ[sp][kk]->Fill(zzAtCoil[index],th,rdDmg[kk]);
 	dBL_phZ[sp][kk]->Fill(zzAtCoil[index],ph,rdDmg[kk]);
 	dBL_zE[sp][kk]->Fill(zzAtCoil[index],kinE/1000,rdDmg[kk]);
+	dBL_vZ[sp][kk]->Fill(hit->at(j).vz,rdDmg[kk]);
+	dBL_vRZ[sp][kk]->Fill(hit->at(j).vz,sqrt(hit->at(j).vx*hit->at(j).vx+hit->at(j).vy*hit->at(j).vy),rdDmg[kk]);
       }
 
     }
@@ -183,7 +188,7 @@ long processOne(string fnm){
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_c1p2V2.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_c1p2V3.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const string fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
@@ -232,6 +237,13 @@ void initHisto(int fileType){
 			      800,500,3200,
 			      800,0,0.5);
 
+      dBL_vZ[i][j] = new TH1F(Form("aC2_vZ_%s_Dmg%d",spH[i].c_str(),j),
+			      Form("%s for %s;vZ[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
+			      800,0,1000);
+      dBL_vRZ[i][j] = new TH2F(Form("aC2_vRZ_%s_Dmg%d",spH[i].c_str(),j),
+			       Form("%s for %s;vZ[mm];vR[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
+			       800,0,1000,
+			       800,0,1000);
 
     }
   }
@@ -265,6 +277,10 @@ void writeOutput(){
       dBL_phZ[i][j]->Write();
       dBL_zE[i][j]->Scale(scaleFactor);
       dBL_zE[i][j]->Write();
+      dBL_vZ[i][j]->Scale(scaleFactor);
+      dBL_vZ[i][j]->Write();
+      dBL_vRZ[i][j]->Scale(scaleFactor);
+      dBL_vRZ[i][j]->Write();
 
     }
   }
