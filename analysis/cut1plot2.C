@@ -99,7 +99,7 @@ long processOne(string fnm){
   int sector(-1);
 
   std::vector<int> trackNr;
-  std::vector<double> zzAtCoil
+  std::vector<double> zzAtCoil;
   //for (Long64_t event = 0; event < 5; t->GetEntry(event++)) {
   for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
     currentEvNr++;
@@ -135,6 +135,7 @@ long processOne(string fnm){
 	trackNr.push_back(hit->at(j).trid);
 	zzAtCoil.push_back(zz);
       }
+    }
 
     for(int j=0;j<hit->size();j++){
       if(hit->at(j).det != 25) continue;
@@ -164,11 +165,11 @@ long processOne(string fnm){
       for(int kk=0;kk<3;kk++){
 	dBL_xy[sp][kk]->Fill(xx,yy,rdDmg[kk]);
 	dBL_r[sp][kk]->Fill(rr,rdDmg[kk]);
-	dBL_thE[sp][kk]->Fill(th,kinE/1000,rdDmg[k]);
-	dBL_phE[sp][kk]->Fill(ph,kinE/1000,rdDmg[k]);
-	dBL_thZ[sp][kk]->Fill(zzAtCoil[index],th,rdDmg[k]);
-	dBL_phZ[sp][kk]->Fill(zzAtCoil[index],ph,rdDmg[k]);
-	dBL_zE[sp][kk]->Fill(zzAtCoil[index],kinE/1000,rdDmg[k]);
+	dBL_thE[sp][kk]->Fill(th,kinE/1000,rdDmg[kk]);
+	dBL_phE[sp][kk]->Fill(ph,kinE/1000,rdDmg[kk]);
+	dBL_thZ[sp][kk]->Fill(zzAtCoil[index],th,rdDmg[kk]);
+	dBL_phZ[sp][kk]->Fill(zzAtCoil[index],ph,rdDmg[kk]);
+	dBL_zE[sp][kk]->Fill(zzAtCoil[index],kinE/1000,rdDmg[kk]);
       }
 
     }
@@ -178,7 +179,7 @@ long processOne(string fnm){
   fin->Close();
   delete fin;
   return nEntries;
-};
+}
 
 
 void initHisto(int fileType){
@@ -217,11 +218,11 @@ void initHisto(int fileType){
 			      800,-3.2,3.2,
 			      800,0,12);
 
-      dBL_thZ[i][j]= new TH2F(Form("aC2_thE_%s_Dmg%d",spH[i].c_str(),j),
+      dBL_thZ[i][j]= new TH2F(Form("aC2_thZ_%s_Dmg%d",spH[i].c_str(),j),
 			      Form("%s for %s;z at coil [mm];theta after Coll2 [rad]",dmgTit[j].c_str(),spTit[i].c_str()),
 			      800,0,3200,
 			      800,0,3.2);
-      dBL_phZ[i][j]= new TH2F(Form("aC2_phE_%s_Dmg%d",spH[i].c_str(),j),
+      dBL_phZ[i][j]= new TH2F(Form("aC2_phZ_%s_Dmg%d",spH[i].c_str(),j),
 			      Form("%s for %s;z at coil [mm];phi after Coll2 [rad]",dmgTit[j].c_str(),spTit[i].c_str()),
 			      800,0,3200,
 			      800,-3.2,3.2);
