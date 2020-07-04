@@ -112,8 +112,8 @@ long processOne(string fnm){
     //pass find tracks that hit the coil
     for(int j=0;j<hit->size();j++){
 
-      //if(hit->at(j).det <4001 || hit->at(j).det>4014) continue;
-      if(hit->at(j).det != 4001 && hit->at(j).det != 4008) continue;
+      if(hit->at(j).det <4001 || hit->at(j).det>4014) continue;
+      //if(hit->at(j).det != 4001 && hit->at(j).det != 4008) continue;
 
       if(std::isnan(rate) || std::isinf(rate)) continue;
       if(rate==0) {rate=1;}
@@ -126,8 +126,8 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,0};
       double zz = hit->at(j).z;
       
-      if( rr > 90 ) continue;
-      //if( rr > 90 || zz<1500 || zz>2500) continue;
+      //if( rr > 90 ) continue;
+      if( rr > 90 || zz<1500 || zz>2500) continue;
       for(int kk=0;kk<3;kk++)
 	dCoil_rz[sp][kk]->Fill(zz,rr,rdDmg[kk]);
 
@@ -183,7 +183,7 @@ long processOne(string fnm){
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_c1p2V1.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_c1p2V2.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const string fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
