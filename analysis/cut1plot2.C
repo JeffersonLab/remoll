@@ -23,6 +23,13 @@ TH1F* dBL_r[nSpecies][nDmg];
 TH1F* dBL_energy[nSpecies];
 TH2F* dCoil_rz[nSpecies][nDmg];
 
+TH2F *dBL_thE[nSpecies][nDmg];
+TH2F *dBL_zE[nSpecies][nDmg];
+TH2F *dBL_thZ[nSpecies][nDmg];
+
+TH2F *dBL_phE[nSpecies][nDmg];
+TH2F *dBL_phZ[nSpecies][nDmg];
+
 void initHisto(int);
 void writeOutput();
 long processOne(string);
@@ -92,6 +99,7 @@ long processOne(string fnm){
   int sector(-1);
 
   std::vector<int> trackNr;
+  std::vector<double> zzAtCoil
   //for (Long64_t event = 0; event < 5; t->GetEntry(event++)) {
   for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
     currentEvNr++;
@@ -100,10 +108,12 @@ long processOne(string fnm){
       currentProc+=procStep;
     }
     trackNr.clear();
+    zzAtCoil.clear();
     //pass find tracks that hit the coil
     for(int j=0;j<hit->size();j++){
 
-      if(hit->at(j).det <4001 || hit->at(j).det>4014) continue;
+      //if(hit->at(j).det <4001 || hit->at(j).det>4014) continue;
+      if(hit->at(j).det != 4001 && hit->at(j).det != 4008) continue;
 
       if(std::isnan(rate) || std::isinf(rate)) continue;
       if(rate==0) {rate=1;}
@@ -116,17 +126,23 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,0};
       double zz = hit->at(j).z;
       
-      if( rr > 90 || zz<1500 || zz>2500) continue;
+      if( rr > 90 ) continue;
+      //if( rr > 90 || zz<1500 || zz>2500) continue;
       for(int kk=0;kk<3;kk++)
 	dCoil_rz[sp][kk]->Fill(zz,rr,rdDmg[kk]);
-      trackNr.push_back(hit->at(j).trid);
-    }
+
+      if( find(trackNr.begin(),trackNr.end(),hit->at(j).trid) == trackNr.end() ){ 
+	trackNr.push_back(hit->at(j).trid);
+	zzAtCoil.push_back(zz);
+      }
 
     for(int j=0;j<hit->size();j++){
       if(hit->at(j).det != 25) continue;
 
-      if( find(trackNr.begin(),trackNr.end(),hit->at(j).trid) == trackNr.end() ) continue;
-      
+      std::vector<int>::iterator it = find(trackNr.begin(),trackNr.end(),hit->at(j).trid);
+      if( it == trackNr.end() ) continue;
+      int index = std::distance(trackNr.begin(),it);
+
       if(std::isnan(rate) || std::isinf(rate)) continue;
       if(rate==0) {rate=1;}
 
@@ -139,6 +155,8 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,0};
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
+      double th = atan2(sqrt(hit->at(j).px*hit->at(j).px + hit->at(j).py*hit->at(j).py),hit->at(j).pz);
+      double ph = atan2(hit->at(j).py,hit->at(j).px);
 
       if(hit->at(j).pz<0) continue;
 
@@ -146,6 +164,11 @@ long processOne(string fnm){
       for(int kk=0;kk<3;kk++){
 	dBL_xy[sp][kk]->Fill(xx,yy,rdDmg[kk]);
 	dBL_r[sp][kk]->Fill(rr,rdDmg[kk]);
+	dBL_thE[sp][kk]->Fill(th,kinE/1000,rdDmg[k]);
+	dBL_phE[sp][kk]->Fill(ph,kinE/1000,rdDmg[k]);
+	dBL_thZ[sp][kk]->Fill(zzAtCoil[index],th,rdDmg[k]);
+	dBL_phZ[sp][kk]->Fill(zzAtCoil[index],ph,rdDmg[k]);
+	dBL_zE[sp][kk]->Fill(zzAtCoil[index],kinE/1000,rdDmg[k]);
       }
 
     }
@@ -159,7 +182,7 @@ long processOne(string fnm){
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_c1p2V0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_c1p2V1.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const string fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
@@ -176,13 +199,39 @@ void initHisto(int fileType){
 			     Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
 			     800,-1300,1300,
 			     800,-1300,1300);
+
       dBL_r[i][j] = new TH1F(Form("aC2_r_%s_Dmg%d",spH[i].c_str(),j),
 			     Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
 			     800,0,1300);
       dCoil_rz[i][j] = new  TH2F(Form("dCoil_xy_%s_Dmg%d",spH[i].c_str(),j),
-				 Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
+				 Form("%s for %s;z[mm];r[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
 				 800,0,3200,
 				 800,0,300);
+
+      dBL_thE[i][j]= new TH2F(Form("aC2_thE_%s_Dmg%d",spH[i].c_str(),j),
+			      Form("%s for %s;theta [rad];E[GeV]",dmgTit[j].c_str(),spTit[i].c_str()),
+			      800,0,3.2,
+			      800,0,12);
+      dBL_phE[i][j]= new TH2F(Form("aC2_phE_%s_Dmg%d",spH[i].c_str(),j),
+			      Form("%s for %s;phi [rad];E[GeV]",dmgTit[j].c_str(),spTit[i].c_str()),
+			      800,-3.2,3.2,
+			      800,0,12);
+
+      dBL_thZ[i][j]= new TH2F(Form("aC2_thE_%s_Dmg%d",spH[i].c_str(),j),
+			      Form("%s for %s;z at coil [mm];theta after Coll2 [rad]",dmgTit[j].c_str(),spTit[i].c_str()),
+			      800,0,3200,
+			      800,0,3.2);
+      dBL_phZ[i][j]= new TH2F(Form("aC2_phE_%s_Dmg%d",spH[i].c_str(),j),
+			      Form("%s for %s;z at coil [mm];phi after Coll2 [rad]",dmgTit[j].c_str(),spTit[i].c_str()),
+			      800,0,3200,
+			      800,-3.2,3.2);
+
+      dBL_zE[i][j]= new TH2F(Form("aC2_zE_%s_Dmg%d",spH[i].c_str(),j),
+			      Form("%s for %s;z at coil [mm];kinE after Coll2 [GeV]",dmgTit[j].c_str(),spTit[i].c_str()),
+			      800,0,3200,
+			      800,0,12);
+
+
     }
   }
 }
@@ -205,6 +254,17 @@ void writeOutput(){
       dBL_r[i][j]->Write();
       dCoil_rz[i][j]->Scale(scaleFactor);
       dCoil_rz[i][j]->Write();
+      dBL_thE[i][j]->Scale(scaleFactor);
+      dBL_thE[i][j]->Write();
+      dBL_thZ[i][j]->Scale(scaleFactor);
+      dBL_thZ[i][j]->Write();
+      dBL_phE[i][j]->Scale(scaleFactor);
+      dBL_phE[i][j]->Write();
+      dBL_phZ[i][j]->Scale(scaleFactor);
+      dBL_phZ[i][j]->Write();
+      dBL_zE[i][j]->Scale(scaleFactor);
+      dBL_zE[i][j]->Write();
+
     }
   }
   fout->Close();
