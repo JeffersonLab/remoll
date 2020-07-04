@@ -137,7 +137,7 @@ long processOne(string fnm){
       }
 
     for(int j=0;j<hit->size();j++){
-      if(hit->at(j).det != 25) continue;
+      if(hit->at(j).det != 26) continue;
 
       std::vector<int>::iterator it = find(trackNr.begin(),trackNr.end(),hit->at(j).trid);
       if( it == trackNr.end() ) continue;
@@ -210,26 +210,26 @@ void initHisto(int fileType){
 
       dBL_thE[i][j]= new TH2F(Form("aC2_thE_%s_Dmg%d",spH[i].c_str(),j),
 			      Form("%s for %s;theta [rad];E[GeV]",dmgTit[j].c_str(),spTit[i].c_str()),
-			      800,0,3.2,
-			      800,0,12);
+			      800,0,1.5,
+			      800,0,0.5);
       dBL_phE[i][j]= new TH2F(Form("aC2_phE_%s_Dmg%d",spH[i].c_str(),j),
 			      Form("%s for %s;phi [rad];E[GeV]",dmgTit[j].c_str(),spTit[i].c_str()),
 			      800,-3.2,3.2,
-			      800,0,12);
+			      800,0,0.5);
 
       dBL_thZ[i][j]= new TH2F(Form("aC2_thE_%s_Dmg%d",spH[i].c_str(),j),
 			      Form("%s for %s;z at coil [mm];theta after Coll2 [rad]",dmgTit[j].c_str(),spTit[i].c_str()),
 			      800,0,3200,
-			      800,0,3.2);
+			      800,0,1.5);
       dBL_phZ[i][j]= new TH2F(Form("aC2_phE_%s_Dmg%d",spH[i].c_str(),j),
 			      Form("%s for %s;z at coil [mm];phi after Coll2 [rad]",dmgTit[j].c_str(),spTit[i].c_str()),
-			      800,0,3200,
+			      800,500,3200,
 			      800,-3.2,3.2);
 
       dBL_zE[i][j]= new TH2F(Form("aC2_zE_%s_Dmg%d",spH[i].c_str(),j),
 			      Form("%s for %s;z at coil [mm];kinE after Coll2 [GeV]",dmgTit[j].c_str(),spTit[i].c_str()),
-			      800,0,3200,
-			      800,0,12);
+			      800,500,3200,
+			      800,0,0.5);
 
 
     }
