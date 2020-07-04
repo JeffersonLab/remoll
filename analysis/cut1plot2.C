@@ -103,7 +103,7 @@ long processOne(string fnm){
     //pass find tracks that hit the coil
     for(int j=0;j<hit->size();j++){
 
-      if(hit->at(j).det != 23) continue;
+      if(hit->at(j).det <4001 || hit->at(j).det>4014) continue;
 
       if(std::isnan(rate) || std::isinf(rate)) continue;
       if(rate==0) {rate=1;}
@@ -116,14 +116,16 @@ long processOne(string fnm){
       double rdDmg[3]={rate,rate*kinE,0};
       double zz = hit->at(j).z;
       
-      if( rr > 90 || zz<1500 || z>2500) continue;
+      if( rr > 90 || zz<1500 || zz>2500) continue;
       for(int kk=0;kk<3;kk++)
-	dCoil_rz[sp][rdDmg[kk]]->Fill(rr,zz);
-      trackNr.push_back(hit->at(j).trackID);
+	dCoil_rz[sp][kk]->Fill(zz,rr,rdDmg[kk]);
+      trackNr.push_back(hit->at(j).trid);
     }
 
     for(int j=0;j<hit->size();j++){
-      if(hit->at(j).det != 23) continue;
+      if(hit->at(j).det != 25) continue;
+
+      if( find(trackNr.begin(),trackNr.end(),hit->at(j).trid) == trackNr.end() ) continue;
       
       if(std::isnan(rate) || std::isinf(rate)) continue;
       if(rate==0) {rate=1;}
@@ -142,10 +144,12 @@ long processOne(string fnm){
 
       dBL_energy[sp]->Fill(kinE);
       for(int kk=0;kk<3;kk++){
-	dBL_xy[sp][rdDmg[kk]]->Fill(xx,yy);
-	dBL_r[sp][rdDmg[kk]]->Fill(rr);
-    }
+	dBL_xy[sp][kk]->Fill(xx,yy,rdDmg[kk]);
+	dBL_r[sp][kk]->Fill(rr,rdDmg[kk]);
+      }
 
+    }
+    
   }
 
   fin->Close();
@@ -165,20 +169,21 @@ void initHisto(int fileType){
     dBL_energy[i] = new TH1F(Form("aC2_energy_%s",spH[i].c_str()),
 			     Form("energy distribution %s",spH[i].c_str()),
 			     121,-8,4.1);
-  niceLogXBins(dBL_energy[i]);
+    niceLogXBins(dBL_energy[i]);
     
-  for(int j=0;j<nDmg;j++){
-    dBL_xy[i][j]= new TH2F(Form("aC2_xy_%s_Dmg%d",spH[i].c_str(),j),
-			   Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
-			   800,-1300,1300,
-			   800,-1300,1300);
-    dBL_r[i][j] = new TH1F(Form("aC2_r_%s_Dmg%d",detID,spH[i].c_str(),j),
-			   Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
-			   800,0,1300);
-    dCoil_rz[i][j] = new  TH2F(Form("dCoil_xy_%s_Dmg%d",spH[i].c_str(),j),
-			       Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
-			       800,0,300,
-			       800,900,3200);
+    for(int j=0;j<nDmg;j++){
+      dBL_xy[i][j]= new TH2F(Form("aC2_xy_%s_Dmg%d",spH[i].c_str(),j),
+			     Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
+			     800,-1300,1300,
+			     800,-1300,1300);
+      dBL_r[i][j] = new TH1F(Form("aC2_r_%s_Dmg%d",spH[i].c_str(),j),
+			     Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
+			     800,0,1300);
+      dCoil_rz[i][j] = new  TH2F(Form("dCoil_xy_%s_Dmg%d",spH[i].c_str(),j),
+				 Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
+				 800,0,3200,
+				 800,0,300);
+    }
   }
 }
 
