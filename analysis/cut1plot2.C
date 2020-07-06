@@ -22,6 +22,8 @@ TH2F* dBL_xy[nSpecies][nDmg];
 TH1F* dBL_r[nSpecies][nDmg];
 TH1F* dBL_energy[nSpecies];
 TH1F* dBL_energyLin[nSpecies];
+TH1F* dCoil_energy[nSpecies];
+TH1F* dCoil_energyLin[nSpecies];
 TH2F* dCoil_rz[nSpecies][nDmg];
 
 TH2F *dBL_thE[nSpecies][nDmg];
@@ -134,6 +136,8 @@ long processOne(string fnm){
       
       //if( rr > 90 ) continue;
       if( rr > 90 || zz<1500 || zz>2500) continue;
+      dCoil_energy[sp]->Fill(kinE);
+      dCoil_energyLin[sp]->Fill(kinE);
       for(int kk=0;kk<3;kk++){
 	dCoil_rz[sp][kk]->Fill(zz,rr,rdDmg[kk]);
       }
@@ -210,6 +214,14 @@ void initHisto(int fileType){
 			     Form("energy distribution %s",spH[i].c_str()),
 			     121,-8,4.1);
     niceLogXBins(dBL_energy[i]);
+
+    dCoil_energyLin[i] = new TH1F(Form("aCoil_energyLin_%s",spH[i].c_str()),
+				  Form("energy distribution %s",spH[i].c_str()),
+				  200,0,1000);
+    dCoil_energy[i] = new TH1F(Form("aCoil_energy_%s",spH[i].c_str()),
+			       Form("energy distribution %s",spH[i].c_str()),
+			       121,-8,4.1);
+    niceLogXBins(dCoil_energy[i]);
     
     for(int j=0;j<nDmg;j++){
       dBL_xy[i][j]= new TH2F(Form("aC2_xy_%s_Dmg%d",spH[i].c_str(),j),
@@ -280,6 +292,10 @@ void writeOutput(){
     dBL_energy[i]->Write();
     dBL_energyLin[i]->Scale(scaleFactor);
     dBL_energyLin[i]->Write();
+    dCoil_energy[i]->Scale(scaleFactor);
+    dCoil_energy[i]->Write();
+    dCoil_energyLin[i]->Scale(scaleFactor);
+    dCoil_energyLin[i]->Write();
       
     for(int j=0;j<nDmg;j++){
       dBL_xy[i][j]->Scale(scaleFactor);
