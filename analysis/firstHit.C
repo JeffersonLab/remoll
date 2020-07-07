@@ -96,7 +96,7 @@ long processOne(string fnm){
 
   std::vector<int> firstHit;
   std::vector<int> species;
-  std::vector<double> powerDep,kinE;
+  std::vector<double> powerDep,kinE,xH,yH,zH;
   //for (Long64_t event = 0; event < 5; t->GetEntry(event++)) {
   for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
     currentEvNr++;
@@ -108,7 +108,8 @@ long processOne(string fnm){
     powerDep.clear();
     kinE.clear();
     species.clear();
-
+    xH.clear();
+    yH.clear();
     //pass find tracks that hit the coil
     for(int j=0;j<hit->size();j++){
 
@@ -122,11 +123,16 @@ long processOne(string fnm){
       if(sp==-1) continue;
 
       int trid = hit->at(j).trid;
-      int foundUS(0);
-      for(int k=0;k<hit->size() && foundUS==0;k++)
-	if(trid == hit->at(k).trid)
-	  foundUS++;
-      if(!foundUS) continue;
+      int mtrid = hit->at(j).mtrid;
+      int foundUS(-1);
+      for(int k=0;k<hit->size() && foundUS==-1;k++)
+	if(trid == hit->at(k).trid && hit->at(k).det==26)
+	  foundUS = trid;
+	else if(mtrid == hit->at(k).trid  && hit->at(k).det==26)
+	  foundUS = mtrid;
+
+      if(foundUS==-1) continue;
+      trid = foundUS;
 
       std::vector<int>::iterator it = find(firstHit.begin(),firstHit.end(),trid);
       if( it == firstHit.end() ){
@@ -134,16 +140,13 @@ long processOne(string fnm){
 	kinE.push_back(hit->at(j).k);	
 	species.push_back(sp);
 	powerDep.push_back(0);
+	xh.push_back(hit->at(j).x);
+	yh.push_back(hit->at(j).x);
+	zh.push_back(hit->at(j).z);
 
 	dCoil_Ein[sp]->Fill(hit->at(j).k);
 	dCoil_EinLin[sp]->Fill(hit->at(j).k);
-	dCoil_xy[sp][0]->Fill(hit->at(j).x,hit->at(j).y);
-	dCoil_xy[sp][1]->Fill(hit->at(j).x,hit->at(j).y,hit->at(j).k);
-	dCoil_rz[sp][0]->Fill(hit->at(j).z,hit->at(j).r);
-	dCoil_rz[sp][1]->Fill(hit->at(j).z,hit->at(j).r,hit->at(j).k);
-      }else{
-	//cout<<"asdfas"<<endl;
-	
+      }else{	
 	int index = std::distance(firstHit.begin(),it);
 	powerDep[index]+=hit->at(j).edep;
       }
@@ -151,8 +154,11 @@ long processOne(string fnm){
 
 
     for(int j=0;j<firstHit.size();j++){
-      //cout<<"AAAA"<<endl;
       dCoil_EinEdep[species[j]]->Fill(kinE[j],powerDep[j]);
+      dCoil_xy[sp][0]->Fill(xH[j],yH[j]);
+      dCoil_xy[sp][1]->Fill(xH[j],yH[j],powerDep[j]);
+      dCoil_rz[sp][0]->Fill(zH[j],sqrt(xH[j]*xH[j]+yH[j]*yH[j]));
+      dCoil_rz[sp][1]->Fill(zH[j],sqrt(xH[j]*xH[j]+yH[j]*yH[j]),powerDet[j]);
     }
     
   }
@@ -164,7 +170,7 @@ long processOne(string fnm){
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_firstHitV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_coilW_firstHitV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const string fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
