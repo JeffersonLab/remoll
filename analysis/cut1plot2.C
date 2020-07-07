@@ -20,6 +20,7 @@ long currentEvNr(0);
 
 TH2F* dBL_xy[nSpecies][nDmg];
 TH2F* dBL_xyFold[nSpecies][nDmg];
+TH2F* dBL_rzFold[nSpecies][nDmg];
 TH1F* dBL_r[nSpecies][nDmg];
 TH1F* dBL_energy[nSpecies];
 TH1F* dBL_energyLin[nSpecies];
@@ -195,6 +196,7 @@ long processOne(string fnm){
 	dBL_phZ[sp][kk]->Fill(zzAtCoil[index],ph,rdDmg[kk]);
 	dBL_phZc2[sp][kk]->Fill(hit->at(j).vz,ph,rdDmg[kk]);
 	dBL_zE[sp][kk]->Fill(zzAtCoil[index],kinE/1000,rdDmg[kk]);
+	dBL_rzFold[sp][kk]->Fill(zzAtCoil[index],rr,rdDmg[kk]);
  	dBL_vZ[sp][kk]->Fill(hit->at(j).vz,rdDmg[kk]);
 	dBL_vRZ[sp][kk]->Fill(hit->at(j).vz,sqrt(hit->at(j).vx*hit->at(j).vx+hit->at(j).vy*hit->at(j).vy),rdDmg[kk]);
  	dBL_vZE[sp][kk]->Fill(hit->at(j).vz,kinE,rdDmg[kk]);
@@ -251,6 +253,11 @@ void initHisto(int fileType){
 				 Form("%s for %s;z[mm];r[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
 				 800,0,3200,
 				 800,0,300);
+
+      dBL_rzFold[i][j] = new  TH2F(Form("dBL_rzFold_%s_Dmg%d",spH[i].c_str(),j),
+				   Form("%s for %s;z at coil [mm];r at C2 [mm]",dmgTit[j].c_str(),spTit[i].c_str()),
+				   800,1100,3200,
+				   800,0,300);
 
       dBL_thE[i][j]= new TH2F(Form("aC2_thE_%s_Dmg%d",spH[i].c_str(),j),
 			      Form("%s for %s;theta [rad];E[GeV]",dmgTit[j].c_str(),spTit[i].c_str()),
@@ -321,6 +328,8 @@ void writeOutput(){
       dBL_r[i][j]->Write();
       dCoil_rz[i][j]->Scale(scaleFactor);
       dCoil_rz[i][j]->Write();
+      dBL_rzFold[i][j]->Scale(scaleFactor);
+      dBL_rzFold[i][j]->Write();
       dBL_thE[i][j]->Scale(scaleFactor);
       dBL_thE[i][j]->Write();
       dBL_thZ[i][j]->Scale(scaleFactor);
