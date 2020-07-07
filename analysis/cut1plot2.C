@@ -19,6 +19,7 @@ int nFiles(0);
 long currentEvNr(0);
 
 TH2F* dBL_xy[nSpecies][nDmg];
+TH2F* dBL_xyFold[nSpecies][nDmg];
 TH1F* dBL_r[nSpecies][nDmg];
 TH1F* dBL_energy[nSpecies];
 TH1F* dBL_energyLin[nSpecies];
@@ -176,7 +177,12 @@ long processOne(string fnm){
       dBL_energy[sp]->Fill(kinE);
       dBL_energyLin[sp]->Fill(kinE);
       for(int kk=0;kk<3;kk++){
+	double phi = atan2(yy,xx);
+	double secPhi = fmod(phi,2*pi/7);
+	double xr = rr*cos(secPhi);
+	double yr = rr*sin(secPhi);
 	dBL_xy[sp][kk]->Fill(xx,yy,rdDmg[kk]);
+	dBL_xyFold[sp][kk]->Fill(xr,yr,rdDmg[kk]);
 	dBL_r[sp][kk]->Fill(rr,rdDmg[kk]);
 	dBL_thE[sp][kk]->Fill(th,kinE/1000,rdDmg[kk]);
 	dBL_phE[sp][kk]->Fill(ph,kinE/1000,rdDmg[kk]);
@@ -200,7 +206,7 @@ long processOne(string fnm){
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_c1p2V5.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_c1p2V7.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const string fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
@@ -228,6 +234,10 @@ void initHisto(int fileType){
 			     Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
 			     800,-1300,1300,
 			     800,-1300,1300);
+      dBL_xyFold[i][j]= new TH2F(Form("aC2_xyFold_%s_Dmg%d",spH[i].c_str(),j),
+				 Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
+				 800,300,0,
+				 800,-100,100);
 
       dBL_r[i][j] = new TH1F(Form("aC2_r_%s_Dmg%d",spH[i].c_str(),j),
 			     Form("%s for %s;x[mm];y[mm]",dmgTit[j].c_str(),spTit[i].c_str()),
@@ -300,6 +310,8 @@ void writeOutput(){
     for(int j=0;j<nDmg;j++){
       dBL_xy[i][j]->Scale(scaleFactor);
       dBL_xy[i][j]->Write();
+      dBL_xyFold[i][j]->Scale(scaleFactor);
+      dBL_xyFold[i][j]->Write();
       dBL_r[i][j]->Scale(scaleFactor);
       dBL_r[i][j]->Write();
       dCoil_rz[i][j]->Scale(scaleFactor);
