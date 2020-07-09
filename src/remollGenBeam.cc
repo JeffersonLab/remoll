@@ -36,6 +36,7 @@ remollGenBeam::remollGenBeam()
     fSampType = kNoTargetVolume;
     fApplyMultScatt = true;
 
+    fThisGenMessenger->DeclarePropertyWithUnit("rasterRefZ","mm",fRasterRefZ,"Raster Origin Z: z unit");
     fThisGenMessenger->DeclarePropertyWithUnit("origin","mm",fOriginMean,"origin position mean: x y z unit");
     fThisGenMessenger->DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginXMean,"origin x position mean");
     fThisGenMessenger->DeclareMethodWithUnit("y","mm",&remollGenBeam::SetOriginYMean,"origin y position mean");
