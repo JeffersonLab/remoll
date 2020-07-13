@@ -8,8 +8,6 @@
 # Max of scanned variable             - default = 30
 # Step size                           - default = 0.5
 
-cd macros
-
 if [ "$#" -lt 1 ] ; then
     echo "  ERROR, requires at least one input
     "
@@ -133,7 +131,7 @@ do
     cp -p ../../build/remoll .
     cp -p ../../geometry_Mainz/materialsOptical.xml .
     cp -p ../../geometry_Mainz/*${geom}.* .
-    #FIXME This assumes I've hacked the matrices_${geom}.xml to only have 2 entries for mylar reflectivity... probably needs to be punted into the gdml generator code (which should also be added into this script for future optimization uses)
+    cp ../../geometry_Mainz/preserve_matrices_${geom}.xml matrices_${geom}.xml
     sed -i 's;'"2.00214948263953\*eV 0.9"';'"2.00214948263953\*eV ${reflectivity}"';g' matrices_${geom}.xml
     sed -i 's;'"7.75389038185112\*eV 0.9"';'"7.75389038185112\*eV ${reflectivity}"';g' matrices_${geom}.xml
     cp ../pe .
