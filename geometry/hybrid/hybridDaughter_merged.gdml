@@ -70,10 +70,10 @@
 
     <!--CAD based shielding beampipe for col-4 to end of hybrid magnet -->
     <!-- <constant name="shield_DS_beampipe_p1_length" value="125 + col4shift"/> FIXME Added length to col 4's beampipe in an arbitrary way!! FIXME -->
-    <constant name="shield_DS_beampipe_p1_length" value="2000"/> 
-    <constant name="shield_DS_beampipe_thickness" value="3"/>
-    <constant name="shield_DS_beampipe_p1_US_rmin" value="35.5"/>
-    <constant name="shield_DS_beampipe_p1_DS_rmin" value="35.5"/>
+    <constant name="shield_DS_beampipe_p1_length" value="9851.45-DOFFSET-posPCOLL2_z-PCOLL2_THICK/2"/> 
+    <constant name="shield_DS_beampipe_thickness" value="6"/>
+    <constant name="shield_DS_beampipe_p1_US_rmin" value="32"/>
+    <constant name="shield_DS_beampipe_p1_DS_rmin" value="32"/>
     <constant name="shield_DS_beampipe_p1_US_rmax" value="shield_DS_beampipe_p1_US_rmin + shield_DS_beampipe_thickness"/>
     <constant name="shield_DS_beampipe_p1_DS_rmax" value="shield_DS_beampipe_p1_DS_rmin + shield_DS_beampipe_thickness"/>
 
