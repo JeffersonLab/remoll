@@ -94,11 +94,6 @@ else
     scint="false"
 fi
 
-#tmpFolder="${scanned}_${fixed}"
-#if [ ! -d $tmpFolder ] ; then
-#    mkdir $tmpFolder
-#fi
-
 for currentStep in `seq 0 $numSteps`;
 do
     point=$(printf "%.1f" "$(bc -l <<< \($scanMin+\(1.0*$currentStep*$scanStep\)\))")
@@ -131,6 +126,9 @@ do
     sed -i 's;'"/process/optical/processActivation Scintillation false"';'"/process/optical/processActivation Scintillation ${scint}"';g' scans_${geom}_${name}.mac
     sed -i 's;'"Mainz_0.0_degrees_0.0_x.root"';'"${geom}_${name}.root"';g' scans_${geom}_${name}.mac
     tmpFolder="scans/$geom/out_${geom}_${name}"
+    if [ ! -d scans ] ; then
+        mkdir scans
+    fi
     if [ ! -d scans/${geom} ] ; then
         mkdir scans/${geom}
     fi
@@ -138,26 +136,15 @@ do
         mkdir $tmpFolder
     fi
     cd $tmpFolder
-    cp -p ../../../../build/remoll .
+    cp -p ../../../../bin/remoll .
     cp -p ../../../../geometry_Mainz/materialsOptical.xml .
     cp -p ../../../../geometry_Mainz/*${geom}.* .
     cp ../../../../geometry_Mainz/matrices_${geom}.xml matrices_${geom}.xml
-    sed -i 's;'"2.00214948263953\*eV 0.9"';'"2.00214948263953\*eV ${reflectivity}"';g' matrices_${geom}.xml
     sed -i 's;'"<matrix name=\"Mylar_Surf_Reflectivity\" coldim=\"2\" values=\"2.00214948263954\*eV 0.7"';'"<matrix name=\"Mylar_Surf_Reflectivity\" coldim=\"2\" values=\"2.00214948263954\*eV ${reflectivity} \n7.75389038185113\*eV ${reflectivity}\"/> \n<matrix name=\"Mylar_Surf_Reflectivity_Original\" coldim=\"2\" values=\"2.00214948263954\*eV 0.7"';g' matrices_${geom}.xml
-    ##';'"2.00214948263953\*eV ${reflectivity}"';g' matrices_${geom}.xml
-    ##sed -i 's;'"7.75389038185112\*eV 0.9"';'"7.75389038185112\*eV ${reflectivity}"';g' matrices_${geom}.xml
-    cp ../../../pe .
+    cp ../../../../analysis/bin/pe .
     mv ../../../scans_${geom}_${name}.mac . 
-    ##source /share/apps/root-5.34.36-build/bin/thisroot.sh
     ./remoll scans_${geom}_${name}.mac
-    ##cd ../
-    ##./build/remoll macros/scans_${geom}_${name}.mac
-    ##cd -
-    ##source /share/apps/root-6.14.06-build/bin/thisroot.sh
-    ##cd $tmpFolder
     ./pe remollout_${geom}_${name}.root ${det} ${angle} ${x_pos} ${reflectivity} ${cerenkov} ${scintillation} ${z_point}
-    ##../pe ../../remollout_${geom}_${name}.root 540210 ${reflectivity} ${cerenkov} ${scintillation} ${z_point}
-    ##source /share/apps/root-5.34.36-build/bin/thisroot.sh
     convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
     rm remollout_${geom}_${name}*.png
     rm remollout_${geom}_${name}.root
