@@ -12,7 +12,7 @@
             lunit="mm">
     <zplane rmin="0" rmax="950" z="19000.0"/>
     <zplane rmin="0" rmax="600" z="19000.0"/>
-    <zplane rmin="0" rmax="770" z="26500"/>
+    <zplane rmin="0" rmax="770" z="26500.0"/>
   </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_2">
@@ -47,15 +47,26 @@
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3">
-      <zplane rmin="525.0" rmax="553.6" z="19794.0"/>
-      <zplane rmin="526.6" rmax="553.6" z="19794.0+12.7"/>
-      <zplane rmin="526.6" rmax="532.95" z="19794.0+12.7"/>
-      <zplane rmin="550.0" rmax="556.35" z="19794.0+12.7+187.3"/>
-      <zplane rmin="550.0" rmax="569.05" z="19794.0+12.7+187.3"/>
-      <zplane rmin="746.471" rmax="765.521" z="19794.0+12.7+187.3+6506"/>
+      <zplane rmin="525.0" rmax="544.05" z="19794.0"/>
+     <zplane rmin="713.74" rmax="732.79" z="25219.694"/>
     </polycone>
+    
+   <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3_1">
+      <zplane rmin="203.2" rmax="206.248" z="24932.42"/>
+      <zplane rmin="729.742" rmax="732.79" z="25230.87"/>
+      </polycone>
 
-  
+  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3_2">
+      <zplane rmin="196.85" rmax="203.2" z="24919.974"/>
+      <zplane rmin="196.85" rmax="203.2" z="26420.86+53.74"/>
+      </polycone>
+
+  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3_3">
+      <zplane rmin="190.5" rmax="584.2" z="26420.86+53.74"/>
+      <zplane rmin="190.5" rmax="584.2" z="26446.26+53.74"/>
+      </polycone>
+
+
 </solids>
 
 <structure>
@@ -83,6 +94,27 @@
     <auxiliary auxtype="Color" auxvalue="Blue"/>
   </volume>
 
+ <volume name="logic_DSpipe3_1">
+    <materialref ref="G4_Al"/>
+    <solidref ref="solid_DSpipe3_1"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+  <volume name="logic_DSpipe3_2">
+    <materialref ref="G4_Al"/>
+    <solidref ref="solid_DSpipe3_2"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+  
+  <volume name="logic_DSpipe3_3">
+    <materialref ref="G4_Al"/>
+    <solidref ref="solid_DSpipe3_3"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume> 
+
+  
+
   <volume name="DSbeampipeMother">
     <materialref ref="G4_Galactic"/>
     <solidref ref="solid_DSbeampipe_vacuum"/>
@@ -102,6 +134,19 @@
     <physvol name="DSpipe3_DSpipe">
       <volumeref ref="logic_DSpipe3"/>
     </physvol>
+
+  <physvol name="DSpipe3_DSpipe_1">
+      <volumeref ref="logic_DSpipe3_1"/>
+    </physvol>
+
+ <physvol name="DSpipe3_DSpipe_2">
+      <volumeref ref="logic_DSpipe3_2"/>
+    </physvol>
+
+<physvol name="DSpipe3_DSpipe_3">
+      <volumeref ref="logic_DSpipe3_3"/>
+    </physvol>
+
 
 
   </volume>
