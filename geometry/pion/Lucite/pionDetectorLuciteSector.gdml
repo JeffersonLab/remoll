@@ -11,7 +11,7 @@
     the radius along with the angle of the detector to increase the length in the
     longitudinal direction.
   -->
-  <quantity name="pionDetectorLuciteInnerRadius" type="length" value="0.665" unit="m"/>
+  <quantity name="pionDetectorLuciteInnerRadius" type="length" value="0.820" unit="m"/>
   <quantity name="pionDetectorLuciteOuterRadius" type="length" value="1.900" unit="m"/>
 
   <!--
@@ -50,7 +50,7 @@
     lucite blocks. This means that the position of the inner edge must be augmented
     with half the height (radial dimension) of the lucite blocks.
   -->
-  <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="95.0+12.5" unit="cm"/>
+  <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="100.0+13.0/2" unit="cm"/>
 </define>
 
 <materials>
