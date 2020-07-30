@@ -64,6 +64,7 @@ void pe(std::string file="tracking.root", int detid=50001)
     oldTree->SetBranchAddress("hit", &fHit); 
     oldTree->SetBranchAddress("part", &fPart); 
     std::vector < catPEs_t > *catPEs = new std::vector < catPEs_t > ;
+    std::vector < catPEs_t > *refPEs = new std::vector < catPEs_t > ;
     std::vector < Q_t > *Q = new std::vector < Q_t > ;
     std::vector < Ref_t > *Ref = new std::vector < Ref_t > ;
     std::vector < RefX_t > *RefX = new std::vector < RefX_t > ;
@@ -73,11 +74,13 @@ void pe(std::string file="tracking.root", int detid=50001)
     std::vector < PMTcat_t > *PMTcat = new std::vector < PMTcat_t > ;
     std::vector < PMTbulk_t > *PMTbulk = new std::vector < PMTbulk_t > ;
     std::vector < elseX_t > *elseX = new std::vector < elseX_t > ;
-    std::vector<int> eTRID;  
+    std::vector<int> eTRID;
+    std::vector<int> refTRID;
     std::vector<int> DETID;
     std::vector<int> PID;
     std::vector<int> MTRID;
     std::vector<int> peTRID;
+    int refHit = 0;
     int Qcounted = 0;
     int Refaircounted = 0;
     int LGaircounted = 0;
@@ -90,6 +93,7 @@ void pe(std::string file="tracking.root", int detid=50001)
     
     newTree->Branch("nentries", &N_entries);
     newTree->Branch("catpes", &catPEs);
+    newTree->Branch("refpes", &refPEs);
     newTree->Branch("q", &Q);
     newTree->Branch("ref", &Ref);
     newTree->Branch("refx", &RefX);
@@ -106,6 +110,7 @@ void pe(std::string file="tracking.root", int detid=50001)
             std::cerr << "\r" <<  j << "/" << oldTree->GetEntries() << " - " << (j*1.0)/oldTree->GetEntries() * 100 << "%";
         }
      
+        refHit = 0;
         oldTree->GetEntry(j);
         //std::cout << "Hits: " << fHit->size() << std::endl;
         //std::cout << "Parts: " << fPart->size() << std::endl;
@@ -136,6 +141,9 @@ void pe(std::string file="tracking.root", int detid=50001)
                 PID.push_back(hit.pid);
                 MTRID.push_back(hit.mtrid);
             }
+            if (hit.pid == 0 && hit.det == detid+4){
+                refTRID.push_back(hit.trid);
+            }
             if (hit.pid == 0 && hit.det == detid){
                 // This is an optical photon and we want to count ++ if it hits the PMT cathode
                 peTRID.push_back(hit.trid);
@@ -145,9 +153,25 @@ void pe(std::string file="tracking.root", int detid=50001)
             }
         }
 
+        std::cout << "Event number " << j << std::endl;
         for (size_t i = 0; i < fHit->size();i++)
         {
             remollGenericDetectorHit_t hit = fHit->at(i);
+            for (size_t k = 0; k < refTRID.size(); k++)
+            {
+                std::cout<< "Checking reflector hit track ID = " << refTRID.at(k) << " Against hit track ID = " << hit.trid << std::endl;
+                if (hit.pid==0 && hit.trid == refTRID.at(k)) {
+                    std::cout<< "Reflector hit - Match found" << std::endl;
+                    for (size_t l = 0; l < peTRID.size(); l++)
+                    {
+                        std::cout<< "Checking cathode hit track ID = " << peTRID.at(l) << " Against hit track ID = " << hit.trid << std::endl;
+                        if (hit.trid == peTRID.at(l)) {
+                            std::cout<< "Cathode hit - Match found" << std::endl;
+                            refHit++;
+                        }
+                    }
+                }
+            }
             for (size_t k = 0; k < eTRID.size(); k++)
             {
                 if (hit.trid == eTRID.at(k)) { // Then this electron hit a detector we should know about and store all of the info and cathode hits too
@@ -191,8 +215,15 @@ void pe(std::string file="tracking.root", int detid=50001)
                     }
                     //break; //how is this useful?? I want to muliple count
                 }
-            }   
+            }
         }
+        if (refHit>=1) {
+            refPEs->push_back(catPEsTrim(DETID,PID,MTRID,refHit,cathitx,cathity,cathitz)); 
+        }
+        else {
+            refPEs->push_back(catPEsTrim(DETID,PID,MTRID,0,cathitx,cathity,cathitz)); 
+        }
+        refHit=0;
         catPEs->push_back(catPEsTrim(DETID,PID,MTRID,(int)peTRID.size(),cathitx,cathity,cathitz)); 
         detSourcedPEs=(int)peTRID.size();
         elseX->push_back(elseXTrim(((int)peTRID.size()-detSourcedPEs),cathitx,cathity,cathitz));
@@ -206,6 +237,8 @@ void pe(std::string file="tracking.root", int detid=50001)
         PMTbulkcounted=0;
         detSourcedPEs=0;
         eTRID.clear();
+        refTRID.clear();
+        refPEs->clear();
         catPEs->clear();
         elseX->clear();
         Q->clear();
@@ -257,6 +290,12 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
     if (Tmol) {
         Tmol->GetEntry(0);
     }
+    std::fstream file_out_ref_rms;
+    std::ofstream file_out_ref_mean;
+    std::ofstream file_out_ref_res;
+    file_out_ref_rms.open("ref_rms.csv",std::ofstream::out | std::ofstream::app);
+    file_out_ref_mean.open("ref_mean.csv",std::ofstream::out | std::ofstream::app);
+    file_out_ref_res.open("ref_res.csv",std::ofstream::out | std::ofstream::app);
     std::fstream file_out_rms;
     std::ofstream file_out_mean;
     std::ofstream file_out_res;
@@ -271,7 +310,7 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
 
     set_plot_style();
 
-    const int n_plots = 12;
+    const int n_plots = 13;
     TH1F *Histo[n_plots];
     double RMS[n_plots];
     double RMSerror[n_plots];
@@ -280,6 +319,7 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
     TCanvas * c1[n_plots];
 
     std::string names[n_plots]={"Total Cathode Spectrum per event",
+                            "Reflector bounces Cathode PEs",
                             "Cathode Spectrum from primary signal quartz electrons only",
                             "Cathode Spectrum from quartz deltas",
                             "Cathode Spectrum from all non-primary quartz signals",
@@ -292,6 +332,7 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
                             "e- hit spectrum in the cathode",
                             "Cathode Spectrum from elsewhere"}; 
     std::string draws[n_plots]={"catpes.npes",
+                            "refpes.npes",
                             "catpes.npes",
                             "catpes.npes",
                             "catpes.npes",
@@ -304,6 +345,7 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
                             "pmtcat.r",
                             "else.npes"};
     std::string cuts[n_plots]={"",
+                            "",
                             Form("catpes.detids==%d && catpes.pids==11 && catpes.mtrids==0",detid),
                             Form("catpes.detids==%d && abs(catpes.pids)==11 && catpes.mtrids!=0",detid),
                             Form("catpes.detids==%d && catpes.mtrids!=0",detid),
@@ -319,6 +361,7 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
                                  "PEs",
                                  "PEs",
                                  "PEs",
+                                 "PEs",
                                  "PMT spectrum vs. Radial Hit Position (mm)",
                                  "PMT spectrum vs. Radial Hit Position (mm)",
                                  "PEs",
@@ -328,6 +371,7 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
                                  "Radial Hit Position (mm)",
                                  "PEs"};
     std::string yTitle[n_plots]={"Spectrum",
+                                 "Spectrum",
                                  "Spectrum",
                                  "Spectrum",
                                  "Spectrum",
@@ -350,8 +394,10 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
                         100,
                         100,
                         100,
+                        100,
                         100};
     double lowbin[n_plots]={
+                        0.0,
                         0.0,
                         0.0,
                         0.0,
@@ -366,6 +412,7 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
                         0.0};
     double highbin[n_plots]={
                         100.0,
+                        10.0,
                         100.0,
                         100.0,
                         100.0,
@@ -616,11 +663,20 @@ void pePlots(int argcC, char **argvC, std::string fileP="tracking.root", int det
             gSystem->Exec("mv localTmp.root scans.root");
 
         }
+        if (p ==1 ) {
+            file_out_ref_rms<<names[p]<< ", " << fileP<<", Reflector RMS,"<<RMS[p]<<","<<RMSerror[p]<<std::endl;
+            std::cout<<names[p]<< ", " << fileP<<", Reflector Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
+            file_out_ref_mean<<names[p]<< ", " << fileP<<", Reflector Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
+            file_out_ref_res<<names[p]<< ", " <<fileP<<", Reflector Resolution = RMS/Mean,"<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
+        }
         plotsFile->cd();
         c1[p]->Write();
         c1[p]->SaveAs(Form("%s_%d.png",fileP.substr(0,fileP.find(".root")).c_str(),p));
     }
 
+    file_out_ref_rms.close();
+    file_out_ref_mean.close();
+    file_out_ref_res.close();
     file_out_rms.close();
     file_out_mean.close();
     file_out_res.close();
