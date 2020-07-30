@@ -153,20 +153,20 @@ void pe(std::string file="tracking.root", int detid=50001)
             }
         }
 
-        std::cout << "Event number " << j << std::endl;
+        //std::cout << "Event number " << j << std::endl;
         for (size_t i = 0; i < fHit->size();i++)
         {
             remollGenericDetectorHit_t hit = fHit->at(i);
             for (size_t k = 0; k < refTRID.size(); k++)
             {
-                std::cout<< "Checking reflector hit track ID = " << refTRID.at(k) << " Against hit track ID = " << hit.trid << std::endl;
+                //std::cout<< "Checking reflector hit track ID = " << refTRID.at(k) << " Against hit track ID = " << hit.trid << std::endl;
                 if (hit.pid==0 && hit.trid == refTRID.at(k)) {
-                    std::cout<< "Reflector hit - Match found" << std::endl;
+                    //std::cout<< "Reflector hit - Match found" << std::endl;
                     for (size_t l = 0; l < peTRID.size(); l++)
                     {
-                        std::cout<< "Checking cathode hit track ID = " << peTRID.at(l) << " Against hit track ID = " << hit.trid << std::endl;
+                        //std::cout<< "Checking cathode hit track ID = " << peTRID.at(l) << " Against hit track ID = " << hit.trid << std::endl;
                         if (hit.trid == peTRID.at(l)) {
-                            std::cout<< "Cathode hit - Match found" << std::endl;
+                            //std::cout<< "Cathode hit - Match found" << std::endl;
                             refHit++;
                         }
                     }
