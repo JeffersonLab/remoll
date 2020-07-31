@@ -51,7 +51,10 @@ detectors are placed -->
 <position name="collar1VirtualPlane_pos" z="12250.00" unit="mm"/>
 <position name="collar2VirtualPlane_pos" z="18900.00" unit="mm"/>
 <position name="gemVirtualPlane_pos" z="20375.00" unit="mm"/>
-<position name="SAMusVirtualPlane_pos" z="24970.00" unit="mm"/>
+<position name="SAMus_neckdown_VirtualPlane_pos" z="24882.42" unit="mm"/>
+<position name="SAMds_neckdown_VirtualPlane_pos" z="25280.87" unit="mm"/>
+<position name="SAMus_flange_VirtualPlane_pos" z="26424.6" unit="mm"/>
+<position name="SAMds_flange_VirtualPlane_pos" z="26550.00" unit="mm"/>
 <position name="dumpEntranceVirtualPlane_pos" z="26500.00" unit="mm"/>
 <position name="donutUSVirtualPlane_pos" z="29330.00" unit="mm"/>
 <position name="donutDSVirtualPlane_pos" z="29360.00" unit="mm"/>
