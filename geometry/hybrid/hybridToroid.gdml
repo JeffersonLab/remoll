@@ -45,15 +45,15 @@
 	</xtru>
 
 	<xtru name="solid_septapus_arm" lunit="mm">
-		<twoDimVertex x="-3" y="12"/>
-		<twoDimVertex x="-3" y="-12"/>
-		<twoDimVertex x="3" y="-12"/>
-		<twoDimVertex x="3" y="12"/>
+		<twoDimVertex x="-3.0" y="3.0"/>
+		<twoDimVertex x="-3.0" y="-3.0"/>
+		<twoDimVertex x="3.0" y="-3.0"/>
+		<twoDimVertex x="3.0" y="3.0"/>
 		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
-		<section zOrder="2" zPosition="3500" xOffset="10" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="3500.0" xOffset="11.0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 
-	<tube name="solid_septapus_tube" rmin="32"  rmax="38" z="148.55" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<tube name="solid_septapus_tube" rmin="32.0"  rmax="38.0" z="148.55" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 
 	<xtru name="solid_C1_mid"  lunit="mm">
 		<twoDimVertex x="91.28" y="860.0" />
