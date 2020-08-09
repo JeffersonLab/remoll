@@ -11,8 +11,10 @@
 if [ "$#" -lt 1 ] ; then
     echo "  ERROR, requires at least one input
     "
+    echo "  Assumes you have already created the geometry (in ../../remoll-detector-generator/) with the correct parameters and name you want before proceding
+    "
     echo "  usage: ./scan.sh fixed-non-scanned \"variable-to-scan\" min-of-scan (-30) max-of-scan (30) step-size (0.5)
-        Takes 11 arguments
+        Takes 12 arguments
 
         Fixed value of non-scanned variable - default = 0.0
         Variable to scan (\"angle\" or \"x\")   - default = \"angle\"
@@ -24,6 +26,7 @@ if [ "$#" -lt 1 ] ; then
         Scintillation                       - default = 1.0
         z Position of beam origin           - default = -11.0
         geometry file name                  - default = \"Mainz\"
+        pass                                - default = 1
         det number                          - default = 540210"
     exit
 fi
@@ -39,6 +42,7 @@ scintillation=1
 z_pos=0.0
 geom="Mainz"
 det=540210
+pass="1"
 if [ "$#" -gt 1 ] ; then
     scanned="$2"
 fi
@@ -66,8 +70,28 @@ fi
 if [ "$#" -gt 9 ] ; then
     geom="${10}"
 fi
+if [[ $geom == "R1" ]] ; then
+    det=140210
+elif [[ $geom == "R2" ]] ; then
+    det=240210
+elif [[ $geom == "R3" ]] ; then
+    det=340210
+elif [[ $geom == "R4" ]] ; then
+    det=440210
+elif [[ $geom == "R5o" ]] ; then
+    det=540210
+elif [[ $geom == "R5t" ]] ; then
+    det=540110
+elif [[ $geom == "R5c" ]] ; then
+    det=504010
+elif [[ $geom == "R6" ]] ; then
+    det=640210
+fi
 if [ "$#" -gt 10 ] ; then
-    det="${11}"
+    pass="${11}"
+fi
+if [ "$#" -gt 11 ] ; then
+    det="${12}"
 fi
 
 angle=0.0
@@ -136,18 +160,32 @@ do
         mkdir $tmpFolder
     fi
     cd $tmpFolder
-    cp -p ../../../../bin/remoll .
-    cp -p ../../../../geometry_Mainz/materialsOptical.xml .
-    cp -p ../../../../geometry_Mainz/*${geom}.* .
-    cp ../../../../geometry_Mainz/matrices_${geom}.xml matrices_${geom}.xml
-    sed -i 's;'"<matrix name=\"Mylar_Surf_Reflectivity\" coldim=\"2\" values=\"2.00214948263954\*eV 0.7"';'"<matrix name=\"Mylar_Surf_Reflectivity\" coldim=\"2\" values=\"2.00214948263954\*eV ${reflectivity} \n7.75389038185113\*eV ${reflectivity}\"/> \n<matrix name=\"Mylar_Surf_Reflectivity_Original\" coldim=\"2\" values=\"2.00214948263954\*eV 0.7"';g' matrices_${geom}.xml
-    cp ../../../../analysis/bin/pe .
-    mv ../../../scans_${geom}_${name}.mac . 
-    ./remoll scans_${geom}_${name}.mac
-    ./pe remollout_${geom}_${name}.root ${det} ${angle} ${x_pos} ${reflectivity} ${cerenkov} ${scintillation} ${z_point}
-    convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
-    rm remollout_${geom}_${name}*.png
-    rm remollout_${geom}_${name}.root
-    rm remollout_${geom}_${name}_PEs_det_${det}.root
+    if [[ "$pass" == "1" ]] ; then
+        cp -p ../../../../bin/remoll .
+        cp -p ../../../../geometry_Mainz/materialsOptical.xml .
+        cp -p ../../../../geometry_Mainz/*${geom}.* .
+        cp ../../../../geometry_Mainz/matrices_${geom}.xml matrices_${geom}.xml
+        sed -i 's;'"<matrix name=\"Mylar_Surf_Reflectivity\" coldim=\"2\" values=\"2.00214948263954\*eV 0.7"';'"<matrix name=\"Mylar_Surf_Reflectivity\" coldim=\"2\" values=\"2.00214948263954\*eV ${reflectivity} \n7.75389038185113\*eV ${reflectivity}\"/> \n<matrix name=\"Mylar_Surf_Reflectivity_Original\" coldim=\"2\" values=\"2.00214948263954\*eV 0.7"';g' matrices_${geom}.xml
+        cp ../../../../analysis/bin/pe .
+        mv ../../../scans_${geom}_${name}.mac . 
+        echo "#!/bin/bash
+#
+#$ -cwd
+#$ -j y
+#$ -S /bin/bash
+source remoll.sh
+./remoll scans_${geom}_${name}.mac
+        " > runscript_${geom}_${name}.sh
+        chmod 755 runscript_${geom}_${name}.sh
+        qsub runscript_${geom}_${name}.sh
+    fi
+    if [[ "$pass" == "2" ]] ; then
+        ./pe remollout_${geom}_${name}.root ${det} angle\=${angle} x_pos\=${x_pos} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}
+        convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
+        rm remollout_${geom}_${name}*.png
+        rm remollout_${geom}_${name}.root
+        rm remollout_${geom}_${name}_PEs_det_${det}.root
+        rm remollout_${geom}_${name}_PEs_det_${det}_plots.root
+    fi
     cd -
 done

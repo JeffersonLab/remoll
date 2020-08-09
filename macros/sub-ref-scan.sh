@@ -150,13 +150,14 @@ do
         refAngle=$fixed
     fi
 
-    for wStep in `seq 0 9`;
+    for wStep in `seq 0 4`;
+    #for wStep in `seq 0 9`;
     do
         for lStep in `seq 0 9`;
         do
-            for thetaStepSeq in `seq 0 14`;
+            for thetaStepSeq in `seq 0 10`;
             do
-                thetaSubRef=$(printf "%.1f" "$(bc -l <<< \(-10.0+\(1.0*$thetaStepSeq*2.5\)\))")
+                thetaSubRef=$(printf "%.1f" "$(bc -l <<< \(-9.0+\(1.0*$thetaStepSeq*3.0\)\))")
                 for phiStepSeq in `seq 0 12`;
                 do
                     phiSubRef=$(printf "%.1f" "$(bc -l <<< \(-30.0+\(1.0*$phiStepSeq*5.0\)\))")
@@ -253,11 +254,12 @@ source remoll.sh
         qsub runscript_${geom}_${name}.sh
     fi
     if [[ "$pass" == "2" ]] ; then
-        ./pe remollout_${geom}_${name}.root ${det} ${refAngle} ${refLength} ${reflectivity} ${cerenkov} ${scintillation} ${z_point}
+        ./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point} length_step\=$lStep width_step\=$wStep theta\=$thetaSubRef phi\=$phiSubRef
         convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
         rm remollout_${geom}_${name}*.png
-        rm remollout_${geom}_${name}.root
-        rm remollout_${geom}_${name}_PEs_det_${det}.root
+        #rm remollout_${geom}_${name}.root
+        rm remollout_${geom}_${name}_*.root
+        #rm remollout_${geom}_${name}_PEs_det_${det}.root
     fi
     cd -
                 done
