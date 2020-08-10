@@ -190,14 +190,12 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
     if (fTargetMother == 0) {
       G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
                 "No target mother volume defined!" << G4endl;
-      exit(1);
     }
 
     // Check if target volume exists
     if (fTargetVolumes.size() == 0) {
       G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
                 "No target volume defined!" << G4endl;
-      exit(1);
     }
 
     // Sample raster x and y positions on target
