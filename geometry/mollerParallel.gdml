@@ -37,7 +37,7 @@
     rmax="307" rmin="0" z="1" lunit="mm"/>
 
   <tube
-    name="sam_VirtualPlane_solid"
+    name="samVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
     rmax="732.79" rmin="0" z="1" lunit="mm"/>
  
