@@ -135,8 +135,8 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     G4ParticleDefinition* particle = particleTable->FindParticle(fParticleName);
 
     // Get initial beam energy instead of using other sampling
-    double E = fBeamTarg->fBeamEnergy;
     double m = particle->GetPDGMass();
+    double E = fBeamTarg->fBeamEnergy + m;
     double p = sqrt(E*E - m*m);
 
     // Start from mean position
