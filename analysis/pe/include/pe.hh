@@ -1,10 +1,13 @@
 #include "remolltypes.hh"
 #include "petypes.hh"
 
-catPEs_t catPEsTrim(int sourcedetid, std::vector<int> sourcedetids, std::vector<int> quartzpids, std::vector<int> quartzmtrids, size_t peLen, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
+catPEs_t catPEsTrim(int sourcedetid, std::vector<int> sourcedetids, std::vector<int> quartzpids, std::vector<int> quartzmtrids, size_t peLen, double all_bounces, double ref_bounces, double lg_bounces, std::vector<double> cathitx, std::vector<double> cathity, std::vector<double> cathitz)
 {
     catPEs_t newHit;
     newHit.npes=peLen;
+    newHit.all_bounces=all_bounces;
+    newHit.ref_bounces=ref_bounces;
+    newHit.lg_bounces=lg_bounces;
     newHit.det=sourcedetid;
     newHit.detids=sourcedetids;
     newHit.pids=quartzpids;

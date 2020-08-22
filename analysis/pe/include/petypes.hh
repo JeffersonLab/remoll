@@ -21,6 +21,7 @@
 
 struct catPEs_t { // The full spectrum regardless of source
   int npes; // PE counts per event
+  double all_bounces, ref_bounces, lg_bounces;
   int det; // store the source det ID too
   std::vector<int> detids; // store the source det IDs too
   std::vector<int> mtrids; // store the source mtrids too

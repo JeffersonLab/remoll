@@ -65,6 +65,7 @@ void pe(std::string file="tracking.root", int detid=50001)
     oldTree->SetBranchAddress("part", &fPart); 
     std::vector < catPEs_t > *catPEs = new std::vector < catPEs_t > ;
     std::vector < catPEs_t > *refPEs = new std::vector < catPEs_t > ;
+    std::vector < catPEs_t > *bouncePEs = new std::vector < catPEs_t > ;
     std::vector < hitPEs_t > *Q = new std::vector < hitPEs_t > ;
     std::vector < hitPEs_t > *Ref = new std::vector < hitPEs_t > ;
     std::vector < hitPEs_t > *RefX = new std::vector < hitPEs_t > ;
@@ -76,6 +77,7 @@ void pe(std::string file="tracking.root", int detid=50001)
     std::vector < catPEs_t > *elseX = new std::vector < catPEs_t > ;
     std::vector<int> eTRID;
     std::vector<int> refTRID;
+    std::vector<int> lgTRID;
     std::vector<int> DETID;
     std::vector<int> PID;
     std::vector<int> MTRID;
@@ -88,6 +90,9 @@ void pe(std::string file="tracking.root", int detid=50001)
     int LGaircounted = 0;
     int PMTbulkcounted = 0;
     int detSourcedPEs = 0;
+    double all_bounces = 0;
+    double ref_bounces = 0;
+    double lg_bounces  = 0;
 	double N_entries = 0;
 
     //TODO reading data into envelopes downstream could be sped up
@@ -96,6 +101,7 @@ void pe(std::string file="tracking.root", int detid=50001)
     newTree->Branch("nentries", &N_entries);
     newTree->Branch("catpes", &catPEs);
     newTree->Branch("refpes", &refPEs);
+    newTree->Branch("bouncepes", &bouncePEs);
     newTree->Branch("q", &Q);
     newTree->Branch("ref", &Ref);
     newTree->Branch("refx", &RefX);
@@ -152,6 +158,9 @@ void pe(std::string file="tracking.root", int detid=50001)
                 PID.push_back(hit.pid);
                 MTRID.push_back(hit.mtrid);
             }
+            if (hit.pid == 0 && ( hit.det == detid+5 || hit.det == detid+3 ) ){ // 5 = LG, 3 = other side of reflector...
+                lgTRID.push_back(hit.trid);
+            }
             if (hit.pid == 0 && hit.det == detid+4){
                 refTRID.push_back(hit.trid);
             }
@@ -168,19 +177,42 @@ void pe(std::string file="tracking.root", int detid=50001)
         for (size_t i = 0; i < fHit->size();i++)
         {
             remollGenericDetectorHit_t hit = fHit->at(i);
-            for (size_t k = 0; k < refTRID.size(); k++)
+            for (size_t k = 0; k < peTRID.size(); k++)
             {
-                //std::cout<< "Checking reflector hit track ID = " << refTRID.at(k) << " Against hit track ID = " << hit.trid << std::endl;
-                if (hit.pid==0 && hit.trid == refTRID.at(k)) {
-                    //std::cout<< "Reflector hit - Match found" << std::endl;
-                    for (size_t l = 0; l < peTRID.size(); l++)
+                //std::cout<< "Checking cathode hit track ID = " << peTRID.at(k) << " Against hit track ID = " << hit.trid << std::endl;
+                if (hit.pid==0 && hit.trid == peTRID.at(k)) {
+                    if (hit.det == detid+3 || hit.det == detid+5) 
+                    { // FIXME Explicitly count bounces
+                            //std::cout<< "Lightguide or other side of reflector hit - Match found" << std::endl;
+                        lg_bounces  = lg_bounces +1.0;
+                        all_bounces = all_bounces+1.0; // Because of how this loop works... looping over the hits will get a positive track==lg+PMT hit twice (so only add 1/2 per identified hit)
+                    }
+                    if (hit.det == detid+4) 
                     {
-                        //std::cout<< "Checking cathode hit track ID = " << peTRID.at(l) << " Against hit track ID = " << hit.trid << std::endl;
-                        if (hit.trid == peTRID.at(l)) {
-                            //std::cout<< "Cathode hit - Match found" << std::endl;
-                            refHit = refHit+0.5; // Because of how this loop works... looping over the hits will get a positive track==ref+PMT hit twice (so only add 1/2 per identified hit)
+                        ref_bounces = ref_bounces+1.0; 
+                        all_bounces = all_bounces+1.0; 
+                        refHit = refHit+1.0; // Because of how this loop works... looping over the hits will get a positive track==ref+PMT hit twice (so only add 1/2 per identified hit)
+                    }
+                    //std::cout<< "Cathode hit - Match found" << std::endl;
+                    /*for (size_t l = 0; l < lgTRID.size(); l++)
+                    { // FIXME Implicitly count bounces
+                        //std::cout<< "Checking lg hit track ID = " << lgTRID.at(l) << " Against hit track ID = " << hit.trid << std::endl;
+                        if (hit.trid == lgTRID.at(l) && hit.trid == peTRID.at(k) && hit.det != detid) {
+                            //std::cout<< "Lightguide or other side of reflector hit - Match found" << std::endl;
+                            lg_bounces  = lg_bounces +1.0;
+                            all_bounces = all_bounces+1.0; // Because of how this loop works... looping over the hits will get a positive track==lg+PMT hit twice (so only add 1/2 per identified hit)
                         }
                     }
+                    for (size_t l = 0; l < refTRID.size(); l++)
+                    {
+                        //std::cout<< "Checking ref hit track ID = " << refTRID.at(l) << " Against hit track ID = " << hit.trid << std::endl;
+                        if (hit.trid == refTRID.at(l) && hit.trid == peTRID.at(k) && hit.det != detid) {
+                            //std::cout<< "Reflector hit - Match found" << std::endl;
+                            ref_bounces = ref_bounces+1.0; 
+                            all_bounces = all_bounces+1.0; 
+                            refHit = refHit+1.0; // Because of how this loop works... looping over the hits will get a positive track==ref+PMT hit twice (so only add 1/2 per identified hit)
+                        }
+                    }*/
                 }
             }
             for (size_t k = 0; k < eTRID.size(); k++)
@@ -229,16 +261,23 @@ void pe(std::string file="tracking.root", int detid=50001)
             }
         }
         if (refHit>=1.0) {
-            refPEs->push_back(catPEsTrim(refSourceDetID,DETID,PID,MTRID,(int)refHit,cathitx,cathity,cathitz)); 
+            refPEs->push_back(catPEsTrim(refSourceDetID,DETID,PID,MTRID,(int)refHit,0,0,0,cathitx,cathity,cathitz)); 
         }
         else {
-            refPEs->push_back(catPEsTrim(refSourceDetID,DETID,PID,MTRID,0,cathitx,cathity,cathitz)); 
+            refPEs->push_back(catPEsTrim(refSourceDetID,DETID,PID,MTRID,0,0,0,0,cathitx,cathity,cathitz)); 
         }
         refHit=0;
-        catPEs->push_back(catPEsTrim(sourceDetID,DETID,PID,MTRID,(int)peTRID.size(),cathitx,cathity,cathitz)); 
         detSourcedPEs=(int)peTRID.size();
-        elseX->push_back(catPEsTrim(sourceDetID,DETID,PID,MTRID,((int)peTRID.size()-detSourcedPEs),cathitx,cathity,cathitz));
-        N_entries = oldTree->GetEntries();
+        catPEs->push_back(catPEsTrim(sourceDetID,DETID,PID,MTRID,detSourcedPEs,0,0,0,cathitx,cathity,cathitz)); 
+        bouncePEs->push_back(catPEsTrim(sourceDetID,DETID,PID,MTRID,detSourcedPEs,all_bounces/detSourcedPEs,ref_bounces/detSourcedPEs,lg_bounces/detSourcedPEs,cathitx,cathity,cathitz)); 
+        if (sourceDetID == detid+1) {
+            // If it is a quartz sourced hit then proceed empty, else add number of PEs
+            elseX->push_back(catPEsTrim(sourceDetID,DETID,PID,MTRID,0,0,0,0,cathitx,cathity,cathitz));
+        }
+        else {
+            elseX->push_back(catPEsTrim(sourceDetID,DETID,PID,MTRID,detSourcedPEs,0,0,0,cathitx,cathity,cathitz));
+        }
+        N_entries = (double)oldTree->GetEntries();
         //if (catPEs->size() > 0){
             newTree->Fill();
 	    //}
@@ -249,10 +288,15 @@ void pe(std::string file="tracking.root", int detid=50001)
         detSourcedPEs=0;
         refSourceDetID=0;
         sourceDetID=0;
+        all_bounces=0;
+        ref_bounces=0;
+        lg_bounces=0;
         eTRID.clear();
+        lgTRID.clear();
         refTRID.clear();
         refPEs->clear();
         catPEs->clear();
+        bouncePEs->clear();
         elseX->clear();
         Q->clear();
         Refair->clear();
@@ -324,7 +368,7 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
 
     set_plot_style();
 
-    const int n_plots = 13;
+    const int n_plots = 16;
     TH1F *Histo[n_plots];
     double RMS[n_plots];
     double RMSerror[n_plots];
@@ -333,10 +377,13 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
     TCanvas * c1[n_plots];
 
     std::string names[n_plots]={"Total Cathode Spectrum per event",
-                            "Reflector bounces Cathode PEs",
+                            "Reflector bounced Cathode PEs",
                             "Cathode Spectrum from primary signal quartz electrons only",
                             "Cathode Spectrum from quartz deltas",
                             "Cathode Spectrum from all non-primary quartz signals",
+                            "Number of bounces for a Cathode PE off of ref plus LG",
+                            "Number of bounces for a Cathode PE off of ref",
+                            "Number of bounces for a Cathode PE off of LG",
                             "e- hit radial hit spectrum on the reflector", // Consider adding photon xyz tracking too - would have to go beside the cathode xyz tracking feature
                             "e- hit radial hit spectrum on the quartz-reflector holder",
                             "Cathode Spectrum from the reflector air",
@@ -350,6 +397,9 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                             "catpes.npes",
                             "catpes.npes",
                             "catpes.npes",
+                            "bouncepes.all_bounces",
+                            "bouncepes.ref_bounces",
+                            "bouncepes.lg_bounces",
                             "ref.r",
                             "refx.r",
                             "refair.npes",
@@ -366,6 +416,9 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                             Form("catpes.det==%d && abs(catpes.pids)==11 && catpes.mtrids!=0",detid+1),
                             //`Form("catpes.detids==%d && catpes.mtrids!=0",detid+1),
                             Form("catpes.det==%d && catpes.mtrids!=0",detid+1),
+                            "",
+                            "",
+                            "",
                             "ref.npes*(ref.npes!=0)",
                             "refx.npes*(refx.npes!=0)",
                             "",
@@ -387,12 +440,18 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                             "",
                             "",
                             "",
+                            "",
+                            "",
+                            "",
                             ""};
     std::string xTitle[n_plots]={"PEs",
                                  "PEs",
                                  "PEs",
                                  "PEs",
                                  "PEs",
+                                 "Bounces",
+                                 "Bounces",
+                                 "Bounces",
                                  "PMT spectrum vs. Radial Hit Position (mm)",
                                  "PMT spectrum vs. Radial Hit Position (mm)",
                                  "PEs",
@@ -406,6 +465,9 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                                  "Spectrum",
                                  "Spectrum",
                                  "Spectrum",
+                                 "Bounce Counter",
+                                 "Bounce Counter",
+                                 "Bounce Counter",
                                  "Counts Spectrum",
                                  "Counts Spectrum",
                                  "Spectrum",
@@ -414,6 +476,7 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                                  "Counts",
                                  "Counts",
                                  "Spectrum"};
+    /*
     int nbins[n_plots]={100,
                         100,
                         100,
@@ -455,6 +518,7 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                         1400.0,
                         1250.0,
                         100.0};
+                        */
 
 
     int nGoodEntries = 0;
