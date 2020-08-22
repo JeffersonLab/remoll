@@ -4,23 +4,27 @@ geom="R5o"
 if [ "$#" -lt 1 ] ; then
     echo "  ERROR, requires at least one input
     "
-    echo "  usage: ./full-scan.sh \"geometry = R5o\" [reflectivity = 0.7] [x step size (cm) = 1.0] [angle step size (degrees) = 0.1]"
+    echo "  usage: ./full-scan.sh \"geometry = R5o\" [analysis pass = 1] [reflectivity = 0.7] [x step size (cm) = 1.0] [angle step size (degrees) = 0.1]"
     exit
 else
     geom=$1
 fi
 
-reflectivity=0.7
+analysis=1 # Submit jobs = 1, analyze jobs = 2
+reflectivity=0.8
 xPosStep=1.0  # 1 cm steps
 angleStep=0.1 # 60 steps per x pos
 if [ "$#" -gt 1 ] ; then
-    reflectivity=$2
+    analysis=$2
 fi
 if [ "$#" -gt 2 ] ; then
-    xPosStep=$3
+    reflectivity=$3
 fi
 if [ "$#" -gt 3 ] ; then
-    angleStep=$4
+    xPosStep=$4
+fi
+if [ "$#" -gt 4 ] ; then
+    angleStep=$5
 fi
 xPosMin=1040.0 # Reflector begin
 xPosMax=1350.0 # PMT begin
@@ -71,7 +75,7 @@ do
     lgAngle=$lg_angle
     z_p=$(printf "%.2f" "$(bc -l <<< ${z1}-0.5*$qThick-$refL*s\(\(${ref_angle}-${lg_angle}\)*3.14159/180.0\))")
     echo "$ring $xPosMin $xPosMax z = $z_p starting z = $z1 and second = $z2"
-done < cadp.csv
+done < cadp_shortened.csv
 IFS=$OLDIFS
 
 
@@ -84,5 +88,5 @@ do
     z_pos=$(printf "%.1f" "$(bc -l <<< 0.1*$z_p-\(-1.0*$x_pos-0.1*$xPosMin\)*s\(${lgAngle}*3.14159/180.0\))")
 
     echo "$x_pos $z_pos"
-    ./scan.sh $x_pos angle $angleMin $angleMax $angleStep $reflectivity 1 1 $z_pos $geom $det &
+    ./scan.sh $x_pos angle $angleMin $angleMax $angleStep $reflectivity 1 1 $z_pos $geom ${analysis} $det &
 done

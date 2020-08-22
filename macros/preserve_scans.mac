@@ -58,10 +58,10 @@
 #/remoll/evgen/beam/direction -0.19937 0.0 0.97992
 /remoll/evgen/beam/rasx 2.5 mm
 /remoll/evgen/beam/rasy 10.0 mm
-/remoll/beamene 11000 MeV
+/remoll/beamene 8000 MeV
 
 /remoll/evgen/beam/partName e-
 
 /remoll/filename remollout_Mainz_0.0_degrees_0.0_x.root
 
-/run/beamOn 100000
+/run/beamOn 10000

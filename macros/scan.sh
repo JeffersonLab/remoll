@@ -90,6 +90,7 @@ fi
 if [ "$#" -gt 10 ] ; then
     pass="${11}"
 fi
+secondpass="$pass"
 if [ "$#" -gt 11 ] ; then
     det="${12}"
 fi
@@ -130,25 +131,27 @@ do
         angle=$fixed
     fi
     name="${angle}_degrees_${x_pos}_x_${z_pos}_z_${reflectivity}_ref_${cerenkov}_cer_${scintillation}_scint"
-    cp preserve_scans.mac scans_${geom}_${name}.mac
-    # FIXME This angle is hardcoded to the qsim-matching case!!
-    # 0.1994 = sin(11.5 degrees), $fixed is the distance from 0.0, + is farther towards PMT, further back away from +z axis
-    # 0.104528 = sin(6 degrees)
-    z_point=$z_pos
-    # FIXME doing z_pos as external input only now, for full detector array setting
-    #z_point=$(printf "%.1f" "$(bc -l <<< ${z_pos}+\($x_pos*0.1045\))")
-    # FIXME z_point and x offset relationships assume the detector is immediately downstream of the origin, and ideally centered at the middle of the lightguide
-    #z_point=$(printf "%.1f" "$(bc -l <<< -11.0-\($fixed*0.1994\))")
-    sed -i 's;'"/remoll/evgen/beam/th -11.5 deg"';'"/remoll/evgen/beam/th ${angle} deg"';g' scans_${geom}_${name}.mac
-    sed -i 's;'"/remoll/evgen/beam/origin 0.0 0.0 0.0 mm"';'"/remoll/evgen/beam/origin ${x_pos} 0.0 ${z_point} cm"';g' scans_${geom}_${name}.mac
+    if [[ "$pass" == "1" ]] ; then
+        cp preserve_scans.mac scans_${geom}_${name}.mac
+        # FIXME This angle is hardcoded to the qsim-matching case!!
+        # 0.1994 = sin(11.5 degrees), $fixed is the distance from 0.0, + is farther towards PMT, further back away from +z axis
+        # 0.104528 = sin(6 degrees)
+        z_point=$z_pos
+        # FIXME doing z_pos as external input only now, for full detector array setting
+        #z_point=$(printf "%.1f" "$(bc -l <<< ${z_pos}+\($x_pos*0.1045\))")
+        # FIXME z_point and x offset relationships assume the detector is immediately downstream of the origin, and ideally centered at the middle of the lightguide
+        #z_point=$(printf "%.1f" "$(bc -l <<< -11.0-\($fixed*0.1994\))")
+        sed -i 's;'"/remoll/evgen/beam/th -11.5 deg"';'"/remoll/evgen/beam/th ${angle} deg"';g' scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/evgen/beam/origin 0.0 0.0 0.0 mm"';'"/remoll/evgen/beam/origin ${x_pos} 0.0 ${z_point} cm"';g' scans_${geom}_${name}.mac
 
-    sed -i 's;'"/remoll/setgeofile geometry_Mainz/mollerMother_Mainz.gdml"';'"/remoll/setgeofile mollerMother_${geom}.gdml"';g' scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/setgeofile geometry_Mainz/mollerMother_Mainz.gdml"';'"/remoll/setgeofile mollerMother_${geom}.gdml"';g' scans_${geom}_${name}.mac
 
-    sed -i 's;'"/remoll/evgen/beam/rasterRefZ 0.0 mm"';'"/remoll/evgen/beam/rasterRefZ ${z_point} cm"';g' scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/evgen/beam/rasterRefZ 0.0 mm"';'"/remoll/evgen/beam/rasterRefZ ${z_point} cm"';g' scans_${geom}_${name}.mac
 
-    sed -i 's;'"/process/optical/processActivation Cerenkov false"';'"/process/optical/processActivation Cerenkov ${cer}"';g' scans_${geom}_${name}.mac
-    sed -i 's;'"/process/optical/processActivation Scintillation false"';'"/process/optical/processActivation Scintillation ${scint}"';g' scans_${geom}_${name}.mac
-    sed -i 's;'"Mainz_0.0_degrees_0.0_x.root"';'"${geom}_${name}.root"';g' scans_${geom}_${name}.mac
+        sed -i 's;'"/process/optical/processActivation Cerenkov false"';'"/process/optical/processActivation Cerenkov ${cer}"';g' scans_${geom}_${name}.mac
+        sed -i 's;'"/process/optical/processActivation Scintillation false"';'"/process/optical/processActivation Scintillation ${scint}"';g' scans_${geom}_${name}.mac
+        sed -i 's;'"Mainz_0.0_degrees_0.0_x.root"';'"${geom}_${name}.root"';g' scans_${geom}_${name}.mac
+    fi
     tmpFolder="scans/$geom/out_${geom}_${name}"
     if [ ! -d scans ] ; then
         mkdir scans
@@ -160,8 +163,25 @@ do
         mkdir $tmpFolder
     fi
     cd $tmpFolder
-    if [[ "$pass" == "1" ]] ; then
-        cp -p ../../../../bin/remoll .
+    if [[ "$pass" == "2" ]] ; then
+        if [[ ! -f remollout_${geom}_${name}.pdf ]] ; then 
+            cp ../../../../analysis/bin/pe .
+            if [[ ! -f remollout_${geom}_${name}.root ]] ; then
+                echo "Error, no remollout_${geom}_${name}.root file, retrying analysis"
+                secondpass="1"
+            else
+                ./pe remollout_${geom}_${name}.root ${det} angle\=${angle} x_pos\=${x_pos} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}
+                convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
+                rm remollout_${geom}_${name}*.png
+                #rm remollout_${geom}_${name}.root
+                rm remollout_${geom}_${name}_PEs_det_${det}.root
+                rm remollout_${geom}_${name}_PEs_det_${det}_plots.root
+            fi
+        fi
+    fi
+    if [[ "$pass" == "1" || "$secondpass" == "1" ]] ; then
+        cp -p ../../../../build/remoll .
+        cp -p ../../../../bin/remoll.sh .
         cp -p ../../../../geometry_Mainz/materialsOptical.xml .
         cp -p ../../../../geometry_Mainz/*${geom}.* .
         cp ../../../../geometry_Mainz/matrices_${geom}.xml matrices_${geom}.xml
@@ -179,13 +199,6 @@ source remoll.sh
         chmod 755 runscript_${geom}_${name}.sh
         qsub runscript_${geom}_${name}.sh
     fi
-    if [[ "$pass" == "2" ]] ; then
-        ./pe remollout_${geom}_${name}.root ${det} angle\=${angle} x_pos\=${x_pos} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}
-        convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
-        rm remollout_${geom}_${name}*.png
-        rm remollout_${geom}_${name}.root
-        rm remollout_${geom}_${name}_PEs_det_${det}.root
-        rm remollout_${geom}_${name}_PEs_det_${det}_plots.root
-    fi
     cd -
+    secondpass="$pass"
 done

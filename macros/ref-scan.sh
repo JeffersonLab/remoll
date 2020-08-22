@@ -232,11 +232,12 @@ source remoll.sh
         qsub runscript_${geom}_${name}.sh
     fi
     if [[ "$pass" == "2" ]] ; then
+        cp ../../../../analysis/bin/pe .
         ./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}
         convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
         rm remollout_${geom}_${name}*.png
-        rm remollout_${geom}_${name}.root
-        rm remollout_${geom}_${name}_PEs_det_${det}.root
+        #rm remollout_${geom}_${name}.root
+        #rm remollout_${geom}_${name}_PEs_det_${det}.root
     fi
     cd -
 done

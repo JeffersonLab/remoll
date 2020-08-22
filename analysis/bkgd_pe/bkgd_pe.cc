@@ -44,7 +44,8 @@ class bkgd {
         std::string fileString = "tracking.root";
         std::string detName = "R5o";
         std::string anaStr = "backgrounds";
-        double current = 85.0;
+        double current = 65.0;
+        double degeneracy = 50.0;
         double user_angle = 0.0;
         double user_x_pos = 0.0;
         double user_reflectivity = 0.7;
@@ -312,22 +313,22 @@ void bkgd::bkgd_pe_ana()
                 lookupXpos = lookupTable->GetYaxis()->FindBin(hit.r);
                 lookup = lookupTable->GetBinContent(lookupAngle,lookupXpos);
                 peNumber += lookup;
-                peRateWeighting += rate*lookup/current;
-                peAsymmetryWeighting += event.A*rate*lookup/current;
+                peRateWeighting += rate*lookup/(current*degeneracy);
+                peAsymmetryWeighting += event.A*rate*lookup/(current*degeneracy);
                 if ( lookup == 0.0 ) {
                     std::cout << "0 PEs" << std::endl;
                 }
-                std::cout << "PE Hit, rate = " << rate/current << ", Asymmetry = " << event.A << ", lookup pe value = " << lookup << ", bin number " << lookupTable->GetBin(lookupAngle,lookupXpos) << ", " << lookupAngle << ", " << lookupXpos << ", angle = " << (180.0/TMath::Pi())*asin(((hit.px*abs(hit.x) + hit.py*abs(hit.y))/hit.r)/hit.p) << ", abs(x_pos) = " << hit.r << ", which yields: " << peRateWeighting << std::endl;
+                std::cout << "PE Hit, rate = " << rate/(current*degeneracy) << ", Asymmetry = " << event.A << ", lookup pe value = " << lookup << ", bin number " << lookupTable->GetBin(lookupAngle,lookupXpos) << ", " << lookupAngle << ", " << lookupXpos << ", angle = " << (180.0/TMath::Pi())*asin(((hit.px*abs(hit.x) + hit.py*abs(hit.y))/hit.r)/hit.p) << ", abs(x_pos) = " << hit.r << ", which yields: " << peRateWeighting << std::endl;
             }
             if (anaStr == "signals" && (hit.det==detid+1) && hit.pid == 11 && hit.mtrid == 0){ // Then this is our primary signal of interest
                 // if you do mtrid == 1 then you get the delta rays! About a 1% contribution 
                 eTRID.push_back(hit.trid);
                 DETID.push_back(hit.det);
-                lookup = 8.0;
-                if (detName == "R5o") lookup = 12.0;
+                lookup = 15.0;
+                if (detName == "R5o") lookup = 25.0;
                 peNumber += lookup;
-                peRateWeighting += rate*lookup/current;
-                peAsymmetryWeighting += event.A*rate*lookup/current;
+                peRateWeighting += rate*lookup/(current*degeneracy);
+                peAsymmetryWeighting += event.A*rate*lookup/(current*degeneracy);
             }
             if (hit.det == detid+1) {
                 // If any particle hits the quartz detector then tell the particle ID and mother ID (so we can keep track of deltas) 
@@ -898,9 +899,9 @@ void bkgd::bkgd_pePlots(int argcC, char **argvC)
 
 void bkgd::do_pe(int argc, char **argv)
 {
-    if (argc <= 1 || argc > 9)
+    if (argc <= 1 || argc > 10)
     {
-        std::cerr << "Usage: ./bkgd_pe char*:filename int:detNumber char*:detName double:reflectivity double:cerenkov double:scintillation double:beamCurrent" << std::endl;
+        std::cerr << "Usage: ./bkgd_pe char*:filename int:detNumber char*:detName char*:analysis (backgrounds or signals) double:reflectivity double:cerenkov double:scintillation double:beamCurrent double:degeneracy (Number of duplicate sample jobs)" << std::endl;
         //std::cerr << "Usage: ./pe char*:filename int:detid char*:manipulateVariable float:variableValue bool:reanalyze(y or n)" << std::endl;
         exit(0);
     }
@@ -938,6 +939,10 @@ void bkgd::do_pe(int argc, char **argv)
     if (argc >=9)
     {
         current = atof(argv[8]);    
+    }
+    if (argc >=10)
+    {
+        degeneracy = atof(argv[9]);    
     }
 
     get_lookuptable();
