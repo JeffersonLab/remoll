@@ -65,6 +65,8 @@ void pe(std::string file="tracking.root", int detid=50001)
     oldTree->SetBranchAddress("part", &fPart); 
     std::vector < catPEs_t > *catPEs = new std::vector < catPEs_t > ;
     std::vector < catPEs_t > *refPEs = new std::vector < catPEs_t > ;
+    std::vector < catPEs_t > *lgPEs = new std::vector < catPEs_t > ;
+    std::vector < catPEs_t > *straightPEs = new std::vector < catPEs_t > ;
     std::vector < catPEs_t > *bouncePEs = new std::vector < catPEs_t > ;
     std::vector < hitPEs_t > *Q = new std::vector < hitPEs_t > ;
     std::vector < hitPEs_t > *Ref = new std::vector < hitPEs_t > ;
@@ -85,11 +87,15 @@ void pe(std::string file="tracking.root", int detid=50001)
     int refSourceDetID = 0;
     int sourceDetID = 0;
     double refHit = 0;
+    double lgHit = 0;
+    double straightHit = 0;
     int Qcounted = 0;
     int Refaircounted = 0;
     int LGaircounted = 0;
     int PMTbulkcounted = 0;
     int detSourcedPEs = 0;
+    int refSourced = 0;
+    int lgSourced = 0;
     double all_bounces = 0;
     double ref_bounces = 0;
     double lg_bounces  = 0;
@@ -101,6 +107,8 @@ void pe(std::string file="tracking.root", int detid=50001)
     newTree->Branch("nentries", &N_entries);
     newTree->Branch("catpes", &catPEs);
     newTree->Branch("refpes", &refPEs);
+    newTree->Branch("lgpes", &lgPEs);
+    newTree->Branch("straightpes", &straightPEs);
     newTree->Branch("bouncepes", &bouncePEs);
     newTree->Branch("q", &Q);
     newTree->Branch("ref", &Ref);
@@ -119,6 +127,8 @@ void pe(std::string file="tracking.root", int detid=50001)
         }
      
         refHit = 0;
+        lgHit = 0;
+        straightHit = 0;
         oldTree->GetEntry(j);
         //std::cout << "Hits: " << fHit->size() << std::endl;
         //std::cout << "Parts: " << fPart->size() << std::endl;
@@ -185,35 +195,38 @@ void pe(std::string file="tracking.root", int detid=50001)
                     { // FIXME Explicitly count bounces
                             //std::cout<< "Lightguide or other side of reflector hit - Match found" << std::endl;
                         lg_bounces  = lg_bounces +1.0;
-                        all_bounces = all_bounces+1.0; // Because of how this loop works... looping over the hits will get a positive track==lg+PMT hit twice (so only add 1/2 per identified hit)
+                        all_bounces = all_bounces+1.0;
                     }
                     if (hit.det == detid+4) 
                     {
                         ref_bounces = ref_bounces+1.0; 
                         all_bounces = all_bounces+1.0; 
-                        refHit = refHit+1.0; // Because of how this loop works... looping over the hits will get a positive track==ref+PMT hit twice (so only add 1/2 per identified hit)
                     }
                     //std::cout<< "Cathode hit - Match found" << std::endl;
-                    /*for (size_t l = 0; l < lgTRID.size(); l++)
+                    for (size_t l = 0; l < lgTRID.size(); l++)
                     { // FIXME Implicitly count bounces
                         //std::cout<< "Checking lg hit track ID = " << lgTRID.at(l) << " Against hit track ID = " << hit.trid << std::endl;
-                        if (hit.trid == lgTRID.at(l) && hit.trid == peTRID.at(k) && hit.det != detid) {
-                            //std::cout<< "Lightguide or other side of reflector hit - Match found" << std::endl;
-                            lg_bounces  = lg_bounces +1.0;
-                            all_bounces = all_bounces+1.0; // Because of how this loop works... looping over the hits will get a positive track==lg+PMT hit twice (so only add 1/2 per identified hit)
+                        if (hit.trid == lgTRID.at(l) && hit.trid == peTRID.at(k) && hit.det == detid) {
+                            //std::cout<< "Lightguide or other side of reflector hit track matches PE track and hit == cathode - Match found, PE from light guide verified" << std::endl;
+                            lgHit = lgHit+1.0;
+                            lgSourced = 1;
                         }
                     }
                     for (size_t l = 0; l < refTRID.size(); l++)
                     {
                         //std::cout<< "Checking ref hit track ID = " << refTRID.at(l) << " Against hit track ID = " << hit.trid << std::endl;
-                        if (hit.trid == refTRID.at(l) && hit.trid == peTRID.at(k) && hit.det != detid) {
-                            //std::cout<< "Reflector hit - Match found" << std::endl;
-                            ref_bounces = ref_bounces+1.0; 
-                            all_bounces = all_bounces+1.0; 
-                            refHit = refHit+1.0; // Because of how this loop works... looping over the hits will get a positive track==ref+PMT hit twice (so only add 1/2 per identified hit)
+                        if (hit.trid == refTRID.at(l) && hit.trid == peTRID.at(k) && hit.det == detid) {
+                            //std::cout<< "Reflector hit track matches PE track and hit == cathode - Match found, PE from reflector verified" << std::endl;
+                            refHit = refHit+1.0;
+                            refSourced = 1;
                         }
-                    }*/
+                    }
+                    if (!refSourced && !lgSourced && hit.det == detid) {
+                        straightHit = straightHit+1.0;
+                    }
                 }
+                refSourced = 0;
+                lgSourced = 0;
             }
             for (size_t k = 0; k < eTRID.size(); k++)
             {
@@ -263,12 +276,18 @@ void pe(std::string file="tracking.root", int detid=50001)
         if (refHit>=1.0) {
             refPEs->push_back(catPEsTrim(refSourceDetID,DETID,PID,MTRID,(int)refHit,0,0,0,cathitx,cathity,cathitz)); 
         }
-        else {
-            refPEs->push_back(catPEsTrim(refSourceDetID,DETID,PID,MTRID,0,0,0,0,cathitx,cathity,cathitz)); 
+        if (lgHit>=1.0) {
+            lgPEs->push_back(catPEsTrim(refSourceDetID,DETID,PID,MTRID,(int)lgHit,0,0,0,cathitx,cathity,cathitz)); 
+        }
+        if (straightHit>=1.0) {
+            straightPEs->push_back(catPEsTrim(refSourceDetID,DETID,PID,MTRID,(int)straightHit,0,0,0,cathitx,cathity,cathitz)); 
         }
         refHit=0;
+        lgHit=0;
+        straightHit=0;
         detSourcedPEs=(int)peTRID.size();
         catPEs->push_back(catPEsTrim(sourceDetID,DETID,PID,MTRID,detSourcedPEs,0,0,0,cathitx,cathity,cathitz)); 
+        // FIXME: Bounces here are avg per event... but could store a vector or push back one number of bounces per PE and then the histogram would have entries == number of PEs
         bouncePEs->push_back(catPEsTrim(sourceDetID,DETID,PID,MTRID,detSourcedPEs,all_bounces/detSourcedPEs,ref_bounces/detSourcedPEs,lg_bounces/detSourcedPEs,cathitx,cathity,cathitz)); 
         if (sourceDetID == detid+1) {
             // If it is a quartz sourced hit then proceed empty, else add number of PEs
@@ -295,6 +314,8 @@ void pe(std::string file="tracking.root", int detid=50001)
         lgTRID.clear();
         refTRID.clear();
         refPEs->clear();
+        lgPEs->clear();
+        straightPEs->clear();
         catPEs->clear();
         bouncePEs->clear();
         elseX->clear();
@@ -368,16 +389,19 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
 
     set_plot_style();
 
-    const int n_plots = 16;
+    const int n_plots = 18;
     TH1F *Histo[n_plots];
     double RMS[n_plots];
     double RMSerror[n_plots];
     double Mean[n_plots];
     double Meanerror[n_plots];
+    double Nentries[n_plots];
     TCanvas * c1[n_plots];
 
     std::string names[n_plots]={"Total Cathode Spectrum per event",
-                            "Reflector bounced Cathode PEs",
+                            "Quartz sourced, Reflector bounced Cathode PEs",
+                            "Quartz sourced, Lightguide bounced Cathode PEs",
+                            "Quartz sourced, No bounce straight shot Cathode PEs",
                             "Cathode Spectrum from primary signal quartz electrons only",
                             "Cathode Spectrum from quartz deltas",
                             "Cathode Spectrum from all non-primary quartz signals",
@@ -394,6 +418,8 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                             "Cathode Spectrum from elsewhere"}; 
     std::string draws[n_plots]={"catpes.npes",
                             "refpes.npes",
+                            "lgpes.npes",
+                            "straightpes.npes",
                             "catpes.npes",
                             "catpes.npes",
                             "catpes.npes",
@@ -410,6 +436,8 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                             "else.npes"};
     std::string cuts[n_plots]={"",
                             Form("refpes.det==%d",detid+1),
+                            Form("lgpes.det==%d",detid+1),
+                            Form("straightpes.det==%d",detid+1),
                             //Form("catpes.detids==%d && catpes.pids==11 && catpes.mtrids==0",detid+1),
                             Form("catpes.det==%d && catpes.pids==11 && catpes.mtrids==0",detid+1),
                             //Form("catpes.detids==%d && abs(catpes.pids)==11 && catpes.mtrids!=0",detid+1),
@@ -443,8 +471,12 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                             "",
                             "",
                             "",
+                            "",
+                            "",
                             ""};
     std::string xTitle[n_plots]={"PEs",
+                                 "PEs",
+                                 "PEs",
                                  "PEs",
                                  "PEs",
                                  "PEs",
@@ -461,6 +493,8 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                                  "Radial Hit Position (mm)",
                                  "PEs"};
     std::string yTitle[n_plots]={"Spectrum",
+                                 "Spectrum",
+                                 "Spectrum",
                                  "Spectrum",
                                  "Spectrum",
                                  "Spectrum",
@@ -522,14 +556,276 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
 
 
     int nGoodEntries = 0;
+
+    std::vector<double> ref_argValues(argValues);
+    std::vector<double> new_argValues(argValues);
+    std::vector<double> old_argValues(argValues);
+    //std::cout<<"TEST " << argValues.at(2);
+    std::fill(new_argValues.begin(),new_argValues.end(),0.0);
+    std::fill(old_argValues.begin(),old_argValues.end(),0.0);
+    /*double ref_x_pos = user_x_pos;
+      double ref_angle = user_angle;
+      double ref_reflectivity = user_reflectivity;
+      double ref_cerenkov = user_cerenkov;
+      double ref_scintillation = user_scintillation;
+      double ref_z_pos = user_z_pos;
+      double oldx_pos = 0.0;
+      double oldangle = 0.0;
+      double oldreflectivity = 0.0;
+      double oldcerenkov = 0.0;
+      double oldscintillation = 0.0;
+      double oldz_pos = 0.0;*/
+
+    // Avg will include all PEs: regardless of where the electron that sourced it came from or what surfaces it bounced off of
+    double oldavg     = 0.0;
+    double oldavg_err = 0.0;
+    double oldrms     = 0.0;
+    double oldrms_err = 0.0;
+    double oldres     = 0.0;
+    double oldN_en    = 0.0;
+    // Quartz-electron hitting sourced PEs: which bounce off of LG, Ref, nothing, or agnostic
+    double oldavg_Qsourced_refHit      = 0.0;
+    double oldavg_Qsourced_lgHit       = 0.0;
+    double oldavg_Qsourced_straightHit = 0.0;
+    double oldavg_Qsourced_primaries   = 0.0;
+    // Per-event averaged number of bounces off of surfaces before hitting PMT cathode
+    // FIXME Could fill per-PE instead of avg per event if wanted
+    double oldavg_allbounce = 0.0;
+    double oldavg_refbounce = 0.0;
+    double oldavg_lgbounce  = 0.0;
+
+    // NEW fills 
+    double avg     = 0.0;
+    double avg_err = 0.0;
+    double rms     = 0.0;
+    double rms_err = 0.0;
+    double res     = 0.0;
+    double N_en    = 0.0;
+
+    double avg_Qsourced_refHit      = 0.0;
+    double avg_Qsourced_lgHit       = 0.0;
+    double avg_Qsourced_straightHit = 0.0;
+    double avg_Qsourced_primaries   = 0.0;
+
+    double avg_allbounce = 0.0;
+    double avg_refbounce = 0.0;
+    double avg_lgbounce  = 0.0;
+
+    /*double new_x_pos = 0.0;
+      double angle = 0.0;
+      double reflectivity = 0.0;
+      double cerenkov = 0.0;
+      double scintillation = 0.0;
+      double z_pos = 0.0;*/
+
+    //std::cout << "X = " << ref_x_pos << ", angle = " << ref_angle <<std::endl;
+
+    TFile new_file(Form("localTmp.root"),"recreate");
+    new_file.cd();
+    TTree* newtree;
+
+    TFile* old_file;
+    TTree* oldtree;
+    if (!gSystem->AccessPathName("scans.root")) {
+        // Old file exists, read it and add new entries
+        old_file = TFile::Open("scans.root");
+        old_file->GetObject("scans", oldtree);
+        new_file.cd();
+        if (!oldtree) {
+            std::cout << "ERROR: Dead scans tree" ;
+            return;
+        }
+        newtree = oldtree->CloneTree(0);
+        int nent = oldtree->GetEntries();
+
+        //        TLeaf* angleL = oldtree->GetLeaf("angle");
+        //        TLeaf* x_posL = oldtree->GetLeaf("new_x_pos");
+
+        // Clear out prior instance if exists - will replace again later, putting it at the end of the list
+        //bool prior = false;
+        int match = 0;
+        for ( int k = 0 ; k < argNames.size() ; k++ ) {
+            oldtree->SetBranchAddress(argNames.at(k).c_str(),&old_argValues.at(k));
+            newtree->SetBranchAddress(argNames.at(k).c_str(),&argValues.at(k));
+        }
+        /*oldtree->SetBranchAddress("angle",&oldangle);
+          oldtree->SetBranchAddress("new_x_pos",&oldx_pos);
+          oldtree->SetBranchAddress("reflectivity",&oldreflectivity);
+          oldtree->SetBranchAddress("cerenkov",&oldcerenkov);
+          oldtree->SetBranchAddress("scintillation",&oldscintillation);
+          oldtree->SetBranchAddress("z_pos",&oldz_pos);*/
+        oldtree->SetBranchAddress("avg_pes",&oldavg);
+        oldtree->SetBranchAddress("avg_pes_err",&oldavg_err);
+        oldtree->SetBranchAddress("rms_pes",&oldrms);
+        oldtree->SetBranchAddress("rms_pes_err",&oldrms_err);
+        oldtree->SetBranchAddress("res",&oldres);
+        oldtree->SetBranchAddress("nentries",&oldN_en);
+
+        oldtree->SetBranchAddress("avg_Qsourced_refHit_pes", &oldavg_Qsourced_refHit);
+        oldtree->SetBranchAddress("avg_Qsourced_lgHit_pes", &oldavg_Qsourced_lgHit);
+        oldtree->SetBranchAddress("avg_Qsourced_straightHit_pes", &oldavg_Qsourced_straightHit);
+        oldtree->SetBranchAddress("avg_Qsourced_primaries_pes", &oldavg_Qsourced_primaries);
+
+        oldtree->SetBranchAddress("avg_all_bounces", &oldavg_allbounce);
+        oldtree->SetBranchAddress("avg_ref_bounces", &oldavg_refbounce);
+        oldtree->SetBranchAddress("avg_lg_bounces", &oldavg_lgbounce);
+        /*newtree->SetBranchAddress("angle",&angle);
+          newtree->SetBranchAddress("new_x_pos",&new_x_pos);
+          newtree->SetBranchAddress("reflectivity",&reflectivity);
+          newtree->SetBranchAddress("cerenkov",&cerenkov);
+          newtree->SetBranchAddress("scintillation",&scintillation);
+          newtree->SetBranchAddress("z_pos",&z_pos);*/
+        newtree->SetBranchAddress("avg_pes",&avg);
+        newtree->SetBranchAddress("avg_pes_err",&avg_err);
+        newtree->SetBranchAddress("rms_pes",&rms);
+        newtree->SetBranchAddress("rms_pes_err",&rms_err);
+        newtree->SetBranchAddress("res",&res);
+        newtree->SetBranchAddress("nentries",&N_en);
+
+        newtree->SetBranchAddress("avg_Qsourced_refHit_pes", &avg_Qsourced_refHit);
+        newtree->SetBranchAddress("avg_Qsourced_lgHit_pes", &avg_Qsourced_lgHit);
+        newtree->SetBranchAddress("avg_Qsourced_straightHit_pes", &avg_Qsourced_straightHit);
+        newtree->SetBranchAddress("avg_Qsourced_primaries_pes", &avg_Qsourced_primaries);
+
+        newtree->SetBranchAddress("avg_all_bounces", &avg_allbounce);
+        newtree->SetBranchAddress("avg_ref_bounces", &avg_refbounce);
+        newtree->SetBranchAddress("avg_lg_bounces", &avg_lgbounce);
+
+        for (int j = 0 ; j < nent ; j++ ) {
+            //            x_posL->GetBranch()->GetEntry(j);
+            //            angleL->GetBranch()->GetEntry(j);
+            oldtree->GetEntry(j);
+
+            for ( int k = 0 ; k < argNames.size() ; k++ ) {
+                if ( old_argValues.at(k) == ref_argValues.at(k) ) {
+                    match++;
+                }
+                new_argValues.at(k) = ref_argValues.at(k);
+            }
+            if (match == argNames.size()) continue;
+            /*if (ref_x_pos == oldx_pos && ref_angle == oldangle && ref_reflectivity == oldreflectivity && ref_cerenkov == oldcerenkov && ref_scintillation == oldscintillation && ref_z_pos == oldz_pos) {
+              prior = true;
+            //if (ref_x_pos == x_posL->GetValue() && ref_angle == angleL->GetValue()) 
+            std::cout << "TEST 1" << std::endl;
+            if (prior) {
+            continue;
+            }
+            }*/
+            avg     = oldavg;
+            avg_err = oldavg_err;
+            rms     = oldrms;
+            rms_err = oldrms_err;
+            res     = oldres;
+            N_en    = oldN_en;
+
+            avg_Qsourced_refHit  = oldavg_Qsourced_refHit;
+            avg_Qsourced_lgHit   = oldavg_Qsourced_lgHit;
+            avg_Qsourced_straightHit = oldavg_Qsourced_straightHit;
+            avg_Qsourced_primaries     = oldavg_Qsourced_primaries;
+                                  
+            avg_allbounce        = oldavg_allbounce;
+            avg_refbounce        = oldavg_refbounce;
+            avg_lgbounce         = oldavg_lgbounce;
+
+            /*new_x_pos   = oldx_pos;
+              angle   = oldangle;
+              reflectivity = oldreflectivity;
+              cerenkov = oldcerenkov;
+              scintillation = oldscintillation;
+              z_pos = oldz_pos;*/
+            newtree->Fill();
+        }
+
+        // Append current run to end
+        old_file->Close();
+        gSystem->Exec("rm scans.root");
+        delete old_file;
+    }
+    else {
+        // Old file doesn't exist, make a new one
+        new_file.cd();
+        newtree = new TTree("scans","scans");
+
+        // Write new tree
+        for ( int k = 0 ; k < argNames.size() ; k++ ) {
+            newtree->Branch(argNames.at(k).c_str(),&new_argValues.at(k));
+        }
+        /*newtree->Branch("angle",&angle);
+          newtree->Branch("x_pos",&new_x_pos);
+          newtree->Branch("reflectivity",&reflectivity);
+          newtree->Branch("cerenkov",&cerenkov);
+          newtree->Branch("scintillation",&scintillation);
+          newtree->Branch("z_pos",&z_pos);*/
+        newtree->Branch("avg_pes",&avg);
+        newtree->Branch("avg_pes_err",&avg_err);
+        newtree->Branch("rms_pes",&rms);
+        newtree->Branch("rms_pes_err",&rms_err);
+        newtree->Branch("res",&res);
+        newtree->Branch("nentries",&N_en);
+
+        newtree->Branch("avg_Qsourced_refHit_pes", &avg_Qsourced_refHit);
+        newtree->Branch("avg_Qsourced_lgHit_pes", &avg_Qsourced_lgHit);
+        newtree->Branch("avg_Qsourced_straightHit_pes", &avg_Qsourced_straightHit);
+        newtree->Branch("avg_Qsourced_primaries_pes", &avg_Qsourced_primaries);
+
+        newtree->Branch("avg_all_bounces", &avg_allbounce);
+        newtree->Branch("avg_ref_bounces", &avg_refbounce);
+        newtree->Branch("avg_lg_bounces", &avg_lgbounce);
+    }
+
+    for ( int k = 0 ; k < argNames.size() ; k++ ) {
+        newtree->SetBranchAddress(argNames.at(k).c_str(),&new_argValues.at(k));
+        new_argValues.at(k) = argValues.at(k);
+        std::cout << argNames.at(k) << " = " << argValues.at(k) << ", ";
+    }
+    std::cout<<std::endl;
+    /*newtree->SetBranchAddress("angle",&angle);
+      newtree->SetBranchAddress("x_pos",&new_x_pos);
+      newtree->SetBranchAddress("reflectivity",&reflectivity);
+      newtree->SetBranchAddress("cerenkov",&cerenkov);
+      newtree->SetBranchAddress("scintillation",&scintillation);
+      newtree->SetBranchAddress("z_pos",&z_pos);*/
+    newtree->SetBranchAddress("avg_pes",&avg);
+    newtree->SetBranchAddress("avg_pes_err",&avg_err);
+    newtree->SetBranchAddress("rms_pes",&rms);
+    newtree->SetBranchAddress("rms_pes_err",&rms_err);
+    newtree->SetBranchAddress("res",&res);
+    newtree->SetBranchAddress("nentries",&N_en);
+
+    newtree->SetBranchAddress("avg_Qsourced_refHit_pes", &avg_Qsourced_refHit);
+    newtree->SetBranchAddress("avg_Qsourced_lgHit_pes", &avg_Qsourced_lgHit);
+    newtree->SetBranchAddress("avg_Qsourced_straightHit_pes", &avg_Qsourced_straightHit);
+    newtree->SetBranchAddress("avg_Qsourced_primaries_pes", &avg_Qsourced_primaries);
+
+    newtree->SetBranchAddress("avg_all_bounces", &avg_allbounce);
+    newtree->SetBranchAddress("avg_ref_bounces", &avg_refbounce);
+    newtree->SetBranchAddress("avg_lg_bounces", &avg_lgbounce);
+
+    // DONE scans.root setup
+    // Clean up defaults, don't just copy prior good entry if appending new data to existing scans.root
+    
+    avg = 0.0;
+    avg_err = 0.0;
+    rms = 0.0;
+    rms_err = 0.0;
+    res = 0.0;
+    N_en = 0.0;
+    avg_Qsourced_refHit = 0.0;
+    avg_Qsourced_lgHit = 0.0;
+    avg_Qsourced_straightHit = 0.0;
+    avg_Qsourced_primaries = 0.0;
+    avg_allbounce = 0.0;
+    avg_refbounce = 0.0;
+    avg_lgbounce = 0.0;
+   
     for (int p=0;p<n_plots;p++) {
-    //for (int p=0;p<2;p++){//n_plots;p++){}}
+        //for (int p=0;p<2;p++){//n_plots;p++){}}
         c1[p]=new TCanvas(Form("%s_c%02d",names[p].c_str(),p),Form("canvas_%s_%02d",names[p].c_str(),p),1500,1500);
         c1[p]->cd();
-    //Histo[p]=new TH1F(Form("Histo[%d]",p),Form("%s; %s; %s",names[p].c_str(),xTitle[p].c_str(),yTitle[p].c_str()),nbins[p],lowbin[p],highbin[p]);
+        //Histo[p]=new TH1F(Form("Histo[%d]",p),Form("%s; %s; %s",names[p].c_str(),xTitle[p].c_str(),yTitle[p].c_str()),nbins[p],lowbin[p],highbin[p]);
         //Histo[p]=new TH1F();
         //Histo[p]->SetName(Form("Histo[%d]",p));
-    //Tmol->Draw(Form("%s>>Histo[%d]",draws[p].c_str(),p),Form("%s",cuts[p].c_str()));
+        //Tmol->Draw(Form("%s>>Histo[%d]",draws[p].c_str(),p),Form("%s",cuts[p].c_str()));
         nGoodEntries = Tmol->Draw(Form("%s",draws[p].c_str(),p),Form("%s",cuts[p].c_str()),Form("%s",drawOpts[p].c_str()));
         if (nGoodEntries>0) {
             TH1* htmp = (TH1*)gROOT->FindObject("htemp");
@@ -555,6 +851,7 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
             RMSerror[p] = 1.0*htmp->GetRMSError();
             Mean[p] = 1.0*htmp->GetMean();
             Meanerror[p] = 1.0*htmp->GetMeanError();
+            Nentries[p] = 1.0*htmp->GetEntries();
             if (Mean[p]>0){
                 c1[p]->SetLogy();
             }
@@ -567,189 +864,12 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                 //file_out_mean<<names[p]<<fileP<<" - Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
                 //file_out_res<<names[p]<<fileP<<" - Resolution = RMS/Mean,"<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
 
-
-                std::vector<double> ref_argValues(argValues);
-                std::vector<double> new_argValues(argValues);
-                std::vector<double> old_argValues(argValues);
-                //std::cout<<"TEST " << argValues.at(2);
-                std::fill(new_argValues.begin(),new_argValues.end(),0.0);
-                std::fill(old_argValues.begin(),old_argValues.end(),0.0);
-                /*double ref_x_pos = user_x_pos;
-                  double ref_angle = user_angle;
-                  double ref_reflectivity = user_reflectivity;
-                  double ref_cerenkov = user_cerenkov;
-                  double ref_scintillation = user_scintillation;
-                  double ref_z_pos = user_z_pos;*/
-
-                double oldavg     = 0.0;
-                double oldavg_err = 0.0;
-                double oldrms     = 0.0;
-                double oldrms_err = 0.0;
-                double oldres     = 0.0;
-                double oldN_en    = 0.0;
-                /*double oldx_pos = 0.0;
-                  double oldangle = 0.0;
-                  double oldreflectivity = 0.0;
-                  double oldcerenkov = 0.0;
-                  double oldscintillation = 0.0;
-                  double oldz_pos = 0.0;*/
-
-                double avg     = 0.0;
-                double avg_err = 0.0;
-                double rms     = 0.0;
-                double rms_err = 0.0;
-                double res     = 0.0;
-                double N_en    = 0.0;
-                /*double new_x_pos = 0.0;
-                  double angle = 0.0;
-                  double reflectivity = 0.0;
-                  double cerenkov = 0.0;
-                  double scintillation = 0.0;
-                  double z_pos = 0.0;*/
-
-                //std::cout << "X = " << ref_x_pos << ", angle = " << ref_angle <<std::endl;
-
-                TFile new_file(Form("localTmp.root"),"recreate");
-                new_file.cd();
-                TTree* newtree;
-
-                TFile* old_file;
-                TTree* oldtree;
-                if (!gSystem->AccessPathName("scans.root")) {
-                    // Old file exists, read it and add new entries
-                    old_file = TFile::Open("scans.root");
-                    old_file->GetObject("scans", oldtree);
-                    new_file.cd();
-                    if (!oldtree) {
-                        std::cout << "ERROR: Dead scans tree" ;
-                        return;
-                    }
-                    newtree = oldtree->CloneTree(0);
-                    int nent = oldtree->GetEntries();
-
-                    //        TLeaf* angleL = oldtree->GetLeaf("angle");
-                    //        TLeaf* x_posL = oldtree->GetLeaf("new_x_pos");
-
-                    // Clear out prior instance if exists - will replace again later, putting it at the end of the list
-                    //bool prior = false;
-                    int match = 0;
-                    for ( int k = 0 ; k < argNames.size() ; k++ ) {
-                        oldtree->SetBranchAddress(argNames.at(k).c_str(),&old_argValues.at(k));
-                        newtree->SetBranchAddress(argNames.at(k).c_str(),&argValues.at(k));
-                    }
-                    /*oldtree->SetBranchAddress("angle",&oldangle);
-                      oldtree->SetBranchAddress("new_x_pos",&oldx_pos);
-                      oldtree->SetBranchAddress("reflectivity",&oldreflectivity);
-                      oldtree->SetBranchAddress("cerenkov",&oldcerenkov);
-                      oldtree->SetBranchAddress("scintillation",&oldscintillation);
-                      oldtree->SetBranchAddress("z_pos",&oldz_pos);*/
-                    oldtree->SetBranchAddress("avg_pes",&oldavg);
-                    oldtree->SetBranchAddress("avg_pes_err",&oldavg_err);
-                    oldtree->SetBranchAddress("rms_pes",&oldrms);
-                    oldtree->SetBranchAddress("rms_pes_err",&oldrms_err);
-                    oldtree->SetBranchAddress("res",&oldres);
-                    oldtree->SetBranchAddress("nentries",&oldN_en);
-                    /*newtree->SetBranchAddress("angle",&angle);
-                      newtree->SetBranchAddress("new_x_pos",&new_x_pos);
-                      newtree->SetBranchAddress("reflectivity",&reflectivity);
-                      newtree->SetBranchAddress("cerenkov",&cerenkov);
-                      newtree->SetBranchAddress("scintillation",&scintillation);
-                      newtree->SetBranchAddress("z_pos",&z_pos);*/
-                    newtree->SetBranchAddress("avg_pes",&avg);
-                    newtree->SetBranchAddress("avg_pes_err",&avg_err);
-                    newtree->SetBranchAddress("rms_pes",&rms);
-                    newtree->SetBranchAddress("rms_pes_err",&rms_err);
-                    newtree->SetBranchAddress("res",&res);
-                    newtree->SetBranchAddress("nentries",&N_en);
-
-                    for (int j = 0 ; j < nent ; j++ ) {
-                        //            x_posL->GetBranch()->GetEntry(j);
-                        //            angleL->GetBranch()->GetEntry(j);
-                        oldtree->GetEntry(j);
-
-                        for ( int k = 0 ; k < argNames.size() ; k++ ) {
-                            if ( old_argValues.at(k) == ref_argValues.at(k) ) {
-                                match++;
-                            }
-                            new_argValues.at(k) = ref_argValues.at(k);
-                        }
-                        if (match == argNames.size()) continue;
-                        /*if (ref_x_pos == oldx_pos && ref_angle == oldangle && ref_reflectivity == oldreflectivity && ref_cerenkov == oldcerenkov && ref_scintillation == oldscintillation && ref_z_pos == oldz_pos) {
-                          prior = true;
-                        //if (ref_x_pos == x_posL->GetValue() && ref_angle == angleL->GetValue()) 
-                        std::cout << "TEST 1" << std::endl;
-                        if (prior) {
-                        continue;
-                        }
-                        }*/
-                        avg     = oldavg;
-                        avg_err = oldavg_err;
-                        rms     = oldrms;
-                        rms_err = oldrms_err;
-                        res     = oldres;
-                        N_en    = oldN_en;
-                        /*new_x_pos   = oldx_pos;
-                          angle   = oldangle;
-                          reflectivity = oldreflectivity;
-                          cerenkov = oldcerenkov;
-                          scintillation = oldscintillation;
-                          z_pos = oldz_pos;*/
-                        newtree->Fill();
-                    }
-
-                    // Append current run to end
-                    old_file->Close();
-                    gSystem->Exec("rm scans.root");
-                    delete old_file;
-                }
-                else {
-                    // Old file doesn't exist, make a new one
-                    new_file.cd();
-                    newtree = new TTree("scans","scans");
-
-                    // Write new tree
-                    for ( int k = 0 ; k < argNames.size() ; k++ ) {
-                        newtree->Branch(argNames.at(k).c_str(),&new_argValues.at(k));
-                    }
-                    /*newtree->Branch("angle",&angle);
-                      newtree->Branch("x_pos",&new_x_pos);
-                      newtree->Branch("reflectivity",&reflectivity);
-                      newtree->Branch("cerenkov",&cerenkov);
-                      newtree->Branch("scintillation",&scintillation);
-                      newtree->Branch("z_pos",&z_pos);*/
-                    newtree->Branch("avg_pes",&avg);
-                    newtree->Branch("avg_pes_err",&avg_err);
-                    newtree->Branch("rms_pes",&rms);
-                    newtree->Branch("rms_pes_err",&rms_err);
-                    newtree->Branch("res",&res);
-                    newtree->Branch("nentries",&N_en);
-                }
-
-                for ( int k = 0 ; k < argNames.size() ; k++ ) {
-                    newtree->SetBranchAddress(argNames.at(k).c_str(),&new_argValues.at(k));
-                    new_argValues.at(k) = argValues.at(k);
-                    std::cout << argNames.at(k) << " = " << argValues.at(k) << ", ";
-                }
-                std::cout<<std::endl;
-                /*newtree->SetBranchAddress("angle",&angle);
-                  newtree->SetBranchAddress("x_pos",&new_x_pos);
-                  newtree->SetBranchAddress("reflectivity",&reflectivity);
-                  newtree->SetBranchAddress("cerenkov",&cerenkov);
-                  newtree->SetBranchAddress("scintillation",&scintillation);
-                  newtree->SetBranchAddress("z_pos",&z_pos);*/
-                newtree->SetBranchAddress("avg_pes",&avg);
-                newtree->SetBranchAddress("avg_pes_err",&avg_err);
-                newtree->SetBranchAddress("rms_pes",&rms);
-                newtree->SetBranchAddress("rms_pes_err",&rms_err);
-                newtree->SetBranchAddress("res",&res);
-                newtree->SetBranchAddress("nentries",&N_en);
-
                 avg     = Mean[p];
                 avg_err = Meanerror[p];
                 rms     = RMS[p];
                 rms_err = RMSerror[p];
                 res     = Mean[p]/RMS[p];
-                N_en    = (double)N_entries;
+                N_en    = Nentries[p]; // (double)N_entries; // N_entries = number of events in simulation
                 /*angle   = user_angle;
                   new_x_pos   = user_x_pos;
                   reflectivity = user_reflectivity;
@@ -761,29 +881,49 @@ void pePlots(std::string fileP, int detid, std::vector<std::string> &argNames, s
                 std::cout<<names[p]<< ", " << fileP<<", Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
                 file_out_mean<<names[p]<< ", " << fileP<<", Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
                 file_out_res<<names[p]<< ", " <<fileP<<", Resolution = RMS/Mean,"<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
-
-
-                //std::cout << "TEST 2 X = " << x_pos << ", angle = " << angle <<std::endl;
-                new_file.cd();
-
-                newtree->Fill();
-                newtree->Write("scans",TObject::kOverwrite);
-                new_file.Close();
-
-                gSystem->Exec("mv localTmp.root scans.root");
-
             }
             if (p==1) {
                 file_out_ref_rms<<names[p]<< ", " << fileP<<", Reflector RMS,"<<RMS[p]<<","<<RMSerror[p]<<std::endl;
                 std::cout<<names[p]<< ", " << fileP<<", Reflector Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
                 file_out_ref_mean<<names[p]<< ", " << fileP<<", Reflector Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
                 file_out_ref_res<<names[p]<< ", " <<fileP<<", Reflector Resolution = RMS/Mean,"<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
+
+                avg_Qsourced_refHit = Mean[p];
             }
+            if (p==2) {
+                avg_Qsourced_lgHit = Mean[p];
+            }
+            if (p==3) {
+                avg_Qsourced_straightHit = Mean[p];
+            }
+            if (p==4) {
+                avg_Qsourced_primaries = Mean[p];
+            }
+            if (p==7) {
+                avg_allbounce = Mean[p];
+            }
+            if (p==8) {
+                avg_refbounce = Mean[p];
+            }
+            if (p==9) {
+                avg_lgbounce = Mean[p];
+            }
+
             plotsFile->cd();
             c1[p]->Write();
             c1[p]->SaveAs(Form("%s_%d.png",fileP.substr(0,fileP.find(".root")).c_str(),p));
+
+            //std::cout << "TEST 2 X = " << x_pos << ", angle = " << angle <<std::endl;
         }
     }
+
+    new_file.cd();
+
+    newtree->Fill();
+    newtree->Write("scans",TObject::kOverwrite);
+    new_file.Close();
+
+    gSystem->Exec("mv localTmp.root scans.root");
 
     file_out_ref_rms.close();
     file_out_ref_mean.close();
