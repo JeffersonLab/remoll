@@ -56,7 +56,6 @@
     </physvol>
 
     <!-- Downstream beampipe -->
-    
     <physvol>
       <file name="beampipe/premoller/beampipeRaster.gdml"/>
     </physvol>
@@ -64,14 +63,12 @@
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
 
-   
-    <!-- Tracking Detectors--> 
-    <!--
+    <!-- Tracking Detectors -->
     <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
       <positionref ref="trackingCenter"/>
     </physvol>
-    -->
+
     <!-- Main Detectors -->
     <!--
     <physvol>
@@ -81,15 +78,14 @@
     </physvol>
     -->
 
-
     <!-- electronics hut for left side --> 
     <physvol>
       <file name="huts/lefthut.gdml"/>
       <positionref ref="lefthut_pos"/>
       <rotation name="lefthut_rot" unit="deg" y="-45"/>
     </physvol>
-    
-    <!-- ShowerMax Detectors--> 
+
+    <!-- ShowerMax Detectors -->
     <physvol>
       <file name="showermax/showerMaxGen.gdml"/>
       <positionref ref="showerMaxDetectorCenter"/>
@@ -106,7 +102,7 @@
       <file name="pion/pionDetectorSystem.gdml"/>
       <positionref ref="pionDetectorSystemFaceUS"/>
     </physvol>
-   
+
   </volume>
 </structure>
 
