@@ -40,12 +40,16 @@
 
 <!-- Z position of the plane about which the two arrays of showermax
 detectors are placed -->
-<position name="showerMaxDetectorCenter" x="0.0" y="0.0" z="23000.00" unit="mm"/>
+<position name="showerMaxDetectorCenter" x="0.0" y="0.0" z="24498.00" unit="mm"/>
+
+<!-- Z position of the US and DS face of the concrete and lead donut -->
+<position name="donutConcreteLeadFaceUS" x="0.0" y="0.0" z="24798.00" unit="mm"/>
+<position name="donutConcreteLeadFaceDS" x="0.0" y="0.0" z="25198.00" unit="mm"/>
 
 <!-- Z position of the center of the lucite stack of the pion detector. -->
-<position name="pionDetectorCenter" x="0.0" y="0.0" z="24250.00" unit="mm"/>
+<position name="pionDetectorSystemFaceUS" x="0.0" y="0.0" z="25198.00" unit="mm"/>
 <!-- Virtual planes in the parallel world -->
-<position name="pionDetectorVirtualPlane_pos" z="24250.00" unit="mm"/>
+<position name="pionDetectorVirtualPlane_pos" z="25648.00" unit="mm"/>
 
 <!-- Beamline detectors for radiation -->
 <position name="collar1VirtualPlane_pos" z="12250.00" unit="mm"/>
@@ -53,8 +57,8 @@ detectors are placed -->
 <position name="gemVirtualPlane_pos" z="20375.00" unit="mm"/>
 <position name="SAMusVirtualPlane_pos" z="24970.00" unit="mm"/>
 <position name="dumpEntranceVirtualPlane_pos" z="26500.00" unit="mm"/>
-<position name="donutUSVirtualPlane_pos" z="29330.00" unit="mm"/>
-<position name="donutDSVirtualPlane_pos" z="29360.00" unit="mm"/>
+<position name="donutUSVirtualPlane_pos" z="24798.00" unit="mm"/>
+<position name="donutDSVirtualPlane_pos" z="25198.00" unit="mm"/>
 <position name="n2atmoVirtualPlane_pos" z="31525.00" unit="mm"/>
 
 
