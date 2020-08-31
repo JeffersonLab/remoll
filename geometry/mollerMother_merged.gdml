@@ -95,11 +95,16 @@
       <positionref ref="showerMaxDetectorCenter"/>
     </physvol>
     
-
+    <!-- Lead Donut -->
+    <physvol>
+      <file name="donut/donutConcreteLead.gdml"/>
+      <positionref ref="donutConcreteLeadFaceUS"/>
+    </physvol>
+   
     <!-- Pion Detectors -->
     <physvol>
       <file name="pion/pionDetectorSystem.gdml"/>
-      <positionref ref="pionDetectorCenter"/>
+      <positionref ref="pionDetectorSystemFaceUS"/>
     </physvol>
    
   </volume>
