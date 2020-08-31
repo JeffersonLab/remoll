@@ -20,7 +20,7 @@
     you modify the angle below so as to avoid overlaps between this volume and
     the trigger scintillator and volumes.
   -->
-  <quantity name="pionDetectorLuciteLength" type="length" value="0.69" unit="m"/>
+  <quantity name="pionDetectorLuciteLength" type="length" value="0.3" unit="m"/>
 
   <!--
     The Cherenkov critical angle for n = 1.5 materials is cos(theta_c) = 1/n,
