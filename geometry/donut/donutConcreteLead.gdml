@@ -24,50 +24,34 @@
 
    <!-- Concrete donut positions -->
    <position name="donutConcretePosition"
-             z="-donutSystemLength/2.0
-             +donutConcreteThickness/2.0"/>
+             z="0"/>
 
    <!-- Lead donut positions -->
    <position name="donutLeadPosition"
-             z="+donutSystemLength/2.0
-             -donutLeadThickness/2.0"/>
+             z="donutConcreteThickness"/>
 </define>
 
 <materials>
 </materials>
 
 <solids>
-    <tube name="donutSystem_solid"
-      rmin="donutSystemInnerRadius"
-      rmax="donutSystemOuterRadius"
-      z="donutSystemLength"
-      deltaphi="360.0" aunit="deg"/>
+    <polycone name="donutSystem_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemOuterRadius" z="0"/>
+      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemOuterRadius" z="donutSystemLength"/>
+    </polycone>
 
-    <tube name="donutConcrete_solid"
-      rmin="donutConcreteInnerRadiusUS"
-      rmax="donutConcreteOuterRadiusUS"
-      z="donutLeadThickness"
-      deltaphi="360.0" aunit="deg"/>
-<!-- for possible future us
     <polycone name="donutConcrete_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutConcreteInnerRadiusUS" rmax="donutConcreteOuterRadiusUS" z="-donutConcreteThickness/2.0"/>
-      <zplane rmin="donutConcreteInnerRadiusDS" rmax="donutConcreteOuterRadiusDS" z="+donutConcreteThickness/2.0"/>
+      <zplane rmin="donutConcreteInnerRadiusUS" rmax="donutConcreteOuterRadiusUS" z="0"/>
+      <zplane rmin="donutConcreteInnerRadiusDS" rmax="donutConcreteOuterRadiusDS" z="donutConcreteThickness"/>
     </polycone>
--->
 
-    <tube name="donutLead_solid"
-      rmin="donutLeadInnerRadiusUS"
-      rmax="donutLeadOuterRadiusUS"
-      z="donutLeadThickness"
-      deltaphi="360.0" aunit="deg"/>
-<!--
     <polycone name="donutLead_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutLeadInnerRadiusUS" rmax="donutLeadOuterRadiusUS" z="-donutLeadThickness/2.0"/>
-      <zplane rmin="donutLeadInnerRadiusDS" rmax="donutLeadOuterRadiusDS" z="+donutLeadThickness/2.0"/>
+      <zplane rmin="donutLeadInnerRadiusUS" rmax="donutLeadOuterRadiusUS" z="0"/>
+      <zplane rmin="donutLeadInnerRadiusDS" rmax="donutLeadOuterRadiusDS" z="donutLeadThickness"/>
     </polycone>
--->
 </solids>
 
 <structure>
