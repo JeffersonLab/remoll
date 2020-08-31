@@ -104,10 +104,6 @@
             value="pionDetectorLuciteReflectorThickness/cos(pionDetectorLuciteReflectorTheta)"/>
   <quantity name="pionDetectorLuciteLightGuideThicknessInY"
             value="pionDetectorLuciteLightGuideThickness/cos(pionDetectorLuciteLightGuideTheta)"/>
-  <quantity name="pionDetectorLuciteLightGuideSlopeInX"
-            value="(pionDetectorLucitePMTDiameter-pionDetectorLuciteOutsideWidth)/pionDetectorLuciteLightGuideHeight"/>
-  <quantity name="pionDetectorLuciteLightGuideSlopeInY"
-            value="pionDetectorLuciteLightGuideSlopeInX/cos(pionDetectorLuciteLightGuideTheta)"/>
 
   &matrices;
 </define>
