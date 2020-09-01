@@ -5,29 +5,31 @@
 
 
 <define>
+	<constant name="PHIRAD" value="3.14159265359/14"/>
+	<variable name="i" value="0"/>
 </define>
 
 <solids>
 	<tube name="solid_pmt_window" rmin="0" rmax="38.1" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
 	<tube name="solid_pmt_cathode" rmin="0" rmax="38.1" z="3e-06" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
-	<box name="solid_mirror_box_tungstenquartz_1" lunit="mm" x="160.0" y="244.604" z="78.604"/>
-	<box name="solid_mirror_box_tungstenquartz_2" lunit="mm" x="161.0" y="238" z="72.0"/>
+	<box name="solid_mirror_box_tungstenquartz_1" lunit="mm" x="160.0" y="271.604" z="78.604"/>
+	<box name="solid_mirror_box_tungstenquartz_2" lunit="mm" x="161.0" y="265" z="72.0"/>
 	<subtraction name="solid_mirror_box_tungstenquartz">
 		<first ref="solid_mirror_box_tungstenquartz_1"/>
 		<second ref="solid_mirror_box_tungstenquartz_2"/>
 		<position name="pos_subtract_mirror_box_tungstenquartz_12" x="0" y="0" z="0"/>
 		<rotation name="rot_subtract_mirror_box_tungstenquartz_12" x="0" y="0" z="0"/>
 	</subtraction>
-	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="78.604"  x2="172.486" y1="244.604"  y2="244.604" z="61.722"/>
-	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="72.0"  x2="165.882" y1="238"  y2="238" z="62.722"/>
+	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="78.604"  x2="172.486" y1="271.604"  y2="271.604" z="61.722"/>
+	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="72.0"  x2="165.882" y1="265"  y2="265" z="62.722"/>
 	<subtraction name="solid_mirror_box_bot">
 		<first ref="solid_mirror_box_bot_1"/>
 		<second ref="solid_mirror_box_bot_2"/>
 		<position name="pos_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
 		<rotation name="rot_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
 	</subtraction>
-	<trd name="solid_mirror_box_top_1" lunit="mm" x1="172.486"  x2="54.002" y1="244.604"  y2="54.002" z="130.971606147"/>
-	<trd name="solid_mirror_box_top_2" lunit="mm" x1="72.0"  x2="47.398" y1="238"  y2="47.398" z="131.971606147"/>
+	<trd name="solid_mirror_box_top_1" lunit="mm" x1="172.486"  x2="54.002" y1="271.604"  y2="54.002" z="130.971606147"/>
+	<trd name="solid_mirror_box_top_2" lunit="mm" x1="72.0"  x2="47.398" y1="265"  y2="47.398" z="131.971606147"/>
 	<subtraction name="solid_mirror_box_top">
 		<first ref="solid_mirror_box_top_1"/>
 		<second ref="solid_mirror_box_top_2"/>
@@ -39,9 +41,11 @@
 		<twoDimVertex x="-80.0" y="-5.0"/>
 		<twoDimVertex x="90.0" y="-5.0"/>
 		<twoDimVertex x="80.0" y="5.0"/>
-		<section zOrder="1" zPosition="-119" xOffset="0" yOffset="0" scalingFactor="1"/>		<section zOrder="2" zPosition="119" xOffset="0" yOffset="0" scalingFactor="1"/>	</xtru>
-	<box name="solid_tungsten" lunit="mm" x="160.0" y="238" z="8.0"/>
-	<box name="solid_logic_mirror_box" lunit="mm" x="195.693609147" y="244.604" z="172.486"/>
+		<section zOrder="1" zPosition="-132.5" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="132.5" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<box name="solid_tungsten" lunit="mm" x="160.0" y="265" z="8.0"/>
+	<box name="solid_logic_mirror_box" lunit="mm" x="195.693609147" y="271.604" z="172.486"/>
 	<union name="solid_logic_mirror_box_union">
 		<first ref="solid_mirror_box_tungstenquartz_1"/>
 		<second ref="solid_logic_mirror_box"/>
@@ -3713,10 +3717,23 @@
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_showerMaxMother"/>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		<loop for="i" from="1" to="28" step="2">
+			<physvol name="singledet[i]"> <!-- index is underscored and subtracted by 1: [1] = _0 -->
+				<volumeref ref="logic_singledet[i]"/>
+				<position name="pos_singledet[i]" x="-1100.0*cos((i-1)*PHIRAD)" y="-1100.0*sin((i-1)*PHIRAD)" z="-40.0"/>
+				<rotation name="rot_singledet[i]" z="-3.14159265359-(i-1)*PHIRAD"/>
+			</physvol>
+			<physvol name="singledet[i+1]"> <!-- index is underscored and subtracted by 1: [1] = _0 -->
+				<volumeref ref="logic_singledet[i+1]"/>
+				<position name="pos_singledet[i+1]" x="-1100.0*cos((i)*PHIRAD)" y="-1100.0*sin((i)*PHIRAD)" z="40.0"/>
+				<rotation name="rot_singledet[i+1]" z="-3.14159265359-(i)*PHIRAD"/>
+			</physvol>
+		</loop>
+		<!--
 		<physvol name="singledet_0">
 			<volumeref ref="logic_singledet_0"/>
 			<position name="pos_singledet_0" x="-1012.5" y="1.23995488414e-13" z="-40.0"/>
-			<rotation name="rot_singledet_0" x="-0.0" y="-0.0" z="-3.14159265359"/>
+			<rotation name="rot_singledet_0" x="0.0" y="-0.0" z="-3.14159265359"/>
 		</physvol>
 		<physvol name="singledet_1">
 			<volumeref ref="logic_singledet_1"/>
@@ -3853,6 +3870,7 @@
 			<position name="pos_singledet_27" x="-987.114511084" y="225.302445631" z="40.0"/>
 			<rotation name="rot_singledet_27" x="-0.0" y="-0.0" z="-9.20037848551"/>
 		</physvol>
+		-->
 	</volume>
 </structure>
 <setup name="showerMaxWorld" version="1.0">
