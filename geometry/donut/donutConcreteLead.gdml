@@ -75,7 +75,7 @@
     </volume>
 
     <volume name="donutSystem_logical">
-      <materialref ref="G4_Galactic"/>
+      <materialref ref="G4_AIR"/>
       <solidref ref="donutSystem_solid"/>
 
       <physvol>
