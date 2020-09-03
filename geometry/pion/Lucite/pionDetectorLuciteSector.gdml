@@ -50,7 +50,7 @@
     lucite blocks. This means that the position of the inner edge must be augmented
     with half the height (radial dimension) of the lucite blocks.
   -->
-  <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="103.0+13.0/2" unit="cm"/>
+  <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="105.5+13.0/2" unit="cm"/>
 </define>
 
 <materials>
