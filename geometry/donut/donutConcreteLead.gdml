@@ -13,17 +13,17 @@
 
    <!-- Concrete donut dimensions -->
    <quantity name="donutConcreteThickness"     type="length" value="0.20" unit="m"/>
-   <quantity name="donutConcreteInnerRadiusUS" type="length" value="1.035" unit="m"/>
-   <quantity name="donutConcreteOuterRadiusUS" type="length" value="1.195" unit="m"/>
-   <quantity name="donutConcreteInnerRadiusDS" type="length" value="1.035" unit="m"/>
-   <quantity name="donutConcreteOuterRadiusDS" type="length" value="1.195" unit="m"/>
+   <quantity name="donutConcreteInnerRadiusUS" type="length" value="1.050" unit="m"/>
+   <quantity name="donutConcreteOuterRadiusUS" type="length" value="1.210" unit="m"/>
+   <quantity name="donutConcreteInnerRadiusDS" type="length" value="1.050" unit="m"/>
+   <quantity name="donutConcreteOuterRadiusDS" type="length" value="1.210" unit="m"/>
 
    <!-- Lead donut dimensions -->
    <quantity name="donutLeadThickness"     type="length" value="0.20" unit="m"/>
-   <quantity name="donutLeadInnerRadiusUS" type="length" value="1.035" unit="m"/>
-   <quantity name="donutLeadOuterRadiusUS" type="length" value="1.195" unit="m"/>
-   <quantity name="donutLeadInnerRadiusDS" type="length" value="1.045" unit="m"/>
-   <quantity name="donutLeadOuterRadiusDS" type="length" value="1.205" unit="m"/>
+   <quantity name="donutLeadInnerRadiusUS" type="length" value="1.050" unit="m"/>
+   <quantity name="donutLeadOuterRadiusUS" type="length" value="1.210" unit="m"/>
+   <quantity name="donutLeadInnerRadiusDS" type="length" value="1.060" unit="m"/>
+   <quantity name="donutLeadOuterRadiusDS" type="length" value="1.220" unit="m"/>
 
    <!-- Concrete donut positions -->
    <position name="donutConcretePosition" z="0"/>
