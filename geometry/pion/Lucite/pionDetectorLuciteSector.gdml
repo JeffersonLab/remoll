@@ -43,14 +43,14 @@
     PMT radially outward; -90.0 degrees is with the PMT radially inward.
   -->
   <quantity name="pionDetectorLuciteSectorAngleBase" type="angle" value="+90.0" unit="deg"/>
-  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="0.0" unit="deg"/>
+  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="0.0555" unit="rad"/>
   
   <!--
     The lucite detector is placed radially in reference to the the center of the
     lucite blocks. This means that the position of the inner edge must be augmented
     with half the height (radial dimension) of the lucite blocks.
   -->
-  <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="107.0+13.0/2" unit="cm"/>
+  <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="109.5+12.5/2" unit="cm"/>
 </define>
 
 <materials>
