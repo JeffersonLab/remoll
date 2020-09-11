@@ -63,10 +63,16 @@
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
 
-    <!-- Tracking Detectors -->
+    <!-- Front Tracking Detectors -->
     <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
-      <positionref ref="trackingCenter"/>
+      <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
+    </physvol>
+
+    <!-- Back Tracking Detectors -->
+    <physvol>
+      <file name="tracking/trackingDaughter.gdml"/>
+      <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
     </physvol>
 
     <!-- Main Detectors -->
