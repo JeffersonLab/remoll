@@ -63,6 +63,11 @@
   <quantity name="pionDetectorLuciteLightGuideEntryDetectorThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLuciteLightGuideExitDetectorThickness" type="length" value="1.0" unit="mm"/>
 
+  <constant name="numberOfPMTsInX" value="1"/>
+  <variable name="iPMTX" value="1"/>
+  <constant name="numberOfPMTsInZ" value="1"/>
+  <variable name="iPMTZ" value="1"/>
+
   <quantity name="pionDetectorLucitePMTThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLucitePMTDiameter" type="length" value="3.0*2.54" unit="cm"/>
   <quantity name="pionDetectorLucitePMTHousingHeight" type="length" value="7.5" unit="cm"/>
@@ -130,11 +135,10 @@
     rmax="pionDetectorLucitePMTDiameter/2.0"
     z="pionDetectorLucitePMTHousingHeight"
     deltaphi="360.0" aunit="deg"/>
-  <tube name="pionDetectorLucitePMTOutsideHousingScaled_solid"
-    rmin="0.0"
-    rmax="SCALE_UP*pionDetectorLucitePMTDiameter/2.0"
-    z="SCALE_UP*pionDetectorLucitePMTHousingHeight"
-    deltaphi="360.0" aunit="deg"/>
+  <box name="pionDetectorLucitePMTOutsideHousingScaled_solid"
+    x="SCALE_UP*numberOfPMTsInX*pionDetectorLucitePMTDiameter"
+    y="SCALE_UP*numberOfPMTsInZ*pionDetectorLucitePMTDiameter"
+    z="SCALE_UP*pionDetectorLucitePMTHousingHeight"/>
   
   <trap name="pionDetectorLuciteGlue_solid"
     alpha1="0.0" alpha2="0.0"
@@ -356,21 +360,21 @@
     theta="pionDetectorLuciteLightGuideTheta" phi="90.0*deg"
     x1="pionDetectorLuciteReflectorWidth"
     x2="pionDetectorLuciteReflectorWidth"
-    x3="pionDetectorLucitePMTDiameter"
-    x4="pionDetectorLucitePMTDiameter"
+    x3="numberOfPMTsInX*pionDetectorLucitePMTDiameter"
+    x4="numberOfPMTsInX*pionDetectorLucitePMTDiameter"
     y1="pionDetectorLuciteReflectorDepth"
-    y2="pionDetectorLucitePMTDiameter"
+    y2="numberOfPMTsInZ*pionDetectorLucitePMTDiameter"
      z="pionDetectorLuciteLightGuideHeight"/>
   <trap name="pionDetectorLuciteLightGuideOutside_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteLightGuideTheta" phi="90.0*deg"
     x1="pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteLightGuideThickness"
     x2="pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteLightGuideThickness"
-    x3="pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
-    x4="pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
+    x3="numberOfPMTsInX*pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
+    x4="numberOfPMTsInX*pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness"
     y1="pionDetectorLuciteReflectorDepth
         +2.0*pionDetectorLuciteLightGuideThicknessInY"
-    y2="pionDetectorLucitePMTDiameter
+    y2="numberOfPMTsInZ*pionDetectorLucitePMTDiameter
         +2.0*pionDetectorLuciteLightGuideThicknessInY"
      z="pionDetectorLuciteLightGuideHeight"/>
   <subtraction name="pionDetectorLuciteLightGuideShell_solid">
@@ -390,8 +394,8 @@
               z="(-pionDetectorLuciteLightGuideHeight+pionDetectorLuciteLightGuideEntryDetectorThickness)/2.0"/>
   </intersection>
   <box name="pionDetectorLuciteLightGuideInsideExitDetectorSlab_solid"
-       x="2.0*pionDetectorLucitePMTDiameter"
-       y="2.0*pionDetectorLucitePMTDiameter"
+       x="2.0*numberOfPMTsInX*pionDetectorLucitePMTDiameter"
+       y="2.0*numberOfPMTsInZ*pionDetectorLucitePMTDiameter"
        z="pionDetectorLuciteLightGuideExitDetectorThickness"/>
   <intersection name="pionDetectorLuciteLightGuideInsideExitDetector_intersection_solid">
     <first ref="pionDetectorLuciteLightGuideInside_solid"/>
@@ -407,10 +411,10 @@
     theta="pionDetectorLuciteLightGuideTheta" phi="90.0*deg"
     x1="SCALE_UP*(pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteLightGuideThickness)"
     x2="SCALE_UP*(pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteLightGuideThickness)"
-    x3="SCALE_UP*(pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
-    x4="SCALE_UP*(pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
+    x3="SCALE_UP*(numberOfPMTsInX*pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
+    x4="SCALE_UP*(numberOfPMTsInX*pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
     y1="SCALE_UP*(pionDetectorLuciteReflectorDepth+2.0*pionDetectorLuciteLightGuideThickness)"
-    y2="SCALE_UP*(pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
+    y2="SCALE_UP*(numberOfPMTsInZ*pionDetectorLucitePMTDiameter+2.0*pionDetectorLuciteLightGuideThickness)"
      z="SCALE_UP*(pionDetectorLuciteLightGuideHeight+pionDetectorLucitePMTThickness)"/>
   
   <!-- Wish we could use multiUnion but requires new uSolids -->
@@ -704,18 +708,27 @@
                 +pionDetectorLuciteLightGuideHeight/2.0"/>
     </physvol>
     
-    <physvol name="pionDetectorLucitePMTOutsideHousing_physical">
-      <volumeref ref="pionDetectorLucitePMTOutsideHousing_logical"/>
-      <position name="pionDetectorLucitePMTOutsideHousing_position"
-        y="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0*tan(pionDetectorLuciteTheta)
-                +pionDetectorLuciteReflectorHeight*tan(pionDetectorLuciteReflectorTheta)
-                +pionDetectorLuciteLightGuideHeight*tan(pionDetectorLuciteLightGuideTheta)"
-        z="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
-                +pionDetectorLuciteReflectorHeight
-                +pionDetectorLuciteLightGuideHeight
-                +pionDetectorLucitePMTHousingHeight/2.0"/>
-    </physvol>
-
+    <!-- There's an annoying geant4 bug that prevents loops with from == to.
+         There's also an annoying requirement that from and to have to be integers.
+         So we set to = from + 1 and use steps of 2 to get the same outcome. -->
+    <loop for="iPMTX" from="1" to="2*numberOfPMTsInX" step="2">
+      <loop for="iPMTZ" from="1" to="2*numberOfPMTsInZ" step="2">
+        <physvol name="pionDetectorLucitePMTOutsideHousing_physical">
+          <volumeref ref="pionDetectorLucitePMTOutsideHousing_logical"/>
+          <position name="pionDetectorLucitePMTOutsideHousing_position"
+            x="((iPMTX-1)/2-(numberOfPMTsInX-1)/2)*pionDetectorLucitePMTDiameter"
+            y="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0*tan(pionDetectorLuciteTheta)
+              +pionDetectorLuciteReflectorHeight*tan(pionDetectorLuciteReflectorTheta)
+              +pionDetectorLuciteLightGuideHeight*tan(pionDetectorLuciteLightGuideTheta)
+              +((iPMTZ-1)/2-(numberOfPMTsInZ-1)/2)*pionDetectorLucitePMTDiameter"
+            z="(pionDetectorLuciteHeight+pionDetectorLuciteWedgeHeight)/2.0
+              +pionDetectorLuciteReflectorHeight
+              +pionDetectorLuciteLightGuideHeight
+              +pionDetectorLucitePMTHousingHeight/2.0"/>
+        </physvol>
+      </loop>
+    </loop>
+    
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
