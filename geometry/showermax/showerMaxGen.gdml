@@ -43,12 +43,19 @@
 		<section zOrder="2" zPosition="132.5" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<box name="solid_tungsten" lunit="mm" x="160.0" y="265.0" z="8.0"/>
-	<box name="solid_logic_mirror_box" lunit="mm" x="195.693609147" y="271.604" z="172.486"/>
+	<box name="solid_logic_mirror_box_3" lunit="mm" x="61.722" y="271.604" z="172.486"/>
+	<box name="solid_logic_mirror_box_4" lunit="mm" z="133.971609147" y="271.604" x="172.486"/>
+	<union name="solid_logic_mirror_box">
+		<first ref="solid_mirror_box_bot_1"/>
+		<second ref="solid_logic_mirror_box_4"/>
+		<position name="pos_logic_mirror_box_union" z="97.8468045735" y="0" x="0"/>
+		<rotation name="rot_logic_mirror_box_union" x="0" y="0" z="0"/>
+	</union>
 	<union name="solid_logic_mirror_box_union">
 		<first ref="solid_mirror_box_tungstenquartz_1"/>
 		<second ref="solid_logic_mirror_box"/>
-		<position name="pos_logic_mirror_box_union" x="177.846804574" y="0" z="0"/>
-		<rotation name="rot_logic_mirror_box_union" x="0" y="0" z="0"/>
+		<position name="pos_logic_mirror_box_union" x="110.861" y="0" z="0"/>
+		<rotation name="rot_logic_mirror_box_union" x="0" y="pi/2" z="0"/>
 	</union>
 	<cone name="solid_showerMaxMother" rmin1="700"  rmax1="1900" rmin2="700" rmax2="1900"  z="416.764" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 </solids>
