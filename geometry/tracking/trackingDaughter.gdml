@@ -54,13 +54,13 @@
   <polycone name="GEMTrackingWorld_sol"
             aunit="deg" startphi="0" deltaphi="360"
             lunit="mm">
-    <zplane rmin="605" rmax="2000.0" z="    0-100.0"/>
-    <zplane rmin="605" rmax="2000.0" z="500.0+100.0"/>
+    <zplane rmin="650" rmax="2000.0" z="    0-100.0"/>
+    <zplane rmin="650" rmax="2000.0" z="500.0+100.0"/>
   </polycone>
 
   <tube name="GEMTrackingPlane_sol"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="610" rmax="1900" z="100" lunit="mm"/>
+    rmin="650" rmax="1900" z="100" lunit="mm"/>
 
   <box name="GEMDetector_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="10.0*cm"/>
 
