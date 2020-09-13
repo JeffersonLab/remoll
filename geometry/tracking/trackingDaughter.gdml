@@ -137,10 +137,10 @@
       <physvol name="GEMDetector_sector_phys[i+1]">
         <volumeref ref="GEMDetector_log"/>
         <position name="GEMDetector_sector_pos[i+1]" 
-                  x="GEMPositionRadius*cos((i-1)*PHI)" 
-                  y="GEMPositionRadius*sin((i-1)*PHI)"/>
+                  x="GEMPositionRadius*cos((i-0.5)*PHI)" 
+                  y="GEMPositionRadius*sin((i-0.5)*PHI)"/>
         <rotation name="GEMDetector_sector_rot[i+1]"
-                  z="-(i-1)*PHI"/>
+                  z="-(i-0.5)*PHI"/>
       </physvol>	
     </loop>
 
