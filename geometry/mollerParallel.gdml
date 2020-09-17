@@ -46,12 +46,84 @@
     startphi="0" deltaphi="360" aunit="deg"
     rmin="1450" rmax="1460" z="2700" lunit="mm"/>
 
+  <sphere name="targetSphere_solid" 
+	  rmin="700" rmax="701" lunit="mm"
+	  deltaphi="360" deltatheta="180" aunit="deg"/>
+
+  <box lunit="mm" name="targetPbWallDS_solid" 
+       x="4000" y="3000" z="1"/>
+
+  <box lunit="mm" name="sbsBunkerFrontFace_solid" 
+       x="11000" y="4500" z="1"/>
 </solids>
 
 <structure>
+  <volume name="comptonVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5500"/>
+  </volume>
+
+  <volume name="mollerVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5501"/>
+  </volume>
+
+  <volume name="targetVirtualSphere_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="targetSphere_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5530"/>
+  </volume>
+
+  <volume name="targetPbWallDSVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="targetPbWallDS_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5531"/>
+  </volume>
+
+  <volume name="sbsBunkerFrontFace_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="sbsBunkerFrontFace_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5510"/>
+  </volume>
+
+  <volume name="usHybridVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5560"/>
+  </volume>
+
   <volume name="trackingDetectorVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="30"/>
   </volume>
@@ -129,6 +201,37 @@
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
+
+    <physvol    name="comptonVirtualPlane_phys">
+      <volumeref ref="comptonVirtualPlane_log"/>
+      <position name="comptonVirtualPlane_pos" unit="mm" z="-26000"/>
+    </physvol>
+
+    <physvol    name="mollerVirtualPlane_phys">
+      <volumeref ref="mollerVirtualPlane_log"/>
+      <position name="mollerVirtualPlane_pos" unit="mm" z="-16500"/>
+    </physvol>
+
+    <physvol    name="sbsBunkerFrontFace_phys">
+      <volumeref ref="sbsBunkerFrontFace_log"/>
+      <position name="sbsBunkerFrontFace_pos" unit="mm" x="6240" y="-1000" z="-11000"/>
+      <rotation name="sbsBunkerFrontFace_rot" unit="deg" y="30"/>
+    </physvol>
+
+    <physvol name="targetVirtualSphere_phys">
+      <volumeref ref="targetVirtualSphere_log"/>
+      <positionref ref="targetCenter"/>
+    </physvol>
+
+    <physvol    name="targetPbWallDSVirtualPlane_phys">
+      <volumeref ref="targetPbWallDSVirtualPlane_log"/>
+      <position name="targetPbWallDSVirtualPlane_pos" unit="mm" z="-2800"/>
+    </physvol>
+
+    <physvol    name="usHybridVirtualPlane_phys">
+      <volumeref ref="usHybridVirtualPlane_log"/>
+      <position name="usHybridVirtualPlane_pos" unit="mm" z="4800"/>
+    </physvol>
 
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
