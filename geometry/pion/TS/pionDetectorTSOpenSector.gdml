@@ -4,7 +4,7 @@
 
 <define>
   <constant name="PHI" value="360.0/2.0"/>
-  <constant name="PHI0" value="2.0*360.0/7.0"/>
+  <constant name="PHI0" value="1.5*360.0/7.0"/>
 
   <quantity name="pionDetectorTSInnerRadius" type="length" value="0.820" unit="m"/>
   <quantity name="pionDetectorTSOuterRadius" type="length" value="1.700" unit="m"/>
@@ -21,7 +21,7 @@
     rmin="pionDetectorTSInnerRadius"
     rmax="pionDetectorTSOuterRadius"
        z="pionDetectorTSLength"
-    startphi="-PHI/2.0" deltaphi="PHI" aunit="deg"/>
+    startphi="-0.5*PHI/2.0" deltaphi="0.5*PHI" aunit="deg"/>
   <tube name="pionDetectorTSAllSectors_solid"
     rmin="pionDetectorTSInnerRadius"
     rmax="pionDetectorTSOuterRadius"
