@@ -12,9 +12,9 @@
   &matrices;
 
   <constant name="i2cm" value="2.54"/>
-  <constant name="width_mother" value="190000."/>
-  <constant name="height_mother" value="190000."/>
-  <constant name="length_mother" value="190000."/>
+  <constant name="width_mother" value="75000."/>
+  <constant name="height_mother" value="50000."/>
+  <constant name="length_mother" value="125000."/>
 
   <constant name="radius_of_cylwall" value="26517.6"/><!--25460."/>-->
   <constant name="hall_cylwall_radius" value="radius_of_cylwall/10"/>
