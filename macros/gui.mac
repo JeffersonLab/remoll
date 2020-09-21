@@ -55,6 +55,8 @@
 /gui/addButton view "Qt viewer (stored)"     "/control/execute vis/SQt.mac"
 /gui/addButton view "Load vis settings"      "/control/execute vis/vis.mac"
 /gui/addButton view "Load cutaway settings"  "/control/execute vis/cutaway.mac"
+/gui/addButton view "Clear cutaway planes"   "/vis/viewer/clearCutawayPlanes"
+/gui/addButton view "Vertical section view"  "/control/execute vis/section.mac"
 /gui/addButton view "Draw real world"        "/vis/drawVolume world"
 /gui/addButton view "Draw all worlds"        "/vis/drawVolume worlds"
 /gui/addButton view "Set style surface"      "/vis/viewer/set/style surface"

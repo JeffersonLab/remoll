@@ -62,10 +62,10 @@ class remollSeed_t: public TObject {
     // Save function for use in ROOT tree
     int Save() const {
       std::stringstream name;
-      name << "run" << fRunNo << "evt" << fEvtNo << ".rndm";
+      name << "run" << fRunNo << "evt" << fEvtNo << ".state";
       std::ofstream file(name.str());
       file << fSeed;
-      return fSeed.Length();
+      return 1;
     };
   ClassDef(remollSeed_t,1);
 };

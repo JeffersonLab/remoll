@@ -23,6 +23,7 @@
   <volume name="logicMother">
     <materialref ref="G4_AIR"/>
     <solidref ref="world_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
     <!-- Target region -->
     <physvol>
