@@ -71,7 +71,7 @@
 
       <physvol>
         <file name="pion/pionDetectorSystem.gdml"/>
-        <positionref ref="pionDetectorCenter"/>
+        <positionref ref="pionDetectorSystemFaceUS"/>
       </physvol>
 
     </volume>
