@@ -225,7 +225,8 @@
 
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_2" rmax="radius_max_cylHallDet" rmin="0" startphi="0" z="0.1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="hallFlatLidDet_solid" 
+	  rmax="radius_max_cylHallDet - 0.2" rmin="0" startphi="0" z="0.1"/>
 
     <!--Hall A top wall -->
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  
@@ -441,7 +442,7 @@
 
     <volume name="hallFlatLidDet_logic">
       <materialref ref="Vacuum"/>
-      <solidref ref="cylHallDet_2"/>
+      <solidref ref="hallFlatLidDet_solid"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="101"/>
@@ -602,7 +603,7 @@
 
       <physvol name="hallFlatLidDet">
         <volumeref ref="hallFlatLidDet_logic"/> <!-- this should be removed once we fix the hall lid CG -->
-        <positionref ref="cylHallDet_2_center"/>
+        <position name="hallFlatLidDet_pos" unit="mm" y="center_cylwall + height_cylwall/2. - 1"/>
 	<rotationref ref="scRot_1"/>
       </physvol>
 
