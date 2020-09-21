@@ -65,7 +65,7 @@ class remollSeed_t: public TObject {
       name << "run" << fRunNo << "evt" << fEvtNo << ".state";
       std::ofstream file(name.str());
       file << fSeed;
-      return fSeed.Length();
+      return 1;
     };
   ClassDef(remollSeed_t,1);
 };
