@@ -5,6 +5,7 @@
 
 # This is the current working geometry
 /remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
 
 #/remoll/likekryptonite  true
 
@@ -53,4 +54,4 @@
 #/remoll/filename remollout_r5o_external_default.root
 
 
-/run/beamOn 1
+##/run/beamOn 1
