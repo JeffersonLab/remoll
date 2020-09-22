@@ -4,15 +4,20 @@
       xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
+<position name="hole_position" unit="mm" x="0" y="0" z="353.454"/>
 <rotation name="rotation1" unit="deg" x="90" y="45"/>
 <rotation name="rotation2" unit="deg" x="90"/>
 <rotation name="rotation3" unit="deg" x="90" y="-45"/>
 <rotation name="rotation4" unit="deg" y="90"/>
+<rotation name="rotation5" unit="deg" x="-90" y="45"/>
+<rotation name="rotation6" unit="deg" x="-90"/>
+<rotation name="rotation7" unit="deg" x="-90" y="-45"/>
+<rotation name="rotation8" unit="deg" y="-90"/>
 </define>
 
 <solids>
 
-  <tube name = "tube" rmin="0" rmax="25.4" z="1006.908" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
+  <tube name = "tube" rmin="0" rmax="25.4" z="300" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
  
   <polycone name="solid_DSbeampipe_vacuum"
             aunit="deg" startphi="0" deltaphi="360"
@@ -117,29 +122,12 @@
     <auxiliary auxtype="Color" auxvalue="Blue"/>
   </volume>
 
- <volume name="logic_tube_1">
+ <volume name="logic_hole">
     <materialref ref="G4_Galactic"/>
     <solidref ref="tube"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
   </volume>
 
- <volume name="logic_tube_2">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="tube"/>
-    <auxiliary auxtype="Color" auxvalue="Blue"/>
-  </volume>
-
- <volume name="logic_tube_3">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="tube"/>
-    <auxiliary auxtype="Color" auxvalue="Blue"/>
-  </volume>
-
- <volume name="logic_tube_4">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="tube"/>
-    <auxiliary auxtype="Color" auxvalue="Blue"/>
-  </volume>
 
   <volume name="logic_DSpipe2_DSplate">
     <materialref ref="G4_Al"/>
@@ -194,24 +182,52 @@
     <materialref ref="G4_Pb"/>
     <solidref ref="SAM_Pb_donut"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
-      <physvol name="tube1">
-            <volumeref ref="logic_tube_1"/>
+      <physvol name="hole1">
+            <volumeref ref="logic_hole"/>
+            <position ref="hole_position"/>
 	     <rotation ref="rotation1"/>
       </physvol>
 
-      <physvol name="tube2">
-            <volumeref ref="logic_tube_2"/>
+      <physvol name="hole2">
+            <volumeref ref="logic_hole"/>
+            <position ref="hole_position"/>
 	     <rotation ref="rotation2"/>
       </physvol>
 
-      <physvol name="tube3">
-            <volumeref ref="logic_tube_3"/>
+      <physvol name="hole3">
+            <volumeref ref="logic_hole"/>
+            <position ref="hole_position"/>
 	     <rotation ref="rotation3"/>
       </physvol>
 
-      <physvol name="tube4">
-            <volumeref ref="logic_tube_4"/>
+      <physvol name="hole4">
+            <volumeref ref="logic_hole"/>
+            <position ref="hole_position"/>
 	     <rotation ref="rotation4"/>
+      </physvol>
+
+      <physvol name="hole5">
+            <volumeref ref="logic_hole"/>
+            <position ref="hole_position"/>
+	     <rotation ref="rotation5"/>
+      </physvol>
+
+      <physvol name="hole6">
+            <volumeref ref="logic_hole"/>
+            <position ref="hole_position"/>
+	     <rotation ref="rotation6"/>
+      </physvol>
+
+      <physvol name="hole7">
+            <volumeref ref="logic_hole"/>
+            <position ref="hole_position"/>
+	     <rotation ref="rotation7"/>
+      </physvol>
+
+      <physvol name="hole8">
+            <volumeref ref="logic_hole"/>
+            <position ref="hole_position"/>
+	     <rotation ref="rotation8"/>
       </physvol>
   </volume>
 
