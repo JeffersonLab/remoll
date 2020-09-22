@@ -4,9 +4,16 @@
       xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
+<rotation name="rotation1" unit="deg" x="90" y="45"/>
+<rotation name="rotation2" unit="deg" x="90"/>
+<rotation name="rotation3" unit="deg" x="90" y="-45"/>
+<rotation name="rotation4" unit="deg" y="90"/>
 </define>
 
 <solids>
+
+  <tube name = "tube" rmin="0" rmax="25.4" z="1006.908" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
+ 
   <polycone name="solid_DSbeampipe_vacuum"
             aunit="deg" startphi="0" deltaphi="360"
             lunit="mm">
@@ -84,6 +91,11 @@
       <zplane rmin="203.454" rmax="246.888" z="25637.524+12.7+34.798+12.7"/>
       </polycone>
 
+ <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAM_Pb_donut">
+      <zplane rmin="203.454" rmax="503.454" z="25637.524+12.7+34.798+12.7+50"/>
+      <zplane rmin="203.454" rmax="503.454" z="25637.524+12.7+34.798+12.7+50+300"/>
+      </polycone>
+
  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3_6">
       <zplane rmin="196.85" rmax="203.2" z="25637.524+12.7+34.798"/>
       <zplane rmin="196.85" rmax="203.2" z="25637.524+12.7+34.798+735.838+53.74"/>
@@ -102,6 +114,30 @@
   <volume name="logic_DSpipe2_2">
     <materialref ref="G4_Al"/>
     <solidref ref="solid_DSpipe2_2"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+ <volume name="logic_tube_1">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tube"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+ <volume name="logic_tube_2">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tube"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+ <volume name="logic_tube_3">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tube"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+ <volume name="logic_tube_4">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tube"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
   </volume>
 
@@ -152,6 +188,31 @@
     <materialref ref="G4_STAINLESS-STEEL"/>
     <solidref ref="solid_DSpipe3_5"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+  </volume>
+
+<volume name="logic_SAM_Pb_donut">
+    <materialref ref="G4_Pb"/>
+    <solidref ref="SAM_Pb_donut"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+      <physvol name="tube1">
+            <volumeref ref="logic_tube_1"/>
+	     <rotation ref="rotation1"/>
+      </physvol>
+
+      <physvol name="tube2">
+            <volumeref ref="logic_tube_2"/>
+	     <rotation ref="rotation2"/>
+      </physvol>
+
+      <physvol name="tube3">
+            <volumeref ref="logic_tube_3"/>
+	     <rotation ref="rotation3"/>
+      </physvol>
+
+      <physvol name="tube4">
+            <volumeref ref="logic_tube_4"/>
+	     <rotation ref="rotation4"/>
+      </physvol>
   </volume>
 
 <volume name="logic_DSpipe3_6">
@@ -205,6 +266,10 @@
 
  <physvol name="DSpipe3_DSpipe_5">
       <volumeref ref="logic_DSpipe3_5"/>
+    </physvol>
+
+ <physvol name="SAM_Pb_donut">
+      <volumeref ref="logic_SAM_Pb_donut"/>
     </physvol>
 
  <physvol name="DSpipe3_DSpipe_6">
