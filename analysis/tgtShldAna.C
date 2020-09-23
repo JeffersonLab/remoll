@@ -225,24 +225,24 @@ void writeOutput(){
 
 
   if( (analyzeDet & 1) == 1)
-    writeHisto_sphere(fout,5530,scaleFactor);
+    writeOutput_sphere(fout,5530,scaleFactor);
   if( (analyzeDet & 2) == 2){
-    writeHisto_beamLine(fout,5500,scaleFactor);
-    writeHisto_beamLine(fout,5501,scaleFactor);
-    writeHisto_beamLine(fout,5547,scaleFactor);
-    writeHisto_beamLine(fout,5546,scaleFactor);
-    writeHisto_beamLine(fout,5543,scaleFactor);
-    writeHisto_beamLine(fout,5542,scaleFactor);
-    writeHisto_beamLine(fout,5531,scaleFactor);
-    writeHisto_beamLine(fout,5560,scaleFactor);
+    writeOutput_beamLine(fout,5500,scaleFactor);
+    writeOutput_beamLine(fout,5501,scaleFactor);
+    writeOutput_beamLine(fout,5547,scaleFactor);
+    writeOutput_beamLine(fout,5546,scaleFactor);
+    writeOutput_beamLine(fout,5543,scaleFactor);
+    writeOutput_beamLine(fout,5542,scaleFactor);
+    writeOutput_beamLine(fout,5531,scaleFactor);
+    writeOutput_beamLine(fout,5560,scaleFactor);
 
-    //writeHisto_beamLine(fout,5556,scaleFactor);FIXME
-    //writeHisto_beamLine(fout,5545,scaleFactor);FIXME
-    //writeHisto_beamLine(fout,5544,scaleFactor);FIXME
-    //writeHisto_beamLine(fout,5555,scaleFactor);FIXME
-    //writeHisto_beamLine(fout,5541,scaleFactor);FIXME
-    //writeHisto_beamLine(fout,5540,scaleFactor);FIXME
-    //writeHisto_beamLine(fout,5510,scaleFactor);FIXME
+    //writeOutput_beamLine(fout,5556,scaleFactor);FIXME
+    //writeOutput_beamLine(fout,5545,scaleFactor);FIXME
+    //writeOutput_beamLine(fout,5544,scaleFactor);FIXME
+    //writeOutput_beamLine(fout,5555,scaleFactor);FIXME
+    //writeOutput_beamLine(fout,5541,scaleFactor);FIXME
+    //writeOutput_beamLine(fout,5540,scaleFactor);FIXME
+    //writeOutput_beamLine(fout,5510,scaleFactor);FIXME
   }
   if( (analyzeDet & 4) == 4){
     writeOutput_hall(fout,scaleFactor);
