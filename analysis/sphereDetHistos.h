@@ -65,8 +65,8 @@ void fillHisto_sphere(int detID, int sp, double rdDmg[3],double pz,
       dSph_energyDS[sp][1][det]->Fill(kinE);
   }
 
-  double th = acos(zz/sqrt(xx*xx + yy*yy + zz*zz));
-  double ph = atan2(yy,xx);
+  double th = acos(zz/sqrt(xx*xx + yy*yy + zz*zz))/pi*180;
+  double ph = atan2(yy,xx)/pi*180;
   ph = fmod(ph,180);
 
   for(int kk=0;kk<nDmg;kk++){
