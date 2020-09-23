@@ -143,6 +143,7 @@ long processOne(string fnm){
       double xx = hit->at(j).x;
       double yy = hit->at(j).y;
       double zz = hit->at(j).z;
+      double sphereZZ = zz + 4500;
       double pz = hit->at(j).pz;
       int det = hit->at(j).det;
 
@@ -151,7 +152,7 @@ long processOne(string fnm){
       double spherePZ = mom*pos;
       bool doBeamLine = std::find(planeDets.begin(), planeDets.end(), det) != planeDets.end();
       if(det==5530  && ( (analyzeDet & 1) ==1))
-	fillHisto_sphere(det, sp, rdDmg, spherePZ, xx, yy, zz, kinE);
+	fillHisto_sphere(det, sp, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
       else if( doBeamLine && ( (analyzeDet & 2) ==2))
 	fillHisto_beamLine(det, sp, rdDmg, pz, xx, yy, kinE);
       else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
@@ -159,7 +160,7 @@ long processOne(string fnm){
 
       if((sp==0 || sp==5) && kinE>1){
 	if(det==5530 && ( (analyzeDet & 1) ==1))
-	  fillHisto_sphere(det, 1, rdDmg, spherePZ, xx, yy, zz, kinE);
+	  fillHisto_sphere(det, 1, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
 	else if(doBeamLine  && ( (analyzeDet & 2) ==2))
 	  fillHisto_beamLine(det, 1, rdDmg, pz, xx, yy, kinE);
 	else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
@@ -167,7 +168,7 @@ long processOne(string fnm){
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
 	  if(det==5530 && ( (analyzeDet & 1) ==1))
-	    fillHisto_sphere(det, 4, rdDmg, spherePZ, xx, yy, zz, kinE);
+	    fillHisto_sphere(det, 4, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
 	  else if(doBeamLine  && ( (analyzeDet & 2) ==2))
 	    fillHisto_beamLine(det, 4, rdDmg, pz, xx, yy, kinE);
 	  else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
