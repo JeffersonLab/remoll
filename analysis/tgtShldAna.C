@@ -11,6 +11,7 @@
 // >.L tgtShldAna.C
 // > tgtShldAna(<remoll output file>,
 //          <1 for tgt sphere, 2 for plane dets, 4 for hall Det>, 
+//          <additional scale factor>,
 //          <0 to update the file, 1 to recreate>, 
 //          <1 for beam generator, 0 else>)
 
@@ -31,13 +32,13 @@ int analyzeDet(0);
 radDamage radDmg;
 
 void initHisto(int);
-void writeOutput();
+void writeOutput(double);
 long processOne(string);
 void process();
 
 const std::vector<int> planeDets={5500,5501,5542,5546,5547,5531,5543,5560};//FIXME add side/over/sbs dets when ready
 
-void tgtShldAna(const string& finName = "./remollout.root", int anaDet=1, int overWriteFile = 1, int beamGenerator=1){
+void tgtShldAna(const string& finName = "./remollout.root", int anaDet=1, double addScale=1, int overWriteFile = 1, int beamGenerator=1){
   fileNm = finName;
   beamGen = beamGenerator;
 
@@ -57,7 +58,7 @@ void tgtShldAna(const string& finName = "./remollout.root", int anaDet=1, int ov
 
   initHisto(overWriteFile);
   process();
-  writeOutput();
+  writeOutput(addScale);
 }
 
 void process(){
@@ -148,7 +149,7 @@ long processOne(string fnm){
       int det = hit->at(j).det;
 
       TVector3 mom(hit->at(j).px,hit->at(j).py,hit->at(j).pz);
-      TVector3 pos(hit->at(j).x,hit->at(j).y,hit->at(j).z);
+      TVector3 pos(hit->at(j).x,hit->at(j).y,hit->at(j).z-4500);
       double spherePZ = mom*pos;
       bool doBeamLine = std::find(planeDets.begin(), planeDets.end(), det) != planeDets.end();
       if(det==5530  && ( (analyzeDet & 1) ==1))
@@ -218,12 +219,13 @@ void initHisto(int fileType){
   }
 }
 
-void writeOutput(){
+void writeOutput(double addScale){
 
   double scaleFactor = 1./nFiles;
   if(beamGen)
     scaleFactor = 1./nTotEv;
 
+  scaleFactor /= addScale;
 
   if( (analyzeDet & 1) == 1)
     writeOutput_sphere(fout,5530,scaleFactor);
