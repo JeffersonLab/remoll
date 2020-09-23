@@ -114,7 +114,8 @@ long processOne(string fnm){
     for(int j=0;j<hit->size();j++){
 
       //if(hit->at(j).det <4001 || hit->at(j).det>4014) continue;
-      if(hit->at(j).det != 4001 && hit->at(j).det != 4008) continue;
+      //if(hit->at(j).det != 4001 && hit->at(j).det != 4008) continue;
+      if(hit->at(j).det != 4015) continue;
 
       if(std::isnan(rate) || std::isinf(rate)) continue;
       if(rate==0) {rate=1;}
@@ -122,27 +123,31 @@ long processOne(string fnm){
       int sp = spM[int(hit->at(j).pid)]-1;
       if(sp==-1) continue;
 
+      if(hit->at(j).r>90 || hit->at(j).z<1500 || hit->at(j).z>2500) continue;
+
       int trid = hit->at(j).trid;
       int mtrid = hit->at(j).mtrid;
       int foundUS(-1);
       for(int k=0;k<hit->size() && foundUS==-1;k++)
-	if(trid == hit->at(k).trid && hit->at(k).det==26)
-	  foundUS = trid;
-	else if(mtrid == hit->at(k).trid  && hit->at(k).det==26)
-	  foundUS = mtrid;
+	if (trid == hit->at(k).trid && hit->at(k).vz<1000 )
+      	  foundUS = trid;
+
+      for(int k=0;k<hit->size() && foundUS==-1;k++)
+	if(mtrid == hit->at(k).trid  && hit->at(k).vz<1000)
+      	  foundUS = mtrid;
 
       if(foundUS==-1) continue;
       trid = foundUS;
-
+      
       std::vector<int>::iterator it = find(firstHit.begin(),firstHit.end(),trid);
       if( it == firstHit.end() ){
 	firstHit.push_back(trid);
 	kinE.push_back(hit->at(j).k);	
 	species.push_back(sp);
 	powerDep.push_back(0);
-	xh.push_back(hit->at(j).x);
-	yh.push_back(hit->at(j).x);
-	zh.push_back(hit->at(j).z);
+	xH.push_back(hit->at(j).x);
+	yH.push_back(hit->at(j).x);
+	zH.push_back(hit->at(j).z);
 
 	dCoil_Ein[sp]->Fill(hit->at(j).k);
 	dCoil_EinLin[sp]->Fill(hit->at(j).k);
@@ -155,10 +160,10 @@ long processOne(string fnm){
 
     for(int j=0;j<firstHit.size();j++){
       dCoil_EinEdep[species[j]]->Fill(kinE[j],powerDep[j]);
-      dCoil_xy[sp][0]->Fill(xH[j],yH[j]);
-      dCoil_xy[sp][1]->Fill(xH[j],yH[j],powerDep[j]);
-      dCoil_rz[sp][0]->Fill(zH[j],sqrt(xH[j]*xH[j]+yH[j]*yH[j]));
-      dCoil_rz[sp][1]->Fill(zH[j],sqrt(xH[j]*xH[j]+yH[j]*yH[j]),powerDet[j]);
+      dCoil_xy[species[j]][0]->Fill(xH[j],yH[j]);
+      dCoil_xy[species[j]][1]->Fill(xH[j],yH[j],powerDep[j]);
+      dCoil_rz[species[j]][0]->Fill(zH[j],sqrt(xH[j]*xH[j]+yH[j]*yH[j]));
+      dCoil_rz[species[j]][1]->Fill(zH[j],sqrt(xH[j]*xH[j]+yH[j]*yH[j]),powerDep[j]);
     }
     
   }
@@ -170,7 +175,7 @@ long processOne(string fnm){
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_coilW_firstHitV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_coilWshld_firstHitV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const string fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
