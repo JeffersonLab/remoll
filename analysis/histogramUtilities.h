@@ -4,6 +4,24 @@
 #include "TAxis.h"
 #include "TH1.h"
 
+int findSeptant(double x, double y){
+  
+  const double secPhi = fmod(phi, 2*pi/7);
+  
+  //0,1,2 == closed, transition, open
+  if( secPhi < pi/28 )
+    sector = 0;
+  else if( secPhi < 3*pi/28 )
+    sector = 1;
+  else if( secPhi < 5*pi/28 )
+    sector = 2;
+  else if( secPhi < 7*pi/28 )
+    sector = 1;
+  else if( secPhi < 8*pi/28 )
+    sector = 0;
+  return 0;
+}
+
 void niceLogXBins(TH1*h)
 {
   TAxis *axis = h->GetXaxis();

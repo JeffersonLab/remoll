@@ -7,23 +7,35 @@ TCanvas* plotCompare2D(vector<string> hNms,string cNm);
 TCanvas *plot2DMD(string hNms, string cNm, string sp);
 TCanvas *rMD(string hXY);
 
-double scale=1/1000.;
+double scale=1.;
 //TFile *fin=TFile::Open("../beamGeoV1_radAnaV4.root","READ");
 //TFile *fin=TFile::Open("../beamGeoV2_radAnaV4.root","READ");
-TFile *fin=TFile::Open("../beamGeoV2_radAnaV4_correctMD.root","READ");
+//TFile *fin=TFile::Open("../beamGeoV2_radAnaV4_correctMD.root","READ");
+TFile *fin=TFile::Open("../test_c1p2V3.root","READ");
 
 void plotRadAna(){
   vector<string> hNms;
   for(int i=0;i<nSpecies;i++)
+    //hNms.push_back(Form("dCoil_xy_%s_Dmg0",spH[i].c_str()));
+    //hNms.push_back(Form("aC2_xy_%s_Dmg1",spH[i].c_str()));
+    //hNms.push_back(Form("aC2_vRZ_%s_Dmg0",spH[i].c_str()));
+    hNms.push_back(Form("aC2_vZ_%s_Dmg0",spH[i].c_str()));
+    //hNms.push_back(Form("aC2_phZ_%s_Dmg1",spH[i].c_str()));
+    //hNms.push_back(Form("aC2_phE_%s_Dmg0",spH[i].c_str()));
+    //hNms.push_back(Form("aC2_zE_%s_Dmg0",spH[i].c_str()));
+
+
   //   hNms.push_back(Form("det28/d28_mdHits_%s_ER0_Dmg2",spH[i].c_str()));
   //hNms.push_back(Form("det45/d45_r_%s_Pg1_Dmg0",spH[i].c_str()));
   //hNms.push_back(Form("det45/d45_energy_Pl1_%s",spH[i].c_str()));
-  hNms.push_back(Form("det28/d28_energyNEIL_R7_%s",spH[i].c_str()));
+    //hNms.push_back(Form("det28/d28_energyNEIL_R7_%s",spH[i].c_str()));
     //hNms.push_back(Form("det28/d28_energy_R7_%s",spH[i].c_str()));
   //hNms.push_back(Form("det28/d28_xy_R0_%s_Dmg0",spH[i].c_str()));
   
-  auto *c1=plotCompare1D(hNms,"kinE");
+  auto *c1=plotCompare1D(hNms,"vZ");
+  //auto *c1=plotCompare1D(hNms,"kinE");
   //auto *c1=plotCompare2D(hNms,"xyHits");
+  //auto *c1=plotCompare2D(hNms,"rzCoilHits");
 
   // auto *c1=plotCompare1DMD("det28/d28_z0","zSource");
   // return;
@@ -116,7 +128,7 @@ TCanvas* rMD(string hNm){
       double yy = h->GetYaxis()->GetBinCenter(j);
       double r = sqrt(xx*xx + yy*yy);
       double val = h->GetBinContent(i,j);
-      if(!isnan(val))
+      if(!std::isnan(val))
 	 hr->Fill(r,val);
     }
 
@@ -198,11 +210,20 @@ TCanvas* plotCompare2D(vector<string> hNms,string cNm){
 
   auto *c1=new TCanvas(cNm.c_str(),cNm.c_str(),1800,800);
   c1->Divide(3,2);
-  gStyle->SetOptStat(0);
+  gStyle->SetOptStat("i");
 
   for(int i=0;i<hNms.size();i++){
     c1->cd(i+1);
     TH2D *h=(TH2D*)fin->Get(hNms[i].c_str());
+    if(!h){
+      cout<<hNms[i]<<endl;
+      continue;
+    }
+    // double range=200;
+    // //if(i==2) range=500;
+    // h->GetXaxis()->SetRangeUser(-range,range);
+    // h->GetYaxis()->SetRangeUser(-range,range);
+    h->GetYaxis()->SetRangeUser(0,200);
     h->Scale(scale);
     h->DrawCopy("colz");
 
