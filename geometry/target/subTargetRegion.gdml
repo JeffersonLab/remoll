@@ -305,6 +305,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="skyshineVacuumDet1_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_1"/>
     <auxiliary auxtype="DetNo" auxvalue="5555"/>
   </volume>
@@ -313,6 +314,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="skyshineVacuumDet2_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_2"/>
     <auxiliary auxtype="DetNo" auxvalue="5556"/>
   </volume>
@@ -321,6 +323,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtOuterDetyz_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5540"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -331,6 +334,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtOuterDetyz_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5541"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -342,6 +346,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtOuterDetxy_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5542"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -352,6 +357,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtOuterDetxy_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5543"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -362,6 +368,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtInnerDetyz_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5544"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -372,6 +379,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtInnerDetyz_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5545"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -383,6 +391,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtInnerDetxy_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5546"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -393,6 +402,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtInnerDetxy_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5547"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>

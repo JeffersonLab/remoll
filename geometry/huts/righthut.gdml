@@ -66,6 +66,7 @@
     <materialref ref="Vacuum"/>
     <solidref ref="righthut_Det_inside_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="hutDet"/>
     <auxiliary auxtype="DetNo" auxvalue="6668"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -76,6 +77,7 @@
     <materialref ref="Vacuum"/>
     <solidref ref="righthut_Det_outside_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="hutDet"/>
     <auxiliary auxtype="DetNo" auxvalue="6669"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -85,6 +87,7 @@
   <volume name="righthut">
     <materialref ref="G4_Galactic"/>
     <solidref ref="righthut_world_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     
     <physvol name="righthut_front_pv">
       <volumeref ref="righthut_front_logic"/>
