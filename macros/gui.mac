@@ -90,6 +90,7 @@
 #
 # Run menu :
 /gui/addMenu   run "7. Run"
+/gui/addButton run "Load from files" "/random/resetEngineFromEachEvent 1"
 /gui/addButton run "beamOn 1"    "/run/beamOn 1"
 /gui/addButton run "beamOn 2"    "/run/beamOn 2"
 /gui/addButton run "beamOn 5"    "/run/beamOn 5"
