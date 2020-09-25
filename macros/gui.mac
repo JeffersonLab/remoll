@@ -73,12 +73,19 @@
 /gui/addButton view "Flush viewer (= refresh + update)"           "/vis/viewer/flush"
 /gui/addButton view "Update scene"           "/vis/scene/notifyHandlers"
 #
+# Filter menu :
+/gui/addMenu   filter "5. Filters"
+/gui/addButton filter "HideAllGammas ON"  "/vis/filtering/trajectories/HideAllGammas/active 1"
+/gui/addButton filter "HideAllGammas OFF" "/vis/filtering/trajectories/HideAllGammas/active 0"
+/gui/addButton filter "ShowOnlyPionDetectorHits ON"  "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 1"
+/gui/addButton filter "ShowOnlyPionDetectorHits OFF" "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 0"
+#
 # Run menu :
-/gui/addMenu   field "5. Fields"
+/gui/addMenu   field "6. Fields"
 /gui/addButton field "Load fieldmaps" "/control/execute macros/load_magnetic_fieldmaps.mac"
 #
 # Generator menu :
-/gui/addMenu   gen "6. Generator"
+/gui/addMenu   gen "7. Generator"
 /gui/addButton gen "Moller"   "/remoll/evgen/set moller"
 /gui/addButton gen "Beam"     "/remoll/evgen/set beam"
 /gui/addButton gen "Beam/pi-" "/remoll/evgen/beam/partName pi-"
@@ -89,7 +96,7 @@
 
 #
 # Run menu :
-/gui/addMenu   run "7. Run"
+/gui/addMenu   run "8. Run"
 /gui/addButton run "Load from files" "/random/resetEngineFromEachEvent 1"
 /gui/addButton run "beamOn 1"    "/run/beamOn 1"
 /gui/addButton run "beamOn 2"    "/run/beamOn 2"
