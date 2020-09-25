@@ -78,10 +78,10 @@
 #
 # Create filters
 #
-/vis/filtering/trajectories/create/particleFilter HideAllGamma
-/vis/filtering/trajectories/HideAllGamma/add gamma
-/vis/filtering/trajectories/HideAllGamma/invert true
-/vis/filtering/trajectories/HideAllGamma/active 0
+/vis/filtering/trajectories/create/particleFilter HideAllGammas
+/vis/filtering/trajectories/HideAllGammas/add gamma
+/vis/filtering/trajectories/HideAllGammas/invert true
+/vis/filtering/trajectories/HideAllGammas/active 0
 
 /vis/filtering/trajectories/create/encounteredVolumeFilter ShowOnlyPionDetectorHits
 /vis/filtering/trajectories/ShowOnlyPionDetectorHits/add pionDetectorLuciteAllPlanesWedgeGlue_physical
