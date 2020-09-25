@@ -53,6 +53,7 @@
 /gui/addMenu   view "4. Viewer"
 /gui/addButton view "Qt viewer (immediate)"  "/control/execute vis/IQt.mac"
 /gui/addButton view "Qt viewer (stored)"     "/control/execute vis/SQt.mac"
+/gui/addButton view "Display limit 1M"       "/vis/ogl/set/displayListLimit 1000000"
 /gui/addButton view "Load vis settings"      "/control/execute vis/vis.mac"
 /gui/addButton view "Load cutaway settings"  "/control/execute vis/cutaway.mac"
 /gui/addButton view "Clear cutaway planes"   "/vis/viewer/clearCutawayPlanes"
@@ -63,6 +64,8 @@
 /gui/addButton view "Set style wireframe"    "/vis/viewer/set/style wireframe"
 /gui/addButton view "Hide tracks behind objects" "/vis/viewer/set/hiddenMarker true"
 /gui/addButton view "Show tracks behind objects" "/vis/viewer/set/hiddenMarker false"
+/gui/addButton view "Hide individual steps"  "/vis/modeling/trajectories/MollerStyle/default/setDrawStepPts false"
+/gui/addButton view "Show individual steps"  "/vis/modeling/trajectories/MollerStyle/default/setDrawStepPts true"
 /gui/addButton view "Front view (+Z)"        "/vis/viewer/set/viewpointThetaPhi 180 0 deg"
 /gui/addButton view "Back view (-Z)"         "/vis/viewer/set/viewpointThetaPhi 0 0 deg"
 /gui/addButton view "Side 1 view (+X)"       "/vis/viewer/set/viewpointThetaPhi 90 180 deg"
@@ -74,12 +77,19 @@
 /gui/addButton view "Flush viewer (= refresh + update)"           "/vis/viewer/flush"
 /gui/addButton view "Update scene"           "/vis/scene/notifyHandlers"
 #
+# Filter menu :
+/gui/addMenu   filter "5. Filters"
+/gui/addButton filter "HideAllGammas ON"  "/vis/filtering/trajectories/HideAllGammas/active 1"
+/gui/addButton filter "HideAllGammas OFF" "/vis/filtering/trajectories/HideAllGammas/active 0"
+/gui/addButton filter "ShowOnlyPionDetectorHits ON"  "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 1"
+/gui/addButton filter "ShowOnlyPionDetectorHits OFF" "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 0"
+#
 # Run menu :
-/gui/addMenu   field "5. Fields"
+/gui/addMenu   field "6. Fields"
 /gui/addButton field "Load fieldmaps" "/control/execute macros/load_magnetic_fieldmaps.mac"
 #
 # Generator menu :
-/gui/addMenu   gen "6. Generator"
+/gui/addMenu   gen "7. Generator"
 /gui/addButton gen "Moller"   "/remoll/evgen/set moller"
 /gui/addButton gen "Beam"     "/remoll/evgen/set beam"
 /gui/addButton gen "Beam/pi-" "/remoll/evgen/beam/partName pi-"
@@ -90,7 +100,7 @@
 
 #
 # Run menu :
-/gui/addMenu   run "7. Run"
+/gui/addMenu   run "8. Run"
 /gui/addButton run "Load from files" "/random/resetEngineFromEachEvent 1"
 /gui/addButton run "beamOn 1"    "/run/beamOn 1"
 /gui/addButton run "beamOn 2"    "/run/beamOn 2"
