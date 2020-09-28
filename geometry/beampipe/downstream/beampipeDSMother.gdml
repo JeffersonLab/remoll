@@ -2,9 +2,7 @@
 <gdml 
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
-<define>
-	<position name="hole_position" x="0" y="0" z="353.454"/>
-</define>
+
 <solids>
 
   <tube name = "tube" rmin="0" rmax="25.4" z="300" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
@@ -173,58 +171,54 @@
     <auxiliary auxtype="Color" auxvalue="Blue"/>
       <physvol name="hole1">
             <volumeref ref="logic_hole"/>
-            <position ref="hole_position"/>
-            <rotation name="rotation1" x="90" y="45" unit="deg"/>
+             <rotation name="rotation1" x="90" y="45" unit="deg"/>
+              <position name="hole1_position" x="203.454+45" y="-203.454-45" z="0"/>
       </physvol>
 
       <physvol name="hole2">
             <volumeref ref="logic_hole"/>
-	     <position ref="hole_position"/>
             <rotation name="rotation2" unit="deg" x="90"/>
-            
+            <position name="hole2_position" x="0" y="-203.454-150" z="0"/>
       </physvol>
 
       <physvol name="hole3">
             <volumeref ref="logic_hole"/>
-	     <position ref="hole_position"/>
             <rotation name="rotation3" unit="deg" x="90" y="-45"/>
-            
+            <position name="hole3_position" x="203.454+45" y="203.454+45" z="0"/>
       </physvol>
 
-      <physvol name="hole4">
+       <physvol name="hole4">
             <volumeref ref="logic_hole"/>
-	     <position ref="hole_position"/>
             <rotation name="rotation4" unit="deg" y="90"/>
-            
+            <position name="hole4_position" x="-203.454-150" y="0" z="0"/>
       </physvol>
 
       <physvol name="hole5">
             <volumeref ref="logic_hole"/>
-	       <position ref="hole_position"/>
             <rotation name="rotation5" unit="deg" x="-90" y="45"/>
-            
+            <position name="hole5_position" x="-203.454-45" y="203.454+45" z="0"/>
       </physvol>
 
       <physvol name="hole6">
             <volumeref ref="logic_hole"/>
-	       <position ref="hole_position"/>
             <rotation name="rotation6" unit="deg" x="-90"/>
-            
+            <position name="hole6_position" x="0" y="203.454+150" z="0"/>
       </physvol>
 
-      <physvol name="hole7">
+     <physvol name="hole7">
             <volumeref ref="logic_hole"/>
-	       <position ref="hole_position"/>
             <rotation name="rotation7" unit="deg" x="-90" y="-45"/>
-            
+            <position name="hole7_position" x="-203.454-45" y="-203.454-45" z="0"/>
       </physvol>
+
+      
 
       <physvol name="hole8">
             <volumeref ref="logic_hole"/>
-	       <position ref="hole_position"/>
             <rotation name="rotation8" unit="deg" y="-90"/>
-            
+            <position name="hole8_position" x="203.454+150" y="0" z="0"/>
       </physvol>
+
   </volume>
 
 <volume name="logic_DSpipe3_6">
