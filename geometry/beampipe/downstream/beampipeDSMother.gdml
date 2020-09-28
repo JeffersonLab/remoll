@@ -2,19 +2,9 @@
 <gdml 
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
-
 <define>
-<position name="hole_position" unit="mm" x="0" y="0" z="353.454"/>
-<rotation name="rotation1" unit="deg" x="90" y="45"/>
-<rotation name="rotation2" unit="deg" x="90"/>
-<rotation name="rotation3" unit="deg" x="90" y="-45"/>
-<rotation name="rotation4" unit="deg" y="90"/>
-<rotation name="rotation5" unit="deg" x="-90" y="45"/>
-<rotation name="rotation6" unit="deg" x="-90"/>
-<rotation name="rotation7" unit="deg" x="-90" y="-45"/>
-<rotation name="rotation8" unit="deg" y="-90"/>
+	<position name="hole_position" x="0" y="0" z="353.454"/>
 </define>
-
 <solids>
 
   <tube name = "tube" rmin="0" rmax="25.4" z="300" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
@@ -96,10 +86,9 @@
       <zplane rmin="203.454" rmax="246.888" z="25637.524+12.7+34.798+12.7"/>
       </polycone>
 
- <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAM_Pb_donut">
-      <zplane rmin="203.454" rmax="503.454" z="25637.524+12.7+34.798+12.7+50"/>
-      <zplane rmin="203.454" rmax="503.454" z="25637.524+12.7+34.798+12.7+50+300"/>
-      </polycone>
+ <tube name = "SAM_Pb_donut" rmin="203.454" rmax="503.454" z="300" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
+
+ 
 
  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3_6">
       <zplane rmin="196.85" rmax="203.2" z="25637.524+12.7+34.798"/>
@@ -185,49 +174,56 @@
       <physvol name="hole1">
             <volumeref ref="logic_hole"/>
             <position ref="hole_position"/>
-	     <rotation ref="rotation1"/>
+            <rotation name="rotation1" x="90" y="45" unit="deg"/>
       </physvol>
 
       <physvol name="hole2">
             <volumeref ref="logic_hole"/>
-            <position ref="hole_position"/>
-	     <rotation ref="rotation2"/>
+	     <position ref="hole_position"/>
+            <rotation name="rotation2" unit="deg" x="90"/>
+            
       </physvol>
 
       <physvol name="hole3">
             <volumeref ref="logic_hole"/>
-            <position ref="hole_position"/>
-	     <rotation ref="rotation3"/>
+	     <position ref="hole_position"/>
+            <rotation name="rotation3" unit="deg" x="90" y="-45"/>
+            
       </physvol>
 
       <physvol name="hole4">
             <volumeref ref="logic_hole"/>
-            <position ref="hole_position"/>
-	     <rotation ref="rotation4"/>
+	     <position ref="hole_position"/>
+            <rotation name="rotation4" unit="deg" y="90"/>
+            
       </physvol>
 
       <physvol name="hole5">
             <volumeref ref="logic_hole"/>
-            <position ref="hole_position"/>
-	     <rotation ref="rotation5"/>
+	       <position ref="hole_position"/>
+            <rotation name="rotation5" unit="deg" x="-90" y="45"/>
+            
       </physvol>
 
       <physvol name="hole6">
             <volumeref ref="logic_hole"/>
-            <position ref="hole_position"/>
-	     <rotation ref="rotation6"/>
+	       <position ref="hole_position"/>
+            <rotation name="rotation6" unit="deg" x="-90"/>
+            
       </physvol>
 
       <physvol name="hole7">
             <volumeref ref="logic_hole"/>
-            <position ref="hole_position"/>
-	     <rotation ref="rotation7"/>
+	       <position ref="hole_position"/>
+            <rotation name="rotation7" unit="deg" x="-90" y="-45"/>
+            
       </physvol>
 
       <physvol name="hole8">
             <volumeref ref="logic_hole"/>
-            <position ref="hole_position"/>
-	     <rotation ref="rotation8"/>
+	       <position ref="hole_position"/>
+            <rotation name="rotation8" unit="deg" y="-90"/>
+            
       </physvol>
   </volume>
 
@@ -286,6 +282,7 @@
 
  <physvol name="SAM_Pb_donut">
       <volumeref ref="logic_SAM_Pb_donut"/>
+      <position name="SAM_Pb_donut_position" unit="mm" x="0" y="0" z="25637.524+12.7+34.798+12.7+50+150"/>
     </physvol>
 
  <physvol name="DSpipe3_DSpipe_6">
