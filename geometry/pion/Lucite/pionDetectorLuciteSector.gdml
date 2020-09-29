@@ -20,7 +20,7 @@
     you modify the angle below so as to avoid overlaps between this volume and
     the trigger scintillator and volumes.
   -->
-  <quantity name="pionDetectorLuciteLength" type="length" value="0.69" unit="m"/>
+  <quantity name="pionDetectorLuciteLength" type="length" value="0.3" unit="m"/>
 
   <!--
     The Cherenkov critical angle for n = 1.5 materials is cos(theta_c) = 1/n,
@@ -43,14 +43,14 @@
     PMT radially outward; -90.0 degrees is with the PMT radially inward.
   -->
   <quantity name="pionDetectorLuciteSectorAngleBase" type="angle" value="+90.0" unit="deg"/>
-  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="0.0" unit="deg"/>
+  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="0.0555" unit="rad"/>
   
   <!--
     The lucite detector is placed radially in reference to the the center of the
     lucite blocks. This means that the position of the inner edge must be augmented
     with half the height (radial dimension) of the lucite blocks.
   -->
-  <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="100.0+13.0/2" unit="cm"/>
+  <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="109.5+12.5/2" unit="cm"/>
 </define>
 
 <materials>
@@ -72,7 +72,7 @@
 <structure>
   
   <volume name="pionDetectorLuciteSector_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
       <file name="pion/Lucite/pionDetectorLucite.gdml"/>
@@ -87,7 +87,7 @@
   </volume>
 
   <volume name="pionDetectorLuciteAllSectors_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorLuciteAllSectors_solid"/>
     <replicavol number="N_P"> <!-- number of replicas has to fill mother volume exactly! -->
       <volumeref ref="pionDetectorLuciteSector_logical"/>

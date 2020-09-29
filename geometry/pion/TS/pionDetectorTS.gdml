@@ -30,7 +30,7 @@
   </volume>
 
   <volume name="pionDetectorTS_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorTSPlane_solid"/>
 
     <physvol name="pionDetectorTS_physical">

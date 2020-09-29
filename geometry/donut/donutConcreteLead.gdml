@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+   <!-- Full concrete and lead donut system dimensions -->
+   <quantity name="donutSystemLength"      type="length" value="0.4" unit="m"/>
+   <quantity name="donutSystemInnerRadius" type="length" value="0.82" unit="m"/>
+   <quantity name="donutSystemOuterRadius" type="length" value="2.00" unit="m"/>
+
+   <!-- Thin virtual detectors on US and DS side -->
+   <quantity name="donutVirtualDetectorThickness" type="length" value="0.1" unit="mm"/>
+
+   <!-- Concrete donut dimensions -->
+   <quantity name="donutConcreteThickness"     type="length" value="0.20" unit="m"/>
+   <quantity name="donutConcreteInnerRadiusUS" type="length" value="1.036" unit="m"/>
+   <quantity name="donutConcreteOuterRadiusUS" type="length" value="1.200" unit="m"/>
+   <quantity name="donutConcreteInnerRadiusDS" type="length" value="1.047" unit="m"/>
+   <quantity name="donutConcreteOuterRadiusDS" type="length" value="1.209" unit="m"/>
+
+   <!-- Lead donut dimensions -->
+   <quantity name="donutLeadThickness"     type="length" value="0.20" unit="m"/>
+   <quantity name="donutLeadInnerRadiusUS" type="length" value="1.047" unit="m"/>
+   <quantity name="donutLeadOuterRadiusUS" type="length" value="1.209" unit="m"/>
+   <quantity name="donutLeadInnerRadiusDS" type="length" value="1.058" unit="m"/>
+   <quantity name="donutLeadOuterRadiusDS" type="length" value="1.218" unit="m"/>
+
+   <!-- Concrete donut positions -->
+   <position name="donutConcretePosition" z="0"/>
+
+   <!-- Lead donut positions -->
+   <position name="donutLeadPosition" z="donutConcreteThickness"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+    <polycone name="donutSystem_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemOuterRadius" z="0"/>
+      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemOuterRadius" z="donutSystemLength"/>
+    </polycone>
+
+    <polycone name="donutConcrete_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutConcreteInnerRadiusUS" rmax="donutConcreteOuterRadiusUS" z="0"/>
+      <zplane rmin="donutConcreteInnerRadiusDS" rmax="donutConcreteOuterRadiusDS" z="donutConcreteThickness"/>
+    </polycone>
+    <polycone name="donutConcreteVirtualDetectorUS_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutConcreteInnerRadiusUS" rmax="donutConcreteOuterRadiusUS" z="0"/>
+      <zplane rmin="donutConcreteInnerRadiusUS
+                   +donutVirtualDetectorThickness/donutConcreteThickness
+                   *(donutConcreteInnerRadiusDS-donutConcreteInnerRadiusUS)"
+              rmax="donutConcreteOuterRadiusUS
+                   +donutVirtualDetectorThickness/donutConcreteThickness
+                   *(donutConcreteOuterRadiusDS-donutConcreteOuterRadiusUS)"
+              z="donutVirtualDetectorThickness"/>
+    </polycone>
+    <polycone name="donutConcreteVirtualDetectorDS_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutConcreteInnerRadiusDS
+                   -donutVirtualDetectorThickness/donutConcreteThickness
+                   *(donutConcreteInnerRadiusDS-donutConcreteInnerRadiusUS)"
+              rmax="donutConcreteOuterRadiusDS
+                   -donutVirtualDetectorThickness/donutConcreteThickness
+                   *(donutConcreteOuterRadiusDS-donutConcreteOuterRadiusUS)"
+              z="donutConcreteThickness-donutVirtualDetectorThickness"/>
+      <zplane rmin="donutConcreteInnerRadiusDS" rmax="donutConcreteOuterRadiusDS" z="donutConcreteThickness"/>
+    </polycone>
+
+    <polycone name="donutLead_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutLeadInnerRadiusUS" rmax="donutLeadOuterRadiusUS" z="0"/>
+      <zplane rmin="donutLeadInnerRadiusDS" rmax="donutLeadOuterRadiusDS" z="donutLeadThickness"/>
+    </polycone>
+    <polycone name="donutLeadVirtualDetectorUS_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutLeadInnerRadiusUS" rmax="donutLeadOuterRadiusUS" z="0"/>
+      <zplane rmin="donutLeadInnerRadiusUS
+                   +donutVirtualDetectorThickness/donutLeadThickness
+                   *(donutLeadInnerRadiusDS-donutLeadInnerRadiusUS)"
+              rmax="donutLeadOuterRadiusUS
+                   +donutVirtualDetectorThickness/donutLeadThickness
+                   *(donutLeadOuterRadiusDS-donutLeadOuterRadiusUS)"
+              z="donutVirtualDetectorThickness"/>
+    </polycone>
+    <polycone name="donutLeadVirtualDetectorDS_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutLeadInnerRadiusDS
+                   -donutVirtualDetectorThickness/donutLeadThickness
+                   *(donutLeadInnerRadiusDS-donutLeadInnerRadiusUS)"
+              rmax="donutLeadOuterRadiusDS
+                   -donutVirtualDetectorThickness/donutLeadThickness
+                   *(donutLeadOuterRadiusDS-donutLeadOuterRadiusUS)"
+              z="donutLeadThickness-donutVirtualDetectorThickness"/>
+      <zplane rmin="donutLeadInnerRadiusDS" rmax="donutLeadOuterRadiusDS" z="donutLeadThickness"/>
+    </polycone>
+</solids>
+
+<structure>
+
+    <volume name="donutConcreteVirtualDetectorUS_logical">
+      <materialref ref="G4_CONCRETE"/>
+      <solidref ref="donutConcreteVirtualDetectorUS_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutConcreteUS"/>
+      <auxiliary auxtype="DetNo" auxvalue="8016"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="donutConcreteVirtualDetectorDS_logical">
+      <materialref ref="G4_CONCRETE"/>
+      <solidref ref="donutConcreteVirtualDetectorDS_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutConcreteDS"/>
+      <auxiliary auxtype="DetNo" auxvalue="8018"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="donutConcrete_logical">
+      <materialref ref="G4_CONCRETE"/>
+      <solidref ref="donutConcrete_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutConcrete"/>
+      <auxiliary auxtype="DetNo" auxvalue="8017"/>
+      <auxiliary auxtype="Color" auxvalue="Gray"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <physvol>
+        <volumeref ref="donutConcreteVirtualDetectorUS_logical"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="donutConcreteVirtualDetectorDS_logical"/>
+      </physvol>
+    </volume>
+
+    <volume name="donutLeadVirtualDetectorUS_logical">
+      <materialref ref="G4_Pb"/>
+      <solidref ref="donutLeadVirtualDetectorUS_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutLeadUS"/>
+      <auxiliary auxtype="DetNo" auxvalue="8019"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="donutLeadVirtualDetectorDS_logical">
+      <materialref ref="G4_Pb"/>
+      <solidref ref="donutLeadVirtualDetectorDS_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutLeadDS"/>
+      <auxiliary auxtype="DetNo" auxvalue="8021"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="donutLead_logical">
+      <materialref ref="G4_Pb"/>
+      <solidref ref="donutLead_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutLead_SD"/>
+      <auxiliary auxtype="DetNo" auxvalue="8020"/>
+      <auxiliary auxtype="Color" auxvalue="Black"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <physvol>
+        <volumeref ref="donutLeadVirtualDetectorUS_logical"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="donutLeadVirtualDetectorDS_logical"/>
+      </physvol>
+    </volume>
+
+    <volume name="donutSystem_logical">
+      <materialref ref="G4_AIR"/>
+      <solidref ref="donutSystem_solid"/>
+
+      <physvol>
+        <volumeref ref="donutConcrete_logical"/>
+        <positionref ref="donutConcretePosition"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="donutLead_logical"/>
+        <positionref ref="donutLeadPosition"/>
+      </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+   </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="donutSystem_logical"/>
+</setup>
+
+</gdml>

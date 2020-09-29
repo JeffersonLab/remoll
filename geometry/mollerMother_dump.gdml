@@ -42,9 +42,16 @@
     </physvol>
  -->
 
+      <!-- Front Tracking Detectors -->
       <physvol>
         <file name="tracking/trackingDaughter.gdml"/>
-        <positionref ref="trackingCenter"/>
+        <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
+      </physvol>
+
+      <!-- Back Tracking Detectors -->
+      <physvol>
+        <file name="tracking/trackingDaughter.gdml"/>
+        <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
       </physvol>
 
       <physvol>
@@ -64,7 +71,7 @@
 
       <physvol>
         <file name="pion/pionDetectorSystem.gdml"/>
-        <positionref ref="pionDetectorCenter"/>
+        <positionref ref="pionDetectorSystemFaceUS"/>
       </physvol>
 
     </volume>

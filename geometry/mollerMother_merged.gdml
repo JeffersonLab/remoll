@@ -57,7 +57,6 @@
     </physvol>
 
     <!-- Downstream beampipe -->
-    
     <physvol>
       <file name="beampipe/premoller/beampipeRaster.gdml"/>
     </physvol>
@@ -65,14 +64,18 @@
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
     </physvol>
 
-   
-    <!-- Tracking Detectors--> 
-    <!--
+    <!-- Front Tracking Detectors -->
     <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
-      <positionref ref="trackingCenter"/>
+      <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
     </physvol>
-    -->
+
+    <!-- Back Tracking Detectors -->
+    <physvol>
+      <file name="tracking/trackingDaughter.gdml"/>
+      <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
+    </physvol>
+
     <!-- Main Detectors -->
     <!--
     <physvol>
@@ -82,27 +85,31 @@
     </physvol>
     -->
 
-
     <!-- electronics hut for left side --> 
     <physvol>
       <file name="huts/lefthut.gdml"/>
       <positionref ref="lefthut_pos"/>
       <rotation name="lefthut_rot" unit="deg" y="-45"/>
     </physvol>
-    
-    <!-- ShowerMax Detectors--> 
+
+    <!-- ShowerMax Detectors -->
     <physvol>
       <file name="showermax/showerMaxGen.gdml"/>
       <positionref ref="showerMaxDetectorCenter"/>
     </physvol>
     
-
+    <!-- Lead Donut -->
+    <physvol>
+      <file name="donut/donutConcreteLead.gdml"/>
+      <positionref ref="donutConcreteLeadFaceUS"/>
+    </physvol>
+   
     <!-- Pion Detectors -->
     <physvol>
       <file name="pion/pionDetectorSystem.gdml"/>
-      <positionref ref="pionDetectorCenter"/>
+      <positionref ref="pionDetectorSystemFaceUS"/>
     </physvol>
-   
+
   </volume>
 </structure>
 

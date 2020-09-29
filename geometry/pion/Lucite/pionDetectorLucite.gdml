@@ -33,7 +33,7 @@
   <quantity name="pionDetectorLuciteInsideWidth"  type="length" value="39.0" unit="cm"/>
   <quantity name="pionDetectorLuciteOutsideWidth" type="length" value="45.0" unit="cm"/>
 
-  <quantity name="pionDetectorLuciteHeight" type="length" value="13.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteHeight" type="length" value="12.5" unit="cm"/>
   <quantity name="pionDetectorLuciteTheta" type="angle" value="0.0" unit="deg"/>
 
   <constant name="pionDetectorLuciteWedgeSide" value="0.0"/> <!-- in [-1, +1] -->
@@ -648,7 +648,7 @@
   </skinsurface>
 
   <volume name="pionDetectorLucitePMTInsideHousing_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorLucitePMTInsideHousing_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLucitePMTHousing"/>
     <auxiliary auxtype="DetNo" auxvalue="8020"/>
