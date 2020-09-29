@@ -21,7 +21,6 @@
     the trigger scintillator and volumes.
   -->
   <quantity name="pionDetectorLuciteLength" type="length" value="0.3" unit="m"/>
-
   <!--
     The Cherenkov critical angle for n = 1.5 materials is cos(theta_c) = 1/n,
     or theta_c = 48 degrees. In other words, beta = 1 charged particles will
@@ -50,7 +49,12 @@
     lucite blocks. This means that the position of the inner edge must be augmented
     with half the height (radial dimension) of the lucite blocks.
   -->
-  <quantity name="pionDetectorLuciteInnerEdgeRadialPosition" type="length" value="109.5+12.5/2" unit="cm"/>
+  <quantity name="pionDetectorLuciteCenterRadialPosition" type="length" value="109.5+12.5/2" unit="cm"/>
+
+  <!--
+    The lucite detector is shielded at the inner edge with a lead layer.
+  -->
+  <quantity name="pionDetectorLuciteInnerLeadShieldRadialPosition" type="length" value="109.5-2.5" unit="cm"/>
 </define>
 
 <materials>
@@ -67,21 +71,34 @@
     rmax="pionDetectorLuciteOuterRadius"
     z="pionDetectorLuciteLength"
     startphi="0" deltaphi="360.0" aunit="deg"/>
+  <box name="pionDetectorLuciteInnerLeadShield_solid"
+    x="10" y="460" z="300"
+    lunit="mm"/>
 </solids>
 
 <structure>
   
+  <volume name="pionDetectorLuciteInnerLeadShield_logical">
+    <materialref ref="G4_Pb"/>
+    <solidref ref="pionDetectorLuciteInnerLeadShield_solid"/>
+  </volume>
+
   <volume name="pionDetectorLuciteSector_logical">
     <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
       <file name="pion/Lucite/pionDetectorLucite.gdml"/>
       <position name="pionDetectorLucite_position"
-        x="pionDetectorLuciteInnerEdgeRadialPosition"/>
+        x="pionDetectorLuciteCenterRadialPosition"/>
       <rotation name="pionDetectorLucite_rotation"
                 z="pionDetectorLuciteSectorAngleBase"
                 y="-(pionDetectorLuciteSectorAngleBase+pionDetectorLuciteSectorAnglePitch)"/>
       <!-- x rotation 180: layer 1 in the back -->
+    </physvol>
+    <physvol name="pionDetectorLuciteInnerLeadShield_physical">
+      <volumeref ref="pionDetectorLuciteInnerLeadShield_logical"/>
+      <position name="pionDetectorLuciteInnerLeadShield_position"
+        x="pionDetectorLuciteInnerLeadShieldRadialPosition"/>
     </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
