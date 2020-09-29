@@ -72,7 +72,7 @@
 <structure>
   
   <volume name="pionDetectorLuciteSector_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorLuciteSector_solid"/>
     <physvol name="pionDetectorLucite_physical">
       <file name="pion/Lucite/pionDetectorLucite.gdml"/>
@@ -87,7 +87,7 @@
   </volume>
 
   <volume name="pionDetectorLuciteAllSectors_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorLuciteAllSectors_solid"/>
     <replicavol number="N_P"> <!-- number of replicas has to fill mother volume exactly! -->
       <volumeref ref="pionDetectorLuciteSector_logical"/>

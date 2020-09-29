@@ -32,7 +32,7 @@
 <structure>
 
   <volume name="pionDetectorTSOpenSector_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorTSOpenSector_solid"/>
     <physvol name="pionDetectorTS_physical">
       <file name="pion/TS/pionDetectorTS.gdml"/>
@@ -43,7 +43,7 @@
   </volume>
 
   <volume name="pionDetectorTSAllSectors_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorTSAllSectors_solid"/>
     <replicavol number="2">
       <volumeref ref="pionDetectorTSOpenSector_logical"/>

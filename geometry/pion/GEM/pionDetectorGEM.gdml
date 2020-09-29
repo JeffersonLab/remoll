@@ -36,7 +36,7 @@
   </volume>
 
   <volume name="pionDetectorGEM_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorGEMPlane_solid"/>
 
     <physvol name="pionDetectorGEM_physical">

@@ -648,7 +648,7 @@
   </skinsurface>
 
   <volume name="pionDetectorLucitePMTInsideHousing_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorLucitePMTInsideHousing_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLucitePMTHousing"/>
     <auxiliary auxtype="DetNo" auxvalue="8020"/>
