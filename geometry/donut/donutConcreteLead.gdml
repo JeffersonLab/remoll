@@ -133,7 +133,7 @@
     </volume>
 
     <volume name="donutLeadVirtualDetectorUS_logical">
-      <materialref ref="G4_CONCRETE"/>
+      <materialref ref="G4_Pb"/>
       <solidref ref="donutLeadVirtualDetectorUS_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="donutLeadUS"/>
       <auxiliary auxtype="DetNo" auxvalue="8019"/>
@@ -141,7 +141,7 @@
       <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     </volume>
     <volume name="donutLeadVirtualDetectorDS_logical">
-      <materialref ref="G4_CONCRETE"/>
+      <materialref ref="G4_Pb"/>
       <solidref ref="donutLeadVirtualDetectorDS_solid"/>
       <auxiliary auxtype="SensDet" auxvalue="donutLeadDS"/>
       <auxiliary auxtype="DetNo" auxvalue="8021"/>
