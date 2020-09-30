@@ -28,6 +28,7 @@
 /gui/addButton geom geometry/pionDetectorLucite.gdml         "/remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml"
 /gui/addButton geom geometry/showerMaxDetector.gdml          "/remoll/geometry/setfile geometry/showerMaxDetector.gdml"
 /gui/addButton geom geometry/mollerParallel.gdml             "/remoll/parallel/setfile geometry/mollerParallel.gdml"
+/gui/addButton geom "No parallel"             "/remoll/parallel/setfile "
 #
 # Initialize menu :
 /gui/addMenu   phys "2. Physics"
