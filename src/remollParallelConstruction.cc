@@ -16,7 +16,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 remollParallelConstruction::remollParallelConstruction(const G4String& name, const G4String& gdmlfile)
 : G4VUserParallelWorld(name),
-  fGDMLPath("geometry"),fGDMLFile(""),
+  fGDMLPath("geometry"),fGDMLFile("mollerParallel.gdml"),
   fGDMLParser(0),
   fGDMLValidate(false),
   fGDMLOverlapCheck(false),
