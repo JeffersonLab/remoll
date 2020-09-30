@@ -39,7 +39,9 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
       "setfile",
       &remollParallelConstruction::SetGDMLFile,
       "Set parallel geometry GDML file")
-      .SetStates(G4State_PreInit);
+          .SetStates(G4State_PreInit)
+          .SetDefaultValue("")
+          .command->GetParameter(0)->SetOmittable(true);
   fParallelMessenger->DeclareProperty(
       "verbose",
       fVerboseLevel,
