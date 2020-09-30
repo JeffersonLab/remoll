@@ -4,9 +4,9 @@ These instructions explain how to replay exactly some previously simulated event
 
 ### Run the original large-N simulations
 
-Not every simulation output file can automatically be used to replay certian events.
+Not every simulation output file can automatically be used to replay certain events.
 
-You must enable storing the random seed status for each event with the following flag enabled:
+You must enable storing the random seed status for each event. This is done by default on recent versions of remoll, but on older versions you will need to run with the following flag enabled:
 ```
 /run/storeRndmStatToEvent 1
 ```

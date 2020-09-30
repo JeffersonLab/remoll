@@ -1,5 +1,5 @@
-# Store random state to events
-/run/storeRndmStatToEvent 1
+# Disable storing random state to events to fail this test
+#/run/storeRndmStatToEvent 0
 
 # Ensure rndm1 directory exists
 /control/shell mkdir -p rndm1
