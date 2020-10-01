@@ -383,6 +383,14 @@ install(FILES
     ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollUseFile.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/remoll)
 
+#----------------------------------------------------------------------------
+# remollSearchPath
+
+link_libraries(stdc++fs)
+add_definitions(
+        -DCMAKE_INSTALL_PREFIX=\"${CMAKE_INSTALL_PREFIX}\"
+        -DCMAKE_INSTALL_FULL_DATADIR=\"${CMAKE_INSTALL_FULL_DATADIR}\"
+)
 
 #----------------------------------------------------------------------------
 # uninstall
