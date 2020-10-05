@@ -4,9 +4,9 @@
 
 <define>
    <!-- Full concrete and lead donut system dimensions -->
-   <quantity name="donutSystemLength"      type="length" value="0.4" unit="m"/>
-   <quantity name="donutSystemInnerRadius" type="length" value="0.82" unit="m"/>
-   <quantity name="donutSystemOuterRadius" type="length" value="2.00" unit="m"/>
+   <quantity name="donutSystemLength" type="length" value="0.4" unit="m"/>
+   <quantity name="donutSystemWidth"  type="length" value="4.0" unit="m"/>
+   <quantity name="donutSystemHeight" type="length" value="4.0" unit="m"/>
 
    <!-- Thin virtual detectors on US and DS side -->
    <quantity name="donutVirtualDetectorThickness" type="length" value="0.1" unit="mm"/>
@@ -81,11 +81,14 @@
       <section zOrder="2" zPosition="+donutIBeamFrameWidth/2" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
 
-    <polycone name="donutSystem_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemOuterRadius" z="0"/>
-      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemOuterRadius" z="donutSystemLength"/>
-    </polycone>
+    <xtru name="donutSystem_solid">
+      <twoDimVertex x="-donutSystemWidth/2" y="-donutSystemHeight/2"/>
+      <twoDimVertex x="-donutSystemWidth/2" y="+donutSystemHeight/2"/>
+      <twoDimVertex x="+donutSystemWidth/2" y="+donutSystemHeight/2"/>
+      <twoDimVertex x="+donutSystemWidth/2" y="-donutSystemHeight/2"/>
+      <section zOrder="1" zPostiion="0"/>
+      <section zOrder="2" zPosition="donutSystemLength"/>
+    </xtru>
 
     <polycone name="donutConcrete_solid"
               aunit="deg" startphi="0" deltaphi="360">
