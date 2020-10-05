@@ -7,6 +7,7 @@
    <quantity name="donutSystemLength" type="length" value="0.4" unit="m"/>
    <quantity name="donutSystemWidth"  type="length" value="4.0" unit="m"/>
    <quantity name="donutSystemHeight" type="length" value="4.0" unit="m"/>
+   <quantity name="donutSystemInnerRadius" type="length" value="0.82" unit="m"/>
 
    <!-- Thin virtual detectors on US and DS side -->
    <quantity name="donutVirtualDetectorThickness" type="length" value="0.1" unit="mm"/>
@@ -81,7 +82,7 @@
       <section zOrder="2" zPosition="+donutIBeamFrameWidth/2" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
 
-    <xtru name="donutSystem_solid">
+    <xtru name="donutSystemBox_solid">
       <twoDimVertex x="-donutSystemWidth/2" y="-donutSystemHeight/2"/>
       <twoDimVertex x="-donutSystemWidth/2" y="+donutSystemHeight/2"/>
       <twoDimVertex x="+donutSystemWidth/2" y="+donutSystemHeight/2"/>
@@ -89,6 +90,15 @@
       <section zOrder="1" zPostiion="0"/>
       <section zOrder="2" zPosition="donutSystemLength"/>
     </xtru>
+    <polycone name="donutSystemHole_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="0" rmax="donutSystemInnerRadius" z="0"/>
+      <zplane rmin="0" rmax="donutSystemInnerRadius" z="donutSystemLength"/>
+    </polycone>
+    <subtraction name="donutSystem_solid">
+      <first ref="donutSystemBox_solid"/>
+      <second ref="donutSystemHole_solid"/>
+    </subtraction>
 
     <polycone name="donutConcrete_solid"
               aunit="deg" startphi="0" deltaphi="360">
