@@ -4,9 +4,10 @@
 
 <define>
    <!-- Full concrete and lead donut system dimensions -->
-   <quantity name="donutSystemLength"      type="length" value="0.4" unit="m"/>
+   <quantity name="donutSystemLength" type="length" value="0.4" unit="m"/>
+   <quantity name="donutSystemWidth"  type="length" value="5.0" unit="m"/>
+   <quantity name="donutSystemHeight" type="length" value="5.0" unit="m"/>
    <quantity name="donutSystemInnerRadius" type="length" value="0.82" unit="m"/>
-   <quantity name="donutSystemOuterRadius" type="length" value="2.00" unit="m"/>
 
    <!-- Thin virtual detectors on US and DS side -->
    <quantity name="donutVirtualDetectorThickness" type="length" value="0.1" unit="mm"/>
@@ -30,17 +31,75 @@
 
    <!-- Lead donut positions -->
    <position name="donutLeadPosition" z="donutConcreteThickness"/>
+
+   <!-- Donut frame I-beams, W 16 x 67 -->
+   <!-- Ref: https://www.engineeringtoolbox.com/docs/documents/1313/steel-beam.png -->
+   <quantity name="donutIBeamFlangeThickness" type="length" value="0.665" unit="in"/>
+   <quantity name="donutIBeamWebThickness"    type="length" value="0.395" unit="in"/>
+   <quantity name="donutIBeamWidth"     type="length" value="10.235" unit="in"/>
+   <quantity name="donutIBeamHeight"    type="length" value="16.33"  unit="in"/>
+
+   <!-- Donut frame width -->
+   <quantity name="donutIBeamFrameWidth"     type="length" value="3" unit="m"/>
+   <quantity name="donutIBeamFrameHeight"    type="length" value="5" unit="m"/>
+   <quantity name="donutIBeamFrameHeightTop" type="length" value="+1.5" unit="m"/>
+   <quantity name="donutIBeamFrameHeightBot" type="length" value="-1.5" unit="m"/>
 </define>
 
 <materials>
 </materials>
 
 <solids>
-    <polycone name="donutSystem_solid"
+    <xtru name="donutIBeamFrameVertical_solid">
+      <twoDimVertex x="-donutIBeamWidth/2" y="-donutIBeamHeight/2"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="-donutIBeamHeight/2"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWebThickness/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWebThickness/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="+donutIBeamHeight/2"/>
+      <twoDimVertex x="-donutIBeamWidth/2" y="+donutIBeamHeight/2"/>
+      <twoDimVertex x="-donutIBeamWidth/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="-donutIBeamWebThickness/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="-donutIBeamWebThickness/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <twoDimVertex x="-donutIBeamWidth/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <section zOrder="1" zPosition="-donutIBeamFrameHeight/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="+donutIBeamFrameHeight/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+    </xtru>
+    <xtru name="donutIBeamFrameHorizontal_solid">
+      <twoDimVertex x="-donutIBeamWidth/2" y="-donutIBeamHeight/2"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="-donutIBeamHeight/2"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWebThickness/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWebThickness/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="+donutIBeamHeight/2"/>
+      <twoDimVertex x="-donutIBeamWidth/2" y="+donutIBeamHeight/2"/>
+      <twoDimVertex x="-donutIBeamWidth/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="-donutIBeamWebThickness/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="-donutIBeamWebThickness/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <twoDimVertex x="-donutIBeamWidth/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <section zOrder="1" zPosition="-donutIBeamFrameWidth/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="+donutIBeamFrameWidth/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+    </xtru>
+
+    <xtru name="donutSystemBox_solid">
+      <twoDimVertex x="-donutSystemWidth/2" y="-donutSystemHeight/2"/>
+      <twoDimVertex x="-donutSystemWidth/2" y="+donutSystemHeight/2"/>
+      <twoDimVertex x="+donutSystemWidth/2" y="+donutSystemHeight/2"/>
+      <twoDimVertex x="+donutSystemWidth/2" y="-donutSystemHeight/2"/>
+      <section zOrder="1" zPostiion="0"/>
+      <section zOrder="2" zPosition="donutSystemLength"/>
+    </xtru>
+    <polycone name="donutSystemHole_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemOuterRadius" z="0"/>
-      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemOuterRadius" z="donutSystemLength"/>
+      <zplane rmin="0" rmax="donutSystemInnerRadius" z="0"/>
+      <zplane rmin="0" rmax="donutSystemInnerRadius" z="donutSystemLength"/>
     </polycone>
+    <subtraction name="donutSystem_solid">
+      <first ref="donutSystemBox_solid"/>
+      <second ref="donutSystemHole_solid"/>
+    </subtraction>
 
     <polycone name="donutConcrete_solid"
               aunit="deg" startphi="0" deltaphi="360">
@@ -100,6 +159,15 @@
 </solids>
 
 <structure>
+
+    <volume name="donutIBeamFrameVertical_logical">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="donutIBeamFrameVertical_solid"/>
+    </volume>
+    <volume name="donutIBeamFrameHorizontal_logical">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="donutIBeamFrameHorizontal_solid"/>
+    </volume>
 
     <volume name="donutConcreteVirtualDetectorUS_logical">
       <materialref ref="G4_CONCRETE"/>
@@ -166,6 +234,27 @@
     <volume name="donutSystem_logical">
       <materialref ref="G4_AIR"/>
       <solidref ref="donutSystem_solid"/>
+
+      <physvol>
+        <volumeref ref="donutIBeamFrameVertical_logical"/>
+        <position x="-donutIBeamFrameWidth/2-donutIBeamHeight/2" z="donutSystemLength/2"/>
+        <rotation x="90" z="90" unit="deg"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="donutIBeamFrameVertical_logical"/>
+        <position x="+donutIBeamFrameWidth/2+donutIBeamHeight/2" z="donutSystemLength/2"/>
+        <rotation x="90" z="90" unit="deg"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="donutIBeamFrameHorizontal_logical"/>
+        <position y="donutIBeamFrameHeightTop+donutIBeamHeight/2" z="donutSystemLength/2"/>
+        <rotation x="90" y="90" z="90" unit="deg"/>
+      </physvol>
+      <physvol>
+        <volumeref ref="donutIBeamFrameHorizontal_logical"/>
+        <position y="donutIBeamFrameHeightBot-donutIBeamHeight/2" z="donutSystemLength/2"/>
+        <rotation x="90" y="90" z="90" unit="deg"/>
+      </physvol>
 
       <physvol>
         <volumeref ref="donutConcrete_logical"/>
