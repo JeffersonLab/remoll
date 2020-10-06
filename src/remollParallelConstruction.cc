@@ -17,7 +17,7 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 remollParallelConstruction::remollParallelConstruction(const G4String& name, const G4String& gdmlfile)
 : G4VUserParallelWorld(name),
-  fGDMLPath("geometry"),fGDMLFile(""),
+  fGDMLPath("geometry"),fGDMLFile("mollerParallel.gdml"),
   fGDMLParser(0),
   fGDMLValidate(false),
   fGDMLOverlapCheck(false),
@@ -43,7 +43,9 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
       "setfile",
       &remollParallelConstruction::SetGDMLFile,
       "Set parallel geometry GDML file")
-      .SetStates(G4State_PreInit);
+          .SetStates(G4State_PreInit)
+          .SetDefaultValue("")
+          .command->GetParameter(0)->SetOmittable(true);
   fParallelMessenger->DeclareProperty(
       "verbose",
       fVerboseLevel,
