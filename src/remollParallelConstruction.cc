@@ -9,6 +9,7 @@
 #include <G4GenericMessenger.hh>
 #include <G4VisAttributes.hh>
 #include <G4Colour.hh>
+#include "G4UnitsTable.hh"
 
 #include "remollGenericDetector.hh"
 #include "remollIO.hh"
