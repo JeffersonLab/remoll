@@ -56,9 +56,7 @@ jobs:
               scripts/tests/watermark.sh ${suite}
             " ;
           done ;
-          ls -al ${PWD}/logfiles ${PWD}/rootfiles ;
-        else
-          echo "Not 
+          ls -al ${PWD}/logfiles ${PWD}/rootfiles ; 
         fi
 
 notifications:
