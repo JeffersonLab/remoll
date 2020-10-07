@@ -835,13 +835,20 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           bool enabled = (det_no > 0)? false : true;
           det_no = std::abs(det_no);
 
+          // Allow detector number sharing
+          auto it_detnoshared = NextAuxWithType(list.begin(), list.end(), "DetNoShared");
+          bool detnoshared = false;
+          if (it_detnoshared != list.end())
+            if (it_detnoshared->value == "true")
+              detnoshared = true;
+
           // Construct detector name
           std::stringstream det_name_ss;
           det_name_ss << "remoll/det_" << det_no;
           std::string det_name = det_name_ss.str();
 
-          // Check for duplication
-          if (detnomap.count(det_no) != 0) {
+          // Check for duplication when not a shared detector number
+          if (!detnoshared && detnomap.count(det_no) != 0 && detnomap[det_no]->GetName() != myvol->GetName()) {
             G4cerr << "remoll: DetNo " << det_no << " for " << myvol->GetName() << G4endl;
             G4cerr << "remoll: already used by " << detnomap[det_no]->GetName() << G4endl;
           }
