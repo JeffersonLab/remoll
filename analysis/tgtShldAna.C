@@ -151,6 +151,8 @@ long processOne(string fnm){
       TVector3 mom(hit->at(j).px,hit->at(j).py,hit->at(j).pz);
       TVector3 pos(hit->at(j).x,hit->at(j).y,hit->at(j).z-4500);
       double spherePZ = mom*pos;
+      if(det==5530 && spherePZ<0 && (hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0 && kinE>10950)
+	continue;//for primaries coming into the sphere
       bool doBeamLine = std::find(planeDets.begin(), planeDets.end(), det) != planeDets.end();
       if(det==5530  && ( (analyzeDet & 1) ==1))
 	fillHisto_sphere(det, sp, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
