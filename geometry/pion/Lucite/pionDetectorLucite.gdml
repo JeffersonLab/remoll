@@ -8,7 +8,7 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
-  <constant name="N_P" value="3"/>
+  <constant name="N_P" value="1"/>
   <variable name="i_p" value="1"/>
 
   <!--
@@ -33,7 +33,7 @@
   <quantity name="pionDetectorLuciteInsideWidth"  type="length" value="39.0" unit="cm"/>
   <quantity name="pionDetectorLuciteOutsideWidth" type="length" value="45.0" unit="cm"/>
 
-  <quantity name="pionDetectorLuciteHeight" type="length" value="12.5" unit="cm"/>
+  <quantity name="pionDetectorLuciteHeight" type="length" value="7" unit="cm"/>
   <quantity name="pionDetectorLuciteTheta" type="angle" value="0.0" unit="deg"/>
 
   <constant name="pionDetectorLuciteWedgeSide" value="0.0"/> <!-- in [-1, +1] -->
@@ -49,8 +49,8 @@
   <quantity name="pionDetectorLuciteReflectorHeight"
             value="pionDetectorLuciteReflectorLightGuideHeight*pionDetectorLuciteReflectorHeightFraction"/>
   <quantity name="pionDetectorLuciteReflectorWidth" type="length" value="40.0" unit="cm"/>
-  <quantity name="pionDetectorLuciteReflectorDepth" type="length" value="5.0*2.54" unit="cm"/>
-  <quantity name="pionDetectorLuciteReflectorTheta" type="angle" value="-10" unit="deg"/>
+  <quantity name="pionDetectorLuciteReflectorDepth" type="length" value="2.54" unit="cm"/>
+  <quantity name="pionDetectorLuciteReflectorTheta" type="angle" value="0.0" unit="deg"/>
 
   <quantity name="pionDetectorLuciteReflectorEntryDetectorThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLuciteReflectorExitDetectorThickness" type="length" value="1.0" unit="mm"/>
@@ -58,7 +58,7 @@
   <quantity name="pionDetectorLuciteLightGuideThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLuciteLightGuideHeight"
             value="pionDetectorLuciteReflectorLightGuideHeight*pionDetectorLuciteLightGuideHeightFraction"/>
-  <quantity name="pionDetectorLuciteLightGuideTheta" type="angle" value="0" unit="deg"/>
+  <quantity name="pionDetectorLuciteLightGuideTheta" type="angle" value="0.0" unit="deg"/>
 
   <quantity name="pionDetectorLuciteLightGuideEntryDetectorThickness" type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLuciteLightGuideExitDetectorThickness" type="length" value="1.0" unit="mm"/>
@@ -69,7 +69,7 @@
   <variable name="iPMTZ" value="1"/>
 
   <quantity name="pionDetectorLucitePMTThickness" type="length" value="1.0" unit="mm"/>
-  <quantity name="pionDetectorLucitePMTDiameter" type="length" value="3.0*2.54" unit="cm"/>
+  <quantity name="pionDetectorLucitePMTDiameter" type="length" value="2.54" unit="cm"/>
   <quantity name="pionDetectorLucitePMTHousingHeight" type="length" value="7.5" unit="cm"/>
   <quantity name="pionDetectorLucitePMTHousingThickness" type="length" value="1.0" unit="mm"/>
   
