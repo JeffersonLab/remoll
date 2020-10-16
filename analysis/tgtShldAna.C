@@ -5,7 +5,8 @@
 //
 // //Load in the script, and run it
 // > .L radDamage.cc+
-// > gSystem->Load("radDamage_cc.so");
+// 
+R__LOAD_LIBRARY(radDamage_cc.so)
 //
 // //Load in the script, and run it
 // >.L tgtShldAna.C
@@ -36,7 +37,7 @@ void writeOutput(double);
 long processOne(string);
 void process();
 
-const std::vector<int> planeDets={5500,5501,5542,5546,5547,5531,5543,5560};//FIXME add side/over/sbs dets when ready
+const std::vector<int> planeDets={5500, 5501, 5510, 5540, 5541, 5542, 5543, 5544, 5545, 5546, 5547, 5555, 5556, 5531,5560};//FIXME add side/over/sbs dets when ready
 
 void tgtShldAna(const string& finName = "./remollout.root", int anaDet=1, double addScale=1, int overWriteFile = 1, int beamGenerator=1){
   fileNm = finName;
@@ -152,12 +153,32 @@ long processOne(string fnm){
       TVector3 pos(hit->at(j).x,hit->at(j).y,hit->at(j).z-4500);
       double spherePZ = mom*pos;
       if(det==5530 && spherePZ<0 && (hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0 && kinE>10950)
-	continue;//for primaries coming into the sphere
+          continue;//for primaries coming into the sphere
       bool doBeamLine = std::find(planeDets.begin(), planeDets.end(), det) != planeDets.end();
+      
+      // transformed coordinates
+      double zz_tr=0;
+      double yy_tr=0;
+      double xx_tr=0;
+
+      if (det==5540 || det==5541 || det==5544 || det==5545){
+	  xx_tr=zz+4500;
+	  yy_tr=yy;
+      } else if (det==5555 || det==5556){
+	  xx_tr=xx;
+	  yy_tr=zz+4500;
+      } else if (det==5510){
+	  xx_tr=(zz+11000)*1.0/2.0+(xx-6240)*sqrt(3)/2.0; // The face of this detector is makes a 60 degree angle with the translated coordinate system z-axis.
+          yy_tr=yy+1000;
+      } else{
+          xx_tr=xx;
+	  yy_tr=yy;
+      }
+
       if(det==5530  && ( (analyzeDet & 1) ==1))
 	fillHisto_sphere(det, sp, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
       else if( doBeamLine && ( (analyzeDet & 2) ==2))
-	fillHisto_beamLine(det, sp, rdDmg, pz, xx, yy, kinE);
+	fillHisto_beamLine(det, sp, rdDmg, pz, xx_tr, yy_tr, kinE);
       else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
 	fillHisto_hall(det,sp,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
@@ -165,7 +186,7 @@ long processOne(string fnm){
 	if(det==5530 && ( (analyzeDet & 1) ==1))
 	  fillHisto_sphere(det, 1, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
 	else if(doBeamLine  && ( (analyzeDet & 2) ==2))
-	  fillHisto_beamLine(det, 1, rdDmg, pz, xx, yy, kinE);
+	  fillHisto_beamLine(det, 1, rdDmg, pz, xx_tr, yy_tr, kinE);
 	else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
 	  fillHisto_hall(det,1,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
@@ -173,7 +194,7 @@ long processOne(string fnm){
 	  if(det==5530 && ( (analyzeDet & 1) ==1))
 	    fillHisto_sphere(det, 4, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
 	  else if(doBeamLine  && ( (analyzeDet & 2) ==2))
-	    fillHisto_beamLine(det, 4, rdDmg, pz, xx, yy, kinE);
+	    fillHisto_beamLine(det, 4, rdDmg, pz, xx_tr, yy_tr, kinE);
 	  else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
 	    fillHisto_hall(det,4,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
@@ -207,13 +228,14 @@ void initHisto(int fileType){
     initHisto_beamLine(fout,5531,"Flat: inside tgt bunker DS Pb");
     initHisto_beamLine(fout,5560,"Flat: beamline US hybrid");
 
-    //initHisto_beamLine(fout,5556,"Flat: inside tgt bunker above tgt");//FIXME
-    //initHisto_beamLine(fout,5545,"Flat: inside tgt bunker right of tgt");//FIXME
-    //initHisto_beamLine(fout,5544,"Flat: inside tgt bunker left of tgt");//FIXME
-    //initHisto_beamLine(fout,5555,"Flat: outside tgt bunker above tgt");//FIXME
-    //initHisto_beamLine(fout,5541,"Flat: outside tgt bunker right of tgt");//FIXME
-    //initHisto_beamLine(fout,5540,"Flat: outside tgt bunker left of tgt");//FIXME1
-    //initHisto_beamLine(fout,5510,"Flat: front SBS bunker");FIXME
+    
+    initHisto_beamLine(fout,5556,"Flat: inside tgt bunker above tgt");//FIXME
+    initHisto_beamLine(fout,5545,"Flat: inside tgt bunker right of tgt");//FIXME
+    initHisto_beamLine(fout,5544,"Flat: inside tgt bunker left of tgt");//FIXME
+    initHisto_beamLine(fout,5555,"Flat: outside tgt bunker above tgt");//FIXME
+    initHisto_beamLine(fout,5541,"Flat: outside tgt bunker right of tgt");//FIXME
+    initHisto_beamLine(fout,5540,"Flat: outside tgt bunker left of tgt");//FIXME1
+    initHisto_beamLine(fout,5510,"Flat: front SBS bunker");//FIXME
 
   }
   if( (analyzeDet & 4) == 4){
@@ -241,13 +263,13 @@ void writeOutput(double addScale){
     writeOutput_beamLine(fout,5531,scaleFactor);
     writeOutput_beamLine(fout,5560,scaleFactor);
 
-    //writeOutput_beamLine(fout,5556,scaleFactor);FIXME
-    //writeOutput_beamLine(fout,5545,scaleFactor);FIXME
-    //writeOutput_beamLine(fout,5544,scaleFactor);FIXME
-    //writeOutput_beamLine(fout,5555,scaleFactor);FIXME
-    //writeOutput_beamLine(fout,5541,scaleFactor);FIXME
-    //writeOutput_beamLine(fout,5540,scaleFactor);FIXME
-    //writeOutput_beamLine(fout,5510,scaleFactor);FIXME
+    writeOutput_beamLine(fout,5556,scaleFactor);//FIXME
+    writeOutput_beamLine(fout,5545,scaleFactor);//FIXME
+    writeOutput_beamLine(fout,5544,scaleFactor);//FIXME
+    writeOutput_beamLine(fout,5555,scaleFactor);//FIXME
+    writeOutput_beamLine(fout,5541,scaleFactor);//FIXME
+    writeOutput_beamLine(fout,5540,scaleFactor);//FIXME
+    writeOutput_beamLine(fout,5510,scaleFactor);//FIXME
   }
   if( (analyzeDet & 4) == 4){
     writeOutput_hall(fout,scaleFactor);
