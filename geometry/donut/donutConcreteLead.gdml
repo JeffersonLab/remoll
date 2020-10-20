@@ -88,8 +88,8 @@
       <twoDimVertex x="-donutSystemWidth/2" y="+donutSystemHeight/2"/>
       <twoDimVertex x="+donutSystemWidth/2" y="+donutSystemHeight/2"/>
       <twoDimVertex x="+donutSystemWidth/2" y="-donutSystemHeight/2"/>
-      <section zOrder="1" zPostiion="0"/>
-      <section zOrder="2" zPosition="donutSystemLength"/>
+      <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="donutSystemLength" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
     <polycone name="donutSystemHole_solid"
               aunit="deg" startphi="0" deltaphi="360">
