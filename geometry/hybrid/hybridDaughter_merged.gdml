@@ -654,12 +654,12 @@
 
     <physvol name="DSpipe1_flange">
       <volumeref ref="logic_DSpipe1_flange"/>
-      <position name="DSpipe1_flange" x="0" y="0" z="boxDSMother_length/2-261.0"/>
+      <position name="DSpipe1_flange_pos" x="0" y="0" z="boxDSMother_length/2-261.0"/>
     </physvol>
 
     <physvol name="DSpipe1_bellow">
       <volumeref ref="logic_DSpipe1_bellow"/>
-      <position name="DSpipe1_bellow" x="0" y="0" z="boxDSMother_length/2-236.0"/>
+      <position name="DSpipe1_bellow_pos" x="0" y="0" z="boxDSMother_length/2-236.0"/>
     </physvol>
 
     <physvol name="DSpipe2_USplate">

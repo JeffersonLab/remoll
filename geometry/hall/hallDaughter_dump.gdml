@@ -411,7 +411,7 @@
     
     <!-- Water Tank Dump (should have rounded tank ends, but using cylinder for now) -->
 
-    <tube name="tubeDumpWaterTank" 
+    <tube name="tubeDumpWaterTank_solid" 
           aunit="deg" startphi="0" deltaphi="360" 
           lunit="cm" rmin="dumpWaterTank_r" rmax="dumpWaterTank_r + dumpWaterTank_thickness"
           z="dumpWaterTank_length + 2*dumpWaterTank_thickness"/>
@@ -422,7 +422,7 @@
           z="dumpWaterTank_length"/>
         
     <subtraction name="tubeDumpWaterTank_solid">
-      <first ref="tubeDumpWaterTank"/>
+      <first ref="tubeDumpWaterTank_solid"/>
       <second ref="waterDumpWaterTank_solid"/>
       <positionref ref="tubeDumpWaterTank_trans"/>
       <rotationref ref="identity"/>
