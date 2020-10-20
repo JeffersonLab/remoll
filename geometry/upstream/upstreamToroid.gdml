@@ -132,7 +132,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="4001"/>
 			<physvol name="inner_E">
 				<volumeref ref="logic_inner_E_1"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -165,7 +165,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="4002"/>
 			<physvol name="inner_E">
 				<volumeref ref="logic_inner_E_2"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -198,7 +198,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="4003"/>
 			<physvol name="inner_E">
 				<volumeref ref="logic_inner_E_3"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -231,7 +231,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="4004"/>
 			<physvol name="inner_E">
 				<volumeref ref="logic_inner_E_4"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -264,7 +264,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="4005"/>
 			<physvol name="inner_E">
 				<volumeref ref="logic_inner_E_5"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -297,7 +297,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="4006"/>
 			<physvol name="inner_E">
 				<volumeref ref="logic_inner_E_6"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -330,7 +330,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="4007"/>
 			<physvol name="inner_E">
 				<volumeref ref="logic_inner_E_7"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
