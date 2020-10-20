@@ -60,8 +60,8 @@
 		<twoDimVertex x="66.27" y="0.0" />
 		<twoDimVertex x="-66.27" y="0.0" />
 		<twoDimVertex x="-64.06" y="860.0" />
-		<section zOrder="1" zPosition="-13.2461"/>
-		<section zOrder="2" zPosition="13.2461"/>
+		<section zOrder="1" zPosition="-13.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="13.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_C1_front" rmin="0" rmax="66.27" z="26.4922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -86,8 +86,8 @@
 		<twoDimVertex x="67.27" y="0.0" />
 		<twoDimVertex x="-67.27" y="0.0" />
 		<twoDimVertex x="-65.06" y="860.0" />
-		<section zOrder="1" zPosition="-14.2461"/>
-		<section zOrder="2" zPosition="14.2461"/>
+		<section zOrder="1" zPosition="-14.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="14.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_outer_E1_front" rmin="0" rmax="67.27" z="28.4922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -112,8 +112,8 @@
 		<twoDimVertex x="40.16" y="0.0" />
 		<twoDimVertex x="-40.16" y="0.0" />
 		<twoDimVertex x="-37.95" y="860.0" />
-		<section zOrder="1" zPosition="-13.2461"/>
-		<section zOrder="2" zPosition="13.2461"/>
+		<section zOrder="1" zPosition="-13.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="13.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_inner_E1_front" rmin="0" rmax="40.16" z="26.4922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -138,8 +138,8 @@
 		<twoDimVertex x="85.42" y="0.0" />
 		<twoDimVertex x="-85.42" y="0.0" />
 		<twoDimVertex x="-83.26" y="840.0" />
-		<section zOrder="1" zPosition="-14.5461"/>
-		<section zOrder="2" zPosition="14.5461"/>
+		<section zOrder="1" zPosition="-14.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="14.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_C2_front" rmin="0" rmax="85.42" z="29.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -164,8 +164,8 @@
 		<twoDimVertex x="86.42" y="0.0" />
 		<twoDimVertex x="-86.42" y="0.0" />
 		<twoDimVertex x="-84.26" y="840.0" />
-		<section zOrder="1" zPosition="-15.5461"/>
-		<section zOrder="2" zPosition="15.5461"/>
+		<section zOrder="1" zPosition="-15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_outer_E2_front" rmin="0" rmax="86.42" z="31.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -190,8 +190,8 @@
 		<twoDimVertex x="59.31" y="0.0" />
 		<twoDimVertex x="-59.31" y="0.0" />
 		<twoDimVertex x="-57.15" y="840.0" />
-		<section zOrder="1" zPosition="-14.5461"/>
-		<section zOrder="2" zPosition="14.5461"/>
+		<section zOrder="1" zPosition="-14.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="14.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_inner_E2_front" rmin="0" rmax="59.31" z="29.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -216,8 +216,8 @@
 		<twoDimVertex x="107.135" y="0.0" />
 		<twoDimVertex x="-107.135" y="0.0" />
 		<twoDimVertex x="-105.195" y="753.0" />
-		<section zOrder="1" zPosition="-15.5461"/>
-		<section zOrder="2" zPosition="15.5461"/>
+		<section zOrder="1" zPosition="-15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_C3_front" rmin="0" rmax="107.135" z="31.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -242,8 +242,8 @@
 		<twoDimVertex x="108.135" y="0.0" />
 		<twoDimVertex x="-108.135" y="0.0" />
 		<twoDimVertex x="-106.195" y="753.0" />
-		<section zOrder="1" zPosition="-16.5461"/>
-		<section zOrder="2" zPosition="16.5461"/>
+		<section zOrder="1" zPosition="-16.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="16.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_outer_E3_front" rmin="0" rmax="108.135" z="33.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -268,8 +268,8 @@
 		<twoDimVertex x="45.00141" y="0.0" />
 		<twoDimVertex x="-45.00141" y="0.0" />
 		<twoDimVertex x="-43.06141" y="753.0" />
-		<section zOrder="1" zPosition="-15.5461"/>
-		<section zOrder="2" zPosition="15.5461"/>
+		<section zOrder="1" zPosition="-15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_inner_E3_front" rmin="0" rmax="45.00141" z="31.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -316,8 +316,8 @@
 		<twoDimVertex x="-109.21579" y="1360.31311" />
 		<twoDimVertex x="-5.33509" y="3337.13369" />
 		<twoDimVertex x="-38.8175" y="3552.527" />
-		<section zOrder="1" zPosition="-8.0"/>
-		<section zOrder="2" zPosition="8.0"/>
+		<section zOrder="1" zPosition="-8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_C4_mid_front" rmin="0" rmax="137.6225" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -364,8 +364,8 @@
 		<twoDimVertex x="-110.21579" y="1360.31311" />
 		<twoDimVertex x="-6.33509" y="3337.13369" />
 		<twoDimVertex x="-39.8175" y="3552.527" />
-		<section zOrder="1" zPosition="-17.2573"/>
-		<section zOrder="2" zPosition="17.2573"/>
+		<section zOrder="1" zPosition="-17.2573" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="17.2573" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_outer_E4_mid_front" rmin="0" rmax="138.6225" z="34.5146" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -412,8 +412,8 @@
 		<twoDimVertex x="-26.35379" y="1360.31311" />
 		<twoDimVertex x="77.52691" y="3337.13369" />
 		<twoDimVertex x="44.0445" y="3552.527" />
-		<section zOrder="1" zPosition="-8.0"/>
-		<section zOrder="2" zPosition="8.0"/>
+		<section zOrder="1" zPosition="-8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_inner_E4_mid_front" rmin="0" rmax="54.7605" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -460,8 +460,8 @@
 		<twoDimVertex x="-72.38098" y="1695.29621" />
 		<twoDimVertex x="31.49972" y="3372.11679" />
 		<twoDimVertex x="-1.9825" y="3584.783" />
-		<section zOrder="1" zPosition="-8.0"/>
-		<section zOrder="2" zPosition="8.0"/>
+		<section zOrder="1" zPosition="-8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_C4_tb_front" rmin="0" rmax="101.4085" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -508,8 +508,8 @@
 		<twoDimVertex x="-73.38098" y="1695.29621" />
 		<twoDimVertex x="30.49972" y="3372.11679" />
 		<twoDimVertex x="-2.9825" y="3584.783" />
-		<section zOrder="1" zPosition="-8.5"/>
-		<section zOrder="2" zPosition="8.5"/>
+		<section zOrder="1" zPosition="-8.5" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.5" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_outer_E4_tb_front" rmin="0" rmax="102.4085" z="17.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -556,8 +556,8 @@
 		<twoDimVertex x="-22.958559" y="1695.29621" />
 		<twoDimVertex x="80.922141" y="3372.11679" />
 		<twoDimVertex x="47.439921" y="3584.783" />
-		<section zOrder="1" zPosition="-8.0"/>
-		<section zOrder="2" zPosition="8.0"/>
+		<section zOrder="1" zPosition="-8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<tube name="solid_inner_E4_tb_front" rmin="0" rmax="51.986079" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
@@ -631,7 +631,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3001"/>
 			<physvol name="inner_E1">
 				<volumeref ref="logic_inner_E1_1"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -664,7 +664,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3001"/>
 			<physvol name="inner_E2">
 				<volumeref ref="logic_inner_E2_1"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -697,7 +697,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3001"/>
 			<physvol name="inner_E3">
 				<volumeref ref="logic_inner_E3_1"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -730,7 +730,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3001"/>
 			<physvol name="inner_E4_top">
 				<volumeref ref="logic_inner_E4_top_1"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -751,7 +751,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3001"/>
 			<physvol name="inner_E4_topmid">
 				<volumeref ref="logic_inner_E4_topmid_1"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -772,7 +772,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3001"/>
 			<physvol name="inner_E4_botmid">
 				<volumeref ref="logic_inner_E4_botmid_1"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -793,7 +793,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3001"/>
 			<physvol name="inner_E4_bot">
 				<volumeref ref="logic_inner_E4_bot_1"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -856,7 +856,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3002"/>
 			<physvol name="inner_E1">
 				<volumeref ref="logic_inner_E1_2"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -889,7 +889,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3002"/>
 			<physvol name="inner_E2">
 				<volumeref ref="logic_inner_E2_2"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -922,7 +922,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3002"/>
 			<physvol name="inner_E3">
 				<volumeref ref="logic_inner_E3_2"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -955,7 +955,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3002"/>
 			<physvol name="inner_E4_top">
 				<volumeref ref="logic_inner_E4_top_2"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -976,7 +976,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3002"/>
 			<physvol name="inner_E4_topmid">
 				<volumeref ref="logic_inner_E4_topmid_2"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -997,7 +997,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3002"/>
 			<physvol name="inner_E4_botmid">
 				<volumeref ref="logic_inner_E4_botmid_2"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1018,7 +1018,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3002"/>
 			<physvol name="inner_E4_bot">
 				<volumeref ref="logic_inner_E4_bot_2"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1081,7 +1081,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3003"/>
 			<physvol name="inner_E1">
 				<volumeref ref="logic_inner_E1_3"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1114,7 +1114,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3003"/>
 			<physvol name="inner_E2">
 				<volumeref ref="logic_inner_E2_3"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1147,7 +1147,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3003"/>
 			<physvol name="inner_E3">
 				<volumeref ref="logic_inner_E3_3"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1180,7 +1180,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3003"/>
 			<physvol name="inner_E4_top">
 				<volumeref ref="logic_inner_E4_top_3"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1201,7 +1201,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3003"/>
 			<physvol name="inner_E4_topmid">
 				<volumeref ref="logic_inner_E4_topmid_3"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1222,7 +1222,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3003"/>
 			<physvol name="inner_E4_botmid">
 				<volumeref ref="logic_inner_E4_botmid_3"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1243,7 +1243,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3003"/>
 			<physvol name="inner_E4_bot">
 				<volumeref ref="logic_inner_E4_bot_3"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1306,7 +1306,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3004"/>
 			<physvol name="inner_E1">
 				<volumeref ref="logic_inner_E1_4"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1339,7 +1339,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3004"/>
 			<physvol name="inner_E2">
 				<volumeref ref="logic_inner_E2_4"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1372,7 +1372,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3004"/>
 			<physvol name="inner_E3">
 				<volumeref ref="logic_inner_E3_4"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1405,7 +1405,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3004"/>
 			<physvol name="inner_E4_top">
 				<volumeref ref="logic_inner_E4_top_4"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1426,7 +1426,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3004"/>
 			<physvol name="inner_E4_topmid">
 				<volumeref ref="logic_inner_E4_topmid_4"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1447,7 +1447,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3004"/>
 			<physvol name="inner_E4_botmid">
 				<volumeref ref="logic_inner_E4_botmid_4"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1468,7 +1468,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3004"/>
 			<physvol name="inner_E4_bot">
 				<volumeref ref="logic_inner_E4_bot_4"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1531,7 +1531,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3005"/>
 			<physvol name="inner_E1">
 				<volumeref ref="logic_inner_E1_5"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1564,7 +1564,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3005"/>
 			<physvol name="inner_E2">
 				<volumeref ref="logic_inner_E2_5"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1597,7 +1597,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3005"/>
 			<physvol name="inner_E3">
 				<volumeref ref="logic_inner_E3_5"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1630,7 +1630,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3005"/>
 			<physvol name="inner_E4_top">
 				<volumeref ref="logic_inner_E4_top_5"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1651,7 +1651,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3005"/>
 			<physvol name="inner_E4_topmid">
 				<volumeref ref="logic_inner_E4_topmid_5"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1672,7 +1672,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3005"/>
 			<physvol name="inner_E4_botmid">
 				<volumeref ref="logic_inner_E4_botmid_5"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1693,7 +1693,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3005"/>
 			<physvol name="inner_E4_bot">
 				<volumeref ref="logic_inner_E4_bot_5"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1756,7 +1756,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3006"/>
 			<physvol name="inner_E1">
 				<volumeref ref="logic_inner_E1_6"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1789,7 +1789,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3006"/>
 			<physvol name="inner_E2">
 				<volumeref ref="logic_inner_E2_6"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1822,7 +1822,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3006"/>
 			<physvol name="inner_E3">
 				<volumeref ref="logic_inner_E3_6"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1855,7 +1855,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3006"/>
 			<physvol name="inner_E4_top">
 				<volumeref ref="logic_inner_E4_top_6"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1876,7 +1876,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3006"/>
 			<physvol name="inner_E4_topmid">
 				<volumeref ref="logic_inner_E4_topmid_6"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1897,7 +1897,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3006"/>
 			<physvol name="inner_E4_botmid">
 				<volumeref ref="logic_inner_E4_botmid_6"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1918,7 +1918,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3006"/>
 			<physvol name="inner_E4_bot">
 				<volumeref ref="logic_inner_E4_bot_6"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -1981,7 +1981,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3007"/>
 			<physvol name="inner_E1">
 				<volumeref ref="logic_inner_E1_7"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -2014,7 +2014,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3007"/>
 			<physvol name="inner_E2">
 				<volumeref ref="logic_inner_E2_7"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -2047,7 +2047,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3007"/>
 			<physvol name="inner_E3">
 				<volumeref ref="logic_inner_E3_7"/>
-				<rotation name="rot_inner_E" y="0" aunit="rad" />
+				<rotation name="rot_inner_E" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -2080,7 +2080,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3007"/>
 			<physvol name="inner_E4_top">
 				<volumeref ref="logic_inner_E4_top_7"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -2101,7 +2101,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3007"/>
 			<physvol name="inner_E4_topmid">
 				<volumeref ref="logic_inner_E4_topmid_7"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -2122,7 +2122,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3007"/>
 			<physvol name="inner_E4_botmid">
 				<volumeref ref="logic_inner_E4_botmid_7"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>
@@ -2143,7 +2143,7 @@
 		<auxiliary auxtype="DetNo" auxvalue="3007"/>
 			<physvol name="inner_E4_bot">
 				<volumeref ref="logic_inner_E4_bot_7"/>
-				<rotation name="rot_inner_E4_" y="0" aunit="rad" />
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
 			</physvol>
 
 	</volume>

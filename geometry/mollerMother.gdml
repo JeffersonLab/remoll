@@ -23,7 +23,6 @@
   <volume name="logicMother">
     <materialref ref="G4_AIR"/>
     <solidref ref="world_solid"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
     <!-- Target region -->
     <physvol>
@@ -110,6 +109,7 @@
       <positionref ref="pionDetectorSystemFaceUS"/>
     </physvol>
 
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 </structure>
 

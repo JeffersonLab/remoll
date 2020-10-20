@@ -54,7 +54,7 @@
   <subtraction name ="targetRegion_solid">
      <first ref="targetRegion_solid1"/>
      <second ref="targetRegion_solid2"/>
-     <position name="MotherSub_pos" lunit="mm" x="0" y=" - 3000 - 5000./2. + 20" z="0" />
+     <position name="MotherSub_pos" unit="mm" x="0" y=" - 3000 - 5000./2. + 20" z="0" />
              <!--2980 mm is the distance of beam center from the hall floor-->
    </subtraction>
 
@@ -129,7 +129,7 @@
   <subtraction name="concrete_sub1">
     <first ref = "concrete_outerbox"/>
     <second ref = "concrete_innerbox"/>
-    <position name ="concreteSub1" lunit="mm" x="0" y="-concreteThickness" z="0" />
+    <position name ="concreteSub1" unit="mm" x="0" y="-concreteThickness" z="0" />
   </subtraction>
 
   <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
@@ -138,8 +138,8 @@
   <subtraction name="concrete_sub">
     <first ref = "concrete_sub1"/>
     <second ref = "Shield_tube"/>
-	    <!--<position name ="concreteSub1" lunit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />-->
-    <position name ="concreteSub1" lunit="mm" x="0" y="-370" z="0" />
+	    <!--<position name ="concreteSub" unit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />-->
+    <position name ="concreteSub" unit="mm" x="0" y="-370" z="0" />
   </subtraction>
 
   <!--shielding front lead -->
@@ -150,7 +150,7 @@
   <subtraction name="lead_sub">
     <first ref = "lead_box"/>
     <second ref = "Shield_tube_lead"/>
-    <position name ="leadSub1" lunit="mm" x="leadBoxx/2.-1880" y="-1.*(leadBoxy/2.-1150)" z="0" />
+    <position name ="leadSub1" unit="mm" x="leadBoxx/2.-1880" y="-1.*(leadBoxy/2.-1150)" z="0" />
   </subtraction>
 
   <!--vacuum detectors for monitoring skyshine  chandan-->
@@ -169,7 +169,7 @@
     <subtraction name="tgtOuterDetxy_solid">
       <first ref = "tgtOuterDetxy_solid0"/>
       <second ref = "tgtDet_sub"/>
-      <position name ="detSub1" lunit="mm" x="0" y="-390" z="0" />
+      <position name ="detSub1" unit="mm" x="0" y="-390" z="0" />
     </subtraction>
 
     <box lunit="mm" name="tgtInnerDetyz_solid"
@@ -179,7 +179,7 @@
     <subtraction name="tgtInnerDetxy_solid">
       <first ref = "tgtInnerDetxy_solid0"/>
       <second ref = "tgtDet_sub"/>
-      <position name ="detSub2" lunit="mm" x="0" y="-390" z="0" />
+      <position name ="detSub2" unit="mm" x="0" y="-390" z="0" />
     </subtraction>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s1"
@@ -422,7 +422,6 @@
   <volume name="targetRegion">
     <materialref ref="VacuumTarg"/>
     <solidref ref="targetRegion_solid"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
     <physvol>
       <volumeref ref="TargWindow_logic"/>
@@ -530,6 +529,7 @@
       <position name="tgtInnerDet3_pos" unit="mm" x="0" y="390" z="1101"/>
     </physvol>
 
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     <auxiliary auxtype="TargetSystem" auxvalue=""/>
   </volume>
 

@@ -411,7 +411,7 @@
     
     <!-- Water Tank Dump (should have rounded tank ends, but using cylinder for now) -->
 
-    <tube name="tubeDumpWaterTank" 
+    <tube name="tubeDumpWaterTank_outer_solid" 
           aunit="deg" startphi="0" deltaphi="360" 
           lunit="cm" rmin="dumpWaterTank_r" rmax="dumpWaterTank_r + dumpWaterTank_thickness"
           z="dumpWaterTank_length + 2*dumpWaterTank_thickness"/>
@@ -422,7 +422,7 @@
           z="dumpWaterTank_length"/>
         
     <subtraction name="tubeDumpWaterTank_solid">
-      <first ref="tubeDumpWaterTank"/>
+      <first ref="tubeDumpWaterTank_outer_solid"/>
       <second ref="waterDumpWaterTank_solid"/>
       <positionref ref="tubeDumpWaterTank_trans"/>
       <rotationref ref="identity"/>
@@ -593,7 +593,6 @@
     <volume name="logicHall">
       <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="hallVerticalWallDet">
         <volumeref ref="hallVerticalWallDet_logic"/>
@@ -716,8 +715,7 @@
         <position name="diffuserPlate_pos" unit="cm" z="nitrogenAtmWall_center_z + 15" />
       </physvol>
 
-
-
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
 </structure>

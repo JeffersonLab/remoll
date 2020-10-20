@@ -88,8 +88,8 @@
       <twoDimVertex x="-donutSystemWidth/2" y="+donutSystemHeight/2"/>
       <twoDimVertex x="+donutSystemWidth/2" y="+donutSystemHeight/2"/>
       <twoDimVertex x="+donutSystemWidth/2" y="-donutSystemHeight/2"/>
-      <section zOrder="1" zPostiion="0"/>
-      <section zOrder="2" zPosition="donutSystemLength"/>
+      <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="donutSystemLength" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
     <polycone name="donutSystemHole_solid"
               aunit="deg" startphi="0" deltaphi="360">
@@ -188,16 +188,16 @@
     <volume name="donutConcrete_logical">
       <materialref ref="G4_CONCRETE"/>
       <solidref ref="donutConcrete_solid"/>
+      <physvol name="donutConcreteVirtualDetectorUS_physical">
+        <volumeref ref="donutConcreteVirtualDetectorUS_logical"/>
+      </physvol>
+      <physvol name="donutConcreteVirtualDetectorDS_physical">
+        <volumeref ref="donutConcreteVirtualDetectorDS_logical"/>
+      </physvol>
       <auxiliary auxtype="SensDet" auxvalue="donutConcrete"/>
       <auxiliary auxtype="DetNo" auxvalue="8017"/>
       <auxiliary auxtype="Color" auxvalue="Gray"/>
       <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-      <physvol>
-        <volumeref ref="donutConcreteVirtualDetectorUS_logical"/>
-      </physvol>
-      <physvol>
-        <volumeref ref="donutConcreteVirtualDetectorDS_logical"/>
-      </physvol>
     </volume>
 
     <volume name="donutLeadVirtualDetectorUS_logical">
@@ -219,49 +219,49 @@
     <volume name="donutLead_logical">
       <materialref ref="G4_Pb"/>
       <solidref ref="donutLead_solid"/>
+      <physvol name="donutLeadVirtualDetectorUS_physical">
+        <volumeref ref="donutLeadVirtualDetectorUS_logical"/>
+      </physvol>
+      <physvol name="donutLeadVirtualDetectorDS_physical">
+        <volumeref ref="donutLeadVirtualDetectorDS_logical"/>
+      </physvol>
       <auxiliary auxtype="SensDet" auxvalue="donutLead_SD"/>
       <auxiliary auxtype="DetNo" auxvalue="8020"/>
       <auxiliary auxtype="Color" auxvalue="Black"/>
       <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-      <physvol>
-        <volumeref ref="donutLeadVirtualDetectorUS_logical"/>
-      </physvol>
-      <physvol>
-        <volumeref ref="donutLeadVirtualDetectorDS_logical"/>
-      </physvol>
     </volume>
 
     <volume name="donutSystem_logical">
       <materialref ref="G4_AIR"/>
       <solidref ref="donutSystem_solid"/>
 
-      <physvol>
+      <physvol name="donutIBeamFrameVertical_right_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
         <position x="-donutIBeamFrameWidth/2-donutIBeamHeight/2" z="donutSystemLength/2"/>
         <rotation x="90" z="90" unit="deg"/>
       </physvol>
-      <physvol>
+      <physvol name="donutIBeamFrameVertical_left_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
         <position x="+donutIBeamFrameWidth/2+donutIBeamHeight/2" z="donutSystemLength/2"/>
         <rotation x="90" z="90" unit="deg"/>
       </physvol>
-      <physvol>
+      <physvol name="donutIBeamFrameHorizontal_top_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
         <position y="donutIBeamFrameHeightTop+donutIBeamHeight/2" z="donutSystemLength/2"/>
         <rotation x="90" y="90" z="90" unit="deg"/>
       </physvol>
-      <physvol>
+      <physvol name="donutIBeamFrameHorizontal_bot_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
         <position y="donutIBeamFrameHeightBot-donutIBeamHeight/2" z="donutSystemLength/2"/>
         <rotation x="90" y="90" z="90" unit="deg"/>
       </physvol>
 
-      <physvol>
+      <physvol name="donutConcrete_physical">
         <volumeref ref="donutConcrete_logical"/>
         <positionref ref="donutConcretePosition"/>
       </physvol>
 
-      <physvol>
+      <physvol name="donutLead_physical">
         <volumeref ref="donutLead_logical"/>
         <positionref ref="donutLeadPosition"/>
       </physvol>
