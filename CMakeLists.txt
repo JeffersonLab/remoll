@@ -38,6 +38,9 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     endif()
 endif()
 
+# For remollSearchPath.hh
+# should be able to use target_link_libraries() here
+link_libraries(stdc++fs)
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
@@ -386,7 +389,6 @@ install(FILES
 #----------------------------------------------------------------------------
 # remollSearchPath
 
-link_libraries(stdc++fs)
 add_definitions(
         -DCMAKE_INSTALL_PREFIX=\"${CMAKE_INSTALL_PREFIX}\"
         -DCMAKE_INSTALL_FULL_DATADIR=\"${CMAKE_INSTALL_FULL_DATADIR}\"

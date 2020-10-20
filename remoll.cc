@@ -27,6 +27,8 @@ typedef G4RunManager RunManager;
 #include "remollDetectorConstruction.hh"
 #include "remollParallelConstruction.hh"
 
+#include "remollSearchPath.hh"
+
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
@@ -152,8 +154,8 @@ int main(int argc, char** argv) {
     {
       // Run in batch mode
       // Copy contents of macro into buffer to be written out into ROOT file
-      remollRun::GetRunData()->SetMacroFile(macro);
-      UImanager->ExecuteMacroFile(macro);
+      remollRun::GetRunData()->SetMacroFile((remollSearchPath::resolve(macro)).c_str());
+      UImanager->ExecuteMacroFile((remollSearchPath::resolve(macro)).c_str());
     } else {
       // Define UI session for interactive mode
       G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
