@@ -7,6 +7,22 @@
 <define>
 </define>
 
+<materials>
+	<material name="G4_Quartz" state="solid">
+		<MEE unit="eV" value="139.2"/>
+		<D value="2.2" unit="g/cm3"/>
+		<fraction n="0.467465468463971" ref="G4_Si"/>
+		<fraction n="0.532534531536029" ref="G4_O"/>
+	</material>
+	<material name="G4_Cathode" state="solid">
+		<D value="0.8223" unit="g/cm3"/>
+		<fraction n="0.2349" ref="G4_K"/>
+		<fraction n="0.3993" ref="G4_Cs"/>
+		<fraction n="0.3658" ref="G4_Sb"/>
+	</material>
+</materials>
+
+
 <solids>
 	<tube name="solid_pmt_window" rmin="0" rmax="38.1" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
 	<tube name="solid_pmt_cathode" rmin="0" rmax="38.1" z="3e-06" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
@@ -48,8 +64,8 @@
 	<union name="solid_logic_mirror_box">
 		<first ref="solid_mirror_box_bot_1"/>
 		<second ref="solid_logic_mirror_box_4"/>
-		<position name="pos_logic_mirror_box_union" z="97.8468045735" y="0" x="0"/>
-		<rotation name="rot_logic_mirror_box_union" x="0" y="0" z="0"/>
+		<position name="pos_logic_mirror_box" z="97.8468045735" y="0" x="0"/>
+		<rotation name="rot_logic_mirror_box" x="0" y="0" z="0"/>
 	</union>
 	<union name="solid_logic_mirror_box_union">
 		<first ref="solid_mirror_box_tungstenquartz_1"/>
@@ -59,22 +75,6 @@
 	</union>
 	<cone name="solid_showerMaxMother" rmin1="730"  rmax1="1900" rmin2="730" rmax2="1900"  z="416.764" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 </solids>
-
-
-<materials>
-	<material name="G4_Quartz" state="solid">
-		<MEE unit="eV" value="139.2"/>
-		<D value="2.2" unit="g/cm3"/>
-		<fraction n="0.467465468463971" ref="G4_Si"/>
-		<fraction n="0.532534531536029" ref="G4_O"/>
-	</material>
-	<material name="G4_Cathode" state="solid">
-		<D value="0.8223" unit="g/cm3"/>
-		<fraction n="0.2349" ref="G4_K"/>
-		<fraction n="0.3993" ref="G4_Cs"/>
-		<fraction n="0.3658" ref="G4_Sb"/>
-	</material>
-</materials>
 
 
 <structure>
@@ -146,7 +146,6 @@
 	<volume name="logic_singledet_0">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_0">
 			<volumeref ref="logic_mirror_box_bot_0"/>
 			<position name="pos_logic_mirror_box_bot_0" x="110.861" y="0" z="0"/>
@@ -207,6 +206,7 @@
 			<position name="pos_logic_tungsten_0_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_0_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_1">
 		<materialref ref="G4_Al"/>
@@ -276,7 +276,6 @@
 	<volume name="logic_singledet_1">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_1">
 			<volumeref ref="logic_mirror_box_bot_1"/>
 			<position name="pos_logic_mirror_box_bot_1" x="110.861" y="0" z="0"/>
@@ -337,6 +336,7 @@
 			<position name="pos_logic_tungsten_1_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_1_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_2">
 		<materialref ref="G4_Al"/>
@@ -406,7 +406,6 @@
 	<volume name="logic_singledet_2">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_2">
 			<volumeref ref="logic_mirror_box_bot_2"/>
 			<position name="pos_logic_mirror_box_bot_2" x="110.861" y="0" z="0"/>
@@ -467,6 +466,7 @@
 			<position name="pos_logic_tungsten_2_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_2_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_3">
 		<materialref ref="G4_Al"/>
@@ -536,7 +536,6 @@
 	<volume name="logic_singledet_3">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_3">
 			<volumeref ref="logic_mirror_box_bot_3"/>
 			<position name="pos_logic_mirror_box_bot_3" x="110.861" y="0" z="0"/>
@@ -597,6 +596,7 @@
 			<position name="pos_logic_tungsten_3_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_3_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_4">
 		<materialref ref="G4_Al"/>
@@ -666,7 +666,6 @@
 	<volume name="logic_singledet_4">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_4">
 			<volumeref ref="logic_mirror_box_bot_4"/>
 			<position name="pos_logic_mirror_box_bot_4" x="110.861" y="0" z="0"/>
@@ -727,6 +726,7 @@
 			<position name="pos_logic_tungsten_4_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_4_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_5">
 		<materialref ref="G4_Al"/>
@@ -796,7 +796,6 @@
 	<volume name="logic_singledet_5">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_5">
 			<volumeref ref="logic_mirror_box_bot_5"/>
 			<position name="pos_logic_mirror_box_bot_5" x="110.861" y="0" z="0"/>
@@ -857,6 +856,7 @@
 			<position name="pos_logic_tungsten_5_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_5_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_6">
 		<materialref ref="G4_Al"/>
@@ -926,7 +926,6 @@
 	<volume name="logic_singledet_6">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_6">
 			<volumeref ref="logic_mirror_box_bot_6"/>
 			<position name="pos_logic_mirror_box_bot_6" x="110.861" y="0" z="0"/>
@@ -987,6 +986,7 @@
 			<position name="pos_logic_tungsten_6_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_6_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_7">
 		<materialref ref="G4_Al"/>
@@ -1056,7 +1056,6 @@
 	<volume name="logic_singledet_7">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_7">
 			<volumeref ref="logic_mirror_box_bot_7"/>
 			<position name="pos_logic_mirror_box_bot_7" x="110.861" y="0" z="0"/>
@@ -1117,6 +1116,7 @@
 			<position name="pos_logic_tungsten_7_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_7_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_8">
 		<materialref ref="G4_Al"/>
@@ -1186,7 +1186,6 @@
 	<volume name="logic_singledet_8">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_8">
 			<volumeref ref="logic_mirror_box_bot_8"/>
 			<position name="pos_logic_mirror_box_bot_8" x="110.861" y="0" z="0"/>
@@ -1247,6 +1246,7 @@
 			<position name="pos_logic_tungsten_8_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_8_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_9">
 		<materialref ref="G4_Al"/>
@@ -1316,7 +1316,6 @@
 	<volume name="logic_singledet_9">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_9">
 			<volumeref ref="logic_mirror_box_bot_9"/>
 			<position name="pos_logic_mirror_box_bot_9" x="110.861" y="0" z="0"/>
@@ -1377,6 +1376,7 @@
 			<position name="pos_logic_tungsten_9_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_9_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_10">
 		<materialref ref="G4_Al"/>
@@ -1446,7 +1446,6 @@
 	<volume name="logic_singledet_10">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_10">
 			<volumeref ref="logic_mirror_box_bot_10"/>
 			<position name="pos_logic_mirror_box_bot_10" x="110.861" y="0" z="0"/>
@@ -1507,6 +1506,7 @@
 			<position name="pos_logic_tungsten_10_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_10_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_11">
 		<materialref ref="G4_Al"/>
@@ -1576,7 +1576,6 @@
 	<volume name="logic_singledet_11">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_11">
 			<volumeref ref="logic_mirror_box_bot_11"/>
 			<position name="pos_logic_mirror_box_bot_11" x="110.861" y="0" z="0"/>
@@ -1637,6 +1636,7 @@
 			<position name="pos_logic_tungsten_11_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_11_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_12">
 		<materialref ref="G4_Al"/>
@@ -1706,7 +1706,6 @@
 	<volume name="logic_singledet_12">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_12">
 			<volumeref ref="logic_mirror_box_bot_12"/>
 			<position name="pos_logic_mirror_box_bot_12" x="110.861" y="0" z="0"/>
@@ -1767,6 +1766,7 @@
 			<position name="pos_logic_tungsten_12_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_12_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_13">
 		<materialref ref="G4_Al"/>
@@ -1836,7 +1836,6 @@
 	<volume name="logic_singledet_13">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_13">
 			<volumeref ref="logic_mirror_box_bot_13"/>
 			<position name="pos_logic_mirror_box_bot_13" x="110.861" y="0" z="0"/>
@@ -1897,6 +1896,7 @@
 			<position name="pos_logic_tungsten_13_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_13_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_14">
 		<materialref ref="G4_Al"/>
@@ -1966,7 +1966,6 @@
 	<volume name="logic_singledet_14">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_14">
 			<volumeref ref="logic_mirror_box_bot_14"/>
 			<position name="pos_logic_mirror_box_bot_14" x="110.861" y="0" z="0"/>
@@ -2027,6 +2026,7 @@
 			<position name="pos_logic_tungsten_14_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_14_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_15">
 		<materialref ref="G4_Al"/>
@@ -2096,7 +2096,6 @@
 	<volume name="logic_singledet_15">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_15">
 			<volumeref ref="logic_mirror_box_bot_15"/>
 			<position name="pos_logic_mirror_box_bot_15" x="110.861" y="0" z="0"/>
@@ -2157,6 +2156,7 @@
 			<position name="pos_logic_tungsten_15_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_15_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_16">
 		<materialref ref="G4_Al"/>
@@ -2226,7 +2226,6 @@
 	<volume name="logic_singledet_16">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_16">
 			<volumeref ref="logic_mirror_box_bot_16"/>
 			<position name="pos_logic_mirror_box_bot_16" x="110.861" y="0" z="0"/>
@@ -2287,6 +2286,7 @@
 			<position name="pos_logic_tungsten_16_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_16_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_17">
 		<materialref ref="G4_Al"/>
@@ -2356,7 +2356,6 @@
 	<volume name="logic_singledet_17">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_17">
 			<volumeref ref="logic_mirror_box_bot_17"/>
 			<position name="pos_logic_mirror_box_bot_17" x="110.861" y="0" z="0"/>
@@ -2417,6 +2416,7 @@
 			<position name="pos_logic_tungsten_17_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_17_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_18">
 		<materialref ref="G4_Al"/>
@@ -2486,7 +2486,6 @@
 	<volume name="logic_singledet_18">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_18">
 			<volumeref ref="logic_mirror_box_bot_18"/>
 			<position name="pos_logic_mirror_box_bot_18" x="110.861" y="0" z="0"/>
@@ -2547,6 +2546,7 @@
 			<position name="pos_logic_tungsten_18_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_18_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_19">
 		<materialref ref="G4_Al"/>
@@ -2616,7 +2616,6 @@
 	<volume name="logic_singledet_19">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_19">
 			<volumeref ref="logic_mirror_box_bot_19"/>
 			<position name="pos_logic_mirror_box_bot_19" x="110.861" y="0" z="0"/>
@@ -2677,6 +2676,7 @@
 			<position name="pos_logic_tungsten_19_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_19_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_20">
 		<materialref ref="G4_Al"/>
@@ -2746,7 +2746,6 @@
 	<volume name="logic_singledet_20">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_20">
 			<volumeref ref="logic_mirror_box_bot_20"/>
 			<position name="pos_logic_mirror_box_bot_20" x="110.861" y="0" z="0"/>
@@ -2807,6 +2806,7 @@
 			<position name="pos_logic_tungsten_20_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_20_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_21">
 		<materialref ref="G4_Al"/>
@@ -2876,7 +2876,6 @@
 	<volume name="logic_singledet_21">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_21">
 			<volumeref ref="logic_mirror_box_bot_21"/>
 			<position name="pos_logic_mirror_box_bot_21" x="110.861" y="0" z="0"/>
@@ -2937,6 +2936,7 @@
 			<position name="pos_logic_tungsten_21_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_21_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_22">
 		<materialref ref="G4_Al"/>
@@ -3006,7 +3006,6 @@
 	<volume name="logic_singledet_22">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_22">
 			<volumeref ref="logic_mirror_box_bot_22"/>
 			<position name="pos_logic_mirror_box_bot_22" x="110.861" y="0" z="0"/>
@@ -3067,6 +3066,7 @@
 			<position name="pos_logic_tungsten_22_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_22_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_23">
 		<materialref ref="G4_Al"/>
@@ -3136,7 +3136,6 @@
 	<volume name="logic_singledet_23">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_23">
 			<volumeref ref="logic_mirror_box_bot_23"/>
 			<position name="pos_logic_mirror_box_bot_23" x="110.861" y="0" z="0"/>
@@ -3197,6 +3196,7 @@
 			<position name="pos_logic_tungsten_23_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_23_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_24">
 		<materialref ref="G4_Al"/>
@@ -3266,7 +3266,6 @@
 	<volume name="logic_singledet_24">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_24">
 			<volumeref ref="logic_mirror_box_bot_24"/>
 			<position name="pos_logic_mirror_box_bot_24" x="110.861" y="0" z="0"/>
@@ -3327,6 +3326,7 @@
 			<position name="pos_logic_tungsten_24_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_24_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_25">
 		<materialref ref="G4_Al"/>
@@ -3396,7 +3396,6 @@
 	<volume name="logic_singledet_25">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_25">
 			<volumeref ref="logic_mirror_box_bot_25"/>
 			<position name="pos_logic_mirror_box_bot_25" x="110.861" y="0" z="0"/>
@@ -3457,6 +3456,7 @@
 			<position name="pos_logic_tungsten_25_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_25_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_26">
 		<materialref ref="G4_Al"/>
@@ -3526,7 +3526,6 @@
 	<volume name="logic_singledet_26">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_26">
 			<volumeref ref="logic_mirror_box_bot_26"/>
 			<position name="pos_logic_mirror_box_bot_26" x="110.861" y="0" z="0"/>
@@ -3587,6 +3586,7 @@
 			<position name="pos_logic_tungsten_26_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_26_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_mirror_box_tungstenquartz_27">
 		<materialref ref="G4_Al"/>
@@ -3656,7 +3656,6 @@
 	<volume name="logic_singledet_27">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_logic_mirror_box_union"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="mirror_box_bot_27">
 			<volumeref ref="logic_mirror_box_bot_27"/>
 			<position name="pos_logic_mirror_box_bot_27" x="110.861" y="0" z="0"/>
@@ -3717,151 +3716,152 @@
 			<position name="pos_logic_tungsten_27_3" x="0" y="0" z="-32.0"/>
 			<rotation name="rot_logic_tungsten_27_3" x="0" y="0" z="0"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="showerMaxMother">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_showerMaxMother"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 		<physvol name="singledet_0">
 			<volumeref ref="logic_singledet_0"/>
-			<position name="pos_singledet_0" x="-1100.0" y="1.34711147906e-13" z="-40.0"/>
+			<position name="pos_singledet_0" x="-1090.0" y="1.33486501107e-13" z="-40.0"/>
 			<rotation name="rot_singledet_0" x="-0.0" y="-0.0" z="-3.14159265359"/>
 		</physvol>
 		<physvol name="singledet_1">
 			<volumeref ref="logic_singledet_1"/>
-			<position name="pos_singledet_1" x="-1072.4207034" y="-244.773027352" z="40.0"/>
+			<position name="pos_singledet_1" x="-1062.67142428" y="-242.547818012" z="40.0"/>
 			<rotation name="rot_singledet_1" x="0.0" y="-0.0" z="-3.36599212885"/>
 		</physvol>
 		<physvol name="singledet_2">
 			<volumeref ref="logic_singledet_2"/>
-			<position name="pos_singledet_2" x="-991.065754693" y="-477.272113029" z="-40.0"/>
+			<position name="pos_singledet_2" x="-982.056066014" y="-472.933275638" z="-40.0"/>
 			<rotation name="rot_singledet_2" x="0.0" y="-0.0" z="-3.5903916041"/>
 		</physvol>
 		<physvol name="singledet_3">
 			<volumeref ref="logic_singledet_3"/>
-			<position name="pos_singledet_3" x="-860.014630715" y="-685.838782045" z="40.0"/>
+			<position name="pos_singledet_3" x="-852.19631589" y="-679.603884026" z="40.0"/>
 			<rotation name="rot_singledet_3" x="0.0" y="-0.0" z="-3.81479107936"/>
 		</physvol>
 		<physvol name="singledet_4">
 			<volumeref ref="logic_singledet_4"/>
-			<position name="pos_singledet_4" x="-685.838782045" y="-860.014630715" z="-40.0"/>
+			<position name="pos_singledet_4" x="-679.603884026" y="-852.19631589" z="-40.0"/>
 			<rotation name="rot_singledet_4" x="0.0" y="-0.0" z="-4.03919055462"/>
 		</physvol>
 		<physvol name="singledet_5">
 			<volumeref ref="logic_singledet_5"/>
-			<position name="pos_singledet_5" x="-477.272113029" y="-991.065754693" z="40.0"/>
+			<position name="pos_singledet_5" x="-472.933275638" y="-982.056066014" z="40.0"/>
 			<rotation name="rot_singledet_5" x="0.0" y="-0.0" z="-4.26359002987"/>
 		</physvol>
 		<physvol name="singledet_6">
 			<volumeref ref="logic_singledet_6"/>
-			<position name="pos_singledet_6" x="-244.773027352" y="-1072.4207034" z="-40.0"/>
+			<position name="pos_singledet_6" x="-242.547818012" y="-1062.67142428" z="-40.0"/>
 			<rotation name="rot_singledet_6" x="0.0" y="-0.0" z="-4.48798950513"/>
 		</physvol>
 		<physvol name="singledet_7">
 			<volumeref ref="logic_singledet_7"/>
-			<position name="pos_singledet_7" x="-2.02066721859e-13" y="-1100.0" z="40.0"/>
+			<position name="pos_singledet_7" x="-2.00229751661e-13" y="-1090.0" z="40.0"/>
 			<rotation name="rot_singledet_7" x="0.0" y="-0.0" z="-4.71238898038"/>
 		</physvol>
 		<physvol name="singledet_8">
 			<volumeref ref="logic_singledet_8"/>
-			<position name="pos_singledet_8" x="244.773027352" y="-1072.4207034" z="-40.0"/>
+			<position name="pos_singledet_8" x="242.547818012" y="-1062.67142428" z="-40.0"/>
 			<rotation name="rot_singledet_8" x="0.0" y="0.0" z="-4.93678845564"/>
 		</physvol>
 		<physvol name="singledet_9">
 			<volumeref ref="logic_singledet_9"/>
-			<position name="pos_singledet_9" x="477.272113029" y="-991.065754693" z="40.0"/>
+			<position name="pos_singledet_9" x="472.933275638" y="-982.056066014" z="40.0"/>
 			<rotation name="rot_singledet_9" x="0.0" y="0.0" z="-5.1611879309"/>
 		</physvol>
 		<physvol name="singledet_10">
 			<volumeref ref="logic_singledet_10"/>
-			<position name="pos_singledet_10" x="685.838782045" y="-860.014630715" z="-40.0"/>
+			<position name="pos_singledet_10" x="679.603884026" y="-852.19631589" z="-40.0"/>
 			<rotation name="rot_singledet_10" x="0.0" y="0.0" z="-5.38558740615"/>
 		</physvol>
 		<physvol name="singledet_11">
 			<volumeref ref="logic_singledet_11"/>
-			<position name="pos_singledet_11" x="860.014630715" y="-685.838782045" z="40.0"/>
+			<position name="pos_singledet_11" x="852.19631589" y="-679.603884026" z="40.0"/>
 			<rotation name="rot_singledet_11" x="0.0" y="0.0" z="-5.60998688141"/>
 		</physvol>
 		<physvol name="singledet_12">
 			<volumeref ref="logic_singledet_12"/>
-			<position name="pos_singledet_12" x="991.065754693" y="-477.272113029" z="-40.0"/>
+			<position name="pos_singledet_12" x="982.056066014" y="-472.933275638" z="-40.0"/>
 			<rotation name="rot_singledet_12" x="0.0" y="0.0" z="-5.83438635667"/>
 		</physvol>
 		<physvol name="singledet_13">
 			<volumeref ref="logic_singledet_13"/>
-			<position name="pos_singledet_13" x="1072.4207034" y="-244.773027352" z="40.0"/>
+			<position name="pos_singledet_13" x="1062.67142428" y="-242.547818012" z="40.0"/>
 			<rotation name="rot_singledet_13" x="0.0" y="0.0" z="-6.05878583192"/>
 		</physvol>
 		<physvol name="singledet_14">
 			<volumeref ref="logic_singledet_14"/>
-			<position name="pos_singledet_14" x="1100.0" y="-2.69422295812e-13" z="-40.0"/>
+			<position name="pos_singledet_14" x="1090.0" y="-2.66973002214e-13" z="-40.0"/>
 			<rotation name="rot_singledet_14" x="0.0" y="0.0" z="-6.28318530718"/>
 		</physvol>
 		<physvol name="singledet_15">
 			<volumeref ref="logic_singledet_15"/>
-			<position name="pos_singledet_15" x="1072.4207034" y="244.773027352" z="40.0"/>
+			<position name="pos_singledet_15" x="1062.67142428" y="242.547818012" z="40.0"/>
 			<rotation name="rot_singledet_15" x="-0.0" y="0.0" z="-6.50758478244"/>
 		</physvol>
 		<physvol name="singledet_16">
 			<volumeref ref="logic_singledet_16"/>
-			<position name="pos_singledet_16" x="991.065754693" y="477.272113029" z="-40.0"/>
+			<position name="pos_singledet_16" x="982.056066014" y="472.933275638" z="-40.0"/>
 			<rotation name="rot_singledet_16" x="-0.0" y="0.0" z="-6.73198425769"/>
 		</physvol>
 		<physvol name="singledet_17">
 			<volumeref ref="logic_singledet_17"/>
-			<position name="pos_singledet_17" x="860.014630715" y="685.838782045" z="40.0"/>
+			<position name="pos_singledet_17" x="852.19631589" y="679.603884026" z="40.0"/>
 			<rotation name="rot_singledet_17" x="-0.0" y="0.0" z="-6.95638373295"/>
 		</physvol>
 		<physvol name="singledet_18">
 			<volumeref ref="logic_singledet_18"/>
-			<position name="pos_singledet_18" x="685.838782045" y="860.014630715" z="-40.0"/>
+			<position name="pos_singledet_18" x="679.603884026" y="852.19631589" z="-40.0"/>
 			<rotation name="rot_singledet_18" x="-0.0" y="0.0" z="-7.18078320821"/>
 		</physvol>
 		<physvol name="singledet_19">
 			<volumeref ref="logic_singledet_19"/>
-			<position name="pos_singledet_19" x="477.272113029" y="991.065754693" z="40.0"/>
+			<position name="pos_singledet_19" x="472.933275638" y="982.056066014" z="40.0"/>
 			<rotation name="rot_singledet_19" x="-0.0" y="0.0" z="-7.40518268346"/>
 		</physvol>
 		<physvol name="singledet_20">
 			<volumeref ref="logic_singledet_20"/>
-			<position name="pos_singledet_20" x="244.773027352" y="1072.4207034" z="-40.0"/>
+			<position name="pos_singledet_20" x="242.547818012" y="1062.67142428" z="-40.0"/>
 			<rotation name="rot_singledet_20" x="-0.0" y="0.0" z="-7.62958215872"/>
 		</physvol>
 		<physvol name="singledet_21">
 			<volumeref ref="logic_singledet_21"/>
-			<position name="pos_singledet_21" x="3.36777869766e-13" y="1100.0" z="40.0"/>
+			<position name="pos_singledet_21" x="3.33716252768e-13" y="1090.0" z="40.0"/>
 			<rotation name="rot_singledet_21" x="-0.0" y="0.0" z="-7.85398163397"/>
 		</physvol>
 		<physvol name="singledet_22">
 			<volumeref ref="logic_singledet_22"/>
-			<position name="pos_singledet_22" x="-244.773027352" y="1072.4207034" z="-40.0"/>
+			<position name="pos_singledet_22" x="-242.547818012" y="1062.67142428" z="-40.0"/>
 			<rotation name="rot_singledet_22" x="-0.0" y="-0.0" z="-8.07838110923"/>
 		</physvol>
 		<physvol name="singledet_23">
 			<volumeref ref="logic_singledet_23"/>
-			<position name="pos_singledet_23" x="-477.272113029" y="991.065754693" z="40.0"/>
+			<position name="pos_singledet_23" x="-472.933275638" y="982.056066014" z="40.0"/>
 			<rotation name="rot_singledet_23" x="-0.0" y="-0.0" z="-8.30278058449"/>
 		</physvol>
 		<physvol name="singledet_24">
 			<volumeref ref="logic_singledet_24"/>
-			<position name="pos_singledet_24" x="-685.838782045" y="860.014630715" z="-40.0"/>
+			<position name="pos_singledet_24" x="-679.603884026" y="852.19631589" z="-40.0"/>
 			<rotation name="rot_singledet_24" x="-0.0" y="-0.0" z="-8.52718005974"/>
 		</physvol>
 		<physvol name="singledet_25">
 			<volumeref ref="logic_singledet_25"/>
-			<position name="pos_singledet_25" x="-860.014630715" y="685.838782045" z="40.0"/>
+			<position name="pos_singledet_25" x="-852.19631589" y="679.603884026" z="40.0"/>
 			<rotation name="rot_singledet_25" x="-0.0" y="-0.0" z="-8.751579535"/>
 		</physvol>
 		<physvol name="singledet_26">
 			<volumeref ref="logic_singledet_26"/>
-			<position name="pos_singledet_26" x="-991.065754693" y="477.272113029" z="-40.0"/>
+			<position name="pos_singledet_26" x="-982.056066014" y="472.933275638" z="-40.0"/>
 			<rotation name="rot_singledet_26" x="-0.0" y="-0.0" z="-8.97597901026"/>
 		</physvol>
 		<physvol name="singledet_27">
 			<volumeref ref="logic_singledet_27"/>
-			<position name="pos_singledet_27" x="-1072.4207034" y="244.773027352" z="40.0"/>
+			<position name="pos_singledet_27" x="-1062.67142428" y="242.547818012" z="40.0"/>
 			<rotation name="rot_singledet_27" x="-0.0" y="-0.0" z="-9.20037848551"/>
 		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 </structure>
 <setup name="showerMaxWorld" version="1.0">
