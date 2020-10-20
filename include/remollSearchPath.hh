@@ -20,7 +20,7 @@ Usage:
 
 #include <unistd.h>
 #include "experimental/filesystem"
-#include "iostream"
+#include "cstring"
 
 namespace fs = std::experimental::filesystem;
 
@@ -38,6 +38,14 @@ public:
     std::string operator() (const std::string& filename);
     static std::string resolve(const std::string& filename) {
         return remollSearchPath::getInstance()->operator()(filename);
+    }
+    // So now it shouldn't matter if you do (remollSearchPath::resolve(macro)).c_str()
+    // or remollSearchPath::resolve(macro.c_str())
+    // It will return the same thing
+    static const char* resolve(const char* filename) {
+        char* file = (char*) malloc((strlen(filename) + 1) * sizeof(char));
+        strcpy(file, remollSearchPath::getInstance()->operator()(std::string(filename)).c_str());
+        return file;
     }
 };
 
