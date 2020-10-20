@@ -12,6 +12,9 @@
 <define>
 </define>
 
+<materials>
+</materials>
+
 <solids>
   <box lunit="m" name="lefthut_world_solid" 
        x="4.4" y="3.6" z="4.2"/> 
@@ -87,7 +90,6 @@
   <volume name="lefthut">
     <materialref ref="G4_Galactic"/>
     <solidref ref="lefthut_world_solid"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     
     <physvol name="lefthut_front_pv">
       <volumeref ref="lefthut_front_logic"/>

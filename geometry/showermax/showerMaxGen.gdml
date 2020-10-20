@@ -8,7 +8,20 @@
 </define>
 
 <materials>
+	<material name="G4_Quartz" state="solid">
+		<MEE unit="eV" value="139.2"/>
+		<D value="2.2" unit="g/cm3"/>
+		<fraction n="0.467465468463971" ref="G4_Si"/>
+		<fraction n="0.532534531536029" ref="G4_O"/>
+	</material>
+	<material name="G4_Cathode" state="solid">
+		<D value="0.8223" unit="g/cm3"/>
+		<fraction n="0.2349" ref="G4_K"/>
+		<fraction n="0.3993" ref="G4_Cs"/>
+		<fraction n="0.3658" ref="G4_Sb"/>
+	</material>
 </materials>
+
 
 <solids>
 	<tube name="solid_pmt_window" rmin="0" rmax="38.1" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
@@ -62,22 +75,6 @@
 	</union>
 	<cone name="solid_showerMaxMother" rmin1="730"  rmax1="1900" rmin2="730" rmax2="1900"  z="416.764" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 </solids>
-
-
-<materials>
-	<material name="G4_Quartz" state="solid">
-		<MEE unit="eV" value="139.2"/>
-		<D value="2.2" unit="g/cm3"/>
-		<fraction n="0.467465468463971" ref="G4_Si"/>
-		<fraction n="0.532534531536029" ref="G4_O"/>
-	</material>
-	<material name="G4_Cathode" state="solid">
-		<D value="0.8223" unit="g/cm3"/>
-		<fraction n="0.2349" ref="G4_K"/>
-		<fraction n="0.3993" ref="G4_Cs"/>
-		<fraction n="0.3658" ref="G4_Sb"/>
-	</material>
-</materials>
 
 
 <structure>
