@@ -235,22 +235,22 @@
       <materialref ref="G4_AIR"/>
       <solidref ref="donutSystem_solid"/>
 
-      <physvol name="donutIBeamFrameVertical_physical">
+      <physvol name="donutIBeamFrameVertical_right_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
         <position x="-donutIBeamFrameWidth/2-donutIBeamHeight/2" z="donutSystemLength/2"/>
         <rotation x="90" z="90" unit="deg"/>
       </physvol>
-      <physvol name="donutIBeamFrameVertical_physical">
+      <physvol name="donutIBeamFrameVertical_left_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
         <position x="+donutIBeamFrameWidth/2+donutIBeamHeight/2" z="donutSystemLength/2"/>
         <rotation x="90" z="90" unit="deg"/>
       </physvol>
-      <physvol name="donutIBeamFrameHorizontal_physical">
+      <physvol name="donutIBeamFrameHorizontal_top_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
         <position y="donutIBeamFrameHeightTop+donutIBeamHeight/2" z="donutSystemLength/2"/>
         <rotation x="90" y="90" z="90" unit="deg"/>
       </physvol>
-      <physvol name="donutIBeamFrameHorizontal_physical">
+      <physvol name="donutIBeamFrameHorizontal_bot_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
         <position y="donutIBeamFrameHeightBot-donutIBeamHeight/2" z="donutSystemLength/2"/>
         <rotation x="90" y="90" z="90" unit="deg"/>
