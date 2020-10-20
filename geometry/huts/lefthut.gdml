@@ -121,6 +121,7 @@
       <position name="lefthut_Det_outside_pos" unit="mm" x="0" y="0" z="0.0"/>
     </physvol>
  
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
 </structure>

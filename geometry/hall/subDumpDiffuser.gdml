@@ -145,7 +145,6 @@
     <volume name="diffuserRegion">
       <materialref ref="G4_AIR"/>
       <solidref ref="diffuserPlate_world"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
 
       <physvol name="diffuser">
 	<volumeref ref="diffuserPlate_logic"/>
@@ -156,6 +155,8 @@
 	<volumeref ref="diffuserPlateBackDet_logic"/>
 	<position name="diffuserBackDet_position" z="20"/>
       </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
     </volume>
 
   </structure>

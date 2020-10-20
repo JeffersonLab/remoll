@@ -593,7 +593,6 @@
     <volume name="logicHall">
       <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="hallVerticalWallDet">
         <volumeref ref="hallVerticalWallDet_logic"/>
@@ -716,8 +715,7 @@
         <position name="diffuserPlate_pos" unit="cm" z="nitrogenAtmWall_center_z + 15" />
       </physvol>
 
-
-
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
 </structure>

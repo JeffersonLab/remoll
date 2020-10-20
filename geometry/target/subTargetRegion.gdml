@@ -422,7 +422,6 @@
   <volume name="targetRegion">
     <materialref ref="VacuumTarg"/>
     <solidref ref="targetRegion_solid"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
     <physvol>
       <volumeref ref="TargWindow_logic"/>
@@ -530,6 +529,7 @@
       <position name="tgtInnerDet3_pos" unit="mm" x="0" y="390" z="1101"/>
     </physvol>
 
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     <auxiliary auxtype="TargetSystem" auxvalue=""/>
   </volume>
 

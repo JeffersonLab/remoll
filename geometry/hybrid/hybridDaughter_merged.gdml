@@ -545,7 +545,6 @@
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
       <solidref ref="boxDownstream_1"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="Driftpipe">
           <volumeref ref="logicDriftpipe"/>
@@ -673,6 +672,7 @@
       <position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="boxDSMother_length/2-36.0"/>
     </physvol>
 
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>
 
