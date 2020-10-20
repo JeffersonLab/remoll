@@ -90,7 +90,6 @@
     <volume name="sbsbunker">
       <materialref ref="G4_AIR"/>
       <solidref ref="sbsBunkerRegion_s"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol>
         <volumeref ref="IronShieldType1_l"/>
@@ -128,7 +127,7 @@
         <position name="sbsBunkerVacuumDet1_p" unit="mm" x="0." y="-0.25*IronBlock_y" z="0."/>
       </physvol>
 
-
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
   </structure>
