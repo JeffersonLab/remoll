@@ -255,7 +255,7 @@
     <subtraction name ="boxDSShield1_local_solid">
       <first ref="boxDSShield1_local_solid_1"/>
       <second ref="DSShield_local_opening_solid"/>
-      <position ref="boxDSShield_local_trans"/>
+      <positionref ref="boxDSShield_local_trans"/>
     </subtraction>
 
     <!--collar solids -->
