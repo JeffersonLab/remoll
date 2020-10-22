@@ -14,9 +14,9 @@ jobs:
       - name: Build
         run: |
           source ${SPACK_ROOT}/share/spack/setup-env.sh
-          spack load gcc
           spack load root
           spack load geant4
+          spack load gcc
           Geant4_DIR=`spack location -i geant4`
           Geant4_DIR=`find $Geant4_DIR -iname Geant4Config.cmake`
           Geant4_DIR=`dirname $Geant4_DIR`
