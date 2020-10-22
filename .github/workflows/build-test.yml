@@ -16,10 +16,9 @@ jobs:
           source ${SPACK_ROOT}/share/spack/setup-env.sh
           spack load root
           spack load geant4
-          echo $CMAKE_PREFIX_PATH
-          spack location -i geant4
-          find `spack location -i geant4` -iname "Geant4Config.cmake"
-          mkdir build && cmake -B build && make -C build install
+          mkdir build
+          cmake -B build -DGeant4_DIR=`spack location -i geant4`/lib*/Geant*/
+          make -C build install
       - name: Test
         run: |
           build/remoll macros/runexample.mac
