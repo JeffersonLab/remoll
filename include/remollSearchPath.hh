@@ -43,9 +43,7 @@ public:
     // or remollSearchPath::resolve(macro.c_str())
     // It will return the same thing
     static const char* resolve(const char* filename) {
-        char* file = (char*) malloc((strlen(filename) + 1) * sizeof(char));
-        strcpy(file, remollSearchPath::getInstance()->operator()(std::string(filename)).c_str());
-        return file;
+        remollSearchPath::resolve(std::string(filename)).c_str();
     }
 };
 
