@@ -19,10 +19,22 @@ Usage:
 */
 
 #include <unistd.h>
+
+#if defined(__cpp_lib_filesystem)
+#include <filesystem>
+namespace fs = std::filesystem;
+#elif defined(__cpp_lib_experimental_filesystem)
 #include "experimental/filesystem"
+namespace fs = std::experimental::filesystem;
+#elif defined(__USE_BOOST_FILESYSTEM)
+#include <boost/filesystem.hpp>
+namespace fs = boost::filesystem;
+#else
+#define NO_FS_SUPPORT
+#endif
+
 #include "cstring"
 
-namespace fs = std::experimental::filesystem;
 
 class remollSearchPath
 {
@@ -38,12 +50,6 @@ public:
     std::string operator() (const std::string& filename);
     static std::string resolve(const std::string& filename) {
         return remollSearchPath::getInstance()->operator()(filename);
-    }
-    // So now it shouldn't matter if you do (remollSearchPath::resolve(macro)).c_str()
-    // or remollSearchPath::resolve(macro.c_str())
-    // It will return the same thing
-    static const char* resolve(const char* filename) {
-        remollSearchPath::resolve(std::string(filename)).c_str();
     }
 };
 
