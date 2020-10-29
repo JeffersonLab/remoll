@@ -1,7 +1,7 @@
 /run/initialize
 /remoll/evgen/set beam
 /remoll/filename remollout_default_raster.root
-/run/beamOn 1000
+/run/beamOn 100
 
 /remoll/evgen/beam/origin 0 0 -5 m
 /remoll/evgen/beam/direction 0 0 1
@@ -12,4 +12,4 @@
 /remoll/evgen/beam/corrx 0.5
 /remoll/evgen/beam/corry 0.1
 /remoll/filename remollout_strange_raster.root
-/run/beamOn 1000
+/run/beamOn 100

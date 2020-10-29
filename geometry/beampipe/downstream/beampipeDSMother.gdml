@@ -6,6 +6,9 @@
 <define>
 </define>
 
+<materials>
+</materials>
+
 <solids>
   <polycone name="solid_DSbeampipe_vacuum"
             aunit="deg" startphi="0" deltaphi="360"

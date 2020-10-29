@@ -27,7 +27,6 @@
 #include "remollGenpInelastic.hh"
 #include "remollGenPion.hh"
 #include "remollGenBeam.hh"
-#include "remollGenTF1.hh"
 #include "remollGen12CElastic.hh"
 #include "remollGenFlat.hh"
 #include "remollGenExternal.hh"
@@ -53,7 +52,6 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     fEvGenMap["pion"] = new remollGenPion();
     fEvGenMap["beam"] = new remollGenBeam();
     fEvGenMap["flat"] = new remollGenFlat();
-    fEvGenMap["TF1"] = new remollGenTF1();
     fEvGenMap["elasticAl"] = new remollGenAl(0);
     fEvGenMap["quasielasticAl"] = new remollGenAl(1);
     fEvGenMap["inelasticAl"] = new remollGenAl(2);

@@ -1,0 +1,21 @@
+name: Build Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: eic/setup-cvmfs@main
+      - uses: eic/setup-spack@main
+        with:
+          environment: eic
+      - name: Build
+        run: |
+          source ${SPACK_ROOT}/share/spack/setup-env.sh
+          spack load root geant4
+          mkdir build && cmake -B build && make -C build install
+      - name: Test
+        run: |
+          build/remoll macros/runexample.mac
