@@ -37,7 +37,9 @@
    <quantity name="donutIBeamFlangeThickness" type="length" value="0.665" unit="in"/>
    <quantity name="donutIBeamWebThickness"    type="length" value="0.395" unit="in"/>
    <quantity name="donutIBeamWidth"     type="length" value="10.235" unit="in"/>
-   <quantity name="donutIBeamHeight"    type="length" value="16.33"  unit="in"/>
+   <!-- TODO: increase mother volume to accomodate 16.33 in instead of 40 cm -->
+   <quantity name="donutIBeamHeight"    type="length" value="40.00"  unit="cm"/>
+   <!--quantity name="donutIBeamHeight"    type="length" value="16.33"  unit="in"/-->
 
    <!-- Donut frame width -->
    <quantity name="donutIBeamFrameWidth"     type="length" value="3" unit="m"/>
@@ -161,11 +163,11 @@
 <structure>
 
     <volume name="donutIBeamFrameVertical_logical">
-      <materialref ref="G4_STAINLESS-STEEL"/>
+      <materialref ref="G4_Al"/>
       <solidref ref="donutIBeamFrameVertical_solid"/>
     </volume>
     <volume name="donutIBeamFrameHorizontal_logical">
-      <materialref ref="G4_STAINLESS-STEEL"/>
+      <materialref ref="G4_Al"/>
       <solidref ref="donutIBeamFrameHorizontal_solid"/>
     </volume>
 
@@ -237,23 +239,23 @@
 
       <physvol name="donutIBeamFrameVertical_right_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
-        <position x="-donutIBeamFrameWidth/2-donutIBeamHeight/2" z="donutSystemLength/2"/>
-        <rotation x="90" z="90" unit="deg"/>
+        <position x="-donutIBeamFrameWidth/2-donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <rotation x="90" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamFrameVertical_left_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
-        <position x="+donutIBeamFrameWidth/2+donutIBeamHeight/2" z="donutSystemLength/2"/>
-        <rotation x="90" z="90" unit="deg"/>
+        <position x="+donutIBeamFrameWidth/2+donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <rotation x="90" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamFrameHorizontal_top_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
-        <position y="donutIBeamFrameHeightTop+donutIBeamHeight/2" z="donutSystemLength/2"/>
-        <rotation x="90" y="90" z="90" unit="deg"/>
+        <position y="donutIBeamFrameHeightTop+donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <rotation x="90" y="90" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamFrameHorizontal_bot_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
-        <position y="donutIBeamFrameHeightBot-donutIBeamHeight/2" z="donutSystemLength/2"/>
-        <rotation x="90" y="90" z="90" unit="deg"/>
+        <position y="donutIBeamFrameHeightBot-donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <rotation x="90" y="90" z="0" unit="deg"/>
       </physvol>
 
       <physvol name="donutConcrete_physical">
