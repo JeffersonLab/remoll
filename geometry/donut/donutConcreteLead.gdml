@@ -42,10 +42,10 @@
    <!--quantity name="donutIBeamHeight"    type="length" value="16.33"  unit="in"/-->
 
    <!-- Donut frame width -->
-   <quantity name="donutIBeamFrameWidth"     type="length" value="3" unit="m"/>
-   <quantity name="donutIBeamFrameHeight"    type="length" value="5" unit="m"/>
-   <quantity name="donutIBeamFrameHeightTop" type="length" value="+1.5" unit="m"/>
-   <quantity name="donutIBeamFrameHeightBot" type="length" value="-1.5" unit="m"/>
+   <quantity name="donutIBeamFrameWidth"     type="length" value="3.2256" unit="m"/>
+   <quantity name="donutIBeamFrameHeight"    type="length" value="5.6896" unit="m"/>
+   <quantity name="donutIBeamFrameHeightTop" type="length" value="+1.600" unit="m"/>
+   <quantity name="donutIBeamFrameHeightBot" type="length" value="-1.600" unit="m"/>
 </define>
 
 <materials>
