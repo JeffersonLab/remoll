@@ -23,7 +23,7 @@ FROM jeffersonlab/jlabce:2.3-mt
 # Install libgcj and pdftk
 RUN wget -q https://copr.fedorainfracloud.org/coprs/robert/gcj/repo/epel-7/robert-gcj-epel-7.repo -P /etc/yum.repos.d && \
     wget -q https://copr.fedorainfracloud.org/coprs/robert/pdftk/repo/epel-7/robert-pdftk-epel-7.repo -P /etc/yum.repos.d && \
-    yum install -q -y pdftk ghostscript boost-devel
+    yum install -q -y pdftk ghostscript time boost-devel
 
 # Add Tini entry point
 ENV TINI_VERSION v0.19.0
