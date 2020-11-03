@@ -46,6 +46,10 @@
    <quantity name="donutIBeamFrameHeight"    type="length" value="5.6896" unit="m"/>
    <quantity name="donutIBeamFrameHeightTop" type="length" value="+1.470" unit="m"/>
    <quantity name="donutIBeamFrameHeightBot" type="length" value="-1.470" unit="m"/>
+
+   <!-- Donut frame struts -->
+   <quantity name="donutIBeamStrutInnerLength"    type="length" value="0.9426" unit="m"/>
+   <quantity name="donutIBeamStrutLength" value="donutIBeamStrutInnerLength-0*sqrt(2)*donutIBeamFrameWidth"/>
 </define>
 
 <materials>
@@ -107,6 +111,37 @@
       <section zOrder="2" zPosition="+donutIBeamFrameWidth/2" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
 
+    <xtru name="donutIBeamStrutNoCut_solid">
+      <twoDimVertex x="-donutIBeamWidth/2" y="-donutIBeamHeight/2"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="-donutIBeamHeight/2"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWebThickness/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWebThickness/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="+donutIBeamWidth/2" y="+donutIBeamHeight/2"/>
+      <twoDimVertex x="-donutIBeamWidth/2" y="+donutIBeamHeight/2"/>
+      <twoDimVertex x="-donutIBeamWidth/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="-donutIBeamWebThickness/2" y="+donutIBeamHeight/2-donutIBeamFlangeThickness"/>
+      <twoDimVertex x="-donutIBeamWebThickness/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <twoDimVertex x="-donutIBeamWidth/2" y="-donutIBeamHeight/2+donutIBeamFlangeThickness"/>
+      <section zOrder="1" zPosition="-donutIBeamStrutLength/2-sqrt(2)/2*donutIBeamWidth" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="+donutIBeamStrutLength/2+sqrt(2)/2*donutIBeamWidth" xOffset="0" yOffset="0" scalingFactor="1"/>
+    </xtru>
+    <box name="donutIBeamStrutCutVertical_solid" x="donutIBeamWidth" y="2*donutIBeamHeight" z="2*donutIBeamStrutLength"/>
+    <box name="donutIBeamStrutCutHorizontal_solid" x="donutIBeamWidth" y="2*donutIBeamHeight" z="2*donutIBeamStrutLength"/>
+    <union name="donutIBeamStrutCut_solid">
+      <first ref="donutIBeamStrutCutVertical_solid"/>
+      <second ref="donutIBeamStrutCutHorizontal_solid"/>
+      <position name="donutIBeamStrutCut_pos" x="donutIBeamStrutLength/2" z="donutIBeamStrutLength/2"/>
+      <rotation name="donutIBeamStrutCut_rot" y="90" unit="deg"/>
+    </union>
+    <subtraction name="donutIBeamStrut_solid">
+      <first ref="donutIBeamStrutNoCut_solid"/>
+      <second ref="donutIBeamStrutCut_solid"/>
+      <position name="donutIBeamStrut_pos" z="sqrt(2)*donutIBeamStrutLength/4" x="donutIBeamStrutLength/2+sqrt(2)*donutIBeamWidth/2-sqrt(2)*donutIBeamStrutLength/4"/>
+      <rotation name="donutIBeamStrut_rot" y="135" unit="deg"/>
+    </subtraction>
+    
     <xtru name="donutSystemBox_solid">
       <twoDimVertex x="-donutSystemWidth/2" y="-donutSystemHeight/2"/>
       <twoDimVertex x="-donutSystemWidth/2" y="+donutSystemHeight/2"/>
@@ -191,6 +226,10 @@
     <volume name="donutIBeamFrameHorizontal_logical">
       <materialref ref="G4_Al"/>
       <solidref ref="donutIBeamFrameHorizontal_solid"/>
+    </volume>
+    <volume name="donutIBeamStrut_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutIBeamStrut_solid"/>
     </volume>
 
     <volume name="donutConcreteVirtualDetectorUS_logical">
@@ -278,6 +317,40 @@
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
         <position y="donutIBeamFrameHeightBot-donutIBeamWidth/2" z="donutSystemLength/2"/>
         <rotation x="90" y="90" z="0" unit="deg"/>
+      </physvol>
+
+      <!-- Struts -->
+      <physvol name="donutIBeamStrut_top_right_physical">
+        <volumeref ref="donutIBeamStrut_logical"/>
+        <position
+          x="donutIBeamFrameWidth/2-sqrt(2)*donutIBeamStrutLength/4"
+          y="donutIBeamFrameHeightTop-sqrt(2)*donutIBeamStrutLength/4"
+          z="donutSystemLength/2"/>
+        <rotation x="90" y="45" z="0" unit="deg"/>
+      </physvol>
+      <physvol name="donutIBeamStrut_top_left_physical">
+        <volumeref ref="donutIBeamStrut_logical"/>
+        <position
+          x="-donutIBeamFrameWidth/2+sqrt(2)*donutIBeamStrutLength/4"
+          y="donutIBeamFrameHeightTop-sqrt(2)*donutIBeamStrutLength/4"
+          z="donutSystemLength/2"/>
+        <rotation x="-90" y="-135" z="0" unit="deg"/>
+      </physvol>
+      <physvol name="donutIBeamStrut_top_right_physical">
+        <volumeref ref="donutIBeamStrut_logical"/>
+        <position
+          x="donutIBeamFrameWidth/2-sqrt(2)*donutIBeamStrutLength/4"
+          y="donutIBeamFrameHeightBot-donutIBeamWidth-sqrt(2)*donutIBeamStrutLength/4"
+          z="donutSystemLength/2"/>
+        <rotation x="90" y="45" z="0" unit="deg"/>
+      </physvol>
+      <physvol name="donutIBeamStrut_top_left_physical">
+        <volumeref ref="donutIBeamStrut_logical"/>
+        <position
+          x="-donutIBeamFrameWidth/2+sqrt(2)*donutIBeamStrutLength/4"
+          y="donutIBeamFrameHeightBot-donutIBeamWidth-sqrt(2)*donutIBeamStrutLength/4"
+          z="donutSystemLength/2"/>
+        <rotation x="-90" y="-135" z="0" unit="deg"/>
       </physvol>
 
       <!-- Concrete donut -->
