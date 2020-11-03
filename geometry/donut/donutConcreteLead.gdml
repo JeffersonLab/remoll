@@ -6,7 +6,7 @@
    <!-- Full concrete and lead donut system dimensions -->
    <quantity name="donutSystemLength" type="length" value="0.4" unit="m"/>
    <quantity name="donutSystemWidth"  type="length" value="5.0" unit="m"/>
-   <quantity name="donutSystemHeight" type="length" value="5.0" unit="m"/>
+   <quantity name="donutSystemHeight" type="length" value="6.0" unit="m"/>
    <quantity name="donutSystemInnerRadius" type="length" value="0.82" unit="m"/>
 
    <!-- Thin virtual detectors on US and DS side -->
