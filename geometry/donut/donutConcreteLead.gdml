@@ -49,6 +49,28 @@
 </define>
 
 <materials>
+ <!-- Ref: http://asm.matweb.com/search/SpecificMaterial.asp?bassnum=MA6061T6
+	Component	Wt. %
+	Al		95.8 - 98.6
+	Mg		0.8 - 1.2
+	Si		0.4 - 0.8
+	Cr		0.04 - 0.35
+	Cu		0.15 - 0.4
+	Ti		Max 0.15
+	Zn		Max 0.25
+	Fe		Max 0.7
+	Mn		Max 0.15
+	Other, each	Max 0.05
+	Other, total	Max 0.15
+
+	Density		2.7 g/cc
+  -->
+  <material name="Al6061-T6" state="solid">
+    <MEE unit="eV" value="166."/>
+    <D unit="g/cm3" value="2.7"/>
+    <fraction n="0.972" ref="G4_Al"/>
+    <fraction n="0.028" ref="G4_Mg"/>
+  </material>
 </materials>
 
 <solids>
@@ -163,7 +185,7 @@
 <structure>
 
     <volume name="donutIBeamFrameVertical_logical">
-      <materialref ref="G4_Al"/>
+      <materialref ref="Al6061-T6"/>
       <solidref ref="donutIBeamFrameVertical_solid"/>
     </volume>
     <volume name="donutIBeamFrameHorizontal_logical">
