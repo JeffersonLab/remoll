@@ -782,7 +782,6 @@
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
       <solidref ref="boxUpstream"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="UScoll_1">
         <volumeref ref="logicUScoll_1"/>
@@ -841,6 +840,8 @@
         <file name="upstream/upstreamBeampipe.gdml"/>
         <positionref ref="shield_US_beampipe_center"/>
       </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>
 

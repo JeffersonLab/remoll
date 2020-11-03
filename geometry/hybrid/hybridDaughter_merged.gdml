@@ -255,7 +255,7 @@
     <subtraction name ="boxDSShield1_local_solid">
       <first ref="boxDSShield1_local_solid_1"/>
       <second ref="DSShield_local_opening_solid"/>
-      <position ref="boxDSShield_local_trans"/>
+      <positionref ref="boxDSShield_local_trans"/>
     </subtraction>
 
     <!--collar solids -->
@@ -545,7 +545,6 @@
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
       <solidref ref="boxDownstream_1"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="Driftpipe">
           <volumeref ref="logicDriftpipe"/>
@@ -561,14 +560,14 @@
 
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
-        <position lunit="mm" name="collar1pos" x="0" y="0" z="17350-25-DOFFSET"/>
-        <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
+        <position unit="mm" name="collar1pos" x="0" y="0" z="17350-25-DOFFSET"/>
+        <rotation unit="rad" name="collar1rot" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
-        <position lunit="mm" name="collar2pos" x="0" y="0" z="23950-25-DOFFSET"/>
-        <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
+        <position unit="mm" name="collar2pos" x="0" y="0" z="23950-25-DOFFSET"/>
+        <rotation unit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol name="lintel1">
@@ -655,12 +654,12 @@
 
     <physvol name="DSpipe1_flange">
       <volumeref ref="logic_DSpipe1_flange"/>
-      <position name="DSpipe1_flange" x="0" y="0" z="boxDSMother_length/2-261.0"/>
+      <position name="DSpipe1_flange_pos" x="0" y="0" z="boxDSMother_length/2-261.0"/>
     </physvol>
 
     <physvol name="DSpipe1_bellow">
       <volumeref ref="logic_DSpipe1_bellow"/>
-      <position name="DSpipe1_bellow" x="0" y="0" z="boxDSMother_length/2-236.0"/>
+      <position name="DSpipe1_bellow_pos" x="0" y="0" z="boxDSMother_length/2-236.0"/>
     </physvol>
 
     <physvol name="DSpipe2_USplate">
@@ -673,6 +672,7 @@
       <position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="boxDSMother_length/2-36.0"/>
     </physvol>
 
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>
 

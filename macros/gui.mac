@@ -22,12 +22,12 @@
 #
 # Geometry menu :
 /gui/addMenu   geom "1. Geometry"
-/gui/addButton geom geometry/mollerMother.gdml               "/remoll/geometry/setfile geometry/mollerMother.gdml"
-/gui/addButton geom geometry/mollerMother_merged.gdml        "/remoll/geometry/setfile geometry/mollerMother_merged.gdml"
-/gui/addButton geom geometry/mollerMother_parametrized.gdml  "/remoll/geometry/setfile geometry/mollerMother_parametrized.gdml"
-/gui/addButton geom geometry/pionDetectorLucite.gdml         "/remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml"
-/gui/addButton geom geometry/showerMaxDetector.gdml          "/remoll/geometry/setfile geometry/showerMaxDetector.gdml"
-/gui/addButton geom geometry/mollerParallel.gdml             "/remoll/parallel/setfile geometry/mollerParallel.gdml"
+/gui/addButton geom "MOLLER Parallel"             "/remoll/parallel/setfile geometry/mollerParallel.gdml"
+/gui/addButton geom "MOLLER Experiment"           "/remoll/geometry/setfile geometry/mollerMother.gdml"
+/gui/addButton geom "MOLLER Experiment (w. dets)" "/remoll/geometry/setfile geometry/mollerMother_parametrized.gdml"
+/gui/addButton geom "Only pion system"            "/remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml"
+/gui/addButton geom "Only showermax"              "/remoll/geometry/setfile geometry/showerMaxDetector.gdml"
+/gui/addButton geom "No parallel"                 "/remoll/parallel/setfile "
 #
 # Initialize menu :
 /gui/addMenu   phys "2. Physics"
@@ -70,7 +70,7 @@
 /gui/addButton view "Back view (-Z)"         "/vis/viewer/set/viewpointThetaPhi 0 0 deg"
 /gui/addButton view "Side 1 view (+X)"       "/vis/viewer/set/viewpointThetaPhi 90 180 deg"
 /gui/addButton view "Side 2 view (-X)"       "/vis/viewer/set/viewpointThetaPhi -90 180 deg"
-/gui/addButton view "Top view (-Y)           "/vis/viewer/set/viewpointThetaPhi 90 90 deg"
+/gui/addButton view "Top view (-Y)"          "/vis/viewer/set/viewpointThetaPhi 90 90 deg"
 /gui/addButton view "Mag fields"             "/vis/scene/add/magneticField 50"
 /gui/addButton view "Refresh viewer (retraverse graphical data)"  "/vis/viewer/refresh"
 /gui/addButton view "Update viewer (interaction or end-of-file)"  "/vis/viewer/update"

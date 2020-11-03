@@ -13,7 +13,7 @@
 /run/beamOn 10
 
 # Write all random states for run 1
-/control/shell build/reroot -l -q macros/tests/unit/test_rng_engine.C
+/control/shell reroot -l -q macros/tests/unit/test_rng_engine.C
 
 # Ensure rndm1 directory exists
 /control/shell mkdir -p rndm2
@@ -39,7 +39,7 @@
 /run/beamOn 10
 
 # Write all random states for run 1
-/control/shell build/reroot -l -q macros/tests/unit/test_rng_engine.C
+/control/shell reroot -l -q macros/tests/unit/test_rng_engine.C
 
 # Compare random states on all events
 /control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt0.state run1evt9.state

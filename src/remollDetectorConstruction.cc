@@ -63,6 +63,9 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   // If gdmlfile is non-empty
   if (gdmlfile.length() > 0) SetGDMLFile("geometry/mollerMother.gdml");
 
+  // New units
+  new G4UnitDefinition("inch","in","Length",25.4*CLHEP::millimeter);
+
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
 
