@@ -41,11 +41,11 @@
    <quantity name="donutIBeamHeight"    type="length" value="40.00"  unit="cm"/>
    <!--quantity name="donutIBeamHeight"    type="length" value="16.33"  unit="in"/-->
 
-   <!-- Donut frame width -->
-   <quantity name="donutIBeamFrameWidth"     type="length" value="3.2256" unit="m"/>
+   <!-- Donut frame width, as measured from beam center to the closest edge -->
+   <quantity name="donutIBeamFrameWidth"     type="length" value="2.9653" unit="m"/>
    <quantity name="donutIBeamFrameHeight"    type="length" value="5.6896" unit="m"/>
-   <quantity name="donutIBeamFrameHeightTop" type="length" value="+1.600" unit="m"/>
-   <quantity name="donutIBeamFrameHeightBot" type="length" value="-1.600" unit="m"/>
+   <quantity name="donutIBeamFrameHeightTop" type="length" value="+1.470" unit="m"/>
+   <quantity name="donutIBeamFrameHeightBot" type="length" value="-1.470" unit="m"/>
 </define>
 
 <materials>
