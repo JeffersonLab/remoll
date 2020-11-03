@@ -280,11 +280,13 @@
         <rotation x="90" y="90" z="0" unit="deg"/>
       </physvol>
 
+      <!-- Concrete donut -->
       <physvol name="donutConcrete_physical">
         <volumeref ref="donutConcrete_logical"/>
         <positionref ref="donutConcretePosition"/>
       </physvol>
 
+      <!-- Lead donut -->
       <physvol name="donutLead_physical">
         <volumeref ref="donutLead_logical"/>
         <positionref ref="donutLeadPosition"/>
