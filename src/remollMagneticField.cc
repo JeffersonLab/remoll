@@ -8,6 +8,8 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
+#include "remollSearchPath.hh"
+
 #include <iostream>
 #include <fstream>
 
@@ -25,9 +27,9 @@
 #include <boost/iostreams/device/file.hpp>
 #endif
 
-remollMagneticField::remollMagneticField( G4String filename ){ 
+remollMagneticField::remollMagneticField( G4String filename ){
 
-    fFilename = filename;
+    fFilename = remollSearchPath::resolve(filename);
 
     // Initialize grid variables
     for( int cidx = kR; cidx < kZ; cidx++ ){
