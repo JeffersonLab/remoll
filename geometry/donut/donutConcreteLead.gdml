@@ -26,6 +26,9 @@
    <quantity name="donutLeadInnerRadiusDS" type="length" value="1.050" unit="m"/>
    <quantity name="donutLeadOuterRadiusDS" type="length" value="1.210" unit="m"/>
 
+   <!-- Aluminum sleeve thickness -->
+   <quantity name="donutSleeveThickness" type="length" value="19.050" unit="mm"/>
+
    <!-- Concrete donut positions -->
    <position name="donutConcretePosition" z="0"/>
 
@@ -187,6 +190,16 @@
               z="donutConcreteThickness-donutVirtualDetectorThickness"/>
       <zplane rmin="donutConcreteInnerRadiusDS" rmax="donutConcreteOuterRadiusDS" z="donutConcreteThickness"/>
     </polycone>
+    <polycone name="donutConcreteSleeveInner_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutConcreteInnerRadiusUS-donutSleeveThickness" rmax="donutConcreteInnerRadiusUS" z="0"/>
+      <zplane rmin="donutConcreteInnerRadiusDS-donutSleeveThickness" rmax="donutConcreteInnerRadiusDS" z="donutConcreteThickness"/>
+    </polycone>
+    <polycone name="donutConcreteSleeveOuter_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutConcreteOuterRadiusUS" rmax="donutConcreteOuterRadiusUS+donutSleeveThickness" z="0"/>
+      <zplane rmin="donutConcreteOuterRadiusDS" rmax="donutConcreteOuterRadiusDS+donutSleeveThickness" z="donutConcreteThickness"/>
+    </polycone>
 
     <polycone name="donutLead_solid"
               aunit="deg" startphi="0" deltaphi="360">
@@ -214,6 +227,16 @@
                    *(donutLeadOuterRadiusDS-donutLeadOuterRadiusUS)"
               z="donutLeadThickness-donutVirtualDetectorThickness"/>
       <zplane rmin="donutLeadInnerRadiusDS" rmax="donutLeadOuterRadiusDS" z="donutLeadThickness"/>
+    </polycone>
+    <polycone name="donutLeadSleeveInner_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutLeadInnerRadiusUS-donutSleeveThickness" rmax="donutLeadInnerRadiusUS" z="0"/>
+      <zplane rmin="donutLeadInnerRadiusDS-donutSleeveThickness" rmax="donutLeadInnerRadiusDS" z="donutLeadThickness"/>
+    </polycone>
+    <polycone name="donutLeadSleeveOuter_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutLeadOuterRadiusUS" rmax="donutLeadOuterRadiusUS+donutSleeveThickness" z="0"/>
+      <zplane rmin="donutLeadOuterRadiusDS" rmax="donutLeadOuterRadiusDS+donutSleeveThickness" z="donutLeadThickness"/>
     </polycone>
 </solids>
 
@@ -262,6 +285,14 @@
       <auxiliary auxtype="Color" auxvalue="Gray"/>
       <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     </volume>
+    <volume name="donutConcreteSleeveInner_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutConcreteSleeveInner_solid"/>
+    </volume>
+    <volume name="donutConcreteSleeveOuter_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutConcreteSleeveOuter_solid"/>
+    </volume>
 
     <volume name="donutLeadVirtualDetectorUS_logical">
       <materialref ref="G4_Pb"/>
@@ -292,6 +323,14 @@
       <auxiliary auxtype="DetNo" auxvalue="8020"/>
       <auxiliary auxtype="Color" auxvalue="Black"/>
       <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="donutLeadSleeveInner_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutLeadSleeveInner_solid"/>
+    </volume>
+    <volume name="donutLeadSleeveOuter_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutLeadSleeveOuter_solid"/>
     </volume>
 
     <volume name="donutSystem_logical">
@@ -358,10 +397,26 @@
         <volumeref ref="donutConcrete_logical"/>
         <positionref ref="donutConcretePosition"/>
       </physvol>
+      <physvol name="donutConcreteSleeveInner_physical">
+        <volumeref ref="donutConcreteSleeveInner_logical"/>
+        <positionref ref="donutConcretePosition"/>
+      </physvol>
+      <physvol name="donutConcreteSleeveOuter_physical">
+        <volumeref ref="donutConcreteSleeveOuter_logical"/>
+        <positionref ref="donutConcretePosition"/>
+      </physvol>
 
       <!-- Lead donut -->
       <physvol name="donutLead_physical">
         <volumeref ref="donutLead_logical"/>
+        <positionref ref="donutLeadPosition"/>
+      </physvol>
+      <physvol name="donutLeadSleeveInner_physical">
+        <volumeref ref="donutLeadSleeveInner_logical"/>
+        <positionref ref="donutLeadPosition"/>
+      </physvol>
+      <physvol name="donutLeadSleeveOuter_physical">
+        <volumeref ref="donutLeadSleeveOuter_logical"/>
         <positionref ref="donutLeadPosition"/>
       </physvol>
 
