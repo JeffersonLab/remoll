@@ -26,8 +26,11 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
   fWorldVolume(0),
   fWorldName(name)
 {
+  SetGDMLFile("geometry/mollerParallel.gdml");
   // If gdmlfile is non-empty
-  if (gdmlfile.length() > 0) SetGDMLFile("geometry/mollerParallel.gdml");
+  if (gdmlfile.length() > 0) {
+    SetGDMLFile(gdmlfile);
+  }
 
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
