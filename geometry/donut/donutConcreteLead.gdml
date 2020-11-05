@@ -49,7 +49,7 @@
 
    <!-- Donut frame struts -->
    <quantity name="donutIBeamStrutInnerLength"    type="length" value="0.9426" unit="m"/>
-   <quantity name="donutIBeamStrutLength" value="donutIBeamStrutInnerLength-0*sqrt(2)*donutIBeamFrameWidth"/>
+   <quantity name="donutIBeamStrutLength" value="donutIBeamStrutInnerLength-sqrt(2)*donutIBeamWidth"/>
 </define>
 
 <materials>
