@@ -21,17 +21,17 @@ void initHisto_flatHE(TFile *fout,int detID, string detNm, int hRange, int vZmin
   dHE_ID2entry.insert(std::pair<int, int>(detID,dHE_ID2entry.size()));
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
-      dHE_xy[i][j][k].push_back(new TH2F(Form("d%dHE_xy_%s_%s",detID,spH[i].c_str(),fbH[k].c_str()),
-					 Form("hits for %s %s;x[mm];y[mm]",fbH[k].c_str(),spTit[i].c_str()),
-					 800,-range,range,
-					 800,-range,range));
-
-      dHE_vz[i][j][k].push_back(new TH1F(Form("d%dHE_vz_%s_%s",detID,spH[i].c_str(),fbH[k].c_str(),j),
-					 Form("hits for %s %s;x[mm];y[mm]",fbH[k].c_str(),spTit[i].c_str()),
-					 2000,vZmin,vZmax));
-      }
+      dHE_xy[i][k].push_back(new TH2F(Form("d%dHE_xy_%s_%s",detID,spH[i].c_str(),fbH[k].c_str()),
+				      Form("hits for %s %s;x[mm];y[mm]",fbH[k].c_str(),spTit[i].c_str()),
+				      800,-range,range,
+				      800,-range,range));
+      
+      dHE_vz[i][k].push_back(new TH1F(Form("d%dHE_vz_%s_%s",detID,spH[i].c_str(),fbH[k].c_str()),
+				      Form("hits for %s %s;x[mm];y[mm]",fbH[k].c_str(),spTit[i].c_str()),
+				      2000,vZmin,vZmax));
     }
 }
+
 
 void fillHisto_flatHE(int detID, int sp, double pz,
 			double xx, double yy, double vz){
