@@ -35,3 +35,27 @@ jobs:
     -
       name: Image digest
       run: echo ${{ steps.docker_build.outputs.digest }}
+  test_geometry:
+    name: Geometry test suite ${{ matrix.suite }}
+    strategy:
+      matrix:
+        suite: [validate,overlap]
+    runs-on: ubuntu-latest
+    container:
+      image: docker://jeffersonlab/remoll:develop
+    steps:
+    - name: Geometry test suite ${{ matrix.suite }}
+      run: |
+        scripts/tests/test_geometries.sh ${{ matrix.suite }}
+  test_running:
+    name: Running test suite ${{ matrix.suite }}
+    strategy:
+      matrix:
+        suite: [unit,commit]
+    runs-on: ubuntu-latest
+    container:
+      image: docker://jeffersonlab/remoll:develop
+    steps:
+    - name: Geometry test suite ${{ matrix.suite }}
+      run: |
+        scripts/tests/test_macros.sh ${{ matrix.suite }}
