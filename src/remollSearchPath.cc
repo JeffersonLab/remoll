@@ -33,7 +33,7 @@ void remollSearchPath::add(const std::string& path)
         fSearchPath.push_back(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/" + path));
     }
         // If directory to search in is inside the current working directory
-    else if(fs::exists(fs::path(get_current_dir_name()) / path)) {
+    else if(fs::exists(fs::path(std::string(get_current_dir_name()) + "/" + path))) {
         fSearchPath.push_back(fs::path(get_current_dir_name()) / path);
     }
         // Path not relative to CMAKE_INSTALL_PREFIX, CMAKE_INSTALL_FULL_DATADIR or CWD
@@ -51,8 +51,9 @@ std::string remollSearchPath::operator() (const std::string& filename)
     // the directory for which the full path exists
 #ifndef NO_FS_SUPPORT
     for (auto path: fSearchPath) {
-        if(fs::exists(path / filename)) {
-            return (path / filename).string();
+        fs::path test(path.string() + "/" + filename);
+        if(fs::exists(test)) {
+            return test.string();
         }
     }
 #endif

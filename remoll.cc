@@ -63,6 +63,14 @@ int main(int argc, char** argv) {
     gROOT->Reset();
     #endif
 
+    // Warn if LIBGL_ALWAYS_INDIRECT is set
+    if (std::getenv("LIBGL_ALWAYS_INDIRECT")) {
+      G4cerr << "remoll: Environment variable LIBGL_ALWAYS_INDIRECT is set." << G4endl;
+      G4cerr << "remoll: This may interfere with visualization. Unset wih:" << G4endl;
+      G4cerr << "remoll: tcsh>  unsetenv LIBGL_ALWAYS_INDIRECT" << G4endl;
+      G4cerr << "remoll: bash>  unset LIBGL_ALWAYS_INDIRECT" << G4endl;
+    }
+
     // Initialize the random seed
     G4long seed = time(0) + (int) getpid();
     // Open /dev/urandom
