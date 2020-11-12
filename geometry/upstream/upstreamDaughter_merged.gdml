@@ -10,8 +10,6 @@
 <define>
     &matrices;
     
-    <variable name="i_septant" value="0"/>
-
     <constant name="PI" value="1.*pi"/>
     <constant name="UOFFSET" value="7000.00"/>
     <constant name="SEPTANT" value ="360./7"/>
@@ -23,7 +21,7 @@
     <!--Add an offset to move the merged col-1 US-->
     <constant name="MERGE_OFFSET" value="150.00"/>
     <constant name="COLL1_z" value ="5575 - UOFFSET - MERGE_OFFSET"/>
-    <position name="posCOLL1" unit="mm" x="0" y="0" z="COLL1_z"/>
+    <position name="posCOLL1" unit="mm" x="0" y="0" z="-1825"/>
     <constant name="COLL1_R1_U" value ="19.960"/>
     <constant name="COLL1_R1_D" value ="13.908"/>
     <!--to keep 0.3060 deg use 27.638 -->
@@ -31,73 +29,22 @@
     <constant name="COLL1_R4_U" value ="31.703"/>
     <constant name="COLL1_R4_D" value ="31.703"/>
 
-    <!-- Set of Radial rings to keep constant edep each will be 10 cm radius quoted here is the inner radius of each ring-->
-    <constant name="COLL1_Ring1_R_U" value ="22.1"/>
-    <constant name="COLL1_Ring1_R_D" value ="22.1"/>
-    <constant name="COLL1_Ring1_Length" value ="100.0"/>
-    <constant name="COLL1_Ring2_R_U" value ="18.489"/>
-    <constant name="COLL1_Ring2_R_D" value ="18.489"/>
-    <constant name="COLL1_Ring2_Length" value ="100.0"/>
-    <constant name="COLL1_Ring3_R_U" value ="16.796"/>
-    <constant name="COLL1_Ring3_R_D" value ="16.796"/>
-    <constant name="COLL1_Ring3_Length" value ="100.0"/>
-    <constant name="COLL1_Ring4_R_U" value ="13.629"/>
-    <constant name="COLL1_Ring4_R_D" value ="COLL1_R1_D"/>
-    <constant name="COLL1_Ring4_Length" value ="100.0"/>
-    <constant name="COLL1_sub_R_U" value ="COLL1_R1_U"/>
-    <constant name="COLL1_sub_R_D" value ="COLL1_Ring4_R_U"/>
-    <constant name="COLL1_sub_Length" value ="400.0"/>
-
-    <constant name="COLL1_remove_Ring1_DeltaR" value ="3.0"/>
-	    <!--<constant name="COLL1_remove_Ring1_Length" value ="100.0"/>-->
-    <constant name="COLL1_remove_Ring1_Length" value ="200.0"/>
-    <constant name="COLL1_remove_Ring2_DeltaR" value ="5.0"/>
-    <constant name="COLL1_remove_Ring2_Length" value ="300.0"/>
-
-    <constant name="COLL1_THICK" value ="500.0"/>
-
-    <!--Fins for col-1 -->
-    <constant name="col1fin_DeltaR" value ="25.0"/>
-    <constant name="col1fin_Length" value ="COLL1_Ring1_Length"/>
-    <constant name="col1fin_RMax" value ="COLL1_R4_U+col1fin_DeltaR"/>
-    <constant name="sub_col1fin_RMax" value ="3.2"/>
-	    <!--<constant name="col1fin_RMin" value ="COLL1_R4_U+0.0001"/>-->
-    <constant name="col1fin_RMin" value ="COLL1_R4_U-3.0+0.001"/>
-<!--    <constant name="col1fin_Delta_SEPTANT" value ="30.0"/> --> <!--for theta_fin = 21.4 -->
-    <constant name="col1fin_Delta_SEPTANT" value ="17.4"/> <!--for theta_fin = 17 -->
-    <!--col1fin_SEPTANT is the angular area to be removed -->
-    <constant name="col1fin_SEPTANT" value ="SEPTANT + col1fin_Delta_SEPTANT"/>
-    <position name="poscol1fin" unit="mm" x="0" y="0" z="COLL1_z - COLL1_THICK/2 + col1fin_Length/2"/>
-    <position name="poscol1fin_test" unit="mm" x="0" y="0" z="COLL1_z - COLL1_THICK/2 + col1fin_Length/2"/>
-    <position name="trans_col1fin" unit="mm" x="col1fin_RMax" y="0" z="0"/>
-    <position name="trans_col1fin_1" unit="mm" x="0" y="0" z="0"/>
-    <!--Col-1 positions -->
-    <position name="trans_COL1_1" unit="mm" x="0" y="0" z="COLL1_sub_Length/2 - COLL1_THICK/2"/>
-    <position name="trans_COL1_2" unit="mm" x="0" y="0" z="-1*COLL1_Ring4_Length/2 + COLL1_THICK/2"/>
-    <position name="trans_COL1_3" unit="mm" x="0" y="0" z="0"/>
-    <position name="trans_COL1_4" unit="mm" x="0" y="0" z="COLL1_Ring1_Length/2 - COLL1_THICK/2"/>
-    <position name="trans_COL1_5" unit="mm" x="0" y="0" z="COLL1_Ring1_Length + COLL1_Ring2_Length/2 - COLL1_THICK/2"/>
-    <position name="trans_COL1_6" unit="mm" x="0" y="0" z="COLL1_Ring1_Length + COLL1_Ring2_Length + COLL1_Ring3_Length/2 - COLL1_THICK/2"/>
-    <!--Remove/leave space from outer radius of merged col-1 for water cooling -->
-	    <!--<position name="trans_COL1_7" unit="mm" x="0" y="0" z="COLL1_remove_Ring1_Length/2 - COLL1_THICK/2 + 100"/>-->
-    <position name="trans_COL1_7" unit="mm" x="0" y="0" z="COLL1_remove_Ring1_Length/2 - COLL1_THICK/2"/>
-    <position name="trans_COL1_8" unit="mm" x="0" y="0" z="COLL1_remove_Ring2_Length/2 - COLL1_THICK/2 + 200"/>
-    
 
     <!-- main coll, adjust this -->
     <position name="posCOLL2_CW" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75-50"/> <!-- upstream end of CW piece is 5250mm with respect to target center -->
     <position name="posCOLL2_Cu" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75+75-25"/> <!-- upstream end of Cu piece is 5350mm with respect to target center -->
+    <position name="posCOLL2_Cu1" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75+75-25+50"/> <!-- upstream end of Cu piece is 5350mm with respect to target center -->
     <!--Shielding beam pipe overlap with col-2 so I increased to bore radius in col-2 from 26.0 to 29.55 -->
-    <constant name="COLL2_R1_CW_U1" value ="16."/>
-    <constant name="COLL2_R1_CW_D1" value ="16."/>
-    <constant name="COLL2_R1_CW_U2" value ="16."/>
-    <constant name="COLL2_R1_CW_D2" value ="16."/>
-    <constant name="COLL2_R1_Cu_U1" value ="16."/>
-    <constant name="COLL2_R1_Cu_D1" value ="16."/>
-    <constant name="COLL2_R1_Cu_U2" value ="16."/>
-    <constant name="COLL2_R1_Cu_D2" value ="16."/>
-    <constant name="COLL2_R1_Cu_U3" value ="16."/>
-    <constant name="COLL2_R1_Cu_D3" value ="16."/>
+    <constant name="COLL2_R1_CW_U1" value ="27.5"/>
+    <constant name="COLL2_R1_CW_D1" value ="27.5"/>
+    <constant name="COLL2_R1_CW_U2" value ="25.4"/>
+    <constant name="COLL2_R1_CW_D2" value ="25.4"/>
+    <constant name="COLL2_R1_Cu_U1" value ="25.4"/>
+    <constant name="COLL2_R1_Cu_D1" value ="25.4"/>
+    <constant name="COLL2_R1_Cu_U2" value ="24.0"/>
+    <constant name="COLL2_R1_Cu_D2" value ="24.0"/>
+    <constant name="COLL2_R1_Cu_U3" value ="22.0"/>
+    <constant name="COLL2_R1_Cu_D3" value ="22.0"/>
 
     <!-- coll sep, inner rad, adjust this -->
     <constant name="COLL2_R2_U" value ="35"/>
@@ -283,185 +230,7 @@
       <zplane rmin="13.908" rmax="22.0" z="500"/> 
     </polycone>
     -->
-
-    <!-- New merged col-1 -->
-    <!--R max will be same as before, I'm starting with bore radius of the exit bore for whole col-1 and then subtract appropriately -->
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_0" rmax="COLL1_R4_U" rmin="0" startphi="0" z="COLL1_THICK"/>
-    <!-- Subtract the reverese tapered bore (this was the first design of merged col1) from front face till 40 cm (leaving last 10 cm with R of  COLL1_Ring4_R_D -->
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="col1_sub_0" rmax1="COLL1_sub_R_U" rmax2="COLL1_sub_R_D" rmin1="0" rmin2="0" startphi="0" z="COLL1_sub_Length + 0.1"/>
-
-     <polycone aunit="deg" lunit="mm" name="col1_sub_1" startphi="0" deltaphi="360">
-	<zplane rmin="0" rmax="COLL1_sub_R_U" z="-1*COLL1_THICK/2 - 0.01"/>
-	<zplane rmin="0" rmax="COLL1_sub_R_D" z="COLL1_THICK/2 - COLL1_Ring4_Length"/>
-	<zplane rmin="0" rmax="COLL1_Ring4_R_D" z="COLL1_THICK/2 + 0.01"/>
-    </polycone>
-
-     <subtraction name ="col1_2">
-      <first ref="col1_0"/>
-      <second ref="col1_sub_1"/>
-      <positionref ref="trans_COL1_3" />
-    </subtraction>    
-
-     <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_sub_Ring1" rmax="COLL1_Ring1_R_U" rmin="0" startphi="0" z="COLL1_Ring1_Length+0.01"/>
-     <subtraction name ="col1_3">
-      <first ref="col1_2"/>
-      <second ref="col1_sub_Ring1"/>
-      <positionref ref="trans_COL1_4" />
-    </subtraction>
-
-     <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_sub_Ring2" rmax="COLL1_Ring2_R_U" rmin="0" startphi="0" z="COLL1_Ring2_Length+0.01"/>
-     <subtraction name ="col1_4">
-      <first ref="col1_3"/>
-      <second ref="col1_sub_Ring2"/>
-      <positionref ref="trans_COL1_5" />
-    </subtraction>
-
-     <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_sub_Ring3" rmax="COLL1_Ring3_R_U" rmin="0" startphi="0" z="COLL1_Ring3_Length+0.01"/>
-     <subtraction name ="col1_5">
-      <first ref="col1_4"/>
-      <second ref="col1_sub_Ring3"/>
-      <positionref ref="trans_COL1_6" />
-    </subtraction>
-
-     <!--Remove/leave space from outer radius of merged col-1 for water cooling  -->
-     <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_remove_Ring1_sub" rmax="COLL1_R4_U + 0.1" rmin="COLL1_R4_U - COLL1_remove_Ring1_DeltaR" startphi="0" z="COLL1_remove_Ring1_Length+5"/>
-     <tube aunit="deg" deltaphi="360" lunit="mm" name="col1_remove_Ring2_sub" rmax="COLL1_R4_U + 0.1" rmin="COLL1_R4_U - COLL1_remove_Ring2_DeltaR" startphi="0" z="COLL1_remove_Ring2_Length + 0.1"/>
-
-     <subtraction name ="col1_6">
-      <first ref="col1_5"/>
-      <second ref="col1_remove_Ring1_sub"/>
-      <positionref ref="trans_COL1_7" />
-    </subtraction>
-     <subtraction name ="col1_7">
-      <first ref="col1_6"/>
-      <second ref="col1_remove_Ring2_sub"/>
-      <positionref ref="trans_COL1_8" />
-     </subtraction>
-
-     <!--Fins for col-1 -->
-     <tube aunit="deg" deltaphi="360" lunit="mm" name="col1fin_0" rmax="col1fin_RMax" rmin="col1fin_RMin" startphi="0" z="col1fin_Length"/>
-
-     <cone aunit="deg" deltaphi="col1fin_SEPTANT/2" lunit="mm" name="col1fin_cons_1" 
-          rmax1="COLL2_R3_U-DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
-          rmax2="COLL2_R3_D+DELTAT*((COLL2_R3_D-COLL2_R3_U)/COLL2_THICK)" 
-          rmin1="0" 
-          rmin2="0" startphi="-col1fin_SEPTANT/4" z="col1fin_Length*2"/>
-
-     
-    <subtraction name ="col1fin_1">
-        <first ref="col1fin_0"/>
-        <second ref="col1fin_cons_1"/>
-        <rotation name="uscollfin_rot1" x="0" y="0" z="SEPTANT*(0+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="col1fin_2">
-        <first ref="col1fin_1"/>
-        <second ref="col1fin_cons_1"/>
-        <rotation name="uscollfin_rot2" x="0" y="0" z="SEPTANT*(1+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="col1fin_3">
-        <first ref="col1fin_2"/>
-        <second ref="col1fin_cons_1"/>
-        <rotation name="uscollfin_rot3" x="0" y="0" z="SEPTANT*(2+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="col1fin_4">
-        <first ref="col1fin_3"/>
-        <second ref="col1fin_cons_1"/>
-        <rotation name="uscollfin_rot4" x="0" y="0" z="SEPTANT*(3+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="col1fin_5">
-        <first ref="col1fin_4"/>
-        <second ref="col1fin_cons_1"/>
-        <rotation name="uscollfin_rot5" x="0" y="0" z="SEPTANT*(4+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="col1fin_6">
-        <first ref="col1fin_5"/>
-        <second ref="col1fin_cons_1"/>
-        <rotation name="uscollfin_rot6" x="0" y="0" z="SEPTANT*(5+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="col1fin_7">
-        <first ref="col1fin_6"/>
-        <second ref="col1fin_cons_1"/>
-        <rotation name="uscollfin_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
-    </subtraction>
-
-     <cone aunit="deg" deltaphi="col1fin_SEPTANT/2" lunit="mm" name="sub_col1fin_cons_1" 
-           rmin1="col1fin_RMax" 
-           rmin2="col1fin_RMax" 
-           rmax1="col1fin_RMax+4.0" 
-           rmax2="col1fin_RMax+4.0" 
-	   startphi="-col1fin_SEPTANT/4" z="col1fin_Length*2"
-	   />
-
-
-     <tube aunit="deg" deltaphi="360" lunit="mm" name="sub_col1fin_0" rmax="sub_col1fin_RMax" rmin="0" startphi="0" z="col1fin_Length*2"/>
-
-     <union name ="sub_col1fin_cons_2">
-        <first ref="sub_col1fin_cons_1"/>
-        <second ref="sub_col1fin_0"/>
-	<positionref ref="trans_col1fin"/>
-     </union>
-
-
-
-    <subtraction name ="col1fin_8">
-        <first ref="col1fin_7"/>
-        <second ref="sub_col1fin_cons_2"/>
-        <rotation name="uscollfin_rot8" x="0" y="0" z="SEPTANT*(0 + 0.0)" unit="deg"/>
-    </subtraction>
-
-    <subtraction name ="col1fin_9">
-        <first ref="col1fin_8"/>
-        <second ref="sub_col1fin_cons_2"/>
-        <rotation name="uscollfin_rot9" x="0" y="0" z="SEPTANT*(1 + 0.0)" unit="deg"/>
-    </subtraction>
-
-    <subtraction name ="col1fin_10">
-        <first ref="col1fin_9"/>
-        <second ref="sub_col1fin_cons_2"/>
-        <rotation name="uscollfin_rot10" x="0" y="0" z="SEPTANT*(2 + 0.0)" unit="deg"/>
-    </subtraction>
-
-    <subtraction name ="col1fin_11">
-        <first ref="col1fin_10"/>
-        <second ref="sub_col1fin_cons_2"/>
-        <rotation name="uscollfin_rot11" x="0" y="0" z="SEPTANT*(3 + 0.0)" unit="deg"/>
-    </subtraction>
-
-    <subtraction name ="col1fin_12">
-        <first ref="col1fin_11"/>
-        <second ref="sub_col1fin_cons_2"/>
-        <rotation name="uscollfin_rot12" x="0" y="0" z="SEPTANT*(4 + 0.0)" unit="deg"/>
-    </subtraction>
-
-    <subtraction name ="col1fin_13">
-        <first ref="col1fin_12"/>
-        <second ref="sub_col1fin_cons_2"/>
-        <rotation name="uscollfin_rot13" x="0" y="0" z="SEPTANT*(5 + 0.0)" unit="deg"/>
-    </subtraction>
-
-    <subtraction name ="col1fin_14">
-        <first ref="col1fin_13"/>
-        <second ref="sub_col1fin_cons_2"/>
-        <rotation name="uscollfin_rot14" x="0" y="0" z="SEPTANT*(6 + 0.0)" unit="deg"/>
-    </subtraction>
-
-     <cone aunit="deg" deltaphi="360" lunit="mm" name="sub_col1fin_cons_3" 
-           rmin1="col1fin_RMin" 
-           rmin2="col1fin_RMin+17.3" 
-           rmax1="col1fin_RMax+2" 
-           rmax2="col1fin_RMax+2" 
-	   startphi="0" z="31"
-	   />
-
-     <subtraction name ="col1fin_15">
-        <first ref="col1fin_14"/>
-        <second ref="sub_col1fin_cons_3"/>
-	<position name="col1fin_15_pos" x="0" y="0" z="-1/2*col1fin_Length + 30/2" unit="mm"/>
-    </subtraction>
-
-    
-
-    <!-- v10 
+    <!-- v10 --> 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
       <zplane rmin="20.0" rmax="27" z="0"/> 
       <zplane rmin="16.25" rmax="27" z="100"/> 
@@ -472,13 +241,13 @@
       <zplane rmin="15.1" rmax="22.0" z="190"/> 
       <zplane rmin="14.1" rmax="22.0" z="310"/> 
       <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
+      <zplane rmin="14.452" rmax="22.0" z="695"/> 
+      <zplane rmin="14.452" rmax="24.0" z="695"/> 
+      <zplane rmin="14.491" rmax="24.0" z="709"/> 
+      <zplane rmin="14.491" rmax="22.0" z="709"/> 
+      <zplane rmin="14.536" rmax="22.0" z="725"/> 
     </polycone>
-    -->
+
 
     <!-- v11
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
@@ -525,13 +294,13 @@
       <zplane rmin="24" rmax="25.4" z="30"/> 
     </polycone>
 
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="col1_h20_CW_solid" rmax1="25.4" rmax2="25.4" rmin1="22" rmin2="22" startphi="0" z="307"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="col1_h20_CW_solid" rmax1="25.4" rmax2="25.4" rmin1="22" rmin2="22" startphi="0" z="522"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="col1_jacket_solid"> 
       <zplane rmin="25.4" rmax="27.5" z="0"/> 
-      <zplane rmin="25.4" rmax="27.5" z="250"/> 
-      <zplane rmin="25.4" rmax="27.3" z="250"/> 
-      <zplane rmin="25.4" rmax="27.3" z="300"/> 
+      <zplane rmin="25.4" rmax="27.5" z="465"/> 
+      <zplane rmin="25.4" rmax="27.3" z="465"/> 
+      <zplane rmin="25.4" rmax="27.3" z="515"/> 
     </polycone>
 
 
@@ -653,6 +422,7 @@
 	<positionref ref="posCOLL2_Cu_sub" />
         <rotation name="uscoll_Cu_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
     </subtraction>
+
     <!--
        Shielding collimators
       -->
@@ -688,24 +458,13 @@
     <volume name="logicUScoll_1">
       <!-- <materialref ref="Tungsten"/> -->
       <materialref ref="CW95"/>
-      <solidref ref="col1_7"/>
+      <solidref ref="Coll1_solid1"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2001"/>
     </volume>
 
-    <volume name="logicUScol1fin_1">
-      <materialref ref="CW95"/>
-      <solidref ref="col1fin_15"/>
-      <auxiliary auxtype="Color" auxvalue="red"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
-      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
-      <auxiliary auxtype="DetNo" auxvalue="2006"/>
-    </volume>
-
-  <!--
     <volume name="col1_h20_logic1">
       <materialref ref="G4_WATER"/>
       <solidref ref="col1_h20_solid1"/>
@@ -745,7 +504,6 @@
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2012"/>
     </volume>
-   -->
 
     <volume name="logicUScollunion_1">
       <materialref ref="CW95"/>
@@ -782,40 +540,35 @@
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
       <solidref ref="boxUpstream"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="UScoll_1">
         <volumeref ref="logicUScoll_1"/>
         <positionref ref="posCOLL1"/>
       </physvol>
 
-      <physvol name="UScol1fin_1">
-        <volumeref ref="logicUScol1fin_1"/>
-        <positionref ref="poscol1fin"/>
-      </physvol>
 
-
-<!--
       <physvol name="col1_h20_phys1">
         <volumeref ref="col1_h20_logic1"/>
-	<position ref="col1_h20_pos1" x="0" y="0" z="-1610+139+7"/> --><!-- center position wrt target center = 5036 mm-->
-<!--      </physvol>
+	<position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7"/> --><!-- center position wrt target center = 5036 mm-->
+      </physvol>
 
       <physvol name="col1_h20_phys2">
         <volumeref ref="col1_h20_logic2"/>
-	<position ref="col1_h20_pos2" x="0" y="0" z="-1610+460"/>--> <!-- front face position wrt target center = 5340 mm-->
- <!--     </physvol>
+	<position ref="col1_h20_pos2" x="0" y="0" z="-1825+675"/>--> <!-- front face position wrt target center = 5340 mm-->
+     </physvol>
 
       <physvol name="col1_h20_CW_phys">
         <volumeref ref="col1_h20_CW_logic"/>
-	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1610+139+14+307./2."/> --><!-- center position wrt target center = 5191.5 mm-->
- <!--     </physvol>
+	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2."/> --><!-- center position wrt target center = 5191.5 mm-->
+     </physvol>
 
       <physvol name="col1_jacket_phys">
         <volumeref ref="col1_jacket_logic"/>
-	<position ref="col1_jacket_pos" x="0" y="0" z="-1610+110"/>--> <!-- center position wrt target center = 5191.5 mm-->
- <!--     </physvol>
+	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110"/>--> <!-- center position wrt target center = 5191.5 mm-->
+     </physvol>
 
--->
+
 
       <physvol name="UScollunion_1">
         <volumeref ref="logicUScollunion_1"/>
@@ -840,8 +593,6 @@
         <file name="upstream/upstreamBeampipe.gdml"/>
         <positionref ref="shield_US_beampipe_center"/>
       </physvol>
-
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>
 
