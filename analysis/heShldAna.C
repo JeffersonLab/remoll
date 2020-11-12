@@ -145,25 +145,30 @@ long processOne(string fnm){
 	xx_tr=xx;
 	yy_tr=zz+4500;
 	pz_tr = hit->at(j).py;
+      }else if(det==101){
+	xx_tr=xx;
+	yy_tr=zz;
+	pz_tr = hit->at(j).py;
       }
+	
 
       fillHisto_beamLine(det, sp, rdDmg, pz, xx_tr, yy_tr, kinE);
       if(kinE > 10)
-	fillHisto_flatHE(det, sp, pz_tr, xx_tr, yy_tr, vz);
+	fillHisto_flatHE(det, sp, pz_tr, xx_tr, yy_tr, vz0);
       
       fillHisto_hall(det,sp,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
       if((sp==0 || sp==5) && kinE>1){
 	fillHisto_beamLine(det, 1, rdDmg, pz, xx_tr, yy_tr, kinE);
 	if(kinE > 10)
-	  fillHisto_flatHE(det, 1, pz_tr, xx_tr, yy_tr, vz);
+	  fillHisto_flatHE(det, 1, pz_tr, xx_tr, yy_tr, vz0);
 
 	fillHisto_hall(det,1,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
-	  fillHisto_sphere(det, 4, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
+	  fillHisto_beamLine(det, 4, rdDmg, pz, xx_tr, yy_tr, kinE);
 	  if(kinE > 10)
-	    fillHisto_flatHE(det, 4, pz_tr, xx_tr, yy_tr, vz);
+	    fillHisto_flatHE(det, 4, pz_tr, xx_tr, yy_tr, vz0);
 	  
 	  fillHisto_hall(det,4,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 	}
@@ -190,7 +195,7 @@ void initHisto(int fileType){
 
   initHisto_flatHE(fout,5556,"Flat: inside tgt bunker above tgt",3900,-7000,-2000);
   initHisto_flatHE(fout,5555,"Flat: inside tgt bunker above tgt",3900,-7000,-2000);
-  initHisto_flatHE(fout,5556,"Flat: hall lid",27000);
+  initHisto_flatHE(fout,101,"Flat: hall lid",27000);
 
   initHisto_hall(fout);
 
@@ -204,29 +209,15 @@ void writeOutput(double addScale){
 
   scaleFactor /= addScale;
 
-  if( (analyzeDet & 1) == 1)
-    writeOutput_sphere(fout,5530,scaleFactor);
-  if( (analyzeDet & 2) == 2){
-    writeOutput_beamLine(fout,5500,scaleFactor);
-    writeOutput_beamLine(fout,5501,scaleFactor);
-    writeOutput_beamLine(fout,5547,scaleFactor);
-    writeOutput_beamLine(fout,5546,scaleFactor);
-    writeOutput_beamLine(fout,5543,scaleFactor);
-    writeOutput_beamLine(fout,5542,scaleFactor);
-    writeOutput_beamLine(fout,5531,scaleFactor);
-    writeOutput_beamLine(fout,5560,scaleFactor);
+  writeOutput_beamLine(fout,5556,scaleFactor);
+  writeOutput_beamLine(fout,5555,scaleFactor);
 
-    writeOutput_beamLine(fout,5556,scaleFactor);
-    writeOutput_beamLine(fout,5545,scaleFactor);
-    writeOutput_beamLine(fout,5544,scaleFactor);
-    writeOutput_beamLine(fout,5555,scaleFactor);
-    writeOutput_beamLine(fout,5541,scaleFactor);
-    writeOutput_beamLine(fout,5540,scaleFactor);
-    writeOutput_beamLine(fout,5510,scaleFactor);
-  }
-  if( (analyzeDet & 4) == 4){
-    writeOutput_hall(fout,scaleFactor);
-  }
+  writeOutput_flat(fout,5556,scaleFactor);
+  writeOutput_flat(fout,5555,scaleFactor);
+  writeOutput_flat(fout,101,scaleFactor);
+
+  writeOutput_hall(fout,scaleFactor);
+
 
   fout->Close();
 }

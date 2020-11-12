@@ -23,8 +23,8 @@ void initHisto_flatHE(TFile *fout,int detID, string detNm, int hRange, int vZmin
     for(int i=0;i<nSpecies;i++){
       dHE_xy[i][k].push_back(new TH2F(Form("d%dHE_xy_%s_%s",detID,spH[i].c_str(),fbH[k].c_str()),
 				      Form("hits for %s %s;x[mm];y[mm]",fbH[k].c_str(),spTit[i].c_str()),
-				      800,-range,range,
-				      800,-range,range));
+				      800,-hRange,hRange,
+				      800,-hRange,hRange));
       
       dHE_vz[i][k].push_back(new TH1F(Form("d%dHE_vz_%s_%s",detID,spH[i].c_str(),fbH[k].c_str()),
 				      Form("hits for %s %s;x[mm];y[mm]",fbH[k].c_str(),spTit[i].c_str()),
