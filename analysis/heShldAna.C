@@ -39,7 +39,7 @@ void process();
 
 const std::vector<int> planeDets={5555, 5556};
 
-void tgtShldAna(const string& finName = "./remollout.root", double addScale=1, int overWriteFile = 1, int beamGenerator=1){
+void heShldAna(const string& finName = "./remollout.root", double addScale=1, int overWriteFile = 1, int beamGenerator=1){
   fileNm = finName;
   beamGen = beamGenerator;
 
@@ -184,7 +184,7 @@ long processOne(string fnm){
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_tgtShldAnaV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_heShldAnaV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const string fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
