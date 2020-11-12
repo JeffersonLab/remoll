@@ -7,7 +7,7 @@
    <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.82" unit="m"/>
    <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.00" unit="m"/>
    <quantity name="pionDetectorSystemLength"      type="length" value="1.00" unit="m"/>
-
+   <!-- Adding some for information -->
    <!-- Positions of detectors within full pion detector system, referenced to front -->
    <position name="pionDetectorLuciteCenterPosition"      z="0.75*2.54*cm"/> <!-- 1.5*in thick -->
    <position name="pionDetectorGEMFrontCenterPosition"    z="0.10*m"/> <!-- 0.10*m thick -->
