@@ -229,13 +229,17 @@ void initHisto(int fileType){
     initHisto_beamLine(fout,5560,"Flat: beamline US hybrid");
 
     
-    initHisto_beamLine(fout,5556,"Flat: inside tgt bunker above tgt");//FIXME
-    initHisto_beamLine(fout,5545,"Flat: inside tgt bunker right of tgt");//FIXME
-    initHisto_beamLine(fout,5544,"Flat: inside tgt bunker left of tgt");//FIXME
-    initHisto_beamLine(fout,5555,"Flat: outside tgt bunker above tgt");//FIXME
-    initHisto_beamLine(fout,5541,"Flat: outside tgt bunker right of tgt");//FIXME
-    initHisto_beamLine(fout,5540,"Flat: outside tgt bunker left of tgt");//FIXME1
-    initHisto_beamLine(fout,5510,"Flat: front SBS bunker");//FIXME
+    initHisto_beamLine(fout,5556,"Flat: inside tgt bunker above tgt");
+    initHisto_beamLine(fout,5545,"Flat: inside tgt bunker right of tgt");
+    initHisto_beamLine(fout,5544,"Flat: inside tgt bunker left of tgt");
+    initHisto_beamLine(fout,5555,"Flat: outside tgt bunker above tgt");
+    initHisto_beamLine(fout,5541,"Flat: outside tgt bunker right of tgt");
+    initHisto_beamLine(fout,5540,"Flat: outside tgt bunker left of tgt");1
+    initHisto_beamLine(fout,5510,"Flat: front SBS bunker");
+
+    initHisto_flatHE(fout,5556,"Flat: inside tgt bunker above tgt",1200);
+    initHisto_flatHE(fout,5555,"Flat: inside tgt bunker above tgt",4200);
+    initHisto_flatHE(fout,5556,"Flat: hall lid",27000);
 
   }
   if( (analyzeDet & 4) == 4){
@@ -263,13 +267,13 @@ void writeOutput(double addScale){
     writeOutput_beamLine(fout,5531,scaleFactor);
     writeOutput_beamLine(fout,5560,scaleFactor);
 
-    writeOutput_beamLine(fout,5556,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5545,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5544,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5555,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5541,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5540,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5510,scaleFactor);//FIXME
+    writeOutput_beamLine(fout,5556,scaleFactor);
+    writeOutput_beamLine(fout,5545,scaleFactor);
+    writeOutput_beamLine(fout,5544,scaleFactor);
+    writeOutput_beamLine(fout,5555,scaleFactor);
+    writeOutput_beamLine(fout,5541,scaleFactor);
+    writeOutput_beamLine(fout,5540,scaleFactor);
+    writeOutput_beamLine(fout,5510,scaleFactor);
   }
   if( (analyzeDet & 4) == 4){
     writeOutput_hall(fout,scaleFactor);
