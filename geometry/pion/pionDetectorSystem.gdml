@@ -9,7 +9,7 @@
    <quantity name="pionDetectorSystemLength"      type="length" value="1.00" unit="m"/>
    <!-- Adding some for information -->
    <!-- Positions of detectors within full pion detector system, referenced to front -->
-   <position name="pionDetectorLuciteCenterPosition"      z="0.75*2.54*cm"/> <!-- 1.5*in thick -->
+   <position name="pionDetectorLuciteCenterPosition"      z="0.75*2.54*cm"/> <!-- 1.5*inch thick -->
    <position name="pionDetectorGEMFrontCenterPosition"    z="0.10*m"/> <!-- 0.10*m thick -->
    <position name="pionDetectorTSFrontCenterPosition"     z="0.20*m"/> <!-- 0.10*m thick -->
    <position name="pionDetectorTSBackCenterPosition"      z="0.85*m"/> <!-- 0.10*m thick -->
