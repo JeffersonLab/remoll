@@ -540,13 +540,11 @@
     <volume name="logicUpstream">
       <materialref ref="VacuumColl"/>
       <solidref ref="boxUpstream"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="UScoll_1">
         <volumeref ref="logicUScoll_1"/>
         <positionref ref="posCOLL1"/>
       </physvol>
-
 
       <physvol name="col1_h20_phys1">
         <volumeref ref="col1_h20_logic1"/>
@@ -567,8 +565,6 @@
         <volumeref ref="col1_jacket_logic"/>
 	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110"/>--> <!-- center position wrt target center = 5191.5 mm-->
      </physvol>
-
-
 
       <physvol name="UScollunion_1">
         <volumeref ref="logicUScollunion_1"/>
@@ -593,6 +589,8 @@
         <file name="upstream/upstreamBeampipe.gdml"/>
         <positionref ref="shield_US_beampipe_center"/>
       </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>
 
