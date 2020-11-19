@@ -9,9 +9,8 @@
 R__LOAD_LIBRARY(radDamage_cc.so)
 //
 // //Load in the script, and run it
-// >.L tgtShldAna.C
-// > tgtShldAna(<remoll output file>,
-//          <1 for tgt sphere, 2 for plane dets, 4 for hall Det>, 
+// >.L heShldAna.C
+// > heShldAna(<remoll output file>,
 //          <additional scale factor>,
 //          <0 to update the file, 1 to recreate>, 
 //          <1 for beam generator, 0 else>)
@@ -19,9 +18,13 @@ R__LOAD_LIBRARY(radDamage_cc.so)
 #include "radDamage.hh"
 #include "histogramUtilities.h"
 #include "beamLineDetHistos.h"
-#include "sphereDetHistos.h"
-#include "hallDetHistos.h"
+#include "beamLineHoleDetHistos.h"
 #include "flatHEdetHistos.h"
+#include "flatHEholeDetHistos.h"
+#include "flatHEusDetHistos.h"
+#include "flatHEdsDetHistos.h"
+// #include "sphereDetHistos.h"
+#include "hallDetHistos.h"
 
 TFile *fout;
 string fileNm;
@@ -31,6 +34,13 @@ int nFiles(0);
 long currentEvNr(0);
 
 radDamage radDmg;
+beamLineDetHistos beamLine;
+beamLineHoleDetHistos beamLineHole;
+hallDetHistos hall;
+flatHEdetHistos flatHE;
+flatHEusDetHistos flatHEus;
+flatHEdsDetHistos flatHEds;
+flatHEholeDetHistos flatHEhole;
 
 void initHisto(int);
 void writeOutput(double);
@@ -39,7 +49,7 @@ void process();
 
 const std::vector<int> planeDets={5555, 5556};
 
-void heShldAna(const string& finName = "./remollout.root", double addScale=1, int overWriteFile = 1, int beamGenerator=1){
+void heShldAna(const string& finName = "./remollout.root", double addScale=1, int overWriteFile=1, int beamGenerator=1){
   fileNm = finName;
   beamGen = beamGenerator;
 
@@ -49,13 +59,12 @@ void heShldAna(const string& finName = "./remollout.root", double addScale=1, in
 }
 
 void process(){
-
   if(fileNm==""){
     cout<<"\t did not find input file. Quitting!"<<endl;
-    return 2;
+    return;
   }
 
-  if( fileNm.find(".root") < fileNm.size() ){
+  if (fileNm.find(".root") < fileNm.size()) {
     cout<<"Processing single file:\n\t"<<fileNm<<endl;
     nTotEv+=processOne(fileNm);
     nFiles=1;
@@ -69,11 +78,10 @@ void process(){
       nFiles++;
     }
   }
-
   cout<<"\nFinished processing a total of "<<nTotEv<<endl;
 }
 
-long processOne(string fnm){
+long processOne(string fnm) {
   TFile *fin=TFile::Open(fnm.c_str(),"READ");
   if(!fin->IsOpen() || fin->IsZombie()){
     cout<<"Problem: can't find file: "<<fnm<<endl;
@@ -103,13 +111,14 @@ long processOne(string fnm){
   int sector(-1);
 
   //for (Long64_t event = 0; event < 5; t->GetEntry(event++)) {
-  for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
+  for (Long64_t event = 0; event < nEntries; event++) {
     currentEvNr++;
     if( float(event+1)/nEntries*100 > currentProc){
       cout<<"at tree entry\t"<<event<<"\t"<< float(event+1)/nEntries*100<<endl;
       currentProc+=procStep;
     }
 
+    t->GetEntry(event);
     for(int j=0;j<hit->size();j++){
 
       if(std::isnan(rate) || std::isinf(rate)) continue;
@@ -150,33 +159,65 @@ long processOne(string fnm){
 	yy_tr=zz;
 	pz_tr = hit->at(j).py;
       }
-	
 
-      fillHisto_beamLine(det, sp, rdDmg, pz, xx_tr, yy_tr, kinE);
-      if(kinE > 10)
-	fillHisto_flatHE(det, sp, pz_tr, xx_tr, yy_tr, vz0);
-      
-      fillHisto_hall(det,sp,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
-
-      if((sp==0 || sp==5) && kinE>1){
-	fillHisto_beamLine(det, 1, rdDmg, pz, xx_tr, yy_tr, kinE);
-	if(kinE > 10)
-	  fillHisto_flatHE(det, 1, pz_tr, xx_tr, yy_tr, vz0);
-
-	fillHisto_hall(det,1,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
-
-	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
-	  fillHisto_beamLine(det, 4, rdDmg, pz, xx_tr, yy_tr, kinE);
-	  if(kinE > 10)
-	    fillHisto_flatHE(det, 4, pz_tr, xx_tr, yy_tr, vz0);
-	  
-	  fillHisto_hall(det,4,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
-	}
+      beamLine.fillHisto(det, sp, rdDmg, pz, xx_tr, yy_tr, kinE);
+      if(kinE > 10) {
+	flatHE.fillHisto(det, sp, pz_tr, xx_tr, yy_tr, vz0);
+	if (yy_tr <= 0)
+	  flatHEus.fillHisto(det, sp, pz_tr, xx_tr, yy_tr, vz0);
+	else 
+	  flatHEds.fillHisto(det, sp, pz_tr, xx_tr, yy_tr, vz0);
       }
       
+      hall.fillHisto(det,sp,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
+
+      if((sp==0 || sp==5) && kinE>1){
+	beamLine.fillHisto(det, 1, rdDmg, pz, xx_tr, yy_tr, kinE);
+	if(kinE > 10) {
+	  flatHE.fillHisto(det, 1, pz_tr, xx_tr, yy_tr, vz0);
+	  if (yy_tr <= 0)
+	    flatHEus.fillHisto(det, 1, pz_tr, xx_tr, yy_tr, vz0);
+	  else 
+	    flatHEds.fillHisto(det, 1, pz_tr, xx_tr, yy_tr, vz0);
+	}
+
+	hall.fillHisto(det,1,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
+
+	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
+	  beamLine.fillHisto(det, 4, rdDmg, pz, xx_tr, yy_tr, kinE);
+	  if(kinE > 10) {
+	    flatHE.fillHisto(det, 4, pz_tr, xx_tr, yy_tr, vz0);
+	    if (yy_tr <= 0)
+	      flatHEus.fillHisto(det, 4, pz_tr, xx_tr, yy_tr, vz0);
+	    else 
+	      flatHEds.fillHisto(det, 4, pz_tr, xx_tr, yy_tr, vz0);
+	  }
+	  
+	  hall.fillHisto(det,4,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
+	}
+      }
+
+      // Hole detector: 5555 || 5556
+      if ((det==5555 || det==5556) && (sqrt(xx_tr*xx_tr + yy_tr*yy_tr) > 1000)) {
+	beamLineHole.fillHisto(det, sp, rdDmg, pz, xx_tr, yy_tr, kinE);
+	if(kinE > 10) {
+	  flatHEhole.fillHisto(det, sp, pz_tr, xx_tr, yy_tr, vz0);
+	}
+	
+	if((sp==0 || sp==5) && kinE>1){
+	  beamLineHole.fillHisto(det, 1, rdDmg, pz, xx_tr, yy_tr, kinE);
+	  if(kinE > 10)
+	    flatHEhole.fillHisto(det, 1, pz_tr, xx_tr, yy_tr, vz0);
+
+	  if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
+	    beamLineHole.fillHisto(det, 4, rdDmg, pz, xx_tr, yy_tr, kinE);
+	    if(kinE > 10)
+	      flatHEhole.fillHisto(det, 4, pz_tr, xx_tr, yy_tr, vz0);
+	  }
+	}
+      }
     }
   }
-
   fin->Close();
   delete fin;
   return nEntries;
@@ -186,38 +227,51 @@ long processOne(string fnm){
 void initHisto(int fileType){
   string foutNm = Form("%s_heShldAnaV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
-  const string fTp[2]={"UPDATE","RECREATE"};
-  cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
-  fout = new TFile(foutNm.c_str(),fTp[fileType].c_str());
+  const char * fTp[2]={"UPDATE","RECREATE"};
+  cout<<"Will " << fTp[fileType] << " file!" << endl;
+  fout = new TFile(foutNm.c_str(), fTp[fileType]);
   
-  initHisto_beamLine(fout,5556,"Flat: inside tgt bunker above tgt");
-  initHisto_beamLine(fout,5555,"Flat: outside tgt bunker above tgt");
+  beamLine.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt");
+  beamLine.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt");
+  beamLineHole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole");
+  beamLineHole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole");
 
-  initHisto_flatHE(fout,5556,"Flat: inside tgt bunker above tgt",3900,-7000,-2000);
-  initHisto_flatHE(fout,5555,"Flat: inside tgt bunker above tgt",3900,-7000,-2000);
-  initHisto_flatHE(fout,101,"Flat: hall lid",27000);
+  flatHE.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt", 5000, -7000, -2000);
+  flatHE.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt", 5000, -7000, -2000);
+  flatHEhole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole", 5000, -7000, -2000);
+  flatHEhole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole", 5000, -7000, -2000);
+  flatHEus.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt (us)", 5000, -7000, -2000);
+  flatHEus.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt (us)", 5000, -7000, -2000);
+  flatHEds.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt (ds)", 5000, -7000, -2000);
+  flatHEds.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt (ds)", 5000, -7000, -2000);
+  flatHE.initHisto(fout, 101, "Flat: hall lid", 27000);
 
-  initHisto_hall(fout);
-
+  hall.initHisto(fout);
 }
 
 void writeOutput(double addScale){
-
   double scaleFactor = 1./nFiles;
   if(beamGen)
     scaleFactor = 1./nTotEv;
 
   scaleFactor /= addScale;
 
-  writeOutput_beamLine(fout,5556,scaleFactor);
-  writeOutput_beamLine(fout,5555,scaleFactor);
+  beamLine.writeOutput(fout, 5556, scaleFactor);
+  beamLine.writeOutput(fout, 5555, scaleFactor);
+  beamLineHole.writeOutput(fout, 5556, scaleFactor);
+  beamLineHole.writeOutput(fout, 5555, scaleFactor);
 
-  writeOutput_flat(fout,5556,scaleFactor);
-  writeOutput_flat(fout,5555,scaleFactor);
-  writeOutput_flat(fout,101,scaleFactor);
+  flatHE.writeOutput(fout, 5556, scaleFactor);
+  flatHE.writeOutput(fout, 5555, scaleFactor);
+  flatHEus.writeOutput(fout, 5556, scaleFactor);
+  flatHEus.writeOutput(fout, 5555, scaleFactor);
+  flatHEds.writeOutput(fout, 5556, scaleFactor);
+  flatHEds.writeOutput(fout, 5555, scaleFactor);
+  flatHEhole.writeOutput(fout, 5556, scaleFactor);
+  flatHEhole.writeOutput(fout, 5555, scaleFactor);
+  flatHE.writeOutput(fout, 101, scaleFactor);
 
-  writeOutput_hall(fout,scaleFactor);
-
+  hall.writeOutput(fout, scaleFactor);
 
   fout->Close();
 }
