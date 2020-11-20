@@ -23,7 +23,7 @@ class beamLineDetHistos {
     void writeOutput(TFile *fout, int detID, double scaleFactor);
 };
 
-void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm){
+void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm, double range=2000){
 
   fout->cd();
   if(!fout->GetDirectory(Form("det%d",detID)))
@@ -41,11 +41,11 @@ void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm){
       for(int j=0;j<nDmg;j++){
 	xy[i][j][k].push_back(new TH2F(Form("d%d_xy_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
 					   Form("%s for %s %s;x[mm];y[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
-					   2000, -5000, 5000,
-					   2000, -5000, 5000));
+					   1000, -range, range,
+					   1000, -range, range));
 	r[i][j][k].push_back(new TH1F(Form("d%d_r_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
 					  Form("%s for %s %s;r[mm];",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
-					  2000, 0, 5000));
+					  1000, 0, range));
       }
     }
 }
