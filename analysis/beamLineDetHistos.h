@@ -23,7 +23,7 @@ class beamLineDetHistos {
     void writeOutput(TFile *fout, int detID, double scaleFactor);
 };
 
-void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm, double range=2000){
+void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm, const double range=2000){
 
   fout->cd();
   if(!fout->GetDirectory(Form("det%d",detID)))

@@ -23,7 +23,7 @@ class beamLineHoleDetHistos {
     void writeOutput(TFile *fout, int detID, double scaleFactor);
 };
 
-void beamLineHoleDetHistos::initHisto(TFile *fout,int detID, const char *detNm, const double range) {
+void beamLineHoleDetHistos::initHisto(TFile *fout,int detID, const char *detNm, const double range=2000) {
   fout->cd();
   if(!fout->GetDirectory(Form("det%d",detID)))
     fout->mkdir(Form("det%d",detID), detNm);
