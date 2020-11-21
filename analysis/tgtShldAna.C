@@ -31,6 +31,9 @@ long currentEvNr(0);
 int analyzeDet(0);
 
 radDamage radDmg;
+beamLineDetHistos beamLine;
+sphereDetHistos sphere;
+hallDetHistos hall;
 
 void initHisto(int);
 void writeOutput(double);
@@ -117,13 +120,14 @@ long processOne(string fnm){
   int sector(-1);
 
   //for (Long64_t event = 0; event < 5; t->GetEntry(event++)) {
-  for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
+  for (Long64_t event = 0; event < nEntries; event++) {
     currentEvNr++;
     if( float(event+1)/nEntries*100 > currentProc){
       cout<<"at tree entry\t"<<event<<"\t"<< float(event+1)/nEntries*100<<endl;
       currentProc+=procStep;
     }
 
+    t->GetEntry(event);
     for(int j=0;j<hit->size();j++){
 
       if(std::isnan(rate) || std::isinf(rate)) continue;
@@ -176,27 +180,27 @@ long processOne(string fnm){
       }
 
       if(det==5530  && ( (analyzeDet & 1) ==1))
-	fillHisto_sphere(det, sp, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
+	sphere.fillHisto(det, sp, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
       else if( doBeamLine && ( (analyzeDet & 2) ==2))
-	fillHisto_beamLine(det, sp, rdDmg, pz, xx_tr, yy_tr, kinE);
+	beamLine.fillHisto(det, sp, rdDmg, pz, xx_tr, yy_tr, kinE);
       else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
-	fillHisto_hall(det,sp,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
+	hall.fillHisto(det,sp,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
       if((sp==0 || sp==5) && kinE>1){
 	if(det==5530 && ( (analyzeDet & 1) ==1))
-	  fillHisto_sphere(det, 1, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
+	  sphere.fillHisto(det, 1, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
 	else if(doBeamLine  && ( (analyzeDet & 2) ==2))
-	  fillHisto_beamLine(det, 1, rdDmg, pz, xx_tr, yy_tr, kinE);
+	  beamLine.fillHisto(det, 1, rdDmg, pz, xx_tr, yy_tr, kinE);
 	else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
-	  fillHisto_hall(det,1,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
+	  hall.fillHisto(det,1,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
 	  if(det==5530 && ( (analyzeDet & 1) ==1))
-	    fillHisto_sphere(det, 4, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
+	    sphere.fillHisto(det, 4, rdDmg, spherePZ, xx, yy, sphereZZ, kinE);
 	  else if(doBeamLine  && ( (analyzeDet & 2) ==2))
-	    fillHisto_beamLine(det, 4, rdDmg, pz, xx_tr, yy_tr, kinE);
+	    beamLine.fillHisto(det, 4, rdDmg, pz, xx_tr, yy_tr, kinE);
 	  else if( (det==99 || det==101) && ((analyzeDet & 4) == 4) )
-	    fillHisto_hall(det,4,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
+	    hall.fillHisto(det,4,rdDmg,xx,yy,zz,vx0,vy0,vz0,kinE);
 
 	}
       }
@@ -217,29 +221,29 @@ void initHisto(int fileType){
   cout<<"Will "<<fTp[fileType]<<" file!"<<endl;
   fout = new TFile(foutNm.c_str(),fTp[fileType].c_str());
   if( (analyzeDet & 1) == 1)
-    initHisto_sphere(fout,5530,"Tgt: sphere detector");
+    sphere.initHisto(fout,5530,"Tgt: sphere detector");
   if( (analyzeDet & 2) == 2){
-    initHisto_beamLine(fout,5500,"Flat: beamline hall entrance");
-    initHisto_beamLine(fout,5501,"Flat: beamline moller pol");
-    initHisto_beamLine(fout,5547,"Flat: inside tgt bunker US Pb");
-    initHisto_beamLine(fout,5546,"Flat: inside tgt bunker US tgt");
-    initHisto_beamLine(fout,5543,"Flat: outside tgt bunker DS Pb");
-    initHisto_beamLine(fout,5542,"Flat: outside tgt bunker US tgt");
-    initHisto_beamLine(fout,5531,"Flat: inside tgt bunker DS Pb");
-    initHisto_beamLine(fout,5560,"Flat: beamline US hybrid");
+    beamLine.initHisto(fout,5500,"Flat: beamline hall entrance");
+    beamLine.initHisto(fout,5501,"Flat: beamline moller pol");
+    beamLine.initHisto(fout,5547,"Flat: inside tgt bunker US Pb");
+    beamLine.initHisto(fout,5546,"Flat: inside tgt bunker US tgt");
+    beamLine.initHisto(fout,5543,"Flat: outside tgt bunker DS Pb");
+    beamLine.initHisto(fout,5542,"Flat: outside tgt bunker US tgt");
+    beamLine.initHisto(fout,5531,"Flat: inside tgt bunker DS Pb");
+    beamLine.initHisto(fout,5560,"Flat: beamline US hybrid");
 
     
-    initHisto_beamLine(fout,5556,"Flat: inside tgt bunker above tgt");//FIXME
-    initHisto_beamLine(fout,5545,"Flat: inside tgt bunker right of tgt");//FIXME
-    initHisto_beamLine(fout,5544,"Flat: inside tgt bunker left of tgt");//FIXME
-    initHisto_beamLine(fout,5555,"Flat: outside tgt bunker above tgt");//FIXME
-    initHisto_beamLine(fout,5541,"Flat: outside tgt bunker right of tgt");//FIXME
-    initHisto_beamLine(fout,5540,"Flat: outside tgt bunker left of tgt");//FIXME1
-    initHisto_beamLine(fout,5510,"Flat: front SBS bunker");//FIXME
+    beamLine.initHisto(fout,5556,"Flat: inside tgt bunker above tgt");//FIXME
+    beamLine.initHisto(fout,5545,"Flat: inside tgt bunker right of tgt");//FIXME
+    beamLine.initHisto(fout,5544,"Flat: inside tgt bunker left of tgt");//FIXME
+    beamLine.initHisto(fout,5555,"Flat: outside tgt bunker above tgt");//FIXME
+    beamLine.initHisto(fout,5541,"Flat: outside tgt bunker right of tgt");//FIXME
+    beamLine.initHisto(fout,5540,"Flat: outside tgt bunker left of tgt");//FIXME1
+    beamLine.initHisto(fout,5510,"Flat: front SBS bunker");//FIXME
 
   }
   if( (analyzeDet & 4) == 4){
-    initHisto_hall(fout);
+    hall.initHisto(fout);
   }
 }
 
@@ -252,27 +256,27 @@ void writeOutput(double addScale){
   scaleFactor /= addScale;
 
   if( (analyzeDet & 1) == 1)
-    writeOutput_sphere(fout,5530,scaleFactor);
+    sphere.writeOutput(fout,5530,scaleFactor);
   if( (analyzeDet & 2) == 2){
-    writeOutput_beamLine(fout,5500,scaleFactor);
-    writeOutput_beamLine(fout,5501,scaleFactor);
-    writeOutput_beamLine(fout,5547,scaleFactor);
-    writeOutput_beamLine(fout,5546,scaleFactor);
-    writeOutput_beamLine(fout,5543,scaleFactor);
-    writeOutput_beamLine(fout,5542,scaleFactor);
-    writeOutput_beamLine(fout,5531,scaleFactor);
-    writeOutput_beamLine(fout,5560,scaleFactor);
+    beamLine.writeOutput(fout,5500,scaleFactor);
+    beamLine.writeOutput(fout,5501,scaleFactor);
+    beamLine.writeOutput(fout,5547,scaleFactor);
+    beamLine.writeOutput(fout,5546,scaleFactor);
+    beamLine.writeOutput(fout,5543,scaleFactor);
+    beamLine.writeOutput(fout,5542,scaleFactor);
+    beamLine.writeOutput(fout,5531,scaleFactor);
+    beamLine.writeOutput(fout,5560,scaleFactor);
 
-    writeOutput_beamLine(fout,5556,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5545,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5544,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5555,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5541,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5540,scaleFactor);//FIXME
-    writeOutput_beamLine(fout,5510,scaleFactor);//FIXME
+    beamLine.writeOutput(fout,5556,scaleFactor);//FIXME
+    beamLine.writeOutput(fout,5545,scaleFactor);//FIXME
+    beamLine.writeOutput(fout,5544,scaleFactor);//FIXME
+    beamLine.writeOutput(fout,5555,scaleFactor);//FIXME
+    beamLine.writeOutput(fout,5541,scaleFactor);//FIXME
+    beamLine.writeOutput(fout,5540,scaleFactor);//FIXME
+    beamLine.writeOutput(fout,5510,scaleFactor);//FIXME
   }
   if( (analyzeDet & 4) == 4){
-    writeOutput_hall(fout,scaleFactor);
+    hall.writeOutput(fout,scaleFactor);
   }
 
   fout->Close();

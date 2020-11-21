@@ -7,36 +7,47 @@
 */
 #include "anaConst.h"
 
-//theta, phi
-std::vector<TH2F*> dSph_tp[nSpecies][nDmg][nFB];
-//energy of upstream half
-std::vector<TH1F*> dSph_energyUS[nSpecies][nFB];
-//energy of downstream half
-std::vector<TH1F*> dSph_energyDS[nSpecies][nFB];
+class sphereDetHistos {
+  private:
+    //theta, phi
+    std::vector<TH2F*> tp[nSpecies][nDmg][nFB];
+    //energy of upstream half
+    std::vector<TH1F*> energyUS[nSpecies][nFB];
+    //energy of downstream half
+    std::vector<TH1F*> energyDS[nSpecies][nFB];
 
-std::map<int, int> dSph_ID2entry;
+    std::map<int, int> ID2entry;
 
-void initHisto_sphere(TFile *fout,int detID, string detNm){
+  public:
+    sphereDetHistos() {}
+    ~sphereDetHistos() {}
+    void initHisto(TFile *fout,int detID, const char * detNm);
+    void fillHisto(int detID, int sp, double rdDmg[3],double pz,
+		   double xx, double yy,double zz, double kinE);
+    void writeOutput(TFile *fout, int detID, double scaleFactor);
+};
 
+void sphereDetHistos::initHisto(TFile *fout,int detID, const char * detNm){
   fout->cd();
-  fout->mkdir(Form("det%d",detID),detNm.c_str());
+  if (!fout->GetDirectory(Form("det%d", detID)));
+    fout->mkdir(Form("det%d",detID),detNm);
   fout->cd(Form("det%d",detID));
 
-  dSph_ID2entry.insert(std::pair<int, int>(detID,dSph_ID2entry.size()));
+  ID2entry.insert(std::pair<int, int>(detID, ID2entry.size()));
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
-      dSph_energyUS[i][k].push_back(new TH1F(Form("d%d_energyUS_%s_%s",detID,fbH[k].c_str(),spH[i].c_str()),
+      energyUS[i][k].push_back(new TH1F(Form("d%d_energyUS_%s_%s",detID,fbH[k].c_str(),spH[i].c_str()),
 					  Form("energy distribution first half %s %s",fbH[k].c_str(),spH[i].c_str()),
 					  121,-8,4.1));
-      niceLogXBins(dSph_energyUS[i][k][dSph_ID2entry[detID]]);
+      niceLogXBins(energyUS[i][k][ID2entry[detID]]);
 
-      dSph_energyDS[i][k].push_back(new TH1F(Form("d%d_energyDS_%s_%s",detID,fbH[k].c_str(),spH[i].c_str()),
+      energyDS[i][k].push_back(new TH1F(Form("d%d_energyDS_%s_%s",detID,fbH[k].c_str(),spH[i].c_str()),
 					  Form("energy distribution second half %s %s",fbH[k].c_str(),spH[i].c_str()),
 					  121,-8,4.1));
-      niceLogXBins(dSph_energyDS[i][k][dSph_ID2entry[detID]]);
+      niceLogXBins(energyDS[i][k][ID2entry[detID]]);
       
       for(int j=0;j<nDmg;j++){
-	dSph_tp[i][j][k].push_back(new TH2F(Form("d%d_tp_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
+	tp[i][j][k].push_back(new TH2F(Form("d%d_tp_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
 					    Form("%s for %s %s (hit angles);theta[deg];phi[deg]",
 						 dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 					   800,0,180,
@@ -46,23 +57,24 @@ void initHisto_sphere(TFile *fout,int detID, string detNm){
 }
 
 /// pz>0 for things going out of the sphere 
-void fillHisto_sphere(int detID, int sp, double rdDmg[3],double pz,
+void sphereDetHistos::fillHisto(int detID, int sp, double rdDmg[3],double pz,
 		      double xx, double yy,double zz, double kinE){
-  
-  int det = dSph_ID2entry[detID];
+  if (ID2entry.find(detID) == ID2entry.end()) 
+    return;
 
+  int det = ID2entry[detID];
   if(zz<0){
-    dSph_energyUS[sp][0][det]->Fill(kinE);
+    energyUS[sp][0][det]->Fill(kinE);
     if(pz<0)
-      dSph_energyUS[sp][2][det]->Fill(kinE);
+      energyUS[sp][2][det]->Fill(kinE);
     else
-      dSph_energyUS[sp][1][det]->Fill(kinE);
+      energyUS[sp][1][det]->Fill(kinE);
   }else{
-    dSph_energyDS[sp][0][det]->Fill(kinE);
+    energyDS[sp][0][det]->Fill(kinE);
     if(pz<0)
-      dSph_energyDS[sp][2][det]->Fill(kinE);
+      energyDS[sp][2][det]->Fill(kinE);
     else
-      dSph_energyDS[sp][1][det]->Fill(kinE);
+      energyDS[sp][1][det]->Fill(kinE);
   }
 
   double th = acos(zz/sqrt(xx*xx + yy*yy + zz*zz))/pi*180;
@@ -70,29 +82,31 @@ void fillHisto_sphere(int detID, int sp, double rdDmg[3],double pz,
   ph = fmod(ph,180);
 
   for(int kk=0;kk<nDmg;kk++){
-    dSph_tp[sp][kk][0][det]->Fill(th,ph,rdDmg[kk]);
+    tp[sp][kk][0][det]->Fill(th,ph,rdDmg[kk]);
     if(pz<0)
-      dSph_tp[sp][kk][2][det]->Fill(th,ph,rdDmg[kk]);
+      tp[sp][kk][2][det]->Fill(th,ph,rdDmg[kk]);
     else
-      dSph_tp[sp][kk][1][det]->Fill(th,ph,rdDmg[kk]);
+      tp[sp][kk][1][det]->Fill(th,ph,rdDmg[kk]);
   }
 }
 
-void writeOutput_sphere(TFile *fout, int detID, double scaleFactor){
+void sphereDetHistos::writeOutput(TFile *fout, int detID, double scaleFactor){
+  if (ID2entry.find(detID) == ID2entry.end()) 
+    return;
 
-  int det = dSph_ID2entry[detID];
+  int det = ID2entry[detID];
   fout->cd();
   fout->cd(Form("det%d",detID));
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
-      dSph_energyUS[i][k][det]->Scale(scaleFactor);
-      dSph_energyUS[i][k][det]->Write();
-      dSph_energyDS[i][k][det]->Scale(scaleFactor);
-      dSph_energyDS[i][k][det]->Write();
+      energyUS[i][k][det]->Scale(scaleFactor);
+      energyUS[i][k][det]->Write();
+      energyDS[i][k][det]->Scale(scaleFactor);
+      energyDS[i][k][det]->Write();
       
       for(int j=0;j<nDmg;j++){
-	dSph_tp[i][j][k][det]->Scale(scaleFactor);
-	dSph_tp[i][j][k][det]->Write();
+        tp[i][j][k][det]->Scale(scaleFactor);
+        tp[i][j][k][det]->Write();
       }
     }
 }
