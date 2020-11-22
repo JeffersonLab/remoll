@@ -18,11 +18,7 @@ R__LOAD_LIBRARY(radDamage_cc.so)
 #include "radDamage.hh"
 #include "histogramUtilities.h"
 #include "beamLineDetHistos.h"
-#include "beamLineHoleDetHistos.h"
 #include "flatHEdetHistos.h"
-#include "flatHEholeDetHistos.h"
-#include "flatHEusDetHistos.h"
-#include "flatHEdsDetHistos.h"
 // #include "sphereDetHistos.h"
 #include "hallDetHistos.h"
 
@@ -35,12 +31,12 @@ long currentEvNr(0);
 
 radDamage radDmg;
 beamLineDetHistos beamLine;
-beamLineHoleDetHistos beamLineHole;
+beamLineDetHistos beamLineHole;
 hallDetHistos hall;
 flatHEdetHistos flatHE;
-flatHEusDetHistos flatHEus;
-flatHEdsDetHistos flatHEds;
-flatHEholeDetHistos flatHEhole;
+flatHEdetHistos flatHEus;
+flatHEdetHistos flatHEds;
+flatHEdetHistos flatHEhole;
 
 void initHisto(int);
 void writeOutput(double);
@@ -233,18 +229,18 @@ void initHisto(int fileType){
   
   beamLine.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt");
   beamLine.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt");
-  beamLineHole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole");
-  beamLineHole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole");
+  beamLineHole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole", "hole");
+  beamLineHole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole", "hole");
 
-  flatHE.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt", 4000, -7000, -2000);
-  flatHE.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt", 4000, -7000, -2000);
-  flatHEhole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole", 4000, -7000, -2000);
-  flatHEhole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole", 4000, -7000, -2000);
-  flatHEus.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt (us)", 4000, -7000, -2000);
-  flatHEus.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt (us)", 4000, -7000, -2000);
-  flatHEds.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt (ds)", 4000, -7000, -2000);
-  flatHEds.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt (ds)", 4000, -7000, -2000);
-  flatHE.initHisto(fout, 101, "Flat: hall lid", 27000);
+  flatHE.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt", "", 4000, -7000, -2000);
+  flatHE.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt", "", 4000, -7000, -2000);
+  flatHEhole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole", "hole", 4000, -7000, -2000);
+  flatHEhole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole", "hole", 4000, -7000, -2000);
+  flatHEus.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt (us)", "us", 4000, -7000, -2000);
+  flatHEus.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt (us)", "us", 4000, -7000, -2000);
+  flatHEds.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt (ds)", "ds", 4000, -7000, -2000);
+  flatHEds.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt (ds)", "ds", 4000, -7000, -2000);
+  flatHE.initHisto(fout, 101, "Flat: hall lid", "", 27000);
 
   hall.initHisto(fout);
 }

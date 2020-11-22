@@ -23,8 +23,8 @@ class flatHEdetHistos {
     void writeOutput(TFile *fout, int detID, double scaleFactor);
 };
 
-void flatHEdetHistos::initHisto(TFile *fout, int detID, const char * detNm, 
-		    int hRange, int vZmin=-30000, int vZmax=45000) {
+void flatHEdetHistos::initHisto(TFile *fout, int detID, const char * detNm, const char * cut = "",
+		    int hRange=4000, int vZmin=-30000, int vZmax=45000) {
   fout->cd();
   if(!fout->GetDirectory(Form("det%d",detID)))
     fout->mkdir(Form("det%d",detID),detNm);
@@ -33,13 +33,17 @@ void flatHEdetHistos::initHisto(TFile *fout, int detID, const char * detNm,
   ID2entry.insert(std::pair<int, int>(detID,ID2entry.size()));
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
-      xy[i][k].push_back(new TH2F(Form("d%dHE_xy_%s_%s", detID, spH[i].c_str(), fbH[k].c_str()),
-				  Form("hits for %s %s;x[mm];y[mm]", fbH[k].c_str(), spTit[i].c_str()),
+      string dir = fbH[k];
+      if (detID == 5555 || detID == 5556)
+	dir.replace(dir.find("pz"), 2, "py");
+
+      xy[i][k].push_back(new TH2F(Form("d%dHE%s_xy_%s_%s", detID, cut, spH[i].c_str(), dir.c_str()),
+				  Form("hits for %s %s;x[mm];y[mm]", dir.c_str(), spTit[i].c_str()),
 				  800, -hRange, hRange,
 				  800, -hRange, hRange));
       
-      vz[i][k].push_back(new TH1F(Form("d%dHE_vz_%s_%s",detID, spH[i].c_str(), fbH[k].c_str()),
-				  Form("hits for %s %s;vz[mm];", fbH[k].c_str(), spTit[i].c_str()),
+      vz[i][k].push_back(new TH1F(Form("d%dHE%s_vz_%s_%s", detID, cut, spH[i].c_str(), dir.c_str()),
+				  Form("hits for %s %s;vz[mm];", dir.c_str(), spTit[i].c_str()),
 				  2000, vZmin, vZmax));
     }
 }

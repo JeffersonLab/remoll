@@ -23,7 +23,7 @@ class beamLineDetHistos {
     void writeOutput(TFile *fout, int detID, double scaleFactor);
 };
 
-void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm, const double range=2000){
+void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm, const char * cut = "", const double range=2000){
 
   fout->cd();
   if(!fout->GetDirectory(Form("det%d",detID)))
@@ -33,19 +33,23 @@ void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm, con
   ID2entry.insert(std::pair<int, int>(detID,ID2entry.size()));
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
-      energy[i][k].push_back(new TH1F(Form("d%d_energy_%s_%s", detID, fbH[k].c_str(), spH[i].c_str()),
-				      Form("energy distribution %s %s", fbH[k].c_str(), spH[i].c_str()),
+      string dir = fbH[k];
+      if (detID == 5555 || detID == 5556)
+	dir.replace(dir.find("pz"), 2, "py");
+
+      energy[i][k].push_back(new TH1F(Form("d%d%s_energy_%s_%s", detID, cut, dir.c_str(), spH[i].c_str()),
+				      Form("energy distribution %s %s", dir.c_str(), spH[i].c_str()),
 				      121, -8, 4.1));
       niceLogXBins(energy[i][k][ID2entry[detID]]);
       
       for(int j=0;j<nDmg;j++){
-	xy[i][j][k].push_back(new TH2F(Form("d%d_xy_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
-					   Form("%s for %s %s;x[mm];y[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
-					   1000, -range, range,
-					   1000, -range, range));
-	r[i][j][k].push_back(new TH1F(Form("d%d_r_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
-					  Form("%s for %s %s;r[mm];",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
-					  1000, 0, range));
+	xy[i][j][k].push_back(new TH2F(Form("d%d%s_xy_%s_%s_Dmg%d",detID, cut, spH[i].c_str(),dir.c_str(),j),
+				       Form("%s for %s %s;x[mm];y[mm]",dmgTit[j].c_str(),dir.c_str(),spTit[i].c_str()),
+				       1000, -range, range,
+				       1000, -range, range));
+	r[i][j][k].push_back(new TH1F(Form("d%d%s_r_%s_%s_Dmg%d",detID, cut, spH[i].c_str(),dir.c_str(),j),
+				      Form("%s for %s %s;r[mm];",dmgTit[j].c_str(),dir.c_str(),spTit[i].c_str()),
+				      1000, 0, range));
       }
     }
 }
