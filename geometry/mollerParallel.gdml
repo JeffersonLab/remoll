@@ -78,13 +78,23 @@
     <auxiliary auxtype="DetNo" auxvalue="5501"/>
   </volume>
 
+  <volume name="mollerDetVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5502"/>
+  </volume>
+
   <volume name="targetVirtualSphere_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="targetSphere_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+   <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="5530"/>
   </volume>
 
@@ -212,6 +222,11 @@
       <position name="mollerVirtualPlane_pos" unit="mm" z="-16500"/>
     </physvol>
 
+    <physvol    name="mollerDetVirtualPlane_phys">
+      <volumeref ref="mollerDetVirtualPlane_log"/>
+      <position name="mollerDetVirtualPlane_pos" unit="mm" z="-16500+7000"/>
+    </physvol>
+
     <physvol    name="sbsBunkerFrontFace_phys">
       <volumeref ref="sbsBunkerFrontFace_log"/>
       <position name="sbsBunkerFrontFace_pos" unit="mm" x="6240" y="-1000" z="-11000"/>
@@ -225,7 +240,7 @@
 
     <physvol    name="targetPbWallDSVirtualPlane_phys">
       <volumeref ref="targetPbWallDSVirtualPlane_log"/>
-      <position name="targetPbWallDSVirtualPlane_pos" unit="mm" z="-2800"/>
+      <position name="targetPbWallDSVirtualPlane_pos" unit="mm" z="-2800+60"/>
     </physvol>
 
     <physvol    name="usHybridVirtualPlane_phys">

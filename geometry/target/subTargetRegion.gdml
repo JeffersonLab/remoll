@@ -30,7 +30,7 @@
   <!--constant for lead shieldings - dimension from Alan design -->
   <constant name="leadBoxx" value="3770."/>
   <constant name="leadBoxy" value="2550."/>
-  <constant name="leadBoxz" value="400."/>
+  <constant name="leadBoxz" value="650."/>
 
   <constant name="Shield_bore" value="150"/>
   <constant name="Shield_bore_concrete" value="340"/>
@@ -124,22 +124,34 @@
   <box lunit="mm" name="concrete_innerbox"
        x="concreteBoxx-2*concreteThickness"
        y="concreteBoxy"
-       z="concreteBoxz-2*concreteThickness"/>
+       z="concreteBoxz"/>
+
+  <tube aunit="deg" lunit="mm" deltaphi="360" name="concreteRoofhole"
+        rmin="0" rmax="1000"
+        z="concreteThickness+2.0"/>
+
 
   <subtraction name="concrete_sub1">
     <first ref = "concrete_outerbox"/>
     <second ref = "concrete_innerbox"/>
-    <position name ="concreteSub1" lunit="mm" x="0" y="-concreteThickness" z="0" />
+    <position name ="concreteSub1" lunit="mm" x="0" y="-concreteThickness" z="-concreteThickness" />
+  </subtraction>
+
+  <subtraction name="concrete_sub2">
+    <first ref = "concrete_sub1"/>
+    <second ref = "concreteRoofhole"/>
+    <position name = "concreteSub2" lunit="mm" x="0" y="(concreteBoxy-concreteThickness)/2.0" z="0"/>
+    <rotation name = "rotConcreteSub2" aunit="rad" x="pi/2.0" y="0" z="0"/>
   </subtraction>
 
   <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
-        rmin="0" rmax="Shield_bore_concrete" z="Shield_length"/>
+        rmin="0" rmax="Shield_bore_concrete" z="concreteThickness+2.0"/>
 
   <subtraction name="concrete_sub">
-    <first ref = "concrete_sub1"/>
+    <first ref = "concrete_sub2"/>
     <second ref = "Shield_tube"/>
 	    <!--<position name ="concreteSub1" lunit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />-->
-    <position name ="concreteSub1" lunit="mm" x="0" y="-370" z="0" />
+    <position name ="concreteSub1" lunit="mm" x="0" y="-370" z="(concreteBoxz-concreteThickness)/2.0" />
   </subtraction>
 
   <!--shielding front lead -->
@@ -292,7 +304,7 @@
   </volume>
 
   <volume name="LeadShield_target">
-    <materialref ref="Lead"/>
+    <materialref ref="Concrete"/>
     <solidref ref="lead_sub"/>
     <auxiliary auxtype="Color" auxvalue="gray"/>
     <auxiliary auxtype="SensDet" auxvalue="CollDet"/>
@@ -466,7 +478,7 @@
 
     <physvol>
       <volumeref ref="LeadShield_target"/>
-      <position name="LeadShield_pos" unit="mm" x="-1.*(leadBoxx/2.-1880)" y="leadBoxy/2.-1150" z="1200+leadBoxz/2."/>
+      <position name="LeadShield_pos" unit="mm" x="-1.*(leadBoxx/2.-1880)" y="leadBoxy/2.-1150" z="1105+leadBoxz/2."/>
     </physvol>
 
     <!--placement of vacuum detector    -->
