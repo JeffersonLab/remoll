@@ -238,7 +238,7 @@ void initHisto(int fileType){
     beamLine.initHisto(fout,5544,"Flat: inside tgt bunker left of tgt");//FIXME
     beamLine.initHisto(fout,5555,"Flat: outside tgt bunker above tgt");//FIXME
     beamLine.initHisto(fout,5541,"Flat: outside tgt bunker right of tgt");//FIXME
-    beamLine.initHisto(fout,5540,"Flat: outside tgt bunker left of tgt");//FIXME1
+    beamLine.initHisto(fout,5540,"Flat: outside tgt bunker left of tgt");//FIXME
     beamLine.initHisto(fout,5510,"Flat: front SBS bunker");//FIXME
 
   }

@@ -29,7 +29,7 @@ class sphereDetHistos {
 
 void sphereDetHistos::initHisto(TFile *fout,int detID, const char * detNm){
   fout->cd();
-  if (!fout->GetDirectory(Form("det%d", detID)));
+  if (!fout->GetDirectory(Form("det%d", detID)))
     fout->mkdir(Form("det%d",detID),detNm);
   fout->cd(Form("det%d",detID));
 

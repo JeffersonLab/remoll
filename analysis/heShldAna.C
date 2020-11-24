@@ -229,13 +229,13 @@ void initHisto(int fileType){
   
   beamLine.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt");
   beamLine.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt");
-  beamLineHole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole", "hole");
-  beamLineHole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole", "hole");
+  beamLineHole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole", "Hole");
+  beamLineHole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole", "Hole");
 
   flatHE.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt", "", 4000, -7000, -2000);
   flatHE.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt", "", 4000, -7000, -2000);
-  flatHEhole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole", "hole", 4000, -7000, -2000);
-  flatHEhole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole", "hole", 4000, -7000, -2000);
+  flatHEhole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole", "Hole", 4000, -7000, -2000);
+  flatHEhole.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt with hole", "Hole", 4000, -7000, -2000);
   flatHEus.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt (us)", "us", 4000, -7000, -2000);
   flatHEus.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt (us)", "us", 4000, -7000, -2000);
   flatHEds.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt (ds)", "ds", 4000, -7000, -2000);
