@@ -82,8 +82,12 @@ remollBeamTarget::~remollBeamTarget()
     delete fMS;
 }
 
-G4double remollBeamTarget::GetEffLumin(){
-    return fEffectiveMaterialLength*fBeamCurrent/(e_SI*coulomb);
+G4double remollBeamTarget::GetEffLumin(SamplingType_t sampling_type)
+{
+    if (sampling_type == kNoTargetVolume)
+        return fBeamCurrent / (e_SI*coulomb); // no length, just frequency
+    else
+        return fBeamCurrent / (e_SI*coulomb) * fEffectiveMaterialLength;
 }
 
 void remollBeamTarget::PrintTargetInfo()
