@@ -176,13 +176,13 @@ void remollBeamTarget::SetActiveTargetVolume(G4String name)
 ////////////////////////////////////////////////////////////////////////////////////////////
 //  Sampling functions
 
-remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
+remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 {
     // Create vertex
     remollVertex vertex;
 
     // No sampling required
-    if (samp == kNoTargetVolume) {
+    if (sampling_type == kNoTargetVolume) {
       return vertex;
     }
 
@@ -208,7 +208,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
 
     // Figure out how far along the target we got
     G4double total_effective_length = 0;
-    switch( samp ){
+    switch (sampling_type) {
         case kActiveTargetVolume:
             total_effective_length = fActiveTargetEffectiveLength;
             break;
@@ -257,7 +257,7 @@ remollVertex remollBeamTarget::SampleVertex(SampType_t samp)
         // Find position in this volume (if we are in it)
         G4double effective_position_in_volume;
         G4double actual_position_in_volume;
-        switch( samp ){
+        switch (sampling_type) {
 	    case kActiveTargetVolume:
 	        if ((*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
 	            // This is the active volume, and we only sample here
