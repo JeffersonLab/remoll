@@ -64,8 +64,7 @@ class remollBeamTarget {
 
 	G4double GetEffLumin();
 
-
-	remollVertex SampleVertex(SampType_t);
+	remollVertex SampleVertex(SamplingType_t);
 
 	G4double fBeamEnergy;
 	G4double fBeamCurrent;

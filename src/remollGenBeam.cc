@@ -33,7 +33,7 @@ remollGenBeam::remollGenBeam()
   fRasterRefZ(-4.5*m),
   fParticleName("e-")
 {
-    fSampType = kNoTargetVolume;
+    fSamplingType = kNoTargetVolume;
     fApplyMultScatt = true;
 
     fThisGenMessenger->DeclarePropertyWithUnit("origin","mm",fOriginMean,"origin position mean: x y z unit");
