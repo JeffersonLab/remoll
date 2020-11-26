@@ -177,7 +177,7 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
         fParticleName,
         evt->fBeamPolarization);
 
-    evt->SetEffCrossSection(0.0);
+    evt->SetEffCrossSection(1.0);
     evt->SetAsymmetry(0.0);
 
     evt->SetQ2(0.0);
