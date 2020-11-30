@@ -29,6 +29,8 @@ typedef G4RunManager RunManager;
 
 #include "remollSearchPath.hh"
 
+#include "G4GenericBiasingPhysics.hh"
+
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
@@ -88,7 +90,7 @@ int main(int argc, char** argv) {
     G4String session;
     G4String geometry_gdmlfile;
     G4String parallel_gdmlfile;
-    G4string bias;
+    G4String bias;
 #ifdef G4MULTITHREADED
     G4int threads = 0;
 #endif
