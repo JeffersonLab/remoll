@@ -5,6 +5,10 @@
 #include "remollGlobalField.hh"
 #include "remollIO.hh"
 
+#include "remollBOptrChangeCrossSection.hh"
+#include "remollBOptrLeadingParticle.hh"
+#include "remollBOptrMultiParticleChangeCrossSection.hh"
+
 #include "G4GenericMessenger.hh"
 #include "G4GeometryManager.hh"
 #include "G4GeometryTolerance.hh"
@@ -808,6 +812,48 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
 
 void remollDetectorConstruction::ParseAuxiliaryBiasInfo()
 {
+  if (fVerboseLevel > 0)
+      G4cout << "Beginning bias assignment" << G4endl;
+
+  // Duplication map
+  std::map<int, G4LogicalVolume*> detnomap;
+
+  // Loop over all volumes with auxiliary tags
+  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  for (G4GDMLAuxMapType::const_iterator iter = auxmap->begin(); iter != auxmap->end(); iter++) {
+
+    G4LogicalVolume* myvol = (*iter).first;
+    G4GDMLAuxListType list = (*iter).second;
+
+    if (fVerboseLevel > 0)
+      G4cout << "Volume " << myvol->GetName() << G4endl;
+
+    // Find first aux list entry with type Bias
+    auto it_bias = NextAuxWithType(list.begin(), list.end(), "Bias");
+    if (it_bias != list.end()) {
+
+      G4cout << "Attaching biasing operator " << it_bias->value
+             << "to logical volume " << myvol->GetName()
+             << G4endl;
+
+      if (it_bias->value == "LeadingParticle") {
+        remollBOptrLeadingParticle* boptr = new remollBOptrLeadingParticle();
+        boptr->AttachTo(myvol);
+      } else if (it_bias->value == "gammaMultiParticleChangeCrossSection") {
+        remollBOptrMultiParticleChangeCrossSection* boptr =
+          new remollBOptrMultiParticleChangeCrossSection();
+        boptr->AddParticle("gamma");
+        boptr->AttachTo(myvol);
+      } else if (it_bias->value == "electronMultiParticleChangeCrossSection") {
+        remollBOptrMultiParticleChangeCrossSection* boptr =
+          new remollBOptrMultiParticleChangeCrossSection();
+        boptr->AddParticle("electron");
+        boptr->AttachTo(myvol);
+      } else {
+        G4cerr << "Biasing operator " << it_bias->value << " unknown." << G4endl;
+      }
+    }
+  }
 }
 
 void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
