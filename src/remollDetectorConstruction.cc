@@ -806,6 +806,10 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
   fWorldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
 }
 
+void remollDetectorConstruction::ParseAuxiliaryBiasInfo()
+{
+}
+
 void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 {
   if (fVerboseLevel > 0)
@@ -934,6 +938,9 @@ void remollDetectorConstruction::LoadMagneticField()
 
 void remollDetectorConstruction::ConstructSDandField()
 {
+  // Parse biasing info
+  ParseAuxiliaryBiasInfo();
+
   // Parse auxiliary info
   ParseAuxiliarySensDetInfo();
 

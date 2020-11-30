@@ -171,6 +171,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     void ParseAuxiliaryTargetInfo();
     void ParseAuxiliaryUserLimits();
     void ParseAuxiliaryVisibilityInfo();
+    void ParseAuxiliaryBiasInfo();
     void ParseAuxiliarySensDetInfo();
 
     void LoadMagneticField();

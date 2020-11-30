@@ -44,7 +44,7 @@ typedef G4RunManager RunManager;
 namespace {
   void PrintUsage() {
     G4cerr << "Usage: " << G4endl;
-    G4cerr << " remoll [-g geometry] [-m macro] [-u UIsession] [-r seed] ";
+    G4cerr << " remoll [-g geometry] [-m macro] [-u UIsession] [-r seed] [-b biasing] ";
 #ifdef G4MULTITHREADED
     G4cerr << "[-t nThreads] ";
 #endif
@@ -88,6 +88,7 @@ int main(int argc, char** argv) {
     G4String session;
     G4String geometry_gdmlfile;
     G4String parallel_gdmlfile;
+    G4string bias;
 #ifdef G4MULTITHREADED
     G4int threads = 0;
 #endif
@@ -98,6 +99,7 @@ int main(int argc, char** argv) {
       else if (G4String(argv[i]) == "-p") parallel_gdmlfile = argv[++i];
       else if (G4String(argv[i]) == "-u") session  = argv[++i];
       else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
+      else if (G4String(argv[i]) == "-b") bias     = argv[++i];
 #ifdef G4MULTITHREADED
       else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
 #endif
@@ -129,8 +131,12 @@ int main(int argc, char** argv) {
     detector->RegisterParallelWorld(parallel);
     runManager->SetUserInitialization(detector);
 
-    // Physics list
+    // Physics list with biasing
     remollPhysicsList* physlist = new remollPhysicsList();
+    G4GenericBiasingPhysics* biasing = new G4GenericBiasingPhysics();
+    if (bias == "on") {
+    }
+    physlist->RegisterPhysics(biasing);
     runManager->SetUserInitialization(physlist);
 
     // Run action
