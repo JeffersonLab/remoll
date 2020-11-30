@@ -34,6 +34,8 @@ remollGenericDetectorHit::remollGenericDetectorHit(G4int det, G4int copy)
   fGen   = 1;
 
   fEdep  = 0.0;
+
+  fW     = 1.0;
 }
 
 remollGenericDetectorHit::~remollGenericDetectorHit() { }
@@ -69,6 +71,8 @@ remollGenericDetectorHit::remollGenericDetectorHit(const remollGenericDetectorHi
   fGen    = right.fGen;
 
   fEdep   = right.fEdep;
+
+  fW      = right.fW;
 }
 
 const remollGenericDetectorHit& remollGenericDetectorHit::operator=(const remollGenericDetectorHit &right) {

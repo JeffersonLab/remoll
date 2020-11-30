@@ -76,6 +76,7 @@ struct remollGenericDetectorHit_t {
   double p, e, m, k;
   double vx, vy, vz;
   double edep;
+  double w;
 };
 struct remollGenericDetectorSumByPID_t {
   double x,y,z;

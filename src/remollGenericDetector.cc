@@ -312,6 +312,8 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
 
     hit->fEdep  = step->GetTotalEnergyDeposit();
 
+    hit->fW = track->GetWeight();
+
     return true;
 }
 

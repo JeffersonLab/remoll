@@ -57,6 +57,8 @@ class remollGenericDetectorHit : public G4VHit {
 	G4int    fGen;
         // Energy deposited
         G4double fEdep;
+        // Weight
+        G4double fW;
 
     public:
       const remollGenericDetectorHit_t GetGenericDetectorHitIO() const {
@@ -93,6 +95,7 @@ class remollGenericDetectorHit : public G4VHit {
         hit.m  = fM;
         hit.k  = fK;
         hit.edep = fEdep;
+        hit.w = fW;
         return hit;
       };
 };
