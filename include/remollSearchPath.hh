@@ -40,7 +40,9 @@ class remollSearchPath
 {
 private:
     static remollSearchPath* fInstance;
+    #ifndef NO_FS_SUPPORT
     std::vector<fs::path> fSearchPath;
+    #endif
     remollSearchPath();
 
 public:
