@@ -33,7 +33,7 @@ namespace fs = boost::filesystem;
 #define NO_FS_SUPPORT
 #endif
 
-#include "cstring"
+#include <string>
 
 
 class remollSearchPath
