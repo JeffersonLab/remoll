@@ -60,5 +60,20 @@
 <position name="donutDSVirtualPlane_pos" z="24450.00+400.00" unit="mm"/>
 <position name="n2atmoVirtualPlane_pos" z="31525.00" unit="mm"/>
 
+<!-- Detector in the hybrid region for diagnosis -->
+<position name="HybridS1_pos" z="3380.00" unit="mm"/>
+<position name="HybridS2_pos" z="4905.00" unit="mm"/>
+<position name="HybridS3_pos" z="6035.00" unit="mm"/>
+<position name="HybridS4_pos" z="7095.00" unit="mm"/>
+<position name="HybridS5_pos" z="8120.00" unit="mm"/>
+<position name="HybridS6_pos" z="12252.00" unit="mm"/>
+<position name="HybridS7_pos" z="11670.00" unit="mm"/>
 
+<position name="HybridD1_pos" z="3378.00" unit="mm"/>
+<position name="HybridD2_pos" z="4902.00" unit="mm"/>
+<position name="HybridD3_pos" z="6032.00" unit="mm"/>
+<position name="HybridD4_pos" z="7092.00" unit="mm"/>
+<position name="HybridD5_pos" z="8117.00" unit="mm"/>
+<position name="HybridD6_pos" z="12250.00" unit="mm"/>
+<position name="HybridD7_pos" z="15500.00" unit="mm"/>
 

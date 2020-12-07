@@ -2209,13 +2209,13 @@
 			<position name="pos_photon_collimator_1" x="28.3091132179" y="124.030328988" z="-500.194"/>
 			<rotation name="rot_photon_collimator_1" x="0" y="0" z="-1.34639685154"/>
 		</physvol>
-
+<!--
 		<physvol name="septapus_arm_1">
 			<volumeref ref="logic_septapus_arm_1"/>
 			<position name="pos_septapus_arm_1" x="21.8221430651" y="27.3641018864" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_1" x="0" y="0" z="-0.897597901026"/>
 		</physvol>
-
+-->
 		<physvol name="dcoil1_2">
 			<volumeref ref="logic_outer_E1_2"/>
 			<position name="pos_dcoil1_2" x="66.6822343088" y="83.61687705" z="-3335.194"/>
@@ -2245,13 +2245,13 @@
 			<position name="pos_photon_collimator_2" x="-79.3203725925" y="99.4646011996" z="-500.194"/>
 			<rotation name="rot_photon_collimator_2" x="0" y="0" z="-2.24399475256"/>
 		</physvol>
-
+<!--
 		<physvol name="septapus_arm_2">
 			<volumeref ref="logic_septapus_arm_2"/>
 			<position name="pos_septapus_arm_2" x="-7.78823268847" y="34.1224769264" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_2" x="0" y="0" z="-1.79519580205"/>
 		</physvol>
-
+-->
 		<physvol name="dcoil1_3">
 			<volumeref ref="logic_outer_E1_3"/>
 			<position name="pos_dcoil1_3" x="-23.7986138866" y="104.268540208" z="-3335.194"/>
@@ -2281,13 +2281,13 @@
 			<position name="pos_photon_collimator_3" x="-127.22" y="1.55799565788e-14" z="-500.194"/>
 			<rotation name="rot_photon_collimator_3" x="0" y="0" z="-3.14159265359"/>
 		</physvol>
-
+<!--
 		<physvol name="septapus_arm_3">
 			<volumeref ref="logic_septapus_arm_3"/>
 			<position name="pos_septapus_arm_3" x="-31.5339103766" y="15.1859308691" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_3" x="0" y="0" z="-2.69279370308"/>
 		</physvol>
-
+-->
 		<physvol name="dcoil1_4">
 			<volumeref ref="logic_outer_E1_4"/>
 			<position name="pos_dcoil1_4" x="-96.3586204222" y="46.4038658986" z="-3335.194"/>
@@ -2317,13 +2317,13 @@
 			<position name="pos_photon_collimator_4" x="-79.3203725925" y="-99.4646011996" z="-500.194"/>
 			<rotation name="rot_photon_collimator_4" x="0" y="0" z="-4.03919055462"/>
 		</physvol>
-
+<!--
 		<physvol name="septapus_arm_4">
 			<volumeref ref="logic_septapus_arm_4"/>
 			<position name="pos_septapus_arm_4" x="-31.5339103766" y="-15.1859308691" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_4" x="0" y="0" z="-3.5903916041"/>
 		</physvol>
-
+-->
 		<physvol name="dcoil1_5">
 			<volumeref ref="logic_outer_E1_5"/>
 			<position name="pos_dcoil1_5" x="-96.3586204222" y="-46.4038658986" z="-3335.194"/>
@@ -2353,13 +2353,13 @@
 			<position name="pos_photon_collimator_5" x="28.3091132179" y="-124.030328988" z="-500.194"/>
 			<rotation name="rot_photon_collimator_5" x="0" y="0" z="-4.93678845564"/>
 		</physvol>
-
+<!--
 		<physvol name="septapus_arm_5">
 			<volumeref ref="logic_septapus_arm_5"/>
 			<position name="pos_septapus_arm_5" x="-7.78823268847" y="-34.1224769264" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_5" x="0" y="0" z="-4.48798950513"/>
 		</physvol>
-
+-->
 		<physvol name="dcoil1_6">
 			<volumeref ref="logic_outer_E1_6"/>
 			<position name="pos_dcoil1_6" x="-23.7986138866" y="-104.268540208" z="-3335.194"/>
@@ -2389,13 +2389,13 @@
 			<position name="pos_photon_collimator_6" x="114.621259375" y="-55.1986892905" z="-500.194"/>
 			<rotation name="rot_photon_collimator_6" x="0" y="0" z="-5.83438635667"/>
 		</physvol>
-
+<!--
 		<physvol name="septapus_arm_6">
 			<volumeref ref="logic_septapus_arm_6"/>
 			<position name="pos_septapus_arm_6" x="21.8221430651" y="-27.3641018864" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_6" x="0" y="0" z="-5.38558740615"/>
 		</physvol>
-
+-->
 		<physvol name="dcoil1_7">
 			<volumeref ref="logic_outer_E1_7"/>
 			<position name="pos_dcoil1_7" x="66.6822343088" y="-83.61687705" z="-3335.194"/>
@@ -2425,7 +2425,7 @@
 			<position name="pos_photon_collimator_7" x="114.621259375" y="55.1986892905" z="-500.194"/>
 			<rotation name="rot_photon_collimator_7" x="0" y="0" z="-6.73198425769"/>
 		</physvol>
-
+<!--
 		<physvol name="septapus_arm_7">
 			<volumeref ref="logic_septapus_arm_7"/>
 			<position name="pos_septapus_arm_7" x="35.0" y="-8.57252759403e-15" z="-3335.194"/>
@@ -2436,7 +2436,7 @@
 			<volumeref ref="logic_septapus_tube"/>
 			<position name="pos_septapus_tube" x="0" y="0" z="-3409.469"/>
 		</physvol>
-
+-->
 	</volume>
 
 </structure>

@@ -148,6 +148,17 @@
       <zplane rmin="shield_DS_beampipe_p1_DS_rmin" rmax="shield_DS_beampipe_p1_DS_rmax" z="shield_DS_beampipe_p1_length"/> 
     </polycone>
 
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="kryptonite_solid"> 
+      <zplane rmin="28" rmax="28.5" z="0"/> 
+      <zplane rmin="33.0" rmax="33.5" z="1530"/> 
+      <zplane rmin="36.5" rmax="37.0" z="2660"/> 
+      <zplane rmin="41.0" rmax="41.5" z="3720"/> 
+      <zplane rmin="45.5" rmax="46.0" z="4745"/><!-- coil3--> 
+      <zplane rmin="60.5" rmax="61.0" z="8873"/> 
+      <!--<zplane rmin="62.5" rmax="63.0" z="8875"/> 
+      <zplane rmin="75.5" rmax="76.0" z="12120"/> -->
+    </polycone>
+
     <tessellated name="leftpcolcut">
 	<triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
 	<quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut3" vertex4="PCOLL2_lcut5" type="ABSOLUTE"/>
@@ -489,6 +500,15 @@
       <auxiliary auxtype="DetNo" auxvalue="56"/> 
     </volume>
 
+    <volume name="kryptonite_logic">
+      <materialref ref="VacuumColl"/>
+      <solidref ref="kryptonite_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="70"/> 
+    </volume>
+
     <volume name="logicDriftpipe">
       <materialref ref="Aluminum"/>
       <solidref ref="solid_Driftpipe"/>
@@ -607,10 +627,15 @@
       </physvol>
 
 <!-- Downstream of coll4 central collimating beampipe -->
-      <physvol>
+     <!-- <physvol>
         <volumeref ref="shield_DS_beampipe_logic"/>
         <positionref ref="shield_DS_beampipe_center"/>
       </physvol>
+-->
+     <!-- <physvol>
+        <volumeref ref="kryptonite_logic"/>
+        <positionref ref="shield_DS_beampipe_center"/>
+      </physvol>-->
 
       <physvol name="DScoil">
         <file name="hybrid/hybridToroid.gdml"/>
