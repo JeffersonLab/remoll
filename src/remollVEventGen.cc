@@ -49,7 +49,7 @@ remollVEventGen::remollVEventGen(const G4String name)
     // Create specific event generator messenger
     fThisGenMessenger = new G4GenericMessenger(this,"/remoll/evgen/" + name + "/","Remoll " + name + " generator properties");
 
-    fSampType       = kActiveTargetVolume;
+    fSamplingType       = kActiveTargetVolume;
     fApplyMultScatt = false;
 }
 
@@ -85,7 +85,7 @@ void remollVEventGen::SetNumberOfParticles(G4int n)
 remollEvent* remollVEventGen::GenerateEvent()
 {
     // Set up beam/target vertex
-    remollVertex vert   = fBeamTarg->SampleVertex(fSampType);
+    remollVertex vert   = fBeamTarg->SampleVertex(fSamplingType);
 
     /////////////////////////////////////////////////////////////////////
     // Create and initialize values for event
