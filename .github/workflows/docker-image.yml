@@ -46,6 +46,7 @@ jobs:
     - uses: actions/checkout@v2
     - name: Running geometry test suite ${{ matrix.suite }}
       run: |
+        source /etc/profile
         scripts/tests/test_geometries.sh ${{ matrix.suite }}
 
   test_macros:
@@ -64,4 +65,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Running macros test suite ${{ matrix.suite }}
       run: |
+        source /etc/profile
         scripts/tests/test_macros.sh ${{ matrix.suite }}
+
