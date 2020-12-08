@@ -29,6 +29,8 @@
   <quantity name="pionDetectorLuciteMylarThickness" type="length" value="0.05" unit="mm"/>
   <quantity name="pionDetectorLuciteGlueThickness"  type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLucitePlaneThickness" type="length" value="2.54" unit="cm"/>
+
+  <quantity name="pionDetectorLuciteShieldDSThickness" type="length" value="2.54/2" unit="cm"/>
   
   <quantity name="pionDetectorLuciteInsideWidth"  type="length" value="39.0" unit="cm"/>
   <quantity name="pionDetectorLuciteOutsideWidth" type="length" value="45.0" unit="cm"/>
@@ -74,6 +76,8 @@
   <quantity name="pionDetectorLucitePMTHousingThickness" type="length" value="1.0" unit="mm"/>
   
   <!-- derived quantities for lucite -->
+  <quantity name="pionDetectorLuciteShieldDSThicknessInY"
+            value="pionDetectorLuciteShieldDSThickness/cos(pionDetectorLuciteTheta)"/>
   <quantity name="pionDetectorLuciteGlueThicknessInY"
             value="pionDetectorLuciteGlueThickness/cos(pionDetectorLuciteTheta)"/>
   <quantity name="pionDetectorLucitePlaneThicknessInY"
@@ -140,6 +144,17 @@
     y="SCALE_UP*numberOfPMTsInZ*pionDetectorLucitePMTDiameter"
     z="SCALE_UP*pionDetectorLucitePMTHousingHeight"/>
   
+  <trap name="pionDetectorLuciteShieldDS_solid"
+    alpha1="0.0" alpha2="0.0"
+    theta="pionDetectorLuciteTheta" phi="90.0*deg"
+    x1="pionDetectorLuciteInsideWidth"
+    x2="pionDetectorLuciteInsideWidth"
+    x3="pionDetectorLuciteOutsideWidth"
+    x4="pionDetectorLuciteOutsideWidth"
+    y1="pionDetectorLuciteShieldDSThicknessInY"
+    y2="pionDetectorLuciteShieldDSThicknessInY"
+     z="pionDetectorLuciteHeight"/>
+
   <trap name="pionDetectorLuciteGlue_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteTheta" phi="90.0*deg"
@@ -479,6 +494,13 @@
 </solids>
 
 <structure>
+
+  <volume name="pionDetectorLuciteShieldDS_logical">
+    <materialref ref="G4_Pb"/>
+    <solidref ref="pionDetectorLuciteShieldDS_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
 
   <volume name="pionDetectorLuciteGlue_logical">
     <materialref ref="Glue"/>
