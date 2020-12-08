@@ -394,7 +394,7 @@
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_1">
-      <zplane rmin="504.775" rmax="509.5375" z="0.0"/>
+      <zplane rmin="504.926" rmax="509.5375" z="0.0"/>
       <zplane rmin="506.1201" rmax="510.8826" z="36"/>
     </polycone>
 
