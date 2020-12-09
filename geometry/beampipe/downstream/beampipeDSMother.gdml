@@ -13,19 +13,18 @@
   <polycone name="solid_DSbeampipe_vacuum"
             aunit="deg" startphi="0" deltaphi="360"
             lunit="mm">
-    <zplane rmin="0" rmax="950" z="19000.0"/>
     <zplane rmin="0" rmax="600" z="19000.0"/>
-    <zplane rmin="0" rmax="770" z="26500"/>
+    <zplane rmin="0" rmax="770" z="26390"/>
   </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_2">
-      <zplane rmin="504.775" rmax="509.5375" z="19000.0"/>
-      <zplane rmin="528.33" rmax="533.0925" z="19000.0+630.4-36"/>
+      <zplane rmin="506.1201" rmax="510.8826" z="19000.0"/>
+      <zplane rmin="528.33" rmax="533.0925" z="19589+4.99"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_DSplate">
-      <zplane rmin="523.5" rmax="528.15" z="19589.0"/>
-      <zplane rmin="523.67" rmax="528.15" z="19589.0+5"/>
+      <zplane rmin="523.5" rmax="528.0" z="19589.0"/>
+      <zplane rmin="523.67" rmax="528." z="19589.0+5"/>
       <zplane rmin="523.67" rmax="533.05" z="19589.0+5"/>
       <zplane rmin="523.942" rmax="533.05" z="19589.0+5+8"/>
       <zplane rmin="523.942" rmax="553.325" z="19589.0+5+8"/>
@@ -55,7 +54,7 @@
       <zplane rmin="526.6" rmax="532.95" z="19794.0+12.7"/>
       <zplane rmin="550.0" rmax="556.35" z="19794.0+12.7+187.3"/>
       <zplane rmin="550.0" rmax="569.05" z="19794.0+12.7+187.3"/>
-      <zplane rmin="746.471" rmax="765.521" z="19794.0+12.7+187.3+6506"/>
+      <zplane rmin="743.15" rmax="762.20" z="19794.0+12.7+187.3+6396"/>
     </polycone>
 
   
