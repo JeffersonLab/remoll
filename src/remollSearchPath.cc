@@ -57,6 +57,9 @@ std::string remollSearchPath::operator() (const std::string& filename)
         if(fs::exists(path / filename)) {
             return (path / filename).string();
         }
+        else if(fs::exists(path / "remoll" / filename)) {
+          return (path / "remoll" / filename).string();
+        }
     }
 #endif
 
