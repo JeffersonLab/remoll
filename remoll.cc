@@ -162,10 +162,19 @@ int main(int argc, char** argv) {
       // Define UI session for interactive mode
       G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
       if (ui->IsGUI()) {
-        UImanager->SetMacroSearchPath(CMAKE_INSTALL_PREFIX);
+        UImanager->SetMacroSearchPath(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/macros");
+        G4cout << std::string(CMAKE_INSTALL_FULL_DATADIR) << G4endl; // = /usr/local/share
+        G4cout << std::string(remollSearchPath::resolve("/remoll/macros/gui.mac")) << G4endl;
         UImanager->ParseMacroSearchPath();
-        UImanager->ApplyCommand("/control/execute macros/gui.mac");
+        //UImanager->ExecuteMacroFile((remollSearchPath::resolve("macros/gui.mac")).c_str());
+        UImanager->ExecuteMacroFile((remollSearchPath::resolve(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/macros/gui.mac")).c_str());
+        //UImanager->ApplyCommand("/control/execute macros/gui.mac");
       }
+//      if (ui->IsGUI()) {
+//        UImanager->SetMacroSearchPath(CMAKE_INSTALL_PREFIX);
+//        UImanager->ParseMacroSearchPath();
+//        UImanager->ApplyCommand("/control/execute macros/gui.mac");
+//      }
       ui->SessionStart();
       delete ui;
     }
