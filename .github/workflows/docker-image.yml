@@ -34,7 +34,6 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-buildx-
     - name: Login to DockerHub
-      if: github.event_name != 'pull_request'
       uses: docker/login-action@v1 
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -45,7 +44,6 @@ jobs:
       with:
         context: .
         file: Dockerfile
-        push: ${{ github.event_name != 'pull_request' }}
         tags: ${{ steps.docker_meta.outputs.tags }}
         labels: ${{ steps.docker_meta.outputs.labels }}
         cache-from: type=local,src=/tmp/.buildx-cache
