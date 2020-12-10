@@ -163,11 +163,8 @@ int main(int argc, char** argv) {
       G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
       if (ui->IsGUI()) {
         UImanager->SetMacroSearchPath(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/macros");
-        G4cout << std::string(CMAKE_INSTALL_FULL_DATADIR) << G4endl;
-        G4cout << std::string(remollSearchPath::resolve("macros/gui.mac")) << G4endl;
         UImanager->ParseMacroSearchPath();
         UImanager->ExecuteMacroFile((remollSearchPath::resolve("macros/gui.mac")).c_str());
-        //UImanager->ApplyCommand("/control/execute macros/gui.mac");
       }
       ui->SessionStart();
       delete ui;
