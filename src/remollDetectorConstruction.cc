@@ -839,12 +839,12 @@ void remollDetectorConstruction::ParseAuxiliaryBiasInfo()
       if (it_bias->value == "LeadingParticle") {
         remollBOptrLeadingParticle* boptr = new remollBOptrLeadingParticle();
         boptr->AttachTo(myvol);
-      } else if (it_bias->value == "gammaMultiParticleChangeCrossSection") {
+      } else if (it_bias->value == "gammaChangeCrossSection") {
         remollBOptrMultiParticleChangeCrossSection* boptr =
           new remollBOptrMultiParticleChangeCrossSection();
         boptr->AddParticle("gamma");
         boptr->AttachTo(myvol);
-      } else if (it_bias->value == "electronMultiParticleChangeCrossSection") {
+      } else if (it_bias->value == "electronChangeCrossSection") {
         remollBOptrMultiParticleChangeCrossSection* boptr =
           new remollBOptrMultiParticleChangeCrossSection();
         boptr->AddParticle("electron");
