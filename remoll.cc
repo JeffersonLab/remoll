@@ -137,6 +137,9 @@ int main(int argc, char** argv) {
     remollPhysicsList* physlist = new remollPhysicsList();
     G4GenericBiasingPhysics* biasing = new G4GenericBiasingPhysics();
     if (bias == "on") {
+      std::vector<G4String> electronProcessesToBias;
+      electronProcessesToBias.push_back("MollerBhabha");
+      biasing->PhysicsBias("e-", electronProcessesToBias);
     }
     physlist->RegisterPhysics(biasing);
     runManager->SetUserInitialization(physlist);
