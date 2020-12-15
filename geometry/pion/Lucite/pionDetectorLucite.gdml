@@ -41,9 +41,14 @@
   <constant name="pionDetectorLuciteWedgeHeightFraction" value="0.5"/> <!-- in ]0, inf[ -->
 
   <quantity name="pionDetectorLuciteShieldDSThickness" type="length" value="2.54/2" unit="cm"/>
-  <quantity name="pionDetectorLuciteShieldDSInsideWidth"  type="length" value="43.0" unit="cm"/>
-  <quantity name="pionDetectorLuciteShieldDSOutsideWidth" type="length" value="51.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldDSInsideWidth"  type="length" value="50.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldDSOutsideWidth" type="length" value="54.5" unit="cm"/>
   <quantity name="pionDetectorLuciteShieldDSHeight" type="length" value="10" unit="cm"/>
+
+  <quantity name="pionDetectorLuciteShieldINThickness" type="length" value="2.54/2" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldINInsideWidth"  type="length" value="49.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldINOutsideWidth"  type="length" value="49.5" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldINDepth" type="length" value="1.8*2.54" unit="cm"/>
 
   <quantity name="pionDetectorLuciteReflectorLightGuideHeight" type="length" value="40.0" unit="cm"/>
   <quantity name="pionDetectorLuciteReflectorHeightFraction" value="0.5"/>
@@ -157,6 +162,22 @@
     y1="pionDetectorLuciteShieldDSThicknessInY"
     y2="pionDetectorLuciteShieldDSThicknessInY"
      z="pionDetectorLuciteShieldDSHeight"/>
+
+  <trap name="pionDetectorLuciteShieldIN_solid"
+    alpha1="0.0" alpha2="0.0"
+    theta="0.0" phi="0.0"
+    x1="pionDetectorLuciteShieldINDepth"
+    x2="pionDetectorLuciteShieldINDepth"
+    x3="pionDetectorLuciteShieldINDepth"
+    x4="pionDetectorLuciteShieldINDepth"
+    y1="pionDetectorLuciteShieldINInsideWidth"
+    y2="pionDetectorLuciteShieldINOutsideWidth"
+     z="pionDetectorLuciteShieldINThickness"/>
+
+  <!--box name="pionDetectorLuciteShieldIN_solid"
+    x="pionDetectorLuciteShieldINThickness"
+    y="pionDetectorLuciteShieldINWidth"
+    z="pionDetectorLuciteShieldINDepth"/-->
 
   <trap name="pionDetectorLuciteGlue_solid"
     alpha1="0.0" alpha2="0.0"
@@ -501,6 +522,13 @@
   <volume name="pionDetectorLuciteShieldDS_logical">
     <materialref ref="G4_Pb"/>
     <solidref ref="pionDetectorLuciteShieldDS_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
+  <volume name="pionDetectorLuciteShieldIN_logical">
+    <materialref ref="G4_Pb"/>
+    <solidref ref="pionDetectorLuciteShieldIN_solid"/>
     <auxiliary auxtype="Color" auxvalue="Yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>

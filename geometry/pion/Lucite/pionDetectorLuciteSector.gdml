@@ -94,6 +94,14 @@
                 y="-(pionDetectorLuciteSectorAngleBase+pionDetectorLuciteSectorAnglePitch)"/>
       <!-- x rotation 180: layer 1 in the back -->
     </physvol>
+    <physvol name="pionDetectorLuciteShieldIN_physical">
+      <file name="pion/Lucite/pionDetectorLucite.gdml" volname="pionDetectorLuciteShieldIN_logical"/>
+      <position name="pionDetectorLucite_position"
+        x="pionDetectorLuciteInnerEdgeRadialPosition-5.75*cm"
+        z="0"/>
+      <rotation name="pionDetectorLuciteShieldIN_rotation"
+        y="-90*deg"/>
+    </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>
   </volume>
 
