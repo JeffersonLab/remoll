@@ -8,6 +8,7 @@
 #include "remollBOptrChangeCrossSection.hh"
 #include "remollBOptrLeadingParticle.hh"
 #include "remollBOptrMultiParticleChangeCrossSection.hh"
+#include "remollBOptrSplitAndKillByCrossSection.hh"
 
 #include "G4GenericMessenger.hh"
 #include "G4GeometryManager.hh"
@@ -833,7 +834,7 @@ void remollDetectorConstruction::ParseAuxiliaryBiasInfo()
     if (it_bias != list.end()) {
 
       G4cout << "Attaching biasing operator " << it_bias->value
-             << "to logical volume " << myvol->GetName()
+             << " to logical volume " << myvol->GetName()
              << G4endl;
 
       if (it_bias->value == "LeadingParticle") {
@@ -847,7 +848,14 @@ void remollDetectorConstruction::ParseAuxiliaryBiasInfo()
       } else if (it_bias->value == "electronChangeCrossSection") {
         remollBOptrMultiParticleChangeCrossSection* boptr =
           new remollBOptrMultiParticleChangeCrossSection();
-        boptr->AddParticle("electron");
+        boptr->AddParticle("e-");
+        boptr->AttachTo(myvol);
+      } else if (it_bias->value == "neutronSplitAndKill") {
+        remollBOptrSplitAndKillByCrossSection* boptr =
+          new remollBOptrSplitAndKillByCrossSection("neutron");
+        boptr->AddProcessToEquipoise("Decay");
+        boptr->AddProcessToEquipoise("nCapture");
+        boptr->AddProcessToEquipoise("neutronInelastic");
         boptr->AttachTo(myvol);
       } else {
         G4cerr << "Biasing operator " << it_bias->value << " unknown." << G4endl;
