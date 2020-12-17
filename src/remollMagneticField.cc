@@ -43,7 +43,7 @@ remollMagneticField::remollMagneticField( G4String filename ){
 
     // Default offset for field maps in reference frame with
     // the hall pivot at z = 0.
-    fZoffset = -5000.0;
+    fZoffset = 0.0;
 
     fInit = false;
     fMagCurrent0 = -1e9;
@@ -144,11 +144,36 @@ void remollMagneticField::ReadFieldMap(){
     boost::iostreams::filtering_istream inputfile;
     // If the filename has .gz somewhere (hopefully the end)
     if (fFilename.find(".gz") != std::string::npos) {
-      // Add gzip decompressor to stream
-      inputfile.push(boost::iostreams::gzip_decompressor());
+      boost::iostreams::file_source source_gz(fFilename);
+      if (source_gz.is_open()) {
+        // Add gzip decompressor to stream
+        inputfile.push(boost::iostreams::gzip_decompressor());
+        // Set file as source
+        inputfile.push(source_gz);
+      } else {
+        G4cerr << "Unable to open input file " << fFilename << G4endl;
+        exit(1);
+      }
+    } else {
+      // Try to add .gz at end of filename
+      boost::iostreams::file_source source_gz(fFilename + ".gz");
+      if (source_gz.is_open()) {
+        // Add gzip decompressor to stream
+        inputfile.push(boost::iostreams::gzip_decompressor());
+        // Set file as source
+        inputfile.push(source_gz);
+      } else {
+        // Try to load filename without gz
+        boost::iostreams::file_source source_txt(fFilename);
+        if (source_txt.is_open()) {
+          // Set file as source
+          inputfile.push(source_txt);
+        } else {
+          G4cerr << "Unable to open input file " << fFilename << G4endl;
+          exit(1);
+        }
+      }
     }
-    // Set file as source
-    inputfile.push(boost::iostreams::file_source(fFilename));
 #else
     // Create STL ifstream
     std::ifstream inputfile;
