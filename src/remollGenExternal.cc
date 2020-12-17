@@ -26,7 +26,8 @@ remollGenExternal::remollGenExternal()
   fEvent(0), fHit(0),
   fzOffset(0), fDetectorID(28), fLoopID(1)
 {
-  fSampType = kNoTargetVolume;
+  fSamplingType = kNoTargetVolume;
+
   // Add to generic messenger
   fThisGenMessenger->DeclareMethod("file",&remollGenExternal::SetGenExternalFile,"External generator event filename");
   fThisGenMessenger->DeclareMethod("zOffset",&remollGenExternal::SetGenExternalZOffset,"External generator zOffset");

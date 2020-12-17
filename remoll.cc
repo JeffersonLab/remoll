@@ -162,7 +162,7 @@ int main(int argc, char** argv) {
     {
       // Run in batch mode
       // Copy contents of macro into buffer to be written out into ROOT file
-      UImanager->SetMacroSearchPath(CMAKE_INSTALL_PREFIX);
+      UImanager->SetMacroSearchPath(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/macros");
       UImanager->ParseMacroSearchPath();
       remollRun::GetRunData()->SetMacroFile((remollSearchPath::resolve(macro)).c_str());
       UImanager->ExecuteMacroFile((remollSearchPath::resolve(macro)).c_str());
@@ -170,9 +170,9 @@ int main(int argc, char** argv) {
       // Define UI session for interactive mode
       G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
       if (ui->IsGUI()) {
-        UImanager->SetMacroSearchPath(CMAKE_INSTALL_PREFIX);
+        UImanager->SetMacroSearchPath(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/macros");
         UImanager->ParseMacroSearchPath();
-        UImanager->ApplyCommand("/control/execute macros/gui.mac");
+        UImanager->ExecuteMacroFile((remollSearchPath::resolve("macros/gui.mac")).c_str());
       }
       ui->SessionStart();
       delete ui;

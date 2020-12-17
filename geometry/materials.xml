@@ -473,4 +473,84 @@
     <atom unit="g/mole" value="39.0983"/>
   </material>
 
+  <material name="Na2O" state="solid">
+    <D value="2.27" unit="g/cm3"/>
+    <composite n="2" ref="Na"/>
+    <composite n="1" ref="O"/>
+  </material>
+
+  <material name="P2O5" state="solid">
+    <D value="2.39" unit="g/cm3"/>
+    <composite n="2" ref="P"/>
+    <composite n="5" ref="O"/>
+  </material>
+
+  <material name="SO2" state="solid">
+    <D value="2.63" unit="g/cm3"/>
+    <composite n="1" ref="S"/>
+    <composite n="2" ref="O"/>
+  </material>
+
+  <material name="NaCl" state="solid">
+    <D value="2.16" unit="g/cm3"/>
+    <composite n="1" ref="Na"/>
+    <composite n="1" ref="Cl"/>
+  </material>
+
+  <material name="MnO2" state="solid">
+    <D value="5.03" unit="g/cm3"/>
+    <composite n="1" ref="Mn"/>
+    <composite n="2" ref="O"/>
+  </material>
+
+  <material name="NiO" state="solid">
+    <D value="6.67" unit="g/cm3"/>
+    <composite n="1" ref="Ni"/>
+    <composite n="1" ref="O"/>
+  </material>
+
+  <material name="cement" state="solid">
+    <D value="3.13" unit="g/cm3"/>
+    <fraction n="0.60486" ref="G4_CALCIUM_OXIDE"/>
+    <fraction n="0.03530" ref="G4_MAGNESIUM_OXIDE"/>
+    <fraction n="0.00109" ref="G4_POTASSIUM_OXIDE"/>
+    <fraction n="0.03778" ref="G4_FERRIC_OXIDE"/>
+    <fraction n="0.22370" ref="G4_SILICON_DIOXIDE"/>
+    <fraction n="0.07050" ref="G4_ALUMINUM_OXIDE"/>
+    <fraction n="0.02677" ref="SO2"/>
+  </material>
+
+  <material name="barite" state="solid">
+    <D value="4.05" unit="g/cm3"/>
+    <fraction n="0.04800" ref="G4_CALCIUM_OXIDE"/>
+    <fraction n="0.00649" ref="G4_MAGNESIUM_OXIDE"/>
+    <fraction n="0.00027" ref="Na2O"/>
+    <fraction n="0.00024" ref="G4_POTASSIUM_OXIDE"/>
+    <fraction n="0.00229" ref="G4_FERRIC_OXIDE"/>
+    <fraction n="0.00019" ref="P2O5"/>
+    <fraction n="0.03293" ref="G4_SILICON_DIOXIDE"/>
+    <fraction n="0.03913" ref="G4_WATER"/>
+    <fraction n="0.01366" ref="G4_ALUMINUM_OXIDE"/>
+    <fraction n="0.00205" ref="SO2"/>
+    <fraction n="0.83132" ref="G4_BARIUM_SULFATE"/>
+    <fraction n="0.00090" ref="G4_MAGNESIUM_CARBONATE"/>
+    <fraction n="0.00090" ref="NaCl"/>
+    <fraction n="0.01803" ref="G4_CALCIUM_CARBONATE"/>
+    <fraction n="0.00180" ref="MnO2"/>
+    <fraction n="0.00180" ref="NiO"/>
+  </material>
+
+  <material name="BariteConcrete" state="solid">
+    <D value="3.36" unit="g/cm3"/>
+    <fraction n="0.0829" ref="cement"/>
+    <fraction n="0.0593" ref="G4_WATER"/>
+    <fraction n="0.8578" ref="barite"/>
+  </material>
+
+  <material name="Marble" state="solid">
+    <D value="2.63" unit="g/cm3"/>
+    <fraction n="0.56" ref="G4_CALCIUM_OXIDE"/>
+    <fraction n="0.44" ref="G4_CARBON_DIOXIDE"/>
+  </material>
+
 </materials>
