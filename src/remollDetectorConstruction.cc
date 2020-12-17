@@ -849,8 +849,10 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 
           // Check for duplication when not a shared detector number
           if (!detnoshared && detnomap.count(det_no) != 0 && detnomap[det_no]->GetName() != myvol->GetName()) {
-            G4cerr << "remoll: DetNo " << det_no << " for " << myvol->GetName() << G4endl;
-            G4cerr << "remoll: already used by " << detnomap[det_no]->GetName() << G4endl;
+            if (fVerboseLevel > 0) {
+              G4cerr << "remoll: DetNo " << det_no << " for " << myvol->GetName() << G4endl;
+              G4cerr << "remoll: already used by " << detnomap[det_no]->GetName() << G4endl;
+            }
           }
 
           // Try to find sensitive detector
