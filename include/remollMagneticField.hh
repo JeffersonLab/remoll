@@ -64,6 +64,7 @@ class remollMagneticField : public G4MagneticField {
         }
 
     private:
+	G4String fName;
 	G4String fFilename;
 
 	G4int fN[__NDIM];

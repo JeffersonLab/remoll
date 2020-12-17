@@ -8,6 +8,8 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
+#include "remollSearchPath.hh"
+
 #include <iostream>
 #include <fstream>
 
@@ -25,9 +27,10 @@
 #include <boost/iostreams/device/file.hpp>
 #endif
 
-remollMagneticField::remollMagneticField( G4String filename ){ 
+remollMagneticField::remollMagneticField( G4String filename ){
 
-    fFilename = filename;
+    fName = filename;
+    fFilename = remollSearchPath::resolve(filename);
 
     // Initialize grid variables
     for( int cidx = kR; cidx < kZ; cidx++ ){
@@ -60,12 +63,12 @@ G4String remollMagneticField::GetName(){
 	return G4String("");
     }
 
-    return fFilename;
+    return fName;
 }
 
 void remollMagneticField::SetFieldScale(G4double s){ 
     fFieldScale = s;
-    G4cout << fFilename << " scale set to " << s << G4endl;
+    G4cout << fName << " scale set to " << s << G4endl;
     return;
 }
 
@@ -74,7 +77,7 @@ void remollMagneticField::SetMagnetCurrent(G4double s){
        	SetFieldScale(s/fMagCurrent0);
     } else {
     	G4cerr << "Warning:  " << __FILE__ << " line " << __LINE__ 
-	    << ": Field current not specified in map " << fFilename << " - Ignoring and proceeding " << G4endl;
+	    << ": Field current not specified in map " << fName << " - Ignoring and proceeding " << G4endl;
     }
     return;
 }
@@ -92,7 +95,7 @@ void remollMagneticField::InitializeGrid() {
 	exit(1);
     }
 
-    G4cout << "Initializing field map grid for " << fFilename << G4endl;
+    G4cout << "Initializing field map grid for " << fName << G4endl;
     G4int cidx, ridx, pidx, zidx;
 
     for( cidx = kR; cidx <= kZ; cidx++ ){
@@ -113,7 +116,7 @@ void remollMagneticField::InitializeGrid() {
 	} // end of r
     } // end coordinate index
 
-    G4cout << "Map grid for " << fFilename << " initialized" << G4endl;
+    G4cout << "Map grid for " << fName << " initialized" << G4endl;
 
     return;
 }

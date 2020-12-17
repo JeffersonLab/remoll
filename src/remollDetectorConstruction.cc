@@ -49,8 +49,8 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   fGDMLParser(0),
   fGDMLValidate(false),
   fGDMLOverlapCheck(false),
-  fGDMLPath("geometry"),
-  fGDMLFile("mollerMother.gdml"),
+  fGDMLPath(""),
+  fGDMLFile(""),
   fMessenger(0),
   fGeometryMessenger(0),
   fUserLimitsMessenger(0),
@@ -60,8 +60,11 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   fWorldVolume(0),
   fWorldName(name)
 {
+  SetGDMLFile("geometry/mollerMother.gdml");
   // If gdmlfile is non-empty
-  if (gdmlfile.length() > 0) SetGDMLFile(gdmlfile);
+  if (gdmlfile.length() > 0) {
+      SetGDMLFile(gdmlfile);
+  }
 
   // New units
   new G4UnitDefinition("inch","in","Length",25.4*CLHEP::millimeter);

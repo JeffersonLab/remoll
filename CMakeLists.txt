@@ -20,11 +20,6 @@ include(CMakeEnv)
 # Use GNU install dirs
 include(GNUInstallDirs)
 
-# Request C++11 standard
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_EXTENSIONS False)
-
 # MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_MACOSX_RPATH ON)
@@ -38,6 +33,9 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     endif()
 endif()
 
+# For remollSearchPath.hh
+# FIXME
+# link_libraries(stdc++fs)
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
@@ -86,7 +84,7 @@ list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
 #----------------------------------------------------------------------------
 # Boost
 #
-find_package(Boost QUIET COMPONENTS iostreams)
+find_package(Boost QUIET COMPONENTS iostreams filesystem)
 if(Boost_FOUND)
   message(STATUS "Boost found --> building with boost enabled.")
   include_directories(${Boost_INCLUDE_DIRS})
@@ -96,6 +94,12 @@ if(Boost_FOUND)
     message(STATUS "Boost::iostreams found --> building with boost::iostreams enabled.")
     ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
   endif()
+  if(Boost_FILESYSTEM_FOUND)
+    message(STATUS "Boost::filesystem found --> building with boost::filesystem enabled.")
+    ADD_DEFINITIONS(-D__USE_BOOST_FILESYSTEM)
+  endif()
+else()
+  message(STATUS "Boost not found.")
 endif()
 
 
@@ -383,6 +387,13 @@ install(FILES
     ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollUseFile.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/remoll)
 
+#----------------------------------------------------------------------------
+# remollSearchPath
+
+add_definitions(
+        -DCMAKE_INSTALL_PREFIX=\"${CMAKE_INSTALL_PREFIX}\"
+        -DCMAKE_INSTALL_FULL_DATADIR=\"${CMAKE_INSTALL_FULL_DATADIR}\"
+)
 
 #----------------------------------------------------------------------------
 # uninstall

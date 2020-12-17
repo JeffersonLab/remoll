@@ -204,11 +204,12 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     G4double nthrown = remollRun::GetRunData()->GetNthrown();
 
     // Calculate rate
+    SamplingType_t sampling_type = fEventGen->GetSamplingType();
     if (fEvent->fRate == 0) { // If the rate is set to 0 then calculate it using the cross section
-        fEvent->fRate  = fEvent->fEffXs * fBeamTarg->GetEffLumin() / nthrown;
+        fEvent->fRate  = fEvent->fEffXs * fBeamTarg->GetEffLumin(sampling_type) / nthrown;
 
     } else { // For LUND - calculate rate and cross section
-        fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg->GetEffLumin();
+        fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg->GetEffLumin(sampling_type);
         fEvent->fRate  = fEvent->fRate / nthrown;
     }
 
