@@ -45,8 +45,8 @@
    <quantity name="donutIBeamFlangeThickness" type="length" value="0.665" unit="in"/>
    <quantity name="donutIBeamWebThickness"    type="length" value="0.395" unit="in"/>
    <quantity name="donutIBeamWidth"     type="length" value="10.235" unit="in"/>
-   <!-- TODO: increase mother volume to accomodate 16.33 in instead of 40 cm -->
    <quantity name="donutIBeamHeight"    type="length" value="40.00"  unit="cm"/>
+   <!-- FIXME: increase mother volume to accomodate 16.375 in instead of 40 cm -->
    <!--quantity name="donutIBeamHeight"    type="length" value="16.33"  unit="in"/-->
 
    <!-- Donut frame width, as measured from beam center to the closest edge -->
