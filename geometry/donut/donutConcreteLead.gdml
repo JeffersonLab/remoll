@@ -32,7 +32,7 @@
    <quantity name="donutLeadOuterRadiusDS" type="length" value="1.210" unit="m"/>
 
    <!-- Aluminum sleeve thickness -->
-   <quantity name="donutSleeveThickness" type="length" value="19.050" unit="mm"/>
+   <quantity name="donutSleeveThickness" type="length" value="0.75" unit="in"/>
 
    <!-- Concrete donut positions -->
    <position name="donutConcretePosition" z="0"/>
@@ -60,13 +60,13 @@
    <quantity name="donutIBeamStrutLength" value="donutIBeamStrutInnerLength-sqrt(2)*donutIBeamWidth"/>
 
    <!-- Donut top support -->
-   <quantity name="donutTopSupportThickness"        type="length" value="19.050" unit="mm"/>
+   <quantity name="donutTopSupportThickness"        type="length" value="0.75" unit="in"/>
    <quantity name="donutTopSupportWidth"            type="length" value="1524.000" unit="mm"/>
    <quantity name="donutTopSupportOuterRibDistance" type="length" value="1397.000" unit="mm"/>
    <quantity name="donutTopSupportInnerRibDistance" type="length" value="705.033" unit="mm"/>
 
    <!-- Donut bottom support -->
-   <quantity name="donutBotSupportThickness"        type="length" value="19.050" unit="mm"/>
+   <quantity name="donutBotSupportThickness"        type="length" value="0.75" unit="in"/>
    <quantity name="donutBotSupportWidth"            type="length" value="1828.800" unit="mm"/>
    <quantity name="donutBotSupportOuterRibDistance" type="length" value="1701.800" unit="mm"/>
    <quantity name="donutBotSupportInnerRibDistance" type="length" value="841.685" unit="mm"/>
