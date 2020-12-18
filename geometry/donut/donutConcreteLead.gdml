@@ -835,10 +835,10 @@
         <volumeref ref="donutBotSupportSleeve_logical"/>
       </physvol>
 
-      <loop for="i" from="0" to="5" step="1">
+      <loop for="i" from="0" to="6" step="1">
         <physvol name="donutBeamPipeSupportFin_physical">
           <volumeref ref="donutBeamPipeSupportFin_logical"/>
-          <rotation x="-90.0" y="(i+0.5)*360.0/7" unit="deg"/>
+          <rotation x="-90.0" y="i*360.0/7" unit="deg"/>
         </physvol>
       </loop>
 
