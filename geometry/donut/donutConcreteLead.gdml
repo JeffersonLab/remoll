@@ -3,6 +3,8 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
+   <variable name="i" value="0"/>
+
    <!-- Full concrete and lead donut system dimensions -->
    <quantity name="donutSystemLength" type="length" value="0.4" unit="m"/>
    <quantity name="donutSystemWidth"  type="length" value="5.0" unit="m"/>
@@ -65,6 +67,12 @@
    <quantity name="donutBotSupportWidth"            type="length" value="1828.800" unit="mm"/>
    <quantity name="donutBotSupportOuterRibDistance" type="length" value="1701.800" unit="mm"/>
    <quantity name="donutBotSupportInnerRibDistance" type="length" value="841.685" unit="mm"/>
+
+   <!-- Beampipe support fin -->
+   <quantity name="donutBeamPipeSupportFinThickness" type="length" value="0.5" unit="in"/>
+   <quantity name="donutBeamPipeSupportFinFlareUS" type="length" value="1.0" unit="in"/> <!-- FIXME: should be ~7.5 in -->
+   <quantity name="donutBeamPipeSupportFinFlareDS" type="length" value="1.0" unit="in"/> <!-- FIXME: should be ~7.5 in -->
+   <quantity name="donutBeamPipeSupportFinFlareR" type="length" value="11.0" unit="in"/>
 </define>
 
 <materials>
@@ -452,6 +460,20 @@
         rmax="donutLeadOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness"
         z="donutConcreteThickness+donutLeadThickness"/>
     </polycone>
+
+    <!-- Beampipe support fin -->
+    <xtru name="donutBeamPipeSupportFin_solid">
+      <twoDimVertex x="donutSystemInnerRadius" y="-donutBeamPipeSupportFinFlareUS"/>
+      <twoDimVertex x="donutSystemInnerRadius+donutBeamPipeSupportFinFlareR" y="0"/>
+      <twoDimVertex x="donutConcreteInnerRadiusUS-1.1*donutSleeveThickness" y="0"/>
+      <!--twoDimVertex x="donutConcreteInnerRadiusDS-1.1*donutSleeveThickness" y="donutConcreteThickness"/-->
+      <!--twoDimVertex x="donutLeadInnerRadiusUS-1.1*donutSleeveThickness" y="donutConcreteThickness"/-->
+      <twoDimVertex x="donutLeadInnerRadiusDS-1.1*donutSleeveThickness" y="donutConcreteThickness+donutLeadThickness"/>
+      <twoDimVertex x="donutSystemInnerRadius+donutBeamPipeSupportFinFlareR" y="donutConcreteThickness+donutLeadThickness"/>
+      <twoDimVertex x="donutSystemInnerRadius" y="donutConcreteThickness+donutLeadThickness+donutBeamPipeSupportFinFlareDS"/>
+      <section zOrder="1" zPosition="-donutBeamPipeSupportFinThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="+donutBeamPipeSupportFinThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+    </xtru>
 </solids>
 
 <structure>
@@ -603,6 +625,11 @@
     <volume name="donutBotSupportSleeve_logical">
       <materialref ref="G4_Al"/>
       <solidref ref="donutBotSupportSleeve_solid"/>
+    </volume>
+
+    <volume name="donutBeamPipeSupportFin_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutBeamPipeSupportFin_solid"/>
     </volume>
 
     <volume name="donutSystem_logical">
@@ -793,6 +820,13 @@
       <physvol name="donutBotSupportSleeve_physical">
         <volumeref ref="donutBotSupportSleeve_logical"/>
       </physvol>
+
+      <loop for="i" from="0" to="5" step="1">
+        <physvol name="donutBeamPipeSupportFin_physical">
+          <volumeref ref="donutBeamPipeSupportFin_logical"/>
+          <rotation x="-90.0" y="(i+0.5)*360.0/7" unit="deg"/>
+        </physvol>
+      </loop>
 
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
