@@ -8,8 +8,8 @@
    <!-- Full concrete and lead donut system dimensions -->
    <quantity name="donutSystemLength" type="length" value="0.4" unit="m"/>
    <quantity name="donutSystemWidth"  type="length" value="5.0" unit="m"/>
-   <quantity name="donutSystemInnerRadius" type="length" value="0.82" unit="m"/>
    <quantity name="donutSystemHeight" type="length" value="5.8" unit="m"/>
+   <quantity name="donutSystemInnerRadius" type="length" value="0.736" unit="m"/>
    <!-- Flare out to allow for fins holding the beam pipe -->
    <quantity name="donutSystemFlareZ" type="length" value="1.1*2.54" unit="cm"/> <!-- FIXME: this should be 8 in -->
    <quantity name="donutSystemFlareR" type="length" value="11.1*2.54" unit="cm"/>
