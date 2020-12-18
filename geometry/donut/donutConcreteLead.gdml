@@ -10,6 +10,9 @@
    <quantity name="donutSystemWidth"  type="length" value="5.0" unit="m"/>
    <quantity name="donutSystemHeight" type="length" value="6.0" unit="m"/>
    <quantity name="donutSystemInnerRadius" type="length" value="0.82" unit="m"/>
+   <!-- Flare out to allow for fins holding the beam pipe -->
+   <quantity name="donutSystemFlareZ" type="length" value="1.1*2.54" unit="cm"/> <!-- FIXME: this should be 8 in -->
+   <quantity name="donutSystemFlareR" type="length" value="11.1*2.54" unit="cm"/>
 
    <!-- Thin virtual detectors on US and DS side -->
    <quantity name="donutVirtualDetectorThickness" type="length" value="0.1" unit="mm"/>
@@ -178,10 +181,21 @@
       <zplane rmin="0" rmax="donutSystemInnerRadius" z="0"/>
       <zplane rmin="0" rmax="donutSystemInnerRadius" z="donutSystemLength"/>
     </polycone>
-    <subtraction name="donutSystem_solid">
+    <subtraction name="donutSystemBoxHole_solid">
       <first ref="donutSystemBox_solid"/>
       <second ref="donutSystemHole_solid"/>
     </subtraction>
+    <polycone name="donutSystemFlare_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemInnerRadius" z="-donutSystemFlareZ"/>
+      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemInnerRadius+donutSystemFlareR" z="0"/>
+      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemInnerRadius+donutSystemFlareR" z="donutSystemLength"/>
+      <zplane rmin="donutSystemInnerRadius" rmax="donutSystemInnerRadius" z="donutSystemLength+donutSystemFlareZ"/>
+    </polycone>
+    <union name="donutSystem_solid">
+      <first ref="donutSystemBoxHole_solid"/>
+      <second ref="donutSystemFlare_solid"/>
+    </union>
 
     <polycone name="donutConcrete_solid"
               aunit="deg" startphi="0" deltaphi="360">
