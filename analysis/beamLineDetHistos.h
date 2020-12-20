@@ -17,33 +17,33 @@ class beamLineDetHistos {
   public:
     beamLineDetHistos() {}
     ~beamLineDetHistos() {}
-    void initHisto(TFile *fout, int detID, const char *detNm, const char *cut, const double range);
+    void initHisto(TFile*,const int,const string,const string,const double,const int);
     void fillHisto(int detID, int sp, double rdDmg[3], double pz,
-		   double xx, double yy, double kinE);
-    void writeOutput(TFile *fout, int detID, double scaleFactor);
+		   double xx, double yy, double kinE, const int subDet);
+    void writeOutput(TFile *fout, int detID, double scaleFactor,const int subDet);
 };
 
-void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm, const char * cut = "", const double range=2000){
+void beamLineDetHistos::initHisto(TFile *fout, const int detID, const string detNm, const string postfix = "", const double range=2000, const int subDet=0){
 
   fout->cd();
   if(!fout->GetDirectory(Form("det%d",detID)))
-    fout->mkdir(Form("det%d",detID), detNm);
+    fout->mkdir(Form("det%d",detID), detNm.c_str());
   fout->cd(Form("det%d",detID));
 
-  ID2entry.insert(std::pair<int, int>(detID,ID2entry.size()));
+  ID2entry.insert(std::pair<int, int>(detID+10000*subDet,ID2entry.size()));
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
-      energy[i][k].push_back(new TH1F(Form("d%d%s_energy_%s_%s", detID, cut, fbH[k].c_str(), spH[i].c_str()),
+      energy[i][k].push_back(new TH1F(Form("d%d_%s_energy_%s_%s", detID, postfix.c_str(), fbH[k].c_str(), spH[i].c_str()),
 				      Form("energy distribution %s %s", fbH[k].c_str(), spH[i].c_str()),
 				      121, -8, 4.1));
       niceLogXBins(energy[i][k][ID2entry[detID]]);
       
       for(int j=0;j<nDmg;j++){
-	xy[i][j][k].push_back(new TH2F(Form("d%d%s_xy_%s_%s_Dmg%d",detID, cut, spH[i].c_str(),fbH[k].c_str(),j),
+	xy[i][j][k].push_back(new TH2F(Form("d%d_%s_xy_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
 				       Form("%s for %s %s;x[mm];y[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 				       1000, -range, range,
 				       1000, -range, range));
-	r[i][j][k].push_back(new TH1F(Form("d%d%s_r_%s_%s_Dmg%d",detID, cut, spH[i].c_str(),fbH[k].c_str(),j),
+	r[i][j][k].push_back(new TH1F(Form("d%d_%s_r_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
 				      Form("%s for %s %s;r[mm];",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 				      1000, 0, range));
       }
@@ -51,11 +51,11 @@ void beamLineDetHistos::initHisto(TFile *fout, int detID, const char *detNm, con
 }
 
 void beamLineDetHistos::fillHisto(int detID, int sp, double rdDmg[3], double pz,
-			double xx, double yy, double kinE) {
-  if (ID2entry.find(detID) == ID2entry.end()) 
+				  double xx, double yy, double kinE, const int subDet=0) {
+  if (ID2entry.find(detID+10000*subDet) == ID2entry.end()) 
     return;
 
-  int det = ID2entry[detID];
+  int det = ID2entry[detID+10000*subDet];
   double rr = sqrt(xx*xx+yy*yy);
 
   energy[sp][0][det]->Fill(kinE);
@@ -79,11 +79,11 @@ void beamLineDetHistos::fillHisto(int detID, int sp, double rdDmg[3], double pz,
   }
 }
 
-void beamLineDetHistos::writeOutput(TFile *fout, int detID, double scaleFactor) {
-  if (ID2entry.find(detID) == ID2entry.end())
+void beamLineDetHistos::writeOutput(TFile *fout, int detID, double scaleFactor,const int subDet=0) {
+  if (ID2entry.find(detID+10000*subDet) == ID2entry.end())
     return;
 
-  int det = ID2entry[detID];
+  int det = ID2entry[detID+10000*subDet];
   fout->cd();
   fout->cd(Form("det%d",detID));
   for(int k=0;k<nFB;k++)
