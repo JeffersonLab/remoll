@@ -11,7 +11,6 @@ R__LOAD_LIBRARY(radDamage_cc.so)
 // //Load in the script, and run it
 // >.L usElectronicsRad.C
 // > usElectronicsRad(<remoll output file>,
-//          <1 for tgt sphere, 2 for plane dets, 4 for hall Det>, 
 //          <additional scale factor>,
 //          <0 to update the file, 1 to recreate>, 
 //          <1 for beam generator, 0 else>)
@@ -19,8 +18,6 @@ R__LOAD_LIBRARY(radDamage_cc.so)
 #include "radDamage.hh"
 #include "histogramUtilities.h"
 #include "beamLineDetHistos.h"
-#include "sphereDetHistos.h"
-#include "hallDetHistos.h"
 
 TFile *fout;
 string fileNm;
@@ -31,15 +28,13 @@ long currentEvNr(0);
 
 radDamage radDmg;
 beamLineDetHistos beamLine;
-sphereDetHistos sphere;
-hallDetHistos hall;
 
 void initHisto(int);
 void writeOutput(double);
 long processOne(string);
 void process();
 
-void usElectronicsRad(const string& finName = "./remollout.root",, double addScale=1, int overWriteFile = 1, int beamGenerator=1){
+void usElectronicsRad(const string& finName = "./remollout.root", double addScale=1, int overWriteFile = 1, int beamGenerator=1){
   fileNm = finName;
   beamGen = beamGenerator;
 
@@ -134,7 +129,7 @@ long processOne(string fnm){
       double pz = hit->at(j).pz;
 
       if(det==5500)      
-	beamLine.fillHisto(det, sp, rdDmg, pz, xx_tr, yy_tr, kinE);
+	beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE);
       if(det==5542){
 	if(rr<100)
 	  beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE,1);
@@ -143,7 +138,7 @@ long processOne(string fnm){
       }else{
 	if(det==5501 && rr>200) continue;
 	if(det==5502 && (abs(xx)>300 || abs(xx)<100) && (yy>-200 || yy<-500)) continue;
-	beamLine.fillHisto(det, sp, rdDmg, pz, xx_tr, yy_tr, kinE,1);
+	beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE,1);
       }
 
     }
