@@ -36,7 +36,7 @@ void beamLineDetHistos::initHisto(TFile *fout, const int detID, const string det
       energy[i][k].push_back(new TH1F(Form("d%d_%s_energy_%s_%s", detID, postfix.c_str(), fbH[k].c_str(), spH[i].c_str()),
 				      Form("energy distribution %s %s", fbH[k].c_str(), spH[i].c_str()),
 				      121, -8, 4.1));
-      niceLogXBins(energy[i][k][ID2entry[detID]]);
+      niceLogXBins(energy[i][k][ID2entry[detID+10000*subDet]]);
       
       for(int j=0;j<nDmg;j++){
 	xy[i][j][k].push_back(new TH2F(Form("d%d_%s_xy_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
