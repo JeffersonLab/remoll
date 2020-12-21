@@ -78,13 +78,13 @@
     name="HybridS5_solid" 
     startphi="0" deltaphi="360" aunit="deg" lunit="mm"><!-- fourth coil -->
     <zplane rmin="47.0" rmax="47.5" z="0"/>
-    <zplane rmin="61.5" rmax="62.0" z="4128"/>
+    <zplane rmin="63.0" rmax="63.5" z="4128"/>
   </polycone>
 
   <polycone
     name="HybridS6_solid"
     startphi="0" deltaphi="360" aunit="deg" lunit="mm"><!--inside the drift chanber-->
-    <zplane rmin="61.5" rmax="62.0" z="0"/>
+    <zplane rmin="63.0" rmax="63.5" z="0"/>
     <zplane rmin="76.0" rmax="76.5" z="3243"/>
   </polycone>
 
@@ -272,6 +272,27 @@
     <auxiliary auxtype="DetNo" auxvalue="69"/>
   </volume>
 
+  <volume name="HybridD8_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="72"/>
+  </volume>
+
+  <volume name="HybridD9_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73"/>
+  </volume>
+
+  <volume name="HybridD10_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="74"/>
+  </volume>
+
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
@@ -415,6 +436,21 @@
     <physvol name="HybridD7_phys">
       <volumeref ref="HybridD7_log"/>
       <positionref ref="HybridD7_pos"/>
+    </physvol>
+
+    <physvol name="HybridD8_phys">
+      <volumeref ref="HybridD8_log"/>
+      <positionref ref="HybridD8_pos"/>
+    </physvol>
+
+    <physvol name="HybridD9_phys">
+      <volumeref ref="HybridD9_log"/>
+      <positionref ref="HybridD9_pos"/>
+    </physvol>
+
+    <physvol name="HybridD10_phys">
+      <volumeref ref="HybridD10_log"/>
+      <positionref ref="HybridD10_pos"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>

@@ -76,4 +76,7 @@
 <position name="HybridD5_pos" z="8117.00" unit="mm"/>
 <position name="HybridD6_pos" z="12250.00" unit="mm"/>
 <position name="HybridD7_pos" z="15500.00" unit="mm"/>
+<position name="HybridD8_pos" z="7784.00" unit="mm"/>
+<position name="HybridD9_pos" z="8500.00" unit="mm"/>
+<position name="HybridD10_pos" z="9500.00" unit="mm"/>
 

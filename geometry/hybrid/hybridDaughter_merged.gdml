@@ -150,13 +150,12 @@
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="kryptonite_solid"> 
       <zplane rmin="28" rmax="28.5" z="0"/> 
-      <zplane rmin="33.0" rmax="33.5" z="1530"/> 
+      <zplane rmin="32.0" rmax="32.5" z="1476.45"/> 
+    <!--  <zplane rmin="33.0" rmax="33.5" z="1530"/> 
       <zplane rmin="36.5" rmax="37.0" z="2660"/> 
       <zplane rmin="41.0" rmax="41.5" z="3720"/> 
-      <zplane rmin="45.5" rmax="46.0" z="4745"/><!-- coil3--> 
-      <zplane rmin="60.5" rmax="61.0" z="8873"/> 
-      <!--<zplane rmin="62.5" rmax="63.0" z="8875"/> 
-      <zplane rmin="75.5" rmax="76.0" z="12120"/> -->
+      <zplane rmin="45.5" rmax="46.0" z="4745"/> 
+      <zplane rmin="60.5" rmax="61.0" z="8873"/>--> 
     </polycone>
 
     <tessellated name="leftpcolcut">
@@ -632,10 +631,10 @@
         <positionref ref="shield_DS_beampipe_center"/>
       </physvol>
 -->
-     <!-- <physvol>
+      <physvol>
         <volumeref ref="kryptonite_logic"/>
         <positionref ref="shield_DS_beampipe_center"/>
-      </physvol>-->
+      </physvol>
 
       <physvol name="DScoil">
         <file name="hybrid/hybridToroid.gdml"/>
