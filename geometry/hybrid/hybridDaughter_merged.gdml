@@ -630,12 +630,12 @@
         <volumeref ref="shield_DS_beampipe_logic"/>
         <positionref ref="shield_DS_beampipe_center"/>
       </physvol>
--->
+
       <physvol>
         <volumeref ref="kryptonite_logic"/>
         <positionref ref="shield_DS_beampipe_center"/>
       </physvol>
-
+-->
       <physvol name="DScoil">
         <file name="hybrid/hybridToroid.gdml"/>
         <position name="pos_hybridToroid" x="0" y="0" z="13335.194-DOFFSET"/>

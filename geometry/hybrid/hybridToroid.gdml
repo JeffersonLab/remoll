@@ -612,6 +612,16 @@
 	   <zplane rmin="48.4" rmax="57" z="100"/>
 	</polycone>
 
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSBeamShieldPipe4_solid">
+	   <zplane rmin="44.0" rmax="51.0" z="0"/>
+	   <zplane rmin="44.0" rmax="51" z="100"/>
+	</polycone>
+
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSBeamShieldPipe5_solid">
+	   <zplane rmin="50" rmax="72.0" z="0"/>
+	   <zplane rmin="50" rmax="72.0" z="100"/>
+	</polycone>
+
 </solids>
 
 
@@ -623,7 +633,7 @@
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="75"/>
+		<auxiliary auxtype="DetNo" auxvalue="80"/>
 	</volume>
 
 	<volume name="DSBeamShieldPipe2_logic">
@@ -632,7 +642,7 @@
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="76"/>
+		<auxiliary auxtype="DetNo" auxvalue="81"/>
 	</volume>
 
 	<volume name="DSBeamShieldPipe3_logic">
@@ -641,7 +651,25 @@
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="77"/>
+		<auxiliary auxtype="DetNo" auxvalue="82"/>
+	</volume>
+
+	<volume name="DSBeamShieldPipe4_logic">
+		<materialref ref="G4_CW95"/>
+		<solidref ref="DSBeamShieldPipe4_solid"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="83"/>
+	</volume>
+
+	<volume name="DSBeamShieldPipe5_logic">
+		<materialref ref="G4_CW95"/>
+		<solidref ref="DSBeamShieldPipe5_solid"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="84"/>
 	</volume>
 
 	<volume name="logic_septapus_tube">
@@ -2514,6 +2542,16 @@
 		<physvol name="DSBeamShieldPipe3_pv">
 			<volumeref ref="DSBeamShieldPipe3_logic"/>
 			<position name="DSBeamShieldPipe3_pos" x="0" y="0" z="164.806"/>
+		</physvol>
+
+		<physvol name="DSBeamShieldPipe4_pv">
+			<volumeref ref="DSBeamShieldPipe4_logic"/>
+			<position name="DSBeamShieldPipe4_pos" x="0" y="0" z="-405.194"/>
+		</physvol>
+
+		<physvol name="DSBeamShieldPipe3_pv">
+			<volumeref ref="DSBeamShieldPipe5_logic"/>
+			<position name="DSBeamShieldPipe5_pos" x="0" y="0" z="1164.806"/>
 		</physvol>
 
 	</volume>
