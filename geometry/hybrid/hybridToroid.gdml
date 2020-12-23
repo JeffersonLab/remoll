@@ -598,7 +598,9 @@
 	<tube name="solid_DS_toroidMother" rmin="0"  rmax="420.97" z="6967.488" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSBeamShieldPipe1_solid">
-	   <zplane rmin="33" rmax="39.0" z="0"/>
+	   <zplane rmin="33" rmax="60.0" z="0"/>
+	   <zplane rmin="33" rmax="60.0" z="15"/>
+	   <zplane rmin="33" rmax="39.0" z="15"/>
 	   <zplane rmin="34.5" rmax="39.5" z="200"/>
 	</polycone>
 
@@ -608,13 +610,13 @@
 	</polycone>
 
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSBeamShieldPipe3_solid">
-	   <zplane rmin="48" rmax="55.0" z="0"/>
-	   <zplane rmin="48.4" rmax="57" z="100"/>
+	   <zplane rmin="48.0" rmax="63.0" z="0"/>
+	   <zplane rmin="48.0" rmax="63" z="100"/>
 	</polycone>
 
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSBeamShieldPipe4_solid">
-	   <zplane rmin="44.0" rmax="51.0" z="0"/>
-	   <zplane rmin="44.0" rmax="51" z="100"/>
+	   <zplane rmin="51.5" rmax="72.0" z="0"/>
+	   <zplane rmin="51.5" rmax="72.0" z="100"/>
 	</polycone>
 
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSBeamShieldPipe5_solid">
@@ -2541,19 +2543,19 @@
 
 		<physvol name="DSBeamShieldPipe3_pv">
 			<volumeref ref="DSBeamShieldPipe3_logic"/>
-			<position name="DSBeamShieldPipe3_pos" x="0" y="0" z="164.806"/>
+			<position name="DSBeamShieldPipe3_pos" x="0" y="0" z="564.806"/>
 		</physvol>
 
 		<physvol name="DSBeamShieldPipe4_pv">
 			<volumeref ref="DSBeamShieldPipe4_logic"/>
-			<position name="DSBeamShieldPipe4_pos" x="0" y="0" z="-405.194"/>
+			<position name="DSBeamShieldPipe4_pos" x="0" y="0" z="1664.806"/>
 		</physvol>
-
+<!--
 		<physvol name="DSBeamShieldPipe3_pv">
 			<volumeref ref="DSBeamShieldPipe5_logic"/>
 			<position name="DSBeamShieldPipe5_pos" x="0" y="0" z="1164.806"/>
 		</physvol>
-
+-->
 	</volume>
 
 </structure>

@@ -300,6 +300,13 @@
     <auxiliary auxtype="DetNo" auxvalue="75"/>
   </volume>
 
+  <volume name="HybridD12_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="76"/>
+  </volume>
+
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
@@ -463,6 +470,11 @@
     <physvol name="HybridD11_phys">
       <volumeref ref="HybridD11_log"/>
       <positionref ref="HybridD11_pos"/>
+    </physvol>
+
+    <physvol name="HybridD12_phys">
+      <volumeref ref="HybridD12_log"/>
+      <positionref ref="HybridD12_pos"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
