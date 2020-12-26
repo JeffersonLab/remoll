@@ -81,4 +81,8 @@
 <position name="HybridD10_pos" z="9500.00" unit="mm"/>
 <position name="HybridD11_pos" z="10000.00" unit="mm"/>
 <position name="HybridD12_pos" z="8899.00" unit="mm"/>
+<position name="HybridD13_pos" z="8602.00" unit="mm"/>
+<position name="HybridD14_pos" z="9002.00" unit="mm"/>
+<position name="HybridD15_pos" z="9602.00" unit="mm"/>
+<position name="HybridD16_pos" z="10102.00" unit="mm"/>
 

@@ -307,6 +307,34 @@
     <auxiliary auxtype="DetNo" auxvalue="76"/>
   </volume>
 
+  <volume name="HybridD13_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="77"/>
+  </volume>
+
+  <volume name="HybridD14_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="78"/>
+  </volume>
+
+  <volume name="HybridD15_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="79"/>
+  </volume>
+
+  <volume name="HybridD16_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="71"/>
+  </volume>
+
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
@@ -475,6 +503,26 @@
     <physvol name="HybridD12_phys">
       <volumeref ref="HybridD12_log"/>
       <positionref ref="HybridD12_pos"/>
+    </physvol>
+
+    <physvol name="HybridD13_phys">
+      <volumeref ref="HybridD13_log"/>
+      <positionref ref="HybridD13_pos"/>
+    </physvol>
+
+    <physvol name="HybridD14_phys">
+      <volumeref ref="HybridD14_log"/>
+      <positionref ref="HybridD14_pos"/>
+    </physvol>
+
+    <physvol name="HybridD15_phys">
+      <volumeref ref="HybridD15_log"/>
+      <positionref ref="HybridD15_pos"/>
+    </physvol>
+
+    <physvol name="HybridD16_phys">
+      <volumeref ref="HybridD16_log"/>
+      <positionref ref="HybridD16_pos"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>

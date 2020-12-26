@@ -598,9 +598,9 @@
 	<tube name="solid_DS_toroidMother" rmin="0"  rmax="420.97" z="6967.488" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSBeamShieldPipe1_solid">
-	   <zplane rmin="33" rmax="60.0" z="0"/>
-	   <zplane rmin="33" rmax="60.0" z="15"/>
-	   <zplane rmin="33" rmax="39.0" z="15"/>
+	   <!--<zplane rmin="33" rmax="60.0" z="0"/>
+	   <zplane rmin="33" rmax="60.0" z="15"/>-->
+	   <zplane rmin="33" rmax="39.0" z="0"/>
 	   <zplane rmin="34.5" rmax="39.5" z="200"/>
 	</polycone>
 
@@ -634,6 +634,8 @@
 	   <position name="firstShieldSub_pos" unit="mm" x="54" y="0" z="0" />
 	   <!--<position name="firstShieldSub_pos" unit="mm" x="57.7680" y="0" z="0" />-->
 	</subtraction>
+
+        <box lunit="mm" name="EPShieldAtColl5_solid" x="74.22-44" y="10" z="70"/>
  
 </solids>
 
@@ -694,13 +696,22 @@
 		<auxiliary auxtype="DetNo" auxvalue="84"/>
 	</volume>
 
+	<volume name="DSBeamShieldPipe6_logic">
+		<materialref ref="G4_CW95"/>
+		<solidref ref="EPShieldAtColl5_solid"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2005"/>
+	</volume>
+
 	<volume name="logic_septapus_tube">
 		<materialref ref="G4_W"/>
 		<solidref ref="solid_septapus_tube"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="56"/>
 	</volume>
-
+<!--
 	<volume name="kryptonite1_logic">
 		<materialref ref="VacuumColl"/>
 		<solidref ref="kryptonite1_solid"/>
@@ -709,7 +720,7 @@
 		<auxiliary auxtype="SensDet" auxvalue="planeDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="71"/>
 	</volume>
-
+-->
 	<volume name="logic_photon_collimator_1">
 		<materialref ref="G4_CW95"/>
 		<solidref ref="solid_photon_collimator"/>
@@ -2313,13 +2324,13 @@
 			<rotation name="rot_dcoil4_1" x="pi/2" y="0.0" z="0"/>
 		</physvol>
 
-<!--		<physvol name="photon_collimator_1">
+		<physvol name="photon_collimator_1">
 			<volumeref ref="logic_photon_collimator_1"/>
 			<position name="pos_photon_collimator_1" x="28.3091132179" y="124.030328988" z="-500.194"/>
 			<rotation name="rot_photon_collimator_1" x="0" y="0" z="-1.34639685154"/>
 		</physvol>
 
-		<physvol name="septapus_arm_1">
+<!--		<physvol name="septapus_arm_1">
 			<volumeref ref="logic_septapus_arm_1"/>
 			<position name="pos_septapus_arm_1" x="21.8221430651" y="27.3641018864" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_1" x="0" y="0" z="-0.897597901026"/>
@@ -2349,13 +2360,13 @@
 			<rotation name="rot_dcoil4_2" x="pi/2" y="0.897597901026" z="0"/>
 		</physvol>
 
-<!--		<physvol name="photon_collimator_2">
+		<physvol name="photon_collimator_2">
 			<volumeref ref="logic_photon_collimator_2"/>
 			<position name="pos_photon_collimator_2" x="-79.3203725925" y="99.4646011996" z="-500.194"/>
 			<rotation name="rot_photon_collimator_2" x="0" y="0" z="-2.24399475256"/>
 		</physvol>
 
-		<physvol name="septapus_arm_2">
+<!--		<physvol name="septapus_arm_2">
 			<volumeref ref="logic_septapus_arm_2"/>
 			<position name="pos_septapus_arm_2" x="-7.78823268847" y="34.1224769264" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_2" x="0" y="0" z="-1.79519580205"/>
@@ -2385,13 +2396,13 @@
 			<rotation name="rot_dcoil4_3" x="pi/2" y="1.79519580205" z="0"/>
 		</physvol>
 
-<!--		<physvol name="photon_collimator_3">
+		<physvol name="photon_collimator_3">
 			<volumeref ref="logic_photon_collimator_3"/>
 			<position name="pos_photon_collimator_3" x="-127.22" y="1.55799565788e-14" z="-500.194"/>
 			<rotation name="rot_photon_collimator_3" x="0" y="0" z="-3.14159265359"/>
 		</physvol>
 
-		<physvol name="septapus_arm_3">
+<!--		<physvol name="septapus_arm_3">
 			<volumeref ref="logic_septapus_arm_3"/>
 			<position name="pos_septapus_arm_3" x="-31.5339103766" y="15.1859308691" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_3" x="0" y="0" z="-2.69279370308"/>
@@ -2421,13 +2432,13 @@
 			<rotation name="rot_dcoil4_4" x="pi/2" y="2.69279370308" z="0"/>
 		</physvol>
 
-<!--		<physvol name="photon_collimator_4">
+		<physvol name="photon_collimator_4">
 			<volumeref ref="logic_photon_collimator_4"/>
 			<position name="pos_photon_collimator_4" x="-79.3203725925" y="-99.4646011996" z="-500.194"/>
 			<rotation name="rot_photon_collimator_4" x="0" y="0" z="-4.03919055462"/>
 		</physvol>
 
-		<physvol name="septapus_arm_4">
+<!--		<physvol name="septapus_arm_4">
 			<volumeref ref="logic_septapus_arm_4"/>
 			<position name="pos_septapus_arm_4" x="-31.5339103766" y="-15.1859308691" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_4" x="0" y="0" z="-3.5903916041"/>
@@ -2457,13 +2468,13 @@
 			<rotation name="rot_dcoil4_5" x="pi/2" y="3.5903916041" z="0"/>
 		</physvol>
 
-<!--		<physvol name="photon_collimator_5">
+		<physvol name="photon_collimator_5">
 			<volumeref ref="logic_photon_collimator_5"/>
 			<position name="pos_photon_collimator_5" x="28.3091132179" y="-124.030328988" z="-500.194"/>
 			<rotation name="rot_photon_collimator_5" x="0" y="0" z="-4.93678845564"/>
 		</physvol>
 
-		<physvol name="septapus_arm_5">
+<!--		<physvol name="septapus_arm_5">
 			<volumeref ref="logic_septapus_arm_5"/>
 			<position name="pos_septapus_arm_5" x="-7.78823268847" y="-34.1224769264" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_5" x="0" y="0" z="-4.48798950513"/>
@@ -2493,13 +2504,13 @@
 			<rotation name="rot_dcoil4_6" x="pi/2" y="4.48798950513" z="0"/>
 		</physvol>
 
-<!--		<physvol name="photon_collimator_6">
+		<physvol name="photon_collimator_6">
 			<volumeref ref="logic_photon_collimator_6"/>
 			<position name="pos_photon_collimator_6" x="114.621259375" y="-55.1986892905" z="-500.194"/>
 			<rotation name="rot_photon_collimator_6" x="0" y="0" z="-5.83438635667"/>
 		</physvol>
 
-		<physvol name="septapus_arm_6">
+<!--		<physvol name="septapus_arm_6">
 			<volumeref ref="logic_septapus_arm_6"/>
 			<position name="pos_septapus_arm_6" x="21.8221430651" y="-27.3641018864" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_6" x="0" y="0" z="-5.38558740615"/>
@@ -2529,13 +2540,13 @@
 			<rotation name="rot_dcoil4_7" x="pi/2" y="5.38558740615" z="0"/>
 		</physvol>
 
-<!--		<physvol name="photon_collimator_7">
+		<physvol name="photon_collimator_7">
 			<volumeref ref="logic_photon_collimator_7"/>
 			<position name="pos_photon_collimator_7" x="114.621259375" y="55.1986892905" z="-500.194"/>
 			<rotation name="rot_photon_collimator_7" x="0" y="0" z="-6.73198425769"/>
 		</physvol>
 
-		<physvol name="septapus_arm_7">
+<!--		<physvol name="septapus_arm_7">
 			<volumeref ref="logic_septapus_arm_7"/>
 			<position name="pos_septapus_arm_7" x="35.0" y="-8.57252759403e-15" z="-3335.194"/>
 			<rotation name="rot_septapus_arm_7" x="0" y="0" z="-6.28318530718"/>
@@ -2561,7 +2572,7 @@
 			<position name="DSBeamShieldPipe2_pos" unit="mm" x="0" y="0" z="-1335.194"/>
 		</physvol>
 
-		<physvol name="DSBeamShieldPipe3_pv">
+<!--		<physvol name="DSBeamShieldPipe3_pv">
 			<volumeref ref="DSBeamShieldPipe3_logic"/>
 			<position name="DSBeamShieldPipe3_pos" unit="mm" x="0" y="0" z="164.806"/>
 		</physvol>
@@ -2611,9 +2622,52 @@
 		<physvol name="DSBeamShieldPipe4_pv">
 			<volumeref ref="DSBeamShieldPipe4_logic"/>
 			<position name="DSBeamShieldPipe4_pos" unit="mm" x="0" y="0" z="1164.806"/>
+		</physvol>-->
+
+		<physvol name="EPShieldAtColl5_1_pv">
+			<volumeref ref="DSBeamShieldPipe6_logic"/>
+			<position name="DSBeamShieldPipe6_1_pos" unit="mm" x="59.11*cos(pi+0*pi/7.)" y="59.11*sin(pi+0*pi/7.)" z="-500.194"/>
+			<rotation name="rot_dsshield1" x="0" y="0" z="0"/>
 		</physvol>
+
+		<physvol name="EPShieldAtColl5_2_pv">
+			<volumeref ref="DSBeamShieldPipe6_logic"/>
+			<position name="DSBeamShieldPipe6_2_pos" unit="mm" x="59.11*cos(pi+2*pi/7.)" y="59.11*sin(pi+2*pi/7.)" z="-500.194"/>
+			<rotation name="rot_dsshield1" x="0" y="0" z="-2*pi/7."/>
+		</physvol>
+
+		<physvol name="EPShieldAtColl5_3_pv">
+			<volumeref ref="DSBeamShieldPipe6_logic"/>
+			<position name="DSBeamShieldPipe6_3_pos" unit="mm" x="59.11*cos(pi+4*pi/7.)" y="59.11*sin(pi+4*pi/7.)" z="-500.194"/>
+			<rotation name="rot_dsshield1" x="0" y="0" z="-4*pi/7."/>
+		</physvol>
+
+		<physvol name="EPShieldAtColl5_4_pv">
+			<volumeref ref="DSBeamShieldPipe6_logic"/>
+			<position name="DSBeamShieldPipe6_4_pos" unit="mm" x="59.11*cos(pi+6*pi/7.)" y="59.11*sin(pi+6*pi/7.)" z="-500.194"/>
+			<rotation name="rot_dsshield1" x="0" y="0" z="-6*pi/7."/>
+		</physvol>
+
+		<physvol name="EPShieldAtColl5_5_pv">
+			<volumeref ref="DSBeamShieldPipe6_logic"/>
+			<position name="DSBeamShieldPipe6_5_pos" unit="mm" x="59.11*cos(pi+8*pi/7.)" y="59.11*sin(pi+8*pi/7.)" z="-500.194"/>
+			<rotation name="rot_dsshield1" x="0" y="0" z="-8*pi/7."/>
+		</physvol>
+
+		<physvol name="EPShieldAtColl5_6_pv">
+			<volumeref ref="DSBeamShieldPipe6_logic"/>
+			<position name="DSBeamShieldPipe6_6_pos" unit="mm" x="59.11*cos(pi+10*pi/7.)" y="59.11*sin(pi+10*pi/7.)" z="-500.194"/>
+			<rotation name="rot_dsshield1" x="0" y="0" z="-10*pi/7."/>
+		</physvol>
+
+		<physvol name="EPShieldAtColl5_7_pv">
+			<volumeref ref="DSBeamShieldPipe6_logic"/>
+			<position name="DSBeamShieldPipe6_7_pos" unit="mm" x="59.11*cos(pi+12*pi/7.)" y="59.11*sin(pi+12*pi/7.)" z="-500.194"/>
+			<rotation name="rot_dsshield1" x="0" y="0" z="-12*pi/7."/>
+		</physvol>
+
 <!--
-		<physvol name="DSBeamShieldPipe3_pv">
+		<physvol name="DSBeamShieldPipe5_pv">
 			<volumeref ref="DSBeamShieldPipe5_logic"/>
 			<position name="DSBeamShieldPipe5_pos" x="0" y="0" z="1164.806"/>
 		</physvol>
