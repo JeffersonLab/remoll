@@ -42,6 +42,16 @@
     <fraction n="0.319614" ref="Oxygen"/>
   </material>
 
+  <material name="Vanta" formula="Lucite-like">
+    <property name="ABSLENGTH" ref="ABSLENGTH_VANTA"/>
+    <property name="RINDEX"    ref="RINDEX_LUCITE"/>
+    <MEE value="125.663" unit="eV"/>
+    <D value="1.18" unit="g/cm3"/>
+    <fraction n="0.080538" ref="Hydrogen"/>
+    <fraction n="0.599848" ref="Carbon"/>
+    <fraction n="0.319614" ref="Oxygen"/>
+  </material>
+
   <material name="Air" state="gas">
     <property name="ABSLENGTH" ref="ABSLENGTH_AIR"/>
     <property name="RINDEX"    ref="RINDEX_AIR"/>

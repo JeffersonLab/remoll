@@ -29,6 +29,7 @@
   <quantity name="pionDetectorLuciteMylarThickness" type="length" value="0.05" unit="mm"/>
   <quantity name="pionDetectorLuciteGlueThickness"  type="length" value="1.0" unit="mm"/>
   <quantity name="pionDetectorLucitePlaneThickness" type="length" value="2.54" unit="cm"/>
+  <quantity name="pionDetectorLuciteVantaThickness" type="length" value="0.1" unit="mm"/>
   
   <quantity name="pionDetectorLuciteInsideWidth"  type="length" value="39.0" unit="cm"/>
   <quantity name="pionDetectorLuciteOutsideWidth" type="length" value="45.0" unit="cm"/>
@@ -150,6 +151,16 @@
     y1="pionDetectorLuciteGlueThicknessInY"
     y2="pionDetectorLuciteGlueThicknessInY"
     z="pionDetectorLuciteHeight"/>
+  <trap name="pionDetectorLuciteVanta_solid"
+    alpha1="0.0" alpha2="0.0"
+    theta="pionDetectorLuciteTheta" phi="90.0*deg"
+    x1="pionDetectorLuciteWidth"
+    x2="pionDetectorLuciteWidth"
+    x3="pionDetectorLuciteWidth"
+    x4="pionDetectorLuciteWidth"
+    y1="pionDetectorLucitePlaneThicknessInY"
+    y2="pionDetectorLucitePlaneThicknessInY"
+     z="pionDetectorLuciteVantaThickness"/>
   <trap name="pionDetectorLucitePlane_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteTheta" phi="90.0*deg"
@@ -486,9 +497,22 @@
     <auxiliary auxtype="Color" auxvalue="Yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
+  <volume name="pionDetectorLuciteVanta_logical">
+    <materialref ref="Vanta"/>
+    <solidref ref="pionDetectorLuciteVanta_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Black"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
   <volume name="pionDetectorLucitePlaneWedge_logical">
     <materialref ref="Lucite"/>
     <solidref ref="pionDetectorLucitePlaneWedge_solid"/>
+    <physvol name="pionDetectorLuciteVanta_physical">
+      <volumeref ref="pionDetectorLuciteVanta_logical"/>
+      <position name="pionDetectorLucitaVanta_position"
+        y="-(pionDetectorLuciteHeight/2.0*tan(pionDetectorLuciteTheta)
+            -pionDetectorLuciteVantaThickness/2.0*tan(pionDetectorLuciteTheta))"
+        z="-(pionDetectorLuciteHeight/2.0-pionDetectorLuciteVantaThickness/2.0)"/>
+    </physvol>
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteDet"/>
     <auxiliary auxtype="DetNo" auxvalue="8001"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>

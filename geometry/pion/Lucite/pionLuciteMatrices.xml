@@ -144,3 +144,26 @@
     4.95956*eV 0.5
     5.51063*eV 0.5
     5.90424*eV 0.5"/>
+
+  <!-- Vantablack -->
+  <matrix coldim="2" name="ABSLENGTH_VANTA" values="
+    1.54986*eV 0*mm
+    1.77127*eV 0*mm
+    2.06648*eV 0*mm
+    2.47978*eV 0*mm
+    3.09973*eV 0*mm
+    4.13297*eV 0*mm
+    4.95956*eV 0*mm
+    5.51063*eV 0*mm
+    5.90424*eV 0*mm"/>
+  <matrix coldim="2" name="REFLECTIVITY_VANTA" values="
+    1.54986*eV 0.005
+    1.77127*eV 0.005
+    2.06648*eV 0.005
+    2.47978*eV 0.005
+    3.09973*eV 0.005
+    4.13297*eV 0.005
+    4.95956*eV 0.005
+    5.51063*eV 0.005
+    5.90424*eV 0.005"/>
+
