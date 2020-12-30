@@ -75,7 +75,7 @@ do
     lgAngle=$lg_angle
     z_p=$(printf "%.2f" "$(bc -l <<< ${z1}-0.5*$qThick-$refL*s\(\(${ref_angle}-${lg_angle}\)*3.14159/180.0\))")
     echo "$ring $xPosMin $xPosMax z = $z_p starting z = $z1 and second = $z2"
-done < cadp_shortened.csv
+done < cadp.csv
 IFS=$OLDIFS
 
 
