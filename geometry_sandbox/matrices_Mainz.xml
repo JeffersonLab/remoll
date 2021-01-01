@@ -3887,7 +3887,9 @@
 7.75292132725114*eV 0.626332
 7.75340582427197*eV 0.622443
 7.75389038185113*eV 0.618527"/>
-<matrix name="Mylar_Surf_Reflectivity" coldim="2" values="2.00214948263954*eV 0.9
+<matrix name="Mylar_Surf_Reflectivity" coldim="2" values="2.00214948263953*eV 0.9
+7.75389038185112*eV 0.9"/>
+<matrix name="Mylar_Surf_Reflectivity_Original" coldim="2" values="2.00214948263954*eV 0.9
 2.01276737263045*eV 0.9
 2.02352818375012*eV 0.9
 2.03437465156394*eV 0.9
@@ -6079,4 +6081,12 @@
 7.75292132725114*eV 0.39013
 7.75340582427197*eV 0.29228
 7.75389038185113*eV 0.288638"/>
-<matrix name="Air_Const_Scint" coldim="1" values="25./MeV"/><matrix name="Ar_Const_Scint" coldim="1" values="510./MeV"/><matrix name="C02_Const_Scint" coldim="1" values="5./MeV"/><matrix name="N2_Const_Scint" coldim="1" values="140./MeV"/><matrix name="General_Const_RESOLUTION" coldim="1" values="2.0"/><matrix name="General_Const_FAST" coldim="1" values="1.*ns"/><matrix name="General_Const_SLOW" coldim="1" values="10.*ns"/><matrix name="General_Const_YIELDRATIO" coldim="1" values="1.0"/>
+
+<matrix name="Air_Const_Scint" coldim="1" values="25./MeV"/>
+<matrix name="Ar_Const_Scint" coldim="1" values="510./MeV"/>
+<matrix name="CO2_Const_Scint" coldim="1" values="5./MeV"/>
+<matrix name="N2_Const_Scint" coldim="1" values="140./MeV"/>
+<matrix name="General_Const_RESOLUTION" coldim="1" values="2.0"/>
+<matrix name="General_Const_FAST" coldim="1" values="1.*ns"/>
+<matrix name="General_Const_SLOW" coldim="1" values="10.*ns"/>
+<matrix name="General_Const_YIELDRATIO" coldim="1" values="1.0"/>
