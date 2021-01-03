@@ -11,8 +11,10 @@
 if [ "$#" -lt 1 ] ; then
     echo "  ERROR, requires at least one input
     "
+    echo "  This script generates geometry from cadp.csv (with options for which ring) and makes a series of analyses at various reflector lengths and angles
+    "
     echo "  usage: ./ref-scan.sh fixed-non-scanned \"variable-to-scan\" min-of-scan (0) max-of-scan (30) step-size (1.0)
-        Takes 5 arguments
+        Takes 10 arguments
 
         Fixed value of non-scanned variable - default = 0.0
         Variable to scan (\"angle\" or \"x\")   - default = \"angle\"
@@ -24,7 +26,7 @@ if [ "$#" -lt 1 ] ; then
         Scintillation                       - default = 1.0
         geometry file name                  - default = \"R5o\"
         pass                                - default = 1
-        det number                          - default = 540210"
+        det number (optional, automatic)    - default = 540210"
     exit
 fi
 
@@ -102,7 +104,7 @@ elif [[ $geom == "R6" ]] ; then
     script_ring="6"
     det=640210
 fi
-
+secondpass="$pass"
 if [ "$#" -gt 10 ] ; then
     det="${11}"
 fi
@@ -110,10 +112,7 @@ fi
 
 
 tiltAngle=3.5
-lgAngle=2.5
 refAngle=18.0
-thetaSubRef=0.0
-phiSubRef=0.0
 refLength=80.0
 z_p=0.0
 numSteps=$(printf "%.0f" "$(bc -l <<< \(${scanMax}-\(${scanMin}\)\)/$scanStep)")
@@ -150,27 +149,10 @@ do
         refAngle=$fixed
     fi
 
-    for wStep in `seq 0 4`;
-    #for wStep in `seq 0 9`;
-    do
-        for lStep in `seq 0 9`;
-        do
-            for thetaStepSeq in `seq 0 10`;
-            do
-                thetaSubRef=$(printf "%.1f" "$(bc -l <<< \(-9.0+\(1.0*$thetaStepSeq*3.0\)\))")
-                for phiStepSeq in `seq 0 12`;
-                do
-                    phiSubRef=$(printf "%.1f" "$(bc -l <<< \(-30.0+\(1.0*$phiStepSeq*5.0\)\))")
-            #for thetaStepSeq in `seq 4 4`;
-            #do
-            #    thetaSubRef=$(printf "%.1f" "$(bc -l <<< \(-10.0+\(1.0*$thetaStepSeq*2.5\)\))")
-            #    for phiStepSeq in `seq 6 6`;
-            #    do
-            #        phiSubRef=$(printf "%.1f" "$(bc -l <<< \(-30.0+\(1.0*$phiStepSeq*5.0\)\))")
 
     name="${refAngle}_degrees_${refLength}_L_${reflectivity}_ref_${cerenkov}_cer_${scintillation}_scint"
 
-    cd ../../remoll-detector-generator/
+    cd ../../../remoll-detector-generator/
     outString=""
     OLDIFS=$IFS
     IFS=","
@@ -184,15 +166,14 @@ $ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$lg_angle,$pmtR,$til
         #xPosMax=$(printf "%.2f" "$(bc -l <<< ${pmtR}-10.0)")
         #xPosMin=$(printf "%.2f" "$(bc -l <<< ${qR}+0.5*${qL}+5.0)")
         z_p=$(printf "%.2f" "$(bc -l <<< ${z1}-0.55*$qThick)")
-        echo "$ring $xPosMin $xPosMax z = $z_p starting z = $z1 and second = $z2"
+        #echo "$ring $xPosMin $xPosMax z = $z_p starting z = $z1 and second = $z2"
         ref_angle=$refAngle
         refL=$refLength
-        lg_angle=$lgAngle
-        tilt=$tiltAngle
+        tiltAngle=$tilt
         q_r=$qR
         outString="$outString
 $ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$lg_angle,$pmtR,$tilt,$pmtRad,$wallThickness,$extraPMT1,$extraPMT2,$z1,$z2"
-    done < cadp_shortened.csv
+    done < cadp.csv
     IFS=$OLDIFS
 
     z_point=$z_p
@@ -200,48 +181,61 @@ $ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$lg_angle,$pmtR,$til
     if [[ "$pass" == "1" ]] ; then
         echo "$outString" > cadp_${geom}_${name}.csv
         perl cadGeneratorV1.pl -F cadp_${geom}_${name}.csv
-        perl gdmlGeneratorV1_materials_reflector.pl -M detectorMotherP.csv -D parameter.csv -P qe.txt -U UVS_45total.txt -R MylarRef.txt -L ${script_ring} -T _${geom} -i $lStep -j $wStep -t $thetaSubRef -p $phiSubRef
+        perl gdmlGeneratorV1_materials.pl -M detectorMotherP.csv -D parameter.csv -P qe.txt -U UVS_45total.txt -R MylarRef.txt -L ${script_ring} -T _${geom}
     fi
     cd -
 
     if [[ "$pass" == "1" ]] ; then
-        cp preserve_ref_scans.mac scans_${geom}_${name}.mac
-        sed -i 's;'"/remoll/evgen/beam/th -11.5 deg"';'"/remoll/evgen/beam/th -${tiltAngle} deg"';g' scans_${geom}_${name}.mac
-        sed -i 's;'"/remoll/evgen/beam/origin 0.0 0.0 0.0 mm"';'"/remoll/evgen/beam/origin -${q_r} 0.0 ${z_point} mm"';g' scans_${geom}_${name}.mac
+        cp macros/preserve_ref_scans.mac macros/scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/evgen/beam/th -11.5 deg"';'"/remoll/evgen/beam/th -${tiltAngle} deg"';g' macros/scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/evgen/beam/origin 0.0 0.0 0.0 mm"';'"/remoll/evgen/beam/origin -${q_r} 0.0 ${z_point} mm"';g' macros/scans_${geom}_${name}.mac
 
-        sed -i 's;'"/remoll/setgeofile geometry_Mainz/mollerMother_Mainz.gdml"';'"/remoll/setgeofile mollerMother_${geom}.gdml"';g' scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/setgeofile geometry_sandbox/mollerMother_Mainz.gdml"';'"/remoll/setgeofile mollerMother_${geom}.gdml"';g' macros/scans_${geom}_${name}.mac
 
-        sed -i 's;'"/remoll/evgen/beam/rasterRefZ 0.0 mm"';'"/remoll/evgen/beam/rasterRefZ ${z_point} mm"';g' scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/evgen/beam/rasterRefZ 0.0 mm"';'"/remoll/evgen/beam/rasterRefZ ${z_point} mm"';g' macros/scans_${geom}_${name}.mac
 
-        sed -i 's;'"/process/optical/processActivation Cerenkov false"';'"/process/optical/processActivation Cerenkov ${cer}"';g' scans_${geom}_${name}.mac
-        sed -i 's;'"/process/optical/processActivation Scintillation false"';'"/process/optical/processActivation Scintillation ${scint}"';g' scans_${geom}_${name}.mac
-        sed -i 's;'"Mainz_0.0_degrees_0.0_x.root"';'"${geom}_${name}.root"';g' scans_${geom}_${name}.mac
+        sed -i 's;'"/process/optical/processActivation Cerenkov false"';'"/process/optical/processActivation Cerenkov ${cer}"';g' macros/scans_${geom}_${name}.mac
+        sed -i 's;'"/process/optical/processActivation Scintillation false"';'"/process/optical/processActivation Scintillation ${scint}"';g' macros/scans_${geom}_${name}.mac
+        sed -i 's;'"Mainz_0.0_degrees_0.0_x.root"';'"${geom}_${name}.root"';g' macros/scans_${geom}_${name}.mac
     fi
 
-    tmpFolder="scans/sub/${geom}/out_${geom}_${wStep}_widthStep_${lStep}_lengthStep_${thetaSubRef}_theta_${phiSubRef}_phi_${name}"
-    if [ ! -d scans ] ; then
-        mkdir scans
+    tmpFolder="ref-scans/$geom/out_${geom}_${name}"
+    if [ ! -d ref-scans ] ; then
+        mkdir ref-scans
     fi
-    if [ ! -d scans/sub ] ; then
-        mkdir scans/sub
-    fi
-    if [ ! -d scans/sub/${geom} ] ; then
-        mkdir scans/sub/${geom}
+    if [ ! -d ref-scans/${geom} ] ; then
+        mkdir ref-scans/${geom}
     fi
     if [ ! -d $tmpFolder ] ; then
         mkdir $tmpFolder
     fi
     cd $tmpFolder
+    if [[ "$pass" == "2" ]] ; then
+        if [[ ! -f remollout_${geom}_${name}.pdf ]] ; then 
+            cp ../../../../../analysis/bin/pe .
+            if [[ ! -f remollout_${geom}_${name}.root ]] ; then
+                echo "Error, no remollout_${geom}_${name}.root file, retrying analysis"
+                secondpass="1"
+            else
+                echo "./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}"
+                ./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}
+                convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
+                rm remollout_${geom}_${name}*.png
+                #rm remollout_${geom}_${name}.root
+                rm remollout_${geom}_${name}_PEs_det_${det}.root
+                rm remollout_${geom}_${name}_PEs_det_${det}_plots.root
+            fi
+        fi
+    fi
     if [[ "$pass" == "1" ]] ; then
         cp -p ../../../../../build/remoll .
         cp -p ../../../../../bin/remoll.sh .
-        mv ../../../../../../remoll-detector-generator/cadp_${geom}_${name}.csv . 
         cp -p ../../../../../../remoll-detector-generator/materialsOptical.xml .
+        mv ../../../../../../remoll-detector-generator/cadp_${geom}_${name}.csv . 
         mv ../../../../../../remoll-detector-generator/*${geom}.* .
-
         sed -i 's;'"<matrix name=\"Mylar_Surf_Reflectivity\" coldim=\"2\" values=\"2.00214948263954\*eV 0.7"';'"<matrix name=\"Mylar_Surf_Reflectivity\" coldim=\"2\" values=\"2.00214948263954\*eV ${reflectivity} \n7.75389038185113\*eV ${reflectivity}\"/> \n<matrix name=\"Mylar_Surf_Reflectivity_Original\" coldim=\"2\" values=\"2.00214948263954\*eV 0.7"';g' matrices_${geom}.xml
         cp ../../../../../analysis/bin/pe .
-        mv ../../../../scans_${geom}_${name}.mac . 
+        mv ../../../macros/scans_${geom}_${name}.mac . 
         echo "#!/bin/bash
 #
 #$ -cwd
@@ -251,20 +245,10 @@ source remoll.sh
 ./remoll scans_${geom}_${name}.mac
         " > runscript_${geom}_${name}.sh
         chmod 755 runscript_${geom}_${name}.sh
+    fi
+    if [[ "$pass" == "1" || "$secondpass" == "1" ]] ; then
         qsub runscript_${geom}_${name}.sh
     fi
-    if [[ "$pass" == "2" ]] ; then
-        ./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point} length_step\=$lStep width_step\=$wStep theta\=$thetaSubRef phi\=$phiSubRef
-        convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
-        rm remollout_${geom}_${name}*.png
-        #rm remollout_${geom}_${name}.root
-        rm remollout_${geom}_${name}_*.root
-        #rm remollout_${geom}_${name}_PEs_det_${det}.root
-    fi
     cd -
-                done
-            done
-        done
-    done
+    secondpass="$pass"
 done
-

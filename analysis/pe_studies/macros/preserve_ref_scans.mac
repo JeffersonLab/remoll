@@ -1,7 +1,7 @@
 # Recreating the Mainz beam test
 
 # These must be called before initialize
-/remoll/setgeofile geometry_Mainz/mollerMother_Mainz.gdml
+/remoll/setgeofile geometry_sandbox/mollerMother_Mainz.gdml
 /remoll/physlist/parallel/disable
 /remoll/physlist/optical/enable
 
@@ -56,12 +56,12 @@
 #/remoll/evgen/beam/z 45.0 mm
 #-11.5 degrees /remoll/evgen/beam/th -0.1047
 #/remoll/evgen/beam/direction -0.19937 0.0 0.97992
-/remoll/evgen/beam/rasx 2.5 mm
-/remoll/evgen/beam/rasy 10.0 mm
+/remoll/evgen/beam/rasx 25.0 mm
+/remoll/evgen/beam/rasy 25.0 mm
 /remoll/beamene 8000 MeV
 
 /remoll/evgen/beam/partName e-
 
 /remoll/filename remollout_Mainz_0.0_degrees_0.0_x.root
 
-/run/beamOn 10000
+/run/beamOn 5000

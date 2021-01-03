@@ -35,9 +35,9 @@
 
 class bkgd {
     public:
-        void do_pe(int, char**);
+        int do_pe(int, char**);
         void set_plot_style();
-        void get_lookuptable();
+        int get_lookuptable();
         void bkgd_pe_ana();
         void bkgd_pePlots(int, char **);
     private:
@@ -64,7 +64,7 @@ class bkgd {
         TH2D* lookupTableFlat;
 };
 
-void bkgd::get_lookuptable()
+int bkgd::get_lookuptable()
 {
     TFile* old_file;
     TTree* oldtree;
@@ -87,9 +87,13 @@ void bkgd::get_lookuptable()
         old_file->GetObject("scans", oldtree);
         if (!oldtree) {
             std::cout << "ERROR: Dead scans tree" ;
-            return;
+            return 0;
         }
         int nent = oldtree->GetEntries();
+    }
+    else {
+        Printf("Error, no scans_%s.root file available, please place the look-up-table data there",detName.c_str());
+        return 0;
     }
     // Draw a TGraph, GOFF mode, obtain the output vectors and loop over them, filling in a low/up bin edge array with the means of neighboring bin centers, if it's an edge then calculate distance from opposite side and add that off to the side.
     // Include in cut avg_pes != 0 (i.e. not some glitch)
@@ -176,14 +180,15 @@ void bkgd::get_lookuptable()
     c1->SaveAs(Form("lookupTable_%s.pdf(",detName.c_str()));
     TCanvas * c2 = new TCanvas();
     c2->cd();
-    lookupTable->SetName(Form("Look Up Table - Log(Avg PEs)"));
-    lookupTable->SetTitle(Form("Look Up Table - Log(Avg PEs)"));
+    lookupTable->SetName(Form("Look Up Table - Avg PEs"));
+    lookupTable->SetTitle(Form("Look Up Table - Avg PEs"));
     lookupTable->SetXTitle(Form("Angle (degrees)"));
     lookupTable->SetYTitle(Form("Radial hit position (mm)"));
     lookupTable->Draw("COLZ");
     c2->SaveAs(Form("lookupTable_%s.pdf)",detName.c_str()));
     delete c1;
     delete c2;
+    return 1;
 }
 
 void bkgd::set_plot_style()
@@ -215,7 +220,7 @@ void bkgd::bkgd_pe_ana()
     std::vector < remollEventParticle_t > *fPart = 0;
     int dotPos = fileString.rfind(".");   
     std::ostringstream os;
-    os << fileString.substr(0, dotPos) << "_PEs_"<<"det_"<<detid<<".root";
+    os << anaStr << "_" << fileString.substr(0, dotPos) << "_PEs_"<<"det_"<<detid<<".root";
     std::string fileName = os.str();
     TFile *old = new TFile(fileString.c_str());
     TTree *oldTree = (TTree*)old->Get("T");
@@ -318,7 +323,7 @@ void bkgd::bkgd_pe_ana()
                 if ( lookup == 0.0 ) {
                     std::cout << "0 PEs" << std::endl;
                 }
-                std::cout << "PE Hit, rate = " << rate/(current*degeneracy) << ", Asymmetry = " << event.A << ", lookup pe value = " << lookup << ", bin number " << lookupTable->GetBin(lookupAngle,lookupXpos) << ", " << lookupAngle << ", " << lookupXpos << ", angle = " << (180.0/TMath::Pi())*asin(((hit.px*abs(hit.x) + hit.py*abs(hit.y))/hit.r)/hit.p) << ", abs(x_pos) = " << hit.r << ", which yields: " << peRateWeighting << std::endl;
+                std::cout << anaStr << " PE Hit, rate = " << rate/(current*degeneracy) << ", Asymmetry = " << event.A << ", lookup pe value = " << lookup << ", bin number " << lookupTable->GetBin(lookupAngle,lookupXpos) << ", " << lookupAngle << ", " << lookupXpos << ", angle = " << (180.0/TMath::Pi())*asin(((hit.px*abs(hit.x) + hit.py*abs(hit.y))/hit.r)/hit.p) << ", abs(x_pos) = " << hit.r << ", which yields: " << peRateWeighting << std::endl;
             }
             if (anaStr == "signals" && (hit.det==detid+1) && hit.pid == 11 && hit.mtrid == 0){ // Then this is our primary signal of interest
                 // if you do mtrid == 1 then you get the delta rays! About a 1% contribution 
@@ -449,8 +454,8 @@ void bkgd::bkgd_pePlots(int argcC, char **argvC)
     int dotpos = fileString.rfind(".root");   
     std::ostringstream os;
     std::ostringstream os2;
-    os << fileString.substr(0, dotpos) << "_PEs_"<<"det_"<<detid<<".root";
-    os2 << fileString.substr(0, dotpos) << "_PEs_"<<"det_"<<detid<<"_plots.root";
+    os << anaStr << "_" << fileString.substr(0, dotpos) << "_PEs_"<<"det_"<<detid<<".root";
+    os2 << anaStr << "_" << fileString.substr(0, dotpos) << "_PEs_"<<"det_"<<detid<<"_plots.root";
     std::string fileName = os.str();
     std::string fileNamePlots = os2.str();
 
@@ -664,10 +669,10 @@ void bkgd::bkgd_pePlots(int argcC, char **argvC)
         //Plot_Name,x_axis_units,x_number,y_number,y_uncertainty
         // user_reflectivity = 0.9, double user_cerenkov = 1.0, double user_scintillation = 1.0, double user_z_pos = -11.0
         if (p==0){ //then we simulated PEs on the photocathode
-            //file_out_rms<<names[p]<<fileString<<" - RMS,"<<RMS[p]<<","<<RMSerror[p]<<std::endl;
-            //std::cout<<names[p]<<fileString<<" - Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
-            //file_out_mean<<names[p]<<fileString<<" - Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
-            //file_out_res<<names[p]<<fileString<<" - Resolution = RMS/Mean,"<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
+            //file_out_rms<<names[p]<<anaStr<<","<<fileString<<" - RMS,"<<RMS[p]<<","<<RMSerror[p]<<std::endl;
+            //std::cout<<names[p]<<anaStr<<","<<fileString<<" - Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
+            //file_out_mean<<names[p]<<anaStr<<","<<fileString<<" - Mean,"<<Mean[p]<<","<<Meanerror[p]<<std::endl;
+            //file_out_res<<names[p]<<anaStr<<","<<fileString<<" - Resolution = RMS/Mean,"<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
 
 
             double ref_x_pos = user_x_pos;
@@ -853,11 +858,11 @@ void bkgd::bkgd_pePlots(int argcC, char **argvC)
 
             angle   = user_angle;
             x_pos   = user_x_pos;
-            file_out_integral<<names[p]<< ", " << fileString << ", " << detName << ", " << detid << ", Integral, "<<integral[p]<<",0"<<std::endl;
-            file_out_rms<<names[p]<< ", " << fileString << ", " << detName << ", " << detid << ", RMS, "<<RMS[p]<<","<<RMSerror[p]<<std::endl;
-            std::cout<<names[p]<< ", " << fileString << ", " << detName << ", " << detid << ", Mean, "<<Mean[p]<<","<<Meanerror[p]<<std::endl;
-            file_out_mean<<names[p]<< ", " << fileString << ", " << detName << ", " << detid << ", Mean, "<<Mean[p]<<","<<Meanerror[p]<<std::endl;
-            file_out_res<<names[p]<< ", " <<fileString << ", " << detName << ", " << detid << ", Resolution = RMS/Mean, "<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
+            file_out_integral << names[p] << ", " << anaStr << ", " << fileString << ", " << detName << ", " << detid << ", Integral, "<<integral[p]<<",0"<<std::endl;
+            file_out_rms << names[p] << ", " << anaStr << ", " << fileString << ", " << detName << ", " << detid << ", RMS, "<<RMS[p]<<","<<RMSerror[p]<<std::endl;
+            std::cout << names[p] << ", " << anaStr << ", " << fileString << ", " << detName << ", " << detid << ", Mean, "<<Mean[p]<<","<<Meanerror[p]<<std::endl;
+            file_out_mean << names[p] << ", " << anaStr << ", " << fileString << ", " << detName << ", " << detid << ", Mean, "<<Mean[p]<<","<<Meanerror[p]<<std::endl;
+            file_out_res << names[p] << ", " << anaStr << ", " <<fileString << ", " << detName << ", " << detid << ", Resolution = RMS/Mean, "<<(RMS[p]/Mean[p])<<","<<(RMS[p]/Mean[p])*sqrt((RMSerror[p]*RMSerror[p])+(Meanerror[p]*Meanerror[p]))<<std::endl;
 
             avg     = Mean[p];
             avg_err = Meanerror[p];
@@ -882,7 +887,7 @@ void bkgd::bkgd_pePlots(int argcC, char **argvC)
         }
         plotsFile->cd();
         c1[p]->Write();
-        c1[p]->SaveAs(Form("%s_%d_%d.png",fileString.substr(0,fileString.find(".root")).c_str(),detid,p));
+        c1[p]->SaveAs(Form("%s_%s_%d_%d.png",fileString.substr(0,fileString.find(".root")).c_str(),anaStr.c_str(),detid,p));
     }
 
     file_out_integral.close();
@@ -897,7 +902,7 @@ void bkgd::bkgd_pePlots(int argcC, char **argvC)
     //theApp.Run();
 }
 
-void bkgd::do_pe(int argc, char **argv)
+int bkgd::do_pe(int argc, char **argv)
 {
     if (argc <= 1 || argc > 10)
     {
@@ -945,20 +950,23 @@ void bkgd::do_pe(int argc, char **argv)
         degeneracy = atof(argv[9]);    
     }
 
-    get_lookuptable();
+    int success = get_lookuptable();
+    if (!success){
+        return 0;
+    }
     if (reana == true) {
-        std::cout << "Running with file=" << fileString << ", detid=" << detid << std::endl; 
+        std::cout << "Running with file=" << fileString << ", analysis=" << anaStr << ", detid=" << detid << std::endl; 
         bkgd_pe_ana();
     }
     if (argc >=1){
-        std::cout << "Plotting previously analyzed file=" << fileString << " + PEs_det_" << detid << ".root" << std::endl; 
+        std::cout << "Plotting previously analyzed file=" << fileString << " + " << anaStr << " + PEs_det_" << detid << ".root" << std::endl; 
         bkgd_pePlots(argc, argv);
     }
+    return 1;
 }
 
 int main(int argc, char **argv)
 {
     bkgd ana;
-    ana.do_pe(argc, argv);
-    return 0;
+    return ana.do_pe(argc, argv);
 }

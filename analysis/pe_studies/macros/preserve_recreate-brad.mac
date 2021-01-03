@@ -1,7 +1,7 @@
 # Recreating the Mainz beam test
 
 # These must be called before initialize
-/remoll/setgeofile geometry_Mainz/mollerMother_Mainz.gdml
+/remoll/setgeofile geometry_sandbox/mollerMother_Mainz.gdml
 /remoll/physlist/parallel/disable
 /remoll/physlist/optical/enable
 
