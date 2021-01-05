@@ -124,7 +124,7 @@ do
     ./scripts/scan.sh $x_pos angle $angleMin $angleMax $angleStep $reflectivity 1 1 $z_pos $geom ${analysis} $det &
 done
 
-if [[ ! -f results ]] ; then 
+if [[ ! -d results ]] ; then 
     mkdir results
 fi
 if [[ ! -f results/bkgd_pe ]] ; then 

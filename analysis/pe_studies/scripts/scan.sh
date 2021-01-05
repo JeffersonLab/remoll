@@ -176,7 +176,7 @@ do
                 ./pe remollout_${geom}_${name}.root ${det} angle\=${angle} x_pos\=${x_pos} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}
                 convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
                 rm remollout_${geom}_${name}*.png
-                #rm remollout_${geom}_${name}.root
+                rm remollout_${geom}_${name}.root
                 rm remollout_${geom}_${name}_PEs_det_${det}.root
                 rm remollout_${geom}_${name}_PEs_det_${det}_plots.root
             fi

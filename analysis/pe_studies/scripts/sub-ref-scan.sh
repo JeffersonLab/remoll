@@ -84,6 +84,8 @@ elif [[ $geom == "R6" ]] ; then
     det=640210
 fi
 secondpass="$pass"
+missing=0
+started=0
 if [ "$#" -gt 5 ] ; then
     det="${6}"
 fi
@@ -106,9 +108,16 @@ else
     scint="false"
 fi
 
+# On the first pass just do the loop once (started == 0)
+# Then, if $pass == 2 the $missing number could be > 0, in which case loop again
+while (( $missing!=0 )) || (( $started==0 )) ;
+do
+    missing=0
+    started=1
 
+#for wStep in `seq 0 4`;
+# seq 0 to 9 is redundant, as there is a symmetry about the midplane where width = 4.5
 for wStep in `seq 0 4`;
-#for wStep in `seq 0 9`;
 do
     for lStep in `seq 0 9`;
     do
@@ -118,12 +127,6 @@ do
             for phiStepSeq in `seq 0 12`;
             do
                 phiSubRef=$(printf "%.1f" "$(bc -l <<< \(-30.0+\(1.0*$phiStepSeq*5.0\)\))")
-        #for thetaStepSeq in `seq 4 4`;
-        #do
-        #    thetaSubRef=$(printf "%.1f" "$(bc -l <<< \(-10.0+\(1.0*$thetaStepSeq*2.5\)\))")
-        #    for phiStepSeq in `seq 6 6`;
-        #    do
-        #        phiSubRef=$(printf "%.1f" "$(bc -l <<< \(-30.0+\(1.0*$phiStepSeq*5.0\)\))")
 
 
 cd ../../../remoll-detector-generator/
@@ -156,7 +159,7 @@ name="${refAngle}_degrees_${refLength}_L_${reflectivity}_ref_${cerenkov}_cer_${s
 if [[ "$pass" == "1" ]] ; then
     echo "$outString" > cadp_${geom}_${name}.csv
     perl cadGeneratorV1.pl -F cadp_${geom}_${name}.csv
-    perl gdmlGeneratorV1_materials_reflector.pl -M detectorMotherP.csv -D parameter.csv -P qe.txt -U UVS_45total.txt -R MylarRef.txt -L ${script_ring} -T _${geom} -i $lStep -j $wStep -t $thetaSubRef -p $phiSubRef
+    perl gdmlGeneratorV1_materials.pl -M detectorMotherP.csv -D parameter.csv -P qe.txt -U UVS_45total.txt -R MylarRef.txt -L ${script_ring} -T _${geom} -i $lStep -j $wStep -t $thetaSubRef -p $phiSubRef
 fi
 cd -
 
@@ -188,15 +191,19 @@ cd $tmpFolder
 if [[ "$pass" == "2" ]] ; then
     if [[ ! -f remollout_${geom}_${name}.pdf ]] ; then 
         cp ../../../../../analysis/bin/pe .
-        if [[ ! -f remollout_${geom}_${name}.root ]] ; then
-            echo "Error, no remollout_${geom}_${name}.root file, retrying analysis"
-            secondpass="1"
+        if [[ ! -f finished.txt ]] ; then
+        #if [[ ! -f remollout_${geom}_${name}.root ]] ; then
+            echo "Not finished with ${geom} ${name}: ${wStep} widthStep, ${lStep} lengthStep, ${thetaSubRef} theta, ${phiSubRef} phi, will retry analysis"
+            let missing=$missing+1
+            #echo "$missing"
+            # Do missing check instead
+            #secondpass="1"
         else
             echo "./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point} length_step\=$lStep width_step\=$wStep theta\=$thetaSubRef phi\=$phiSubRef"
             ./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point} length_step\=$lStep width_step\=$wStep theta\=$thetaSubRef phi\=$phiSubRef
             convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
             rm remollout_${geom}_${name}*.png
-            #rm remollout_${geom}_${name}.root
+            rm remollout_${geom}_${name}.root
             rm remollout_${geom}_${name}_PEs_det_${det}.root
             rm remollout_${geom}_${name}_PEs_det_${det}_plots.root
         fi
@@ -217,11 +224,24 @@ if [[ "$pass" == "1" ]] ; then
 #$ -j y
 #$ -S /bin/bash
 source remoll.sh
-./remoll scans_${geom}_${name}.mac
+echo \"
+Doing ${geom} ${name} job
+\"
+while [[ ! -f remollout_${geom}_${name}.root ]] ;
+do 
+    echo \"Executing ./remoll scans_${geom}_${name}.mac
+    \"
+    ./remoll scans_${geom}_${name}.mac
+    rm core.*
+done
+echo \"Done, touching finished.txt to signal pass 2 to work
+\"
+touch finished.txt
     " > runscript_${geom}_${name}.sh
     chmod 755 runscript_${geom}_${name}.sh
 fi
-if [[ "$pass" == "1" || "$secondpass" == "1" ]] ; then
+#if [[ "$pass" == "1" || "$secondpass" == "1" ]] ; then
+if [[ "$pass" == "1" ]] ; then
     qsub runscript_${geom}_${name}.sh
 fi
 cd -
@@ -229,4 +249,35 @@ secondpass="$pass"
             done
         done
     done
+done
+if [[ "$pass" == "1" ]] ; then
+    echo "Pass 1 finished, feel free to rerun immediately with pass 2 (will loop until all jobs finish)"
+    missing=0
+fi
+if (( $missing!=0 )) ; then
+    echo "Pass 2 finished, waiting on $missing incomplete jobs for another pass
+    "
+    echo "Sleeping for 10 minutes"
+    sleep 60
+    echo "Sleeping for 9 minutes"
+    sleep 60
+    echo "Sleeping for 8 minutes"
+    sleep 60
+    echo "Sleeping for 7 minutes"
+    sleep 60
+    echo "Sleeping for 6 minutes"
+    sleep 60
+    echo "Sleeping for 5 minutes"
+    sleep 60
+    echo "Sleeping for 4 minutes"
+    sleep 60
+    echo "Sleeping for 3  minutes"
+    sleep 60
+    echo "Sleeping for 2 minutes"
+    sleep 60
+    echo "Sleeping for 1 minutes"
+    sleep 57
+    echo "Retrying analysis"
+    sleep 3
+fi
 done
