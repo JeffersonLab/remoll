@@ -7,6 +7,7 @@
 
 const int nSpecies=6;
 const string spTit[nSpecies]={"e-/pi-","e/#pi E>1","#gamma","neutron","primary e E>1","e+/pi+"};
+const int spCls[nSpecies]={2,6,1,4,7,3};
 const string spH[nSpecies]={"em","e1","g","n","eP1","ep"};
 std::map<int,int> spM {{11,1},{-211,1},{22,3},{2112,4},{-11,6},{211,6}};
 
