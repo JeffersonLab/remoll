@@ -7,80 +7,95 @@
 */
 #include "anaConst.h"
 
-std::vector<TH2F*> dBL_xy[nSpecies][nDmg][nFB];
-std::vector<TH1F*> dBL_r[nSpecies][nDmg][nFB];
-std::vector<TH1F*> dBL_energy[nSpecies][nFB];
-std::map<int, int> dBL_ID2entry;
+class beamLineDetHistos {
+  private:
+    std::vector<TH2F*> xy[nSpecies][nDmg][nFB];
+    std::vector<TH1F*> r[nSpecies][nDmg][nFB];
+    std::vector<TH1F*> energy[nSpecies][nFB];
+    std::map<int, int> ID2entry;
 
-void initHisto_beamLine(TFile *fout,int detID, string detNm){
+  public:
+    beamLineDetHistos() {}
+    ~beamLineDetHistos() {}
+    void initHisto(TFile*,const int,const string,const string,const double,const int);
+    void fillHisto(int detID, int sp, double rdDmg[3], double pz,
+		   double xx, double yy, double kinE, const int subDet);
+    void writeOutput(TFile *fout, int detID, double scaleFactor,const int subDet);
+};
+
+void beamLineDetHistos::initHisto(TFile *fout, const int detID, const string detNm, const string postfix = "", const double range=2000, const int subDet=0){
 
   fout->cd();
-  fout->mkdir(Form("det%d",detID),detNm.c_str());
+  if(!fout->GetDirectory(Form("det%d",detID)))
+    fout->mkdir(Form("det%d",detID), detNm.c_str());
   fout->cd(Form("det%d",detID));
 
-  dBL_ID2entry.insert(std::pair<int, int>(detID,dBL_ID2entry.size()));
+  ID2entry.insert(std::pair<int, int>(detID+10000*subDet,ID2entry.size()));
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
-      dBL_energy[i][k].push_back(new TH1F(Form("d%d_energy_%s_%s",detID,fbH[k].c_str(),spH[i].c_str()),
-					  Form("energy distribution %s %s",fbH[k].c_str(),spH[i].c_str()),
-					  121,-8,4.1));
-      niceLogXBins(dBL_energy[i][k][dBL_ID2entry[detID]]);
+      energy[i][k].push_back(new TH1F(Form("d%d_%s_energy_%s_%s", detID, postfix.c_str(), fbH[k].c_str(), spH[i].c_str()),
+				      Form("energy distribution %s %s", fbH[k].c_str(), spH[i].c_str()),
+				      121, -8, 4.1));
+      niceLogXBins(energy[i][k][ID2entry[detID+10000*subDet]]);
       
       for(int j=0;j<nDmg;j++){
-	dBL_xy[i][j][k].push_back(new TH2F(Form("d%d_xy_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
-					   Form("%s for %s %s;x[mm];y[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
-					   800,-1300,1300,
-					   800,-1300,1300));
-	dBL_r[i][j][k].push_back(new TH1F(Form("d%d_r_%s_%s_Dmg%d",detID,spH[i].c_str(),fbH[k].c_str(),j),
-					  Form("%s for %s %s;x[mm];y[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
-					  800,0,1300));
+	xy[i][j][k].push_back(new TH2F(Form("d%d_%s_xy_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
+				       Form("%s for %s %s;x[mm];y[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
+				       1000, -range, range,
+				       1000, -range, range));
+	r[i][j][k].push_back(new TH1F(Form("d%d_%s_r_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
+				      Form("%s for %s %s;r[mm];",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
+				      1000, 0, range));
       }
     }
 }
 
-void fillHisto_beamLine(int detID, int sp, double rdDmg[3],double pz,
-			double xx, double yy, double kinE){
-  
-  int det = dBL_ID2entry[detID];
+void beamLineDetHistos::fillHisto(int detID, int sp, double rdDmg[3], double pz,
+				  double xx, double yy, double kinE, const int subDet=0) {
+  if (ID2entry.find(detID+10000*subDet) == ID2entry.end()) 
+    return;
+
+  int det = ID2entry[detID+10000*subDet];
   double rr = sqrt(xx*xx+yy*yy);
 
-  dBL_energy[sp][0][det]->Fill(kinE);
+  energy[sp][0][det]->Fill(kinE);
   if(pz<0)
-    dBL_energy[sp][2][det]->Fill(kinE);
+    energy[sp][2][det]->Fill(kinE);
   else
-    dBL_energy[sp][1][det]->Fill(kinE);
+    energy[sp][1][det]->Fill(kinE);
 
   for(int kk=0;kk<nDmg;kk++){
-    dBL_xy[sp][kk][0][det]->Fill(xx,yy,rdDmg[kk]);
+    xy[sp][kk][0][det]->Fill(xx,yy,rdDmg[kk]);
     if(pz<0)
-      dBL_xy[sp][kk][2][det]->Fill(xx,yy,rdDmg[kk]);
+      xy[sp][kk][2][det]->Fill(xx,yy,rdDmg[kk]);
     else
-      dBL_xy[sp][kk][1][det]->Fill(xx,yy,rdDmg[kk]);
+      xy[sp][kk][1][det]->Fill(xx,yy,rdDmg[kk]);
 
-    dBL_r[sp][kk][0][det]->Fill(rr,rdDmg[kk]);
+    r[sp][kk][0][det]->Fill(rr,rdDmg[kk]);
     if(pz<0)
-      dBL_r[sp][kk][2][det]->Fill(rr,rdDmg[kk]);
+      r[sp][kk][2][det]->Fill(rr,rdDmg[kk]);
     else
-      dBL_r[sp][kk][1][det]->Fill(rr,rdDmg[kk]);
-
+      r[sp][kk][1][det]->Fill(rr,rdDmg[kk]);
   }
 }
 
-void writeOutput_beamLine(TFile *fout, int detID, double scaleFactor){
+void beamLineDetHistos::writeOutput(TFile *fout, int detID, double scaleFactor,const int subDet=0) {
+  if (ID2entry.find(detID+10000*subDet) == ID2entry.end())
+    return;
 
-  int det = dBL_ID2entry[detID];
+  int det = ID2entry[detID+10000*subDet];
   fout->cd();
   fout->cd(Form("det%d",detID));
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
-      dBL_energy[i][k][det]->Scale(scaleFactor);
-      dBL_energy[i][k][det]->Write();
+      energy[i][k][det]->Scale(scaleFactor);
+      energy[i][k][det]->Write();
       
       for(int j=0;j<nDmg;j++){
-	dBL_xy[i][j][k][det]->Scale(scaleFactor);
-	dBL_xy[i][j][k][det]->Write();
-	dBL_r[i][j][k][det]->Scale(scaleFactor);
-	dBL_r[i][j][k][det]->Write();
+        xy[i][j][k][det]->Scale(scaleFactor);
+        xy[i][j][k][det]->Write();
+        r[i][j][k][det]->Scale(scaleFactor);
+        r[i][j][k][det]->Write();
       }
     }
 }
