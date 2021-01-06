@@ -130,14 +130,14 @@ long processOne(string fnm){
 
       if(det==5500)      
 	beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE);
-      if(det==5542){
+      else if(det==5542){
 	if(sqrt(xx*xx+yy*yy)<100)
 	  beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE,1);
 	else if( yy<-1000 && yy>-2000 && abs(xx)<500)
 	  beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE,2);
       }else{
 	if(det==5501 && sqrt(xx*xx+yy*yy)>200) continue;
-	if(det==5502 && (abs(xx)>300 || abs(xx)<100) && (yy>-200 || yy<-500)) continue;
+	if(det==5502 && (abs(xx)>300 || abs(xx)<100) || (yy>-200 || yy<-500)) continue;
 	beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE,1);
       }
 
