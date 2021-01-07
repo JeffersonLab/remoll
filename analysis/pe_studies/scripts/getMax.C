@@ -1,4 +1,4 @@
-void getMax(TString fName = "scans.root") {
+void getMax(TString fName = "scans.root",Double_t baseline = 0.0) {
     TFile* fFile = TFile::Open(fName);
     if (!fFile) {
         std::cout<< "ERROR: No file named " << fName << std::endl;
@@ -7,8 +7,8 @@ void getMax(TString fName = "scans.root") {
     TChain* scans = (TChain*) fFile->Get("scans");
     TCanvas * c1 = new TCanvas();
 
-    Double_t old_integral = 0.095;
-    Double_t new_integral = 0.095;
+    Double_t old_integral = baseline;
+    Double_t new_integral = baseline;
 
     //(5 tiles of x width, 10 tiles of y length, and fill with the Theta chosen above)
     TH2F * improvementHistOld = new TH2F ("ImprovementOld","Original Yield", 5, 0, 5, 10, 0 , 10);
@@ -28,7 +28,7 @@ void getMax(TString fName = "scans.root") {
             TH2* hTemp = (TH2*) gROOT->FindObject("htemp");
             Int_t max_bin = hTemp->GetMaximumBin();
             Double_t max_value = hTemp->GetBinContent(max_bin);
-            new_integral += max_value - 0.095;
+            new_integral += max_value - baseline;
             Int_t xBin, yBin, zBin;
             hTemp->GetBinXYZ(max_bin,xBin,yBin,zBin);
             std::cout<< "Max bin = " << max_bin << ", and value = " << hTemp->GetBinContent(max_bin) << std::endl;
@@ -44,7 +44,7 @@ void getMax(TString fName = "scans.root") {
             if (!hTemp) {continue;}
             Int_t old_max_bin = hTemp->GetMaximumBin();
             Double_t old_max_value = hTemp->GetBinContent(old_max_bin);
-            old_integral += old_max_value - 0.095;
+            old_integral += old_max_value - baseline;
             Int_t old_xBin, old_yBin, old_zBin;
             hTemp->GetBinXYZ(old_max_bin,old_xBin,old_yBin,old_zBin);
             std::cout<< "Old Max bin = " << old_max_bin << ", and value = " << hTemp->GetBinContent(old_max_bin) << std::endl;
@@ -75,6 +75,10 @@ void getMax(TString fName = "scans.root") {
     newHist_Theta->Draw("COLZ");
     c2->cd(4);
     newHist_Phi->Draw("COLZ");
-    c2->SaveAs("test2.pdf");
+    int dotPos = ((std::string)fName).rfind(".root");
+    std::ostringstream os;
+    os << ((std::string)fName).substr(0, dotPos) << ".pdf";
+    std::string fileName = os.str();
+    c2->SaveAs(fileName.c_str());
 }
 
