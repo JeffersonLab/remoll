@@ -251,12 +251,12 @@
     <auxiliary auxtype="DetNo" auxvalue="66"/>
   </volume>
 
-  <volume name="HybridD5_log">
+<!--  <volume name="HybridD5_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="67"/>
-  </volume>
+  </volume>-->
 
   <volume name="HybridD6_log">
     <materialref ref="G4_Galactic"/>
@@ -279,12 +279,12 @@
     <auxiliary auxtype="DetNo" auxvalue="72"/>
   </volume>
 
-  <volume name="HybridD9_log">
+<!--  <volume name="HybridD9_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="73"/>
-  </volume>
+  </volume>-->
 
   <volume name="HybridD10_log">
     <materialref ref="G4_Galactic"/>
@@ -300,7 +300,7 @@
     <auxiliary auxtype="DetNo" auxvalue="75"/>
   </volume>
 
-  <volume name="HybridD12_log">
+<!--  <volume name="HybridD12_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
@@ -333,6 +333,48 @@
     <solidref ref="VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="71"/>
+  </volume>-->
+
+  <volume name="HybridD17_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="67"/>
+  </volume>
+
+  <volume name="HybridD18_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="71"/>
+  </volume>
+
+  <volume name="HybridD19_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73"/>
+  </volume>
+
+  <volume name="HybridD20_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="76"/>
+  </volume>
+
+  <volume name="HybridD21_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="77"/>
+  </volume>
+
+  <volume name="HybridD22_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="78"/>
   </volume>
 
   <volume name="ParallelWorld_logical">
@@ -465,10 +507,10 @@
       <positionref ref="HybridD4_pos"/>
     </physvol>
 
-    <physvol name="HybridD5_phys">
+<!--    <physvol name="HybridD5_phys">
       <volumeref ref="HybridD5_log"/>
       <positionref ref="HybridD5_pos"/>
-    </physvol>
+    </physvol>-->
 
     <physvol name="HybridD6_phys">
       <volumeref ref="HybridD6_log"/>
@@ -485,10 +527,10 @@
       <positionref ref="HybridD8_pos"/>
     </physvol>
 
-    <physvol name="HybridD9_phys">
+<!--    <physvol name="HybridD9_phys">
       <volumeref ref="HybridD9_log"/>
       <positionref ref="HybridD9_pos"/>
-    </physvol>
+    </physvol>-->
 
     <physvol name="HybridD10_phys">
       <volumeref ref="HybridD10_log"/>
@@ -500,7 +542,7 @@
       <positionref ref="HybridD11_pos"/>
     </physvol>
 
-    <physvol name="HybridD12_phys">
+<!--    <physvol name="HybridD12_phys">
       <volumeref ref="HybridD12_log"/>
       <positionref ref="HybridD12_pos"/>
     </physvol>
@@ -523,6 +565,36 @@
     <physvol name="HybridD16_phys">
       <volumeref ref="HybridD16_log"/>
       <positionref ref="HybridD16_pos"/>
+    </physvol>-->
+
+    <physvol name="HybridD17_phys">
+      <volumeref ref="HybridD17_log"/>
+      <positionref ref="HybridD17_pos"/>
+    </physvol>
+
+    <physvol name="HybridD18_phys">
+      <volumeref ref="HybridD18_log"/>
+      <positionref ref="HybridD18_pos"/>
+    </physvol>
+
+    <physvol name="HybridD19_phys">
+      <volumeref ref="HybridD19_log"/>
+      <positionref ref="HybridD19_pos"/>
+    </physvol>
+
+    <physvol name="HybridD20_phys">
+      <volumeref ref="HybridD20_log"/>
+      <positionref ref="HybridD20_pos"/>
+    </physvol>
+
+    <physvol name="HybridD21_phys">
+      <volumeref ref="HybridD21_log"/>
+      <positionref ref="HybridD21_pos"/>
+    </physvol>
+
+    <physvol name="HybridD22_phys">
+      <volumeref ref="HybridD22_log"/>
+      <positionref ref="HybridD22_pos"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
