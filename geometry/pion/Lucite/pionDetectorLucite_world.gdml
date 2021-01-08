@@ -1,28 +1,46 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "pionLuciteMaterials.xml">
+  <!ENTITY matrices SYSTEM "pionLuciteMatrices.xml">
+]>
 
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
-  <position name="pionDetectorCenter" z="1.5*m"/>
+  &matrices;
 </define>
 
-<materials>
-</materials>
+&materials;
 
 <solids>
-  <box name="world_solid" x="2*m" y="2*m" z="4*m"/>
+  <box name="world_solid" x="2.5*m" y="2.5*m" z="2.5*m"/>
+  <sphere name="sphere_solid" rmin="1*m" rmax="1.001*m" deltaphi="360*deg" deltatheta="180*deg"/>
 </solids>
 
 <structure>
 
+  <volume name="sphere_logical">
+    <materialref ref="Air"/>
+    <solidref ref="sphere_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="sphere"/>
+    <auxiliary auxtype="DetNo" auxvalue="8000"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+    <auxiliary auxtype="Color" auxvalue="Gray"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
   <volume name="world_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="Air"/>
     <solidref ref="world_solid"/>
 
     <physvol>
       <file name="pionDetectorLucite.gdml"/>
-      <positionref ref="pionDetectorCenter"/>
       <rotation x="90*deg"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="sphere_logical"/>
     </physvol>
       
   </volume>

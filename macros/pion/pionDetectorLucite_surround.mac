@@ -1,0 +1,60 @@
+# This must be called before initialize
+/remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml
+/remoll/parallel/setfile
+
+# Enable optical physics
+/remoll/physlist/parallel/disable
+/remoll/physlist/optical/enable
+
+# This must be explicitly called
+/run/initialize
+
+# Viewer
+/vis/open OGL 600x600-0+0
+/vis/ogl/set/displayListLimit 1000000
+/control/execute vis/vis.mac
+/vis/viewer/zoomTo 1
+
+# Enable only lucite and PMT
+/remoll/SD/enable 8000
+/remoll/SD/enable 8001
+
+# Set beam generator
+/remoll/beamene 11 GeV
+/remoll/evgen/set beam
+/remoll/evgen/beam/origin 0 0 0 cm
+/remoll/evgen/beam/originshift -1 m
+/remoll/evgen/beam/direction 0 0 1
+/remoll/evgen/beam/rasrefz 0
+/remoll/evgen/beam/rasx 0
+/remoll/evgen/beam/rasy 0
+/remoll/evgen/beam/corrx 0
+/remoll/evgen/beam/corry 0
+
+/control/alias part pi-
+
+/control/alias theta 0
+/control/alias phi 0
+/control/alias n 100
+#/control/loop macros/pion/pionDetectorLucite_surround_loop_theta.mac theta 0 90 5
+
+/control/alias theta -1
+/control/alias phi -1
+/control/alias n 1
+/remoll/evgen/beam/isotropic False
+#/control/execute macros/pion/pionDetectorLucite_surround_inside_loop.mac
+
+/control/alias n 100
+/remoll/evgen/beam/isotropic True
+/remoll/evgen/beam/isotropic_theta_min 45 deg
+/remoll/evgen/beam/isotropic_theta_max 45 deg
+/control/alias part opticalphoton
+/remoll/evgen/beam/sz 1
+/remoll/beamene 2 eV
+/remoll/evgen/beam/originshift 0 m
+/remoll/evgen/beam/origin 0 0 0 cm
+/control/execute macros/pion/pionDetectorLucite_surround_inside_loop.mac
+/remoll/evgen/beam/origin 0 2.54 0 cm
+#/control/execute macros/pion/pionDetectorLucite_surround_inside_loop.mac
+/remoll/evgen/beam/origin 0 -2.54 0 cm
+#/control/execute macros/pion/pionDetectorLucite_surround_inside_loop.mac

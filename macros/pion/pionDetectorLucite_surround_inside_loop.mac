@@ -1,0 +1,6 @@
+/remoll/evgen/set beam
+/remoll/evgen/beam/th {theta} deg
+/remoll/evgen/beam/ph {phi} deg
+/remoll/evgen/beam/partName {part}
+/remoll/filename remollout_{part}_theta{theta}_phi{phi}.root
+/run/beamOn {n}
