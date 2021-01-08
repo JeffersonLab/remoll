@@ -116,6 +116,7 @@ void remollGenBeam::SetPartName(G4String& name){
     G4cerr << "remollGenBeam: particle " << name << " not recognized." << G4endl;
     exit(-1);
   }
+}
 
 G4double remollGenBeam::GetSpread(G4double spread, EOriginModel model)
 {
