@@ -27,6 +27,7 @@ remollGenBeam::remollGenBeam()
   fOriginModelY(kOriginModelFlat),
   fOriginModelZ(kOriginModelFlat),
   fDirection(0.0,0.0,1.0),
+  fOriginShift(0.0),
   fCorrelation(0.0653*mrad/mm,0.0653*mrad/mm,0.0),
   fPolarization(0.0,0.0,0.0),
   fRaster(5*mm,5*mm,0.0),
@@ -55,6 +56,8 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"direction z (vector will be normalized before use)");
     fThisGenMessenger->DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"direction vector theta angle");
     fThisGenMessenger->DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"direction vector phi angle");
+
+    fThisGenMessenger->DeclarePropertyWithUnit("originshift","mm",fOriginShift,"origin shift along direction vector: s unit");
 
     fThisGenMessenger->DeclareProperty("polarization",fPolarization,"polarization vector (will be normalized): x y z");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
@@ -164,6 +167,9 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     // Add spreads to origin
     origin += raster;
     origin += spread;
+
+    // Add shift to origin
+    origin += fOriginShift * direction;
 
     // Override target sampling
     evt->fBeamE = E;

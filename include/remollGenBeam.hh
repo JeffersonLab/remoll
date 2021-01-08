@@ -65,6 +65,7 @@ class remollGenBeam : public remollVEventGen {
     G4ThreeVector fOriginSpread;
     EOriginModel  fOriginModelX, fOriginModelY, fOriginModelZ;
     G4ThreeVector fDirection;
+    G4double      fOriginShift;
     G4ThreeVector fCorrelation;
     G4ThreeVector fPolarization;
 
