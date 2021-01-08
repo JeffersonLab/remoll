@@ -22,7 +22,6 @@
     <physvol>
       <file name="pionDetectorLucite.gdml"/>
       <positionref ref="pionDetectorCenter"/>
-      <rotation x="90*deg"/>
     </physvol>
       
   </volume>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "pionLuciteMaterials.xml">
+  <!ENTITY matrices SYSTEM "pionLuciteMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <variable name="i" value="0"/>
+  <constant name="N_facets" value="100"/>
+  <!--constant name="N_facets" value="100"/-->
+
+  <!-- https://www.knightoptical.com/stock/default/linear-fresnel-lens-pmma-50mmfl-100x30mm.html -->
+  <quantity name="width" type="length" value="100" unit="mm"/>
+  <quantity name="height" type="length" value="30" unit="mm"/>
+  <quantity name="thickness" type="length" value="2" unit="mm"/>
+  <quantity name="focal_length" type="length" value="10" unit="mm"/>
+  <quantity name="radius" type="length" value="2*focal_length"/>
+  <quantity name="facet" type="length" value="height/(2*N_facets+1)"/>
+
+  &matrices;
+</define>
+
+&materials;
+
+<solids>
+  <box name="fresnel_lens_world_solid" x="width" y="height" z="thickness"/>
+  <tube name="lens_solid" rmin="0" rmax="radius" z="width" deltaphi="360" aunit="deg"/>
+  <loop for="i" from="-N_facets" to="N_facets" step="1">
+    <box name="slice_solid[i]" x="width" y="facet" z="thickness"/>
+    <intersection name="facet_solid[i]">
+      <first ref="slice_solid[i]"/>
+      <second ref="lens_solid"/>
+      <position name="facet_pos[i]"
+        y="-i*(height/2-facet/2)/N_facets"
+        z="-sqrt(radius**2-(i*(height/2-facet/2)/N_facets)**2)+thickness/2"/>
+      <rotation name="facet_rot[i]"
+        y="90" unit="deg"/>
+    </intersection>
+  </loop>
+</solids>
+
+<structure>
+
+  <loop for="i" from="-N_facets" to="N_facets" step="1">
+    <volume name="facet_logical[i]">
+      <materialref ref="Lucite"/>
+      <solidref ref="facet_solid[i]"/>
+    </volume>
+
+    <volume name="slice_logical[i]">
+      <materialref ref="Air"/>
+      <solidref ref="slice_solid[i]"/>
+      <physvol name="facet_physical[i]">
+        <volumeref ref="facet_logical[i]"/>
+      </physvol>
+    </volume>
+  </loop>
+
+  <volume name="fresnel_lens_logical">
+    <materialref ref="Air"/>
+    <solidref ref="fresnel_lens_world_solid"/>
+    <loop for="i" from="-N_facets" to="N_facets" step="1">
+      <physvol name="slice_physical[i]">
+        <volumeref ref="slice_logical[i]"/>
+        <position name="slice_pos[i]"
+          y="i*(height/2-facet/2)/N_facets"/>
+      </physvol>
+    </loop>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="fresnel_lens_logical"/>
+</setup>
+
+</gdml>
+
