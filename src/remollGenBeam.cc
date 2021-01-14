@@ -27,6 +27,7 @@ remollGenBeam::remollGenBeam()
   fOriginModelY(kOriginModelFlat),
   fOriginModelZ(kOriginModelFlat),
   fDirection(0.0,0.0,1.0),
+  fOriginShift(0.0),
   fIsotropic(false),
   fIsotropicThetaMin(0.0),
   fIsotropicThetaMax(2.0*pi),
@@ -62,6 +63,8 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareProperty("isotropic",fIsotropic,"direction is isotropic");
     fThisGenMessenger->DeclarePropertyWithUnit("isotropic_theta_min","deg",fIsotropicThetaMin,"minimum theta in isotropic direction");
     fThisGenMessenger->DeclarePropertyWithUnit("isotropic_theta_max","deg",fIsotropicThetaMax,"maximum theta in isotropic direction");
+
+    fThisGenMessenger->DeclarePropertyWithUnit("originshift","mm",fOriginShift,"origin shift along direction vector: s unit");
 
     fThisGenMessenger->DeclareProperty("polarization",fPolarization,"polarization vector (will be normalized): x y z");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
@@ -187,6 +190,9 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     // Add spreads to origin
     origin += raster;
     origin += spread;
+
+    // Add shift to origin
+    origin += fOriginShift * direction;
 
     // Override target sampling
     evt->fBeamE = E;

@@ -66,6 +66,7 @@ class remollGenBeam : public remollVEventGen {
     G4ThreeVector fOriginSpread;
     EOriginModel  fOriginModelX, fOriginModelY, fOriginModelZ;
     G4ThreeVector fDirection;
+    G4double      fOriginShift;
     G4bool        fIsotropic;
     G4double      fIsotropicThetaMin;
     G4double      fIsotropicThetaMax;
