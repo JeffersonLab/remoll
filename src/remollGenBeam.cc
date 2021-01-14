@@ -27,6 +27,9 @@ remollGenBeam::remollGenBeam()
   fOriginModelY(kOriginModelFlat),
   fOriginModelZ(kOriginModelFlat),
   fDirection(0.0,0.0,1.0),
+  fIsotropic(false),
+  fIsotropicThetaMin(0.0),
+  fIsotropicThetaMax(2.0*pi),
   fCorrelation(0.0653*mrad/mm,0.0653*mrad/mm,0.0),
   fPolarization(0.0,0.0,0.0),
   fRaster(5*mm,5*mm,0.0),
@@ -55,6 +58,9 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"direction z (vector will be normalized before use)");
     fThisGenMessenger->DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"direction vector theta angle");
     fThisGenMessenger->DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"direction vector phi angle");
+    fThisGenMessenger->DeclareProperty("isotropic",fIsotropic,"direction is isotropic");
+    fThisGenMessenger->DeclarePropertyWithUnit("isotropic_theta_min","deg",fIsotropicThetaMin,"minimum theta in isotropic direction");
+    fThisGenMessenger->DeclarePropertyWithUnit("isotropic_theta_max","deg",fIsotropicThetaMax,"maximum theta in isotropic direction");
 
     fThisGenMessenger->DeclareProperty("polarization",fPolarization,"polarization vector (will be normalized): x y z");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
@@ -144,6 +150,14 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 
     // Start from mean direction
     G4ThreeVector direction(fDirection.unit());
+
+    // Add direction range
+    if (fIsotropic) {
+      double th = acos(G4RandFlat::shoot(cos(fIsotropicThetaMax), cos(fIsotropicThetaMin)));
+      double ph = G4RandFlat::shoot(0.0, 2.0*pi);
+      direction.setTheta(th);
+      direction.setPhi(ph);
+    }
 
     // Add a spread based on chosen model
     G4ThreeVector spread = GetSpread(fOriginSpread, fOriginModelX, fOriginModelY, fOriginModelZ);
