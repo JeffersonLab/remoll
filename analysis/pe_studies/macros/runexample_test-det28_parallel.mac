@@ -1,0 +1,35 @@
+# This must be called before initialize
+/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+# Parallel world geometry is optional - detector 28 (the primary detector array's idealize vacuum detector) is included in this parallel world now.
+/remoll/parallel/setfile geometry/mollerParallelOrig.gdml 
+
+/remoll/physlist/parallel/enable 
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/SD/disable_all
+/remoll/SD/enable 28
+#/remoll/SD/enable 540211
+#/remoll/SD/enable 540217
+#/remoll/SD/enable 540215
+#/remoll/SD/enable 540214
+
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+# Raster and initial angle stuff
+#/remoll/oldras false
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+
+/remoll/evgen/set moller
+/remoll/beamene 11 GeV
+/remoll/beamcurr 65 microampere
+/control/execute macros/kryptonite.mac
+/process/list
+
+/remoll/filename remollout_testParallel.root
+
+/remoll/printtargetinfo
+/run/beamOn 10000

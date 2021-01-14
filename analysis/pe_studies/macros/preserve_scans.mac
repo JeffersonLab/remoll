@@ -1,0 +1,67 @@
+# Recreating the Mainz beam test
+
+# These must be called before initialize
+/remoll/setgeofile geometry_sandbox/mollerMother_Mainz.gdml
+/remoll/physlist/parallel/disable
+/remoll/physlist/optical/enable
+
+/process/optical/processActivation Cerenkov false
+/process/optical/processActivation Scintillation false
+
+/process/optical/setTrackSecondariesFirst Cerenkov true
+/process/optical/setTrackSecondariesFirst Scintillation true
+
+# This must be explicitly called
+/run/initialize
+
+/process/optical/cerenkov/setTrackSecondariesFirst true
+/process/optical/cerenkov/setMaxPhotons 2000
+/process/optical/scintillation/setTrackSecondariesFirst true
+/process/optical/scintillation/setYieldFactor 1.0
+/process/optical/scintillation/setExcitationRatio 0.0
+
+/remoll/SD/enable_all
+
+/remoll/printgeometry true
+
+#/remoll/scalefield map_directory/blockyHybrid_rm_3.0.txt 1.0
+#/remoll/magcurrent map_directory/blockyHybrid_rm_3.0.txt 1000.0 A
+
+# Raster and initial angle stuff
+/remoll/oldras true
+#/remoll/rasx 0 mm
+#/remoll/rasy 10 mm
+
+#Set Beam Generator settings
+/remoll/evgen/set beam 
+#/run/beamOn 0
+
+
+#----------------------------------------
+
+# Kill tracks on interactions with W, Cu, and Pb
+#/control/execute macros/kryptonite.mac
+
+/process/list
+
+# Electrons incident on quartz------------
+
+#/process/optical/cerenkov/setMaxPhotons 0
+# (Quartz center, - 1/2 of quartz length, - full distance to PMT )/2
+# (-987.5-75 -1350 )/2 = 1206.25
+/remoll/evgen/beam/rasterRefZ 0.0 mm
+/remoll/evgen/beam/origin 0.0 0.0 0.0 mm
+/remoll/evgen/beam/th -11.5 deg
+#/remoll/evgen/beam/x -1206.25 mm
+#/remoll/evgen/beam/z 45.0 mm
+#-11.5 degrees /remoll/evgen/beam/th -0.1047
+#/remoll/evgen/beam/direction -0.19937 0.0 0.97992
+/remoll/evgen/beam/rasx 2.5 mm
+/remoll/evgen/beam/rasy 10.0 mm
+/remoll/beamene 8000 MeV
+
+/remoll/evgen/beam/partName e-
+
+/remoll/filename remollout_Mainz_0.0_degrees_0.0_x.root
+
+/run/beamOn 10000

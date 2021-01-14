@@ -31,7 +31,7 @@
 #
 # Declare that trajectories and hits should be added to the scene
 #
-/vis/scene/add/trajectories rich
+/vis/scene/add/trajectories
 /vis/scene/add/hits
 
 #
@@ -57,7 +57,9 @@
 /vis/viewer/set/lightsThetaPhi 40 50
 #New cutaway plane setting
 #/vis/viewer/set/cutawayMode intersection
-/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 1.0 0.0 0.0
+#/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 1.0 0.0 0.0
+/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 0.0 -1.0 0.0
+#/vis/viewer/addCutawayPlane 0.25 0.0 0.0 m -1.0 0.0 0.0
 #old value
 #/vis/viewer/set/lightsMove with-camera
 #
@@ -74,18 +76,6 @@
 /vis/modeling/trajectories/MollerStyle/set proton magenta
 #
 /vis/modeling/trajectories/select MollerStyle
-
-#
-# Create filters
-#
-/vis/filtering/trajectories/create/particleFilter HideAllGammas
-/vis/filtering/trajectories/HideAllGammas/add gamma
-/vis/filtering/trajectories/HideAllGammas/invert true
-/vis/filtering/trajectories/HideAllGammas/active 0
-
-/vis/filtering/trajectories/create/encounteredVolumeFilter ShowOnlyPionDetectorHits
-/vis/filtering/trajectories/ShowOnlyPionDetectorHits/add pionDetectorLuciteAllPlanesWedgeGlue_physical
-/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 0
 
 #
 # Event action
