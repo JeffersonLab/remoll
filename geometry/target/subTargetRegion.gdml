@@ -108,6 +108,7 @@
 
   <!--<box lunit="mm" name="LeadCollar_solid1"
 	  x="370" y="370" z="200"/>-->
+  <!-- FIXME this could be done with just one tube and no subtraction -->
   <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollar_solid1"
         rmin="0" rmax="330" z="200"/>
   <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollarInnerSub_solid"
@@ -120,7 +121,14 @@
 
 
   <!--shielding concrete -->
-  <box lunit="mm" name="concrete_outerbox" x="concreteBoxx" y="concreteBoxy" z="concreteBoxz"/>
+  <box lunit="mm" name="concrete_outerbox_full" x="concreteBoxx" y="concreteBoxy" z="concreteBoxz"/>
+  <box lunit="mm" name="concrete_usSub" x="concreteBoxx+1" y="concreteBoxy+1" z="concreteBoxz/2."/>
+  <subtraction name="concrete_outerbox">
+    <first ref = "concrete_outerbox_full"/>
+    <second ref = "concrete_usSub"/>
+    <position name ="concreteUSsub" lunit="mm" x="0" y="" z="-concreteBoxz/4." />
+  </subtraction>
+
   <box lunit="mm" name="concrete_innerbox"
        x="concreteBoxx-2*concreteThickness"
        y="concreteBoxy"
@@ -145,7 +153,10 @@
   </subtraction>
 
   <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
-        rmin="0" rmax="Shield_bore_concrete" z="concreteThickness+2.0"/>
+        rmin="0" rmax="510" z="concreteThickness+2.0"/>
+
+  <tube aunit="deg" deltaphi="360" lunit="mm" name="bariteDonut_solid"
+        rmin="339" rmax="505" z="concreteThickness"/>
 
   <subtraction name="concrete_sub">
     <first ref = "concrete_sub2"/>
@@ -303,6 +314,13 @@
     <auxiliary auxtype="Alpha" auxvalue="1.0"/>
   </volume>
 
+  <volume name="bariteDonut_logic">
+    <materialref ref="barite"/>
+    <solidref ref="bariteDonut_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Brown"/>
+    <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+  </volume>
+
   <volume name="LeadShield_target">
     <materialref ref="Concrete"/>
     <solidref ref="lead_sub"/>
@@ -446,18 +464,18 @@
 	<position name="targ_downstream_window" unit="mm" x="0" y="0" z="625+1"/>
     </physvol>
 
-    <physvol>
-      <volumeref ref="targetChamber"/>
-      <position name="targetChamber_pos" unit="mm" x="0" y="0" z="0"/>
-      <rotationref ref="rot_x90"/>
-    </physvol>
+    <!-- <physvol> -->
+    <!--   <volumeref ref="targetChamber"/> -->
+    <!--   <position name="targetChamber_pos" unit="mm" x="0" y="0" z="0"/> -->
+    <!--   <rotationref ref="rot_x90"/> -->
+    <!-- </physvol> -->
 
-    <physvol>
-      <volumeref ref="targetChamberHat"/>
-      <position name="targetChamberHat_pos" unit="mm" x="0" z="0"
-                y="targetChamber_L/2 + targetChamberLid_thickness + targetChamberHat_L/2"/>
-      <rotationref ref="rot_x90"/>
-    </physvol>
+    <!-- <physvol> -->
+    <!--   <volumeref ref="targetChamberHat"/> -->
+    <!--   <position name="targetChamberHat_pos" unit="mm" x="0" z="0" -->
+    <!--             y="targetChamber_L/2 + targetChamberLid_thickness + targetChamberHat_L/2"/> -->
+    <!--   <rotationref ref="rot_x90"/> -->
+    <!-- </physvol> -->
 
     <physvol>
       <volumeref ref="targetUSBeamPipe"/>
@@ -473,13 +491,17 @@
     <physvol>
       <volumeref ref="ConcreteShield_target"/>
       <position name="ConcerteShield_pos" unit="mm" x="0" y="concreteBoxy/2.-2975" z="0"/>
-      <!-- <position name="ConcerteShield_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="concreteBoxy/2.-2975" z="0"/> -->
     </physvol>
 
     <physvol>
-      <volumeref ref="LeadShield_target"/>
-      <position name="LeadShield_pos" unit="mm" x="-1.*(leadBoxx/2.-1880)" y="leadBoxy/2.-1150" z="1105+leadBoxz/2."/>
+      <volumeref ref="bariteDonut_logic"/>
+      <position name="bariteDonut_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2."/>
     </physvol>
+
+    <!-- <physvol> -->
+    <!--   <volumeref ref="LeadShield_target"/> -->
+    <!--   <position name="LeadShield_pos" unit="mm" x="-1.*(leadBoxx/2.-1880)" y="leadBoxy/2.-1150" z="1105+leadBoxz/2."/> -->
+    <!-- </physvol> -->
 
     <!--placement of vacuum detector    -->
     <physvol>
