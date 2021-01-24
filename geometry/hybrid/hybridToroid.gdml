@@ -2727,7 +2727,6 @@
 			<rotation name="rot_dsshield1" x="0" y="0" z="-12*pi/7."/>
 		</physvol>
 
-
 		<physvol name="DSBeamShieldPipe5_pv">
 			<volumeref ref="DSBeamShieldPipe5_logic"/>
 			<position name="DSBeamShieldPipe5_pos" x="0" y="0" z="2164.806"/>
