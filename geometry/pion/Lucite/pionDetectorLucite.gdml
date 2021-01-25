@@ -305,8 +305,10 @@
   <trap name="pionDetectorLuciteReflectorInside_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteReflectorTheta" phi="90.0*deg"
-    x1="pionDetectorLuciteOutsideWidth"
-    x2="pionDetectorLuciteOutsideWidth"
+    x1="pionDetectorLuciteOutsideWidth
+        +pionDetectorLuciteWedgeHeight*pionDetectorLuciteSlopeInX"
+    x2="pionDetectorLuciteOutsideWidth
+        +pionDetectorLuciteWedgeHeight*pionDetectorLuciteSlopeInX"
     x3="pionDetectorLuciteReflectorWidth"
     x4="pionDetectorLuciteReflectorWidth"
     y1="pionDetectorLuciteAllPlanesGlueThicknessInY"
@@ -315,8 +317,12 @@
   <trap name="pionDetectorLuciteReflectorOutside_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteReflectorTheta" phi="90.0*deg"
-    x1="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteReflectorThickness"
-    x2="pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteReflectorThickness"
+    x1="pionDetectorLuciteOutsideWidth
+        +pionDetectorLuciteWedgeHeight*pionDetectorLuciteSlopeInX
+        +2.0*pionDetectorLuciteReflectorThickness"
+    x2="pionDetectorLuciteOutsideWidth
+        +pionDetectorLuciteWedgeHeight*pionDetectorLuciteSlopeInX
+        +2.0*pionDetectorLuciteReflectorThickness"
     x3="pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteReflectorThickness"
     x4="pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteReflectorThickness"
     y1="pionDetectorLuciteAllPlanesGlueThicknessInY
@@ -356,8 +362,12 @@
   <trap name="pionDetectorLuciteReflectorOutsideScaled_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteReflectorTheta" phi="90.0*deg"
-    x1="SCALE_UP*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteReflectorThickness)"
-    x2="SCALE_UP*(pionDetectorLuciteOutsideWidth+2.0*pionDetectorLuciteReflectorThickness)"
+    x1="SCALE_UP*(pionDetectorLuciteOutsideWidth
+        +pionDetectorLuciteWedgeHeight*pionDetectorLuciteSlopeInX
+        +2.0*pionDetectorLuciteReflectorThickness)"
+    x2="SCALE_UP*(pionDetectorLuciteOutsideWidth
+        +pionDetectorLuciteWedgeHeight*pionDetectorLuciteSlopeInX
+        +2.0*pionDetectorLuciteReflectorThickness)"
     x3="SCALE_UP*(pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteReflectorThickness)"
     x4="SCALE_UP*(pionDetectorLuciteReflectorWidth+2.0*pionDetectorLuciteReflectorThickness)"
     y1="SCALE_UP*(pionDetectorLuciteAllPlanesGlueThicknessInY+2.0*pionDetectorLuciteReflectorThicknessInY)"
