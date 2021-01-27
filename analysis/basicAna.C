@@ -32,6 +32,7 @@ int nFiles(0);
 long currentEvNr(0);
 
 float offsetR(0),offsetPhi(0);
+float detOffsetX(0),detOffsetY(0);
 const double pi = acos(-1);
 
 void initHisto();
@@ -40,7 +41,11 @@ void process();
 int findDetector(int &sector, double phi, double r);
 void writeOutput();
 
-void basicAna(const string& finName = "./remollout.root"){
+void basicAna(const string& finName = "./remollout.root", totalXoffset = 0, totalYoffset = 0, radialOffset = 0, phiOffset=0){
+  detOffsetX = totalXoffset;
+  detOffsetY = totalYoffset;
+  offsetR = radialOffset;
+  offsetPhi = phiOffset;
   fin = finName;
   initHisto();
   process();
@@ -74,7 +79,7 @@ void process(){
 }
 
 void initHisto(){
-  string foutNm = Form("%s_bkgAnaV4.root",fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("%s_basicAnaV0.root",fin.substr(0,fin.find(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -229,9 +234,13 @@ long processOne(string fnm){
       
       if(hit->at(j).r < 500) continue;
 
-      double phi = atan2(hit->at(j).y,hit->at(j).x);
+      double phi = atan2(hit->at(j).y - detOffsetY,hit->at(j).x - detOffsetX);
       if(phi<0) phi+=2*pi;
-      int foundRing = findDetector(sector, phi, hit->at(j).r);
+
+      double offsetRR  = hit->at(j).r;
+      if(abs(detOffsetY)>0 || abs(detOffsetX)>0)
+	offsetRR = sqrt((hit->at(j).y - detOffsetY)*(hit->at(j).y - detOffsetY)+(hit->at(j).x - detOffsetX)*(hit->at(j).x - detOffsetX));
+      int foundRing = findDetector(sector, phi, offsetRR);
       if(foundRing==-1) continue;
 
       ///HACK Cut to select one septant .. WARNING!! do not use in regular analysis
@@ -400,10 +409,11 @@ void writeOutput(){
   
 int findDetector(int &sector, double phi, double r){
 
-  //turn off for regular analysis
-  // double dPhiOffset = 2 * atan2( offsetPhi , 2*(r * 1000) );
-  // phi -= dPhiOffset;// "-" because we are moving the hit; i.e. the detector moves the other way
-
+  if(offsetPhi>0){
+    double dPhiOffset = 2 * atan2( offsetPhi , 2*(r * 1000) );
+    phi -= dPhiOffset;// "-" because we are moving the hit; i.e. the detector moves the other way
+  }
+ 
   const double secPhi = fmod(phi, 2*pi/7);
   
   //0,1,2 == closed, transition, open
@@ -437,13 +447,6 @@ int findDetector(int &sector, double phi, double r){
     {1070.0, 1060.0, 1055.0},
     {1170.0, 1170.0, 1170.0}
   };
-
-  // if ever you want to recover this it has to be reorganized
-  // const double rMin[8]={690, 730, 780, 855,  900,  855,  915, 1070};//initial CG estimation
-  // const double rMax[8]={730, 780, 855, 930, 1060, 1070, 1055, 1200};
-  // const double rMin[8]={0.690, 0.730, 0.780, 0.855, 0.935, 0.960, 0.960, 1.100};
-  // const double rMax[8]={0.730, 0.780, 0.855, 0.930, 1.040, 1.075, 1.100, 1.200};
-  //const int region2ring[8]={0,1,2,3,4,4,4,5};
 
   for(int i=0;i<nRings;i++)
     if( r >= rMin[i][sector] + offsetR && r <= rMax[i][sector] + offsetR)
