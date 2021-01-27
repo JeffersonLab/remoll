@@ -41,7 +41,8 @@ void process();
 int findDetector(int &sector, double phi, double r);
 void writeOutput();
 
-void basicAna(const string& finName = "./remollout.root", totalXoffset = 0, totalYoffset = 0, radialOffset = 0, phiOffset=0){
+void basicAna(const string& finName = "./remollout.root", 
+	      float totalXoffset = 0, float totalYoffset = 0, float radialOffset = 0, float phiOffset=0){
   detOffsetX = totalXoffset;
   detOffsetY = totalYoffset;
   offsetR = radialOffset;
@@ -164,7 +165,7 @@ long processOne(string fnm){
   
   long nEntries = t->GetEntries();
   cout<<"\tTotal events: "<<nEntries<<endl;
-  float currentProc=1,procStep=10;
+  float currentProc=1,procStep=30;
   vector<int> procID;
   int sector(-1);
   double pi = acos(-1);
@@ -178,7 +179,7 @@ long processOne(string fnm){
     }
 
     if(currentEvNr % 10000 == 1 && currentEvNr>2){
-      cout<<"avg "<<currentEvNr<<" " <<event<<endl;
+      //cout<<"avg "<<currentEvNr<<" " <<event<<endl;
       leftRate->Fill(lR->GetMean());
       rightRate->Fill(rR->GetMean());
       lR->Reset();
@@ -230,7 +231,7 @@ long processOne(string fnm){
       if( find(procID.begin(),procID.end(), hit->at(j).trid) != procID.end() ) continue;
       procID.push_back(hit->at(j).trid);
 
-      if(isnan(rate) || isinf(rate)) continue;
+      if(std::isnan(rate) || std::isinf(rate)) continue;
       
       if(hit->at(j).r < 500) continue;
 
