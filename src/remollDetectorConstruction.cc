@@ -60,6 +60,9 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   fWorldVolume(0),
   fWorldName(name)
 {
+  // Define some engineering units
+  new G4UnitDefinition("inch","in","Length",25.4*CLHEP::millimeter);
+
   SetGDMLFile("geometry/mollerMother.gdml");
   // If gdmlfile is non-empty
   if (gdmlfile.length() > 0) {
