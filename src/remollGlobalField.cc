@@ -252,7 +252,7 @@ void remollGlobalField::PrintFieldValue(const G4ThreeVector& r)
     GetFieldValue(p, B);
     G4cout << "At r" << r << " [m]: B = ";
     for (int i = 0; i < __GLOBAL_NDIM; i++) {
-        G4cout << B[i] << " ";
+        G4cout << B[i]/tesla << " ";
     }
     G4cout << "T" << G4endl;
 }

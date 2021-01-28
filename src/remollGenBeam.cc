@@ -27,15 +27,20 @@ remollGenBeam::remollGenBeam()
   fOriginModelY(kOriginModelFlat),
   fOriginModelZ(kOriginModelFlat),
   fDirection(0.0,0.0,1.0),
+  fOriginShift(0.0),
+  fIsotropic(false),
+  fIsotropicThetaMin(0.0),
+  fIsotropicThetaMax(2.0*pi),
   fCorrelation(0.0653*mrad/mm,0.0653*mrad/mm,0.0),
   fPolarization(0.0,0.0,0.0),
   fRaster(5*mm,5*mm,0.0),
   fRasterRefZ(-4.5*m),
   fParticleName("e-")
 {
-    fSampType = kNoTargetVolume;
+    fSamplingType = kNoTargetVolume;
     fApplyMultScatt = true;
 
+    fThisGenMessenger->DeclarePropertyWithUnit("rasterRefZ","mm",fRasterRefZ,"Raster Origin Z: z unit");
     fThisGenMessenger->DeclarePropertyWithUnit("origin","mm",fOriginMean,"origin position mean: x y z unit");
     fThisGenMessenger->DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginXMean,"origin x position mean");
     fThisGenMessenger->DeclareMethodWithUnit("y","mm",&remollGenBeam::SetOriginYMean,"origin y position mean");
@@ -55,6 +60,11 @@ remollGenBeam::remollGenBeam()
     fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"direction z (vector will be normalized before use)");
     fThisGenMessenger->DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"direction vector theta angle");
     fThisGenMessenger->DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"direction vector phi angle");
+    fThisGenMessenger->DeclareProperty("isotropic",fIsotropic,"direction is isotropic");
+    fThisGenMessenger->DeclarePropertyWithUnit("isotropic_theta_min","deg",fIsotropicThetaMin,"minimum theta in isotropic direction");
+    fThisGenMessenger->DeclarePropertyWithUnit("isotropic_theta_max","deg",fIsotropicThetaMax,"maximum theta in isotropic direction");
+
+    fThisGenMessenger->DeclarePropertyWithUnit("originshift","mm",fOriginShift,"origin shift along direction vector: s unit");
 
     fThisGenMessenger->DeclareProperty("polarization",fPolarization,"polarization vector (will be normalized): x y z");
     fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
@@ -108,7 +118,15 @@ void remollGenBeam::SetPolarizationX(double sx){ fPolarization.setX(sx); }
 void remollGenBeam::SetPolarizationY(double sy){ fPolarization.setY(sy); }
 void remollGenBeam::SetPolarizationZ(double sz){ fPolarization.setZ(sz); }
 
-void remollGenBeam::SetPartName(G4String& name){ fParticleName = name; }
+void remollGenBeam::SetPartName(G4String& name){
+  G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
+  G4ParticleDefinition* particle = particleTable->FindParticle(name);
+  if (particle) fParticleName = name;
+  else {
+    G4cerr << "remollGenBeam: particle " << name << " not recognized." << G4endl;
+    exit(-1);
+  }
+}
 
 G4double remollGenBeam::GetSpread(G4double spread, EOriginModel model)
 {
@@ -135,8 +153,8 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     G4ParticleDefinition* particle = particleTable->FindParticle(fParticleName);
 
     // Get initial beam energy instead of using other sampling
-    double E = fBeamTarg->fBeamEnergy;
     double m = particle->GetPDGMass();
+    double E = fBeamTarg->fBeamEnergy + m;
     double p = sqrt(E*E - m*m);
 
     // Start from mean position
@@ -144,6 +162,14 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
 
     // Start from mean direction
     G4ThreeVector direction(fDirection.unit());
+
+    // Add direction range
+    if (fIsotropic) {
+      double th = acos(G4RandFlat::shoot(cos(fIsotropicThetaMax), cos(fIsotropicThetaMin)));
+      double ph = G4RandFlat::shoot(0.0, 2.0*pi);
+      direction.setTheta(th);
+      direction.setPhi(ph);
+    }
 
     // Add a spread based on chosen model
     G4ThreeVector spread = GetSpread(fOriginSpread, fOriginModelX, fOriginModelY, fOriginModelZ);
@@ -165,6 +191,9 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
     origin += raster;
     origin += spread;
 
+    // Add shift to origin
+    origin += fOriginShift * direction;
+
     // Override target sampling
     evt->fBeamE = E;
     evt->fBeamMomentum = p * direction;
@@ -177,7 +206,7 @@ void remollGenBeam::SamplePhysics(remollVertex * /*vert*/, remollEvent *evt)
         fParticleName,
         evt->fBeamPolarization);
 
-    evt->SetEffCrossSection(0.0);
+    evt->SetEffCrossSection(1.0);
     evt->SetAsymmetry(0.0);
 
     evt->SetQ2(0.0);

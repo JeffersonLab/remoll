@@ -14,204 +14,26 @@
 		<fraction n="0.015" ref="G4_Cu"/>
 		<fraction n="0.035" ref="G4_Ni"/>
 	</material>
+	<material name="Epoxy" state="solid">
+		<D value="1.3" unit="g/cm3"/>
+		<fraction n="0.5354" ref="C"/>
+		<fraction n="0.1318" ref="H"/>
+		<fraction n="0.3328" ref="O"/>
+	</material>
+	<material name="G10" state="solid">
+		<D value="1.3" unit="g/cm3"/>
+		<fraction n="0.773" ref="G4_SILICON_DIOXIDE"/>
+		<fraction n="0.147" ref="Epoxy"/>
+		<fraction n="0.080" ref="G4_Cl"/>
+	</material>
 </materials>
 
 
 <solids>
 
-	<box name="solid_s1_lowerArm" lunit="mm" x="27.5" y="27.0" z="1000.0"/>
-	<para name="solid_s1_upperArm" lunit="mm" aunit="rad" x="27.5" y="27.0" z="1000.0" alpha="0" theta="0.0274930708522" phi="0"/>
-	<tube name="solid_s1_frontNose" rmin="38.75"  rmax="66.25" z="27.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-
-	<box name="solid_s2_lowerArm" lunit="mm" x="41.0" y="27.0" z="1000.0"/>
-	<para name="solid_s2_upperArm" lunit="mm" aunit="rad" x="41.0" y="27.0" z="1000.0" alpha="0" theta="0.0544461364188" phi="0"/>
-	<tube name="solid_s2_frontNose" rmin="39.0"  rmax="52.5" z="27.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-
-	<box name="solid_s3_lowerArm" lunit="mm" x="68.5" y="27.0" z="1000.0"/>
-	<para name="solid_s3_upperArm" lunit="mm" aunit="rad" x="68.5" y="27.0" z="1000.0" alpha="0" theta="0.0364838039027" phi="0"/>
-	<tube name="solid_s3_frontNose" rmin="38.75"  rmax="66.25" z="27.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-
-	<para name="solid_s4_low1_tb" lunit="mm" aunit="rad" x="68.5" y="14.0" z="1040.0" alpha="0" theta="0" phi="0"/>
-	<para name="solid_s4_low1_mid" lunit="mm" aunit="rad" x="68.5" y="27.0" z="1040.0" alpha="0" theta="0.0230728278901" phi="0"/>
-	<para name="solid_s4_low2" lunit="mm" aunit="rad" x="68.5" y="55.0" z="760.0" alpha="0" theta="0.0230728278901" phi="0"/>
-	<para name="solid_s4_low3" lunit="mm" aunit="rad" x="68.5" y="55.0" z="1760.0" alpha="0" theta="0.062418809996" phi="0"/>
-	<para name="solid_s4_low4" lunit="mm" aunit="rad" x="68.5" y="55.0" z="140.0" alpha="0" theta="-0.0142847425874" phi="0"/>
-
-	<para name="solid_s4_up1" lunit="mm" aunit="rad" x="68.5" y="55.0" z="400.0" alpha="0" theta="0.19258327746" phi="0"/>
-	<para name="solid_s4_up2" lunit="mm" aunit="rad" x="68.5" y="55.0" z="1040.0" alpha="0" theta="0.0317201263721" phi="0"/>
-
-	<tube name="solid_s4_up3_S" rmin="28.5"  rmax="97.0" z="55.0" startphi="0" deltaphi="pi/2" aunit="rad" lunit="mm"/>
-	<box name="solid_s4_up3_box" x="68.5" y="97.25" z="55.0"/>
-
-	<union name="solid_s4_up3_half">
-		<first ref="solid_s4_up3_S"/>
-		<second ref="solid_s4_up3_box"/>
-		<position name="pos_s4_box_wrt_S" x="62.75" y="-48.625" z="0"/>
-		<rotation name="rot_s4_box_wrt_S" x="0" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_up3">
-		<first ref="solid_s4_up3_half"/>
-		<second ref="solid_s4_up3_half"/>
-		<position name="pos_s4_S" x="0" y="125.5" z="0"/>
-		<rotation name="rot_s4_S" x="pi" y="pi" z="0"/>
-	</union>
-
-	<para name="solid_s4_up4" lunit="mm" aunit="rad" x="68.5" y="55.0" z="1800.0" alpha="0" theta="0.0649086896934" phi="0"/>
-	<para name="solid_s4_up5" lunit="mm" aunit="rad" x="68.5" y="55.0" z="140.0" alpha="0" theta="0.0713074647853" phi="0"/>
-	<tube name="solid_s4_frontNose" rmin="45.0"  rmax="113.5" z="14.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-	<tube name="solid_s4_endNose" rmin="38.4807692308"  rmax="106.980769231" z="55.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-
-	<union name="solid_s1_1">
-		<first ref="solid_s1_frontNose"/>
-		<second ref="solid_s1_upperArm"/>
-		<position name="pos_s1_1" x="66.25" y="-500.0" z="0"/>
-		<rotation name="rot_s1_1" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s1">
-		<first ref="solid_s1_1"/>
-		<second ref="solid_s1_lowerArm"/>
-		<position name="pos_s1" x="-52.5" y="-500.0" z="0"/>
-		<rotation name="rot_s1" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s2_1">
-		<first ref="solid_s2_frontNose"/>
-		<second ref="solid_s2_upperArm"/>
-		<position name="pos_s2_1" x="86.75" y="-500.0" z="0"/>
-		<rotation name="rot_s2_1" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s2">
-		<first ref="solid_s2_1"/>
-		<second ref="solid_s2_lowerArm"/>
-		<position name="pos_s2" x="-59.5" y="-500.0" z="0"/>
-		<rotation name="rot_s2" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s3_1">
-		<first ref="solid_s3_frontNose"/>
-		<second ref="solid_s3_upperArm"/>
-		<position name="pos_s3_1" x="91.25" y="-500.0" z="0"/>
-		<rotation name="rot_s3_1" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s3">
-		<first ref="solid_s3_1"/>
-		<second ref="solid_s3_lowerArm"/>
-		<position name="pos_s3" x="-73.0" y="-500.0" z="0"/>
-		<rotation name="rot_s3" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_1">
-		<first ref="solid_s4_frontNose"/>
-		<second ref="solid_s4_low1_tb"/>
-		<position name="pos_s4_1" x="-79.25" y="-520.0" z="0"/>
-		<rotation name="rot_s4_1" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_2">
-		<first ref="solid_s4_1"/>
-		<second ref="solid_s4_low1_mid"/>
-		<position name="pos_s4_2" x="-91.25" y="-520.0" z="-20.5"/>
-		<rotation name="rot_s4_2" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_3">
-		<first ref="solid_s4_2"/>
-		<second ref="solid_s4_1"/>
-		<position name="pos_s4_3" x="0" y="0" z="-41.0"/>
-		<rotation name="rot_s4_3" x="0" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_4">
-		<first ref="solid_s4_3"/>
-		<second ref="solid_s4_up1"/>
-		<position name="pos_s4_4" x="118.25" y="-200.0" z="-20.5"/>
-		<rotation name="rot_s4_4" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_5">
-		<first ref="solid_s4_4"/>
-		<second ref="solid_s4_up2"/>
-		<position name="pos_s4_5" x="173.75" y="-920.0" z="-20.5"/>
-		<rotation name="rot_s4_5" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_6">
-		<first ref="solid_s4_5"/>
-		<second ref="solid_s4_up3"/>
-		<position name="pos_s4_6" x="127.5" y="-1537.25" z="-20.5"/>
-		<rotation name="rot_s4_6" x="pi" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_7">
-		<first ref="solid_s4_6"/>
-		<second ref="solid_s4_low2"/>
-		<position name="pos_s4_7" x="-70.4807692308" y="-1420.0" z="-20.5"/>
-		<rotation name="rot_s4_7" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_8">
-		<first ref="solid_s4_7"/>
-		<second ref="solid_s4_low3"/>
-		<position name="pos_s4_8" x="-6.71153846154" y="-2680.0" z="-20.5"/>
-		<rotation name="rot_s4_8" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_9">
-		<first ref="solid_s4_8"/>
-		<second ref="solid_s4_low4"/>
-		<position name="pos_s4_9" x="47.2884615385" y="-3630.0" z="-20.5"/>
-		<rotation name="rot_s4_9" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_10">
-		<first ref="solid_s4_9"/>
-		<second ref="solid_s4_up4"/>
-		<position name="pos_s4_10" x="123.25" y="-2660.0" z="-20.5"/>
-		<rotation name="rot_s4_10" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4_11">
-		<first ref="solid_s4_10"/>
-		<second ref="solid_s4_up5"/>
-		<position name="pos_s4_11" x="186.75" y="-3630.0" z="-20.5"/>
-		<rotation name="rot_s4_11" x="pi/2" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s4">
-		<first ref="solid_s4_11"/>
-		<second ref="solid_s4_endNose"/>
-		<position name="pos_s4_12" x="119.019230769" y="-3700.0" z="-20.5"/>
-		<rotation name="rot_s4_12" x="-pi" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s1_s2">
-		<first ref="solid_s1"/>
-		<second ref="solid_s2"/>
-		<position name="pos_s1_s2" x="13.75" y="-1000.0" z="0"/>
-		<rotation name="rot_s1_s2" x="0" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s1_s2_s3">
-		<first ref="solid_s1_s2"/>
-		<second ref="solid_s3"/>
-		<position name="pos_s1_s2_s3" x="41.0" y="-2000.0" z="0"/>
-		<rotation name="rot_s1_s2_s3" x="0" y="0" z="0"/>
-	</union>
-
-	<union name="solid_s1_s2_s3_s4">
-		<first ref="solid_s1_s2_s3"/>
-		<second ref="solid_s4"/>
-		<position name="pos_s1_s2_s3_s4" x="71.25" y="-3000.0" z="20.5"/>
-		<rotation name="rot_s1_s2_s3_s4" x="0" y="0" z="0"/>
-	</union>
-
 	<xtru name="solid_photon_collimator" lunit="mm">
-		<twoDimVertex x="-53.0" y="18.25"/>
-		<twoDimVertex x="-53.0" y="-18.25"/>
+		<twoDimVertex x="-53.0" y="17.25"/>
+		<twoDimVertex x="-53.0" y="-17.25"/>
 		<twoDimVertex x="53.0" y="-54.15"/>
 		<twoDimVertex x="53.0" y="-29.15"/>
 		<twoDimVertex x="-10.84" y="-12.75"/>
@@ -222,279 +44,2397 @@
 		<section zOrder="2" zPosition="35" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 
-	<box name="solid_dcoil_mid" lunit="mm" x="363.5" y="27.0" z="6873.23076923"/>
-	<box name="solid_dcoil_tb" lunit="mm" x="339.5" y="55.0" z="3920.48076923"/>
-	<union name="solid_dcoil">
-		<first ref="solid_dcoil_mid"/>
-		<second ref="solid_dcoil_tb"/>
-		<position name="pos_dcoil" x="12.0" y="0" z="1476.375"/>
-		<rotation name="rot_dcoil" x="0" y="0" z="0"/>
+	<xtru name="solid_septapus_arm" lunit="mm">
+		<twoDimVertex x="-3.0" y="3.0"/>
+		<twoDimVertex x="-3.0" y="-3.0"/>
+		<twoDimVertex x="3.0" y="-3.0"/>
+		<twoDimVertex x="3.0" y="3.0"/>
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="3500.0" xOffset="11.0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+
+	<tube name="solid_septapus_tube" rmin="32.0"  rmax="38.0" z="148.55" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+
+	<xtru name="solid_C1_mid"  lunit="mm">
+		<twoDimVertex x="91.28" y="860.0" />
+		<twoDimVertex x="66.27" y="0.0" />
+		<twoDimVertex x="-66.27" y="0.0" />
+		<twoDimVertex x="-64.06" y="860.0" />
+		<section zOrder="1" zPosition="-13.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="13.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_C1_front" rmin="0" rmax="66.27" z="26.4922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_C1_back" rmin="0" rmax="77.67" z="26.4922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_C1_frontmid">
+		<first ref="solid_C1_front"/>
+		<second ref="solid_C1_mid"/>
+		<position name="position_node_solid_C1_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_C1_frontmid" x="pi" />
 	</union>
 
-	<tube name="solid_DS_toroidMother" rmin="40.0"  rmax="413.5" z="6893.23076923" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+		<union name="solid_C1">
+			<first ref="node_solid_C1_frontmid"/>
+			<second ref="solid_C1_back"/>
+			<position name="position_node_solid_C1" x="13.61" y="-860.0"/>
+			<rotation name="rotation_node_solid_C1_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_outer_E1_mid"  lunit="mm">
+		<twoDimVertex x="92.28" y="860.0" />
+		<twoDimVertex x="67.27" y="0.0" />
+		<twoDimVertex x="-67.27" y="0.0" />
+		<twoDimVertex x="-65.06" y="860.0" />
+		<section zOrder="1" zPosition="-14.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="14.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_outer_E1_front" rmin="0" rmax="67.27" z="28.4922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_outer_E1_back" rmin="0" rmax="78.67" z="28.4922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_outer_E1_frontmid">
+		<first ref="solid_outer_E1_front"/>
+		<second ref="solid_outer_E1_mid"/>
+		<position name="position_node_solid_outer_E1_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_outer_E1_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_outer_E1">
+			<first ref="node_solid_outer_E1_frontmid"/>
+			<second ref="solid_outer_E1_back"/>
+			<position name="position_node_solid_outer_E1" x="13.61" y="-860.0"/>
+			<rotation name="rotation_node_solid_outer_E1_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_inner_E1_mid"  lunit="mm">
+		<twoDimVertex x="65.17" y="860.0" />
+		<twoDimVertex x="40.16" y="0.0" />
+		<twoDimVertex x="-40.16" y="0.0" />
+		<twoDimVertex x="-37.95" y="860.0" />
+		<section zOrder="1" zPosition="-13.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="13.2461" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_inner_E1_front" rmin="0" rmax="40.16" z="26.4922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_inner_E1_back" rmin="0" rmax="51.56" z="26.4922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_inner_E1_frontmid">
+		<first ref="solid_inner_E1_front"/>
+		<second ref="solid_inner_E1_mid"/>
+		<position name="position_node_solid_inner_E1_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_inner_E1_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_inner_E1">
+			<first ref="node_solid_inner_E1_frontmid"/>
+			<second ref="solid_inner_E1_back"/>
+			<position name="position_node_solid_inner_E1" x="13.61" y="-860.0"/>
+			<rotation name="rotation_node_solid_inner_E1_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_C2_mid"  lunit="mm">
+		<twoDimVertex x="109.58" y="840.0" />
+		<twoDimVertex x="85.42" y="0.0" />
+		<twoDimVertex x="-85.42" y="0.0" />
+		<twoDimVertex x="-83.26" y="840.0" />
+		<section zOrder="1" zPosition="-14.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="14.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_C2_front" rmin="0" rmax="85.42" z="29.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_C2_back" rmin="0" rmax="96.42" z="29.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_C2_frontmid">
+		<first ref="solid_C2_front"/>
+		<second ref="solid_C2_mid"/>
+		<position name="position_node_solid_C2_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_C2_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_C2">
+			<first ref="node_solid_C2_frontmid"/>
+			<second ref="solid_C2_back"/>
+			<position name="position_node_solid_C2" x="13.16" y="-840.0"/>
+			<rotation name="rotation_node_solid_C2_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_outer_E2_mid"  lunit="mm">
+		<twoDimVertex x="110.58" y="840.0" />
+		<twoDimVertex x="86.42" y="0.0" />
+		<twoDimVertex x="-86.42" y="0.0" />
+		<twoDimVertex x="-84.26" y="840.0" />
+		<section zOrder="1" zPosition="-15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_outer_E2_front" rmin="0" rmax="86.42" z="31.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_outer_E2_back" rmin="0" rmax="97.42" z="31.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_outer_E2_frontmid">
+		<first ref="solid_outer_E2_front"/>
+		<second ref="solid_outer_E2_mid"/>
+		<position name="position_node_solid_outer_E2_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_outer_E2_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_outer_E2">
+			<first ref="node_solid_outer_E2_frontmid"/>
+			<second ref="solid_outer_E2_back"/>
+			<position name="position_node_solid_outer_E2" x="13.16" y="-840.0"/>
+			<rotation name="rotation_node_solid_outer_E2_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_inner_E2_mid"  lunit="mm">
+		<twoDimVertex x="83.47" y="840.0" />
+		<twoDimVertex x="59.31" y="0.0" />
+		<twoDimVertex x="-59.31" y="0.0" />
+		<twoDimVertex x="-57.15" y="840.0" />
+		<section zOrder="1" zPosition="-14.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="14.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_inner_E2_front" rmin="0" rmax="59.31" z="29.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_inner_E2_back" rmin="0" rmax="70.31" z="29.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_inner_E2_frontmid">
+		<first ref="solid_inner_E2_front"/>
+		<second ref="solid_inner_E2_mid"/>
+		<position name="position_node_solid_inner_E2_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_inner_E2_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_inner_E2">
+			<first ref="node_solid_inner_E2_frontmid"/>
+			<second ref="solid_inner_E2_back"/>
+			<position name="position_node_solid_inner_E2" x="13.16" y="-840.0"/>
+			<rotation name="rotation_node_solid_inner_E2_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_C3_mid"  lunit="mm">
+		<twoDimVertex x="124.075" y="753.0" />
+		<twoDimVertex x="107.135" y="0.0" />
+		<twoDimVertex x="-107.135" y="0.0" />
+		<twoDimVertex x="-105.195" y="753.0" />
+		<section zOrder="1" zPosition="-15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_C3_front" rmin="0" rmax="107.135" z="31.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_C3_back" rmin="0" rmax="114.635" z="31.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_C3_frontmid">
+		<first ref="solid_C3_front"/>
+		<second ref="solid_C3_mid"/>
+		<position name="position_node_solid_C3_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_C3_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_C3">
+			<first ref="node_solid_C3_frontmid"/>
+			<second ref="solid_C3_back"/>
+			<position name="position_node_solid_C3" x="9.44" y="-753.0"/>
+			<rotation name="rotation_node_solid_C3_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_outer_E3_mid"  lunit="mm">
+		<twoDimVertex x="125.075" y="753.0" />
+		<twoDimVertex x="108.135" y="0.0" />
+		<twoDimVertex x="-108.135" y="0.0" />
+		<twoDimVertex x="-106.195" y="753.0" />
+		<section zOrder="1" zPosition="-16.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="16.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_outer_E3_front" rmin="0" rmax="108.135" z="33.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_outer_E3_back" rmin="0" rmax="115.635" z="33.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_outer_E3_frontmid">
+		<first ref="solid_outer_E3_front"/>
+		<second ref="solid_outer_E3_mid"/>
+		<position name="position_node_solid_outer_E3_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_outer_E3_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_outer_E3">
+			<first ref="node_solid_outer_E3_frontmid"/>
+			<second ref="solid_outer_E3_back"/>
+			<position name="position_node_solid_outer_E3" x="9.44" y="-753.0"/>
+			<rotation name="rotation_node_solid_outer_E3_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_inner_E3_mid"  lunit="mm">
+		<twoDimVertex x="61.94141" y="753.0" />
+		<twoDimVertex x="45.00141" y="0.0" />
+		<twoDimVertex x="-45.00141" y="0.0" />
+		<twoDimVertex x="-43.06141" y="753.0" />
+		<section zOrder="1" zPosition="-15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="15.5461" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_inner_E3_front" rmin="0" rmax="45.00141" z="31.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_inner_E3_back" rmin="0" rmax="52.50141" z="31.0922" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_inner_E3_frontmid">
+		<first ref="solid_inner_E3_front"/>
+		<second ref="solid_inner_E3_mid"/>
+		<position name="position_node_solid_inner_E3_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_inner_E3_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_inner_E3">
+			<first ref="node_solid_inner_E3_frontmid"/>
+			<second ref="solid_inner_E3_back"/>
+			<position name="position_node_solid_inner_E3" x="9.44" y="-753.0"/>
+			<rotation name="rotation_node_solid_inner_E3_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_C4_mid_mid"  lunit="mm">
+		<twoDimVertex x="222.8425" y="3552.527" />
+		<twoDimVertex x="100.90766" y="1642.45733" />
+		<twoDimVertex x="101.34462" y="1625.48249" />
+		<twoDimVertex x="102.8725" y="1608.60192" />
+		<twoDimVertex x="106.41283" y="1591.93128" />
+		<twoDimVertex x="111.00935" y="1575.58476" />
+		<twoDimVertex x="116.94194" y="1559.67437" />
+		<twoDimVertex x="124.16997" y="1544.30908" />
+		<twoDimVertex x="132.64392" y="1529.6907" />
+		<twoDimVertex x="142.30574" y="1515.63045" />
+		<twoDimVertex x="153.08924" y="1502.51356" />
+		<twoDimVertex x="168.11613" y="1484.23265" />
+		<twoDimVertex x="181.57721" y="1464.76992" />
+		<twoDimVertex x="193.37999" y="1444.2591" />
+		<twoDimVertex x="203.44334" y="1422.84117" />
+		<twoDimVertex x="211.69812" y="1400.6633" />
+		<twoDimVertex x="218.08758" y="1377.87792" />
+		<twoDimVertex x="222.56783" y="1354.6416" />
+		<twoDimVertex x="225.10807" y="1331.11404" />
+		<twoDimVertex x="225.69084" y="1307.45692" />
+		<twoDimVertex x="190.81784" y="308.82491" />
+		<twoDimVertex x="137.6225" y="0.0" />
+		<twoDimVertex x="-137.6225" y="0.0" />
+		<twoDimVertex x="-109.21579" y="1360.31311" />
+		<twoDimVertex x="-5.33509" y="3337.13369" />
+		<twoDimVertex x="-38.8175" y="3552.527" />
+		<section zOrder="1" zPosition="-8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_C4_mid_front" rmin="0" rmax="137.6225" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_C4_mid_back" rmin="0" rmax="130.83" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_C4_mid_frontmid">
+		<first ref="solid_C4_mid_front"/>
+			<second ref="solid_C4_mid_mid"/>
+			<position name="position_node_solid_C4_mid_frontmid" x="0" y="0" z="0"/>
+			<rotation name="rotation_node_solid_C4_mid_frontmid" x="pi" y="0" z="0"/>
+		</union>
+
+		<union name="solid_C4_mid">
+			<first ref="node_solid_C4_mid_frontmid"/>
+			<second ref="solid_C4_mid_back"/>
+			<position name="position_node_solid_C4_mid_back" x="92.0125" y="-3552.527"/>
+			<rotation name="rotation_node_solid_C4_mid_back" x="-pi" y="0" z="0"/>
+		</union>
+
+	<xtru name="solid_outer_E4_mid_mid"  lunit="mm">
+		<twoDimVertex x="223.8425" y="3552.527" />
+		<twoDimVertex x="101.90766" y="1642.45733" />
+		<twoDimVertex x="102.34462" y="1625.48249" />
+		<twoDimVertex x="103.8725" y="1608.60192" />
+		<twoDimVertex x="107.41283" y="1591.93128" />
+		<twoDimVertex x="112.00935" y="1575.58476" />
+		<twoDimVertex x="117.94194" y="1559.67437" />
+		<twoDimVertex x="125.16997" y="1544.30908" />
+		<twoDimVertex x="133.64392" y="1529.6907" />
+		<twoDimVertex x="143.30574" y="1515.63045" />
+		<twoDimVertex x="154.08924" y="1502.51356" />
+		<twoDimVertex x="169.11613" y="1484.23265" />
+		<twoDimVertex x="182.57721" y="1464.76992" />
+		<twoDimVertex x="194.37999" y="1444.2591" />
+		<twoDimVertex x="204.44334" y="1422.84117" />
+		<twoDimVertex x="212.69812" y="1400.6633" />
+		<twoDimVertex x="219.08758" y="1377.87792" />
+		<twoDimVertex x="223.56783" y="1354.6416" />
+		<twoDimVertex x="226.10807" y="1331.11404" />
+		<twoDimVertex x="226.69084" y="1307.45692" />
+		<twoDimVertex x="191.81784" y="308.82491" />
+		<twoDimVertex x="138.6225" y="0.0" />
+		<twoDimVertex x="-138.6225" y="0.0" />
+		<twoDimVertex x="-110.21579" y="1360.31311" />
+		<twoDimVertex x="-6.33509" y="3337.13369" />
+		<twoDimVertex x="-39.8175" y="3552.527" />
+		<section zOrder="1" zPosition="-17.2573" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="17.2573" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_outer_E4_mid_front" rmin="0" rmax="138.6225" z="34.5146" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_outer_E4_mid_back" rmin="0" rmax="131.83" z="34.5146" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_outer_E4_mid_frontmid">
+		<first ref="solid_outer_E4_mid_front"/>
+			<second ref="solid_outer_E4_mid_mid"/>
+			<position name="position_node_solid_outer_E4_mid_frontmid" x="0" y="0" z="0"/>
+			<rotation name="rotation_node_solid_outer_E4_mid_frontmid" x="pi" y="0" z="0"/>
+		</union>
+
+		<union name="solid_outer_E4_mid">
+			<first ref="node_solid_outer_E4_mid_frontmid"/>
+			<second ref="solid_outer_E4_mid_back"/>
+			<position name="position_node_solid_outer_E4_mid_back" x="92.0125" y="-3552.527"/>
+			<rotation name="rotation_node_solid_outer_E4_mid_back" x="-pi" y="0" z="0"/>
+		</union>
+
+	<xtru name="solid_inner_E4_mid_mid"  lunit="mm">
+		<twoDimVertex x="139.9805" y="3552.527" />
+		<twoDimVertex x="18.04566" y="1642.45733" />
+		<twoDimVertex x="18.48262" y="1625.48249" />
+		<twoDimVertex x="20.0105" y="1608.60192" />
+		<twoDimVertex x="23.55083" y="1591.93128" />
+		<twoDimVertex x="28.14735" y="1575.58476" />
+		<twoDimVertex x="34.07994" y="1559.67437" />
+		<twoDimVertex x="41.30797" y="1544.30908" />
+		<twoDimVertex x="49.78192" y="1529.6907" />
+		<twoDimVertex x="59.44374" y="1515.63045" />
+		<twoDimVertex x="70.22724" y="1502.51356" />
+		<twoDimVertex x="85.25413" y="1484.23265" />
+		<twoDimVertex x="98.71521" y="1464.76992" />
+		<twoDimVertex x="110.51799" y="1444.2591" />
+		<twoDimVertex x="120.58134" y="1422.84117" />
+		<twoDimVertex x="128.83612" y="1400.6633" />
+		<twoDimVertex x="135.22558" y="1377.87792" />
+		<twoDimVertex x="139.70583" y="1354.6416" />
+		<twoDimVertex x="142.24607" y="1331.11404" />
+		<twoDimVertex x="142.82884" y="1307.45692" />
+		<twoDimVertex x="107.95584" y="308.82491" />
+		<twoDimVertex x="54.7605" y="0.0" />
+		<twoDimVertex x="-54.7605" y="0.0" />
+		<twoDimVertex x="-26.35379" y="1360.31311" />
+		<twoDimVertex x="77.52691" y="3337.13369" />
+		<twoDimVertex x="44.0445" y="3552.527" />
+		<section zOrder="1" zPosition="-8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_inner_E4_mid_front" rmin="0" rmax="54.7605" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_inner_E4_mid_back" rmin="0" rmax="47.968" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_inner_E4_mid_frontmid">
+		<first ref="solid_inner_E4_mid_front"/>
+			<second ref="solid_inner_E4_mid_mid"/>
+			<position name="position_node_solid_inner_E4_mid_frontmid" x="0" y="0" z="0"/>
+			<rotation name="rotation_node_solid_inner_E4_mid_frontmid" x="pi" y="0" z="0"/>
+		</union>
+
+		<union name="solid_inner_E4_mid">
+			<first ref="node_solid_inner_E4_mid_frontmid"/>
+			<second ref="solid_inner_E4_mid_back"/>
+			<position name="position_node_solid_inner_E4_mid_back" x="92.0125" y="-3552.527"/>
+			<rotation name="rotation_node_solid_inner_E4_mid_back" x="-pi" y="0" z="0"/>
+		</union>
+
+	<xtru name="solid_C4_tb_mid"  lunit="mm">
+		<twoDimVertex x="192.8415" y="3584.783" />
+		<twoDimVertex x="70.90683" y="1678.54799" />
+		<twoDimVertex x="71.41271" y="1658.8043" />
+		<twoDimVertex x="73.54989" y="1639.1701" />
+		<twoDimVertex x="77.30374" y="1619.77995" />
+		<twoDimVertex x="82.64852" y="1600.76673" />
+		<twoDimVertex x="89.54761" y="1582.26074" />
+		<twoDimVertex x="97.95373" y="1564.3888" />
+		<twoDimVertex x="107.80927" y="1547.27338" />
+		<twoDimVertex x="119.04669" y="1531.03178" />
+		<twoDimVertex x="131.58898" y="1515.7753" />
+		<twoDimVertex x="144.85706" y="1499.634" />
+		<twoDimVertex x="156.74253" y="1482.44916" />
+		<twoDimVertex x="167.16372" y="1464.33887" />
+		<twoDimVertex x="176.04898" y="1445.42762" />
+		<twoDimVertex x="183.33726" y="1425.84537" />
+		<twoDimVertex x="188.97846" y="1405.72671" />
+		<twoDimVertex x="192.93382" y="1385.20992" />
+		<twoDimVertex x="195.17614" y="1364.43601" />
+		<twoDimVertex x="195.69003" y="1343.54775" />
+		<twoDimVertex x="160.81703" y="344.91581" />
+		<twoDimVertex x="101.4085" y="0.0" />
+		<twoDimVertex x="-101.4085" y="0.0" />
+		<twoDimVertex x="-72.38098" y="1695.29621" />
+		<twoDimVertex x="31.49972" y="3372.11679" />
+		<twoDimVertex x="-1.9825" y="3584.783" />
+		<section zOrder="1" zPosition="-8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_C4_tb_front" rmin="0" rmax="101.4085" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_C4_tb_back" rmin="0" rmax="97.412" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_C4_tb_frontmid">
+		<first ref="solid_C4_tb_front"/>
+			<second ref="solid_C4_tb_mid"/>
+			<position name="position_node_solid_C4_tb_frontmid" x="0" y="0" z="0"/>
+			<rotation name="rotation_node_solid_C4_tb_frontmid" x="pi" y="0" z="0"/>
+		</union>
+
+		<union name="solid_C4_tb">
+			<first ref="node_solid_C4_tb_frontmid"/>
+			<second ref="solid_C4_tb_back"/>
+			<position name="position_node_solid_C4_tb_back" x="95.4295" y="-3584.783"/>
+			<rotation name="rotation_node_solid_C4_tb_back" x="-pi" y="0" z="0"/>
+		</union>
+
+	<xtru name="solid_outer_E4_tb_mid"  lunit="mm">
+		<twoDimVertex x="193.8415" y="3584.783" />
+		<twoDimVertex x="71.90683" y="1678.54799" />
+		<twoDimVertex x="72.41271" y="1658.8043" />
+		<twoDimVertex x="74.54989" y="1639.1701" />
+		<twoDimVertex x="78.30374" y="1619.77995" />
+		<twoDimVertex x="83.64852" y="1600.76673" />
+		<twoDimVertex x="90.54761" y="1582.26074" />
+		<twoDimVertex x="98.95373" y="1564.3888" />
+		<twoDimVertex x="108.80927" y="1547.27338" />
+		<twoDimVertex x="120.04669" y="1531.03178" />
+		<twoDimVertex x="132.58898" y="1515.7753" />
+		<twoDimVertex x="145.85706" y="1499.634" />
+		<twoDimVertex x="157.74253" y="1482.44916" />
+		<twoDimVertex x="168.16372" y="1464.33887" />
+		<twoDimVertex x="177.04898" y="1445.42762" />
+		<twoDimVertex x="184.33726" y="1425.84537" />
+		<twoDimVertex x="189.97846" y="1405.72671" />
+		<twoDimVertex x="193.93382" y="1385.20992" />
+		<twoDimVertex x="196.17614" y="1364.43601" />
+		<twoDimVertex x="196.69003" y="1343.54775" />
+		<twoDimVertex x="161.81703" y="344.91581" />
+		<twoDimVertex x="102.4085" y="0.0" />
+		<twoDimVertex x="-102.4085" y="0.0" />
+		<twoDimVertex x="-73.38098" y="1695.29621" />
+		<twoDimVertex x="30.49972" y="3372.11679" />
+		<twoDimVertex x="-2.9825" y="3584.783" />
+		<section zOrder="1" zPosition="-8.5" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.5" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_outer_E4_tb_front" rmin="0" rmax="102.4085" z="17.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_outer_E4_tb_back" rmin="0" rmax="98.412" z="17.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_outer_E4_tb_frontmid">
+		<first ref="solid_outer_E4_tb_front"/>
+			<second ref="solid_outer_E4_tb_mid"/>
+			<position name="position_node_solid_outer_E4_tb_frontmid" x="0" y="0" z="0"/>
+			<rotation name="rotation_node_solid_outer_E4_tb_frontmid" x="pi" y="0" z="0"/>
+		</union>
+
+		<union name="solid_outer_E4_tb">
+			<first ref="node_solid_outer_E4_tb_frontmid"/>
+			<second ref="solid_outer_E4_tb_back"/>
+			<position name="position_node_solid_outer_E4_tb_back" x="95.4295" y="-3584.783"/>
+			<rotation name="rotation_node_solid_outer_E4_tb_back" x="-pi" y="0" z="0"/>
+		</union>
+
+	<xtru name="solid_inner_E4_tb_mid"  lunit="mm">
+		<twoDimVertex x="143.419079" y="3584.783" />
+		<twoDimVertex x="21.484409" y="1678.54799" />
+		<twoDimVertex x="21.990289" y="1658.8043" />
+		<twoDimVertex x="24.127469" y="1639.1701" />
+		<twoDimVertex x="27.881319" y="1619.77995" />
+		<twoDimVertex x="33.226099" y="1600.76673" />
+		<twoDimVertex x="40.125189" y="1582.26074" />
+		<twoDimVertex x="48.531309" y="1564.3888" />
+		<twoDimVertex x="58.386849" y="1547.27338" />
+		<twoDimVertex x="69.624269" y="1531.03178" />
+		<twoDimVertex x="82.166559" y="1515.7753" />
+		<twoDimVertex x="95.434639" y="1499.634" />
+		<twoDimVertex x="107.320109" y="1482.44916" />
+		<twoDimVertex x="117.741299" y="1464.33887" />
+		<twoDimVertex x="126.626559" y="1445.42762" />
+		<twoDimVertex x="133.914839" y="1425.84537" />
+		<twoDimVertex x="139.556039" y="1405.72671" />
+		<twoDimVertex x="143.511399" y="1385.20992" />
+		<twoDimVertex x="145.753719" y="1364.43601" />
+		<twoDimVertex x="146.267609" y="1343.54775" />
+		<twoDimVertex x="111.394609" y="344.91581" />
+		<twoDimVertex x="51.986079" y="0.0" />
+		<twoDimVertex x="-51.986079" y="0.0" />
+		<twoDimVertex x="-22.958559" y="1695.29621" />
+		<twoDimVertex x="80.922141" y="3372.11679" />
+		<twoDimVertex x="47.439921" y="3584.783" />
+		<section zOrder="1" zPosition="-8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="8.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_inner_E4_tb_front" rmin="0" rmax="51.986079" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_inner_E4_tb_back" rmin="0" rmax="47.989579" z="16.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_inner_E4_tb_frontmid">
+		<first ref="solid_inner_E4_tb_front"/>
+			<second ref="solid_inner_E4_tb_mid"/>
+			<position name="position_node_solid_inner_E4_tb_frontmid" x="0" y="0" z="0"/>
+			<rotation name="rotation_node_solid_inner_E4_tb_frontmid" x="pi" y="0" z="0"/>
+		</union>
+
+		<union name="solid_inner_E4_tb">
+			<first ref="node_solid_inner_E4_tb_frontmid"/>
+			<second ref="solid_inner_E4_tb_back"/>
+			<position name="position_node_solid_inner_E4_tb_back" x="95.4295" y="-3584.783"/>
+			<rotation name="rotation_node_solid_inner_E4_tb_back" x="-pi" y="0" z="0"/>
+		</union>
+
+	<union name="solid_outer_E4_submodule">
+		<first ref="solid_outer_E4_mid"/>
+		<second ref="solid_outer_E4_tb"/>
+		<position name="position"  x="0" y="36.214" z="25.7573"/>
+	</union>
+	<union name="solid_outer_E4">
+		<first ref="solid_outer_E4_submodule"/>
+		<second ref="solid_outer_E4_tb"/>
+		<position name="position"  x="0" y="36.214" z="-25.7573"/>
+	</union>
+	<tube name="solid_DS_toroidMother" rmin="0"  rmax="420.97" z="6967.488" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 
 </solids>
 
 
 <structure>
 
-	<volume name="logic_s1_s2_s3_s4_0">
-		<materialref ref="G4_Cu"/>
-		<solidref ref="solid_s1_s2_s3_s4"/>
-		<auxiliary auxtype="Color" auxvalue="magenta"/>
+	<volume name="logic_septapus_tube">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_septapus_tube"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="3001"/>
-	</volume>
-
-	<volume name="logic_dcoil_0">
-		<materialref ref="G4_Galactic"/>
-		<solidref ref="solid_dcoil"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
-		<physvol name="s1_s2_s3_s4_0">
-			<volumeref ref="logic_s1_s2_s3_s4_0"/>
-			<position name="pos_s1_s2_s3_s4_0" x="-115.5" y="0" z="-3370.36538462"/>
-			<rotation name="rot_s1_s2_s3_s4_0" x="pi/2" y="0" z="0"/>
-		</physvol>
-	</volume>
-
-	<volume name="logic_photon_collimator_0">
-		<materialref ref="G4_CW95"/>
-		<solidref ref="solid_photon_collimator"/>
-	</volume>
-
-	<volume name="logic_s1_s2_s3_s4_1">
-		<materialref ref="G4_Cu"/>
-		<solidref ref="solid_s1_s2_s3_s4"/>
-		<auxiliary auxtype="Color" auxvalue="magenta"/>
-		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="3002"/>
-	</volume>
-
-	<volume name="logic_dcoil_1">
-		<materialref ref="G4_Galactic"/>
-		<solidref ref="solid_dcoil"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
-		<physvol name="s1_s2_s3_s4_1">
-			<volumeref ref="logic_s1_s2_s3_s4_1"/>
-			<position name="pos_s1_s2_s3_s4_1" x="-115.5" y="0" z="-3370.36538462"/>
-			<rotation name="rot_s1_s2_s3_s4_1" x="pi/2" y="0" z="0"/>
-		</physvol>
+		<auxiliary auxtype="DetNo" auxvalue="56"/>
 	</volume>
 
 	<volume name="logic_photon_collimator_1">
 		<materialref ref="G4_CW95"/>
 		<solidref ref="solid_photon_collimator"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2005"/>
 	</volume>
 
-	<volume name="logic_s1_s2_s3_s4_2">
+	<volume name="logic_septapus_arm_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_septapus_arm"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="56"/>
+	</volume>
+
+	<volume name="logic_inner_E1_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+	</volume>
+
+	<volume name="logic_C1_1">
 		<materialref ref="G4_Cu"/>
-		<solidref ref="solid_s1_s2_s3_s4"/>
+		<solidref ref="solid_C1"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="3003"/>
+		<auxiliary auxtype="DetNo" auxvalue="3001"/>
+			<physvol name="inner_E1">
+				<volumeref ref="logic_inner_E1_1"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
 	</volume>
 
-	<volume name="logic_dcoil_2">
-		<materialref ref="G4_Galactic"/>
-		<solidref ref="solid_dcoil"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
-		<physvol name="s1_s2_s3_s4_2">
-			<volumeref ref="logic_s1_s2_s3_s4_2"/>
-			<position name="pos_s1_s2_s3_s4_2" x="-115.5" y="0" z="-3370.36538462"/>
-			<rotation name="rot_s1_s2_s3_s4_2" x="pi/2" y="0" z="0"/>
-		</physvol>
+	<volume name="logic_outer_E1_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+			<physvol name="C1">
+				<volumeref ref="logic_C1_1"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E2_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+	</volume>
+
+	<volume name="logic_C2_1">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C2"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3001"/>
+			<physvol name="inner_E2">
+				<volumeref ref="logic_inner_E2_1"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E2_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+			<physvol name="C2">
+				<volumeref ref="logic_C2_1"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E3_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+	</volume>
+
+	<volume name="logic_C3_1">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C3"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3001"/>
+			<physvol name="inner_E3">
+				<volumeref ref="logic_inner_E3_1"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E3_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+			<physvol name="C3">
+				<volumeref ref="logic_C3_1"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_top_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+	</volume>
+
+	<volume name="logic_C4_top_1">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3001"/>
+			<physvol name="inner_E4_top">
+				<volumeref ref="logic_inner_E4_top_1"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_topmid_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+	</volume>
+
+	<volume name="logic_C4_topmid_1">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3001"/>
+			<physvol name="inner_E4_topmid">
+				<volumeref ref="logic_inner_E4_topmid_1"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_botmid_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+	</volume>
+
+	<volume name="logic_C4_botmid_1">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3001"/>
+			<physvol name="inner_E4_botmid">
+				<volumeref ref="logic_inner_E4_botmid_1"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_bot_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+	</volume>
+
+	<volume name="logic_C4_bot_1">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3001"/>
+			<physvol name="inner_E4_bot">
+				<volumeref ref="logic_inner_E4_bot_1"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E4_1">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E4"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3008"/>
+			<physvol name="C4_top">
+				<volumeref ref="logic_C4_top_1"/>
+				<position name="pos_logic_C4_top_1" y="36.214" z="25.2573"/>
+			</physvol>
+
+			<physvol name="C4_bot">
+				<volumeref ref="logic_C4_bot_1"/>
+				<position name="pos_logic_C4_bot_1" y="36.214" z="-25.2573"/>
+			</physvol>
+
+			<physvol name="C4_topmid">
+				<volumeref ref="logic_C4_topmid_1"/>
+				<position name="pos_logic_C4_topmid_1" y="0" z="8.5461"/>
+			</physvol>
+
+			<physvol name="C4_botmid">
+				<volumeref ref="logic_C4_botmid_1"/>
+				<position name="pos_logic_C4_botmid_1" y="0" z="-8.5461"/>
+			</physvol>
+
 	</volume>
 
 	<volume name="logic_photon_collimator_2">
 		<materialref ref="G4_CW95"/>
 		<solidref ref="solid_photon_collimator"/>
-                <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-                <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
-                <auxiliary auxtype="DetNo" auxvalue="2005"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2005"/>
 	</volume>
 
-	<volume name="logic_s1_s2_s3_s4_3">
+	<volume name="logic_septapus_arm_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_septapus_arm"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="56"/>
+	</volume>
+
+	<volume name="logic_inner_E1_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+	</volume>
+
+	<volume name="logic_C1_2">
 		<materialref ref="G4_Cu"/>
-		<solidref ref="solid_s1_s2_s3_s4"/>
+		<solidref ref="solid_C1"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="3004"/>
+		<auxiliary auxtype="DetNo" auxvalue="3002"/>
+			<physvol name="inner_E1">
+				<volumeref ref="logic_inner_E1_2"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
 	</volume>
 
-	<volume name="logic_dcoil_3">
-		<materialref ref="G4_Galactic"/>
-		<solidref ref="solid_dcoil"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
-		<physvol name="s1_s2_s3_s4_3">
-			<volumeref ref="logic_s1_s2_s3_s4_3"/>
-			<position name="pos_s1_s2_s3_s4_3" x="-115.5" y="0" z="-3370.36538462"/>
-			<rotation name="rot_s1_s2_s3_s4_3" x="pi/2" y="0" z="0"/>
-		</physvol>
+	<volume name="logic_outer_E1_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+			<physvol name="C1">
+				<volumeref ref="logic_C1_2"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E2_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+	</volume>
+
+	<volume name="logic_C2_2">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C2"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3002"/>
+			<physvol name="inner_E2">
+				<volumeref ref="logic_inner_E2_2"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E2_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+			<physvol name="C2">
+				<volumeref ref="logic_C2_2"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E3_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+	</volume>
+
+	<volume name="logic_C3_2">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C3"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3002"/>
+			<physvol name="inner_E3">
+				<volumeref ref="logic_inner_E3_2"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E3_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+			<physvol name="C3">
+				<volumeref ref="logic_C3_2"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_top_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+	</volume>
+
+	<volume name="logic_C4_top_2">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3002"/>
+			<physvol name="inner_E4_top">
+				<volumeref ref="logic_inner_E4_top_2"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_topmid_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+	</volume>
+
+	<volume name="logic_C4_topmid_2">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3002"/>
+			<physvol name="inner_E4_topmid">
+				<volumeref ref="logic_inner_E4_topmid_2"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_botmid_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+	</volume>
+
+	<volume name="logic_C4_botmid_2">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3002"/>
+			<physvol name="inner_E4_botmid">
+				<volumeref ref="logic_inner_E4_botmid_2"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_bot_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+	</volume>
+
+	<volume name="logic_C4_bot_2">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3002"/>
+			<physvol name="inner_E4_bot">
+				<volumeref ref="logic_inner_E4_bot_2"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E4_2">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E4"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3009"/>
+			<physvol name="C4_top">
+				<volumeref ref="logic_C4_top_2"/>
+				<position name="pos_logic_C4_top_2" y="36.214" z="25.2573"/>
+			</physvol>
+
+			<physvol name="C4_bot">
+				<volumeref ref="logic_C4_bot_2"/>
+				<position name="pos_logic_C4_bot_2" y="36.214" z="-25.2573"/>
+			</physvol>
+
+			<physvol name="C4_topmid">
+				<volumeref ref="logic_C4_topmid_2"/>
+				<position name="pos_logic_C4_topmid_2" y="0" z="8.5461"/>
+			</physvol>
+
+			<physvol name="C4_botmid">
+				<volumeref ref="logic_C4_botmid_2"/>
+				<position name="pos_logic_C4_botmid_2" y="0" z="-8.5461"/>
+			</physvol>
+
 	</volume>
 
 	<volume name="logic_photon_collimator_3">
 		<materialref ref="G4_CW95"/>
 		<solidref ref="solid_photon_collimator"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2005"/>
 	</volume>
 
-	<volume name="logic_s1_s2_s3_s4_4">
+	<volume name="logic_septapus_arm_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_septapus_arm"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="56"/>
+	</volume>
+
+	<volume name="logic_inner_E1_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+	</volume>
+
+	<volume name="logic_C1_3">
 		<materialref ref="G4_Cu"/>
-		<solidref ref="solid_s1_s2_s3_s4"/>
+		<solidref ref="solid_C1"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="3005"/>
+		<auxiliary auxtype="DetNo" auxvalue="3003"/>
+			<physvol name="inner_E1">
+				<volumeref ref="logic_inner_E1_3"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
 	</volume>
 
-	<volume name="logic_dcoil_4">
-		<materialref ref="G4_Galactic"/>
-		<solidref ref="solid_dcoil"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
-		<physvol name="s1_s2_s3_s4_4">
-			<volumeref ref="logic_s1_s2_s3_s4_4"/>
-			<position name="pos_s1_s2_s3_s4_4" x="-115.5" y="0" z="-3370.36538462"/>
-			<rotation name="rot_s1_s2_s3_s4_4" x="pi/2" y="0" z="0"/>
-		</physvol>
+	<volume name="logic_outer_E1_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+			<physvol name="C1">
+				<volumeref ref="logic_C1_3"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E2_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+	</volume>
+
+	<volume name="logic_C2_3">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C2"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3003"/>
+			<physvol name="inner_E2">
+				<volumeref ref="logic_inner_E2_3"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E2_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+			<physvol name="C2">
+				<volumeref ref="logic_C2_3"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E3_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+	</volume>
+
+	<volume name="logic_C3_3">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C3"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3003"/>
+			<physvol name="inner_E3">
+				<volumeref ref="logic_inner_E3_3"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E3_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+			<physvol name="C3">
+				<volumeref ref="logic_C3_3"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_top_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+	</volume>
+
+	<volume name="logic_C4_top_3">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3003"/>
+			<physvol name="inner_E4_top">
+				<volumeref ref="logic_inner_E4_top_3"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_topmid_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+	</volume>
+
+	<volume name="logic_C4_topmid_3">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3003"/>
+			<physvol name="inner_E4_topmid">
+				<volumeref ref="logic_inner_E4_topmid_3"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_botmid_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+	</volume>
+
+	<volume name="logic_C4_botmid_3">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3003"/>
+			<physvol name="inner_E4_botmid">
+				<volumeref ref="logic_inner_E4_botmid_3"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_bot_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+	</volume>
+
+	<volume name="logic_C4_bot_3">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3003"/>
+			<physvol name="inner_E4_bot">
+				<volumeref ref="logic_inner_E4_bot_3"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E4_3">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E4"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3010"/>
+			<physvol name="C4_top">
+				<volumeref ref="logic_C4_top_3"/>
+				<position name="pos_logic_C4_top_3" y="36.214" z="25.2573"/>
+			</physvol>
+
+			<physvol name="C4_bot">
+				<volumeref ref="logic_C4_bot_3"/>
+				<position name="pos_logic_C4_bot_3" y="36.214" z="-25.2573"/>
+			</physvol>
+
+			<physvol name="C4_topmid">
+				<volumeref ref="logic_C4_topmid_3"/>
+				<position name="pos_logic_C4_topmid_3" y="0" z="8.5461"/>
+			</physvol>
+
+			<physvol name="C4_botmid">
+				<volumeref ref="logic_C4_botmid_3"/>
+				<position name="pos_logic_C4_botmid_3" y="0" z="-8.5461"/>
+			</physvol>
+
 	</volume>
 
 	<volume name="logic_photon_collimator_4">
 		<materialref ref="G4_CW95"/>
 		<solidref ref="solid_photon_collimator"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2005"/>
 	</volume>
 
-	<volume name="logic_s1_s2_s3_s4_5">
+	<volume name="logic_septapus_arm_4">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_septapus_arm"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="56"/>
+	</volume>
+
+	<volume name="logic_inner_E1_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+	</volume>
+
+	<volume name="logic_C1_4">
 		<materialref ref="G4_Cu"/>
-		<solidref ref="solid_s1_s2_s3_s4"/>
+		<solidref ref="solid_C1"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="3006"/>
+		<auxiliary auxtype="DetNo" auxvalue="3004"/>
+			<physvol name="inner_E1">
+				<volumeref ref="logic_inner_E1_4"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
 	</volume>
 
-	<volume name="logic_dcoil_5">
-		<materialref ref="G4_Galactic"/>
-		<solidref ref="solid_dcoil"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
-		<physvol name="s1_s2_s3_s4_5">
-			<volumeref ref="logic_s1_s2_s3_s4_5"/>
-			<position name="pos_s1_s2_s3_s4_5" x="-115.5" y="0" z="-3370.36538462"/>
-			<rotation name="rot_s1_s2_s3_s4_5" x="pi/2" y="0" z="0"/>
-		</physvol>
+	<volume name="logic_outer_E1_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+			<physvol name="C1">
+				<volumeref ref="logic_C1_4"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E2_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+	</volume>
+
+	<volume name="logic_C2_4">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C2"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3004"/>
+			<physvol name="inner_E2">
+				<volumeref ref="logic_inner_E2_4"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E2_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+			<physvol name="C2">
+				<volumeref ref="logic_C2_4"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E3_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+	</volume>
+
+	<volume name="logic_C3_4">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C3"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3004"/>
+			<physvol name="inner_E3">
+				<volumeref ref="logic_inner_E3_4"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E3_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+			<physvol name="C3">
+				<volumeref ref="logic_C3_4"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_top_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+	</volume>
+
+	<volume name="logic_C4_top_4">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3004"/>
+			<physvol name="inner_E4_top">
+				<volumeref ref="logic_inner_E4_top_4"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_topmid_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+	</volume>
+
+	<volume name="logic_C4_topmid_4">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3004"/>
+			<physvol name="inner_E4_topmid">
+				<volumeref ref="logic_inner_E4_topmid_4"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_botmid_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+	</volume>
+
+	<volume name="logic_C4_botmid_4">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3004"/>
+			<physvol name="inner_E4_botmid">
+				<volumeref ref="logic_inner_E4_botmid_4"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_bot_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+	</volume>
+
+	<volume name="logic_C4_bot_4">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3004"/>
+			<physvol name="inner_E4_bot">
+				<volumeref ref="logic_inner_E4_bot_4"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E4_4">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E4"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3011"/>
+			<physvol name="C4_top">
+				<volumeref ref="logic_C4_top_4"/>
+				<position name="pos_logic_C4_top_4" y="36.214" z="25.2573"/>
+			</physvol>
+
+			<physvol name="C4_bot">
+				<volumeref ref="logic_C4_bot_4"/>
+				<position name="pos_logic_C4_bot_4" y="36.214" z="-25.2573"/>
+			</physvol>
+
+			<physvol name="C4_topmid">
+				<volumeref ref="logic_C4_topmid_4"/>
+				<position name="pos_logic_C4_topmid_4" y="0" z="8.5461"/>
+			</physvol>
+
+			<physvol name="C4_botmid">
+				<volumeref ref="logic_C4_botmid_4"/>
+				<position name="pos_logic_C4_botmid_4" y="0" z="-8.5461"/>
+			</physvol>
+
 	</volume>
 
 	<volume name="logic_photon_collimator_5">
 		<materialref ref="G4_CW95"/>
 		<solidref ref="solid_photon_collimator"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2005"/>
 	</volume>
 
-	<volume name="logic_s1_s2_s3_s4_6">
+	<volume name="logic_septapus_arm_5">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_septapus_arm"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="56"/>
+	</volume>
+
+	<volume name="logic_inner_E1_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+	</volume>
+
+	<volume name="logic_C1_5">
 		<materialref ref="G4_Cu"/>
-		<solidref ref="solid_s1_s2_s3_s4"/>
+		<solidref ref="solid_C1"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="3007"/>
+		<auxiliary auxtype="DetNo" auxvalue="3005"/>
+			<physvol name="inner_E1">
+				<volumeref ref="logic_inner_E1_5"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
 	</volume>
 
-	<volume name="logic_dcoil_6">
-		<materialref ref="G4_Galactic"/>
-		<solidref ref="solid_dcoil"/>
-		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
-		<physvol name="s1_s2_s3_s4_6">
-			<volumeref ref="logic_s1_s2_s3_s4_6"/>
-			<position name="pos_s1_s2_s3_s4_6" x="-115.5" y="0" z="-3370.36538462"/>
-			<rotation name="rot_s1_s2_s3_s4_6" x="pi/2" y="0" z="0"/>
-		</physvol>
+	<volume name="logic_outer_E1_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+			<physvol name="C1">
+				<volumeref ref="logic_C1_5"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E2_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+	</volume>
+
+	<volume name="logic_C2_5">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C2"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3005"/>
+			<physvol name="inner_E2">
+				<volumeref ref="logic_inner_E2_5"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E2_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+			<physvol name="C2">
+				<volumeref ref="logic_C2_5"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E3_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+	</volume>
+
+	<volume name="logic_C3_5">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C3"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3005"/>
+			<physvol name="inner_E3">
+				<volumeref ref="logic_inner_E3_5"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E3_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+			<physvol name="C3">
+				<volumeref ref="logic_C3_5"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_top_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+	</volume>
+
+	<volume name="logic_C4_top_5">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3005"/>
+			<physvol name="inner_E4_top">
+				<volumeref ref="logic_inner_E4_top_5"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_topmid_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+	</volume>
+
+	<volume name="logic_C4_topmid_5">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3005"/>
+			<physvol name="inner_E4_topmid">
+				<volumeref ref="logic_inner_E4_topmid_5"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_botmid_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+	</volume>
+
+	<volume name="logic_C4_botmid_5">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3005"/>
+			<physvol name="inner_E4_botmid">
+				<volumeref ref="logic_inner_E4_botmid_5"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_bot_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+	</volume>
+
+	<volume name="logic_C4_bot_5">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3005"/>
+			<physvol name="inner_E4_bot">
+				<volumeref ref="logic_inner_E4_bot_5"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E4_5">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E4"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3012"/>
+			<physvol name="C4_top">
+				<volumeref ref="logic_C4_top_5"/>
+				<position name="pos_logic_C4_top_5" y="36.214" z="25.2573"/>
+			</physvol>
+
+			<physvol name="C4_bot">
+				<volumeref ref="logic_C4_bot_5"/>
+				<position name="pos_logic_C4_bot_5" y="36.214" z="-25.2573"/>
+			</physvol>
+
+			<physvol name="C4_topmid">
+				<volumeref ref="logic_C4_topmid_5"/>
+				<position name="pos_logic_C4_topmid_5" y="0" z="8.5461"/>
+			</physvol>
+
+			<physvol name="C4_botmid">
+				<volumeref ref="logic_C4_botmid_5"/>
+				<position name="pos_logic_C4_botmid_5" y="0" z="-8.5461"/>
+			</physvol>
+
 	</volume>
 
 	<volume name="logic_photon_collimator_6">
 		<materialref ref="G4_CW95"/>
 		<solidref ref="solid_photon_collimator"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2005"/>
+	</volume>
+
+	<volume name="logic_septapus_arm_6">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_septapus_arm"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="56"/>
+	</volume>
+
+	<volume name="logic_inner_E1_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+	</volume>
+
+	<volume name="logic_C1_6">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C1"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3006"/>
+			<physvol name="inner_E1">
+				<volumeref ref="logic_inner_E1_6"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E1_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+			<physvol name="C1">
+				<volumeref ref="logic_C1_6"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E2_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+	</volume>
+
+	<volume name="logic_C2_6">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C2"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3006"/>
+			<physvol name="inner_E2">
+				<volumeref ref="logic_inner_E2_6"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E2_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+			<physvol name="C2">
+				<volumeref ref="logic_C2_6"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E3_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+	</volume>
+
+	<volume name="logic_C3_6">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C3"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3006"/>
+			<physvol name="inner_E3">
+				<volumeref ref="logic_inner_E3_6"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E3_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+			<physvol name="C3">
+				<volumeref ref="logic_C3_6"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_top_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+	</volume>
+
+	<volume name="logic_C4_top_6">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3006"/>
+			<physvol name="inner_E4_top">
+				<volumeref ref="logic_inner_E4_top_6"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_topmid_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+	</volume>
+
+	<volume name="logic_C4_topmid_6">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3006"/>
+			<physvol name="inner_E4_topmid">
+				<volumeref ref="logic_inner_E4_topmid_6"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_botmid_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+	</volume>
+
+	<volume name="logic_C4_botmid_6">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3006"/>
+			<physvol name="inner_E4_botmid">
+				<volumeref ref="logic_inner_E4_botmid_6"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_bot_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+	</volume>
+
+	<volume name="logic_C4_bot_6">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3006"/>
+			<physvol name="inner_E4_bot">
+				<volumeref ref="logic_inner_E4_bot_6"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E4_6">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E4"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3013"/>
+			<physvol name="C4_top">
+				<volumeref ref="logic_C4_top_6"/>
+				<position name="pos_logic_C4_top_6" y="36.214" z="25.2573"/>
+			</physvol>
+
+			<physvol name="C4_bot">
+				<volumeref ref="logic_C4_bot_6"/>
+				<position name="pos_logic_C4_bot_6" y="36.214" z="-25.2573"/>
+			</physvol>
+
+			<physvol name="C4_topmid">
+				<volumeref ref="logic_C4_topmid_6"/>
+				<position name="pos_logic_C4_topmid_6" y="0" z="8.5461"/>
+			</physvol>
+
+			<physvol name="C4_botmid">
+				<volumeref ref="logic_C4_botmid_6"/>
+				<position name="pos_logic_C4_botmid_6" y="0" z="-8.5461"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_photon_collimator_7">
+		<materialref ref="G4_CW95"/>
+		<solidref ref="solid_photon_collimator"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2005"/>
+	</volume>
+
+	<volume name="logic_septapus_arm_7">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_septapus_arm"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="56"/>
+	</volume>
+
+	<volume name="logic_inner_E1_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+	</volume>
+
+	<volume name="logic_C1_7">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C1"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3007"/>
+			<physvol name="inner_E1">
+				<volumeref ref="logic_inner_E1_7"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E1_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E1"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+			<physvol name="C1">
+				<volumeref ref="logic_C1_7"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E2_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+	</volume>
+
+	<volume name="logic_C2_7">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C2"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3007"/>
+			<physvol name="inner_E2">
+				<volumeref ref="logic_inner_E2_7"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E2_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E2"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+			<physvol name="C2">
+				<volumeref ref="logic_C2_7"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E3_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+	</volume>
+
+	<volume name="logic_C3_7">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C3"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3007"/>
+			<physvol name="inner_E3">
+				<volumeref ref="logic_inner_E3_7"/>
+				<rotation name="rot_inner_E" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E3_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E3"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+			<physvol name="C3">
+				<volumeref ref="logic_C3_7"/>
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_top_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+	</volume>
+
+	<volume name="logic_C4_top_7">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3007"/>
+			<physvol name="inner_E4_top">
+				<volumeref ref="logic_inner_E4_top_7"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_topmid_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+	</volume>
+
+	<volume name="logic_C4_topmid_7">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3007"/>
+			<physvol name="inner_E4_topmid">
+				<volumeref ref="logic_inner_E4_topmid_7"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_botmid_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+	</volume>
+
+	<volume name="logic_C4_botmid_7">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_mid"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3007"/>
+			<physvol name="inner_E4_botmid">
+				<volumeref ref="logic_inner_E4_botmid_7"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_inner_E4_bot_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_inner_E4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+	</volume>
+
+	<volume name="logic_C4_bot_7">
+		<materialref ref="G4_Cu"/>
+		<solidref ref="solid_C4_tb"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3007"/>
+			<physvol name="inner_E4_bot">
+				<volumeref ref="logic_inner_E4_bot_7"/>
+				<rotation name="rot_inner_E4_" y="0" unit="rad" />
+			</physvol>
+
+	</volume>
+
+	<volume name="logic_outer_E4_7">
+		<materialref ref="G10"/>
+		<solidref ref="solid_outer_E4"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="3014"/>
+			<physvol name="C4_top">
+				<volumeref ref="logic_C4_top_7"/>
+				<position name="pos_logic_C4_top_7" y="36.214" z="25.2573"/>
+			</physvol>
+
+			<physvol name="C4_bot">
+				<volumeref ref="logic_C4_bot_7"/>
+				<position name="pos_logic_C4_bot_7" y="36.214" z="-25.2573"/>
+			</physvol>
+
+			<physvol name="C4_topmid">
+				<volumeref ref="logic_C4_topmid_7"/>
+				<position name="pos_logic_C4_topmid_7" y="0" z="8.5461"/>
+			</physvol>
+
+			<physvol name="C4_botmid">
+				<volumeref ref="logic_C4_botmid_7"/>
+				<position name="pos_logic_C4_botmid_7" y="0" z="-8.5461"/>
+			</physvol>
+
 	</volume>
 
 	<volume name="DS_toroidMother">
 		<materialref ref="G4_Galactic"/>
 		<solidref ref="solid_DS_toroidMother"/>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
-		<physvol name="dcoil_0">
-			<volumeref ref="logic_dcoil_0"/>
-			<position name="pos_dcoil_0" x="221.75" y="0.0" z="0"/>
-			<rotation name="rot_dcoil_0" x="0" y="0" z="-0.0"/>
+		<physvol name="dcoil1_1">
+			<volumeref ref="logic_outer_E1_1"/>
+			<position name="pos_dcoil1_1" x="106.95" y="0.0" z="-3335.194"/>
+			<rotation name="rot_dcoil1_1" x="pi/2" y="0.0" z="0"/>
 		</physvol>
 
-		<physvol name="photon_collimator_0">
-			<volumeref ref="logic_photon_collimator_0"/>
-			<position name="pos_photon_collimator_0" x="114.621259375" y="55.1986892905" z="-535.365384615"/>
-			<rotation name="rot_photon_collimator_0" x="0" y="0" z="-0.448798950513"/>
+		<physvol name="dcoil2_1">
+			<volumeref ref="logic_outer_E2_1"/>
+			<position name="pos_dcoil2_1" x="128.77" y="0.0" z="-2299.194"/>
+			<rotation name="rot_dcoil2_1" x="pi/2" y="0.0" z="0"/>
 		</physvol>
 
-		<physvol name="dcoil_1">
-			<volumeref ref="logic_dcoil_1"/>
-			<position name="pos_dcoil_1" x="138.258863562" y="173.371131237" z="0"/>
-			<rotation name="rot_dcoil_1" x="0" y="0" z="-0.897597901026"/>
+		<physvol name="dcoil3_1">
+			<volumeref ref="logic_outer_E3_1"/>
+			<position name="pos_dcoil3_1" x="153.215" y="0.0" z="-1238.194"/>
+			<rotation name="rot_dcoil3_1" x="pi/2" y="0.0" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_1">
+			<volumeref ref="logic_outer_E4_1"/>
+			<position name="pos_dcoil4_1" x="188.1275" y="0.0" z="-217.333"/>
+			<rotation name="rot_dcoil4_1" x="pi/2" y="0.0" z="0"/>
 		</physvol>
 
 		<physvol name="photon_collimator_1">
 			<volumeref ref="logic_photon_collimator_1"/>
-			<position name="pos_photon_collimator_1" x="28.3091132179" y="124.030328988" z="-535.365384615"/>
+			<position name="pos_photon_collimator_1" x="28.3091132179" y="124.030328988" z="-500.194"/>
 			<rotation name="rot_photon_collimator_1" x="0" y="0" z="-1.34639685154"/>
 		</physvol>
 
-		<physvol name="dcoil_2">
-			<volumeref ref="logic_dcoil_2"/>
-			<position name="pos_dcoil_2" x="-49.3440171048" y="216.190264526" z="0"/>
-			<rotation name="rot_dcoil_2" x="0" y="0" z="-1.79519580205"/>
+		<physvol name="septapus_arm_1">
+			<volumeref ref="logic_septapus_arm_1"/>
+			<position name="pos_septapus_arm_1" x="21.8221430651" y="27.3641018864" z="-3335.194"/>
+			<rotation name="rot_septapus_arm_1" x="0" y="0" z="-0.897597901026"/>
+		</physvol>
+
+		<physvol name="dcoil1_2">
+			<volumeref ref="logic_outer_E1_2"/>
+			<position name="pos_dcoil1_2" x="66.6822343088" y="83.61687705" z="-3335.194"/>
+			<rotation name="rot_dcoil1_2" x="pi/2" y="0.897597901026" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_2">
+			<volumeref ref="logic_outer_E2_2"/>
+			<position name="pos_dcoil2_2" x="80.2867817853" y="100.676439997" z="-2299.194"/>
+			<rotation name="rot_dcoil2_2" x="pi/2" y="0.897597901026" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_2">
+			<volumeref ref="logic_outer_E3_2"/>
+			<position name="pos_dcoil3_2" x="95.5279899918" y="119.788310586" z="-1238.194"/>
+			<rotation name="rot_dcoil3_2" x="pi/2" y="0.897597901026" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_2">
+			<volumeref ref="logic_outer_E4_2"/>
+			<position name="pos_dcoil4_2" x="117.295577699" y="147.084002218" z="-217.333"/>
+			<rotation name="rot_dcoil4_2" x="pi/2" y="0.897597901026" z="0"/>
 		</physvol>
 
 		<physvol name="photon_collimator_2">
 			<volumeref ref="logic_photon_collimator_2"/>
-			<position name="pos_photon_collimator_2" x="-79.3203725925" y="99.4646011996" z="-535.365384615"/>
+			<position name="pos_photon_collimator_2" x="-79.3203725925" y="99.4646011996" z="-500.194"/>
 			<rotation name="rot_photon_collimator_2" x="0" y="0" z="-2.24399475256"/>
 		</physvol>
 
-		<physvol name="dcoil_3">
-			<volumeref ref="logic_dcoil_3"/>
-			<position name="pos_dcoil_3" x="-199.789846457" y="96.2137191493" z="0"/>
-			<rotation name="rot_dcoil_3" x="0" y="0" z="-2.69279370308"/>
+		<physvol name="septapus_arm_2">
+			<volumeref ref="logic_septapus_arm_2"/>
+			<position name="pos_septapus_arm_2" x="-7.78823268847" y="34.1224769264" z="-3335.194"/>
+			<rotation name="rot_septapus_arm_2" x="0" y="0" z="-1.79519580205"/>
+		</physvol>
+
+		<physvol name="dcoil1_3">
+			<volumeref ref="logic_outer_E1_3"/>
+			<position name="pos_dcoil1_3" x="-23.7986138866" y="104.268540208" z="-3335.194"/>
+			<rotation name="rot_dcoil1_3" x="pi/2" y="1.79519580205" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_3">
+			<volumeref ref="logic_outer_E2_3"/>
+			<position name="pos_dcoil2_3" x="-28.6540206656" y="125.541467252" z="-2299.194"/>
+			<rotation name="rot_dcoil2_3" x="pi/2" y="1.79519580205" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_3">
+			<volumeref ref="logic_outer_E3_3"/>
+			<position name="pos_dcoil3_3" x="-34.0935448961" y="149.373580065" z="-1238.194"/>
+			<rotation name="rot_dcoil3_3" x="pi/2" y="1.79519580205" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_3">
+			<volumeref ref="logic_outer_E4_3"/>
+			<position name="pos_dcoil4_3" x="-41.8623070029" y="183.410750799" z="-217.333"/>
+			<rotation name="rot_dcoil4_3" x="pi/2" y="1.79519580205" z="0"/>
 		</physvol>
 
 		<physvol name="photon_collimator_3">
 			<volumeref ref="logic_photon_collimator_3"/>
-			<position name="pos_photon_collimator_3" x="-127.22" y="1.55799565788e-14" z="-535.365384615"/>
+			<position name="pos_photon_collimator_3" x="-127.22" y="1.55799565788e-14" z="-500.194"/>
 			<rotation name="rot_photon_collimator_3" x="0" y="0" z="-3.14159265359"/>
 		</physvol>
 
-		<physvol name="dcoil_4">
-			<volumeref ref="logic_dcoil_4"/>
-			<position name="pos_dcoil_4" x="-199.789846457" y="-96.2137191493" z="0"/>
-			<rotation name="rot_dcoil_4" x="0" y="0" z="-3.5903916041"/>
+		<physvol name="septapus_arm_3">
+			<volumeref ref="logic_septapus_arm_3"/>
+			<position name="pos_septapus_arm_3" x="-31.5339103766" y="15.1859308691" z="-3335.194"/>
+			<rotation name="rot_septapus_arm_3" x="0" y="0" z="-2.69279370308"/>
+		</physvol>
+
+		<physvol name="dcoil1_4">
+			<volumeref ref="logic_outer_E1_4"/>
+			<position name="pos_dcoil1_4" x="-96.3586204222" y="46.4038658986" z="-3335.194"/>
+			<rotation name="rot_dcoil1_4" x="pi/2" y="2.69279370308" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_4">
+			<volumeref ref="logic_outer_E2_4"/>
+			<position name="pos_dcoil2_4" x="-116.01776112" y="55.8712090862" z="-2299.194"/>
+			<rotation name="rot_dcoil2_4" x="pi/2" y="2.69279370308" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_4">
+			<volumeref ref="logic_outer_E3_4"/>
+			<position name="pos_dcoil3_4" x="-138.041945096" y="66.4774970889" z="-1238.194"/>
+			<rotation name="rot_dcoil3_4" x="pi/2" y="2.69279370308" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_4">
+			<volumeref ref="logic_outer_E4_4"/>
+			<position name="pos_dcoil4_4" x="-169.497020696" y="81.6254631308" z="-217.333"/>
+			<rotation name="rot_dcoil4_4" x="pi/2" y="2.69279370308" z="0"/>
 		</physvol>
 
 		<physvol name="photon_collimator_4">
 			<volumeref ref="logic_photon_collimator_4"/>
-			<position name="pos_photon_collimator_4" x="-79.3203725925" y="-99.4646011996" z="-535.365384615"/>
+			<position name="pos_photon_collimator_4" x="-79.3203725925" y="-99.4646011996" z="-500.194"/>
 			<rotation name="rot_photon_collimator_4" x="0" y="0" z="-4.03919055462"/>
 		</physvol>
 
-		<physvol name="dcoil_5">
-			<volumeref ref="logic_dcoil_5"/>
-			<position name="pos_dcoil_5" x="-49.3440171048" y="-216.190264526" z="0"/>
-			<rotation name="rot_dcoil_5" x="0" y="0" z="-4.48798950513"/>
+		<physvol name="septapus_arm_4">
+			<volumeref ref="logic_septapus_arm_4"/>
+			<position name="pos_septapus_arm_4" x="-31.5339103766" y="-15.1859308691" z="-3335.194"/>
+			<rotation name="rot_septapus_arm_4" x="0" y="0" z="-3.5903916041"/>
+		</physvol>
+
+		<physvol name="dcoil1_5">
+			<volumeref ref="logic_outer_E1_5"/>
+			<position name="pos_dcoil1_5" x="-96.3586204222" y="-46.4038658986" z="-3335.194"/>
+			<rotation name="rot_dcoil1_5" x="pi/2" y="3.5903916041" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_5">
+			<volumeref ref="logic_outer_E2_5"/>
+			<position name="pos_dcoil2_5" x="-116.01776112" y="-55.8712090862" z="-2299.194"/>
+			<rotation name="rot_dcoil2_5" x="pi/2" y="3.5903916041" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_5">
+			<volumeref ref="logic_outer_E3_5"/>
+			<position name="pos_dcoil3_5" x="-138.041945096" y="-66.4774970889" z="-1238.194"/>
+			<rotation name="rot_dcoil3_5" x="pi/2" y="3.5903916041" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_5">
+			<volumeref ref="logic_outer_E4_5"/>
+			<position name="pos_dcoil4_5" x="-169.497020696" y="-81.6254631308" z="-217.333"/>
+			<rotation name="rot_dcoil4_5" x="pi/2" y="3.5903916041" z="0"/>
 		</physvol>
 
 		<physvol name="photon_collimator_5">
 			<volumeref ref="logic_photon_collimator_5"/>
-			<position name="pos_photon_collimator_5" x="28.3091132179" y="-124.030328988" z="-535.365384615"/>
+			<position name="pos_photon_collimator_5" x="28.3091132179" y="-124.030328988" z="-500.194"/>
 			<rotation name="rot_photon_collimator_5" x="0" y="0" z="-4.93678845564"/>
 		</physvol>
 
-		<physvol name="dcoil_6">
-			<volumeref ref="logic_dcoil_6"/>
-			<position name="pos_dcoil_6" x="138.258863562" y="-173.371131237" z="0"/>
-			<rotation name="rot_dcoil_6" x="0" y="0" z="-5.38558740615"/>
+		<physvol name="septapus_arm_5">
+			<volumeref ref="logic_septapus_arm_5"/>
+			<position name="pos_septapus_arm_5" x="-7.78823268847" y="-34.1224769264" z="-3335.194"/>
+			<rotation name="rot_septapus_arm_5" x="0" y="0" z="-4.48798950513"/>
+		</physvol>
+
+		<physvol name="dcoil1_6">
+			<volumeref ref="logic_outer_E1_6"/>
+			<position name="pos_dcoil1_6" x="-23.7986138866" y="-104.268540208" z="-3335.194"/>
+			<rotation name="rot_dcoil1_6" x="pi/2" y="4.48798950513" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_6">
+			<volumeref ref="logic_outer_E2_6"/>
+			<position name="pos_dcoil2_6" x="-28.6540206656" y="-125.541467252" z="-2299.194"/>
+			<rotation name="rot_dcoil2_6" x="pi/2" y="4.48798950513" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_6">
+			<volumeref ref="logic_outer_E3_6"/>
+			<position name="pos_dcoil3_6" x="-34.0935448961" y="-149.373580065" z="-1238.194"/>
+			<rotation name="rot_dcoil3_6" x="pi/2" y="4.48798950513" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_6">
+			<volumeref ref="logic_outer_E4_6"/>
+			<position name="pos_dcoil4_6" x="-41.8623070029" y="-183.410750799" z="-217.333"/>
+			<rotation name="rot_dcoil4_6" x="pi/2" y="4.48798950513" z="0"/>
 		</physvol>
 
 		<physvol name="photon_collimator_6">
 			<volumeref ref="logic_photon_collimator_6"/>
-			<position name="pos_photon_collimator_6" x="114.621259375" y="-55.1986892905" z="-535.365384615"/>
+			<position name="pos_photon_collimator_6" x="114.621259375" y="-55.1986892905" z="-500.194"/>
 			<rotation name="rot_photon_collimator_6" x="0" y="0" z="-5.83438635667"/>
+		</physvol>
+
+		<physvol name="septapus_arm_6">
+			<volumeref ref="logic_septapus_arm_6"/>
+			<position name="pos_septapus_arm_6" x="21.8221430651" y="-27.3641018864" z="-3335.194"/>
+			<rotation name="rot_septapus_arm_6" x="0" y="0" z="-5.38558740615"/>
+		</physvol>
+
+		<physvol name="dcoil1_7">
+			<volumeref ref="logic_outer_E1_7"/>
+			<position name="pos_dcoil1_7" x="66.6822343088" y="-83.61687705" z="-3335.194"/>
+			<rotation name="rot_dcoil1_7" x="pi/2" y="5.38558740615" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_7">
+			<volumeref ref="logic_outer_E2_7"/>
+			<position name="pos_dcoil2_7" x="80.2867817853" y="-100.676439997" z="-2299.194"/>
+			<rotation name="rot_dcoil2_7" x="pi/2" y="5.38558740615" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_7">
+			<volumeref ref="logic_outer_E3_7"/>
+			<position name="pos_dcoil3_7" x="95.5279899918" y="-119.788310586" z="-1238.194"/>
+			<rotation name="rot_dcoil3_7" x="pi/2" y="5.38558740615" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_7">
+			<volumeref ref="logic_outer_E4_7"/>
+			<position name="pos_dcoil4_7" x="117.295577699" y="-147.084002218" z="-217.333"/>
+			<rotation name="rot_dcoil4_7" x="pi/2" y="5.38558740615" z="0"/>
+		</physvol>
+
+		<physvol name="photon_collimator_7">
+			<volumeref ref="logic_photon_collimator_7"/>
+			<position name="pos_photon_collimator_7" x="114.621259375" y="55.1986892905" z="-500.194"/>
+			<rotation name="rot_photon_collimator_7" x="0" y="0" z="-6.73198425769"/>
+		</physvol>
+
+		<physvol name="septapus_arm_7">
+			<volumeref ref="logic_septapus_arm_7"/>
+			<position name="pos_septapus_arm_7" x="35.0" y="-8.57252759403e-15" z="-3335.194"/>
+			<rotation name="rot_septapus_arm_7" x="0" y="0" z="-6.28318530718"/>
+		</physvol>
+
+		<physvol name="septapus_tube">
+			<volumeref ref="logic_septapus_tube"/>
+			<position name="pos_septapus_tube" x="0" y="0" z="-3409.469"/>
 		</physvol>
 
 	</volume>

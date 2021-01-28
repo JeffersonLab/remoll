@@ -4,7 +4,7 @@
 /remoll/physlist/optical/enable
 
 # This is the current working geometry
-/remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 
 #/remoll/likekryptonite  true
 
@@ -51,6 +51,3 @@
 #/remoll/evgen/external/startEvent 0
 #/remoll/evgen/external/zOffset -28550.0
 #/remoll/filename remollout_r5o_external_default.root
-
-
-/run/beamOn 1

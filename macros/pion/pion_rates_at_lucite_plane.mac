@@ -10,8 +10,7 @@
 /run/initialize
 
 # Magnetic fields
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+/control/execute macros/load_magnetic_fieldmaps.mac
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers

@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY world SYSTEM "solids/world.xml">
+<!ENTITY positions SYSTEM "positions.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  &positions;
+  <rotation name="rot" unit="deg" x="0" y="90" z="0"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  &world;
+  <tube
+    name="VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="1900" rmin="0" z="1" lunit="mm"/>
+
+  <tube
+    name="trackingVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="1400" rmin="0" z="1" lunit="mm"/>
+
+  <tube
+    name="collarVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="1200" rmin="0" z="1" lunit="mm"/>
+
+  <tube
+    name="samVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="660" rmin="0" z="1" lunit="mm"/>
+
+  <tube
+    name="dumpVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="307" rmin="0" z="1" lunit="mm"/>
+
+  <tube
+    name="gemVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="1450" rmax="1460" z="2700" lunit="mm"/>
+
+</solids>
+
+<structure>
+  <volume name="trackingDetectorVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="30"/>
+  </volume>
+
+  <volume name="mainDetectorVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="28"/>
+  </volume>
+
+  <volume name="pionDetectorVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="29"/>
+  </volume>
+
+  <volume name="collar1VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="collarVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="40"/>
+  </volume>
+
+  <volume name="collar2VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="collarVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="41"/>
+  </volume>
+
+  <volume name="gemVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="gemVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="50"/>
+  </volume>
+
+  <volume name="SAMusVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="42"/>
+  </volume>
+
+  <volume name="dumpEntranceVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="43"/>
+  </volume>
+
+  <volume name="donutUSVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dumpVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="44"/>
+  </volume>
+
+  <volume name="donutDSVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dumpVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="45"/>
+  </volume>
+
+  <volume name="n2atmoVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dumpVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="46"/>
+  </volume>
+
+  <volume name="ParallelWorld_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="parallel_solid"/>
+
+    <!-- Tracking planes -->
+    <!--
+    <physvol name="trackingDetectorVirtualPlaneFront1_phys">
+      <volumeref ref="trackingDetectorVirtualPlane_log"/>
+      <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
+    </physvol>
+    <physvol name="trackingDetectorVirtualPlaneFront2_phys">
+      <volumeref ref="trackingDetectorVirtualPlane_log"/>
+      <positionref ref="trackingDetectorVirtualPlaneFront2_pos"/>
+    </physvol>
+    <physvol name="trackingDetectorVirtualPlaneBack1_phys">
+      <volumeref ref="trackingDetectorVirtualPlane_log"/>
+      <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
+    </physvol>
+    <physvol name="trackingDetectorVirtualPlaneBack2_phys">
+      <volumeref ref="trackingDetectorVirtualPlane_log"/>
+      <positionref ref="trackingDetectorVirtualPlaneBack2_pos"/>
+    </physvol>
+-->
+    
+    <!-- Main detector plane
+    <physvol name="mainDetectorVirtualPlane_phys">
+      <volumeref ref="mainDetectorVirtualPlane_log"/>
+      <positionref ref="mainDetectorVirtualPlane_pos"/>
+    </physvol>  -->
+
+    <!-- Pion detector plane -->
+    <!--
+    <physvol name="pionDetectorVirtualPlane_phys">
+      <volumeref ref="pionDetectorVirtualPlane_log"/>
+      <positionref ref="pionDetectorVirtualPlane_pos"/>
+    </physvol>
+-->
+
+    <!-- Beamline detector planes -->
+<!--
+    <physvol name="collar1VirtualPlane_phys">
+      <volumeref ref="collar1VirtualPlane_log"/>
+      <positionref ref="collar1VirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="collar2VirtualPlane_phys">
+      <volumeref ref="collar2VirtualPlane_log"/>
+      <positionref ref="collar2VirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="gemVirtualPlane_phys">
+      <volumeref ref="gemVirtualPlane_log"/>
+      <positionref ref="gemVirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="SAMusVirtualPlane_phys">
+      <volumeref ref="SAMusVirtualPlane_log"/>
+      <positionref ref="SAMusVirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="dumpEntranceVirtualPlane_phys">
+      <volumeref ref="dumpEntranceVirtualPlane_log"/>
+      <positionref ref="dumpEntranceVirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="donutUSVirtualPlane_phys">
+      <volumeref ref="donutUSVirtualPlane_log"/>
+      <positionref ref="donutUSVirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="donutDSVirtualPlane_phys">
+      <volumeref ref="donutDSVirtualPlane_log"/>
+      <positionref ref="donutDSVirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="n2atmoVirtualPlane_phys">
+      <volumeref ref="n2atmoVirtualPlane_log"/>
+      <positionref ref="n2atmoVirtualPlane_pos"/>
+    </physvol>
+-->
+
+    <physvol>
+      <file name="flat_segmented_detector_produce.gdml"/>
+      <positionref ref="detectorCenter"/>
+      <rotationref ref="rot"/>
+    </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="ParallelWorld_logical"/>
+</setup>
+
+</gdml>

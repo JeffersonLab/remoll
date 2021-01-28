@@ -12,9 +12,9 @@
   &matrices;
 
   <constant name="i2cm" value="2.54"/>
-  <constant name="width_mother" value="190000."/>
-  <constant name="height_mother" value="190000."/>
-  <constant name="length_mother" value="190000."/>
+  <constant name="width_mother" value="75000."/>
+  <constant name="height_mother" value="50000."/>
+  <constant name="length_mother" value="125000."/>
 
   <constant name="radius_of_cylwall" value="26517.6"/><!--25460."/>-->
   <constant name="hall_cylwall_radius" value="radius_of_cylwall/10"/>
@@ -31,7 +31,7 @@
   <constant name="center_cylwall" value="1*(height_cylwall/2+bottom_cylwall)"/>
   <constant name="trans_topwall" value="radius_topwall_out-(-center_topwall+bottom_cylwall+height_cylwall)"/> 
 
-  <constant name="radius_max_cylHallDet" value="radius_of_cylwall - 100"/>
+  <constant name="radius_max_cylHallDet" value="radius_of_cylwall - 10"/>
   <constant name="height_cylHallDet" value="height_cylwall - thick_cylwall - 1"/>
 
   <position name="cylHallDet_center" unit="mm" x="0" y="0" z="0"/>
@@ -216,16 +216,24 @@
     <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
     <box lunit="mm" name="boxHallMother_in" x="width_mother - 2500." y="height_mother - 2500." z="length_mother - 2000."/>
 
-    <subtraction name ="boxHallMother">
+    <subtraction name ="boxHallMother_1">
       <first ref="boxHallMother_out"/>
       <second ref="cylHallMother_1"/>
       <positionref ref="cylwall_center" />
       <rotationref ref="scRot_1"/>
-  </subtraction> 
+    </subtraction>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeamPipeDS" rmax="770" rmin="0" startphi="0" z="1000"/>
+    <subtraction name ="boxHallMother">
+      <first ref="boxHallMother_1"/>
+      <second ref="tubeBeamPipeDS"/>
+      <position z="26000."/>
+    </subtraction>
 
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_2" rmax="radius_max_cylHallDet" rmin="0" startphi="0" z="0.1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="hallFlatLidDet_solid" 
+	  rmax="radius_max_cylHallDet - 0.2" rmin="0" startphi="0" z="0.1"/>
 
     <!--Hall A top wall -->
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  
@@ -410,7 +418,7 @@
     
     <!-- Water Tank Dump (should have rounded tank ends, but using cylinder for now) -->
 
-    <tube name="tubeDumpWaterTank" 
+    <tube name="tubeDumpWaterTank_outer_solid" 
           aunit="deg" startphi="0" deltaphi="360" 
           lunit="cm" rmin="dumpWaterTank_r" rmax="dumpWaterTank_r + dumpWaterTank_thickness"
           z="dumpWaterTank_length + 2*dumpWaterTank_thickness"/>
@@ -421,7 +429,7 @@
           z="dumpWaterTank_length"/>
         
     <subtraction name="tubeDumpWaterTank_solid">
-      <first ref="tubeDumpWaterTank"/>
+      <first ref="tubeDumpWaterTank_outer_solid"/>
       <second ref="waterDumpWaterTank_solid"/>
       <positionref ref="tubeDumpWaterTank_trans"/>
       <rotationref ref="identity"/>
@@ -441,7 +449,7 @@
 
     <volume name="hallFlatLidDet_logic">
       <materialref ref="Vacuum"/>
-      <solidref ref="cylHallDet_2"/>
+      <solidref ref="hallFlatLidDet_solid"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="101"/>
@@ -592,7 +600,6 @@
     <volume name="logicHall">
       <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="hallVerticalWallDet">
         <volumeref ref="hallVerticalWallDet_logic"/>
@@ -602,7 +609,7 @@
 
       <physvol name="hallFlatLidDet">
         <volumeref ref="hallFlatLidDet_logic"/> <!-- this should be removed once we fix the hall lid CG -->
-        <positionref ref="cylHallDet_2_center"/>
+        <position name="hallFlatLidDet_pos" unit="mm" y="center_cylwall + height_cylwall/2. - 1"/>
 	<rotationref ref="scRot_1"/>
       </physvol>
 
@@ -715,8 +722,7 @@
         <position name="diffuserPlate_pos" unit="cm" z="nitrogenAtmWall_center_z + 15" />
       </physvol>
 
-
-
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
 </structure>
