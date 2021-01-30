@@ -619,7 +619,7 @@
 	   <zplane rmin="49.5" rmax="65.0" z="100"/>
 	</polycone>
 
-        <box lunit="mm" name="ShieldboxAt14MBox_solid" x="132" y="10" z="100"/>
+        <box lunit="mm" name="ShieldboxAt14MBox_solid" x="132" y="34" z="100"/>
 
 	<cone aunit="deg" deltaphi="360" lunit="mm" name="ShieldcylinderAt14M_solid" rmax1="55" rmax2="55" rmin1="0" rmin2="0" startphi="0" z="101"/>
 
@@ -2685,7 +2685,7 @@
 			<rotation name="rot_dsshield7" x="0" y="0" z="-12*pi/7."/>
 		</physvol>
 
-		<physvol name="EPShieldAtColl5_1_pv">
+<!--		<physvol name="EPShieldAtColl5_1_pv">
 			<volumeref ref="DSBeamShieldPipe6_logic"/>
 			<position name="DSBeamShieldPipe6_1_pos" unit="mm" x="59.11*cos(pi+0*pi/7.)" y="59.11*sin(pi+0*pi/7.)" z="-500.194"/>
 			<rotation name="rot_dsshield1" x="0" y="0" z="0"/>
@@ -2725,7 +2725,7 @@
 			<volumeref ref="DSBeamShieldPipe6_logic"/>
 			<position name="DSBeamShieldPipe6_7_pos" unit="mm" x="59.11*cos(pi+12*pi/7.)" y="59.11*sin(pi+12*pi/7.)" z="-500.194"/>
 			<rotation name="rot_dsshield1" x="0" y="0" z="-12*pi/7."/>
-		</physvol>
+		</physvol>-->
 
 		<physvol name="DSBeamShieldPipe5_pv">
 			<volumeref ref="DSBeamShieldPipe5_logic"/>
