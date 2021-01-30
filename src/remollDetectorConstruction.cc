@@ -809,7 +809,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
   // Duplication map
-  std::map<int, G4LogicalVolume*> detnomap;
+  std::map<int, std::pair<G4String, G4LogicalVolume*>> detnomap;
 
   // Loop over all volumes with auxiliary tags
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
@@ -827,6 +827,8 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
       auto it_sensdet = NextAuxWithType(list.begin(), list.end(), "SensDet");
       if (it_sensdet != list.end()) {
 
+        G4String sens_det = it_sensdet->value;
+
         // Find first aux list entry with type DetNo
         auto it_detno = NextAuxWithType(list.begin(), list.end(), "DetNo");
         if (it_detno != list.end()) {
@@ -835,24 +837,17 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           bool enabled = (det_no > 0)? false : true;
           det_no = std::abs(det_no);
 
-          // Allow detector number sharing
-          auto it_detnoshared = NextAuxWithType(list.begin(), list.end(), "DetNoShared");
-          bool detnoshared = false;
-          if (it_detnoshared != list.end())
-            if (it_detnoshared->value == "true")
-              detnoshared = true;
-
           // Construct detector name
           std::stringstream det_name_ss;
           det_name_ss << "remoll/det_" << det_no;
           std::string det_name = det_name_ss.str();
 
           // Check for duplication when not a shared detector number
-          if (!detnoshared && detnomap.count(det_no) != 0 && detnomap[det_no]->GetName() != myvol->GetName()) {
-            if (fVerboseLevel > 0) {
-              G4cerr << "remoll: DetNo " << det_no << " for " << myvol->GetName() << G4endl;
-              G4cerr << "remoll: already used by " << detnomap[det_no]->GetName() << G4endl;
-            }
+          if (detnomap.count(det_no) != 0 && detnomap[det_no].first != sens_det) {
+            std::string sens_det2 = detnomap[det_no].first;
+            G4LogicalVolume* myvol2 = detnomap[det_no].second;
+            G4cerr << "remoll: Detector number " << det_no << " (" << sens_det  << ") " << myvol->GetName()  << G4endl;
+            G4cerr << "remoll: already used by " << det_no << " (" << sens_det2 << ") " << myvol2->GetName() << G4endl;
           }
 
           // Try to find sensitive detector
@@ -874,11 +869,11 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 
             // Register detector with SD manager
             SDman->AddNewDetector(remollsd);
-            detnomap[det_no] = myvol;
+            detnomap[det_no] = std::make_pair(sens_det, myvol);
 
             // Register detector with remollIO
             remollIO* io = remollIO::GetInstance();
-            io->RegisterDetector(myvol->GetName(), it_sensdet->value, det_no);
+            io->RegisterDetector(myvol->GetName(), sens_det, det_no);
 
           }
 
