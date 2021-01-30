@@ -31,7 +31,7 @@
   <constant name="center_cylwall" value="1*(height_cylwall/2+bottom_cylwall)"/>
   <constant name="trans_topwall" value="radius_topwall_out-(-center_topwall+bottom_cylwall+height_cylwall)"/> 
 
-  <constant name="radius_max_cylHallDet" value="radius_of_cylwall - 100"/>
+  <constant name="radius_max_cylHallDet" value="radius_of_cylwall - 10"/>
   <constant name="height_cylHallDet" value="height_cylwall - thick_cylwall - 1"/>
 
   <position name="cylHallDet_center" unit="mm" x="0" y="0" z="0"/>
@@ -216,12 +216,19 @@
     <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
     <box lunit="mm" name="boxHallMother_in" x="width_mother - 2500." y="height_mother - 2500." z="length_mother - 2000."/>
 
-    <subtraction name ="boxHallMother">
+    <subtraction name ="boxHallMother_1">
       <first ref="boxHallMother_out"/>
       <second ref="cylHallMother_1"/>
       <positionref ref="cylwall_center" />
       <rotationref ref="scRot_1"/>
-  </subtraction> 
+    </subtraction>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeamPipeDS" rmax="770" rmin="0" startphi="0" z="1000"/>
+    <subtraction name ="boxHallMother">
+      <first ref="boxHallMother_1"/>
+      <second ref="tubeBeamPipeDS"/>
+      <position z="26000."/>
+    </subtraction>
 
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>

@@ -32,68 +32,19 @@
     rmax="1200" rmin="0" z="1" lunit="mm"/>
 
   <tube
-    name="samVirtualPlane_solid"
-    startphi="0" deltaphi="360" aunit="deg"
-    rmax="660" rmin="0" z="1" lunit="mm"/>
-
-  <tube
     name="dumpVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
     rmax="307" rmin="0" z="1" lunit="mm"/>
 
   <tube
+    name="samVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="732.79" rmin="0" z="1" lunit="mm"/>
+ 
+  <tube
     name="gemVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
     rmin="1450" rmax="1460" z="2700" lunit="mm"/>
-
-  <polycone
-    name="HybridS1_solid"
-    startphi="0" deltaphi="360" aunit="deg" lunit="mm"><!-- before coil-->
-    <zplane rmin="30.5" rmax="31.0" z="0"/>
-    <zplane rmin="34.5" rmax="35.0" z="1520"/>
-  </polycone>
-
-  <polycone
-    name="HybridS2_solid"
-    startphi="0" deltaphi="360" aunit="deg" lunit="mm"><!--first coil-->
-    <zplane rmin="34.5" rmax="35.0" z="0"/>
-    <zplane rmin="38" rmax="38.5" z="1125"/>
-  </polycone>
-
-  <polycone
-    name="HybridS3_solid"
-    startphi="0" deltaphi="360" aunit="deg" lunit="mm"> <!--second coil-->
-    <zplane rmin="38.0" rmax="38.5" z="0"/>
-    <zplane rmin="42.5" rmax="43.0" z="1055"/>
-  </polycone>
-
-  <polycone
-    name="HybridS4_solid" 
-    startphi="0" deltaphi="360" aunit="deg" lunit="mm"><!--third coil-->
-    <zplane rmin="42.5" rmax="43.0" z="0"/>
-    <zplane rmin="47.0" rmax="47.5" z="1020"/>
-  </polycone>
-
-  <polycone
-    name="HybridS5_solid" 
-    startphi="0" deltaphi="360" aunit="deg" lunit="mm"><!-- fourth coil -->
-    <zplane rmin="47.0" rmax="47.5" z="0"/>
-    <zplane rmin="63.0" rmax="63.5" z="4128"/>
-  </polycone>
-
-  <polycone
-    name="HybridS6_solid"
-    startphi="0" deltaphi="360" aunit="deg" lunit="mm"><!--inside the drift chanber-->
-    <zplane rmin="63.0" rmax="63.5" z="0"/>
-    <zplane rmin="76.0" rmax="76.5" z="3243"/>
-  </polycone>
-
-  <polycone
-    name="HybridS7_solid"
-    startphi="0" deltaphi="360" aunit="deg" lunit="mm">
-    <zplane rmin="64.0" rmax="64.5" z="0"/>
-    <zplane rmin="77.0" rmax="77.5" z="3825"/>
-  </polycone>
 
 </solids>
 
@@ -140,12 +91,34 @@
     <auxiliary auxtype="DetNo" auxvalue="50"/>
   </volume>
 
-  <volume name="SAMusVirtualPlane_log">
+  <volume name="SAMus_neckdown_VirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="samVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="42"/>
+    <auxiliary auxtype="DetNo" auxvalue="55"/>
   </volume>
+
+ <volume name="SAMds_neckdown_VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="56"/>
+  </volume>
+
+ <volume name="SAMus_flange_VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="57"/>
+  </volume>
+
+ <volume name="SAMds_flange_VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="58"/>
+  </volume>
+
 
   <volume name="dumpEntranceVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
@@ -175,206 +148,11 @@
     <auxiliary auxtype="DetNo" auxvalue="46"/>
   </volume>
 
-  <volume name="HybridS1_log">
+  <volume name="sieveVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="HybridS1_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="57"/>
-  </volume>
-
-  <volume name="HybridS2_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="HybridS2_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="58"/>
-  </volume>
-
-  <volume name="HybridS3_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="HybridS3_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="59"/>
-  </volume>
-
-  <volume name="HybridS4_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="HybridS4_solid"/>
+    <solidref ref="VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="60"/>
-  </volume>
-
-  <volume name="HybridS5_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="HybridS5_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="61"/>
-  </volume>
-
-  <volume name="HybridS6_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="HybridS6_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="62"/>
-  </volume>
-<!--
-  <volume name="HybridS7_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="HybridS7_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="63"/>
-  </volume>
--->
-  <volume name="HybridD1_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="63"/>
-  </volume>
-
-  <volume name="HybridD2_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="64"/>
-  </volume>
-
-  <volume name="HybridD3_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="65"/>
-  </volume>
-  <volume name="HybridD4_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="66"/>
-  </volume>
-
-<!--  <volume name="HybridD5_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="67"/>
-  </volume>-->
-
-  <volume name="HybridD6_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="68"/>
-  </volume>
-
-  <volume name="HybridD7_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="69"/>
-  </volume>
-
-  <volume name="HybridD8_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="72"/>
-  </volume>
-
-<!--  <volume name="HybridD9_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="73"/>
-  </volume>-->
-
-  <volume name="HybridD10_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="74"/>
-  </volume>
-
-  <volume name="HybridD11_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="75"/>
-  </volume>
-
-<!--  <volume name="HybridD12_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="76"/>
-  </volume>
-
-  <volume name="HybridD13_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="77"/>
-  </volume>
-
-  <volume name="HybridD14_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="78"/>
-  </volume>
-
-  <volume name="HybridD15_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="79"/>
-  </volume>
-
-  <volume name="HybridD16_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="71"/>
-  </volume>-->
-
-  <volume name="HybridD17_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="67"/>
-  </volume>
-
-  <volume name="HybridD18_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="71"/>
-  </volume>
-
-  <volume name="HybridD19_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="73"/>
-  </volume>
-
-  <volume name="HybridD20_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="76"/>
-  </volume>
-
-  <volume name="HybridD21_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="77"/>
-  </volume>
-
-  <volume name="HybridD22_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="78"/>
   </volume>
 
   <volume name="ParallelWorld_logical">
@@ -411,6 +189,31 @@
       <positionref ref="pionDetectorVirtualPlane_pos"/>
     </physvol>
 
+
+  <!-- SAM detector planes -->
+
+    <physvol name="SAMus_neckdown_VirtualPlane_phys">
+      <volumeref ref="SAMus_neckdown_VirtualPlane_log"/>
+      <positionref ref="SAMus_neckdown_VirtualPlane_pos"/>
+    </physvol>
+
+   <physvol name="SAMds_neckdown_VirtualPlane_phys">
+      <volumeref ref="SAMds_neckdown_VirtualPlane_log"/>
+      <positionref ref="SAMds_neckdown_VirtualPlane_pos"/>
+    </physvol>
+ 
+   <physvol name="SAMus_flange_VirtualPlane_phys">
+      <volumeref ref="SAMus_flange_VirtualPlane_log"/>
+      <positionref ref="SAMus_flange_VirtualPlane_pos"/>
+    </physvol>
+
+   <physvol name="SAMds_flange_VirtualPlane_phys">
+      <volumeref ref="SAMds_flange_VirtualPlane_log"/>
+      <positionref ref="SAMds_flange_VirtualPlane_pos"/>
+    </physvol>
+
+
+
     <!-- Beamline detector planes -->
 <!--    <physvol name="collar1VirtualPlane_phys">
       <volumeref ref="collar1VirtualPlane_log"/>
@@ -427,12 +230,8 @@
       <positionref ref="gemVirtualPlane_pos"/>
     </physvol>
 
-    <physvol name="SAMusVirtualPlane_phys">
-      <volumeref ref="SAMusVirtualPlane_log"/>
-      <positionref ref="SAMusVirtualPlane_pos"/>
-    </physvol>
 
-    <physvol name="dumpEntranceVirtualPlane_phys">
+   <physvol name="dumpEntranceVirtualPlane_phys">
       <volumeref ref="dumpEntranceVirtualPlane_log"/>
       <positionref ref="dumpEntranceVirtualPlane_pos"/>
     </physvol>
@@ -452,149 +251,9 @@
       <positionref ref="n2atmoVirtualPlane_pos"/>
     </physvol>
 
-    <physvol name="HybridS1_phys">
-      <volumeref ref="HybridS1_log"/>
-      <positionref ref="HybridS1_pos"/>
-    </physvol>
-
-    <physvol name="HybridS2_phys">
-      <volumeref ref="HybridS2_log"/>
-      <positionref ref="HybridS2_pos"/>
-    </physvol>
-
-    <physvol name="HybridS3_phys">
-      <volumeref ref="HybridS3_log"/>
-      <positionref ref="HybridS3_pos"/>
-    </physvol>
-
-    <physvol name="HybridS4_phys">
-      <volumeref ref="HybridS4_log"/>
-      <positionref ref="HybridS4_pos"/>
-    </physvol>
-
-    <physvol name="HybridS5_phys">
-      <volumeref ref="HybridS5_log"/>
-      <positionref ref="HybridS5_pos"/>
-    </physvol>
-
-    <physvol name="HybridS6_phys">
-      <volumeref ref="HybridS6_log"/>
-      <positionref ref="HybridS6_pos"/>
-    </physvol>
-<!--
-    <physvol name="HybridS7_phys">
-      <volumeref ref="HybridS7_log"/>
-      <positionref ref="HybridS7_pos"/>
-    </physvol>
--->
-    <physvol name="HybridD1_phys">
-      <volumeref ref="HybridD1_log"/>
-      <positionref ref="HybridD1_pos"/>
-    </physvol>
-
-    <physvol name="HybridD2_phys">
-      <volumeref ref="HybridD2_log"/>
-      <positionref ref="HybridD2_pos"/>
-    </physvol>
-
-    <physvol name="HybridD3_phys">
-      <volumeref ref="HybridD3_log"/>
-      <positionref ref="HybridD3_pos"/>
-    </physvol>
-
-    <physvol name="HybridD4_phys">
-      <volumeref ref="HybridD4_log"/>
-      <positionref ref="HybridD4_pos"/>
-    </physvol>
-
-<!--    <physvol name="HybridD5_phys">
-      <volumeref ref="HybridD5_log"/>
-      <positionref ref="HybridD5_pos"/>
-    </physvol>-->
-
-    <physvol name="HybridD6_phys">
-      <volumeref ref="HybridD6_log"/>
-      <positionref ref="HybridD6_pos"/>
-    </physvol>
-
-    <physvol name="HybridD7_phys">
-      <volumeref ref="HybridD7_log"/>
-      <positionref ref="HybridD7_pos"/>
-    </physvol>
-
-    <physvol name="HybridD8_phys">
-      <volumeref ref="HybridD8_log"/>
-      <positionref ref="HybridD8_pos"/>
-    </physvol>
-
-<!--    <physvol name="HybridD9_phys">
-      <volumeref ref="HybridD9_log"/>
-      <positionref ref="HybridD9_pos"/>
-    </physvol>-->
-
-    <physvol name="HybridD10_phys">
-      <volumeref ref="HybridD10_log"/>
-      <positionref ref="HybridD10_pos"/>
-    </physvol>
-
-    <physvol name="HybridD11_phys">
-      <volumeref ref="HybridD11_log"/>
-      <positionref ref="HybridD11_pos"/>
-    </physvol>
-
-<!--    <physvol name="HybridD12_phys">
-      <volumeref ref="HybridD12_log"/>
-      <positionref ref="HybridD12_pos"/>
-    </physvol>
-
-    <physvol name="HybridD13_phys">
-      <volumeref ref="HybridD13_log"/>
-      <positionref ref="HybridD13_pos"/>
-    </physvol>
-
-    <physvol name="HybridD14_phys">
-      <volumeref ref="HybridD14_log"/>
-      <positionref ref="HybridD14_pos"/>
-    </physvol>
-
-    <physvol name="HybridD15_phys">
-      <volumeref ref="HybridD15_log"/>
-      <positionref ref="HybridD15_pos"/>
-    </physvol>
-
-    <physvol name="HybridD16_phys">
-      <volumeref ref="HybridD16_log"/>
-      <positionref ref="HybridD16_pos"/>
-    </physvol>-->
-
-    <physvol name="HybridD17_phys">
-      <volumeref ref="HybridD17_log"/>
-      <positionref ref="HybridD17_pos"/>
-    </physvol>
-
-    <physvol name="HybridD18_phys">
-      <volumeref ref="HybridD18_log"/>
-      <positionref ref="HybridD18_pos"/>
-    </physvol>
-
-    <physvol name="HybridD19_phys">
-      <volumeref ref="HybridD19_log"/>
-      <positionref ref="HybridD19_pos"/>
-    </physvol>
-
-    <physvol name="HybridD20_phys">
-      <volumeref ref="HybridD20_log"/>
-      <positionref ref="HybridD20_pos"/>
-    </physvol>
-
-    <physvol name="HybridD21_phys">
-      <volumeref ref="HybridD21_log"/>
-      <positionref ref="HybridD21_pos"/>
-    </physvol>
-
-    <physvol name="HybridD22_phys">
-      <volumeref ref="HybridD22_log"/>
-      <positionref ref="HybridD22_pos"/>
+    <physvol name="sieveVirtualPlane_phys">
+      <volumeref ref="sieveVirtualPlane_log"/>
+      <positionref ref="sieveVirtualPlane_pos"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
