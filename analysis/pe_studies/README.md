@@ -31,12 +31,14 @@ The arguments are as follows:
 * nameStub: "moller" (or epelastic or epinelastic) are what you should probably use here. This field is just to avoid having to parse whatever macro's name is given and is used as the remollout_NAME.root output.
 * cadp.csv: "cadp.csv" is the usual name of the csv file that will be used in the perl scripts in the remoll-detector-generator scripts. The file is assumed to live inside that repository, and that repository is assumed to be parallel to the current install of remoll (three levels up).
 
+In order for the flux that is produced to be useful, edit mollerParallel.gdml to only have the detectors you want. The flat parameterized detector from the detector perl scripts should be used to interface with the full-scan.sh.
+
 Once you have generated the outputs, please make sure that none of the individual jobs have segfaulted or failed in any way. If they have then just go and manually re-run that failed job.
 
 Once all of the jobs are done the easiest thing to do is execute `hadd -f moller.root out_moller_*/remollout_parallel_moller.root`, which merges them all into one. Because of the way that remoll samples and assigns relative weights, it is important for you to know the uA beam current that was assumed while simulating and the number of individual jobs that were `hadd` together. The rates in any one remoll job are self normalized so that that one job stands alone. `hadd` multiple jobs together will then multiply the rates higher by the multiplicity of separate jobs. Similarly if you want the rate in Hz/uA you need to later divide by the number of uA (which is 65 uA in the sameple macros given).
 
 ### scan.sh
-Usage: `./scripts/scan.sh fixed-non-scanned "variable-to-scan" min-of-scan (-30) max-of-scan (30) step-size (0.5)`
+Usage: `./scripts/scan.sh fixed-non-scanned "variable-to-scan" min-of-scan (-30) max-of-scan (30) step-size (0.5) Reflectivity Cerenkov Scintillation z_position Pass Detector`
 
 This script assumes that a "Geometry name" suffix'ed set of GDML files has been placed in the geometry_sandbox folder of remoll, and that the user wants to scan shooting at different positions or angles onto the light guide. The angles, x position, and z position of the beam generator are passed in as arguments. Practically speaking this script needs to just be called from within the `scripts/full-scan.sh` script, which knows to produce the GDML files itself and read the cadp.csv file to know what x and z points to shoot the beam from. The analysis requires 2 passes, to simulate and then analyze the sim outputs. And the outputs come in the scans.root output file that contains several metrics, including average number of pes and it's RMS, as well as number of bounces against the reflector, lightguide, and both, as well as the input command line parameters.
 
@@ -60,6 +62,7 @@ This is a script that wraps around scan.sh to produce a lookup table's worth of 
 This script assumes several files are already in place and will complain if they are not in the right places or with the right names. Do `scripts/produce.sh` and `scripts/full-scan.sh` first to properly prepare for getting the lightguide backgrounds lookup table folded into the MOLLER flux for final numbers. Please note that the "signal" size has been assumed at 12 PEs vs 25 PEs for rings 1,2,3,4, and 6, vs 5, respectively. The "background" signal is entirely determined by the lookup table coming from the `scripts/full-scan.sh` analysis.
 ### ref-scan.sh
 This is a script that will allow you to scan the reflector length and reflector angle parameters to determine the ideal size and angle of the reflector segment for ideal light collection. Parameters for cerenkov and scintillation can be turned on and off to help understand what is happening. With some care, the relflectivity of the reflector section and the light guide section could be separated from eachother and this can be used to determine the impact of blackening in the light guide section (you would need to edit the material property names or values by hand in the GDML files copied into this analysis in order for that test to be feasible, though it has been done before. See the logic surrounding the Reflectivity parameter in these scripts for guidance on how to achieve this)
+This script is run similarly to scan.sh. For instructions on general parameters to enter, input ./scripts/ref-scan.sh
 ### sub-ref-scan.sh
 This script executes similarly to `scripts/ref-scan.sh`, but it loops over sub-segments of the reflector, allowing fine tuning of a fresnel-type mirror, for optimal light collection. This is just one easiest way that the light guides and reflectors can be studied in addition to the default flat segments we have started with. 
 ### getMax.C
