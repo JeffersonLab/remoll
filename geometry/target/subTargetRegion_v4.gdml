@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  &matrices;
+
+  <constant name="targetChamber_R" value="1981.0/2.0"/>
+  <constant name="targetChamber_L" value="1829."/>
+  <constant name="targetChamber_thickness" value="13."/>
+  <constant name="targetChamberLid_thickness" value="76."/>
+  <!--<constant name="targetChamberHat_L" value="3658."/>-->
+  <constant name="targetChamberHat_L" value="1000."/>
+
+
+  <!--constant for shieldings - dimension from Alan design -->
+  <constant name="concreteBoxx" value="7690."/>
+  <!--<constant name="concreteBoxy" value="9510."/>-->
+  <constant name="concreteBoxy" value="6700."/>
+  <constant name="concreteBoxz" value="6350."/>
+  <!--<constant name="concreteBoxz" value="6990."/>-->
+  <!--<constant name="concreteThickness" value="1550"/>-->
+  <constant name="concreteThickness" value="1000"/>
+
+  <!--constant for lead shieldings - dimension from Alan design -->
+  <constant name="leadBoxx" value="3770."/>
+  <constant name="leadBoxy" value="2550."/>
+  <constant name="leadBoxz" value="400."/>
+
+  <constant name="Shield_bore" value="150"/>
+  <constant name="Shield_bore_concrete" value="340"/>
+  <constant name="Shield_length" value="concreteBoxz+2"/>
+
+  <position name="origin" x="0" y="0" z="0"/>
+
+  <rotation name="rot_x90" unit="deg" x="90"/>
+</define>
+
+&materials;
+
+<solids>
+
+  <box lunit="m" name="targetRegion_solid1"
+       x="10" y="15" z="6.38"/>
+
+  <box lunit="m" name="targetRegion_solid2"
+	  x="11" y="5" z="6.4"/>
+
+  <subtraction name ="targetRegion_solid">
+     <first ref="targetRegion_solid1"/>
+     <second ref="targetRegion_solid2"/>
+     <position name="MotherSub_pos" lunit="mm" x="0" y=" - 3000 - 5000./2. + 20" z="0" />
+             <!--2980 mm is the distance of beam center from the hall floor-->
+   </subtraction>
+
+  <tube aunit="deg" lunit="mm" deltaphi="360" name="target_solid"
+	  rmax="40" rmin="0" z="1250"/>
+
+
+  <tube aunit="deg" lunit="mm" deltaphi="360" name="AlWindow"
+        rmax="40" rmin="0" z="0.127"/>
+
+  <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamber_solid1"
+        rmin="targetChamber_R"
+        rmax="targetChamber_R + targetChamber_thickness"
+        z="targetChamber_L"/>
+  <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamberEntrancePort_solid"
+        rmin="0" rmax="102" z="100"/>
+  <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamberExitPort_solid"
+        rmin="0" rmax="204" z="100"/>
+  <subtraction name ="targetChamber_solid2">
+    <first ref="targetChamber_solid1"/>
+    <second ref="targetChamberEntrancePort_solid"/>
+    <position name="targetChamberEntrance_pos" x="0" z="0" y="targetChamber_R" />
+    <rotationref ref="rot_x90"/>
+  </subtraction>
+  <subtraction name ="targetChamber_solid3">
+    <first ref="targetChamber_solid2"/>
+    <second ref="targetChamberExitPort_solid"/>
+    <position name="targetChamberExit_pos" x="0" z="0" y="-targetChamber_R" />
+    <rotationref ref="rot_x90"/>
+  </subtraction>
+
+  <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamberLid_solid"
+        rmin="0" rmax="targetChamber_R + targetChamber_thickness"
+        z="targetChamberLid_thickness"/>
+  <union name ="targetChamber_solid4">
+    <first ref="targetChamber_solid3"/>
+    <second ref="targetChamberLid_solid"/>
+    <position name="targetChamberTop_pos"
+              z="targetChamber_L/2. + targetChamberLid_thickness/2. - 1"/>
+  </union>
+  <union name ="targetChamber_solid">
+    <first ref="targetChamber_solid4"/>
+    <second ref="targetChamberLid_solid"/>
+    <position name="targetChamberBot_pos"
+              z="-targetChamber_L/2. - targetChamberLid_thickness/2. + 1"/>
+  </union>
+
+  <tube aunit="deg" lunit="mm" deltaphi="360" name="targetChamberHat_solid"
+        rmin="targetChamber_R" rmax="targetChamber_R + targetChamber_thickness"
+        z="targetChamberHat_L"/>
+
+  <!--<box lunit="mm" name="LeadCollar_solid1"
+	  x="370" y="370" z="200"/>-->
+  <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollar_solid1"
+        rmin="0" rmax="330" z="200"/>
+  <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollarInnerSub_solid"
+        rmin="0" rmax="74" z="300"/>
+  <subtraction name ="LeadCollar_solid">
+    <first ref="LeadCollar_solid1"/>
+    <second ref="LeadCollarInnerSub_solid"/>
+    <positionref ref="origin" />
+  </subtraction>
+
+
+  <!--shielding concrete -->
+  <box lunit="mm" name="concrete_outerbox" x="concreteBoxx" y="concreteBoxy-1000" z="concreteBoxz"/>
+  <box lunit="mm" name="concrete_innerbox"
+       x="concreteBoxx-2*concreteThickness"
+       y="concreteBoxy-1000"
+       z="concreteBoxz-2*concreteThickness"/>
+
+  <subtraction name="concrete_sub1">
+    <first ref = "concrete_outerbox"/>
+    <second ref = "concrete_innerbox"/>
+    <!--<position name ="concreteSub1" lunit="mm" x="0" y="-concreteThickness" z="0" />-->
+    <position name ="concreteSub1" lunit="mm" x="0" y="-1400" z="0" />
+  </subtraction>
+
+  <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
+        rmin="0" rmax="Shield_bore_concrete" z="Shield_length"/>
+
+  <subtraction name="concrete_sub">
+    <first ref = "concrete_sub1"/>
+    <second ref = "Shield_tube"/>
+	    <!--<position name ="concreteSub1" lunit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />-->
+    <position name ="concreteSub1" lunit="mm" x="0" y="-370" z="0" />
+  </subtraction>
+
+  <!--shielding front lead -->
+  <box lunit="mm" name="lead_box" x="leadBoxx" y="leadBoxy" z="leadBoxz"/>
+  <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube_lead"
+        rmin="0" rmax="Shield_bore" z="leadBoxz+2"/>
+
+  <subtraction name="lead_sub">
+    <first ref = "lead_box"/>
+    <second ref = "Shield_tube_lead"/>
+    <position name ="leadSub1" lunit="mm" x="leadBoxx/2.-1880" y="-1.*(leadBoxy/2.-1150)" z="0" />
+  </subtraction>
+
+  <!--vacuum detectors for monitoring skyshine  chandan-->
+  <box lunit="mm" name="skyshineVacuumDet1_solid"
+       x="concreteBoxx-concreteThickness*2-1" y="1.0" z="concreteBoxz-concreteThickness*2-1.0"/>
+  <box lunit="mm" name="skyshineVacuumDet2_solid"
+       x="concreteBoxx+1000" y="1.0" z="concreteBoxz"/>
+
+  <tube aunit="deg" deltaphi="360" lunit="mm" name="tgtDet_sub"
+        rmin="0" rmax="Shield_bore/2" z="leadBoxz+2"/>
+
+    <box lunit="mm" name="tgtOuterDetyz_solid"
+       x="1" y="concreteBoxy-1000" z="concreteBoxz"/>
+    <box lunit="mm" name="tgtOuterDetxy_solid0"
+       x="concreteBoxx" y="concreteBoxy-1000" z="1"/>
+    <subtraction name="tgtOuterDetxy_solid">
+      <first ref = "tgtOuterDetxy_solid0"/>
+      <second ref = "tgtDet_sub"/>
+      <position name ="detSub1" lunit="mm" x="0" y="-390" z="0" />
+    </subtraction>
+
+    <box lunit="mm" name="tgtInnerDetyz_solid"
+       x="1" y="3000" z="2200"/>
+    <box lunit="mm" name="tgtInnerDetxy_solid0"
+       x="2200" y="3000" z="1"/>
+    <subtraction name="tgtInnerDetxy_solid">
+      <first ref = "tgtInnerDetxy_solid0"/>
+      <second ref = "tgtDet_sub"/>
+      <position name ="detSub2" lunit="mm" x="0" y="-190" z="0" />
+    </subtraction>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s1"
+        rmin="0" rmax="5.95" z="0.1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s2"
+        rmin="5.95" rmax="14.2" z="0.2"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s3"
+        rmin="14.2" rmax="38.6" z="0.3"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s4"
+        rmin="38.6" rmax="140-0.01" z="0.5"/>
+
+  <union name ="window_solid1">
+    <first ref="window_s1"/>
+    <second ref="window_s2"/>
+    <position name="window_pos1"
+              z="0.05"/>
+  </union>
+  <union name ="window_solid2">
+    <first ref="window_solid1"/>
+    <second ref="window_s3"/>
+    <position name="window_pos2"
+              z="0.1"/>
+  </union>
+  <union name ="TargWindow_solid">
+    <first ref="window_solid2"/>
+    <second ref="window_s4"/>
+    <position name="window_pos3"
+              z="0.2"/>
+  </union>
+
+  <!-- Target upstream beampipe -->
+  <polycone name="targetUSBeamPipeOuter_solid"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="0" rmax="70" z="-3190.0"/>
+    <zplane rmin="0" rmax="70" z="-1000.0"/>
+  </polycone>
+  <polycone name="targetUSBeamPipeInner_solid"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="0" rmax="68" z="-3190.0"/>
+    <zplane rmin="0" rmax="68" z="-1000.0"/>
+  </polycone>
+</solids>
+
+<structure>
+
+  <volume name="h2Targ">
+    <materialref ref="G4_lH2"/>
+    <solidref ref="target_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+  </volume>
+
+  <volume name="USAlTarg">
+    <materialref ref="G4_Al"/>
+    <solidref ref="AlWindow"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+    <auxiliary auxtype="Color" auxvalue="white"/>
+  </volume>
+
+  <volume name="DSAlTarg">
+    <materialref ref="G4_Al"/>
+    <solidref ref="AlWindow"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+    <auxiliary auxtype="Color" auxvalue="white"/>
+  </volume>
+
+  <volume name="targetChamber">
+    <materialref ref="Aluminum"/>
+    <solidref ref="targetChamber_solid4"/>
+    <auxiliary auxtype="Color" auxvalue="white"/>
+  </volume>
+
+  <volume name="targetChamberHat">
+    <materialref ref="Aluminum"/>
+    <solidref ref="targetChamberHat_solid"/>
+    <auxiliary auxtype="Color" auxvalue="white"/>
+  </volume>
+
+  <volume name="targetUSBeamPipeVacuum">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="targetUSBeamPipeInner_solid"/>
+  </volume>
+  <volume name="targetUSBeamPipe">
+    <materialref ref="G4_Al"/>
+    <solidref ref="targetUSBeamPipeOuter_solid"/>
+    <physvol>
+      <volumeref ref="targetUSBeamPipeVacuum"/>
+    </physvol>
+  </volume>
+  
+  <volume name="LeadCollar_logic">
+    <materialref ref="Lead"/>
+    <solidref ref="LeadCollar_solid"/>
+    <auxiliary auxtype="Color" auxvalue="gray"/>
+    <auxiliary auxtype="SensDet" auxvalue="CollDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="3342"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+
+  <!--Shielding-->
+  <volume name="ConcreteShield_target">
+    <materialref ref="Concrete"/>
+    <solidref ref="concrete_sub"/>
+    <auxiliary auxtype="Color" auxvalue="Green"/>
+    <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+  </volume>
+
+  <volume name="LeadShield_target">
+    <materialref ref="Lead"/>
+    <solidref ref="lead_sub"/>
+    <auxiliary auxtype="Color" auxvalue="gray"/>
+    <auxiliary auxtype="SensDet" auxvalue="CollDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="3341"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="skyshineVacuumDet1_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="skyshineVacuumDet1_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_1"/>
+    <auxiliary auxtype="DetNo" auxvalue="5555"/>
+  </volume>
+
+  <volume name="skyshineVacuumDet2_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="skyshineVacuumDet2_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_2"/>
+    <auxiliary auxtype="DetNo" auxvalue="5556"/>
+  </volume>
+
+  <volume name="tgtOuterDet0_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtOuterDetyz_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5540"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtOuterDet1_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtOuterDetyz_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5541"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+
+  <volume name="tgtOuterDet2_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtOuterDetxy_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5542"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtOuterDet3_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtOuterDetxy_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5543"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtInnerDet0_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtInnerDetyz_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5544"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtInnerDet1_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtInnerDetyz_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5545"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+
+  <volume name="tgtInnerDet2_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtInnerDetxy_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5546"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtInnerDet3_logic">
+    <materialref ref="VacuumDet"/>
+    <solidref ref="tgtInnerDetxy_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5547"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="TargWindow_logic">
+    <materialref ref="Aluminum"/>
+    <solidref ref="TargWindow_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Magenta"/>
+    <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="3340"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="targetRegion">
+    <materialref ref="VacuumTarg"/>
+    <solidref ref="targetRegion_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+    <physvol>
+      <volumeref ref="TargWindow_logic"/>
+      <position name="targ_vac_window" unit="mm" x="0" y="0" z="1500"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="USAlTarg"/>
+      <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-625-1"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="h2Targ"/>
+      <position name="targ_center1" unit="mm" x="0" y="0" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="DSAlTarg"/>
+	<position name="targ_downstream_window" unit="mm" x="0" y="0" z="625+1"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="targetChamber"/>
+      <position name="targetChamber_pos" unit="mm" x="0" y="0" z="0"/>
+      <rotationref ref="rot_x90"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="targetChamberHat"/>
+      <position name="targetChamberHat_pos" unit="mm" x="0" z="0"
+                y="targetChamber_L/2 + targetChamberLid_thickness + targetChamberHat_L/5"/>
+      <rotationref ref="rot_x90"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="targetUSBeamPipe"/>
+    </physvol>
+    
+    <physvol>
+      <volumeref ref="LeadCollar_logic"/>
+      <position name="LeadCollar_pos" unit="mm" x="0" y="0"
+                z="2851 + 100"/>
+    </physvol>
+
+    <!--shielding placement-->
+    <physvol>
+      <volumeref ref="ConcreteShield_target"/>
+      <position name="ConcreteShield_pos" unit="mm" x="0" y="concreteBoxy/2.-2975" z="0"/>
+      <!-- <position name="ConcreteShield_pos" unit="mm" x="-1.*(concreteBoxx/2.-3550)" y="concreteBoxy/2.-2975" z="0"/> -->
+    </physvol>
+
+    <physvol>
+      <volumeref ref="LeadShield_target"/>
+      <position name="LeadShield_pos" unit="mm" x="-1.*(leadBoxx/2.-1880)" y="leadBoxy/2.-1150" z="1200+leadBoxz/2."/>
+    </physvol>
+
+    <!--placement of vacuum detector    -->
+    <physvol>
+      <volumeref ref="skyshineVacuumDet1_logic"/>
+      <position name="shyshineVacuumDet1_pos" unit="mm" x="0" y="targetChamber_L/2.+targetChamberHat_L-200" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="skyshineVacuumDet2_logic"/>
+      <position name="shyshineVacuumDet2_pos" unit="mm" x="0" y="concreteBoxy/2" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtOuterDet0_logic"/>
+      <position name="tgtOuterDet0_pos" unit="mm" x="concreteBoxx/2 + 1" y="390" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtOuterDet1_logic"/>
+      <position name="tgtOuterDet1_pos" unit="mm" x="-concreteBoxx/2 - 1" y="390" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtOuterDet2_logic"/>
+      <position name="tgtOuterDet2_pos" unit="mm" x="0" y="390" z="-concreteBoxz/2 - 1"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtOuterDet3_logic"/>
+      <position name="tgtOuterDet3_pos" unit="mm" x="0" y="390" z="concreteBoxz/2 + 1"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtInnerDet0_logic"/>
+      <position name="tgtInnerDet0_pos" unit="mm" x="1101" y="190" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtInnerDet1_logic"/>
+      <position name="tgtInnerDet1_pos" unit="mm" x="-1101" y="190" z="0"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtInnerDet2_logic"/>
+      <position name="tgtInnerDet2_pos" unit="mm" x="0" y="190" z="-1101"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="tgtInnerDet3_logic"/>
+      <position name="tgtInnerDet3_pos" unit="mm" x="0" y="190" z="1101"/>
+    </physvol>
+
+    <auxiliary auxtype="TargetSystem" auxvalue=""/>
+  </volume>
+
+</structure>
+
+<setup name="Target" version="1.0">
+  <world ref="targetRegion"/>
+</setup>
+
+</gdml>
