@@ -89,7 +89,7 @@ void det28Histos::initHisto(TFile *fout){
 	energyNIEL[i][j][k]=new TH1F(Form("d28_energyNIEL_R%d_%s_%s",j,spH[i].c_str(),fbH[k].c_str()),
 				     Form("rate weighted R%d for %s %s;E [MeV]",j,spTit[i].c_str(),fbH[k].c_str()),
 				     121,-8,4.1);
-	niceLogXBins(d28_energyNIEL[i][j][k]);
+	niceLogXBins(energyNIEL[i][j][k]);
       }
 
 
