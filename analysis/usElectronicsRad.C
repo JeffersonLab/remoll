@@ -137,7 +137,7 @@ long processOne(string fnm){
 	  beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE,2);
       }else{
 	if(det==5501 && sqrt(xx*xx+yy*yy)>200) continue;
-	if(det==5502 && (abs(xx)>300 || abs(xx)<100) || (yy>-200 || yy<-500)) continue;
+	if(det==5502 && ((abs(xx)>300 || abs(xx)<100) || (yy>-200 || yy<-500))) continue;
 	beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE,1);
       }
 
