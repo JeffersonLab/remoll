@@ -71,7 +71,7 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-# /control/execute macros/kryptonite.mac
+/control/execute macros/kryptonite.mac
 
 /process/list
 
