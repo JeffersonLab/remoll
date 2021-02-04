@@ -362,7 +362,7 @@ foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
       )
     install(FILES
       ${REMOLL_MAP_DIR}/${FILE}.gz
-      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll/map_directory)
   else()
     file(DOWNLOAD
       ${REMOLL_DOWNLOADS}/${FILE}

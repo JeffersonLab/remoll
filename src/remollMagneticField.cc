@@ -30,7 +30,7 @@
 remollMagneticField::remollMagneticField( G4String filename ){
 
     fName = filename;
-    fFilename = remollSearchPath::resolve(filename);
+    fFilename = filename;
 
     // Initialize grid variables
     for( int cidx = kR; cidx < kZ; cidx++ ){
@@ -144,6 +144,7 @@ void remollMagneticField::ReadFieldMap(){
     boost::iostreams::filtering_istream inputfile;
     // If the filename has .gz somewhere (hopefully the end)
     if (fFilename.find(".gz") != std::string::npos) {
+      fFilename = remollSearchPath::resolve(fFilename);
       boost::iostreams::file_source source_gz(fFilename);
       if (source_gz.is_open()) {
         // Add gzip decompressor to stream
@@ -156,7 +157,8 @@ void remollMagneticField::ReadFieldMap(){
       }
     } else {
       // Try to add .gz at end of filename
-      boost::iostreams::file_source source_gz(fFilename + ".gz");
+      fFilename = remollSearchPath::resolve(fFilename + ".gz");
+      boost::iostreams::file_source source_gz(fFilename);
       if (source_gz.is_open()) {
         // Add gzip decompressor to stream
         inputfile.push(boost::iostreams::gzip_decompressor());
@@ -183,6 +185,7 @@ void remollMagneticField::ReadFieldMap(){
       exit(1);
     }
     // Set file as source
+    fFilename = remollSearchPath::resolve(fFilename);
     inputfile.open(fFilename.data());
 #endif
 
