@@ -14,6 +14,8 @@
 //          <0 to update the file, 1 to recreate>, 
 //          <1 for beam generator, 0 else>)
 
+
+R__LOAD_LIBRARY(radDamage_cc.so)
 #include "radDamage.hh"
 #include "histogramUtilities.h"
 #include "mainDetUtilities.h"
