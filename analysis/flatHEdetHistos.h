@@ -16,7 +16,7 @@ class flatHEdetHistos {
   public:
     flatHEdetHistos() {}
     ~flatHEdetHistos() {}
-    void initHisto( TFile *fout, int detID, const char * detNm, 
+    void initHisto( TFile *fout, int detID, const char * detNm, const char * cut,
 		    int hRange, int vZmin, int vZmax);
     void fillHisto( int detID, int sp, double pz,
 		    double xx, double yy, double vzz);
@@ -24,7 +24,7 @@ class flatHEdetHistos {
 };
 
 void flatHEdetHistos::initHisto(TFile *fout, int detID, const char * detNm, const char * cut = "",
-		    int hRange=4000, int vZmin=-30000, int vZmax=45000) {
+				int hRange=4000, int vZmin=-30000, int vZmax=45000) {
   fout->cd();
   if(!fout->GetDirectory(Form("det%d",detID)))
     fout->mkdir(Form("det%d",detID),detNm);
