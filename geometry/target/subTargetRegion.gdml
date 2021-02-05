@@ -177,7 +177,7 @@
   </subtraction>
 
   <!--vacuum detectors for monitoring skyshine  chandan-->
-  <box lunit="mm" name="skyshineVacuumDet1_solid"
+  <!-- <box lunit="mm" name="skyshineVacuumDet1_solid"
        x="concreteBoxx-concreteThickness*2-1" y="1.0" z="concreteBoxz-concreteThickness*2-1.0"/>
   <box lunit="mm" name="skyshineVacuumDet2_solid"
        x="concreteBoxx+1000" y="1.0" z="concreteBoxz"/>
@@ -203,7 +203,7 @@
       <first ref = "tgtInnerDetxy_solid0"/>
       <second ref = "tgtDet_sub"/>
       <position name ="detSub2" lunit="mm" x="0" y="-390" z="0" />
-    </subtraction>
+    </subtraction>-->
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s1"
         rmin="0" rmax="5.95" z="0.1"/>
@@ -331,7 +331,7 @@
     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
   </volume>
 
-  <volume name="skyshineVacuumDet1_logic">
+  <!--  <volume name="skyshineVacuumDet1_logic">
     <materialref ref="VacuumDet"/>
     <solidref ref="skyshineVacuumDet1_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
@@ -427,7 +427,7 @@
     <auxiliary auxtype="DetNo" auxvalue="5547"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
-  </volume>
+  </volume>-->
 
   <volume name="TargWindow_logic">
     <materialref ref="Aluminum"/>
@@ -504,7 +504,7 @@
     <!-- </physvol> -->
 
     <!--placement of vacuum detector    -->
-    <physvol>
+    <!--  <physvol>
       <volumeref ref="skyshineVacuumDet1_logic"/>
       <position name="shyshineVacuumDet1_pos" unit="mm" x="0" y="targetChamber_L/2.+targetChamberHat_L+200" z="0"/>
     </physvol>
@@ -552,7 +552,7 @@
     <physvol>
       <volumeref ref="tgtInnerDet3_logic"/>
       <position name="tgtInnerDet3_pos" unit="mm" x="0" y="390" z="1101"/>
-    </physvol>
+    </physvol>-->
 
     <auxiliary auxtype="TargetSystem" auxvalue=""/>
   </volume>
