@@ -34,8 +34,8 @@ void flatHEdetHistos::initHisto(TFile *fout, int detID, const char * detNm, cons
   for(int k=0;k<nFB;k++)
     for(int i=0;i<nSpecies;i++){
       string dir = fbH[k];
-      if (detID == 5555 || detID == 5556)
-	dir.replace(dir.find("pz"), 2, "py");
+      if ((detID == 5555 || detID == 5556) && k==0)
+	dir.replace(dir.find("PZ"), 2, "PY");
 
       xy[i][k].push_back(new TH2F(Form("d%dHE%s_xy_%s_%s", detID, cut, spH[i].c_str(), dir.c_str()),
 				  Form("hits for %s %s;x[mm];y[mm]", dir.c_str(), spTit[i].c_str()),
