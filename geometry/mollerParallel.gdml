@@ -52,7 +52,25 @@
 
   <box lunit="mm" name="targetPbWallDS_solid" 
        x="4000" y="3000" z="1"/>
-
+       
+  <box lunit="mm" name="skyshineVacuumDet1_solid"
+       x="4889" y="1.0" z="3549"/>
+    
+  <box lunit="mm" name="skyshineVacuumDet2_solid"
+       x="8690" y="1.0" z="6350"/>
+       
+  <box lunit="mm" name="tgtOuterDetyz_solid"
+       x="1" y="6700" z="6350"/>
+       
+  <box lunit="mm" name="VPtgtOuterDetxy_solid"
+       x="7690" y="6700" z="1"/>
+       
+  <box lunit="mm" name="tgtInnerDetyz_solid"
+       x="1" y="3000" z="2200"/>
+  
+  <box lunit="mm" name="tgtInnerDetxy_solid"
+       x="2200" y="3000" z="1"/>
+            
   <box lunit="mm" name="sbsBunkerFrontFace_solid" 
        x="11000" y="4500" z="1"/>
 </solids>
@@ -98,6 +116,114 @@
     <auxiliary auxtype="DetNo" auxvalue="5530"/>
   </volume>
 
+  <volume name="skyshineVacuumDet1VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="skyshineVacuumDet1_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_1"/>
+    <auxiliary auxtype="DetNo" auxvalue="5555"/>
+  </volume>
+
+  <volume name="skyshineVacuumDet2VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="skyshineVacuumDet2_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_2"/>
+    <auxiliary auxtype="DetNo" auxvalue="5556"/>
+  </volume>
+  
+  <volume name="tgtOuterDet0VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tgtOuterDetyz_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5540"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtOuterDet1VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tgtOuterDetyz_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5541"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+
+  <volume name="tgtOuterDet2VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VPtgtOuterDetxy_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5542"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtOuterDet3VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VPtgtOuterDetxy_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5543"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtInnerDet0VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tgtInnerDetyz_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5544"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+  
+  <volume name="tgtInnerDet1VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tgtInnerDetyz_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5545"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+  
+  <volume name="tgtInnerDet2VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tgtInnerDetxy_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5546"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="tgtInnerDet3VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tgtInnerDetxy_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
+    <auxiliary auxtype="DetNo" auxvalue="5547"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+  
+  
   <volume name="targetPbWallDSVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="targetPbWallDS_solid"/>
@@ -241,6 +367,56 @@
     <physvol    name="targetPbWallDSVirtualPlane_phys">
       <volumeref ref="targetPbWallDSVirtualPlane_log"/>
       <position name="targetPbWallDSVirtualPlane_pos" unit="mm" z="-2800+60"/>
+    </physvol>
+    
+    <physvol    name="skyshineVacuumDet1VirtualPlane_phys">
+      <volumeref ref="skyshineVacuumDet1VirtualPlane_log"/>
+      <position name="skyshineVacuumDet1VirtualPlane_pos" unit="mm" x="0" y="1829/2.+1200" z="-4502"/>
+    </physvol>
+
+    <physvol    name="skyshineVacuumDet2VirtualPlane_phys">
+      <volumeref ref="skyshineVacuumDet2VirtualPlane_log"/>
+      <position name="skyshineVacuumDet2VirtualPlane_pos" unit="mm" x="0" y="3850" z="-4502"/>
+    </physvol>
+    
+    <physvol    name="tgtOuterDet0VirtualPlane_phys">
+      <volumeref ref="tgtOuterDet0VirtualPlane_log"/>
+      <position name="tgtOuterDet0VirtualPlane_pos" unit="mm" x="7690/2 + 1" y="390" z="-4502"/>
+    </physvol>
+
+    <physvol    name="tgtOuterDet1VirtualPlane_phys">
+      <volumeref ref="tgtOuterDet1VirtualPlane_log"/>
+      <position name="tgtOuterDet1VirtualPlane_pos" unit="mm" x="-7690/2 - 1" y="390" z="-4502"/>
+    </physvol>
+
+    <physvol    name="tgtOuterDet2VirtualPlane_phys">
+      <volumeref ref="tgtOuterDet2VirtualPlane_log"/>
+      <position name="tgtOuterDet2VirtualPlane_pos" unit="mm" x="0" y="390" z="-7677"/>
+    </physvol>
+
+    <physvol    name="tgtOuterDet3VirtualPlane_phys">
+      <volumeref ref="tgtOuterDet3VirtualPlane_log"/>
+      <position name="tgtOuterDet3VirtualPlane_pos" unit="mm" x="0" y="390" z="-1325"/>
+    </physvol>
+    
+    <physvol    name="tgtInnerDet0VirtualPlane_phys">
+      <volumeref ref="tgtInnerDet0VirtualPlane_log"/>
+      <position name="tgtInnerDet0VirtualPlane_pos" unit="mm" x="1101" y="390" z="-4502"/>
+    </physvol>
+
+    <physvol    name="tgtInnerDet1VirtualPlane_phys">
+      <volumeref ref="tgtInnerDet1VirtualPlane_log"/>
+      <position name="tgtInnerDet1VirtualPlane_pos" unit="mm" x="-1101" y="390" z="-4502"/>
+    </physvol>
+
+    <physvol    name="tgtInnerDet2VirtualPlane_phys">
+      <volumeref ref="tgtInnerDet2VirtualPlane_log"/>
+      <position name="tgtInnerDet2VirtualPlane_pos" unit="mm" x="0" y="390" z="-5602"/>
+    </physvol>
+
+    <physvol    name="tgtInnerDet3VirtualPlane_phys">
+      <volumeref ref="tgtInnerDet3VirtualPlane_log"/>
+      <position name="tgtInnerDet3VirtualPlane_pos" unit="mm" x="0" y="390" z="-3400"/>
     </physvol>
 
     <physvol    name="usHybridVirtualPlane_phys">
