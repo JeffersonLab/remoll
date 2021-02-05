@@ -48,6 +48,8 @@ void heShldAna(const string& finName = "./remollout.root", double addScale=1, in
   fileNm = finName;
   beamGen = beamGenerator;
 
+  cout<<"Start "<<fileNm<<" "<<beamGen<<endl;
+
   initHisto(overWriteFile);
   process();
   writeOutput(addScale);
@@ -225,7 +227,7 @@ void initHisto(int fileType){
   const char * fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will " << fTp[fileType] << " file!" << endl;
   fout = new TFile(foutNm.c_str(), fTp[fileType]);
-  
+
   beamLine.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt");
   beamLine.initHisto(fout, 5555, "Flat: outside tgt bunker above tgt");
   beamLineHole.initHisto(fout, 5556, "Flat: inside tgt bunker above tgt with hole", "Hole");
@@ -242,6 +244,7 @@ void initHisto(int fileType){
   flatHE.initHisto(fout, 101, "Flat: hall lid", "", 27000);
 
   hall.initHisto(fout);
+
 }
 
 void writeOutput(double addScale){
