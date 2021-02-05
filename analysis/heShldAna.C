@@ -19,7 +19,6 @@ R__LOAD_LIBRARY(radDamage_cc.so)
 #include "histogramUtilities.h"
 #include "beamLineDetHistos.h"
 #include "flatHEdetHistos.h"
-// #include "sphereDetHistos.h"
 #include "hallDetHistos.h"
 
 TFile *fout;
