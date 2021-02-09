@@ -148,7 +148,7 @@ long processOne(string fnm) {
 	double projZ = zz - dProjY * hit->at(j).pz/hit->at(j).py;
 	if(sqrt(projX*projX + projZ*projZ) < 1000)
 	  flatHEholeProj.fillHisto(det, sp, py, projX, projZ, vz0);
-
+      }
     }
   }
   fin->Close();
