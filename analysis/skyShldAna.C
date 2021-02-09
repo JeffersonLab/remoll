@@ -140,16 +140,15 @@ long processOne(string fnm) {
       if(det!=5555) continue;
 
       if(kinE > 10){
-	if(sqrt(yy*yy + tgtZZ*tgtZZ) < 1000)
-	  flatHEhole.fillHisto(det, sp, py, xx, tgtZZ, vz0);
-	
-	flatHE.fillHisto(det, sp, py, xx, tgtZZ, vz0);
+	if(sqrt(xx*xx + tgtZZ*tgtZZ) < 1000)
+	  flatHEhole.fillHisto(det, sp, py, xx, tgtZZ, vz0);	
+	flatHE.fillHisto(det, sp, py, xx, tgtZZ, vz0);	
 	
 	double projX = xx - dProjY * hit->at(j).px/hit->at(j).py;
 	double projZ = zz - dProjY * hit->at(j).pz/hit->at(j).py;
-	flatHEholeProj.fillHisto(det, sp, py, projX, projZ, vz0);
-	
-      }
+	if(sqrt(projX*projX + projZ*projZ) < 1000)
+	  flatHEholeProj.fillHisto(det, sp, py, projX, projZ, vz0);
+
     }
   }
   fin->Close();
