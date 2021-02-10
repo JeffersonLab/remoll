@@ -140,14 +140,17 @@ long processOne(string fnm) {
       if(det!=5555) continue;
 
       if(kinE > 10){
+	//cout<<xx<<" "<<yy<<" "<<zz<<" "<<px<<" "<<py<<" "<<pz<<endl;
 	if(sqrt(xx*xx + tgtZZ*tgtZZ) < 1000)
 	  flatHEhole.fillHisto(det, sp, py, xx, tgtZZ, vz0);	
 	flatHE.fillHisto(det, sp, py, xx, tgtZZ, vz0);	
 	
-	double projX = xx - dProjY * hit->at(j).px/hit->at(j).py;
-	double projZ = zz - dProjY * hit->at(j).pz/hit->at(j).py;
+	double projX = xx - px/py *dProjY;
+	double projZ = tgtZZ - pz/py *dProjY;
 	if(sqrt(projX*projX + projZ*projZ) < 1000)
 	  flatHEholeProj.fillHisto(det, sp, py, projX, projZ, vz0);
+	// cout<<"\t"<<projX<<" "<<projZ<<endl;
+	// std::cin.ignore();
       }
     }
   }
@@ -158,7 +161,7 @@ long processOne(string fnm) {
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_heShldAnaV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_skyShldAnaV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const char * fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will " << fTp[fileType] << " file!" << endl;
