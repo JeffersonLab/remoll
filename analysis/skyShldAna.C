@@ -142,13 +142,13 @@ long processOne(string fnm) {
       if(kinE > 10){
 	//cout<<xx<<" "<<yy<<" "<<zz<<" "<<px<<" "<<py<<" "<<pz<<endl;
 	if(sqrt(xx*xx + tgtZZ*tgtZZ) < 1000)
-	  flatHEhole.fillHisto(det, sp, py, xx, tgtZZ, vz0);	
-	flatHE.fillHisto(det, sp, py, xx, tgtZZ, vz0);	
+	  flatHEhole.fillHisto(det, sp, py, xx, tgtZZ, vx0, vy0, vz0);	
+	flatHE.fillHisto(det, sp, py, xx, tgtZZ, vx0, vy0, vz0);	
 	
 	double projX = xx - px/py *dProjY;
 	double projZ = tgtZZ - pz/py *dProjY;
 	if(sqrt(projX*projX + projZ*projZ) < 1000)
-	  flatHEholeProj.fillHisto(det, sp, py, projX, projZ, vz0);
+	  flatHEholeProj.fillHisto(det, sp, py, projX, projZ, vx0, vy0, vz0);
 	// cout<<"\t"<<projX<<" "<<projZ<<endl;
 	// std::cin.ignore();
       }
