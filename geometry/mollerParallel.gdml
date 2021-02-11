@@ -147,7 +147,7 @@
     <auxiliary auxtype="DetNo" auxvalue="58"/>
   </volume>
 
-  <volume name="Col2Exit_log">
+  <volume name="Col2Ent_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="samVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
@@ -189,7 +189,7 @@
     <auxiliary auxtype="DetNo" auxvalue="64"/>
   </volume>
 
-  <volume name="Col4Exit_log">
+  <volume name="Col4Ent_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="samVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
@@ -385,11 +385,11 @@
       <volumeref ref="gemVirtualPlane_log"/>
       <positionref ref="gemVirtualPlane_pos"/>
     </physvol>
-
+<!--
     <physvol name="SAMusVirtualPlane_phys">
       <volumeref ref="SAMusVirtualPlane_log"/>
       <positionref ref="SAMusVirtualPlane_pos"/>
-    </physvol>
+    </physvol>-->
 
     <physvol name="dumpEntranceVirtualPlane_phys">
       <volumeref ref="dumpEntranceVirtualPlane_log"/>
@@ -421,9 +421,9 @@
       <position  name="tgtPbCollar_pos" unit="mm" x="0" y="0" z="-1449"/>
     </physvol>
 
-    <physvol name="Col2Exit_phys">
-      <volumeref ref="Col2Exit_log"/>
-      <position  name="Col2Exit_pos" unit="mm" x="0" y="0" z="900"/>
+    <physvol name="Col2Ent_phys">
+      <volumeref ref="Col2Ent_log"/>
+      <position  name="Col2Ent_pos" unit="mm" x="0" y="0" z="750"/>
     </physvol>
 
     <physvol name="USCoil1_phys">
@@ -451,14 +451,14 @@
       <position  name="USCoil5_pos" unit="mm" x="0" y="0" z="3000"/>
     </physvol>
 
-    <physvol name="Col4Exit_phys">
-      <volumeref ref="Col4Exit_log"/>
-      <position  name="Col4Exit_pos" unit="mm" x="0" y="0" z="3375"/>
+    <physvol name="Col4Ent_phys">
+      <volumeref ref="Col4Ent_log"/>
+      <position  name="Col4Ent_pos" unit="mm" x="0" y="0" z="3225"/>
     </physvol>
 
     <physvol name="DSCoil1_phys">
       <volumeref ref="DSCoil1_log"/>
-      <position  name="DSCoil1_pos" unit="mm" x="0" y="0" z="4900"/>
+      <position  name="DSCoil1_pos" unit="mm" x="0" y="0" z="4430.5"/>
     </physvol>
 
     <physvol name="DSCoil2_phys">
@@ -508,7 +508,7 @@
 
     <physvol name="DSCoil11_phys">
       <volumeref ref="DSCoil11_log"/>
-      <position  name="DSCoil11_pos" unit="mm" x="0" y="0" z="7600"/>
+      <position  name="DSCoil11_pos" unit="mm" x="0" y="0" z="7785"/>
     </physvol>
 
     <physvol name="DSCoil12_phys">
