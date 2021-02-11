@@ -92,7 +92,7 @@ if(Boost_FOUND)
   ADD_DEFINITIONS(-D__USE_BOOST)
   if(Boost_IOSTREAMS_FOUND)
     message(STATUS "Boost::iostreams found --> building with boost::iostreams enabled.")
-    ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+    #ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
   endif()
   if(Boost_FILESYSTEM_FOUND)
     message(STATUS "Boost::filesystem found --> building with boost::filesystem enabled.")
@@ -363,7 +363,8 @@ foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
     install(FILES
       ${REMOLL_MAP_DIR}/${FILE}.gz
       DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
-  else()
+  endif()
+  #else()
     file(DOWNLOAD
       ${REMOLL_DOWNLOADS}/${FILE}
       ${REMOLL_MAP_DIR}/${FILE}
@@ -372,7 +373,7 @@ foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
     install(FILES
       ${REMOLL_MAP_DIR}/${FILE}
       DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
-  endif()
+  #endif()
 endforeach()
 
 

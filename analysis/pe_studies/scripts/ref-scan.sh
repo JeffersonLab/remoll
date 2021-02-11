@@ -2,7 +2,7 @@
 
 # Takes 5 arguments
 # 
-# Fixed value of non-scanned variable - default = 0.0
+# Fixed value of non-scanned variable - default = 80.0
 # Variable to scan ("angle" or "x")   - default = "angle"
 # Min of scanned variable             - default = -30
 # Max of scanned variable             - default = 30
@@ -16,7 +16,7 @@ if [ "$#" -lt 1 ] ; then
     echo "  usage: ./ref-scan.sh fixed-non-scanned \"variable-to-scan\" min-of-scan (0) max-of-scan (30) step-size (1.0)
         Takes 10 arguments
 
-        Fixed value of non-scanned variable - default = 0.0
+        Fixed value of non-scanned variable - default = 80.0
         Variable to scan (\"angle\" or \"x\")   - default = \"angle\"
         Min of scanned variable             - default = 0
         Max of scanned variable             - default = 30
