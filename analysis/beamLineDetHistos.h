@@ -148,11 +148,11 @@ void beamLineDetHistos::initHisto(TFile *fout, const int detID, const string det
 	}
 	if( (histos & 2) == 2 ){ //source histograms
 	  vxz[i][j][k].push_back(new TH2F(Form("d%d_%s_vxz_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
-					  Form("%s for %s %s;vx[mm];vz[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
+					  Form("%s for %s %s;vz[mm];vx[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 					  1000, vzRgMin, vzRgMax,
 					  1000, vxRgMin, vxRgMax));
 	  vyz[i][j][k].push_back(new TH2F(Form("d%d_%s_vyz_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
-					  Form("%s for %s %s;vy[mm];vz[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
+					  Form("%s for %s %s;vz[mm];vy[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 					  1000, vzRgMin, vzRgMax,
 					  1000, vyRgMin, vyRgMax));
 	
