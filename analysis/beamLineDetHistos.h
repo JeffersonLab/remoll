@@ -98,7 +98,8 @@ void beamLineDetHistos::fillHisto(const int detID, const int sp, const double rd
 	r[sp][kk][2][det]->Fill(rr,rdDmg[kk]);
       else
 	r[sp][kk][1][det]->Fill(rr,rdDmg[kk]);
-    }else if( (histos & 2) == 2){
+    }
+    if( (histos & 2) == 2){
       vxz[sp][kk][0][det]->Fill(vz,vx,rdDmg[kk]);
       if(pz<0)
 	vxz[sp][kk][2][det]->Fill(vz,vx,rdDmg[kk]);
@@ -144,7 +145,8 @@ void beamLineDetHistos::initHisto(TFile *fout, const int detID, const string det
 	  r[i][j][k].push_back(new TH1F(Form("d%d_%s_r_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
 					Form("%s for %s %s;r[mm];",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 					1000, 0, range));
-	}else if( (histos & 2) == 2 ){ //source histograms
+	}
+	if( (histos & 2) == 2 ){ //source histograms
 	  vxz[i][j][k].push_back(new TH2F(Form("d%d_%s_vxz_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
 					  Form("%s for %s %s;vx[mm];vz[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 					  1000, vzRgMin, vzRgMax,
@@ -209,7 +211,8 @@ void beamLineDetHistos::writeOutput(TFile *fout, int detID, double scaleFactor,c
 	  xy[i][j][k][det]->Write();
 	  r[i][j][k][det]->Scale(scaleFactor);
 	  r[i][j][k][det]->Write();
-	}else if( (histos & 2) == 2){
+	}
+	if( (histos & 2) == 2){
 	  vxz[i][j][k][det]->Scale(scaleFactor);
 	  vxz[i][j][k][det]->Write();
 	  vyz[i][j][k][det]->Scale(scaleFactor);
