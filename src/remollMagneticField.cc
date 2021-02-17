@@ -185,7 +185,7 @@ void remollMagneticField::ReadFieldMap(){
       exit(1);
     }
     // Set file as source
-    fFilename = remollSearchPath::resolve(fFilename);
+    fFilename = remollSearchPath::resolve(std::string(fFilename));
     inputfile.open(fFilename.data());
 #endif
 
