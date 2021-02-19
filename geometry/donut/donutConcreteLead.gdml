@@ -307,9 +307,9 @@
       <twoDimVertex x="0" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)"/>
       <twoDimVertex x="donutConcreteThickness+donutLeadThickness" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)"/>
       <twoDimVertex x="donutConcreteThickness+donutLeadThickness" y="(donutLeadOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)"/>
-      <twoDimVertex x="donutConcreteThickness+0.1" y="(donutLeadOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)"/>
+      <twoDimVertex x="donutConcreteThickness+0.1" y="(donutLeadOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)+0.1"/>
       <twoDimVertex x="donutConcreteThickness" y="(max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)+donutSleeveThickness+donutTopSupportThickness)"/>
-      <twoDimVertex x="donutConcreteThickness-0.1" y="(donutConcreteOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)"/>
+      <twoDimVertex x="donutConcreteThickness-0.1" y="(donutConcreteOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)+0.1"/>
       <twoDimVertex x="0" y="(donutConcreteOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)"/>
       <section zOrder="1" zPosition="-donutTopSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="+donutTopSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
@@ -324,7 +324,7 @@
       <twoDimVertex x="donutConcreteThickness+0.1"
                     y="sqrt((donutLeadOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportInnerRibDistance/2)^2)+donutTopSupportThickness/2"/>
       <twoDimVertex x="donutConcreteThickness"
-                    y="sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportInnerRibDistance/2)^2)+donutTopSupportThickness/2"/>
+                    y="sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)-0.1+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportInnerRibDistance/2)^2)+donutTopSupportThickness/2"/>
       <twoDimVertex x="donutConcreteThickness-0.1"
                     y="sqrt((donutConcreteOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportInnerRibDistance/2)^2)+donutTopSupportThickness/2"/>
       <twoDimVertex x="0"
@@ -342,7 +342,7 @@
       <twoDimVertex x="donutConcreteThickness+0.1"
                     y="sqrt((donutLeadOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportOuterRibDistance/2)^2)+donutTopSupportThickness/2"/>
       <twoDimVertex x="donutConcreteThickness"
-                    y="sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportOuterRibDistance/2)^2)+donutTopSupportThickness/2"/>
+                    y="sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)-0.1+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportOuterRibDistance/2)^2)+donutTopSupportThickness/2"/>
       <twoDimVertex x="donutConcreteThickness-0.1"
                     y="sqrt((donutConcreteOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportOuterRibDistance/2)^2)+donutTopSupportThickness/2"/>
       <twoDimVertex x="0"
@@ -411,11 +411,11 @@
       <twoDimVertex x="donutConcreteThickness+donutLeadThickness"
                     y="-(donutLeadOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)"/>
       <twoDimVertex x="donutConcreteThickness+0.1"
-                    y="-(donutLeadOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)"/>
+                    y="-(donutLeadOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)-0.1"/>
       <twoDimVertex x="donutConcreteThickness"
                     y="-(max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)+donutSleeveThickness+donutBotSupportThickness)"/>
       <twoDimVertex x="donutConcreteThickness-0.1"
-                    y="-(donutConcreteOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)"/>
+                    y="-(donutConcreteOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)-0.1"/>
       <twoDimVertex x="0"
                     y="-(donutConcreteOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)"/>
       <section zOrder="1" zPosition="-donutBotSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
@@ -431,7 +431,7 @@
       <twoDimVertex x="donutConcreteThickness+0.1"
                     y="-sqrt((donutLeadOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportInnerRibDistance/2)^2)-donutBotSupportThickness/2"/>
       <twoDimVertex x="donutConcreteThickness"
-                    y="-sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportInnerRibDistance/2)^2)-donutBotSupportThickness/2"/>
+                    y="-sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)-0.1+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportInnerRibDistance/2)^2)-donutBotSupportThickness/2"/>
       <twoDimVertex x="donutConcreteThickness-0.1"
                     y="-sqrt((donutConcreteOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportInnerRibDistance/2)^2)-donutBotSupportThickness/2"/>
       <twoDimVertex x="0"
@@ -449,7 +449,7 @@
       <twoDimVertex x="donutConcreteThickness+0.1"
                     y="-sqrt((donutLeadOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportOuterRibDistance/2)^2)-donutBotSupportThickness/2"/>
       <twoDimVertex x="donutConcreteThickness"
-                    y="-sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportOuterRibDistance/2)^2)-donutBotSupportThickness/2"/>
+                    y="-sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)-0.1+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportOuterRibDistance/2)^2)-donutBotSupportThickness/2"/>
       <twoDimVertex x="donutConcreteThickness-0.1"
                     y="-sqrt((donutConcreteOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportOuterRibDistance/2)^2)-donutBotSupportThickness/2"/>
       <twoDimVertex x="0"
@@ -485,8 +485,9 @@
       <twoDimVertex x="donutSystemInnerRadius" y="-donutBeamPipeSupportFinFlareUS"/>
       <twoDimVertex x="donutSystemInnerRadius+donutBeamPipeSupportFinFlareR" y="0"/>
       <twoDimVertex x="donutConcreteInnerRadiusUS-1.1*donutSleeveThickness" y="0"/>
-      <!--twoDimVertex x="donutConcreteInnerRadiusDS-1.1*donutSleeveThickness" y="donutConcreteThickness"/-->
-      <!--twoDimVertex x="donutLeadInnerRadiusUS-1.1*donutSleeveThickness" y="donutConcreteThickness"/-->
+      <twoDimVertex x="donutConcreteInnerRadiusDS-1.1*donutSleeveThickness-0.1" y="donutConcreteThickness-0.1"/>
+      <twoDimVertex x="min(donutConcreteInnerRadiusDS,donutLeadInnerRadiusUS)+0.1-1.1*donutSleeveThickness" y="donutConcreteThickness"/>
+      <twoDimVertex x="donutLeadInnerRadiusUS-1.1*donutSleeveThickness-0.1" y="donutConcreteThickness+0.1"/>
       <twoDimVertex x="donutLeadInnerRadiusDS-1.1*donutSleeveThickness" y="donutConcreteThickness+donutLeadThickness"/>
       <twoDimVertex x="donutSystemInnerRadius+donutBeamPipeSupportFinFlareR" y="donutConcreteThickness+donutLeadThickness"/>
       <twoDimVertex x="donutSystemInnerRadius" y="donutConcreteThickness+donutLeadThickness+donutBeamPipeSupportFinFlareDS"/>
