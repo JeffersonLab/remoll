@@ -69,15 +69,16 @@
           z="concreteThickness+2.0"/>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
-          rmin="0" rmax="510" z="concreteThickness+2.0"/>
+          rmin="0" rmax="451" z="concreteThickness+2.0"/>
 
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="bariteDonut_solid"
-          rmin="339" rmax="505" z="concreteThickness"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="outerBarite_solid"
+          rmin="331" rmax="450" z="concreteThickness - 200"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="innerBarite_solid"
+          rmin="150" rmax="330" z="500"/>
 
     <subtraction name="concreteDS_sub">
       <first ref = "concreteDS"/>
       <second ref = "Shield_tube"/>
-      <!--<position name ="concreteSub" lunit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />-->
       <position name ="concreteSub" lunit="mm" x="0" y="1087" z="0" />
     </subtraction>
 
@@ -206,9 +207,16 @@
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
     
-    <volume name="bariteDonut_logic">
+    <volume name="outerBarite_logic">
       <materialref ref="barite"/>
-      <solidref ref="bariteDonut_solid"/>
+      <solidref ref="outerBarite_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+
+    <volume name="innerBarite_logic">
+      <materialref ref="barite"/>
+      <solidref ref="innerBarite_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
@@ -280,8 +288,13 @@
       </physvol>
       
       <physvol>
-	<volumeref ref="bariteDonut_logic"/>
-	<position name="bariteDonut_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2."/>
+	<volumeref ref="outerBarite_logic"/>
+	<position name="outerBarite_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2. + 100"/>
+      </physvol>
+
+      <physvol>
+	<volumeref ref="innerBarite_logic"/>
+	<position name="innerBarite_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2."/>
       </physvol>
 
       <auxiliary auxtype="TargetSystem" auxvalue=""/>
