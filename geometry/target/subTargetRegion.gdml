@@ -55,19 +55,8 @@
     <tube aunit="deg" lunit="mm" deltaphi="360" name="AlWindow"
           rmax="40" rmin="0" z="0.127"/>
 
-    <!--<box lunit="mm" name="LeadCollar_solid1"
-	x="370" y="370" z="200"/>-->
-    <!-- FIXME this could be done with just one tube and no subtraction -->
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollar_solid1"
-          rmin="0" rmax="330" z="200"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollarInnerSub_solid"
-          rmin="0" rmax="74" z="300"/>
-    <subtraction name ="LeadCollar_solid">
-      <first ref="LeadCollar_solid1"/>
-      <second ref="LeadCollarInnerSub_solid"/>
-      <positionref ref="origin" />
-    </subtraction>
-
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="LeadCollar_solid"
+          rmin="74" rmax="330" z="200"/>
 
     <!--shielding concrete -->
     <box lunit="mm" name="concreteDS" x="concreteBoxx" y="concreteBoxy-concreteThickness-1524" z="concreteThickness"/>
