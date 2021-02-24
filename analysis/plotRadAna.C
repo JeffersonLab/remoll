@@ -15,8 +15,9 @@ TCanvas *plotRatioMDringRates(vector<string> hNms,string cNm);
 //TFile *fin=TFile::Open("../beamGeoV2_radAnaV4_correctMD.root","READ");
 
 const double scale=1;
-TFile *fin=TFile::Open("/phenix/spin/phnxsp01/ciprian/mollerOut/targetShieldStudy_Sep21/radAnaV5_Config1.root","READ");
-TFile *fin2=TFile::Open("/phenix/spin/phnxsp01/ciprian/mollerOut/targetShieldStudy_Nov21/radAnaV5_Config2.root","READ");
+TFile *fin2=TFile::Open("/phenix/spin/phnxsp01/ciprian/mollerOut/targetShieldStudy_Sep21/radAnaV5_Config1.root","READ");
+//TFile *fin2=TFile::Open("/phenix/spin/phnxsp01/ciprian/mollerOut/targetShieldStudy_Nov21/radAnaV5_Config2.root","READ");
+TFile *fin=TFile::Open("/phenix/spin/phnxsp01/ciprian/mollerOut/targetShieldStudy_Jan23_Config3/tgtShld_conf3_radAnaV5.root","READ");
 
 void plotRadAna(){
   vector<string> hNms;
@@ -28,8 +29,8 @@ void plotRadAna(){
     //hNms.push_back(Form("det28/d28_energy_R7_%s",spH[i].c_str()));
   //hNms.push_back(Form("det28/d28_xy_R0_%s_Dmg0",spH[i].c_str()));
   
-  //auto *c1=plotMDringRates(hNms,"kinE");
-  auto *c1=plotRatioMDringRates(hNms,"kinE");
+  auto *c1=plotMDringRates(hNms,"kinE");
+  //auto *c1=plotRatioMDringRates(hNms,"kinE");
   //auto *c1=plotCompare1D(hNms,"kinE");
   //auto *c1=plotCompare1D(hNms,"kinE");
   //auto *c1=plotCompare2D(hNms,"xyHits");
@@ -109,7 +110,7 @@ TCanvas *plotRatioMDringRates(vector<string> hNms,string cNm){
     h->SetMarkerColor(spCls[i]);
     h->Scale(scale);
     // cout<<i<<" "<<h1->GetTitle()<<endl;
-    // h->Fit("pol0");
+    //h->Fit("pol0");
     // cout<<endl;
     if(i==0){
       h->GetYaxis()->SetTitle("hits per electron on target");
