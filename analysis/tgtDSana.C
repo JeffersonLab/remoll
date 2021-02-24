@@ -21,6 +21,7 @@ R__LOAD_LIBRARY(radDamage_cc.so)
 #include "histogramUtilities.h"
 #include "beamLineDetHistos.h"
 #include "det28Histos.h"
+#include "mainDetUtilities.h"
 
 TFile *fout;
 string fileNm;
@@ -135,16 +136,21 @@ long processOne(string fnm){
       double pz = hit->at(j).pz;
       int det = hit->at(j).det;
 
+      double phi = atan2(hit->at(j).y,hit->at(j).x);
+      if(phi<0) phi+=2*pi;
+      int foundRing = findDetector(sector, phi, hit->at(j).r,1);
+      if(foundRing==-1) continue;
+
       beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, vx0, vy0, vz0, kinE);
-      mainDet.fillHisto(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
+      mainDet.fillHisto(sp,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
 
       if((sp==0 || sp==5) && kinE>1){
 	beamLine.fillHisto(det, 1, rdDmg, pz, xx, yy, vx0, vy0, vz0, kinE);
-	mainDet.fillHisto(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
+	mainDet.fillHisto(1,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
 	  beamLine.fillHisto(det, 4, rdDmg, pz, xx, yy, vx0, vy0, vz0, kinE);
-	  mainDet.fillHisto(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
+	  mainDet.fillHisto(4,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
 	}
       }
       
