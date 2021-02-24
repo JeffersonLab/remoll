@@ -135,15 +135,15 @@ long processOne(string fnm){
       double pz = hit->at(j).pz;
       int det = hit->at(j).det;
 
-      beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, vx0, vy0, vz0, kinE);
+      beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE, vx0, vy0, vz0);
       mainDet.fillHisto(sp,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
 
       if((sp==0 || sp==5) && kinE>1){
-	beamLine.fillHisto(det, 1, rdDmg, pz, xx, yy, vx0, vy0, vz0, kinE);
+	beamLine.fillHisto(det, 1, rdDmg, pz, xx, yy, kinE, vx0, vy0, vz0);
 	mainDet.fillHisto(1,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
-	  beamLine.fillHisto(det, 4, rdDmg, pz, xx, yy, vx0, vy0, vz0, kinE);
+	  beamLine.fillHisto(det, 4, rdDmg, pz, xx, yy, kinE, vx0, vy0, vz0);
 	  mainDet.fillHisto(4,0, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
 	}
       }
@@ -165,9 +165,9 @@ void initHisto(int fileType){
   fout = new TFile(foutNm.c_str(),fTp[fileType].c_str());
 
   beamLine.initHisto(fout,5543,"Flat: outside tgt bunker DS",
-		     -4000,4000,
-		     -4000,4000,
-		     -6000,-1500,
+		     -6000,6000,
+		     -6000,6000,
+		     -6000,-1000,
 		     "",4000,0);
 
   mainDet.initHisto(fout);
