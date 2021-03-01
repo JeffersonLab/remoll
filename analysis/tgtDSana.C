@@ -136,21 +136,28 @@ long processOne(string fnm){
       double pz = hit->at(j).pz;
       int det = hit->at(j).det;
 
+      beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE, vx0, vy0, vz0);
+      if((sp==0 || sp==5) && kinE>1){
+	beamLine.fillHisto(det, 1, rdDmg, pz, xx, yy, kinE, vx0, vy0, vz0);
+	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
+	  beamLine.fillHisto(det, 4, rdDmg, pz, xx, yy, kinE, vx0, vy0, vz0);
+	}
+      }
+
+      if(det!=28) continue;
+
       double phi = atan2(hit->at(j).y,hit->at(j).x);
       if(phi<0) phi+=2*pi;
       int foundRing = findDetector(sector, phi, hit->at(j).r,1);
       if(foundRing==-1) continue;
 
-      beamLine.fillHisto(det, sp, rdDmg, pz, xx, yy, kinE, vx0, vy0, vz0);
-      mainDet.fillHisto(sp,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
+      mainDet.fillHisto(sp,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,sector);
 
       if((sp==0 || sp==5) && kinE>1){
-	beamLine.fillHisto(det, 1, rdDmg, pz, xx, yy, kinE, vx0, vy0, vz0);
-	mainDet.fillHisto(1,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
+	mainDet.fillHisto(1,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,sector);
 
 	if((hit->at(j).trid==1 || hit->at(j).trid==2) && hit->at(j).mtrid==0){
-	  beamLine.fillHisto(det, 4, rdDmg, pz, xx, yy, kinE, vx0, vy0, vz0);
-	  mainDet.fillHisto(4,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,0);
+	  mainDet.fillHisto(4,foundRing+1, rdDmg, xx, yy, vx0, vy0, vz0,rr,kinE,pz,sector);
 	}
       }
       
