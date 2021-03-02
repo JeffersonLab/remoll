@@ -161,7 +161,7 @@ long processOne(string fnm) {
 
 
 void initHisto(int fileType){
-  string foutNm = Form("%s_skyShldAnaV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_skyShldAnaV1.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   const char * fTp[2]={"UPDATE","RECREATE"};
   cout<<"Will " << fTp[fileType] << " file!" << endl;
