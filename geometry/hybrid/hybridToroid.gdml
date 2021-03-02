@@ -35,10 +35,10 @@
 		<twoDimVertex x="-53.0" y="17.25"/>
 		<twoDimVertex x="-53.0" y="-17.25"/>
 		<twoDimVertex x="53.0" y="-54.15"/>
-		<twoDimVertex x="53.0" y="-29.15"/>
+		<twoDimVertex x="53.0" y="-33.5"/>
 		<twoDimVertex x="-10.84" y="-12.75"/>
 		<twoDimVertex x="-10.84" y="12.75"/>
-		<twoDimVertex x="53.0" y="29.15"/>
+		<twoDimVertex x="53.0" y="33.5"/>
 		<twoDimVertex x="53.0" y="54.15"/>
 		<section zOrder="1" zPosition="-35" xOffset="0" yOffset="0" scalingFactor="1"/>
 		<section zOrder="2" zPosition="35" xOffset="0" yOffset="0" scalingFactor="1"/>
