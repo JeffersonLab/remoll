@@ -423,7 +423,7 @@
 
     <physvol name="Col2Ent_phys">
       <volumeref ref="Col2Ent_log"/>
-      <position  name="Col2Ent_pos" unit="mm" x="0" y="0" z="750"/>
+      <position  name="Col2Ent_pos" unit="mm" x="0" y="0" z="750-0.51"/>
     </physvol>
 
     <physvol name="USCoil1_phys">
@@ -453,12 +453,12 @@
 
     <physvol name="Col4Ent_phys">
       <volumeref ref="Col4Ent_log"/>
-      <position  name="Col4Ent_pos" unit="mm" x="0" y="0" z="3225"/>
+      <position  name="Col4Ent_pos" unit="mm" x="0" y="0" z="3225-0.51"/>
     </physvol>
 
     <physvol name="DSCoil1_phys">
       <volumeref ref="DSCoil1_log"/>
-      <position  name="DSCoil1_pos" unit="mm" x="0" y="0" z="4430.5"/>
+      <position  name="DSCoil1_pos" unit="mm" x="0" y="0" z="4430.5-0.51"/>
     </physvol>
 
     <physvol name="DSCoil2_phys">
@@ -508,7 +508,7 @@
 
     <physvol name="DSCoil11_phys">
       <volumeref ref="DSCoil11_log"/>
-      <position  name="DSCoil11_pos" unit="mm" x="0" y="0" z="7785"/>
+      <position  name="DSCoil11_pos" unit="mm" x="0" y="0" z="7785-0.51"/>
     </physvol>
 
     <physvol name="DSCoil12_phys">
@@ -523,7 +523,7 @@
 
     <physvol name="DSCoil14_phys">
       <volumeref ref="DSCoil14_log"/>
-      <position  name="DSCoil14_pos" unit="mm" x="0" y="0" z="10000"/>
+      <position  name="DSCoil14_pos" unit="mm" x="0" y="0" z="10000-0.51"/>
     </physvol>
 
     <physvol name="DSCoil15_phys">
@@ -538,7 +538,7 @@
 
     <physvol name="Collar1_phys">
       <volumeref ref="Collar1_log"/>
-      <position  name="Collar1_pos" unit="mm" x="0" y="0" z="12250"/>
+      <position  name="Collar1_pos" unit="mm" x="0" y="0" z="12250-0.51"/>
     </physvol>
 
     <physvol name="Drift_phys">
@@ -548,7 +548,7 @@
 
     <physvol name="Collar2_phys">
       <volumeref ref="Collar2_log"/>
-      <position  name="Collar2_pos" unit="mm" x="0" y="0" z="18850"/>
+      <position  name="Collar2_pos" unit="mm" x="0" y="0" z="18850-0.51"/>
     </physvol>
 
     <physvol name="HallExit_phys">
