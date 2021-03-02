@@ -160,12 +160,12 @@ void det28Histos::fillHisto(int sp, int ring,double rdDmg[3],
     int foundRing=ring-1;
     for(int kk=0;kk<nDmg;kk++){
       mdHits[sp][0][kk]->SetBinContent(foundRing*3+sector+1,
-					    rdDmg[kk] + mdHits[sp][0][kk]->GetBinContent(foundRing*3+sector+1));
+				       rdDmg[kk] + mdHits[sp][0][kk]->GetBinContent(foundRing*3+sector+1));
 
       for(int ll = 1; ll<nErange ; ll++)
 	if(kinE<eRanges[ll] && kinE>=eRanges[ll-1])
 	  mdHits[sp][ll][kk]->SetBinContent(foundRing*3+sector+1,
-						rdDmg[kk] + mdHits[sp][ll][kk]->GetBinContent(foundRing*3+sector+1));
+					    rdDmg[kk] + mdHits[sp][ll][kk]->GetBinContent(foundRing*3+sector+1));
       
     }
   }
