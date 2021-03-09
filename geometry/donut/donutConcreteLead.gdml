@@ -275,7 +275,7 @@
     <box name="donutTopSupportFlat_solid"
          x="donutTopSupportWidth"
          y="donutTopSupportThickness"
-         z="donutConcreteThickness+donutLeadThickness"/>
+         z="donutLeadEnd-donutConcreteStart"/>
     <box name="donutTopSupportInnerFlangeNoCut_solid"
          x="donutTopSupportInnerRibDistance/2-donutTopSupportThickness"
          y="donutIBeamFrameHeightTop-donutTopSupportThickness"
@@ -285,7 +285,7 @@
          y="donutIBeamFrameHeightTop-donutTopSupportThickness"
          z="donutTopSupportThickness"/>
     <tube name="donutTopSupportFlangeCut_solid"
-          rmin="0" rmax="donutLeadOuterRadiusUS+donutSleeveThickness+1.03*donutTopSupportThickness"
+          rmin="0" rmax="max(donutConcreteOuterRadiusDS,donutLeadOuterRadiusUS)+donutSleeveThickness+1.05*donutTopSupportThickness"
           z="2*donutTopSupportThickness" startphi="0" deltaphi="360" aunit="deg"/>
     <subtraction name="donutTopSupportInnerFlange_solid">
       <first ref="donutTopSupportInnerFlangeNoCut_solid"/>
@@ -382,7 +382,7 @@
     <box name="donutBotSupportFlat_solid"
          x="donutBotSupportWidth"
          y="donutBotSupportThickness"
-         z="donutConcreteThickness+donutLeadThickness"/>
+         z="donutLeadEnd-donutConcreteStart"/>
     <box name="donutBotSupportInnerFlangeNoCut_solid"
          x="donutBotSupportInnerRibDistance/2-donutBotSupportThickness"
          y="-donutIBeamFrameHeightBot-donutBotSupportThickness"
@@ -392,7 +392,7 @@
          y="-donutIBeamFrameHeightBot-donutBotSupportThickness"
          z="donutBotSupportThickness"/>
     <tube name="donutBotSupportFlangeCut_solid"
-          rmin="0" rmax="donutLeadOuterRadiusUS+donutSleeveThickness+1.03*donutBotSupportThickness"
+          rmin="0" rmax="max(donutConcreteOuterRadiusDS,donutLeadOuterRadiusUS)+donutSleeveThickness+1.03*donutBotSupportThickness"
           z="2*donutBotSupportThickness" startphi="0" deltaphi="360" aunit="deg"/>
     <subtraction name="donutBotSupportInnerFlange_solid">
       <first ref="donutBotSupportInnerFlangeNoCut_solid"/>
@@ -758,24 +758,24 @@
       <!-- Top support -->
       <physvol name="donutTopSupportFlat_physical">
         <volumeref ref="donutTopSupportFlat_logical"/>
-        <position y="donutIBeamFrameHeightTop-donutTopSupportThickness/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position y="donutIBeamFrameHeightTop-donutTopSupportThickness/2" z="(donutConcreteStart+donutLeadEnd)/2"/>
       </physvol>
       <physvol name="donutTopSupportInnerFlange_physical">
         <volumeref ref="donutTopSupportInnerFlange_logical"/>
-        <position x="donutTopSupportInnerRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position x="donutTopSupportInnerRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
       </physvol>
       <physvol name="donutTopSupportInnerFlange_physical">
         <volumeref ref="donutTopSupportInnerFlange_logical"/>
-        <position x="-donutTopSupportInnerRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position x="-donutTopSupportInnerRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
         <rotation y="180" unit="deg"/>
       </physvol>
       <physvol name="donutTopSupportOuterFlange_physical">
         <volumeref ref="donutTopSupportOuterFlange_logical"/>
-        <position x="donutTopSupportInnerRibDistance/4+donutTopSupportOuterRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position x="donutTopSupportInnerRibDistance/4+donutTopSupportOuterRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
       </physvol>
       <physvol name="donutTopSupportOuterFlange_physical">
         <volumeref ref="donutTopSupportOuterFlange_logical"/>
-        <position x="-donutTopSupportInnerRibDistance/4-donutTopSupportOuterRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position x="-donutTopSupportInnerRibDistance/4-donutTopSupportOuterRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
         <rotation y="180" unit="deg"/>
       </physvol>
       <physvol name="donutTopSupportCenterRib_physical">
@@ -812,24 +812,24 @@
       <!-- Bot support -->
       <physvol name="donutBotSupportFlat_physical">
         <volumeref ref="donutBotSupportFlat_logical"/>
-        <position y="donutIBeamFrameHeightBot+donutBotSupportThickness/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position y="donutIBeamFrameHeightBot+donutBotSupportThickness/2" z="(donutConcreteStart+donutLeadEnd)/2"/>
       </physvol>
       <physvol name="donutBotSupportInnerFlange_physical">
         <volumeref ref="donutBotSupportInnerFlange_logical"/>
-        <position x="donutBotSupportInnerRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position x="donutBotSupportInnerRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
       </physvol>
       <physvol name="donutBotSupportInnerFlange_physical">
         <volumeref ref="donutBotSupportInnerFlange_logical"/>
-        <position x="-donutBotSupportInnerRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position x="-donutBotSupportInnerRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
         <rotation y="180" unit="deg"/>
       </physvol>
       <physvol name="donutBotSupportOuterFlange_physical">
         <volumeref ref="donutBotSupportOuterFlange_logical"/>
-        <position x="donutBotSupportInnerRibDistance/4+donutBotSupportOuterRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position x="donutBotSupportInnerRibDistance/4+donutBotSupportOuterRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
       </physvol>
       <physvol name="donutBotSupportOuterFlange_physical">
         <volumeref ref="donutBotSupportOuterFlange_logical"/>
-        <position x="-donutBotSupportInnerRibDistance/4-donutBotSupportOuterRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteThickness+donutLeadThickness)/2"/>
+        <position x="-donutBotSupportInnerRibDistance/4-donutBotSupportOuterRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
         <rotation y="180" unit="deg"/>
       </physvol>
       <physvol name="donutBotSupportCenterRib_physical">
