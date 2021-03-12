@@ -18,8 +18,8 @@
 class remollRunData : public TObject {
   using TObject::Print;
     public:
-	remollRunData();
-	virtual ~remollRunData();
+	remollRunData() { };
+	virtual ~remollRunData() { };
 
 	unsigned long long int GetNthrown(){ return fNthrown; }
 	void SetNthrown(unsigned long long int n){ fNthrown = n; }

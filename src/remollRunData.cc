@@ -12,16 +12,6 @@
 // External objects
 extern const char* const gGitInfo;
 
-remollRunData::remollRunData()
-{
-    fSeed = 0;
-    fNthrown = -1;
-    fBeamE   = -1e9;
-}
-
-remollRunData::~remollRunData(){
-}
-
 void remollRunData::Init()
 {
     fNthrown = 0;
