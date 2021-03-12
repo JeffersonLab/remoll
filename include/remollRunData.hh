@@ -51,9 +51,9 @@ class remollRunData : public TObject {
 	long int  fSeed;
 	double fBeamE;
 	char fGenName[__RUNSTR_LEN];
+	std::string fRunPath;
 
-	char fHostName[__RUNSTR_LEN];
-	char fRunPath[__RUNSTR_LEN];
+        std::string fHostName;
 
 	remollTextFile              fMacro;
 	std::vector<remollTextFile> fGDMLFiles;

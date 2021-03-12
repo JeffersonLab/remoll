@@ -29,13 +29,22 @@ void remollRunData::Init()
     fNthrown = 0;
     fBeamE   = 0;
     strcpy(fGenName, "default");
-    if(gethostname(fHostName,__RUNSTR_LEN) == -1){
-	fprintf(stderr, "%s line %d: ERROR could not get hostname\n", __PRETTY_FUNCTION__ ,  __LINE__ );
-	fprintf(stderr, "%s\n",strerror(errno));
+    const unsigned int length = 128;
+
+    char hostname[length];
+    if (gethostname(hostname, length) == -1) {
+	G4cerr << "Error:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": "
+               << "could not get hostname" << G4endl;
+    } else {
+        fHostName = hostname;
     }
-    if(getcwd(fRunPath,__RUNSTR_LEN) == NULL){
-	fprintf(stderr, "%s line %d: ERROR could not get current working directory\n", __PRETTY_FUNCTION__ ,  __LINE__ );
-	fprintf(stderr, "%s\n",strerror(errno));
+
+    char runpath[length];
+    if (getcwd(runpath, length) == NULL) {
+	G4cerr << "Error:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": "
+               << "could not get current working directory" << G4endl;
+    } else {
+        fRunPath = runpath;
     }
 }
 
