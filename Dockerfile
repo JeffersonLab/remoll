@@ -56,6 +56,6 @@ RUN ln -sf $REMOLL/bin/remoll.sh /etc/profile.d/remoll.sh
 COPY docker/jlab.sh /jlab/${JLAB_VERSION}/ce/jlab.sh
 
 # Entry point loads the environment
-ENTRYPOINT ["/tini", "--", "bash", "-c", "source /etc/profile && \"$@\"", "-s"]
+ENTRYPOINT ["/tini", "-s", "--", "bash", "-c", "source /etc/profile && \"$@\""]
 
 CMD ["remoll"]

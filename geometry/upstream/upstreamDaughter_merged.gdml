@@ -3,11 +3,13 @@
 <!DOCTYPE gdml [
 <!ENTITY matrices SYSTEM "../matrices.xml">
 <!ENTITY materials SYSTEM "../materials.xml">
+<!ENTITY positions SYSTEM "../positions.xml">
 ]>
 
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
+    &positions;
     &matrices;
     
     <constant name="PI" value="1.*pi"/>
@@ -574,6 +576,11 @@
       <physvol name="UScollunion_2">
         <volumeref ref="logicUScollunion_2"/>
         <positionref ref="posCOLL2_Cu"/>
+      </physvol>
+
+      <physvol name="USsieve">
+        <file name= "upstream/sieve.gdml"/>
+        <positionref ref="sieveActualCenter_pos"/>
       </physvol>
 
       <physvol name="UScoil">
