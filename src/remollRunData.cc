@@ -17,7 +17,6 @@ remollRunData::remollRunData()
     fSeed = 0;
     fNthrown = -1;
     fBeamE   = -1e9;
-    fHostName[0] = '\0';
 }
 
 remollRunData::~remollRunData(){
