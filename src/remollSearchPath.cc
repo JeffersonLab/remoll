@@ -24,26 +24,26 @@ remollSearchPath::~remollSearchPath() {}
 void remollSearchPath::add(const std::string& path)
 {
 #ifndef NO_FS_SUPPORT
-    // If directory to search in is inside CMAKE_INSTALL_PREFIX
-    if(fs::exists(fs::path(std::string(CMAKE_INSTALL_PREFIX) + "/" + path))) {
-        fSearchPath.push_back(fs::path(std::string(CMAKE_INSTALL_PREFIX) + "/" + path));
-    }
-    else if(fs::exists(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/" + path))) {
-      fSearchPath.push_back(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/" + path));
-    }
-        // If directory to search in is inside CMAKE_INSTALL_FULL_DATADIR
-    else if(fs::exists(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/" + path))) {
-        fSearchPath.push_back(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/" + path));
-    }
-        // If directory to search in is inside the current working directory
-    else if(fs::exists(fs::path(std::string(get_current_dir_name()) + "/" + path))) {
-        fSearchPath.push_back(fs::path(get_current_dir_name()) / path);
-    }
-        // Path not relative to CMAKE_INSTALL_PREFIX, CMAKE_INSTALL_FULL_DATADIR or CWD
-        // path is probably an absolute path
-    else if (fs::exists(fs::path(path))) {
-        fSearchPath.push_back(fs::path(path));
-    }
+  // Check if path is an absolute path
+  if (fs::exists(fs::path(path))) {
+    fSearchPath.push_back(fs::path(path));
+  }
+  // Check if the directory to search in is inside the current working directory
+  else if(fs::exists(fs::path(std::string(get_current_dir_name()) + "/" + path))) {
+    fSearchPath.push_back(fs::path(get_current_dir_name()) / path);
+  }
+  // Check if directory to search in is inside CMAKE_INSTALL_PREFIX
+  if(fs::exists(fs::path(std::string(CMAKE_INSTALL_PREFIX) + "/" + path))) {
+    fSearchPath.push_back(fs::path(std::string(CMAKE_INSTALL_PREFIX) + "/" + path));
+  }
+  // Check if directory to search in is inside CMAKE_INSTALL_FULL_DATADIR
+  else if(fs::exists(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/" + path))) {
+    SearchPath.push_back(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/" + path));
+  }
+  // Check if directory to search in is inside CMAKE_INSTALL_FULL_DATADIR/remoll/
+  else(fs::exists(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/" + path))) {
+    fSearchPath.push_back(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/" + path));
+  }
 #endif
 }
 
