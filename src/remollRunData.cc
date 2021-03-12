@@ -17,7 +17,6 @@ remollRunData::remollRunData()
     fSeed = 0;
     fNthrown = -1;
     fBeamE   = -1e9;
-    fGenName[0]  = '\0';
     fHostName[0] = '\0';
 }
 
@@ -28,7 +27,6 @@ void remollRunData::Init()
 {
     fNthrown = 0;
     fBeamE   = 0;
-    strcpy(fGenName, "default");
     fGitInfo = gGitInfo;
 
     const unsigned int length = 128;
@@ -60,7 +58,6 @@ void remollRunData::Print()
     G4cout << "Run Path " << fRunPath << G4endl;;
     G4cout << "N generated = " << fNthrown << G4endl;
     G4cout << "Beam Energy = " << fBeamE << "GeV" << G4endl;
-    G4cout << "Generator   = " << fGenName << G4endl;
 
     G4cout << "Field maps:" << G4endl;
     for (unsigned int i = 0; i < fMagData.size(); i++ ){
