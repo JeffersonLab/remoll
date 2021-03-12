@@ -15,7 +15,6 @@ extern const char* const gGitInfo;
 void remollRunData::Init()
 {
     fNthrown = 0;
-    fBeamE   = 0;
     fGitInfo = gGitInfo;
 
     const unsigned int length = 128;
@@ -46,7 +45,6 @@ void remollRunData::Print()
     G4cout << "Run at " << fRunTime.AsString("ls") << " on " << fHostName << G4endl;
     G4cout << "Run Path " << fRunPath << G4endl;;
     G4cout << "N generated = " << fNthrown << G4endl;
-    G4cout << "Beam Energy = " << fBeamE << "GeV" << G4endl;
 
     G4cout << "Field maps:" << G4endl;
     for (unsigned int i = 0; i < fMagData.size(); i++ ){

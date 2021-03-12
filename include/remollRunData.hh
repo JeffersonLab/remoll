@@ -46,7 +46,6 @@ class remollRunData : public TObject {
 
 	long int  fNthrown;
 	long int  fSeed;
-	double fBeamE;
 	std::string fRunPath;
 
         std::string fHostName;
