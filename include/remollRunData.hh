@@ -45,6 +45,7 @@ class remollRunData : public TObject {
 
 	void Print();
 
+        std::string fGitInfo;
 	TTimeStamp fRunTime;
 
 	long int  fNthrown;
@@ -60,7 +61,7 @@ class remollRunData : public TObject {
 
 	std::vector<filedata_t> fMagData;
 
-	ClassDef(remollRunData, 1);
+	ClassDef(remollRunData, 2);
 };
 
 #endif//__REMOLLRUNDATA_HH

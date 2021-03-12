@@ -29,6 +29,8 @@ void remollRunData::Init()
     fNthrown = 0;
     fBeamE   = 0;
     strcpy(fGenName, "default");
+    fGitInfo = gGitInfo;
+
     const unsigned int length = 128;
 
     char hostname[length];
@@ -52,7 +54,7 @@ void remollRunData::Print()
 {
     G4cout << "git repository info" << G4endl;
     G4cout << "-------------------------------------------------" << G4endl;
-    G4cout << gGitInfo << G4endl;
+    G4cout << fGitInfo << G4endl;
     G4cout << "-------------------------------------------------" << G4endl;
     G4cout << "Run at " << fRunTime.AsString("ls") << " on " << fHostName << G4endl;
     G4cout << "Run Path " << fRunPath << G4endl;;
