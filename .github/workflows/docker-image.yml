@@ -18,7 +18,7 @@ jobs:
       id: docker_meta
       uses: crazy-max/ghaction-docker-meta@v1
       with:
-        images: jeffersonlab/remoll
+        images: ${{ github.repository }}
         tag-semver: |
           {{version}}
           {{major}}.{{minor}}
@@ -34,18 +34,20 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-buildx-
     - name: Login to DockerHub
+      id: docker_login
       if: github.event_name != 'pull_request'
       uses: docker/login-action@v1 
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+      continue-on-error: true
     - name: Build and push
       id: docker_build
       uses: docker/build-push-action@v2
       with:
         context: .
         file: Dockerfile
-        push: ${{ github.event_name != 'pull_request' }}
+        push: ${{ steps.docker_login.outcome == 'success' && github.event_name != 'pull_request' }}
         tags: ${{ steps.docker_meta.outputs.tags }}
         labels: ${{ steps.docker_meta.outputs.labels }}
         cache-from: type=local,src=/tmp/.buildx-cache
