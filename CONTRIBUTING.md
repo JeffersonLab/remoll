@@ -19,14 +19,14 @@ After creating a fork, you will need to add this fork as the primary remote (ori
   git fetch upstream
   Variant: git fetch --all
 - ... and merge the upstream branch in your branch, e.g. for the 'develop' branch
-  git checkout develop
+  git checkout --track origin/develop
   git merge upstream/develop
 Avoid making changes directly on master or develop, even in your own repository (for the same reasons).
 
 ## Doing your work:
 It is easiest to do your work in branches, one per logically separate tasks, and to merge those to jeffersonlab/remoll frequently.
 - Create a new branch from the develop branch (the base of your branch):
-  git checkout develop
+  git checkout --track develop
   git branch new-feature-xyz
   git checkout new-feature-xyz
 - Now, you can do your work in this branch.
