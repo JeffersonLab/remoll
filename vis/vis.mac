@@ -83,6 +83,11 @@
 /vis/filtering/trajectories/HideAllGammas/invert true
 /vis/filtering/trajectories/HideAllGammas/active 0
 
+/vis/filtering/trajectories/create/chargeFilter ShowOnlyCharged
+/vis/filtering/trajectories/ShowOnlyCharged/add 0
+/vis/filtering/trajectories/ShowOnlyCharged/invert true
+/vis/filtering/trajectories/ShowOnlyCharged/active 0
+
 /vis/filtering/trajectories/create/encounteredVolumeFilter ShowOnlyPionDetectorHits
 /vis/filtering/trajectories/ShowOnlyPionDetectorHits/add pionDetectorLuciteAllPlanesWedgeGlue_physical
 /vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 0
