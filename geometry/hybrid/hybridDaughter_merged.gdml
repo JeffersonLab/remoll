@@ -68,16 +68,7 @@
     <constant name="boxDSMother_height" value="2700"/>
     <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73"/> 
 
-    <!--CAD based shielding beampipe for col-4 to end of hybrid magnet -->
-    <!-- <constant name="shield_DS_beampipe_p1_length" value="125 + col4shift"/> FIXME Added length to col 4's beampipe in an arbitrary way!! FIXME -->
-    <constant name="shield_DS_beampipe_p1_length" value="9851.45-DOFFSET-posPCOLL2_z-PCOLL2_THICK/2"/> 
-    <constant name="shield_DS_beampipe_thickness" value="6"/>
-    <constant name="shield_DS_beampipe_p1_US_rmin" value="32"/>
-    <constant name="shield_DS_beampipe_p1_DS_rmin" value="32"/>
-    <constant name="shield_DS_beampipe_p1_US_rmax" value="shield_DS_beampipe_p1_US_rmin + shield_DS_beampipe_thickness"/>
-    <constant name="shield_DS_beampipe_p1_DS_rmax" value="shield_DS_beampipe_p1_DS_rmin + shield_DS_beampipe_thickness"/>
-
-    <position name="shield_DS_beampipe_center" unit="mm" x="0" y="0" z="posPCOLL2_z  + PCOLL2_THICK/2"/>
+    <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL2_z  + PCOLL2_THICK/2+1425"/>
 
     <!-- New shifted target and shrunk experiment mode collimator 4 sculpt -->
     <constant name="PCOLL2_SCULPT_P1_X" value ="53.3"/>
@@ -143,9 +134,9 @@
     </subtraction> 
 
     <!--this is one bounce photon shield -->
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="shield_DS_beampipe_solid"> 
-      <zplane rmin="shield_DS_beampipe_p1_US_rmin" rmax="shield_DS_beampipe_p1_US_rmax" z="0"/> 
-      <zplane rmin="shield_DS_beampipe_p1_DS_rmin" rmax="shield_DS_beampipe_p1_DS_rmax" z="shield_DS_beampipe_p1_length"/> 
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SubCoil1EpoxyShield1_solid"> 
+      <zplane rmin="32.5" rmax="38.5" z="0"/> 
+      <zplane rmin="32.6715" rmax="38.6715" z="51.45"/> 
     </polycone>
 
     <tessellated name="leftpcolcut">
@@ -480,13 +471,13 @@
       <solidref ref="solidLintel7"/>
     </volume>
 
-    <volume name="shield_DS_beampipe_logic">
+    <volume name="SubCoil1EpoxyShield1_logic">
       <materialref ref="Tungsten"/>
-      <solidref ref="shield_DS_beampipe_solid"/>
+      <solidref ref="SubCoil1EpoxyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="56"/> 
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="61"/> 
     </volume>
 
     <volume name="logicDriftpipe">
@@ -608,8 +599,8 @@
 
 <!-- Downstream of coll4 central collimating beampipe -->
       <physvol>
-        <volumeref ref="shield_DS_beampipe_logic"/>
-        <positionref ref="shield_DS_beampipe_center"/>
+        <volumeref ref="SubCoil1EpoxyShield1_logic"/>
+        <positionref ref="SubCoil1EpoxyShield1_center"/>
       </physvol>
 
       <physvol name="DScoil">
