@@ -48,7 +48,7 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
 : fVerboseLevel(0),
   fGDMLParser(0),
   fGDMLValidate(false),
-  fGDMLOverlapCheck(false),
+  fGDMLOverlapCheck(true),
   fGDMLPath(""),
   fGDMLFile(""),
   fMessenger(0),
@@ -523,13 +523,13 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     // Clear parser
     fGDMLParser->Clear();
 
-    // Print GDML warning
-    PrintGDMLWarning();
-
     // Print parsing options
     G4cout << "Reading " << fGDMLFile << G4endl;
     G4cout << "- schema validation " << (fGDMLValidate? "on": "off") << G4endl;
     G4cout << "- overlap check " << (fGDMLOverlapCheck? "on": "off") << G4endl;
+
+    // Print GDML warning when validation
+    if (fGDMLValidate) PrintGDMLWarning();
 
     // Get remollIO instance before chdir since remollIO creates root file
     remollIO* io = remollIO::GetInstance();
