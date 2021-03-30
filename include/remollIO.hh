@@ -75,13 +75,13 @@ class remollIO {
         // Singleton pointer
         static remollIO* gInstance;
         // Private constructor
-        remollIO();
+        remollIO(const G4String& outputfile);
 
     public:
         // Public destructor
         virtual ~remollIO();
         // Static instance getter
-        static remollIO* GetInstance();
+        static remollIO* GetInstance(const G4String& outputfile = "remollout.root");
 
 	void SetFilename(const G4String& name) { fFilename = name; }
 	G4String GetFilename() const { return fFilename; }
