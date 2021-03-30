@@ -41,7 +41,7 @@
 /remoll/filename pion_rates_at_lucite_plane_evgen_pion_1k.root
 
 # Number of events
-/run/beamOn 1000
+/run/beamOn 10000
 
 
 ### 2. moller electrons
@@ -61,44 +61,43 @@
 /remoll/filename pion_rates_at_lucite_plane_evgen_moller_1k.root
 
 # Number of events
-/run/beamOn 1000
+/run/beamOn 10000
 
 
 ### 3. ep elastic electrons
 
-/remoll/evgen/set elastic
+#/remoll/evgen/set elastic
+#/remoll/evgen/emin  0.0 MeV
+#/remoll/evgen/emax 11.0 GeV
 
-/remoll/evgen/emin  0.0 MeV
-/remoll/evgen/emax 11.0 GeV
-
-/remoll/evgen/thmin 0.5 deg
-/remoll/evgen/thmax 3.0 deg
+#/remoll/evgen/thmin 0.5 deg
+#/remoll/evgen/thmax 3.0 deg
 
 # Specify random number seed
-/remoll/seed 1234
+#/remoll/seed 1234
 
 # Filename
-/remoll/filename pion_rates_at_lucite_plane_evgen_ep_elastic_1k.root
+#/remoll/filename pion_rates_at_lucite_plane_evgen_ep_elastic_1k.root
 
 # Number of events
-/run/beamOn 1000
+#/run/beamOn 1000
 
 
 ### 4. ep inelastic electrons
 
-/remoll/evgen/set inelastic
+#/remoll/evgen/set inelastic
 
-/remoll/evgen/emin  0.0 MeV
-/remoll/evgen/emax 11.0 GeV
+#/remoll/evgen/emin  0.0 MeV
+#/remoll/evgen/emax 11.0 GeV
 
-/remoll/evgen/thmin 0.5 deg
-/remoll/evgen/thmax 3.0 deg
+#/remoll/evgen/thmin 0.5 deg
+#/remoll/evgen/thmax 3.0 deg
 
 # Specify random number seed
-/remoll/seed 1234
+#/remoll/seed 1234
 
 # Filename
-/remoll/filename pion_rates_at_lucite_plane_evgen_ep_inelastic_1k.root
+#/remoll/filename pion_rates_at_lucite_plane_evgen_ep_inelastic_1k.root
 
 # Number of events
-/run/beamOn 1000
+#/run/beamOn 1000

@@ -7,11 +7,11 @@
    <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.82" unit="m"/>
    <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.00" unit="m"/>
    <quantity name="pionDetectorSystemLength"      type="length" value="1.00" unit="m"/>
-
+   <!-- Adding some for information -->
    <!-- Positions of detectors within full pion detector system, referenced to front -->
-   <position name="pionDetectorGEMFrontCenterPosition"    z="0.05*m"/> <!-- 0.10*m thick -->
-   <position name="pionDetectorTSFrontCenterPosition"     z="0.15*m"/> <!-- 0.10*m thick -->
-   <position name="pionDetectorLuciteCenterPosition"      z="0.45*m"/> <!-- 0.30*m thick -->
+   <position name="pionDetectorLuciteCenterPosition"      z="2.54*cm"/> <!-- 2.0*inch thick -->
+   <position name="pionDetectorGEMFrontCenterPosition"    z="0.15*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorTSFrontCenterPosition"     z="0.25*m"/> <!-- 0.10*m thick -->
    <position name="pionDetectorTSBackCenterPosition"      z="0.85*m"/> <!-- 0.10*m thick -->
    <position name="pionDetectorGEMBackCenterPosition"     z="0.95*m"/> <!-- 0.10*m thick -->
 
@@ -24,7 +24,7 @@
 <solids>
     <polycone name="pionDetectorSystem_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="pionDetectorSystemInnerRadius" rmax="pionDetectorSystemOuterRadius" z="0"/>
+      <zplane rmin="pionDetectorSystemInnerRadius" rmax="pionDetectorSystemOuterRadius" z="0.0*m"/>
       <zplane rmin="pionDetectorSystemInnerRadius" rmax="pionDetectorSystemOuterRadius" z="pionDetectorSystemLength"/>
     </polycone>
 </solids>
