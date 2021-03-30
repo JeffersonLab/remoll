@@ -31,7 +31,7 @@
 #
 # Declare that trajectories and hits should be added to the scene
 #
-/vis/scene/add/trajectories smooth rich
+/vis/scene/add/trajectories rich
 /vis/scene/add/hits
 
 #

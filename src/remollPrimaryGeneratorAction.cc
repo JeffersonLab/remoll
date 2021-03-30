@@ -27,7 +27,6 @@
 #include "remollGenpInelastic.hh"
 #include "remollGenPion.hh"
 #include "remollGenBeam.hh"
-#include "remollGenTF1.hh"
 #include "remollGen12CElastic.hh"
 #include "remollGenFlat.hh"
 #include "remollGenExternal.hh"
@@ -53,7 +52,6 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     fEvGenMap["pion"] = new remollGenPion();
     fEvGenMap["beam"] = new remollGenBeam();
     fEvGenMap["flat"] = new remollGenFlat();
-    fEvGenMap["TF1"] = new remollGenTF1();
     fEvGenMap["elasticAl"] = new remollGenAl(0);
     fEvGenMap["quasielasticAl"] = new remollGenAl(1);
     fEvGenMap["inelasticAl"] = new remollGenAl(2);
@@ -133,8 +131,6 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
     if (fEventGen) {
       fEventGen->SetBeamTarget(fBeamTarg);
     }
-
-    remollRun::GetRunData()->SetGenName(genname.data());
 }
 
 void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
@@ -206,11 +202,12 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     G4double nthrown = remollRun::GetRunData()->GetNthrown();
 
     // Calculate rate
+    SamplingType_t sampling_type = fEventGen->GetSamplingType();
     if (fEvent->fRate == 0) { // If the rate is set to 0 then calculate it using the cross section
-        fEvent->fRate  = fEvent->fEffXs * fBeamTarg->GetEffLumin() / nthrown;
+        fEvent->fRate  = fEvent->fEffXs * fBeamTarg->GetEffLumin(sampling_type) / nthrown;
 
     } else { // For LUND - calculate rate and cross section
-        fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg->GetEffLumin();
+        fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg->GetEffLumin(sampling_type);
         fEvent->fRate  = fEvent->fRate / nthrown;
     }
 

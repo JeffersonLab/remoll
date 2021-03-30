@@ -1,0 +1,24 @@
+/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+/run/initialize
+
+/remoll/geometry/printoverlaps
+
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+/remoll/kryptonite/volume sieve_sector_logic
+
+/remoll/SD/enable_range 1000 1010
+
+/remoll/evgen/set moller
+
+/control/execute macros/sieve/sieve_in.mac
+/remoll/filename test_sieve_in.root
+/remoll/seed 123456
+/run/beamOn 10
+
+/control/execute macros/sieve/sieve_out.mac
+/remoll/filename test_sieve_out.root
+/remoll/seed 123456
+/run/beamOn 10

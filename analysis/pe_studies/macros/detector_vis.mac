@@ -1,0 +1,62 @@
+# Use this open statement to create an OpenGL view:
+/vis/open OGL 600x600-0+0  
+
+#/remoll/physlist/parallel/disable
+#/remoll/physlist/optical/enable
+/remoll/physlist/parallel/enable
+/remoll/physlist/optical/disable
+
+# This is the current working geometry
+/remoll/setgeofile geometry/mollerMother_merged.gdml
+
+#/remoll/likekryptonite  true
+
+#Below the this energy, the tracks are killed
+#/remoll/minEnergyCut 0 MeV
+
+#/remoll/setphysicslist QGSP_BERT_EMV
+
+/run/initialize
+
+/remoll/SD/enable_all
+
+#/remoll/beamene 11.0 GeV
+/remoll/beamene 855 MeV
+/remoll/beamcurr 50 microampere
+#/remoll/optical true
+#/remoll/addfield CLEO_rm.dat
+/control/execute ../../vis/vis.mac
+#/gun/position 0.0 0.0 -0.1 m
+#/gun/momentum 0.5 1.0 2.0 GeV
+
+# Raster is on by default with 5x5mm
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm 
+
+## Beam generator
+/remoll/evgen/set beam
+#/remoll/evgen/beam/origin -987.5,0.0,-150.0 mm
+/remoll/evgen/beam/origin -987.5 -1.0 21850.0 mm
+/remoll/evgen/beam/rasterRefZ 21850 mm
+#/remoll/evgen/beam/x -987.5 mm
+/remoll/evgen/beam/direction -0.0523 0.0 0.9986
+/remoll/evgen/beam/rasx 105.0 mm
+/remoll/evgen/beam/rasy 78.0 mm
+/remoll/evgen/beam/partName e-
+#/remoll/evgen/beam/x -987.5 mm
+#/remoll/evgen/beam/z -150.0 mm
+#/remoll/evgen/beam/px -0.0523
+#/remoll/evgen/beam/pz 0.9986 
+/remoll/filename remollout_r5o_beam_default.root
+
+
+## External Generator
+#/remoll/evgen/set external
+#/remoll/evgen/external/file remoll_moller_envelope_noCol4_noCoils_500k_LGtest_det28.root
+#/remoll/evgen/external/detid 28
+#/remoll/evgen/external/startEvent 0
+#/remoll/evgen/external/zOffset -28550.0
+#/remoll/filename remollout_r5o_external_default.root
+
+
+#/run/beamOn 100

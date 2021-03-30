@@ -17,7 +17,11 @@
 
 #include "TTimeStamp.h"
 
-enum SampType_t { kNoTargetVolume, kActiveTargetVolume, kAllTargetVolumes };
+enum SamplingType_t {
+    kNoTargetVolume,
+    kActiveTargetVolume,
+    kAllTargetVolumes
+};
 
 struct filedata_t {
     char filename[__RUNSTR_LEN];

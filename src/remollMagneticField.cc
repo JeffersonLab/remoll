@@ -8,6 +8,8 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
+#include "remollSearchPath.hh"
+
 #include <iostream>
 #include <fstream>
 
@@ -25,8 +27,9 @@
 #include <boost/iostreams/device/file.hpp>
 #endif
 
-remollMagneticField::remollMagneticField( G4String filename ){ 
+remollMagneticField::remollMagneticField( G4String filename ){
 
+    fName = filename;
     fFilename = filename;
 
     // Initialize grid variables
@@ -40,7 +43,7 @@ remollMagneticField::remollMagneticField( G4String filename ){
 
     // Default offset for field maps in reference frame with
     // the hall pivot at z = 0.
-    fZoffset = -5000.0;
+    fZoffset = 0.0;
 
     fInit = false;
     fMagCurrent0 = -1e9;
@@ -60,12 +63,12 @@ G4String remollMagneticField::GetName(){
 	return G4String("");
     }
 
-    return fFilename;
+    return fName;
 }
 
 void remollMagneticField::SetFieldScale(G4double s){ 
     fFieldScale = s;
-    G4cout << fFilename << " scale set to " << s << G4endl;
+    G4cout << fName << " scale set to " << s << G4endl;
     return;
 }
 
@@ -74,7 +77,7 @@ void remollMagneticField::SetMagnetCurrent(G4double s){
        	SetFieldScale(s/fMagCurrent0);
     } else {
     	G4cerr << "Warning:  " << __FILE__ << " line " << __LINE__ 
-	    << ": Field current not specified in map " << fFilename << " - Ignoring and proceeding " << G4endl;
+	    << ": Field current not specified in map " << fName << " - Ignoring and proceeding " << G4endl;
     }
     return;
 }
@@ -92,7 +95,7 @@ void remollMagneticField::InitializeGrid() {
 	exit(1);
     }
 
-    G4cout << "Initializing field map grid for " << fFilename << G4endl;
+    G4cout << "Initializing field map grid for " << fName << G4endl;
     G4int cidx, ridx, pidx, zidx;
 
     for( cidx = kR; cidx <= kZ; cidx++ ){
@@ -113,7 +116,7 @@ void remollMagneticField::InitializeGrid() {
 	} // end of r
     } // end coordinate index
 
-    G4cout << "Map grid for " << fFilename << " initialized" << G4endl;
+    G4cout << "Map grid for " << fName << " initialized" << G4endl;
 
     return;
 }
@@ -141,11 +144,38 @@ void remollMagneticField::ReadFieldMap(){
     boost::iostreams::filtering_istream inputfile;
     // If the filename has .gz somewhere (hopefully the end)
     if (fFilename.find(".gz") != std::string::npos) {
-      // Add gzip decompressor to stream
-      inputfile.push(boost::iostreams::gzip_decompressor());
+      fFilename = remollSearchPath::resolve(fFilename);
+      boost::iostreams::file_source source_gz(fFilename);
+      if (source_gz.is_open()) {
+        // Add gzip decompressor to stream
+        inputfile.push(boost::iostreams::gzip_decompressor());
+        // Set file as source
+        inputfile.push(source_gz);
+      } else {
+        G4cerr << "Unable to open input file " << fFilename << G4endl;
+        exit(1);
+      }
+    } else {
+      // Try to add .gz at end of filename
+      fFilename = remollSearchPath::resolve(fFilename + ".gz");
+      boost::iostreams::file_source source_gz(fFilename);
+      if (source_gz.is_open()) {
+        // Add gzip decompressor to stream
+        inputfile.push(boost::iostreams::gzip_decompressor());
+        // Set file as source
+        inputfile.push(source_gz);
+      } else {
+        // Try to load filename without gz
+        boost::iostreams::file_source source_txt(fFilename);
+        if (source_txt.is_open()) {
+          // Set file as source
+          inputfile.push(source_txt);
+        } else {
+          G4cerr << "Unable to open input file " << fFilename << G4endl;
+          exit(1);
+        }
+      }
     }
-    // Set file as source
-    inputfile.push(boost::iostreams::file_source(fFilename));
 #else
     // Create STL ifstream
     std::ifstream inputfile;
@@ -155,6 +185,7 @@ void remollMagneticField::ReadFieldMap(){
       exit(1);
     }
     // Set file as source
+    fFilename = remollSearchPath::resolve(std::string(fFilename));
     inputfile.open(fFilename.data());
 #endif
 
@@ -424,14 +455,14 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     }
 
     // Check that the point is within the defined region
-    if( r > fMax[kR] || r < fMin[kR] ||
-	z > fMax[kZ] || z < fMin[kZ] ){
+    if( r >= fMax[kR] || r < fMin[kR] ||
+	z >= fMax[kZ] || z < fMin[kZ] ){
 	return;
     }
 
     // Ensure we're going to get our grid indices correct
-    assert( fMin[kR] <= r && r <= fMax[kR] );
-    assert( fMin[kZ] <= z && z <= fMax[kZ] );
+    assert( fMin[kR] <= r && r < fMax[kR] );
+    assert( fMin[kZ] <= z && z < fMax[kZ] );
 
     // 2. Next calculate phi (slower)
     G4double phi = atan2(Point[1],Point[0]);
@@ -470,12 +501,12 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
 
     // Check that the point is within the defined region
     // before interpolation.  If it is outside, the field is zero
-    if( lphi > fFileMax[kPhi] || lphi < fFileMin[kPhi] ){
+    if( lphi >= fFileMax[kPhi] || lphi < fFileMin[kPhi] ){
 	return;
     }
 
     // Ensure we're going to get our grid indices correct
-    assert( fFileMin[kPhi] <= lphi && lphi <= fFileMax[kPhi] );
+    assert( fFileMin[kPhi] <= lphi && lphi < fFileMax[kPhi] );
 
 
     // 3. Get interoplation variables

@@ -27,6 +27,8 @@ typedef G4RunManager RunManager;
 #include "remollDetectorConstruction.hh"
 #include "remollParallelConstruction.hh"
 
+#include "remollSearchPath.hh"
+
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 
@@ -60,6 +62,14 @@ int main(int argc, char** argv) {
     // make sure gROOT is loaded before LLVM by using it first
     gROOT->Reset();
     #endif
+
+    // Warn if LIBGL_ALWAYS_INDIRECT is set
+    if (std::getenv("LIBGL_ALWAYS_INDIRECT")) {
+      G4cerr << "remoll: Environment variable LIBGL_ALWAYS_INDIRECT is set." << G4endl;
+      G4cerr << "remoll: This may interfere with visualization. Unset wih:" << G4endl;
+      G4cerr << "remoll: tcsh>  unsetenv LIBGL_ALWAYS_INDIRECT" << G4endl;
+      G4cerr << "remoll: bash>  unset LIBGL_ALWAYS_INDIRECT" << G4endl;
+    }
 
     // Initialize the random seed
     G4long seed = time(0) + (int) getpid();
@@ -147,18 +157,26 @@ int main(int argc, char** argv) {
     G4cout << "remoll: see also https://github.com/JeffersonLab/remoll/issues/130" << G4endl;
     #endif
 
+
     // Define UI session for interactive mode
+    G4String searchpath = std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll";
+    searchpath += ":" + std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/macros";
     if (macro.size())
     {
       // Run in batch mode
       // Copy contents of macro into buffer to be written out into ROOT file
-      remollRun::GetRunData()->SetMacroFile(macro);
-      UImanager->ExecuteMacroFile(macro);
+      UImanager->SetMacroSearchPath(searchpath);
+      UImanager->ParseMacroSearchPath();
+      remollRun::GetRunData()->SetMacroFile((remollSearchPath::resolve(macro)).c_str());
+      UImanager->ExecuteMacroFile((remollSearchPath::resolve(macro)).c_str());
     } else {
       // Define UI session for interactive mode
       G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
-      if (ui->IsGUI())
-        UImanager->ApplyCommand("/control/execute macros/gui.mac");
+      if (ui->IsGUI()) {
+        UImanager->SetMacroSearchPath(searchpath);
+        UImanager->ParseMacroSearchPath();
+        UImanager->ExecuteMacroFile((remollSearchPath::resolve("macros/gui.mac")).c_str());
+      }
       ui->SessionStart();
       delete ui;
     }

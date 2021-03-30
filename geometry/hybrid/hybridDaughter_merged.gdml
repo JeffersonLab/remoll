@@ -68,16 +68,7 @@
     <constant name="boxDSMother_height" value="2700"/>
     <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73"/> 
 
-    <!--CAD based shielding beampipe for col-4 to end of hybrid magnet -->
-    <!-- <constant name="shield_DS_beampipe_p1_length" value="125 + col4shift"/> FIXME Added length to col 4's beampipe in an arbitrary way!! FIXME -->
-    <constant name="shield_DS_beampipe_p1_length" value="9851.45-DOFFSET-posPCOLL2_z-PCOLL2_THICK/2"/> 
-    <constant name="shield_DS_beampipe_thickness" value="6"/>
-    <constant name="shield_DS_beampipe_p1_US_rmin" value="32"/>
-    <constant name="shield_DS_beampipe_p1_DS_rmin" value="32"/>
-    <constant name="shield_DS_beampipe_p1_US_rmax" value="shield_DS_beampipe_p1_US_rmin + shield_DS_beampipe_thickness"/>
-    <constant name="shield_DS_beampipe_p1_DS_rmax" value="shield_DS_beampipe_p1_DS_rmin + shield_DS_beampipe_thickness"/>
-
-    <position name="shield_DS_beampipe_center" unit="mm" x="0" y="0" z="posPCOLL2_z  + PCOLL2_THICK/2"/>
+    <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL2_z  + PCOLL2_THICK/2+1425"/>
 
     <!-- New shifted target and shrunk experiment mode collimator 4 sculpt -->
     <constant name="PCOLL2_SCULPT_P1_X" value ="53.3"/>
@@ -143,9 +134,9 @@
     </subtraction> 
 
     <!--this is one bounce photon shield -->
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="shield_DS_beampipe_solid"> 
-      <zplane rmin="shield_DS_beampipe_p1_US_rmin" rmax="shield_DS_beampipe_p1_US_rmax" z="0"/> 
-      <zplane rmin="shield_DS_beampipe_p1_DS_rmin" rmax="shield_DS_beampipe_p1_DS_rmax" z="shield_DS_beampipe_p1_length"/> 
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SubCoil1EpoxyShield1_solid"> 
+      <zplane rmin="32.5" rmax="38.5" z="0"/> 
+      <zplane rmin="32.6715" rmax="38.6715" z="51.45"/> 
     </polycone>
 
     <tessellated name="leftpcolcut">
@@ -255,7 +246,7 @@
     <subtraction name ="boxDSShield1_local_solid">
       <first ref="boxDSShield1_local_solid_1"/>
       <second ref="DSShield_local_opening_solid"/>
-      <position ref="boxDSShield_local_trans"/>
+      <positionref ref="boxDSShield_local_trans"/>
     </subtraction>
 
     <!--collar solids -->
@@ -394,7 +385,7 @@
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_1">
-      <zplane rmin="504.775" rmax="509.5375" z="0.0"/>
+      <zplane rmin="504.926" rmax="509.5375" z="0.0"/>
       <zplane rmin="506.1201" rmax="510.8826" z="36"/>
     </polycone>
 
@@ -480,13 +471,13 @@
       <solidref ref="solidLintel7"/>
     </volume>
 
-    <volume name="shield_DS_beampipe_logic">
+    <volume name="SubCoil1EpoxyShield1_logic">
       <materialref ref="Tungsten"/>
-      <solidref ref="shield_DS_beampipe_solid"/>
+      <solidref ref="SubCoil1EpoxyShield1_solid"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="56"/> 
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="61"/> 
     </volume>
 
     <volume name="logicDriftpipe">
@@ -545,7 +536,6 @@
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
       <solidref ref="boxDownstream_1"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="Driftpipe">
           <volumeref ref="logicDriftpipe"/>
@@ -561,14 +551,14 @@
 
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
-        <position lunit="mm" name="collar1pos" x="0" y="0" z="17350-25-DOFFSET"/>
-        <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
+        <position unit="mm" name="collar1pos" x="0" y="0" z="17350-25-DOFFSET"/>
+        <rotation unit="rad" name="collar1rot" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
-        <position lunit="mm" name="collar2pos" x="0" y="0" z="23950-25-DOFFSET"/>
-        <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
+        <position unit="mm" name="collar2pos" x="0" y="0" z="23950-25-DOFFSET"/>
+        <rotation unit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol name="lintel1">
@@ -609,8 +599,8 @@
 
 <!-- Downstream of coll4 central collimating beampipe -->
       <physvol>
-        <volumeref ref="shield_DS_beampipe_logic"/>
-        <positionref ref="shield_DS_beampipe_center"/>
+        <volumeref ref="SubCoil1EpoxyShield1_logic"/>
+        <positionref ref="SubCoil1EpoxyShield1_center"/>
       </physvol>
 
       <physvol name="DScoil">
@@ -655,12 +645,12 @@
 
     <physvol name="DSpipe1_flange">
       <volumeref ref="logic_DSpipe1_flange"/>
-      <position name="DSpipe1_flange" x="0" y="0" z="boxDSMother_length/2-261.0"/>
+      <position name="DSpipe1_flange_pos" x="0" y="0" z="boxDSMother_length/2-261.0"/>
     </physvol>
 
     <physvol name="DSpipe1_bellow">
       <volumeref ref="logic_DSpipe1_bellow"/>
-      <position name="DSpipe1_bellow" x="0" y="0" z="boxDSMother_length/2-236.0"/>
+      <position name="DSpipe1_bellow_pos" x="0" y="0" z="boxDSMother_length/2-236.0"/>
     </physvol>
 
     <physvol name="DSpipe2_USplate">
@@ -673,6 +663,7 @@
       <position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="boxDSMother_length/2-36.0"/>
     </physvol>
 
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>
 
