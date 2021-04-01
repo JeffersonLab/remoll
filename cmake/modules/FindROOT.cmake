@@ -86,6 +86,7 @@ if(NOT ROOT_CONFIG_EXEC)
     )
   # Remove include directories from compiler flags; they are handled separately
   string(REGEX REPLACE "-I[^ ]*" "" _cxx_flags "${_cxx_flags}")
+  string(REGEX REPLACE "-O[^ ]*" "" _cxx_flags "${_cxx_flags}")
   set(ROOT_CXX_FLAGS "${_cxx_flags}" CACHE STRING "ROOT C++ compiler flags" FORCE)
   mark_as_advanced(ROOT_CXX_FLAGS)
   unset(_cxx_flags)
