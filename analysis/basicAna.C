@@ -231,47 +231,48 @@ long processOne(string fnm){
       if( find(procID.begin(),procID.end(), hit->at(j).trid) != procID.end() ) continue;
       procID.push_back(hit->at(j).trid);
 
+      const double xx = hit->at(j).x - detOffsetX;
+      const double yy = hit->at(j).y - detOffsetY;
+      const double rr = sqrt(xx*xx + yy*yy);
+
       if(std::isnan(rate) || std::isinf(rate)) continue;
       
-      if(hit->at(j).r < 500) continue;
+      if(rr < 500) continue;
 
-      double phi = atan2(hit->at(j).y - detOffsetY,hit->at(j).x - detOffsetX);
+      double phi = atan2(yy, xx);
       if(phi<0) phi+=2*pi;
 
-      double offsetRR  = hit->at(j).r;
-      if(abs(detOffsetY)>0 || abs(detOffsetX)>0)
-	offsetRR = sqrt((hit->at(j).y - detOffsetY)*(hit->at(j).y - detOffsetY)+(hit->at(j).x - detOffsetX)*(hit->at(j).x - detOffsetX));
-      int foundRing = findDetector(sector, phi, offsetRR);
+      int foundRing = findDetector(sector, phi, rr);
       if(foundRing==-1) continue;
 
       ///HACK Cut to select one septant .. WARNING!! do not use in regular analysis
       //if(!(phi>=2*pi/7*6 && phi<2*pi/7*7)) continue;
 
-      double xx = bm->x;
-      double yy = bm->y;
+      double rxx = bm->x;
+      double ryy = bm->y;
       double gRate = rate/1e9;
-      xRateAll -> Fill(xx, gRate);
+      xRateAll -> Fill(rxx, gRate);
       if(foundRing == 4){
-	beamRaster -> Fill(xx,yy);
-	rBeamRaster -> Fill(xx,yy,gRate);
-	xRate -> Fill(xx, gRate);
+	beamRaster -> Fill(rxx,ryy);
+	rBeamRaster -> Fill(rxx,ryy,gRate);
+	xRate -> Fill(rxx, gRate);
 
-	if( xx > -2.5 && xx < -2.0)
+	if( rxx > -2.5 && rxx < -2.0)
 	  lR->Fill(gRate);
-	else if(xx > 2.0 && xx < 2.5)
+	else if(rxx > 2.0 && rxx < 2.5)
 	  rR->Fill(gRate);
       }
 
 
-      r->Fill(hit->at(j).r);
-      rRate->Fill(hit->at(j).r,rate);
-      rRateAsym->Fill(hit->at(j).r,rate*asym);
+      r->Fill(rr);
+      rRate->Fill(rr,rate);
+      rRateAsym->Fill(rr,rate*asym);
       if(foundRing == 4)
 	eRateAsym->Fill(hit->at(j).e,rate*asym);
       sourceZ->Fill(hit->at(j).vz);
-      hXY->Fill(hit->at(j).x,hit->at(j).y);
-      hXYrate->Fill(hit->at(j).x,hit->at(j).y,rate);
-      hXYrateAsym->Fill(hit->at(j).x,hit->at(j).y,rate*asym);
+      hXY->Fill(xx,yy);
+      hXYrate->Fill(xx,yy,rate);
+      hXYrateAsym->Fill(xx,yy,rate*asym);
 
       int hitRing5=0;
       if(foundRing == 4) hitRing5=1;
@@ -281,19 +282,19 @@ long processOne(string fnm){
 			   rate + hRate->GetBinContent(foundRing*3+sector+1));
       
       if(hit->at(j).trid==1 && scatAng[0]!=-1){
-	hVtxAngR -> Fill(hit->at(j).r,scatAng[0]);
-	hVtxAngRrate -> Fill(hit->at(j).r,scatAng[0],rate);
-	hVtxER -> Fill(hit->at(j).r,scatP[0]);
-	hVtxERrate -> Fill(hit->at(j).r,scatP[0],rate);
+	hVtxAngR -> Fill(rr,scatAng[0]);
+	hVtxAngRrate -> Fill(rr,scatAng[0],rate);
+	hVtxER -> Fill(rr,scatP[0]);
+	hVtxERrate -> Fill(rr,scatP[0],rate);
 	if(hitRing5){
 	  hVtxAngE -> Fill(scatAng[0],scatP[0]);
 	  hVtxAngErate -> Fill(scatAng[0],scatP[0],rate);
 	}
       }else if(hit->at(j).trid==2 && scatAng[1]!=-1){
-	hVtxAngR -> Fill(hit->at(j).r,scatAng[1]);
-	hVtxAngRrate -> Fill(hit->at(j).r,scatAng[1],rate);
-	hVtxER -> Fill(hit->at(j).r,scatP[1]);
-	hVtxERrate -> Fill(hit->at(j).r,scatP[1],rate);
+	hVtxAngR -> Fill(rr,scatAng[1]);
+	hVtxAngRrate -> Fill(rr,scatAng[1],rate);
+	hVtxER -> Fill(rr,scatP[1]);
+	hVtxERrate -> Fill(rr,scatP[1],rate);
 	if(hitRing5){
 	  hVtxAngE -> Fill(scatAng[1],scatP[1]);
 	  hVtxAngErate -> Fill(scatAng[1],scatP[1],rate);
@@ -301,19 +302,19 @@ long processOne(string fnm){
       }
 
       if(hit->at(j).trid==1 && afterColl2Ang[0]!=-1){
-	hAfterColl2AngR -> Fill(hit->at(j).r,afterColl2Ang[0]);
-	hAfterColl2AngRrate -> Fill(hit->at(j).r,afterColl2Ang[0],rate);
-	hAfterColl2ER -> Fill(hit->at(j).r,afterColl2P[0]);
-	hAfterColl2ERrate -> Fill(hit->at(j).r,afterColl2P[0],rate);
+	hAfterColl2AngR -> Fill(rr,afterColl2Ang[0]);
+	hAfterColl2AngRrate -> Fill(rr,afterColl2Ang[0],rate);
+	hAfterColl2ER -> Fill(rr,afterColl2P[0]);
+	hAfterColl2ERrate -> Fill(rr,afterColl2P[0],rate);
 	if(hitRing5){
 	  hAfterColl2AngE -> Fill(scatAng[0],afterColl2P[0]);
 	  hAfterColl2AngErate -> Fill(scatAng[0],afterColl2P[0],rate);
 	}
       }else if(hit->at(j).trid==2 && afterColl2Ang[1]!=-1){
-	hAfterColl2AngR -> Fill(hit->at(j).r,afterColl2Ang[1]);
-	hAfterColl2AngRrate -> Fill(hit->at(j).r,afterColl2Ang[1],rate);
-	hAfterColl2ER -> Fill(hit->at(j).r,afterColl2P[1]);
-	hAfterColl2ERrate -> Fill(hit->at(j).r,afterColl2P[1],rate);
+	hAfterColl2AngR -> Fill(rr,afterColl2Ang[1]);
+	hAfterColl2AngRrate -> Fill(rr,afterColl2Ang[1],rate);
+	hAfterColl2ER -> Fill(rr,afterColl2P[1]);
+	hAfterColl2ERrate -> Fill(rr,afterColl2P[1],rate);
 	if(hitRing5){
 	  hAfterColl2AngE -> Fill(scatAng[1],afterColl2P[1]);
 	  hAfterColl2AngErate -> Fill(scatAng[1],afterColl2P[1],rate);
