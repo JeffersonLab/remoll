@@ -24,7 +24,7 @@ int nFiles(0);
 long currentEvNr(0);
 
 radDamage radDmg;
-beamLineDetHistos beamLine;
+beamLineDetHistos beamLine(3);
 
 void initHisto();
 void writeOutput();
