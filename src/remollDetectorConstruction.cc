@@ -621,7 +621,7 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
         // Found target mother logical volume
         G4LogicalVolume* mother_logical_volume = logical_volume;
         if (fVerboseLevel > 0)
-          G4cout << "Found target mother logical volume "
+          G4cout << "Found target system mother logical volume "
                  << mother_logical_volume->GetName() << "." << G4endl;
 
         // Now find target mother physical volume
@@ -633,15 +633,14 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
 
           // Mutex lock before writing static structures in remollBeamTarget
           G4AutoLock lock(&remollDetectorConstructionMutex);
-          remollBeamTarget::ResetTargetVolumes();
-          remollBeamTarget::SetMotherVolume(mother_physical_volume);
+          remollBeamTarget::AddMotherVolume(mother_physical_volume);
 
           if (fVerboseLevel > 0)
             G4cout << "Found target mother physical volume "
                    << mother_physical_volume->GetName() << "." << G4endl;
         } else {
           G4cout << "Target mother logical volume does not occur "
-                 << "*exactly once* as a physical volume." << G4endl;
+                 << "*exactly once as a physical volume." << G4endl;
           exit(-1);
         }
 
@@ -689,6 +688,8 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
       } // loop over auxiliary tags in volume to find "TargetSystem"
 
     } // loop over volumes with auxiliary tags to find "TargetSystem"
+
+    remollBeamTarget::UpdateInfo();
 }
 
 void remollDetectorConstruction::ParseAuxiliaryUserLimits()
