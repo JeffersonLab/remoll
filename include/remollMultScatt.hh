@@ -59,35 +59,36 @@
    -------------------------------------------------
 */
 
-#define MAT_MAX 50
+#include <vector>
+#include <tuple>
 
 class remollMultScatt {
 
     public:
 	remollMultScatt();
-	remollMultScatt( double p, double t, double A, double Z );
-	remollMultScatt( double p, int nmat, double t[], double A[], double Z[] );
+	remollMultScatt(double p, const std::tuple<double,double,double>& m);
+	remollMultScatt(double p, const std::vector<std::tuple<double,double,double>>& m);
 
-	void   Init( double p, double t, double A, double Z );
-	void   Init( double p, int nmat, double t[], double A[], double Z[] );
+	void   Init(double p, const std::tuple<double,double,double>& m);
+	void   Init(double p, const std::vector<std::tuple<double,double,double>>& m);
 
 	virtual ~remollMultScatt() {;}
 
 	double J0(double x);
 	double CalcMSDistPlane( double theta);
-	double CalcMSDistPlane( double theta, double p, int,  double t[], double A[], double Z[] );
-	double CalcMSDistPlane( double theta, double p, double t, double A, double Z );
+	double CalcMSDistPlane( double theta, double p, const std::vector<std::tuple<double,double,double>>& m);
+	double CalcMSDistPlane( double theta, double p, const std::tuple<double,double,double>& m);
 
-	double CalcMSDist( double theta);
-	double CalcMSDist( double theta, double p, int,  double t[], double A[], double Z[] );
-	double CalcMSDist( double theta, double p, double t, double A, double Z );
+	double CalcMSDist(double theta);
+	double CalcMSDist(double theta, double p, const std::vector<std::tuple<double,double,double>>& m);
+	double CalcMSDist(double theta, double p, const std::tuple<double,double,double>& m);
 
 	double GenerateMS();
-	double GenerateMS( double p, double t, double A, double Z );
-	double GenerateMS( double p, int nmat, double t[], double A[], double Z[] );
+	double GenerateMS(double p, const std::tuple<double,double,double>& m);
+	double GenerateMS(double p, const std::vector<std::tuple<double,double,double>>& m);
 	double GenerateMSPlane();
-	double GenerateMSPlane( double p, double t, double A, double Z );
-	double GenerateMSPlane( double p, int nmat, double t[], double A[], double Z[] );
+	double GenerateMSPlane(double p, const std::tuple<double,double,double>& m);
+	double GenerateMSPlane(double p, const std::vector<std::tuple<double,double,double>>& m);
 
 	double GetPDGTh(){ return fthpdg; }
 
@@ -96,11 +97,8 @@ class remollMultScatt {
 	bool   fInit, fReturnZero;
 	double fErf2sig;
 
-	int    fNmat;
 	double fp;
-	double ft[MAT_MAX];
-	double fA[MAT_MAX];
-	double fZ[MAT_MAX];
+	std::vector<std::tuple<double,double,double>> fm;
 
 	double fth;
 	double fthpdg;
