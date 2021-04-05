@@ -6,18 +6,22 @@
    INPUT: output file and  detector ID
 */
 #include "anaConst.h"
+#include "histogramUtilities.h"
 
 class beamLineDetHistos {
   private:
-    std::vector<TH2F*> xy[nSpecies][nDmg][nFB];
-    std::vector<TH2F*> vxz[nSpecies][nDmg][nFB];
-    std::vector<TH2F*> vyz[nSpecies][nDmg][nFB];
+  int histos; //sets which histograms are recorded
 
-    std::vector<TH1F*> r[nSpecies][nDmg][nFB];
-    std::vector<TH1F*> energy[nSpecies][nFB];
-    std::map<int, int> ID2entry;
+  //histos & 1 == 1
+  std::vector<TH1F*> r[nSpecies][nDmg][nFB];
+  std::vector<TH1F*> energy[nSpecies][nFB];
+  std::map<int, int> ID2entry;
     
-    int histos;
+  //histos & 2 == 2
+  std::vector<TH2F*> xy[nSpecies][nDmg][nFB];
+  std::vector<TH2F*> vxz[nSpecies][nDmg][nFB];
+  std::vector<TH2F*> vyz[nSpecies][nDmg][nFB];
+
 
   public:
     beamLineDetHistos(const int histCode=1) { histos=histCode;}
@@ -31,6 +35,10 @@ class beamLineDetHistos {
 		   const string,const float, const int);
     void fillHisto(const int detID, const int sp, const double rdDmg[3], const double pz,
 		   const float xx, const float yy, const float kinE, 
+		   const float vx, const float vy, const float vz, 
+		   const int subDet);
+    void fillHisto(const int detID, const int sp, const double rdDmg[3], const double pz,
+		   const float xx, const float yy, const float kinE, const float rr,
 		   const float vx, const float vy, const float vz, 
 		   const int subDet);
     void fillHisto(const int detID, const int sp, const double rdDmg[3], const double pz,
@@ -68,7 +76,7 @@ void beamLineDetHistos::fillHisto(const int detID, const int sp, const double rd
 }
 
 void beamLineDetHistos::fillHisto(const int detID, const int sp, const double rdDmg[3], const double pz,
-				  const float xx, const float yy, const float kinE, 
+				  const float xx, const float yy, const float kinE,
 				  const float vx, const float vy, const float vz,
 				  const int subDet=0) {
   if (ID2entry.find(detID+10000*subDet) == ID2entry.end()) 
@@ -76,6 +84,53 @@ void beamLineDetHistos::fillHisto(const int detID, const int sp, const double rd
 
   int det = ID2entry[detID+10000*subDet];
   double rr = sqrt(xx*xx+yy*yy);
+
+  if( (histos & 1) == 1){
+    energy[sp][0][det]->Fill(kinE);
+    if(pz<0)
+      energy[sp][2][det]->Fill(kinE);
+    else
+      energy[sp][1][det]->Fill(kinE);
+  }
+
+  for(int kk=0;kk<nDmg;kk++){
+    if( (histos & 1) == 1){
+      xy[sp][kk][0][det]->Fill(xx,yy,rdDmg[kk]);
+      if(pz<0)
+	xy[sp][kk][2][det]->Fill(xx,yy,rdDmg[kk]);
+      else
+	xy[sp][kk][1][det]->Fill(xx,yy,rdDmg[kk]);
+      
+      r[sp][kk][0][det]->Fill(rr,rdDmg[kk]);
+      if(pz<0)
+	r[sp][kk][2][det]->Fill(rr,rdDmg[kk]);
+      else
+	r[sp][kk][1][det]->Fill(rr,rdDmg[kk]);
+    }
+    if( (histos & 2) == 2){
+      vxz[sp][kk][0][det]->Fill(vz,vx,rdDmg[kk]);
+      if(pz<0)
+	vxz[sp][kk][2][det]->Fill(vz,vx,rdDmg[kk]);
+      else
+	vxz[sp][kk][1][det]->Fill(vz,vx,rdDmg[kk]);
+
+      vyz[sp][kk][0][det]->Fill(vz,vy,rdDmg[kk]);
+      if(pz<0)
+	vyz[sp][kk][2][det]->Fill(vz,vy,rdDmg[kk]);
+      else
+	vyz[sp][kk][1][det]->Fill(vz,vy,rdDmg[kk]);
+      
+    }
+  }
+}
+void beamLineDetHistos::fillHisto(const int detID, const int sp, const double rdDmg[3], const double pz,
+				  const float xx, const float yy, const float kinE, const float rr,
+				  const float vx, const float vy, const float vz,
+				  const int subDet=0) {
+  if (ID2entry.find(detID+10000*subDet) == ID2entry.end()) 
+    return;
+
+  int det = ID2entry[detID+10000*subDet];
 
   if( (histos & 1) == 1){
     energy[sp][0][det]->Fill(kinE);
