@@ -34,9 +34,12 @@ class remollBeamTarget {
 
     private:
         // Static geometry objects
-	static G4String fActiveTargetVolume;
-        static std::vector <G4VPhysicalVolume*> fTargetVolumes;
-        static G4VPhysicalVolume* fTargetMother;
+	static G4String fActiveTargetMotherName;
+	static G4String fActiveTargetVolumeName;
+	static size_t fActiveTargetMother;
+	static size_t fActiveTargetVolume;
+        static std::vector<G4VPhysicalVolume*> fTargetMothers;
+        static std::vector<std::vector<G4VPhysicalVolume*>> fTargetVolumes;
 
         // Effective lengths are weighted by density (i.e. in 1/cm^2)
         static G4double fTotalTargetEffectiveLength;
@@ -45,15 +48,28 @@ class remollBeamTarget {
         static G4double fMotherTargetAbsolutePosition;
         static G4double fActiveTargetRelativePosition;
 
+    public:
         static void UpdateInfo();
 
     public:
         // Static geometry functions
-        static void ResetTargetVolumes(){ fTargetVolumes.clear(); fTargetMother = 0; UpdateInfo(); }
-        static void SetMotherVolume( G4VPhysicalVolume *v ){ fTargetMother = v; UpdateInfo(); }
-        static void AddTargetVolume( G4VPhysicalVolume *v ){ fTargetVolumes.push_back(v); UpdateInfo(); }
-        static std::vector<G4VPhysicalVolume*> GetTargetVolumes(){ return fTargetVolumes; }
+        static void ResetTargetVolumes() {
+          fTargetVolumes.clear();
+          fTargetMothers.clear();
+        }
+        static void AddMotherVolume(G4VPhysicalVolume *v) {
+          fTargetMothers.push_back(v);
+          fTargetVolumes.resize(fTargetMothers.size());
+          fActiveTargetMother = fTargetMothers.size() - 1;
+        }
+        static void AddTargetVolume(G4VPhysicalVolume *v) {
+          fTargetVolumes[fActiveTargetMother].push_back(v);
+        }
+        static std::vector<G4VPhysicalVolume*> GetTargetVolumes() {
+          return fTargetVolumes[fActiveTargetMother];
+        }
 
+        void SetActiveTargetMother(G4String name);
         void SetActiveTargetVolume(G4String name);
 
         void PrintTargetInfo();

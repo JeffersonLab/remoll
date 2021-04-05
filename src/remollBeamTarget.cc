@@ -1,3 +1,4 @@
+#include "G4Box.hh"
 #include "G4Tubs.hh"
 #include "G4VPhysicalVolume.hh"
 #include "G4LogicalVolume.hh"
@@ -30,9 +31,12 @@
 namespace { G4Mutex remollBeamTargetMutex = G4MUTEX_INITIALIZER; }
 
 // Initialize static geometry objects
-G4String remollBeamTarget::fActiveTargetVolume = "h2Targ";
-G4VPhysicalVolume* remollBeamTarget::fTargetMother = 0;
-std::vector <G4VPhysicalVolume *> remollBeamTarget::fTargetVolumes;
+G4String remollBeamTarget::fActiveTargetMotherName = "TargetLH2_logical_PV";
+G4String remollBeamTarget::fActiveTargetVolumeName = "targetLH2_LH2Volume_logical";
+size_t remollBeamTarget::fActiveTargetMother = 0;
+size_t remollBeamTarget::fActiveTargetVolume = 0;
+std::vector<G4VPhysicalVolume*> remollBeamTarget::fTargetMothers;
+std::vector<std::vector<G4VPhysicalVolume*>> remollBeamTarget::fTargetVolumes;
 
 G4double remollBeamTarget::fActiveTargetEffectiveLength  = -1e9;
 G4double remollBeamTarget::fMotherTargetAbsolutePosition = -1e9;
@@ -92,23 +96,32 @@ G4double remollBeamTarget::GetEffLumin(SamplingType_t sampling_type)
 
 void remollBeamTarget::PrintTargetInfo()
 {
-    for (std::vector<G4VPhysicalVolume *>::iterator
-        it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
+    for (auto mother  = fTargetMothers.begin();
+              mother != fTargetMothers.end();
+              mother++) {
 
-        // Try to cast the target volume into its tubs solid
-        G4LogicalVolume* volume = (*it)->GetLogicalVolume();
-        G4Material* material = volume->GetMaterial();
-        G4VSolid* solid = volume->GetSolid();
+        auto i_mother = mother - fTargetMothers.begin();
 
-        G4cout << "Target volume " << (*it)->GetName() << ":" << G4endl;
-        G4cout << " volume:   " << volume->GetName() << G4endl;
-        G4cout << " material: " << material->GetName() << G4endl;
-        G4cout << " solid: "    << solid->GetName() << G4endl;
+        G4cout << "Target mother " << (*mother)->GetName() << ":" << G4endl;
 
-	if( (*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
-            G4cout << " active volume: " << fActiveTargetVolume << G4endl;
+        for (auto daughter  = fTargetVolumes[i_mother].begin();
+                  daughter != fTargetVolumes[i_mother].end();
+                  daughter++) {
+
+            G4LogicalVolume* volume = (*daughter)->GetLogicalVolume();
+            G4Material* material = volume->GetMaterial();
+            G4VSolid* solid = volume->GetSolid();
+
+            G4cout << "  Target volume " << (*daughter)->GetName() << ":" << G4endl;
+            G4cout << "    volume:   " << volume->GetName() << G4endl;
+            G4cout << "    material: " << material->GetName() << G4endl;
+            G4cout << "    solid: "    << solid->GetName() << G4endl;
+
         }
     }
+
+    SetActiveTargetMother(fActiveTargetMotherName);
+    SetActiveTargetVolume(fActiveTargetVolumeName);
 
     G4cout << "Final target parameters: " << G4endl;
     G4cout << " active target effective length: " << fActiveTargetEffectiveLength << G4endl;
@@ -126,28 +139,33 @@ void remollBeamTarget::UpdateInfo()
     fTotalTargetEffectiveLength = 0.0;
 
     // Can't calculate anything without mother, let's hope we find one later on
-    if (!fTargetMother) {
+    if (fTargetMothers.size() == 0) {
       return;
     }
-    fMotherTargetAbsolutePosition = fTargetMother->GetTranslation().z();
 
-    for (std::vector<G4VPhysicalVolume *>::iterator
-        it = fTargetVolumes.begin(); it != fTargetVolumes.end(); it++) {
+    // Get absolute position
+    fMotherTargetAbsolutePosition = fTargetMothers[fActiveTargetMother]->GetTranslation().z() - 4500;
+
+    for (auto it =  fTargetVolumes[fActiveTargetMother].begin();
+              it != fTargetVolumes[fActiveTargetMother].end();
+              it++) {
 
         // Try to cast the target volume into its tubs solid
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
         G4Material* material = volume->GetMaterial();
         G4VSolid* solid = volume->GetSolid();
+
         G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
+        G4Box* box = dynamic_cast<G4Box*>(solid);
 
         // Assume everything is non-nested tubes
-	if( !tubs ){
+	if (!tubs && !box) {
 	    G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		":  Target volume not made of G4Tubs" << G4endl; 
-	    exit(1);
+		":  Target volume " << (*it)->GetLogicalVolume()->GetName() << " not made of G4Tubs or G4Box" << G4endl;
+	    continue; // exit(1);
 	}
 
-	if( (*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
+	if (it == fTargetVolumes[fActiveTargetMother].begin() + fActiveTargetVolume) {
 
 	    if( fActiveTargetEffectiveLength >= 0.0 ){
 		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
@@ -155,24 +173,57 @@ void remollBeamTarget::UpdateInfo()
 		exit(1);
 	    }
 
-	    fActiveTargetEffectiveLength = tubs->GetZHalfLength()*2.0
+            G4double z_half_length = 0;
+            if (tubs) z_half_length = tubs->GetZHalfLength();
+            if (box)  z_half_length = box->GetZHalfLength();
+
+	    fActiveTargetEffectiveLength = z_half_length*2.0
 		* material->GetDensity();
 
 	    fActiveTargetRelativePosition = (*it)->GetTranslation().z();
 
-	    fTotalTargetEffectiveLength += tubs->GetZHalfLength()*2.0
+	    fTotalTargetEffectiveLength += z_half_length*2.0
 		* material->GetDensity();
 	}
     }
 }
 
 
+void remollBeamTarget::SetActiveTargetMother(G4String name)
+{
+  G4AutoLock lock(&remollBeamTargetMutex);
+
+  for (auto mother  = fTargetMothers.begin();
+            mother != fTargetMothers.end();
+            mother++) {
+
+    if ((*mother)->GetName() == name) {
+      fActiveTargetMother = mother - fTargetMothers.begin();
+    }
+
+  }
+
+  lock.unlock();
+
+  UpdateInfo();
+}
+
 void remollBeamTarget::SetActiveTargetVolume(G4String name)
 {
   G4AutoLock lock(&remollBeamTargetMutex);
-  fActiveTargetVolume = name;
+
+  for (auto daughter  = fTargetVolumes[fActiveTargetMother].begin();
+            daughter != fTargetVolumes[fActiveTargetMother].end();
+            daughter++) {
+
+    if ((*daughter)->GetName() == name) {
+      fActiveTargetVolume = daughter - fTargetVolumes[fActiveTargetMother].begin();
+    }
+
+  }
 
   lock.unlock();
+
   UpdateInfo();
 }
 
@@ -187,17 +238,19 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 
     // No sampling required
     if (sampling_type == kNoTargetVolume) {
+      G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
+                "kNoTargetVolume!" << G4endl;
       return vertex;
     }
 
     // Check if target mother volume exists
-    if (fTargetMother == 0) {
+    if (fTargetMothers.size() == 0) {
       G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
                 "No target mother volume defined!" << G4endl;
     }
 
     // Check if target volume exists
-    if (fTargetVolumes.size() == 0) {
+    if (fTargetVolumes[fActiveTargetMother].size() == 0) {
       G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
                 "No target volume defined!" << G4endl;
     }
@@ -237,14 +290,12 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
     // Start with no multiple scattering materials loaded:
     // this may seem like something that can be made static,
     // but it's probably not worth it since only called once per event.
-    int      nmsmat = 0;
-    double   msthick[__MAX_MAT];
-    double   msA[__MAX_MAT];
-    double   msZ[__MAX_MAT];
+    std::vector<std::tuple<double,double,double>> ms;
 
     // Figure out the material we are in and the radiation length we traversed
-    for (std::vector<G4VPhysicalVolume *>::iterator
-        it = fTargetVolumes.begin(); it != fTargetVolumes.end() && !found_active_volume; it++ ){
+    for (auto it =  fTargetVolumes[fActiveTargetMother].begin();
+              it != fTargetVolumes[fActiveTargetMother].end() && !found_active_volume;
+              it++) {
 
         // Relative position of this target volume in mother volume
         G4double volume_relative_position = (*it)->GetTranslation().z();
@@ -253,17 +304,29 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
         G4LogicalVolume* volume = (*it)->GetLogicalVolume();
         G4Material* material = volume->GetMaterial();
         G4VSolid* solid = volume->GetSolid();
+
         G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
+        G4Box* box = dynamic_cast<G4Box*>(solid);
+
+        if (!tubs && !box) {
+          G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
+                    ":  Target volume " << (*it)->GetLogicalVolume()->GetName() << " not made of G4Tubs or G4Box" << G4endl;
+	    continue; // exit(1);
+        }
+
+        G4double z_half_length = 0;
+        if (box)  z_half_length = box->GetZHalfLength();
+        if (tubs) z_half_length = tubs->GetZHalfLength();
 
         // Effective length of this target volume
-        G4double effective_length = tubs->GetZHalfLength()*2.0 * material->GetDensity();
+        G4double effective_length = z_half_length*2.0 * material->GetDensity();
 
         // Find position in this volume (if we are in it)
         G4double effective_position_in_volume;
         G4double actual_position_in_volume;
         switch (sampling_type) {
 	    case kActiveTargetVolume:
-	        if ((*it)->GetLogicalVolume()->GetName() == fActiveTargetVolume ){
+	        if (it == fTargetVolumes[fActiveTargetMother].begin() + fActiveTargetVolume) {
 	            // This is the active volume, and we only sample here
 	            found_active_volume = true;
 	            actual_position_in_volume = effective_position/material->GetDensity();
@@ -311,7 +374,7 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 	    fRadiationLength = cumulative_radiation_length;
 	    fVer    = G4ThreeVector( rasx, rasy,
 		      fMotherTargetAbsolutePosition
-                      + volume_relative_position - tubs->GetZHalfLength()
+                      + volume_relative_position - z_half_length
                       + actual_position_in_volume );
 
 	    G4double masssum = 0.0;
@@ -324,10 +387,10 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 		// but it does - SPR 2/5/13.
 		assert( atomvec );
 		masssum += (*elvec)[i]->GetA()*atomvec[i];
-		msthick[nmsmat] = material->GetDensity()*actual_position_in_volume*fracvec[i];
-		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
-		msZ[nmsmat] = (*elvec)[i]->GetZ();
-		nmsmat++;
+		double t = material->GetDensity()*actual_position_in_volume*fracvec[i];
+		double A = (*elvec)[i]->GetA()*mole/g;
+		double Z = (*elvec)[i]->GetZ();
+		ms.push_back(std::make_tuple(t,A,Z));
 	    }
 
 	    // Effective material length for luminosity calculation
@@ -337,10 +400,10 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 	    const G4ElementVector *elvec = material->GetElementVector();
 	    const G4double *fracvec = material->GetFractionVector();
 	    for( unsigned int i = 0; i < elvec->size(); i++ ){
-		msthick[nmsmat] = effective_length*fracvec[i];
-		msA[nmsmat] = (*elvec)[i]->GetA()*mole/g;
-		msZ[nmsmat] = (*elvec)[i]->GetZ();
-		nmsmat++;
+		double t = effective_length*fracvec[i];
+		double A = (*elvec)[i]->GetA()*mole/g;
+		double Z = (*elvec)[i]->GetZ();
+		ms.push_back(std::make_tuple(t,A,Z));
 	    }
 	}
     }
@@ -361,8 +424,8 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 
     // Sample multiple scattering angles
     G4double msth = 0, msph = 0;
-    if( nmsmat > 0 ){
-	fMS->Init( fBeamEnergy, nmsmat, msthick, msA, msZ );
+    if (ms.size() > 0) {
+	fMS->Init(fBeamEnergy, ms);
 	msth = fMS->GenerateMSPlane();
 	msph = fMS->GenerateMSPlane();
     }
