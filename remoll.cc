@@ -101,7 +101,21 @@ int main(int argc, char** argv) {
       else if (G4String(argv[i]) == "-p") parallel_gdmlfile = argv[++i];
       else if (G4String(argv[i]) == "-u") session  = argv[++i];
       else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
-      else if (G4String(argv[i]) == "-o") outputfile = argv[++i];
+      else if (G4String(argv[i]) == "-o") {
+        outputfile = argv[++i];
+
+        const std::string illegalChars = "$?<>:*\?\\\'\"";
+
+        for(auto ch : illegalChars) {
+          if (outputfile.find(ch) != std::string::npos) {
+            G4cerr << "==================Filename Error: ==================" << G4endl;
+            G4cerr << "Output file name cannot have " << ch <<  " in the name, aborting" << G4endl;
+            G4cerr << "====================================================" << G4endl;
+
+            return 1;
+          }
+        }
+      }
 #ifdef G4MULTITHREADED
       else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
 #endif
