@@ -23,6 +23,6 @@
 
 /remoll/seed 123456
 
-/remoll/printtargetinfo
+/remoll/target/print
 /run/beamOn 100
 
