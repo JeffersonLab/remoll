@@ -24,19 +24,17 @@
 
 #include <math.h>
 
-#define __MAX_MAT 100
-
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
 namespace { G4Mutex remollBeamTargetMutex = G4MUTEX_INITIALIZER; }
 
 // Initialize static geometry objects
-G4String remollBeamTarget::fActiveTargetMotherName = "TargetLH2_logical_PV";
-G4String remollBeamTarget::fActiveTargetVolumeName = "targetLH2_LH2Volume_logical";
+G4String remollBeamTarget::fActiveTargetMotherName = "LH2";
+G4String remollBeamTarget::fActiveTargetVolumeName = "LH2";
 size_t remollBeamTarget::fActiveTargetMother = 0;
 size_t remollBeamTarget::fActiveTargetVolume = 0;
-std::vector<G4VPhysicalVolume*> remollBeamTarget::fTargetMothers;
-std::vector<std::vector<G4VPhysicalVolume*>> remollBeamTarget::fTargetVolumes;
+std::vector<std::pair<G4VPhysicalVolume*,G4String>> remollBeamTarget::fTargetMothers;
+std::vector<std::vector<std::pair<G4VPhysicalVolume*,G4String>>> remollBeamTarget::fTargetVolumes;
 
 G4double remollBeamTarget::fActiveTargetEffectiveLength  = -1e9;
 G4double remollBeamTarget::fMotherTargetAbsolutePosition = -1e9;
@@ -60,8 +58,6 @@ remollBeamTarget::remollBeamTarget()
 
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-    fMessenger->DeclareMethod("targname",&remollBeamTarget::SetActiveTargetVolume,"Target name").SetStates(G4State_Idle);
-    fMessenger->DeclareMethod("printtargetinfo",&remollBeamTarget::PrintTargetInfo).SetStates(G4State_Idle);
 
     fMessenger->DeclarePropertyWithUnit("beamcurr","microampere",fBeamCurrent,"Beam current");
     fMessenger->DeclarePropertyWithUnit("beamene","GeV",fBeamEnergy,"Beam energy");
@@ -78,10 +74,16 @@ remollBeamTarget::remollBeamTarget()
     fMessenger->DeclarePropertyWithUnit("beam_corrth","deg",fCorrTh,"beam correlated angle (vertical)");
     fMessenger->DeclarePropertyWithUnit("beam_dph","deg",fdPh,"beam gaussian spread in x (horizontal)");
     fMessenger->DeclarePropertyWithUnit("beam_dth","deg",fdTh,"beam gaussian spread in y (vertical)");
+
+    fMessengerTarget = new G4GenericMessenger(this,"/remoll/target/","Remoll target properties");
+    fMessengerTarget->DeclareMethod("mother",&remollBeamTarget::SetActiveTargetMother,"Set target mother name").SetStates(G4State_Idle);
+    fMessengerTarget->DeclareMethod("volume",&remollBeamTarget::SetActiveTargetVolume,"Set target volume name").SetStates(G4State_Idle);
+    fMessengerTarget->DeclareMethod("print",&remollBeamTarget::PrintTargetInfo).SetStates(G4State_Idle);
 }
 
 remollBeamTarget::~remollBeamTarget()
 {
+    delete fMessengerTarget;
     delete fMessenger;
     delete fMS;
 }
@@ -102,20 +104,17 @@ void remollBeamTarget::PrintTargetInfo()
 
         auto i_mother = mother - fTargetMothers.begin();
 
-        G4cout << "Target mother " << (*mother)->GetName() << ":" << G4endl;
+        G4cout << "Target mother " << (*mother).second << ":" << G4endl;
 
         for (auto daughter  = fTargetVolumes[i_mother].begin();
                   daughter != fTargetVolumes[i_mother].end();
                   daughter++) {
 
-            G4LogicalVolume* volume = (*daughter)->GetLogicalVolume();
+            G4LogicalVolume* volume = (*daughter).first->GetLogicalVolume();
             G4Material* material = volume->GetMaterial();
-            G4VSolid* solid = volume->GetSolid();
 
-            G4cout << "  Target volume " << (*daughter)->GetName() << ":" << G4endl;
-            G4cout << "    volume:   " << volume->GetName() << G4endl;
-            G4cout << "    material: " << material->GetName() << G4endl;
-            G4cout << "    solid: "    << solid->GetName() << G4endl;
+            G4cout << "  Target volume " << (*daughter).second << ":";
+            G4cout << "  material: " << material->GetName() << G4endl;
 
         }
     }
@@ -123,10 +122,14 @@ void remollBeamTarget::PrintTargetInfo()
     SetActiveTargetMother(fActiveTargetMotherName);
     SetActiveTargetVolume(fActiveTargetVolumeName);
 
+    G4cout << "Current active target: " << G4endl;
+    G4cout << "Target mother = " << fActiveTargetMotherName << G4endl;
+    G4cout << "Target volume = " << fActiveTargetVolumeName << G4endl;
+
     G4cout << "Final target parameters: " << G4endl;
-    G4cout << " active target effective length: " << fActiveTargetEffectiveLength << G4endl;
-    G4cout << " active target relative position: " << fActiveTargetRelativePosition << G4endl;
-    G4cout << " total active length: " << fTotalTargetEffectiveLength << G4endl;
+    G4cout << " total target effective length: " << fTotalTargetEffectiveLength/(gram/cm2) << " gram/cm2" << G4endl;
+    G4cout << " active target effective length: " << fActiveTargetEffectiveLength/(gram/cm2) << " gram/cm2" << G4endl;
+    G4cout << " active target relative position: " << fActiveTargetRelativePosition/mm << " mm" << G4endl;
 }
 
 void remollBeamTarget::UpdateInfo()
@@ -144,14 +147,15 @@ void remollBeamTarget::UpdateInfo()
     }
 
     // Get absolute position
-    fMotherTargetAbsolutePosition = fTargetMothers[fActiveTargetMother]->GetTranslation().z() - 4500;
+    fMotherTargetAbsolutePosition = fTargetMothers[fActiveTargetMother].first->GetTranslation().z() - 4500;
 
     for (auto it =  fTargetVolumes[fActiveTargetMother].begin();
               it != fTargetVolumes[fActiveTargetMother].end();
               it++) {
 
         // Try to cast the target volume into its tubs solid
-        G4LogicalVolume* volume = (*it)->GetLogicalVolume();
+        G4VPhysicalVolume* physvol = (*it).first;
+        G4LogicalVolume* volume = physvol->GetLogicalVolume();
         G4Material* material = volume->GetMaterial();
         G4VSolid* solid = volume->GetSolid();
 
@@ -161,7 +165,7 @@ void remollBeamTarget::UpdateInfo()
         // Assume everything is non-nested tubes
 	if (!tubs && !box) {
 	    G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		":  Target volume " << (*it)->GetLogicalVolume()->GetName() << " not made of G4Tubs or G4Box" << G4endl;
+		":  Target volume " << volume->GetName() << " not made of G4Tubs or G4Box" << G4endl;
 	    continue; // exit(1);
 	}
 
@@ -180,7 +184,7 @@ void remollBeamTarget::UpdateInfo()
 	    fActiveTargetEffectiveLength = z_half_length*2.0
 		* material->GetDensity();
 
-	    fActiveTargetRelativePosition = (*it)->GetTranslation().z();
+	    fActiveTargetRelativePosition = physvol->GetTranslation().z();
 
 	    fTotalTargetEffectiveLength += z_half_length*2.0
 		* material->GetDensity();
@@ -197,7 +201,8 @@ void remollBeamTarget::SetActiveTargetMother(G4String name)
             mother != fTargetMothers.end();
             mother++) {
 
-    if ((*mother)->GetName() == name) {
+    if ((*mother).second == name) {
+      fActiveTargetMotherName = name;
       fActiveTargetMother = mother - fTargetMothers.begin();
     }
 
@@ -216,7 +221,8 @@ void remollBeamTarget::SetActiveTargetVolume(G4String name)
             daughter != fTargetVolumes[fActiveTargetMother].end();
             daughter++) {
 
-    if ((*daughter)->GetName() == name) {
+    if ((*daughter).second == name) {
+      fActiveTargetVolumeName = name;
       fActiveTargetVolume = daughter - fTargetVolumes[fActiveTargetMother].begin();
     }
 
@@ -297,11 +303,14 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
               it != fTargetVolumes[fActiveTargetMother].end() && !found_active_volume;
               it++) {
 
+        // Target volume
+        G4VPhysicalVolume* physvol = (*it).first;
+
         // Relative position of this target volume in mother volume
-        G4double volume_relative_position = (*it)->GetTranslation().z();
+        G4double volume_relative_position = physvol->GetTranslation().z();
 
         // Try to cast the target volume into its tubs solid
-        G4LogicalVolume* volume = (*it)->GetLogicalVolume();
+        G4LogicalVolume* volume = physvol->GetLogicalVolume();
         G4Material* material = volume->GetMaterial();
         G4VSolid* solid = volume->GetSolid();
 
@@ -310,7 +319,7 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 
         if (!tubs && !box) {
           G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-                    ":  Target volume " << (*it)->GetLogicalVolume()->GetName() << " not made of G4Tubs or G4Box" << G4endl;
+                    ":  Target volume " << volume->GetName() << " not made of G4Tubs or G4Box" << G4endl;
 	    continue; // exit(1);
         }
 

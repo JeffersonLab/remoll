@@ -38,8 +38,8 @@ class remollBeamTarget {
 	static G4String fActiveTargetVolumeName;
 	static size_t fActiveTargetMother;
 	static size_t fActiveTargetVolume;
-        static std::vector<G4VPhysicalVolume*> fTargetMothers;
-        static std::vector<std::vector<G4VPhysicalVolume*>> fTargetVolumes;
+        static std::vector<std::pair<G4VPhysicalVolume*,G4String>> fTargetMothers;
+        static std::vector<std::vector<std::pair<G4VPhysicalVolume*,G4String>>> fTargetVolumes;
 
         // Effective lengths are weighted by density (i.e. in 1/cm^2)
         static G4double fTotalTargetEffectiveLength;
@@ -57,15 +57,15 @@ class remollBeamTarget {
           fTargetVolumes.clear();
           fTargetMothers.clear();
         }
-        static void AddMotherVolume(G4VPhysicalVolume *v) {
-          fTargetMothers.push_back(v);
+        static void AddMotherVolume(G4VPhysicalVolume *v, const G4String& tag) {
+          fTargetMothers.push_back(std::make_pair(v,tag));
           fTargetVolumes.resize(fTargetMothers.size());
           fActiveTargetMother = fTargetMothers.size() - 1;
         }
-        static void AddTargetVolume(G4VPhysicalVolume *v) {
-          fTargetVolumes[fActiveTargetMother].push_back(v);
+        static void AddTargetVolume(G4VPhysicalVolume *v, const G4String& tag) {
+          fTargetVolumes[fActiveTargetMother].push_back(std::make_pair(v,tag));
         }
-        static std::vector<G4VPhysicalVolume*> GetTargetVolumes() {
+        static std::vector<std::pair<G4VPhysicalVolume*,G4String>> GetTargetVolumes() {
           return fTargetVolumes[fActiveTargetMother];
         }
 
@@ -93,6 +93,7 @@ class remollBeamTarget {
 
     private:
 	G4GenericMessenger* fMessenger;
+	G4GenericMessenger* fMessengerTarget;
 
 	G4Material *fDefaultMat;
 

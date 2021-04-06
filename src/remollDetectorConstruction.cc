@@ -618,6 +618,9 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
         // Treat auxiliary type "TargetSystem" only
         if ((*vit).type != "TargetSystem") continue;
 
+        // Target system name
+        G4String mother_tag = (*vit).value;
+
         // Found target mother logical volume
         G4LogicalVolume* mother_logical_volume = logical_volume;
         if (fVerboseLevel > 0)
@@ -633,7 +636,7 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
 
           // Mutex lock before writing static structures in remollBeamTarget
           G4AutoLock lock(&remollDetectorConstructionMutex);
-          remollBeamTarget::AddMotherVolume(mother_physical_volume);
+          remollBeamTarget::AddMotherVolume(mother_physical_volume, mother_tag);
 
           if (fVerboseLevel > 0)
             G4cout << "Found target mother physical volume "
@@ -674,10 +677,13 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
               // If the logical volume is tagged as "TargetSamplingVolume"
               if ((*vit2).type != "TargetSamplingVolume") continue;
 
+              // Target system name
+              G4String target_tag = (*vit2).value;
+
               // Add target volume
               G4cout << "Adding target sampling volume "
                      << target_logical_volume->GetName() << "." << G4endl;
-              remollBeamTarget::AddTargetVolume(target_physical_volume);
+              remollBeamTarget::AddTargetVolume(target_physical_volume, target_tag);
 
             } // loop over auxiliary tags in volume to find "TargetSamplingVolume"
 
