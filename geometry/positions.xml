@@ -45,8 +45,8 @@
 <position name="donutConcreteLeadFaceDS" z="24450.00+400.00" unit="mm"/>
 
 <!-- Z position of the US and DS face of the pion detector system -->
-<position name="pionDetectorSystemFaceUS" z="24900.00" unit="mm"/>
-<position name="pionDetectorSystemFaceDS" z="24900.00+1200.00" unit="mm"/>
+<position name="pionDetectorSystemFaceUS" z="24850.00" unit="mm"/>
+<position name="pionDetectorSystemFaceDS" z="24850.00+1200.00" unit="mm"/>
 <!-- Virtual planes in the parallel world -->
 <position name="pionDetectorVirtualPlane_pos" z="24900.00+450.00" unit="mm"/>
 

@@ -131,8 +131,6 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
     if (fEventGen) {
       fEventGen->SetBeamTarget(fBeamTarg);
     }
-
-    remollRun::GetRunData()->SetGenName(genname.data());
 }
 
 void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
