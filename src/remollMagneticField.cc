@@ -27,8 +27,88 @@
 #include <boost/iostreams/device/file.hpp>
 #endif
 
-remollMagneticField::remollMagneticField( G4String filename ){
+// Set location of cell vertices
+// Note the different endianness
+const char remollMagneticField::kLinearMap[8][3] = {
+    {0, 0, 0},  // 00
+    {1, 0, 0},
+    {0, 1, 0},
+    {1, 1, 0},
+    {0, 0, 1},  // 04
+    {1, 0, 1},
+    {0, 1, 1},
+    {1, 1, 1},
+};
+const char remollMagneticField::kCubicMap[64][3] = {
+    {-1, -1, -1},  // 00
+    {-1, -1, 0},
+    {-1, -1, 1},
+    {-1, -1, 2},
+    {-1, 0, -1},  // 04
+    {-1, 0, 0},
+    {-1, 0, 1},
+    {-1, 0, 2},
+    {-1, 1, -1},  // 08
+    {-1, 1, 0},
+    {-1, 1, 1},
+    {-1, 1, 2},
+    {-1, 2, -1},  // 12
+    {-1, 2, 0},
+    {-1, 2, 1},
+    {-1, 2, 2},
+    {0, -1, -1},  // 16
+    {0, -1, 0},
+    {0, -1, 1},
+    {0, -1, 2},
+    {0, 0, -1},  // 20
+    {0, 0, 0},
+    {0, 0, 1},
+    {0, 0, 2},
+    {0, 1, -1},  // 24
+    {0, 1, 0},
+    {0, 1, 1},
+    {0, 1, 2},
+    {0, 2, -1},  // 28
+    {0, 2, 0},
+    {0, 2, 1},
+    {0, 2, 2},
+    {1, -1, -1},  // 22
+    {1, -1, 0},
+    {1, -1, 1},
+    {1, -1, 2},
+    {1, 0, -1},  // 26
+    {1, 0, 0},
+    {1, 0, 1},
+    {1, 0, 2},
+    {1, 1, -1},  // 40
+    {1, 1, 0},
+    {1, 1, 1},
+    {1, 1, 2},
+    {1, 2, -1},  // 44
+    {1, 2, 0},
+    {1, 2, 1},
+    {1, 2, 2},
+    {2, -1, -1},  // 48
+    {2, -1, 0},
+    {2, -1, 1},
+    {2, -1, 2},
+    {2, 0, -1},  // 52
+    {2, 0, 0},
+    {2, 0, 1},
+    {2, 0, 2},
+    {2, 1, -1},  // 56
+    {2, 1, 0},
+    {2, 1, 1},
+    {2, 1, 2},
+    {2, 2, -1},  // 60
+    {2, 2, 0},
+    {2, 2, 1},
+    {2, 2, 2},
+};
 
+remollMagneticField::remollMagneticField( G4String filename )
+: fInterpolationType(kLinear)
+{
     fName = filename;
     fFilename = filename;
 
@@ -509,7 +589,8 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     assert( fFileMin[kPhi] <= lphi && lphi < fFileMax[kPhi] );
 
 
-    // 3. Get interoplation variables
+    // 3. Get interpolation variables
+
     // the N-1 here is fencepost problem
     G4double x[__NDIM] = {0};
     G4double didx[__NDIM] = {0};
@@ -520,30 +601,86 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     // Cast these to integers for indexing and check
     G4int idx[__NDIM] = {0};
     for(int cidx = 0; cidx < __NDIM; cidx++ ){ idx[cidx] = (G4int) didx[cidx]; }
-
     assert( 0 <= idx[kR]   && idx[kR]   < fN[kR] );
     assert( 0 <= idx[kPhi] && idx[kPhi] < fN[kPhi] );
     assert( 0 <= idx[kZ]   && idx[kZ]   < fN[kZ] );
+
+    // Flag edge cases and treat at best as linear
+    EInterpolationType type = fInterpolationType;
+    if (idx[kR] == 0 || idx[kR] == fN[kR] - 2) type = kLinear;
+    if (idx[kZ] == 0 || idx[kZ] == fN[kZ] - 2) type = kLinear;
+
+    // number of cell vertices
+    size_t n = 64;
+    const char (*map)[3] = kCubicMap;
+    switch (fInterpolationType) {
+       case kLinear:
+           map = kLinearMap;
+           n = 8;
+           break;
+       case kCubic:
+           map = kCubicMap;
+           n = 64;
+           break;
+    }
+
+    // values of cell vertices
+    G4double values_linear[__NDIM][64]; /* make large enough, TODO thread_local */
+    for (size_t i = 0; i < 8; i++) {
+        for (size_t cidx = 0; cidx < __NDIM; cidx++) {
+            values_linear[cidx][i] =
+                    fBFieldData[cidx]
+                           [idx[kR] + kLinearMap[i][kR]]
+                           [idx[kPhi] + kLinearMap[i][kPhi]]
+                           [idx[kZ] + kLinearMap[i][kZ]];
+        }
+    }
+    G4double values_cubic[__NDIM][64]; /* make large enough, TODO thread_local */
+    for (size_t i = 0; i < 64; i++) {
+        for (size_t cidx = 0; cidx < __NDIM; cidx++) {
+            if (idx[kR] == 0 || idx[kR] == fN[kR] - 1 || idx[kZ] == 0 || idx[kZ] == fN[kZ] - 1)
+                values_cubic[cidx][i] = 0;
+            else
+                values_cubic[cidx][i] =
+                    fBFieldData[cidx]
+                           [idx[kR] + kCubicMap[i][kR]]
+                           [(idx[kPhi] + kCubicMap[i][kPhi]) % (fN[kPhi]-1)] // wrap around
+                           [idx[kZ] + kCubicMap[i][kZ]];
+        }
+    }
 
     // Interpolate
     G4double Bint[__NDIM] = {0};
     for(int cidx = 0; cidx < __NDIM; cidx++ ){
 
-        G4double c00, c10, c01, c11;
-	c00 = fBFieldData[cidx][idx[kR]][idx[kPhi]][idx[kZ]]*(1.0-x[kR])
-	    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]][idx[kZ]]*x[kR];
-	c10 = fBFieldData[cidx][idx[kR]][idx[kPhi]+1][idx[kZ]]*(1.0-x[kR])
-	    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]+1][idx[kZ]]*x[kR];
-	c01 = fBFieldData[cidx][idx[kR]][idx[kPhi]][idx[kZ]+1]*(1.0-x[kR])
-	    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]][idx[kZ]+1]*x[kR];
-	c11 = fBFieldData[cidx][idx[kR]][idx[kPhi]+1][idx[kZ]+1]*(1.0-x[kR])
-	    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]+1][idx[kZ]+1]*x[kR];
+                G4double c00, c10, c01, c11;
+                c00 = fBFieldData[cidx][idx[kR]][idx[kPhi]][idx[kZ]]*(1.0-x[kR])
+                    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]][idx[kZ]]*x[kR];
+                c10 = fBFieldData[cidx][idx[kR]][idx[kPhi]+1][idx[kZ]]*(1.0-x[kR])
+                    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]+1][idx[kZ]]*x[kR];
+                c01 = fBFieldData[cidx][idx[kR]][idx[kPhi]][idx[kZ]+1]*(1.0-x[kR])
+                    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]][idx[kZ]+1]*x[kR];
+                c11 = fBFieldData[cidx][idx[kR]][idx[kPhi]+1][idx[kZ]+1]*(1.0-x[kR])
+                    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]+1][idx[kZ]+1]*x[kR];
 
-        G4double c0, c1;
-	c0  = c00*(1.0-x[kPhi]) + c10*x[kPhi];
-	c1  = c01*(1.0-x[kPhi]) + c11*x[kPhi];
+                G4double c0 = c00*(1.0-x[kPhi]) + c10*x[kPhi];
+                G4double c1 = c01*(1.0-x[kPhi]) + c11*x[kPhi];
 
-	Bint[cidx] = c0*(1.0-x[kZ])+c1*x[kZ];
+                Bint[cidx] = c0*(1.0-x[kZ])+c1*x[kZ];
+                G4cout << Bint[cidx] << ": ";
+
+//        switch (fInterpolationType) {
+//           case kLinear: {
+                G4cout << _trilinearInterpolate(values_linear[cidx], x) / Bint[cidx] << " ";
+                Bint[cidx] = _trilinearInterpolate(values_linear[cidx], x);
+//               break;
+//           }
+//           case kCubic: {
+                G4cout << _tricubicInterpolate(values_cubic[cidx], x) / Bint[cidx] << G4endl;
+                Bint[cidx] = _tricubicInterpolate(values_cubic[cidx], x);
+//               break;
+//           }
+//        }
     }
 
     G4ThreeVector Bcart = G4ThreeVector(Bint[kR], Bint[kPhi], Bint[kZ]);

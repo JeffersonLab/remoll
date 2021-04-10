@@ -79,6 +79,7 @@ remollGlobalField::remollGlobalField()
     fGlobalFieldMessenger->DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
     fGlobalFieldMessenger->DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
     fGlobalFieldMessenger->DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
+    fGlobalFieldMessenger->DeclareMethod("interpolation",&remollGlobalField::SetInterpolationType,"Set magnetic field interpolation type");
     fGlobalFieldMessenger->DeclareMethod("zoffset",&remollGlobalField::SetZOffset,"Set magnetic field z offset");
     fGlobalFieldMessenger->DeclareMethod("scale",&remollGlobalField::SetFieldScale,"Scale magnetic field by factor");
     fGlobalFieldMessenger->DeclareMethod("current",&remollGlobalField::SetMagnetCurrent,"Scale magnetic field by current");
@@ -285,6 +286,18 @@ void remollGlobalField::SetZOffset(const G4String& name, G4double offset)
   } else {
     G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
            << ": field " << name << " offset failed" << G4endl;
+  }
+}
+
+void remollGlobalField::SetInterpolationType(const G4String& name, const G4String& type)
+{
+  remollMagneticField *field = GetFieldByName(name);
+  if (field) {
+    G4AutoLock lock(&remollGlobalFieldMutex);
+    field->SetInterpolationType(type);
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " interpolation type failed" << G4endl;
   }
 }
 

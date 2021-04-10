@@ -27,6 +27,7 @@ class remollGlobalField : public G4MagneticField {
 
         void AddNewField(G4String& name);
 
+        void SetInterpolationType(const G4String& name, const G4String& type);
         void SetZOffset(const G4String& name, G4double offset);
         void SetFieldScale(const G4String& name, G4double scale);
         void SetMagnetCurrent(const G4String& name, G4double current);
