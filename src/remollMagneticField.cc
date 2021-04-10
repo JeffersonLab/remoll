@@ -107,7 +107,7 @@ const char remollMagneticField::kCubicMap[64][3] = {
 };
 
 remollMagneticField::remollMagneticField( G4String filename )
-: fInterpolationType(kLinear)
+: fInterpolationType(kCubic)
 {
     fName = filename;
     fFilename = filename;
@@ -607,13 +607,15 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
 
     // Flag edge cases and treat at best as linear
     EInterpolationType type = fInterpolationType;
-    if (idx[kR] == 0 || idx[kR] == fN[kR] - 2) type = kLinear;
-    if (idx[kZ] == 0 || idx[kZ] == fN[kZ] - 2) type = kLinear;
+    if (idx[kR] == 0 || idx[kR] == fN[kR] - 2
+     || idx[kZ] == 0 || idx[kZ] == fN[kZ] - 2) {
+        type = kLinear;
+    }
 
     // number of cell vertices
     size_t n = 64;
     const char (*map)[3] = kCubicMap;
-    switch (fInterpolationType) {
+    switch (type) {
        case kLinear:
            map = kLinearMap;
            n = 8;
@@ -625,27 +627,14 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     }
 
     // values of cell vertices
-    G4double values_linear[__NDIM][64]; /* make large enough, TODO thread_local */
-    for (size_t i = 0; i < 8; i++) {
+    G4double values[__NDIM][64]; /* make large enough, TODO thread_local */
+    for (size_t i = 0; i < n; i++) {
         for (size_t cidx = 0; cidx < __NDIM; cidx++) {
-            values_linear[cidx][i] =
+            values[cidx][i] =
                     fBFieldData[cidx]
-                           [idx[kR] + kLinearMap[i][kR]]
-                           [idx[kPhi] + kLinearMap[i][kPhi]]
-                           [idx[kZ] + kLinearMap[i][kZ]];
-        }
-    }
-    G4double values_cubic[__NDIM][64]; /* make large enough, TODO thread_local */
-    for (size_t i = 0; i < 64; i++) {
-        for (size_t cidx = 0; cidx < __NDIM; cidx++) {
-            if (idx[kR] == 0 || idx[kR] == fN[kR] - 1 || idx[kZ] == 0 || idx[kZ] == fN[kZ] - 1)
-                values_cubic[cidx][i] = 0;
-            else
-                values_cubic[cidx][i] =
-                    fBFieldData[cidx]
-                           [idx[kR] + kCubicMap[i][kR]]
-                           [(idx[kPhi] + kCubicMap[i][kPhi]) % (fN[kPhi]-1)] // wrap around
-                           [idx[kZ] + kCubicMap[i][kZ]];
+                           [idx[kR] + map[i][kR]]
+                           [(idx[kPhi] + map[i][kPhi]) % (fN[kPhi]-1)] // wrap around
+                           [idx[kZ] + map[i][kZ]];
         }
     }
 
@@ -669,18 +658,18 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
                 Bint[cidx] = c0*(1.0-x[kZ])+c1*x[kZ];
                 G4cout << Bint[cidx] << ": ";
 
-//        switch (fInterpolationType) {
-//           case kLinear: {
-                G4cout << _trilinearInterpolate(values_linear[cidx], x) / Bint[cidx] << " ";
-                Bint[cidx] = _trilinearInterpolate(values_linear[cidx], x);
-//               break;
-//           }
-//           case kCubic: {
-                G4cout << _tricubicInterpolate(values_cubic[cidx], x) / Bint[cidx] << G4endl;
-                Bint[cidx] = _tricubicInterpolate(values_cubic[cidx], x);
-//               break;
-//           }
-//        }
+        switch (fInterpolationType) {
+            case kLinear: {
+                G4cout << _trilinearInterpolate(values[cidx], x) / Bint[cidx] << "L" << G4endl;
+                Bint[cidx] = _trilinearInterpolate(values[cidx], x);
+                break;
+            }
+            case kCubic: {
+                G4cout << _tricubicInterpolate(values[cidx], x) / Bint[cidx] << G4endl;
+                Bint[cidx] = _tricubicInterpolate(values[cidx], x);
+                break;
+            }
+        }
     }
 
     G4ThreeVector Bcart = G4ThreeVector(Bint[kR], Bint[kPhi], Bint[kZ]);
