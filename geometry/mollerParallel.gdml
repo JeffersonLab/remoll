@@ -49,40 +49,40 @@
   <tube
     name="bellows1VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="7.8*25.4/2" rmax="7.8*25.4/2+1" z="325" lunit="mm"/>
+    rmin="7.8*25.4/2" rmax="7.8*25.4/2+50" z="325" lunit="mm"/>
 
-  <tube
+ <tube
     name="bellows2VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="9.8*25.4/2" rmax="9.8*25.4/2+1" z="380" lunit="mm"/>
+    rmin="9.8*25.4/2" rmax="9.8*25.4/2+50" z="17.2*25.4" lunit="mm"/>
 
   <tube
     name="bellows3VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="25.8*25.4/2" rmax="25.8*25.4/2+1" z="508" lunit="mm"/>
+    rmin="25.8*25.4/2" rmax="25.8*25.4/2+50" z="15.7*25.4" lunit="mm"/>
+
 
   <tube
     name="bellows4VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="600" rmax="51*25.4/2+1" z="150" lunit="mm"/>
-<!--    rmin="51*25.4/2" rmax="51*25.4/2+1" z="150" lunit="mm"/> -->
-
-
+    rmin="600" rmax="600+50" z="12.82*25.4" lunit="mm"/>
+<!--    rmin="56.4*25.4/2" rmax="56.4*25.4/2+50" z="12.82*25.4" lunit="mm"/> -->
 
   <tube
     name="bellows5VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="39.8*25.4/2" rmax="39.8*25.4/2+1" z="120" lunit="mm"/>
+    rmin="40.8*25.4/2" rmax="40.8*25.4/2+50" z="5.51*25.4" lunit="mm"/>
 
   <tube
     name="bellows6VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="41.6*25.4/2" rmax="41.6*25.4/2+1" z="120" lunit="mm"/>
+    rmin="41.2*25.4/2" rmax="41.2*25.4/2+50" z="8.06*25.4" lunit="mm"/>
 
   <tube
     name="bellows7VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="16*25.4/2" rmax="16*25.4/2+1" z="570" lunit="mm"/>
+    rmin="16*25.4/2" rmax="16*25.4/2+50" z="24.5*25.4" lunit="mm"/>
+
 
   <sphere name="targetSphere_solid" 
 	  rmin="700" rmax="701" lunit="mm"
