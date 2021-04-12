@@ -46,7 +46,7 @@
     <constant name="boxDSShieldColl1_inner_rmax" value="265"/>
     <constant name="boxDSShieldColl1_width" value="5715"/>
     <constant name="boxDSShieldColl1_height" value="5000/3"/> <!-- /2"/> FIXME new, reduce height a lot -->
-    <constant name="boxDSShieldColl1_offsetbellows" value="-300"/>
+    <constant name="boxDSShieldColl1_offsetbellows" value="-280"/>
     <constant name="boxDSShieldColl1_length" value="1000 + 400 - coll4shield_shift + boxDSShieldColl1_offsetbellows*2"/>
     <!-- Concrete Shield1 will be outside shielding block 4 -->
     <constant name="DSConcreteShield1_side_thickness" value="400"/>
