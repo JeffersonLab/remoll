@@ -633,7 +633,7 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
             values[cidx][i] =
                     fBFieldData[cidx]
                            [idx[kR] + map[i][kR]]
-                           [(idx[kPhi] + map[i][kPhi]) % (fN[kPhi]-1)] // wrap around
+                           [(idx[kPhi] + map[i][kPhi] + fN[kPhi] - 1) % (fN[kPhi]-1)] // wrap around
                            [idx[kZ] + map[i][kZ]];
         }
     }
@@ -642,30 +642,12 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     G4double Bint[__NDIM] = {0};
     for(int cidx = 0; cidx < __NDIM; cidx++ ){
 
-                G4double c00, c10, c01, c11;
-                c00 = fBFieldData[cidx][idx[kR]][idx[kPhi]][idx[kZ]]*(1.0-x[kR])
-                    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]][idx[kZ]]*x[kR];
-                c10 = fBFieldData[cidx][idx[kR]][idx[kPhi]+1][idx[kZ]]*(1.0-x[kR])
-                    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]+1][idx[kZ]]*x[kR];
-                c01 = fBFieldData[cidx][idx[kR]][idx[kPhi]][idx[kZ]+1]*(1.0-x[kR])
-                    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]][idx[kZ]+1]*x[kR];
-                c11 = fBFieldData[cidx][idx[kR]][idx[kPhi]+1][idx[kZ]+1]*(1.0-x[kR])
-                    + fBFieldData[cidx][idx[kR]+1][idx[kPhi]+1][idx[kZ]+1]*x[kR];
-
-                G4double c0 = c00*(1.0-x[kPhi]) + c10*x[kPhi];
-                G4double c1 = c01*(1.0-x[kPhi]) + c11*x[kPhi];
-
-                Bint[cidx] = c0*(1.0-x[kZ])+c1*x[kZ];
-                G4cout << Bint[cidx] << ": ";
-
-        switch (fInterpolationType) {
+        switch (type) {
             case kLinear: {
-                G4cout << _trilinearInterpolate(values[cidx], x) / Bint[cidx] << "L" << G4endl;
                 Bint[cidx] = _trilinearInterpolate(values[cidx], x);
                 break;
             }
             case kCubic: {
-                G4cout << _tricubicInterpolate(values[cidx], x) / Bint[cidx] << G4endl;
                 Bint[cidx] = _tricubicInterpolate(values[cidx], x);
                 break;
             }
