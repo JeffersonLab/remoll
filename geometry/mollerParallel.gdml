@@ -449,10 +449,10 @@
       <positionref ref="targetCenter"/>
     </physvol>
 
-    <physvol    name="targetPbWallDSVirtualPlane_phys">
+<!--    <physvol    name="targetPbWallDSVirtualPlane_phys">
       <volumeref ref="targetPbWallDSVirtualPlane_log"/>
       <position name="targetPbWallDSVirtualPlane_pos" unit="mm" z="-2800+60"/>
-    </physvol>
+    </physvol> -->
     
     <physvol    name="skyshineVacuumDet1VirtualPlane_phys">
       <volumeref ref="skyshineVacuumDet1VirtualPlane_log"/>
