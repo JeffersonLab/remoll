@@ -64,7 +64,10 @@
   <tube
     name="bellows4VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="51*25.4/2" rmax="51*25.4/2+1" z="150" lunit="mm"/>
+    rmin="600" rmax="51*25.4/2+1" z="150" lunit="mm"/>
+<!--    rmin="51*25.4/2" rmax="51*25.4/2+1" z="150" lunit="mm"/> -->
+
+
 
   <tube
     name="bellows5VirtualPlane_solid"
