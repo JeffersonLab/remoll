@@ -262,7 +262,6 @@
     <!--collar solids -->
     <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="600" rmax1="750" rmin2="600" rmax2="750" z="100+50"/>
     <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="952" rmax1="1200" rmin2="952" rmax2="1200" z="100+50"/>
-
 	    <!-- Lintels solid -->
     <xtru name="solidLintel1" lunit="mm">
      <twoDimVertex x="107" y="160" />
@@ -654,15 +653,15 @@
       <position name="DSpipe1_pos" x="0" y="0" z="boxDSMother_length/2-490.0"/>
     </physvol>
 
-    <physvol name="DSpipe1_flange">
+<!--    <physvol name="DSpipe1_flange">
       <volumeref ref="logic_DSpipe1_flange"/>
       <position name="DSpipe1_flange" x="0" y="0" z="boxDSMother_length/2-261.0"/>
-    </physvol>
+    </physvol> -->
 
-    <physvol name="DSpipe1_bellow">
+<!--    <physvol name="DSpipe1_bellow">
       <volumeref ref="logic_DSpipe1_bellow"/>
       <position name="DSpipe1_bellow" x="0" y="0" z="boxDSMother_length/2-236.0"/>
-    </physvol>
+    </physvol> -->
 
     <physvol name="DSpipe2_USplate">
       <volumeref ref="logic_DSpipe2_USplate"/>
