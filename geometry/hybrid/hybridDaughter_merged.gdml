@@ -46,7 +46,8 @@
     <constant name="boxDSShieldColl1_inner_rmax" value="265"/>
     <constant name="boxDSShieldColl1_width" value="5715"/>
     <constant name="boxDSShieldColl1_height" value="5000/3"/> <!-- /2"/> FIXME new, reduce height a lot -->
-    <constant name="boxDSShieldColl1_length" value="1000 + 400 - coll4shield_shift"/>
+    <constant name="boxDSShieldColl1_offsetbellows" value="-300"/>
+    <constant name="boxDSShieldColl1_length" value="1000 + 400 - coll4shield_shift + boxDSShieldColl1_offsetbellows*2"/>
     <!-- Concrete Shield1 will be outside shielding block 4 -->
     <constant name="DSConcreteShield1_side_thickness" value="400"/>
     <constant name="DSConcreteShield1_top_thickness" value="400"/>
@@ -54,14 +55,14 @@
     <constant name="DSConcreteShield1_length" value="boxDSShieldColl1_length + 1 + 1*DSConcreteShield1_side_thickness"/> <!-- was 2* -->
     <constant name="DSConcreteShield1_height" value="boxDSShieldColl1_height + 1 + DSConcreteShield1_top_thickness + DSConcreteShield1_bottom_thickness"/>
     <position name="boxDSConcreteShield1_trans2" unit="mm" x="0" y="0" z="0"/>
-    <position name="boxDSConcreteShield1_center" unit="mm" x="0" y="0" z="9020-DOFFSET - coll4shield_shift/2"/>
+    <position name="boxDSConcreteShield1_center" unit="mm" x="0" y="0" z="9020-DOFFSET - coll4shield_shift/2 + boxDSShieldColl1_offsetbellows"/>
 
 	    <!-- this is for Lead wall dimension -->
     <constant name="DSShield_local_height" value="2400"/>
     <constant name="DSShield_local_length" value="250"/>
     <constant name="DSShield_local_width" value="2400"/>
     <constant name="DSShield_local_inner_rmax" value="boxDSShieldColl1_inner_rmax"/>
-    <position name="boxDSShield_local_center" unit="mm" x="0" y="0" z="9020-DOFFSET - coll4shield_shift/2 + DSConcreteShield1_length/2 + DSShield_local_length/2 + 10"/>
+    <position name="boxDSShield_local_center" unit="mm" x="0" y="0" z="9020-DOFFSET - coll4shield_shift/2 + DSConcreteShield1_length/2 + DSShield_local_length/2 + 10 + boxDSShieldColl1_offsetbellows"/>
     <position name="boxDSShield_local_trans" unit="mm" x="0" y="0" z="0"/>
 
     <constant name="boxDSMother_width" value="2700"/>
