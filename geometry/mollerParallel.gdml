@@ -46,6 +46,41 @@
     startphi="0" deltaphi="360" aunit="deg"
     rmin="1450" rmax="1460" z="2700" lunit="mm"/>
 
+  <tube
+    name="bellows1VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="7.8*25.4/2" rmax="7.8*25.4/2+1" z="325" lunit="mm"/>
+
+  <tube
+    name="bellows2VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="9.8*25.4/2" rmax="9.8*25.4/2+1" z="380" lunit="mm"/>
+
+  <tube
+    name="bellows3VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="25.8*25.4/2" rmax="25.8*25.4/2+1" z="508" lunit="mm"/>
+
+  <tube
+    name="bellows4VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="51*25.4/2" rmax="51*25.4/2+1" z="150" lunit="mm"/>
+
+  <tube
+    name="bellows5VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="39.8*25.4/2" rmax="39.8*25.4/2+1" z="120" lunit="mm"/>
+
+  <tube
+    name="bellows6VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="41.6*25.4/2" rmax="41.6*25.4/2+1" z="120" lunit="mm"/>
+
+  <tube
+    name="bellows7VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="16*25.4/2" rmax="16*25.4/2+1" z="570" lunit="mm"/>
+
   <sphere name="targetSphere_solid" 
 	  rmin="700" rmax="701" lunit="mm"
 	  deltaphi="360" deltatheta="180" aunit="deg"/>
@@ -299,6 +334,56 @@
     <auxiliary auxtype="DetNo" auxvalue="50"/>
   </volume>
 
+  <volume name="bellows1VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="bellows1VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="70"/>
+  </volume>
+
+  <volume name="bellows2VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="bellows2VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="71"/>
+  </volume>
+
+  <volume name="bellows3VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="bellows3VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="72"/>
+  </volume>
+
+  <volume name="bellows4VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="bellows4VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73"/>
+  </volume>
+
+  <volume name="bellows5VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="bellows5VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="74"/>
+  </volume>
+
+  <volume name="bellows6VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="bellows6VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="75"/>
+  </volume>
+
+  <volume name="bellows7VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="bellows7VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="76"/>
+  </volume>
+
+
   <volume name="SAMusVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="samVirtualPlane_solid"/>
@@ -468,6 +553,41 @@
     <physvol name="gemVirtualPlane_phys">
       <volumeref ref="gemVirtualPlane_log"/>
       <positionref ref="gemVirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="bellows1VirtualPlane_phys">
+      <volumeref ref="bellows1VirtualPlane_log"/>
+      <positionref ref="bellows1VirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="bellows2VirtualPlane_phys">
+      <volumeref ref="bellows2VirtualPlane_log"/>
+      <positionref ref="bellows2VirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="bellows3VirtualPlane_phys">
+      <volumeref ref="bellows3VirtualPlane_log"/>
+      <positionref ref="bellows3VirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="bellows4VirtualPlane_phys">
+      <volumeref ref="bellows4VirtualPlane_log"/>
+      <positionref ref="bellows4VirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="bellows5VirtualPlane_phys">
+      <volumeref ref="bellows5VirtualPlane_log"/>
+      <positionref ref="bellows5VirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="bellows6VirtualPlane_phys">
+      <volumeref ref="bellows6VirtualPlane_log"/>
+      <positionref ref="bellows6VirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="bellows7VirtualPlane_phys">
+      <volumeref ref="bellows7VirtualPlane_log"/>
+      <positionref ref="bellows7VirtualPlane_pos"/>
     </physvol>
 
     <physvol name="SAMusVirtualPlane_phys">
