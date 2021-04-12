@@ -54,7 +54,7 @@ detectors are placed -->
 <position name="bellows1VirtualPlane_pos" z="1690.00-4500.0" unit="mm"/>
 <position name="bellows2VirtualPlane_pos" z="4087.00-4500.0" unit="mm"/>
 <position name="bellows3VirtualPlane_pos" z="8846.00-4500.0" unit="mm"/>
-<position name="bellows4VirtualPlane_pos" z="16904.00-4500.0+120" unit="mm"/>
+<position name="bellows4VirtualPlane_pos" z="16904.00-4500.0+220" unit="mm"/>
 <position name="bellows5VirtualPlane_pos" z="23314.00-4500.0" unit="mm"/>
 <position name="bellows6VirtualPlane_pos" z="24077.00-4500.0" unit="mm"/>
 <!--<position name="bellows7VirtualPlane_pos" z="30159.00-4500.0" unit="mm"/>-->
