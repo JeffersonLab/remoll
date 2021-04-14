@@ -6,12 +6,12 @@ def main():
 
     email = "palatchi@jlab.org"
 
-    config = "remoll_bellows_beam_100M"
+    config = "remoll_bellows_beam_newgeoftsd_100M"
 
     sourceDir = "/w/moller12gev-sciwork18/palatchi/moller/remoll/"
     outDir = "/volatile/halla/moller12gev/palatchi/"+config
 
-    activeDetectors = [28, 70, 71, 72, 73, 74, 75, 76]
+    activeDetectors = [28, 70, 71, 72, 73, 74, 75, 76, 5547]
 
     if not os.path.exists(outDir):
        os.makedirs(outDir)
