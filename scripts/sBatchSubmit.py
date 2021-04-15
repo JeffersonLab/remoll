@@ -6,7 +6,7 @@ def main():
 
     email = "palatchi@jlab.org"
 
-    config = "remoll_bellows_beam_newgeoftsd_100M"
+    config = "remoll_bellows_beam_updateftsd_100M"
 
     sourceDir = "/w/moller12gev-sciwork18/palatchi/moller/remoll/"
     outDir = "/volatile/halla/moller12gev/palatchi/"+config
@@ -15,9 +15,9 @@ def main():
 
     if not os.path.exists(outDir):
        os.makedirs(outDir)
-    nrEv   = 100000 #900000 100k is 10hours
+    nrEv   = 100000 #00 #900000 100k is 10hours
     nrStart= 1
-    nrStop = 1001 #(nrStop -nrStart) total jobs
+    nrStop = 1001 #1001 #(nrStop -nrStart) total jobs
     submit  = 1
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
@@ -52,7 +52,7 @@ def createMacFile(outDirFull,nrEv,jobNr, detectorList):
 
     f=open(outDirFull+"/"+"macro.mac",'w')
 
-    f.write("/remoll/geometry/setfile geometry/mollerMother.gdml\n")
+    f.write("/remoll/geometry/setfile geometry/mollerMother_merged.gdml\n")
     f.write("/remoll/parallel/setfile geometry/mollerParallel.gdml \n")
     f.write("/remoll/physlist/parallel/enable \n")
     f.write("/run/initialize\n")
@@ -139,7 +139,8 @@ def make_tarfile(sourceDir):
     tar.add(sourceDir+"/geometry/positions.xml",arcname="geometry/positions.xml")
     tar.add(sourceDir+"/geometry/solids/world.xml",arcname="geometry/solids/world.xml")
     tar.add(sourceDir+"/geometry/mollerParallel.gdml" ,arcname="geometry/mollerParallel.gdml") 
-    tar.add(sourceDir+"/geometry/mollerMother.gdml" ,arcname="geometry/mollerMother.gdml") 
+#    tar.add(sourceDir+"/geometry/mollerMother.gdml" ,arcname="geometry/mollerMother.gdml") 
+    tar.add(sourceDir+"/geometry/mollerMother_merged.gdml" ,arcname="geometry/mollerMother_merged.gdml") 
 #    tar.add(sourceDir+"/geometry/donut/donutConcreteLead.gdml" ,arcname="geometry/donut/donutConcreteLead.gdml") 
     tar.add(sourceDir+"/geometry/target/subTargetRegion.gdml" ,arcname="geometry/target/subTargetRegion.gdml") 
     tar.add(sourceDir+"/geometry/electronics/subSBSbunker.gdml" ,arcname="geometry/electronics/subSBSbunker.gdml") 
