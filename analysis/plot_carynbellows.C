@@ -3,8 +3,8 @@ void plot_carynbellows(int b = 70, int plot=0){
    //Tfile
   //TString filename="/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_100M/remoll_bellows_beam_100M_100kEv";
 
-  TString filename = "__carynplots.root";
-  TFile *_file0 = TFile::Open(Form("det%d%s",b,filename.Data()));
+  TString filename = "_updateftsd_carynplots.root";
+  TFile *_file0 = TFile::Open(Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_updateftsd_beam_100M/det%d%s",b,filename.Data()));
   TDirectory *d = _file0->GetDirectory("QA");
   //Get energy info
 
