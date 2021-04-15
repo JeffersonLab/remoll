@@ -6,7 +6,7 @@ def main():
 
     email = "palatchi@jlab.org"
 
-    config = "remoll_bellows_beam_newgeoftsd_test3"
+    config = "remoll_bellows_beam_newgeoftsd_test5"
 
     sourceDir = "/w/moller12gev-sciwork18/palatchi/moller/remoll/"
     outDir = "/volatile/halla/moller12gev/palatchi/"+config
