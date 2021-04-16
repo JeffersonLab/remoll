@@ -73,6 +73,21 @@
             
   <box lunit="mm" name="sbsBunkerFrontFace_solid" 
        x="11000" y="4500" z="1"/>
+
+  <box lunit="mm" name="usHybridVirtualPlane_solid"
+       x="5000" y="6000" z="1"/>
+
+  <box lunit="mm" name="coll1InnerSideVirtualPlane_solid"
+       x="1" y="1270*2" z="4335"/>
+
+  <box lunit="mm" name="coll1OuterSideVirtualPlane_solid"
+       x="1" y="6000" z="4335"/>
+
+  <box lunit="mm" name="coll1InnerTopVirtualPlane_solid"
+       x="1270" y="1" z="4335"/>
+
+  <box lunit="mm" name="coll1OuterTopVirtualPlane_solid"
+       x="1270+1400*2" y="1" z="4335"/>
 </solids>
 
 <structure>
@@ -246,12 +261,82 @@
 
   <volume name="usHybridVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="5560"/>
+    <auxiliary auxtype="DetNo" auxvalue="5620"/>
+  </volume>
+
+  <volume name="coll1InnerLeftVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="coll1InnerSideVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5600"/>
+  </volume>
+
+  <volume name="coll1OuterLeftVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="coll1OuterSideVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5610"/>
+  </volume>
+
+  <volume name="coll1InnerRightVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="coll1InnerSideVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5601"/>
+  </volume>
+
+  <volume name="coll1OuterRightVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="coll1OuterSideVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5611"/>
+  </volume>
+
+  <volume name="coll1InnerTopVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="coll1InnerTopVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5603"/>
+  </volume>
+
+  <volume name="coll1OuterTopVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="coll1OuterTopVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5613"/>
+  </volume>
+
+  <volume name="coll1OuterBottomVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="coll1OuterTopVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5614"/>
   </volume>
 
   <volume name="trackingDetectorVirtualPlane_log">
@@ -422,6 +507,41 @@
     <physvol    name="usHybridVirtualPlane_phys">
       <volumeref ref="usHybridVirtualPlane_log"/>
       <position name="usHybridVirtualPlane_pos" unit="mm" z="4800"/>
+    </physvol>
+
+    <physvol    name="coll1InnerLeftVirtualPlane_phys">
+      <volumeref ref="coll1InnerLeftVirtualPlane_log"/>
+      <position name="coll1InnerLeftVirtualPlane_pos" unit="mm" x="1270/2-1" z="852.5"/>
+    </physvol>
+
+    <physvol    name="coll1OuterLeftVirtualPlane_phys">
+      <volumeref ref="coll1OuterLeftVirtualPlane_log"/>
+      <position name="coll1OuterLeftVirtualPlane_pos" unit="mm" x="+1270/2+1401" z="852.5"/>
+    </physvol>
+
+    <physvol    name="coll1InnerRightVirtualPlane_phys">
+      <volumeref ref="coll1InnerRightVirtualPlane_log"/>
+      <position name="coll1InnerRightVirtualPlane_pos" unit="mm" x="-1270/2+1" z="852.5"/>
+    </physvol>
+
+    <physvol    name="coll1OuterRightVirtualPlane_phys">
+      <volumeref ref="coll1OuterRightVirtualPlane_log"/>
+      <position name="coll1OuterRightVirtualPlane_pos" unit="mm" x="-1270/2-1401" z="852.5"/>
+    </physvol>
+
+    <physvol    name="coll1InnerTopVirtualPlane_phys">
+      <volumeref ref="coll1InnerTopVirtualPlane_log"/>
+      <position name="coll1InnerTopVirtualPlane_pos" unit="mm" y="1269" z="852.5"/>
+    </physvol>
+
+    <physvol    name="coll1OuterTopVirtualPlane_phys">
+      <volumeref ref="coll1OuterTopVirtualPlane_log"/>
+      <position name="coll1OuterTopVirtualPlane_pos" unit="mm" y="1270+1405" z="852.50"/>
+    </physvol>
+
+    <physvol    name="coll1OuterBottomVirtualPlane_phys">
+      <volumeref ref="coll1OuterBottomVirtualPlane_log"/>
+      <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1275" z="852.5"/>
     </physvol>
 
     <!-- Tracking planes -->
