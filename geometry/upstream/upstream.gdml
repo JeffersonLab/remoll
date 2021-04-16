@@ -59,8 +59,8 @@
     <!-- Shielding collimators dimensions -->
     <constant name="USBoxmother_extensionUS" value="120"/>
 
-    <constant name="USBoxmother_width" value="4200 + 300"/>
-    <constant name="USBoxmother_height" value="4000 + 300"/>
+    <constant name="USBoxmother_width" value="4500"/>
+    <constant name="USBoxmother_height" value="5800"/>
     <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
 
     <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
@@ -238,23 +238,21 @@
       <rotation name="uscoll_Cu_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
     </subtraction>
 
-    <!--
-	Shielding collimators
-    -->
-    <box lunit="mm" name="boxUSShieldColl1_solid_1" 
-	 x="2*(500+1400)" 
-	 y="2*(500+1400)" 
+
+    <box lunit="mm" name="coll1SideShielding_solid"
+	 x="1400"
+	 y="2*(1270)"
 	 z="USBoxmother_length - USBoxmothersubtract_length - 10"/>
 
-    <tube aunit="deg" deltaphi="360" lunit="mm" rmin="0" startphi="0" name="USShield_subTube_solid_1"
-	  rmax="COLL2_R4_U+200"
-	  z="USBoxmother_length"/>
+    <box lunit="mm" name="coll1TopShielding_solid"
+	 x="1400*2 + 1270"
+	 y="1400"
+	 z="USBoxmother_length - USBoxmothersubtract_length - 10"/>
 
-    <subtraction name ="boxUSShieldColl1_solid">
-      <first ref="boxUSShieldColl1_solid_1"/>
-      <second ref="USShield_subTube_solid_1"/>
-      <positionref ref="CENTER" />
-    </subtraction> 
+    <box lunit="mm" name="pivotIron_solid"
+	 x="1400*2 + 1270"
+	 y="200"
+	 z="USBoxmother_length - USBoxmothersubtract_length - 10"/>
 
   </solids>
 
@@ -331,12 +329,23 @@
       <auxiliary auxtype="DetNo" auxvalue="2008"/>
     </volume>
 
-    <volume name="boxUSShieldColl1_logic">
+    <volume name="coll1TopShiled_logic">
       <materialref ref="Concrete"/>
-      <solidref ref="boxUSShieldColl1_solid"/> 
+      <solidref ref="coll1TopShielding_solid"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_US_1_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6010"/>
+    </volume>
+
+    <volume name="coll1SideShiled_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="coll1SideShielding_solid"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="pivotIron_logic">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="pivotIron_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.8"/>
     </volume>
 
     <volume name="upstreamTorusRegion">
@@ -382,9 +391,24 @@
         <file name= "upstream/upstreamToroid.gdml"/>
       </physvol>
 
-      <physvol>
-        <volumeref ref="boxUSShieldColl1_logic"/>
-        <position name="bosUSShieldColl1_pos" unit="mm" x="0" y="0" z="- USBoxmothersubtract_length/2"/>
+      <physvol name="coll1TopShielding">
+        <volumeref ref="coll1TopShiled_logic"/>
+        <position name="coll1TopShield_pos" unit="mm" x="0" y="1270+700" z="- USBoxmothersubtract_length/2"/>
+      </physvol>
+
+      <physvol name="coll1LeftShielding">
+        <volumeref ref="coll1SideShiled_logic"/>
+        <position name="coll1LeftShield_pos" unit="mm" x="1270/2 + 700" y="0" z="- USBoxmothersubtract_length/2"/>
+      </physvol>
+
+      <physvol name="coll1RightShielding">
+        <volumeref ref="coll1SideShiled_logic"/>
+        <position name="coll1RightShield_pos" unit="mm" x="-1270/2 - 700" y="0" z="- USBoxmothersubtract_length/2"/>
+      </physvol>
+
+      <physvol name="pivotIron">
+        <volumeref ref="pivotIron_logic"/>
+        <position name="pivotIron_pos" unit="mm" x="0" y="-2800" z="- USBoxmothersubtract_length/2"/>
       </physvol>
 
       <physvol>
