@@ -251,7 +251,7 @@
 
     <box lunit="mm" name="pivotIron_solid"
 	 x="1400*2 + 1270"
-	 y="200"
+	 y="50"
 	 z="USBoxmother_length - USBoxmothersubtract_length - 10"/>
 
   </solids>
@@ -393,22 +393,22 @@
 
       <physvol name="coll1TopShielding">
         <volumeref ref="coll1TopShiled_logic"/>
-        <position name="coll1TopShield_pos" unit="mm" x="0" y="1270+700" z="- USBoxmothersubtract_length/2"/>
+        <position name="coll1TopShield_pos" unit="mm" x="0" y="760+700" z="- USBoxmothersubtract_length/2"/>
       </physvol>
 
       <physvol name="coll1LeftShielding">
         <volumeref ref="coll1SideShiled_logic"/>
-        <position name="coll1LeftShield_pos" unit="mm" x="1270/2 + 700" y="0" z="- USBoxmothersubtract_length/2"/>
+        <position name="coll1LeftShield_pos" unit="mm" x="1270/2 + 700" y="-510" z="- USBoxmothersubtract_length/2"/>
       </physvol>
 
       <physvol name="coll1RightShielding">
         <volumeref ref="coll1SideShiled_logic"/>
-        <position name="coll1RightShield_pos" unit="mm" x="-1270/2 - 700" y="0" z="- USBoxmothersubtract_length/2"/>
+        <position name="coll1RightShield_pos" unit="mm" x="-1270/2 - 700" y="-510" z="- USBoxmothersubtract_length/2"/>
       </physvol>
 
       <physvol name="pivotIron">
         <volumeref ref="pivotIron_logic"/>
-        <position name="pivotIron_pos" unit="mm" x="0" y="-2800" z="- USBoxmothersubtract_length/2"/>
+        <position name="pivotIron_pos" unit="mm" x="0" y="-1900" z="- USBoxmothersubtract_length/2"/>
       </physvol>
 
       <physvol>
