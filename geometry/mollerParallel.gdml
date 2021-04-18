@@ -511,7 +511,7 @@
 
     <physvol    name="coll1InnerLeftVirtualPlane_phys">
       <volumeref ref="coll1InnerLeftVirtualPlane_log"/>
-      <position name="coll1InnerLeftVirtualPlane_pos" unit="mm" x="1270/2-1" z="852.5"/>
+      <position name="coll1InnerLeftVirtualPlane_pos" unit="mm" x="1270/2-1" y="-510" z="852.5"/>
     </physvol>
 
     <physvol    name="coll1OuterLeftVirtualPlane_phys">
@@ -521,7 +521,7 @@
 
     <physvol    name="coll1InnerRightVirtualPlane_phys">
       <volumeref ref="coll1InnerRightVirtualPlane_log"/>
-      <position name="coll1InnerRightVirtualPlane_pos" unit="mm" x="-1270/2+1" z="852.5"/>
+      <position name="coll1InnerRightVirtualPlane_pos" unit="mm" x="-1270/2+1" y="-510" z="852.5"/>
     </physvol>
 
     <physvol    name="coll1OuterRightVirtualPlane_phys">
@@ -531,17 +531,17 @@
 
     <physvol    name="coll1InnerTopVirtualPlane_phys">
       <volumeref ref="coll1InnerTopVirtualPlane_log"/>
-      <position name="coll1InnerTopVirtualPlane_pos" unit="mm" y="1269" z="852.5"/>
+      <position name="coll1InnerTopVirtualPlane_pos" unit="mm" y="759" z="852.5"/>
     </physvol>
 
     <physvol    name="coll1OuterTopVirtualPlane_phys">
       <volumeref ref="coll1OuterTopVirtualPlane_log"/>
-      <position name="coll1OuterTopVirtualPlane_pos" unit="mm" y="1270+1405" z="852.50"/>
+      <position name="coll1OuterTopVirtualPlane_pos" unit="mm" y="760+1405" z="852.50"/>
     </physvol>
 
     <physvol    name="coll1OuterBottomVirtualPlane_phys">
       <volumeref ref="coll1OuterBottomVirtualPlane_log"/>
-      <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1275" z="852.5"/>
+      <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1825" z="852.5"/>
     </physvol>
 
     <!-- Tracking planes -->
