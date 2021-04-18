@@ -61,7 +61,8 @@
     <constant name="DSShield_local_length" value="250"/>
     <constant name="DSShield_local_width" value="2400"/>
     <constant name="DSShield_local_inner_rmax" value="boxDSShieldColl1_inner_rmax"/>
-    <position name="boxDSShield_local_center" unit="mm" x="0" y="0" z="9020-DOFFSET - coll4shield_shift/2 + DSConcreteShield1_length/2 + DSShield_local_length/2 + 10"/>
+    <position name="boxDSShield_local_center" unit="mm" x="0" y="0" 
+	      z="9020-DOFFSET - coll4shield_shift/2 + DSConcreteShield1_length/2 + DSShield_local_length/2 + 10"/>
     <position name="boxDSShield_local_trans" unit="mm" x="0" y="0" z="0"/>
 
     <constant name="boxDSMother_width" value="2700"/>
@@ -186,27 +187,28 @@
 	  rmax1="PCOLL2_R3_U-DELTAT*((PCOLL2_R3_D-PCOLL2_R3_U)/PCOLL2_THICK)" 
 	  rmax2="PCOLL2_R3_D+DELTAT*((PCOLL2_R3_D-PCOLL2_R3_U)/PCOLL2_THICK)" 
 	  rmin1="PCOLL2_R2_U-DELTAT*((PCOLL2_R2_D-PCOLL2_R2_U)/PCOLL2_THICK)" 
-	  rmin2="PCOLL2_R2_D+DELTAT*((PCOLL2_R2_D-PCOLL2_R2_U)/PCOLL2_THICK)" startphi="-SEPTANT/4" z="PCOLL2_THICK+DELTAT*2"/>
+	  rmin2="PCOLL2_R2_D+DELTAT*((PCOLL2_R2_D-PCOLL2_R2_U)/PCOLL2_THICK)" 
+	  startphi="-SEPTANT/4" z="PCOLL2_THICK+DELTAT*2"/>
 
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="PCOLL2_THICK"/>
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" 
+	  rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" 
+	  rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" 
+	  startphi="0" z="PCOLL2_THICK"/>
 
 
     <subtraction name ="pcons_sculpt_1">
       <first ref="pcons_1"/> 
       <second ref="leftpcolcut"/> 
     </subtraction>
-
     <subtraction name ="pcons_sculpt_2">
       <first ref="pcons_sculpt_1"/> 
       <second ref="rightpcolcut"/> 
     </subtraction>
-
     <subtraction name ="pdscoll_union_0">
       <first ref="pdscyl"/>
       <second ref="pcons_sculpt_2"/> 
       <rotation name="pdscoll_rot1" x="0" y="0" z="SEPTANT*(0+0.5)" unit="deg"/>
     </subtraction>
-
     <subtraction name ="pdscoll_union_1">
       <first ref="pdscoll_union_0"/>
       <second ref="pcons_sculpt_2"/> 
@@ -620,21 +622,22 @@
 
 
       <!-- Collimator 4 -->
-      <physvol name="DScoll_6">
+      <physvol name="collimator4">
 	<volumeref ref="logicPDScollunion_1"/>
         <positionref ref="posPCOLL2"/>
       </physvol>
 
 
-      <physvol>
-        <volumeref ref="boxDSConcreteShield1_logic"/>
-        <positionref ref="boxDSConcreteShield1_center"/>
-      </physvol>
+      <!-- <physvol> -->
+      <!--   <volumeref ref="boxDSConcreteShield1_logic"/> -->
+      <!--   <positionref ref="boxDSConcreteShield1_center"/> -->
+      <!-- </physvol> -->
 
       <!-- Lead wall DS of collimator 4 -->
-      <physvol>
+      <physvol name="hybridPbWall">
         <volumeref ref="boxDSShield_local_logic"/>
-        <positionref ref="boxDSShield_local_center"/>
+	<position name="hybridPbWall_pos" x="0" y="0" z="-7007.5"/>
+        <!-- <positionref ref="boxDSShield_local_center"/> -->
       </physvol>
 
       <!-- this part of the downstream beampipe -->
