@@ -20,11 +20,6 @@ include(CMakeEnv)
 # Use GNU install dirs
 include(GNUInstallDirs)
 
-# Request C++11 standard
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_CXX_EXTENSIONS False)
-
 # MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_MACOSX_RPATH ON)
@@ -38,6 +33,9 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     endif()
 endif()
 
+# For remollSearchPath.hh
+# FIXME
+# link_libraries(stdc++fs)
 
 #----------------------------------------------------------------------------
 # Locate sources and headers for this project
@@ -86,7 +84,7 @@ list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
 #----------------------------------------------------------------------------
 # Boost
 #
-find_package(Boost QUIET COMPONENTS iostreams)
+find_package(Boost QUIET COMPONENTS iostreams filesystem)
 if(Boost_FOUND)
   message(STATUS "Boost found --> building with boost enabled.")
   include_directories(${Boost_INCLUDE_DIRS})
@@ -94,8 +92,14 @@ if(Boost_FOUND)
   ADD_DEFINITIONS(-D__USE_BOOST)
   if(Boost_IOSTREAMS_FOUND)
     message(STATUS "Boost::iostreams found --> building with boost::iostreams enabled.")
-    ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+    #ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
   endif()
+  if(Boost_FILESYSTEM_FOUND)
+    message(STATUS "Boost::filesystem found --> building with boost::filesystem enabled.")
+    ADD_DEFINITIONS(-D__USE_BOOST_FILESYSTEM)
+  endif()
+else()
+  message(STATUS "Boost not found.")
 endif()
 
 
@@ -305,74 +309,76 @@ set(REMOLL_LOCATION /group/halla/www/hallaweb/html/12GeV/Moller/downloads/remoll
 set(REMOLL_DOWNLOADS http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/)
 set(REMOLL_MAP_DIR ${PROJECT_SOURCE_DIR}/map_directory)
 if(EXISTS ${REMOLL_LOCATION})
-  message(STATUS "Copying files directly from directory...")
+  message(STATUS "Fieldmaps will be copied from directory...")
   set(REMOLL_DOWNLOADS file://${REMOLL_LOCATION})
 else()
   message(STATUS "Fieldmaps will be downloaded from web...")
 endif()
-file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/hybridJLAB.txt
-     ${REMOLL_MAP_DIR}/hybridJLAB.txt
-     EXPECTED_MD5 c2da18fd7ab80cc4abe7eafc487963dc
-     )
-file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/upstreamJLAB_1.25.txt
-     ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt
-     EXPECTED_MD5 af06ed35516c17640e89ba3aa0f5b200
-     )
-file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/hybridJLAB_v2.txt
-     ${REMOLL_MAP_DIR}/hybridJLAB_v2.txt
-     EXPECTED_MD5 4a0d1abc9b80cf5f2c3dd495a1133e26
-     )
-file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/segmentedJLAB_v2.txt
-     ${REMOLL_MAP_DIR}/segmentedJLAB_v2.txt
-     EXPECTED_MD5 2a21b540f6496e3f554302f369646bbb
-     )
-file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/upstreamJLAB_v2.txt
-     ${REMOLL_MAP_DIR}/upstreamJLAB_v2.txt
-     EXPECTED_MD5 bed73f2ea44135c52222bc8e767e1954
-     )
-install(FILES
-     ${REMOLL_MAP_DIR}/hybridJLAB.txt
-     ${REMOLL_MAP_DIR}/upstreamJLAB_1.25.txt
-     ${REMOLL_MAP_DIR}/hybridJLAB_v2.txt
-     ${REMOLL_MAP_DIR}/segmentedJLAB_v2.txt
-     ${REMOLL_MAP_DIR}/upstreamJLAB_v2.txt
-     DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+if(Boost_IOSTREAMS_FOUND)
+  message(STATUS "Gzipped fieldmaps will be made available...")
+endif()
+# for i in *.txt ; do echo `md5sum $i|awk '{print$1}'`:`md5sum $i.gz|awk '{print$1}'`:$i ; done
+set(REMOLL_MAPS
+b8b30b803bae42f69135323ff40fe7db:99bf3fae83677c6c2f3e09a871682b2e:V2U.1a.50cm.parallel.txt
+d5f568675ca29e295c1013617a2dc092:b3e031ce9d97fa5331ec39e8903817e6:V2DSg.9.75cm.parallel.txt
+)
+set(REMOLL_MAPS_EXTRA
+1c79bc83e4da5e9d5e44338e28ce6ebe:c7591d167ca56e871e8e5eeecab2872c:V2DSg.9.75cm.txt
+f768447f761b9bf01af7c57e249d1d8a:94ec0017b21fc56d9d8084d68e479fd5:V2U.1a.50cm.txt
+b1b8f2845dc5cd420c6ff49ae7760a60:6002f6f5f092346cb2bdedac046d1905:V1U.2a.txt
+70e2bbed1831816957e953bba48f01d5:2fd1cd2785db92f9c880b675890460b5:V2U.1a.txt
+e55ffd8aba96cbf24962155d3c7f75e4:0172016c988867b0928258d79cd1c865:V2U.1b.txt
+eb802b9d8569669b5aa674fc56c52a24:df7f4dd87c894c5eef878b248ef14c3e:V1DSg.3.txt
+c71758450b063ab83e95a7ba8c590885:a5ba5c81c0c6590d43fac1cbd3f2d7a0:V2DSg.1a.txt
+c2ac33287df1bf20bfedcb4d4a96c8d5:3a31416eb7659248f7a2ba582d43a6fe:V2DSg.1b.txt
+ca69d4a4397ae3a944f603b91dfbe586:36e2aa90d39e4ad9be4f747a522baa69:V1DHy.3.txt
+259459226a5cacc1d62ba295534645e2:95c6193ea30c03316068e3d67d3ec32b:V2DHy.1.txt
+b4bfef8f362e0df66f166b4e76a6847e:57a7719eb877572751f4c4b481d6a788:blockyHybrid_rm_3.0.txt
+7df29e47413c8dd69fd179298f11b717:9120bc05099a144916467b6ea17e39f8:blockyUpstream_rm_1.1_noscale.txt
+3e2338e1ba74b03da37545e98931f5f3:75dfcd912e74f42543892fed8271fa7c:blockyUpstream_rm_1.1.txt
+c2da18fd7ab80cc4abe7eafc487963dc:112a466bf5dc2ef4dd24b935767a0540:hybridJLAB.txt
+4a0d1abc9b80cf5f2c3dd495a1133e26:a8f5875a4ef0c27c63f31cf7395b13f0:hybridJLAB_v2.txt
+0f6e9a3a8392d01c63f1609afc4e4c09:996a6581de9d3c331398bb85ef955a15:hybridSymmetric_sensR_0.0.txt
+78fad2ffa5b5ae129df11bdf0ce25333:f21fb19507197baba3658885315c9a6e:hybridSymmetric_sensR_0.1.txt
+2a21b540f6496e3f554302f369646bbb:fb95664f9bdba1c22ad28eb21bd1c9fb:segmentedJLAB_v2.txt
+af06ed35516c17640e89ba3aa0f5b200:b8009dc61a17eea1d884f0c746f6922c:upstreamJLAB_1.25.txt
+bed73f2ea44135c52222bc8e767e1954:f50ce73289174ada019977f2dec87cb6:upstreamJLAB_v2.txt
+4ca3d968cadd85a89b86148411eda678:ce0a41b96a5937978aa9f30155fab610:upstreamSymmetric_sensR_0.0.txt
+849d9dc5abab0842fc13fef7f4918648:4a8c457385f179a036fffca4ae8e2cb0:upstreamSymmetric_sensR_0.1.txt
+)
 if(ADDITIONAL_FIELDS)
-  message(STATUS "Ensuring additional fields are available")
-  file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/blockyUpstream_rm_1.1.txt
-     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
-     EXPECTED_MD5 3e2338e1ba74b03da37545e98931f5f3
-     )
-  file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/blockyHybrid_rm_3.0.txt
-     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
-     EXPECTED_MD5 b4bfef8f362e0df66f166b4e76a6847e
-     )
-  file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/upstreamSymmetric_sensR_0.1.txt
-     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.1.txt
-     EXPECTED_MD5 849d9dc5abab0842fc13fef7f4918648
-     )
-  file(DOWNLOAD
-     ${REMOLL_DOWNLOADS}/hybridSymmetric_sensR_0.1.txt
-     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.1.txt
-     EXPECTED_MD5 78fad2ffa5b5ae129df11bdf0ce25333
-     )
-  install(FILES
-     ${REMOLL_MAP_DIR}/blockyHybrid_rm_3.0.txt
-     ${REMOLL_MAP_DIR}/blockyUpstream_rm_1.1.txt
-     ${REMOLL_MAP_DIR}/upstreamSymmetric_sensR_0.1.txt
-     ${REMOLL_MAP_DIR}/hybridSymmetric_sensR_0.1.txt
-     DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+  message(STATUS "Ensuring additional fields are available.")
 else()
   message(STATUS "Download additional fields with '-DADDITIONAL_FIELDS=ON'.")
+  set(REMOLL_MAPS_EXTRA "")
 endif()
+foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
+  set(REGEX "^(.*):(.*):(.*)$")
+  # Hash 1: txt file, Hash 2: txt.gz file
+  string(REGEX REPLACE ${REGEX} "\\1" HASH1 ${MAP})
+  string(REGEX REPLACE ${REGEX} "\\2" HASH2 ${MAP})
+  string(REGEX REPLACE ${REGEX} "\\3" FILE ${MAP})
+  if(Boost_IOSTREAMS_FOUND)
+    file(DOWNLOAD
+      ${REMOLL_DOWNLOADS}/${FILE}.gz
+      ${REMOLL_MAP_DIR}/${FILE}.gz
+      EXPECTED_MD5 ${HASH2}
+      )
+    install(FILES
+      ${REMOLL_MAP_DIR}/${FILE}.gz
+      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll/map_directory)
+  endif()
+  #else()
+    file(DOWNLOAD
+      ${REMOLL_DOWNLOADS}/${FILE}
+      ${REMOLL_MAP_DIR}/${FILE}
+      EXPECTED_MD5 ${HASH1}
+      )
+    install(FILES
+      ${REMOLL_MAP_DIR}/${FILE}
+      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll/map_directory)
+  #endif()
+endforeach()
 
 
 #----------------------------------------------------------------------------
@@ -383,6 +389,13 @@ install(FILES
     ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollUseFile.cmake
     DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/remoll)
 
+#----------------------------------------------------------------------------
+# remollSearchPath
+
+add_definitions(
+        -DCMAKE_INSTALL_PREFIX=\"${CMAKE_INSTALL_PREFIX}\"
+        -DCMAKE_INSTALL_FULL_DATADIR=\"${CMAKE_INSTALL_FULL_DATADIR}\"
+)
 
 #----------------------------------------------------------------------------
 # uninstall
