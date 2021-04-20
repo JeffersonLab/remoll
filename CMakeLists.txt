@@ -319,10 +319,12 @@ if(Boost_IOSTREAMS_FOUND)
 endif()
 # for i in *.txt ; do echo `md5sum $i|awk '{print$1}'`:`md5sum $i.gz|awk '{print$1}'`:$i ; done
 set(REMOLL_MAPS
-1c79bc83e4da5e9d5e44338e28ce6ebe:c7591d167ca56e871e8e5eeecab2872c:V2DSg.9.75cm.txt
-f768447f761b9bf01af7c57e249d1d8a:94ec0017b21fc56d9d8084d68e479fd5:V2U.1a.50cm.txt
+b8b30b803bae42f69135323ff40fe7db:99bf3fae83677c6c2f3e09a871682b2e:V2U.1a.50cm.parallel.txt
+d5f568675ca29e295c1013617a2dc092:b3e031ce9d97fa5331ec39e8903817e6:V2DSg.9.75cm.parallel.txt
 )
 set(REMOLL_MAPS_EXTRA
+1c79bc83e4da5e9d5e44338e28ce6ebe:c7591d167ca56e871e8e5eeecab2872c:V2DSg.9.75cm.txt
+f768447f761b9bf01af7c57e249d1d8a:94ec0017b21fc56d9d8084d68e479fd5:V2U.1a.50cm.txt
 b1b8f2845dc5cd420c6ff49ae7760a60:6002f6f5f092346cb2bdedac046d1905:V1U.2a.txt
 70e2bbed1831816957e953bba48f01d5:2fd1cd2785db92f9c880b675890460b5:V2U.1a.txt
 e55ffd8aba96cbf24962155d3c7f75e4:0172016c988867b0928258d79cd1c865:V2U.1b.txt
