@@ -42,24 +42,20 @@ class remollMagneticField : public G4MagneticField {
 
     public:
 
-	remollMagneticField( G4String );
-	virtual ~remollMagneticField();
+	remollMagneticField(const G4String&);
+	virtual ~remollMagneticField() { };
 
 	void GetFieldValue(const G4double Point[4], G4double *Bfield) const;
 
-	void InitializeGrid();
-	void ReadFieldMap();
+	void SetFieldScale(G4double scale) { fFieldScale = scale; }
+	void SetRefCurrent(G4double current) { fRefCurrent = current; }
+	void SetCurrent(G4double current) { SetFieldScale(current/fRefCurrent); }
 
-	void SetFieldScale(G4double s);
-	void SetMagnetCurrent(G4double s);
+	void SetZoffset(G4double z) { fZoffset = z; }
 
-	void SetZoffset(G4double z){ fZoffset= z; }
-
-	G4String GetName();
+	const G4String& GetName() const { return fName; }
 
 	enum Coord_t { kR, kPhi, kZ };
-
-	G4bool IsInit(){ return fInit; }
 
         G4bool IsInBoundingBox(const G4double* p) const {
           if (p[2] - fZoffset < fMin[kZ] || p[2] - fZoffset > fMax[kZ]) return false;
@@ -72,8 +68,8 @@ class remollMagneticField : public G4MagneticField {
 	G4String fName;
 	G4String fFilename;
 
-	G4int fN[__NDIM];
-	G4double fMin[__NDIM], fMax[__NDIM];
+	size_t fN[__NDIM];
+	G4double fUnit[__NDIM], fMin[__NDIM], fMax[__NDIM], fStep[__NDIM];
 	G4double fFileMin[__NDIM], fFileMax[__NDIM];
 
 	G4int fNxtant; // Number of *tants (septants, or whatever)
@@ -86,9 +82,7 @@ class remollMagneticField : public G4MagneticField {
 	G4double fZMapOffset, fPhiMapOffset;
 
 	G4double fFieldScale; // Scale overall field by this amount
-	G4double fMagCurrent0; // Scale overall field by this amount
-
-	G4bool fInit;
+	G4double fRefCurrent; // Reference current for magnetic field
 
     private:
 
