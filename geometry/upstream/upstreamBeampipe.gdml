@@ -15,18 +15,20 @@
 <solids>
 
 
-
+<!--Naz :changing rmin from 16 to 20.5 and rmax from 24 t0 23.5 -->
      <polycone name="solid_shield_US_beampipe_l" aunit="deg" startphi="0" deltaphi="360" lunit="mm">
-      <zplane rmin="16" rmax="24" z="-1945/2"/>
-      <zplane rmin="19" rmax="27" z="-1945/2+950"/>
-      <zplane rmin="23" rmax="28" z="-1945/2+1945"/>
+      <zplane rmin="20.5" rmax="23.5" z="-2100/2"/>
+      <!--
+	  <zplane rmin="19" rmax="27" z="-1945/2+950"/> -->
+      <zplane rmin="27.5" rmax="30.5" z="-2100/2+2100"/>
      </polycone>
-
+<!-- Naz : changing rmin from 23 to 27.5 and rmax from 28 to 30.5. the length incresed from 1945 to 2100  -->
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_mother">
-      <zplane rmin="0" rmax="24" z="-1945/2"/>
-      <zplane rmin="0" rmax="27" z="-1945/2+950"/>
-      <zplane rmin="0" rmax="28" z="-1945/2+1945"/>
+      <zplane rmin="20.5" rmax="23.5" z="-2100/2"/>
+ <!--     <zplane rmin="0" rmax="27" z="-1945/2+950"/>
+ -->
+ <zplane rmin="27.5" rmax="30.5" z="-2100/2+2100"/>
      </polycone>
 
 
