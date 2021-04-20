@@ -45,7 +45,8 @@ class remollMagneticField : public G4MagneticField {
 	remollMagneticField(const G4String&);
 	virtual ~remollMagneticField() { };
 
-	void GetFieldValue(const G4double Point[4], G4double *Bfield) const;
+	void AddFieldValue(const G4double point[4], G4double *field) const;
+	void GetFieldValue(const G4double point[4], G4double *field) const;
 
 	void SetFieldScale(G4double scale) { fFieldScale = scale; }
 	void SetRefCurrent(G4double current) { fRefCurrent = current; }

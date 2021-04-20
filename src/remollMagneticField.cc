@@ -384,10 +384,20 @@ remollMagneticField::remollMagneticField(const G4String& filename)
     G4cout << "... done reading " << nlines << " lines." << G4endl<< G4endl;
 }
 
-void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfield ) const
+void remollMagneticField::GetFieldValue(const G4double point[4], G4double *field ) const
+{
+    // set to zero
+    field[0] = 0.0;
+    field[1] = 0.0;
+    field[2] = 0.0;
+    // add values
+    AddFieldValue(point, field);
+}
+
+void remollMagneticField::AddFieldValue(const G4double point[4], G4double *field ) const
 {
     // Check the bounding box
-    if (! IsInBoundingBox(Point)) return;
+    if (! IsInBoundingBox(point)) return;
 
     // First we have to translate into polar or cylindric coordinates
     // since the field maps are given in cylindric coordinates and the
@@ -397,15 +407,15 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     // back to the field manager
 
     // 1. First calculate r and z
-    G4double r = sqrt(Point[0]*Point[0] + Point[1]*Point[1]);
-    G4double z = Point[2] - fZoffset;
+    G4double r = sqrt(point[0]*point[0] + point[1]*point[1]);
+    G4double z = point[2] - fZoffset;
 
     // Check that the point is a valid number
     if( std::isnan(r) || std::isinf(r) ||
 	std::isnan(z) || std::isinf(z) ){
 
 	G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR bad conversion to cylindrical coordinates" << G4endl;
-	G4cerr << "Point  ( " << Point[0]/m << ", " << Point[1]/m << ", " << Point[2]/m << " ) m" << G4endl;
+	G4cerr << "Point  ( " << point[0]/m << ", " << point[1]/m << ", " << point[2]/m << " ) m" << G4endl;
 
 	exit(1);
     }
@@ -417,13 +427,13 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     }
 
     // 2. Next calculate phi (slower)
-    G4double phi = atan2(Point[1],Point[0]);
+    G4double phi = atan2(point[1],point[0]);
 
     // Check that the point is a valid number
     if( std::isnan(phi) || std::isinf(phi) ){
 
 	G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR bad conversion to cylindrical coordinates" << G4endl;
-	G4cerr << "Point  ( " << Point[0]/m << ", " << Point[1]/m << ", " << Point[2]/m << " ) m" << G4endl;
+	G4cerr << "Point  ( " << point[0]/m << ", " << point[1]/m << ", " << point[2]/m << " ) m" << G4endl;
 
 	exit(1);
     }
@@ -506,7 +516,7 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     }
 
     // values of cell vertices
-    G4double values[__NDIM][64]; /* make large enough, TODO thread_local */
+    thread_local G4double values[__NDIM][64];
     for (size_t i = 0; i < n; i++) {
         for (size_t cidx = 0; cidx < __NDIM; cidx++) {
             values[cidx][i] =
@@ -539,9 +549,10 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     // scale field
     Bcart *= fFieldScale;
 
-    Bfield[0] = Bcart.x();
-    Bfield[1] = Bcart.y();
-    Bfield[2] = Bcart.z();
+    // add to original field
+    field[0] += Bcart.x();
+    field[1] += Bcart.y();
+    field[2] += Bcart.z();
 }
 
 

@@ -251,23 +251,11 @@ void remollGlobalField::PrintFieldValue(const G4ThreeVector& r)
     G4cout << "T" << G4endl;
 }
 
-void remollGlobalField::GetFieldValue(const G4double p[], G4double *resB) const
+void remollGlobalField::GetFieldValue(const G4double p[], G4double *field) const
 {
-    G4double Bsum [__GLOBAL_NDIM] = {0};
-
-    std::vector<remollMagneticField*>::const_iterator it = fFields.begin();
-    for (it = fFields.begin(); it != fFields.end(); it++) {
-        G4double thisB[__GLOBAL_NDIM] = {0};
-        (*it)->GetFieldValue(p, thisB);
-
-        for (int i = 0; i < __GLOBAL_NDIM; i++) {
-          Bsum[i] += thisB[i];
-        }
-    }
-
-    for (int i = 0; i < __GLOBAL_NDIM; i++) {
-        resB[i] = Bsum[i];
-    }
+    // Field is initialized to zero before passing to this function
+    for (auto it = fFields.begin(); it != fFields.end(); it++)
+        (*it)->GetFieldValue(p, field);
 }
 
 void remollGlobalField::SetZOffset(const G4String& name, G4double offset)
