@@ -40,7 +40,7 @@ remollMagneticField::remollMagneticField( G4String filename ){
 
     // Default offset for field maps in reference frame with
     // the hall pivot at z = 0.
-    fZoffset = -5000.0;
+    fZoffset = 0.0;
 
     fInit = false;
     fMagCurrent0 = -1e9;
@@ -424,14 +424,14 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
     }
 
     // Check that the point is within the defined region
-    if( r > fMax[kR] || r < fMin[kR] ||
-	z > fMax[kZ] || z < fMin[kZ] ){
+    if( r >= fMax[kR] || r < fMin[kR] ||
+	z >= fMax[kZ] || z < fMin[kZ] ){
 	return;
     }
 
     // Ensure we're going to get our grid indices correct
-    assert( fMin[kR] <= r && r <= fMax[kR] );
-    assert( fMin[kZ] <= z && z <= fMax[kZ] );
+    assert( fMin[kR] <= r && r < fMax[kR] );
+    assert( fMin[kZ] <= z && z < fMax[kZ] );
 
     // 2. Next calculate phi (slower)
     G4double phi = atan2(Point[1],Point[0]);
@@ -470,12 +470,12 @@ void remollMagneticField::GetFieldValue(const G4double Point[4], G4double *Bfiel
 
     // Check that the point is within the defined region
     // before interpolation.  If it is outside, the field is zero
-    if( lphi > fFileMax[kPhi] || lphi < fFileMin[kPhi] ){
+    if( lphi >= fFileMax[kPhi] || lphi < fFileMin[kPhi] ){
 	return;
     }
 
     // Ensure we're going to get our grid indices correct
-    assert( fFileMin[kPhi] <= lphi && lphi <= fFileMax[kPhi] );
+    assert( fFileMin[kPhi] <= lphi && lphi < fFileMax[kPhi] );
 
 
     // 3. Get interoplation variables
