@@ -102,7 +102,6 @@ int main(int argc, char** argv) {
       else if (G4String(argv[i]) == "-u") session  = argv[++i];
       else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
       else if (G4String(argv[i]) == "-o") outputfile = argv[++i];
-
 #ifdef G4MULTITHREADED
       else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
 #endif
@@ -123,6 +122,7 @@ int main(int argc, char** argv) {
     #endif
 
     // Set the default random seed
+    G4cout << G4endl << "remoll: Random seed: " << seed << G4endl;
     G4Random::setTheSeed(seed);
 
     // Create remoll IO object with output file name
