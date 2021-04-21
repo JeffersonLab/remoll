@@ -226,16 +226,10 @@ install(FILES ${headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 #----------------------------------------------------------------------------
 # executables
 #
-<<<<<<< HEAD
-add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
-set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} ${cadmesh_LIBRARIES})
-=======
 file(GLOB exefiles *.cc)
 foreach(file ${exefiles})
   get_filename_component(filename ${file} NAME_WE)
   string(TOLOWER ${filename} filelower)
->>>>>>> upstream/develop
 
   add_executable(${filelower} ${file})
 
