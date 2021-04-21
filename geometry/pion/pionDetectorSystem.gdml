@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+   <!-- Full pion detector system dimensions -->
+   <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.82" unit="m"/>
+   <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.00" unit="m"/>
+   <quantity name="pionDetectorSystemLength"      type="length" value="1.00" unit="m"/>
+   <!-- Adding some for information -->
+   <!-- Positions of detectors within full pion detector system, referenced to front -->
+   <position name="pionDetectorLuciteCenterPosition"      z="2.54*cm"/> <!-- 2.0*inch thick -->
+   <position name="pionDetectorGEMFrontCenterPosition"    z="0.15*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorTSFrontCenterPosition"     z="0.25*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorTSBackCenterPosition"      z="0.85*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorGEMBackCenterPosition"     z="0.95*m"/> <!-- 0.10*m thick -->
+
+   <position name="pionDetectorCalorimeterCenterPosition" x="1*m" y="1*m" z="0.66*m"/> <!-- 0.20*m thick -->
+</define>
+
+<materials>
+</materials>
+
+<solids>
+    <polycone name="pionDetectorSystem_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="pionDetectorSystemInnerRadius" rmax="pionDetectorSystemOuterRadius" z="0.0*m"/>
+      <zplane rmin="pionDetectorSystemInnerRadius" rmax="pionDetectorSystemOuterRadius" z="pionDetectorSystemLength"/>
+    </polycone>
+</solids>
+
+<structure>
+
+    <volume name="pionDetectorSystem_logical">
+      <materialref ref="G4_AIR"/>
+      <solidref ref="pionDetectorSystem_solid"/>
+
+      <physvol>
+        <file name="pion/TS/pionDetectorTSOpenSector.gdml"/>
+        <positionref ref="pionDetectorTSFrontCenterPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="pion/GEM/pionDetectorGEMOpenSector.gdml"/>
+        <positionref ref="pionDetectorGEMFrontCenterPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="pion/Lucite/pionDetectorLuciteSector.gdml"/>
+        <positionref ref="pionDetectorLuciteCenterPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="pion/GEM/pionDetectorGEMOpenSector.gdml"/>
+        <positionref ref="pionDetectorGEMBackCenterPosition"/>
+      </physvol>
+
+      <physvol>
+        <file name="pion/TS/pionDetectorTSOpenSector.gdml"/>
+        <positionref ref="pionDetectorTSBackCenterPosition"/>
+      </physvol>
+
+<!--
+      <physvol>
+        <file name="pion/Calorimeter/pionDetectorCalorimeter.gdml"/>
+        <positionref ref="pionDetectorCalorimeterCenterPosition"/>
+      </physvol>
+-->
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+   </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorSystem_logical"/>
+</setup>
+
+</gdml>

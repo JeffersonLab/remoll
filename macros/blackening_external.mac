@@ -1,0 +1,38 @@
+#Shoots the backtraced moller hit distribution for the first septant at a single detector
+
+# This must be called before initialize
+/remoll/setgeofile geometry/mollerMother_5open.gdml
+
+/remoll/physlist/optical/enable 
+# This must be explicitly called
+/run/initialize
+
+/process/list
+/remoll/printgeometry true
+/remoll/beamene 11 GeV
+#/remoll/beamene 855 MeV
+
+# Blackening
+#/remoll/evgen/set blackening 
+#/remoll/evgen/blackening/useFirstSeptant true
+#/run/beamOn 0
+#/remoll/filename remollout_r5o_blackening_default.root
+#/run/beamOn 100
+
+# Beam
+/remoll/evgen/set beam
+/remoll/evgen/beam/x -987.5
+/remoll/evgen/beam/z -20.0
+/remoll/evgen/beam/px -0.0523
+/remoll/evgen/beam/pz 0.9986 
+/remoll/filename remollout_r5o_beam_default.root
+/run/beamOn 100
+
+# External
+#/remoll/evgen/set external
+#/remoll/evgen/external/file remoll_moller_envelope_noCol4_noCoils_500k_LGtest_det28.root
+#/remoll/evgen/external/detid 28
+#/remoll/evgen/external/startEvent 0
+#/remoll/evgen/external/zOffset -28550.0
+#/remoll/filename remollout_r5o_external_default.root
+#/run/beamOn 100

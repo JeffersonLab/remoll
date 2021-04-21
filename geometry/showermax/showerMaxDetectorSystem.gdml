@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "showerMaxMaterials.xml">
+  <!ENTITY matrices SYSTEM "showerMaxMatrices.xml">
+]>
+
+<gdml 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <constant name="N_P" value="14"/> <!-- number per ring -->
+  <constant name="PHI" value="360.0/N_P"/>
+
+  <!--
+    For enclosing volumes we merely scale up the actual volume by a small factor.
+  -->
+  <constant name="SCALE" value="0.01"/>
+  <constant name="SCALE_UP" value="1.0+SCALE"/>
+  <constant name="SCALE_DOWN" value="1.0-SCALE"/>
+  <scale name="scale_up" x="SCALE_UP" y="SCALE_UP" z="SCALE_UP"/>
+  <scale name="scale_down" x="SCALE_DOWN" y="SCALE_DOWN" z="SCALE_DOWN"/>
+
+  <!--
+    The radius is the full extent of the detector in the radial direction. We use
+    the radius along with the angle of the detector to increase the length in the
+    longitudinal direction.
+  -->
+  <quantity name="showerMaxDetectorInnerRadius" type="length" value="0.605" unit="m"/>
+  <quantity name="showerMaxDetectorOuterRadius" type="length" value="1.900" unit="m"/>
+
+  <!--
+    The length is the full extent of the detector in the longitudinal direction.
+    This is increased when a non-zero angle is used. Make sure to modify this if
+    you modify the angle below so as to avoid overlaps.
+  -->
+  <quantity name="showerMaxDetectorLength" type="length" value="0.12" unit="m"/>
+
+  <!--
+    This variable implements the global rotation of the entire detector/lightguide
+    assembly. There are also angles that can be set independently for  and
+    for lightguide.
+    
+    A good choice for this parameter is about 5.0 degrees, to be chosen consistent
+    with the average angle of pions behind the spectrometer magnets.
+  
+    showerMaxDetectorSectorAngleBase is +90.0 degrees for the configuration with
+    PMT radially outward; -90.0 degrees is with the PMT radially inward.
+  -->
+  <quantity name="showerMaxDetectorSectorAngleBase" type="angle" value="0.0" unit="deg"/>
+  <quantity name="showerMaxDetectorSectorAnglePitch" type="angle" value="0.0" unit="deg"/>
+  
+  <!--
+    The  detector is placed radially in reference to the the center of the
+     blocks. This means that the position of the inner edge must be augmented
+    with half the height (radial dimension) of the  blocks.
+  -->
+  <quantity name="showerMaxDetectorInnerEdgeRadialPosition" type="length" value="95.0+12.5" unit="cm"/>
+
+  &matrices;
+</define>
+
+&materials;
+
+<solids>
+  <tube name="showerMaxDetectorSingleSector_solid"
+    rmin="SCALE_UP*showerMaxDetectorInnerRadius"
+    rmax="SCALE_DOWN*showerMaxDetectorOuterRadius"
+    z="SCALE_DOWN*showerMaxDetectorLength"
+    startphi="-SCALE_DOWN*PHI/2.0" deltaphi="SCALE_DOWN*PHI" aunit="deg"/>
+
+  <tube name="showerMaxDetectorAllSectorsFront_solid"
+    rmin="showerMaxDetectorInnerRadius"
+    rmax="showerMaxDetectorOuterRadius"
+    z="showerMaxDetectorLength"
+    startphi="0.0" deltaphi="360.0" aunit="deg"/>
+
+  <tube name="showerMaxDetectorAllSectorsBack_solid"
+    rmin="showerMaxDetectorInnerRadius"
+    rmax="showerMaxDetectorOuterRadius"
+    z="showerMaxDetectorLength"
+    startphi="0.0" deltaphi="360.0" aunit="deg"/>
+
+  <tube name="showerMaxDetectorAllSectorsFrontBack_solid"
+    rmin="SCALE_DOWN*showerMaxDetectorInnerRadius"
+    rmax="SCALE_UP*showerMaxDetectorOuterRadius"
+    z="SCALE_UP*(2.0*showerMaxDetectorLength)"
+    startphi="0.0" deltaphi="360.0" aunit="deg"/>
+</solids>
+
+<structure>
+  
+  <volume name="showerMaxDetectorSingleSector_logical">
+    <materialref ref="Air"/>
+    <solidref ref="showerMaxDetectorSingleSector_solid"/>
+
+    <physvol name="showerMaxDetector_physical">
+      <file name="showermax/showerMaxDetector.gdml"/>
+      <position name="showerMaxDetector_position"
+        x="showerMaxDetectorInnerEdgeRadialPosition"/>
+      <rotation name="showerMaxDetector_rotation"
+                z="showerMaxDetectorSectorAngleBase"
+                y="-(showerMaxDetectorSectorAngleBase+showerMaxDetectorSectorAnglePitch)"/>
+    </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
+  </volume>
+
+  <volume name="showerMaxDetectorAllSectorsFront_logical">
+    <materialref ref="Air"/>
+    <solidref ref="showerMaxDetectorAllSectorsFront_solid"/>
+
+    <replicavol number="N_P"> <!-- number of replicas has to fill mother volume exactly! -->
+      <volumeref ref="showerMaxDetectorSingleSector_logical"/>
+      <replicate_along_axis>
+        <direction phi="1"/>
+        <width value="PHI" unit="deg"/>
+        <offset value="-PHI/2.0" unit="deg"/>
+      </replicate_along_axis>
+    </replicavol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
+  </volume>
+
+  <volume name="showerMaxDetectorAllSectorsBack_logical">
+    <materialref ref="Air"/>
+    <solidref ref="showerMaxDetectorAllSectorsBack_solid"/>
+
+    <replicavol number="N_P"> <!-- number of replicas has to fill mother volume exactly! -->
+      <volumeref ref="showerMaxDetectorSingleSector_logical"/>
+      <replicate_along_axis>
+        <direction phi="1"/>
+        <width value="PHI" unit="deg"/>
+        <offset value="0" unit="deg"/>
+      </replicate_along_axis>
+    </replicavol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
+  </volume>
+
+  <volume name="showerMaxDetectorAllSectorsFrontBack_logical">
+    <materialref ref="Air"/>
+    <solidref ref="showerMaxDetectorAllSectorsFrontBack_solid"/>
+
+    <physvol name="showerMaxDetectorFront_physical">
+      <volumeref ref="showerMaxDetectorAllSectorsFront_logical"/>
+      <position name="showerMaxDetectorFront_position"
+        z="-SCALE_UP*showerMaxDetectorLength/2.0"/>
+    </physvol>
+
+    <physvol name="showerMaxDetectorBack_physical">
+      <volumeref ref="showerMaxDetectorAllSectorsBack_logical"/>
+      <position name="showerMaxDetectorBack_position"
+        z="+SCALE_UP*showerMaxDetectorLength/2.0"/>
+    </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.05"/>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="showerMaxDetectorAllSectorsFrontBack_logical"/>
+</setup>
+
+</gdml>

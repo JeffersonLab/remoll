@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<!--Used to resolve why hall detector missing any hits and how to include the detector+hall mother volume without making any volume overlaps or encapsulations -->
+<define>
+  &matrices;
+
+  <constant name="i2cm" value="2.54"/>
+  <constant name="width_mother" value="75000."/>
+  <constant name="height_mother" value="50000."/>
+  <constant name="length_mother" value="125000."/>
+
+  <constant name="radius_of_cylwall" value="26517.6"/><!--25460."/>-->
+  <constant name="hall_cylwall_radius" value="radius_of_cylwall/10"/>
+  <constant name="thick_cylwall" value="1487."/>  
+  <constant name="hall_cylwall_thickness" value="thick_cylwall/10"/>  
+  <constant name="hall_floor_distance" value="120.5*i2cm"/>
+  <constant name="height_cylwall" value="17770."/>
+  <constant name="hall_cylwall_height" value="height_cylwall/10"/>
+  <constant name="bottom_cylwall" value="-4470."/>  
+
+  <constant name="radius_topwall_out" value="54727.8"/>
+  <constant name="radius_topwall_in" value="54027.8"/>
+  <constant name="center_topwall" value="-34352.6"/> 
+  <constant name="center_cylwall" value="1*(height_cylwall/2+bottom_cylwall)"/>
+  <constant name="trans_topwall" value="radius_topwall_out-(-center_topwall+bottom_cylwall+height_cylwall)"/> 
+
+  <constant name="radius_max_cylHallDet" value="radius_of_cylwall - 10"/>
+  <constant name="height_cylHallDet" value="height_cylwall - thick_cylwall - 1"/>
+
+  <position name="cylHallDet_center" unit="mm" x="0" y="0" z="0"/>
+  <position name="cylHallDet_1_center" x="0" y="1.*center_cylwall + thick_cylwall/2" z="0" unit="mm"/>
+  <position name="cylHallDet_2_center" x="0" y="center_cylwall + height_cylwall/2" z="0" unit="mm"/>
+
+  <position unit="mm" name="cylwallTrans_1"    x="0" y="0"     z="thick_cylwall/2"/>
+  <!--<position unit="mm" name="cylwallTrans_2"    x="0" y="-1.0*radius_of_cylwall-0.5*thick_cylwall" z="dump_hole_y_center - center_cylwall"/>-->
+  <position unit="mm" name="cylwallTrans_3"    x="0" y="0" z="0"/>
+  <position unit="mm" name="cylwall_center"    x="0" y="1.*center_cylwall" z="0"/>
+
+  <position unit="mm" name="topwallTrans_1"    x="0" y="0"     z="-trans_topwall"/>
+  <position unit="mm" name="topwall_center"    x="0" y="1.*center_topwall"     z="0"/>
+
+    <!-- Dump --> 
+
+    <!-- Dump Enclosure -->
+    <constant name="dump_wall_thickness" value="12.0*i2cm"/>
+    <constant name="dump_width" value="84.*i2cm + 2.*dump_wall_thickness"/>
+    <constant name="dump_height" value="120.*i2cm + 2.*dump_wall_thickness"/>
+    <constant name="dump_length" value="1200.*i2cm + 1.*dump_wall_thickness"/>
+    <constant name="dumpUSSub_width" value="dump_width - 2.*dump_wall_thickness"/>
+    <constant name="dumpUSSub_height" value="dump_height - 2.*dump_wall_thickness"/>
+    <constant name="dumpUSSub_length" value="720.*i2cm"/>
+    <constant name="dumpDSSub_width1" value="dump_width - 2.*dump_wall_thickness"/>
+    <constant name="dumpDSSub_height2" value="36.*i2cm + 0.1"/>
+    <constant name="dump_floor_distance_beam" value="(dump_height - 2.*dump_wall_thickness - dumpDSSub_height2)/2 + dumpDSSub_height2"/>
+    <constant name="dumpDSSub_height1" value="dump_height - 2.*dump_wall_thickness - dumpDSSub_height2"/>
+    <constant name="dumpDSSub_length1" value="dump_length - dumpUSSub_length - 1.*dump_wall_thickness"/>
+    <constant name="dumpDSSub_width2" value="dump_width"/>
+    <constant name="dumpDSSub_length2" value="dumpDSSub_length1"/>
+    <constant name="dump_center_y" value="dump_height/2 - dump_wall_thickness - dump_floor_distance_beam"/>
+    <constant name="dump_center_z" value="hall_cylwall_radius + dump_length/2"/>
+    <position unit="cm" name="dumpUSSub_trans" x="0" y="0" z="(-1.*dump_length + 1.*dumpUSSub_length)/2"/>
+    <position unit="cm" name="dumpDSSub1_trans" x="0" y="(1.*dump_height - 1.*dumpDSSub_height1)/2 - dump_wall_thickness" z="(1.*dump_length - 1.*dumpDSSub_length1)/2 - dump_wall_thickness"/>
+    <position unit="cm" name="dumpDSSub2_trans" x="0" y="(-1.*dump_height + 1.*dumpDSSub_height2)/2" z="(1.*dump_length - 1.*dumpDSSub_length2)/2"/>
+    <position unit="cm" name="hall_dumphole_sub_trans" x="0" z="10 - 1.*hall_cylwall_height/2 + center_cylwall/10 + 0*hall_floor_distance + dump_center_y" y="-1.*hall_cylwall_radius - hall_cylwall_thickness/2 - 0.1"/> <!-- NEW shift forward for subtraction purposes FIXME -->
+
+    <!-- Temporary Lead Shield -->
+    <constant name="dumpTempShieldUS_width" value="16*i2cm"/>
+    <constant name="dumpTempShieldUS_height" value="72*i2cm"/>
+    <constant name="dumpTempShieldUS_length" value="24*i2cm"/>
+    <constant name="dumpTempShieldMS_width" value="16*i2cm"/>
+    <constant name="dumpTempShieldMS_height" value="32*i2cm"/>
+    <constant name="dumpTempShieldMS_length" value="24*i2cm"/>
+    <constant name="dumpTempShieldDS_width" value="16*i2cm"/>
+    <constant name="dumpTempShieldDS_height" value="72*i2cm"/>
+    <constant name="dumpTempShieldDS_length" value="24*i2cm"/>
+    <constant name="dumpTempShieldGap_length" value="6*i2cm"/>
+    <position unit="cm" name="dumpTempShield_left_trans_1" x="0" y="(-1.*dumpTempShieldUS_height + 1.*dumpTempShieldMS_height)/2" z="(dumpTempShieldUS_length + dumpTempShieldMS_length)/2 + dumpTempShieldGap_length"/> <!-- Next step assumes the original coordinate frame from US guy is preserved) -->
+    <position unit="cm" name="dumpTempShield_left_trans_2" x="0" y="(-1.*dumpTempShieldUS_height + 1.*dumpTempShieldDS_height)/2" z="(dumpTempShieldUS_length + dumpTempShieldDS_length)/2 + dumpTempShieldGap_length + dumpTempShieldMS_length"/> 
+    <position unit="cm" name="dumpTempShield_right_trans_1" x="0" y="(-1.*dumpTempShieldUS_height + 1.*dumpTempShieldMS_height)/2" z="(dumpTempShieldUS_length + dumpTempShieldMS_length)/2 + dumpTempShieldGap_length"/>
+    <position unit="cm" name="dumpTempShield_right_trans_2" x="0" y="(-1.*dumpTempShieldUS_height + 1.*dumpTempShieldDS_height)/2" z="(dumpTempShieldUS_length + dumpTempShieldDS_length)/2 + dumpTempShieldGap_length + dumpTempShieldMS_length"/>
+
+    <!-- Neckdown Beam pipe (ines) -->
+    <constant name="neckDownOffset" value="21.131"/> <!-- Offset from dump entry -->
+
+    <constant name="ndFlangeUS_r_min" value="36.75*i2cm/2"/>
+    <constant name="ndFlangeUS_r_max" value="46.*i2cm/2"/>
+    <constant name="ndFlangeUS_thickness" value="1.*i2cm"/>
+    <constant name="ndFlangeUS_center_z" value="hall_cylwall_radius + neckDownOffset + ndFlangeUS_thickness/2"/>
+    
+    <constant name="ndConeUS_r_min1" value="37.54*i2cm/2"/>
+    <constant name="ndConeUS_r_max1" value="38.*i2cm/2"/>
+    <constant name="ndConeUS_r_min2" value="23.54*i2cm/2"/>
+    <constant name="ndConeUS_r_max2" value="24.*i2cm/2"/>
+    <constant name="ndConeUS_length" value="9.95*i2cm"/>
+    <constant name="ndConeUS_center_z" value="ndFlangeUS_center_z + ndFlangeUS_thickness/2 + ndConeUS_length/2"/>
+
+    <constant name="ndPipeUS_r_min" value="12.12*i2cm"/>
+    <constant name="ndPipeUS_r_max" value="12.5*i2cm"/>
+    <constant name="ndPipeUS_length" value="91.51*i2cm"/>
+    <constant name="ndPipeUS_center_z" value="ndConeUS_center_z + ndConeUS_length/2 + ndPipeUS_length/2"/>
+    
+    <constant name="ndDonut_outer_r_min" value="23.37*i2cm/2"/>
+    <constant name="ndDonut_outer_r_max" value="25.38*i2cm/2"/>
+    <constant name="ndDonut_outer_thickness" value=".787*i2cm"/><!--1.*i2cm"/>-->
+    <constant name="ndDonut_outer_center_z" value="ndPipeUS_center_z + ndPipeUS_length/2 + ndDonut_outer_thickness/2"/>
+
+    <constant name="ndDonut_inner_r_min" value="3.25*i2cm/2"/>
+    <constant name="ndDonut_inner_r_max" value="11.8*i2cm/2"/>
+    <constant name="ndDonut_inner_thickness" value=".787*i2cm"/><!--.79*i2cm"/>-->
+    <constant name="ndDonut_inner_center_z" value="ndPipeUS_center_z + ndPipeUS_length/2 + ndDonut_outer_thickness/2"/>
+
+    <constant name="ndDonut_middle_r_min" value="11.81*i2cm/2"/>
+    <constant name="ndDonut_middle_r_max" value="23.37*i2cm/2"/>
+    <constant name="ndDonut_middle_thickness" value=".787*i2cm"/><!--.39*i2cm"/>-->
+    <constant name="ndDonut_middle_center_z" value="ndPipeUS_center_z + ndPipeUS_length/2 + ndDonut_outer_thickness/2"/>
+    
+    <constant name="ndPipeDS_r_min" value="12.12*i2cm"/>
+    <constant name="ndPipeDS_r_max" value="12.5*i2cm"/>
+    <constant name="ndPipeDS_length" value="85.5*i2cm"/>
+    <constant name="ndPipeDS_center_z" value="ndDonut_outer_center_z + ndDonut_outer_thickness/2 + ndPipeDS_length/2"/>
+
+    <constant name="ndConeDS_r_min1" value="23.49*i2cm/2"/>
+    <constant name="ndConeDS_r_max1" value="24.*i2cm/2"/>
+    <constant name="ndConeDS_r_min2" value="12.0*i2cm/2"/>
+    <constant name="ndConeDS_r_max2" value="12.5*i2cm/2"/>
+    <constant name="ndConeDS_length" value="6.13*i2cm"/>
+    <constant name="ndConeDS_center_z" value="ndPipeDS_center_z + ndPipeDS_length/2 + ndConeDS_length/2"/>
+
+    <constant name="ndPipeDDS_r_min" value="12.12*i2cm/2"/>
+    <constant name="ndPipeDDS_r_max" value="12.5*i2cm/2"/>
+    <constant name="ndPipeDDS_length" value="1.88*i2cm"/>
+    <constant name="ndPipeDDS_center_z" value="ndConeDS_center_z + ndConeDS_length/2 + ndPipeDDS_length/2"/>
+
+    <constant name="ndFlangeDS_r_min" value="12.5*i2cm/2"/>
+    <constant name="ndFlangeDS_r_max" value="16.5*i2cm/2"/>
+    <constant name="ndFlangeDS_thickness" value="2.13*i2cm"/>
+    <constant name="ndFlangeDS_center_z" value="ndPipeDDS_center_z + ndPipeDDS_length/2 + ndFlangeDS_thickness/2"/>
+
+    <!-- Dump Nitrogen Atmosphere Enclosure Wall --> 
+    <constant name="nitrogenAtmWall_hole_r" value="16.5*i2cm/2"/>
+    <constant name="nitrogenAtmWall_thickness" value="0.31*i2cm"/>
+    <constant name="nitrogenAtmWall_width" value="83.*i2cm"/>
+    <constant name="nitrogenAtmWall_height" value="117.*i2cm"/>
+    <constant name="nitrogenAtmWall_center_z" value="ndFlangeDS_center_z + ndFlangeDS_thickness/2 + nitrogenAtmWall_thickness/2"/>
+    <constant name="nitrogenAtmWall_center_y" value="-1.*dump_floor_distance_beam + nitrogenAtmWall_height/2"/>
+    <position unit="cm" name="nitrogenAtmWall_hole_trans" x="0" y="-1.*nitrogenAtmWall_center_y" z="0"/> 
+
+    <!-- Dump Pipe DS -->
+    <constant name="dumpPipeDS_r_min" value="60.643/2"/>
+    <constant name="dumpPipeDS_r_max" value="62.814/2"/>
+    <constant name="dumpPipeDS_length" value="666.72*i2cm"/>
+    <constant name="dumpPipeDS_center_z" value="49.0*i2cm + nitrogenAtmWall_center_z + nitrogenAtmWall_thickness/2 + dumpPipeDS_length/2"/>
+
+    <!-- Water Tank Dump -->
+    <constant name="dumpWaterTank_r" value="21.815*i2cm"/>
+    <constant name="dumpWaterTank_length" value="137.67*i2cm"/>
+    <constant name="dumpWaterTank_thickness" value="1.6*i2cm"/>
+    <constant name="dumpWaterTank_z_offset" value="950.15*i2cm"/>
+    <constant name="tubeDumpWaterTank_center_z" value="hall_cylwall_radius + dumpWaterTank_z_offset + dumpWaterTank_length/2"/>
+    <constant name="waterDumpWaterTank_center_z" value="hall_cylwall_radius + dumpWaterTank_z_offset + dumpWaterTank_length/2"/>
+    <position unit="cm" name="tubeDumpWaterTank_trans" x="0" y="0" z="0"/>
+
+
+    <!-- Positions -->
+    <position unit="cm" name="center" x="0" y="0" z="0"/>
+
+    <position unit="cm" name="dump_center" x="0" y="dump_center_y" z="dump_center_z"/>
+    <position unit="cm" name="dumpTempShield_left_center" x="-1.*dump_width/2 + dump_wall_thickness + dumpTempShieldUS_width/2" y="-1.*(dump_floor_distance_beam) + dumpTempShieldUS_height/2" z="hall_cylwall_radius + (98.0*i2cm + (dumpTempShieldUS_length/2))"/> <!-- old FIXME +dumpTempShieldMS_length+dumpTempShieldDS_length+dumpTempShieldGap_length)/2)"/> -->
+    <position unit="cm" name="dumpTempShield_right_center" x="1.*dump_width/2 - dump_wall_thickness - dumpTempShieldUS_width/2" y="-1.*(dump_floor_distance_beam) + dumpTempShieldUS_height/2" z="hall_cylwall_radius + (98.0*i2cm + (dumpTempShieldUS_length/2))"/>
+    <position unit="cm" name="ndFlangeUS_center" x="0" y="0" z="ndFlangeUS_center_z"/>
+    <position unit="cm" name="ndConeUS_center" x="0" y="0" z="ndConeUS_center_z"/>
+    <position unit="cm" name="ndPipeUS_center" x="0" y="0" z="ndPipeUS_center_z"/>
+    <position unit="cm" name="ndDonut_inner_center" x="0" y="0" z="ndDonut_inner_center_z"/>
+    <position unit="cm" name="ndDonut_middle_center" x="0" y="0" z="ndDonut_middle_center_z"/>
+    <position unit="cm" name="ndDonut_outer_center" x="0" y="0" z="ndDonut_outer_center_z"/>
+    <position unit="cm" name="ndPipeDS_center" x="0" y="0" z="ndPipeDS_center_z"/>
+    <position unit="cm" name="ndPipeDDS_center" x="0" y="0" z="ndPipeDDS_center_z"/>
+    <position unit="cm" name="ndConeDS_center" x="0" y="0" z="ndConeDS_center_z"/>
+    <position unit="cm" name="ndFlangeDS_center" x="0" y="0" z="ndFlangeDS_center_z"/>
+    <position unit="cm" name="nitrogenAtmWall_center" x="0" y="nitrogenAtmWall_center_y" z="nitrogenAtmWall_center_z"/>
+    <position unit="cm" name="dumpPipeDS_center" x="0" y="0" z="dumpPipeDS_center_z"/>
+    <position unit="cm" name="tubeDumpWaterTank_center" x="0" y="0" z="tubeDumpWaterTank_center_z"/>
+    <position unit="cm" name="waterDumpWaterTank_center" x="0" y="0" z="waterDumpWaterTank_center_z"/>
+
+    <!-- Rotations -->
+    <rotation name="scRot_1"  unit="deg" x="90"  y="0"   z="0"/>
+    <rotation name="scRot_2"  unit="deg" x="-90" y="0"   z="0"/>
+    <rotation name="scRot_3"  unit="deg" x="0"   y="0"   z="45"/>
+    <rotation name="scRot_4"  unit="deg" x="0"   y="0"   z="-45"/>
+    <rotation name="scRot_5"  unit="deg" x="0"   y="0"   z="225"/>
+    <rotation name="scRot_6"  unit="deg" x="90"  y="0"   z="12.5"/>
+    <rotation name="scRot_7"  unit="deg" x="90"  y="0"   z="-12.5"/>
+    <rotation name="scRot_8"  unit="deg" x="90"  y="0"   z="30"/>
+    <rotation name="scRot_9"  unit="deg" x="0"   y="0"   z="120"/>
+    <rotation name="scRot_10" unit="deg" x="0"   y="0"   z="240"/>
+    <rotation name="scRot_11" unit="deg" x="0"   y="0"   z="12.5"/>
+    <rotation name="scRot_12" unit="deg" x="0"   y="0"   z="-12.5"/>
+    <rotation name="scRot_13" unit="deg" x="0"   y="90"  z="0"/>
+    <rotation name="scRot_14" unit="deg" x="0"   y="0"   z="90"/>
+    <rotation name="scRot_22" unit="deg" x="0"   y="-90" z="0"/>
+    <rotation name="identity"/>
+
+ </define>
+ &materials;
+
+  <solids>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallWall" rmax="radius_of_cylwall" rmin="radius_of_cylwall - thick_cylwall" startphi="0" z="height_cylwall"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallMother_1" rmax="radius_of_cylwall - 110." rmin="0" startphi="0" z="height_cylwall - thick_cylwall*2"/>
+    <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
+    <box lunit="mm" name="boxHallMother_in" x="width_mother - 2500." y="height_mother - 2500." z="length_mother - 2000."/>
+
+    <subtraction name ="boxHallMother_1">
+      <first ref="boxHallMother_out"/>
+      <second ref="cylHallMother_1"/>
+      <positionref ref="cylwall_center" />
+      <rotationref ref="scRot_1"/>
+    </subtraction>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeamPipeDS" rmax="770" rmin="0" startphi="0" z="1000"/>
+    <subtraction name ="boxHallMother">
+      <first ref="boxHallMother_1"/>
+      <second ref="tubeBeamPipeDS"/>
+      <position z="26000."/>
+    </subtraction>
+
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="hallFlatLidDet_solid" 
+	  rmax="radius_max_cylHallDet - 0.2" rmin="0" startphi="0" z="0.1"/>
+
+    <!--Hall A top wall -->
+  <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  
+	  rmin="radius_topwall_in" rmax="radius_topwall_out"/>
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="hall_top_sub" rmin="0.0" 
+	rmax="radius_topwall_out+10" z="2*radius_topwall_out" />
+ 
+  <subtraction name ="topwall_solid">
+      <first ref="hall_top_shell"/>
+      <second ref="hall_top_sub"/>
+      <positionref ref="topwallTrans_1"/>
+  </subtraction>
+
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="out_cylwall" rmin="0.0" rmax="radius_of_cylwall+1.*thick_cylwall" z="height_cylwall" />
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="in_cylwall" rmin="0.0" rmax="radius_of_cylwall" z="1*height_cylwall-1*thick_cylwall" />
+
+  <box lunit="cm" name="hall_dumphole" x="dump_width" z="1.1*dump_height" y="3*hall_cylwall_thickness"/>
+
+  <subtraction name ="cylwall_full">
+      <first ref="out_cylwall"/>
+      <second ref="in_cylwall"/>
+      <positionref ref="cylwallTrans_1"/>
+  </subtraction>
+  <subtraction name ="cylwall_hole">
+      <first ref="cylwall_full"/>
+      <second ref="hall_dumphole"/> 
+      <positionref ref="hall_dumphole_sub_trans"/>
+      <!-- <rotationref ref="scRot_1"/> -->
+  </subtraction>
+
+  <!--Hall A top wall detector -->
+  <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="halldet_top_shell"  rmin="radius_topwall_out+10" rmax="radius_topwall_out+10+1"/>
+  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="halldet_top_sub" rmin="0.0" rmax="radius_topwall_out+11" z="2*(radius_topwall_out+10+1)" />
+ 
+  <subtraction name ="topwalldet_solid">
+      <first ref="halldet_top_shell"/>
+      <second ref="halldet_top_sub"/>
+      <positionref ref="topwallTrans_1"/>
+  </subtraction>
+
+  <!-- Dump Enclosure -->
+
+    <box lunit="cm" name="boxDumpBulk" x="dump_width" y="dump_height" z="dump_length"/>
+    <box lunit="cm" name="boxDumpUSSub" x="dumpUSSub_width" y="dumpUSSub_height" z="dumpUSSub_length*1.005"/>
+    <box lunit="cm" name="boxDumpDSSub1" x="dumpDSSub_width1" y="dumpDSSub_height1" z="dumpDSSub_length1"/>
+    <box lunit="cm" name="boxDumpDSSub2" x="dumpDSSub_width2" y="dumpDSSub_height2" z="dumpDSSub_length2"/>
+
+    <subtraction name="dumpSub_A">
+      <first ref="boxDumpBulk"/>
+      <second ref="boxDumpUSSub"/>
+      <positionref ref="dumpUSSub_trans"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+    <subtraction name="dumpSub_B">
+      <first ref="dumpSub_A"/>
+      <second ref="boxDumpDSSub1"/>
+      <positionref ref="dumpDSSub1_trans"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+    <subtraction name="dump_solid">
+      <first ref="dumpSub_B"/>
+      <second ref="boxDumpDSSub2"/>
+      <positionref ref="dumpDSSub2_trans"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+
+    <!-- Dump Temporary Shielding Blocks -->
+
+    <box lunit="cm" name="boxDumpTempShieldBulkUS" x="dumpTempShieldUS_width" y="dumpTempShieldUS_height" z="dumpTempShieldUS_length"/>
+    <box lunit="cm" name="boxDumpTempShieldBulkMS" x="dumpTempShieldMS_width" y="dumpTempShieldMS_height" z="dumpTempShieldMS_length"/>
+    <box lunit="cm" name="boxDumpTempShieldBulkDS" x="dumpTempShieldDS_width" y="dumpTempShieldDS_height" z="dumpTempShieldDS_length"/>
+
+    <union name="dumpTempShield_left_A">
+      <first ref="boxDumpTempShieldBulkUS"/>
+      <second ref="boxDumpTempShieldBulkMS"/>
+      <positionref ref="dumpTempShield_left_trans_1"/>
+      <rotationref ref="identity"/>
+    </union>
+
+    <union name="dumpTempShield_left_solid">
+      <first ref="dumpTempShield_left_A"/>
+      <second ref="boxDumpTempShieldBulkDS"/>
+      <positionref ref="dumpTempShield_left_trans_2"/>
+      <rotationref ref="identity"/>
+    </union>
+
+    <union name="dumpTempShield_right_A">
+      <first ref="boxDumpTempShieldBulkUS"/>
+      <second ref="boxDumpTempShieldBulkMS"/>
+      <positionref ref="dumpTempShield_right_trans_1"/>
+      <rotationref ref="identity"/>
+    </union>
+
+    <union name="dumpTempShield_right_solid">
+      <first ref="dumpTempShield_right_A"/>
+      <second ref="boxDumpTempShieldBulkDS"/>
+      <positionref ref="dumpTempShield_right_trans_2"/>
+      <rotationref ref="identity"/>
+    </union>
+
+
+    <!-- Neckdown Beampipe (entry flange, Cone 1, Section 1, Donut array - inner, middle, outer, Section 2, Cone 2, exit flange). Ignores support ring structures, for now FIXME -->
+
+    <tube name="ndFlangeUS_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="ndFlangeUS_r_min" rmax="ndFlangeUS_r_max"
+          z="ndFlangeUS_thickness"/> 
+
+    <cone name="ndConeUS_solid" lunit="cm"
+          aunit="deg" startphi="0" deltaphi="360"
+          rmin1="ndConeUS_r_min1" rmax1="ndConeUS_r_max1"
+          rmin2="ndConeUS_r_min2" rmax2="ndConeUS_r_max2"
+          z="ndConeUS_length"/>
+        
+    <tube name="ndPipeUS_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="ndPipeUS_r_min" rmax="ndPipeUS_r_max"
+          z="ndPipeUS_length"/> 
+
+    <tube name="ndDonut_inner_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="ndDonut_inner_r_min" rmax="ndDonut_inner_r_max"
+          z="ndDonut_inner_thickness"/> 
+
+    <tube name="ndDonut_middle_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="ndDonut_middle_r_min" rmax="ndDonut_middle_r_max"
+          z="ndDonut_middle_thickness"/> 
+
+    <tube name="ndDonut_outer_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="ndDonut_outer_r_min" rmax="ndDonut_outer_r_max"
+          z="ndDonut_outer_thickness"/> 
+
+    <tube name="ndPipeDS_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="ndPipeDS_r_min" rmax="ndPipeDS_r_max"
+          z="ndPipeDS_length"/> 
+
+    <cone name="ndConeDS_solid" lunit="cm"
+          aunit="deg" startphi="0" deltaphi="360"
+          rmin1="ndConeDS_r_min1" rmax1="ndConeDS_r_max1"
+          rmin2="ndConeDS_r_min2" rmax2="ndConeDS_r_max2"
+          z="ndConeDS_length"/>
+
+    <tube name="ndPipeDDS_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="ndPipeDDS_r_min" rmax="ndPipeDDS_r_max"
+          z="ndPipeDDS_length"/> 
+
+    <tube name="ndFlangeDS_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="ndFlangeDS_r_min" rmax="ndFlangeDS_r_max"
+          z="ndFlangeDS_thickness"/> 
+        
+
+    <!-- Dump Nitrogen Atmosphere Enclosure Wall -->
+
+    <box lunit="cm" name="boxNitrogenAtmWall" x="nitrogenAtmWall_width" y="nitrogenAtmWall_height" z="nitrogenAtmWall_thickness"/>
+    <tube name="nitrogenAtmWall_hole" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="0.0" rmax="nitrogenAtmWall_hole_r"
+          z="1.1*nitrogenAtmWall_thickness"/> <!-- FIXME This hole should be large enough that flanges and beam pipes don't intersect -->
+
+    <subtraction name="nitrogenAtmWall_solid">
+      <first ref="boxNitrogenAtmWall"/>
+      <second ref="nitrogenAtmWall_hole"/>
+      <positionref ref="nitrogenAtmWall_hole_trans"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+
+    <!-- Dump Pipe DS (oversimplified down to just one tube with flanges and water-tank interface section ignored) -->
+    
+    <tube name="dumpPipeDS_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="dumpPipeDS_r_min" rmax="dumpPipeDS_r_max"
+          z="dumpPipeDS_length"/>
+    
+    <!-- Water Tank Dump (should have rounded tank ends, but using cylinder for now) -->
+
+    <tube name="tubeDumpWaterTank_outer_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="dumpWaterTank_r" rmax="dumpWaterTank_r + dumpWaterTank_thickness"
+          z="dumpWaterTank_length + 2*dumpWaterTank_thickness"/>
+      
+    <tube name="waterDumpWaterTank_solid" 
+          aunit="deg" startphi="0" deltaphi="360" 
+          lunit="cm" rmin="0.0" rmax="dumpWaterTank_r"
+          z="dumpWaterTank_length"/>
+        
+    <subtraction name="tubeDumpWaterTank_solid">
+      <first ref="tubeDumpWaterTank_outer_solid"/>
+      <second ref="waterDumpWaterTank_solid"/>
+      <positionref ref="tubeDumpWaterTank_trans"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+ 
+  </solids>
+
+<structure>
+
+    <volume name="hallVerticalWallDet_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="cylHallDet_1"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="99"/>
+    </volume>
+
+    <volume name="hallFlatLidDet_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="hallFlatLidDet_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="101"/>
+    </volume>
+
+    <volume name="topWallOuterDet_logic">
+      <materialref ref="Vacuum"/>
+      <solidref ref="topwalldet_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="107"/>
+    </volume>
+
+
+    <volume name="topwall_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="topwall_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+    <volume name="cylwall_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="cylwall_hole"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+
+
+    <volume name="dump_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="dump_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="dumpTempShield_left_logic">
+      <materialref ref="Lead"/>
+      <solidref ref="dumpTempShield_left_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="dumpTempShield_right_logic">
+      <materialref ref="Lead"/>
+      <solidref ref="dumpTempShield_right_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="ndFlangeUS_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndFlangeUS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="ndConeUS_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndConeUS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="ndPipeUS_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndPipeUS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="ndDonut_inner_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndDonut_inner_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="ndDonut_middle_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndDonut_middle_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="ndDonut_outer_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndDonut_outer_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+   </volume>
+    
+    <volume name="ndPipeDS_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndPipeDS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="ndConeDS_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndConeDS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="ndPipeDDS_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndPipeDDS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+ 
+    <volume name="ndFlangeDS_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="ndFlangeDS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+    <volume name="nitrogenAtmWall_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="nitrogenAtmWall_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="dumpPipeDS_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="dumpPipeDS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="tubeDumpWaterTank_logic">
+      <materialref ref="Aluminum"/>
+      <solidref ref="tubeDumpWaterTank_solid"/>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="waterDumpWaterTank_logic">
+      <materialref ref="G4_WATER"/>
+      <solidref ref="waterDumpWaterTank_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+    <volume name="logicHall">
+      <materialref ref="Vacuum"/>  <!-- air ??? -->
+      <solidref ref="boxHallMother"/>
+
+      <physvol name="hallVerticalWallDet">
+        <volumeref ref="hallVerticalWallDet_logic"/>
+        <positionref ref="cylHallDet_1_center"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="hallFlatLidDet">
+        <volumeref ref="hallFlatLidDet_logic"/> <!-- this should be removed once we fix the hall lid CG -->
+        <position name="hallFlatLidDet_pos" unit="mm" y="center_cylwall + height_cylwall/2. - 1"/>
+	<rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="topWall">
+        <volumeref ref="topwall_logic"/>
+        <positionref ref="topwall_center"/>
+        <rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="topWallOuterDet">
+        <volumeref ref="topWallOuterDet_logic"/>
+        <positionref ref="topwall_center"/>
+        <rotationref ref="scRot_1"/>
+      </physvol>
+
+      <physvol name="cylwall">
+        <volumeref ref="cylwall_logic"/>
+        <positionref ref="cylwall_center"/>
+        <rotationref ref="scRot_1"/>
+      </physvol>
+
+
+      <physvol name="dump">
+        <volumeref ref="dump_logic"/>
+        <positionref ref="dump_center"/>
+      </physvol>
+
+      <physvol name="dumpTempShield_left">
+        <volumeref ref="dumpTempShield_left_logic"/>
+        <positionref ref="dumpTempShield_left_center"/>
+      </physvol>
+
+      <physvol name="dumpTempShield_right">
+        <volumeref ref="dumpTempShield_right_logic"/>
+        <positionref ref="dumpTempShield_right_center"/>
+      </physvol>
+
+      <physvol name="ndFlangeUS">
+        <volumeref ref="ndFlangeUS_logic"/>
+        <positionref ref="ndFlangeUS_center"/>
+      </physvol>
+
+      <physvol name="ndConeUS">
+        <volumeref ref="ndConeUS_logic"/>
+        <positionref ref="ndConeUS_center"/>
+      </physvol>
+
+      <physvol name="ndPipeUS">
+        <volumeref ref="ndPipeUS_logic"/>
+        <positionref ref="ndPipeUS_center"/>
+      </physvol>
+
+      <physvol name="ndDonut_inner">
+        <volumeref ref="ndDonut_inner_logic"/>
+        <positionref ref="ndDonut_inner_center"/>
+      </physvol>
+
+      <physvol name="ndDonut_middle">
+        <volumeref ref="ndDonut_middle_logic"/>
+        <positionref ref="ndDonut_middle_center"/>
+      </physvol>
+
+      <physvol name="ndDonut_outer">
+        <volumeref ref="ndDonut_outer_logic"/>
+        <positionref ref="ndDonut_outer_center"/>
+      </physvol>
+
+      <physvol name="ndPipeDS">
+        <volumeref ref="ndPipeDS_logic"/>
+        <positionref ref="ndPipeDS_center"/>
+      </physvol>
+
+      <physvol name="ndConeDS">
+        <volumeref ref="ndConeDS_logic"/>
+        <positionref ref="ndConeDS_center"/>
+      </physvol>
+
+      <physvol name="ndPipeDDS">
+        <volumeref ref="ndPipeDDS_logic"/>
+        <positionref ref="ndPipeDDS_center"/>
+      </physvol>
+
+      <physvol name="ndFlangeDS">
+        <volumeref ref="ndFlangeDS_logic"/>
+        <positionref ref="ndFlangeDS_center"/>
+      </physvol>
+
+      <physvol name="nitrogenAtmWall">
+        <volumeref ref="nitrogenAtmWall_logic"/>
+        <positionref ref="nitrogenAtmWall_center"/>
+      </physvol>
+
+      <physvol name="dumpPipeDS">
+        <volumeref ref="dumpPipeDS_logic"/>
+        <positionref ref="dumpPipeDS_center"/>
+      </physvol>
+
+      <physvol name="tubeDumpWaterTank">
+        <volumeref ref="tubeDumpWaterTank_logic"/>
+        <positionref ref="tubeDumpWaterTank_center"/>
+      </physvol>
+
+      <physvol name="waterDumpWaterTank">
+        <volumeref ref="waterDumpWaterTank_logic"/>
+        <positionref ref="waterDumpWaterTank_center"/>
+      </physvol>
+
+      <physvol name="diffuserPlate">
+	<file name="hall/subDumpDiffuser.gdml"/>
+        <position name="diffuserPlate_pos" unit="cm" z="nitrogenAtmWall_center_z + 15" />
+      </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+</structure>
+
+<setup name="Hall" version="1.0">
+	<world ref="logicHall"/>
+</setup>
+
+</gdml>

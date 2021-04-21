@@ -1,0 +1,4 @@
+import model sm
+generate e- p > e- p
+output ep_ep
+shell cp template/* ep_ep/Cards

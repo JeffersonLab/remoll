@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "showerMaxMaterials.xml">
+  <!ENTITY matrices SYSTEM "showerMaxMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define>
+    <quantity name="ShowerMaxDetectorQuartzAngle" type="angle" value="-26.565051177078" unit="deg"/>
+    <quantity name="ShowerMaxDetectorQuartzWidth" type="length" value="246" unit="mm"/>
+    <quantity name="ShowerMaxDetectorQuartzThickness" type="length" value="10" unit="mm"/>
+    <quantity name="ShowerMaxDetectorQuartzHeightShort" type="length" value="105" unit="mm"/>
+    <quantity name="ShowerMaxDetectorQuartzHeightDiff"  type="length" value="ShowerMaxDetectorQuartzThickness"/> <!-- 45 deg angle -->
+    <quantity name="ShowerMaxDetectorQuartzHeightLong"  type="length" value="ShowerMaxDetectorQuartzHeightShort+ShowerMaxDetectorQuartzHeightDiff"/>
+
+    <quantity name="ShowerMaxDetectorTungstenThickness" type="length" value="8" unit="mm"/>
+    <quantity name="ShowerMaxDetectorTungstenHeight"    type="length" value="ShowerMaxDetectorQuartzWidth"/>
+    <quantity name="ShowerMaxDetectorTungstenWidth"     type="length" value="ShowerMaxDetectorQuartzHeightShort"/>
+
+    <quantity name="ShowerMaxDetectorMirrorThickness" type="length" value="0.5" unit="mm"/>
+
+    <quantity name="ShowerMaxDetectorPMTRadius"    type="length" value="38.1" unit="mm"/>
+    <quantity name="ShowerMaxDetectorPMTThickness" type="length" value="3.0"  unit="mm"/>
+    <quantity name="ShowerMaxDetectorPMTPosition"  type="length" value="311.5"  unit="mm"/> <!-- should be calculable -->
+    <quantity name="ShowerMaxDetectorCathodeThickness" type="length" value="0.2" unit="mm"/>
+    <quantity name="ShowerMaxDetectorCathodePosition"  type="length" value="ShowerMaxDetectorPMTPosition+0.5*(ShowerMaxDetectorPMTThickness+ShowerMaxDetectorCathodeThickness)"/>
+
+    <!-- alternating orientation for prisms -->
+    <rotation name="ShowerMaxDetectorQuartz_0_rot" x="+90" unit="deg"/>
+    <rotation name="ShowerMaxDetectorQuartz_1_rot" x="-90" unit="deg"/>
+    <rotation name="ShowerMaxDetectorQuartz_2_rot" x="+90" unit="deg"/>
+    <rotation name="ShowerMaxDetectorQuartz_3_rot" x="-90" unit="deg"/>
+
+    <!-- shift in zero of coordinate system -->
+    <quantity name="x0" type="length" value="-0.3*(ShowerMaxDetectorCathodePosition+0.5*ShowerMaxDetectorQuartzHeightLong)"/>
+    <quantity name="z0" type="length" value="1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+
+    <!-- layers from back to front: zero z defined as center of last quartz plane, zero x defined as center of quartz plane -->
+    <position name="ShowerMaxDetectorMirrorBack_pos"  x="x0+2.5" z="z0+0.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorMirrorThickness)"/>
+    <position name="ShowerMaxDetectorQuartz_0_pos"    x="x0"     z="z0-0.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="ShowerMaxDetectorTungsten_1_pos"  x="x0-2.5" z="z0-0.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="ShowerMaxDetectorQuartz_1_pos"    x="x0"     z="z0-1.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="ShowerMaxDetectorTungsten_2_pos"  x="x0-2.5" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="ShowerMaxDetectorQuartz_2_pos"    x="x0"     z="z0-2.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="ShowerMaxDetectorTungsten_3_pos"  x="x0-2.5" z="z0-2.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="ShowerMaxDetectorQuartz_3_pos"    x="x0"     z="z0-3.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="ShowerMaxDetectorMirrorFront_pos" x="x0+2.5" z="z0-3.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)
+                                                                    -0.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorMirrorThickness)"/> 
+    <position name="ShowerMaxDetectorTungsten_4_pos"  x="x0-2.5" z="z0-3.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)
+                                                                    -1.0*ShowerMaxDetectorMirrorThickness"/>
+    <!-- side mirrors along stack -->
+    <position name="ShowerMaxDetectorMirrorSide_1_pos" unit="mm" x="x0+2.5" y="+0.5*(ShowerMaxDetectorQuartzWidth+ShowerMaxDetectorMirrorThickness)" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="ShowerMaxDetectorMirrorSide_2_pos" unit="mm" x="x0+2.5" y="-0.5*(ShowerMaxDetectorQuartzWidth+ShowerMaxDetectorMirrorThickness)" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+
+    <position name="Mirror_box_1_0_pos" unit="mm" x="x0+104.29" y="+0.5*ShowerMaxDetectorQuartzWidth" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="Mirror_box_1_1_pos" unit="mm" x="x0+104.29" y="-0.5*ShowerMaxDetectorQuartzWidth" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="Mirror_box_2_0_pos" unit="mm" x="x0+229.29" y="+78.5" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <position name="Mirror_box_2_1_pos" unit="mm" x="x0+229.29" y="-78.5" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+
+    <rotation name="Mirror_box_1_0_rot" unit="deg" y="90"/>
+    <rotation name="Mirror_box_1_1_rot" unit="deg" y="90"/>
+    <rotation name="Mirror_box_2_0_rot" unit="deg" x="+90" y="61.13" z="+90"/>
+    <rotation name="Mirror_box_2_1_rot" unit="deg" x="-90" y="61.13" z="-90"/>
+
+    <position name="Mirror_box_4_0_pos" unit="mm" x="x0+104.29" y="0" z="z0+17.29"/>
+    <position name="Mirror_box_4_1_pos" unit="mm" x="x0+104.29" y="0" z="z0-71.29"/>
+    <position name="Mirror_box_6_0_pos" unit="mm" x="x0+229.29" y="0" z="z0+18.79"/>
+    <position name="Mirror_box_6_1_pos" unit="mm" x="x0+229.29" y="0" z="z0-72.79"/>
+
+    <rotation name="Mirror_box_4_0_rot" unit="deg" x="-180" y="74.49" z="-90"/>
+    <rotation name="Mirror_box_4_1_rot" unit="deg" x="0"    y="74.49" z="+90"/>
+    <rotation name="Mirror_box_6_0_rot" unit="deg" x="0"    y="82.38" z="+90"/>
+    <rotation name="Mirror_box_6_1_rot" unit="deg" x="-180" y="82.38" z="-90"/>
+
+    <position name="ShowerMaxDetectorPMT_pos" x="x0+ShowerMaxDetectorPMTPosition" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <rotation name="ShowerMaxDetectorPMT_rot" y="90" unit="deg"/>
+
+    <position name="ShowerMaxDetectorCathode_pos" x="x0+ShowerMaxDetectorCathodePosition" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+    <rotation name="ShowerMaxDetectorCathode_rot" y="90" unit="deg"/>
+
+    &matrices;
+  </define>
+
+  &materials;
+
+  <solids>
+    <box name="ShowerMaxDetectorSector_solid"
+      x="420" y="250" z="120" lunit="mm"/>
+
+    <trap name="ShowerMaxDetectorQuartz_solid"
+      alpha1="ShowerMaxDetectorQuartzAngle" alpha2="ShowerMaxDetectorQuartzAngle" phi="0" theta="0"
+      x1="ShowerMaxDetectorQuartzHeightLong" x2="ShowerMaxDetectorQuartzHeightShort"
+      x3="ShowerMaxDetectorQuartzHeightLong" x4="ShowerMaxDetectorQuartzHeightShort"
+      y1="ShowerMaxDetectorQuartzThickness" y2="ShowerMaxDetectorQuartzThickness"
+      z="ShowerMaxDetectorQuartzWidth"/>
+
+    <opticalsurface finish="3" model="0" name="QuartzSurface" type="1" value="0.975">
+      <property name="RINDEX" ref="RINDEX_QUARTZ_OS"/>
+      <property name="GROUPVEL" ref="GROUPVEL_QUARTZ_OS"/>
+      <property name="SPECULARLOBECONSTANT" ref="SPECULARLOBECONSTANT_QUARTZ_OS"/>
+      <property name="SPECULARSPIKECONSTANT" ref="SPECULARSPIKECONSTANT_QUARTZ_OS"/>
+      <property name="BACKSCATTERCONSTANT" ref="BACKSCATTERCONSTANT_QUARTZ_OS"/>
+    </opticalsurface>
+
+    <box name="ShowerMaxDetectorTungsten_box"
+      x="ShowerMaxDetectorQuartzHeightShort"
+      y="ShowerMaxDetectorQuartzWidth"
+      z="ShowerMaxDetectorTungstenThickness"/>
+
+    <trap name="Mirror_box_1_solid"
+      alpha1="0" alpha2="0" phi="0" theta="0" aunit="deg"
+      x1="113.17" x2="113.17"
+      x3="64" x4="64"
+      y1="ShowerMaxDetectorMirrorThickness" y2="ShowerMaxDetectorMirrorThickness"
+      z="88.58"
+      lunit="mm"/>
+    <trap
+      name="Mirror_box_2_solid"
+      alpha1="0" alpha2="0" phi="0" theta="0" aunit="deg"
+      lunit="mm"
+      x1="70" x2="70"
+      x3="113.17" x4="113.17"
+      y1="ShowerMaxDetectorMirrorThickness" y2="ShowerMaxDetectorMirrorThickness"
+      z="184.33"/>
+    <trap
+      name="Mirror_box_4_solid"
+      alpha1="0" alpha2="0" phi="0" theta="0" aunit="deg"
+      lunit="mm"
+      x1="ShowerMaxDetectorQuartzWidth" x2="ShowerMaxDetectorQuartzWidth"
+      x3="ShowerMaxDetectorQuartzWidth" x4="ShowerMaxDetectorQuartzWidth"
+      y1="ShowerMaxDetectorMirrorThickness" y2="ShowerMaxDetectorMirrorThickness"
+      z="91.93"/>
+    <trap
+      name="Mirror_box_6_solid"
+      alpha1="0" alpha2="0" phi="0" theta="0" aunit="deg"
+      lunit="mm"
+      x1="68" x2="68"
+      x3="ShowerMaxDetectorQuartzWidth" x4="ShowerMaxDetectorQuartzWidth"
+      y1="ShowerMaxDetectorMirrorThickness" y2="ShowerMaxDetectorMirrorThickness"
+      z="162.85"/>
+    <box
+      name="ShowerMaxDetectorMirrorSide_solid"
+      x="ShowerMaxDetectorQuartzHeightLong"
+      y="ShowerMaxDetectorMirrorThickness"
+      z="66"/>
+    <box
+      name="ShowerMaxDetectorMirrorBack_solid"
+      x="ShowerMaxDetectorQuartzHeightLong"
+      y="ShowerMaxDetectorQuartzWidth"
+      z="ShowerMaxDetectorMirrorThickness"/>
+    <box
+      name="Mirror_box_6_solid"
+      x="ShowerMaxDetectorMirrorThickness"
+      y="ShowerMaxDetectorQuartzWidth"
+      z="64"/>
+
+    <opticalsurface finish="6" model="0" name="MirrorOpSurface" type="0" value="1">
+      <property name="REFLECTIVITY" ref="REFLECTIVITY_MIRROR"/>
+    </opticalsurface>
+
+    <tube 
+      name="ShowerMaxDetectorPMT_solid"
+      aunit="deg" startphi="0" deltaphi="360"
+      rmin="0" rmax="ShowerMaxDetectorPMTRadius"
+      z="ShowerMaxDetectorPMTThickness"/>
+    <tube 
+      aunit="deg" startphi="0" deltaphi="360" 
+      name="ShowerMaxDetectorCathode_solid"
+      rmin="0" rmax="ShowerMaxDetectorPMTRadius"
+      z="ShowerMaxDetectorCathodeThickness"/>
+    <opticalsurface finish="6" model="0" name="CathodeOpSurface" type="0" value="1">
+      <property name="REFLECTIVITY" ref="REFLECTIVITY_CATH_OS"/>
+      <property name="EFFICIENCY" ref="EFFICIENCY_CATH_OS"/>
+    </opticalsurface>
+
+  </solids>
+
+  <structure>
+    <volume name="ShowerMaxDetectorQuartz_log">
+      <materialref ref="Quartz_mat"/>
+      <solidref ref="ShowerMaxDetectorQuartz_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="ShowerMaxDetectorQuartz"/>
+      <auxiliary auxtype="DetNo" auxvalue="7001"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.25"/>
+    </volume>
+    <volume name="ShowerMaxDetectorTungsten_log">
+      <materialref ref="G4_W"/>
+      <solidref ref="ShowerMaxDetectorTungsten_box"/>
+      <auxiliary auxtype="SensDet" auxvalue="ShowerMaxDetectorTungsten"/>
+      <auxiliary auxtype="DetNo" auxvalue="7002"/>
+      <auxiliary auxtype="Color" auxvalue="Gray"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.50"/>
+    </volume>
+    <volume name="Mirror_box_1_log">
+      <materialref ref="Mirror_mat"/>
+      <solidref ref="Mirror_box_1_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    <volume name="Mirror_box_2_log">
+      <materialref ref="Mirror_mat"/>
+      <solidref ref="Mirror_box_2_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    <volume name="Mirror_box_4_log">
+      <materialref ref="Mirror_mat"/>
+      <solidref ref="Mirror_box_4_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    <volume name="Mirror_box_6_log">
+      <materialref ref="Mirror_mat"/>
+      <solidref ref="Mirror_box_6_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    <volume name="ShowerMaxDetectorMirrorSide_log">
+      <materialref ref="Mirror_mat"/>
+      <solidref ref="ShowerMaxDetectorMirrorSide_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    <volume name="ShowerMaxDetectorMirrorBack_log">
+      <materialref ref="Mirror_mat"/>
+      <solidref ref="ShowerMaxDetectorMirrorBack_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    <volume name="ShowerMaxDetectorPMT_log">
+      <materialref ref="Air"/>
+      <solidref ref="ShowerMaxDetectorPMT_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    <volume name="ShowerMaxDetectorCathode_log">
+      <materialref ref="CATH_mat"/>
+      <solidref ref="ShowerMaxDetectorCathode_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="ShowerMaxDetectorCathode"/>
+      <auxiliary auxtype="DetNo" auxvalue="7000"/>
+      <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+      <auxiliary auxtype="Color" auxvalue="White"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    <volume name="ShowerMaxDetectorSector_log">
+      <materialref ref="Air"/>
+      <solidref ref="ShowerMaxDetectorSector_solid"/>
+
+      <!-- 0 = center of last downstream quartz plane
+           x = dispersive, radial outward
+           y = azimuthal, counter-clockwise
+           z = downstream along beamline -->
+
+      <physvol name="ShowerMaxDetectorQuartz_0_phys">
+        <volumeref ref="ShowerMaxDetectorQuartz_log"/>
+        <positionref ref="ShowerMaxDetectorQuartz_0_pos"/>
+        <rotationref ref="ShowerMaxDetectorQuartz_0_rot"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorTungsten_1_phys">
+        <volumeref ref="ShowerMaxDetectorTungsten_log"/>
+        <positionref ref="ShowerMaxDetectorTungsten_1_pos"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorQuartz_1_phys">
+        <volumeref ref="ShowerMaxDetectorQuartz_log"/>
+        <positionref ref="ShowerMaxDetectorQuartz_1_pos"/>
+        <rotationref ref="ShowerMaxDetectorQuartz_1_rot"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorTungsten_2_phys">
+        <volumeref ref="ShowerMaxDetectorTungsten_log"/>
+        <positionref ref="ShowerMaxDetectorTungsten_2_pos"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorQuartz_2_phys">
+        <volumeref ref="ShowerMaxDetectorQuartz_log"/>
+        <positionref ref="ShowerMaxDetectorQuartz_2_pos"/>
+        <rotationref ref="ShowerMaxDetectorQuartz_2_rot"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorTungsten_3_phys">
+        <volumeref ref="ShowerMaxDetectorTungsten_log"/>
+        <positionref ref="ShowerMaxDetectorTungsten_3_pos"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorQuartz_3_phys">
+        <volumeref ref="ShowerMaxDetectorQuartz_log"/>
+        <positionref ref="ShowerMaxDetectorQuartz_3_pos"/>
+        <rotationref ref="ShowerMaxDetectorQuartz_3_rot"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorTungsten_4_phys">
+        <volumeref ref="ShowerMaxDetectorTungsten_log"/>
+        <positionref ref="ShowerMaxDetectorTungsten_4_pos"/>
+      </physvol>
+
+      <physvol name="ShowerMaxDetectorMirrorSide_1">
+        <volumeref ref="ShowerMaxDetectorMirrorSide_log"/>
+        <positionref ref="ShowerMaxDetectorMirrorSide_1_pos"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorMirrorSide_2">
+        <volumeref ref="ShowerMaxDetectorMirrorSide_log"/>
+        <positionref ref="ShowerMaxDetectorMirrorSide_2_pos"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorMirrorBack_phys">
+        <volumeref ref="ShowerMaxDetectorMirrorBack_log"/>
+        <positionref ref="ShowerMaxDetectorMirrorBack_pos"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorMirrorFront_phys">
+        <volumeref ref="ShowerMaxDetectorMirrorBack_log"/>
+        <positionref ref="ShowerMaxDetectorMirrorFront_pos"/>
+      </physvol>
+
+      <physvol name="Mirror_box_1_0_phys">
+        <volumeref ref="Mirror_box_1_log"/>
+        <positionref ref="Mirror_box_1_0_pos"/>
+        <rotationref ref="Mirror_box_1_0_rot"/>
+      </physvol>
+      <physvol name="Mirror_box_1_1_phys">
+        <volumeref ref="Mirror_box_1_log"/>
+        <positionref ref="Mirror_box_1_1_pos"/>
+        <rotationref ref="Mirror_box_1_1_rot"/>
+      </physvol>
+      <physvol name="Mirror_box_2_0_phys">
+        <volumeref ref="Mirror_box_2_log"/>
+        <positionref ref="Mirror_box_2_0_pos"/>
+        <rotationref ref="Mirror_box_2_0_rot"/>
+      </physvol>
+      <physvol name="Mirror_box_2_1_phys">
+        <volumeref ref="Mirror_box_2_log"/>
+        <positionref ref="Mirror_box_2_1_pos"/>
+        <rotationref ref="Mirror_box_2_1_rot"/>
+      </physvol>
+
+      <physvol name="Mirror_box_4_0_phys">
+        <volumeref ref="Mirror_box_4_log"/>
+        <positionref ref="Mirror_box_4_0_pos"/>
+        <rotationref ref="Mirror_box_4_0_rot"/>
+      </physvol>
+      <physvol name="Mirror_box_4_1_phys">
+        <volumeref ref="Mirror_box_4_log"/>
+        <positionref ref="Mirror_box_4_1_pos"/>
+        <rotationref ref="Mirror_box_4_1_rot"/>
+      </physvol>
+      <physvol name="Mirror_box_6_0_phys">
+        <volumeref ref="Mirror_box_6_log"/>
+        <positionref ref="Mirror_box_6_0_pos"/>
+        <rotationref ref="Mirror_box_6_0_rot"/>
+      </physvol>
+      <physvol name="Mirror_box_6_1_phys">
+        <volumeref ref="Mirror_box_6_log"/>
+        <positionref ref="Mirror_box_6_1_pos"/>
+        <rotationref ref="Mirror_box_6_1_rot"/>
+      </physvol>
+
+      <physvol name="ShowerMaxDetectorPMT_phys">
+        <volumeref ref="ShowerMaxDetectorPMT_log"/>
+        <positionref ref="ShowerMaxDetectorPMT_pos"/>
+        <rotationref ref="ShowerMaxDetectorPMT_rot"/>
+      </physvol>
+      <physvol name="ShowerMaxDetectorCathode_phys">
+        <volumeref ref="ShowerMaxDetectorCathode_log"/>
+        <positionref ref="ShowerMaxDetectorCathode_pos"/>
+        <rotationref ref="ShowerMaxDetectorCathode_rot"/>
+      </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+    <skinsurface name="MirrorOpS_1" surfaceproperty="MirrorOpSurface">
+      <volumeref ref="Mirror_box_1_log"/>
+    </skinsurface>
+    <skinsurface name="MirrorOpS_2" surfaceproperty="MirrorOpSurface">
+      <volumeref ref="Mirror_box_2_log"/>
+    </skinsurface>
+    <skinsurface name="MirrorOpS_4" surfaceproperty="MirrorOpSurface">
+      <volumeref ref="Mirror_box_4_log"/>
+    </skinsurface>
+    <skinsurface name="MirrorOpS_6" surfaceproperty="MirrorOpSurface">
+      <volumeref ref="Mirror_box_6_log"/>
+    </skinsurface>
+    <skinsurface name="MirrorOpS_7" surfaceproperty="MirrorOpSurface">
+      <volumeref ref="ShowerMaxDetectorMirrorSide_log"/>
+    </skinsurface>
+    <skinsurface name="MirrorOpS_8" surfaceproperty="MirrorOpSurface">
+      <volumeref ref="ShowerMaxDetectorMirrorBack_log"/>
+    </skinsurface>
+    <skinsurface name="CathOpS1" surfaceproperty="CathodeOpSurface">
+      <volumeref ref="ShowerMaxDetectorCathode_log"/>
+    </skinsurface>
+
+<!--
+    <bordersurface name="QuartzSurface" surfaceproperty="QuartzSurface">
+      <physvolref ref="ShowerMaxDetectorQuartz_phys"/>
+      <physvolref ref="ShowerMaxDetectorSector_phys"/>
+    </bordersurface>
+-->
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="ShowerMaxDetectorSector_log"/>
+  </setup>
+
+</gdml>

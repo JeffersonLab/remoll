@@ -1,0 +1,45 @@
+#  Example file
+
+# This must be called before initialize
+/remoll/setgeofile geometry/mollerMother_dump.gdml
+
+# Enable optical photons
+/remoll/physlist/optical/enable
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+
+/remoll/beamene 11 GeV
+
+/remoll/evgen/set beam
+/remoll/evgen/thmin 0.00 deg
+/remoll/evgen/thmax 2.00 deg
+
+/remoll/beamcurr 85 microampere
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/remoll/kryptonite/disable
+
+# Disable all but useful detectors
+/remoll/SD/disable_all
+/remoll/SD/det_28/enable true
+/remoll/SD/det_30/enable true
+/remoll/SD/det_8060/enable true
+/remoll/SD/det_8061/enable true
+
+# Specify random number seed
+/remoll/seed %seedA% %seedB%
+
+# Filename
+/remoll/filename rootfiles/%name%/%name%_%jobid%_workdir/%name%_%jobid%.root
+
+/run/beamOn %nevents%

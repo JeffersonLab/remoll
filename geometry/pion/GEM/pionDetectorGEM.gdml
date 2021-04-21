@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <quantity name="pionDetectorGEMThickness" type="length" value="2.54" unit="cm"/>
+  <quantity name="pionDetectorGEMWidth" type="length" value="60.0" unit="cm"/>
+  <quantity name="pionDetectorGEMHeight" type="length" value="40.0" unit="cm"/>
+</define>
+
+<materials>
+  <material name="pionGEMGasMixture">
+    <!-- density CO2 at STP = 1.98 kg/m3 -->
+    <!-- density Ar at STP = 1.784 kg/m3 -->
+    <D value="1.882" unit="mg/cm3"/>
+    <fraction n="0.5" ref="G4_CARBON_DIOXIDE"/>
+    <fraction n="0.5" ref="G4_Ar"/>
+  </material>
+</materials>
+
+<solids>
+  <!-- x in azimuthal direction -->
+  <!-- y in downstream beam direction -->
+  <!-- z in radial outward direction -->
+  <box  name="pionDetectorGEMPlane_solid" y="pionDetectorGEMThickness" x="pionDetectorGEMWidth" z="pionDetectorGEMHeight"/>
+</solids>
+
+<structure>
+
+  <volume name="pionDetectorGEMSinglePlane_logical">
+    <materialref ref="pionGEMGasMixture"/>
+    <solidref ref="pionDetectorGEMPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="pionDetGEM"/>
+    <auxiliary auxtype="DetNo" auxvalue="8002"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
+  <volume name="pionDetectorGEM_logical">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="pionDetectorGEMPlane_solid"/>
+
+    <physvol name="pionDetectorGEM_physical">
+      <volumeref ref="pionDetectorGEMSinglePlane_logical"/>
+    </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorGEM_logical"/>
+</setup>
+
+</gdml>

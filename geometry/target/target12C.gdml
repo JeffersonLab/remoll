@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define>
+    <constant name="targetCenterZ" value="0"/>
+  </define>
+  
+  <materials>
+    <material Z="1" name="VacuumTarg" state="gas">
+      <T unit="K" value="2.73"/>
+      <P unit="pascal" value="3e-18"/>
+      <D unit="g/cm3" value="1e-25"/>
+      <atom unit="g/mole" value="1.01"/>
+    </material>
+    <material Z="6" name="C12" state="solid">
+      <T unit="K" value="20.27"/>
+      <D unit="g/cm3" value="2.2670"/>
+      <atom unit="g/mole" value="12.0107"/>
+    </material>
+  </materials>
+
+<solids>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1000" rmin="0" startphi="0" z="2.1*targetCenterZ"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="40" rmin="0" startphi="0" z="15"/>
+</solids>
+
+<structure>
+
+    <volume name="C12Targ">
+      <materialref ref="C12"/>
+      <solidref ref="tubeTarget"/>
+    </volume>
+
+    <volume name="logicTarget">
+      <materialref ref="VacuumTarg"/>
+      <solidref ref="tubeTargetMother"/>
+
+      <physvol>
+        <volumeref ref="C12Targ"/>
+        <position name="targ_center" unit="mm" x="0" y="0" z="targetCenterZ"/>
+      </physvol>
+
+    </volume>
+
+</structure>
+
+<setup name="Target" version="1.0">
+	<world ref="logicTarget"/>
+</setup>
+
+</gdml>

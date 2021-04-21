@@ -1,31 +1,61 @@
-FROM jeffersonlab/jlabce:2.1
+# Instructions for building remoll, a Docker image for the MOLLER experiment.
+#
+# Instructions for building the remoll image: 
+#   docker build -t jeffersonlab/remoll:latest .
+# Instructions for building the remoll image without cache: 
+#   docker build --no-cache -t jeffersonlab/remoll:latest .
+# Sharing the remoll image on DockerHub: 
+#   docker push jeffersonlab/remoll:latest
+#
+# Running the container with docker:
+#   docker run --rm -it jeffersonlab/remoll:latest remoll macros/runexample.mac
+#
+# Running the container with singularity:
+#   singularity build --disable-cache --fix-perms --sandbox remoll:latest docker-daemon://jeffersonlab/remoll:latest
+#   singularity run remoll:latest remoll macros/runexample.mac
+# Note: building a sandbox image may not work on all filesystem or on
+# hyperlinked directories. Make sure you are in an actual directory with:
+#   cd `readlink -f .`
+#
 
-ENV JLAB_VERSION=2.1
+FROM jeffersonlab/jlabce:2.3-mt
+
+# Install libgcj and pdftk
+RUN wget -q https://copr.fedorainfracloud.org/coprs/robert/gcj/repo/epel-7/robert-gcj-epel-7.repo -P /etc/yum.repos.d && \
+    wget -q https://copr.fedorainfracloud.org/coprs/robert/pdftk/repo/epel-7/robert-pdftk-epel-7.repo -P /etc/yum.repos.d && \
+    yum install -q -y pdftk ghostscript time boost-devel
+
+# Add Tini entry point
+ENV TINI_VERSION v0.19.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+
+# Set JLab CE version
+ENV JLAB_VERSION=2.3
 ENV JLAB_ROOT=/jlab
-ENV JLAB_SOFTWARE=/jlab/2.1/Linux_CentOS7.3.1611-x86_64-gcc4.8.5
 
-ENV REMOLL=$JLAB_SOFTWARE/remoll
+# Set remoll location
+ENV REMOLL=/jlab/remoll
 
-WORKDIR $REMOLL
 # Compile remoll
-# RUN git clone https://github.com/jeffersonlab/remoll $REMOLL
-ADD . .
-RUN source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh && \
-    mkdir -p $REMOLL/build && cd $REMOLL/build && cmake .. && make
+WORKDIR $REMOLL
+COPY . .
+RUN source /etc/profile && \
+    mkdir -p $REMOLL/build && \
+    pushd $REMOLL/build && \
+    cmake .. && \
+    make -j$(nproc) && \
+    make install && \
+    make clean
 
-# Download the map data files and place them in the correct directory
-RUN wget -r --no-parent -l1 -A txt http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/
-RUN mkdir map_directory && \
-    find ./hallaweb.jlab.org -mindepth 2 -type f -exec mv -t ./map_directory -i '{}' + && \
-    rm -rf hallaweb.jlab.org
+# Environment through /etc/profile
+RUN ln -sf $REMOLL/bin/remoll.csh /etc/profile.d/remoll.csh
+RUN ln -sf $REMOLL/bin/remoll.sh /etc/profile.d/remoll.sh
 
-# Create entry point bash script
-RUN echo '#!/bin/bash'                                > /entrypoint.sh && \
-    echo 'unset OSRELEASE'                            >> /entrypoint.sh && \
-    echo 'source $JLAB_ROOT/$JLAB_VERSION/ce/jlab.sh' >> /entrypoint.sh && \
-    echo 'cd $REMOLL && exec ./build/remoll $1'       >> /entrypoint.sh && \
-    chmod +x /entrypoint.sh
+# Override JLab CE environment for container use
+COPY docker/jlab.sh /jlab/${JLAB_VERSION}/ce/jlab.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["macros/runexample.mac"]
+# Entry point loads the environment
+ENTRYPOINT ["/tini", "-s", "--", "bash", "-c", "source /etc/profile && \"$@\""]
 
+CMD ["remoll"]

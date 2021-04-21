@@ -1,19 +1,26 @@
 #----------------------------------------------------------------------------
-
 # Setup the project
 #
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
-project(REMOLL)
+cmake_minimum_required(VERSION 3.5)
+project(remoll VERSION 0.1 LANGUAGES CXX C)
 
-# Default install path is the source directory
-if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-    message(STATUS "    Install-prefix was at default -> forcing it to the source-dir" )
-    message(STATUS "    Use -DCMAKE_INSTALL_PREFIX=/usr/local to set to something else" )
-    set (CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}"
-         CACHE PATH "default install path" FORCE )
+# Disallow in-source builds
+if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
+  message(FATAL_ERROR "remoll requires an out-of-source build.")
 endif()
 
-#MAC specific variable
+# Prepend module search path
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/modules ${CMAKE_MODULE_PATH})
+
+# Use our modules and utility functions
+include(BuildType)
+include(PrefixDir)
+include(CMakeEnv)
+
+# Use GNU install dirs
+include(GNUInstallDirs)
+
+# MAC specific variable
 if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     set(CMAKE_MACOSX_RPATH ON)
     set(CMAKE_SKIP_BUILD_RPATH FALSE)
@@ -26,38 +33,73 @@ if(${CMAKE_SYSTEM_NAME} MATCHES "Darwin")
     endif()
 endif()
 
-#ROOT path
-set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/modules")
-find_package(ROOT REQUIRED)
-
-# Update header file
-add_custom_command(OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh COMMAND ${PROJECT_SOURCE_DIR}/pullgitinfo.py ${PROJECT_SOURCE_DIR} COMMENT "Creating gitinfo.hh" )
-
-# this is to ensure we find the header we need
-include_directories(${CMAKE_CURRENT_BINARY_DIR}/include)
-
-ROOT_GENERATE_DICTIONARY(
-    remollDict                         # path to dictionary to generate
-    "include/remolltypes.hh"           # list of classes to process
-    "include/remollRunData.hh"
-    "include/remollTextFile.hh"
-    LINKDEF "include/remollLinkDef.h"  # ROOT linkDef file
-    OPTIONS -p
-)
+# For remollSearchPath.hh
+# FIXME
+# link_libraries(stdc++fs)
 
 #----------------------------------------------------------------------------
-# Find Boost libraries, in particular iostreams
+# Locate sources and headers for this project
+#
+file(GLOB sources src/remoll*.cc)
+file(GLOB headers include/remoll*.hh)
 
-if(USE_BOOST)
-    find_package(Boost COMPONENTS iostreams)
-    if(Boost_FOUND)
-        include_directories(${Boost_INCLUDE_DIRS})
-        link_directories(${Boost_LIBRARY_DIR})
-        ADD_DEFINITIONS(-D__USE_BOOST)
-        if(Boost_IOSTREAMS_FOUND)
-            ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
-        endif()
-    endif()
+
+#----------------------------------------------------------------------------
+# ROOT
+#
+set(minimum_root_version 6.0)
+find_package(ROOT ${minimum_root_version} REQUIRED)
+config_add_dependency(ROOT ${minimum_root_version})
+
+
+#----------------------------------------------------------------------------
+# gitinfo.cc
+#
+set(PRE_CONFIGURE_FILE ${PROJECT_SOURCE_DIR}/cmake/templates/gitinfo.cc.in)
+set(POST_CONFIGURE_FILE ${CMAKE_BINARY_DIR}/gitinfo.cc)
+include(CMakeGitInfo)
+list(APPEND sources ${POST_CONFIGURE_FILE})
+
+
+#----------------------------------------------------------------------------
+# main dictionaries
+#
+message(STATUS "Generating ${PROJECT_NAME} dictionaries for ROOT ${ROOT_VERSION}...")
+foreach(file ${headers})
+  # Find the header files that have uncommented ClassDef lines
+  execute_process(COMMAND grep -l "[^/]ClassDef" ${file} OUTPUT_VARIABLE result)
+  if(result)
+    list(APPEND needsdict ${file})
+  endif()
+endforeach()
+build_root_dictionary(
+  ${PROJECT_NAME}
+  ${needsdict}
+  TARGETS lib${PROJECT_NAME}
+  LINKDEF ${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}LinkDef.hh
+)
+list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
+
+
+#----------------------------------------------------------------------------
+# Boost
+#
+find_package(Boost QUIET COMPONENTS iostreams filesystem)
+if(Boost_FOUND)
+  message(STATUS "Boost found --> building with boost enabled.")
+  include_directories(${Boost_INCLUDE_DIRS})
+  link_directories(${Boost_LIBRARY_DIR})
+  ADD_DEFINITIONS(-D__USE_BOOST)
+  if(Boost_IOSTREAMS_FOUND)
+    message(STATUS "Boost::iostreams found --> building with boost::iostreams enabled.")
+    #ADD_DEFINITIONS(-D__USE_BOOST_IOSTREAMS)
+  endif()
+  if(Boost_FILESYSTEM_FOUND)
+    message(STATUS "Boost::filesystem found --> building with boost::filesystem enabled.")
+    ADD_DEFINITIONS(-D__USE_BOOST_FILESYSTEM)
+  endif()
+else()
+  message(STATUS "Boost not found.")
 endif()
 
 #----------------------------------------------------------------------------
@@ -80,9 +122,9 @@ endif()
 #
 option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
-  find_package(Geant4 REQUIRED ui_all vis_all)
+  find_package(Geant4 4.10 REQUIRED ui_all vis_all)
 else()
-  find_package(Geant4 REQUIRED)
+  find_package(Geant4 4.10 REQUIRED)
 endif()
 
 #----------------------------------------------------------------------------
@@ -92,56 +134,142 @@ endif()
 include(${Geant4_USE_FILE})
 
 
-#debugging symbols, complains
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -pg")
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Woverloaded-virtual")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -g -Wno-shadow -Wno-pedantic")
-
-# Ignore warning of struct initialization { } for gcc < 5.0 (after that it is ignored internally)
-if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-missing-field-initializers")
-endif()
-
-# C++11 standard if avialable
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-if(COMPILER_SUPPORTS_CXX11)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++11 support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has C++0x support.")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+#----------------------------------------------------------------------------
+# HepMC (optional)
+#
+find_package(HepMC QUIET)
+if(HepMC_FOUND)
+  message(STATUS "HepMC found --> building with HepMC enabled.")
+  add_definitions(-DG4LIB_USE_HEPMC)
+  file(GLOB hepmc_sources src/HepMC*.cc)
+  file(GLOB hepmc_headers include/HepMC*.hh)
+  list(APPEND sources ${hepmc_sources})
+  list(APPEND headers ${hepmc_headers})
 else()
-        message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support.")
+  set(HEPMC_LIBRARIES "")
 endif()
 
-#----------------------------------------------------------------------------
-# Generate dictionaries as well (so we can write objects to ROOT files
-
-include_directories(${PROJECT_SOURCE_DIR}/include ${ROOT_INCLUDE_DIR} ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 #----------------------------------------------------------------------------
-# Locate sources and headers for this project
-# NB: headers are included so they will show up in IDEs
+# Pythia6 (optional)
 #
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/remoll*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/remoll*.hh)
+find_package(Pythia6 QUIET)
+if(PYTHIA6_FOUND)
+  message(STATUS "Pythia6 found --> building with Pythia6 enabled.")
+  add_definitions(-DG4LIB_USE_PYTHIA)
+else()
+  set(PYTHIA6_LIBRARIES "")
+endif()
+
 
 #----------------------------------------------------------------------------
-# Add the executable, and link it to the Geant4 libraries
+# Compiler flags
 #
+# Set compiler flags to the set given by ROOT set
+set_compiler_flags("${ROOT_CXX_FLAGS}")
+# FIXME: The following will at some point all disappear (yeah yeah, soon)
+# Ignore shadowing of CLHEP 1-letter units with 1-letter local variables
+string(APPEND ${PROJECT_NAME_UC}_DIAG_FLAGS " -Wno-shadow")
+# Ignore missing field initializers in structs
+string(APPEND ${PROJECT_NAME_UC}_DIAG_FLAGS " -Wno-missing-field-initializers")
+# Ignore unused parameters in many geant4 functions
+string(APPEND ${PROJECT_NAME_UC}_DIAG_FLAGS " -Wno-unused-parameter")
+if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
+  # Ignore warning of struct initialization { } for gcc < 5.0 (after that it is ignored internally)
+  string(APPEND ${PROJECT_NAME_UC}_DIAG_FLAGS " -Wno-missing-field-initializers")
+endif()
+# Now add the standard WALL and WEXTRA sets
+set_diagnostic_flags(WALL WEXTRA)
+# Finally print what we use
+report_build_info()
+
+
+#----------------------------------------------------------------------------
+# main library
+#
+add_library(lib${PROJECT_NAME} SHARED ${sources} ${headers})
+add_dependencies(lib${PROJECT_NAME} check_git_repository)
+set_target_properties(lib${PROJECT_NAME} PROPERTIES OUTPUT_NAME remoll)
+
+target_include_directories(lib${PROJECT_NAME}
+  PUBLIC
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+  )
+
+target_compile_options(lib${PROJECT_NAME}
+  PUBLIC
+    ${${PROJECT_NAME_UC}_CXX_FLAGS_LIST}
+  PRIVATE
+    ${${PROJECT_NAME_UC}_DIAG_FLAGS_LIST}
+  )
+
+target_link_libraries(lib${PROJECT_NAME}
+  PUBLIC
+    ROOT::Libraries
+    ${Geant4_LIBRARIES}
+    ${Boost_LIBRARIES}
+    ${HEPMC_LIBRARIES}
+    ${PYTHIA6_LIBRARIES}
+  )
+
+install(TARGETS lib${PROJECT_NAME}
+  EXPORT ${MAIN_PROJECT_NAME_LC}-exports
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+  )
+install(FILES ${headers} DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+
+
+#----------------------------------------------------------------------------
+# executables
+#
+<<<<<<< HEAD
 add_library(remoll-lib SHARED ${sources} ${headers} ${CMAKE_CURRENT_BINARY_DIR}/include/gitinfo.hh remollDict.cxx)
 set_target_properties(remoll-lib PROPERTIES OUTPUT_NAME remoll)
 target_link_libraries(remoll-lib ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} ${Boost_LIBRARIES} ${cadmesh_LIBRARIES})
+=======
+file(GLOB exefiles *.cc)
+foreach(file ${exefiles})
+  get_filename_component(filename ${file} NAME_WE)
+  string(TOLOWER ${filename} filelower)
+>>>>>>> upstream/develop
 
-add_executable(remoll-bin remoll.cc)
-set_target_properties(remoll-bin PROPERTIES OUTPUT_NAME remoll)
-target_link_libraries(remoll-bin remoll-lib)
+  add_executable(${filelower} ${file})
 
-add_executable(reroot-bin reroot.cc)
-set_target_properties(reroot-bin PROPERTIES OUTPUT_NAME reroot)
-target_link_libraries(reroot-bin remoll-lib)
+  target_link_libraries(${filelower}
+    PRIVATE
+      lib${PROJECT_NAME}
+  )
+  target_compile_options(${filelower}
+    PUBLIC
+      ${${PROJECT_NAME_UC}_CXX_FLAGS_LIST}
+    PRIVATE
+      ${${PROJECT_NAME_UC}_DIAG_FLAGS_LIST}
+  )
+  if(${CMAKE_SYSTEM_NAME} MATCHES Linux)
+    target_compile_options(${filelower} PUBLIC -fPIC)
+  endif()
+
+  install(TARGETS ${filelower}
+    DESTINATION ${CMAKE_INSTALL_BINDIR}
+  )
+endforeach()
+
+#
+# custom targets
+#
+add_custom_target(create-manual
+  COMMAND ./remoll -g ${PROJECT_SOURCE_DIR}/geometry/mollerMother.gdml ${PROJECT_SOURCE_DIR}/macros/manual.mac | awk '/Command directory path/,/Graphics systems deleted/' > manual.txt
+  BYPRODUCTS manual.txt
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  DEPENDS remoll)
+add_custom_target(check-manual
+  COMMAND diff ${PROJECT_SOURCE_DIR}/manual.txt manual.txt || true
+  WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+  DEPENDS create-manual)
 
 #----------------------------------------------------------------------------
 # Copy all scripts to the build directory, i.e. the directory in which we
@@ -149,16 +277,16 @@ target_link_libraries(reroot-bin remoll-lib)
 # relies on these scripts being in the current working directory.
 #
 
-FILE( GLOB REMOLL_GEO "geometry/*" )
+install(DIRECTORY geometry DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+install(DIRECTORY macros DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
+install(DIRECTORY vis DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll)
 
+file(GLOB vis_macros RELATIVE ${PROJECT_SOURCE_DIR} vis/*.mac)
 set(REMOLL_SCRIPTS
-    vis/OIX.mac
-    vis/Qt.mac
-    vis/vis.mac
-    vis/X.mac
+    ${vis_macros}
     macros/runexample.mac
     macros/gui.mac
-    rootlogon.C
+    macros/moller_dose.mac
   )
 
 foreach(_script ${REMOLL_SCRIPTS})
@@ -169,16 +297,133 @@ foreach(_script ${REMOLL_SCRIPTS})
     )
 endforeach()
 
-#----------------------------------------------------------------------------
-# For internal Geant4 use - but has no effect if you build this
-# example standalone
-#
-add_custom_target(REMOLL DEPENDS remoll-bin)
 
 #----------------------------------------------------------------------------
-# Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
+# Templates
 #
-install(TARGETS remoll-bin reroot-bin DESTINATION bin)
-install(TARGETS remoll-lib DESTINATION lib)
+file(GLOB templates RELATIVE ${PROJECT_SOURCE_DIR} cmake/templates/*.in)
+foreach(_template_in ${templates})
+  string(REPLACE ".in" "" _template_out ${_template_in})
+  configure_file(
+    ${PROJECT_SOURCE_DIR}/${_template_in}
+    ${PROJECT_BINARY_DIR}/${_template_out}
+    @ONLY
+    )
+  install(FILES
+    ${PROJECT_BINARY_DIR}/${_template_out}
+    DESTINATION bin
+    PERMISSIONS
+      OWNER_READ OWNER_WRITE OWNER_EXECUTE
+      GROUP_READ GROUP_EXECUTE
+      WORLD_READ WORLD_EXECUTE
+    )
+endforeach()
 
+
+#----------------------------------------------------------------------------
+# Download field maps subdirectory
+#
+set(REMOLL_LOCATION /group/halla/www/hallaweb/html/12GeV/Moller/downloads/remoll/)
+set(REMOLL_DOWNLOADS http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/)
+set(REMOLL_MAP_DIR ${PROJECT_SOURCE_DIR}/map_directory)
+if(EXISTS ${REMOLL_LOCATION})
+  message(STATUS "Fieldmaps will be copied from directory...")
+  set(REMOLL_DOWNLOADS file://${REMOLL_LOCATION})
+else()
+  message(STATUS "Fieldmaps will be downloaded from web...")
+endif()
+if(Boost_IOSTREAMS_FOUND)
+  message(STATUS "Gzipped fieldmaps will be made available...")
+endif()
+# for i in *.txt ; do echo `md5sum $i|awk '{print$1}'`:`md5sum $i.gz|awk '{print$1}'`:$i ; done
+set(REMOLL_MAPS
+b8b30b803bae42f69135323ff40fe7db:99bf3fae83677c6c2f3e09a871682b2e:V2U.1a.50cm.parallel.txt
+d5f568675ca29e295c1013617a2dc092:b3e031ce9d97fa5331ec39e8903817e6:V2DSg.9.75cm.parallel.txt
+)
+set(REMOLL_MAPS_EXTRA
+1c79bc83e4da5e9d5e44338e28ce6ebe:c7591d167ca56e871e8e5eeecab2872c:V2DSg.9.75cm.txt
+f768447f761b9bf01af7c57e249d1d8a:94ec0017b21fc56d9d8084d68e479fd5:V2U.1a.50cm.txt
+b1b8f2845dc5cd420c6ff49ae7760a60:6002f6f5f092346cb2bdedac046d1905:V1U.2a.txt
+70e2bbed1831816957e953bba48f01d5:2fd1cd2785db92f9c880b675890460b5:V2U.1a.txt
+e55ffd8aba96cbf24962155d3c7f75e4:0172016c988867b0928258d79cd1c865:V2U.1b.txt
+eb802b9d8569669b5aa674fc56c52a24:df7f4dd87c894c5eef878b248ef14c3e:V1DSg.3.txt
+c71758450b063ab83e95a7ba8c590885:a5ba5c81c0c6590d43fac1cbd3f2d7a0:V2DSg.1a.txt
+c2ac33287df1bf20bfedcb4d4a96c8d5:3a31416eb7659248f7a2ba582d43a6fe:V2DSg.1b.txt
+ca69d4a4397ae3a944f603b91dfbe586:36e2aa90d39e4ad9be4f747a522baa69:V1DHy.3.txt
+259459226a5cacc1d62ba295534645e2:95c6193ea30c03316068e3d67d3ec32b:V2DHy.1.txt
+b4bfef8f362e0df66f166b4e76a6847e:57a7719eb877572751f4c4b481d6a788:blockyHybrid_rm_3.0.txt
+7df29e47413c8dd69fd179298f11b717:9120bc05099a144916467b6ea17e39f8:blockyUpstream_rm_1.1_noscale.txt
+3e2338e1ba74b03da37545e98931f5f3:75dfcd912e74f42543892fed8271fa7c:blockyUpstream_rm_1.1.txt
+c2da18fd7ab80cc4abe7eafc487963dc:112a466bf5dc2ef4dd24b935767a0540:hybridJLAB.txt
+4a0d1abc9b80cf5f2c3dd495a1133e26:a8f5875a4ef0c27c63f31cf7395b13f0:hybridJLAB_v2.txt
+0f6e9a3a8392d01c63f1609afc4e4c09:996a6581de9d3c331398bb85ef955a15:hybridSymmetric_sensR_0.0.txt
+78fad2ffa5b5ae129df11bdf0ce25333:f21fb19507197baba3658885315c9a6e:hybridSymmetric_sensR_0.1.txt
+2a21b540f6496e3f554302f369646bbb:fb95664f9bdba1c22ad28eb21bd1c9fb:segmentedJLAB_v2.txt
+af06ed35516c17640e89ba3aa0f5b200:b8009dc61a17eea1d884f0c746f6922c:upstreamJLAB_1.25.txt
+bed73f2ea44135c52222bc8e767e1954:f50ce73289174ada019977f2dec87cb6:upstreamJLAB_v2.txt
+4ca3d968cadd85a89b86148411eda678:ce0a41b96a5937978aa9f30155fab610:upstreamSymmetric_sensR_0.0.txt
+849d9dc5abab0842fc13fef7f4918648:4a8c457385f179a036fffca4ae8e2cb0:upstreamSymmetric_sensR_0.1.txt
+)
+if(ADDITIONAL_FIELDS)
+  message(STATUS "Ensuring additional fields are available.")
+else()
+  message(STATUS "Download additional fields with '-DADDITIONAL_FIELDS=ON'.")
+  set(REMOLL_MAPS_EXTRA "")
+endif()
+foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
+  set(REGEX "^(.*):(.*):(.*)$")
+  # Hash 1: txt file, Hash 2: txt.gz file
+  string(REGEX REPLACE ${REGEX} "\\1" HASH1 ${MAP})
+  string(REGEX REPLACE ${REGEX} "\\2" HASH2 ${MAP})
+  string(REGEX REPLACE ${REGEX} "\\3" FILE ${MAP})
+  if(Boost_IOSTREAMS_FOUND)
+    file(DOWNLOAD
+      ${REMOLL_DOWNLOADS}/${FILE}.gz
+      ${REMOLL_MAP_DIR}/${FILE}.gz
+      EXPECTED_MD5 ${HASH2}
+      )
+    install(FILES
+      ${REMOLL_MAP_DIR}/${FILE}.gz
+      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll/map_directory)
+  endif()
+  #else()
+    file(DOWNLOAD
+      ${REMOLL_DOWNLOADS}/${FILE}
+      ${REMOLL_MAP_DIR}/${FILE}
+      EXPECTED_MD5 ${HASH1}
+      )
+    install(FILES
+      ${REMOLL_MAP_DIR}/${FILE}
+      DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll/map_directory)
+  #endif()
+endforeach()
+
+
+#----------------------------------------------------------------------------
+# Install cmake config file
+#
+install(FILES
+    ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollConfig.cmake
+    ${PROJECT_SOURCE_DIR}/cmake/scripts/RemollUseFile.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/remoll)
+
+#----------------------------------------------------------------------------
+# remollSearchPath
+
+add_definitions(
+        -DCMAKE_INSTALL_PREFIX=\"${CMAKE_INSTALL_PREFIX}\"
+        -DCMAKE_INSTALL_FULL_DATADIR=\"${CMAKE_INSTALL_FULL_DATADIR}\"
+)
+
+#----------------------------------------------------------------------------
+# uninstall
+#
+if(NOT TARGET uninstall)
+  configure_file(
+      "${CMAKE_CURRENT_SOURCE_DIR}/cmake/scripts/cmake_uninstall.cmake.in"
+      "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+      IMMEDIATE @ONLY)
+  add_custom_target(uninstall
+      COMMAND ${CMAKE_COMMAND} -P ${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake)
+endif()
 

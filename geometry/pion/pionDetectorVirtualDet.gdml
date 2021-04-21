@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <quantity name="pionDetectorVirtualDetThickness" type="length" value="10" unit="mm"/>
+</define>
+
+<materials>
+  <material Z="1" name="VacuumKryptonite" state="gas">
+    <T unit="K" value="2.73"/>
+    <P unit="pascal" value="3e-18"/>
+    <D unit="g/cm3" value="1e-25"/>
+    <atom unit="g/mole" value="1.01"/>
+  </material>
+</materials>
+
+<solids>
+  <tube aunit="deg" deltaphi="360.0" name="pionDetectorVirtualDet_solid"
+        rmin="820*mm" rmax="2000*mm" startphi="0" z="pionDetectorVirtualDetThickness"/>
+</solids>
+
+<structure>
+
+  <volume name="pionDetectorVirtualDetVacuum_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pionDetectorVirtualDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="8060"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+  <volume name="pionDetectorVirtualDetVacuumKryptonite_logical">
+    <materialref ref="VacuumKryptonite"/>
+    <solidref ref="pionDetectorVirtualDet_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="8061"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorVirtualDetVacuumKryptonite_logical"/>
+</setup>
+
+</gdml>

@@ -1,4 +1,3 @@
-
 #ifndef remollEventAction_h
 #define remollEventAction_h 1
 
@@ -10,6 +9,7 @@
 class G4Event;
 
 class remollPrimaryGeneratorAction;
+class remollTrackReconstruct;
 
 class remollEventAction : public G4UserEventAction
 {
@@ -24,17 +24,18 @@ class remollEventAction : public G4UserEventAction
   private:
     // Pointer to primary generator action
     remollPrimaryGeneratorAction* fPrimaryGeneratorAction;
+    remollTrackReconstruct* rTrack;
+
+    // Timer for benchmarking of simulation time per event
+    G4Timer fTimer;
+
   public:
     // Setter for primary generator action
     void SetPrimaryGeneratorAction(remollPrimaryGeneratorAction* action) {
       fPrimaryGeneratorAction = action;
     }
 
-  private:
-    // Random seed at begin of event
-    G4String fEventSeed;
 };
 
 #endif
 
-    

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  &matrices;
+
+  <constant name="targetCenterZ" value="0"/>
+  <constant name="tubeTarget_rmax" value="40"/>
+  <constant name="tubeTarget_length" value="1250"/>
+  <constant name="AlWindowTarget_length" value="0.127"/>
+</define>
+
+&materials;
+
+<solids>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1000" rmin="0" startphi="0" z="2400"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="tubeTarget_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlWindow" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="AlWindowTarget_length"/>
+</solids>
+
+<structure>
+
+    <volume name="h2Targ">
+      <materialref ref="G4_lH2"/>
+      <solidref ref="tubeTarget"/>
+      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+    </volume>
+ 
+    <volume name="USAlTarg">
+      <materialref ref="G4_Al"/>
+      <solidref ref="AlWindow"/>
+      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+    </volume>
+
+    <volume name="DSAlTarg">
+      <materialref ref="G4_Al"/>
+      <solidref ref="AlWindow"/>
+      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+    </volume>
+
+
+    <volume name="logicTarget">
+      <materialref ref="VacuumTarg"/>
+      <solidref ref="tubeTargetMother"/>
+
+      <physvol>
+        <volumeref ref="USAlTarg"/>
+        <position name="targ_upstream_window" unit="mm" x="0" y="0" z="targetCenterZ-(AlWindowTarget_length+tubeTarget_length)/2.0"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="h2Targ"/>
+        <position name="targ_center" unit="mm" x="0" y="0" z="targetCenterZ"/>
+      </physvol>
+      
+      <physvol>
+        <volumeref ref="DSAlTarg"/>
+        <position name="targ_downstream_window" unit="mm" x="0" y="0" z="targetCenterZ+(AlWindowTarget_length+tubeTarget_length)/2.0"/>
+      </physvol>
+
+      <auxiliary auxtype="TargetSystem" auxvalue=""/>
+    </volume>
+
+</structure>
+
+<setup name="Target" version="1.0">
+	<world ref="logicTarget"/>
+</setup>
+
+</gdml>

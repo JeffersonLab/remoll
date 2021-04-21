@@ -1,4 +1,12 @@
+/run/numberOfThreads 1
+
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+/remoll/physlist/parallel/enable 
+
+/control/execute macros/kryptonite.mac
+
 /run/initialize
+
 /remoll/evgen/set moller
 /remoll/filename remollin.root
 /run/beamOn 1000
@@ -6,8 +14,8 @@
 /remoll/filename remollout.root
 
 /remoll/evgen/set external
-/run/beamOn 0
 /remoll/evgen/external/file remollin.root
 /remoll/evgen/external/detid 28
+/remoll/evgen/external/startEvent 0
 /remoll/filename remollout.root
 /run/beamOn 1

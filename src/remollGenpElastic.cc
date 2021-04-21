@@ -45,13 +45,13 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     std::vector<G4VPhysicalVolume *>::iterator it = targVols.begin();
     if( targVols.size() > 0 ){
-	while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" 
+	while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" 
 		&& it != targVols.end() ){ it++; }
 
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
+	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" ){
 	    G4cerr << __FILE__ << " line " << __LINE__ << ": WARNING could not find target" << G4endl;
 	    bypass_target = true;
-	}     
+	}
     } else {
 	bypass_target = true;
     }
@@ -178,7 +178,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     // Set event information to our new sampling
     evt->fBeamE = beamE;
-    evt->fBeamMomentum = evt->fBeamMomentum.unit()*sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2);;
+    evt->fBeamMomentum = evt->fBeamMomentum.unit()*sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2);
 
     ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -203,7 +203,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double ph = G4RandFlat::shoot(0.0, 2.0*pi);
 
-    double ef    = proton_mass_c2*beamE/(proton_mass_c2 + beamE*(1.0-cos(th)));;
+    double ef    = proton_mass_c2*beamE/(proton_mass_c2 + beamE*(1.0-cos(th)));
 
     double q2  = 2.0*beamE*ef*(1.0-cos(th));
     double tau = q2/(4.0*proton_mass_c2*proton_mass_c2);
@@ -221,7 +221,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double sigma = sigma_mott*(ef/beamE)*(ffpart1 + ffpart2);
 
-    double V = 2.0*pi*(cthmin - cthmax)*samp_fact;
+    double V = (fPh_max - fPh_min) * (cthmin - cthmax) * samp_fact;
 
     // Suppress too low angles from being generated
     // If we're in the multiple-scattering regime
@@ -266,7 +266,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // We're going to use the new kinematics for this guy
 
     int_bt = (alpha/pi)*( log( q2/(electron_mass_c2*electron_mass_c2) ) - 1.0 );
-    Ekin = ef - electron_mass_c2;;
+    Ekin = ef - electron_mass_c2;
     double env, ref;
 
     prob = 1.- pow(bremcut/Ekin, int_bt) - int_bt/(int_bt+1.)*(1.- pow(bremcut/Ekin,int_bt+1.))

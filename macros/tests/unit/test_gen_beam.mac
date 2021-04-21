@@ -1,0 +1,13 @@
+/run/initialize
+/remoll/evgen/set beam
+/remoll/evgen/beam/origin -200 10 10 mm
+/remoll/evgen/beam/direction 0 0 1
+/remoll/evgen/beam/polarization 0 0 1
+/remoll/evgen/beam/z -200
+/remoll/evgen/beam/x -1300 mm
+/remoll/evgen/beam/px 0
+/remoll/evgen/beam/py 0
+/remoll/evgen/beam/pz 1
+/remoll/evgen/beam/th 20e-3 rad
+/remoll/evgen/beam/ph 0.1 deg
+/run/beamOn 1

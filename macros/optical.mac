@@ -1,0 +1,63 @@
+# Note:
+# As long as mainly the pion detector is setup for optical photons,
+# you may want to ensure that some electrons reach it by making the
+# following changes in geometry/pionDetectorSystem.gdml:
+#     <volume name="pionDetectorLeadDonut_logical">
+#       <!-- for testing with electron: disable lead and turn into G4_Galactic -->
+#-      <!-- <materialref ref="G4_Galactic"/> -->
+#-      <materialref ref="G4_Pb"/>
+#+      <materialref ref="G4_Galactic"/>
+#+      <!-- <materialref ref="G4_Pb"/> -->
+#       <solidref ref="pionDetectorLeadDonut_solid"/>
+#       <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+#     </volume>
+
+# This must be called before initialize
+/remoll/setgeofile geometry/mollerMother.gdml
+
+# Enable optical physics
+/remoll/physlist/optical/enable
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+/remoll/kryptonite/disable
+
+/remoll/filename remollout.root
+
+/run/beamOn 10
+
+# Output: hit.pid == 0 for optical photons, energy is O(eV) ~ 10e-6 MeV
+# root [3] T->Scan("hit.pid:hit.det:hit.e","hit.pid==0")
+#***********************************************************
+#*    Row   * Instance *   hit.pid *   hit.det *     hit.e *
+#***********************************************************
+#*        2 *      561 *         0 *      4010 * 1.991e-06 *
+#*        2 *      562 *         0 *      4010 * 1.991e-06 *
+#*        2 *      563 *         0 *      4010 * 1.991e-06 *
+#*        2 *      564 *         0 *      4010 * 1.991e-06 *
+#*        2 *      565 *         0 *      4010 * 1.991e-06 *
+#*        2 *      566 *         0 *      4010 * 1.991e-06 *
+#*        2 *      567 *         0 *      4010 * 1.991e-06 *
+#*        2 *      568 *         0 *      4010 * 1.991e-06 *
+#*        2 *      569 *         0 *      4010 * 3.608e-06 *
+#*        2 *      570 *         0 *      4010 * 3.608e-06 *
+#*        2 *      571 *         0 *      4010 * 3.608e-06 *
+#*        2 *      572 *         0 *      4010 * 3.608e-06 *
+#*        2 *      573 *         0 *      4010 * 3.608e-06 *
+#*        2 *      574 *         0 *      4010 * 3.608e-06 *
+#*        2 *      575 *         0 *      4010 * 3.608e-06 *
+#*        2 *      576 *         0 *      4010 * 2.027e-06 *
+#*        2 *      577 *         0 *      4010 * 2.027e-06 *
+#*        2 *      578 *         0 *      4010 * 2.027e-06 *
+#*        2 *      579 *         0 *      4010 * 2.027e-06 *
+#*        2 *      580 *         0 *      4010 * 2.027e-06 *
+#*        2 *      581 *         0 *      4010 * 2.027e-06 *
+#*        2 *      582 *         0 *      4010 * 3.223e-06 *
+#*        2 *      583 *         0 *      4010 * 3.223e-06 *
+#*        2 *      584 *         0 *      4010 * 3.223e-06 *
+#*        2 *      585 *         0 *      4010 * 3.223e-06 *
+

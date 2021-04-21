@@ -1,0 +1,39 @@
+<gdml 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box name="world_solid" x="1.0" y="1.0" z="1.0" lunit="m"/>
+  <box name="krypt_solid" x="0.5" y="0.5" z="0.5" lunit="m"/>
+</solids>
+
+<structure>
+  <volume name="krypt_logical">
+    <materialref ref="G4_Pb"/>
+    <solidref ref="krypt_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="krypt_SD"/>
+    <auxiliary auxtype="DetNo"   auxvalue="1"/>
+  </volume>
+
+  <volume name="world_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="world_solid"/>
+
+    <physvol name="krypt_physical">
+      <volumeref ref="krypt_logical"/>
+    </physvol>
+
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="world_logical"/>
+</setup>
+
+</gdml>

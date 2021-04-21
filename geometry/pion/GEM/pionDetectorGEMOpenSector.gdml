@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <variable name="i" value="0"/>
+  <constant name="PHI"  value="360.0/2.0"/>
+  <constant name="PHI0" value="1.5*360.0/7.0"/>
+
+  <quantity name="pionDetectorGEMInnerRadius" type="length" value="0.820" unit="m"/>
+  <quantity name="pionDetectorGEMOuterRadius" type="length" value="1.500" unit="m"/>
+  <quantity name="pionDetectorGEMLength" type="length" value="0.1" unit="m"/>
+
+  <quantity name="pionDetectorGEMRadialPosition" type="length" value="105.0" unit="cm"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <tube name="pionDetectorGEMOpenSector_solid"
+    rmin="pionDetectorGEMInnerRadius"
+    rmax="pionDetectorGEMOuterRadius"
+       z="pionDetectorGEMLength"
+    startphi="-0.5*PHI/2.0" deltaphi="0.5*PHI" aunit="deg"/>
+  <tube name="pionDetectorGEMAllSectors_solid"
+    rmin="pionDetectorGEMInnerRadius"
+    rmax="pionDetectorGEMOuterRadius"
+       z="pionDetectorGEMLength"
+    startphi="-PHI/2.0" deltaphi="360.0" aunit="deg"/>
+</solids>
+
+<structure>
+
+  <volume name="pionDetectorGEMOpenSector_logical">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="pionDetectorGEMOpenSector_solid"/>
+    <physvol name="pionDetectorGEM_physical">
+      <file name="pion/GEM/pionDetectorGEM.gdml"/>
+      <position name="pionDetectorGEM_position" x="pionDetectorGEMRadialPosition"/>
+      <rotation name="pionDetectorGEM_rotation" y="-90.0" z="90" unit="deg"/>
+    </physvol>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+  <volume name="pionDetectorGEMAllSectors_logical">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="pionDetectorGEMAllSectors_solid"/>
+    <loop for="i" from="0" to="1" step="1">
+      <physvol name="pionDetectorGEMOpenSector_physical[i]">
+        <volumeref ref="pionDetectorGEMOpenSector_logical"/>
+        <rotation z="-PHI0-i*PHI" unit="deg"/>
+      </physvol>
+    </loop>
+    <!--replicavol number="2">
+      <volumeref ref="pionDetectorGEMOpenSector_logical"/>
+      <replicate_along_axis>
+        <direction phi="1"/>
+        <width value="PHI" unit="deg"/>
+        <offset value="PHI0-PHI/2" unit="deg"/>
+      </replicate_along_axis>
+    </replicavol-->
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="pionDetectorGEMAllSectors_logical"/>
+</setup>
+
+</gdml>

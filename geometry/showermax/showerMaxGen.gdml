@@ -1,0 +1,4437 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+
+<define>
+</define>
+
+<materials>
+	<material name="G4_Quartz" state="solid">
+		<MEE unit="eV" value="139.2"/>
+		<D value="2.2" unit="g/cm3"/>
+		<fraction n="0.467465468463971" ref="G4_Si"/>
+		<fraction n="0.532534531536029" ref="G4_O"/>
+	</material>
+	<material name="G4_Cathode" state="solid">
+		<D value="0.8223" unit="g/cm3"/>
+		<fraction n="0.2349" ref="G4_K"/>
+		<fraction n="0.3993" ref="G4_Cs"/>
+		<fraction n="0.3658" ref="G4_Sb"/>
+	</material>
+</materials>
+
+
+<solids>
+	<tube name="solid_pmt_window" rmin="0" rmax="38.1" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_cathode" rmin="0" rmax="38.1" z="3e-06" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<box name="solid_mirror_box_tungstenquartz_1" lunit="mm" x="160.0" y="266.0" z="57.0"/>
+	<box name="solid_mirror_box_tungstenquartz_2" lunit="mm" x="161.0" y="265.0" z="56.0"/>
+	<subtraction name="solid_mirror_box_tungstenquartz">
+		<first ref="solid_mirror_box_tungstenquartz_1"/>
+		<second ref="solid_mirror_box_tungstenquartz_2"/>
+		<position name="pos_subtract_mirror_box_tungstenquartz_12" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_mirror_box_tungstenquartz_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="49.0"  x2="86.868" y1="266.0"  y2="266.0" z="67.462"/>
+	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="48.0"  x2="85.868" y1="265.0"  y2="265.0" z="68.462"/>
+	<subtraction name="solid_mirror_box_bot">
+		<first ref="solid_mirror_box_bot_1"/>
+		<second ref="solid_mirror_box_bot_2"/>
+		<position name="pos_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<trd name="solid_mirror_box_top_1" lunit="mm" x1="86.868"  x2="70.866" y1="266.0"  y2="70.866" z="183.058"/>
+	<trd name="solid_mirror_box_top_2" lunit="mm" x1="85.868"  x2="69.866" y1="265.0"  y2="69.866" z="184.058"/>
+	<subtraction name="solid_mirror_box_top">
+		<first ref="solid_mirror_box_top_1"/>
+		<second ref="solid_mirror_box_top_2"/>
+		<position name="pos_subtract_mirror_box_top_12" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_mirror_box_top_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<xtru name="solid_quartz" lunit="mm">
+		<twoDimVertex x="-80.0" y="3.0"/>
+		<twoDimVertex x="-80.0" y="-3.0"/>
+		<twoDimVertex x="86.0" y="-3.0"/>
+		<twoDimVertex x="80.0" y="3.0"/>
+		<section zOrder="1" zPosition="-132.5" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="132.5" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<box name="solid_tungsten" lunit="mm" x="160.0" y="265.0" z="8.0"/>
+	<box name="solid_logic_mirror_box_3" lunit="mm" x="181.61" y="313.944" z="69.7"/>
+	<union name="solid_logic_mirror_box_tungstenquartz_frontplate_backplate">
+		<first ref="solid_mirror_box_tungstenquartz_1"/>
+		<second ref="solid_logic_mirror_box_3"/>
+		<position name="pos_logic_mirror_box_tungstenquartz_frontplate_backplate" z="0" y="0" x="-10.805"/>
+		<rotation name="rot_logic_mirror_box_tungstenquartz_frontplate_backplate" x="0" y="0" z="0"/>
+	</union>
+	<box name="solid_logic_mirror_box_4" lunit="mm" z="186.058003" y="266.0" x="86.868"/>
+	<union name="solid_logic_mirror_box">
+		<first ref="solid_mirror_box_bot_1"/>
+		<second ref="solid_logic_mirror_box_4"/>
+		<position name="pos_logic_mirror_box" z="126.7600015" y="0" x="0"/>
+		<rotation name="rot_logic_mirror_box" x="0" y="0" z="0"/>
+	</union>
+	<box name="solid_front_back_plate" lunit="mm" x="181.61" y="313.944" z="6.35"/>
+	<union name="solid_logic_mirror_box_union">
+		<first ref="solid_logic_mirror_box_tungstenquartz_frontplate_backplate"/>
+		<second ref="solid_logic_mirror_box"/>
+		<position name="pos_logic_mirror_box_union" x="113.731" y="0" z="4.0"/>
+		<rotation name="rot_logic_mirror_box_union" x="0" y="pi/2" z="0"/>
+	</union>
+	<cone name="solid_showerMaxMother" rmin1="730"  rmax1="1900" rmin2="730" rmax2="1900"  z="263.604" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+</solids>
+
+
+<structure>
+	<volume name="logic_mirror_box_tungstenquartz_0">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_0">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_0">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_0">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_0">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_0_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_0_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_0_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_0_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_0_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_0_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_0_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_0_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_0">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_0">
+			<volumeref ref="logic_mirror_box_tungstenquartz_0"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_0" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_0">
+			<volumeref ref="logic_mirror_box_bot_0"/>
+			<position name="pos_logic_mirror_box_bot_0" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_0">
+			<volumeref ref="logic_mirror_box_top_0"/>
+			<position name="pos_logic_mirror_box_top_0" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_0">
+			<volumeref ref="logic_pmt_window_0"/>
+			<position name="pos_logic_pmt_window_0" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_0">
+			<volumeref ref="logic_pmt_cathode_0"/>
+			<position name="pos_logic_pmt_cathode_0" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_0">
+			<volumeref ref="logic_front_back_plate_0"/>
+			<position name="pos_logic_front_plate_0" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_0">
+			<volumeref ref="logic_front_back_plate_0"/>
+			<position name="pos_logic_back_plate_0" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_0">
+			<volumeref ref="logic_quartz_0_0"/>
+			<position name="pos_logic_quartz_0_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_0_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_0">
+			<volumeref ref="logic_tungsten_0_0"/>
+			<position name="pos_logic_tungsten_0_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_0_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_1">
+			<volumeref ref="logic_quartz_0_1"/>
+			<position name="pos_logic_quartz_0_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_0_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_1">
+			<volumeref ref="logic_tungsten_0_1"/>
+			<position name="pos_logic_tungsten_0_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_0_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_2">
+			<volumeref ref="logic_quartz_0_2"/>
+			<position name="pos_logic_quartz_0_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_0_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_2">
+			<volumeref ref="logic_tungsten_0_2"/>
+			<position name="pos_logic_tungsten_0_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_0_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_3">
+			<volumeref ref="logic_quartz_0_3"/>
+			<position name="pos_logic_quartz_0_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_0_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_3">
+			<volumeref ref="logic_tungsten_0_3"/>
+			<position name="pos_logic_tungsten_0_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_0_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_1">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_1">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_1">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_1">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_1">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_1_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_1_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_1_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_1_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_1_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_1_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_1_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_1_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_1">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_1">
+			<volumeref ref="logic_mirror_box_tungstenquartz_1"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_1" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_1">
+			<volumeref ref="logic_mirror_box_bot_1"/>
+			<position name="pos_logic_mirror_box_bot_1" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_1" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_1">
+			<volumeref ref="logic_mirror_box_top_1"/>
+			<position name="pos_logic_mirror_box_top_1" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_1" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_1">
+			<volumeref ref="logic_pmt_window_1"/>
+			<position name="pos_logic_pmt_window_1" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_1" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_1">
+			<volumeref ref="logic_pmt_cathode_1"/>
+			<position name="pos_logic_pmt_cathode_1" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_1" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_1">
+			<volumeref ref="logic_front_back_plate_1"/>
+			<position name="pos_logic_front_plate_1" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_1">
+			<volumeref ref="logic_front_back_plate_1"/>
+			<position name="pos_logic_back_plate_1" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_1_0">
+			<volumeref ref="logic_quartz_1_0"/>
+			<position name="pos_logic_quartz_1_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_1_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_1_0">
+			<volumeref ref="logic_tungsten_1_0"/>
+			<position name="pos_logic_tungsten_1_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_1_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_1_1">
+			<volumeref ref="logic_quartz_1_1"/>
+			<position name="pos_logic_quartz_1_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_1_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_1_1">
+			<volumeref ref="logic_tungsten_1_1"/>
+			<position name="pos_logic_tungsten_1_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_1_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_1_2">
+			<volumeref ref="logic_quartz_1_2"/>
+			<position name="pos_logic_quartz_1_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_1_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_1_2">
+			<volumeref ref="logic_tungsten_1_2"/>
+			<position name="pos_logic_tungsten_1_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_1_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_1_3">
+			<volumeref ref="logic_quartz_1_3"/>
+			<position name="pos_logic_quartz_1_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_1_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_1_3">
+			<volumeref ref="logic_tungsten_1_3"/>
+			<position name="pos_logic_tungsten_1_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_1_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_2">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_2">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_2">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_2">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_2">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_2_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_2_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_2_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_2_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_2_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_2_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_2_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_2_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_2">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_2">
+			<volumeref ref="logic_mirror_box_tungstenquartz_2"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_2" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_2">
+			<volumeref ref="logic_mirror_box_bot_2"/>
+			<position name="pos_logic_mirror_box_bot_2" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_2" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_2">
+			<volumeref ref="logic_mirror_box_top_2"/>
+			<position name="pos_logic_mirror_box_top_2" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_2" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_2">
+			<volumeref ref="logic_pmt_window_2"/>
+			<position name="pos_logic_pmt_window_2" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_2" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_2">
+			<volumeref ref="logic_pmt_cathode_2"/>
+			<position name="pos_logic_pmt_cathode_2" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_2" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_2">
+			<volumeref ref="logic_front_back_plate_2"/>
+			<position name="pos_logic_front_plate_2" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_2">
+			<volumeref ref="logic_front_back_plate_2"/>
+			<position name="pos_logic_back_plate_2" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_2_0">
+			<volumeref ref="logic_quartz_2_0"/>
+			<position name="pos_logic_quartz_2_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_2_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_2_0">
+			<volumeref ref="logic_tungsten_2_0"/>
+			<position name="pos_logic_tungsten_2_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_2_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_2_1">
+			<volumeref ref="logic_quartz_2_1"/>
+			<position name="pos_logic_quartz_2_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_2_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_2_1">
+			<volumeref ref="logic_tungsten_2_1"/>
+			<position name="pos_logic_tungsten_2_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_2_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_2_2">
+			<volumeref ref="logic_quartz_2_2"/>
+			<position name="pos_logic_quartz_2_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_2_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_2_2">
+			<volumeref ref="logic_tungsten_2_2"/>
+			<position name="pos_logic_tungsten_2_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_2_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_2_3">
+			<volumeref ref="logic_quartz_2_3"/>
+			<position name="pos_logic_quartz_2_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_2_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_2_3">
+			<volumeref ref="logic_tungsten_2_3"/>
+			<position name="pos_logic_tungsten_2_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_2_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_3">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_3">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_3">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_3">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_3">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_3_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_3_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_3_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_3_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_3_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_3_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_3_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_3_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_3">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_3">
+			<volumeref ref="logic_mirror_box_tungstenquartz_3"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_3" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_3">
+			<volumeref ref="logic_mirror_box_bot_3"/>
+			<position name="pos_logic_mirror_box_bot_3" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_3" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_3">
+			<volumeref ref="logic_mirror_box_top_3"/>
+			<position name="pos_logic_mirror_box_top_3" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_3" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_3">
+			<volumeref ref="logic_pmt_window_3"/>
+			<position name="pos_logic_pmt_window_3" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_3" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_3">
+			<volumeref ref="logic_pmt_cathode_3"/>
+			<position name="pos_logic_pmt_cathode_3" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_3" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_3">
+			<volumeref ref="logic_front_back_plate_3"/>
+			<position name="pos_logic_front_plate_3" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_3">
+			<volumeref ref="logic_front_back_plate_3"/>
+			<position name="pos_logic_back_plate_3" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_3_0">
+			<volumeref ref="logic_quartz_3_0"/>
+			<position name="pos_logic_quartz_3_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_3_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_3_0">
+			<volumeref ref="logic_tungsten_3_0"/>
+			<position name="pos_logic_tungsten_3_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_3_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_3_1">
+			<volumeref ref="logic_quartz_3_1"/>
+			<position name="pos_logic_quartz_3_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_3_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_3_1">
+			<volumeref ref="logic_tungsten_3_1"/>
+			<position name="pos_logic_tungsten_3_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_3_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_3_2">
+			<volumeref ref="logic_quartz_3_2"/>
+			<position name="pos_logic_quartz_3_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_3_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_3_2">
+			<volumeref ref="logic_tungsten_3_2"/>
+			<position name="pos_logic_tungsten_3_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_3_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_3_3">
+			<volumeref ref="logic_quartz_3_3"/>
+			<position name="pos_logic_quartz_3_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_3_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_3_3">
+			<volumeref ref="logic_tungsten_3_3"/>
+			<position name="pos_logic_tungsten_3_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_3_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_4">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_4">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_4">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_4">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_4">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_4">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_4_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_4_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_4_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_4_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_4_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_4_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_4_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_4_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_4">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_4">
+			<volumeref ref="logic_mirror_box_tungstenquartz_4"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_4" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_4">
+			<volumeref ref="logic_mirror_box_bot_4"/>
+			<position name="pos_logic_mirror_box_bot_4" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_4" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_4">
+			<volumeref ref="logic_mirror_box_top_4"/>
+			<position name="pos_logic_mirror_box_top_4" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_4" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_4">
+			<volumeref ref="logic_pmt_window_4"/>
+			<position name="pos_logic_pmt_window_4" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_4" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_4">
+			<volumeref ref="logic_pmt_cathode_4"/>
+			<position name="pos_logic_pmt_cathode_4" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_4" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_4">
+			<volumeref ref="logic_front_back_plate_4"/>
+			<position name="pos_logic_front_plate_4" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_4">
+			<volumeref ref="logic_front_back_plate_4"/>
+			<position name="pos_logic_back_plate_4" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_4_0">
+			<volumeref ref="logic_quartz_4_0"/>
+			<position name="pos_logic_quartz_4_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_4_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_4_0">
+			<volumeref ref="logic_tungsten_4_0"/>
+			<position name="pos_logic_tungsten_4_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_4_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_4_1">
+			<volumeref ref="logic_quartz_4_1"/>
+			<position name="pos_logic_quartz_4_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_4_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_4_1">
+			<volumeref ref="logic_tungsten_4_1"/>
+			<position name="pos_logic_tungsten_4_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_4_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_4_2">
+			<volumeref ref="logic_quartz_4_2"/>
+			<position name="pos_logic_quartz_4_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_4_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_4_2">
+			<volumeref ref="logic_tungsten_4_2"/>
+			<position name="pos_logic_tungsten_4_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_4_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_4_3">
+			<volumeref ref="logic_quartz_4_3"/>
+			<position name="pos_logic_quartz_4_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_4_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_4_3">
+			<volumeref ref="logic_tungsten_4_3"/>
+			<position name="pos_logic_tungsten_4_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_4_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_5">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_5">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_5">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_5">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_5">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_5">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_5_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_5_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_5_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_5_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_5_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_5_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_5_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_5_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_5">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_5">
+			<volumeref ref="logic_mirror_box_tungstenquartz_5"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_5" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_5">
+			<volumeref ref="logic_mirror_box_bot_5"/>
+			<position name="pos_logic_mirror_box_bot_5" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_5" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_5">
+			<volumeref ref="logic_mirror_box_top_5"/>
+			<position name="pos_logic_mirror_box_top_5" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_5" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_5">
+			<volumeref ref="logic_pmt_window_5"/>
+			<position name="pos_logic_pmt_window_5" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_5" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_5">
+			<volumeref ref="logic_pmt_cathode_5"/>
+			<position name="pos_logic_pmt_cathode_5" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_5" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_5">
+			<volumeref ref="logic_front_back_plate_5"/>
+			<position name="pos_logic_front_plate_5" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_5">
+			<volumeref ref="logic_front_back_plate_5"/>
+			<position name="pos_logic_back_plate_5" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_5_0">
+			<volumeref ref="logic_quartz_5_0"/>
+			<position name="pos_logic_quartz_5_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_5_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_5_0">
+			<volumeref ref="logic_tungsten_5_0"/>
+			<position name="pos_logic_tungsten_5_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_5_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_5_1">
+			<volumeref ref="logic_quartz_5_1"/>
+			<position name="pos_logic_quartz_5_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_5_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_5_1">
+			<volumeref ref="logic_tungsten_5_1"/>
+			<position name="pos_logic_tungsten_5_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_5_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_5_2">
+			<volumeref ref="logic_quartz_5_2"/>
+			<position name="pos_logic_quartz_5_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_5_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_5_2">
+			<volumeref ref="logic_tungsten_5_2"/>
+			<position name="pos_logic_tungsten_5_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_5_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_5_3">
+			<volumeref ref="logic_quartz_5_3"/>
+			<position name="pos_logic_quartz_5_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_5_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_5_3">
+			<volumeref ref="logic_tungsten_5_3"/>
+			<position name="pos_logic_tungsten_5_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_5_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_6">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_6">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_6">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_6">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_6">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_6">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_6_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_6_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_6_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_6_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_6_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_6_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_6_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_6_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_6">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_6">
+			<volumeref ref="logic_mirror_box_tungstenquartz_6"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_6" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_6">
+			<volumeref ref="logic_mirror_box_bot_6"/>
+			<position name="pos_logic_mirror_box_bot_6" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_6" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_6">
+			<volumeref ref="logic_mirror_box_top_6"/>
+			<position name="pos_logic_mirror_box_top_6" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_6" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_6">
+			<volumeref ref="logic_pmt_window_6"/>
+			<position name="pos_logic_pmt_window_6" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_6" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_6">
+			<volumeref ref="logic_pmt_cathode_6"/>
+			<position name="pos_logic_pmt_cathode_6" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_6" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_6">
+			<volumeref ref="logic_front_back_plate_6"/>
+			<position name="pos_logic_front_plate_6" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_6">
+			<volumeref ref="logic_front_back_plate_6"/>
+			<position name="pos_logic_back_plate_6" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_6_0">
+			<volumeref ref="logic_quartz_6_0"/>
+			<position name="pos_logic_quartz_6_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_6_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_6_0">
+			<volumeref ref="logic_tungsten_6_0"/>
+			<position name="pos_logic_tungsten_6_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_6_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_6_1">
+			<volumeref ref="logic_quartz_6_1"/>
+			<position name="pos_logic_quartz_6_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_6_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_6_1">
+			<volumeref ref="logic_tungsten_6_1"/>
+			<position name="pos_logic_tungsten_6_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_6_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_6_2">
+			<volumeref ref="logic_quartz_6_2"/>
+			<position name="pos_logic_quartz_6_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_6_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_6_2">
+			<volumeref ref="logic_tungsten_6_2"/>
+			<position name="pos_logic_tungsten_6_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_6_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_6_3">
+			<volumeref ref="logic_quartz_6_3"/>
+			<position name="pos_logic_quartz_6_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_6_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_6_3">
+			<volumeref ref="logic_tungsten_6_3"/>
+			<position name="pos_logic_tungsten_6_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_6_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_7">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_7">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_7">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_7">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_7">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_7">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_7_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_7_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_7_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_7_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_7_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_7_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_7_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_7_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_7">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_7">
+			<volumeref ref="logic_mirror_box_tungstenquartz_7"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_7" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_7" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_7">
+			<volumeref ref="logic_mirror_box_bot_7"/>
+			<position name="pos_logic_mirror_box_bot_7" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_7" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_7">
+			<volumeref ref="logic_mirror_box_top_7"/>
+			<position name="pos_logic_mirror_box_top_7" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_7" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_7">
+			<volumeref ref="logic_pmt_window_7"/>
+			<position name="pos_logic_pmt_window_7" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_7" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_7">
+			<volumeref ref="logic_pmt_cathode_7"/>
+			<position name="pos_logic_pmt_cathode_7" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_7" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_7">
+			<volumeref ref="logic_front_back_plate_7"/>
+			<position name="pos_logic_front_plate_7" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_7" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_7">
+			<volumeref ref="logic_front_back_plate_7"/>
+			<position name="pos_logic_back_plate_7" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_7" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_7_0">
+			<volumeref ref="logic_quartz_7_0"/>
+			<position name="pos_logic_quartz_7_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_7_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_7_0">
+			<volumeref ref="logic_tungsten_7_0"/>
+			<position name="pos_logic_tungsten_7_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_7_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_7_1">
+			<volumeref ref="logic_quartz_7_1"/>
+			<position name="pos_logic_quartz_7_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_7_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_7_1">
+			<volumeref ref="logic_tungsten_7_1"/>
+			<position name="pos_logic_tungsten_7_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_7_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_7_2">
+			<volumeref ref="logic_quartz_7_2"/>
+			<position name="pos_logic_quartz_7_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_7_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_7_2">
+			<volumeref ref="logic_tungsten_7_2"/>
+			<position name="pos_logic_tungsten_7_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_7_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_7_3">
+			<volumeref ref="logic_quartz_7_3"/>
+			<position name="pos_logic_quartz_7_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_7_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_7_3">
+			<volumeref ref="logic_tungsten_7_3"/>
+			<position name="pos_logic_tungsten_7_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_7_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_8">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_8">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_8">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_8">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_8">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_8">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_8_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_8_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_8_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_8_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_8_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_8_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_8_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_8_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_8">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_8">
+			<volumeref ref="logic_mirror_box_tungstenquartz_8"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_8" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_8" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_8">
+			<volumeref ref="logic_mirror_box_bot_8"/>
+			<position name="pos_logic_mirror_box_bot_8" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_8" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_8">
+			<volumeref ref="logic_mirror_box_top_8"/>
+			<position name="pos_logic_mirror_box_top_8" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_8" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_8">
+			<volumeref ref="logic_pmt_window_8"/>
+			<position name="pos_logic_pmt_window_8" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_8" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_8">
+			<volumeref ref="logic_pmt_cathode_8"/>
+			<position name="pos_logic_pmt_cathode_8" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_8" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_8">
+			<volumeref ref="logic_front_back_plate_8"/>
+			<position name="pos_logic_front_plate_8" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_8" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_8">
+			<volumeref ref="logic_front_back_plate_8"/>
+			<position name="pos_logic_back_plate_8" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_8" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_8_0">
+			<volumeref ref="logic_quartz_8_0"/>
+			<position name="pos_logic_quartz_8_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_8_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_8_0">
+			<volumeref ref="logic_tungsten_8_0"/>
+			<position name="pos_logic_tungsten_8_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_8_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_8_1">
+			<volumeref ref="logic_quartz_8_1"/>
+			<position name="pos_logic_quartz_8_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_8_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_8_1">
+			<volumeref ref="logic_tungsten_8_1"/>
+			<position name="pos_logic_tungsten_8_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_8_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_8_2">
+			<volumeref ref="logic_quartz_8_2"/>
+			<position name="pos_logic_quartz_8_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_8_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_8_2">
+			<volumeref ref="logic_tungsten_8_2"/>
+			<position name="pos_logic_tungsten_8_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_8_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_8_3">
+			<volumeref ref="logic_quartz_8_3"/>
+			<position name="pos_logic_quartz_8_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_8_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_8_3">
+			<volumeref ref="logic_tungsten_8_3"/>
+			<position name="pos_logic_tungsten_8_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_8_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_9">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_9">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_9">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_9">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_9">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_9">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_9_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_9_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_9_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_9_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_9_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_9_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_9_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_9_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_9">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_9">
+			<volumeref ref="logic_mirror_box_tungstenquartz_9"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_9" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_9" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_9">
+			<volumeref ref="logic_mirror_box_bot_9"/>
+			<position name="pos_logic_mirror_box_bot_9" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_9" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_9">
+			<volumeref ref="logic_mirror_box_top_9"/>
+			<position name="pos_logic_mirror_box_top_9" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_9" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_9">
+			<volumeref ref="logic_pmt_window_9"/>
+			<position name="pos_logic_pmt_window_9" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_9" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_9">
+			<volumeref ref="logic_pmt_cathode_9"/>
+			<position name="pos_logic_pmt_cathode_9" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_9" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_9">
+			<volumeref ref="logic_front_back_plate_9"/>
+			<position name="pos_logic_front_plate_9" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_9" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_9">
+			<volumeref ref="logic_front_back_plate_9"/>
+			<position name="pos_logic_back_plate_9" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_9" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_9_0">
+			<volumeref ref="logic_quartz_9_0"/>
+			<position name="pos_logic_quartz_9_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_9_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_9_0">
+			<volumeref ref="logic_tungsten_9_0"/>
+			<position name="pos_logic_tungsten_9_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_9_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_9_1">
+			<volumeref ref="logic_quartz_9_1"/>
+			<position name="pos_logic_quartz_9_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_9_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_9_1">
+			<volumeref ref="logic_tungsten_9_1"/>
+			<position name="pos_logic_tungsten_9_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_9_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_9_2">
+			<volumeref ref="logic_quartz_9_2"/>
+			<position name="pos_logic_quartz_9_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_9_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_9_2">
+			<volumeref ref="logic_tungsten_9_2"/>
+			<position name="pos_logic_tungsten_9_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_9_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_9_3">
+			<volumeref ref="logic_quartz_9_3"/>
+			<position name="pos_logic_quartz_9_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_9_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_9_3">
+			<volumeref ref="logic_tungsten_9_3"/>
+			<position name="pos_logic_tungsten_9_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_9_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_10">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_10">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_10">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_10">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_10">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_10">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_10_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_10_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_10_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_10_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_10_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_10_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_10_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_10_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_10">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_10">
+			<volumeref ref="logic_mirror_box_tungstenquartz_10"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_10" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_10" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_10">
+			<volumeref ref="logic_mirror_box_bot_10"/>
+			<position name="pos_logic_mirror_box_bot_10" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_10" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_10">
+			<volumeref ref="logic_mirror_box_top_10"/>
+			<position name="pos_logic_mirror_box_top_10" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_10" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_10">
+			<volumeref ref="logic_pmt_window_10"/>
+			<position name="pos_logic_pmt_window_10" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_10" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_10">
+			<volumeref ref="logic_pmt_cathode_10"/>
+			<position name="pos_logic_pmt_cathode_10" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_10" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_10">
+			<volumeref ref="logic_front_back_plate_10"/>
+			<position name="pos_logic_front_plate_10" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_10" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_10">
+			<volumeref ref="logic_front_back_plate_10"/>
+			<position name="pos_logic_back_plate_10" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_10" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_10_0">
+			<volumeref ref="logic_quartz_10_0"/>
+			<position name="pos_logic_quartz_10_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_10_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_10_0">
+			<volumeref ref="logic_tungsten_10_0"/>
+			<position name="pos_logic_tungsten_10_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_10_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_10_1">
+			<volumeref ref="logic_quartz_10_1"/>
+			<position name="pos_logic_quartz_10_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_10_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_10_1">
+			<volumeref ref="logic_tungsten_10_1"/>
+			<position name="pos_logic_tungsten_10_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_10_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_10_2">
+			<volumeref ref="logic_quartz_10_2"/>
+			<position name="pos_logic_quartz_10_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_10_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_10_2">
+			<volumeref ref="logic_tungsten_10_2"/>
+			<position name="pos_logic_tungsten_10_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_10_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_10_3">
+			<volumeref ref="logic_quartz_10_3"/>
+			<position name="pos_logic_quartz_10_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_10_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_10_3">
+			<volumeref ref="logic_tungsten_10_3"/>
+			<position name="pos_logic_tungsten_10_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_10_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_11">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_11">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_11">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_11">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_11">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_11">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_11_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_11_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_11_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_11_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_11_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_11_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_11_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_11_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_11">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_11">
+			<volumeref ref="logic_mirror_box_tungstenquartz_11"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_11" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_11" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_11">
+			<volumeref ref="logic_mirror_box_bot_11"/>
+			<position name="pos_logic_mirror_box_bot_11" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_11" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_11">
+			<volumeref ref="logic_mirror_box_top_11"/>
+			<position name="pos_logic_mirror_box_top_11" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_11" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_11">
+			<volumeref ref="logic_pmt_window_11"/>
+			<position name="pos_logic_pmt_window_11" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_11" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_11">
+			<volumeref ref="logic_pmt_cathode_11"/>
+			<position name="pos_logic_pmt_cathode_11" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_11" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_11">
+			<volumeref ref="logic_front_back_plate_11"/>
+			<position name="pos_logic_front_plate_11" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_11" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_11">
+			<volumeref ref="logic_front_back_plate_11"/>
+			<position name="pos_logic_back_plate_11" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_11" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_11_0">
+			<volumeref ref="logic_quartz_11_0"/>
+			<position name="pos_logic_quartz_11_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_11_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_11_0">
+			<volumeref ref="logic_tungsten_11_0"/>
+			<position name="pos_logic_tungsten_11_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_11_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_11_1">
+			<volumeref ref="logic_quartz_11_1"/>
+			<position name="pos_logic_quartz_11_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_11_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_11_1">
+			<volumeref ref="logic_tungsten_11_1"/>
+			<position name="pos_logic_tungsten_11_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_11_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_11_2">
+			<volumeref ref="logic_quartz_11_2"/>
+			<position name="pos_logic_quartz_11_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_11_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_11_2">
+			<volumeref ref="logic_tungsten_11_2"/>
+			<position name="pos_logic_tungsten_11_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_11_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_11_3">
+			<volumeref ref="logic_quartz_11_3"/>
+			<position name="pos_logic_quartz_11_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_11_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_11_3">
+			<volumeref ref="logic_tungsten_11_3"/>
+			<position name="pos_logic_tungsten_11_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_11_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_12">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_12">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_12">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_12">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_12">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_12">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_12_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_12_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_12_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_12_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_12_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_12_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_12_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_12_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_12">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_12">
+			<volumeref ref="logic_mirror_box_tungstenquartz_12"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_12" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_12" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_12">
+			<volumeref ref="logic_mirror_box_bot_12"/>
+			<position name="pos_logic_mirror_box_bot_12" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_12" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_12">
+			<volumeref ref="logic_mirror_box_top_12"/>
+			<position name="pos_logic_mirror_box_top_12" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_12" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_12">
+			<volumeref ref="logic_pmt_window_12"/>
+			<position name="pos_logic_pmt_window_12" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_12" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_12">
+			<volumeref ref="logic_pmt_cathode_12"/>
+			<position name="pos_logic_pmt_cathode_12" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_12" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_12">
+			<volumeref ref="logic_front_back_plate_12"/>
+			<position name="pos_logic_front_plate_12" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_12" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_12">
+			<volumeref ref="logic_front_back_plate_12"/>
+			<position name="pos_logic_back_plate_12" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_12" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_12_0">
+			<volumeref ref="logic_quartz_12_0"/>
+			<position name="pos_logic_quartz_12_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_12_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_12_0">
+			<volumeref ref="logic_tungsten_12_0"/>
+			<position name="pos_logic_tungsten_12_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_12_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_12_1">
+			<volumeref ref="logic_quartz_12_1"/>
+			<position name="pos_logic_quartz_12_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_12_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_12_1">
+			<volumeref ref="logic_tungsten_12_1"/>
+			<position name="pos_logic_tungsten_12_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_12_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_12_2">
+			<volumeref ref="logic_quartz_12_2"/>
+			<position name="pos_logic_quartz_12_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_12_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_12_2">
+			<volumeref ref="logic_tungsten_12_2"/>
+			<position name="pos_logic_tungsten_12_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_12_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_12_3">
+			<volumeref ref="logic_quartz_12_3"/>
+			<position name="pos_logic_quartz_12_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_12_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_12_3">
+			<volumeref ref="logic_tungsten_12_3"/>
+			<position name="pos_logic_tungsten_12_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_12_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_13">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_13">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_13">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_13">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_13">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_13">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_13_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_13_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_13_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_13_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_13_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_13_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_13_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_13_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_13">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_13">
+			<volumeref ref="logic_mirror_box_tungstenquartz_13"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_13" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_13" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_13">
+			<volumeref ref="logic_mirror_box_bot_13"/>
+			<position name="pos_logic_mirror_box_bot_13" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_13" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_13">
+			<volumeref ref="logic_mirror_box_top_13"/>
+			<position name="pos_logic_mirror_box_top_13" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_13" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_13">
+			<volumeref ref="logic_pmt_window_13"/>
+			<position name="pos_logic_pmt_window_13" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_13" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_13">
+			<volumeref ref="logic_pmt_cathode_13"/>
+			<position name="pos_logic_pmt_cathode_13" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_13" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_13">
+			<volumeref ref="logic_front_back_plate_13"/>
+			<position name="pos_logic_front_plate_13" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_13" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_13">
+			<volumeref ref="logic_front_back_plate_13"/>
+			<position name="pos_logic_back_plate_13" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_13" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_13_0">
+			<volumeref ref="logic_quartz_13_0"/>
+			<position name="pos_logic_quartz_13_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_13_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_13_0">
+			<volumeref ref="logic_tungsten_13_0"/>
+			<position name="pos_logic_tungsten_13_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_13_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_13_1">
+			<volumeref ref="logic_quartz_13_1"/>
+			<position name="pos_logic_quartz_13_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_13_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_13_1">
+			<volumeref ref="logic_tungsten_13_1"/>
+			<position name="pos_logic_tungsten_13_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_13_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_13_2">
+			<volumeref ref="logic_quartz_13_2"/>
+			<position name="pos_logic_quartz_13_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_13_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_13_2">
+			<volumeref ref="logic_tungsten_13_2"/>
+			<position name="pos_logic_tungsten_13_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_13_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_13_3">
+			<volumeref ref="logic_quartz_13_3"/>
+			<position name="pos_logic_quartz_13_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_13_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_13_3">
+			<volumeref ref="logic_tungsten_13_3"/>
+			<position name="pos_logic_tungsten_13_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_13_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_14">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_14">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_14">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_14">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_14">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_14">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_14_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_14_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_14_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_14_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_14_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_14_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_14_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_14_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_14">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_14">
+			<volumeref ref="logic_mirror_box_tungstenquartz_14"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_14" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_14" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_14">
+			<volumeref ref="logic_mirror_box_bot_14"/>
+			<position name="pos_logic_mirror_box_bot_14" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_14" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_14">
+			<volumeref ref="logic_mirror_box_top_14"/>
+			<position name="pos_logic_mirror_box_top_14" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_14" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_14">
+			<volumeref ref="logic_pmt_window_14"/>
+			<position name="pos_logic_pmt_window_14" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_14" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_14">
+			<volumeref ref="logic_pmt_cathode_14"/>
+			<position name="pos_logic_pmt_cathode_14" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_14" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_14">
+			<volumeref ref="logic_front_back_plate_14"/>
+			<position name="pos_logic_front_plate_14" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_14" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_14">
+			<volumeref ref="logic_front_back_plate_14"/>
+			<position name="pos_logic_back_plate_14" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_14" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_14_0">
+			<volumeref ref="logic_quartz_14_0"/>
+			<position name="pos_logic_quartz_14_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_14_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_14_0">
+			<volumeref ref="logic_tungsten_14_0"/>
+			<position name="pos_logic_tungsten_14_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_14_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_14_1">
+			<volumeref ref="logic_quartz_14_1"/>
+			<position name="pos_logic_quartz_14_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_14_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_14_1">
+			<volumeref ref="logic_tungsten_14_1"/>
+			<position name="pos_logic_tungsten_14_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_14_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_14_2">
+			<volumeref ref="logic_quartz_14_2"/>
+			<position name="pos_logic_quartz_14_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_14_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_14_2">
+			<volumeref ref="logic_tungsten_14_2"/>
+			<position name="pos_logic_tungsten_14_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_14_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_14_3">
+			<volumeref ref="logic_quartz_14_3"/>
+			<position name="pos_logic_quartz_14_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_14_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_14_3">
+			<volumeref ref="logic_tungsten_14_3"/>
+			<position name="pos_logic_tungsten_14_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_14_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_15">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_15">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_15">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_15">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_15">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_15">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_15_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_15_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_15_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_15_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_15_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_15_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_15_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_15_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_15">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_15">
+			<volumeref ref="logic_mirror_box_tungstenquartz_15"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_15" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_15" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_15">
+			<volumeref ref="logic_mirror_box_bot_15"/>
+			<position name="pos_logic_mirror_box_bot_15" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_15" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_15">
+			<volumeref ref="logic_mirror_box_top_15"/>
+			<position name="pos_logic_mirror_box_top_15" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_15" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_15">
+			<volumeref ref="logic_pmt_window_15"/>
+			<position name="pos_logic_pmt_window_15" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_15" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_15">
+			<volumeref ref="logic_pmt_cathode_15"/>
+			<position name="pos_logic_pmt_cathode_15" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_15" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_15">
+			<volumeref ref="logic_front_back_plate_15"/>
+			<position name="pos_logic_front_plate_15" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_15" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_15">
+			<volumeref ref="logic_front_back_plate_15"/>
+			<position name="pos_logic_back_plate_15" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_15" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_15_0">
+			<volumeref ref="logic_quartz_15_0"/>
+			<position name="pos_logic_quartz_15_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_15_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_15_0">
+			<volumeref ref="logic_tungsten_15_0"/>
+			<position name="pos_logic_tungsten_15_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_15_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_15_1">
+			<volumeref ref="logic_quartz_15_1"/>
+			<position name="pos_logic_quartz_15_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_15_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_15_1">
+			<volumeref ref="logic_tungsten_15_1"/>
+			<position name="pos_logic_tungsten_15_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_15_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_15_2">
+			<volumeref ref="logic_quartz_15_2"/>
+			<position name="pos_logic_quartz_15_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_15_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_15_2">
+			<volumeref ref="logic_tungsten_15_2"/>
+			<position name="pos_logic_tungsten_15_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_15_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_15_3">
+			<volumeref ref="logic_quartz_15_3"/>
+			<position name="pos_logic_quartz_15_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_15_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_15_3">
+			<volumeref ref="logic_tungsten_15_3"/>
+			<position name="pos_logic_tungsten_15_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_15_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_16">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_16">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_16">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_16">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_16">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_16">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_16_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_16_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_16_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_16_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_16_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_16_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_16_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_16_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_16">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_16">
+			<volumeref ref="logic_mirror_box_tungstenquartz_16"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_16" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_16" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_16">
+			<volumeref ref="logic_mirror_box_bot_16"/>
+			<position name="pos_logic_mirror_box_bot_16" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_16" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_16">
+			<volumeref ref="logic_mirror_box_top_16"/>
+			<position name="pos_logic_mirror_box_top_16" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_16" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_16">
+			<volumeref ref="logic_pmt_window_16"/>
+			<position name="pos_logic_pmt_window_16" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_16" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_16">
+			<volumeref ref="logic_pmt_cathode_16"/>
+			<position name="pos_logic_pmt_cathode_16" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_16" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_16">
+			<volumeref ref="logic_front_back_plate_16"/>
+			<position name="pos_logic_front_plate_16" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_16" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_16">
+			<volumeref ref="logic_front_back_plate_16"/>
+			<position name="pos_logic_back_plate_16" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_16" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_16_0">
+			<volumeref ref="logic_quartz_16_0"/>
+			<position name="pos_logic_quartz_16_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_16_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_16_0">
+			<volumeref ref="logic_tungsten_16_0"/>
+			<position name="pos_logic_tungsten_16_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_16_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_16_1">
+			<volumeref ref="logic_quartz_16_1"/>
+			<position name="pos_logic_quartz_16_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_16_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_16_1">
+			<volumeref ref="logic_tungsten_16_1"/>
+			<position name="pos_logic_tungsten_16_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_16_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_16_2">
+			<volumeref ref="logic_quartz_16_2"/>
+			<position name="pos_logic_quartz_16_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_16_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_16_2">
+			<volumeref ref="logic_tungsten_16_2"/>
+			<position name="pos_logic_tungsten_16_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_16_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_16_3">
+			<volumeref ref="logic_quartz_16_3"/>
+			<position name="pos_logic_quartz_16_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_16_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_16_3">
+			<volumeref ref="logic_tungsten_16_3"/>
+			<position name="pos_logic_tungsten_16_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_16_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_17">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_17">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_17">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_17">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_17">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_17">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_17_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_17_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_17_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_17_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_17_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_17_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_17_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_17_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_17">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_17">
+			<volumeref ref="logic_mirror_box_tungstenquartz_17"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_17" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_17" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_17">
+			<volumeref ref="logic_mirror_box_bot_17"/>
+			<position name="pos_logic_mirror_box_bot_17" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_17" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_17">
+			<volumeref ref="logic_mirror_box_top_17"/>
+			<position name="pos_logic_mirror_box_top_17" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_17" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_17">
+			<volumeref ref="logic_pmt_window_17"/>
+			<position name="pos_logic_pmt_window_17" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_17" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_17">
+			<volumeref ref="logic_pmt_cathode_17"/>
+			<position name="pos_logic_pmt_cathode_17" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_17" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_17">
+			<volumeref ref="logic_front_back_plate_17"/>
+			<position name="pos_logic_front_plate_17" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_17" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_17">
+			<volumeref ref="logic_front_back_plate_17"/>
+			<position name="pos_logic_back_plate_17" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_17" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_17_0">
+			<volumeref ref="logic_quartz_17_0"/>
+			<position name="pos_logic_quartz_17_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_17_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_17_0">
+			<volumeref ref="logic_tungsten_17_0"/>
+			<position name="pos_logic_tungsten_17_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_17_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_17_1">
+			<volumeref ref="logic_quartz_17_1"/>
+			<position name="pos_logic_quartz_17_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_17_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_17_1">
+			<volumeref ref="logic_tungsten_17_1"/>
+			<position name="pos_logic_tungsten_17_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_17_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_17_2">
+			<volumeref ref="logic_quartz_17_2"/>
+			<position name="pos_logic_quartz_17_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_17_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_17_2">
+			<volumeref ref="logic_tungsten_17_2"/>
+			<position name="pos_logic_tungsten_17_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_17_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_17_3">
+			<volumeref ref="logic_quartz_17_3"/>
+			<position name="pos_logic_quartz_17_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_17_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_17_3">
+			<volumeref ref="logic_tungsten_17_3"/>
+			<position name="pos_logic_tungsten_17_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_17_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_18">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_18">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_18">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_18">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_18">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_18">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_18_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_18_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_18_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_18_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_18_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_18_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_18_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_18_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_18">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_18">
+			<volumeref ref="logic_mirror_box_tungstenquartz_18"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_18" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_18" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_18">
+			<volumeref ref="logic_mirror_box_bot_18"/>
+			<position name="pos_logic_mirror_box_bot_18" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_18" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_18">
+			<volumeref ref="logic_mirror_box_top_18"/>
+			<position name="pos_logic_mirror_box_top_18" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_18" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_18">
+			<volumeref ref="logic_pmt_window_18"/>
+			<position name="pos_logic_pmt_window_18" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_18" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_18">
+			<volumeref ref="logic_pmt_cathode_18"/>
+			<position name="pos_logic_pmt_cathode_18" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_18" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_18">
+			<volumeref ref="logic_front_back_plate_18"/>
+			<position name="pos_logic_front_plate_18" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_18" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_18">
+			<volumeref ref="logic_front_back_plate_18"/>
+			<position name="pos_logic_back_plate_18" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_18" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_18_0">
+			<volumeref ref="logic_quartz_18_0"/>
+			<position name="pos_logic_quartz_18_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_18_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_18_0">
+			<volumeref ref="logic_tungsten_18_0"/>
+			<position name="pos_logic_tungsten_18_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_18_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_18_1">
+			<volumeref ref="logic_quartz_18_1"/>
+			<position name="pos_logic_quartz_18_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_18_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_18_1">
+			<volumeref ref="logic_tungsten_18_1"/>
+			<position name="pos_logic_tungsten_18_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_18_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_18_2">
+			<volumeref ref="logic_quartz_18_2"/>
+			<position name="pos_logic_quartz_18_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_18_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_18_2">
+			<volumeref ref="logic_tungsten_18_2"/>
+			<position name="pos_logic_tungsten_18_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_18_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_18_3">
+			<volumeref ref="logic_quartz_18_3"/>
+			<position name="pos_logic_quartz_18_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_18_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_18_3">
+			<volumeref ref="logic_tungsten_18_3"/>
+			<position name="pos_logic_tungsten_18_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_18_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_19">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_19">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_19">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_19">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_19">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_19">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_19_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_19_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_19_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_19_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_19_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_19_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_19_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_19_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_19">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_19">
+			<volumeref ref="logic_mirror_box_tungstenquartz_19"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_19" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_19" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_19">
+			<volumeref ref="logic_mirror_box_bot_19"/>
+			<position name="pos_logic_mirror_box_bot_19" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_19" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_19">
+			<volumeref ref="logic_mirror_box_top_19"/>
+			<position name="pos_logic_mirror_box_top_19" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_19" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_19">
+			<volumeref ref="logic_pmt_window_19"/>
+			<position name="pos_logic_pmt_window_19" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_19" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_19">
+			<volumeref ref="logic_pmt_cathode_19"/>
+			<position name="pos_logic_pmt_cathode_19" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_19" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_19">
+			<volumeref ref="logic_front_back_plate_19"/>
+			<position name="pos_logic_front_plate_19" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_19" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_19">
+			<volumeref ref="logic_front_back_plate_19"/>
+			<position name="pos_logic_back_plate_19" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_19" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_19_0">
+			<volumeref ref="logic_quartz_19_0"/>
+			<position name="pos_logic_quartz_19_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_19_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_19_0">
+			<volumeref ref="logic_tungsten_19_0"/>
+			<position name="pos_logic_tungsten_19_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_19_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_19_1">
+			<volumeref ref="logic_quartz_19_1"/>
+			<position name="pos_logic_quartz_19_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_19_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_19_1">
+			<volumeref ref="logic_tungsten_19_1"/>
+			<position name="pos_logic_tungsten_19_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_19_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_19_2">
+			<volumeref ref="logic_quartz_19_2"/>
+			<position name="pos_logic_quartz_19_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_19_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_19_2">
+			<volumeref ref="logic_tungsten_19_2"/>
+			<position name="pos_logic_tungsten_19_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_19_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_19_3">
+			<volumeref ref="logic_quartz_19_3"/>
+			<position name="pos_logic_quartz_19_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_19_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_19_3">
+			<volumeref ref="logic_tungsten_19_3"/>
+			<position name="pos_logic_tungsten_19_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_19_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_20">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_20">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_20">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_20">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_20">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_20">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_20_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_20_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_20_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_20_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_20_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_20_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_20_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_20_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_20">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_20">
+			<volumeref ref="logic_mirror_box_tungstenquartz_20"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_20" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_20" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_20">
+			<volumeref ref="logic_mirror_box_bot_20"/>
+			<position name="pos_logic_mirror_box_bot_20" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_20" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_20">
+			<volumeref ref="logic_mirror_box_top_20"/>
+			<position name="pos_logic_mirror_box_top_20" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_20" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_20">
+			<volumeref ref="logic_pmt_window_20"/>
+			<position name="pos_logic_pmt_window_20" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_20" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_20">
+			<volumeref ref="logic_pmt_cathode_20"/>
+			<position name="pos_logic_pmt_cathode_20" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_20" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_20">
+			<volumeref ref="logic_front_back_plate_20"/>
+			<position name="pos_logic_front_plate_20" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_20" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_20">
+			<volumeref ref="logic_front_back_plate_20"/>
+			<position name="pos_logic_back_plate_20" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_20" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_20_0">
+			<volumeref ref="logic_quartz_20_0"/>
+			<position name="pos_logic_quartz_20_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_20_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_20_0">
+			<volumeref ref="logic_tungsten_20_0"/>
+			<position name="pos_logic_tungsten_20_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_20_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_20_1">
+			<volumeref ref="logic_quartz_20_1"/>
+			<position name="pos_logic_quartz_20_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_20_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_20_1">
+			<volumeref ref="logic_tungsten_20_1"/>
+			<position name="pos_logic_tungsten_20_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_20_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_20_2">
+			<volumeref ref="logic_quartz_20_2"/>
+			<position name="pos_logic_quartz_20_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_20_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_20_2">
+			<volumeref ref="logic_tungsten_20_2"/>
+			<position name="pos_logic_tungsten_20_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_20_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_20_3">
+			<volumeref ref="logic_quartz_20_3"/>
+			<position name="pos_logic_quartz_20_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_20_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_20_3">
+			<volumeref ref="logic_tungsten_20_3"/>
+			<position name="pos_logic_tungsten_20_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_20_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_21">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_21">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_21">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_21">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_21">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_21">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_21_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_21_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_21_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_21_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_21_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_21_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_21_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_21_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_21">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_21">
+			<volumeref ref="logic_mirror_box_tungstenquartz_21"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_21" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_21" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_21">
+			<volumeref ref="logic_mirror_box_bot_21"/>
+			<position name="pos_logic_mirror_box_bot_21" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_21" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_21">
+			<volumeref ref="logic_mirror_box_top_21"/>
+			<position name="pos_logic_mirror_box_top_21" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_21" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_21">
+			<volumeref ref="logic_pmt_window_21"/>
+			<position name="pos_logic_pmt_window_21" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_21" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_21">
+			<volumeref ref="logic_pmt_cathode_21"/>
+			<position name="pos_logic_pmt_cathode_21" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_21" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_21">
+			<volumeref ref="logic_front_back_plate_21"/>
+			<position name="pos_logic_front_plate_21" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_21" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_21">
+			<volumeref ref="logic_front_back_plate_21"/>
+			<position name="pos_logic_back_plate_21" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_21" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_21_0">
+			<volumeref ref="logic_quartz_21_0"/>
+			<position name="pos_logic_quartz_21_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_21_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_21_0">
+			<volumeref ref="logic_tungsten_21_0"/>
+			<position name="pos_logic_tungsten_21_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_21_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_21_1">
+			<volumeref ref="logic_quartz_21_1"/>
+			<position name="pos_logic_quartz_21_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_21_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_21_1">
+			<volumeref ref="logic_tungsten_21_1"/>
+			<position name="pos_logic_tungsten_21_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_21_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_21_2">
+			<volumeref ref="logic_quartz_21_2"/>
+			<position name="pos_logic_quartz_21_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_21_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_21_2">
+			<volumeref ref="logic_tungsten_21_2"/>
+			<position name="pos_logic_tungsten_21_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_21_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_21_3">
+			<volumeref ref="logic_quartz_21_3"/>
+			<position name="pos_logic_quartz_21_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_21_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_21_3">
+			<volumeref ref="logic_tungsten_21_3"/>
+			<position name="pos_logic_tungsten_21_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_21_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_22">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_22">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_22">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_22">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_22">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_22">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_22_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_22_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_22_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_22_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_22_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_22_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_22_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_22_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_22">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_22">
+			<volumeref ref="logic_mirror_box_tungstenquartz_22"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_22" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_22" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_22">
+			<volumeref ref="logic_mirror_box_bot_22"/>
+			<position name="pos_logic_mirror_box_bot_22" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_22" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_22">
+			<volumeref ref="logic_mirror_box_top_22"/>
+			<position name="pos_logic_mirror_box_top_22" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_22" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_22">
+			<volumeref ref="logic_pmt_window_22"/>
+			<position name="pos_logic_pmt_window_22" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_22" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_22">
+			<volumeref ref="logic_pmt_cathode_22"/>
+			<position name="pos_logic_pmt_cathode_22" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_22" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_22">
+			<volumeref ref="logic_front_back_plate_22"/>
+			<position name="pos_logic_front_plate_22" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_22" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_22">
+			<volumeref ref="logic_front_back_plate_22"/>
+			<position name="pos_logic_back_plate_22" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_22" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_22_0">
+			<volumeref ref="logic_quartz_22_0"/>
+			<position name="pos_logic_quartz_22_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_22_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_22_0">
+			<volumeref ref="logic_tungsten_22_0"/>
+			<position name="pos_logic_tungsten_22_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_22_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_22_1">
+			<volumeref ref="logic_quartz_22_1"/>
+			<position name="pos_logic_quartz_22_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_22_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_22_1">
+			<volumeref ref="logic_tungsten_22_1"/>
+			<position name="pos_logic_tungsten_22_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_22_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_22_2">
+			<volumeref ref="logic_quartz_22_2"/>
+			<position name="pos_logic_quartz_22_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_22_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_22_2">
+			<volumeref ref="logic_tungsten_22_2"/>
+			<position name="pos_logic_tungsten_22_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_22_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_22_3">
+			<volumeref ref="logic_quartz_22_3"/>
+			<position name="pos_logic_quartz_22_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_22_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_22_3">
+			<volumeref ref="logic_tungsten_22_3"/>
+			<position name="pos_logic_tungsten_22_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_22_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_23">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_23">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_23">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_23">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_23">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_23">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_23_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_23_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_23_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_23_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_23_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_23_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_23_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_23_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_23">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_23">
+			<volumeref ref="logic_mirror_box_tungstenquartz_23"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_23" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_23" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_23">
+			<volumeref ref="logic_mirror_box_bot_23"/>
+			<position name="pos_logic_mirror_box_bot_23" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_23" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_23">
+			<volumeref ref="logic_mirror_box_top_23"/>
+			<position name="pos_logic_mirror_box_top_23" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_23" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_23">
+			<volumeref ref="logic_pmt_window_23"/>
+			<position name="pos_logic_pmt_window_23" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_23" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_23">
+			<volumeref ref="logic_pmt_cathode_23"/>
+			<position name="pos_logic_pmt_cathode_23" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_23" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_23">
+			<volumeref ref="logic_front_back_plate_23"/>
+			<position name="pos_logic_front_plate_23" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_23" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_23">
+			<volumeref ref="logic_front_back_plate_23"/>
+			<position name="pos_logic_back_plate_23" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_23" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_23_0">
+			<volumeref ref="logic_quartz_23_0"/>
+			<position name="pos_logic_quartz_23_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_23_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_23_0">
+			<volumeref ref="logic_tungsten_23_0"/>
+			<position name="pos_logic_tungsten_23_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_23_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_23_1">
+			<volumeref ref="logic_quartz_23_1"/>
+			<position name="pos_logic_quartz_23_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_23_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_23_1">
+			<volumeref ref="logic_tungsten_23_1"/>
+			<position name="pos_logic_tungsten_23_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_23_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_23_2">
+			<volumeref ref="logic_quartz_23_2"/>
+			<position name="pos_logic_quartz_23_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_23_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_23_2">
+			<volumeref ref="logic_tungsten_23_2"/>
+			<position name="pos_logic_tungsten_23_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_23_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_23_3">
+			<volumeref ref="logic_quartz_23_3"/>
+			<position name="pos_logic_quartz_23_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_23_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_23_3">
+			<volumeref ref="logic_tungsten_23_3"/>
+			<position name="pos_logic_tungsten_23_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_23_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_24">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_24">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_24">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_24">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_24">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_24">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_24_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_24_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_24_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_24_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_24_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_24_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_24_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_24_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_24">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_24">
+			<volumeref ref="logic_mirror_box_tungstenquartz_24"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_24" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_24" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_24">
+			<volumeref ref="logic_mirror_box_bot_24"/>
+			<position name="pos_logic_mirror_box_bot_24" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_24" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_24">
+			<volumeref ref="logic_mirror_box_top_24"/>
+			<position name="pos_logic_mirror_box_top_24" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_24" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_24">
+			<volumeref ref="logic_pmt_window_24"/>
+			<position name="pos_logic_pmt_window_24" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_24" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_24">
+			<volumeref ref="logic_pmt_cathode_24"/>
+			<position name="pos_logic_pmt_cathode_24" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_24" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_24">
+			<volumeref ref="logic_front_back_plate_24"/>
+			<position name="pos_logic_front_plate_24" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_24" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_24">
+			<volumeref ref="logic_front_back_plate_24"/>
+			<position name="pos_logic_back_plate_24" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_24" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_24_0">
+			<volumeref ref="logic_quartz_24_0"/>
+			<position name="pos_logic_quartz_24_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_24_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_24_0">
+			<volumeref ref="logic_tungsten_24_0"/>
+			<position name="pos_logic_tungsten_24_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_24_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_24_1">
+			<volumeref ref="logic_quartz_24_1"/>
+			<position name="pos_logic_quartz_24_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_24_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_24_1">
+			<volumeref ref="logic_tungsten_24_1"/>
+			<position name="pos_logic_tungsten_24_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_24_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_24_2">
+			<volumeref ref="logic_quartz_24_2"/>
+			<position name="pos_logic_quartz_24_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_24_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_24_2">
+			<volumeref ref="logic_tungsten_24_2"/>
+			<position name="pos_logic_tungsten_24_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_24_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_24_3">
+			<volumeref ref="logic_quartz_24_3"/>
+			<position name="pos_logic_quartz_24_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_24_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_24_3">
+			<volumeref ref="logic_tungsten_24_3"/>
+			<position name="pos_logic_tungsten_24_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_24_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_25">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_25">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_25">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_25">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_25">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_25">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_25_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_25_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_25_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_25_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_25_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_25_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_25_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_25_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_25">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_25">
+			<volumeref ref="logic_mirror_box_tungstenquartz_25"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_25" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_25" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_25">
+			<volumeref ref="logic_mirror_box_bot_25"/>
+			<position name="pos_logic_mirror_box_bot_25" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_25" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_25">
+			<volumeref ref="logic_mirror_box_top_25"/>
+			<position name="pos_logic_mirror_box_top_25" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_25" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_25">
+			<volumeref ref="logic_pmt_window_25"/>
+			<position name="pos_logic_pmt_window_25" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_25" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_25">
+			<volumeref ref="logic_pmt_cathode_25"/>
+			<position name="pos_logic_pmt_cathode_25" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_25" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_25">
+			<volumeref ref="logic_front_back_plate_25"/>
+			<position name="pos_logic_front_plate_25" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_25" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_25">
+			<volumeref ref="logic_front_back_plate_25"/>
+			<position name="pos_logic_back_plate_25" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_25" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_25_0">
+			<volumeref ref="logic_quartz_25_0"/>
+			<position name="pos_logic_quartz_25_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_25_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_25_0">
+			<volumeref ref="logic_tungsten_25_0"/>
+			<position name="pos_logic_tungsten_25_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_25_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_25_1">
+			<volumeref ref="logic_quartz_25_1"/>
+			<position name="pos_logic_quartz_25_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_25_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_25_1">
+			<volumeref ref="logic_tungsten_25_1"/>
+			<position name="pos_logic_tungsten_25_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_25_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_25_2">
+			<volumeref ref="logic_quartz_25_2"/>
+			<position name="pos_logic_quartz_25_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_25_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_25_2">
+			<volumeref ref="logic_tungsten_25_2"/>
+			<position name="pos_logic_tungsten_25_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_25_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_25_3">
+			<volumeref ref="logic_quartz_25_3"/>
+			<position name="pos_logic_quartz_25_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_25_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_25_3">
+			<volumeref ref="logic_tungsten_25_3"/>
+			<position name="pos_logic_tungsten_25_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_25_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_26">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_26">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_26">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_26">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_26">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_26">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_26_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_26_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_26_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_26_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_26_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_26_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_26_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_26_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_26">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_26">
+			<volumeref ref="logic_mirror_box_tungstenquartz_26"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_26" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_26" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_26">
+			<volumeref ref="logic_mirror_box_bot_26"/>
+			<position name="pos_logic_mirror_box_bot_26" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_26" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_26">
+			<volumeref ref="logic_mirror_box_top_26"/>
+			<position name="pos_logic_mirror_box_top_26" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_26" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_26">
+			<volumeref ref="logic_pmt_window_26"/>
+			<position name="pos_logic_pmt_window_26" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_26" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_26">
+			<volumeref ref="logic_pmt_cathode_26"/>
+			<position name="pos_logic_pmt_cathode_26" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_26" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_26">
+			<volumeref ref="logic_front_back_plate_26"/>
+			<position name="pos_logic_front_plate_26" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_26" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_26">
+			<volumeref ref="logic_front_back_plate_26"/>
+			<position name="pos_logic_back_plate_26" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_26" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_26_0">
+			<volumeref ref="logic_quartz_26_0"/>
+			<position name="pos_logic_quartz_26_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_26_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_26_0">
+			<volumeref ref="logic_tungsten_26_0"/>
+			<position name="pos_logic_tungsten_26_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_26_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_26_1">
+			<volumeref ref="logic_quartz_26_1"/>
+			<position name="pos_logic_quartz_26_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_26_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_26_1">
+			<volumeref ref="logic_tungsten_26_1"/>
+			<position name="pos_logic_tungsten_26_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_26_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_26_2">
+			<volumeref ref="logic_quartz_26_2"/>
+			<position name="pos_logic_quartz_26_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_26_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_26_2">
+			<volumeref ref="logic_tungsten_26_2"/>
+			<position name="pos_logic_tungsten_26_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_26_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_26_3">
+			<volumeref ref="logic_quartz_26_3"/>
+			<position name="pos_logic_quartz_26_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_26_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_26_3">
+			<volumeref ref="logic_tungsten_26_3"/>
+			<position name="pos_logic_tungsten_26_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_26_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="logic_mirror_box_tungstenquartz_27">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_27">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_27">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_window_27">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_27">
+		<materialref ref="G4_Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_27">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_quartz_27_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_27_0">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_27_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_27_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_27_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_27_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_27_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_tungsten_27_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_singledet_27">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_logic_mirror_box_union"/>
+		<physvol name="mirror_box_tungstenquartz_27">
+			<volumeref ref="logic_mirror_box_tungstenquartz_27"/>
+			<position name="pos_logic_mirror_box_tungstenquartz_27" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_mirror_box_tungstenquartz_27" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_27">
+			<volumeref ref="logic_mirror_box_bot_27"/>
+			<position name="pos_logic_mirror_box_bot_27" x="113.731" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_27" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_27">
+			<volumeref ref="logic_mirror_box_top_27"/>
+			<position name="pos_logic_mirror_box_top_27" x="238.991" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_27" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_27">
+			<volumeref ref="logic_pmt_window_27"/>
+			<position name="pos_logic_pmt_window_27" x="332.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_27" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_27">
+			<volumeref ref="logic_pmt_cathode_27"/>
+			<position name="pos_logic_pmt_cathode_27" x="333.5200015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_27" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="front_plate_27">
+			<volumeref ref="logic_front_back_plate_27"/>
+			<position name="pos_logic_front_plate_27" x="-10.805" y="0" z="-31.675"/>
+			<rotation name="rot_logic_front_plate_27" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_27">
+			<volumeref ref="logic_front_back_plate_27"/>
+			<position name="pos_logic_back_plate_27" x="-10.805" y="0" z="31.675"/>
+			<rotation name="rot_logic_back_plate_27" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_27_0">
+			<volumeref ref="logic_quartz_27_0"/>
+			<position name="pos_logic_quartz_27_0" x="0" y="0" z="25.0"/>
+			<rotation name="rot_logic_quartz_27_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_27_0">
+			<volumeref ref="logic_tungsten_27_0"/>
+			<position name="pos_logic_tungsten_27_0" x="0" y="0" z="18.0"/>
+			<rotation name="rot_logic_tungsten_27_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_27_1">
+			<volumeref ref="logic_quartz_27_1"/>
+			<position name="pos_logic_quartz_27_1" x="0" y="0" z="11.0"/>
+			<rotation name="rot_logic_quartz_27_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_27_1">
+			<volumeref ref="logic_tungsten_27_1"/>
+			<position name="pos_logic_tungsten_27_1" x="0" y="0" z="4.0"/>
+			<rotation name="rot_logic_tungsten_27_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_27_2">
+			<volumeref ref="logic_quartz_27_2"/>
+			<position name="pos_logic_quartz_27_2" x="0" y="0" z="-3.0"/>
+			<rotation name="rot_logic_quartz_27_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_27_2">
+			<volumeref ref="logic_tungsten_27_2"/>
+			<position name="pos_logic_tungsten_27_2" x="0" y="0" z="-10.0"/>
+			<rotation name="rot_logic_tungsten_27_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_27_3">
+			<volumeref ref="logic_quartz_27_3"/>
+			<position name="pos_logic_quartz_27_3" x="0" y="0" z="-17.0"/>
+			<rotation name="rot_logic_quartz_27_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_27_3">
+			<volumeref ref="logic_tungsten_27_3"/>
+			<position name="pos_logic_tungsten_27_3" x="0" y="0" z="-24.0"/>
+			<rotation name="rot_logic_tungsten_27_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="showerMaxMother">
+		<materialref ref="G4_AIR"/>
+		<solidref ref="solid_showerMaxMother"/>
+		<physvol name="singledet_0">
+			<volumeref ref="logic_singledet_0"/>
+			<position name="pos_singledet_0" x="-1090.0" y="1.33486501107e-13" z="-43.434"/>
+			<rotation name="rot_singledet_0" x="-0.0" y="-0.0" z="-3.14159265359"/>
+		</physvol>
+		<physvol name="singledet_1">
+			<volumeref ref="logic_singledet_1"/>
+			<position name="pos_singledet_1" x="-1062.67142428" y="-242.547818012" z="43.434"/>
+			<rotation name="rot_singledet_1" x="0.0" y="-0.0" z="-3.36599212885"/>
+		</physvol>
+		<physvol name="singledet_2">
+			<volumeref ref="logic_singledet_2"/>
+			<position name="pos_singledet_2" x="-982.056066014" y="-472.933275638" z="-43.434"/>
+			<rotation name="rot_singledet_2" x="0.0" y="-0.0" z="-3.5903916041"/>
+		</physvol>
+		<physvol name="singledet_3">
+			<volumeref ref="logic_singledet_3"/>
+			<position name="pos_singledet_3" x="-852.19631589" y="-679.603884026" z="43.434"/>
+			<rotation name="rot_singledet_3" x="0.0" y="-0.0" z="-3.81479107936"/>
+		</physvol>
+		<physvol name="singledet_4">
+			<volumeref ref="logic_singledet_4"/>
+			<position name="pos_singledet_4" x="-679.603884026" y="-852.19631589" z="-43.434"/>
+			<rotation name="rot_singledet_4" x="0.0" y="-0.0" z="-4.03919055462"/>
+		</physvol>
+		<physvol name="singledet_5">
+			<volumeref ref="logic_singledet_5"/>
+			<position name="pos_singledet_5" x="-472.933275638" y="-982.056066014" z="43.434"/>
+			<rotation name="rot_singledet_5" x="0.0" y="-0.0" z="-4.26359002987"/>
+		</physvol>
+		<physvol name="singledet_6">
+			<volumeref ref="logic_singledet_6"/>
+			<position name="pos_singledet_6" x="-242.547818012" y="-1062.67142428" z="-43.434"/>
+			<rotation name="rot_singledet_6" x="0.0" y="-0.0" z="-4.48798950513"/>
+		</physvol>
+		<physvol name="singledet_7">
+			<volumeref ref="logic_singledet_7"/>
+			<position name="pos_singledet_7" x="-2.00229751661e-13" y="-1090.0" z="43.434"/>
+			<rotation name="rot_singledet_7" x="0.0" y="-0.0" z="-4.71238898038"/>
+		</physvol>
+		<physvol name="singledet_8">
+			<volumeref ref="logic_singledet_8"/>
+			<position name="pos_singledet_8" x="242.547818012" y="-1062.67142428" z="-43.434"/>
+			<rotation name="rot_singledet_8" x="0.0" y="0.0" z="-4.93678845564"/>
+		</physvol>
+		<physvol name="singledet_9">
+			<volumeref ref="logic_singledet_9"/>
+			<position name="pos_singledet_9" x="472.933275638" y="-982.056066014" z="43.434"/>
+			<rotation name="rot_singledet_9" x="0.0" y="0.0" z="-5.1611879309"/>
+		</physvol>
+		<physvol name="singledet_10">
+			<volumeref ref="logic_singledet_10"/>
+			<position name="pos_singledet_10" x="679.603884026" y="-852.19631589" z="-43.434"/>
+			<rotation name="rot_singledet_10" x="0.0" y="0.0" z="-5.38558740615"/>
+		</physvol>
+		<physvol name="singledet_11">
+			<volumeref ref="logic_singledet_11"/>
+			<position name="pos_singledet_11" x="852.19631589" y="-679.603884026" z="43.434"/>
+			<rotation name="rot_singledet_11" x="0.0" y="0.0" z="-5.60998688141"/>
+		</physvol>
+		<physvol name="singledet_12">
+			<volumeref ref="logic_singledet_12"/>
+			<position name="pos_singledet_12" x="982.056066014" y="-472.933275638" z="-43.434"/>
+			<rotation name="rot_singledet_12" x="0.0" y="0.0" z="-5.83438635667"/>
+		</physvol>
+		<physvol name="singledet_13">
+			<volumeref ref="logic_singledet_13"/>
+			<position name="pos_singledet_13" x="1062.67142428" y="-242.547818012" z="43.434"/>
+			<rotation name="rot_singledet_13" x="0.0" y="0.0" z="-6.05878583192"/>
+		</physvol>
+		<physvol name="singledet_14">
+			<volumeref ref="logic_singledet_14"/>
+			<position name="pos_singledet_14" x="1090.0" y="-2.66973002214e-13" z="-43.434"/>
+			<rotation name="rot_singledet_14" x="0.0" y="0.0" z="-6.28318530718"/>
+		</physvol>
+		<physvol name="singledet_15">
+			<volumeref ref="logic_singledet_15"/>
+			<position name="pos_singledet_15" x="1062.67142428" y="242.547818012" z="43.434"/>
+			<rotation name="rot_singledet_15" x="-0.0" y="0.0" z="-6.50758478244"/>
+		</physvol>
+		<physvol name="singledet_16">
+			<volumeref ref="logic_singledet_16"/>
+			<position name="pos_singledet_16" x="982.056066014" y="472.933275638" z="-43.434"/>
+			<rotation name="rot_singledet_16" x="-0.0" y="0.0" z="-6.73198425769"/>
+		</physvol>
+		<physvol name="singledet_17">
+			<volumeref ref="logic_singledet_17"/>
+			<position name="pos_singledet_17" x="852.19631589" y="679.603884026" z="43.434"/>
+			<rotation name="rot_singledet_17" x="-0.0" y="0.0" z="-6.95638373295"/>
+		</physvol>
+		<physvol name="singledet_18">
+			<volumeref ref="logic_singledet_18"/>
+			<position name="pos_singledet_18" x="679.603884026" y="852.19631589" z="-43.434"/>
+			<rotation name="rot_singledet_18" x="-0.0" y="0.0" z="-7.18078320821"/>
+		</physvol>
+		<physvol name="singledet_19">
+			<volumeref ref="logic_singledet_19"/>
+			<position name="pos_singledet_19" x="472.933275638" y="982.056066014" z="43.434"/>
+			<rotation name="rot_singledet_19" x="-0.0" y="0.0" z="-7.40518268346"/>
+		</physvol>
+		<physvol name="singledet_20">
+			<volumeref ref="logic_singledet_20"/>
+			<position name="pos_singledet_20" x="242.547818012" y="1062.67142428" z="-43.434"/>
+			<rotation name="rot_singledet_20" x="-0.0" y="0.0" z="-7.62958215872"/>
+		</physvol>
+		<physvol name="singledet_21">
+			<volumeref ref="logic_singledet_21"/>
+			<position name="pos_singledet_21" x="3.33716252768e-13" y="1090.0" z="43.434"/>
+			<rotation name="rot_singledet_21" x="-0.0" y="0.0" z="-7.85398163397"/>
+		</physvol>
+		<physvol name="singledet_22">
+			<volumeref ref="logic_singledet_22"/>
+			<position name="pos_singledet_22" x="-242.547818012" y="1062.67142428" z="-43.434"/>
+			<rotation name="rot_singledet_22" x="-0.0" y="-0.0" z="-8.07838110923"/>
+		</physvol>
+		<physvol name="singledet_23">
+			<volumeref ref="logic_singledet_23"/>
+			<position name="pos_singledet_23" x="-472.933275638" y="982.056066014" z="43.434"/>
+			<rotation name="rot_singledet_23" x="-0.0" y="-0.0" z="-8.30278058449"/>
+		</physvol>
+		<physvol name="singledet_24">
+			<volumeref ref="logic_singledet_24"/>
+			<position name="pos_singledet_24" x="-679.603884026" y="852.19631589" z="-43.434"/>
+			<rotation name="rot_singledet_24" x="-0.0" y="-0.0" z="-8.52718005974"/>
+		</physvol>
+		<physvol name="singledet_25">
+			<volumeref ref="logic_singledet_25"/>
+			<position name="pos_singledet_25" x="-852.19631589" y="679.603884026" z="43.434"/>
+			<rotation name="rot_singledet_25" x="-0.0" y="-0.0" z="-8.751579535"/>
+		</physvol>
+		<physvol name="singledet_26">
+			<volumeref ref="logic_singledet_26"/>
+			<position name="pos_singledet_26" x="-982.056066014" y="472.933275638" z="-43.434"/>
+			<rotation name="rot_singledet_26" x="-0.0" y="-0.0" z="-8.97597901026"/>
+		</physvol>
+		<physvol name="singledet_27">
+			<volumeref ref="logic_singledet_27"/>
+			<position name="pos_singledet_27" x="-1062.67142428" y="242.547818012" z="43.434"/>
+			<rotation name="rot_singledet_27" x="-0.0" y="-0.0" z="-9.20037848551"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+</structure>
+<setup name="showerMaxWorld" version="1.0">
+	<world ref="showerMaxMother"/>
+</setup>
+</gdml>

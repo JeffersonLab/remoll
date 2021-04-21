@@ -1,0 +1,5 @@
+/run/initialize
+# FIXME Disabled by default since fails on JLabCE 2.3
+#/remoll/evgen/set hepmcAscii
+#/generator/hepmcAscii/open macros/tests/unit/test_gen_hepmc.dat
+/run/beamOn 1

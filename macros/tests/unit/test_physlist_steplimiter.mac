@@ -1,0 +1,17 @@
+# Enable step limiter physics
+/remoll/physlist/steplimiter/enable
+
+# Enable kryptonite
+/control/execute macros/kryptonite.mac
+
+# Initialize and run
+/run/initialize
+
+# Set step limit
+/remoll/geometry/userlimits/usermaxallowedstep h2Targ 5*mm
+
+# Run
+/remoll/seed 123456
+/event/verbose 1
+/tracking/verbose 1
+/run/beamOn 1

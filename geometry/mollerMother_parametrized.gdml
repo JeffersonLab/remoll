@@ -1,72 +1,118 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+
+<!DOCTYPE gdml [
+<!ENTITY world SYSTEM "solids/world.xml">
+<!ENTITY positions SYSTEM "positions.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define> 
-  <position name="hallCenter" x="0" y="0" z="4000"/>
-  <position name="targetCenter" x="0" y="0" z="0"/>
-  <position name="upstreamCenter" x="0" y="0" z="7000."/>
-  <position name="hybridCenter" x="0" y="0" z="13366.57"/>
-  <position name="detectorCenter" x="0" y="0" z="0."/><!-- 28500."/> -->
-  <rotation name="identity"/>
-  <rotation name="detectorRot" x="0" y="3.14159/2" z="0"/>
+  &positions;
 </define>
 
 <materials>
-     <material Z="1" name="Vacuum" state="gas">
-       <T unit="K" value="2.73"/>
-       <P unit="pascal" value="3e-18"/>
-       <D unit="g/cm3" value="1e-25"/>
-       <atom unit="g/mole" value="1.01"/>
-     </material>
 </materials>
 
 <solids>
-     <box lunit="mm" name="boxMother" x="200000" y="200000" z="200000"/>
+  &world;
 </solids>
 
-  <structure>
+<structure>
 
-    <volume name="logicMother">
-      <materialref ref="Vacuum"/>
-      <solidref ref="boxMother"/>
-<!--
-      <physvol>
-      <file name="geometry/targetDaughter.gdml"/>
+  <volume name="logicMother">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="world_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+    <!-- Target region -->
+    <physvol>
+      <file name="target/subTargetRegion.gdml"/>
       <positionref ref="targetCenter"/>
-      <rotationref ref="identity"/>
-      </physvol>
+    </physvol>
 
-
-      <physvol>
-      <file name="geometry/hallDaughter.gdml"/>
+    <!-- Hall -->
+    <physvol>
+      <file name="hall/hallDaughter_dump.gdml"/>
       <positionref ref="hallCenter"/>
-      <rotationref ref="identity"/>
-      </physvol>
--->
-      <physvol>
-      <file name="geometry/detector_parametrized.gdml"/>
+    </physvol>
+
+    <!-- SBS Bunker -->
+    <physvol>
+      <file name="electronics/subSBSbunker.gdml"/>
+      <position name="sbsBunker_pos" x="8740" y="-3000 + 2000" z="-15180."/>
+      <rotation name="rot_y30" unit="deg" y="30"/>
+    </physvol>
+ 
+    <!-- Upstream region -->
+    <physvol>
+      <file name="upstream/upstreamDaughter_merged.gdml"/>
+      <positionref ref="upstreamCenter"/>
+    </physvol>
+
+    <!-- Hybrid region -->
+    <physvol>
+      <file name="hybrid/hybridDaughter_merged.gdml"/>
+      <positionref ref="hybridCenter"/>
+    </physvol>
+
+    <!-- Downstream beampipe -->
+    <physvol>
+      <file name="beampipe/premoller/beampipeRaster.gdml"/>
+    </physvol>
+    <physvol>
+      <file name="beampipe/downstream/beampipeDSMother.gdml"/>
+    </physvol>
+
+    <!-- Front Tracking Detectors -->
+    <physvol>
+      <file name="tracking/trackingDaughter.gdml"/>
+      <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
+    </physvol>
+
+    <!-- Back Tracking Detectors -->
+    <physvol>
+      <file name="tracking/trackingDaughter.gdml"/>
+      <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
+    </physvol>
+
+    <!-- Main Detectors -->
+    <physvol>
+      <file name="detector/detector.gdml"/>
       <positionref ref="detectorCenter"/>
-      <rotationref ref="detectorRot"/>
-      </physvol>
-<!--
-      <physvol>
-	    <file name="geometry/upstreamDaughter.gdml"/>
-	    <positionref ref="upstreamCenter"/>
-    	<rotationref ref="identity"/>
-      </physvol>
+      <rotation name="detectorRot" x="0" y="90" z="0" unit="deg"/>
+    </physvol>
 
-      <physvol>
-    	<file name="geometry/hybridDaughter.gdml"/>
-	    <positionref ref="hybridCenter"/>
-    	<rotationref ref="identity"/>
-      </physvol>    
--->
+    <!-- electronics hut for left side --> 
+    <physvol>
+      <file name="huts/lefthut.gdml"/>
+      <positionref ref="lefthut_pos"/>
+      <rotation name="lefthut_rot" unit="deg" y="-45"/>
+    </physvol>
 
-    </volume>
-  </structure>
+    <!-- ShowerMax Detectors -->
+    <physvol>
+      <file name="showermax/showerMaxGen.gdml"/>
+      <positionref ref="showerMaxDetectorCenter"/>
+    </physvol>
+    
+    <!-- Lead Donut -->
+    <physvol>
+      <file name="donut/donutConcreteLead.gdml"/>
+      <positionref ref="donutConcreteLeadFaceUS"/>
+    </physvol>
+   
+    <!-- Pion Detectors -->
+    <physvol>
+      <file name="pion/pionDetectorSystem.gdml"/>
+      <positionref ref="pionDetectorSystemFaceUS"/>
+    </physvol>
 
-  <setup name="Default" version="1.0">
-    <world ref="logicMother"/>
-  </setup>
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="logicMother"/>
+</setup>
  
 </gdml> 

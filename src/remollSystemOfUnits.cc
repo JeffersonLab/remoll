@@ -41,5 +41,5 @@ remollUnits_t::remollUnits_t():
     kHz (Hz/1000.0),
     MHz (kHz/1000.0),
     GHz (MHz/1000.0)
-{ };
+{ }
 

@@ -1,0 +1,26 @@
+<gdml 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <orb name="surveymarker_solid" r="0.001" lunit="mm"/>
+</solids>
+
+<structure>
+  <volume name="surveymarker_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="surveymarker_solid"/>
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="surveymarker_logical"/>
+</setup>
+
+</gdml>

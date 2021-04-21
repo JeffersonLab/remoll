@@ -1,0 +1,72 @@
+  <materials>
+    <isotope N="28" Z="14" name="Si28">
+      <atom unit="g/mole" value="27.9769"/>
+    </isotope>
+    <isotope N="29" Z="14" name="Si29">
+      <atom unit="g/mole" value="28.9765"/>
+    </isotope>
+    <isotope N="30" Z="14" name="Si30">
+      <atom unit="g/mole" value="29.9738"/>
+    </isotope>
+    <element name="Si">
+      <fraction n="0.922296077703922" ref="Si28"/>
+      <fraction n="0.0468319531680468" ref="Si29"/>
+      <fraction n="0.0308719691280309" ref="Si30"/>
+    </element>
+    <isotope N="16" Z="8" name="O16">
+      <atom unit="g/mole" value="15.9949"/>
+    </isotope>
+    <isotope N="17" Z="8" name="O17">
+      <atom unit="g/mole" value="16.9991"/>
+    </isotope>
+    <isotope N="18" Z="8" name="O18">
+      <atom unit="g/mole" value="17.9992"/>
+    </isotope>
+    <element name="O">
+      <fraction n="0.99757" ref="O16"/>
+      <fraction n="0.00038" ref="O17"/>
+      <fraction n="0.00205" ref="O18"/>
+    </element>
+    <material name="Quartz_mat" state="solid">
+      <property name="RINDEX" ref="RINDEX_QUARTZ"/>
+      <property name="GROUPVEL" ref="GROUPVEL_QUARTZ"/>
+      <property name="ABSLENGTH" ref="ABSLENGTH_QUARTZ"/>
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="125.663004061075"/>
+      <D unit="g/cm3" value="2.203"/>
+      <fraction n="0.466666666666667" ref="Si"/>
+      <fraction n="0.533333333333333" ref="O"/>
+    </material>
+    <material Z="13" name="Mirror_mat" state="solid">
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="166"/>
+      <D unit="g/cm3" value="2.7"/>
+      <atom unit="g/mole" value="27"/>
+    </material>
+    <isotope N="14" Z="7" name="N14">
+      <atom unit="g/mole" value="14.0031"/>
+    </isotope>
+    <isotope N="15" Z="7" name="N15">
+      <atom unit="g/mole" value="15.0001"/>
+    </isotope>
+    <element name="N">
+      <fraction n="0.99632" ref="N14"/>
+      <fraction n="0.00368" ref="N15"/>
+    </element>
+    <material name="Air" state="gas">
+      <property name="RINDEX" ref="RINDEX_AIR"/>
+      <property name="GROUPVEL" ref="GROUPVEL_AIR"/>
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="85.7030667332999"/>
+      <D unit="g/cm3" value="0.00129"/>
+      <fraction n="0.7" ref="N"/>
+      <fraction n="0.3" ref="O"/>
+    </material>
+    <material Z="13" name="CATH_mat" state="solid">
+      <T unit="K" value="293.15"/>
+      <MEE unit="eV" value="166"/>
+      <D unit="g/cm3" value="2.7"/>
+      <atom unit="g/mole" value="27"/>
+    </material>
+  </materials>
+

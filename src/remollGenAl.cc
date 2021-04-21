@@ -207,12 +207,7 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   effectiveXsection = xsect;
 
   ///~~~ Aymmetry calculation
-  const G4double gf=1.16637e-5;//fermi coupling [GeV^-2]
-  const G4double qwp=0.0713;
-  const G4double qwn=-0.988;
-  //---modified by Yuxiang Zhao
-  //use qwp as weak charge
-  asym= -gf/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (qwp);
+  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2 * (QWp);
 }
 
 void remollGenAl::GenElastic(G4double beamE,G4double theta,
@@ -257,8 +252,5 @@ void remollGenAl::GenElastic(G4double beamE,G4double theta,
   fWeight = effectiveXsection*sin(theta);  
   
   ///~~~ Aymmetry calculation
-  const G4double gf=1.16637e-5;//fermi coupling [GeV^-2]
-  const G4double qwp=0.0713;
-  const G4double qwn=-0.988;
-  asym= -gf/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (qwp+qwn*(A-Z)/Z);
+  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2 * (QWp + QWn*(A-Z)/Z);
 }

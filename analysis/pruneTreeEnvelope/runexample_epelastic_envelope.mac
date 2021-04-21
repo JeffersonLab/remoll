@@ -1,0 +1,31 @@
+# Enable step limiter physics
+/remoll/physlist/steplimiter/enable
+# Macrofile
+# This must be called before initialize
+/remoll/setgeofile geometry/mollerMother_acceptanceDefinition_includeCol4.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+/remoll/physlist/parallel/enable 
+
+# This must be explicitly called
+/run/initialize
+/remoll/geometry/userlimits/usermaxallowedstep logicDownstream 10*cm
+/remoll/geometry/userlimits/usermaxallowedstep logicUpstream 10*cm
+/remoll/tracking/set 0
+/tracking/storeTrajectory 1
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+# Raster and initial angle stuff
+/remoll/oldras false
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+/remoll/beamene 11 GeV
+/remoll/evgen/set elastic
+/remoll/beamcurr 85 microampere
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/control/execute macros/kryptonite.mac
+/process/list
+# Specify random number seed - DO NOT USE THE SAME SEED OVER AND OVER AGAIN
+#/remoll/seed 123456
+/remoll/filename remoll_epelastic_envelope_2M.root
+/run/beamOn 2000000

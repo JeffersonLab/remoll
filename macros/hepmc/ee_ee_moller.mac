@@ -1,0 +1,30 @@
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+/remoll/physlist/parallel/enable
+
+/run/initialize
+
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+
+/control/execute macros/kryptonite.mac
+
+/remoll/SD/disable_range 7000 10000
+
+# Beam current
+/remoll/beamcurr 85 microampere
+
+# Raster
+/remoll/oldras true
+/remoll/rasx 0 mm
+/remoll/rasy 0 mm
+
+#
+# Moller generator
+#
+/remoll/evgen/set moller
+
+/remoll/filename remollout_ee_ee_moller.root
+/run/beamOn 50000
+

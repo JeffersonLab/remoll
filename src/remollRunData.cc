@@ -1,5 +1,6 @@
 #include "remollRunData.hh"
-#include "gitinfo.hh"
+
+#include "G4ios.hh"
 
 #include <string.h>
 #include <errno.h>
@@ -8,67 +9,65 @@
 #include <unistd.h>
 #endif
 
-remollRunData::remollRunData()
+// External objects
+extern const char* const gGitInfo;
+
+void remollRunData::Init()
 {
-    fSeed = 0;
-    fNthrown = -1;
-    fBeamE   = -1e9;
-    fGenName[0]  = '\0';
-    fHostName[0] = '\0';
-}
-
-remollRunData::~remollRunData(){
-}
-
-void remollRunData::Init(){
     fNthrown = 0;
-    fBeamE   = 0;
-    strcpy(fGenName, "default");
-    if(gethostname(fHostName,__RUNSTR_LEN) == -1){
-	fprintf(stderr, "%s line %d: ERROR could not get hostname\n", __PRETTY_FUNCTION__ ,  __LINE__ );
-	fprintf(stderr, "%s\n",strerror(errno));
+    fSeed = 0;
+
+    fGitInfo = gGitInfo;
+
+    const unsigned int length = 128;
+
+    char hostname[length];
+    if (gethostname(hostname, length) == -1) {
+	G4cerr << "Error:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": "
+               << "could not get hostname" << G4endl;
+    } else {
+        fHostName = hostname;
     }
-    if(getcwd(fRunPath,__RUNSTR_LEN) == NULL){
-	fprintf(stderr, "%s line %d: ERROR could not get current working directory\n", __PRETTY_FUNCTION__ ,  __LINE__ );
-	fprintf(stderr, "%s\n",strerror(errno));
+
+    char runpath[length];
+    if (getcwd(runpath, length) == NULL) {
+	G4cerr << "Error:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": "
+               << "could not get current working directory" << G4endl;
+    } else {
+        fRunPath = runpath;
     }
 }
 
-void remollRunData::Print(){
-    char gitInfo[__GITMAXINFO_SIZE];
-    gitInfo[0] = '\0';
-    strcpy(gitInfo, gGitInfoStr);
+void remollRunData::Print()
+{
+    G4cout << "git repository info" << G4endl;
+    G4cout << "-------------------------------------------------" << G4endl;
+    G4cout << fGitInfo << G4endl;
+    G4cout << "-------------------------------------------------" << G4endl;
+    G4cout << "Run at " << fRunTime.AsString("ls") << " on " << fHostName << G4endl;
+    G4cout << "Run path " << fRunPath << G4endl;
+    G4cout << "N generated = " << fNthrown << G4endl;
 
-    printf("git repository info\n-------------------------------------------------\n%s-------------------------------------------------\n\n", gitInfo);
-    printf("Run at %s on %s\n", fRunTime.AsString("ls"), fHostName);
-    printf("Run Path %s\n", fRunPath);
-    printf("N generated = %ld\n", fNthrown);
-    printf("Beam Energy = %f GeV\n", fBeamE);
-    printf("Generator   = %s\n", fGenName);
-
-    printf("Field maps:\n");
-    unsigned int i;
-    for( i = 0; i < fMagData.size(); i++ ){
-	printf("\t%s\n", fMagData[i].filename);
-	printf("\t%s\n", fMagData[i].hashsum);
-	printf("\t%s\n\n", fMagData[i].timestamp.AsString("ls"));
+    G4cout << "Field maps:" << G4endl;
+    for (unsigned int i = 0; i < fMagData.size(); i++ ){
+	G4cout << "\t" << fMagData[i].filename << G4endl;
+	G4cout << "\t" << fMagData[i].hashsum << G4endl;
+	G4cout << "\t" << fMagData[i].timestamp.AsString("ls") << G4endl;
     }
 
-    printf("Macro run:\n-------------------------------------------------\n");
-
+    G4cout << "Macro run:" << G4endl;
+    G4cout << "-------------------------------------------------" << G4endl;
     fMacro.Print();
-    
-    printf("-------------------------------------------------\n\n");
-    printf("Stored GDML Files:\n");
-    for( i = 0; i < fGDMLFiles.size(); i++ ){
+    G4cout << "-------------------------------------------------" << G4endl;
+    G4cout << "Stored GDML Files:" << G4endl;
+    for (unsigned int i = 0; i < fGDMLFiles.size(); i++ ) {
 	if( fGDMLFiles[i].GetBufferSize() >= 1024 ){
-	    printf("\t%32s %4lld kB\n", fGDMLFiles[i].GetFilename(), fGDMLFiles[i].GetBufferSize()/1024 );
+	    G4cout << "\t" << fGDMLFiles[i].GetFilename() << " " << fGDMLFiles[i].GetBufferSize()/1024 << "kB" << G4endl;
 	} else {
-	    printf("\t%32s   <1 kB\n", fGDMLFiles[i].GetFilename());
+	    G4cout << "\t" << fGDMLFiles[i].GetFilename() << " < 1kB" << G4endl;
 	}
     }
-    printf("-------------------------------------------------\n\n");
-
+    G4cout << "-------------------------------------------------" << G4endl;
 }
 
 void remollRunData::AddGDMLFile( const char *fn )

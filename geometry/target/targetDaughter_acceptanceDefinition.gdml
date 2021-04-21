@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define>
+    &matrices;
+
+    <constant name="y_increase_targ" value="0.0"/>
+    <constant name="YOFFSET_targ" value="-1*y_increase_targ/2"/>
+
+    <constant name="targetCenterZ" value="0"/>
+    <constant name="tubeTarget_rmax" value="40"/>
+    <constant name="tubeTarget_length" value="1250"/>
+    <constant name="AlWindowTarget_length" value="0.127"/>
+
+    <!-- Mother volume parameters -->
+    <constant name="boxTargetMother_width" value="9500"/>
+    <constant name="boxTargetMother_height" value="6000 - 100 + y_increase_targ + 200"/>
+    <constant name="boxTargetMother_length" value="6400"/>
+    <constant name="tubeBeampipeMother_sub_rmax" value="200"/>
+    <!-- <constant name="tubeBeampipeMother_sub_length" value="250"/> -->
+    <!--To have space for lead coller -->
+    <constant name="tubeBeampipeMother_sub_length" value="15"/>
+
+    <!--Following dimensions used for initial target shielding cylinder - Rakitha -->
+    <constant name="tubeShield_tgtseparation" value="10"/>
+    <constant name="tubeShield_thickness" value="400"/>
+    <constant name="tubeShield_beam_rmax" value="60"/>
+    <constant name="tubeShield_height" value="400"/>
+    <constant name="tubeShield_rmin" value="tubeTarget_length/2+tubeShield_tgtseparation"/>
+    <constant name="tubeShield_rmax" value="tubeShield_rmin+tubeShield_thickness"/>
+    <constant name="tubeShield_disk_thickness" value="400"/>
+    <constant name="tubeShield_disk_rmax" value="tubeShield_rmax"/>
+
+    <!-- Target Shielding hut dimensions -->
+    <constant name="tgtShield_length" value="4700"/>
+    <constant name="tgtShield_width" value="5920"/>
+    <constant name="tgtShield_height" value="5000"/>
+    <!--Default thickness is  305. Increased to 500 now -->
+    <constant name="tgtShield_side_thickness" value="750"/>
+    <constant name="tgtShield_top_thickness" value="500"/>
+    <constant name="tgtShield_y_offset" value="-400"/>
+    <constant name="tgtShield_x_offset" value="915"/>
+    <!--Default value is 100 before check2 in merge col-1 update1 -->
+    <constant name="boxShield_beam_bore" value="200"/>
+
+    <!-- Neutron Poly Shielding -->
+    <!-- PolyShield1 will be outside shielding -->
+    <constant name="tgtPolyShield1_side_thickness" value="400 + 400"/>
+    <constant name="tgtPolyShield1_top_thickness" value="400 + 400"/>
+    <constant name="tgtPolyShield1_length" value="tgtShield_length + 1 + 2*tgtPolyShield1_side_thickness"/>
+    <constant name="tgtPolyShield1_width" value="tgtShield_width + 1 + 2*tgtPolyShield1_side_thickness"/>
+    <constant name="tgtPolyShield1_height" value="tgtShield_height + 1 + 1*tgtPolyShield1_top_thickness"/>
+    <constant name="boxPolyShield1_beam_bore" value="200"/>
+    <constant name="tgtPolyShield1_y_offset" value="-400 + tgtPolyShield1_top_thickness/2"/>
+    <constant name="tgtPolyShield1_y_offset1" value="-400 - 500/2"/>
+
+    <!-- lead collar -->
+    <constant name="LeadCollar_width" value="370"/>
+    <constant name="LeadCollar_height" value="370"/>
+    <constant name="LeadCollar_length" value="200"/>
+    <!--I have use 100 before based on Tyler's ray tracing we can reduce down to 74 mm -->  
+    <constant name="ShieldCol1_inner_rmax" value="74"/>
+
+      <!-- Lead Top -->
+      <constant name="LeadTop_width" value="tgtShield_width - 2*tgtShield_side_thickness"/>
+      <constant name="LeadTop_length" value="tgtShield_length - 2*tgtShield_side_thickness"/>
+      <constant name="LeadTop_thickness" value="400"/>
+      <!-- Lead front  -->
+      <constant name="LeadFront_height" value="5000-500-400+200"/>
+      <constant name="LeadFront_width" value="tgtShield_width - 2*tgtShield_side_thickness"/>
+      <constant name="LeadFront_thickness" value="400"/>
+      <constant name="LeadFront_height_trim" value="2000"/>
+      <constant name="LeadFront_width_trim" value="1500"/>
+      <constant name="LeadTop_width_trim" value="1500"/>
+
+      
+  
+    <!-- PolyShield for lead collar -->
+    <constant name="tgtPolyShield_LeadCollar_top_thickness" value="200"/>
+    <constant name="tgtPolyShield_LeadCollar_bottom_thickness" value="200"/>
+    <constant name="tgtPolyShield_LeadCollar_side_thickness" value="200"/>
+    <constant name="tgtPolyShield_LeadCollar_front_thickness" value="200"/>
+    <constant name="shieldcoll_center" value="2851"/>
+    <position name="boxtgtPolyShield_LeadCollar_trans1" unit="mm" x="0" y="0" z="0"/>
+    <position name="boxtgtPolyShield_LeadCollar_trans2" unit="mm" x="0" y="0" z="-1*tgtPolyShield_LeadCollar_front_thickness/2"/>
+    <position name="boxtgtPolyShield_LeadCollar_sub_trans1" unit="mm" x="-1*tgtShield_x_offset" y="0-50" z="tgtPolyShield1_length/2 - (tgtPolyShield_LeadCollar_front_thickness/2 + LeadCollar_length/2)"/>
+
+
+    <!--Sens box detector  -->
+    <constant name="tgtBoxDet_length" value="tgtPolyShield1_length + 10"/>
+    <constant name="tgtBoxDet_width" value="tgtPolyShield1_width + 10"/>
+    <constant name="tgtBoxDet_height" value="tgtPolyShield1_height + 10"/>
+
+    <constant name="boxShield_inner_rmax" value="200"/>
+
+
+    <position name="v0" x="60.4388" y="-36.6311" z="65.0000" unit="mm"/>
+    <position name="tubeShield_topdisk_center" unit="mm" x="0" y="tubeShield_height/2+tubeShield_disk_thickness/2" z="0"/>
+    <position name="tubeShield_bottomdisk_center" unit="mm" x="0" y="-1*tubeShield_height/2 - tubeShield_disk_thickness/2" z="0"/>
+    <position name="tgt_center" unit="mm" x="0" y="0" z="0"/>
+    <position name="shieldcoll_center_1" unit="mm" x="0" y="YOFFSET_targ" z="shieldcoll_center"/>
+    <position name="LeadCollar_center_1" unit="mm" x="0" y="YOFFSET_targ" z="shieldcoll_center + tgtPolyShield_LeadCollar_front_thickness/2"/>
+    <position name="beampipe_sub_center" unit="mm" x="0" y="YOFFSET_targ" z="boxTargetMother_length/2 - tubeBeampipeMother_sub_length/2"/>
+
+    <position name="boxtgtShield_trans1" unit="mm" x="0" y="-1*tgtShield_top_thickness/2+50-50" z="0"/>
+    <position name="boxtgtShield_trans12" unit="mm" x="LeadTop_width/2 - LeadTop_width_trim/2 + 1" y="0" z="0"/>
+    <position name="boxtgtShield_trans3" unit="mm" x="0-300" y="-1*400/2+200.1" z="0+200.1"/>
+    <position name="boxtgtShield_trans2" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset-50-25" z="0"/>
+    <position name="boxtgtShield_trans22" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset+450-100" z="0"/>
+    <position name="boxtgtShield_trans23" unit="mm" x="0" y="-1*(5000-500-400+200)/2 + LeadFront_height_trim/2 - 1" z="0"/>
+    <position name="boxtgtShield_trans24" unit="mm" x="LeadFront_width/2 - LeadFront_width_trim/2 + 1" y="0" z="0"/>
+
+    <position name="boxtgtShield_trans4" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtShield_y_offset+250+200-100" z="0"/>
+    <position name="boxtgtShield1_center" unit="mm" x="tgtShield_x_offset" y="tgtShield_y_offset+50+25+YOFFSET_targ" z="0"/>
+
+
+    <position name="box1_center" unit="mm" x="tgtShield_x_offset" y="tgtShield_y_offset+2250-450+200+YOFFSET_targ" z="0"/>
+    <position name="box2_center" unit="mm" x="tgtShield_x_offset" y="tgtPolyShield1_y_offset1-200+100+YOFFSET_targ" z="0+1600-200"/>   
+
+    <constant name="theellipsoid_thick" value="12.7"/>
+    <constant name="theellipsoid1_height" value="539.515*2"/>
+    <constant name="theellipsoid1_length" value="2057.4"/>
+    <constant name="theellipsoid1_width" value="2057.4"/>
+    <constant name="ellipsoid1_sub_rect_height" value="theellipsoid1_height/2 + 25"/>
+    <constant name="ellipsoid1_sub_rect_length" value="theellipsoid1_length"/>
+    <constant name="ellipsoid1_sub_rect_width" value="theellipsoid1_width"/>
+    <constant name="theellipsoid2_height" value="533.4*2"/>
+    <constant name="theellipsoid2_length" value="2057.4"/>
+    <constant name="theellipsoid2_width" value="2057.4"/>
+    <constant name="ellipsoid2_sub_rect_height" value="theellipsoid2_height/2 + 25"/> <!-- Addition 25 to make sure the shell gets subtracted completely -->
+    <constant name="ellipsoid2_sub_rect_length" value="theellipsoid2_length"/>
+    <constant name="ellipsoid2_sub_rect_width" value="theellipsoid2_width"/>
+    <position name="ellipsoid_center" unit="mm" x="0" y="-222.25+YOFFSET_targ" z="0"/>    
+    <position name="ellipsoid_center2" unit="mm" x="0" y="222.25+101.6+501.65+YOFFSET_targ" z="0"/>
+    <position name="cyll1_center" unit="mm" x="0" y="222.25+101.6+250.825+YOFFSET_targ" z="0"/>
+    <position name="cyll2_center" unit="mm" x="0" y="222.25+50.8+YOFFSET_targ" z="0"/>
+    <position name="cyll3_center" unit="mm" x="0" y="YOFFSET_targ" z="0"/>  
+
+    <position name="ellipsoid_1_hollow_trans" unit="mm" x="0" y="0" z="0"/>
+    <position name="ellipsoid_1_sub_trans" unit="mm" x="0" y="0" z="-1*ellipsoid1_sub_rect_height/2"/>
+    <position name="ellipsoid_2_hollow_trans" unit="mm" x="0" y="0" z="0"/>
+    <position name="ellipsoid_2_sub_trans" unit="mm" x="0" y="0" z="ellipsoid2_sub_rect_height/2"/>
+
+
+    <position name="boxtgtPolyShield1_trans1" unit="mm" x="0" y="-1*tgtPolyShield1_top_thickness/2+25" z="0"/>
+    <position name="boxtgtPolyShield1_trans2" unit="mm" x="-1*tgtShield_x_offset" y="-1*tgtPolyShield1_y_offset-50" z="0"/>
+    <position name="boxtgtPolyShield1_center" unit="mm" x="tgtShield_x_offset" y="tgtPolyShield1_y_offset+50+YOFFSET_targ" z="0"/>
+    <position name="boxtgtPolyShield1_poly_center" unit="mm" x="tgtShield_x_offset" y="tgtPolyShield1_y_offset1+YOFFSET_targ-100" z="0-200"/>
+    <rotation name="scRot_1" unit="deg" x="90" y="0" z="0"/> 
+    <rotation name="scRot_2" unit="deg" x="270" y="0" z="0"/>
+    <position name="boxtgtMother_center_1" unit="mm" x="0" y="-1*(boxTargetMother_height)/2" z="0"/>
+  </define>
+
+  &materials;
+
+  <solids>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTargetMother" rmax="1400" rmin="0" startphi="0" z="6000"/>
+    <!--100 mm offset to prevent target mother volume overlapping with hall mother volume -->
+    <box lunit="mm" name="boxTargetMother_1" x="boxTargetMother_width" y="boxTargetMother_height" z="boxTargetMother_length"/>
+    <box lunit="mm" name="boxTargetMother_2" x="boxTargetMother_width+1" y="150" z="boxTargetMother_length+1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeampipe_sub" rmax="tubeBeampipeMother_sub_rmax" rmin="0" startphi="0" z="tubeBeampipeMother_sub_length"/>
+    <subtraction name ="boxTargetMother_3">
+      <first ref="boxTargetMother_1"/>
+      <second ref="boxTargetMother_2"/>
+      <positionref ref="boxtgtMother_center_1" />
+    </subtraction>
+    <subtraction name ="boxTargetMother">
+      <first ref="boxTargetMother_3"/>
+      <second ref="tubeBeampipe_sub"/>
+      <positionref ref="beampipe_sub_center"/>
+    </subtraction> 
+
+
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="tubeTarget_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget_solid_1" rmax="tubeShield_beam_rmax" rmin="0" startphi="0" z="2*tubeTarget_length"/>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="AlWindow" rmax="tubeTarget_rmax" rmin="0" startphi="0" z="AlWindowTarget_length"/>
+
+    <!--Following solids used for initial target shielding cylinder - Rakitha -->
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_solid_1" rmax="tubeShield_rmax" rmin="tubeShield_rmin" startphi="0" z="tubeShield_height"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_topdisk_solid" rmax="tubeShield_disk_rmax" rmin="0" startphi="0" z="tubeShield_disk_thickness"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_bottomdisk_solid" rmax="tubeShield_disk_rmax" rmin="0" startphi="0" z="tubeShield_disk_thickness"/>
+
+    <box lunit="mm" name="boxShieldColl1_solid_1" x="LeadCollar_width" y="LeadCollar_height" z="LeadCollar_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="TargShield_subTube_solid" rmax="ShieldCol1_inner_rmax" rmin="0" startphi="0" z="LeadCollar_length + 10"/>
+    <ellipsoid name = "theellipsoid_down_1"  ax="theellipsoid2_length/2" by="theellipsoid2_width/2" cz="theellipsoid2_height/2" zcut2="0" lunit= "mm"/> 
+    <ellipsoid name = "theellipsoid_down_2"  ax="theellipsoid2_length/2 - theellipsoid_thick" by="theellipsoid2_width/2 - theellipsoid_thick" cz="theellipsoid2_height/2 - theellipsoid_thick" zcut2="0" lunit= "mm"/> 
+    <ellipsoid name = "theellipsoid_up_1"  ax="theellipsoid1_length/2" by="theellipsoid1_width/2" cz="theellipsoid1_height/2" zcut2="0" lunit= "mm"/> 
+    <ellipsoid name = "theellipsoid_up_2"  ax="theellipsoid1_length/2 - theellipsoid_thick" by="theellipsoid1_width/2 - theellipsoid_thick" cz="theellipsoid1_height/2 - theellipsoid_thick" zcut2="0" lunit= "mm"/> 
+    <box lunit="mm" name="boxSubEllipsoid1" x="ellipsoid1_sub_rect_width" y="ellipsoid1_sub_rect_height" z="ellipsoid1_sub_rect_length"/>
+    <box lunit="mm" name="boxSubEllipsoid2" x="ellipsoid2_sub_rect_width" y="ellipsoid2_sub_rect_height" z="ellipsoid2_sub_rect_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tgtShield_beamTube_solid1"     rmax="76.2" rmin="0" startphi="0" z="tgtShield_length+10"/>
+
+    <subtraction name ="theellipsoid_sub_1">
+      <first ref="theellipsoid_down_1"/>
+      <second ref="theellipsoid_down_2"/>
+      <positionref ref="ellipsoid_1_hollow_trans"/>
+    </subtraction> 
+
+    <subtraction name ="theellipsoid_1">
+      <first ref="theellipsoid_sub_1"/>
+      <second ref="boxSubEllipsoid1"/>
+      <rotationref ref="scRot_1"/>
+      <positionref ref="ellipsoid_1_sub_trans"/>
+    </subtraction> 
+
+    <subtraction name ="theellipsoid_sub_2">
+      <first ref="theellipsoid_up_1"/>
+      <second ref="theellipsoid_up_2"/>
+      <positionref ref="ellipsoid_2_hollow_trans" />    
+    </subtraction> 
+
+    <subtraction name ="theellipsoid_2">
+      <first ref="theellipsoid_sub_2"/>
+      <second ref="boxSubEllipsoid2"/>
+      <rotationref ref="scRot_1"/>
+      <positionref ref="ellipsoid_2_sub_trans"/>
+    </subtraction> 
+
+<!--top tube -->
+   <tube aunit="deg" deltaphi="360" lunit="mm" name="cyll1" rmax="2057.4/2" rmin="1016" startphi="0" z="501.650"/>  <!--middle ring -->
+   <tube aunit="deg" deltaphi="360" lunit="mm" name="cyll2" rmax="2260.6/2" rmin="2032/2" startphi="0" z="101.6"/>
+<!--bottom tube -->
+   <tube aunit="deg" deltaphi="360" lunit="mm" name="cyll13" rmax="2057.4/2" rmin="2057.4/2 - 12.7" startphi="0" z="444.5"/>
+
+
+
+
+
+   <subtraction name ="cyll3">
+     <first ref="cyll13"/>
+     <second ref="tgtShield_beamTube_solid1"/>
+     <rotationref ref="scRot_1"/>
+     <positionref ref="boxtgtPolyShield_LeadCollar_trans1" />     
+   </subtraction> 
+
+   <subtraction name ="TargShield_solid">
+     <first ref="TargShield_solid_1"/>
+     <second ref="tubeTarget_solid_1"/>
+     <positionref ref="tgt_center" />
+     <rotationref ref="scRot_1"/>      
+   </subtraction> 
+
+   <subtraction name ="boxShieldColl1_solid">
+     <first ref="boxShieldColl1_solid_1"/>
+     <second ref="TargShield_subTube_solid"/>
+     <positionref ref="tgt_center" />
+   </subtraction> 
+
+   <!--Target Shielding hut solids-->
+   <box lunit="mm" name="boxtgtShield_solid_1" x="tgtShield_width+2*100" y="tgtShield_height+100+50" z="tgtShield_length+2*100"/>
+   <box lunit="mm" name="boxtgtShield_solid_2" x="tgtShield_width - 2*tgtShield_side_thickness" y="tgtShield_height - tgtShield_top_thickness+200-50+100" z="tgtShield_length - 2*tgtShield_side_thickness"/>
+
+   <box lunit="mm" name="boxtgtShield_poly_solid_1" x="tgtShield_width - 2*tgtShield_side_thickness" y="tgtShield_height - tgtShield_top_thickness-400+200" z="tgtShield_length - 2*tgtShield_side_thickness-400"/>
+
+     <box lunit="mm" name="box1_lead_solid_0"  x="LeadTop_width" y="LeadTop_thickness" z="LeadTop_length"/>
+     <box lunit="mm" name="box1_lead_solid_2"  x="LeadTop_width_trim" y="LeadTop_thickness + 1" z="LeadTop_length + 1"/>
+     <box lunit="mm" name="box2_lead_solid_2"  x="LeadFront_width" y="LeadFront_height" z="LeadFront_thickness"/>
+     <box lunit="mm" name="box3_lead_solid_1"  x="LeadFront_width + 1" y="LeadFront_height_trim" z="LeadFront_thickness + 1"/>
+     <box lunit="mm" name="box4_lead_solid_1"  x="LeadFront_width_trim" y="LeadFront_height + 1" z="LeadFront_thickness + 1"/>
+
+   <box lunit="mm" name="boxtgtShield_poly_solid_2" x="tgtShield_width - 2*tgtShield_side_thickness-2*400" y="tgtShield_height - tgtShield_top_thickness-400+200" z="tgtShield_length - 2*tgtShield_side_thickness-2*400"/>
+
+
+   <tube aunit="deg" deltaphi="360" lunit="mm" name="tgtShield_beamTube_solid" rmax="boxShield_beam_bore" rmin="0" startphi="0" z="tgtShield_length+10+200"/>
+
+   <subtraction name ="boxtgtShield1_solid_3">
+     <first ref="boxtgtShield_solid_1"/>
+     <second ref="boxtgtShield_solid_2"/>
+     <positionref ref="boxtgtShield_trans1" />
+   </subtraction>    
+
+   <subtraction name ="boxtgtShield1_solid">
+     <first ref="boxtgtShield1_solid_3"/>
+     <second ref="tgtShield_beamTube_solid"/>
+     <positionref ref="boxtgtShield_trans2" />
+   </subtraction>
+
+    <subtraction name ="box1_lead_solid_1">
+      <first ref="box1_lead_solid_0"/>
+      <second ref="box1_lead_solid_2"/>
+      <positionref ref="boxtgtShield_trans12" />
+    </subtraction>
+
+   <subtraction name ="box2_lead_solid_01">
+     <first ref="box2_lead_solid_2"/>
+     <second ref="box3_lead_solid_1"/>
+     <positionref ref="boxtgtShield_trans23" />
+   </subtraction>
+
+   <subtraction name ="box2_lead_solid_0">
+      <first ref="box2_lead_solid_01"/>
+      <second ref="box4_lead_solid_1"/>
+      <positionref ref="boxtgtShield_trans24" />
+    </subtraction>
+
+   <subtraction name ="box2_lead_solid_1">
+     <first ref="box2_lead_solid_0"/>
+     <second ref="tgtShield_beamTube_solid"/>
+     <positionref ref="boxtgtShield_trans22" />
+   </subtraction>   
+
+   <subtraction name ="boxtgtShield1_poly_solid_3">
+     <first ref="boxtgtShield_poly_solid_1"/>
+     <second ref="boxtgtShield_poly_solid_2"/>
+     <positionref ref="boxtgtShield_trans3" />
+   </subtraction>
+
+   <subtraction name ="boxtgtShield1_poly_solid">
+     <first ref="boxtgtShield1_poly_solid_3"/>
+     <second ref="tgtShield_beamTube_solid"/>
+     <positionref ref="boxtgtShield_trans4" />
+   </subtraction> 
+
+
+
+   <box lunit="mm" name="boxtgtPolyShield1_solid_1" x="tgtPolyShield1_width" y="tgtPolyShield1_height+100" z="tgtPolyShield1_length"/>
+   <box lunit="mm" name="boxtgtPolyShield1_solid_2" x="tgtPolyShield1_width - 2*tgtPolyShield1_side_thickness + 1+2*100" y="tgtPolyShield1_height - tgtPolyShield1_top_thickness + 1+100+50" z="tgtPolyShield1_length - 2*tgtPolyShield1_side_thickness + 1+2*100"/>
+   <tube aunit="deg" deltaphi="360" lunit="mm" name="tgtPolyShield1_beamTube_solid" rmax="boxPolyShield1_beam_bore" rmin="0" startphi="0" z="tgtPolyShield1_length+10"/>
+
+   <subtraction name ="boxtgtPolyShield1_solid_3">
+     <first ref="boxtgtPolyShield1_solid_1"/>
+     <second ref="boxtgtPolyShield1_solid_2"/>
+     <positionref ref="boxtgtPolyShield1_trans1" />
+   </subtraction> 
+
+   <box lunit="mm" name="boxPolyShield_LeadCollar_solid_sub" x="LeadCollar_width+0.1 + 2*tgtPolyShield_LeadCollar_side_thickness + 0.1 " y="LeadCollar_height + tgtPolyShield_LeadCollar_top_thickness + tgtPolyShield_LeadCollar_bottom_thickness + 0.1" z="LeadCollar_length + tgtPolyShield_LeadCollar_front_thickness + 0.1"/>
+
+   <subtraction name ="boxtgtPolyShield1_solid_4">
+     <first ref="boxtgtPolyShield1_solid_3"/>
+     <second ref="boxPolyShield_LeadCollar_solid_sub"/>
+     <positionref ref="boxtgtPolyShield_LeadCollar_sub_trans1" />
+   </subtraction>
+
+   <subtraction name ="boxtgtPolyShield1_solid">
+     <first ref="boxtgtPolyShield1_solid_4"/>
+     <second ref="tgtPolyShield1_beamTube_solid"/>
+     <positionref ref="boxtgtPolyShield1_trans2" />
+   </subtraction>  
+
+
+   <box lunit="mm" name="boxPolyShield_LeadCollar_solid_1" x="LeadCollar_width + 2*tgtPolyShield_LeadCollar_side_thickness" y="LeadCollar_height + tgtPolyShield_LeadCollar_top_thickness + tgtPolyShield_LeadCollar_bottom_thickness" z="LeadCollar_length + tgtPolyShield_LeadCollar_front_thickness"/>
+   <box lunit="mm" name="boxPolyShield_LeadCollar_solid_2" x="LeadCollar_width + 1" y="LeadCollar_height + 1" z="LeadCollar_length + 1"/>
+   <tube aunit="deg" deltaphi="360" lunit="mm" name="boxPolyShield_LeadCollar_subTube_solid" rmax="ShieldCol1_inner_rmax+1" rmin="0" startphi="0" z="LeadCollar_length + tgtPolyShield_LeadCollar_front_thickness + 10"/>
+
+
+   <subtraction name ="boxPolyShield_LeadCollar_solid_3">
+     <first ref="boxPolyShield_LeadCollar_solid_1"/>
+     <second ref="boxPolyShield_LeadCollar_subTube_solid"/>
+     <positionref ref="boxtgtPolyShield_LeadCollar_trans1" />
+   </subtraction>    
+
+   <subtraction name ="boxPolyShield_LeadCollar_solid_4">
+     <first ref="boxPolyShield_LeadCollar_solid_3"/>
+     <second ref="boxPolyShield_LeadCollar_solid_2"/>
+     <positionref ref="boxtgtPolyShield_LeadCollar_trans2" />
+   </subtraction>     
+
+
+   <box lunit="mm" name="boxDet1_solid_1" x="tgtBoxDet_width" y="tgtBoxDet_height" z="tgtBoxDet_width"/>
+
+ </solids>
+
+ <structure>
+
+   <volume name="h2Targ">
+     <materialref ref="G4_lH2"/>
+     <solidref ref="tubeTarget"/>
+     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+   </volume>
+
+   <volume name="USAlTarg">
+     <materialref ref="G4_Al"/>
+     <solidref ref="AlWindow"/>
+     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+   </volume>
+
+   <volume name="DSAlTarg">
+     <materialref ref="G4_Al"/>
+     <solidref ref="AlWindow"/>
+     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+   </volume>
+
+   <volume name="TargShield_topdisk_logic">
+     <materialref ref="Borated_Concrete"/>
+     <solidref ref="TargShield_topdisk_solid"/>
+   </volume>
+
+   <volume name="TargShield_bottomdisk_logic">
+     <materialref ref="Borated_Concrete"/>
+     <solidref ref="TargShield_bottomdisk_solid"/>
+   </volume>
+
+   <volume name="TargShield_logic">
+     <materialref ref="Concrete"/>
+     <solidref ref="TargShield_solid"/>
+   </volume>
+
+   <volume name="boxtgtShield1_logic">
+     <materialref ref="Concrete"/>
+     <solidref ref="boxtgtShield1_solid"/>
+     <auxiliary auxtype="Color" auxvalue="Green"/>
+   </volume>
+
+   <!-- Neutron Poly Shielding -->
+   <!-- PolyShield1 will be outside shielding -->
+   <volume name="boxtgtPolyShield1_logic">
+     <materialref ref="Polythene"/>
+     <solidref ref="boxtgtPolyShield1_solid"/>
+     <auxiliary auxtype="Color" auxvalue="Brown"/>
+   </volume>
+
+   <volume name="boxtgtShield1_poly_logic">
+     <materialref ref="Polythene"/>
+     <solidref ref="boxtgtShield1_poly_solid"/>
+     <auxiliary auxtype="Color" auxvalue="Brown"/>
+   </volume>
+
+   <volume name="box1_lead_logic">
+     <materialref ref="Lead"/>
+     <solidref ref="box1_lead_solid_1"/>
+     <auxiliary auxtype="Color" auxvalue="red"/>
+   </volume>
+
+   <volume name="box2_lead_logic">
+     <materialref ref="Lead"/>
+     <solidref ref="box2_lead_solid_1"/>
+     <auxiliary auxtype="Color" auxvalue="red"/>
+   </volume>
+
+
+   <volume name="boxShieldColl1_logic">
+     <materialref ref="Lead"/>
+     <solidref ref="boxShieldColl1_solid"/>
+     <auxiliary auxtype="Color" auxvalue="red"/>
+   </volume>
+
+   <volume name="shell1_logic">
+     <materialref ref="Aluminium"/>
+     <solidref ref="theellipsoid_1"/>
+     <auxiliary auxtype="Color" auxvalue="silver"/>
+   </volume>
+
+
+   <volume name="shell2_logic">
+     <materialref ref="Aluminium"/>
+     <solidref ref="theellipsoid_2"/>
+     <auxiliary auxtype="Color" auxvalue="silver"/>
+
+   </volume>
+
+
+   <volume name="cyll1_logic">
+     <materialref ref="Aluminium"/>
+     <solidref ref="cyll1"/>
+     <auxiliary auxtype="Color" auxvalue="silver"/>
+   </volume>
+
+   <volume name="cyll2_logic">
+     <materialref ref="Aluminium"/>  
+     <solidref ref="cyll2"/>
+     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+     <auxiliary auxtype="Color" auxvalue="silver"/>
+     <auxiliary auxtype="DetNo" auxvalue="1"/>
+   </volume>
+
+   <volume name="cyll3_logic">
+     <materialref ref="Aluminium"/>
+     <solidref ref="cyll3"/>
+     <auxiliary auxtype="Color" auxvalue="silver"/>
+   </volume>
+
+
+
+
+
+   <volume name="boxPolyShield_LeadCollar_logic">
+     <materialref ref="Polythene"/>
+     <solidref ref="boxPolyShield_LeadCollar_solid_4"/>
+     <auxiliary auxtype="Color" auxvalue="brown"/>
+   </volume>
+
+   <volume name="logicTarget">
+     <materialref ref="VacuumTarg"/>
+     <solidref ref="boxTargetMother"/>
+
+     <physvol>
+       <volumeref ref="USAlTarg"/>
+       <position name="targ_upstream_window" unit="mm" x="0" y="YOFFSET_targ" z="targetCenterZ-(AlWindowTarget_length+tubeTarget_length)/2"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="h2Targ"/>
+       <position name="targ_center1" unit="mm" x="0" y="YOFFSET_targ" z="targetCenterZ"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="DSAlTarg"/>
+       <position name="targ_downstream_window" unit="mm" x="0" y="YOFFSET_targ" z="targetCenterZ+(AlWindowTarget_length+tubeTarget_length)/2"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="boxtgtShield1_logic"/>
+       <positionref ref="boxtgtShield1_center"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="box1_lead_logic"/>
+       <positionref ref="box1_center"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="box2_lead_logic"/>
+       <positionref ref="box2_center"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="shell1_logic"/>
+       <rotationref ref="scRot_2"/>
+       <positionref ref="ellipsoid_center"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="shell2_logic"/>
+       <rotationref ref="scRot_2"/>
+       <positionref ref="ellipsoid_center2"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="cyll1_logic"/>
+       <rotationref ref="scRot_1"/>
+       <positionref ref="cyll1_center"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="cyll2_logic"/>
+       <rotationref ref="scRot_1"/>
+       <positionref ref="cyll2_center"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="cyll3_logic"/>
+       <rotationref ref="scRot_1"/>
+       <positionref ref="cyll3_center"/>
+     </physvol>
+     <physvol>
+       <volumeref ref="boxtgtPolyShield1_logic"/>
+       <positionref ref="boxtgtPolyShield1_center"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="boxtgtShield1_poly_logic"/>
+       <positionref ref="boxtgtPolyShield1_poly_center"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="boxShieldColl1_logic"/>
+       <positionref ref="shieldcoll_center_1"/>
+     </physvol>
+
+     <physvol>
+       <volumeref ref="boxPolyShield_LeadCollar_logic"/>
+       <positionref ref="LeadCollar_center_1"/>
+     </physvol>
+
+     <auxiliary auxtype="TargetSystem" auxvalue=""/>
+   </volume>
+
+ </structure>
+
+ <setup name="Target" version="1.0">
+   <world ref="logicTarget"/>
+ </setup> 
+
+</gdml>

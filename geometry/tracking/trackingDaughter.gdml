@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <constant name="PHI" value="2*pi/7"/>
+  <variable name="i" value="0"/>
+
+  <quantity name="GEMThickness"   type="length" value="30" unit="mm"/>
+
+  <quantity name="GEMFrameThickness"   type="length" value="10" unit="mm"/>
+  <quantity name="GEMFrameInnerLength" type="length" value="300" unit="mm"/>
+  <quantity name="GEMFrameInnerWidth"  type="length" value="300" unit="mm"/>
+  <quantity name="GEMFrameOuterLength" type="length" value="350" unit="mm"/>
+  <quantity name="GEMFrameOuterWidth"  type="length" value="350" unit="mm"/>
+
+  <quantity name="GEMKaptonCathodeThickness" type="length" value="0.050" unit="mm"/>
+  <quantity name="GEMKaptonMiddleThickness"  type="length" value="0.050" unit="mm"/>
+  <quantity name="GEMKaptonAnodeThickness"   type="length" value="0.050" unit="mm"/>
+  <quantity name="GEMFR4AnodeThickness"      type="length" value="0.300" unit="mm"/>
+  <quantity name="GEMCopperLayerThickness"   type="length" value="0.005" unit="mm"/>
+
+  <quantity name="GEMPositionRadius" type="length" value="0.85" unit="m"/>
+
+  <position name="GEMTrackingPlane1_pos" z="0.0" unit="m"/>
+  <position name="GEMTrackingPlane2_pos" z="0.5" unit="m"/>
+</define>
+
+<materials>
+  <material name="ArCO2" state="gas">
+    <T unit="K" value="293.15"/>
+    <D unit="g/cm3" value="0.0018"/>
+    <fraction n="0.8" ref="G4_Ar"/>
+    <fraction n="0.2" ref="G4_CARBON_DIOXIDE"/>
+  </material>
+
+  <material name="Epoxy" state="solid">
+    <T unit="K" value="293.15"/>
+    <D unit="g/cm3" value="1.2"/>
+    <fraction n="0.15" ref="G4_H"/>
+    <fraction n="0.85" ref="G4_C"/>
+  </material>
+
+  <material name="FR4" state="solid">
+    <T unit="K" value="293.15"/>
+    <D unit="g/cm3" value="1.86"/>
+    <fraction n="0.6" ref="G4_SILICON_DIOXIDE"/>
+    <fraction n="0.4" ref="Epoxy"/>
+  </material>
+</materials>
+
+<solids>
+  <polycone name="GEMTrackingWorld_sol"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="650" rmax="2000.0" z="    0-100.0"/>
+    <zplane rmin="650" rmax="2000.0" z="500.0+100.0"/>
+  </polycone>
+
+  <tube name="GEMTrackingPlane_sol"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="650" rmax="1900" z="100" lunit="mm"/>
+
+  <box name="GEMDetector_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="10.0*cm"/>
+
+  <box name="GEMFrameInner_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMFrameThickness"/>
+  <box name="GEMFrameOuter_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="GEMFrameThickness"/>
+  <subtraction name="GEMFrame_sol">
+    <first ref="GEMFrameOuter_sol"/>
+    <second ref="GEMFrameInner_sol"/>
+  </subtraction>
+
+  <box name="GEMKaptonCathodeFoil_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMKaptonCathodeThickness"/>
+  <box name="GEMKaptonMiddleFoil_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMKaptonMiddleThickness"/>
+  <box name="GEMKaptonAnodeFoil_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMKaptonAnodeThickness"/>
+</solids>
+
+<structure>
+
+  <volume name="GEMFrame_log">
+    <materialref ref="FR4"/>
+    <solidref ref="GEMFrame_sol"/>
+  </volume>
+
+  <volume name="GEMKaptonCathodeFoil_log">
+    <materialref ref="G4_KAPTON"/>
+    <solidref ref="GEMKaptonCathodeFoil_sol"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMKaptonCathodeFoil"/>
+    <auxiliary auxtype="DetNo"   auxvalue="511"/>
+  </volume>
+
+  <volume name="GEMKaptonMiddleFoil_log">
+    <materialref ref="G4_KAPTON"/>
+    <solidref ref="GEMKaptonMiddleFoil_sol"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMKaptonMiddleFoil"/>
+    <auxiliary auxtype="DetNo"   auxvalue="512"/>
+  </volume>
+
+  <volume name="GEMKaptonAnodeFoil_log">
+    <materialref ref="G4_KAPTON"/>
+    <solidref ref="GEMKaptonAnodeFoil_sol"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMKaptonAnodeFoil"/>
+    <auxiliary auxtype="DetNo"   auxvalue="513"/>
+  </volume>
+
+  <volume name="GEMDetector_log">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="GEMDetector_sol"/>
+
+    <physvol name="GEMFrame_phys">
+      <volumeref ref="GEMFrame_log"/>
+      <position name="GEMFrame_pos" z="0.0" unit="mm"/>
+    </physvol>	
+
+    <physvol name="GEMKaptonCathodeFoil_phys">
+      <volumeref ref="GEMKaptonCathodeFoil_log"/>
+      <position name="GEMKaptonCathodeFoil_pos" z="-3.0" unit="mm"/>
+    </physvol>	
+    <physvol name="GEMKaptonMiddleFoil_phys">
+      <volumeref ref="GEMKaptonMiddleFoil_log"/>
+      <position name="GEMKaptonMiddleFoil_pos" z="0.0" unit="mm"/>
+    </physvol>	
+    <physvol name="GEMKaptonAnodeFoil_phys">
+      <volumeref ref="GEMKaptonAnodeFoil_log"/>
+      <position name="GEMKaptonAnodeFoil_pos" z="+3.0" unit="mm"/>
+    </physvol>	
+    
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+  <volume name="GEMTrackingPlane_log">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="GEMTrackingPlane_sol"/>
+
+    <loop for="i" from="1" to="7" step="1">
+      <physvol name="GEMDetector_sector_phys[i+1]">
+        <volumeref ref="GEMDetector_log"/>
+        <position name="GEMDetector_sector_pos[i+1]" 
+                  x="GEMPositionRadius*cos((i-0.5)*PHI)" 
+                  y="GEMPositionRadius*sin((i-0.5)*PHI)"/>
+        <rotation name="GEMDetector_sector_rot[i+1]"
+                  z="-(i-0.5)*PHI"/>
+      </physvol>	
+    </loop>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+  <volume name="GEMTrackingWorld_log">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="GEMTrackingWorld_sol"/>
+
+    <physvol name="GEMTrackingPlane1_phys">
+      <volumeref ref="GEMTrackingPlane_log"/>
+      <positionref ref="GEMTrackingPlane1_pos"/>
+    </physvol>	
+    <physvol name="GEMTrackingPlane2_phys">
+      <volumeref ref="GEMTrackingPlane_log"/>
+      <positionref ref="GEMTrackingPlane2_pos"/>
+    </physvol>	
+    
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="GEMTrackingWorld_log"/>
+</setup>
+
+</gdml>

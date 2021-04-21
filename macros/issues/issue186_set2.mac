@@ -1,0 +1,14 @@
+/remoll/setgeofile geometry/mollerMother.gdml
+/run/initialize
+/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
+/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+/remoll/evgen/set beam
+/remoll/beamene 11 GeV
+/remoll/kryptonite/set true
+/remoll/filename remollout1.root
+/run/beamOn 10000
+/control/shell build/reroot -l -q macros/issues/issue179.C
+

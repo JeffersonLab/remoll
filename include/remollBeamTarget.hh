@@ -55,8 +55,6 @@ class remollBeamTarget {
         static std::vector<G4VPhysicalVolume*> GetTargetVolumes(){ return fTargetVolumes; }
 
         void SetActiveTargetVolume(G4String name);
-        void SetTargetPos(G4double z);
-        void SetTargetLen(G4double l);
 
         void PrintTargetInfo();
 
@@ -64,10 +62,9 @@ class remollBeamTarget {
         remollBeamTarget();
 	virtual ~remollBeamTarget();
 
-	G4double GetEffLumin();
+	G4double GetEffLumin(SamplingType_t);
 
-
-	remollVertex SampleVertex(SampType_t);
+	remollVertex SampleVertex(SamplingType_t);
 
 	G4double fBeamEnergy;
 	G4double fBeamCurrent;
@@ -75,11 +72,14 @@ class remollBeamTarget {
 
 	remollMultScatt *fMS;
 
+	bool fAlreadyWarned;
+        bool fAlreadyWarned_LH2;
+
     private:
 	G4GenericMessenger* fMessenger;
 
 	G4Material *fDefaultMat;
-	
+
     public:
 	// Base position, angle *sampled* info
 	G4ThreeVector fVer, fDir;

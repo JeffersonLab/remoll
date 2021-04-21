@@ -1,0 +1,5 @@
+/control/execute macros/kryptonite.mac
+/run/initialize
+/remoll/evgen/set moller
+/remoll/interval 5
+/run/beamOn 1000

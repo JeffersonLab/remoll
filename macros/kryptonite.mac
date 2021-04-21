@@ -1,0 +1,12 @@
+# Enable kryptonite
+/remoll/kryptonite/enable
+
+# Set some default materials
+/remoll/kryptonite/add VacuumKryptonite
+/remoll/kryptonite/add Tungsten
+/remoll/kryptonite/add Copper
+/remoll/kryptonite/add Lead
+/remoll/kryptonite/add CW95
+
+# List materials
+/remoll/kryptonite/list

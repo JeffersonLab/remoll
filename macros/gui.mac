@@ -17,11 +17,93 @@
 #
 # File :
 /gui/addMenu   file File
-/gui/addButton file Initialize "/run/initialize"
 /gui/addButton file Exit "exit"
+
+#
+# Geometry menu :
+/gui/addMenu   geom "1. Geometry"
+/gui/addButton geom "MOLLER Parallel"             "/remoll/parallel/setfile geometry/mollerParallel.gdml"
+/gui/addButton geom "MOLLER Experiment"           "/remoll/geometry/setfile geometry/mollerMother.gdml"
+/gui/addButton geom "MOLLER Experiment (w. dets)" "/remoll/geometry/setfile geometry/mollerMother_parametrized.gdml"
+/gui/addButton geom "Only pion system"            "/remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml"
+/gui/addButton geom "Only showermax"              "/remoll/geometry/setfile geometry/showerMaxDetector.gdml"
+/gui/addButton geom "No parallel"                 "/remoll/parallel/setfile "
+#
+# Initialize menu :
+/gui/addMenu   phys "2. Physics"
+/gui/addButton phys "List physics"       "/remoll/physlist/list"
+/gui/addButton phys "Enable optical"     "/remoll/physlist/optical/enable"
+/gui/addButton phys "Disable optical"    "/remoll/physlist/optical/disable"
+/gui/addButton phys "Enable step limit"  "/remoll/physlist/steplimiter/enable"
+/gui/addButton phys "Disable step limit" "/remoll/physlist/steplimiter/disable"
+/gui/addButton phys "QGSP_BERT"          "/remoll/physlist/register QGSP_BERT"
+/gui/addButton phys "QGSP_BERT_HP"       "/remoll/physlist/register QGSP_BERT_HP"
+/gui/addButton phys "QGSP_BIC"           "/remoll/physlist/register QGSP_BIC"
+/gui/addButton phys "QGSP_BIC_HP"        "/remoll/physlist/register QGSP_BIC_HP"
+/gui/addButton phys "FTFP_BERT"          "/remoll/physlist/register FTFP_BERT"
+/gui/addButton phys "FTFP_BERT_HP"       "/remoll/physlist/register FTFP_BERT_HP"
+/gui/addButton phys "FTFP_BIC"           "/remoll/physlist/register FTFP_BIC"
+/gui/addButton phys "QGSP_FTFP_BERT"     "/remoll/physlist/register QGSP_FTFP_BERT"
+#
+# Initialize menu :
+/gui/addMenu   init "3. Initialize"
+/gui/addButton init Initialize "/run/initialize"
+#
+# Viewer menu :
+/gui/addMenu   view "4. Viewer"
+/gui/addButton view "Qt viewer (immediate)"  "/control/execute vis/IQt.mac"
+/gui/addButton view "Qt viewer (stored)"     "/control/execute vis/SQt.mac"
+/gui/addButton view "Display limit 1M"       "/vis/ogl/set/displayListLimit 1000000"
+/gui/addButton view "Load vis settings"      "/control/execute vis/vis.mac"
+/gui/addButton view "Load cutaway settings"  "/control/execute vis/cutaway.mac"
+/gui/addButton view "Clear cutaway planes"   "/vis/viewer/clearCutawayPlanes"
+/gui/addButton view "Vertical section view"  "/control/execute vis/section.mac"
+/gui/addButton view "Draw real world"        "/vis/drawVolume world"
+/gui/addButton view "Draw all worlds"        "/vis/drawVolume worlds"
+/gui/addButton view "Set style surface"      "/vis/viewer/set/style surface"
+/gui/addButton view "Set style wireframe"    "/vis/viewer/set/style wireframe"
+/gui/addButton view "Hide tracks behind objects" "/vis/viewer/set/hiddenMarker true"
+/gui/addButton view "Show tracks behind objects" "/vis/viewer/set/hiddenMarker false"
+/gui/addButton view "Hide individual steps"  "/vis/modeling/trajectories/MollerStyle/default/setDrawStepPts false"
+/gui/addButton view "Show individual steps"  "/vis/modeling/trajectories/MollerStyle/default/setDrawStepPts true"
+/gui/addButton view "Front view (+Z)"        "/vis/viewer/set/viewpointThetaPhi 180 0 deg"
+/gui/addButton view "Back view (-Z)"         "/vis/viewer/set/viewpointThetaPhi 0 0 deg"
+/gui/addButton view "Side 1 view (+X)"       "/vis/viewer/set/viewpointThetaPhi 90 180 deg"
+/gui/addButton view "Side 2 view (-X)"       "/vis/viewer/set/viewpointThetaPhi -90 180 deg"
+/gui/addButton view "Top view (-Y)"          "/vis/viewer/set/viewpointThetaPhi 90 90 deg"
+/gui/addButton view "Mag fields"             "/vis/scene/add/magneticField 50"
+/gui/addButton view "Refresh viewer (retraverse graphical data)"  "/vis/viewer/refresh"
+/gui/addButton view "Update viewer (interaction or end-of-file)"  "/vis/viewer/update"
+/gui/addButton view "Flush viewer (= refresh + update)"           "/vis/viewer/flush"
+/gui/addButton view "Update scene"           "/vis/scene/notifyHandlers"
+#
+# Filter menu :
+/gui/addMenu   filter "5. Filters"
+/gui/addButton filter "HideAllGammas ON"  "/vis/filtering/trajectories/HideAllGammas/active 1"
+/gui/addButton filter "HideAllGammas OFF" "/vis/filtering/trajectories/HideAllGammas/active 0"
+/gui/addButton filter "ShowOnlyCharged ON"  "/vis/filtering/trajectories/ShowOnlyCharged/active 1"
+/gui/addButton filter "ShowOnlyCharged OFF" "/vis/filtering/trajectories/ShowOnlyCharged/active 0"
+/gui/addButton filter "ShowOnlyPionDetectorHits ON"  "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 1"
+/gui/addButton filter "ShowOnlyPionDetectorHits OFF" "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 0"
 #
 # Run menu :
-/gui/addMenu   run Run
+/gui/addMenu   field "6. Fields"
+/gui/addButton field "Load fieldmaps" "/control/execute macros/load_magnetic_fieldmaps.mac"
+#
+# Generator menu :
+/gui/addMenu   gen "7. Generator"
+/gui/addButton gen "Moller"   "/remoll/evgen/set moller"
+/gui/addButton gen "Beam"     "/remoll/evgen/set beam"
+/gui/addButton gen "Beam/pi-" "/remoll/evgen/beam/partName pi-"
+/gui/addButton gen "Pion"     "/remoll/evgen/set pion"
+/gui/addButton gen "Pion/pi-" "/remoll/evgen/pion/settype pi-"
+/gui/addButton gen "Pion/pi+" "/remoll/evgen/pion/settype pi+"
+/gui/addButton gen "Pion/pi0" "/remoll/evgen/pion/settype pi0"
+
+#
+# Run menu :
+/gui/addMenu   run "8. Run"
+/gui/addButton run "Load from files" "/random/resetEngineFromEachEvent 1"
 /gui/addButton run "beamOn 1"    "/run/beamOn 1"
 /gui/addButton run "beamOn 2"    "/run/beamOn 2"
 /gui/addButton run "beamOn 5"    "/run/beamOn 5"
@@ -35,24 +117,3 @@
 /gui/addButton run "beamOn 1000" "/run/beamOn 1000"
 /gui/addButton run "beamOn 2000" "/run/beamOn 2000"
 
-#
-# Viewer menu :
-/gui/addMenu   viewer Viewer
-#/gui/addButton viewer "My viewer"            "/control/execute vis/myVis.mac"
-#/gui/addButton viewer "OIX viewer"           "/control/execute vis/OIX.mac"
-#/gui/addButton viewer "X viewer"             "/control/execute vis/X.mac"
-/gui/addButton viewer "Qt viewer"            "/control/execute vis/Qt.mac"
-/gui/addButton viewer "Set style solid"      "/vis/viewer/set/style s"
-/gui/addButton viewer "Set style wire"       "/vis/viewer/set/style w"
-/gui/addButton viewer "Hide tracks behind objects" "/vis/viewer/set/hiddenMarker true"
-/gui/addButton viewer "Show tracks behind objects" "/vis/viewer/set/hiddenMarker false"
-/gui/addButton viewer "Front view"           "/vis/viewer/set/viewpointThetaPhi 180 0 deg"
-/gui/addButton viewer "Back view"            "/vis/viewer/set/viewpointThetaPhi 0 0 deg"
-/gui/addButton viewer "Side 1 view"            "/vis/viewer/set/viewpointThetaPhi 90 180 deg"
-/gui/addButton viewer "Side 2 view"            "/vis/viewer/set/viewpointThetaPhi -90 180 deg"
-/gui/addButton viewer "Top view"             "/vis/viewer/set/viewpointThetaPhi 90 90 deg"
-/gui/addButton viewer "Cutaway"              "/control/execute vis/cutaway.mac"
-/gui/addButton viewer "Update viewer"        "/vis/viewer/update"
-/gui/addButton viewer "Update scene"         "/vis/scene/notifyHandlers"
-/gui/addButton viewer "Reset scene"          "/control/execute vis/vis.mac"
-#

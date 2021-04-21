@@ -1,0 +1,146 @@
+  <!-- PbWO4 -->
+  <matrix coldim="2" name="ABSLENGTH_PBWO4" values="
+      1.54986*eV 263160
+      1.77127*eV 250000
+      2.06648*eV 227270
+      2.47978*eV 200000
+      3.09973*eV 131580
+      4.13297*eV 16130
+      4.95956*eV 740
+      5.51063*eV 125
+      5.90424*eV 10"/>
+  <matrix coldim="2" name="RINDEX_PBWO4" values="
+      1.54986*eV 1.45338
+      1.77127*eV 1.45536
+      2.06648*eV 1.4581
+      2.47978*eV 1.46239
+      3.09973*eV 1.47018
+      4.13297*eV 1.48786
+      4.95956*eV 1.50751
+      5.51063*eV 1.52422
+      5.90424*eV 1.53842"/>
+
+  <!-- Photocathode -->
+  <matrix coldim="2" name="REFLECTIVITY_CATHODE" values="
+      1.54986*eV 0.0
+      1.77127*eV 0.0
+      2.06648*eV 0.0
+      2.47978*eV 0.0
+      3.09973*eV 0.0
+      4.13297*eV 0.0
+      4.95956*eV 0.0
+      5.51063*eV 0.0
+      5.90424*eV 0.0"/>
+  <matrix coldim="2" name="EFFICIENCY_CATHODE" values="
+      1.54986*eV 0.0080
+      1.77127*eV 0.0298
+      2.06648*eV 0.0638
+      2.47978*eV 0.1240
+      3.09973*eV 0.1770
+      4.13297*eV 0.2110
+      4.95956*eV 0.1780
+      5.51063*eV 0.0890
+      5.90424*eV 0.0355"/>
+
+  <!-- Air -->
+  <matrix coldim="2" name="ABSLENGTH_AIR" values="
+    1.54986*eV 1*km
+    1.77127*eV 1*km
+    2.06648*eV 1*km
+    2.47978*eV 1*km
+    3.09973*eV 1*km
+    4.13297*eV 1*km
+    4.95956*eV 1*km
+    5.51063*eV 1*km
+    5.90424*eV 1*km"/>
+  <matrix coldim="2" name="RINDEX_AIR" values="
+    1.54986*eV 1.000292
+    1.77127*eV 1.000292
+    2.06648*eV 1.000292
+    2.47978*eV 1.000292
+    3.09973*eV 1.000292
+    4.13297*eV 1.000292
+    4.95956*eV 1.000292
+    5.51063*eV 1.000292
+    5.90424*eV 1.000292"/>
+
+  <!-- Lucite -->
+  <matrix coldim="2" name="ABSLENGTH_LUCITE" values="
+    1.54986*eV 263160*mm
+    1.77127*eV 250000*mm
+    2.06648*eV 227270*mm
+    2.47978*eV 200000*mm
+    3.09973*eV 131580*mm
+    4.13297*eV 16130*mm
+    4.95956*eV 740*mm
+    5.51063*eV 125*mm
+    5.90424*eV 10*mm"/>
+  <matrix coldim="2" name="RINDEX_LUCITE" values="
+    1.54986*eV 1.45338
+    1.77127*eV 1.45536
+    2.06648*eV 1.4581
+    2.47978*eV 1.46239
+    3.09973*eV 1.47018
+    4.13297*eV 1.48786
+    4.95956*eV 1.50751
+    5.51063*eV 1.52422
+    5.90424*eV 1.53842"/>
+
+  <matrix name="RINDEX_LUCITE_surf" coldim="2" values="
+    2.038*eV 1.46
+    4.144*eV 1.46"/>
+  <matrix name="SPECLOBE_LUCITE" coldim="2" values="
+    2.038*eV 0.3
+    4.144*eV 0.3"/>
+  <matrix name="SPECSPIKE_LUCITE" coldim="2" values="
+    2.038*eV 0.2
+    4.144*eV 0.2"/>
+  <matrix name="BACKSCATTER_LUCITE" coldim="2" values="
+    2.038*eV 0.2
+    4.144*eV 0.2"/>
+
+  <!-- Glue -->
+  <matrix coldim="2" name="ABSLENGTH_GLUE" values="
+    1.54986*eV 263160*mm
+    1.77127*eV 250000*mm
+    2.06648*eV 227270*mm
+    2.47978*eV 200000*mm
+    3.09973*eV 131580*mm
+    4.13297*eV 16130*mm
+    4.95956*eV 740*mm
+    5.51063*eV 125*mm
+    5.90424*eV 10*mm"/>
+  <matrix coldim="2" name="RINDEX_GLUE" values="
+    1.54986*eV 1.405
+    1.77127*eV 1.405
+    2.06648*eV 1.405
+    2.47978*eV 1.405
+    3.09973*eV 1.405
+    4.13297*eV 1.405
+    4.95956*eV 1.405
+    5.51063*eV 1.405
+    5.90424*eV 1.405"/>
+
+  <!-- Mylar -->
+  <matrix coldim="2" name="REFLECTIVITY_MYLAR" values="
+    1.54986*eV 0.9
+    1.77127*eV 0.9
+    2.06648*eV 0.9
+    2.47978*eV 0.9
+    3.09973*eV 0.9
+    4.13297*eV 0.9
+    4.95956*eV 0.9
+    5.51063*eV 0.9
+    5.90424*eV 0.9"/>
+
+  <!-- Aluminum -->
+  <matrix coldim="2" name="REFLECTIVITY_ALUMINUM" values="
+    1.54986*eV 0.5
+    1.77127*eV 0.5
+    2.06648*eV 0.5
+    2.47978*eV 0.5
+    3.09973*eV 0.5
+    4.13297*eV 0.5
+    4.95956*eV 0.5
+    5.51063*eV 0.5
+    5.90424*eV 0.5"/>

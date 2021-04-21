@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+
+  <define>
+    &matrices;
+    <!--Dimension of single iron block-->
+    <constant name="IronBlock_x" value="1320"/>
+    <constant name="IronBlock_y" value="1320"/>
+    <constant name="IronBlock_z" value="660"/>
+    <!--Dimension of single Steel block-->
+    <constant name="SteelBlock_x" value="4880"/>
+    <constant name="SteelBlock_y" value="60"/>
+    <constant name="SteelBlock_z" value="1220"/>
+
+  </define>
+
+  &materials;
+
+  <solids>
+
+    <box lunit="mm" name="sbsBunkerRegion_s"
+         x="8*IronBlock_x" y="3*IronBlock_y" z="14*IronBlock_z"/>
+
+    <box lunit="mm" name="IronShieldType1_s"
+         x="5*IronBlock_x" y="2.5*IronBlock_y" z="2.*IronBlock_z"/>
+
+    <box lunit="mm" name="IronShieldType2_s"
+         x="1.*IronBlock_x" y="2.5*IronBlock_y" z="1.*IronBlock_z"/>
+
+    <box lunit="mm" name="IronShieldType3_s"
+         x="1.*IronBlock_x/2." y="2.5*IronBlock_y" z="10.*IronBlock_z"/>
+
+    <!--top steell plate-->
+    <box lunit="mm" name="SteelShield_s"
+         x="2.*SteelBlock_x" y="2.*SteelBlock_y" z="4.*SteelBlock_z"/>
+
+    <!--vacuum detectors for monitoring skyshine  chandan-->
+    <box lunit="mm" name="sbsBunkerVacuumDet1_s"
+         x="6.25*IronBlock_x-5." y="2.5*IronBlock_y-5" z="10.*IronBlock_z-5"/>
+
+  </solids>
+
+  <structure>
+
+    <volume name="IronShieldType1_l">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="IronShieldType1_s"/>
+      <auxiliary auxtype="ElectShield" auxvalue=""/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="IronShieldType2_l">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="IronShieldType2_s"/>
+      <auxiliary auxtype="ElectShield" auxvalue=""/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="IronShieldType3_l">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="IronShieldType3_s"/>
+      <auxiliary auxtype="ElectShield" auxvalue=""/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="SteelShield_l">
+      <materialref ref="G4_Fe"/>   <!--FIXME   change material to steel-->
+      <solidref ref="SteelShield_s"/>
+      <auxiliary auxtype="ElectShield" auxvalue=""/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+      <!-- <auxiliary auxtype="Alpha" auxvalue="0.3"/> -->
+    </volume>
+
+    <volume name="sbsBunkerVacuumDet1_l">
+      <materialref ref="VacuumDet"/>
+      <solidref ref="sbsBunkerVacuumDet1_s"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+      <auxiliary auxtype="SensDet" auxvalue="sbsBunkerVacuumDet_1"/>
+      <auxiliary auxtype="DetType" auxvalue="all"/>
+      <auxiliary auxtype="DetNo" auxvalue="5559"/>
+    </volume>
+
+    <volume name="sbsbunker">
+      <materialref ref="G4_AIR"/>
+      <solidref ref="sbsBunkerRegion_s"/>
+
+      <physvol>
+        <volumeref ref="IronShieldType1_l"/>
+        <position name="IronShieldType1_p" unit="mm" x="0." y="-0.25*IronBlock_y" z="3*IronBlock_x"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="IronShieldType2_l"/>
+        <position name="IronShieldType2_p1" unit="mm" x="2.5*IronBlock_x+0.5*IronBlock_x" y="-0.25*IronBlock_y" z="2.5*IronBlock_x+0.5*IronBlock_z"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="IronShieldType2_l"/>
+        <position name="IronShieldType2_p2" unit="mm" x="-2.5*IronBlock_x-0.5*IronBlock_x" y="-0.25*IronBlock_y" z="2.5*IronBlock_x+0.5*IronBlock_z"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="IronShieldType3_l"/>
+        <position name="IronShieldType3_p1" unit="mm" x="2.5*IronBlock_x+1.*IronBlock_x" y="-0.25*IronBlock_y" z="7*IronBlock_z-5*IronBlock_z-2*IronBlock_z"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="IronShieldType3_l"/>
+        <position name="IronShieldType3_p2" unit="mm" x="-2.5*IronBlock_x-1.*IronBlock_x" y="-0.25*IronBlock_y" z="7*IronBlock_z-5.*IronBlock_z-2*IronBlock_z"/>
+      </physvol>
+
+      <physvol>
+        <volumeref ref="SteelShield_l"/>
+        <position name="SteelShield_p" unit="mm" x="0" y="1.*IronBlock_y+SteelBlock_y" z="7*IronBlock_z-2.*SteelBlock_z-1.75*IronBlock_z"/>
+      </physvol>
+
+      <!--placement of vacuum detector-->
+      <physvol>
+        <volumeref ref="sbsBunkerVacuumDet1_l"/>
+        <position name="sbsBunkerVacuumDet1_p" unit="mm" x="0." y="-0.25*IronBlock_y" z="0."/>
+      </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+  </structure>
+
+  <setup name="sbsBunker" version="1.0">
+    <world ref="sbsbunker"/>
+  </setup>
+
+</gdml>

@@ -1,0 +1,45 @@
+#  Example file
+
+# This must be called before initialize
+/remoll/setgeofile geometry_sculpt/mollerMother.gdml
+
+# This must be explicitly called
+/run/initialize
+
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+# Raster and initial angle stuff
+/remoll/rasx 0 mm
+/remoll/rasy 0 mm
+#/remoll/beam_x0 0 mm
+#/remoll/beam_y0 0 mm
+# initial angle
+#/remoll/beam_th0 0 mrad
+#/remoll/beam_ph0 0 mrad
+# gaussian spread widths
+#/remoll/beam_dth 0 mrad
+#/remoll/beam_dph 0 mrad
+
+/remoll/gen carbon
+/remoll/thmin 0.1 deg
+/remoll/thmax 2.0 deg
+
+/remoll/beamcurr 85 microampere
+
+#Enable optical photons and processes
+#/remoll/optical true
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+#/remoll/krypt   true
+
+# Specify random number seed
+/remoll/seed 123456
+
+#/tracking/storeTrajectory 1
+#/tracking/verbose 2
+#/run/verbose 2
+
+/remoll/filename Rootfiles/remoll_C12_noras_4GEMRes75um_det28z.root
+/run/beamOn 1000000
+

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Exit whenever non-zero exit code occurs
+set -euo pipefail
+
 # Determine absolute path of this script
 dir=`dirname $0`/../..
 dir=`readlink -f ${dir}`
@@ -15,14 +18,17 @@ macroglob="${2:-*.mac}"
 shopt -s nullglob
 analysisglob="${3:-*.C}"
 
+# The branch name is used to avoid clobbering comparative output
+branch=`git rev-parse --abbrev-ref HEAD || echo "HEAD"`
+
 # Set test suite input directories
 macros=${dir}/macros/tests/${suite}
 analysis1=${dir}/analysis/tests
 analysis2=${dir}/analysis/tests/${suite}
 
 # Set test suite output directories
-rootfiles=${dir}/rootfiles/tests/${suite}
-logfiles=${dir}/logfiles/tests/${suite}
+rootfiles=${dir}/rootfiles/tests/${suite}/${branch}
+logfiles=${dir}/logfiles/tests/${suite}/${branch}
 mkdir -p ${logfiles} ${rootfiles} ${rootfiles}/analysis
 
 
@@ -55,6 +61,11 @@ if [ "$suite" == "valgrind" ] ; then
 	echo
 fi
 
+# Accumulate timing information
+mkdir -p ${logfiles}
+rm -rf ${logfiles}/time.log
+export TIME="%E real,\t%U user,\t%S sys,\t%C"
+time="time -a -o ${logfiles}/time.log"
 
 # Run test suite macros as requested
 for macro in ${macros}/${macroglob} ; do
@@ -66,7 +77,7 @@ for macro in ${macros}/${macroglob} ; do
 
 	# Run remoll macro
 	mkdir -p ${logfiles}
-	$prefix build/remoll ${macro} 2>&1 | tee ${logfiles}/${name}.log
+	$time $prefix remoll ${macro} 2>&1 | tee ${logfiles}/${name}.log
 
 	# Unit tests do not have output
 	if [ "$suite" == "unit" ] ; then
@@ -89,7 +100,8 @@ for macro in ${macros}/${macroglob} ; do
 	echo "Starting analysis..." | tee ${logfiles}/analysis/${name}.log
 	for rootmacro in ${analysis1}/${analysisglob} ${analysis2}/${analysisglob} ; do
 		echo "Running analysis macro `basename ${rootmacro} .C`..."
-		root -q -b -l "${rootmacro}+(\"${rootfiles}\",\"${name}\")" 2>&1 | tee -a ${logfiles}/analysis/${name}.log
+		$time reroot -q -b -l "${rootmacro}+(\"${rootfiles}\",\"${name}\")" 2>&1 | tee -a ${logfiles}/analysis/${name}.log
 	done
 
 done
+cat ${logfiles}/time.log

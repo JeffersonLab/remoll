@@ -1,0 +1,40 @@
+#!/bin/bash
+
+function usage () {
+  echo "`basename $0` [--prefix] [--bindir] [--libdir] [--incdir] [--ldflags] [--cppflags] [--libs] [--data]"
+  exit 1
+}
+
+# If no arguments
+if [ $# -eq 0 ] ; then
+  usage
+fi
+
+# Loop over the arguments
+while [ $# -ne 0 ] ; do
+
+  # Treat cases
+  case $1 in
+    (--prefix)      echo -n "@CMAKE_INSTALL_PREFIX@" ;;
+    (--bindir)      echo -n "@CMAKE_INSTALL_FULL_BINDIR@" ;;
+    (--libdir)      echo -n "@CMAKE_INSTALL_FULL_LIBDIR@" ;;
+    (--incdir)      echo -n "@CMAKE_INSTALL_FULL_INCLUDEDIR@" ;;
+    (--data)        echo -n "@CMAKE_INSTALL_FULL_DATADIR@" ;;
+    (--libs)        echo -n "-L@CMAKE_INSTALL_FULL_LIBDIR@ -lremoll" ;;
+    (--ldflags)     echo -n "-L@CMAKE_INSTALL_FULL_LIBDIR@ -lremoll" ;;
+    (--cppflags)    echo -n "-I@CMAKE_INSTALL_FULL_INCLUDEDIR@" ;;
+    (--help)  usage ;;
+    (-h)      usage ;;
+    (*)       usage ;;
+  esac
+
+  # End with a space
+  echo -n " "
+
+  # Shift to the next argument
+  shift
+done
+
+# Finish with a new line
+# (disabled because it could break command lines)
+echo

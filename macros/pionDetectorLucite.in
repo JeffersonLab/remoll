@@ -1,0 +1,25 @@
+# This must be called before initialize
+/remoll/geometry/setfile geometry/pionDetectorLucite_world.gdml
+/remoll/parallel/setfile
+
+# Enable optical physics
+/remoll/physlist/optical/enable
+
+/run/initialize
+
+/remoll/beamene  10 GeV
+/remoll/beamcurr 50 microampere
+
+/remoll/SD/disable 8010
+/remoll/SD/disable 8011
+
+/remoll/evgen/set beam
+/remoll/evgen/beam/origin 0 0 0 cm
+/remoll/evgen/beam/originspread 30 25 0 cm
+/remoll/evgen/beam/direction 0 0 1
+/remoll/evgen/beam/partName e-
+
+/remoll/filename rootfiles/%name%/%name%_%jobid%_workdir/%name%_%jobid%.root
+/remoll/seed %seedA% %seedB%
+/run/beamOn %nevents%
+
