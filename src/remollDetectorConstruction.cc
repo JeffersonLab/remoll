@@ -16,6 +16,7 @@
 #include "G4PhysicalVolumeStore.hh"
 #include "G4LogicalVolumeStore.hh"
 #include "G4LogicalVolume.hh"
+#include "G4PVPlacement.hh"
 #include "globals.hh"
 
 #include "G4RunManager.hh"
@@ -31,7 +32,7 @@
 
 //CADMesh
 #ifdef __USE_CADMESH
-#include "CADMesh.hh"
+#include <CADMesh.hh>
 #endif
 
 // visual
@@ -176,6 +177,11 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       &remollDetectorConstruction::RelativeRotation,
       "Rotate a volume relative to current orientation [deg]")
       .SetStates(G4State_PreInit,G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "addmesh",
+      &remollDetectorConstruction::AddMeshFile,
+      "Add mesh file (stl, ply, obj)")
+      .SetStates(G4State_Idle);
 
   // Create user limits messenger
   fUserLimitsMessenger = new G4GenericMessenger(this,
@@ -373,6 +379,23 @@ remollDetectorConstruction::~remollDetectorConstruction()
     delete fGeometryMessenger;
     delete fKryptoniteMessenger;
     delete fUserLimitsMessenger;
+}
+
+void remollDetectorConstruction::AddMeshFile(G4String filename, G4ThreeVector position)
+{
+  G4String material = "G4_Galactic";
+  G4ThreeVector rotation(0.0,0.0,0.0);
+  #ifdef __USE_CADMESH
+    auto mesh = CADMesh::TessellatedMesh::FromSTL(filename);
+    G4VSolid* solid = mesh->GetSolid();
+    G4Material* mat = G4NistManager::Instance()->FindOrBuildMaterial(material);
+    G4LogicalVolume* lv = new G4LogicalVolume(solid, mat, filename);
+    G4RotationMatrix rot(rotation.x(), rotation.y(), rotation.z());
+    G4Transform3D tf(rot, position);
+    fMeshPVs.push_back(new G4PVPlacement(tf, filename, lv, fWorldVolume, false, 0, false));
+  #else
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning - meshes not supported." << G4endl;
+  #endif
 }
 
 void remollDetectorConstruction::AbsolutePosition(G4String name, G4ThreeVector position)
@@ -919,11 +942,6 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 
 G4VPhysicalVolume* remollDetectorConstruction::Construct()
 {
-  #ifdef __USE_CADMESH
-  G4ThreeVector offset = G4ThreeVector(-30*cm, 0, 0);
-  CADMesh * mesh = new CADMesh("../../models/cone.ply", mm, offset, false);
-  #endif
-
   // Parse GDML file
   fWorldVolume = ParseGDMLFile();
 
