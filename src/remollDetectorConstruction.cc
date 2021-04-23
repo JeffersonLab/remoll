@@ -179,8 +179,8 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       .SetStates(G4State_PreInit,G4State_Idle);
   fGeometryMessenger->DeclareMethod(
       "addmesh",
-      &remollDetectorConstruction::AddMeshFile,
-      "Add mesh file (stl, ply, obj)")
+      &remollDetectorConstruction::AddMesh,
+      "Add mesh file (ascii stl, ascii ply, ascii obj)")
       .SetStates(G4State_Idle);
 
   // Create user limits messenger
@@ -374,6 +374,7 @@ void remollDetectorConstruction::SetUserMinRange(G4String name, G4String value_u
 
 remollDetectorConstruction::~remollDetectorConstruction()
 {
+    for (auto pv: fMeshPVs) delete pv;
     delete fGDMLParser;
     delete fMessenger;
     delete fGeometryMessenger;
@@ -381,18 +382,24 @@ remollDetectorConstruction::~remollDetectorConstruction()
     delete fUserLimitsMessenger;
 }
 
-void remollDetectorConstruction::AddMeshFile(G4String filename, G4ThreeVector position)
+void remollDetectorConstruction::AddMesh(const G4String& filename)
 {
-  G4String material = "G4_Galactic";
-  G4ThreeVector rotation(0.0,0.0,0.0);
+  G4Material* material = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
   #ifdef __USE_CADMESH
+    // Read mesh
     auto mesh = CADMesh::TessellatedMesh::FromSTL(filename);
-    G4VSolid* solid = mesh->GetSolid();
-    G4Material* mat = G4NistManager::Instance()->FindOrBuildMaterial(material);
-    G4LogicalVolume* lv = new G4LogicalVolume(solid, mat, filename);
-    G4RotationMatrix rot(rotation.x(), rotation.y(), rotation.z());
-    G4Transform3D tf(rot, position);
-    fMeshPVs.push_back(new G4PVPlacement(tf, filename, lv, fWorldVolume, false, 0, false));
+
+    // Extract solids
+    for (auto solid: mesh->GetSolids()) {
+      auto lv = new G4LogicalVolume(solid, material, filename);
+      lv->SetVisAttributes(G4Colour(0.0,1.0,0.0,1.0));
+      auto pv = new G4PVPlacement(G4Transform3D(), filename, lv, fWorldVolume, false, 0, false);
+      fMeshPVs.push_back(pv);
+    }
+
+    // Reoptimize geometry
+    G4RunManager* run_manager = G4RunManager::GetRunManager();
+    run_manager->GeometryHasBeenModified();
   #else
     G4cerr << __FILE__ << " line " << __LINE__ << ": Warning - meshes not supported." << G4endl;
   #endif

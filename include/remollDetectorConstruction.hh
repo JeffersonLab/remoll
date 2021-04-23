@@ -116,7 +116,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     std::vector<G4VPhysicalVolume*> fMeshPVs;
 
-    void AddMeshFile(G4String filename, G4ThreeVector position);
+    void AddMesh(const G4String& filename);
 
   public:
 
