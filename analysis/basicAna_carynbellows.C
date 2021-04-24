@@ -52,6 +52,8 @@ void writeOutput();
 
 void basicAna(const string& finName = "./remollout.root", int detectornumber = 70){
   fin = finName;
+  //  if(detectornumber==0)
+  // for(){
   detnum = detectornumber;
   if(detnum==5547){
     z1=-3400;
@@ -70,54 +72,57 @@ void basicAna(const string& finName = "./remollout.root", int detectornumber = 7
   if(detnum==70){//b1
     z1=-2972.48; //1690.00-4500.0 -325/2 -0.48
     z2=-2647.6;  //1690.00-4500.0 +325/2 +0.4
-    r1=100;
-    r2=149;
-    Emax=6000;
+    r1=100;//7.8*25.4/2
+    r2=149;//7.8*25.4/2+50
+    Emax=11000;
   }
   if(detnum==71){//b2
-    z1=4087.00-4500.0-380/2+1;  //<z1 front face
-    z2=4087.00-4500.0+380/2-1;  //>z2 back face
+    z1=4087.00-4500.0-17.2*25.4/2+1;  //<z1 front face
+    z2=4087.00-4500.0+17.2*25.4/2-1;  //>z2 back face
     r1=9.8*25.4/2+1;//<r1 inner ring
     r2=9.8*25.4/2+50-1;//>r2 outer ring
-    Emax=1500;
+    Emax=11000;
   }
   if(detnum==72){//b3
-    z1=8946.00-4500.0-508/2+1;//<z1 front face
-    z2=8946.00-4500.0+508/2-1;//>z2 back face
+    z1=8846.00-4500.0-15.7*25.4/2+1;//<z1 front face
+    z2=8846.00-4500.0+15.7*25.4/2-1;//>z2 back face
     r1=25.8*25.4/2+1;//<r1 inner ring
     r2=25.8*25.4/2+50-1;//>r2 outer ring
+    Emax=11000;
   }
   if(detnum==73){//b4
-    z1=16900.00-4500.0-150/2+1;//<z1 front face
-    z2=16900.00-4500.0+150/2-1;//>z2 back face
-    r1=51*25.4/2+1;//<r1 inner ring
-    r2=51*25.4/2+50-1;//>r2 outer ring
-    Emax=1500;
+    z1=16904.00-4500.0+220-12.82*25.4/2+1;//<z1 front face
+    z2=16904.00-4500.0+220+12.82*25.4/2-1;//>z2 back face
+    r1=600+1;//<r1 inner ring
+    r2=600+50-1;//>r2 outer ring
+    Emax=11000;
   }
   if(detnum==74){//b5
-    z1=23430.00-4500.0-120/2+1;//<z1 front face
-    z2=23430.00-4500.0+120/2-1;//>z2 back face
-    r1=39.8*25.4/2+1;//<r1 inner ring
-    r2=39.8*25.4/2+50-1;//>r2 outer ring
-    Emax=1500;
+    z1=23314.00-4500.0-5.51*25.4/2+1;//<z1 front face
+    z2=23314.00-4500.0+5.51*25.4/2-1;//>z2 back face
+    r1=40.8*25.4/2+1;//<r1 inner ring
+    r2=40.8*25.4/2+50-1;//>r2 outer ring
+    Emax=11000;
   }
   if(detnum==75){//b6
-    z1=24280.00-4500.0-120/2+1;//<z1 front face
-    z2=24280.00-4500.0+120/2-1;//>z2 back face
+    z1=24077.00-4500.0-8.06*25.4/2+1;//<z1 front face
+    z2=24077.00-4500.0+8.06*25.4/2-1;//>z2 back face
     r1=41.6*25.4/2+1;//<r1 inner ring
     r2=41.6*25.4/2+50-1;//>r2 outer ring
-    Emax=1500;
+    Emax=11000;
   }
   if(detnum==76){///b7
-    z1=30160.00-4500.0-570/2+1;//<z1 front face
-    z2=30160.00-4500.0+570/2-1;//>z2 back face
+    z1=25199.872+530.352/2-24.5*25.4/2+1;//<z1 front face
+    z2=25199.872+530.352/2+24.5*25.4/2-1;//>z2 back face
     r1=16*25.4/2+1;//<r1 inner ring
     r2=16*25.4/2+50-1;//>r2 outer ring
-    Emax=1500;
+    Emax=11000;
   }
+
   initHisto();
   process();
   writeOutput();
+  //}
 }
 
 void process(){
@@ -127,22 +132,77 @@ void process(){
     // cout<<"\t did not find input file. Quitting!"<<endl;
     //    return 2;
      string data;
-     for(int ii=1; ii<1001;ii++){
+      int bad=0;
+      for(int ii=1; ii<1001;ii++){
+      //       for(int ii=100; ii<102;ii++){
+
+        bad=0;
+    //don't use runs still going on ifarm
+    int badruns[35]={
+  980,
+  886,
+  916,
+  854,
+  815,
+  821,
+  799,
+  810,
+  746,
+  754,
+  756,
+  657,
+  592,
+  602,
+  565,
+  573,
+  431,
+  489,
+  412,
+  416,
+  349,
+  385,
+  401,
+  318,
+  320,
+  321,
+  290,
+  292,
+  224,
+  195,
+  199,
+  170,
+  42,
+  		   92,
+  33};
+
+      for(int kk=0;kk<35;kk++){
+          if(ii==badruns[kk]){
+	    //	bad=1;
+          }
+        }
+     if(ii>327&&ii<347){
+       //      bad=1;
+     }
+     bad=0;
+    if(bad==0){
+
+
        if(ii<10){
-	 data = Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_updateftsd_100M/remoll_bellows_beam_updateftsd_100M_100kEv_00%d/remollout.root",ii);
+	 data = Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_updateftsd_hybridusfields_100M/remoll_bellows_beam_updateftsd_hybridusfields_100M_100kEv_00%d/remollout.root",ii);
 	 //	 data = "copyremollout.root";
        }
        if(ii>9&&ii<100){
-      	 data = Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_updateftsd_100M/remoll_bellows_beam_updateftsd_100M_100kEv_0%d/remollout.root",ii);
+      	 data = Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_updateftsd_hybridusfields_100M/remoll_bellows_beam_updateftsd_hybridusfields_100M_100kEv_0%d/remollout.root",ii);
 	 //	 data = "copyremollout.root";
        }
        if(ii>99){
-	  data = Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_updateftsd_beam_100M/remoll_bellows_beam_updateftsd_100M_100kEv_%d/remollout.root",ii);
+         data = Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_updateftsd_hybridusfields_100M/remoll_bellows_beam_updateftsd_hybridusfields_100M_100kEv_%d/remollout.root",ii);
 	  //data = "copyremollout.root";
        }
           cout<<" processing: "<<data<<endl;
       	  nTotEv+=processOne(data);
 	  nFiles++;
+    }
      }
   }
 
@@ -165,7 +225,7 @@ void process(){
 }
 
 void initHisto(){
-  string foutNm = Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_updateftsd_beam_100M/det%d%s_updateftsd_carynplots.root",detnum,fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_updateftsd_hybridusfields_100M/det%d%s_updateftsd_hybridusfields_track1_carynplots.root",detnum,fin.substr(0,fin.find(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -292,7 +352,7 @@ long processOne(string fnm){
       currentProc+=procStep;
     }
 
-    double asym = ev->A;
+    //    double asym = ev->A;
 
     //        double scatAng[2]={-1,-1};
 	//        double scatP[2]={-1,-1};
@@ -324,13 +384,17 @@ long processOne(string fnm){
       //make sure this is the detector you want 70
       if(hit->at(j).det != detnum) continue;
 
+      //keep only track==1 electrons;
+      if(hit->at(j).trid != 1) continue;
+
+
       //this will ensure that we process only one hit from a particular track per event
       if( find(procID.begin(),procID.end(), hit->at(j).trid) != procID.end() ) continue;
             procID.push_back(hit->at(j).trid);
 
       r->Fill(hit->at(j).r);
       rRate->Fill(hit->at(j).r,rate);
-      rRateAsym->Fill(hit->at(j).r,rate*asym);
+      //      rRateAsym->Fill(hit->at(j).r,rate*asym);
       hXY->Fill(hit->at(j).x,hit->at(j).y);
       hXYrate->Fill(hit->at(j).x,hit->at(j).y,rate);
 
@@ -404,7 +468,7 @@ long processOne(string fnm){
 
       r_ecut->Fill(hit->at(j).r);
       rRate_ecut->Fill(hit->at(j).r,rate);
-      rRateAsym_ecut->Fill(hit->at(j).r,rate*asym);
+      //      rRateAsym_ecut->Fill(hit->at(j).r,rate*asym);
       hXY_ecut->Fill(hit->at(j).x,hit->at(j).y);
       hXYrate_ecut->Fill(hit->at(j).x,hit->at(j).y,rate);
 
@@ -483,9 +547,9 @@ void writeOutput(){
   r->Write();
 
   rRate->Scale(1./nFiles);
-  rRateAsym->Scale(1./nFiles);
+  //  rRateAsym->Scale(1./nFiles);
   rRate->Write();
-  rRateAsym->Write();
+  //  rRateAsym->Write();
 
   hXY->Write();
 
@@ -539,9 +603,9 @@ void writeOutput(){
   r_ecut->Write();
 
   rRate_ecut->Scale(1./nFiles);
-  rRateAsym_ecut->Scale(1./nFiles);
+  //  rRateAsym_ecut->Scale(1./nFiles);
   rRate_ecut->Write();
-  rRateAsym_ecut->Write();
+  //  rRateAsym_ecut->Write();
 
   hXY_ecut->Write();
 
