@@ -2,7 +2,7 @@ using namespace ROOT;
 
 Int_t isValid(std::vector<remollGenericDetectorHit_t> *);
 
-int copytree_selectbr_V2(TString source, TString out){
+int copytree_selectbr(TString source, TString out){
 
 TChain T("T");
 T.Add(Form("%s", source.Data())); 
