@@ -2,13 +2,13 @@ void caryn_bellows(int detnum=70){
 
   //  int runnum=1;
 
-  int Nruns=1000;
+  int Nruns=2;//1000;
   //  int detnum=70;
 
     int Nmax=10000; //max number of tracks stored per detector per run
 
 
- TString filename="/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_updateftsd_100M/remoll_bellows_beam_updatefttsd_100M_100kEv";
+ TString filename="/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_updateftsd_100M/remoll_bellows_beam_updateftsd_100M_100kEv";
   TFile *_file0;
 
 
@@ -56,7 +56,7 @@ void caryn_bellows(int detnum=70){
  
 
 
-    TTree *t = (TTree*)_file0->Get("T");
+    TTree *tree = (TTree*)_file0->Get("T");
     TH1D *h;
 
 
@@ -77,15 +77,15 @@ void caryn_bellows(int detnum=70){
     double t_short[Nmax];
 
     //create list of all electron tracks that hit 70
-    //    t->Draw("hit.trid>>hebellows","(hit.det>69&&hit.det<77)&&hit.pid==11");
-    t->Draw("hit.trid>>hebellows",Form("hit.det==%d&&hit.pid==11",detnum),"Q");
+    //    tree->Draw("hit.trid>>hebellows","(hit.det>69&&hit.det<77)&&hit.pid==11");
+    tree->Draw("hit.trid>>hebellows",Form("hit.det==%d&&hit.pid==11",detnum),"Q");
  
     h=(TH1D*)gDirectory->FindObject("hebellows");
     int Nebellows=h->GetEntries();
-    ///    t->Draw("hit.trid:hit.x:hit.y:hit.z","(hit.det>69&&hit.det<77)&&hit.pid==11");
-    t->Draw("Entry$:hit.t",Form("hit.det==%d&&hit.pid==11",detnum),"Q");
-    double* pventrybellows = t->GetV1();
-    double* pvt = t->GetV2();
+    ///    tree->Draw("hit.trid:hit.x:hit.y:hit.z","(hit.det>69&&hit.det<77)&&hit.pid==11");
+    tree->Draw("Entry$:hit.t",Form("hit.det==%d&&hit.pid==11",detnum),"Q");
+    double* pventrybellows = tree->GetV1();
+    double* pvt = tree->GetV2();
     //    double vebellows[Nebellows];
     //    double x[Nebellows];
     //    double y[Nebellows];
@@ -99,22 +99,22 @@ void caryn_bellows(int detnum=70){
       ventrybellows[ii]=*(pventrybellows+ii);
       t[ii]=*(pvt+ii);
     }
-    t->Draw("hit.trid:hit.x:hit.y:hit.z",Form("hit.det==%d&&hit.pid==11",detnum),"Q");
-    double* pvebellows = t->GetV1();
-   double* pvx = t->GetV2();
-   double* pvy = t->GetV3();
-   double* pvz = t->GetV4();
+    tree->Draw("hit.trid:hit.x:hit.y:hit.z",Form("hit.det==%d&&hit.pid==11",detnum),"Q");
+    double* pvebellows = tree->GetV1();
+   double* pvx = tree->GetV2();
+   double* pvy = tree->GetV3();
+   double* pvz = tree->GetV4();
     for(int ii=0;ii<Nebellows;ii++){
       vebellows[ii]=*(pvebellows+ii);
       x[ii]=*(pvx+ii);
       y[ii]=*(pvy+ii);
       z[ii]=*(pvz+ii);
     }
-    t->Draw("hit.px:hit.py:hit.pz:hit.det",Form("hit.det==%d&&hit.pid==11",detnum),"Q");
-   double* pvpx = t->GetV1();
-   double* pvpy = t->GetV2();
-   double* pvpz = t->GetV3();
-   double* pvdet = t->GetV4();
+    tree->Draw("hit.px:hit.py:hit.pz:hit.det",Form("hit.det==%d&&hit.pid==11",detnum),"Q");
+   double* pvpx = tree->GetV1();
+   double* pvpy = tree->GetV2();
+   double* pvpz = tree->GetV3();
+   double* pvdet = tree->GetV4();
     for(int ii=0;ii<Nebellows;ii++){
       px[ii]=*(pvpx+ii);
       py[ii]=*(pvpy+ii);
@@ -124,7 +124,7 @@ void caryn_bellows(int detnum=70){
 
     //    int Neaddbellows = Ne70+Ne71+Ne72+Ne73+Ne74+Ne75+Ne76;
    //create list of all electron tracks that hit 70-76 or main det 28
-    // t->Draw("hit.trid>>hebellows","(hit.det>69&&hit.det<77)&&hit.det==28&&hit.pid==11","Q");
+    // tree->Draw("hit.trid>>hebellows","(hit.det>69&&hit.det<77)&&hit.det==28&&hit.pid==11","Q");
  
     //    cout<<"N Ne Ne28 Ne70 Ne71 Ne72 Ne73 Ne74 Ne75 Ne76 Neaddbellows Nbellows"<<endl;
     //  cout<<N<<" "<<Ne<<" "<<Ne28<<" "<<Ne70<<" "<<Ne71<<" "<<Ne72<<" "<<Ne73<<" "<<Ne74<<" "<<Ne75<<" "<<Ne76<<" "<<Nebellows<<endl;
@@ -186,7 +186,7 @@ void caryn_bellows(int detnum=70){
 
 	  if(understand==0){
 	    cout<<"!!! "<<ventrybellows_temp<<" "<<vebellows_temp<<" "<<z_temp<<" "<<pz_temp<<"diff "<<px_temp-px_short[jj]<<" "<<py_temp-py_short[jj]<<" "<<pz_temp-pz_short[jj]<<" "<<t_temp<<endl;
-	    t->Scan("Entry$:hit.trid:hit.det:hit.x:hit.y:hit.z:hit.pz:hit.px:hit.py:hit.z:hit.t",Form("Entry$==%f&&hit.trid==%f&&hit.det==%d",ventrybellows_temp,vebellows_temp,detnum));
+	    //	    tree->Scan("Entry$:hit.trid:hit.det:hit.x:hit.y:hit.z:hit.pz:hit.px:hit.py:hit.z:hit.t",Form("Entry$==%f&&hit.trid==%f&&hit.det==%d",ventrybellows_temp,vebellows_temp,detnum));
 	  }
 
 	  understand=0;
@@ -215,7 +215,7 @@ void caryn_bellows(int detnum=70){
 	outfile<<px_temp<<" ";
 	outfile<<py_temp<<" ";
 	outfile<<pz_temp<<" ";
-	outfile<<t_temp<<<<endl;
+	outfile<<t_temp<<endl;
 
 
       }
@@ -262,7 +262,7 @@ void caryn_bellows(int detnum=70){
 
 
     //    for(Int_t ii=0;ii<N;ii++){
-      //      t->Draw("hit.x",Form("hit.trid==%d&&hit.pid==11&&hit.det==28",N),"Q");
+      //      tree->Draw("hit.x",Form("hit.trid==%d&&hit.pid==11&&hit.det==28",N),"Q");
 
     //    }
 
