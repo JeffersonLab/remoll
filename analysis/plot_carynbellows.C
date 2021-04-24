@@ -3,12 +3,13 @@ void plot_carynbellows(int b = 70, int plot=0){
    //Tfile
   //TString filename="/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_100M/remoll_bellows_beam_100M_100kEv";
 
-  TString filename = "_updateftsd_carynplots.root";
-  TFile *_file0 = TFile::Open(Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_updateftsd_beam_100M/det%d%s",b,filename.Data()));
+  //  TString filename = "_updateftsd_carynplots.root";
+  TString filename = "_updateftsd_track1_carynplots.root";
+  TFile *_file0 = TFile::Open(Form("/volatile/halla/moller12gev/palatchi/remoll_bellows_beam_updateftsd_hybridusfields_100M/det%d%s",b,filename.Data()));
   TDirectory *d = _file0->GetDirectory("QA");
   //Get energy info
 
-    TCanvas *c0 = new TCanvas("c0","c0",100,100,700,700);  
+    TCanvas *c0 = new TCanvas("c0","c0",100,100,700*1.5,700*1.5);  
     c0->cd();
     gStyle->SetOptStat("eMRoui");
 
@@ -58,7 +59,7 @@ void plot_carynbellows(int b = 70, int plot=0){
       //cout<<h->Integral(1,10);
       if(plot==1){
 
-    TCanvas *c1 = new TCanvas("c1","c1",0,0,1600,850);
+    TCanvas *c1 = new TCanvas("c1","c1",0,0,1600*1.5,850*1.5);
     c1->Divide(4,2);
     //    TExec* ex1 = new TExec("ex1","gStyle->SetOptStat(1111);");
     //    TExec* ex1 = new TExec("ex1",Form("gStyle->SetOptStat(%s);",""eMRoui""));
@@ -84,7 +85,7 @@ void plot_carynbellows(int b = 70, int plot=0){
     //2D plots
     //    gStyle->SetOptStat(0);
     TExec* ex2 = new TExec("ex2","gStyle->SetOptStat(0);");
-    TCanvas *c2a = new TCanvas("c2a","c2a",0,0,1600,650);
+    TCanvas *c2a = new TCanvas("c2a","c2a",0,0,1600*1.5,650*1.5);
     ex2->Draw();
     c2a->Divide(4,2);
     vector<string> hNms2a = {"hetheta","hetheta_cut15","hethetaVSz","hethetaVSz_cut15",
@@ -111,7 +112,7 @@ void plot_carynbellows(int b = 70, int plot=0){
 
     //    gStyle->SetOptStat(0);
 
-    TCanvas *c2b = new TCanvas("c2b","c2b",0,0,1600,650);
+    TCanvas *c2b = new TCanvas("c2b","c2b",0,0,1600*1.5,650*1.5);
     c2b->Divide(4,2);
     ex2->Draw();
     vector<string> hNms2b = {"hzfront","hzback","hrin","hrout",
@@ -132,7 +133,7 @@ void plot_carynbellows(int b = 70, int plot=0){
        }
 
     //new plots
-    TCanvas *c2c = new TCanvas("c2c","c2c",0,0,1600,650);
+    TCanvas *c2c = new TCanvas("c2c","c2c",0,0,1600*1.5,650*1.5);
     ex2->Draw();
     c2c->Divide(4,2);
     vector<string> hNms2c = {"heVSz","heVSr",
