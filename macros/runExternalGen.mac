@@ -1,0 +1,59 @@
+#  Example file
+
+/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+/remoll/physlist/register QGSP_BERT_HP
+/remoll/physlist/parallel/enable 
+
+# This must be explicitly called
+/run/initialize
+
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+
+/remoll/SD/disable_all
+/remoll/SD/enable 5547
+/remoll/SD/detect lowenergyneutral 5547
+/remoll/SD/detect secondaries 5547
+/remoll/SD/detect boundaryhits 5547
+/remoll/SD/enable 28
+/remoll/SD/detect lowenergyneutral 28
+/remoll/SD/detect secondaries 28
+/remoll/SD/detect boundaryhits 28
+/remoll/SD/enable 70
+/remoll/SD/detect lowenergyneutral 70
+/remoll/SD/detect secondaries 70
+/remoll/SD/detect boundaryhits 70
+/remoll/SD/enable 71
+/remoll/SD/detect lowenergyneutral 71
+/remoll/SD/detect secondaries 71
+/remoll/SD/detect boundaryhits 71
+/remoll/SD/enable 72
+/remoll/SD/detect lowenergyneutral 72
+/remoll/SD/detect secondaries 72
+/remoll/SD/detect boundaryhits 72
+/remoll/SD/enable 73
+/remoll/SD/detect lowenergyneutral 73
+/remoll/SD/detect secondaries 73
+/remoll/SD/detect boundaryhits 73
+/remoll/SD/enable 74
+/remoll/SD/detect lowenergyneutral 74
+/remoll/SD/detect secondaries 74
+/remoll/SD/detect boundaryhits 74
+/remoll/SD/enable 75
+/remoll/SD/detect lowenergyneutral 75
+/remoll/SD/detect secondaries 75
+/remoll/SD/detect boundaryhits 75
+/remoll/SD/enable 76
+/remoll/SD/detect lowenergyneutral 76
+/remoll/SD/detect secondaries 76
+/remoll/SD/detect boundaryhits 76
+
+
+
+/remoll/evgen/set external
+/remoll/evgen/external/file prunedtree.root
+/remoll/evgen/external/detid 5547
+/remoll/seed 1
+/remoll/filename remollout.root
+/run/beamOn 91
