@@ -253,9 +253,12 @@ void remollGlobalField::PrintFieldValue(const G4ThreeVector& r)
 
 void remollGlobalField::GetFieldValue(const G4double p[], G4double *field) const
 {
-    // Field is initialized to zero before passing to this function
+    // Field is not initialized to zero by geant4
+    field[0] = 0.0;
+    field[1] = 0.0;
+    field[2] = 0.0;
     for (auto it = fFields.begin(); it != fFields.end(); it++)
-        (*it)->GetFieldValue(p, field);
+        (*it)->AddFieldValue(p, field);
 }
 
 void remollGlobalField::SetZOffset(const G4String& name, G4double offset)
