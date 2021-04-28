@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/apps/bin/python3
 from subprocess import call
 import sys, os, time, tarfile
 
@@ -6,19 +6,19 @@ def main():
 
     email = "ciprian@jlab.org"
 
-    config = "moller_TgtConf4"
+    config = "moller_TgtConf5_Coll1v1"
 
-    sourceDir = "/work/halla/moller12gev/ciprian/remoll"
+    sourceDir = "/work/halla/moller12gev/ciprian/moller/remoll"
     outDir = "/volatile/halla/moller12gev/ciprian/"+config
 
-    activeDetectors = [28, 55, 56, 57, 58]
+    activeDetectors = [28, 101, 5530, 5555, 5556, 5540, 5541, 5542, 5543, 5510, 5600, 5610, 5601, 5611, 5603, 5613, 5604, 5614, 5620]
 
     if not os.path.exists(outDir):
        os.makedirs(outDir)
-    nrEv   = 1000 #900000
+    nrEv   = 100000 #900000
     nrStart= 0
-    nrStop = 4 #(nrStop -nrStart) total jobs
-    submit  = 0
+    nrStop = 1000 #(nrStop -nrStart) total jobs
+    submit  = 1
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -32,7 +32,7 @@ def main():
 
         jobFullName = jobName + '_%03d'%jobNr
         outDirFull=outDir+"/"+jobFullName
-        createMacFile(outDirFull,nrEv,jobNr,activeDetectors)
+        createMacFile(sourceDir, outDirFull,nrEv,jobNr,activeDetectors)
 
         call(["cp",sourceDir+"/jobs/default.tar.gz",
               outDir+"/"+jobFullName+"/default.tar.gz"])
@@ -40,12 +40,13 @@ def main():
         createSBATCHfile(sourceDir,outDirFull,jobName,jobNr)
 
         if submit==1:
+            print("submitting", jobName)
             call(["sbatch",sourceDir+"/jobs/"+jobName+".sh"])
 
-    print "All done for config ",config," for #s between ",nrStart, " and ", nrStop
+    print("All done for config ",config," for #s between ",nrStart, " and ", nrStop)
 
 
-def createMacFile(outDirFull,nrEv,jobNr, detectorList):
+def createMacFile(srcDir, outDirFull,nrEv,jobNr, detectorList):
 
     if not os.path.exists(outDirFull):
         os.makedirs(outDirFull)
@@ -57,8 +58,10 @@ def createMacFile(outDirFull,nrEv,jobNr, detectorList):
     f.write("/remoll/parallel/setfile geometry/mollerParallel.gdml\n")
     #f.write("/run/numberOfThreads 16\n")
     f.write("/run/initialize\n")
-    f.write("/remoll/addfield map_directory/hybridJLAB.txt\n")
-    f.write("/remoll/addfield map_directory/upstreamJLAB_1.25.txt\n")
+    f.write("/remoll/addfield "+srcDir+"/map_directory/hybridJLAB.txt\n")
+    f.write("/remoll/addfield "+srcDir+"/map_directory/upstreamJLAB_1.25.txt\n")
+    # f.write("/remoll/addfield "+srcDir+"/map_directory/V2U.1a.50cm.txt\n")
+    # f.write("/remoll/addfield "+srcDir+"/map_directory/V2DSg.9.75cm.txt\n")
     f.write("/remoll/evgen/set beam\n")
     f.write("/remoll/evgen/beam/origin 0 0 -7.5 m\n")
     f.write("/remoll/evgen/beam/rasx 5 mm\n")
@@ -78,7 +81,7 @@ def createMacFile(outDirFull,nrEv,jobNr, detectorList):
 
     f.write("/remoll/kryptonite/enable\n")
     f.write("/process/list\n")
-    f.write("/remoll/seed "+str(jobNr)+"\n")
+    f.write("/remoll/seed "+str(int(time.clock_gettime(0)) + jobNr)+"\n")
     f.write("/remoll/filename o_remoll.root\n")
     f.write("/run/beamOn "+str(nrEv)+"\n")
     f.close()
@@ -106,14 +109,12 @@ def createSBATCHfile(sourceDir,outDirFull,jobName,jobNr):
     return 0
 
 def make_tarfile(sourceDir):
-    print "making geometry tarball"
+    print("making geometry tarball")
     if os.path.isfile(sourceDir+"/jobs/default.tar.gz"):
         os.remove(sourceDir+"/jobs/default.tar.gz")
     tar = tarfile.open(sourceDir+"/jobs/default.tar.gz","w:gz")
     tar.add(sourceDir+"/build/remoll",arcname="remoll")
     tar.add(sourceDir+"/build/libremoll.so",arcname="libremoll.so")
-    tar.add(sourceDir+"/map_directory//hybridJLAB.txt",arcname="map_directory/hybridJLAB.txt")
-    tar.add(sourceDir+"/map_directory/upstreamJLAB_1.25.txt",arcname="map_directory/upstreamJLAB_1.25.txt")
     tar.add(sourceDir+"/geometry/materials.xml",arcname="geometry/materials.xml")
     tar.add(sourceDir+"/geometry/matrices.xml",arcname="geometry/matrices.xml")
     tar.add(sourceDir+"/geometry/positions.xml",arcname="geometry/positions.xml")
@@ -126,6 +127,7 @@ def make_tarfile(sourceDir):
     tar.add(sourceDir+"/geometry/hall/hallDaughter_dump.gdml" ,arcname="geometry/hall/hallDaughter_dump.gdml")
     tar.add(sourceDir+"/geometry/hall/subDumpDiffuser.gdml" ,arcname="geometry/hall/subDumpDiffuser.gdml")
     tar.add(sourceDir+"/geometry/upstream/upstreamDaughter_merged.gdml" ,arcname="geometry/upstream/upstreamDaughter_merged.gdml")
+    tar.add(sourceDir+"/geometry/upstream/upstream.gdml" ,arcname="geometry/upstream/upstream.gdml")
     tar.add(sourceDir+"/geometry/upstream/upstreamToroid.gdml" ,arcname="geometry/upstream/upstreamToroid.gdml")
     tar.add(sourceDir+"/geometry/upstream/upstreamBeampipe.gdml" ,arcname="geometry/upstream/upstreamBeampipe.gdml")
     tar.add(sourceDir+"/geometry/hybrid/hybridToroid.gdml" ,arcname="geometry/hybrid/hybridToroid.gdml")
