@@ -91,17 +91,17 @@
     </physvol>
     
     <!-- ShowerMax Detectors--> 
-    <physvol>
-      <file name="showermax/showerMaxGen.gdml"/>
-      <positionref ref="showerMaxDetectorCenter"/>
-    </physvol>
+    <!-- <physvol> -->
+    <!--   <file name="showermax/showerMaxGen.gdml"/> -->
+    <!--   <positionref ref="showerMaxDetectorCenter"/> -->
+    <!-- </physvol> -->
     
 
     <!-- Pion Detectors -->
-    <physvol>
-      <file name="pion/pionDetectorSystem.gdml"/>
-      <positionref ref="pionDetectorCenter"/>
-    </physvol>
+    <!-- <physvol> -->
+    <!--   <file name="pion/pionDetectorSystem.gdml"/> -->
+    <!--   <positionref ref="pionDetectorCenter"/> -->
+    <!-- </physvol> -->
    
   </volume>
 </structure>
