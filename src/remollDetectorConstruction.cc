@@ -374,7 +374,13 @@ void remollDetectorConstruction::SetUserMinRange(G4String name, G4String value_u
 
 remollDetectorConstruction::~remollDetectorConstruction()
 {
-    for (auto pv: fMeshPVs) delete pv;
+    for (auto pv: fMeshPVs) {
+      auto lv = pv->GetLogicalVolume();
+      auto solid = lv->GetSolid();
+      delete solid;
+      delete lv;
+      delete pv;
+    }
     delete fGDMLParser;
     delete fMessenger;
     delete fGeometryMessenger;
