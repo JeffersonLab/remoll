@@ -79,6 +79,7 @@ remollGlobalField::remollGlobalField()
     fGlobalFieldMessenger->DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
     fGlobalFieldMessenger->DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
     fGlobalFieldMessenger->DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
+    fGlobalFieldMessenger->DeclareMethod("interpolation",&remollGlobalField::SetInterpolationType,"Set magnetic field interpolation type");
     fGlobalFieldMessenger->DeclareMethod("zoffset",&remollGlobalField::SetZOffset,"Set magnetic field z offset");
     fGlobalFieldMessenger->DeclareMethod("scale",&remollGlobalField::SetFieldScale,"Scale magnetic field by factor");
     fGlobalFieldMessenger->DeclareMethod("current",&remollGlobalField::SetMagnetCurrent,"Scale magnetic field by current");
@@ -194,46 +195,39 @@ void remollGlobalField::AddNewField(G4String& name)
 
   // If this field has already been loaded
   if (GetFieldByName(name) != 0) return;
-  
+
   // Load new field
   remollMagneticField *thisfield = new remollMagneticField(name);
-  if (thisfield->IsInit()) {
-    fFields.push_back(thisfield);
+  fFields.push_back(thisfield);
 
-    if (fVerboseLevel > 0)
-      G4cout << __FUNCTION__ << ": field " << name << " was added." << G4endl;
+  if (fVerboseLevel > 0)
+    G4cout << __FUNCTION__ << ": field " << name << " was added." << G4endl;
 
-    // Add file data to output data stream
+  // Add file data to output data stream
+  remollRunData *rd = remollRun::GetRunData();
 
-    remollRunData *rd = remollRun::GetRunData();
+  // FIXME disabled TMD5 functionality as long as CentOS 7.2 is common
+  // due to kernel bug when running singularity containers
 
-    // FIXME disabled TMD5 functionality as long as CentOS 7.2 is common
-    // due to kernel bug when running singularity containers
+  //TMD5 *md5 = TMD5::FileChecksum(name.data());
 
-    //TMD5 *md5 = TMD5::FileChecksum(name.data());
+  filedata_t fdata;
 
-    filedata_t fdata;
+  strcpy(fdata.filename, name.data());
+  strcpy(fdata.hashsum, "no hash" ); // md5->AsString() );
 
-    strcpy(fdata.filename, name.data());
-    strcpy(fdata.hashsum, "no hash" ); // md5->AsString() );
+  //G4cout << "MD5 checksum " << md5->AsString() << G4endl;
 
-    //G4cout << "MD5 checksum " << md5->AsString() << G4endl;
+  //delete md5;
 
-    //delete md5;
+  struct stat fs;
+  stat(name.data(), &fs);
+  fdata.timestamp = TTimeStamp( fs.st_mtime );
 
-    struct stat fs;
-    stat(name.data(), &fs);
-    fdata.timestamp = TTimeStamp( fs.st_mtime );
+  if (fVerboseLevel > 0)
+    G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
 
-    if (fVerboseLevel > 0)
-      G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
-
-    rd->AddMagData(fdata);
-
-  } else {
-    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-           << ": field " << name << " was not initialized." << G4endl;
-  }
+  rd->AddMagData(fdata);
 }
 
 remollMagneticField* remollGlobalField::GetFieldByName(const G4String& name) const
@@ -257,23 +251,14 @@ void remollGlobalField::PrintFieldValue(const G4ThreeVector& r)
     G4cout << "T" << G4endl;
 }
 
-void remollGlobalField::GetFieldValue(const G4double p[], G4double *resB) const
+void remollGlobalField::GetFieldValue(const G4double p[], G4double *field) const
 {
-    G4double Bsum [__GLOBAL_NDIM] = {0};
-
-    std::vector<remollMagneticField*>::const_iterator it = fFields.begin();
-    for (it = fFields.begin(); it != fFields.end(); it++) {
-        G4double thisB[__GLOBAL_NDIM] = {0};
-        (*it)->GetFieldValue(p, thisB);
-
-        for (int i = 0; i < __GLOBAL_NDIM; i++) {
-          Bsum[i] += thisB[i];
-        }
-    }
-
-    for (int i = 0; i < __GLOBAL_NDIM; i++) {
-        resB[i] = Bsum[i];
-    }
+    // Field is not initialized to zero by geant4
+    field[0] = 0.0;
+    field[1] = 0.0;
+    field[2] = 0.0;
+    for (auto it = fFields.begin(); it != fFields.end(); it++)
+        (*it)->AddFieldValue(p, field);
 }
 
 void remollGlobalField::SetZOffset(const G4String& name, G4double offset)
@@ -285,6 +270,18 @@ void remollGlobalField::SetZOffset(const G4String& name, G4double offset)
   } else {
     G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
            << ": field " << name << " offset failed" << G4endl;
+  }
+}
+
+void remollGlobalField::SetInterpolationType(const G4String& name, const G4String& type)
+{
+  remollMagneticField *field = GetFieldByName(name);
+  if (field) {
+    G4AutoLock lock(&remollGlobalFieldMutex);
+    field->SetInterpolationType(type);
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " interpolation type failed" << G4endl;
   }
 }
 
@@ -305,7 +302,7 @@ void remollGlobalField::SetMagnetCurrent(const G4String& name, G4double current)
   remollMagneticField *field = GetFieldByName(name);
   if (field) {
     G4AutoLock lock(&remollGlobalFieldMutex);
-    field->SetMagnetCurrent(current);
+    field->SetRefCurrent(current);
   } else {
     G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
            << ": field " << name << " scaling failed" << G4endl;

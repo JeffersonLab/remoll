@@ -81,6 +81,8 @@
 /gui/addMenu   filter "5. Filters"
 /gui/addButton filter "HideAllGammas ON"  "/vis/filtering/trajectories/HideAllGammas/active 1"
 /gui/addButton filter "HideAllGammas OFF" "/vis/filtering/trajectories/HideAllGammas/active 0"
+/gui/addButton filter "ShowOnlyCharged ON"  "/vis/filtering/trajectories/ShowOnlyCharged/active 1"
+/gui/addButton filter "ShowOnlyCharged OFF" "/vis/filtering/trajectories/ShowOnlyCharged/active 0"
 /gui/addButton filter "ShowOnlyPionDetectorHits ON"  "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 1"
 /gui/addButton filter "ShowOnlyPionDetectorHits OFF" "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 0"
 #

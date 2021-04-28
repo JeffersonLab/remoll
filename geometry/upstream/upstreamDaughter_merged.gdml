@@ -77,11 +77,19 @@
     <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
     <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2"/>
 
-    <constant name="shield_US_beampipe_length" value="1945"/>
+    <constant name="shield_US_beampipe_length" value="2100"/>
     <constant name="shield_US_beampipe_center_z" value="shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2+0.001-50/2-75"/>
     <!--need to subtract 50/2 to accomdate for the beampipe moving downstream due to collimator thickness increasing. An additional 75 mm subtracted to move the beampipe upstream.-->
     <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z"/>
 
+    <constant name="nose_shield_US_beampipe_length" value="100"/>
+    <constant name="nose_shield_US_beampipe_center_z" value="nose_shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2+0.001-50/2-75"/>
+    <position name="nose_shield_US_beampipe_center" unit="mm" x="0" y="0" z="nose_shield_US_beampipe_center_z"/>
+ 
+    <constant name="inner_nose_shield_US_beampipe_length" value="200"/>
+    <constant name="inner_nose_shield_US_beampipe_center_z" value="inner_nose_shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2+0.001-50/2-75"/>
+    <position name="inner_nose_shield_US_beampipe_center" unit="mm" x="0" y="0" z="inner_nose_shield_US_beampipe_center_z"/>
+     
 </define> 
 
 &materials;
@@ -597,6 +605,16 @@
         <positionref ref="shield_US_beampipe_center"/>
       </physvol>
 
+      <physvol>
+        <file name="upstream/upstream_nose_shield_beampipe.gdml"/>
+        <positionref ref="nose_shield_US_beampipe_center"/>
+      </physvol>
+    
+      <physvol>
+        <file name="upstream/inner_upstream_nose_shield_beampipe.gdml"/>
+        <positionref ref="inner_nose_shield_US_beampipe_center"/>
+      </physvol>
+     
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>
