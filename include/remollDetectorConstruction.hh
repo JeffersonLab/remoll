@@ -112,6 +112,11 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     void InitKryptoniteMaterials();
 
+  private:
+
+    std::vector<G4VPhysicalVolume*> fMeshPVs;
+
+    void AddMesh(const G4String& filename);
 
   public:
 
