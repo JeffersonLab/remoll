@@ -126,10 +126,10 @@ long processOne(string fnm){
   vector<int> procID;
   int sector(-1);
 
-  auto cmp = [](auto lhs, auto rhs) { return lhs.tID < rhs.tID; };
   std::vector<hitx> hits5614;
   hits5614.clear();
   hitx bHit;
+
   for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
     currentEvNr++;
     if( float(event+1)/nEntries*100 > currentProc){
@@ -234,20 +234,20 @@ long processOne(string fnm){
       int det = hit->at(j).det;
       double pz = hit->at(j).pz;
         
-      if ( hit->at(j).det == 28){
+      if (hit->at(j).det == 28){
 	for (auto &k : hits5614){
               
 	  double _kinE = k.energy;
 	  double _rr = sqrt(k.posx*k.posx + k.posy*k.posy);
 	  double _rdDmg[2] = {rate,rate*_kinE};
-      double _xx =k.posx;
+          double _xx =k.posx;
 	  double _yy =k.posy;
 	  int _det = k.dID;
 	  double _pz = k.pZ;
               
 	  if (hit->at(j).trid  == k.tID ){
 	    xDet.fillHisto_detX(_det, _rdDmg, _pz, _xx, _yy,_kinE, _rr);
-	    if(hit->at(j).pid == 11)   xDet.fillHisto_detX(det, rdDmg, pz, xx, yy,kinE, rr);
+        if(hit->at(j).pid == 11) xDet.fillHisto_detX(det, rdDmg, pz, xx, yy,kinE, rr);
 	  }
 	}
 
