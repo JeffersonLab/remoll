@@ -528,16 +528,15 @@ void remollMagneticField::AddFieldValue(const G4double point[4], G4double *field
     }
 
     // Interpolate
-    G4double Bint[__NDIM] = {0};
-    G4ThreeVector Bcart(Bint[0], Bint[1], Bint[2]);
+    G4ThreeVector Bcart(0.0,0.0,0.0);
     for(int cidx = 0; cidx < __NDIM; cidx++ ){
         switch (type) {
             case kLinear: {
-                Bcart[cidx] = Bint[cidx] = _trilinearInterpolate(values[cidx], x);
+                Bcart[cidx] = _trilinearInterpolate(values[cidx], x);
                 break;
             }
             case kCubic: {
-                Bcart[cidx] = Bint[cidx] = _tricubicInterpolate(values[cidx], x);
+                Bcart[cidx] = _tricubicInterpolate(values[cidx], x);
                 break;
             }
         }
