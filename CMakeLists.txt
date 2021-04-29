@@ -102,6 +102,42 @@ else()
   message(STATUS "Boost not found.")
 endif()
 
+#----------------------------------------------------------------------------
+# Find CADMesh libraries
+set(cadmesh_LIBRARIES "")
+find_package(cadmesh)
+if(cadmesh_FOUND)
+    # Pretty sure at some point cadmesh will update to use lowercase
+    include_directories(${CADMESH_INCLUDE_DIRS})
+    include_directories(${cadmesh_INCLUDE_DIRS})
+    link_directories(${cadmesh_LIBRARY_DIR})
+    ADD_DEFINITIONS(-D__USE_CADMESH)
+
+    find_path(TETGEN_INCLUDE_DIRS tetgen.h
+        PATHS
+        $ENV{TETGEN_PATH}
+        $ENV{TETGEN_PATH}/tetgen
+        /usr/local/include
+        /usr/include)
+    find_library(TETGEN_LIBRARIES NAMES tetgen tet
+        PATHS
+        $ENV{TETGEN_PATH}
+        $ENV{TETGEN_PATH}/tetgen
+        /usr/local/lib
+        /usr/lib)
+    if(TETGEN_INCLUDE_DIRS)
+        if(TETGEN_LIBRARIES)
+            include_directories(${TETGEN_INCLUDE_DIRS})
+            ADD_DEFINITIONS(-D__USE_CADMESH_TETGEN)
+        endif()
+    endif()
+
+    find_package(assimp QUIET)
+    if(assimp_FOUND)
+        include_directories(${ASSIMP_INCLUDE_DIRS})
+        ADD_DEFINITIONS(-D__USE_CADMESH_ASSIMP)
+    endif()
+endif()
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -200,6 +236,7 @@ target_link_libraries(lib${PROJECT_NAME}
     ${Boost_LIBRARIES}
     ${HEPMC_LIBRARIES}
     ${PYTHIA6_LIBRARIES}
+    ${cadmesh_LIBRARIES}
   )
 
 install(TARGETS lib${PROJECT_NAME}
