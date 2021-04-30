@@ -135,7 +135,7 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
       // Throw new particle
       G4ThreeVector r(hit.x,hit.y,hit.z);
       G4ThreeVector p(hit.px,hit.py,hit.pz);
-      r += fZOffset*p.unit();
+      r += fzOffset*p.unit();
       evt->ProduceNewParticle(r,p,particlename);
 
       number_of_particles++;
