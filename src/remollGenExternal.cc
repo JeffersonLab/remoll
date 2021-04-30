@@ -133,10 +133,11 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
       G4String particlename = particle->GetParticleName();
 
       // Throw new particle
-      evt->ProduceNewParticle(
-          G4ThreeVector(hit.x, hit.y, hit.z + fzOffset),
-          G4ThreeVector(hit.px, hit.py, hit.pz),
-          particlename);
+      G4ThreeVector r(hit.x,hit.y,hit.z);
+      G4ThreeVector p(hit.px,hit.py,hit.pz);
+      r += fZOffset*p.unit();
+      evt->ProduceNewParticle(r,p,particlename);
+
       number_of_particles++;
     }
 
