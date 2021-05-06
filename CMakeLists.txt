@@ -105,7 +105,7 @@ endif()
 #----------------------------------------------------------------------------
 # Find CADMesh libraries
 set(cadmesh_LIBRARIES "")
-find_package(cadmesh)
+find_package(cadmesh QUIET)
 if(cadmesh_FOUND)
     # Pretty sure at some point cadmesh will update to use lowercase
     include_directories(${CADMESH_INCLUDE_DIRS})
