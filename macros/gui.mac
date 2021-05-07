@@ -57,7 +57,8 @@
 /gui/addButton view "Load vis settings"      "/control/execute vis/vis.mac"
 /gui/addButton view "Load cutaway settings"  "/control/execute vis/cutaway.mac"
 /gui/addButton view "Clear cutaway planes"   "/vis/viewer/clearCutawayPlanes"
-/gui/addButton view "Vertical section view"  "/control/execute vis/section.mac"
+/gui/addButton view "YZ section view"        "/control/execute vis/section_yz.mac"
+/gui/addButton view "XZ section view"        "/control/execute vis/section_xz.mac"
 /gui/addButton view "Draw real world"        "/vis/drawVolume world"
 /gui/addButton view "Draw all worlds"        "/vis/drawVolume worlds"
 /gui/addButton view "Set style surface"      "/vis/viewer/set/style surface"
@@ -81,6 +82,8 @@
 /gui/addMenu   filter "5. Filters"
 /gui/addButton filter "HideAllGammas ON"  "/vis/filtering/trajectories/HideAllGammas/active 1"
 /gui/addButton filter "HideAllGammas OFF" "/vis/filtering/trajectories/HideAllGammas/active 0"
+/gui/addButton filter "ShowOnlyCharged ON"  "/vis/filtering/trajectories/ShowOnlyCharged/active 1"
+/gui/addButton filter "ShowOnlyCharged OFF" "/vis/filtering/trajectories/ShowOnlyCharged/active 0"
 /gui/addButton filter "ShowOnlyPionDetectorHits ON"  "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 1"
 /gui/addButton filter "ShowOnlyPionDetectorHits OFF" "/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 0"
 #

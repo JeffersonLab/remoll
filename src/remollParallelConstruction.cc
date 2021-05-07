@@ -20,7 +20,7 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
   fGDMLPath(""),fGDMLFile(""),
   fGDMLParser(0),
   fGDMLValidate(false),
-  fGDMLOverlapCheck(false),
+  fGDMLOverlapCheck(true),
   fVerboseLevel(0),
   fParallelMessenger(0),
   fWorldVolume(0),
@@ -152,7 +152,8 @@ G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
 
   // Parse GDML file
   fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
-  // hide output if not validating or checking ovelaps
+  // hide output if not validating or checking overlaps
+  // https://bugzilla-geant4.kek.jp/show_bug.cgi?id=2358
   if (! fGDMLOverlapCheck && ! fGDMLValidate)
     G4cout.setstate(std::ios_base::failbit);
   fGDMLParser->Read(fGDMLFile,fGDMLValidate);
