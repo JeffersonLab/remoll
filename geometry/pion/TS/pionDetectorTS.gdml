@@ -5,7 +5,7 @@
 <define>
   <quantity name="pionDetectorTSThickness" type="length" value="2.54" unit="cm"/>
   <quantity name="pionDetectorTSWidth" type="length" value="70.0" unit="cm"/>
-  <quantity name="pionDetectorTSHeight" type="length" value="50.0" unit="cm"/>
+  <quantity name="pionDetectorTSHeight" type="length" value="16.0" unit="cm"/>
 </define>
 
 <materials>

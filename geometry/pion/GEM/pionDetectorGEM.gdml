@@ -4,8 +4,8 @@
 
 <define>
   <quantity name="pionDetectorGEMThickness" type="length" value="2.54" unit="cm"/>
-  <quantity name="pionDetectorGEMWidth" type="length" value="60.0" unit="cm"/>
-  <quantity name="pionDetectorGEMHeight" type="length" value="40.0" unit="cm"/>
+  <quantity name="pionDetectorGEMWidth" type="length" value="60.00" unit="cm"/>
+  <quantity name="pionDetectorGEMHeight" type="length" value="16.00" unit="cm"/>
 </define>
 
 <materials>

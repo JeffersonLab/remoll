@@ -7,11 +7,11 @@
   <constant name="PHI" value="360.0/2.0"/>
   <constant name="PHI0" value="1.5*360.0/7.0"/>
 
-  <quantity name="pionDetectorTSInnerRadius" type="length" value="0.820" unit="m"/>
+  <quantity name="pionDetectorTSInnerRadius" type="length" value="1.020" unit="m"/>
   <quantity name="pionDetectorTSOuterRadius" type="length" value="1.700" unit="m"/>
   <quantity name="pionDetectorTSLength" type="length" value="0.1" unit="m"/>
 
-  <quantity name="pionDetectorTSRadialPosition" type="length" value="110.0" unit="cm"/>
+  <quantity name="pionDetectorTSRadialPosition" type="length" value="112" unit="cm"/>
 </define>
 
 <materials>

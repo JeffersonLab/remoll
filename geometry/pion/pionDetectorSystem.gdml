@@ -4,7 +4,7 @@
 
 <define>
    <!-- Full pion detector system dimensions -->
-   <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.82" unit="m"/>
+   <quantity name="pionDetectorSystemInnerRadius" type="length" value="1.02" unit="m"/>
    <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.00" unit="m"/>
    <quantity name="pionDetectorSystemLength"      type="length" value="1.00" unit="m"/>
    <!-- Adding some for information -->
