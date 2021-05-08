@@ -17,15 +17,15 @@
 <!--Naz : change it to different parts inner and outer shield , This is the outer one-->
 
      <polycone name="solid_nose_shield_US_beampipe_l" aunit="deg" startphi="0" deltaphi="360" lunit="mm">
-      <zplane rmin="23.5+1" rmax="35" z="-100/2"/>
-      <zplane rmin="23.6+1" rmax="35" z="-100/2+100"/>
+      <zplane rmin="23.5+1" rmax="35" z="-75.569/2"/>
+      <zplane rmin="23.6+1" rmax="35" z="-75.569/2+75.569"/>
       <!--<zplane rmin="23" rmax="28" z="-1945/2+1945"/>-->
      </polycone>
 
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_nose_shield_US_beampipe_mother">
-      <zplane rmin="23.5+1" rmax="35" z="-100/2"/>
-      <zplane rmin="23.6+1" rmax="35" z="-100/2+100"/>
+      <zplane rmin="23.5+1" rmax="35" z="-75.569/2"/>
+      <zplane rmin="23.6+1" rmax="35" z="-75.569/2+75.569"/>
       <!--<zplane rmin="0" rmax="28" z="-1945/2+1945"/>-->
     </polycone>
  
