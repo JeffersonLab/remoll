@@ -46,7 +46,7 @@
  
     <!-- Upstream region -->
     <physvol>
-      <file name="upstream/upstreamDaughter_merged.gdml"/>
+      <file name="upstream/upstream.gdml"/>
       <positionref ref="upstreamCenter"/>
     </physvol>
 

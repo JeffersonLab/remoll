@@ -4,46 +4,42 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 
-<define>
-</define>
+  <define>
+  </define>
 
 
-<materials>
-</materials>
+  <materials>
+  </materials>
 
 
-<solids>
-
+  <solids>
 
 
      <polycone name="solid_shield_US_beampipe_l" aunit="deg" startphi="0" deltaphi="360" lunit="mm">
-      <zplane rmin="16" rmax="24" z="-1945/2"/>
-      <zplane rmin="19" rmax="27" z="-1945/2+950"/>
-      <zplane rmin="23" rmax="28" z="-1945/2+1945"/>
+      <zplane rmin="20.5" rmax="23.5" z="-2100/2"/>
+      <zplane rmin="27.5" rmax="30.5" z="-2100/2+2100"/>
      </polycone>
 
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_mother">
-      <zplane rmin="0" rmax="24" z="-1945/2"/>
-      <zplane rmin="0" rmax="27" z="-1945/2+950"/>
-      <zplane rmin="0" rmax="28" z="-1945/2+1945"/>
+     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_shield_US_beampipe_mother">
+      <zplane rmin="20.5" rmax="23.5" z="-2100/2"/>
+      <zplane rmin="27.5" rmax="30.5" z="-2100/2+2100"/>
      </polycone>
 
 
     
-</solids>
+  </solids>
 
 
-<structure>
- <volume name="shield_US_beampipe_1_logic">
+  <structure>
+    <volume name="shield_US_beampipe_1_logic">
       <materialref ref="G4_W"/>
       <solidref ref="solid_shield_US_beampipe_l"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="55"/>
- </volume>
- 
-  <volume name="logicUpstreamBeampipe">
+    </volume>
+    
+    <volume name="upstreamBeampipe">
       <materialref ref="G4_Galactic"/>
       <solidref ref="solid_shield_US_beampipe_mother"/> 
 
@@ -52,13 +48,13 @@
         <position name="shield_US_beampipe_1_pos" unit="mm" x="0" y="0" z="0"/>
       </physvol>
       
-  </volume>
+    </volume>
 
-</structure>
+  </structure>
 
 
-<setup name="Default" version="1.0">
-        <world ref="logicUpstreamBeampipe"/>
-</setup>
+  <setup name="Default" version="1.0">
+    <world ref="upstreamBeampipe"/>
+  </setup>
 
 </gdml>
