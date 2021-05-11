@@ -35,5 +35,5 @@ RUN source /etc/profile && \
     make clean
 
 # Entry point loads the environment
-ENTRYPOINT ["/bin/bash", "-c", "source $REMOLL/bin/remoll.sh && \"$@\"", "--"]
+ENTRYPOINT ["/bin/bash", "-c", "source /etc/profile && source $REMOLL/bin/remoll.sh && \"$@\"", "--"]
 CMD ["remoll"]
