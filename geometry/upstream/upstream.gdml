@@ -27,7 +27,7 @@
     <position name="posCOLL2_Cu" unit="mm" x="0" y="0" 
 	      z="5925-UOFFSET-50-75+75-25"/> 
     <!-- upstream end of Cu piece is 5350mm with respect to target center -->
-        
+
     <!--Shielding beam pipe overlap with col-2 so I increased to bore radius in col-2 from 26.0 to 29.55 -->
     <constant name="COLL2_R1_CW_U1" value ="27.5"/>
     <constant name="COLL2_R1_CW_D1" value ="27.5"/>
@@ -64,7 +64,7 @@
     <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
 
     <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
-    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 610/2"/>
+    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 610/2 + 500/2"/>
 
     <!--need to subtract 50/2 to accomdate for the beampipe moving downstream due to collimator thickness increasing. An additional 75 mm subtracted to move the beampipe upstream.-->
     <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" 
@@ -136,18 +136,15 @@
   &materials;
 
   <solids>
-
-    <box lunit="mm" name="boxUpstream_1" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmother_length"/>
-    <box lunit="mm" name="boxUpstream_2" x="USBoxmother_width + 1" y="USBoxmother_height + 1" z="USBoxmothersubtract_length - 610"/>
-    <subtraction name="boxUpstream"> <!-- originally was _4"> -->
-      <first ref="boxUpstream_1"/>
-      <second ref="boxUpstream_2"/>
-      <positionref ref="USmothersubtract_center_2" />
-    </subtraction>
-
-    <!-- US tube -->
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="solid_UStube" rmax="550" rmin="540" startphi="0" z="USBoxmother_length - USBoxmothersubtract_length - 10+  1110"/>
-    
+     
+      <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_1" rmax="550" rmin="0" startphi="0" z="USBoxmother_length"/>
+      <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_2" rmax="550+1" rmin="0" startphi="0" z="USBoxmothersubtract_length - 610 - 500"/>
+      <subtraction name="tubeUpstream">
+        <first ref="tubeUpstream_1"/>
+        <second ref="tubeUpstream_2"/>
+        <positionref ref="USmothersubtract_center_2" />
+      </subtraction>
+      
     <!-- Lead shielding solids -->
     <tube aunit="deg" deltaphi="360" lunit="mm" name="boxDSShield1_local_solid" rmin="265" rmax="540" z="250"/>
        
@@ -400,14 +397,6 @@
 
   <structure>
     
-    <volume name="logicUStube">
-      <materialref ref="G4_Galactic"/>
-      <solidref ref="solid_UStube"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="Color" auxvalue="blue"/>
-      <!--<auxiliary auxtype="DetNo" auxvalue="xxx"/>-->
-    </volume>
-    
     <volume name="boxDSShield_local_logic">
       <materialref ref="Lead"/>
       <solidref ref="boxDSShield1_local_solid"/>
@@ -498,12 +487,7 @@
     
     <volume name="upstreamTorusRegion">
       <materialref ref="VacuumColl"/>
-      <solidref ref="boxUpstream"/>
-
-      <physvol name="UStube">
-        <volumeref ref="logicUStube"/>
-        <position name="UStube_pos" x="0" y="0" z="- USBoxmothersubtract_length/2+  1110/2"/>
-      </physvol>
+      <solidref ref="tubeUpstream"/>
 
       <!-- Lead wall DS of collimator 4 -->
       <physvol name="hybridPbWall">
