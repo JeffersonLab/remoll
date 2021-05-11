@@ -44,6 +44,12 @@
       <rotation name="rot_y30" unit="deg" y="30"/>
     </physvol>
  
+    <!-- Upstream Concrete Shielding -->
+    <physvol>
+      <file name="upstream/upstreamconcreteshielding.gdml"/>
+      <positionref ref="upstreamCenter"/>
+    </physvol>
+ 
     <!-- Upstream region -->
     <physvol>
       <file name="upstream/upstream.gdml"/>
