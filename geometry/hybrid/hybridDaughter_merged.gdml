@@ -627,7 +627,7 @@
       <!-- Lead wall DS of collimator 4 -->
       <physvol name="hybridPbWall">
         <volumeref ref="boxDSShield_local_logic"/>
-	<position name="hybridPbWall_pos" x="0" y="0" z="-7007.5"/>
+	<position name="hybridPbWall_pos" x="0" y="0" z="-7008.5"/>
         <!-- <positionref ref="boxDSShield_local_center"/> -->
       </physvol>
 
