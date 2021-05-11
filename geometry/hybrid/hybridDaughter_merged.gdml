@@ -111,6 +111,7 @@
     <position name="PCOLL2_rcut11" unit="mm" x="PCOLL2_SCULPT_P4_X" y="70" z="PCOLL2_THICK/2+5"/> 
     <position name="PCOLL2_rcut12" unit="mm" x="20" y="70" z="PCOLL2_THICK/2+5"/> 
     
+    <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435"/>
 
   </define>
 
@@ -118,9 +119,15 @@
 
   <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="4500" rmin="0" startphi="0" z="7865.68 + 2*950"/>
-    
-    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here - centered at union_2_center -->
-    
+        
+    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here-->
+      <box lunit="mm" name="boxDownstream_3" x="boxDSMother_width + 1" y="boxDSMother_height + 1" z="1115"/>
+      <subtraction name="boxDownstream">
+        <first ref="boxDownstream_1"/>
+        <second ref="boxDownstream_3"/>
+        <positionref ref="boxDownstream_center"/>
+      </subtraction>
+      
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="HybridMotherSub"> 
       <zplane rmin="0" rmax="1000" z="0"/> 
       <zplane rmin="0" rmax="1000" z="330"/> 
@@ -537,7 +544,7 @@
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
-      <solidref ref="boxDownstream_1"/>
+      <solidref ref="boxDownstream"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="Driftpipe">
