@@ -18,21 +18,7 @@
 #   cd `readlink -f .`
 #
 
-FROM jeffersonlab/jlabce:2.3-mt
-
-# Install libgcj and pdftk
-RUN wget -q https://copr.fedorainfracloud.org/coprs/robert/gcj/repo/epel-7/robert-gcj-epel-7.repo -P /etc/yum.repos.d && \
-    wget -q https://copr.fedorainfracloud.org/coprs/robert/pdftk/repo/epel-7/robert-pdftk-epel-7.repo -P /etc/yum.repos.d && \
-    yum install -q -y pdftk ghostscript time boost-devel
-
-# Add Tini entry point
-ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
-
-# Set JLab CE version
-ENV JLAB_VERSION=2.3
-ENV JLAB_ROOT=/jlab
+FROM jeffersonlab/remoll-builder:main
 
 # Set remoll location
 ENV REMOLL=/jlab/remoll
@@ -48,14 +34,6 @@ RUN source /etc/profile && \
     make install && \
     make clean
 
-# Environment through /etc/profile
-RUN ln -sf $REMOLL/bin/remoll.csh /etc/profile.d/remoll.csh
-RUN ln -sf $REMOLL/bin/remoll.sh /etc/profile.d/remoll.sh
-
-# Override JLab CE environment for container use
-COPY docker/jlab.sh /jlab/${JLAB_VERSION}/ce/jlab.sh
-
 # Entry point loads the environment
-ENTRYPOINT ["/tini", "-s", "--", "bash", "-c", "source /etc/profile && \"$@\""]
-
+ENTRYPOINT ["/bin/bash", "-c", "source $REMOLL/bin/remoll.sh && \"$@\"", "--"]
 CMD ["remoll"]
