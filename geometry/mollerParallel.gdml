@@ -76,18 +76,21 @@
 
   <box lunit="mm" name="usHybridVirtualPlane_solid"
        x="5000" y="6000" z="1"/>
-
+       
+  <box lunit="mm" name="usHybridVirtualPlane2_solid"
+       x="5000" y="6000" z="1"/>
+            
   <box lunit="mm" name="coll1InnerSideVirtualPlane_solid"
-       x="1" y="1270*2" z="4335"/>
+       x="1" y="1286.5*2" z="4335 + 610"/>
 
   <box lunit="mm" name="coll1OuterSideVirtualPlane_solid"
-       x="1" y="6000" z="4335"/>
+       x="1" y="6000" z="4335 + 610"/>
 
   <box lunit="mm" name="coll1InnerTopVirtualPlane_solid"
-       x="1270" y="1" z="4335"/>
+       x="2660" y="1" z="4335 + 610"/>
 
   <box lunit="mm" name="coll1OuterTopVirtualPlane_solid"
-       x="1270+1400*2" y="1" z="4335"/>
+       x="4262" y="1" z="4335 + 610"/>
 </solids>
 
 <structure>
@@ -262,6 +265,16 @@
   <volume name="usHybridVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="usHybridVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5619"/>
+  </volume>
+  
+  <volume name="usHybridVirtualPlane2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="usHybridVirtualPlane2_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
@@ -506,42 +519,47 @@
 
     <physvol    name="usHybridVirtualPlane_phys">
       <volumeref ref="usHybridVirtualPlane_log"/>
-      <position name="usHybridVirtualPlane_pos" unit="mm" z="4800"/>
+      <position name="usHybridVirtualPlane_pos" unit="mm" z="3630"/>
+    </physvol>
+    
+    <physvol    name="usHybridVirtualPlane2_phys">
+      <volumeref ref="usHybridVirtualPlane2_log"/>
+      <position name="usHybridVirtualPlane2_pos" unit="mm" z="4131"/>
     </physvol>
 
     <physvol    name="coll1InnerLeftVirtualPlane_phys">
       <volumeref ref="coll1InnerLeftVirtualPlane_log"/>
-      <position name="coll1InnerLeftVirtualPlane_pos" unit="mm" x="1270/2-1" y="-510" z="852.5"/>
+      <position name="coll1InnerLeftVirtualPlane_pos" unit="mm" x="1331-1" y="-370.83" z="852.5 + 610/2"/>
     </physvol>
 
     <physvol    name="coll1OuterLeftVirtualPlane_phys">
       <volumeref ref="coll1OuterLeftVirtualPlane_log"/>
-      <position name="coll1OuterLeftVirtualPlane_pos" unit="mm" x="+1270/2+1401" z="852.5"/>
+      <position name="coll1OuterLeftVirtualPlane_pos" unit="mm" x="+1331+801" z="852.5 + 610/2"/>
     </physvol>
 
     <physvol    name="coll1InnerRightVirtualPlane_phys">
       <volumeref ref="coll1InnerRightVirtualPlane_log"/>
-      <position name="coll1InnerRightVirtualPlane_pos" unit="mm" x="-1270/2+1" y="-510" z="852.5"/>
+      <position name="coll1InnerRightVirtualPlane_pos" unit="mm" x="-1331+1" y="-370.83" z="852.5 + 610/2"/>
     </physvol>
 
     <physvol    name="coll1OuterRightVirtualPlane_phys">
       <volumeref ref="coll1OuterRightVirtualPlane_log"/>
-      <position name="coll1OuterRightVirtualPlane_pos" unit="mm" x="-1270/2-1401" z="852.5"/>
+      <position name="coll1OuterRightVirtualPlane_pos" unit="mm" x="-1331-801" z="852.5 + 610/2"/>
     </physvol>
 
     <physvol    name="coll1InnerTopVirtualPlane_phys">
       <volumeref ref="coll1InnerTopVirtualPlane_log"/>
-      <position name="coll1InnerTopVirtualPlane_pos" unit="mm" y="759" z="852.5"/>
+      <position name="coll1InnerTopVirtualPlane_pos" unit="mm" y="905.5" z="852.5 + 610/2"/>
     </physvol>
 
     <physvol    name="coll1OuterTopVirtualPlane_phys">
       <volumeref ref="coll1OuterTopVirtualPlane_log"/>
-      <position name="coll1OuterTopVirtualPlane_pos" unit="mm" y="760+1405" z="852.50"/>
+      <position name="coll1OuterTopVirtualPlane_pos" unit="mm" y="915.67+1405" z="852.50 + 610/2"/>
     </physvol>
 
     <physvol    name="coll1OuterBottomVirtualPlane_phys">
       <volumeref ref="coll1OuterBottomVirtualPlane_log"/>
-      <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1825" z="852.5"/>
+      <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1825" z="852.5 + 610/2"/>
     </physvol>
 
     <!-- Tracking planes -->

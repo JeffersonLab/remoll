@@ -46,7 +46,8 @@
  
     <!-- Upstream region -->
     <physvol>
-      <file name="upstream/upstream.gdml"/>
+      <file name="upstream/upstream_Conf6.gdml"/>
+      <!-- <file name="upstream/upstream.gdml"/> -->
       <positionref ref="upstreamCenter"/>
     </physvol>
 
