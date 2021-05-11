@@ -54,15 +54,23 @@
 
     <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="9825-DOFFSET-1500-50.0/2  + 150.0/2+1425"/> <!--it was z="posPCOLL2_z  + PCOLL2_THICK/2+1425, the corresponding values were added in their places since the collimator4 was moved the upstream.gdml.-->
     
+    <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435"/>
+
   </define>
 
   &materials;
 
   <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="4500" rmin="0" startphi="0" z="7865.68 + 2*950"/>
-    
-    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here - centered at union_2_center -->
-    
+        
+    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here-->
+      <box lunit="mm" name="boxDownstream_3" x="boxDSMother_width + 1" y="boxDSMother_height + 1" z="1115"/>
+      <subtraction name="boxDownstream">
+        <first ref="boxDownstream_1"/>
+        <second ref="boxDownstream_3"/>
+        <positionref ref="boxDownstream_center"/>
+      </subtraction>
+      
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="HybridMotherSub"> 
       <zplane rmin="0" rmax="1000" z="0"/> 
       <zplane rmin="0" rmax="1000" z="330"/> 
@@ -359,7 +367,7 @@
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
-      <solidref ref="boxDownstream_1"/>
+      <solidref ref="boxDownstream"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="Driftpipe">
