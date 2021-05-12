@@ -7,11 +7,11 @@
   <constant name="PHI"  value="360.0/2.0"/>
   <constant name="PHI0" value="1.5*360.0/7.0"/>
 
-  <quantity name="pionDetectorGEMInnerRadius" type="length" value="0.820" unit="m"/>
+  <quantity name="pionDetectorGEMInnerRadius" type="length" value="1.020" unit="m"/>
   <quantity name="pionDetectorGEMOuterRadius" type="length" value="1.500" unit="m"/>
   <quantity name="pionDetectorGEMLength" type="length" value="0.1" unit="m"/>
 
-  <quantity name="pionDetectorGEMRadialPosition" type="length" value="105.0" unit="cm"/>
+  <quantity name="pionDetectorGEMRadialPosition" type="length" value="112.0" unit="cm"/>
 </define>
 
 <materials>

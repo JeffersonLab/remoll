@@ -84,7 +84,7 @@ list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
 #----------------------------------------------------------------------------
 # Boost
 #
-find_package(Boost QUIET COMPONENTS iostreams filesystem)
+find_package(Boost QUIET OPTIONAL_COMPONENTS iostreams filesystem)
 if(Boost_FOUND)
   message(STATUS "Boost found --> building with boost enabled.")
   include_directories(${Boost_INCLUDE_DIRS})
@@ -105,7 +105,7 @@ endif()
 #----------------------------------------------------------------------------
 # Find CADMesh libraries
 set(cadmesh_LIBRARIES "")
-find_package(cadmesh)
+find_package(cadmesh QUIET)
 if(cadmesh_FOUND)
     # Pretty sure at some point cadmesh will update to use lowercase
     include_directories(${CADMESH_INCLUDE_DIRS})

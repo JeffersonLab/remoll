@@ -21,21 +21,12 @@
    <!-- petal -->
     <!-- Col-1 is now conical with bore and surface with same angles as inner and outer angles at the upstream face  -->
     <!--Add an offset to move the merged col-1 US-->
-    <constant name="MERGE_OFFSET" value="150.00"/>
-    <constant name="COLL1_z" value ="5575 - UOFFSET - MERGE_OFFSET"/>
     <position name="posCOLL1" unit="mm" x="0" y="0" z="-1825"/>
-    <constant name="COLL1_R1_U" value ="19.960"/>
-    <constant name="COLL1_R1_D" value ="13.908"/>
-    <!--to keep 0.3060 deg use 27.638 -->
-    <!--to keep 0.3510 deg use 31.703 -->
-    <constant name="COLL1_R4_U" value ="31.703"/>
-    <constant name="COLL1_R4_D" value ="31.703"/>
-
 
     <!-- main coll, adjust this -->
     <position name="posCOLL2_CW" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75-50"/> <!-- upstream end of CW piece is 5250mm with respect to target center -->
+    <position name="posCOLL2_CW_1" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75-50+50"/> <!-- upstream end of CW piece is 5250mm with respect to target center -->
     <position name="posCOLL2_Cu" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75+75-25"/> <!-- upstream end of Cu piece is 5350mm with respect to target center -->
-    <position name="posCOLL2_Cu1" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75+75-25+50"/> <!-- upstream end of Cu piece is 5350mm with respect to target center -->
     <!--Shielding beam pipe overlap with col-2 so I increased to bore radius in col-2 from 26.0 to 29.55 -->
     <constant name="COLL2_R1_CW_U1" value ="27.5"/>
     <constant name="COLL2_R1_CW_D1" value ="27.5"/>
@@ -61,7 +52,8 @@
     <constant name="COLL2_THICK_CW" value ="100.0"/>
     <constant name="COLL2_THICK_Cu" value ="50.0"/> 
     <constant name="posCOLL2z" value ="5925-UOFFSET"/>
-    <position name="posCOLL2_CW_sub" unit="mm" x="0" y="0" z="COLL2_THICK_CW/2"/> 
+    <position name="posCOLL2_CW_sub1" unit="mm" x="0" y="0" z="COLL2_THICK_CW/4"/> 
+    <position name="posCOLL2_CW_sub2" unit="mm" x="0" y="0" z="COLL2_THICK_CW/2"/> 
     <position name="posCOLL2_Cu_sub" unit="mm" x="0" y="0" z="COLL2_THICK_Cu/2"/> 
 
     <!--
@@ -82,7 +74,7 @@
     <!--need to subtract 50/2 to accomdate for the beampipe moving downstream due to collimator thickness increasing. An additional 75 mm subtracted to move the beampipe upstream.-->
     <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" z="shield_US_beampipe_center_z"/>
 
-    <constant name="nose_shield_US_beampipe_length" value="100"/>
+    <constant name="nose_shield_US_beampipe_length" value="75.569"/>
     <constant name="nose_shield_US_beampipe_center_z" value="nose_shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2+0.001-50/2-75"/>
     <position name="nose_shield_US_beampipe_center" unit="mm" x="0" y="0" z="nose_shield_US_beampipe_center_z"/>
  
@@ -321,21 +313,25 @@
           rmax1="COLL2_R3_U" 
           rmax2="COLL2_R3_D" 
           rmin1="COLL2_R2_U" 
-          rmin2="COLL2_R2_D" startphi="-SEPTANT/4" z="COLL2_THICK_CW+DELTAT*2"/>
+          rmin2="COLL2_R2_D" startphi="-SEPTANT/4" z="COLL2_THICK_CW/2.+DELTAT*2"/>
 
 	    <!--<cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_1" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_CW_U1" rmin2="COLL2_R1_CW_D1" startphi="0" z="COLL2_THICK_CW"/>-->
     <polycone aunit="deg" lunit="mm" name="uscyl_1" startphi="0" deltaphi="360">
 	    <zplane rmin="COLL2_R1_CW_U1" rmax="COLL2_R4_U" z="0"/>
 	    <zplane rmin="COLL2_R1_CW_D1" rmax="COLL2_R4_D" z="COLL2_THICK_CW/2"/>
-	    <zplane rmin="COLL2_R1_CW_U2" rmax="COLL2_R4_U" z="COLL2_THICK_CW/2"/>
-	    <zplane rmin="COLL2_R1_CW_D2" rmax="COLL2_R4_D" z="COLL2_THICK_CW"/>
     </polycone>
+
+    <polycone aunit="deg" lunit="mm" name="uscyl_1_2" startphi="0" deltaphi="360">
+	    <zplane rmin="COLL2_R1_CW_U2" rmax="COLL2_R4_U" z="0"/>
+	    <zplane rmin="COLL2_R1_CW_D2" rmax="COLL2_R4_D" z="COLL2_THICK_CW/2."/>
+    </polycone>
+
 
     <cone aunit="deg" deltaphi="SEPTANT/2" lunit="mm" name="cons_2" 
           rmax1="COLL2_R3_U" 
           rmax2="COLL2_R3_D" 
           rmin1="COLL2_R2_U" 
-          rmin2="COLL2_R2_D" startphi="-SEPTANT/4" z="COLL2_THICK_CW+DELTAT*2"/>
+          rmin2="COLL2_R2_D" startphi="-SEPTANT/4" z="COLL2_THICK_Cu+DELTAT*2"/>
 
 	    <!--<cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_Cu_U1" rmin2="COLL2_R1_Cu_D1" startphi="0" z="COLL2_THICK_Cu"/>-->
     <polycone aunit="deg" lunit="mm" name="uscyl_2" startphi="0" deltaphi="360">
@@ -350,88 +346,195 @@
     <subtraction name ="uscoll2_CW_0">
         <first ref="uscyl_1"/>
         <second ref="cons_1"/>
-	<positionref ref="posCOLL2_CW_sub" />
+	<positionref ref="posCOLL2_CW_sub1" />
         <rotation name="uscoll_CW_rot1" x="0" y="0" z="SEPTANT*(0+0.5)" unit="deg"/>
     </subtraction>
     <subtraction name ="uscoll2_CW_1">
         <first ref="uscoll2_CW_0"/>
         <second ref="cons_1"/>
-	<positionref ref="posCOLL2_CW_sub" />
+	<positionref ref="posCOLL2_CW_sub1" />
         <rotation name="uscoll_CW_rot2" x="0" y="0" z="SEPTANT*(1+0.5)" unit="deg"/>
     </subtraction>
     <subtraction name ="uscoll2_CW_2">
         <first ref="uscoll2_CW_1"/>
         <second ref="cons_1"/>
-	<positionref ref="posCOLL2_CW_sub" />
+	<positionref ref="posCOLL2_CW_sub1" />
         <rotation name="uscoll_CW_rot3" x="0" y="0" z="SEPTANT*(2+0.5)" unit="deg"/>
     </subtraction>
     <subtraction name ="uscoll2_CW_3">
         <first ref="uscoll2_CW_2"/>
         <second ref="cons_1"/>
-	<positionref ref="posCOLL2_CW_sub" />
+	<positionref ref="posCOLL2_CW_sub1" />
         <rotation name="uscoll_CW_rot4" x="0" y="0" z="SEPTANT*(3+0.5)" unit="deg"/>
     </subtraction>
     <subtraction name ="uscoll2_CW_4">
         <first ref="uscoll2_CW_3"/>
         <second ref="cons_1"/>
-	<positionref ref="posCOLL2_CW_sub" />
+	<positionref ref="posCOLL2_CW_sub1" />
         <rotation name="uscoll_CW_rot5" x="0" y="0" z="SEPTANT*(4+0.5)" unit="deg"/>
     </subtraction>
     <subtraction name ="uscoll2_CW_5">
         <first ref="uscoll2_CW_4"/>
         <second ref="cons_1"/>
-	<positionref ref="posCOLL2_CW_sub" />
+	<positionref ref="posCOLL2_CW_sub1" />
         <rotation name="uscoll_CW_rot6" x="0" y="0" z="SEPTANT*(5+0.5)" unit="deg"/>
     </subtraction>
     <subtraction name ="uscoll2_CW_6">
         <first ref="uscoll2_CW_5"/>
         <second ref="cons_1"/>
-	<positionref ref="posCOLL2_CW_sub" />
+	<positionref ref="posCOLL2_CW_sub1" />
         <rotation name="uscoll_CW_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
     </subtraction>
 
-    <subtraction name ="uscoll2_Cu_0">
+<!-- this is the second part of CW -->
+    <arb8 name="Coll2_CW2_S" v1x="33*tan(SEPTANT*pi/(4*180))" v1y="33" 
+	v2x="-33*tan(SEPTANT*pi/(4*180.))" v2y="33" 
+        v3x="-103*tan(SEPTANT*pi/(4*180.))" v3y="103" 
+        v4x="103*tan(SEPTANT*pi/(4*180))" v4y="103" 
+        v5x="33*tan(SEPTANT*pi/(4*180.))+52*tan(0.5*pi/180.)" v5y="33" 
+        v6x="-(33*tan(SEPTANT*pi/(4*180.))+52*tan(0.5*pi/180.))" v6y="33" 
+        v7x="-(105*tan(SEPTANT*pi/(4*180.))+52*tan(0.5*pi/180.))" v7y="105" 
+        v8x="105*tan(SEPTANT*pi/(4*180.))+52*tan(0.5*pi/180.)" v8y="105" 
+        dz="26" lunit="mm"/>
+
+    <cone aunit="deg" deltaphi="SEPTANT/2.+4." lunit="mm" name="Coll2_CW2_R1_S" rmax1="35" rmax2="35" rmin1="30" rmin2="30" startphi="-SEPTANT/4-2.0" z="54"/>
+    <cone aunit="deg" deltaphi="SEPTANT/2.+4." lunit="mm" name="Coll2_CW2_R2_S" rmax1="110" rmax2="110" rmin1="101" rmin2="102.31" startphi="-SEPTANT/4-2.0" z="54"/>
+
+        <subtraction name ="Coll2_CW2_S1">
+        <first ref="Coll2_CW2_S"/>
+        <second ref="Coll2_CW2_R1_S"/>
+        <rotation name="Cut_rot_smallR" x="0" y="0" z="90" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_CW2_S2">
+        <first ref="Coll2_CW2_S1"/>
+        <second ref="Coll2_CW2_R2_S"/>
+        <rotation name="Cut_rot_largeR" x="0" y="0" z="90" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_CW2_S3">
+        <first ref="uscyl_1_2"/>
+        <second ref="Coll2_CW2_S2"/>
+        <position name="pos_CW2_1" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_CW2_1" x="0" y="0" z="SEPTANT*(0+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_CW2_S4">
+        <first ref="Coll2_CW2_S3"/>
+        <second ref="Coll2_CW2_S2"/>
+        <position name="pos_CW2_2" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_CW2_2" x="0" y="0" z="SEPTANT*(1+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_CW2_S5">
+        <first ref="Coll2_CW2_S4"/>
+        <second ref="Coll2_CW2_S2"/>
+        <position name="pos_CW2_3" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_CW2_3" x="0" y="0" z="SEPTANT*(2+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_CW2_S6">
+        <first ref="Coll2_CW2_S5"/>
+        <second ref="Coll2_CW2_S2"/>
+        <position name="pos_CW2_4" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_CW2_4" x="0" y="0" z="SEPTANT*(3+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_CW2_S7">
+        <first ref="Coll2_CW2_S6"/>
+        <second ref="Coll2_CW2_S2"/>
+        <position name="pos_CW2_5" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_CW2_5" x="0" y="0" z="SEPTANT*(4+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_CW2_S8">
+        <first ref="Coll2_CW2_S7"/>
+        <second ref="Coll2_CW2_S2"/>
+        <position name="pos_CW2_6" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_CW2_6" x="0" y="0" z="SEPTANT*(5+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_CW2_S9">
+        <first ref="Coll2_CW2_S8"/>
+        <second ref="Coll2_CW2_S2"/>
+        <position name="pos_CW2_7" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_CW2_7" x="0" y="0" z="SEPTANT*(6+0.75)" unit="deg"/>
+        </subtraction>
+
+<!-- this is the part of Cu of Collimator2 -->
+    <arb8 name="Coll2_Cu_S" v1x="33*tan(SEPTANT*pi/(4*180.))+50*tan(0.5*pi/180.)" v1y="33" 
+	v2x="-(33*tan(SEPTANT*pi/(4*180.))+50*tan(0.5*pi/180.))" v2y="33" 
+        v3x="-(105*tan(SEPTANT*pi/(4*180.))+50*tan(0.5*pi/180.))" v3y="105" 
+        v4x="105*tan(SEPTANT*pi/(4*180.))+50*tan(0.5*pi/180.)" v4y="105" 
+        v5x="33*tan(SEPTANT*pi/(4*180.))+102*tan(0.5*pi/180.)" v5y="33" 
+        v6x="-(33*tan(SEPTANT*pi/(4*180.))+102*tan(0.5*pi/180.))" v6y="33" 
+        v7x="-(105*tan(SEPTANT*pi/(4*180.))+102*tan(0.5*pi/180.))" v7y="105" 
+        v8x="105*tan(SEPTANT*pi/(4*180.))+102*tan(0.5*pi/180.)" v8y="105" 
+        dz="26" lunit="mm"/>
+
+    <cone aunit="deg" deltaphi="SEPTANT/2.+6." lunit="mm" name="Coll2_Cu_R1_S" rmax1="35" rmax2="35" rmin1="25" rmin2="25" startphi="-SEPTANT/4-3.0" z="54"/>
+    <cone aunit="deg" deltaphi="SEPTANT/2.+6." lunit="mm" name="Coll2_Cu_R2_S" rmax1="115" rmax2="115" rmin1="102.31" rmin2="103.62" startphi="-SEPTANT/4-3.0" z="54"/>
+
+        <subtraction name ="Coll2_Cu_S1">
+        <first ref="Coll2_Cu_S"/>
+        <second ref="Coll2_Cu_R1_S"/>
+        <rotation name="Cut_Cu_rot_smallR" x="0" y="0" z="90" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_Cu_S2">
+        <first ref="Coll2_Cu_S1"/>
+        <second ref="Coll2_Cu_R2_S"/>
+        <rotation name="Cut_Cu_rot_largeR" x="0" y="0" z="90" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_Cu_S3">
         <first ref="uscyl_2"/>
-        <second ref="cons_2"/>
-	<positionref ref="posCOLL2_Cu_sub" />
-        <rotation name="uscoll_Cu_rot1" x="0" y="0" z="SEPTANT*(0+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_Cu_1">
-        <first ref="uscoll2_Cu_0"/>
-        <second ref="cons_2"/>
-	<positionref ref="posCOLL2_Cu_sub" />
-        <rotation name="uscoll_Cu_rot2" x="0" y="0" z="SEPTANT*(1+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_Cu_2">
-        <first ref="uscoll2_Cu_1"/>
-        <second ref="cons_2"/>
-	<positionref ref="posCOLL2_Cu_sub" />
-        <rotation name="uscoll_Cu_rot3" x="0" y="0" z="SEPTANT*(2+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_Cu_3">
-        <first ref="uscoll2_Cu_2"/>
-        <second ref="cons_2"/>
-	<positionref ref="posCOLL2_Cu_sub" />
-        <rotation name="uscoll_Cu_rot4" x="0" y="0" z="SEPTANT*(3+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_Cu_4">
-        <first ref="uscoll2_Cu_3"/>
-        <second ref="cons_2"/>
-	<positionref ref="posCOLL2_Cu_sub" />
-        <rotation name="uscoll_Cu_rot5" x="0" y="0" z="SEPTANT*(4+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_Cu_5">
-        <first ref="uscoll2_Cu_4"/>
-        <second ref="cons_2"/>
-	<positionref ref="posCOLL2_Cu_sub" />
-        <rotation name="uscoll_Cu_rot6" x="0" y="0" z="SEPTANT*(5+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="uscoll2_Cu_6">
-        <first ref="uscoll2_Cu_5"/>
-        <second ref="cons_2"/>
-	<positionref ref="posCOLL2_Cu_sub" />
-        <rotation name="uscoll_Cu_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
-    </subtraction>
+        <second ref="Coll2_Cu_S2"/>
+        <position name="pos_Cu_1" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_Cu_1" x="0" y="0" z="SEPTANT*(0+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_Cu_S4">
+        <first ref="Coll2_Cu_S3"/>
+        <second ref="Coll2_Cu_S2"/>
+        <position name="pos_Cu_2" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_Cu_2" x="0" y="0" z="SEPTANT*(1+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_Cu_S5">
+        <first ref="Coll2_Cu_S4"/>
+        <second ref="Coll2_Cu_S2"/>
+        <position name="pos_Cu_3" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_Cu_3" x="0" y="0" z="SEPTANT*(2+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_Cu_S6">
+        <first ref="Coll2_Cu_S5"/>
+        <second ref="Coll2_Cu_S2"/>
+        <position name="pos_Cu_4" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_Cu_4" x="0" y="0" z="SEPTANT*(3+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_Cu_S7">
+        <first ref="Coll2_Cu_S6"/>
+        <second ref="Coll2_Cu_S2"/>
+        <position name="pos_Cu_5" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_Cu_5" x="0" y="0" z="SEPTANT*(4+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_Cu_S8">
+        <first ref="Coll2_Cu_S7"/>
+        <second ref="Coll2_Cu_S2"/>
+        <position name="pos_Cu_6" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_Cu_6" x="0" y="0" z="SEPTANT*(5+0.75)" unit="deg"/>
+        </subtraction>
+
+        <subtraction name ="Coll2_Cu_S9">
+        <first ref="Coll2_Cu_S8"/>
+        <second ref="Coll2_Cu_S2"/>
+        <position name="pos_Cu_7" x="0" y="0" z="25" lunit="mm"/>
+        <rotation name="rot_Cu_7" x="0" y="0" z="SEPTANT*(6+0.75)" unit="deg"/>
+        </subtraction>
 
     <!--
        Shielding collimators
@@ -526,8 +629,18 @@
       </volume>
 
    <volume name="logicUScollunion_2">
+      <materialref ref="CW95"/>
+      <solidref ref="Coll2_CW2_S9"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetNo" auxvalue="2002"/>
+      </volume>
+
+   <volume name="logicUScollunion_3">
       <materialref ref="Copper"/>
-      <solidref ref="uscoll2_Cu_6"/>
+      <solidref ref="Coll2_Cu_S9"/>
       <auxiliary auxtype="Color" auxvalue="magenta"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
@@ -558,22 +671,22 @@
 
       <physvol name="col1_h20_phys1">
         <volumeref ref="col1_h20_logic1"/>
-	<position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7"/> --><!-- center position wrt target center = 5036 mm-->
+	<position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7"/><!-- center position wrt target center = 5036 mm-->
       </physvol>
 
       <physvol name="col1_h20_phys2">
         <volumeref ref="col1_h20_logic2"/>
-	<position ref="col1_h20_pos2" x="0" y="0" z="-1825+675"/>--> <!-- front face position wrt target center = 5340 mm-->
+	<position ref="col1_h20_pos2" x="0" y="0" z="-1825+675"/> <!-- front face position wrt target center = 5340 mm-->
      </physvol>
 
       <physvol name="col1_h20_CW_phys">
         <volumeref ref="col1_h20_CW_logic"/>
-	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2."/> --><!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2."/><!-- center position wrt target center = 5191.5 mm-->
      </physvol>
 
       <physvol name="col1_jacket_phys">
         <volumeref ref="col1_jacket_logic"/>
-	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110"/>--> <!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110"/> <!-- center position wrt target center = 5191.5 mm-->
      </physvol>
 
       <physvol name="UScollunion_1">
@@ -583,6 +696,11 @@
 
       <physvol name="UScollunion_2">
         <volumeref ref="logicUScollunion_2"/>
+        <positionref ref="posCOLL2_CW_1"/>
+      </physvol>
+
+      <physvol name="UScollunion_3">
+        <volumeref ref="logicUScollunion_3"/>
         <positionref ref="posCOLL2_Cu"/>
       </physvol>
 

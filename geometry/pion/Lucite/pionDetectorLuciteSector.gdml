@@ -12,7 +12,7 @@
     the radius along with the angle of the detector to increase the length in the
     longitudinal direction.
   -->
-  <quantity name="pionDetectorLuciteInnerRadius" type="length" value="0.820" unit="m"/>
+  <quantity name="pionDetectorLuciteInnerRadius" type="length" value="1.020" unit="m"/>
   <quantity name="pionDetectorLuciteOuterRadius" type="length" value="1.900" unit="m"/>
 
   <!--

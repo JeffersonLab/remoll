@@ -510,6 +510,9 @@
     <solidref ref="pionDetectorLucitePlaneWedge_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLuciteDet"/>
     <auxiliary auxtype="DetNo" auxvalue="8001"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
