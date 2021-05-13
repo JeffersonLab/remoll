@@ -53,13 +53,13 @@
   <volume name="targetLH2_LH2Volume_logical">
     <materialref ref="G4_lH2"/>
     <solidref ref="TargetLH2_LH2Volume_solid"/>
-    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="LH2"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
   </volume>
   <volume name="targetLH2_AlWindowDS_logical">
     <materialref ref="G4_Al"/>
     <solidref ref="TargetLH2_AlWindow_solid"/>
-    <auxiliary auxtype="TargetSamplingVolume" auxvalue="LH2"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
     <auxiliary auxtype="Color" auxvalue="white"/>
   </volume>
   <volume name="TargetLH2_logical">
