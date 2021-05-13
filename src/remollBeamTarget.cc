@@ -163,26 +163,18 @@ void remollBeamTarget::UpdateInfo()
 	if (!tubs && !box) {
 	    G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		":  Target volume " << volume->GetName() << " not made of G4Tubs or G4Box" << G4endl;
-	    continue; // exit(1);
+	    exit(1);
 	}
+
+        G4double z_half_length = 0;
+        if (tubs) z_half_length = tubs->GetZHalfLength();
+        if (box)  z_half_length = box->GetZHalfLength();
+
+        fTotalTargetEffectiveLength += 2.0 * z_half_length * material->GetDensity();
 
 	if (it == fTargetVolumes[fActiveTargetMother].begin() + fActiveTargetVolume) {
 
-	    if( fActiveTargetEffectiveLength >= 0.0 ){
-		G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
-		    ":  Multiply defined target volumes" << G4endl;
-		exit(1);
-	    }
-
-            G4double z_half_length = 0;
-            if (tubs) z_half_length = tubs->GetZHalfLength();
-            if (box)  z_half_length = box->GetZHalfLength();
-
-	    fActiveTargetEffectiveLength = z_half_length*2.0
-		* material->GetDensity();
-
-	    fTotalTargetEffectiveLength += z_half_length*2.0
-		* material->GetDensity();
+	    fActiveTargetEffectiveLength = 2.0 * z_half_length * material->GetDensity();
 	}
     }
 }
