@@ -38,7 +38,6 @@ std::vector<std::vector<std::pair<G4VPhysicalVolume*,G4String>>> remollBeamTarge
 
 G4double remollBeamTarget::fActiveTargetEffectiveLength  = -1e9;
 G4double remollBeamTarget::fMotherTargetAbsolutePosition = -1e9;
-G4double remollBeamTarget::fActiveTargetRelativePosition = -1e9;
 G4double remollBeamTarget::fTotalTargetEffectiveLength = 0.0;
 
 remollBeamTarget::remollBeamTarget()
@@ -129,7 +128,6 @@ void remollBeamTarget::PrintTargetInfo()
     G4cout << "Final target parameters: " << G4endl;
     G4cout << " total target effective length: " << fTotalTargetEffectiveLength/(gram/cm2) << " gram/cm2" << G4endl;
     G4cout << " active target effective length: " << fActiveTargetEffectiveLength/(gram/cm2) << " gram/cm2" << G4endl;
-    G4cout << " active target relative position: " << fActiveTargetRelativePosition/mm << " mm" << G4endl;
 }
 
 void remollBeamTarget::UpdateInfo()
@@ -138,7 +136,6 @@ void remollBeamTarget::UpdateInfo()
 
     fActiveTargetEffectiveLength  = -1e9;
     fMotherTargetAbsolutePosition = -1e9;
-    fActiveTargetRelativePosition = -1e9;
     fTotalTargetEffectiveLength = 0.0;
 
     // Can't calculate anything without mother, let's hope we find one later on
@@ -183,8 +180,6 @@ void remollBeamTarget::UpdateInfo()
 
 	    fActiveTargetEffectiveLength = z_half_length*2.0
 		* material->GetDensity();
-
-	    fActiveTargetRelativePosition = physvol->GetTranslation().z();
 
 	    fTotalTargetEffectiveLength += z_half_length*2.0
 		* material->GetDensity();
@@ -348,7 +343,7 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 		break;
 
 	    case kAllTargetVolumes:
-		if( effective_position - cumulative_effective_length < effective_length ){
+		if (effective_position - cumulative_effective_length < effective_length) {
                     // This is the volume where our sample landed
 		    found_active_volume = true;
 		    effective_position_in_volume = (effective_position - cumulative_effective_length);
