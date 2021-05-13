@@ -46,7 +46,6 @@ class remollBeamTarget {
         static G4double fActiveTargetEffectiveLength;
         // Positions are in physical distances (i.e. in cm)
         static G4double fMotherTargetAbsolutePosition;
-        static G4double fActiveTargetRelativePosition;
 
     public:
         static void UpdateInfo();
