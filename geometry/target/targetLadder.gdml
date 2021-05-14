@@ -65,12 +65,17 @@
   <volume name="TargetLH2_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="TargetLH2_solid"/>
-    <physvol>
-      <volumeref ref="targetLH2_LH2Volume_logical"/>
-    </physvol>
+    <!-- Note:
+         The order in the physical volume is important. 
+         Only earlier defined volumes will be considered for the
+         prescattering energy loss.
+     -->
     <physvol>
       <volumeref ref="targetLH2_AlWindowUS_logical"/>
       <position z="-(1250+0.127)/2"/>
+    </physvol>
+    <physvol>
+      <volumeref ref="targetLH2_LH2Volume_logical"/>
     </physvol>
     <physvol>
       <volumeref ref="targetLH2_AlWindowDS_logical"/>
