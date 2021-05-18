@@ -1,5 +1,5 @@
 /run/initialize
 /remoll/targname USAlTarg
-/remoll/printtargetinfo
+/remoll/target/print
 /run/beamOn 1
 
