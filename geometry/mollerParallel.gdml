@@ -559,7 +559,7 @@
 
     <physvol    name="coll1OuterBottomVirtualPlane_phys">
       <volumeref ref="coll1OuterBottomVirtualPlane_log"/>
-      <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1825" z="852.5 + 610/2"/>
+      <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1670" z="852.5 + 610/2"/>
     </physvol>
 
     <!-- Tracking planes -->
