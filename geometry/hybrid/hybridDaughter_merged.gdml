@@ -1071,10 +1071,10 @@
         <positionref ref="posPCOLL4_3"/>
       </physvol>
 
-      <physvol>
+<!--      <physvol>
         <volumeref ref="boxDSConcreteShield1_logic"/>
         <positionref ref="boxDSConcreteShield1_center"/>
-      </physvol>
+</physvol>-->
 
       <!-- Lead wall DS of collimator 4 -->
       <physvol>
