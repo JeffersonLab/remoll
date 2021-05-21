@@ -81,5 +81,5 @@
 /remoll/filename remollout.root
 
 #/tracking/verbose 2
-/remoll/printtargetinfo
+/remoll/target/print
 /run/beamOn 100
