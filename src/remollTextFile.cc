@@ -115,14 +115,14 @@ void remollTextFile::RecreateInDir(const char *adir, bool clobber ){
     if( ret == -1 && errno != EEXIST ){ 
 	fprintf(stderr, "%s - %s\n", thisdir, strerror(errno) );
 	delete thisdir;
-	delete catpath;
+	delete[] catpath;
 	return;
     }
 
     Recreate(catpath, clobber);
 
     delete thisdir;
-    delete catpath;
+    delete[] catpath;
 }
 
 void remollTextFile::Recreate(const char *fn, bool clobber ){
