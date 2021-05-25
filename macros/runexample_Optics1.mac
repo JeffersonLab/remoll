@@ -17,7 +17,9 @@
 /remoll/rasx 0 mm
 /remoll/rasy 0 mm
 
-/remoll/evgen/set carbon
+/remoll/evgen/set elasticC12
+#/remoll/evgen/set quasielasticC12
+#/remoll/evgen/set inelasticC12
 
 /remoll/beamcurr 85 microampere
 

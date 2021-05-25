@@ -27,7 +27,7 @@
 #include "remollGenpInelastic.hh"
 #include "remollGenPion.hh"
 #include "remollGenBeam.hh"
-#include "remollGen12CElastic.hh"
+#include "remollGenC12.hh"
 #include "remollGenFlat.hh"
 #include "remollGenExternal.hh"
 #include "remollGenAl.hh"
@@ -57,7 +57,9 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     fEvGenMap["inelasticAl"] = new remollGenAl(2);
     fEvGenMap["external"] = new remollGenExternal();
     fEvGenMap["pion_LUND"] = new remollGenLUND();
-    fEvGenMap["carbon"] = new remollGen12CElastic();
+    fEvGenMap["elasticC12"] = new remollGenC12(0);
+    fEvGenMap["quasielasticC12"] = new remollGenC12(1);
+    fEvGenMap["inelasticC12"] = new remollGenC12(2);
     fEvGenMap["hyperon"] = new remollGenHyperon();
 
     // Populate map with all possible primary generators
