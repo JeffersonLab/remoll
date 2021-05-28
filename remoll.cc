@@ -46,7 +46,7 @@ typedef G4RunManager RunManager;
 namespace {
   void PrintUsage() {
     G4cerr << "Usage: " << G4endl;
-    G4cerr << " remoll [-g geometry] [-m macro] [-u UIsession] [-r seed] [-o outputfile] ";
+    G4cerr << " remoll [-f] [-g geometry] [-m macro] [-u UIsession] [-r seed] [-o outputfile] ";
 #ifdef G4MULTITHREADED
     G4cerr << "[-t nThreads] ";
 #endif
@@ -91,6 +91,7 @@ int main(int argc, char** argv) {
     G4String geometry_gdmlfile;
     G4String parallel_gdmlfile;
     G4String outputfile;
+    __attribute__((unused)) G4bool force = false;
 #ifdef G4MULTITHREADED
     G4int threads = 0;
 #endif
@@ -102,6 +103,7 @@ int main(int argc, char** argv) {
       else if (G4String(argv[i]) == "-u") session  = argv[++i];
       else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
       else if (G4String(argv[i]) == "-o") outputfile = argv[++i];
+      else if (G4String(argv[i]) == "-f") force    = true;
 #ifdef G4MULTITHREADED
       else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
 #endif
@@ -111,6 +113,27 @@ int main(int argc, char** argv) {
         return 1;
       }
     }
+
+    //-------------------------------
+    // Check dependency versions
+    //-------------------------------
+    #if G4VERSION_NUMBER < 1060
+    if (! force) {
+      G4cerr << "WARNING: You are running with an older geant4 version." << G4endl;
+      G4cerr << "WARNING: The encouraged version of geant4 is 10.6.2." << G4endl;
+      G4cerr << "WARNING: Pass the option '-f' to ignore this warning." << G4endl;
+      exit(-1);
+    }
+    #endif
+
+    #if ROOT_VERSION_CODE < ROOT_VERSION(6,14,4)
+    if (! force) {
+      G4cerr << "WARNING: You are running with an older ROOT version." << G4endl;
+      G4cerr << "WARNING: The encouraged version of ROOT is 6.14.4." << G4endl;
+      G4cerr << "WARNING: Pass the option '-f' to ignore this warning." << G4endl;
+      exit(-1);
+    }
+    #endif
 
 
     //-------------------------------
