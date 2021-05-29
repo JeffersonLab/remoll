@@ -1,8 +1,5 @@
 #include "remollSearchPath.hh"
 
-#include <stdio.h>
-#include <stdlib.h>
-
 remollSearchPath* remollSearchPath::fInstance = nullptr;
 
 remollSearchPath::remollSearchPath()
