@@ -1,5 +1,8 @@
 #include "remollSearchPath.hh"
 
+#include <stdio.h>
+#include <stdlib.h>
+
 remollSearchPath* remollSearchPath::fInstance = nullptr;
 
 remollSearchPath::remollSearchPath()
@@ -44,6 +47,9 @@ void remollSearchPath::add(const std::string& path)
   else if (fs::exists(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/" + path))) {
     fSearchPath.push_back(fs::path(std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/" + path));
   }
+  else if (fs::exists(fs::path("/jlab/remoll/share/remoll/" + path))) {
+      fSearchPath.push_back(fs::path("/jlab/remoll/share/remoll/" + path));
+  }
 #endif
 }
 
@@ -53,6 +59,9 @@ std::string remollSearchPath::operator() (const std::string& filename)
     // directories inside fSearchPath, return the filename prefixed with
     // the directory for which the full path exists
 #ifndef NO_FS_SUPPORT
+    if(fs::exists(fs::path(std::string("/jlab/remoll/share/remoll/" + filename)))) {
+        return std::string("/jlab/remoll/share/remoll/" + filename);
+    }
     for (auto path: fSearchPath) {
         fs::path test(path.string() + "/" + filename);
         if(fs::exists(test)) {
@@ -66,5 +75,5 @@ std::string remollSearchPath::operator() (const std::string& filename)
 
     // File not found in any of the search directories,
     // return the filename
-    return std::string(filename); /* and pray everything work */
+    return std::string("/jlab/remoll/share/remoll/" + filename); /* and pray everything work */
 }
