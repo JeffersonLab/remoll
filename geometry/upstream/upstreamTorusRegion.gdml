@@ -393,6 +393,8 @@
       <rotation name="pdscoll_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
     </subtraction>
     
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_solid" 
+	  rmax="550" rmin="214.5" startphi="0" z="102"/>
   </solids>
 
   <structure>
@@ -401,9 +403,12 @@
       <materialref ref="Lead"/>
       <solidref ref="boxDSShield1_local_solid"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
-      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
-      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6031"/>
+    </volume>
+
+    <volume name="vacuumPbWall_logic">
+      <materialref ref="Lead"/>
+      <solidref ref="vacuumPbWall_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
     </volume>
     
     <volume name="logicUScoll_1">
@@ -493,7 +498,12 @@
       <physvol name="hybridPbWall">
         <volumeref ref="boxDSShield_local_logic"/>
         <position name="hybridPbWall_pos" x="0" y="0" z="2005"/>
-        <!-- <positionref ref="boxDSShield_local_center"/> -->
+      </physvol>
+
+      <!-- mini - Lead wall DS of collimator 4 -->
+      <physvol name="vacuumPbWall">
+        <volumeref ref="vacuumPbWall_logic"/>
+        <position name="vacuumPbWall_pos" x="0" y="0" z="1613"/>
       </physvol>
       
       <physvol name="collimator1">
