@@ -13,7 +13,7 @@
     <constant name="USBoxmother_extensionUS" value="120"/>
 
     <constant name="USBoxmother_width" value="4500"/>
-    <constant name="USBoxmother_height" value="5800"/>
+    <constant name="USBoxmother_height" value="5964"/>
     <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
 
     <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
