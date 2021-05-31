@@ -394,7 +394,7 @@
     </subtraction>
     
     <tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_solid" 
-	  rmax="550" rmin="214.5" startphi="0" z="102"/>
+	  rmax="550" rmin="219" startphi="0" z="102"/>
   </solids>
 
   <structure>
@@ -503,7 +503,7 @@
       <!-- mini - Lead wall DS of collimator 4 -->
       <physvol name="vacuumPbWall">
         <volumeref ref="vacuumPbWall_logic"/>
-        <position name="vacuumPbWall_pos" x="0" y="0" z="1613"/>
+        <position name="vacuumPbWall_pos" x="0" y="0" z="1665"/>
       </physvol>
       
       <physvol name="collimator1">
