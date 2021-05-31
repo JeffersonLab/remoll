@@ -194,50 +194,6 @@
 	  startphi="0" z="PCOLL2_THICK"/>
 
 
-    <subtraction name ="pcons_sculpt_1">
-      <first ref="pcons_1"/> 
-      <second ref="leftpcolcut"/> 
-    </subtraction>
-    <subtraction name ="pcons_sculpt_2">
-      <first ref="pcons_sculpt_1"/> 
-      <second ref="rightpcolcut"/> 
-    </subtraction>
-    <subtraction name ="pdscoll_union_0">
-      <first ref="pdscyl"/>
-      <second ref="pcons_sculpt_2"/> 
-      <rotation name="pdscoll_rot1" x="0" y="0" z="SEPTANT*(0+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_1">
-      <first ref="pdscoll_union_0"/>
-      <second ref="pcons_sculpt_2"/> 
-      <rotation name="pdscoll_rot2" x="0" y="0" z="SEPTANT*(1+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_2">
-      <first ref="pdscoll_union_1"/>
-      <second ref="pcons_sculpt_2"/> 
-      <rotation name="pdscoll_rot3" x="0" y="0" z="SEPTANT*(2+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_3">
-      <first ref="pdscoll_union_2"/>
-      <second ref="pcons_sculpt_2"/> 
-      <rotation name="pdscoll_rot4" x="0" y="0" z="SEPTANT*(3+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_4">
-      <first ref="pdscoll_union_3"/>
-      <second ref="pcons_sculpt_2"/> 
-      <rotation name="pdscoll_rot5" x="0" y="0" z="SEPTANT*(4+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_5">
-      <first ref="pdscoll_union_4"/>
-      <second ref="pcons_sculpt_2"/> 
-      <rotation name="pdscoll_rot6" x="0" y="0" z="SEPTANT*(5+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_6">
-      <first ref="pdscoll_union_5"/>
-      <second ref="pcons_sculpt_2"/> 
-      <rotation name="pdscoll_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
-    </subtraction>
-
     <!--concrete shield -->
     <box lunit="mm" name="boxDSConcreteShield1_solid_1" x="DSConcreteShield1_height" y="DSConcreteShield1_height" z="DSConcreteShield1_length"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="DSConcreteShield1_beamTube_solid" rmax="boxDSShieldColl1_inner_rmax" rmin="0" startphi="0" z="DSConcreteShield1_length+10"/>
@@ -247,16 +203,6 @@
       <second ref="DSConcreteShield1_beamTube_solid"/>
       <positionref ref="boxDSConcreteShield1_trans2" />
     </subtraction>    
-
-    <!-- Lead shielding solids -->
-    <box lunit="mm" name="boxDSShield1_local_solid_1" x="DSShield_local_width" y="DSShield_local_height" z="DSShield_local_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSShield_local_opening_solid" rmax="DSShield_local_inner_rmax" rmin="0" startphi="0" z="DSShield_local_length + 10.0"/>
-
-    <subtraction name ="boxDSShield1_local_solid">
-      <first ref="boxDSShield1_local_solid_1"/>
-      <second ref="DSShield_local_opening_solid"/>
-      <position ref="boxDSShield_local_trans"/>
-    </subtraction>
 
     <!--collar solids -->
     <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="600" rmax1="750" rmin2="600" rmax2="750" z="100+50"/>
@@ -409,32 +355,6 @@
       <auxiliary auxtype="DetNo" auxvalue="92"/>
     </volume>
 
-    <volume name="logicPDScollunion_1">
-      <materialref ref="CW95"/>
-      <!--  <materialref ref="Kryptonite"/> -->
-      <solidref ref="pdscoll_union_6"/> 
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
-      <auxiliary auxtype="DetNo" auxvalue="2004"/>
-    </volume>
-
-    <volume name="boxDSConcreteShield1_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="boxDSConcreteShield1_solid"/>
-      <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6021"/>
-    </volume>
-
-    <volume name="boxDSShield_local_logic">
-      <materialref ref="Lead"/>
-      <solidref ref="boxDSShield1_local_solid"/>
-      <auxiliary auxtype="Color" auxvalue="gray"/>
-      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
-      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6031"/>
-    </volume>
-    
     <volume name="logicCollar1">
       <materialref ref="G4_Pb"/>
       <solidref ref="solidCollar1"/>
@@ -616,26 +536,6 @@
       <physvol name="DScoil">
         <file name="hybrid/hybridToroid.gdml"/>
         <position name="pos_hybridToroid" x="0" y="0" z="13335.194-DOFFSET"/>
-      </physvol>
-
-
-      <!-- Collimator 4 -->
-      <physvol name="collimator4">
-	<volumeref ref="logicPDScollunion_1"/>
-        <positionref ref="posPCOLL2"/>
-      </physvol>
-
-
-      <!-- <physvol> -->
-      <!--   <volumeref ref="boxDSConcreteShield1_logic"/> -->
-      <!--   <positionref ref="boxDSConcreteShield1_center"/> -->
-      <!-- </physvol> -->
-
-      <!-- Lead wall DS of collimator 4 -->
-      <physvol name="hybridPbWall">
-        <volumeref ref="boxDSShield_local_logic"/>
-	<position name="hybridPbWall_pos" x="0" y="0" z="-7008.5"/>
-        <!-- <positionref ref="boxDSShield_local_center"/> -->
       </physvol>
 
       <!-- this part of the downstream beampipe -->
