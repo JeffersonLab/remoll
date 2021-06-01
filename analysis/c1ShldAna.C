@@ -126,9 +126,8 @@ long processOne(string fnm){
   vector<int> procID;
   int sector(-1);
 
-  auto cmp = [](auto lhs, auto rhs) { return lhs.tID < rhs.tID; };
+  //auto cmp = [](auto lhs, auto rhs) { return lhs.tID < rhs.tID; };
   std::vector<hitx> hits5614;
-  hits5614.clear();
   hitx bHit;
   for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
     currentEvNr++;
@@ -137,6 +136,7 @@ long processOne(string fnm){
       currentProc+=procStep;
     }
    
+    hits5614.clear();
 
     for(int j=0;j<hit->size();j++){
 
@@ -225,6 +225,7 @@ long processOne(string fnm){
     for(int j=0;j<hit->size();j++){
       if(std::isnan(rate) || std::isinf(rate)) continue;
       rate=1; //this is for beam simulations only (right now)
+      if ( hit->at(j).det != 28) continue;
 
       double kinE = hit->at(j).k;
       double rdDmg[2] = {rate,rate*kinE};
@@ -234,21 +235,19 @@ long processOne(string fnm){
       int det = hit->at(j).det;
       double pz = hit->at(j).pz;
         
-      if ( hit->at(j).det == 28){
-	for (auto &k : hits5614){
+      for (auto &k : hits5614){
               
-	  double _kinE = k.energy;
-	  double _rr = sqrt(k.posx*k.posx + k.posy*k.posy);
-	  double _rdDmg[2] = {rate,rate*_kinE};
-      double _xx =k.posx;
-	  double _yy =k.posy;
-	  int _det = k.dID;
-	  double _pz = k.pZ;
-              
-	  if (hit->at(j).trid  == k.tID ){
-	    xDet.fillHisto_detX(_det, _rdDmg, _pz, _xx, _yy,_kinE, _rr);
-	    if(hit->at(j).pid == 11)   xDet.fillHisto_detX(det, rdDmg, pz, xx, yy,kinE, rr);
-	  }
+	double _kinE = k.energy;
+	double _rr = sqrt(k.posx*k.posx + k.posy*k.posy);
+	double _rdDmg[2] = {rate,rate*_kinE};
+	double _xx =k.posx;
+	double _yy =k.posy;
+	int _det = k.dID;
+	double _pz = k.pZ;
+	
+	if (hit->at(j).trid  == k.tID ){
+	  xDet.fillHisto_detX(_det, _rdDmg, _pz, _xx, _yy,_kinE, _rr);
+	  if(hit->at(j).pid == 11)   xDet.fillHisto_detX(det, rdDmg, pz, xx, yy,kinE, rr);
 	}
 
       }
@@ -262,7 +261,7 @@ long processOne(string fnm){
 
 
 void initHisto(){
-  string foutNm = Form("%s_c1CollAnaV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_c1CollAnaV1.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -272,6 +271,7 @@ void initHisto(){
   // 				  const float vzRgMin , const float vzRgMax,
   // 				  const string postfix = "", const float range=2000, const int subDet=0)
   beamLine.initHisto(fout,5620,"After C4PbWall"    ,-2500,2500,-2500,2500,-5600,6000,"",2500);
+  beamLine.initHisto(fout,5619,"Before C4PbWall"   ,-2500,2500,-2500,2500,-5600,6000,"",2500);
   beamLine.initHisto(fout,5543,"After Tgt bunker"  ,-2500,2500,-2500,2500,-5600,6000,"",2500);
 
   beamLine.initHisto(fout,5600,"c1 In  Beam Right" ,-2500,2500,-2500,2500,-5600,6000,"",2500);
@@ -299,6 +299,7 @@ void writeOutput(){
 
   beamLine.writeOutput(fout,5543,scaleFactor);
   beamLine.writeOutput(fout,5620,scaleFactor);
+  beamLine.writeOutput(fout,5619,scaleFactor);
   beamLine.writeOutput(fout,5600,scaleFactor);
   beamLine.writeOutput(fout,5601,scaleFactor);
   beamLine.writeOutput(fout,5603,scaleFactor);
