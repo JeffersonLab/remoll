@@ -6,23 +6,25 @@ def main():
 
     email = "ciprian@jlab.org"
 
-    config = "moller_TgtConf5_Coll1v1"
+    config = "moller_shieldConf7"
 
     sourceDir = "/work/halla/moller12gev/ciprian/moller/remoll"
     outDir = "/volatile/halla/moller12gev/ciprian/"+config
 
-    activeDetectors = [28, 101, 5530, 5555, 5556, 5540, 5541, 5542, 5543, 5510, 5600, 5610, 5601, 5611, 5603, 5613, 5604, 5614, 5620]
+    activeDetectors = [28, 99, 101, ## MD, roof, wall
+                       5530, 5555, 5556, 5540, 5541, 5542, 5543, 5510, ##tgt
+                       5600, 5610, 5601, 5611, 5603, 5613, 5604, 5614, 5619, 5620] ##coll1
 
     if not os.path.exists(outDir):
        os.makedirs(outDir)
-    nrEv   = 100000 #900000
+    nrEv   = 100000 #100000
     nrStart= 0
     nrStop = 1000 #(nrStop -nrStart) total jobs
     submit  = 1
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
-    jobName=config + '_%02dkEv'%(nrEv/1000)
+    jobName=config + '_%03dkEv'%(nrEv/1000)
 
     ###tar exec+geometry
     make_tarfile(sourceDir)
@@ -30,7 +32,7 @@ def main():
     for jobNr in range(nrStart,nrStop): # repeat for jobNr jobs
         print("Starting job setup for jobID: " + str(jobNr))
 
-        jobFullName = jobName + '_%03d'%jobNr
+        jobFullName = jobName + '_%04d'%jobNr
         outDirFull=outDir+"/"+jobFullName
         createMacFile(sourceDir, outDirFull,nrEv,jobNr,activeDetectors)
 
@@ -58,10 +60,8 @@ def createMacFile(srcDir, outDirFull,nrEv,jobNr, detectorList):
     f.write("/remoll/parallel/setfile geometry/mollerParallel.gdml\n")
     #f.write("/run/numberOfThreads 16\n")
     f.write("/run/initialize\n")
-    f.write("/remoll/addfield "+srcDir+"/map_directory/hybridJLAB.txt\n")
-    f.write("/remoll/addfield "+srcDir+"/map_directory/upstreamJLAB_1.25.txt\n")
-    # f.write("/remoll/addfield "+srcDir+"/map_directory/V2U.1a.50cm.txt\n")
-    # f.write("/remoll/addfield "+srcDir+"/map_directory/V2DSg.9.75cm.txt\n")
+    f.write("/remoll/addfield "+srcDir+"/map_directory/V2U.1a.50cm.txt\n")
+    f.write("/remoll/addfield "+srcDir+"/map_directory/V2DSg.9.75cm.txt\n")
     f.write("/remoll/evgen/set beam\n")
     f.write("/remoll/evgen/beam/origin 0 0 -7.5 m\n")
     f.write("/remoll/evgen/beam/rasx 5 mm\n")
@@ -127,8 +127,15 @@ def make_tarfile(sourceDir):
     tar.add(sourceDir+"/geometry/hall/hallDaughter_dump.gdml" ,arcname="geometry/hall/hallDaughter_dump.gdml")
     tar.add(sourceDir+"/geometry/hall/subDumpDiffuser.gdml" ,arcname="geometry/hall/subDumpDiffuser.gdml")
     tar.add(sourceDir+"/geometry/upstream/upstreamDaughter_merged.gdml" ,arcname="geometry/upstream/upstreamDaughter_merged.gdml")
+    tar.add(sourceDir+"/geometry/upstream/upstream_nose_shield_beampipe.gdml" ,arcname="geometry/upstream/upstream_nose_shield_beampipe.gdml")
+    tar.add(sourceDir+"/geometry/upstream/inner_upstream_nose_shield_beampipe.gdml" ,arcname="geometry/upstream/inner_upstream_nose_shield_beampipe.gdml")
     tar.add(sourceDir+"/geometry/upstream/upstream.gdml" ,arcname="geometry/upstream/upstream.gdml")
     tar.add(sourceDir+"/geometry/upstream/upstreamToroid.gdml" ,arcname="geometry/upstream/upstreamToroid.gdml")
+    tar.add(sourceDir+"/geometry/upstream/upstreamTorusRegion.gdml" ,arcname="geometry/upstream/upstreamTorusRegion.gdml")
+    tar.add(sourceDir+"/geometry/upstream/inner_upstream_nose_shield_beampipe.gdml" ,arcname="geometry/upstream/inner_upstream_nose_shield_beampipe.gdml")
+    tar.add(sourceDir+"/geometry/upstream/upstream_nose_shield_beampipe.gdml" ,arcname="geometry/upstream/upstream_nose_shield_beampipe.gdml")
+    tar.add(sourceDir+"/geometry/upstream/upstream_Conf6.gdml" ,arcname="geometry/upstream/upstream_Conf6.gdml")
+    tar.add(sourceDir+"/geometry/upstream/upstream_Conf7.gdml" ,arcname="geometry/upstream/upstream_Conf7.gdml")
     tar.add(sourceDir+"/geometry/upstream/upstreamBeampipe.gdml" ,arcname="geometry/upstream/upstreamBeampipe.gdml")
     tar.add(sourceDir+"/geometry/hybrid/hybridToroid.gdml" ,arcname="geometry/hybrid/hybridToroid.gdml")
     tar.add(sourceDir+"/geometry/hybrid/hybridDaughter_merged.gdml" ,arcname="geometry/hybrid/hybridDaughter_merged.gdml")
