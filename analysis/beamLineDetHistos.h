@@ -21,7 +21,8 @@ class beamLineDetHistos {
   std::vector<TH2F*> xy[nSpecies][nDmg][nFB];
   std::vector<TH2F*> vxz[nSpecies][nDmg][nFB];
   std::vector<TH2F*> vyz[nSpecies][nDmg][nFB];
-    
+  std::vector<TH2F*> vrz[nSpecies][nDmg][nFB];
+
   std::vector<TH2F*> dXY[nDmg-1][nFB];
   std::vector<TH2F*> XY[nDmg][nFB];
 
@@ -97,6 +98,7 @@ void beamLineDetHistos::fillHisto(const int detID, const int sp, const double rd
 
   int det = ID2entry[detID+10000*subDet];
   double rr = sqrt(xx*xx+yy*yy);
+  double vr = sqrt(pow(vx,2)+pow(vy,2));
 
   if( (histos & 1) == 1){
     energy[sp][0][det]->Fill(kinE);
@@ -132,7 +134,14 @@ void beamLineDetHistos::fillHisto(const int detID, const int sp, const double rd
 	vyz[sp][kk][2][det]->Fill(vz,vy,rdDmg[kk]);
       else
 	vyz[sp][kk][1][det]->Fill(vz,vy,rdDmg[kk]);
-      
+   
+      if (detID == 5619 || detID == 5620) {
+	vrz[sp][kk][0][det]->Fill(vz,vr,rdDmg[kk]);
+	if(pz<0)
+	  vrz[sp][kk][2][det]->Fill(vz,vr,rdDmg[kk]);
+	else
+	  vrz[sp][kk][1][det]->Fill(vz,vr,rdDmg[kk]);
+      }
     }
   }
 }
@@ -144,6 +153,9 @@ void beamLineDetHistos::fillHisto(const int detID, const int sp, const double rd
     return;
 
   int det = ID2entry[detID+10000*subDet];
+    
+  double vr = sqrt(pow(vx,2)+pow(vy,2));
+
   if( (histos & 1) == 1){
     energy[sp][0][det]->Fill(kinE);
     if(pz<0)
@@ -180,6 +192,14 @@ void beamLineDetHistos::fillHisto(const int detID, const int sp, const double rd
 	vyz[sp][kk][2][det]->Fill(vz,vy,rdDmg[kk]);
       else
 	vyz[sp][kk][1][det]->Fill(vz,vy,rdDmg[kk]);
+        
+      if (detID == 5619 || detID == 5620) {
+	vrz[sp][kk][0][det]->Fill(vz,vr,rdDmg[kk]);
+	if(pz<0)
+	  vrz[sp][kk][2][det]->Fill(vz,vr,rdDmg[kk]);
+	else
+	  vrz[sp][kk][1][det]->Fill(vz,vr,rdDmg[kk]);
+      }
       
     }
       
@@ -268,6 +288,11 @@ void beamLineDetHistos::initHisto(TFile *fout, const int detID, const string det
 					  Form("%s for %s %s;vz[mm];vy[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
 					  1000, vzRgMin, vzRgMax,
 					  1000, vyRgMin, vyRgMax));
+        
+	  if (detID == 5619 || detID == 5620)     vrz[i][j][k].push_back(new TH2F(Form("d%d_%s_vrz_%s_%s_Dmg%d",detID, postfix.c_str(), spH[i].c_str(),fbH[k].c_str(),j),
+										  Form("%s for %s %s;vz[mm];vr[mm]",dmgTit[j].c_str(),fbH[k].c_str(),spTit[i].c_str()),
+										  1000, vzRgMin, vzRgMax,
+										  1000, 0, 5000));
 	
 	}
       }
@@ -364,6 +389,10 @@ void beamLineDetHistos::writeOutput(TFile *fout, int detID, double scaleFactor,c
 	  vxz[i][j][k][det]->Write();
 	  vyz[i][j][k][det]->Scale(scaleFactor);
 	  vyz[i][j][k][det]->Write();
+	  if (detID == 5619 || detID == 5620) {
+	    vrz[i][j][k][det]->Scale(scaleFactor);
+	    vrz[i][j][k][det]->Write();
+	}
 	}
       }
     }
