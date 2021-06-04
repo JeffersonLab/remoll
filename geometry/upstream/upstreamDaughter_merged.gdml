@@ -964,12 +964,12 @@
         <volumeref ref="Col2_accep3"/>
         <positionref ref="posCOLL2_Cu"/>
       </physvol>
-
+<!--
       <physvol name="USsieve">
         <file name= "upstream/sieve.gdml"/>
         <positionref ref="sieveActualCenter_pos"/>
       </physvol>
-
+-->
       <physvol name="UScoil">
         <file name= "upstream/upstreamToroid.gdml"/>
       </physvol>
