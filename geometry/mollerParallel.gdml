@@ -162,7 +162,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
 
-    <!-- Tracking planes -->
+    <!-- Tracking planes 
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
       <volumeref ref="trackingDetectorVirtualPlane_log"/>
       <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
@@ -179,21 +179,23 @@
       <volumeref ref="trackingDetectorVirtualPlane_log"/>
       <positionref ref="trackingDetectorVirtualPlaneBack2_pos"/>
     </physvol>
+    -->
     
     <!-- Main detector plane -->
     <physvol name="mainDetectorVirtualPlane_phys">
       <volumeref ref="mainDetectorVirtualPlane_log"/>
       <positionref ref="mainDetectorVirtualPlane_pos"/>
+      <rotationref ref="mainDetectorVirtualPlane_rot"/>
     </physvol>
 
-    <!-- Pion detector plane -->
+    <!-- Pion detector plane 
     <physvol name="pionDetectorVirtualPlane_phys">
       <volumeref ref="pionDetectorVirtualPlane_log"/>
       <positionref ref="pionDetectorVirtualPlane_pos"/>
     </physvol>
+   -->
 
-
-  <!-- SAM detector planes -->
+  <!-- SAM detector planes 
 
     <physvol name="SAMus_neckdown_VirtualPlane_phys">
       <volumeref ref="SAMus_neckdown_VirtualPlane_log"/>
@@ -215,9 +217,9 @@
       <positionref ref="SAMds_flange_VirtualPlane_pos"/>
     </physvol>
 
+    -->
 
-
-    <!-- Beamline detector planes -->
+    <!-- Beamline detector planes 
     <physvol name="collar1VirtualPlane_phys">
       <volumeref ref="collar1VirtualPlane_log"/>
       <positionref ref="collar1VirtualPlane_pos"/>
@@ -258,7 +260,7 @@
       <volumeref ref="sieveVirtualPlane_log"/>
       <positionref ref="sieveVirtualPlane_pos"/>
     </physvol>
-
+    -->
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 </structure>
