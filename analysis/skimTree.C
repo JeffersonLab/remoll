@@ -49,7 +49,7 @@ void skimTree(string finNm, int testRun=0){
   otree->Write();
   ofile->Close();
 
-  cout<<"\nFinished processing a total of "<<nTotHits<<endl;
+  cout<<"\nFinished processing a total of "<<nTotHits<<" hits."<<endl;
 }
 
 long processOne(string fnm){
