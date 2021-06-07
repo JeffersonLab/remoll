@@ -38,7 +38,7 @@
     <second ref="TargetAlHole_solid"/>
   </subtraction>
 
-  <box name="TargetCFoil_solid" x="25*mm" y="25*mm" z="1*mm"/>
+  <box name="TargetCFoil_solid" x="25*mm" y="25*mm" z="2*mm"/>
 
 </solids>
 
@@ -183,13 +183,15 @@
   <volume name="TargetPositionOptics1_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="TargetPosition_solid"/>
+    <!--
     <physvol>
       <volumeref ref="TargetCFoilUS_logical"/>
       <position z="-30*cm"/>
     </physvol>
+    -->
     <physvol>
       <volumeref ref="TargetCFoilDS_logical"/>
-      <position z="+60*cm"/>
+      <position z="0*cm"/>
     </physvol>
     <auxiliary auxtype="TargetSystem" auxvalue="Optics1"/>
   </volume>
