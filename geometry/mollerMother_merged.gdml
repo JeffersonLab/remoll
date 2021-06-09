@@ -20,7 +20,12 @@
     <box lunit="mm" name="hybridIronSupport_solid"
 	 x="4261"
 	 y="50"
-	 z="15000"/>
+	 z="15000-1000"/>
+
+    <box lunit="mm" name="hybridConcrete_solid"
+         x="2700"
+         y="2000-300-15"
+         z="500"/>
 
   </solids>
 
@@ -33,6 +38,12 @@
       <auxiliary auxtype="Alpha" auxvalue="0.8"/>
     </volume>
 
+    <volume name="hybridConcreteShielding">
+      <materialref ref="G4_CONCRETE"/>
+      <solidref ref="hybridConcrete_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
 
     <volume name="logicMother">
       <materialref ref="G4_AIR"/>
@@ -79,9 +90,14 @@
 
       <physvol name="hybridIronSupport">
         <volumeref ref="hybridIronSupport_logic"/>
-        <position name="hybridIronSupport_pos" unit="mm" x="0" y="-1700" z="12000"/>
+        <position name="hybridIronSupport_pos" unit="mm" x="0" y="-1700" z="12000-1000/2"/>
       </physvol>
 
+      <physvol>
+        <volumeref ref="hybridConcreteShielding"/>
+        <position name="hybridConcreteShielding_pos" unit="mm" x="0" y="-2142.5" z="18750"/>
+      </physvol>
+      
       <!-- Downstream beampipe -->    
       <physvol>
 	<file name="beampipe/premoller/beampipeRaster.gdml"/>

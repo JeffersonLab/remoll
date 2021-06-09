@@ -95,7 +95,7 @@
   <box lunit="mm" name="hybridIronVirtualPlane_solid"
 	 x="4261"
 	 y="1"
-	 z="15000"/>
+	 z="15000-1000"/>
 
 </solids>
 
@@ -596,7 +596,7 @@
 
     <physvol    name="hybridIronVirtualPlane_phys">
       <volumeref ref="hybridIronVirtualPlane_log"/>
-      <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000"/>
+      <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000-1000/2"/>
     </physvol>
 
     <!-- Tracking planes -->
