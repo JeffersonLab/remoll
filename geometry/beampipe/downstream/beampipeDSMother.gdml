@@ -109,6 +109,11 @@
       <zplane rmin="190.5" rmax="584.2" z="26446.26+53.74"/>
     </polycone>
 
+    <tube name = "airWindow_solid" 
+	  rmin="0" rmax="450" 
+	  z="20"  lunit= "mm"
+	  deltaphi="360" startphi="0" aunit="deg"/>
+
 
   </solids>
 
@@ -274,6 +279,11 @@
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
     
+    <volume name="airWindow_logic">
+      <materialref ref="G4_Al"/>
+      <solidref ref="airWindow_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Gray"/>
+    </volume>
 
     <volume name="DSbeampipeMother">
       <materialref ref="G4_Galactic"/>
@@ -469,6 +479,11 @@
 
       <physvol name="neckdown_flange">
 	<volumeref ref="logic_neckdown_flange"/>
+      </physvol>
+
+      <physvol name="airWindow">
+	<volumeref ref="airWindow_logic"/>
+        <position name="airWindow_pos" z="18600"/>
       </physvol>
 
 
