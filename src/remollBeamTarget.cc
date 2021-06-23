@@ -39,6 +39,7 @@ std::vector<std::vector<std::pair<G4VPhysicalVolume*,G4String>>> remollBeamTarge
 G4double remollBeamTarget::fActiveTargetEffectiveLength  = -1e9;
 G4double remollBeamTarget::fMotherTargetAbsolutePosition = -1e9;
 G4double remollBeamTarget::fTotalTargetEffectiveLength = 0.0;
+G4bool remollBeamTarget::fUpdateNeeded = true;
 
 remollBeamTarget::remollBeamTarget()
 : fBeamEnergy(gDefaultBeamE),fBeamCurrent(gDefaultBeamCur),fBeamPolarization(gDefaultBeamPol),
@@ -78,6 +79,11 @@ remollBeamTarget::remollBeamTarget()
     fMessengerTarget->DeclareMethod("mother",&remollBeamTarget::SetActiveTargetMother,"Set target mother name").SetStates(G4State_Idle);
     fMessengerTarget->DeclareMethod("volume",&remollBeamTarget::SetActiveTargetVolume,"Set target volume name").SetStates(G4State_Idle);
     fMessengerTarget->DeclareMethod("print",&remollBeamTarget::PrintTargetInfo).SetStates(G4State_Idle);
+
+    SetActiveTargetMother(fActiveTargetMotherName);
+    SetActiveTargetVolume(fActiveTargetVolumeName);
+
+    fUpdateNeeded = true;
 }
 
 remollBeamTarget::~remollBeamTarget()
@@ -97,6 +103,8 @@ G4double remollBeamTarget::GetEffLumin(SamplingType_t sampling_type)
 
 void remollBeamTarget::PrintTargetInfo()
 {
+    if (fUpdateNeeded) UpdateInfo();
+
     for (auto mother  = fTargetMothers.begin();
               mother != fTargetMothers.end();
               mother++) {
@@ -117,9 +125,6 @@ void remollBeamTarget::PrintTargetInfo()
 
         }
     }
-
-    SetActiveTargetMother(fActiveTargetMotherName);
-    SetActiveTargetVolume(fActiveTargetVolumeName);
 
     G4cout << "Current active target: " << G4endl;
     G4cout << "Target mother = " << fActiveTargetMotherName << G4endl;
@@ -195,9 +200,8 @@ void remollBeamTarget::SetActiveTargetMother(G4String name)
 
   }
 
-  lock.unlock();
+  fUpdateNeeded = true;
 
-  UpdateInfo();
 }
 
 void remollBeamTarget::SetActiveTargetVolume(G4String name)
@@ -215,9 +219,8 @@ void remollBeamTarget::SetActiveTargetVolume(G4String name)
 
   }
 
-  lock.unlock();
+  fUpdateNeeded = true;
 
-  UpdateInfo();
 }
 
 
@@ -255,6 +258,9 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 
     // Sample where along target weighted by density (which roughly corresponds to A
     // or the number of electrons, which is probably good enough for this
+
+    // Update if needed
+    if (fUpdateNeeded) UpdateInfo();
 
     // Figure out how far along the target we got
     G4double total_effective_length = 0;
