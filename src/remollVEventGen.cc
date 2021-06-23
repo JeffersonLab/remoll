@@ -125,7 +125,7 @@ void remollVEventGen::PolishEvent(remollEvent *ev) {
         exit(1);
     }
 
-    G4ThreeVector rotax      = (fBeamTarg->fDir.cross(G4ThreeVector(0.0, 0.0, 1.0))).unit();
+    G4ThreeVector rotax      = (-1)*(fBeamTarg->fDir.cross(G4ThreeVector(0.0, 0.0, 1.0))).unit();
     G4RotationMatrix msrot;
     msrot.rotate(fBeamTarg->fDir.theta(), rotax);
 
