@@ -21,7 +21,23 @@
     <!-- coll at the center of hybrid toriod -->
     <position name="posCOLL5" unit="mm" x="0" y="0" z="12835-DOFFSET"/>
     <constant name="COLL5_THICK" value ="70.0"/>
-    
+
+    <!-- main collimator number 4, adjust this -->
+    <constant name="col4shift" value ="1500"/>
+    <constant name="posPCOLL2_z" value ="9825-DOFFSET-col4shift-50.0/2"/> <!--subtracting 50/2 from z to compensate for increased thickness so that downstream end still ends at the same point as before-->
+    <position name="posPCOLL2" unit="mm" x="0" y="0" z="posPCOLL2_z"/>
+    <constant name="PCOLL2_R1_U" value ="30.861"/> <!-- Was 38.0" for no good reason, then 30 -->
+    <constant name="PCOLL2_R1_D" value ="30.861"/> <!-- 8.0"/> -->
+    <!-- coll sep, inner rad, adjust this -->
+    <constant name="PCOLL2_R2_U" value ="53.5"/>  <!-- was 64, then was 52.5 for US col 4 but still bad envelope, then settled on 50 but now improved -->
+    <constant name="PCOLL2_R2_D" value ="53.5"/>
+    <!-- coll sep, outer rad, adjust this -->
+    <constant name="PCOLL2_R3_U" value ="196.5"/> <!-- was 221, then was 165.5 for US col 4 but still bad envelope, then settled on 171.4 but now improved -->
+    <constant name="PCOLL2_R3_D" value ="196.5"/>
+    <constant name="PCOLL2_R4_U" value ="250"/>
+    <constant name="PCOLL2_R4_D" value ="250"/>
+    <constant name="PCOLL2_THICK" value ="150.0"/> <!--100.0 increased the thickness by 50% to prevent punch through-->
+
     <!--
 	Shielding collimators dimensions
     -->
@@ -52,7 +68,47 @@
     <constant name="boxDSMother_height" value="2700"/>
     <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73"/> 
 
-    <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="9825-DOFFSET-1500-50.0/2  + 150.0/2+1425"/> <!--it was z="posPCOLL2_z  + PCOLL2_THICK/2+1425, the corresponding values were added in their places since the collimator4 was moved the upstream.gdml.-->
+    <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL2_z  + PCOLL2_THICK/2+1425"/>
+
+    <!-- New shifted target and shrunk experiment mode collimator 4 sculpt -->
+    <constant name="PCOLL2_SCULPT_P1_X" value ="53.3"/>
+    <constant name="PCOLL2_SCULPT_P1_Y" value ="10.3"/>
+    <constant name="PCOLL2_SCULPT_P2_X" value ="88.60"/>
+    <constant name="PCOLL2_SCULPT_P2_Y" value ="17.68"/>
+    <constant name="PCOLL2_SCULPT_P3_X" value ="123.25"/>
+    <constant name="PCOLL2_SCULPT_P3_Y" value ="28.48"/>
+    <constant name="PCOLL2_SCULPT_P4_X" value ="187.22"/>
+    <constant name="PCOLL2_SCULPT_P4_Y" value ="45.04"/>
+
+
+    <position name="PCOLL2_lcut1" unit="mm" x="PCOLL2_SCULPT_P1_X" y="-PCOLL2_SCULPT_P1_Y" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_lcut2" unit="mm" x="PCOLL2_SCULPT_P2_X" y="-PCOLL2_SCULPT_P2_Y" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_lcut3" unit="mm" x="PCOLL2_SCULPT_P3_X" y="-PCOLL2_SCULPT_P3_Y" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_lcut4" unit="mm" x="PCOLL2_SCULPT_P4_X" y="-PCOLL2_SCULPT_P4_Y" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_lcut5" unit="mm" x="PCOLL2_SCULPT_P4_X" y="-70" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_lcut6" unit="mm" x="20.0" y="-70.0" z="-PCOLL2_THICK/2-5"/> 
+
+    <position name="PCOLL2_lcut7" unit="mm" x="PCOLL2_SCULPT_P1_X" y="-PCOLL2_SCULPT_P1_Y" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_lcut8" unit="mm" x="PCOLL2_SCULPT_P2_X" y="-PCOLL2_SCULPT_P2_Y" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_lcut9" unit="mm" x="PCOLL2_SCULPT_P3_X" y="-PCOLL2_SCULPT_P3_Y" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_lcut10" unit="mm" x="PCOLL2_SCULPT_P4_X" y="-PCOLL2_SCULPT_P4_Y" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_lcut11" unit="mm" x="PCOLL2_SCULPT_P4_X" y="-70" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_lcut12" unit="mm" x="20.0" y="-70.0" z="PCOLL2_THICK/2+5"/> 
+
+
+    <position name="PCOLL2_rcut1" unit="mm" x="PCOLL2_SCULPT_P1_X" y="PCOLL2_SCULPT_P1_Y" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_rcut2" unit="mm" x="PCOLL2_SCULPT_P2_X" y="PCOLL2_SCULPT_P2_Y" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_rcut3" unit="mm" x="PCOLL2_SCULPT_P3_X" y="PCOLL2_SCULPT_P3_Y" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_rcut4" unit="mm" x="PCOLL2_SCULPT_P4_X" y="PCOLL2_SCULPT_P4_Y" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_rcut5" unit="mm" x="PCOLL2_SCULPT_P4_X" y="70" z="-PCOLL2_THICK/2-5"/> 
+    <position name="PCOLL2_rcut6" unit="mm" x="20.0" y="70" z="-PCOLL2_THICK/2-5"/> 
+
+    <position name="PCOLL2_rcut7" unit="mm" x="PCOLL2_SCULPT_P1_X" y="PCOLL2_SCULPT_P1_Y" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_rcut8" unit="mm" x="PCOLL2_SCULPT_P2_X" y="PCOLL2_SCULPT_P2_Y" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_rcut9" unit="mm" x="PCOLL2_SCULPT_P3_X" y="PCOLL2_SCULPT_P3_Y" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_rcut10" unit="mm" x="PCOLL2_SCULPT_P4_X" y="PCOLL2_SCULPT_P4_Y" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_rcut11" unit="mm" x="PCOLL2_SCULPT_P4_X" y="70" z="PCOLL2_THICK/2+5"/> 
+    <position name="PCOLL2_rcut12" unit="mm" x="20" y="70" z="PCOLL2_THICK/2+5"/> 
     
     <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435"/>
 
@@ -89,6 +145,53 @@
       <zplane rmin="32.5" rmax="38.5" z="0"/> 
       <zplane rmin="32.6715" rmax="38.6715" z="51.45"/> 
     </polycone>
+
+    <tessellated name="leftpcolcut">
+      <triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut3" vertex4="PCOLL2_lcut5" type="ABSOLUTE"/>
+      <triangular vertex1="PCOLL2_lcut3" vertex2="PCOLL2_lcut4" vertex3="PCOLL2_lcut5" type="ABSOLUTE"/>
+
+      <quadrangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut6" vertex3="PCOLL2_lcut12" vertex4="PCOLL2_lcut7" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut5" vertex3="PCOLL2_lcut11" vertex4="PCOLL2_lcut12" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_lcut4" vertex2="PCOLL2_lcut10" vertex3="PCOLL2_lcut11" vertex4="PCOLL2_lcut5" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_lcut3" vertex2="PCOLL2_lcut9" vertex3="PCOLL2_lcut10" vertex4="PCOLL2_lcut4" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_lcut2" vertex2="PCOLL2_lcut8" vertex3="PCOLL2_lcut9" vertex4="PCOLL2_lcut3" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut7" vertex3="PCOLL2_lcut8" vertex4="PCOLL2_lcut2" type="ABSOLUTE"/>
+
+      <triangular vertex1="PCOLL2_lcut7" vertex2="PCOLL2_lcut12" vertex3="PCOLL2_lcut8" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_lcut8" vertex2="PCOLL2_lcut12" vertex3="PCOLL2_lcut11" vertex4="PCOLL2_lcut9" type="ABSOLUTE"/>
+      <triangular vertex1="PCOLL2_lcut9" vertex2="PCOLL2_lcut11" vertex3="PCOLL2_lcut10" type="ABSOLUTE"/>
+    </tessellated>
+
+    <tessellated name="rightpcolcut">
+      <triangular vertex1="PCOLL2_rcut1" vertex2="PCOLL2_rcut6" vertex3="PCOLL2_rcut2" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_rcut6" vertex2="PCOLL2_rcut5" vertex3="PCOLL2_rcut3" vertex4="PCOLL2_rcut2" type="ABSOLUTE"/>
+      <triangular vertex1="PCOLL2_rcut3" vertex2="PCOLL2_rcut5" vertex3="PCOLL2_rcut4" type="ABSOLUTE"/>
+
+      <quadrangular vertex1="PCOLL2_rcut1" vertex2="PCOLL2_rcut7" vertex3="PCOLL2_rcut12" vertex4="PCOLL2_rcut6" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_rcut6" vertex2="PCOLL2_rcut12" vertex3="PCOLL2_rcut11" vertex4="PCOLL2_rcut5" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_rcut4" vertex2="PCOLL2_rcut5" vertex3="PCOLL2_rcut11" vertex4="PCOLL2_rcut10" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_rcut3" vertex2="PCOLL2_rcut4" vertex3="PCOLL2_rcut10" vertex4="PCOLL2_rcut9" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_rcut2" vertex2="PCOLL2_rcut3" vertex3="PCOLL2_rcut9" vertex4="PCOLL2_rcut8" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_rcut1" vertex2="PCOLL2_rcut2" vertex3="PCOLL2_rcut8" vertex4="PCOLL2_rcut7" type="ABSOLUTE"/>
+
+      <triangular vertex1="PCOLL2_rcut8" vertex2="PCOLL2_rcut12" vertex3="PCOLL2_rcut7" type="ABSOLUTE"/>
+      <quadrangular vertex1="PCOLL2_rcut8" vertex2="PCOLL2_rcut9" vertex3="PCOLL2_rcut11" vertex4="PCOLL2_rcut12" type="ABSOLUTE"/>
+      <triangular vertex1="PCOLL2_rcut10" vertex2="PCOLL2_rcut11" vertex3="PCOLL2_rcut9" type="ABSOLUTE"/>
+    </tessellated>
+
+    <cone aunit="deg" deltaphi="SEPTANT/2" lunit="mm" name="pcons_1" 
+	  rmax1="PCOLL2_R3_U-DELTAT*((PCOLL2_R3_D-PCOLL2_R3_U)/PCOLL2_THICK)" 
+	  rmax2="PCOLL2_R3_D+DELTAT*((PCOLL2_R3_D-PCOLL2_R3_U)/PCOLL2_THICK)" 
+	  rmin1="PCOLL2_R2_U-DELTAT*((PCOLL2_R2_D-PCOLL2_R2_U)/PCOLL2_THICK)" 
+	  rmin2="PCOLL2_R2_D+DELTAT*((PCOLL2_R2_D-PCOLL2_R2_U)/PCOLL2_THICK)" 
+	  startphi="-SEPTANT/4" z="PCOLL2_THICK+DELTAT*2"/>
+
+    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" 
+	  rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" 
+	  rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" 
+	  startphi="0" z="PCOLL2_THICK"/>
+
 
     <!--concrete shield -->
     <box lunit="mm" name="boxDSConcreteShield1_solid_1" x="DSConcreteShield1_height" y="DSConcreteShield1_height" z="DSConcreteShield1_length"/>
@@ -240,7 +343,25 @@
       <zplane rmin="506.1201" rmax="510.8826" z="36"/>
     </polycone>
 
+    <!--DS Hybrid shielding concrete-->
+    <box lunit="mm" name="hybridConcrete" x="boxDSMother_width" y="boxDSMother_height" z="150"/>
+    <box lunit="mm" name="hybridConcrete2" x="4000" y="5000" z="150"/>
+    <box lunit="mm" name="hybridConcrete3" x="boxDSMother_width" y="boxDSMother_height" z="150+1"/>
 
+    <cone name="Collar2_tube" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1200+1" rmin2="0" rmax2="1200+1" z="150+1"/>
+
+    <subtraction name="hybridConcreteShielding1_sub">
+      <first ref = "hybridConcrete"/>
+      <second ref = "Collar2_tube"/>
+      <position name ="hybridConcreteSub1" lunit="mm" x="0" y="0" z="0" />
+    </subtraction>
+ 
+    <subtraction name="hybridConcreteShielding2_sub">
+      <first ref = "hybridConcrete2"/>
+      <second ref = "hybridConcrete3"/>
+      <position name ="hybridConcreteSub2" lunit="mm" x="0" y="965/2" z="0" />
+    </subtraction>
+ 
   </solids>
 
   <structure>
@@ -249,16 +370,8 @@
       <solidref ref="solDSTracker"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="DetNo" auxvalue="92"/>
-    </volume>   
-
-    <volume name="boxDSConcreteShield1_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="boxDSConcreteShield1_solid"/>
-      <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6021"/>
     </volume>
-  
+
     <volume name="logicCollar1">
       <materialref ref="G4_Pb"/>
       <solidref ref="solidCollar1"/>
@@ -364,6 +477,20 @@
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
+    <volume name="hybridConcreteShielding1_log">
+      <materialref ref="Concrete"/>
+      <solidref ref="hybridConcreteShielding1_sub"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+    
+    <volume name="hybridConcreteShielding2_log">
+      <materialref ref="Concrete"/>
+      <solidref ref="hybridConcreteShielding2_sub"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+    
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
       <!-- <solidref ref="tubeDownstream"/> -->
@@ -372,7 +499,7 @@
 
       <physvol name="Driftpipe">
         <volumeref ref="logicDriftpipe"/>
-	    <position name="Driftpipe_pos" x="0" y="0" z="boxDSMother_length/2-6595"/>
+	<position name="Driftpipe_pos" x="0" y="0" z="boxDSMother_length/2-6595"/>
       </physvol>
 
       <!--
@@ -394,46 +521,50 @@
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
 
+      <physvol name="hybridConcreteShielding1_phys">
+        <volumeref ref="hybridConcreteShielding1_log"/>
+        <position name="hybridConcreteShielding1_pos" unit="mm" x="0" y="0" z="23950-25-DOFFSET"/>
+      </physvol>
+      
+      <physvol name="hybridConcreteShielding2_phys">
+        <volumeref ref="hybridConcreteShielding2_log"/>
+        <position name="hybridConcreteShielding2_pos" unit="mm" x="0" y="-965/2" z="23950-25-DOFFSET"/>
+      </physvol>
+      
       <physvol name="lintel1">
-	    <volumeref ref="logicLintel1"/>
-	    <position name="lintel1pos" x="-542.0" y="6.63758565138e-14" z="12835-DOFFSET"/>
-	    <rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
+	<volumeref ref="logicLintel1"/>
+	<position name="lintel1pos" x="-542.0" y="6.63758565138e-14" z="12835-DOFFSET"/>
+	<rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
       </physvol>
-      
       <physvol name="lintel2">
-        <volumeref ref="logicLintel2"/>
-	    <position name="lintel2pos" x="-337.931472607" y="-423.752663498" z="12835-DOFFSET"/>
-	    <rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
+	<volumeref ref="logicLintel2"/>
+	<position name="lintel2pos" x="-337.931472607" y="-423.752663498" z="12835-DOFFSET"/>
+	<rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
       </physvol>
-      
       <physvol name="lintel3">
-	    <volumeref ref="logicLintel3"/>
-	    <position name="lintel3pos" x="120.606346204" y="-528.410928403" z="12835-DOFFSET"/>
-	    <rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
+	<volumeref ref="logicLintel3"/>
+	<position name="lintel3pos" x="120.606346204" y="-528.410928403" z="12835-DOFFSET"/>
+	<rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
       </physvol>
-      
       <physvol name="lintel4">
-	    <volumeref ref="logicLintel4"/>
-	    <position name="lintel4pos" x="488.325126403" y="-235.164986602" z="12835-DOFFSET"/>
-	    <rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
+	<volumeref ref="logicLintel4"/>
+	<position name="lintel4pos" x="488.325126403" y="-235.164986602" z="12835-DOFFSET"/>
+	<rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
       </physvol>
-      
       <physvol name="lintel5">
-	    <volumeref ref="logicLintel5"/>
-	    <position name="lintel5pos" x="488.325126403" y="235.164986602" z="12835-DOFFSET"/>
-	    <rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
+	<volumeref ref="logicLintel5"/>
+	<position name="lintel5pos" x="488.325126403" y="235.164986602" z="12835-DOFFSET"/>
+	<rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
       </physvol>
-      
       <physvol name="lintel6">
-	    <volumeref ref="logicLintel6"/>
-	    <position name="lintel6pos" x="120.606346204" y="528.410928403" z="12835-DOFFSET"/>
-	    <rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
+	<volumeref ref="logicLintel6"/>
+	<position name="lintel6pos" x="120.606346204" y="528.410928403" z="12835-DOFFSET"/>
+	<rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
       </physvol>
-      
       <physvol name="lintel7">
-	    <volumeref ref="logicLintel7"/>
-	    <position name="lintel7pos" x="-337.931472607" y="423.752663498" z="12835-DOFFSET"/>
-	    <rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
+	<volumeref ref="logicLintel7"/>
+	<position name="lintel7pos" x="-337.931472607" y="423.752663498" z="12835-DOFFSET"/>
+	<rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
       </physvol>
 
       <!-- Downstream of coll4 central collimating beampipe -->
@@ -447,47 +578,42 @@
         <position name="pos_hybridToroid" x="0" y="0" z="13335.194-DOFFSET"/>
       </physvol>
 
-      <!-- <physvol> -->
-      <!--   <volumeref ref="boxDSConcreteShield1_logic"/> -->
-      <!--   <positionref ref="boxDSConcreteShield1_center"/> -->
-      <!-- </physvol> -->
-
       <!-- this part of the downstream beampipe -->
       <physvol name="DSwindow">
-	    <volumeref ref="logicDSwindow"/>
-	    <position name="DSwindow_pos" x="0" y="0" z="boxDSMother_length/2-484.88"/>
+	<volumeref ref="logicDSwindow"/>
+	<position name="DSwindow_pos" x="0" y="0" z="boxDSMother_length/2-484.88"/>
       </physvol>
 
       <physvol name="DSwindow_flange">
-	    <volumeref ref="logic_DSwindow_flange"/>
-	    <position name="DSwindow_flange_pos" x="0" y="0" z="boxDSMother_length/2-217.0"/>
+	<volumeref ref="logic_DSwindow_flange"/>
+	<position name="DSwindow_flange_pos" x="0" y="0" z="boxDSMother_length/2-217.0"/>
       </physvol>
 
       <physvol name="DSpipe1">
-	    <volumeref ref="logic_DSpipe1"/>
-	    <position name="DSpipe1_pos" x="0" y="0" z="boxDSMother_length/2-490.0"/>
+	<volumeref ref="logic_DSpipe1"/>
+	<position name="DSpipe1_pos" x="0" y="0" z="boxDSMother_length/2-490.0"/>
       </physvol>
 
       <physvol name="DSpipe1_flange">
-	    <volumeref ref="logic_DSpipe1_flange"/>
-	    <position name="DSpipe1_flange" x="0" y="0" z="boxDSMother_length/2-261.0"/>
+	<volumeref ref="logic_DSpipe1_flange"/>
+	<position name="DSpipe1_flange" x="0" y="0" z="boxDSMother_length/2-261.0"/>
       </physvol>
 
       <physvol name="DSpipe1_bellow">
-	    <volumeref ref="logic_DSpipe1_bellow"/>
-	    <position name="DSpipe1_bellow" x="0" y="0" z="boxDSMother_length/2-236.0"/>
+	<volumeref ref="logic_DSpipe1_bellow"/>
+	<position name="DSpipe1_bellow" x="0" y="0" z="boxDSMother_length/2-236.0"/>
       </physvol>
 
       <physvol name="DSpipe2_USplate">
-	    <volumeref ref="logic_DSpipe2_USplate"/>
-	    <position name="DSpipe1_USplate" x="0" y="0" z="boxDSMother_length/2-56.0"/>
+	<volumeref ref="logic_DSpipe2_USplate"/>
+	<position name="DSpipe1_USplate" x="0" y="0" z="boxDSMother_length/2-56.0"/>
       </physvol>
 
       <physvol name="DSpipe2_DSpipe2_1">
-	    <volumeref ref="logic_DSpipe2_1"/>
-	    <position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="boxDSMother_length/2-36.0"/>
+	<volumeref ref="logic_DSpipe2_1"/>
+	<position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="boxDSMother_length/2-36.0"/>
       </physvol>
-
+      
     </volume>
   </structure>
 
