@@ -24,7 +24,7 @@
   <tube
     name="trackingVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmax="1400" rmin="0" z="1" lunit="mm"/>
+    rmax="2400" rmin="0" z="1" lunit="mm"/>
 
   <tube
     name="collarVirtualPlane_solid"
@@ -41,10 +41,10 @@
     startphi="0" deltaphi="360" aunit="deg"
     rmax="307" rmin="0" z="1" lunit="mm"/>
 
-  <tube
+    <!-- <tube
     name="gemVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="1450" rmax="1460" z="2700" lunit="mm"/>
+    rmin="1450" rmax="1460" z="2700" lunit="mm"/>-->
 
   <sphere name="targetSphere_solid" 
 	  rmin="700" rmax="701" lunit="mm"
@@ -76,9 +76,6 @@
 
   <box lunit="mm" name="usHybridVirtualPlane_solid"
        x="5000" y="6000" z="1"/>
-       
-  <box lunit="mm" name="usHybridVirtualPlane2_solid"
-       x="5000" y="6000" z="1"/>
             
   <box lunit="mm" name="coll1InnerSideVirtualPlane_solid"
        x="1" y="1286.5*2" z="4335 + 610 + 86"/>
@@ -93,9 +90,14 @@
        x="4262" y="1" z="4335 + 610 + 86"/>
 
   <box lunit="mm" name="hybridIronVirtualPlane_solid"
-	 x="4261"
-	 y="1"
-	 z="15000-1000"/>
+       x="2860"
+       y="1"
+       z="15000-680+100"/>
+
+  <box lunit="mm" name="dsHybridVirtualPlane_solid"
+       x="8000" 
+       y="6000"
+       z="1"/>
 
 </solids>
 
@@ -290,7 +292,7 @@
   
   <volume name="usHybridVirtualPlane2_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="usHybridVirtualPlane2_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
@@ -416,12 +418,32 @@
     <auxiliary auxtype="DetNo" auxvalue="41"/>
   </volume>
 
-  <volume name="gemVirtualPlane_log">
+  <volume name="dsHybridVirtualPlane1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsHybridVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5719"/>
+  </volume>
+
+  <volume name="dsHybridVirtualPlane2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsHybridVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5720"/>
+  </volume>
+
+  <!--<volume name="gemVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="gemVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="50"/>
-  </volume>
+  </volume>-->
 
   <volume name="SAMusVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
@@ -596,7 +618,7 @@
 
     <physvol    name="hybridIronVirtualPlane_phys">
       <volumeref ref="hybridIronVirtualPlane_log"/>
-      <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000-1000/2"/>
+      <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000-680/2-40/2"/>
     </physvol>
 
     <!-- Tracking planes -->
@@ -640,10 +662,10 @@
       <positionref ref="collar2VirtualPlane_pos"/>
     </physvol>
 
-    <physvol name="gemVirtualPlane_phys">
+    <!--<physvol name="gemVirtualPlane_phys">
       <volumeref ref="gemVirtualPlane_log"/>
       <positionref ref="gemVirtualPlane_pos"/>
-    </physvol>
+    </physvol>-->
 
     <physvol name="SAMusVirtualPlane_phys">
       <volumeref ref="SAMusVirtualPlane_log"/>
@@ -670,6 +692,16 @@
       <positionref ref="n2atmoVirtualPlane_pos"/>
     </physvol>
 
+    <physvol name="dsHybridVirtualPlane1_phys">
+      <volumeref ref="dsHybridVirtualPlane1_log"/>
+      <position name="dsHybridVirtualPlane1_pos" unit="mm" y="0" z="18848"/>
+    </physvol>
+    
+    <physvol name="dsHybridVirtualPlane2_phys">
+      <volumeref ref="dsHybridVirtualPlane2_log"/>
+      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19002"/>
+    </physvol>
+    
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 </structure>
