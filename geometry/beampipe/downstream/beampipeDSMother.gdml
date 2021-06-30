@@ -10,14 +10,14 @@
   <polycone name="solid_DSbeampipe_vacuum"
             aunit="deg" startphi="0" deltaphi="360"
             lunit="mm">
-    <zplane rmin="0" rmax="950" z="19000.0"/>
-    <zplane rmin="0" rmax="600" z="19000.0"/>
+    <zplane rmin="0" rmax="950" z="19000.0 + 50"/>
+    <zplane rmin="0" rmax="600" z="19000.0 + 50"/>
     <zplane rmin="0" rmax="770" z="26500"/>
   </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_2">
       <zplane rmin="504.775" rmax="509.5375" z="19000.0"/>
-      <zplane rmin="528.33" rmax="533.0925" z="19000.0+630.4-36"/>
+      <zplane rmin="528.33" rmax="533.0925" z="19000.0+630.4-36 - 50"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_DSplate">
@@ -89,6 +89,7 @@
 
     <physvol name="DSpipe2_DSpipe2_2">
       <volumeref ref="logic_DSpipe2_2"/>
+      <position name="DSpipe2_DSpipe2_2_pos" x="0" y="0" z="50"/>
     </physvol>
 
     <physvol name="DSpipe2_DSplate">

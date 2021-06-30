@@ -699,7 +699,7 @@
     
     <physvol name="dsHybridVirtualPlane2_phys">
       <volumeref ref="dsHybridVirtualPlane2_log"/>
-      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19002"/>
+      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19002+250"/>
     </physvol>
     
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
