@@ -43,7 +43,7 @@
    <quantity name="donutIBeamFlangeThickness" type="length" value="0.665" unit="in"/>
    <quantity name="donutIBeamWebThickness"    type="length" value="0.395" unit="in"/>
    <quantity name="donutIBeamWidth"     type="length" value="10.235" unit="in"/>
-   <quantity name="donutIBeamHeight"    type="length" value="40.00"  unit="cm"/>
+   <quantity name="donutIBeamHeight"    type="length" value="20.00"  unit="cm"/>
    <!-- FIXME: increase mother volume to accomodate 16.375 in instead of 40 cm -->
    <!--quantity name="donutIBeamHeight"    type="length" value="16.33"  unit="in"/-->
 
@@ -52,6 +52,12 @@
    <quantity name="donutIBeamFrameHeight"    type="length" value="5.6896" unit="m"/>
    <quantity name="donutIBeamFrameHeightTop" type="length" value="+1.470" unit="m"/>
    <quantity name="donutIBeamFrameHeightBot" type="length" value="-1.470" unit="m"/>
+   <quantity name="donutIBeamFramePosition"  value="0.5*(donutLeadStart+donutLeadEnd)"/>
+
+   <!-- Aluminum plate thickness -->
+   <quantity name="donutPlateThickness" type="length" value="6.0" unit="in"/>
+   <quantity name="donutPlateRadius"    type="length" value="56.0" unit="in"/>
+   <quantity name="donutPlatePosition"  value="donutIBeamFramePosition-donutIBeamHeight/2-donutPlateThickness/2"/>
 
    <!-- Donut frame struts -->
    <quantity name="donutIBeamStrutInnerLength"    type="length" value="0.9426" unit="m"/>
@@ -165,18 +171,30 @@
       <position name="donutIBeamStrut_pos" z="sqrt(2)*donutIBeamStrutLength/4" x="donutIBeamStrutLength/2+sqrt(2)*donutIBeamWidth/2-sqrt(2)*donutIBeamStrutLength/4"/>
       <rotation name="donutIBeamStrut_rot" y="135" unit="deg"/>
     </subtraction>
-    
+
+    <box name="donutPlateFull_solid"
+         x="donutIBeamFrameWidth+2*donutIBeamWidth"
+         y="(donutIBeamFrameHeightTop-donutIBeamFrameHeightBot)+2*donutIBeamWidth"
+         z="donutPlateThickness"/>
+    <tube name="donutPlateHole_solid"
+          rmin="0" rmax="donutPlateRadius" z="2*donutPlateThickness"
+          startphi="0" deltaphi="360" aunit="deg"/>
+    <subtraction name="donutPlate_solid">
+      <first ref="donutPlateFull_solid"/>
+      <second ref="donutPlateHole_solid"/>
+    </subtraction>
+
     <xtru name="donutSystemBox_solid">
       <twoDimVertex x="-donutSystemWidth/2" y="-donutSystemHeight/2"/>
       <twoDimVertex x="-donutSystemWidth/2" y="+donutSystemHeight/2"/>
       <twoDimVertex x="+donutSystemWidth/2" y="+donutSystemHeight/2"/>
       <twoDimVertex x="+donutSystemWidth/2" y="-donutSystemHeight/2"/>
-      <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="1" zPosition="min(0,donutPlatePosition-donutPlateThickness/2)" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="donutSystemLength" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
     <polycone name="donutSystemHole_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="0" rmax="donutSystemInnerRadius" z="0"/>
+      <zplane rmin="0" rmax="donutSystemInnerRadius" z="-donutPlateThickness"/>
       <zplane rmin="0" rmax="donutSystemInnerRadius" z="donutSystemLength"/>
     </polycone>
     <subtraction name="donutSystemBoxHole_solid">
@@ -485,6 +503,26 @@
         z="donutLeadEnd"/>
     </polycone>
 
+    <!-- Plate support fin -->
+    <xtru name="donutPlateSupportFin_solid">
+      <twoDimVertex x="donutPlateRadius-0.1"
+                    y="donutConcreteStart"/>
+      <twoDimVertex x="donutConcreteOuterRadiusUS+1.1*donutSleeveThickness"
+                    y="donutConcreteStart"/>
+      <twoDimVertex x="donutConcreteOuterRadiusDS+1.1*donutSleeveThickness+0.1"
+                    y="donutConcreteEnd-0.1"/>
+      <twoDimVertex x="min(donutConcreteOuterRadiusDS,donutLeadOuterRadiusUS)-0.1+1.1*donutSleeveThickness"
+                    y="donutConcreteEnd"/>
+      <twoDimVertex x="donutLeadOuterRadiusUS+1.1*donutSleeveThickness+0.1"
+                    y="donutLeadStart+0.1"/>
+      <twoDimVertex x="donutLeadOuterRadiusDS+1.1*donutSleeveThickness"
+                    y="donutLeadEnd"/>
+      <twoDimVertex x="donutPlateRadius-0.1"
+                    y="donutLeadEnd"/>
+      <section zOrder="1" zPosition="-donutBeamPipeSupportFinThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="+donutBeamPipeSupportFinThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+    </xtru>
+
     <!-- Beampipe support fin -->
     <xtru name="donutBeamPipeSupportFin_solid">
       <twoDimVertex x="donutSystemInnerRadius"
@@ -523,6 +561,11 @@
     <volume name="donutIBeamStrut_logical">
       <materialref ref="G4_Al"/>
       <solidref ref="donutIBeamStrut_solid"/>
+    </volume>
+
+    <volume name="donutPlate_logical">
+      <materialref ref="Al6061-T6"/>
+      <solidref ref="donutPlate_solid"/>
     </volume>
 
     <volume name="donutConcreteVirtualDetectorUS_logical">
@@ -669,6 +712,11 @@
       <solidref ref="donutBotSupportSleeveLead_solid"/>
     </volume>
 
+    <volume name="donutPlateSupportFin_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPlateSupportFin_solid"/>
+    </volume>
+
     <volume name="donutBeamPipeSupportFin_logical">
       <materialref ref="G4_Al"/>
       <solidref ref="donutBeamPipeSupportFin_solid"/>
@@ -680,23 +728,29 @@
 
       <physvol name="donutIBeamFrameVertical_right_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
-        <position x="-donutIBeamFrameWidth/2-donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <position x="-donutIBeamFrameWidth/2-donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamFrameVertical_left_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
-        <position x="+donutIBeamFrameWidth/2+donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <position x="+donutIBeamFrameWidth/2+donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamFrameHorizontal_top_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
-        <position y="donutIBeamFrameHeightTop+donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <position y="donutIBeamFrameHeightTop+donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" y="90" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamFrameHorizontal_bot_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
-        <position y="donutIBeamFrameHeightBot-donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <position y="donutIBeamFrameHeightBot-donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" y="90" z="0" unit="deg"/>
+      </physvol>
+
+      <!-- Plate -->
+      <physvol name="donutPlate_physical">
+        <volumeref ref="donutPlate_logical"/>
+        <position z="donutIBeamFramePosition-donutIBeamHeight/2-donutPlateThickness/2"/>
       </physvol>
 
       <!-- Struts -->
@@ -705,7 +759,7 @@
         <position
           x="donutIBeamFrameWidth/2-sqrt(2)*donutIBeamStrutLength/4"
           y="donutIBeamFrameHeightTop-sqrt(2)*donutIBeamStrutLength/4"
-          z="donutSystemLength/2"/>
+          z="donutIBeamFramePosition"/>
         <rotation x="90" y="45" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamStrut_top_left_physical">
@@ -713,7 +767,7 @@
         <position
           x="-donutIBeamFrameWidth/2+sqrt(2)*donutIBeamStrutLength/4"
           y="donutIBeamFrameHeightTop-sqrt(2)*donutIBeamStrutLength/4"
-          z="donutSystemLength/2"/>
+          z="donutIBeamFramePosition"/>
         <rotation x="-90" y="-135" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamStrut_top_right_physical">
@@ -721,7 +775,7 @@
         <position
           x="donutIBeamFrameWidth/2-sqrt(2)*donutIBeamStrutLength/4"
           y="donutIBeamFrameHeightBot-donutIBeamWidth-sqrt(2)*donutIBeamStrutLength/4"
-          z="donutSystemLength/2"/>
+          z="donutIBeamFramePosition"/>
         <rotation x="90" y="45" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamStrut_top_left_physical">
@@ -729,7 +783,7 @@
         <position
           x="-donutIBeamFrameWidth/2+sqrt(2)*donutIBeamStrutLength/4"
           y="donutIBeamFrameHeightBot-donutIBeamWidth-sqrt(2)*donutIBeamStrutLength/4"
-          z="donutSystemLength/2"/>
+          z="donutIBeamFramePosition"/>
         <rotation x="-90" y="-135" z="0" unit="deg"/>
       </physvol>
 
@@ -756,6 +810,7 @@
       </physvol>
 
       <!-- Top support -->
+      <!--
       <physvol name="donutTopSupportFlat_physical">
         <volumeref ref="donutTopSupportFlat_logical"/>
         <position y="donutIBeamFrameHeightTop-donutTopSupportThickness/2" z="(donutConcreteStart+donutLeadEnd)/2"/>
@@ -808,8 +863,10 @@
       <physvol name="donutTopSupportSleeveLead_physical">
         <volumeref ref="donutTopSupportSleeveLead_logical"/>
       </physvol>
+      -->
 
       <!-- Bot support -->
+      <!--
       <physvol name="donutBotSupportFlat_physical">
         <volumeref ref="donutBotSupportFlat_logical"/>
         <position y="donutIBeamFrameHeightBot+donutBotSupportThickness/2" z="(donutConcreteStart+donutLeadEnd)/2"/>
@@ -862,7 +919,17 @@
       <physvol name="donutBotSupportSleeveLead_physical">
         <volumeref ref="donutBotSupportSleeveLead_logical"/>
       </physvol>
+      -->
 
+      <!-- Plate support fins -->
+      <loop for="i" from="0" to="6" step="1">
+        <physvol name="donutPlateSupportFin_physical">
+          <volumeref ref="donutPlateSupportFin_logical"/>
+          <rotation x="-90.0" y="i*360.0/7" unit="deg"/>
+        </physvol>
+      </loop>
+
+      <!-- Beam pipe support fins -->
       <loop for="i" from="0" to="6" step="1">
         <physvol name="donutBeamPipeSupportFin_physical">
           <volumeref ref="donutBeamPipeSupportFin_logical"/>
