@@ -79,11 +79,6 @@ remollBeamTarget::remollBeamTarget()
     fMessengerTarget->DeclareMethod("mother",&remollBeamTarget::SetActiveTargetMother,"Set target mother name").SetStates(G4State_Idle);
     fMessengerTarget->DeclareMethod("volume",&remollBeamTarget::SetActiveTargetVolume,"Set target volume name").SetStates(G4State_Idle);
     fMessengerTarget->DeclareMethod("print",&remollBeamTarget::PrintTargetInfo).SetStates(G4State_Idle);
-
-    SetActiveTargetMother(fActiveTargetMotherName);
-    SetActiveTargetVolume(fActiveTargetVolumeName);
-
-    fUpdateNeeded = true;
 }
 
 remollBeamTarget::~remollBeamTarget()
@@ -148,6 +143,27 @@ void remollBeamTarget::UpdateInfo()
       return;
     }
 
+    // Find mother volume
+    for (auto mother  = fTargetMothers.begin();
+              mother != fTargetMothers.end();
+              mother++) {
+
+      if ((*mother).second == fActiveTargetMotherName) {
+        fActiveTargetMother = mother - fTargetMothers.begin();
+      }
+    }
+
+    // Find target volume
+    for (auto daughter  = fTargetVolumes[fActiveTargetMother].begin();
+              daughter != fTargetVolumes[fActiveTargetMother].end();
+              daughter++) {
+
+      if ((*daughter).second == fActiveTargetVolumeName) {
+        fActiveTargetVolume = daughter - fTargetVolumes[fActiveTargetMother].begin();
+      }
+
+    }
+
     // Get absolute position
     fMotherTargetAbsolutePosition = fTargetMothers[fActiveTargetMother].first->GetTranslation().z() - 4500;
 
@@ -182,45 +198,23 @@ void remollBeamTarget::UpdateInfo()
 	    fActiveTargetEffectiveLength = 2.0 * z_half_length * material->GetDensity();
 	}
     }
+
+    fUpdateNeeded = false;
 }
 
 
 void remollBeamTarget::SetActiveTargetMother(G4String name)
 {
   G4AutoLock lock(&remollBeamTargetMutex);
-
-  for (auto mother  = fTargetMothers.begin();
-            mother != fTargetMothers.end();
-            mother++) {
-
-    if ((*mother).second == name) {
-      fActiveTargetMotherName = name;
-      fActiveTargetMother = mother - fTargetMothers.begin();
-    }
-
-  }
-
+  fActiveTargetMotherName = name;
   fUpdateNeeded = true;
-
 }
 
 void remollBeamTarget::SetActiveTargetVolume(G4String name)
 {
   G4AutoLock lock(&remollBeamTargetMutex);
-
-  for (auto daughter  = fTargetVolumes[fActiveTargetMother].begin();
-            daughter != fTargetVolumes[fActiveTargetMother].end();
-            daughter++) {
-
-    if ((*daughter).second == name) {
-      fActiveTargetVolumeName = name;
-      fActiveTargetVolume = daughter - fTargetVolumes[fActiveTargetMother].begin();
-    }
-
-  }
-
+  fActiveTargetVolumeName = name;
   fUpdateNeeded = true;
-
 }
 
 
