@@ -205,7 +205,7 @@
 
     <!--collar solids -->
     <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="600" rmax1="750" rmin2="600" rmax2="750" z="100+50"/>
-    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="952" rmax1="1150" rmin2="952" rmax2="1150" z="100+50"/>
+    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="952" rmax1="1300" rmin2="952" rmax2="1300" z="100+50"/>
 
     <!-- Lintels solid -->
     <xtru name="solidLintel1" lunit="mm">
@@ -346,7 +346,7 @@
     <!--DS Hybrid shielding concrete-->
     <box lunit="mm" name="hybridConcrete" x="boxDSMother_width" y="boxDSMother_height" z="150"/>
 
-    <cone name="Collar2_tube" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1150+1" rmin2="0" rmax2="1150+1" z="150+1"/>
+    <cone name="Collar2_tube" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1300+1" rmin2="0" rmax2="1300+1" z="150+1"/>
 
     <subtraction name="hybridConcreteShielding1_sub">
       <first ref = "hybridConcrete"/>

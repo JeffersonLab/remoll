@@ -61,9 +61,9 @@
     </volume>
     
     <volume name="hybridConcreteShielding3_log">
-      <materialref ref="barite"/>
+      <materialref ref="Concrete"/>
       <solidref ref="hybridConcreteShielding3_sub"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
     
