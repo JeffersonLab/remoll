@@ -2,6 +2,8 @@
 
 <!DOCTYPE gdml [
 <!ENTITY world SYSTEM "solids/world.xml">
+<!ENTITY matrices SYSTEM "matrices.xml">
+<!ENTITY materials SYSTEM "materials.xml">
 <!ENTITY positions SYSTEM "positions.xml">
 ]>
 
@@ -9,18 +11,36 @@
 
   <define> 
     &positions;
+    &matrices;
+
   </define>
 
-  <materials>
-  </materials>
+  &materials;
 
   <solids>
     &world;
     
+    <box lunit="mm" name="hybridConcrete2" x="4000" y="5000" z="150"/>
+    <box lunit="mm" name="hybridConcrete3" x="2700+1" y="2700+1" z="150+1"/>
+    <box lunit="mm" name="hybridConcrete4" x="4000" y="5000" z="250"/>
+    <cone name="Collar2_tube2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1051" rmin2="0" rmax2="1051" z="250+1"/>
+
     <box lunit="mm" name="hybridIronSupport_solid"
 	 x="2860"
 	 y="50"
-	 z="15000-680+100"/>
+	 z="15000-680+100-1"/>
+
+     <subtraction name="hybridConcreteShielding2_sub">
+       <first ref = "hybridConcrete2"/>
+       <second ref = "hybridConcrete3"/>
+       <position name ="hybridConcreteSub2" lunit="mm" x="0" y="965/2" z="0" />
+     </subtraction>
+    
+  <subtraction name="hybridConcreteShielding3_sub">
+      <first ref = "hybridConcrete4"/>
+      <second ref = "Collar2_tube2"/>
+      <position name ="hybridConcreteSub3" lunit="mm" x="0" y="965/2" z="0" />
+    </subtraction>
 
   </solids>
 
@@ -33,6 +53,20 @@
       <auxiliary auxtype="Alpha" auxvalue="0.8"/>
     </volume>
 
+    <volume name="hybridConcreteShielding2_log">
+      <materialref ref="barite"/>
+      <solidref ref="hybridConcreteShielding2_sub"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+    
+    <volume name="hybridConcreteShielding3_log">
+      <materialref ref="barite"/>
+      <solidref ref="hybridConcreteShielding3_sub"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+    
     <volume name="logicMother">
       <materialref ref="G4_AIR"/>
       <solidref ref="world_solid"/>
@@ -81,6 +115,16 @@
         <position name="hybridIronSupport_pos" unit="mm" x="0" y="-1700" z="12000-680/2-40/2"/>
       </physvol>
       
+      <physvol name="hybridConcreteShielding2_phys">
+        <volumeref ref="hybridConcreteShielding2_log"/>
+        <position name="hybridConcreteShielding2_pos" unit="mm" x="0" y="-965/2" z="17460+1590-250+100+10+10+5"/>
+      </physvol>
+      
+       <physvol name="hybridConcreteShielding3_phys">
+        <volumeref ref="hybridConcreteShielding3_log"/>
+        <position name="hybridConcreteShielding3_pos" unit="mm" x="0" y="-965/2" z="17460+1590-250+376-50"/>
+      </physvol>
+
       <!-- Downstream beampipe -->    
       <physvol>
 	<file name="beampipe/premoller/beampipeRaster.gdml"/>

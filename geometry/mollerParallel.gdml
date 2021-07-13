@@ -92,7 +92,7 @@
   <box lunit="mm" name="hybridIronVirtualPlane_solid"
        x="2860"
        y="1"
-       z="15000-680+100"/>
+       z="15000-680+100-1"/>
 
   <box lunit="mm" name="dsHybridVirtualPlane_solid"
        x="8000" 

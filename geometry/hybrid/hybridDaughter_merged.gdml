@@ -110,7 +110,7 @@
     <position name="PCOLL2_rcut11" unit="mm" x="PCOLL2_SCULPT_P4_X" y="70" z="PCOLL2_THICK/2+5"/> 
     <position name="PCOLL2_rcut12" unit="mm" x="20" y="70" z="PCOLL2_THICK/2+5"/> 
     
-    <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435 - 100/2"/>
+    <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435"/>
 
   </define>
 
@@ -119,8 +119,8 @@
   <solids>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="4500" rmin="0" startphi="0" z="7865.68 + 2*950"/>
         
-    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length + 100"/> <!-- Define the placement of the mother volume box here-->
-      <box lunit="mm" name="boxDownstream_3" x="boxDSMother_width + 1" y="boxDSMother_height + 1" z="1115 + 100"/>
+    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here-->
+      <box lunit="mm" name="boxDownstream_3" x="boxDSMother_width + 1" y="boxDSMother_height + 1" z="1115"/>
       <subtraction name="boxDownstream">
         <first ref="boxDownstream_1"/>
         <second ref="boxDownstream_3"/>
@@ -137,7 +137,7 @@
     <subtraction name="boxDownstream_2">
       <first ref="boxDownstream_1"/>
       <second ref="HybridMotherSub"/>
-      <position name="HybridMotherSub_pos" unit="mm" x="0" y="0" z="boxDSMother_length/2-490 - 100/2" />
+      <position name="HybridMotherSub_pos" unit="mm" x="0" y="0" z="boxDSMother_length/2-490" />
     </subtraction> 
 
     <!--this is one bounce photon shield -->
@@ -205,7 +205,7 @@
 
     <!--collar solids -->
     <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="600" rmax1="750" rmin2="600" rmax2="750" z="100+50"/>
-    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="952" rmax1="1150" rmin2="952" rmax2="1150" z="100+100"/>
+    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="952" rmax1="1150" rmin2="952" rmax2="1150" z="100+50"/>
 
     <!-- Lintels solid -->
     <xtru name="solidLintel1" lunit="mm">
@@ -340,26 +340,18 @@
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_1">
       <zplane rmin="504.775" rmax="509.5375" z="0.0"/>
-      <zplane rmin="506.1201" rmax="510.8826" z="36+50"/>
+      <zplane rmin="506.1201" rmax="510.8826" z="36"/>
     </polycone>
 
     <!--DS Hybrid shielding concrete-->
-    <box lunit="mm" name="hybridConcrete" x="boxDSMother_width" y="boxDSMother_height" z="400"/>
-    <box lunit="mm" name="hybridConcrete2" x="4000" y="5000" z="400"/>
-    <box lunit="mm" name="hybridConcrete3" x="boxDSMother_width" y="boxDSMother_height" z="400+1"/>
+    <box lunit="mm" name="hybridConcrete" x="boxDSMother_width" y="boxDSMother_height" z="150"/>
 
-    <cone name="Collar2_tube" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1150+1" rmin2="0" rmax2="1150+1" z="400+1"/>
+    <cone name="Collar2_tube" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1150+1" rmin2="0" rmax2="1150+1" z="150+1"/>
 
     <subtraction name="hybridConcreteShielding1_sub">
       <first ref = "hybridConcrete"/>
       <second ref = "Collar2_tube"/>
       <position name ="hybridConcreteSub1" lunit="mm" x="0" y="0" z="0" />
-    </subtraction>
- 
-    <subtraction name="hybridConcreteShielding2_sub">
-      <first ref = "hybridConcrete2"/>
-      <second ref = "hybridConcrete3"/>
-      <position name ="hybridConcreteSub2" lunit="mm" x="0" y="965/2" z="0" />
     </subtraction>
  
   </solids>
@@ -484,12 +476,6 @@
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
     
-    <volume name="hybridConcreteShielding2_log">
-      <materialref ref="barite"/>
-      <solidref ref="hybridConcreteShielding2_sub"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
-    </volume>
     
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
@@ -517,18 +503,13 @@
 
       <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
-        <position lunit="mm" name="collar2pos" x="0" y="0" z="23950-25-DOFFSET+50/2"/>
+        <position lunit="mm" name="collar2pos" x="0" y="0" z="23950-25-DOFFSET"/>
         <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol name="hybridConcreteShielding1_phys">
         <volumeref ref="hybridConcreteShielding1_log"/>
-        <position name="hybridConcreteShielding1_pos" unit="mm" x="0" y="0" z="23950-25-DOFFSET+250/2"/>
-      </physvol>
-      
-      <physvol name="hybridConcreteShielding2_phys">
-        <volumeref ref="hybridConcreteShielding2_log"/>
-        <position name="hybridConcreteShielding2_pos" unit="mm" x="0" y="-965/2" z="23950-25-DOFFSET+250/2"/>
+        <position name="hybridConcreteShielding1_pos" unit="mm" x="0" y="0" z="23950-25-DOFFSET"/>
       </physvol>
       
       <physvol name="lintel1">
