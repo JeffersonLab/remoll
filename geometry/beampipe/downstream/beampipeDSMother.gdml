@@ -283,13 +283,13 @@
 	<volumeref ref="logic_DSpipe2_2"/>
       </physvol>
 
-      <physvol name="DSpipe2_DSplate">
+<!--      <physvol name="DSpipe2_DSplate">
 	<volumeref ref="logic_DSpipe2_DSplate"/>
       </physvol>
 
       <physvol name="DSpipe2_bellow">
 	<volumeref ref="logic_DSpipe2_bellow"/>
-      </physvol>
+      </physvol>-->
 
       <physvol name="DSpipe3_DSpipe">
 	<volumeref ref="logic_DSpipe3"/>
