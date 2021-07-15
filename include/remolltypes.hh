@@ -12,7 +12,7 @@
 //#include <G4Types.hh>
 //#endif
 
-#define __RUNSTR_LEN 255
+#define __RUNSTR_LEN 255 fBeta for hit
 #define __MAXFILE_LEN 1048576 // MB file size limit
 
 #include "TTimeStamp.h"
@@ -77,7 +77,7 @@ struct remollGenericDetectorHit_t {
   double px, py, pz;
   double pxl, pyl, pzl;
   double sx, sy, sz;
-  double p, e, m, k;
+  double p, e, m, k, beta;
   double vx, vy, vz;
   double edep;
 };

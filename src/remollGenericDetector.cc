@@ -3,6 +3,7 @@
 #include "G4OpticalPhoton.hh"
 #include "G4SDManager.hh"
 #include "G4GenericMessenger.hh"
+#include "G4PhysicalConstants.hh"
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
@@ -303,6 +304,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     hit->fE = track->GetTotalEnergy();
     hit->fM = particle->GetPDGMass();
     hit->fK = track->GetKineticEnergy();
+    hit->fBeta = track->GetVelocity() / c_light;
 
     hit->fTrID  = track->GetTrackID();
     hit->fmTrID = track->GetParentID();
