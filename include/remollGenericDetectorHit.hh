@@ -48,7 +48,7 @@ class remollGenericDetectorHit : public G4VHit {
         G4double fThRec;
 
 	// Total momentum, energy, mass, kinetic energy
-	G4double fP, fE, fM, fK;
+	G4double fP, fE, fM, fK, fBeta;
 	// Origin
 	G4ThreeVector f3V;
 	// Geant4 track ID, particle type, and mother ID
@@ -92,6 +92,7 @@ class remollGenericDetectorHit : public G4VHit {
         hit.e  = fE;
         hit.m  = fM;
         hit.k  = fK;
+	hit.beta = fBeta;.cc
         hit.edep = fEdep;
         return hit;
       };
