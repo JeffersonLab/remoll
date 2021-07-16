@@ -512,7 +512,7 @@
 
     <physvol name="LintelExit_phys">
       <volumeref ref="LintelExit_log"/>
-      <position name="LintelExit_pos" unit="mm" x="0" y="0" z="7800+70+0.5"/>
+      <position name="LintelExit_pos" unit="mm" x="0" y="0" z="7800+70+1.0"/>
     </physvol>
 
     <physvol name="DSCoil11_phys">
