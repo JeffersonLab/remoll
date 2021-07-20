@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+
+<define>
+</define>
+
+
+<materials>
+</materials>
+
+
+<solids>
+ 
+<!--Naz : change it to different parts inner and outer shield , This is the outer one-->
+
+    <!-- <polycone name="solid_nose_shield_US_beampipe_l" aunit="deg" startphi="0" deltaphi="360" lunit="mm">
+      <zplane rmin="23.5+1" rmax="35" z="-100/2"/>
+      <zplane rmin="23.6+1" rmax="35" z="-100/2+100"/>-->
+      <!--<zplane rmin="23" rmax="28" z="-1945/2+1945"/>-->
+    <!-- </polycone>-->
+
+
+    <!--<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_nose_shield_US_beampipe_mother">
+      <zplane rmin="23.5+1" rmax="35" z="-100/2"/>
+      <zplane rmin="23.6+1" rmax="35" z="-100/2+100"/>-->
+      <!--<zplane rmin="0" rmax="28" z="-1945/2+1945"/>-->
+   <!--</polycone>-->
+    
+     <!--Naz:the inner one-->
+ <polycone name="inner_solid_nose_shield_US_beampipe_l" aunit="deg" startphi="0" deltaphi="360" lunit="mm">
+      <zplane rmin="17" rmax="20" z="-200/2"/>
+      <zplane rmin="17.3" rmax="20.3" z="-200/2+200"/>
+      <!--<zplane rmin="23" rmax="28" z="-1945/2+1945"/>-->
+     </polycone>
+
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="inner_solid_nose_shield_US_beampipe_mother">
+      <zplane rmin="17" rmax="20" z="-200/2"/>
+      <zplane rmin="17.3" rmax="20.3" z="-200/2+200"/>
+      <!--<zplane rmin="0" rmax="28" z="-1945/2+1945"/>-->
+     </polycone>
+     <!-- the inner one  -->
+
+
+     
+    
+</solids>
+
+
+<structure>
+ <!--<volume name="nose_shield_US_beampipe_1_logic">
+      <materialref ref="G4_W"/>
+      <solidref ref="solid_nose_shield_US_beampipe_l"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="6000"/>
+ </volume>
+ 
+  <volume name="logicUpstreamNoseShieldBeampipe">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="solid_nose_shield_US_beampipe_mother"/>--> 
+
+      <!--added by Naz for inner-->
+<volume name="inner_nose_shield_US_beampipe_1_logic">
+      <materialref ref="G4_W"/>
+      <solidref ref="inner_solid_nose_shield_US_beampipe_l"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="10000"/>
+ </volume>
+ 
+  <volume name="inner_logicUpstreamNoseShieldBeampipe">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="inner_solid_nose_shield_US_beampipe_mother"/>
+      <!--Naz-->
+
+      
+     <!-- <physvol name="nose_shield_US_beampipe">
+        <volumeref ref="nose_shield_US_beampipe_1_logic"/>
+        <position name="nose_shield_US_beampipe_1_pos" unit="mm" x="0" y="0" z="0"/>
+      </physvol>-->
+
+      <!--naz-->
+
+ <physvol name="inner_nose_shield_US_beampipe">
+        <volumeref ref="inner_nose_shield_US_beampipe_1_logic"/>
+        <position name="inner_nose_shield_US_beampipe_1_pos" unit="mm" x="0" y="0" z="0"/>
+      </physvol>
+      
+      <!--naz-->
+
+      
+  </volume>
+
+</structure>
+
+
+<setup name="Default" version="1.0">
+        <world ref="inner_logicUpstreamNoseShieldBeampipe"/>
+</setup>
+
+</gdml>

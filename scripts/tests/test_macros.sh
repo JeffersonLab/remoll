@@ -61,6 +61,11 @@ if [ "$suite" == "valgrind" ] ; then
 	echo
 fi
 
+# Accumulate timing information
+mkdir -p ${logfiles}
+rm -rf ${logfiles}/time.log
+export TIME="%E real,\t%U user,\t%S sys,\t%C"
+time="time -a -o ${logfiles}/time.log"
 
 # Run test suite macros as requested
 for macro in ${macros}/${macroglob} ; do
@@ -72,7 +77,7 @@ for macro in ${macros}/${macroglob} ; do
 
 	# Run remoll macro
 	mkdir -p ${logfiles}
-	time $prefix remoll ${macro} 2>&1 | tee ${logfiles}/${name}.log
+	$time $prefix remoll ${macro} 2>&1 | tee ${logfiles}/${name}.log
 
 	# Unit tests do not have output
 	if [ "$suite" == "unit" ] ; then
@@ -95,7 +100,8 @@ for macro in ${macros}/${macroglob} ; do
 	echo "Starting analysis..." | tee ${logfiles}/analysis/${name}.log
 	for rootmacro in ${analysis1}/${analysisglob} ${analysis2}/${analysisglob} ; do
 		echo "Running analysis macro `basename ${rootmacro} .C`..."
-		time reroot -q -b -l "${rootmacro}+(\"${rootfiles}\",\"${name}\")" 2>&1 | tee -a ${logfiles}/analysis/${name}.log
+		$time reroot -q -b -l "${rootmacro}+(\"${rootfiles}\",\"${name}\")" 2>&1 | tee -a ${logfiles}/analysis/${name}.log
 	done
 
 done
+cat ${logfiles}/time.log

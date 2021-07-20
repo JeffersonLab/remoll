@@ -1,0 +1,89 @@
+#
+# Create a new empty scene
+#
+/vis/scene/create
+
+#
+# Draw both real and parallel worlds
+#
+/vis/drawVolume worlds
+
+#
+# Declare that the world volume should be added to the scene
+#
+/vis/scene/add/volume
+#
+#
+# Attach scene to scenehandler
+#
+/vis/sceneHandler/attach
+
+# Add axis (has to be after /vis/scene/create )
+#
+/vis/scene/add/axes 0 0 0 100 cm
+
+
+#
+# Draw a picture that has just the detector (no trajectories or hits).
+#
+/vis/viewer/flush
+
+#
+# Declare that trajectories and hits should be added to the scene
+#
+/vis/scene/add/trajectories
+/vis/scene/add/hits
+
+#
+# Set camera
+#
+/vis/viewer/reset
+# Specify view angle:
+#updated setting
+/vis/viewer/set/viewpointThetaPhi 90. 0.
+#old value
+#/vis/viewer/set/viewpointThetaPhi 35 15 deg
+#/vis/viewer/zoom 2.0
+
+#
+# Set surface
+#
+/vis/viewer/set/style surface
+
+#updated setting from PREX vis.mac
+/vis/viewer/set/viewpointThetaPhi 90 180 deg
+#/vis/viewer/panTo 100 3000 cm				  
+/vis/viewer/zoom 5.0
+/vis/viewer/set/lightsThetaPhi 40 50
+#New cutaway plane setting
+#/vis/viewer/set/cutawayMode intersection
+#/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 1.0 0.0 0.0
+/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 0.0 -1.0 0.0
+#/vis/viewer/addCutawayPlane 0.25 0.0 0.0 m -1.0 0.0 0.0
+#old value
+#/vis/viewer/set/lightsMove with-camera
+#
+
+#
+# Create style
+#
+/vis/modeling/trajectories/create/drawByParticleID MollerStyle
+/vis/modeling/trajectories/MollerStyle/set e- red
+/vis/modeling/trajectories/MollerStyle/set e+ blue
+/vis/modeling/trajectories/MollerStyle/set gamma green
+/vis/modeling/trajectories/MollerStyle/set neutron white
+/vis/modeling/trajectories/MollerStyle/set opticalphoton yellow
+/vis/modeling/trajectories/MollerStyle/set proton magenta
+#
+/vis/modeling/trajectories/select MollerStyle
+
+#
+# Event action
+#
+/vis/scene/endOfEventAction accumulate
+
+#
+# Run action
+#
+/vis/scene/endOfRunAction refresh
+

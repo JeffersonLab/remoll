@@ -39,16 +39,16 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double beamE = fBeamTarg->fBeamEnergy;
     double Ekin  = beamE - electron_mass_c2;
 
-    std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargetVolumes();
+    auto targVols = fBeamTarg->GetTargetVolumes();
 
     bool bypass_target = false;
 
-    std::vector<G4VPhysicalVolume *>::iterator it = targVols.begin();
+    auto it = targVols.begin();
     if( targVols.size() > 0 ){
-	while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" 
+	while( (*it).first->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" 
 		&& it != targVols.end() ){ it++; }
 
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" ){
+	if( (*it).first->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" ){
 	    G4cerr << __FILE__ << " line " << __LINE__ << ": WARNING could not find target" << G4endl;
 	    bypass_target = true;
 	}
@@ -66,7 +66,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double bt;
     if( !bypass_target ){
-	bt = (4.0/3.0)*(fBeamTarg->fTravelledLength/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
+	bt = (4.0/3.0)*(fBeamTarg->fTravelledLength/(*it).first->GetLogicalVolume()->GetMaterial()->GetRadlen()
 		+ int_bt);
     } else {
 	bt = 0.0;

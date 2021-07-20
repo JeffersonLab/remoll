@@ -1,0 +1,54 @@
+/run/numberOfThreads 1
+/run/initialize
+
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+/remoll/field/interpolation map_directory/V2DSg.9.75cm.txt linear
+#0.35    -180    8.5     0.00357702902439        0.000508489642332       0.00792856854346
+/remoll/field/value 0.3500 0.0 8.50
+/remoll/field/value 0.3502 0.0 8.51
+/remoll/field/value 0.3504 0.0 8.52
+/remoll/field/value 0.3506 0.0 8.53
+/remoll/field/value 0.3508 0.0 8.54
+/remoll/field/value 0.3510 0.0 8.55
+/remoll/field/value 0.3512 0.0 8.56
+/remoll/field/value 0.3514 0.0 8.57
+/remoll/field/value 0.3516 0.0 8.58
+/remoll/field/value 0.3518 0.0 8.59
+/remoll/field/value 0.3520 0.0 8.60
+#0.352   -180    8.6     8.3868756498e-05        0.0241781282489 0.00052352054301
+/remoll/field/value 0.3522 0.0 8.61
+/remoll/field/value 0.3524 0.0 8.62
+/remoll/field/value 0.3526 0.0 8.63
+/remoll/field/value 0.3528 0.0 8.64
+/remoll/field/value 0.3530 0.0 8.65
+/remoll/field/value 0.3532 0.0 8.66
+/remoll/field/value 0.3534 0.0 8.67
+/remoll/field/value 0.3536 0.0 8.68
+/remoll/field/value 0.3538 0.0 8.69
+/remoll/field/value 0.3540 0.0 8.70
+
+/remoll/field/interpolation map_directory/V2DSg.9.75cm.txt cubic
+#0.35    -180    8.5     0.00357702902439        0.000508489642332       0.00792856854346
+/remoll/field/value 0.3500 0.0 8.50
+/remoll/field/value 0.3502 0.0 8.51
+/remoll/field/value 0.3504 0.0 8.52
+/remoll/field/value 0.3506 0.0 8.53
+/remoll/field/value 0.3508 0.0 8.54
+/remoll/field/value 0.3510 0.0 8.55
+/remoll/field/value 0.3512 0.0 8.56
+/remoll/field/value 0.3514 0.0 8.57
+/remoll/field/value 0.3516 0.0 8.58
+/remoll/field/value 0.3518 0.0 8.59
+/remoll/field/value 0.3520 0.0 8.60
+#0.352   -180    8.6     8.3868756498e-05        0.0241781282489 0.00052352054301
+/remoll/field/value 0.3522 0.0 8.61
+/remoll/field/value 0.3524 0.0 8.62
+/remoll/field/value 0.3526 0.0 8.63
+/remoll/field/value 0.3528 0.0 8.64
+/remoll/field/value 0.3530 0.0 8.65
+/remoll/field/value 0.3532 0.0 8.66
+/remoll/field/value 0.3534 0.0 8.67
+/remoll/field/value 0.3536 0.0 8.68
+/remoll/field/value 0.3538 0.0 8.69
+/remoll/field/value 0.3540 0.0 8.70

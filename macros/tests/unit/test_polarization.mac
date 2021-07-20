@@ -4,7 +4,7 @@
 
 /control/execute macros/load_magnetic_fieldmaps.mac
 
-/remoll/gen moller
+/remoll/evgen/set moller
 
 /remoll/field/equationtype 2
 /run/beamOn 100

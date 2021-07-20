@@ -1,4 +1,4 @@
-/remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 /run/initialize
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt

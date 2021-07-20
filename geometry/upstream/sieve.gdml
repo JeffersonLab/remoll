@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <!-- Full sieve system dimensions -->
+  <quantity name="sieve_system_inner_radius" type="length" value="1.390" unit="in"/>
+  <quantity name="sieve_system_outer_radius" type="length" value="3.858" unit="in"/>
+  <quantity name="sieve_system_thickness" type="length" value="4.724" unit="in"/>
+
+  <!-- Sieve sector dimensions -->
+  <quantity name="sieve_sector_inner_radius" type="length" value="1.390" unit="in"/>
+  <quantity name="sieve_sector_outer_radius" type="length" value="3.858" unit="in"/>
+  <!-- Radiation length in W is 0.3504 cm [1], so 40 X_0 is about 15 cm.
+   [1] http://pdg.lbl.gov/2019/AtomicNuclearProperties/HTML/tungsten_W.html
+   -->
+  <quantity name="sieve_sector_thickness" type="length" value="4.724" unit="in"/>
+  <quantity name="sieve_sector_angle" type="angle" value="25.7" unit="deg"/>
+
+  <!-- Sieve hole dimensions -->
+  <quantity name="sieve_hole1_diameter" type="length" value="0.5" unit="in"/>
+  <quantity name="sieve_hole1_radial_position" type="length" value="1.8" unit="in"/>
+  <quantity name="sieve_hole1_angular_offset_phi" type="angle" value="0" unit="deg"/>
+
+  <quantity name="sieve_hole2_diameter" type="length" value="0.5" unit="in"/>
+  <quantity name="sieve_hole2_radial_position" type="length" value="3.5" unit="in"/>
+  <quantity name="sieve_hole2_angular_offset_phi" type="angle" value="-5" unit="deg"/>
+
+  <quantity name="sieve_hole3_diameter" type="length" value="0.5" unit="in"/>
+  <quantity name="sieve_hole3_radial_position" type="length" value="2.6" unit="in"/>
+  <quantity name="sieve_hole3_angular_offset_phi" type="angle" value="2.5" unit="deg"/>
+  <quantity name="sieve_hole3_axis_theta" type="angle" value="2.5" unit="deg"/>
+  <quantity name="sieve_hole3_axis_phi" type="angle" value="0" unit="deg"/>
+
+  <variable name="i" value="1"/>
+</define>
+
+<materials>
+</materials>
+
+
+<solids>
+  <!-- Sieve system solid -->
+  <tube name="sieve_system_solid"
+    rmin="sieve_system_inner_radius"
+    rmax="sieve_system_outer_radius"
+    z="sieve_system_thickness"
+    startphi="0" deltaphi="360.0" aunit="deg"
+    />
+
+  <!-- Sieve sector solid -->
+  <tube name="sieve_sector_solid"
+    rmin="sieve_sector_inner_radius"
+    rmax="sieve_sector_outer_radius"
+    z="sieve_sector_thickness"
+    startphi="-sieve_sector_angle/2" deltaphi="sieve_sector_angle"
+    />
+
+  <!-- Sieve hole solids -->
+  <tube name="sieve_hole1_solid"
+    rmin="0."
+    rmax="sieve_hole1_diameter/2"
+    z="sieve_sector_thickness"
+    startphi="0" deltaphi="360.0" aunit="deg"
+    />
+  <tube name="sieve_hole2_solid"
+    rmin="0."
+    rmax="sieve_hole2_diameter/2"
+    z="sieve_sector_thickness"
+    startphi="0" deltaphi="360.0" aunit="deg"
+    />
+  <!-- Support for non-zero sieve_hole_axis_theta and sieve_hole_axis_phi
+    requires implementation of solid with cutTube, but this is slower so avoid
+    if not necessary -->
+  <cutTube name="sieve_hole3_solid"
+    rmin="0."
+    rmax="sieve_hole3_diameter/2"
+    z="sieve_sector_thickness/cos(sieve_hole3_axis_theta)"
+    startphi="0" deltaphi="360.0" aunit="deg"
+    lowX="-sin(-sieve_hole3_axis_theta)*cos(-sieve_hole3_axis_phi)"
+    lowY="-sin(-sieve_hole3_axis_theta)*sin(-sieve_hole3_axis_phi)"
+    lowZ="-cos(-sieve_hole3_axis_theta)"
+    highX="sin(-sieve_hole3_axis_theta)*cos(-sieve_hole3_axis_phi)"
+    highY="sin(-sieve_hole3_axis_theta)*sin(-sieve_hole3_axis_phi)"
+    highZ="cos(-sieve_hole3_axis_theta)"
+    />
+</solids>
+
+<structure>
+  <!-- Define the holes as detectors to enable mc-truth analysis where
+    one requires that the track went through a specific sieve hole -->
+  <volume name="sieve_hole1_logic">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="sieve_hole1_solid"/>
+    <auxiliary auxtype="Color" auxvalue="magenta"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetNo" auxvalue="1001"/>
+  </volume>
+  <volume name="sieve_hole2_logic">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="sieve_hole2_solid"/>
+    <auxiliary auxtype="Color" auxvalue="magenta"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetNo" auxvalue="1002"/>
+  </volume>
+  <volume name="sieve_hole3_logic">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="sieve_hole3_solid"/>
+    <auxiliary auxtype="Color" auxvalue="magenta"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetNo" auxvalue="1003"/>
+  </volume>
+
+  <!-- Place the holes inside the sector volume -->
+  <volume name="sieve_sector_logic">
+    <materialref ref="G4_W"/>
+    <solidref ref="sieve_sector_solid"/>
+    <physvol name="sieve_hole1_physical">
+      <volumeref ref="sieve_hole1_logic"/>
+      <position x="sieve_hole1_radial_position"/>
+    </physvol>
+
+    <physvol name="sieve_hole2_physical">
+      <volumeref ref="sieve_hole2_logic"/>
+      <position
+        x="sieve_hole2_radial_position*cos(sieve_hole2_angular_offset_phi)"
+        y="sieve_hole2_radial_position*sin(sieve_hole2_angular_offset_phi)"
+        />
+    </physvol>
+
+    <physvol name="sieve_hole3_physical">
+      <volumeref ref="sieve_hole3_logic"/>
+      <position
+        x="sieve_hole3_radial_position*cos(sieve_hole3_angular_offset_phi)"
+        y="sieve_hole3_radial_position*sin(sieve_hole3_angular_offset_phi)"
+        />
+      <rotation
+        y="-(sieve_hole3_axis_theta)"
+        />
+    </physvol>
+  </volume>
+
+  <!-- Place the sector volumes around the ring -->
+  <volume name="sieve_system_logic">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="sieve_system_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetNo" auxvalue="1000"/>
+    <loop for="i" from="1" to="7" step="1">
+      <physvol name="sieve_sector_physical[i]">
+        <volumeref ref="sieve_sector_logic"/>
+        <rotation unit="deg"
+          z="360.0/14.0+360.0/7.0*(i-1)"
+          />
+      </physvol>
+    </loop>
+  </volume>
+</structure>
+
+<setup name="sieve_system_world" version="1.0">
+  <world ref="sieve_system_logic"/>
+</setup>
+
+</gdml>

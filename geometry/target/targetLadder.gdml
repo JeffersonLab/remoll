@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <quantity name="AlX0" type="length" value="8.897" unit="cm"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box name="TargetLadder1_solid" x="200" y="200" z="1300" lunit="mm"/>
+  <box name="TargetLadder2_solid" x="200" y="600" z="1300" lunit="mm"/>
+  <union name="TargetLadder_solid">
+    <first ref="TargetLadder1_solid"/>
+    <second ref="TargetLadder2_solid"/>
+    <position y="-400" unit="mm"/>
+  </union>
+  <box name="TargetPosition_solid" x="70" y="70" z="1300" lunit="mm"/>
+
+  <tube name="TargetLH2_solid"
+        aunit="deg" lunit="mm" deltaphi="360"
+        rmax="40" rmin="0" z="1250+2*0.127"/>
+  <tube name="TargetLH2_LH2Volume_solid"
+        aunit="deg" lunit="mm" deltaphi="360"
+        rmax="40" rmin="0" z="1250"/>
+  <tube name="TargetLH2_AlWindow_solid"
+        aunit="deg" lunit="mm" deltaphi="360"
+        rmax="40" rmin="0" z="0.127"/>
+
+  <box name="TargetAlDummy2pct_solid" x="25*mm" y="25*mm" z="0.02*AlX0"/>
+  <box name="TargetAlDummy4pct_solid" x="25*mm" y="25*mm" z="0.04*AlX0"/>
+  <box name="TargetAlDummy8pct_solid" x="25*mm" y="25*mm" z="0.08*AlX0"/>
+  <tube name="TargetAlHole_solid" rmin="0" rmax="2*mm" z="0.10*AlX0" deltaphi="360" startphi="0" aunit="deg"/>
+  <subtraction name="TargetAlDummyHole_solid">
+    <first ref="TargetAlDummy4pct_solid"/>
+    <second ref="TargetAlHole_solid"/>
+  </subtraction>
+
+  <box name="TargetCFoil_solid" x="25*mm" y="25*mm" z="1*mm"/>
+
+</solids>
+
+<structure>
+
+  <volume name="targetLH2_AlWindowUS_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="TargetLH2_AlWindow_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="USAl"/>
+    <auxiliary auxtype="Color" auxvalue="white"/>
+  </volume>
+  <volume name="targetLH2_LH2Volume_logical">
+    <materialref ref="G4_lH2"/>
+    <solidref ref="TargetLH2_LH2Volume_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="LH2"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+  </volume>
+  <volume name="targetLH2_AlWindowDS_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="TargetLH2_AlWindow_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
+    <auxiliary auxtype="Color" auxvalue="white"/>
+  </volume>
+  <volume name="TargetLH2_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetLH2_solid"/>
+    <!-- Note:
+         The order in the physical volume is important. 
+         Only earlier defined volumes will be considered for the
+         prescattering energy loss.
+     -->
+    <physvol>
+      <volumeref ref="targetLH2_AlWindowUS_logical"/>
+      <position z="-(1250+0.127)/2"/>
+    </physvol>
+    <physvol>
+      <volumeref ref="targetLH2_LH2Volume_logical"/>
+    </physvol>
+    <physvol>
+      <volumeref ref="targetLH2_AlWindowDS_logical"/>
+      <position z="+(1250+0.127)/2"/>
+    </physvol>
+    <auxiliary auxtype="TargetSystem" auxvalue="LH2"/>
+  </volume>
+
+  <volume name="TargetAlDummyHoleUS_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="TargetAlDummyHole_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="USAl"/>
+  </volume>
+  <volume name="TargetAlDummyHoleDS_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="TargetAlDummyHole_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
+  </volume>
+  <volume name="TargetPositionAlDummyHoleUS_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetPosition_solid"/>
+    <physvol>
+      <volumeref ref="TargetAlDummyHoleUS_logical"/>
+      <position z="-125/2*cm"/>
+    </physvol>
+    <auxiliary auxtype="TargetSystem" auxvalue="AlHoleUS"/>
+  </volume>
+  <volume name="TargetPositionAlDummyHoleDS_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetPosition_solid"/>
+    <physvol>
+      <volumeref ref="TargetAlDummyHoleDS_logical"/>
+      <position z="+125/2*cm"/>
+    </physvol>
+    <auxiliary auxtype="TargetSystem" auxvalue="AlHoleDS"/>
+  </volume>
+
+  <volume name="TargetAlDummy4pctDS_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="TargetAlDummy4pct_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
+  </volume>
+  <volume name="TargetAlDummy4pctUS_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="TargetAlDummy4pct_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
+  </volume>
+  <volume name="TargetAlDummy2pctDS_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="TargetAlDummy2pct_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
+  </volume>
+  <volume name="TargetAlDummy2pctUS_logical">
+    <materialref ref="G4_Al"/>
+    <solidref ref="TargetAlDummy2pct_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="USAl"/>
+  </volume>
+  <volume name="TargetPositionAlDummy1US_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetPosition_solid"/>
+    <physvol>
+      <volumeref ref="TargetAlDummy4pctUS_logical"/>
+      <position z="-125/2*cm"/>
+    </physvol>
+    <auxiliary auxtype="TargetSystem" auxvalue="AlDummy1US"/>
+  </volume>
+  <volume name="TargetPositionAlDummy1DS_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetPosition_solid"/>
+    <physvol>
+      <volumeref ref="TargetAlDummy4pctDS_logical"/>
+      <position z="+125/2*cm"/>
+    </physvol>
+    <auxiliary auxtype="TargetSystem" auxvalue="AlDummy1DS"/>
+  </volume>
+  <volume name="TargetPositionAlDummy2US_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetPosition_solid"/>
+    <physvol>
+      <volumeref ref="TargetAlDummy2pctUS_logical"/>
+      <position z="-125/2*cm"/>
+    </physvol>
+    <auxiliary auxtype="TargetSystem" auxvalue="AlDummy2US"/>
+  </volume>
+  <volume name="TargetPositionAlDummy2DS_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetPosition_solid"/>
+    <physvol>
+      <volumeref ref="TargetAlDummy2pctDS_logical"/>
+      <position z="+125/2*cm"/>
+    </physvol>
+    <auxiliary auxtype="TargetSystem" auxvalue="AlDummy2DS"/>
+  </volume>
+
+  <volume name="TargetCFoilUS_logical">
+    <materialref ref="G4_C"/>
+    <solidref ref="TargetCFoil_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="USC"/>
+  </volume>
+  <volume name="TargetCFoilDS_logical">
+    <materialref ref="G4_C"/>
+    <solidref ref="TargetCFoil_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSC"/>
+  </volume>
+  <volume name="TargetPositionOptics1_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetPosition_solid"/>
+    <physvol>
+      <volumeref ref="TargetCFoilUS_logical"/>
+      <position z="-30*cm"/>
+    </physvol>
+    <physvol>
+      <volumeref ref="TargetCFoilDS_logical"/>
+      <position z="+60*cm"/>
+    </physvol>
+    <auxiliary auxtype="TargetSystem" auxvalue="Optics1"/>
+  </volume>
+  <volume name="TargetPositionOptics2_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetPosition_solid"/>
+    <physvol>
+      <volumeref ref="TargetCFoilUS_logical"/>
+      <position z="-60*cm"/>
+    </physvol>
+    <physvol>
+      <volumeref ref="TargetCFoilDS_logical"/>
+      <position z="+30*cm"/>
+    </physvol>
+    <auxiliary auxtype="TargetSystem" auxvalue="Optics2"/>
+  </volume>
+
+  <volume name="TargetLadder_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetLadder_solid"/>
+
+    <physvol>
+      <volumeref ref="TargetLH2_logical"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="TargetPositionAlDummyHoleUS_logical"/>
+      <position y="-14*cm"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="TargetPositionAlDummyHoleDS_logical"/>
+      <position y="-21*cm"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="TargetPositionAlDummy1US_logical"/>
+      <position y="-28*cm"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="TargetPositionAlDummy1DS_logical"/>
+      <position y="-35*cm"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="TargetPositionAlDummy2US_logical"/>
+      <position y="-42*cm"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="TargetPositionAlDummy2DS_logical"/>
+      <position y="-49*cm"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="TargetPositionOptics1_logical"/>
+      <position y="-56*cm"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="TargetPositionOptics2_logical"/>
+      <position y="-63*cm"/>
+    </physvol>
+
+    <auxiliary auxtype="TargetLadder" auxvalue=""/>
+  </volume>
+
+</structure>
+
+<setup name="TargetLadder" version="1.0">
+  <world ref="TargetLadder_logical"/>
+</setup>
+
+</gdml>

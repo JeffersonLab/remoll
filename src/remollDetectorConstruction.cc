@@ -16,6 +16,7 @@
 #include "G4PhysicalVolumeStore.hh"
 #include "G4LogicalVolumeStore.hh"
 #include "G4LogicalVolume.hh"
+#include "G4PVPlacement.hh"
 #include "globals.hh"
 
 #include "G4RunManager.hh"
@@ -28,6 +29,11 @@
 
 // GDML export
 #include "G4GDMLParser.hh"
+
+//CADMesh
+#ifdef __USE_CADMESH
+#include <CADMesh.hh>
+#endif
 
 // visual
 #include "G4VisAttributes.hh"
@@ -48,9 +54,9 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
 : fVerboseLevel(0),
   fGDMLParser(0),
   fGDMLValidate(false),
-  fGDMLOverlapCheck(false),
-  fGDMLPath("geometry"),
-  fGDMLFile("mollerMother.gdml"),
+  fGDMLOverlapCheck(true),
+  fGDMLPath(""),
+  fGDMLFile(""),
   fMessenger(0),
   fGeometryMessenger(0),
   fUserLimitsMessenger(0),
@@ -60,8 +66,17 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   fWorldVolume(0),
   fWorldName(name)
 {
+  // Define some engineering units
+  new G4UnitDefinition("inch","in","Length",25.4*CLHEP::millimeter);
+
+  SetGDMLFile("geometry/mollerMother.gdml");
   // If gdmlfile is non-empty
-  if (gdmlfile.length() > 0) SetGDMLFile(gdmlfile);
+  if (gdmlfile.length() > 0) {
+      SetGDMLFile(gdmlfile);
+  }
+
+  // New units
+  new G4UnitDefinition("inch","in","Length",25.4*CLHEP::millimeter);
 
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
@@ -162,6 +177,11 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
       &remollDetectorConstruction::RelativeRotation,
       "Rotate a volume relative to current orientation [deg]")
       .SetStates(G4State_PreInit,G4State_Idle);
+  fGeometryMessenger->DeclareMethod(
+      "addmesh",
+      &remollDetectorConstruction::AddMesh,
+      "Add mesh file (ascii stl, ascii ply, ascii obj)")
+      .SetStates(G4State_Idle);
 
   // Create user limits messenger
   fUserLimitsMessenger = new G4GenericMessenger(this,
@@ -354,11 +374,41 @@ void remollDetectorConstruction::SetUserMinRange(G4String name, G4String value_u
 
 remollDetectorConstruction::~remollDetectorConstruction()
 {
+    for (auto pv: fMeshPVs) {
+      auto lv = pv->GetLogicalVolume();
+      auto solid = lv->GetSolid();
+      delete solid;
+      delete lv;
+      delete pv;
+    }
     delete fGDMLParser;
     delete fMessenger;
     delete fGeometryMessenger;
     delete fKryptoniteMessenger;
     delete fUserLimitsMessenger;
+}
+
+void remollDetectorConstruction::AddMesh(const G4String& filename)
+{
+  G4Material* material = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
+  #ifdef __USE_CADMESH
+    // Read mesh
+    auto mesh = CADMesh::TessellatedMesh::FromSTL(filename);
+
+    // Extract solids
+    for (auto solid: mesh->GetSolids()) {
+      auto lv = new G4LogicalVolume(solid, material, filename);
+      lv->SetVisAttributes(G4Colour(0.0,1.0,0.0,1.0));
+      auto pv = new G4PVPlacement(G4Transform3D(), filename, lv, fWorldVolume, false, 0, false);
+      fMeshPVs.push_back(pv);
+    }
+
+    // Reoptimize geometry
+    G4RunManager* run_manager = G4RunManager::GetRunManager();
+    run_manager->GeometryHasBeenModified();
+  #else
+    G4cerr << __FILE__ << " line " << __LINE__ << ": Warning - meshes not supported." << G4endl;
+  #endif
 }
 
 void remollDetectorConstruction::AbsolutePosition(G4String name, G4ThreeVector position)
@@ -514,13 +564,13 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     // Clear parser
     fGDMLParser->Clear();
 
-    // Print GDML warning
-    PrintGDMLWarning();
-
     // Print parsing options
     G4cout << "Reading " << fGDMLFile << G4endl;
     G4cout << "- schema validation " << (fGDMLValidate? "on": "off") << G4endl;
     G4cout << "- overlap check " << (fGDMLOverlapCheck? "on": "off") << G4endl;
+
+    // Print GDML warning when validation
+    if (fGDMLValidate) PrintGDMLWarning();
 
     // Get remollIO instance before chdir since remollIO creates root file
     remollIO* io = remollIO::GetInstance();
@@ -538,7 +588,8 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 
     // Parse GDML file
     fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
-    // hide output if not validating or checking ovelaps
+    // hide output if not validating or checking overlaps
+    // https://bugzilla-geant4.kek.jp/show_bug.cgi?id=2358
     if (! fGDMLOverlapCheck && ! fGDMLValidate)
       G4cout.setstate(std::ios_base::failbit);
     fGDMLParser->Read(fGDMLFile,fGDMLValidate);
@@ -609,10 +660,13 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
         // Treat auxiliary type "TargetSystem" only
         if ((*vit).type != "TargetSystem") continue;
 
+        // Target system name
+        G4String mother_tag = (*vit).value;
+
         // Found target mother logical volume
         G4LogicalVolume* mother_logical_volume = logical_volume;
         if (fVerboseLevel > 0)
-          G4cout << "Found target mother logical volume "
+          G4cout << "Found target system mother logical volume "
                  << mother_logical_volume->GetName() << "." << G4endl;
 
         // Now find target mother physical volume
@@ -624,15 +678,14 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
 
           // Mutex lock before writing static structures in remollBeamTarget
           G4AutoLock lock(&remollDetectorConstructionMutex);
-          remollBeamTarget::ResetTargetVolumes();
-          remollBeamTarget::SetMotherVolume(mother_physical_volume);
+          remollBeamTarget::AddMotherVolume(mother_physical_volume, mother_tag);
 
           if (fVerboseLevel > 0)
             G4cout << "Found target mother physical volume "
                    << mother_physical_volume->GetName() << "." << G4endl;
         } else {
           G4cout << "Target mother logical volume does not occur "
-                 << "*exactly once* as a physical volume." << G4endl;
+                 << "*exactly once as a physical volume." << G4endl;
           exit(-1);
         }
 
@@ -666,10 +719,13 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
               // If the logical volume is tagged as "TargetSamplingVolume"
               if ((*vit2).type != "TargetSamplingVolume") continue;
 
+              // Target system name
+              G4String target_tag = (*vit2).value;
+
               // Add target volume
               G4cout << "Adding target sampling volume "
                      << target_logical_volume->GetName() << "." << G4endl;
-              remollBeamTarget::AddTargetVolume(target_physical_volume);
+              remollBeamTarget::AddTargetVolume(target_physical_volume, target_tag);
 
             } // loop over auxiliary tags in volume to find "TargetSamplingVolume"
 
@@ -680,6 +736,8 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
       } // loop over auxiliary tags in volume to find "TargetSystem"
 
     } // loop over volumes with auxiliary tags to find "TargetSystem"
+
+    remollBeamTarget::UpdateInfo();
 }
 
 void remollDetectorConstruction::ParseAuxiliaryUserLimits()
@@ -798,14 +856,6 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
   G4VisAttributes* motherVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
   motherVisAtt->SetForceWireframe(true);
   fWorldVolume->GetLogicalVolume()->SetVisAttributes(motherVisAtt);
-
-  // Set all immediate daughters of the world volume to wireframe
-  G4VisAttributes* daughterVisAtt = new G4VisAttributes(G4Colour(1.0,1.0,1.0));
-  daughterVisAtt->SetForceWireframe(true);
-  auto n = fWorldVolume->GetLogicalVolume()->GetNoDaughters();
-  for (decltype(n) i = 0; i < n; i++) {
-    fWorldVolume->GetLogicalVolume()->GetDaughter(i)->GetLogicalVolume()->SetVisAttributes(daughterVisAtt);
-  }
 }
 
 void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
@@ -814,7 +864,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
   // Duplication map
-  std::map<int, G4LogicalVolume*> detnomap;
+  std::map<int, std::pair<G4String, G4LogicalVolume*>> detnomap;
 
   // Loop over all volumes with auxiliary tags
   const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
@@ -832,6 +882,8 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
       auto it_sensdet = NextAuxWithType(list.begin(), list.end(), "SensDet");
       if (it_sensdet != list.end()) {
 
+        G4String sens_det = it_sensdet->value;
+
         // Find first aux list entry with type DetNo
         auto it_detno = NextAuxWithType(list.begin(), list.end(), "DetNo");
         if (it_detno != list.end()) {
@@ -845,10 +897,12 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           det_name_ss << "remoll/det_" << det_no;
           std::string det_name = det_name_ss.str();
 
-          // Check for duplication
-          if (detnomap.count(det_no) != 0) {
-            G4cerr << "remoll: DetNo " << det_no << " for " << myvol->GetName() << G4endl;
-            G4cerr << "remoll: already used by " << detnomap[det_no]->GetName() << G4endl;
+          // Check for duplication when not a shared detector number
+          if (detnomap.count(det_no) != 0 && detnomap[det_no].first != sens_det) {
+            std::string sens_det2 = detnomap[det_no].first;
+            G4LogicalVolume* myvol2 = detnomap[det_no].second;
+            G4cerr << "remoll: Detector number " << det_no << " (" << sens_det  << ") " << myvol->GetName()  << G4endl;
+            G4cerr << "remoll: already used by " << det_no << " (" << sens_det2 << ") " << myvol2->GetName() << G4endl;
           }
 
           // Try to find sensitive detector
@@ -870,11 +924,11 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 
             // Register detector with SD manager
             SDman->AddNewDetector(remollsd);
-            detnomap[det_no] = myvol;
+            detnomap[det_no] = std::make_pair(sens_det, myvol);
 
             // Register detector with remollIO
             remollIO* io = remollIO::GetInstance();
-            io->RegisterDetector(myvol->GetName(), it_sensdet->value, det_no);
+            io->RegisterDetector(myvol->GetName(), sens_det, det_no);
 
           }
 

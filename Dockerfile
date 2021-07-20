@@ -18,21 +18,16 @@
 #   cd `readlink -f .`
 #
 
-FROM jeffersonlab/jlabce:2.3-mt
+FROM jeffersonlab/remoll-builder:main
 
-# Install libgcj and pdftk
-RUN wget -q https://copr.fedorainfracloud.org/coprs/robert/gcj/repo/epel-7/robert-gcj-epel-7.repo -P /etc/yum.repos.d && \
-    wget -q https://copr.fedorainfracloud.org/coprs/robert/pdftk/repo/epel-7/robert-pdftk-epel-7.repo -P /etc/yum.repos.d && \
-    yum install -q -y pdftk ghostscript
+# XrootD
+RUN yum --enablerepo=extras -y install epel-release
+RUN yum -y install python3-pip \
+    xrootd-client
 
-# Add Tini entry point
-ENV TINI_VERSION v0.19.0
-ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
-RUN chmod +x /tini
-
-# Set JLab CE version
-ENV JLAB_VERSION=2.3
-ENV JLAB_ROOT=/jlab
+# Stashcp
+RUN pip3 install setuptools && \
+    pip3 install stashcp
 
 # Set remoll location
 ENV REMOLL=/jlab/remoll
@@ -48,14 +43,6 @@ RUN source /etc/profile && \
     make install && \
     make clean
 
-# Environment through /etc/profile
-RUN ln -sf $REMOLL/bin/remoll.csh /etc/profile.d/remoll.csh
-RUN ln -sf $REMOLL/bin/remoll.sh /etc/profile.d/remoll.sh
-
-# Override JLab CE environment for container use
-COPY docker/jlab.sh /jlab/${JLAB_VERSION}/ce/jlab.sh
-
 # Entry point loads the environment
-ENTRYPOINT ["/tini", "--", "bash", "-c", "source /etc/profile && \"$@\"", "-s"]
-
+ENTRYPOINT ["/bin/bash", "-c", "source /etc/profile && source $REMOLL/bin/remoll.sh && \"$@\"", "--"]
 CMD ["remoll"]

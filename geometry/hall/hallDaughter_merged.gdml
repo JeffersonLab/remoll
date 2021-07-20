@@ -11,8 +11,8 @@
 <define>
   &matrices;
 
-  <constant name="width_mother" value="90000."/>
-  <constant name="height_mother" value="90000."/>
+  <constant name="width_mother" value="75000."/>
+  <constant name="height_mother" value="50000."/>
   <constant name="length_mother" value="90000."/>
 
   <!-- Hall - wall, floor and "dump" -->
@@ -214,6 +214,7 @@
     <volume name="logicHall">
       <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
       <!-- <solidref ref="boxHallMother_out"/> -->
 <!--
       <physvol>

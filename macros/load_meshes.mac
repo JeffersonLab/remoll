@@ -1,0 +1,16 @@
+# This loads the small meshes
+/control/foreach macros/load_mesh.mac mesh "JL0094043_small.stl JL0095703_small.stl JL0096597_small.stl JL0096636_small.stl JL0094866_small.stl JL0096772_small.stl JL0091832_small.stl JL0096533_small.stl JL0094773_small.stl JL0096752_small.stl JL0097012_small.stl JL0109771_small.stl"
+
+# Below are larger meshes (slow, needs memory)
+
+# JL0096676_small.stl: dump tunnel utilities
+/control/foreach macros/load_mesh.mac mesh "JL0096676_small.stl"
+
+# JL0094629_small.stl: hybrid toroid
+/control/foreach macros/load_mesh.mac mesh "JL0094629_small.stl"
+
+# Below are envelopes (slow, needs memory)
+
+# JL0100741_small.stl: envelopes
+#/control/foreach macros/load_mesh.mac mesh "JL0100741_small.stl"
+

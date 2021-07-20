@@ -6,6 +6,9 @@
 <define>
 </define>
 
+<materials>
+</materials>
+
 <solids>
   <polycone name="raster_beampipe_outer_solid"
             aunit="deg" startphi="0" deltaphi="360"

@@ -17,7 +17,7 @@
 
 <solids>
   <tube aunit="deg" deltaphi="360.0" name="pionDetectorVirtualDet_solid"
-        rmin="665*mm" rmax="1900*mm" startphi="0" z="pionDetectorVirtualDetThickness"/>
+        rmin="820*mm" rmax="2000*mm" startphi="0" z="pionDetectorVirtualDetThickness"/>
 </solids>
 
 <structure>

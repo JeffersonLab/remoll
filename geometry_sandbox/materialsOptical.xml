@@ -1,0 +1,119 @@
+<materials>
+
+<material Z="82" name="Lead" state="solid">
+      <MEE unit="eV" value="823"/>
+      <D unit="g/cm3" value="11.35"/>
+      <atom unit="g/mole" value="207.19"/>
+</material>
+    
+<element Z="1" name="Hydrogen">
+    <atom unit="g/mole" value="1.01"/>
+</element>
+
+<element Z="6" name="Carbon">
+    <atom unit="g/mole" value="12.011"/>
+</element>
+
+<material name="Tyvek" state="solid">
+    <MEE unit="eV" value="56.5182975271737"/> 
+    <D unit="g/cm3" value="0.96"/>
+    <fraction n="0.14396693036847" ref="Hydrogen"/>
+    <fraction n="0.85603306963153" ref="Carbon"/>
+</material>
+
+<element Z="14" name="Silicon">
+    <atom unit="g/mole" value="28.09"/>
+</element>
+
+<element Z="8" name="Oxygen">
+    <atom unit="g/mole" value="16"/>
+</element>
+
+<element Z="18" name="Argon">
+    <atom unit="g/mole" value="40"/>
+</element>
+
+<material name="QsimArgon" state="gas">
+    <property name="RINDEX" ref="AR_RINDEX"/>
+    <property name="FASTCOMPONENT" ref="Scnt_FAST"/>
+    <property name="SLOWCOMPONENT" ref="Scnt_SLOW"/>   
+	
+    <property name="SCINTILLATIONYIELD" ref="Ar_Const_Scint"/>   
+	<property name="RESOLUTIONSCALE" ref="General_Const_RESOLUTION"/>
+    <property name="FASTTIMECONSTANT" ref="General_Const_FAST"/>
+    <property name="SLOWTIMECONSTANT" ref="General_Const_SLOW"/>   
+    <property name="YIELDRATIO" ref="General_Const_YIELDRATIO"/>  
+    <D unit="g/cm3" value="0.00129"/>
+    <fraction n="1.0" ref="Argon"/>
+</material>
+
+<material name="Quartz" state="solid">
+    <property name="RINDEX" ref="Quartz_RINDEX"/> 
+    <property name="ABSLENGTH" ref="Quartz_ABSLENGTH"/> 
+    <MEE unit="eV" value="125.663004061076"/>
+    <D unit="g/cm3" value="2.2"/>
+    <fraction n="0.467465468463971" ref="Silicon"/>
+    <fraction n="0.532534531536029" ref="Oxygen"/>
+</material>
+
+<element Z="7" name="Nitrogen">
+    <atom unit="g/mole" value="14.01"/>
+</element>
+
+<material name="QsimCO2" state="gas">
+    <property name="RINDEX" ref="CO2_RINDEX"/>
+    <property name="FASTCOMPONENT" ref="Scnt_FAST"/>
+    <property name="SLOWCOMPONENT" ref="Scnt_SLOW"/>   
+	
+    <property name="SCINTILLATIONYIELD" ref="CO2_Const_Scint"/>   
+    <property name="ABSLENGTH" ref="CO2_ABSLENGTH"/>   
+	<property name="RESOLUTIONSCALE" ref="General_Const_RESOLUTION"/>
+    <property name="FASTTIMECONSTANT" ref="General_Const_FAST"/>
+    <property name="SLOWTIMECONSTANT" ref="General_Const_SLOW"/>   
+    <property name="YIELDRATIO" ref="General_Const_YIELDRATIO"/>  
+    <MEE unit="eV" value="85.7030667332999"/>
+    <D unit="g/cm3" value="0.001836"/>
+    <fraction n="0.3333" ref="Carbon"/>
+    <fraction n="0.6667" ref="Oxygen"/>
+</material>
+
+<material name="QsimAir" state="gas">
+    <property name="RINDEX" ref="Air_RINDEX"/>
+    <property name="FASTCOMPONENT" ref="Scnt_FAST"/>
+    <property name="SLOWCOMPONENT" ref="Scnt_SLOW"/>   
+    
+    <property name="SCINTILLATIONYIELD" ref="Air_Const_Scint"/>   
+    <property name="RESOLUTIONSCALE" ref="General_Const_RESOLUTION"/>
+    <property name="FASTTIMECONSTANT" ref="General_Const_FAST"/>
+    <property name="SLOWTIMECONSTANT" ref="General_Const_SLOW"/>   
+    <property name="YIELDRATIO" ref="General_Const_YIELDRATIO"/>  
+    <MEE unit="eV" value="85.7030667332999"/>
+    <D unit="g/cm3" value="0.00120479"/>
+    <fraction n="0.755268" ref="G4_N"/>
+    <fraction n="0.231781" ref="G4_O"/>
+    <fraction n="0.012827" ref="G4_Ar"/>
+    <fraction n="0.000124" ref="G4_C"/>
+</material>
+
+<material name="AlMylar" state="solid">
+    <MEE unit="eV" value="50.0"/> <!-- guess -->
+    <D unit="g/cm3" value="0.999999"/>
+    <fraction n="0.4" ref="G4_C"/>
+    <fraction n="0.32" ref="G4_H"/>
+    <fraction n="0.16" ref="G4_O"/>
+    <fraction n="0.12" ref="G4_Al"/>
+</material>
+
+<material Z="13" name="Aluminium" state="solid">
+    
+    <MEE unit="eV" value="166"/>
+    <D unit="g/cm3" value="2.7"/>
+    <atom unit="g/mole" value="26.98"/>
+</material>
+
+<material Z="19" name="Photocathode" state="solid">
+    <MEE unit="eV" value="166"/> <!--190"-->
+      <D unit="g/cm3" value="2.7"/> <!-- 5.0 -->
+      <atom unit="g/mole" value="26.982"/> <!--39.0983"-->
+</material>
+</materials>

@@ -31,15 +31,15 @@ ClassImp(remollSeed_t)
 
 // Singleton
 remollIO* remollIO::gInstance = 0;
-remollIO* remollIO::GetInstance() {
+remollIO* remollIO::GetInstance(const G4String& outputfile) {
   if (gInstance == 0) {
-    gInstance = new remollIO();
+    gInstance = new remollIO(outputfile);
   }
   return gInstance;
 }
 
-remollIO::remollIO()
-: fFile(0),fTree(0),fFilename("remollout.root"),fRate(0)
+remollIO::remollIO(const G4String& outputfile)
+: fFile(0),fTree(0),fFilename(outputfile),fRate(0)
 {
     // Create generic messenger
     fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");

@@ -5,7 +5,7 @@
 <!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 
   <define>
@@ -127,7 +127,7 @@
         <position name="sbsBunkerVacuumDet1_p" unit="mm" x="0." y="-0.25*IronBlock_y" z="0."/>
       </physvol>
 
-
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
   </structure>

@@ -1,0 +1,6 @@
+/control/echo {mesh}
+/control/alias url https://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/cad
+/control/alias dir geometry/meshes
+/control/shell mkdir -p {dir}
+/control/shell wget -N -c -P {dir} {url}/{mesh}
+/remoll/geometry/addmesh {dir}/{mesh}

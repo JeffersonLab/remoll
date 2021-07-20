@@ -3,14 +3,15 @@
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
-  <constant name="N_P" value="2"/>
-  <constant name="PHI" value="360.0/N_P"/>
+  <variable name="i" value="0"/>
+  <constant name="PHI" value="360.0/2.0"/>
+  <constant name="PHI0" value="1.5*360.0/7.0"/>
 
-  <quantity name="pionDetectorTSInnerRadius" type="length" value="0.665" unit="m"/>
+  <quantity name="pionDetectorTSInnerRadius" type="length" value="1.020" unit="m"/>
   <quantity name="pionDetectorTSOuterRadius" type="length" value="1.700" unit="m"/>
   <quantity name="pionDetectorTSLength" type="length" value="0.1" unit="m"/>
 
-  <quantity name="pionDetectorTSRadialPosition" type="length" value="105.0" unit="cm"/>
+  <quantity name="pionDetectorTSRadialPosition" type="length" value="112" unit="cm"/>
 </define>
 
 <materials>
@@ -18,10 +19,10 @@
 
 <solids>
   <tube name="pionDetectorTSOpenSector_solid"
-    rmin="1.01*pionDetectorTSInnerRadius"
-    rmax="0.99*pionDetectorTSOuterRadius"
-       z="0.99*pionDetectorTSLength"
-    startphi="-0.99*PHI/2.0" deltaphi="0.99*PHI" aunit="deg"/>
+    rmin="pionDetectorTSInnerRadius"
+    rmax="pionDetectorTSOuterRadius"
+       z="pionDetectorTSLength"
+    startphi="-0.5*PHI/2.0" deltaphi="0.5*PHI" aunit="deg"/>
   <tube name="pionDetectorTSAllSectors_solid"
     rmin="pionDetectorTSInnerRadius"
     rmax="pionDetectorTSOuterRadius"
@@ -32,7 +33,7 @@
 <structure>
 
   <volume name="pionDetectorTSOpenSector_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorTSOpenSector_solid"/>
     <physvol name="pionDetectorTS_physical">
       <file name="pion/TS/pionDetectorTS.gdml"/>
@@ -43,16 +44,22 @@
   </volume>
 
   <volume name="pionDetectorTSAllSectors_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorTSAllSectors_solid"/>
-    <replicavol number="N_P">
+    <loop for="i" from="0" to="1" step="1">
+      <physvol name="pionDetectorTSOpenSector_physical[i]">
+        <volumeref ref="pionDetectorTSOpenSector_logical"/>
+        <rotation z="-PHI0-i*PHI" unit="deg"/>
+      </physvol>
+    </loop>
+    <!--replicavol number="2">
       <volumeref ref="pionDetectorTSOpenSector_logical"/>
       <replicate_along_axis>
         <direction phi="1"/>
         <width value="PHI" unit="deg"/>
-        <offset value="-PHI/2.0" unit="deg"/>
+        <offset value="PHI0-PHI/2.0" unit="deg"/>
       </replicate_along_axis>
-    </replicavol>
+    </replicavol-->
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 

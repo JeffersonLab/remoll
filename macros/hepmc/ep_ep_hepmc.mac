@@ -1,4 +1,4 @@
-/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+/remoll/geometry/setfile geometry/mollerMother.gdml
 /remoll/parallel/setfile geometry/mollerParallel.gdml
 
 /remoll/physlist/parallel/enable

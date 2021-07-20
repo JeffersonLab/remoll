@@ -41,12 +41,23 @@ jobs:
           echo "=== scripts/tests/test_macros.sh ${suite} ===" ;
           mkdir -p ${PWD}/logfiles ${PWD}/rootfiles ;
           time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll:$TRAVIS_BRANCH sh -c "
-            scripts/tests/test_macros.sh ${suite} &&
-            scripts/tests/targz_macros.sh ${suite} &&
-            scripts/tests/watermark.sh ${suite}
-          " ;
+            scripts/tests/test_macros.sh ${suite}
+        " ;
         done ;
         ls -al ${PWD}/logfiles ${PWD}/rootfiles
+    - script:
+      - if [ "$TRAVIS_BRANCH" == "master" ]; then
+          for suite in release ; do
+            echo "=== scripts/tests/test_macros.sh ${suite} ===" ;
+            mkdir -p ${PWD}/logfiles ${PWD}/rootfiles ;
+            time docker run --rm -v ${PWD}/rootfiles:/jlab/remoll/rootfiles -v ${PWD}/logfiles:/jlab/remoll/logfiles -t jeffersonlab/remoll:$TRAVIS_BRANCH sh -c "
+              scripts/tests/test_macros.sh ${suite} &&
+              scripts/tests/targz_macros.sh ${suite} &&
+              scripts/tests/watermark.sh ${suite}
+            " ;
+          done ;
+          ls -al ${PWD}/logfiles ${PWD}/rootfiles ; 
+        fi
 
 notifications:
   slack:

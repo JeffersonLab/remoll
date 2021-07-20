@@ -4,5 +4,5 @@
 # consider loading this macro with
 #   /control/execute macros/load_magnetic_field.mac
 
-/remoll/addfield map_directory/segmentedJLAB_v2.txt
-/remoll/addfield map_directory/upstreamJLAB_v2.txt
+/remoll/addfield map_directory/V2U.1a.50cm.parallel.txt
+/remoll/addfield map_directory/V2DSg.9.75cm.parallel.txt

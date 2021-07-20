@@ -3,6 +3,8 @@
 
 #include <G4VUserParallelWorld.hh>
 
+#include "remollSearchPath.hh"
+
 class G4LogicalVolume;
 class G4VPhysicalVolume;
 class G4GDMLParser;
@@ -30,6 +32,7 @@ class remollParallelConstruction : public G4VUserParallelWorld
     G4String fGDMLFile;
 
     void SetGDMLFile(G4String gdmlfile) {
+      gdmlfile = remollSearchPath::resolve(gdmlfile);
       size_t i = gdmlfile.rfind('/');
       if (i != std::string::npos) {
         fGDMLPath = gdmlfile.substr(0,i);

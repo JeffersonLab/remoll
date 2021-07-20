@@ -9,6 +9,8 @@
 #include <vector>
 #include <set>
 
+#include "remollSearchPath.hh"
+
 class G4Tubs;
 class G4LogicalVolume;
 class G4VPhysicalVolume;
@@ -57,6 +59,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
     G4String fGDMLFile;
 
     void SetGDMLFile(G4String gdmlfile) {
+      gdmlfile = remollSearchPath::resolve(gdmlfile);
       size_t i = gdmlfile.rfind('/');
       if (i != std::string::npos) {
         fGDMLPath = gdmlfile.substr(0,i);
@@ -109,6 +112,11 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
     void InitKryptoniteMaterials();
 
+  private:
+
+    std::vector<G4VPhysicalVolume*> fMeshPVs;
+
+    void AddMesh(const G4String& filename);
 
   public:
 

@@ -9,6 +9,7 @@
 #include <G4GenericMessenger.hh>
 #include <G4VisAttributes.hh>
 #include <G4Colour.hh>
+#include "G4UnitsTable.hh"
 
 #include "remollGenericDetector.hh"
 #include "remollIO.hh"
@@ -16,20 +17,26 @@
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 remollParallelConstruction::remollParallelConstruction(const G4String& name, const G4String& gdmlfile)
 : G4VUserParallelWorld(name),
-  fGDMLPath("geometry"),fGDMLFile(""),
+  fGDMLPath(""),fGDMLFile(""),
   fGDMLParser(0),
   fGDMLValidate(false),
-  fGDMLOverlapCheck(false),
+  fGDMLOverlapCheck(true),
   fVerboseLevel(0),
   fParallelMessenger(0),
   fWorldVolume(0),
   fWorldName(name)
 {
+  SetGDMLFile("geometry/mollerParallel.gdml");
   // If gdmlfile is non-empty
-  if (gdmlfile.length() > 0) fGDMLFile = gdmlfile;
+  if (gdmlfile.length() > 0) {
+    SetGDMLFile(gdmlfile);
+  }
 
   // Create GDML parser
   fGDMLParser = new G4GDMLParser();
+
+  // New units
+  new G4UnitDefinition("inch","in","Length",25.4*CLHEP::millimeter);
 
   // Create parallel geometry messenger
   fParallelMessenger = new G4GenericMessenger(this,
@@ -39,7 +46,9 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
       "setfile",
       &remollParallelConstruction::SetGDMLFile,
       "Set parallel geometry GDML file")
-      .SetStates(G4State_PreInit);
+          .SetStates(G4State_PreInit)
+          .SetDefaultValue("")
+          .command->GetParameter(0)->SetOmittable(true);
   fParallelMessenger->DeclareProperty(
       "verbose",
       fVerboseLevel,
@@ -143,7 +152,8 @@ G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
 
   // Parse GDML file
   fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
-  // hide output if not validating or checking ovelaps
+  // hide output if not validating or checking overlaps
+  // https://bugzilla-geant4.kek.jp/show_bug.cgi?id=2358
   if (! fGDMLOverlapCheck && ! fGDMLValidate)
     G4cout.setstate(std::ios_base::failbit);
   fGDMLParser->Read(fGDMLFile,fGDMLValidate);

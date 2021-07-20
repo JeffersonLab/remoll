@@ -1,0 +1,57 @@
+# Disable storing random state to events to fail this test
+#/run/storeRndmStatToEvent 0
+
+# Ensure rndm1 directory exists
+/control/shell mkdir -p rndm1
+/random/setDirectoryName rndm1
+# Store random state to files
+/random/setSavingFlag 1
+/random/saveEachEventFlag 1
+
+# Run 10 events
+/run/initialize
+/run/beamOn 10
+
+# Write all random states for run 1
+/control/shell reroot -l -q macros/tests/unit/test_rng_engine.C
+
+# Ensure rndm1 directory exists
+/control/shell mkdir -p rndm2
+/random/setDirectoryName rndm2
+
+# Convert random state for event 5
+# Note: resetEngineFromEachEvent reads from current directory
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt9.state > run1evt0.rndm
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt8.state > run1evt1.rndm
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt7.state > run1evt2.rndm
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt6.state > run1evt3.rndm
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt5.state > run1evt4.rndm
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt4.state > run1evt5.rndm
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt3.state > run1evt6.rndm
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt2.state > run1evt7.rndm
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt1.state > run1evt8.rndm
+/control/shell scripts/convert-mixmaxrng-state.sh run0evt0.state > run1evt9.rndm
+
+# Reset engine for each event
+/random/resetEngineFromEachEvent 1
+
+# Run 10 events
+/run/beamOn 10
+
+# Write all random states for run 1
+/control/shell reroot -l -q macros/tests/unit/test_rng_engine.C
+
+# Compare random states on all events
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt0.state run1evt9.state
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt1.state run1evt8.state
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt2.state run1evt7.state
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt3.state run1evt6.state
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt4.state run1evt5.state
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt5.state run1evt4.state
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt6.state run1evt3.state
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt7.state run1evt2.state
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt8.state run1evt1.state
+/control/shell diff --ignore-matching-lines ^MixMaxRng-begin run0evt9.state run1evt0.state
+
+# Clean up
+# rm -rf *.rndm *.state rndm1 rndm2

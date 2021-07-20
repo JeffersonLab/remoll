@@ -1,4 +1,4 @@
-/remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 /remoll/physlist/register QGSP_BERT_HP
 /remoll/physlist/parallel/enable
 /remoll/parallel/setfile geometry/mollerParallel.gdml

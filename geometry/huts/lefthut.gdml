@@ -12,6 +12,9 @@
 <define>
 </define>
 
+<materials>
+</materials>
+
 <solids>
   <box lunit="m" name="lefthut_world_solid" 
        x="4.4" y="3.6" z="4.2"/> 
@@ -37,7 +40,7 @@
   <subtraction name ="lefthut_Det_outside_solid">
     <first ref="lefthut_Det_outside_box1"/>
     <second ref="lefthut_Det_outside_box2"/>
-    <position name="lefthut_DetSub_pos" lunit="mm" x="0" y=" -500./2" z="0" />
+    <position name="lefthut_DetSub_pos" unit="mm" x="0" y=" -500./2" z="0" />
   </subtraction>
 
   
@@ -65,6 +68,7 @@
   <volume name="lefthut_Det_inside_logic">
     <materialref ref="Vacuum"/>
     <solidref ref="lefthut_Det_inside_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
     <auxiliary auxtype="SensDet" auxvalue="hutDet"/>
     <auxiliary auxtype="DetNo" auxvalue="6666"/>
@@ -76,6 +80,7 @@
     <materialref ref="Vacuum"/>
     <solidref ref="lefthut_Det_outside_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="hutDet"/>
     <auxiliary auxtype="DetNo" auxvalue="6667"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -88,34 +93,35 @@
     
     <physvol name="lefthut_front_pv">
       <volumeref ref="lefthut_front_logic"/>
-      <position name="lefthut_front_pos" lunit="mm" x="0" y="-550" z="-1500"/>
+      <position name="lefthut_front_pos" unit="mm" x="0" y="-550" z="-1500"/>
     </physvol>
 	   
     <physvol name="lefthut_side_pv1">
       <volumeref ref="lefthut_side_logic"/>
-      <position name="lefthut_side_pos1" lunit="mm" x="1100+500" y="-550" z="-4200./2+(3000./2+1000+100)"/>
+      <position name="lefthut_side_pos1" unit="mm" x="1100+500" y="-550" z="-4200./2+(3000./2+1000+100)"/>
     </physvol>
     
     <physvol name="lefthut_side_pv2">
       <volumeref ref="lefthut_side_logic"/>
-      <position name="lefthut_side_pos2" lunit="mm" x="-(1100+500)" y="-550" z="-4200./2+(3000./2+1000+100)"/>
+      <position name="lefthut_side_pos2" unit="mm" x="-(1100+500)" y="-550" z="-4200./2+(3000./2+1000+100)"/>
     </physvol>
     
     <physvol name="lefthut_top_pv">
       <volumeref ref="lefthut_top_logic"/>
-      <position name="lefthut_top_pos" lunit="mm" x="0" y="3600./2.-100-500" z="0.0"/>
+      <position name="lefthut_top_pos" unit="mm" x="0" y="3600./2.-100-500" z="0.0"/>
     </physvol>
     
     <physvol name="lefthut_Det_inside_pv">
       <volumeref ref="lefthut_Det_inside_logic"/>
-      <position name="lefthut_Det_inside_pos" lunit="mm" x="0" y="-550" z="(1000.)/2."/>
+      <position name="lefthut_Det_inside_pos" unit="mm" x="0" y="-550" z="(1000.)/2."/>
     </physvol>
     
     <physvol name="lefthut_Det_outside_pv">
       <volumeref ref="lefthut_Det_outside_logic"/>
-      <position name="lefthut_Det_outside_pos" lunit="mm" x="0" y="0" z="0.0"/>
+      <position name="lefthut_Det_outside_pos" unit="mm" x="0" y="0" z="0.0"/>
     </physvol>
  
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
 </structure>

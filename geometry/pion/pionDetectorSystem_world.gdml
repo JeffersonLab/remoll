@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <position name="pionDetectorCenter" z="0.0*m"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box name="world_solid" x="4*m" y="4*m" z="2*m"/>
+</solids>
+
+<structure>
+
+  <volume name="world_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="world_solid"/>
+
+    <physvol>
+      <file name="pion/pionDetectorSystem.gdml"/>
+      <positionref ref="pionDetectorCenter"/>
+    </physvol>
+      
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="world_logical"/>
+</setup>
+
+</gdml>
