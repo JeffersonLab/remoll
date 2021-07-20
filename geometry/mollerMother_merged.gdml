@@ -22,8 +22,8 @@
     
     <box lunit="mm" name="hybridConcrete2" x="4000" y="5000" z="150"/>
     <box lunit="mm" name="hybridConcrete3" x="2700+1" y="2700+1" z="150+1"/>
-    <box lunit="mm" name="hybridConcrete4" x="4000" y="5000" z="250"/>
-    <cone name="Collar2_tube2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1051" rmin2="0" rmax2="1051" z="250+1"/>
+    <box lunit="mm" name="hybridConcrete4" x="4000" y="5000" z="150"/>
+    <cone name="Collar2_tube2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1051" rmin2="0" rmax2="1051" z="150+1"/>
 
     <box lunit="mm" name="hybridIronSupport_solid"
 	 x="2860"
@@ -42,6 +42,21 @@
       <position name ="hybridConcreteSub3" lunit="mm" x="0" y="965/2" z="0" />
     </subtraction>
 
+  <box lunit="mm" name="fbhutTracker_solid"
+       x="1"
+       y="5715"
+       z="11249.914"/>
+
+  <box lunit="mm" name="sidehutTracker_solid"
+       x="16799.56"
+       y="5715"
+       z="1"/>
+   
+  <box lunit="mm" name="tophutTracker_solid"
+       x="16799.56"
+       y="1"
+       z="11249.914"/>
+    
   </solids>
 
   <structure>
@@ -61,10 +76,50 @@
     </volume>
     
     <volume name="hybridConcreteShielding3_log">
-      <materialref ref="Concrete"/>
+      <materialref ref="barite"/>
       <solidref ref="hybridConcreteShielding3_sub"/>
-      <auxiliary auxtype="Color" auxvalue="Green"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+    
+    <volume name="fronthutTracker_log">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="fbhutTracker_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
+      <auxiliary auxtype="DetNo" auxvalue="5840"/>
+    </volume>
+    
+    <volume name="sidehutTracker1_log">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="sidehutTracker_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
+      <auxiliary auxtype="DetNo" auxvalue="5842"/>
+    </volume>
+    
+    <volume name="sidehutTracker2_log">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="sidehutTracker_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
+      <auxiliary auxtype="DetNo" auxvalue="5843"/>
+    </volume>
+    
+    <volume name="backhutTracker_log">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="fbhutTracker_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
+      <auxiliary auxtype="DetNo" auxvalue="5841"/>
+    </volume>
+    
+    <volume name="tophutTracker_log">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="tophutTracker_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
+      <auxiliary auxtype="DetNo" auxvalue="5845"/>
     </volume>
     
     <volume name="logicMother">
@@ -98,11 +153,11 @@
 	<positionref ref="upstreamCenter"/>
       </physvol>
 
-      <physvol name="magnetPShut">
+      <!--  <physvol name="magnetPShut">
 	<file name="electronics/subSBSbunker.gdml"/>
 	<position name="magnetPShut_pos" x="10740" y="-3000 + 2000" z="8000."/>
 	<rotation name="rot_y90" unit="deg" y="90"/>
-      </physvol>
+      </physvol>-->
 
       <!-- Hybrid region -->
       <physvol>
@@ -122,9 +177,36 @@
       
        <physvol name="hybridConcreteShielding3_phys">
         <volumeref ref="hybridConcreteShielding3_log"/>
-        <position name="hybridConcreteShielding3_pos" unit="mm" x="0" y="-965/2" z="17460+1590-250+376-50"/>
+        <position name="hybridConcreteShielding3_pos" unit="mm" x="0" y="-965/2" z="17460+1590-250+376-50-100/2"/>
       </physvol>
 
+       <physvol name="fronthutTracker_phys">
+        <volumeref ref="fronthutTracker_log"/>
+        <position name="fronthutTracker_pos" unit="mm" x="3864.356" y="0" z="10447.957"/>
+       </physvol>
+       <!-- 10'055.457-->
+       
+       <physvol name="sidehutTracker1_phys">
+        <volumeref ref="sidehutTracker1_log"/>
+        <position name="sidehutTracker1_pos" unit="mm" x="3864.356+16799.56/2+1" y="0" z="10447.957-11249.914/2-1"/>
+       </physvol>
+       
+       <physvol name="sidehutTracker2_phys">
+        <volumeref ref="sidehutTracker2_log"/>
+        <position name="sidehutTracker2_pos" unit="mm" x="3864.356+16799.56/2+1" y="0" z="10447.957+11249.914-11249.914/2+1"/>
+       </physvol>
+       
+       <physvol name="backhutTracker_phys">
+        <volumeref ref="backhutTracker_log"/>
+        <position name="backhutTracker_pos" unit="mm" x="3864.356+16799.56+1+1" y="0" z="10447.957"/>
+       </physvol>
+       <!-- 10'055.457-->
+       
+       <physvol name="tophutTracker_phys">
+        <volumeref ref="tophutTracker_log"/>
+        <position name="tophutTracker_pos" unit="mm" x="3864.356+16799.56/2+1" y="5715/2+1" z="10447.957"/>
+       </physvol>
+       
       <!-- Downstream beampipe -->    
       <physvol>
 	<file name="beampipe/premoller/beampipeRaster.gdml"/>
@@ -153,11 +235,11 @@
 
 
       <!-- electronics hut for left side --> 
-      <physvol>
+      <!--   <physvol>
 	<file name="huts/lefthut.gdml"/>
 	<positionref ref="lefthut_pos"/>
 	<rotation name="lefthut_rot" unit="deg" y="-45"/>
-      </physvol>
+      </physvol>-->
       
       <!-- ShowerMax Detectors--> 
       <!-- <physvol> -->

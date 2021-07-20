@@ -270,16 +270,6 @@
     <auxiliary auxtype="DetNo" auxvalue="5510"/>
   </volume>
 
-  <volume name="magnetPShutFrontFace_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="sbsBunkerFrontFace_solid"/>
-    <auxiliary auxtype="Visibility" auxvalue="true"/>
-    <auxiliary auxtype="Color" auxvalue="yellow"/>
-    <auxiliary auxtype="Alpha" auxvalue="1"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="5710"/>
-  </volume>
-
   <volume name="usHybridVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="usHybridVirtualPlane_solid"/>
@@ -610,12 +600,6 @@
       <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1670" z="852.5 + 610/2 + 86/2"/>
     </physvol>
 
-    <physvol    name="magnetPShutFrontFace_phys">
-      <volumeref ref="magnetPShutFrontFace_log"/>
-      <position name="magnetPShutFrontFace_pos" unit="mm" x="5740" y="-1000" z="8000"/>\
-      <rotation name="magnetPShutFrontFace_rot" unit="deg" y="90"/>
-    </physvol>
-
     <physvol    name="hybridIronVirtualPlane_phys">
       <volumeref ref="hybridIronVirtualPlane_log"/>
       <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000-680/2-40/2"/>
@@ -699,7 +683,7 @@
     
     <physvol name="dsHybridVirtualPlane2_phys">
       <volumeref ref="dsHybridVirtualPlane2_log"/>
-      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19002+250"/>
+      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19002+150"/>
     </physvol>
     
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
