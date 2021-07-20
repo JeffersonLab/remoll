@@ -20,6 +20,15 @@
 
 FROM jeffersonlab/remoll-builder:main
 
+# XrootD
+RUN yum --enablerepo=extras -y install epel-release
+RUN yum -y install python3-pip \
+    xrootd-client
+
+# Stashcp
+RUN pip3 install setuptools && \
+    pip3 install stashcp
+
 # Set remoll location
 ENV REMOLL=/jlab/remoll
 
