@@ -227,10 +227,11 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
     remollVertex vertex;
 
     // No sampling required
-    if (sampling_type == kNoTargetVolume) {
+    static bool sampling_type_has_been_warned = false;
+    if (sampling_type == kNoTargetVolume && ! sampling_type_has_been_warned) {
       G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
                 "kNoTargetVolume!" << G4endl;
-      return vertex;
+      sampling_type_has_been_warned = true;
     }
 
     // Check if target mother volume exists
