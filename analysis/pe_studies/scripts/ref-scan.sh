@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Takes 5 arguments
+# Takes 6 arguments
 # 
-# Fixed value of non-scanned variable - default = 80.0
+# Fixed value of non-scanned length - default = 80.0
+# Fixed value of non-scanned depth - default = -1
 # Variable to scan ("angle" or "x")   - default = "angle"
 # Min of scanned variable             - default = -30
 # Max of scanned variable             - default = 30
@@ -16,8 +17,9 @@ if [ "$#" -lt 1 ] ; then
     echo "  usage: ./ref-scan.sh fixed-non-scanned \"variable-to-scan\" min-of-scan (0) max-of-scan (30) step-size (1.0)
         Takes 10 arguments
 
-        Fixed value of non-scanned variable - default = 80.0
-        Variable to scan (\"angle\" or \"x\")   - default = \"angle\"
+        Fixed value of non-scanned length - default = 80.0
+        Fixed value of non-scanned depth - default = -1
+        Variable to scan (\"angle\" or \"x\" or \"d\")   - default = \"angle\"
         Min of scanned variable             - default = 0
         Max of scanned variable             - default = 30
         Step size                           - default = 1.0
@@ -30,7 +32,8 @@ if [ "$#" -lt 1 ] ; then
     exit
 fi
 
-fixed="$1"
+fixed1="$1"
+fixed2="$2"
 scanned="angle"
 q_r=0.0
 scanMin=0.0
@@ -40,34 +43,34 @@ reflectivity=0.7
 cerenkov=1
 scintillation=1
 geom="R5o"
-det=540210
 pass="1"
+det=540210
 if [ "$#" -gt 1 ] ; then
-    scanned="$2"
+    scanned="$3"
 fi
 if [ "$#" -gt 2 ] ; then
-    scanMin=$3
+    scanMin=$4
 fi
 if [ "$#" -gt 3 ] ; then
-    scanMax=$4
+    scanMax=$5
 fi
 if [ "$#" -gt 4 ] ; then
-    scanStep=$5
+    scanStep=$6
 fi
 if [ "$#" -gt 5 ] ; then
-    reflectivity=$6
+    reflectivity=$7
 fi
 if [ "$#" -gt 6 ] ; then
-    cerenkov=$(printf "%.0f" "$7")
+    cerenkov=$(printf "%.0f" "$8")
 fi
 if [ "$#" -gt 7 ] ; then
-    scintillation=$(printf "%.0f" "$8")
+    scintillation=$(printf "%.0f" "$9")
 fi
 if [ "$#" -gt 8 ] ; then
-    geom="${9}"
+    geom="${10}"
 fi
 if [ "$#" -gt 9 ] ; then
-    pass="${10}"
+    pass="${11}"
 fi
 user_ring="5.0"
 script_ring="5"
@@ -106,7 +109,7 @@ elif [[ $geom == "R6" ]] ; then
 fi
 secondpass="$pass"
 if [ "$#" -gt 10 ] ; then
-    det="${11}"
+    det="${12}"
 fi
 
 
@@ -114,14 +117,20 @@ fi
 tiltAngle=3.5
 refAngle=18.0
 refLength=80.0
+refDepth=-1
 z_p=0.0
+x_p=0.0
+y_p=0.0
 numSteps=$(printf "%.0f" "$(bc -l <<< \(${scanMax}-\(${scanMin}\)\)/$scanStep)")
-fixed=$(printf "%.1f" "$(bc -l <<< 1.0*$fixed)")
+fixed1=$(printf "%.1f" "$(bc -l <<< 1.0*$fixed1)")
+fixed2=$(printf "%.1f" "$(bc -l <<< 1.0*$fixed2)")
 z_point=0.0
+raster_x=0.0
+raster_y=0.0
 
 defaultName="refScanOut.root"
 outputName="refScanOut.root"
-name="refScan_0.0_degrees_0.0_L"
+name="refScan_0.0_degrees_0.0_L_0.0_D"
 
 cer="true"
 scint="true"
@@ -141,42 +150,55 @@ for currentStep in `seq 0 $numSteps`;
 do
     point=$(printf "%.1f" "$(bc -l <<< \($scanMin+\(1.0*$currentStep*$scanStep\)\))")
     if [[ "$scanned" == "angle" ]] ; then
-        refLength=$fixed
+        refLength=$fixed1
         refAngle=$point
+        refDepth=$fixed2
     fi
     if [[ "$scanned" == "x" ]] ; then
         refLength=$point
-        refAngle=$fixed
+        refAngle=$fixed1
+        refDepth=$fixed2
+    fi
+    if [[ "$scanned" == "d" ]] ; then
+        refLength=$fixed1
+        refAngle=$fixed2
+        refDepth=$point
     fi
 
 
-    name="${refAngle}_degrees_${refLength}_L_${reflectivity}_ref_${cerenkov}_cer_${scintillation}_scint"
+    name="${refAngle}_degrees_${refLength}_L_${refDepth}_D_${reflectivity}_ref_${cerenkov}_cer_${scintillation}_scint"
 
     cd ../../../remoll-detector-generator/
     outString=""
     OLDIFS=$IFS
     IFS=","
-    while read ring qR qL overlap qThick num2 num3 refL ref_angle lg_angle pmtR tilt pmtRad wallThickness extraPMT1 extraPMT2 z1 z2
+    while read ring qR qL overlap qThick num2 num3 refL ref_angle refD lg_angle pmtR tilt pmtRad wallThickness extraPMT1 extraPMT2 z1 z2
     do
         if [[ $ring != $user_ring ]] ; then 
             outString="$outString
-$ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$lg_angle,$pmtR,$tilt,$pmtRad,$wallThickness,$extraPMT1,$extraPMT2,$z1,$z2"
+$ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$refD,$lg_angle,$pmtR,$tilt,$pmtRad,$wallThickness,$extraPMT1,$extraPMT2,$z1,$z2"
             continue
         fi
         #xPosMax=$(printf "%.2f" "$(bc -l <<< ${pmtR}-10.0)")
         #xPosMin=$(printf "%.2f" "$(bc -l <<< ${qR}+0.5*${qL}+5.0)")
         z_p=$(printf "%.2f" "$(bc -l <<< ${z1}-0.55*$qThick)")
+        x_p=$(printf "%.2f" "$(bc -l <<< ${qL})") #Sets beam x-width to quartz width
+        #y_p=$(printf "%.2f" "$(bc -l <<< ${qR}*2.0*3.14159/28.0 + 0.5*${qL}*2.0*3.14159/28.0)") #sets beam y-width
+        y_p=$(printf "%.2f" "$(bc -l <<< ${qR}*0.22440+0.5*${qL}*0.22440)") #sets beam y-width
         #echo "$ring $xPosMin $xPosMax z = $z_p starting z = $z1 and second = $z2"
         ref_angle=$refAngle
         refL=$refLength
+        refD=$refDepth
         tiltAngle=$tilt
         q_r=$qR
         outString="$outString
-$ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$lg_angle,$pmtR,$tilt,$pmtRad,$wallThickness,$extraPMT1,$extraPMT2,$z1,$z2"
+$ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$refD,$lg_angle,$pmtR,$tilt,$pmtRad,$wallThickness,$extraPMT1,$extraPMT2,$z1,$z2"
     done < cadp.csv
     IFS=$OLDIFS
 
     z_point=$z_p
+    raster_x=$x_p
+    raster_y=$y_p
 
     if [[ "$pass" == "1" ]] ; then
         echo "$outString" > cadp_${geom}_${name}.csv
@@ -194,9 +216,16 @@ $ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$lg_angle,$pmtR,$til
 
         sed -i 's;'"/remoll/evgen/beam/rasterRefZ 0.0 mm"';'"/remoll/evgen/beam/rasterRefZ ${z_point} mm"';g' macros/scans_${geom}_${name}.mac
 
+        #Setting the beam position to the full dimensions of the quartz rather than a 25 mm x 25 mm square
+
+        sed -i 's;'"/remoll/evgen/beam/rasx 25.0 mm"';'"/remoll/evgen/beam/rasx ${raster_x} mm"';g' macros/scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/evgen/beam/rasy 25.0 mm"';'"/remoll/evgen/beam/rasy ${raster_y} mm"';g' macros/scans_${geom}_${name}.mac
+
+        #Beam changes made using x_p, y_p, raster_x, raster_y
+
         sed -i 's;'"/process/optical/processActivation Cerenkov false"';'"/process/optical/processActivation Cerenkov ${cer}"';g' macros/scans_${geom}_${name}.mac
         sed -i 's;'"/process/optical/processActivation Scintillation false"';'"/process/optical/processActivation Scintillation ${scint}"';g' macros/scans_${geom}_${name}.mac
-        sed -i 's;'"Mainz_0.0_degrees_0.0_x.root"';'"${geom}_${name}.root"';g' macros/scans_${geom}_${name}.mac
+        sed -i 's;'"Mainz_0.0_degrees_0.0_x_0.0_d.root"';'"${geom}_${name}.root"';g' macros/scans_${geom}_${name}.mac
     fi
 
     tmpFolder="ref-scans/$geom/out_${geom}_${name}"
@@ -217,8 +246,8 @@ $ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$lg_angle,$pmtR,$til
                 echo "Error, no remollout_${geom}_${name}.root file, retrying analysis"
                 secondpass="1"
             else
-                echo "./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}"
-                ./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}
+                echo "./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} refdepth\=${refDepth} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}"
+                ./pe remollout_${geom}_${name}.root ${det} angle\=${refAngle} reflength\=${refLength} refdepth\=${refDepth} reflectivity\=${reflectivity} cerenkov\=${cerenkov} scintillation\=${scintillation} z_pos\=${z_point}
                 convert remollout_${geom}_${name}*.png remollout_${geom}_${name}.pdf
                 rm remollout_${geom}_${name}*.png
                 #rm remollout_${geom}_${name}.root
