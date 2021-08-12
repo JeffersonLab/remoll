@@ -115,8 +115,8 @@ fi
 
 
 tiltAngle=3.5
-refAngle=18.0
-refLength=80.0
+refAngle=15.0 # Updated
+refLength=88.5 # Updated
 refDepth=-1
 z_p=0.0
 x_p=0.0
@@ -125,8 +125,11 @@ numSteps=$(printf "%.0f" "$(bc -l <<< \(${scanMax}-\(${scanMin}\)\)/$scanStep)")
 fixed1=$(printf "%.1f" "$(bc -l <<< 1.0*$fixed1)")
 fixed2=$(printf "%.1f" "$(bc -l <<< 1.0*$fixed2)")
 z_point=0.0
-raster_x=0.0
-raster_y=0.0
+# Added to adjust how the beam hits the quartz. Raster is set to 0.1 to minimize it. x_p and y_p are new as well
+raster_x=0.1
+raster_y=0.1
+xspread=0.0
+yspread=0.0
 
 defaultName="refScanOut.root"
 outputName="refScanOut.root"
@@ -197,8 +200,8 @@ $ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$refD,$lg_angle,$pmt
     IFS=$OLDIFS
 
     z_point=$z_p
-    raster_x=$x_p
-    raster_y=$y_p
+    x_spread=$x_p
+    y_spread=$y_p
 
     if [[ "$pass" == "1" ]] ; then
         echo "$outString" > cadp_${geom}_${name}.csv
@@ -216,12 +219,16 @@ $ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$refD,$lg_angle,$pmt
 
         sed -i 's;'"/remoll/evgen/beam/rasterRefZ 0.0 mm"';'"/remoll/evgen/beam/rasterRefZ ${z_point} mm"';g' macros/scans_${geom}_${name}.mac
 
-        #Setting the beam position to the full dimensions of the quartz rather than a 25 mm x 25 mm square
+        #Setting the beam raster to be minimal
 
         sed -i 's;'"/remoll/evgen/beam/rasx 25.0 mm"';'"/remoll/evgen/beam/rasx ${raster_x} mm"';g' macros/scans_${geom}_${name}.mac
         sed -i 's;'"/remoll/evgen/beam/rasy 25.0 mm"';'"/remoll/evgen/beam/rasy ${raster_y} mm"';g' macros/scans_${geom}_${name}.mac
 
-        #Beam changes made using x_p, y_p, raster_x, raster_y
+        #Setting the beam spread to the full dimension of the quartz
+        sed -i 's;'"/remoll/evgen/beam/xspread 25.0 mm"';'"/remoll/evgen/beam/rasx ${x_spread} mm"';g' macros/scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/evgen/beam/xspread 25.0 mm"';'"/remoll/evgen/beam/rasx ${y_spread} mm"';g' macros/scans_${geom}_${name}.mac
+
+        #End of changes to beam
 
         sed -i 's;'"/process/optical/processActivation Cerenkov false"';'"/process/optical/processActivation Cerenkov ${cer}"';g' macros/scans_${geom}_${name}.mac
         sed -i 's;'"/process/optical/processActivation Scintillation false"';'"/process/optical/processActivation Scintillation ${scint}"';g' macros/scans_${geom}_${name}.mac

@@ -56,8 +56,11 @@
 #/remoll/evgen/beam/z 45.0 mm
 #-11.5 degrees /remoll/evgen/beam/th -0.1047
 #/remoll/evgen/beam/direction -0.19937 0.0 0.97992
-/remoll/evgen/beam/rasx 25.0 mm
-/remoll/evgen/beam/rasy 25.0 mm
+/remoll/evgen/beam/rasx 25.0 mm # Overwritten by ref-scan.sh to be 0.1
+/remoll/evgen/beam/rasy 25.0 mm # Overwritten by ref-scan.sh to be 0.1
+#Adding a spread (removes the old role of the raster, values given here are irrelevant)
+/remoll/evgen/beam/xspread 25.0
+/remoll/evgen/beam/yspread 25.0
 /remoll/beamene 8000 MeV
 
 /remoll/evgen/beam/partName e-
