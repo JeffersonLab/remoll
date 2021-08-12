@@ -1,0 +1,33 @@
+# This is the current working geometry
+/remoll/setgeofile geometry/tid.gdml
+
+/remoll/setphysicslist QGSP_BERT_HP
+/run/initialize
+
+/remoll/SD/disable_all
+
+/remoll/SD/enable 1
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+/remoll/SD/enable 2
+/remoll/SD/detect lowenergyneutral 2
+/remoll/SD/detect secondaries 2
+/remoll/SD/detect boundaryhits 2
+
+/remoll/SD/enable 3
+/remoll/SD/detect lowenergyneutral 3
+/remoll/SD/detect secondaries 3
+/remoll/SD/detect boundaryhits 3
+
+
+## External Generator
+/remoll/evgen/set external
+/remoll/evgen/external/file /volatile/halla/moller12gev/ciprian/../zdemirog/moller_shieldConf14_part1/moller_shieldConf14_part1_100kEv_0249/o_remoll.root
+/remoll/evgen/external/detid 28
+/remoll/evgen/external/startEvent -1
+/remoll/evgen/external/zOffset -22007.0
+/remoll/filename tid_test.root
+
+/run/beamOn 10000
