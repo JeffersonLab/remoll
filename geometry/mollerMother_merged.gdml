@@ -22,8 +22,8 @@
     
     <box lunit="mm" name="hybridConcrete2" x="4000" y="5000" z="150"/>
     <box lunit="mm" name="hybridConcrete3" x="2700+1" y="2700+1" z="150+1"/>
-    <box lunit="mm" name="hybridConcrete4" x="4000" y="5000" z="150"/>
-    <cone name="Collar2_tube2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1051" rmin2="0" rmax2="1051" z="150+1"/>
+    <box lunit="mm" name="hybridConcrete4" x="4000" y="5000" z="250"/>
+    <cone name="Collar2_tube2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1051" rmin2="0" rmax2="1051" z="250+1"/>
 
     <box lunit="mm" name="hybridIronSupport_solid"
 	 x="2860"
@@ -44,12 +44,12 @@
 
   <box lunit="mm" name="fbhutTracker_solid"
        x="1"
-       y="5715"
+       y="5715-1500"
        z="11249.914"/>
 
   <box lunit="mm" name="sidehutTracker_solid"
        x="16799.56"
-       y="5715"
+       y="5715-1500"
        z="1"/>
    
   <box lunit="mm" name="tophutTracker_solid"
@@ -177,34 +177,34 @@
       
        <physvol name="hybridConcreteShielding3_phys">
         <volumeref ref="hybridConcreteShielding3_log"/>
-        <position name="hybridConcreteShielding3_pos" unit="mm" x="0" y="-965/2" z="17460+1590-250+376-50-100/2"/>
+        <position name="hybridConcreteShielding3_pos" unit="mm" x="0" y="-965/2" z="17460+1590-250+376-50"/>
       </physvol>
 
        <physvol name="fronthutTracker_phys">
         <volumeref ref="fronthutTracker_log"/>
-        <position name="fronthutTracker_pos" unit="mm" x="3864.356" y="0" z="10447.957"/>
+        <position name="fronthutTracker_pos" unit="mm" x="3864.356" y="-1500/2" z="10447.957"/>
        </physvol>
        <!-- 10'055.457-->
        
        <physvol name="sidehutTracker1_phys">
         <volumeref ref="sidehutTracker1_log"/>
-        <position name="sidehutTracker1_pos" unit="mm" x="3864.356+16799.56/2+1" y="0" z="10447.957-11249.914/2-1"/>
+        <position name="sidehutTracker1_pos" unit="mm" x="3864.356+16799.56/2+1" y="-1500/2" z="10447.957-11249.914/2-1"/>
        </physvol>
        
        <physvol name="sidehutTracker2_phys">
         <volumeref ref="sidehutTracker2_log"/>
-        <position name="sidehutTracker2_pos" unit="mm" x="3864.356+16799.56/2+1" y="0" z="10447.957+11249.914-11249.914/2+1"/>
+        <position name="sidehutTracker2_pos" unit="mm" x="3864.356+16799.56/2+1" y="-1500/2" z="10447.957+11249.914-11249.914/2+1"/>
        </physvol>
        
        <physvol name="backhutTracker_phys">
         <volumeref ref="backhutTracker_log"/>
-        <position name="backhutTracker_pos" unit="mm" x="3864.356+16799.56+1+1" y="0" z="10447.957"/>
+        <position name="backhutTracker_pos" unit="mm" x="3864.356+16799.56+1+1" y="-1500/2" z="10447.957"/>
        </physvol>
        <!-- 10'055.457-->
        
        <physvol name="tophutTracker_phys">
         <volumeref ref="tophutTracker_log"/>
-        <position name="tophutTracker_pos" unit="mm" x="3864.356+16799.56/2+1" y="5715/2+1" z="10447.957"/>
+        <position name="tophutTracker_pos" unit="mm" x="3864.356+16799.56/2+1" y="5715/2+1-1500" z="10447.957"/>
        </physvol>
        
       <!-- Downstream beampipe -->    

@@ -99,6 +99,10 @@
        y="6000"
        z="1"/>
 
+  <box lunit="mm" name="dsCoilVirtualPlane_solid"
+       x="2700"
+       y="2700"
+       z="1"/>
 </solids>
 
 <structure>
@@ -428,6 +432,58 @@
     <auxiliary auxtype="DetNo" auxvalue="5720"/>
   </volume>
 
+  <volume name="dsCoilVirtualPlane1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5701"/>
+  </volume>
+  
+  <volume name="dsCoilVirtualPlane2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5702"/>
+  </volume>
+  
+  <volume name="dsCoilVirtualPlane3_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5703"/>
+  </volume>
+  
+  <volume name="dsCoilVirtualPlane4_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5704"/>
+  </volume>
+  
+  
+  <volume name="dsCoilVirtualPlane5_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5705"/>
+  </volume>
+  
+  
   <!--<volume name="gemVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="gemVirtualPlane_solid"/>
@@ -683,7 +739,32 @@
     
     <physvol name="dsHybridVirtualPlane2_phys">
       <volumeref ref="dsHybridVirtualPlane2_log"/>
-      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19002+150"/>
+      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19002+250"/>
+    </physvol>
+    
+    <physvol name="dsCoilVirtualPlane1_phys">
+      <volumeref ref="dsCoilVirtualPlane1_log"/>
+      <position name="dsCoilVirtualPlane1_pos" unit="mm" y="0" z="5435.5"/>
+    </physvol>
+    
+    <physvol name="dsCoilVirtualPlane2_phys">
+      <volumeref ref="dsCoilVirtualPlane2_log"/>
+      <position name="dsCoilVirtualPlane2_pos" unit="mm" y="0" z="6447.5"/>
+    </physvol>
+    
+    <physvol name="dsCoilVirtualPlane3_phys">
+      <volumeref ref="dsCoilVirtualPlane3_log"/>
+      <position name="dsCoilVirtualPlane3_pos" unit="mm" y="0" z="7460"/>
+    </physvol>
+    
+    <physvol name="dsCoilVirtualPlane4_phys">
+      <volumeref ref="dsCoilVirtualPlane4_log"/>
+      <position name="dsCoilVirtualPlane4_pos" unit="mm" y="0" z="8800"/>
+    </physvol>
+    
+    <physvol name="dsCoilVirtualPlane5_phys">
+      <volumeref ref="dsCoilVirtualPlane5_log"/>
+      <position name="dsCoilVirtualPlane5_pos" unit="mm" y="0" z="10700"/>
     </physvol>
     
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
