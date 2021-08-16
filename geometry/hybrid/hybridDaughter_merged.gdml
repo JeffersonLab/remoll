@@ -26,7 +26,7 @@
 
     <constant name="boxDSMother_width" value="2700"/>
     <constant name="boxDSMother_height" value="2700"/>
-    <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73+150."/> 
+    <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73+150.+400"/> 
 
     <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL4_z+75+1425-75"/>
 
@@ -139,7 +139,7 @@
 
     <!--collar solids -->
     <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="612" rmax1="750" rmin2="621" rmax2="750" z="100+50"/>
-    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="998" rmax1="1300" rmin2="1007" rmax2="1300" z="100+50"/>
+    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1013" rmax1="1315" rmin2="1022" rmax2="1315" z="100+50"/>
 
 
     <!-- drift pipe -->
@@ -411,7 +411,7 @@
 
       <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
-	<position unit="mm" name="collar2pos" x="0" y="0" z="24016.09-DOFFSET-150./2."/>
+	<position unit="mm" name="collar2pos" x="0" y="0" z="24016.09-DOFFSET-150./2.+241.6"/>
         <rotation unit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
 
@@ -430,7 +430,7 @@
       <!-- this part of the downstream beampipe -->
     <physvol name="DSwindow">
       <volumeref ref="logicDSwindow"/>
-      <position name="DSwindow_pos" x="0" y="0" z="boxDSMother_length/2-484.88-150"/>
+      <position name="DSwindow_pos" x="0" y="0" z="boxDSMother_length/2-484.88-150-400"/>
     </physvol>
     <!--
     <physvol name="DSwindow_flange">
