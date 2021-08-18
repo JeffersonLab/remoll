@@ -46,6 +46,31 @@
     startphi="0" deltaphi="360" aunit="deg"
     rmax="1199" rmin="0" z="1" lunit="mm"/>
 
+  <tube
+    name="PMT_IR_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="1369" rmin="1368" z="1967.2" lunit="mm"/>
+
+  <tube
+    name="PMT_OR_solid1"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="1426" rmin="1425" z="1613.2" lunit="mm"/>
+
+  <tube
+    name="PMT_OR_solid2"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="1543" rmin="1542" z="1613.2" lunit="mm"/>
+
+  <tube
+    name="PMT_OR_solid3"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="1603" rmin="1602" z="1613.2" lunit="mm"/>
+
+  <tube
+    name="Cathode_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="38.1" rmin="0" z="1" lunit="mm"/>
+
 </solids>
 
 <structure>
@@ -386,11 +411,111 @@
     <auxiliary auxtype="DetNo" auxvalue="31"/>
   </volume>
 
+  <volume name="PMT_IR_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PMT_IR_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="76"/>
+  </volume>
+
+  <volume name="PMT_OR_log1">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PMT_OR_solid1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="77"/>
+  </volume>
+
+  <volume name="PMT_OR_log2">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PMT_OR_solid2"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="78"/>
+  </volume>
+
+  <volume name="PMT_OR_log3">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PMT_OR_solid3"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="79"/>
+  </volume>
+
+  <volume name="Cathode_log_R1_1">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Cathode_solid"/>
+    <auxiliary auxtype="Color" auxvalue="red"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="80"/>
+  </volume>
+
+  <volume name="Cathode_log_R1_2">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Cathode_solid"/>
+    <auxiliary auxtype="Color" auxvalue="green"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="81"/>
+  </volume>
+
+  <volume name="Cathode_log_R1_3">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Cathode_solid"/>
+    <auxiliary auxtype="Color" auxvalue="magenta"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="82"/>
+  </volume>
+
+  <volume name="Cathode_log_R3_1">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Cathode_solid"/>
+    <auxiliary auxtype="Color" auxvalue="red"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="83"/>
+  </volume>
+
+  <volume name="Cathode_log_R3_2">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Cathode_solid"/>
+    <auxiliary auxtype="Color" auxvalue="green"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="84"/>
+  </volume>
+
+  <volume name="Cathode_log_R3_3">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Cathode_solid"/>
+    <auxiliary auxtype="Color" auxvalue="magenta"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="85"/>
+  </volume>
+
+  <volume name="Cathode_log_R5_1">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Cathode_solid"/>
+    <auxiliary auxtype="Color" auxvalue="red"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="86"/>
+  </volume>
+
+  <volume name="Cathode_log_R5_2">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Cathode_solid"/>
+    <auxiliary auxtype="Color" auxvalue="green"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="87"/>
+  </volume>
+
+  <volume name="Cathode_log_R5_3">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Cathode_solid"/>
+    <auxiliary auxtype="Color" auxvalue="magenta"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="88"/>
+  </volume>
+
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
 
-    <physvol name="tgtPbCollar_phys">
+    <!--    <physvol name="tgtPbCollar_phys">
       <volumeref ref="tgtPbCollar_log"/>
       <position  name="tgtPbCollar_pos" unit="mm" x="0" y="0" z="-1449+0.5"/>
     </physvol>
@@ -588,9 +713,9 @@
     <physvol name="Collar2Exit_phys">
       <volumeref ref="Collar2Exit_log"/>
       <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="18941.09+150+0.5"/>
-    </physvol>
+    </physvol>-->
 
-    <!-- Tracking planes -->
+    <!-- Tracking planes
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
       <volumeref ref="gemVirtualPlane1_log"/>
       <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
@@ -606,30 +731,159 @@
     <physvol name="trackingDetectorVirtualPlaneBack2_phys">
       <volumeref ref="gemVirtualPlane4_log"/>
       <positionref ref="trackingDetectorVirtualPlaneBack2_pos"/>
-    </physvol>
+    </physvol> -->
     
-    <!-- Main detector plane -->
+    <!-- Main detector plane
     <physvol name="mainDetectorVirtualPlane_phys">
       <volumeref ref="mainDetectorVirtualPlane_log"/>
       <positionref ref="mainDetectorVirtualPlane_pos"/>
-    </physvol>
+    </physvol> -->
 
-    <!-- Main detector plane -->
+    <!-- Main detector plane
     <physvol name="showerMaxVir_phys">
       <volumeref ref="showerMaxVir_log"/>
       <positionref ref="showerMaxDetectorFaceUS"/>
-    </physvol>
+    </physvol> -->
 
-    <!-- Pion detector plane -->
+    <!-- Pion detector plane
     <physvol name="pionDetectorVirtualPlane_phys">
       <volumeref ref="pionDetectorVirtualPlane_log"/>
       <positionref ref="pionDetectorVirtualPlane_pos"/>
-    </physvol>
+    </physvol> -->
 
-    <physvol name="HallExit_phys">
+    <!--    <physvol name="HallExit_phys">
       <volumeref ref="HallExit_log"/>
       <position  name="HallExit_pos" unit="mm" x="0" y="0" z="26200"/>
+    </physvol> -->
+
+    <physvol name="PMT_IR_phys">
+      <volumeref ref="PMT_IR_log"/>
+      <position name="PMT_IR_pos" x="0" y="0" z="22521.3"/>
     </physvol>
+
+    <physvol name="PMT_OR_phys1">
+      <volumeref ref="PMT_OR_log1"/>
+      <position name="PMT_OR_pos1" x="0" y="0" z="22521.3"/>
+    </physvol>
+
+    <physvol name="PMT_OR_phys2">
+      <volumeref ref="PMT_OR_log2"/>
+      <position name="PMT_OR_pos2" x="0" y="0" z="22521.3"/>
+    </physvol>
+
+    <physvol name="PMT_OR_phys3">
+      <volumeref ref="PMT_OR_log3"/>
+      <position name="PMT_OR_pos3" x="0" y="0" z="22521.3"/>
+    </physvol>
+
+    <physvol name="Cathode_R1_phys1_1">
+      <volumeref ref="Cathode_log_R1_1"/>
+      <position name="Cathode_R1_pos1_1" x="1371*sin(pi/28)" y="1371.*cos(pi/28.)" z="22521.3+712"/>
+      <rotation name="Cathode_R1_rot1_1" aunit="rad" x="pi/2" y="-pi/28" z="0."/>
+    </physvol>
+
+    <physvol name="Cathode_R1_phys1_2">
+      <volumeref ref="Cathode_log_R1_1"/>
+      <position name="Cathode_R1_pos1_2" x="-1371*sin(pi/28)" y="1371*cos(pi/28)" z="22521.3+588"/>
+      <rotation name="Cathode_R1_rot1_2" aunit="rad" x="pi/2" y="pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R1_phys2_1">
+      <volumeref ref="Cathode_log_R1_2"/>
+      <position name="Cathode_R1_pos2_1" x="(1371+22)*sin(pi/28.)" y="(1371.+22)*cos(pi/28)" z="22521.3+712"/>
+      <rotation name="Cathode_R1_rot2_1" aunit="rad" x="pi/2" y="-pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R1_phys2_2">
+      <volumeref ref="Cathode_log_R1_2"/>
+      <position name="Cathode_R1_pos2_2" x="-(1371+22)*sin(pi/28)" y="(1371+22)*cos(pi/28)" z="22521.3+588"/>
+      <rotation name="Cathode_R1_rot2_2" aunit="rad" x="pi/2" y="pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R1_phys3_1">
+      <volumeref ref="Cathode_log_R1_3"/>
+      <position name="Cathode_R1_pos3_1" x="(1371+46)*sin(pi/28)" y="(1371.+46)*cos(pi/28)" z="22521.3+712"/>
+      <rotation name="Cathode_R1_rot3_1" aunit="rad" x="pi/2" y="-pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R1_phys3_2">
+      <volumeref ref="Cathode_log_R1_3"/>
+      <position name="Cathode_R1_pos3_2" x="-(1371+46)*sin(pi/28)" y="(1371+46)*cos(pi/28)" z="22521.3+588"/>
+      <rotation name="Cathode_R1_rot3_2" aunit="rad" x="pi/2" y="pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R3_phys1_1">
+      <volumeref ref="Cathode_log_R3_1"/>
+      <position name="Cathode_R3_pos1_1" x="1371*sin(pi/28)" y="1371.*cos(pi/28.)" z="22521.3+216"/>
+      <rotation name="Cathode_R3_rot1_1" aunit="rad" x="pi/2" y="-pi/28" z="0."/>
+    </physvol>
+
+    <physvol name="Cathode_R3_phys1_2">
+      <volumeref ref="Cathode_log_R3_1"/>
+      <position name="Cathode_R3_pos1_2" x="-1371*sin(pi/28)" y="1371*cos(pi/28)" z="22521.3+92"/>
+      <rotation name="Cathode_R3_rot1_2" aunit="rad" x="pi/2" y="pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R3_phys2_1">
+      <volumeref ref="Cathode_log_R3_2"/>
+      <position name="Cathode_R3_pos2_1" x="(1371+22)*sin(pi/28.)" y="(1371.+22)*cos(pi/28)" z="22521.3+216"/>
+      <rotation name="Cathode_R3_rot2_1" aunit="rad" x="pi/2" y="-pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R3_phys2_2">
+      <volumeref ref="Cathode_log_R3_2"/>
+      <position name="Cathode_R3_pos2_2" x="-(1371+22)*sin(pi/28)" y="(1371+22)*cos(pi/28)" z="22521.3+92"/>
+      <rotation name="Cathode_R3_rot2_2" aunit="rad" x="pi/2" y="pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R3_phys3_1">
+      <volumeref ref="Cathode_log_R3_3"/>
+      <position name="Cathode_R3_pos3_1" x="(1371+46)*sin(pi/28)" y="(1371.+46)*cos(pi/28)" z="22521.3+216"/>
+      <rotation name="Cathode_R3_rot3_1" aunit="rad" x="pi/2" y="-pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R3_phys3_2">
+      <volumeref ref="Cathode_log_R3_3"/>
+      <position name="Cathode_R3_pos3_2" x="-(1371+46)*sin(pi/28)" y="(1371+46)*cos(pi/28)" z="22521.3+92"/>
+      <rotation name="Cathode_R3_rot3_2" aunit="rad" x="pi/2" y="pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R5_phys1_1">
+      <volumeref ref="Cathode_log_R5_1"/>
+      <position name="Cathode_R5_pos1_1" x="1371*sin(pi/28)" y="1371.*cos(pi/28.)" z="22521.3-424"/>
+      <rotation name="Cathode_R5_rot1_1" aunit="rad" x="pi/2" y="-pi/28" z="0."/>
+    </physvol>
+
+    <physvol name="Cathode_R5_phys1_2">
+      <volumeref ref="Cathode_log_R5_1"/>
+      <position name="Cathode_R5_pos1_2" x="-1371*sin(pi/28)" y="1371*cos(pi/28)" z="22521.3-290"/>
+      <rotation name="Cathode_R5_rot1_2" aunit="rad" x="pi/2" y="pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R5_phys2_1">
+      <volumeref ref="Cathode_log_R5_2"/>
+      <position name="Cathode_R5_pos2_1" x="(1371+22)*sin(pi/28.)" y="(1371.+22)*cos(pi/28)" z="22521.3-424"/>
+      <rotation name="Cathode_R5_rot2_1" aunit="rad" x="pi/2" y="-pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R5_phys2_2">
+      <volumeref ref="Cathode_log_R5_2"/>
+      <position name="Cathode_R5_pos2_2" x="-(1371+22)*sin(pi/28)" y="(1371+22)*cos(pi/28)" z="22521.3-290"/>
+      <rotation name="Cathode_R5_rot2_2" aunit="rad" x="pi/2" y="pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R5_phys3_1">
+      <volumeref ref="Cathode_log_R5_3"/>
+      <position name="Cathode_R5_pos3_1" x="(1371+46)*sin(pi/28)" y="(1371.+46)*cos(pi/28)" z="22521.3-424"/>
+      <rotation name="Cathode_R5_rot3_1" aunit="rad" x="pi/2" y="-pi/28" z="0"/>
+    </physvol>
+
+    <physvol name="Cathode_R5_phys3_2">
+      <volumeref ref="Cathode_log_R5_3"/>
+      <position name="Cathode_R5_pos3_2" x="-(1371+46)*sin(pi/28)" y="(1371+46)*cos(pi/28)" z="22521.3-290"/>
+      <rotation name="Cathode_R5_rot3_2" aunit="rad" x="pi/2" y="pi/28" z="0"/>
+    </physvol>
+
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>

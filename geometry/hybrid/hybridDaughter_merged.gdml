@@ -15,7 +15,7 @@
     <constant name="DEGRAD" value="PI/180."/>
     <constant name="SEPTANT" value ="360./7"/>
     <position name="CENTER" unit="mm" x="0" y="0" z="0"/>
-    <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435-75"/>
+    <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435-75-200"/>
 
     <constant name="DELTAT" value ="1.0"/>
 
@@ -28,7 +28,7 @@
     <constant name="boxDSMother_height" value="2700"/>
     <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73+150.+400"/> 
 
-    <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL4_z+75+1425-75"/>
+    <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL4_z+75+1425-75-200"/>
 
 
     <constant name="bellows3_eps" value="0.35"/>
@@ -37,7 +37,7 @@
     <constant name="bellows3flange_Rthickness" value="88.5-bellows3_eps"/>
     <constant name="bellows3_length" value="419.4"/>
     <constant name="bellows3_Rthickness" value="31.0"/>
-    <constant name="bellows3_zpos" value="8946-4500-(11016.865-8.73/2+75)"/>
+    <constant name="bellows3_zpos" value="8946-4500-(11016.865-8.73/2+75+200)"/>
     <constant name="bellows3flangeUS_zpos" value="bellows3_zpos - bellows3_length/2 - bellows3flange_length/2 - bellows3_eps/2"/>
     <constant name="bellows3flangeDS_zpos" value="bellows3_zpos + bellows3_length/2 + bellows3flange_length/2 + bellows3_eps/2"/>
 
@@ -51,7 +51,7 @@
     <constant name="bellows4flange_Rthickness" value="114.3-bellows4_eps"/>
     <constant name="bellows4_length" value="148.0"/>
     <constant name="bellows4_Rthickness" value="84.1"/>
-    <constant name="bellows4_zpos" value="17075-4500-(11016.865-8.73/2+75)"/>
+    <constant name="bellows4_zpos" value="17075-4500-(11016.865-8.73/2+75+200)"/>
     <constant name="bellows4flangeUS_zpos" value="bellows4_zpos - bellows4_length/2 - bellows4flange_length/2 - bellows4_eps/2"/>
     <constant name="bellows4flangeDS_zpos" value="bellows4_zpos + bellows4_length/2 + bellows4flange_length/2 + bellows4_eps/2"/>
 
@@ -66,7 +66,7 @@
     <constant name="bellows5flange_Rthickness" value="29.9-bellows5_eps"/>
     <constant name="bellows5_length" value="100"/>
     <constant name="bellows5_Rthickness" value="28.4"/>
-    <constant name="bellows5_zpos" value="23430-4500-(11016.865-8.73/2+75)"/>
+    <constant name="bellows5_zpos" value="23430-4500-(11016.865-8.73/2+75+200)"/>
     <constant name="bellows5flangeUS_zpos" value="bellows5_zpos - bellows5_length/2 - bellows5flange_length/2 - bellows5_eps/2"/>
     <constant name="bellows5flangeDS_zpos" value="bellows5_zpos + bellows5_length/2 + bellows5flange_length/2 + bellows5_eps/2"/>
 
@@ -405,13 +405,13 @@
     
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
-	<position unit="mm" name="collar1pos" x="0" y="0" z="16950.09-DOFFSET-150./2."/>
+	<position unit="mm" name="collar1pos" x="0" y="0" z="16950.09-DOFFSET-150./2.-400./2"/>
         <rotation unit="rad" name="collar1rot" x="0" y="0" z="0"/>
       </physvol>
 
       <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
-	<position unit="mm" name="collar2pos" x="0" y="0" z="24016.09-DOFFSET-150./2.+241.6"/>
+	<position unit="mm" name="collar2pos" x="0" y="0" z="24016.09-DOFFSET-150./2.+241.6-400/2"/>
         <rotation unit="rad" name="collar2rot" x="0" y="0" z="0"/>
       </physvol>
 
@@ -423,7 +423,7 @@
 
       <physvol name="DScoil">
         <file name="hybrid/hybridToroid.gdml"/>
-	<position name="pos_hybridToroid" x="0" y="0" z="13335.194-DOFFSET-75"/>
+	<position name="pos_hybridToroid" x="0" y="0" z="13335.194-DOFFSET-75-200"/>
       </physvol>
 
 

@@ -60,8 +60,8 @@
     <materialref ref="Aluminium"/>
     <solidref ref="AnglePlateLeft_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-   <auxiliary auxtype="Color" auxvalue="red"/>-->
-    <auxiliary auxtype="DetNo" auxvalue="1997"/>
+   <auxiliary auxtype="Color" auxvalue="red"/>
+   <!--    <auxiliary auxtype="DetNo" auxvalue="1997"/>-->
   </volume>
 
   <volume name="AnglePlateRight_log">
@@ -69,7 +69,7 @@
     <solidref ref="AnglePlateRight_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
      <auxiliary auxtype="Color" auxvalue="red"/>
-    <auxiliary auxtype="DetNo" auxvalue="1998"/>
+	   <!--    <auxiliary auxtype="DetNo" auxvalue="1998"/>-->
   </volume>
 
   <volume name="LeadBrick_log">
@@ -77,7 +77,7 @@
     <solidref ref="LeadBrick_solid"/>
     <auxiliary auxtype="Color" auxvalue="orange"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="1999"/>
+    <!--    <auxiliary auxtype="DetNo" auxvalue="1999"/>-->
   </volume>
 
   <volume name="PlateRight_log">
@@ -85,7 +85,7 @@
       <solidref ref="PlateRight_solid"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2000"/>
+	    <!--      <auxiliary auxtype="DetNo" auxvalue="2000"/>-->
   </volume>
 
   <volume name="PlateLeft_log">
@@ -93,7 +93,7 @@
       <solidref ref="PlateLeft_solid"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2001"/>
+      <!--      <auxiliary auxtype="DetNo" auxvalue="2001"/>-->
   </volume>
 
   <volume name ="LeadPlateHole_log">
@@ -117,53 +117,53 @@
       <solidref ref="LeadPlateBottom_solid"/>
      <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2002"/>
+      <!--      <auxiliary auxtype="DetNo" auxvalue="2002"/>-->
            
          <physvol name="LeadPlateHole1_phys_1">
          <volumeref ref="LeadPlateHole_log"/>
-         <position name="LeadPlateHole1_pos_1" x="0" y="0" z="-588"/>
+         <position name="LeadPlateHole1_pos_1" x="0" y="0" z="-558"/>
          <rotation name="LeadPlateHole1_rot_1" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="LeadPlateHole1_phys_2">
          <volumeref ref="LeadPlateHole_log"/>
-         <position name="LeadPlateHole1_pos_2" x="0" y="0" z="-340"/>
+         <position name="LeadPlateHole1_pos_2" x="0" y="0" z="-424"/>
          <rotation name="LeadPlateHole1_rot_2" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="LeadPlateHole1_phys_3">
          <volumeref ref="LeadPlateHole_log"/>
-         <position name="LeadPlateHole1_pos_3" x="0" y="0" z="-92"/>
+         <position name="LeadPlateHole1_pos_3" x="-84" y="0" z="-290"/>
          <rotation name="LeadPlateHole1_rot_3" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="LeadPlateHole1_phys_4">
          <volumeref ref="LeadPlateHole_log"/>
-         <position name="LeadPlateHole1_pos_4" x="0" y="0" z="156"/>
+         <position name="LeadPlateHole1_pos_4" x="84" y="0" z="-290"/>
          <rotation name="LeadPlateHole1_rot_4" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
           <physvol name="LeadPlateHole1_phys_5">
           <volumeref ref="LeadPlateHole_log"/>
-          <position name="LeadPlateHole1_pos_5" x="0" y="0" z="290"/>
+          <position name="LeadPlateHole1_pos_5" x="0" y="0" z="-32"/>
           <rotation name="LeadPlateHole1_rot_5" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="LeadPlateHole1_phys_6">
           <volumeref ref="LeadPlateHole_log"/>
-          <position name="LeadPlateHole1_pos_6" x="84" y="0" z="424"/>
+          <position name="LeadPlateHole1_pos_6" x="0" y="0" z="216"/>
           <rotation name="LeadPlateHole1_rot_6" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="LeadPlateHole1_phys_7">
           <volumeref ref="LeadPlateHole_log"/>
-          <position name="LeadPlateHole1_pos_7" x="-84" y="0" z="424"/>
+          <position name="LeadPlateHole1_pos_7" x="0" y="0" z="464"/>
           <rotation name="LeadPlateHole1_rot_7" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="LeadPlateHole1_phys_8">
           <volumeref ref="LeadPlateHole_log"/>
-          <position name="LeadPlateHole1_pos_8" x="0" y="0" z="692"/>
+          <position name="LeadPlateHole1_pos_8" x="0" y="0" z="712"/>
           <rotation name="LeadPlateHole1_rot_8" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
                                                                                                                                                               
@@ -174,53 +174,53 @@
       <solidref ref="MountingPlateBottom_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2003"/>
+	      <!--      <auxiliary auxtype="DetNo" auxvalue="2003"/>-->
            
          <physvol name="AlPlateHole1_phys_1">
          <volumeref ref="AlPlateHole_log"/>
-         <position name="AlPlateHole1_pos_1" x="0" y="0" z="-588"/>
+         <position name="AlPlateHole1_pos_1" x="0" y="0" z="-558"/>
          <rotation name="AlPlateHole1_rot_1" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="AlPlateHole1_phys_2">
          <volumeref ref="AlPlateHole_log"/>
-         <position name="AlPlateHole1_pos_2" x="0" y="0" z="-340"/>
+         <position name="AlPlateHole1_pos_2" x="0" y="0" z="-424"/>
          <rotation name="AlPlateHole1_rot_2" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="AlPlateHole1_phys_3">
          <volumeref ref="AlPlateHole_log"/>
-         <position name="AlPlateHole1_pos_3" x="0" y="0" z="-92"/>
+         <position name="AlPlateHole1_pos_3" x="-84" y="0" z="-290"/>
          <rotation name="AlPlateHole1_rot_3" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="AlPlateHole1_phys_4">
          <volumeref ref="AlPlateHole_log"/>
-         <position name="AlPlateHole1_pos_4" x="0" y="0" z="156"/>
+         <position name="AlPlateHole1_pos_4" x="84" y="0" z="-290"/>
          <rotation name="AlPlateHole1_rot_4" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
           <physvol name="AlPlateHole1_phys_5">
           <volumeref ref="AlPlateHole_log"/>
-          <position name="AlPlateHole1_pos_5" x="0" y="0" z="290"/>
+          <position name="AlPlateHole1_pos_5" x="0" y="0" z="-32"/>
           <rotation name="AlPlateHole1_rot_5" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="AlPlateHole1_phys_6">
           <volumeref ref="AlPlateHole_log"/>
-          <position name="AlPlateHole1_pos_6" x="84" y="0" z="424"/>
+          <position name="AlPlateHole1_pos_6" x="0" y="0" z="216"/>
           <rotation name="AlPlateHole1_rot_6" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="AlPlateHole1_phys_7">
           <volumeref ref="AlPlateHole_log"/>
-          <position name="AlPlateHole1_pos_7" x="-84" y="0" z="424"/>
+          <position name="AlPlateHole1_pos_7" x="0" y="0" z="464"/>
           <rotation name="AlPlateHole1_rot_7" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="AlPlateHole1_phys_8">
           <volumeref ref="AlPlateHole_log"/>
-          <position name="AlPlateHole1_pos_8" x="0" y="0" z="692"/>
+          <position name="AlPlateHole1_pos_8" x="0" y="0" z="712"/>
           <rotation name="AlPlateHole1_rot_8" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
   </volume>
@@ -230,53 +230,53 @@
       <solidref ref="LeadPlateBottom_solid"/>
      <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2004"/>
+      <!--      <auxiliary auxtype="DetNo" auxvalue="2004"/>-->
            
          <physvol name="LeadPlateHole2_phys_1">
          <volumeref ref="LeadPlateHole_log"/>
-         <position name="LeadPlateHole2_pos_1" x="0" y="0" z="-712"/>
+         <position name="LeadPlateHole2_pos_1" x="0" y="0" z="-692"/>
          <rotation name="LeadPlateHole2_rot_1" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="LeadPlateHole2_phys_2">
          <volumeref ref="LeadPlateHole_log"/>
-         <position name="LeadPlateHole2_pos_2" x="0" y="0" z="-464"/>
+         <position name="LeadPlateHole2_pos_2" x="-84" y="0" z="-424"/>
          <rotation name="LeadPlateHole2_rot_2" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="LeadPlateHole2_phys_3">
          <volumeref ref="LeadPlateHole_log"/>
-         <position name="LeadPlateHole2_pos_3" x="0" y="0" z="-216"/>
+         <position name="LeadPlateHole2_pos_3" x="84" y="0" z="-424"/>
          <rotation name="LeadPlateHole2_rot_3" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="LeadPlateHole2_phys_4">
          <volumeref ref="LeadPlateHole_log"/>
-         <position name="LeadPlateHole2_pos_4" x="0" y="0" z="32"/>
+         <position name="LeadPlateHole2_pos_4" x="0" y="0" z="-290"/>
          <rotation name="LeadPlateHole2_rot_4" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
           <physvol name="LeadPlateHole2_phys_5">
           <volumeref ref="LeadPlateHole_log"/>
-          <position name="LeadPlateHole2_pos_5" x="-84" y="0" z="290"/>
+          <position name="LeadPlateHole2_pos_5" x="0" y="0" z="-156"/>
           <rotation name="LeadPlateHole2_rot_5" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="LeadPlateHole2_phys_6">
           <volumeref ref="LeadPlateHole_log"/>
-          <position name="LeadPlateHole2_pos_6" x="84" y="0" z="290"/>
+          <position name="LeadPlateHole2_pos_6" x="0" y="0" z="92"/>
           <rotation name="LeadPlateHole2_rot_6" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="LeadPlateHole2_phys_7">
           <volumeref ref="LeadPlateHole_log"/>
-          <position name="LeadPlateHole2_pos_7" x="0" y="0" z="424"/>
+          <position name="LeadPlateHole2_pos_7" x="0" y="0" z="340"/>
           <rotation name="LeadPlateHole2_rot_7" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="LeadPlateHole2_phys_8">
           <volumeref ref="LeadPlateHole_log"/>
-          <position name="LeadPlateHole2_pos_8" x="0" y="0" z="558"/>
+          <position name="LeadPlateHole2_pos_8" x="0" y="0" z="588"/>
           <rotation name="LeadPlateHole2_rot_8" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
                                                                                                                                                               
@@ -287,53 +287,53 @@
       <solidref ref="MountingPlateBottom_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2005"/>
+	      <!--      <auxiliary auxtype="DetNo" auxvalue="2005"/>-->
            
          <physvol name="AlPlateHole2_phys_1">
          <volumeref ref="AlPlateHole_log"/>
-         <position name="AlPlateHole2_pos_1" x="0" y="0" z="-712"/>
+         <position name="AlPlateHole2_pos_1" x="0" y="0" z="-692"/>
          <rotation name="AlPlateHole2_rot_1" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="AlPlateHole2_phys_2">
          <volumeref ref="AlPlateHole_log"/>
-         <position name="AlPlateHole2_pos_2" x="0" y="0" z="-464"/>
+         <position name="AlPlateHole2_pos_2" x="-84" y="0" z="-424"/>
          <rotation name="AlPlateHole2_rot_2" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="AlPlateHole2_phys_3">
          <volumeref ref="AlPlateHole_log"/>
-         <position name="AlPlateHole2_pos_3" x="0" y="0" z="-215"/>
+         <position name="AlPlateHole2_pos_3" x="84" y="0" z="-424"/>
          <rotation name="AlPlateHole2_rot_3" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
          <physvol name="AlPlateHole2_phys_4">
          <volumeref ref="AlPlateHole_log"/>
-         <position name="AlPlateHole2_pos_4" x="0" y="0" z="32"/>
+         <position name="AlPlateHole2_pos_4" x="0" y="0" z="-290"/>
          <rotation name="AlPlateHole2_rot_4" aunit="rad" x="pi/2" y="0" z="0"/>
          </physvol>
 
           <physvol name="AlPlateHole2_phys_5">
           <volumeref ref="AlPlateHole_log"/>
-          <position name="AlPlateHole2_pos_5" x="-84" y="0" z="290"/>
+          <position name="AlPlateHole2_pos_5" x="0" y="0" z="-156"/>
           <rotation name="AlPlateHole2_rot_5" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="AlPlateHole2_phys_6">
           <volumeref ref="AlPlateHole_log"/>
-          <position name="AlPlateHole2_pos_6" x="84" y="0" z="290"/>
+          <position name="AlPlateHole2_pos_6" x="0" y="0" z="92"/>
           <rotation name="AlPlateHole2_rot_6" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="AlPlateHole2_phys_7">
           <volumeref ref="AlPlateHole_log"/>
-          <position name="AlPlateHole2_pos_7" x="0" y="0" z="424"/>
+          <position name="AlPlateHole2_pos_7" x="0" y="0" z="340"/>
           <rotation name="AlPlateHole2_rot_7" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
 
           <physvol name="AlPlateHole2_phys_8">
           <volumeref ref="AlPlateHole_log"/>
-          <position name="AlPlateHole2_pos_8" x="0" y="0" z="558"/>
+          <position name="AlPlateHole2_pos_8" x="0" y="0" z="588"/>
           <rotation name="AlPlateHole2_rot_8" aunit="rad" x="pi/2" y="0" z="0"/>
           </physvol>
   </volume>
@@ -342,7 +342,7 @@
       <solidref ref="SidePlate_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2006"/>
+      <!--      <auxiliary auxtype="DetNo" auxvalue="2006"/>-->
   </volume>
 
  <volume name="BigOuterRing_log">
@@ -350,18 +350,17 @@
    <solidref ref="BigOuterRing_solid1"/>
     <auxiliary auxtype="Color" auxvalue="green"/>
    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-   <auxiliary auxtype="DetNo." auxvalue="2007"/>
+	      <!--   <auxiliary auxtype="DetNo." auxvalue="2007"/>-->
  </volume>
 
  <volume name="OuterBox1_log">
    <materialref ref="G4_Galactic"/>
    <solidref ref="OuterBox_solid"/>
    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-   <auxiliar auxtype="DetNo" auxvalue="2008"/>
-   
-        <physvol name="AnglePlateLeft_phys">
-        <volumeref ref="AnglePlateLeft_log"/>
-        <position name="AnglePlateLeft_pos" x="0" y="47.025" z="-850.25"/>
+   <!--   <auxiliar auxtype="DetNo" auxvalue="2008"/>-->
+        <physvol name="AnglePlateRight_phys">
+        <volumeref ref="AnglePlateRight_log"/>
+        <position name="AnglePlateRight_pos" x="0" y="72.025" z="-850.25"/>
         </physvol>
 
         <physvol name="SidePlate_phys_1">
@@ -400,11 +399,11 @@
    <materialref ref="G4_Galactic"/>
    <solidref ref="OuterBox_solid"/>
    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-   <auxiliar auxtype="DetNo" auxvalue="2009"/>
+	   <!--   <auxiliar auxtype="DetNo" auxvalue="2009"/>-->
    
-        <physvol name="AnglePlateRight_phys">
-        <volumeref ref="AnglePlateRight_log"/>
-        <position name="AnglePlateRight_pos" x="0" y="72.025" z="850.25"/>
+        <physvol name="AnglePlateLeft_phys">
+        <volumeref ref="AnglePlateLeft_log"/>
+        <position name="AnglePlateLeft_pos" x="0" y="47.025" z="850.25"/>
         </physvol>
 
         <physvol name="SidePlate_phys_1">
@@ -437,55 +436,6 @@
          <volumeref ref="LeadPlateBottom2_log"/>
          <position name="LeadPlateBottom2_pos" x="0" y="-102.975" z="0"/>
          </physvol>
-         <!--
-         <physvol name="PlateHole_phys_1">
-         <volumeref ref="PlateHole_log"/>
-         <position name="PlateHole_pos_1" x="0" y="0" z="-712"/>
-         <rotation name="PlateHole_rot_1" aunit="rad" x="pi/2" y="0" z="0"/>
-         </physvol>
-         
-         <physvol name="PlateHole_phys_2">
-         <volumeref ref="PlateHole_log"/>
-         <position name="PlateHole_pos_2" x="0" y="0" z="-464"/>
-         <rotation name="PlateHole_rot_2" aunit="rad" x="pi/2" y="0" z="0"/>
-         </physvol>
-
-         <physvol name="PlateHole_phys_3">
-         <volumeref ref="PlateHole_log"/>
-         <position name="PlateHole_pos_3" x="0" y="0" z="-216"/>
-         <rotation name="PlateHole_rot_3" aunit="rad" x="pi/2" y="0" z="0"/>
-         </physvol>
-
-         <physvol name="PlateHole_phys_4">
-         <volumeref ref="PlateHole_log"/>
-         <position name="PlateHole_pos_4" x="0" y="0" z="32"/>
-         <rotation name="PlateHole_rot_4" aunit="rad" x="pi/2" y="0" z="0"/>
-         </physvol>
-
-          <physvol name="PlateHole_phys_5">
-          <volumeref ref="PlateHole_log"/>
-          <position name="PlateHole_pos_5" x="84" y="0" z="290"/>
-          <rotation name="PlateHole_rot_5" aunit="rad" x="pi/2" y="0" z="0"/>
-          </physvol>
-
-          <physvol name="PlateHole_phys_6">
-          <volumeref ref="PlateHole_log"/>
-          <position name="PlateHole_pos_6" x="-84" y="0" z="290"/>
-          <rotation name="PlateHole_rot_6" aunit="rad" x="pi/2" y="0" z="0"/>
-          </physvol>
-
-          <physvol name="PlateHole_phys_7">
-          <volumeref ref="PlateHole_log"/>
-          <position name="PlateHole_pos_7" x="0" y="0" z="424"/>
-          <rotation name="PlateHole_rot_7" aunit="rad" x="pi/2" y="0" z="0"/>
-          </physvol>
-
-          <physvol name="PlateHole_phys_8">
-          <volumeref ref="PlateHole_log"/>
-          <position name="PlateHole_pos_8" x="0" y="0" z="558"/>
-          <rotation name="PlateHole_rot_8" aunit="rad" x="pi/2" y="0" z="0"/>
-          </physvol>   
--->                                                                                  
         </volume>
 
  <volume name="logicBox_shielding">
@@ -525,23 +475,6 @@
  <volume name="logicMother_shielding">
  <materialref ref="G4_Galactic"/>
  <solidref ref="logicMother_solid"/>
- <!--
-   <physvol name="BigOuterRing1_phys">
-        <volumeref ref="BigOuterRing_log"/>
-        <position name="BigOuterRing1_pos" lunit="mm" x="0" y="0" z="907.4"/>
-      </physvol>
-    <physvol name="BigOuterRing2_phys">
-        <volumeref ref="BigOuterRing_log"/>
-        <position name="BigOuterRing2_pos" lunit="mm" x="0" y="0" z="-907.4"/>
-    </physvol>
--->
-    <!--  
-    <physvol>
-      <volumeref ref="OuterBox_log"/>
-      <position name="OuterBox_pos" lunit="mm" x="0" y="1651-137.5" z="0"/>
-      <rotation name="OuterBox_rot" aunit="rad" x="0" y="0" z="shieldingPMTangle"/>
-    </physvol>
-    -->
     <physvol name="Set1">
       <volumeref ref="logicBox_shielding"/>
       <position name="Set1_pos" lunit="mm" x="0" y="0" z="0"/>
