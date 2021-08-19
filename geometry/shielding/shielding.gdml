@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE gdml [
-        <!ENTITY materials SYSTEM "materialsNew.xml"> 
-]>
-
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
-
-
-&materials;
-<!-- &solids; -->
+<materials>
+</materials>
 
 <define>
   <constant name="shieldingPMTangle" value="360*pi/28/180"/>

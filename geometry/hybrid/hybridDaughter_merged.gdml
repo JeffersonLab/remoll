@@ -24,8 +24,8 @@
     <constant name="posPCOLL4_z" value ="9825-DOFFSET-col4shift-50.0/2"/> <!--subtracting 50/2 from z to compensate for increased thickness so that downstream end still ends at the same point as before-->
 
 
-    <constant name="boxDSMother_width" value="2700"/>
-    <constant name="boxDSMother_height" value="2700"/>
+    <constant name="boxDSMother_width" value="5800"/>
+    <constant name="boxDSMother_height" value="5800"/>
     <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73+150.+400"/> 
 
     <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL4_z+75+1425-75-200"/>
@@ -214,6 +214,12 @@
       <zplane rmin="506.1201" rmax="510.8826" z="36"/>
     </polycone>
 
+    <box lunit="mm" name="Barite_Collar2_solid" x="4000" y="4800" z="400"/>
+
+   <tube
+    name="Barite_hole_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="0" rmax="1315" z="400" lunit="mm"/>
 
 </solids>
 
@@ -236,6 +242,29 @@
       <solidref ref="solidCollar2"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>
+
+    <volume name="logicBariteHole">
+      <materialref ref="Vacuum"/>
+      <solidref ref="Barite_hole_solid"/>
+      <auxiliary auxtype="Color" auxvalue="yellow"/>
+      <physvol name="phys_Collar2">
+              <volumeref ref="logicCollar2"/>
+	       <position name="Colar2_pos" x="0" y="0" z="125" unit="mm"/>
+      </physvol>
+    </volume>
+
+    <volume name="logic_Barite_Collar2">
+      <materialref ref="Vacuum"/>
+      <solidref ref="Barite_Collar2_solid"/>
+      <auxiliary auxtype="Color" auxvalue="brown"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <physvol name="phys_BariteHole">
+              <volumeref ref="logicBariteHole"/>
+	       <position name="BariteHole_pos" x="0" y="400" z="0" unit="mm"/>
+      </physvol>
+      </volume>
+
+
 
     <volume name="SubCoil1EpoxyShield1_logic">
       <materialref ref="Tungsten"/>
@@ -409,10 +438,15 @@
         <rotation unit="rad" name="collar1rot" x="0" y="0" z="0"/>
       </physvol>
 
-      <physvol name="collar2">
+      <!--      <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
 	<position unit="mm" name="collar2pos" x="0" y="0" z="24016.09-DOFFSET-150./2.+241.6-400/2"/>
         <rotation unit="rad" name="collar2rot" x="0" y="0" z="0"/>
+      </physvol>-->
+
+      <physvol name="Phy_Barite_Collar2">
+        <volumeref ref="logic_Barite_Collar2"/>
+	<position unit="mm" name="BariteCollar2pos" x="0" y="-400" z="24016.09-DOFFSET-125.-150./2.+241.6-400/2"/>
       </physvol>
 
 <!-- Downstream of coll4 central collimating beampipe -->
