@@ -254,7 +254,7 @@
     </volume>
 
     <volume name="logic_Barite_Collar2">
-      <materialref ref="Vacuum"/>
+      <materialref ref="BariteConcrete"/>
       <solidref ref="Barite_Collar2_solid"/>
       <auxiliary auxtype="Color" auxvalue="brown"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
