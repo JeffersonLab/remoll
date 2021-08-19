@@ -597,20 +597,35 @@
 	   <zplane rmin="42.0" rmax="45.0" z="170"/>
 	</polycone>
 
-	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll6Ring_solid">
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll6_1_Ring_solid">
 	   <zplane rmin="55" rmax="58.0" z="0"/>
 	   <zplane rmin="55" rmax="58.0" z="100"/>
 	</polycone>
 
-        <box lunit="mm" name="Coll6Box_solid" x="132" y="34" z="100"/>
+        <box lunit="mm" name="Coll6_1_Box_solid" x="90" y="25" z="100"/>
 
-	<cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6Cylinder_solid" rmax1="58" rmax2="58" rmin1="0" rmin2="0" startphi="0" z="101"/>
+	<cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6_1_Cylinder_solid" rmax1="55" rmax2="55" rmin1="0" rmin2="0" startphi="0" z="101"/>
 
-	<subtraction name="Coll6_solid">
-	   <first ref="Coll6Box_solid"/>
-	   <second ref="Coll6Cylinder_solid"/>
-	   <position name="Coll6Sub_pos" unit="mm" x="66" y="0" z="0" />
+	<subtraction name="Coll6_1_solid">
+	   <first ref="Coll6_1_Box_solid"/>
+	   <second ref="Coll6_1_Cylinder_solid"/>
+	   <position name="Coll6_1_Sub_pos" unit="mm" x="90./2" y="0" z="0" />
 	</subtraction>
+
+        <box lunit="mm" name="Coll6_2_Box_solid" x="125" y="25" z="100"/>
+
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll6_2_Ring_solid">
+	   <zplane rmin="62" rmax="125.0" z="0"/>
+	   <zplane rmin="62" rmax="125.0" z="100"/>
+        </polycone>
+
+	<cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6_2_Cylinder_solid" rmax1="125" rmax2="125" rmin1="62" rmin2="62" startphi="0" z="100"/>
+
+	<!--	<subtraction name="Coll6_2_solid">
+	   <first ref="Coll6_2_Box_solid"/>
+	   <second ref="Coll6_2_Cylinder_solid"/>
+	   <position name="Coll6_2_Sub_pos" unit="mm" x="90./2" y="0" z="0" />
+   </subtraction>-->
 
         <box lunit="mm" name="EPShieldAtColl5_solid" x="74.22-46" y="10" z="70"/>
 
@@ -679,22 +694,31 @@
 	</volume>
 
 <!-- This is part of coll6 -->
-	<volume name="Coll6Ring_logic">
+	<volume name="Coll6_1_Ring_logic">
 		<materialref ref="G4_CW95"/>
-		<solidref ref="Coll6Ring_solid"/>
+		<solidref ref="Coll6_1_Ring_solid"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="2006"/>
 	</volume>
 
-	<volume name="Coll6_logic">
+	<volume name="Coll6_1_logic">
 		<materialref ref="G4_CW95"/>
-		<solidref ref="Coll6_solid"/>
+		<solidref ref="Coll6_1_solid"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="2006"/>
+	</volume>
+
+	<volume name="Coll6_2_Ring_logic">
+		<materialref ref="G4_CW95"/>
+		<solidref ref="Coll6_2_Ring_solid"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2007"/>
 	</volume>
 
 <!-- This is the handle of Coll5 -->
@@ -2384,51 +2408,56 @@
 			<position name="SubCoil2EpoxyShield_pos" unit="mm" x="0" y="0" z="-1335.194"/>
 		</physvol>
 		
-		<physvol name="Coll6Ring_pv">
-			<volumeref ref="Coll6Ring_logic"/>
-			<position name="Coll6Ring_pos" x="0" y="0" z="1664.806"/>
-		</physvol>
+<!--		<physvol name="Coll6_1_Ring_pv">
+			<volumeref ref="Coll6_1_Ring_logic"/>
+			<position name="Coll6_1_Ring_pos" x="0" y="0" z="1172.106"/>
+		</physvol>-->
 
-		<physvol name="Coll6_1_pv">
-			<volumeref ref="Coll6_logic"/>
-			<position name="Coll6_1_pos" unit="mm" x="66*cos(pi+0*pi/7.)" y="66*sin(pi+0*pi/7.)" z="1664.806+50."/>
+		<physvol name="Coll6_1_1_pv">
+			<volumeref ref="Coll6_1_logic"/>
+			<position name="Coll6_1_1_pos" unit="mm" x="45*cos(pi+0*pi/7.)" y="45*sin(pi+0*pi/7.)" z="1172.106+50."/>
 			<rotation name="rot_dsshield1" x="0" y="0" z="0"/>
 		</physvol>
 
-		<physvol name="Coll6_2_pv">
-			<volumeref ref="Coll6_logic"/>
-			<position name="Coll6_2_pos" unit="mm" x="66*cos(pi+2*pi/7.)" y="66*sin(pi+2*pi/7.)" z="1664.806+50."/>
+		<physvol name="Coll6_1_2_pv">
+			<volumeref ref="Coll6_1_logic"/>
+			<position name="Coll6_1_2_pos" unit="mm" x="45*cos(pi+2*pi/7.)" y="45*sin(pi+2*pi/7.)" z="1172.106+50."/>
 			<rotation name="rot_dsshield2" x="0" y="0" z="-2*pi/7."/>
 		</physvol>
 
-		<physvol name="Coll6_3_pv">
-			<volumeref ref="Coll6_logic"/>
-			<position name="Coll6_3_pos" unit="mm" x="66*cos(pi+4*pi/7.)" y="66*sin(pi+4*pi/7.)" z="1664.806+50."/>
+		<physvol name="Coll6_1_3_pv">
+			<volumeref ref="Coll6_1_logic"/>
+			<position name="Coll6_1_3_pos" unit="mm" x="45*cos(pi+4*pi/7.)" y="45*sin(pi+4*pi/7.)" z="1172.106+50."/>
 			<rotation name="rot_dsshield3" x="0" y="0" z="-4*pi/7."/>
 		</physvol>
 
-		<physvol name="Coll6_4_pv">
-			<volumeref ref="Coll6_logic"/>
-			<position name="Coll6_4_pos" unit="mm" x="66*cos(pi+6*pi/7.)" y="66*sin(pi+6*pi/7.)" z="1664.806+50."/>
+		<physvol name="Coll6_1_4_pv">
+			<volumeref ref="Coll6_1_logic"/>
+			<position name="Coll6_1_4_pos" unit="mm" x="45*cos(pi+6*pi/7.)" y="45*sin(pi+6*pi/7.)" z="1172.106+50."/>
 			<rotation name="rot_dsshield4" x="0" y="0" z="-6*pi/7."/>
 		</physvol>
 
-		<physvol name="Coll6_5_pv">
-			<volumeref ref="Coll6_logic"/>
-			<position name="Coll6_5_pos" unit="mm" x="66*cos(pi+8*pi/7.)" y="66*sin(pi+8*pi/7.)" z="1664.806+50."/>
+		<physvol name="Coll6_1_5_pv">
+			<volumeref ref="Coll6_1_logic"/>
+			<position name="Coll6_1_5_pos" unit="mm" x="45*cos(pi+8*pi/7.)" y="45*sin(pi+8*pi/7.)" z="1172.106+50."/>
 			<rotation name="rot_dsshield5" x="0" y="0" z="-8*pi/7."/>
 		</physvol>
 
-		<physvol name="Coll6_6_pv">
-			<volumeref ref="Coll6_logic"/>
-			<position name="Coll6_6_pos" unit="mm" x="66*cos(pi+10*pi/7.)" y="66*sin(pi+10*pi/7.)" z="1664.806+50."/>
+		<physvol name="Coll6_1_6_pv">
+			<volumeref ref="Coll6_1_logic"/>
+			<position name="Coll6_1_6_pos" unit="mm" x="45*cos(pi+10*pi/7.)" y="45*sin(pi+10*pi/7.)" z="1172.106+50."/>
 			<rotation name="rot_dsshield6" x="0" y="0" z="-10*pi/7."/>
 		</physvol>
 
-		<physvol name="Coll6_7_pv">
-			<volumeref ref="Coll6_logic"/>
-			<position name="Coll6_7_pos" unit="mm" x="66*cos(pi+12*pi/7.)" y="66*sin(pi+12*pi/7.)" z="1664.806+50."/>
+		<physvol name="Coll6_1_7_pv">
+			<volumeref ref="Coll6_1_logic"/>
+			<position name="Coll6_1_7_pos" unit="mm" x="45*cos(pi+12*pi/7.)" y="45*sin(pi+12*pi/7.)" z="1172.106+50."/>
 			<rotation name="rot_dsshield7" x="0" y="0" z="-12*pi/7."/>
+		</physvol>
+
+		<physvol name="Coll6_2_Ring_pv">
+			<volumeref ref="Coll6_2_Ring_logic"/>
+			<position name="Coll6Ring_pos" x="0" y="0" z="1172.106+1504.95"/>
 		</physvol>
 
 		<physvol name="phys_Col5_1">
