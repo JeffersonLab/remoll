@@ -46,6 +46,8 @@ class remollBeamTarget {
         static G4double fActiveTargetEffectiveLength;
         // Positions are in physical distances (i.e. in cm)
         static G4double fMotherTargetAbsolutePosition;
+        // Flag to require recomputation of effective lengths
+        static bool fUpdateNeeded;
 
     public:
         static void UpdateInfo();
@@ -55,14 +57,17 @@ class remollBeamTarget {
         static void ResetTargetVolumes() {
           fTargetVolumes.clear();
           fTargetMothers.clear();
+          fUpdateNeeded = true;
         }
         static void AddMotherVolume(G4VPhysicalVolume *v, const G4String& tag) {
           fTargetMothers.push_back(std::make_pair(v,tag));
           fTargetVolumes.resize(fTargetMothers.size());
           fActiveTargetMother = fTargetMothers.size() - 1;
+          fUpdateNeeded = true;
         }
         static void AddTargetVolume(G4VPhysicalVolume *v, const G4String& tag) {
           fTargetVolumes[fActiveTargetMother].push_back(std::make_pair(v,tag));
+          fUpdateNeeded = true;
         }
         static std::vector<std::pair<G4VPhysicalVolume*,G4String>> GetTargetVolumes() {
           return fTargetVolumes[fActiveTargetMother];

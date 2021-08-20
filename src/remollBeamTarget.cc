@@ -39,6 +39,7 @@ std::vector<std::vector<std::pair<G4VPhysicalVolume*,G4String>>> remollBeamTarge
 G4double remollBeamTarget::fActiveTargetEffectiveLength  = -1e9;
 G4double remollBeamTarget::fMotherTargetAbsolutePosition = -1e9;
 G4double remollBeamTarget::fTotalTargetEffectiveLength = 0.0;
+G4bool remollBeamTarget::fUpdateNeeded = true;
 
 remollBeamTarget::remollBeamTarget()
 : fBeamEnergy(gDefaultBeamE),fBeamCurrent(gDefaultBeamCur),fBeamPolarization(gDefaultBeamPol),
@@ -97,6 +98,8 @@ G4double remollBeamTarget::GetEffLumin(SamplingType_t sampling_type)
 
 void remollBeamTarget::PrintTargetInfo()
 {
+    if (fUpdateNeeded) UpdateInfo();
+
     for (auto mother  = fTargetMothers.begin();
               mother != fTargetMothers.end();
               mother++) {
@@ -118,9 +121,6 @@ void remollBeamTarget::PrintTargetInfo()
         }
     }
 
-    SetActiveTargetMother(fActiveTargetMotherName);
-    SetActiveTargetVolume(fActiveTargetVolumeName);
-
     G4cout << "Current active target: " << G4endl;
     G4cout << "Target mother = " << fActiveTargetMotherName << G4endl;
     G4cout << "Target volume = " << fActiveTargetVolumeName << G4endl;
@@ -141,6 +141,27 @@ void remollBeamTarget::UpdateInfo()
     // Can't calculate anything without mother, let's hope we find one later on
     if (fTargetMothers.size() == 0) {
       return;
+    }
+
+    // Find mother volume
+    for (auto mother  = fTargetMothers.begin();
+              mother != fTargetMothers.end();
+              mother++) {
+
+      if ((*mother).second == fActiveTargetMotherName) {
+        fActiveTargetMother = mother - fTargetMothers.begin();
+      }
+    }
+
+    // Find target volume
+    for (auto daughter  = fTargetVolumes[fActiveTargetMother].begin();
+              daughter != fTargetVolumes[fActiveTargetMother].end();
+              daughter++) {
+
+      if ((*daughter).second == fActiveTargetVolumeName) {
+        fActiveTargetVolume = daughter - fTargetVolumes[fActiveTargetMother].begin();
+      }
+
     }
 
     // Get absolute position
@@ -177,47 +198,23 @@ void remollBeamTarget::UpdateInfo()
 	    fActiveTargetEffectiveLength = 2.0 * z_half_length * material->GetDensity();
 	}
     }
+
+    fUpdateNeeded = false;
 }
 
 
 void remollBeamTarget::SetActiveTargetMother(G4String name)
 {
   G4AutoLock lock(&remollBeamTargetMutex);
-
-  for (auto mother  = fTargetMothers.begin();
-            mother != fTargetMothers.end();
-            mother++) {
-
-    if ((*mother).second == name) {
-      fActiveTargetMotherName = name;
-      fActiveTargetMother = mother - fTargetMothers.begin();
-    }
-
-  }
-
-  lock.unlock();
-
-  UpdateInfo();
+  fActiveTargetMotherName = name;
+  fUpdateNeeded = true;
 }
 
 void remollBeamTarget::SetActiveTargetVolume(G4String name)
 {
   G4AutoLock lock(&remollBeamTargetMutex);
-
-  for (auto daughter  = fTargetVolumes[fActiveTargetMother].begin();
-            daughter != fTargetVolumes[fActiveTargetMother].end();
-            daughter++) {
-
-    if ((*daughter).second == name) {
-      fActiveTargetVolumeName = name;
-      fActiveTargetVolume = daughter - fTargetVolumes[fActiveTargetMother].begin();
-    }
-
-  }
-
-  lock.unlock();
-
-  UpdateInfo();
+  fActiveTargetVolumeName = name;
+  fUpdateNeeded = true;
 }
 
 
@@ -230,10 +227,11 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
     remollVertex vertex;
 
     // No sampling required
-    if (sampling_type == kNoTargetVolume) {
+    static bool sampling_type_has_been_warned = false;
+    if (sampling_type == kNoTargetVolume && ! sampling_type_has_been_warned) {
       G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ << ": " <<
                 "kNoTargetVolume!" << G4endl;
-      return vertex;
+      sampling_type_has_been_warned = true;
     }
 
     // Check if target mother volume exists
@@ -255,6 +253,9 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
 
     // Sample where along target weighted by density (which roughly corresponds to A
     // or the number of electrons, which is probably good enough for this
+
+    // Update if needed
+    if (fUpdateNeeded) UpdateInfo();
 
     // Figure out how far along the target we got
     G4double total_effective_length = 0;
