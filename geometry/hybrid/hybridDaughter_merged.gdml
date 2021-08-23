@@ -438,12 +438,6 @@
         <rotation unit="rad" name="collar1rot" x="0" y="0" z="0"/>
       </physvol>
 
-      <!--      <physvol name="collar2">
-        <volumeref ref="logicCollar2"/>
-	<position unit="mm" name="collar2pos" x="0" y="0" z="24016.09-DOFFSET-150./2.+241.6-400/2"/>
-        <rotation unit="rad" name="collar2rot" x="0" y="0" z="0"/>
-      </physvol>-->
-
       <physvol name="Phy_Barite_Collar2">
         <volumeref ref="logic_Barite_Collar2"/>
 	<position unit="mm" name="BariteCollar2pos" x="0" y="-400" z="24016.09-DOFFSET-125.-150./2.+241.6-400/2"/>
