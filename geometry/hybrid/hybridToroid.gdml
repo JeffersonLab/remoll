@@ -585,7 +585,7 @@
 		<position name="position"  x="0" y="36.214" z="-25.7573"/>
 	</union>
 		<!--<tube name="solid_DS_toroidMother" rmin="0"  rmax="420.97" z="6967.488" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>-->
-	<tube name="solid_DS_toroidMother" rmin="0"  rmax="615" z="6967.488" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<tube name="solid_DS_toroidMother" rmin="0"  rmax="810" z="6967.488" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SubCoil1EpoxyShield2_solid">
 	   <zplane rmin="32.6715" rmax="38.6715" z="0"/>
@@ -604,7 +604,7 @@
 
         <box lunit="mm" name="Coll6_1_Box_solid" x="90" y="25" z="100"/>
 
-	<cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6_1_Cylinder_solid" rmax1="55" rmax2="55" rmin1="0" rmin2="0" startphi="0" z="101"/>
+	<cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6_1_Cylinder_solid" rmax1="55" rmax2="58.8" rmin1="0" rmin2="0" startphi="0" z="101"/>
 
 	<subtraction name="Coll6_1_solid">
 	   <first ref="Coll6_1_Box_solid"/>
@@ -616,7 +616,7 @@
 
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll6_2_Ring_solid">
 	   <zplane rmin="62" rmax="125.0" z="0"/>
-	   <zplane rmin="62" rmax="125.0" z="100"/>
+	   <zplane rmin="69.9" rmax="125.0" z="100"/>
         </polycone>
 
 	<cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6_2_Cylinder_solid" rmax1="125" rmax2="125" rmin1="62" rmin2="62" startphi="0" z="100"/>
@@ -631,25 +631,25 @@
 
 	            <!-- Lintels solid -->
 	<arb8 name="Lintel_s1"
-	  v1x="-401" v1y="-110"
-          v2x="-600" v2y="-110"
-          v3x="-600" v3y="0"
-          v4x="-396" v4y="0"
-          v5x="-405" v5y="-110"
-          v6x="-600" v6y="-110"
-          v7x="-600" v7y="0"
-          v8x="-400" v8y="0"
+	  v1x="-494" v1y="-140"
+          v2x="-800" v2y="-100"
+          v3x="-800" v3y="0"
+          v4x="-478" v4y="0"
+          v5x="-499" v5y="-140"
+          v6x="-800" v6y="-100"
+          v7x="-800" v7y="0"
+          v8x="-483" v8y="0"
           dz="50" lunit="mm"/>
 
 	<arb8 name="Lintel_s2"
-	  v1x="-396" v1y="0"
-          v2x="-600" v2y="0"
-          v3x="-600" v3y="110"
-          v4x="-401" v4y="110"
-          v5x="-400" v5y="0"
-          v6x="-600" v6y="0"
-          v7x="-600" v7y="110"
-          v8x="-405" v8y="110"
+	  v1x="-478" v1y="0"
+          v2x="-800" v2y="0"
+          v3x="-800" v3y="100"
+          v4x="-494" v4y="140"
+          v5x="-483" v5y="0"
+          v6x="-800" v6y="0"
+          v7x="-800" v7y="100"
+          v8x="-499" v8y="140"
     	  dz="50" lunit="mm"/>
 
 </solids>
@@ -2544,83 +2544,83 @@
 			<rotation name="rot_EPshieldAtColl5_7" x="0" y="0" z="-12*pi/7."/>
 		</physvol>
 		
-		<!--  <physvol name="Lintel_phys11">
+      <physvol name="Lintel_phys11">
         <volumeref ref="Lintel_logic1"/>
-        <position name="lintelpos11" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos11" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot11" unit="deg" x="0" y="0" z="0*360./7."/>
       </physvol>
       <physvol name="Lintel_phys21">
         <volumeref ref="Lintel_logic2"/>
-        <position name="lintelpos21" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos21" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot21" unit="deg" x="0" y="0" z="0*360./7."/>
       </physvol>
 
       <physvol name="Lintel_phys12">
         <volumeref ref="Lintel_logic1"/>
-        <position name="lintelpos12" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos12" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot12" unit="deg" x="0" y="0" z="1*360./7."/>
       </physvol>
       <physvol name="Lintel_phys22">
         <volumeref ref="Lintel_logic2"/>
-        <position name="lintelpos22" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos22" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot22" unit="deg" x="0" y="0" z="1*360./7."/>
       </physvol>
 
       <physvol name="Lintel_phys13">
         <volumeref ref="Lintel_logic1"/>
-        <position name="lintelpos13" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos13" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot13" unit="deg" x="0" y="0" z="2*360./7."/>
       </physvol>
       <physvol name="Lintel_phys23">
         <volumeref ref="Lintel_logic2"/>
-        <position name="lintelpos23" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos23" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot23" unit="deg" x="0" y="0" z="2*360./7."/>
       </physvol>
 
 
       <physvol name="Lintel_phys14">
         <volumeref ref="Lintel_logic1"/>
-        <position name="lintelpos14" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos14" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot14" unit="deg" x="0" y="0" z="3*360./7."/>
       </physvol>
       <physvol name="Lintel_phys24">
         <volumeref ref="Lintel_logic2"/>
-        <position name="lintelpos24" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos24" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot24" unit="deg" x="0" y="0" z="3*360./7."/>
       </physvol>
 
       <physvol name="Lintel_phys15">
         <volumeref ref="Lintel_logic1"/>
-        <position name="lintelpos15" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos15" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot15" unit="deg" x="0" y="0" z="4*360./7."/>
       </physvol>
       <physvol name="Lintel_phys25">
         <volumeref ref="Lintel_logic2"/>
-        <position name="lintelpos25" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos25" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot25" unit="deg" x="0" y="0" z="4*360./7."/>
       </physvol>
 
       <physvol name="Lintel_phys16">
         <volumeref ref="Lintel_logic1"/>
-        <position name="lintelpos16" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos16" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot16" unit="deg" x="0" y="0" z="5*360./7."/>
       </physvol>
       <physvol name="Lintel_phys26">
         <volumeref ref="Lintel_logic2"/>
-        <position name="lintelpos26" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos26" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot26" unit="deg" x="0" y="0" z="5*360./7."/>
       </physvol>
 
       <physvol name="Lintel_phys17">
         <volumeref ref="Lintel_logic1"/>
-        <position name="lintelpos17" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos17" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot17" unit="deg" x="0" y="0" z="6*360./7."/>
       </physvol>
       <physvol name="Lintel_phys27">
         <volumeref ref="Lintel_logic2"/>
-        <position name="lintelpos27" x="0" y="0" z="-500.194"/>
+        <position name="lintelpos27" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot27" unit="deg" x="0" y="0" z="6*360./7."/>
-</physvol>-->
+      </physvol>
 
 
 	</volume>
