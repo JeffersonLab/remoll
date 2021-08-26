@@ -103,6 +103,37 @@
        x="2700"
        y="2700"
        z="1"/>
+       
+  <box lunit="mm" name="PSbunkerOuterFrontVP_solid"
+       x="1"
+       y="4215"
+       z="11249.914"/>
+       
+  <box lunit="mm" name="PSbunkerOuterSideLeftVP_solid"
+       x="16799.56"
+       y="4215"
+       z="1"/>
+  
+  <box lunit="mm" name="PSbunkerOuterSideRightVP_solid"
+       x="16799.56-1000"
+       y="4215"
+       z="1"/>
+   
+  <box lunit="mm" name="PSbunkerInnerFrontVP_solid"
+     x="1"
+     y="4215"
+     z="8449.914"/>
+  
+  <box lunit="mm" name="PSbunkerInnerSideLeftVP_solid"
+       x="15399.56"
+       y="4215"
+       z="1"/>
+  
+  <box lunit="mm" name="PSbunkerInnerSideRightVP_solid"
+       x="15399.56-1000"
+       y="4215"
+       z="1"/>
+       
 </solids>
 
 <structure>
@@ -483,6 +514,65 @@
     <auxiliary auxtype="DetNo" auxvalue="5705"/>
   </volume>
   
+  <volume name="PSbunkerOuterFrontVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerOuterFrontVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5840"/>
+  </volume>
+  
+  <volume name="PSbunkerOuterSideLeftVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerOuterSideLeftVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5842"/>
+  </volume>
+  
+  <volume name="PSbunkerOuterSideRightVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerOuterSideRightVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5843"/>
+  </volume>
+  
+  <volume name="PSbunkerInnerFrontVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerInnerFrontVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5850"/>
+  </volume>
+  
+  <volume name="PSbunkerInnerSideLeftVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerInnerSideLeftVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5852"/>
+  </volume>
+  
+  <volume name="PSbunkerInnerSideRightVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerInnerSideRightVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5853"/>
+  </volume>
   
   <!--<volume name="gemVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
@@ -765,6 +855,36 @@
     <physvol name="dsCoilVirtualPlane5_phys">
       <volumeref ref="dsCoilVirtualPlane5_log"/>
       <position name="dsCoilVirtualPlane5_pos" unit="mm" y="0" z="10700"/>
+    </physvol>
+    
+    <physvol name="PSbunkerOuterFrontVP_phys">
+      <volumeref ref="PSbunkerOuterFrontVP_log"/>
+      <position name="PSbunkerOuterFrontVP_pos" unit="mm" x="4123.944-1" y="-948.86+75" z="10447.957"/>
+    </physvol>
+    
+    <physvol name="PSbunkerOuterSideLeftVP_phys">
+      <volumeref ref="PSbunkerOuterSideLeftVP_log"/>
+      <position name="PSbunkerOuterSideLeftVP_pos" unit="mm" x="4123.944+16799.56/2" y="-948.86+75" z="10447.957-11249.914/2-1"/>
+    </physvol>
+    
+    <physvol name="PSbunkerOuterSideRightVP_phys">
+      <volumeref ref="PSbunkerOuterSideRightVP_log"/>
+      <position name="PSbunkerOuterSideRightVP_pos" unit="mm" x="4123.944+16799.56/2-500" y="-948.86+75" z="10447.957+11249.914/2+1"/>
+    </physvol>
+    
+    <physvol name="PSbunkerInnerFrontVP_phys">
+      <volumeref ref="PSbunkerInnerFrontVP_log"/>
+      <position name="PSbunkerInnerFrontVP_pos" unit="mm" x="4123.944+1400+1" y="-948.86+75" z="10447.957"/>
+    </physvol>
+    
+    <physvol name="PSbunkerInnerSideLeftVP_phys">
+      <volumeref ref="PSbunkerInnerSideLeftVP_log"/>
+      <position name="PSbunkerInnerSideLeftVP_pos" unit="mm" x="4123.944+16799.56/2+700+1" y="-948.86+75" z="10447.957-11249.914/2+1400+1"/>
+    </physvol>
+    
+    <physvol name="PSbunkerInnerSideRightVP_phys">
+      <volumeref ref="PSbunkerInnerSideRightVP_log"/>
+      <position name="PSbunkerInnerSideRightVP_pos" unit="mm" x="4123.944+16799.56/2+700-500+1" y="-948.86+75" z="10447.957+11249.914/2-1400-1"/>
     </physvol>
     
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
