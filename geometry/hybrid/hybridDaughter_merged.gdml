@@ -74,6 +74,8 @@
     <position name="bellows5flangeUS_pos" z="bellows5flangeUS_zpos" unit="mm"/>
     <position name="bellows5flangeDS_pos" z="bellows5flangeDS_zpos" unit="mm"/>
 
+    <position name="PhotonBlocker_pos" z="9258.3-4500-(11016.865-8.73/2+75+200)" unit="mm"/>
+
 </define>
 
 &materials;
@@ -220,6 +222,29 @@
     name="Barite_hole_solid"
     startphi="0" deltaphi="360" aunit="deg"
     rmin="0" rmax="1315" z="400" lunit="mm"/>
+
+    <cone name="PhotonBlocker_solid1" lunit="mm" aunit="rad" startphi="-0.35" deltaphi="0.7" rmin1="57.5" rmax1="sqrt(59.98*59.98+15.57*15.57)" rmin2="57.5" rmax2="sqrt(59.98*59.98+15.57*15.57)" z="102.6"/>
+
+   <arb8 name="PhotonBlocker_solid2"
+    v1x="59.98" v1y="15.57" 
+    v2x="109.08" v2y="27.0" 
+    v3x="109.08" v3y="-27.0" 
+    v4x="59.98" v4y="-15.57" 
+    v5x="59.98" v5y="15.57" 
+    v6x="109.08" v6y="27.0" 
+    v7x="109.08" v7y="-27.0" 
+    v8x="59.98" v8y="-15.57" 
+    dz="50.8" lunit="mm"/>
+
+   <subtraction name="PhotonBlocker_solid3">
+     <first ref="PhotonBlocker_solid2"/>
+     <second ref="PhotonBlocker_solid1"/>
+   </subtraction>
+
+   <cone name="PhotonBlocker_solid4" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="33.0" rmax1="sqrt(59.98*59.98+15.57*15.57)" rmin2="33.0" rmax2="sqrt(59.98*59.98+15.57*15.57)" z="101.6"/>
+
+   <cone name="PhotonBlocker_solid5" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="115" rmin2="0" rmax2="115" z="101.6"/>
+
 
 </solids>
 
@@ -375,6 +400,64 @@
     <auxiliary auxtype="Color" auxvalue="Orange"/>
   </volume>
 
+  <volume name="PhotonBlocker_log1">
+    <materialref ref="CW95"/>
+    <solidref ref="PhotonBlocker_solid3"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetNo" auxvalue="2014"/>
+  </volume>
+
+  <volume name="PhotonBlocker_log2">
+    <materialref ref="CW95"/>
+    <solidref ref="PhotonBlocker_solid4"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetNo" auxvalue="2014"/>
+  </volume>
+
+  <volume name="PhotonBlocker_log">
+    <materialref ref="Vacuum"/>
+    <solidref ref="PhotonBlocker_solid5"/>
+    <auxiliary auxtype="Color" auxvalue="Yellow"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <physvol name="PhotonBlocker_phys1_0">
+      <volumeref ref="PhotonBlocker_log1"/>
+      <rotation name="PhotonBlocker_rot0" unit="deg" x="0" y="0" z="SEPTANT*0"/>
+    </physvol>
+    <physvol name="PhotonBlocker_phys1_1">
+      <volumeref ref="PhotonBlocker_log1"/>
+      <rotation name="PhotonBlocker_rot1" unit="deg" x="0" y="0" z="SEPTANT*1"/>
+    </physvol>
+    <physvol name="PhotonBlocker_phys1_2">
+      <volumeref ref="PhotonBlocker_log1"/>
+      <rotation name="PhotonBlocker_rot2" unit="deg" x="0" y="0" z="SEPTANT*2"/>
+    </physvol>
+    <physvol name="PhotonBlocker_phys1_3">
+      <volumeref ref="PhotonBlocker_log1"/>
+      <rotation name="PhotonBlocker_rot3" unit="deg" x="0" y="0" z="SEPTANT*3"/>
+    </physvol>
+    <physvol name="PhotonBlocker_phys1_4">
+      <volumeref ref="PhotonBlocker_log1"/>
+      <rotation name="PhotonBlocker_rot4" unit="deg" x="0" y="0" z="SEPTANT*4"/>
+    </physvol>
+    <physvol name="PhotonBlocker_phys1_5">
+      <volumeref ref="PhotonBlocker_log1"/>
+      <rotation name="PhotonBlocker_rot5" unit="deg" x="0" y="0" z="SEPTANT*5"/>
+    </physvol>
+    <physvol name="PhotonBlocker_phys1_6">
+      <volumeref ref="PhotonBlocker_log1"/>
+      <rotation name="PhotonBlocker_rot6" unit="deg" x="0" y="0" z="SEPTANT*6"/>
+    </physvol>
+    <physvol name="PhotonBlocker_phys2">
+      <volumeref ref="PhotonBlocker_log2"/>
+    </physvol>
+
+  </volume>
+
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
       <solidref ref="boxDownstream"/>
@@ -432,7 +515,7 @@
     </physvol>-->
 
     
-      <physvol name="collar1">
+    <!-- <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
 	<position unit="mm" name="collar1pos" x="0" y="0" z="16950.09-DOFFSET-150./2.-400./2"/>
         <rotation unit="rad" name="collar1rot" x="0" y="0" z="0"/>
@@ -441,13 +524,13 @@
       <physvol name="Phy_Barite_Collar2">
         <volumeref ref="logic_Barite_Collar2"/>
 	<position unit="mm" name="BariteCollar2pos" x="0" y="-400" z="24016.09-DOFFSET-125.-150./2.+241.6-400/2"/>
-      </physvol>
+    </physvol> -->
 
-<!-- Downstream of coll4 central collimating beampipe -->
-      <physvol>
+<!-- Downstream of coll4 central collimating beampipe
+      <physvol name="SubCoil1EpoxyShield1_phys">
         <volumeref ref="SubCoil1EpoxyShield1_logic"/>
         <positionref ref="SubCoil1EpoxyShield1_center"/>
-      </physvol>
+      </physvol> -->
 
       <physvol name="DScoil">
         <file name="hybrid/hybridToroid.gdml"/>
@@ -491,6 +574,11 @@
       <position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="boxDSMother_length/2-36.0"/>
     </physvol>
 -->
+
+    <physvol name="PhotonBlocker_phys">
+      <volumeref ref="PhotonBlocker_log"/>
+      <positionref ref="PhotonBlocker_pos"/>
+    </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>

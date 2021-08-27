@@ -32,8 +32,8 @@
 
     <!-- Hall -->
     <physvol>
-      <file name="hall/hallDaughter_dump.gdml"/>
-	    <!--<file name="hall/hallDaughter_merged.gdml"/>-->
+     <!-- <file name="hall/hallDaughter_dump.gdml"/>-->
+	    <file name="hall/hallDaughter_merged.gdml"/>
       <positionref ref="hallCenter"/>
     </physvol>
 
@@ -61,9 +61,9 @@
       <file name="beampipe/premoller/beampipeRaster.gdml"/>
     </physvol>
 
-    <physvol>
+    <!--<physvol>
       <file name="beampipe/downstream/beampipeDSMother.gdml"/>
-    </physvol>
+    </physvol>-->
 
     <!-- Front Tracking Detectors -->
     <physvol>
@@ -93,29 +93,29 @@
       <rotation name="lefthut_rot" unit="deg" y="-45"/>
     </physvol>
 
-    <!-- PMT region shielding-->
+    <!-- PMT region shielding
     <physvol>
       <file name="shielding/shielding.gdml"/>
       <position name="PMTShield" x="0" y="0" z="22521.3"/>
-    </physvol>
+    </physvol>-->
 
-    <!-- ShowerMax Detectors -->
+    <!-- ShowerMax Detectors
     <physvol>
       <file name="showermax/showerMaxGen.gdml"/>
       <positionref ref="showerMaxDetectorCenter"/>
-    </physvol>
+    </physvol> -->
     
-    <!-- Lead Donut -->
+    <!-- Lead Donut
     <physvol>
       <file name="donut/donutConcreteLead.gdml"/>
       <positionref ref="donutConcreteLeadFaceUS"/>
-    </physvol>
+    </physvol> -->
    
-    <!-- Pion Detectors-->
+    <!-- Pion Detectors
     <physvol>
       <file name="pion/pionDetectorSystem.gdml"/>
       <positionref ref="pionDetectorSystemFaceUS"/>
-    </physvol>
+    </physvol>-->
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
