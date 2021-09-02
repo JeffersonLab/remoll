@@ -44,6 +44,7 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     remollEvent *fEvent;
 
     G4GenericMessenger* fMessenger;
+  G4int fRateCopy;
     G4GenericMessenger* fEvGenMessenger;
 
     G4double fEffCrossSection;

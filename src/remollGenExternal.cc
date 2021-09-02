@@ -79,6 +79,13 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
     G4cerr << "Could not find branch hit in event file " << filename << G4endl;
     return;
   }
+
+  if (fTree->GetBranch("rate")) {
+    fTree->SetBranchAddress("rate", &rate);
+  }else{
+    G4cerr << "Warning! could not find rate branch. Set rate to 1"<<G4endl;
+    rate = 1;
+  }
 /* event tree removed by Cameron 11/15/2018
 *  if (fTree->GetBranch("ev")) {
 *    fTree->SetBranchAddress("ev", &fEvent);
@@ -117,6 +124,11 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
     evt->SetQ2(0.0);
     evt->SetW2(4e15);
     evt->SetAsymmetry(-42.0*ppb);
+    
+    if(!std::isnan(rate) && !std::isinf(rate)){
+      evt->SetRate(rate/s);
+    }
+
     // Loop over all hits in this event
     for (size_t i = 0; i < fHit->size(); i++) {
       // Create local copy of this hit
