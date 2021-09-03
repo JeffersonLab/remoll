@@ -30,7 +30,7 @@
 
 
 <solids>
-
+	<!--
 	<arb8 name="Col5_solid1" v1x="74.22" v1y="17.25" 
              v2x="180.22" v2y="54.15" 
              v3x="180.22" v3y="-54.15" 
@@ -49,7 +49,34 @@
              v6x="180.22" v6y="33.5" 
              v7x="180.22" v7y="-33.5" 
              v8x="116.38" v8y="-12.75" 
-             dz="35" lunit="mm"/>
+	dz="35" lunit="mm"/>-->
+
+	<xtru name="Col5_solid1" lunit="mm">
+                <twoDimVertex x="-176" y="34"/>
+                <twoDimVertex x="-176" y="66"/>
+                <twoDimVertex x="-47" y="4"/>
+                <twoDimVertex x="-46" y="4"/>
+                <twoDimVertex x="-46" y="-2.54"/>
+                <twoDimVertex x="-100.7" y="-2.54"/>
+                <twoDimVertex x="-100.7" y="12.2"/>
+                <twoDimVertex x="-160" y="28"/>
+                <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+                <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+
+        <xtru name="Col5_solid2" lunit="mm">
+                <twoDimVertex x="-176" y="-34"/>
+                <twoDimVertex x="-176" y="-66"/>
+                <twoDimVertex x="-47" y="-4"/>
+                <twoDimVertex x="-45" y="-4"/>
+                <twoDimVertex x="-45" y="2.54"/>
+                <twoDimVertex x="-100" y="2.54"/>
+                <twoDimVertex x="-100" y="-12.2"/>
+                <twoDimVertex x="-160" y="-28"/>
+                <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+                <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+
 
 
 	<xtru name="solid_C1_mid"  lunit="mm">
@@ -731,22 +758,33 @@
 		<auxiliary auxtype="DetNo" auxvalue="2005"/>
 	</volume>
 
-	<volume name="logic_Col5_accep">
+	<!--	<volume name="logic_Col5_accep">
 		<materialref ref="Vacuum"/>
 		<solidref ref="Col5_solid2"/>
 		<auxiliary auxtype="Color" auxvalue="Yellow"/>
 		<auxiliary auxtype="SensDet" auxvalue="collDet"/>
-	</volume>
+	</volume>-->
 
-	<volume name="logic_Col5">
+	<volume name="logic1_Col5">
 		<materialref ref="G4_CW95"/>
 		<solidref ref="Col5_solid1"/>
 		<auxiliary auxtype="Color" auxvalue="Blue"/>
 		<auxiliary auxtype="SensDet" auxvalue="collDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="2005"/>
-		<physvol name="phys_Col5_accep">
+		<!--<physvol name="phys_Col5_accep">
                   <volumeref ref="logic_Col5_accep"/>
-                </physvol>
+		</physvol>-->
+	</volume>
+
+	<volume name="logic2_Col5">
+		<materialref ref="G4_CW95"/>
+		<solidref ref="Col5_solid2"/>
+		<auxiliary auxtype="Color" auxvalue="Blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="collDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="2005"/>
+		<!--<physvol name="phys_Col5_accep">
+                  <volumeref ref="logic_Col5_accep"/>
+		</physvol>-->
 	</volume>
 
 	<volume name="logic_inner_E1_1">
@@ -2460,13 +2498,91 @@
 			<position name="Coll6Ring_pos" x="0" y="0" z="1172.106+1504.95"/>
 		</physvol>
 
-		<!--<physvol name="phys_Col5_1">
-			<volumeref ref="logic_Col5"/>
-			<position name="Col5_pos1" unit="mm" x="0" y="0" z="-500.194"/>
-			<rotation name="Col5_rot1" unit="deg" x="0" y="0" z="-(0+0.5)*360./7."/>
+		<physvol name="phys_Col5_11">
+			<volumeref ref="logic1_Col5"/>
+			<position name="Col5_pos11" unit="mm" x="0" y="0" z="-737.264+100+12.7"/>
+			<rotation name="Col5_rot11" unit="deg" x="0" y="0" z="0.0*360./7."/>
 		</physvol>
 
-		<physvol name="EPShieldAtColl5_1_pv">
+		<physvol name="phys_Col5_12">
+			<volumeref ref="logic2_Col5"/>
+			<position name="Col5_pos12" unit="mm" x="0" y="0" z="-737.264"/>
+			<rotation name="Col5_rot12" unit="deg" x="0" y="0" z="0.0*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_21">
+			<volumeref ref="logic1_Col5"/>
+			<position name="Col5_pos21" unit="mm" x="0" y="0" z="-737.264+100+12.7"/>
+			<rotation name="Col5_rot21" unit="deg" x="0" y="0" z="-1.0*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_22">
+			<volumeref ref="logic2_Col5"/>
+			<position name="Col5_pos22" unit="mm" x="0" y="0" z="-737.264"/>
+			<rotation name="Col5_rot22" unit="deg" x="0" y="0" z="-1*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_31">
+			<volumeref ref="logic1_Col5"/>
+			<position name="Col5_pos31" unit="mm" x="0" y="0" z="-737.264+100+12.7"/>
+			<rotation name="Col5_rot31" unit="deg" x="0" y="0" z="-2.0*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_32">
+			<volumeref ref="logic2_Col5"/>
+			<position name="Col5_pos32" unit="mm" x="0" y="0" z="-737.264"/>
+			<rotation name="Col5_rot32" unit="deg" x="0" y="0" z="-2*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_41">
+			<volumeref ref="logic1_Col5"/>
+			<position name="Col5_pos41" unit="mm" x="0" y="0" z="-737.264+100+12.7"/>
+			<rotation name="Col5_rot41" unit="deg" x="0" y="0" z="-3.0*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_42">
+			<volumeref ref="logic2_Col5"/>
+			<position name="Col5_pos42" unit="mm" x="0" y="0" z="-737.264"/>
+			<rotation name="Col5_rot42" unit="deg" x="0" y="0" z="-3*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_51">
+			<volumeref ref="logic1_Col5"/>
+			<position name="Col5_pos51" unit="mm" x="0" y="0" z="-737.264+100+12.7"/>
+			<rotation name="Col5_rot51" unit="deg" x="0" y="0" z="-4.0*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_52">
+			<volumeref ref="logic2_Col5"/>
+			<position name="Col5_pos52" unit="mm" x="0" y="0" z="-737.264"/>
+			<rotation name="Col5_rot52" unit="deg" x="0" y="0" z="-4*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_61">
+			<volumeref ref="logic1_Col5"/>
+			<position name="Col5_pos61" unit="mm" x="0" y="0" z="-737.264+100+12.7"/>
+			<rotation name="Col5_rot61" unit="deg" x="0" y="0" z="-5.0*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_62">
+			<volumeref ref="logic2_Col5"/>
+			<position name="Col5_pos62" unit="mm" x="0" y="0" z="-737.264"/>
+			<rotation name="Col5_rot62" unit="deg" x="0" y="0" z="-5*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_71">
+			<volumeref ref="logic1_Col5"/>
+			<position name="Col5_pos71" unit="mm" x="0" y="0" z="-737.264+100+12.7"/>
+			<rotation name="Col5_rot71" unit="deg" x="0" y="0" z="-6.0*360./7."/>
+		</physvol>
+
+		<physvol name="phys_Col5_72">
+			<volumeref ref="logic2_Col5"/>
+			<position name="Col5_pos72" unit="mm" x="0" y="0" z="-737.264"/>
+			<rotation name="Col5_rot72" unit="deg" x="0" y="0" z="-6*360./7."/>
+		</physvol>
+
+		<!--<physvol name="EPShieldAtColl5_1_pv">
 			<volumeref ref="EPShieldAtColl5_logic"/>
 			<position name="EPShieldAtColl5_1_pos" unit="mm" x="60.11*cos(pi+0*pi/7.)" y="60.11*sin(pi+0*pi/7.)" z="-500.194"/>
 			<rotation name="rot_EPshieldAtColl5_1" x="0" y="0" z="0"/>
