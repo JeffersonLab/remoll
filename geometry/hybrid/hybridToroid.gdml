@@ -52,14 +52,15 @@
 	dz="35" lunit="mm"/>-->
 
 	<xtru name="Col5_solid1" lunit="mm">
-                <twoDimVertex x="-176" y="34"/>
+                <twoDimVertex x="-176" y="32.6"/>
                 <twoDimVertex x="-176" y="66"/>
                 <twoDimVertex x="-47" y="4"/>
                 <twoDimVertex x="-46" y="4"/>
                 <twoDimVertex x="-46" y="-2.54"/>
-                <twoDimVertex x="-100.7" y="-2.54"/>
-                <twoDimVertex x="-100.7" y="12.2"/>
-                <twoDimVertex x="-160" y="28"/>
+                <twoDimVertex x="-102.6" y="-2.54"/>
+                <twoDimVertex x="-102.6" y="8.5"/>
+                <twoDimVertex x="-110" y="14"/>
+                <twoDimVertex x="-160" y="27"/>
                 <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
                 <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
@@ -71,7 +72,8 @@
                 <twoDimVertex x="-45" y="-4"/>
                 <twoDimVertex x="-45" y="2.54"/>
                 <twoDimVertex x="-100" y="2.54"/>
-                <twoDimVertex x="-100" y="-12.2"/>
+                <twoDimVertex x="-100" y="-9.3"/>
+		<twoDimVertex x="-107.7" y="-14.2"/>
                 <twoDimVertex x="-160" y="-28"/>
                 <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
                 <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
