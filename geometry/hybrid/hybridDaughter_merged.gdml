@@ -563,7 +563,7 @@
     </physvol>-->
 
     
-    <!-- <physvol name="collar1">
+      <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
 	<position unit="mm" name="collar1pos" x="0" y="0" z="16950.09-DOFFSET-150./2.-400./2"/>
         <rotation unit="rad" name="collar1rot" x="0" y="0" z="0"/>
@@ -572,7 +572,7 @@
       <physvol name="Phy_Barite_Collar2">
         <volumeref ref="logic_Barite_Collar2"/>
 	<position unit="mm" name="BariteCollar2pos" x="0" y="-400" z="24016.09-DOFFSET-125.-150./2.+241.6-400/2"/>
-    </physvol> -->
+    </physvol>
 
 <!-- Downstream of coll4 central collimating beampipe
       <physvol name="SubCoil1EpoxyShield1_phys">

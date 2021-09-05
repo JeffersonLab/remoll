@@ -2660,7 +2660,7 @@
 			<rotation name="rot_EPshieldAtColl5_7" x="0" y="0" z="-12*pi/7."/>
 		</physvol>-->
 		
-		<!--      <physvol name="Lintel_phys11">
+      <physvol name="Lintel_phys11">
         <volumeref ref="Lintel_logic1"/>
         <position name="lintelpos11" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot11" unit="deg" x="0" y="0" z="0*360./7."/>
@@ -2736,7 +2736,7 @@
         <volumeref ref="Lintel_logic2"/>
         <position name="lintelpos27" x="0" y="0" z="1222.106"/>
 	<rotation name="lintelrot27" unit="deg" x="0" y="0" z="6*360./7."/>
-		</physvol>-->
+      </physvol>
 
 
 	</volume>

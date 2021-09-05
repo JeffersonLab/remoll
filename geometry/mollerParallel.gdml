@@ -623,7 +623,7 @@
 
     <physvol name="Collar2Exit_phys">
       <volumeref ref="Collar2Exit_log"/>
-      <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="19182.69+150+0.5"/>
+      <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="19182.69+150+0.6"/>
     </physvol>
 
     <!-- Tracking planes -->
