@@ -37,8 +37,8 @@
 <position name="mainDetectorVirtualPlane_pos" z="22000.00" unit="mm"/>
 
 <!-- Z position of center of the two arrays of showermax detectors -->
-<position name="showerMaxDetectorFaceUS" z="24000.00" unit="mm"/>
-<position name="showerMaxDetectorCenter" z="24000.00+76.00" unit="mm"/>
+<position name="showerMaxDetectorFaceUS" z="23920.00-87.00" unit="mm"/>
+<position name="showerMaxDetectorCenter" z="23920.00" unit="mm"/>
 
 <!-- Z position of the US and DS face of the concrete and lead donut (400 mm thick) -->
 <position name="donutConcreteLeadFaceUS" z="24450.00" unit="mm"/>
@@ -67,5 +67,6 @@
 <position name="sieveActualCenter_pos" z="-1375.00" x="200" unit="mm"/>
 <position name="sieveVirtualPlane_pos" z="-1375.00" unit="mm"/>
 
-
+<!-- Showermax virtual plane detector position (between open and trans)  -->
+<position name="showerMaxVirtualPlane_pos" z="23920.00-97.00" unit="mm"/>
 

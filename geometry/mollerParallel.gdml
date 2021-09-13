@@ -46,9 +46,12 @@
     startphi="0" deltaphi="360" aunit="deg"
     rmin="1450" rmax="1460" z="2700" lunit="mm"/>
 
+  <tube
+    name="showerMaxVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="0" rmax="2000" z="1" lunit="mm"/>
 
  
-
 </solids>
 
 <structure>
@@ -158,6 +161,13 @@
     <auxiliary auxtype="DetNo" auxvalue="60"/>
   </volume>
 
+  <volume name="showerMaxVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="showerMaxVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="70"/>
+  </volume>
+
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
@@ -259,6 +269,10 @@
       <positionref ref="sieveVirtualPlane_pos"/>
     </physvol>
 
+    <physvol name="showerMaxVirtualPlane_phys">
+      <volumeref ref="showerMaxVirtualPlane_log"/>
+      <positionref ref="showerMaxVirtualPlane_pos"/>
+    </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 </structure>
