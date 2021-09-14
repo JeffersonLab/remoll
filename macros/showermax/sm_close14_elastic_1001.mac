@@ -51,6 +51,4 @@
 /remoll/SD/detect secondaries 7148
 /remoll/SD/detect boundaryhits 7148
 
-/remoll/filename /lustre19/expphy/volatile/halla/moller12gev/sudip/remoll_rootfiles/SM0821v3/sm_close14_SM0821v3_elastic_50k_1001.root 
-
 /run/beamOn 50000
