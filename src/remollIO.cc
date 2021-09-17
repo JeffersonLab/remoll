@@ -19,6 +19,10 @@
 #include <sys/stat.h>
 #include <errno.h>
 
+#ifdef __APPLE__
+#include <unistd.h>
+#endif
+
 #include <xercesc/parsers/XercesDOMParser.hpp>
 #include <xercesc/dom/DOMEntityReference.hpp>
 #include <xercesc/dom/DOMEntity.hpp>
