@@ -1,0 +1,49 @@
+name: Build and Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      LCG: "LCG_101/x86_64-centos7-clang12-opt"
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cvmfs-contrib/github-action-cvmfs@v2
+      with:
+        cvmfs_repositories: 'sft.cern.ch,geant4.cern.ch'
+    - uses: aidasoft/run-lcg-view@v1
+      with:
+        release-platform: ${{ env.LCG }}
+        run: |
+          cmake -Bbuild -S.
+          cmake --build build
+
+  test_geometries:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: ["load", "validate", "overlap"]
+    steps:
+      - run: |
+          mkdir -p logfiles rootfiles
+          scripts/tests/test_geometries.sh ${{ matrix.suite }}
+          ls -al logfiles rootfiles
+
+  test_macros:
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: ["unit", "commit", "release"]
+    steps:
+      - run: |
+          mkdir -p logfiles rootfiles
+          scripts/tests/test_macros.sh ${{ matrix.suite }}
+          ls -al logfiles rootfiles
+          
