@@ -1556,7 +1556,7 @@
       <physvol name="UScoil">
         <file name= "upstream/upstreamToroid.gdml"/>
       </physvol>
-
+<!--
       <physvol>
         <file name="upstream/upstreamBeampipe.gdml"/>
         <positionref ref="shield_US_beampipe_center"/>
@@ -1571,7 +1571,7 @@
         <file name="upstream/inner_upstream_nose_shield_beampipe.gdml"/>
         <positionref ref="inner_nose_shield_US_beampipe_center"/>
       </physvol>
-
+-->
       <!-- Collimator 4 -->
       <physvol name="phy_Col4_accep1">
         <volumeref ref="logic_Col4_accep1"/>
