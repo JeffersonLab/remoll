@@ -42,6 +42,10 @@
 #include <algorithm>
 #include <sys/param.h>
 
+#ifdef __APPLE__
+#include <unistd.h>
+#endif
+
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
 namespace { G4Mutex remollDetectorConstructionMutex = G4MUTEX_INITIALIZER; }
