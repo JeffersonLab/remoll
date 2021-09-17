@@ -193,7 +193,8 @@ int main(int argc, char** argv) {
 
 
     // Define UI session for interactive mode
-    G4String searchpath = std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll";
+    G4String searchpath = ".";
+    searchpath += ":" + std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll";
     searchpath += ":" + std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/macros";
     if (macro.size())
     {
