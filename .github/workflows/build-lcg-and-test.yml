@@ -23,11 +23,13 @@ jobs:
           cmake -Bbuild -S. -DCMAKE_INSTALL_PREFIX=install/
           cmake --build build 
           cmake --build build --target install
+    - run: |
+        tar -cvf install.tar install/
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ env.LCG }}-${{ env.sys }}
-        path: install/
-        retention-days: 7
+        path: install.tar
+        retention-days: 1
           
   test_geometries:
     runs-on: ubuntu-latest
@@ -44,7 +46,9 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: ${{ env.LCG }}-${{ env.sys }}
-        path: install/
+        path: install.tar
+    - run: |
+        tar -xvf install.tar
     - uses: aidasoft/run-lcg-view@v1
       with:
         release-platform: ${{ env.LCG }}/${{ env.sys }}
@@ -75,7 +79,9 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: ${{ env.LCG }}-${{ env.sys }}
-        path: install/
+        path: install.tar
+    - run: |
+        tar -xvf install.tar
     - uses: aidasoft/run-lcg-view@v1
       with:
         release-platform: ${{ env.LCG }}/${{ env.sys }}
