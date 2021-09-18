@@ -1,12 +1,13 @@
-name: Build and Test
+name: Build LCG and Test
 
 on: [push, pull_request]
+
+env:
+  LCG: "LCG_101/x86_64-centos7-clang12-opt"
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      LCG: "LCG_101/x86_64-centos7-clang12-opt"
     strategy:
       fail-fast: false
     steps:
@@ -18,9 +19,15 @@ jobs:
       with:
         release-platform: ${{ env.LCG }}
         run: |
-          cmake -Bbuild -S.
-          cmake --build build
-
+          cmake -Bbuild -S. -DCMAKE_INSTALL_PREFIX=install/
+          cmake --build build 
+          cmake --build build --target install
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.LCG }}
+        path: install/
+        retention-days: 7
+          
   test_geometries:
     runs-on: ubuntu-latest
     needs: build
@@ -29,10 +36,25 @@ jobs:
       matrix:
         suite: ["load", "validate", "overlap"]
     steps:
-      - run: |
+    - uses: cvmfs-contrib/github-action-cvmfs@v2
+      with:
+        cvmfs_repositories: 'sft.cern.ch,geant4.cern.ch'
+    - uses: actions/download-artifact@v2
+      with:
+        name: ${{ env.LCG }}
+    - uses: aidasoft/run-lcg-view@v1
+      with:
+        release-platform: ${{ env.LCG }}
+        run: |
           mkdir -p logfiles rootfiles
           scripts/tests/test_geometries.sh ${{ matrix.suite }}
           ls -al logfiles rootfiles
+    - uses: actions/upload-artifact@v2
+      with:
+        name: test_geometries_${{ matrix.suite }}_logfiles
+        path: |
+          logfiles/
+        retention-days: 3
 
   test_macros:
     runs-on: ubuntu-latest
@@ -42,8 +64,22 @@ jobs:
       matrix:
         suite: ["unit", "commit", "release"]
     steps:
-      - run: |
+    - uses: cvmfs-contrib/github-action-cvmfs@v2
+      with:
+        cvmfs_repositories: 'sft.cern.ch,geant4.cern.ch'
+    - uses: actions/download-artifact@v2
+      with:
+        name: ${{ env.LCG }}
+    - uses: aidasoft/run-lcg-view@v1
+      with:
+        release-platform: ${{ env.LCG }}
+        run: |
           mkdir -p logfiles rootfiles
           scripts/tests/test_macros.sh ${{ matrix.suite }}
           ls -al logfiles rootfiles
-          
+    - uses: actions/upload-artifact@v2
+      with:
+        name: test_macros_${{ matrix.suite }}_logfiles
+        path: |
+          logfiles/
+        retention-days: 3
