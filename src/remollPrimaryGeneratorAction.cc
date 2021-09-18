@@ -68,7 +68,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     #ifdef G4LIB_USE_HEPMC
     fPriGenMap["hepmcAscii"] = new HepMCG4AsciiInterface();
     #ifdef G4LIB_USE_PYTHIA
-    fPriGenMap["hepmcPythia"] = new HepMCG4PythiaInterface()
+    fPriGenMap["hepmcPythia"] = new HepMCG4PythiaInterface();
     #endif
     #endif
 
