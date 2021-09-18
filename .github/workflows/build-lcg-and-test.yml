@@ -46,7 +46,6 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: ${{ env.LCG }}-${{ env.sys }}
-        path: install.tar
     - run: |
         tar -xvf install.tar
     - uses: aidasoft/run-lcg-view@v1
@@ -79,7 +78,6 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: ${{ env.LCG }}-${{ env.sys }}
-        path: install.tar
     - run: |
         tar -xvf install.tar
     - uses: aidasoft/run-lcg-view@v1
