@@ -12,7 +12,7 @@
 //#include <G4Types.hh>
 //#endif
 
-#define __RUNSTR_LEN 255 fBeta for hit
+#define __RUNSTR_LEN 255
 #define __MAXFILE_LEN 1048576 // MB file size limit
 
 #include "TTimeStamp.h"
