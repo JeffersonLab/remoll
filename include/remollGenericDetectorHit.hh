@@ -92,7 +92,7 @@ class remollGenericDetectorHit : public G4VHit {
         hit.e  = fE;
         hit.m  = fM;
         hit.k  = fK;
-	hit.beta = fBeta;.cc
+        hit.beta = fBeta;
         hit.edep = fEdep;
         return hit;
       };
