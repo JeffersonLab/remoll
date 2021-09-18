@@ -44,11 +44,13 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: ${{ env.LCG }}-${{ env.sys }}
+        path: install/
     - uses: aidasoft/run-lcg-view@v1
       with:
         release-platform: ${{ env.LCG }}/${{ env.sys }}
         run: |
           mkdir -p logfiles rootfiles
+          source install/bin/remoll.sh
           scripts/tests/test_geometries.sh ${{ matrix.suite }}
           ls -al logfiles rootfiles
     - uses: actions/upload-artifact@v2
@@ -73,11 +75,13 @@ jobs:
     - uses: actions/download-artifact@v2
       with:
         name: ${{ env.LCG }}-${{ env.sys }}
+        path: install/
     - uses: aidasoft/run-lcg-view@v1
       with:
         release-platform: ${{ env.LCG }}/${{ env.sys }}
         run: |
           mkdir -p logfiles rootfiles
+          source install/bin/remoll.sh
           scripts/tests/test_macros.sh ${{ matrix.suite }}
           ls -al logfiles rootfiles
     - uses: actions/upload-artifact@v2
