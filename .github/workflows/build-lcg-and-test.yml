@@ -3,7 +3,8 @@ name: Build LCG and Test
 on: [push, pull_request]
 
 env:
-  LCG: "LCG_101/x86_64-centos7-clang12-opt"
+  LCG: "LCG_101"
+  sys: "x86_64-centos7-clang12-opt"
 
 jobs:
   build:
@@ -17,14 +18,14 @@ jobs:
         cvmfs_repositories: 'sft.cern.ch,geant4.cern.ch'
     - uses: aidasoft/run-lcg-view@v1
       with:
-        release-platform: ${{ env.LCG }}
+        release-platform: ${{ env.LCG }}/${{ env.sys }}
         run: |
           cmake -Bbuild -S. -DCMAKE_INSTALL_PREFIX=install/
           cmake --build build 
           cmake --build build --target install
     - uses: actions/upload-artifact@v2
       with:
-        name: ${{ env.LCG }}
+        name: ${{ env.LCG }}-${{ env.sys }}
         path: install/
         retention-days: 7
           
@@ -41,10 +42,10 @@ jobs:
         cvmfs_repositories: 'sft.cern.ch,geant4.cern.ch'
     - uses: actions/download-artifact@v2
       with:
-        name: ${{ env.LCG }}
+        name: ${{ env.LCG }}-${{ env.sys }}
     - uses: aidasoft/run-lcg-view@v1
       with:
-        release-platform: ${{ env.LCG }}
+        release-platform: ${{ env.LCG }}/${{ env.sys }}
         run: |
           mkdir -p logfiles rootfiles
           scripts/tests/test_geometries.sh ${{ matrix.suite }}
@@ -69,10 +70,10 @@ jobs:
         cvmfs_repositories: 'sft.cern.ch,geant4.cern.ch'
     - uses: actions/download-artifact@v2
       with:
-        name: ${{ env.LCG }}
+        name: ${{ env.LCG }}-${{ env.sys }}
     - uses: aidasoft/run-lcg-view@v1
       with:
-        release-platform: ${{ env.LCG }}
+        release-platform: ${{ env.LCG }}/${{ env.sys }}
         run: |
           mkdir -p logfiles rootfiles
           scripts/tests/test_macros.sh ${{ matrix.suite }}
