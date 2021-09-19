@@ -19,12 +19,12 @@
 
     <constant name="DELTAT" value ="1.0"/>
 
-    <position name="posCOLL1" unit="mm" x="-1" y="0" z="-1825"/>
+    <position name="posCOLL1" unit="mm" x="0" y="0" z="-1825"/>
 
     <!-- main coll, adjust this -->
-    <position name="posCOLL2_CW" unit="mm" x="-1" y="0" z="5925-UOFFSET-50-75-50"/> <!-- upstream end of CW piece is 5250mm with respect to targetrcenter -->
-    <position name="posCOLL2_CW_1" unit="mm" x="-1" y="0" z="5925-UOFFSET-50-75-50+50"/> <!-- upstream end of CW piece is 5250mm with respect to target center -->
-    <position name="posCOLL2_Cu" unit="mm" x="-1" y="0" z="5925-UOFFSET-50-75+75-25"/> <!-- upstream end of Cu piece is 5350mm with respect to target center -->
+    <position name="posCOLL2_CW" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75-50"/> <!-- upstream end of CW piece is 5250mm with respect to targetrcenter -->
+    <position name="posCOLL2_CW_1" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75-50+50"/> <!-- upstream end of CW piece is 5250mm with respect to target center -->
+    <position name="posCOLL2_Cu" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75+75-25"/> <!-- upstream end of Cu piece is 5350mm with respect to target center -->
     <!--Shielding beam pipe overlap with col-2 so I increased to bore radius in col-2 from 26.0 to 29.55 -->
     <constant name="COLL2_R1_CW_U1" value ="27.5"/>
     <constant name="COLL2_R1_CW_D1" value ="27.5"/>
@@ -1515,22 +1515,22 @@
 
       <physvol name="col1_h20_phys1">
         <volumeref ref="col1_h20_logic1"/>
-	<position ref="col1_h20_pos1" x="-1" y="0" z="-1825+139+7"/><!-- center position wrt target center = 5036 mm-->
+	<position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7"/><!-- center position wrt target center = 5036 mm-->
       </physvol>
 
       <physvol name="col1_h20_phys2">
         <volumeref ref="col1_h20_logic2"/>
-	<position ref="col1_h20_pos2" x="-1" y="0" z="-1825+675"/> <!-- front face position wrt target center = 5340 mm-->
+	<position ref="col1_h20_pos2" x="0" y="0" z="-1825+675"/> <!-- front face position wrt target center = 5340 mm-->
      </physvol>
 
       <physvol name="col1_h20_CW_phys">
         <volumeref ref="col1_h20_CW_logic"/>
-	<position ref="col1_h20_CW_pos" x="-1" y="0" z="-1825+139+14+522./2."/><!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2."/><!-- center position wrt target center = 5191.5 mm-->
      </physvol>
 
       <physvol name="col1_jacket_phys">
         <volumeref ref="col1_jacket_logic"/>
-	<position ref="col1_jacket_pos" x="-1" y="0" z="-1825+110"/> <!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110"/> <!-- center position wrt target center = 5191.5 mm-->
      </physvol>
 
       <physvol name="Phys_Col2_accep1">
