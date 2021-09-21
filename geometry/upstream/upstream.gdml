@@ -27,7 +27,7 @@
     <position name="posCOLL2_Cu" unit="mm" x="0" y="0" 
 	      z="5925-UOFFSET-50-75+75-25"/> 
     <!-- upstream end of Cu piece is 5350mm with respect to target center -->
-
+        
     <!--Shielding beam pipe overlap with col-2 so I increased to bore radius in col-2 from 26.0 to 29.55 -->
     <constant name="COLL2_R1_CW_U1" value ="27.5"/>
     <constant name="COLL2_R1_CW_D1" value ="27.5"/>
@@ -64,7 +64,7 @@
     <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
 
     <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
-    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 610/2 + 500/2"/>
+    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2"/>
 
     <!--need to subtract 50/2 to accomdate for the beampipe moving downstream due to collimator thickness increasing. An additional 75 mm subtracted to move the beampipe upstream.-->
     <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" 
@@ -76,78 +76,21 @@
     <position name="inner_nose_shield_US_beampipe_center" unit="mm" x="0" y="0"
               z="200/2 + posCOLL2z + COLL2_THICK/2+0.001-50/2-75"/>
 
-    <!-- New shifted target and shrunk experiment mode collimator 4 sculpt -->
-    <!-- main collimator number 4, adjust this -->
-    <constant name="col4shift" value ="1500"/>
-    <constant name="DOFFSET" value="13366.57+5300.59/2-8.73/2"/>
-    <constant name="posPCOLL2_z" value ="1300"/> <!--subtracting 50/2 from z to compensate for increased thickness so that downstream end still ends at the same point as before-->
-    <position name="posPCOLL2" unit="mm" x="0" y="0" z="posPCOLL2_z"/>
-    <constant name="PCOLL2_R1_U" value ="30.861"/> <!-- Was 38.0" for no good reason, then 30 -->
-    <constant name="PCOLL2_R1_D" value ="30.861"/> <!-- 8.0"/> -->
-    <!-- coll sep, inner rad, adjust this -->
-    <constant name="PCOLL2_R2_U" value ="53.5"/>  <!-- was 64, then was 52.5 for US col 4 but still bad envelope, then settled on 50 but now improved -->
-    <constant name="PCOLL2_R2_D" value ="53.5"/>
-    <!-- coll sep, outer rad, adjust this -->
-    <constant name="PCOLL2_R3_U" value ="196.5"/> <!-- was 221, then was 165.5 for US col 4 but still bad envelope, then settled on 171.4 but now improved -->
-    <constant name="PCOLL2_R3_D" value ="196.5"/>
-    <constant name="PCOLL2_R4_U" value ="250"/>
-    <constant name="PCOLL2_R4_D" value ="250"/>
-    <constant name="PCOLL2_THICK" value ="150.0"/> <!--100.0 increased the thickness by 50% to prevent punch through-->
-
-    <constant name="PCOLL2_SCULPT_P1_X" value ="53.3"/>
-    <constant name="PCOLL2_SCULPT_P1_Y" value ="10.3"/>
-    <constant name="PCOLL2_SCULPT_P2_X" value ="88.60"/>
-    <constant name="PCOLL2_SCULPT_P2_Y" value ="17.68"/>
-    <constant name="PCOLL2_SCULPT_P3_X" value ="123.25"/>
-    <constant name="PCOLL2_SCULPT_P3_Y" value ="28.48"/>
-    <constant name="PCOLL2_SCULPT_P4_X" value ="187.22"/>
-    <constant name="PCOLL2_SCULPT_P4_Y" value ="45.04"/>
-
-    <position name="PCOLL2_lcut1" unit="mm" x="PCOLL2_SCULPT_P1_X" y="-PCOLL2_SCULPT_P1_Y" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_lcut2" unit="mm" x="PCOLL2_SCULPT_P2_X" y="-PCOLL2_SCULPT_P2_Y" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_lcut3" unit="mm" x="PCOLL2_SCULPT_P3_X" y="-PCOLL2_SCULPT_P3_Y" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_lcut4" unit="mm" x="PCOLL2_SCULPT_P4_X" y="-PCOLL2_SCULPT_P4_Y" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_lcut5" unit="mm" x="PCOLL2_SCULPT_P4_X" y="-70" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_lcut6" unit="mm" x="20.0" y="-70.0" z="-PCOLL2_THICK/2-5"/>
-
-    <position name="PCOLL2_lcut7" unit="mm" x="PCOLL2_SCULPT_P1_X" y="-PCOLL2_SCULPT_P1_Y" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_lcut8" unit="mm" x="PCOLL2_SCULPT_P2_X" y="-PCOLL2_SCULPT_P2_Y" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_lcut9" unit="mm" x="PCOLL2_SCULPT_P3_X" y="-PCOLL2_SCULPT_P3_Y" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_lcut10" unit="mm" x="PCOLL2_SCULPT_P4_X" y="-PCOLL2_SCULPT_P4_Y" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_lcut11" unit="mm" x="PCOLL2_SCULPT_P4_X" y="-70" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_lcut12" unit="mm" x="20.0" y="-70.0" z="PCOLL2_THICK/2+5"/>
-
-    <position name="PCOLL2_rcut1" unit="mm" x="PCOLL2_SCULPT_P1_X" y="PCOLL2_SCULPT_P1_Y" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_rcut2" unit="mm" x="PCOLL2_SCULPT_P2_X" y="PCOLL2_SCULPT_P2_Y" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_rcut3" unit="mm" x="PCOLL2_SCULPT_P3_X" y="PCOLL2_SCULPT_P3_Y" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_rcut4" unit="mm" x="PCOLL2_SCULPT_P4_X" y="PCOLL2_SCULPT_P4_Y" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_rcut5" unit="mm" x="PCOLL2_SCULPT_P4_X" y="70" z="-PCOLL2_THICK/2-5"/>
-    <position name="PCOLL2_rcut6" unit="mm" x="20.0" y="70" z="-PCOLL2_THICK/2-5"/>
-
-    <position name="PCOLL2_rcut7" unit="mm" x="PCOLL2_SCULPT_P1_X" y="PCOLL2_SCULPT_P1_Y" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_rcut8" unit="mm" x="PCOLL2_SCULPT_P2_X" y="PCOLL2_SCULPT_P2_Y" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_rcut9" unit="mm" x="PCOLL2_SCULPT_P3_X" y="PCOLL2_SCULPT_P3_Y" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_rcut10" unit="mm" x="PCOLL2_SCULPT_P4_X" y="PCOLL2_SCULPT_P4_Y" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_rcut11" unit="mm" x="PCOLL2_SCULPT_P4_X" y="70" z="PCOLL2_THICK/2+5"/>
-    <position name="PCOLL2_rcut12" unit="mm" x="20" y="70" z="PCOLL2_THICK/2+5"/>
 
   </define> 
 
   &materials;
 
   <solids>
-     
-      <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_1" rmax="550" rmin="0" startphi="0" z="USBoxmother_length"/>
-      <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_2" rmax="550+1" rmin="0" startphi="0" z="USBoxmothersubtract_length - 610 - 500"/>
-      <subtraction name="tubeUpstream">
-        <first ref="tubeUpstream_1"/>
-        <second ref="tubeUpstream_2"/>
-        <positionref ref="USmothersubtract_center_2" />
-      </subtraction>
-      
-    <!-- Lead shielding solids -->
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="boxDSShield1_local_solid" rmin="265" rmax="540" z="250"/>
-       
+
+    <box lunit="mm" name="boxUpstream_1" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmother_length"/>
+    <box lunit="mm" name="boxUpstream_2" x="USBoxmother_width + 1" y="USBoxmother_height + 1" z="USBoxmothersubtract_length"/>
+    <subtraction name="boxUpstream"> <!-- originally was _4"> -->
+      <first ref="boxUpstream_1"/>
+      <second ref="boxUpstream_2"/>
+      <positionref ref="USmothersubtract_center_2" />
+    </subtraction>
+
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
       <zplane rmin="20.0" rmax="27" z="0"/> 
       <zplane rmin="16.25" rmax="27" z="100"/> 
@@ -186,6 +129,7 @@
       <zplane rmin="25.4" rmax="27.3" z="465"/> 
       <zplane rmin="25.4" rmax="27.3" z="515"/> 
     </polycone>
+
 
     <cone aunit="deg" deltaphi="SEPTANT/2" lunit="mm" name="cons_1" 
           rmax1="COLL2_R3_U" 
@@ -301,110 +245,26 @@
       <rotation name="uscoll_Cu_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
     </subtraction>
 
-    <!--collimator4-->
-    <tessellated name="leftpcolcut">
-      <triangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut6" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut2" vertex3="PCOLL2_lcut3" vertex4="PCOLL2_lcut5" type="ABSOLUTE"/>
-      <triangular vertex1="PCOLL2_lcut3" vertex2="PCOLL2_lcut4" vertex3="PCOLL2_lcut5" type="ABSOLUTE"/>
 
-      <quadrangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut6" vertex3="PCOLL2_lcut12" vertex4="PCOLL2_lcut7" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_lcut6" vertex2="PCOLL2_lcut5" vertex3="PCOLL2_lcut11" vertex4="PCOLL2_lcut12" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_lcut4" vertex2="PCOLL2_lcut10" vertex3="PCOLL2_lcut11" vertex4="PCOLL2_lcut5" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_lcut3" vertex2="PCOLL2_lcut9" vertex3="PCOLL2_lcut10" vertex4="PCOLL2_lcut4" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_lcut2" vertex2="PCOLL2_lcut8" vertex3="PCOLL2_lcut9" vertex4="PCOLL2_lcut3" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_lcut1" vertex2="PCOLL2_lcut7" vertex3="PCOLL2_lcut8" vertex4="PCOLL2_lcut2" type="ABSOLUTE"/>
+    <box lunit="mm" name="coll1SideShielding_solid"
+	 x="1400"
+	 y="2*(1270)"
+	 z="USBoxmother_length - USBoxmothersubtract_length - 10"/>
 
-      <triangular vertex1="PCOLL2_lcut7" vertex2="PCOLL2_lcut12" vertex3="PCOLL2_lcut8" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_lcut8" vertex2="PCOLL2_lcut12" vertex3="PCOLL2_lcut11" vertex4="PCOLL2_lcut9" type="ABSOLUTE"/>
-      <triangular vertex1="PCOLL2_lcut9" vertex2="PCOLL2_lcut11" vertex3="PCOLL2_lcut10" type="ABSOLUTE"/>
-    </tessellated>
+    <box lunit="mm" name="coll1TopShielding_solid"
+	 x="1400*2 + 1270"
+	 y="1400"
+	 z="USBoxmother_length - USBoxmothersubtract_length - 10"/>
 
-    <tessellated name="rightpcolcut">
-      <triangular vertex1="PCOLL2_rcut1" vertex2="PCOLL2_rcut6" vertex3="PCOLL2_rcut2" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_rcut6" vertex2="PCOLL2_rcut5" vertex3="PCOLL2_rcut3" vertex4="PCOLL2_rcut2" type="ABSOLUTE"/>
-      <triangular vertex1="PCOLL2_rcut3" vertex2="PCOLL2_rcut5" vertex3="PCOLL2_rcut4" type="ABSOLUTE"/>
+    <box lunit="mm" name="pivotIron_solid"
+	 x="1400*2 + 1270"
+	 y="50"
+	 z="USBoxmother_length - USBoxmothersubtract_length - 10"/>
 
-      <quadrangular vertex1="PCOLL2_rcut1" vertex2="PCOLL2_rcut7" vertex3="PCOLL2_rcut12" vertex4="PCOLL2_rcut6" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_rcut6" vertex2="PCOLL2_rcut12" vertex3="PCOLL2_rcut11" vertex4="PCOLL2_rcut5" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_rcut4" vertex2="PCOLL2_rcut5" vertex3="PCOLL2_rcut11" vertex4="PCOLL2_rcut10" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_rcut3" vertex2="PCOLL2_rcut4" vertex3="PCOLL2_rcut10" vertex4="PCOLL2_rcut9" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_rcut2" vertex2="PCOLL2_rcut3" vertex3="PCOLL2_rcut9" vertex4="PCOLL2_rcut8" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_rcut1" vertex2="PCOLL2_rcut2" vertex3="PCOLL2_rcut8" vertex4="PCOLL2_rcut7" type="ABSOLUTE"/>
-
-      <triangular vertex1="PCOLL2_rcut8" vertex2="PCOLL2_rcut12" vertex3="PCOLL2_rcut7" type="ABSOLUTE"/>
-      <quadrangular vertex1="PCOLL2_rcut8" vertex2="PCOLL2_rcut9" vertex3="PCOLL2_rcut11" vertex4="PCOLL2_rcut12" type="ABSOLUTE"/>
-      <triangular vertex1="PCOLL2_rcut10" vertex2="PCOLL2_rcut11" vertex3="PCOLL2_rcut9" type="ABSOLUTE"/>
-    </tessellated>
-
-    <cone aunit="deg" deltaphi="SEPTANT/2" lunit="mm" name="pcons_1"
-      rmax1="PCOLL2_R3_U-DELTAT*((PCOLL2_R3_D-PCOLL2_R3_U)/PCOLL2_THICK)"
-      rmax2="PCOLL2_R3_D+DELTAT*((PCOLL2_R3_D-PCOLL2_R3_U)/PCOLL2_THICK)"
-      rmin1="PCOLL2_R2_U-DELTAT*((PCOLL2_R2_D-PCOLL2_R2_U)/PCOLL2_THICK)"
-      rmin2="PCOLL2_R2_D+DELTAT*((PCOLL2_R2_D-PCOLL2_R2_U)/PCOLL2_THICK)"
-      startphi="-SEPTANT/4" z="PCOLL2_THICK+DELTAT*2"/>
-
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl"
-      rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D"
-      rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D"
-      startphi="0" z="PCOLL2_THICK"/>
-
-
-    <subtraction name ="pcons_sculpt_1">
-      <first ref="pcons_1"/>
-      <second ref="leftpcolcut"/>
-    </subtraction>
-    <subtraction name ="pcons_sculpt_2">
-      <first ref="pcons_sculpt_1"/>
-      <second ref="rightpcolcut"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_0">
-      <first ref="pdscyl"/>
-      <second ref="pcons_sculpt_2"/>
-      <rotation name="pdscoll_rot1" x="0" y="0" z="SEPTANT*(0+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_1">
-      <first ref="pdscoll_union_0"/>
-      <second ref="pcons_sculpt_2"/>
-      <rotation name="pdscoll_rot2" x="0" y="0" z="SEPTANT*(1+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_2">
-      <first ref="pdscoll_union_1"/>
-      <second ref="pcons_sculpt_2"/>
-      <rotation name="pdscoll_rot3" x="0" y="0" z="SEPTANT*(2+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_3">
-      <first ref="pdscoll_union_2"/>
-      <second ref="pcons_sculpt_2"/>
-      <rotation name="pdscoll_rot4" x="0" y="0" z="SEPTANT*(3+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_4">
-      <first ref="pdscoll_union_3"/>
-      <second ref="pcons_sculpt_2"/>
-      <rotation name="pdscoll_rot5" x="0" y="0" z="SEPTANT*(4+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_5">
-      <first ref="pdscoll_union_4"/>
-      <second ref="pcons_sculpt_2"/>
-      <rotation name="pdscoll_rot6" x="0" y="0" z="SEPTANT*(5+0.5)" unit="deg"/>
-    </subtraction>
-    <subtraction name ="pdscoll_union_6">
-      <first ref="pdscoll_union_5"/>
-      <second ref="pcons_sculpt_2"/>
-      <rotation name="pdscoll_rot7" x="0" y="0" z="SEPTANT*(6+0.5)" unit="deg"/>
-    </subtraction>
-    
   </solids>
 
+
   <structure>
-    
-    <volume name="boxDSShield_local_logic">
-      <materialref ref="Lead"/>
-      <solidref ref="boxDSShield1_local_solid"/>
-      <auxiliary auxtype="Color" auxvalue="gray"/>
-      <!--<auxiliary auxtype="Alpha" auxvalue="0.1"/>-->
-      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_poly"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6031"/>
-    </volume>
     
     <volume name="logicUScoll_1">
       <materialref ref="CW95"/>
@@ -476,26 +336,29 @@
       <auxiliary auxtype="DetNo" auxvalue="2008"/>
     </volume>
 
-    <volume name="logicPDScollunion_1">
-      <materialref ref="CW95"/>
-      <!--  <materialref ref="Kryptonite"/> -->
-      <solidref ref="pdscoll_union_6"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
-      <auxiliary auxtype="DetNo" auxvalue="2004"/>
+    <volume name="coll1TopShiled_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="coll1TopShielding_solid"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
     </volume>
-    
+
+    <volume name="coll1SideShiled_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="coll1SideShielding_solid"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="pivotIron_logic">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="pivotIron_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.8"/>
+    </volume>
+
     <volume name="upstreamTorusRegion">
       <materialref ref="VacuumColl"/>
-      <solidref ref="tubeUpstream"/>
+      <solidref ref="boxUpstream"/>
 
-      <!-- Lead wall DS of collimator 4 -->
-      <physvol name="hybridPbWall">
-        <volumeref ref="boxDSShield_local_logic"/>
-        <position name="hybridPbWall_pos" x="0" y="0" z="2005"/>
-        <!-- <positionref ref="boxDSShield_local_center"/> -->
-      </physvol>
-      
       <physvol name="collimator1">
         <volumeref ref="logicUScoll_1"/>
         <positionref ref="posCOLL1"/>
@@ -503,22 +366,22 @@
 
       <physvol name="col1_us_h20_phys">
         <volumeref ref="col1_h20_logic1"/>
-	    <position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7"/> <!-- center position wrt target center = 5036 mm-->
+	<position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7"/> <!-- center position wrt target center = 5036 mm-->
       </physvol>
 
       <physvol name="col1_ds_h20_phys">
         <volumeref ref="col1_h20_logic2"/>
-	    <position ref="col1_h20_pos2" x="0" y="0" z="-1825+675"/> <!-- front face position wrt target center = 5340 mm-->
+	<position ref="col1_h20_pos2" x="0" y="0" z="-1825+675"/> <!-- front face position wrt target center = 5340 mm-->
       </physvol>
 
       <physvol name="col1_h20_CW_phys">
         <volumeref ref="col1_h20_CW_logic"/>
-	    <position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2."/> <!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2."/> <!-- center position wrt target center = 5191.5 mm-->
       </physvol>
 
       <physvol name="col1_jacket_phys">
         <volumeref ref="col1_jacket_logic"/>
-	    <position ref="col1_jacket_pos" x="0" y="0" z="-1825+110"/> <!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110"/> <!-- center position wrt target center = 5191.5 mm-->
       </physvol>
 
       <physvol name="collimator2_CW">
@@ -531,14 +394,28 @@
         <positionref ref="posCOLL2_Cu"/>
       </physvol>
 
-      <!-- Collimator 4 -->
-      <physvol name="collimator4">
-        <volumeref ref="logicPDScollunion_1"/>
-        <positionref ref="posPCOLL2"/>
-      </physvol>
-      
       <physvol name="US_torus">
         <file name= "upstream/upstreamToroid.gdml"/>
+      </physvol>
+
+      <physvol name="coll1TopShielding">
+        <volumeref ref="coll1TopShiled_logic"/>
+        <position name="coll1TopShield_pos" unit="mm" x="0" y="760+700" z="- USBoxmothersubtract_length/2"/>
+      </physvol>
+
+      <physvol name="coll1LeftShielding">
+        <volumeref ref="coll1SideShiled_logic"/>
+        <position name="coll1LeftShield_pos" unit="mm" x="1270/2 + 700" y="-510" z="- USBoxmothersubtract_length/2"/>
+      </physvol>
+
+      <physvol name="coll1RightShielding">
+        <volumeref ref="coll1SideShiled_logic"/>
+        <position name="coll1RightShield_pos" unit="mm" x="-1270/2 - 700" y="-510" z="- USBoxmothersubtract_length/2"/>
+      </physvol>
+
+      <physvol name="pivotIron">
+        <volumeref ref="pivotIron_logic"/>
+        <position name="pivotIron_pos" unit="mm" x="0" y="-1900" z="- USBoxmothersubtract_length/2"/>
       </physvol>
 
       <physvol>
@@ -555,6 +432,8 @@
         <file name="upstream/inner_upstream_nose_shield_beampipe.gdml"/>
         <positionref ref="inner_nose_shield_US_beampipe_center"/>
       </physvol>
+
+
 
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define>
+    &matrices;
+    <!-- Shielding collimators dimensions -->
+    <constant name="USBoxmother_extensionUS" value="120"/>
+
+    <constant name="USBoxmother_width" value="4500"/>
+    <constant name="USBoxmother_height" value="5964"/>
+    <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
+
+    <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
+    <position name="boxConcreteShielding_center" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 1110/2"/>
+
+    
+  </define>
+  &materials;
+
+  <solids>
+    
+    <box lunit="mm" name="boxConcreteShielding_1" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmother_length"/>
+    <box lunit="mm" name="boxConcreteShielding_2" x="USBoxmother_width + 1" y="USBoxmother_height + 1" z="USBoxmothersubtract_length - 1110"/>
+    <subtraction name="boxConcreteShielding"> <!-- originally was _4"> -->
+      <first ref="boxConcreteShielding_1"/>
+      <second ref="boxConcreteShielding_2"/>
+      <positionref ref="boxConcreteShielding_center" />
+    </subtraction>
+
+    <!--shielding concrete-->
+    <box lunit="mm" name="DSconcrete" x="4261" y="5160 + 127.65 + 12.43" z="500"/>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="ShieldDS_tube" rmin="0" rmax="800+1" z="500+1"/>
+
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="dsBarite_solid" rmin="551" rmax="800" z="500"/>
+
+    <subtraction name="DSconcreteShielding_sub">
+      <first ref = "DSconcrete"/>
+      <second ref = "ShieldDS_tube"/>
+      <position name ="concreteSub2" lunit="mm" x="0" y="420-127.65/2 - 18 - 12.43/2" z="0" />
+    </subtraction>
+
+    <box lunit="mm" name="coll1SideShielding_solid"
+	 x="800"
+	 y="2*(1287.05)"
+	 z="USBoxmother_length - USBoxmothersubtract_length - 10 + 610"/>
+
+    <box lunit="mm" name="coll1TopShielding_solid"
+	 x="4261"
+	 y="1400"
+	 z="USBoxmother_length - USBoxmothersubtract_length - 10 + 610"/>
+
+    <box lunit="mm" name="pivotIron_solid"
+	 x="4261"
+	 y="50"
+	 z="USBoxmother_length - USBoxmothersubtract_length - 10 + 610"/>
+    
+  </solids>
+
+  <structure>
+
+    <!--Concrete Shielding-->
+    <volume name="coll1TopShield_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="coll1TopShielding_solid"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="coll1SideShield_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="coll1SideShielding_solid"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="pivotIron_logic">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="pivotIron_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.8"/>
+    </volume>
+    
+    <volume name="DSconcreteShielding">
+      <materialref ref="Concrete"/>
+      <solidref ref="DSconcreteShielding_sub"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+    
+    <volume name="dsBarite_logic">
+      <materialref ref="barite"/>
+      <solidref ref="dsBarite_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+    
+
+    <volume name="upstream">
+      <materialref ref="G4_AIR"/>  
+      <solidref ref="boxConcreteShielding"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+      <!--shielding placement-->
+      <physvol name="coll1TopShielding">
+        <volumeref ref="coll1TopShield_logic"/>
+        <position name="coll1TopShield_pos" unit="mm" x="0" y="915.67 + 1400/2 - 10 + 12.43" z="1287.5-250/2 - 2000"/>
+      </physvol>
+
+      <physvol name="coll1LeftShielding">
+        <volumeref ref="coll1SideShield_logic"/>
+        <position name="coll1LeftShield_pos" unit="mm" x="1331+800/2" y="-368.95" z="1287.5-250/2 - 2000"/>
+      </physvol>
+
+      <physvol name="coll1RightShielding">
+        <volumeref ref="coll1SideShield_logic"/>
+        <position name="coll1RightShield_pos" unit="mm" x="-1331-800/2" y="-368.95" z="1287.5-250/2 - 2000"/>
+      </physvol>
+
+      <physvol name="pivotIron">
+        <volumeref ref="pivotIron_logic"/>
+        <position name="pivotIron_pos" unit="mm" x="0" y="-1700" z="1287.5-250/2 - 2000"/>
+      </physvol>
+      
+      <physvol>
+	<volumeref ref="DSconcreteShielding"/>
+	<position name="DSconcreteShielding_pos" unit="mm" x="0" y="-420 + 127.65/2 + 18 + 12.43/2" z="4005-250/2- 2000"/>
+      </physvol>
+
+      <physvol name="dsBarite">
+	<volumeref ref="dsBarite_logic"/>
+	<position name="dsBarite_pos" unit="mm" x="0" y="0" z="4005-250/2- 2000"/>
+      </physvol>
+
+      <physvol>
+	<file name="upstream/upstreamTorusRegion.gdml"/>
+      </physvol>
+
+
+    </volume>
+
+  </structure>
+
+  <setup name="ConcreteShielding" version="1.0">
+    <world ref="upstream"/>
+  </setup>
+
+</gdml>

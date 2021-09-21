@@ -41,9 +41,9 @@
 <!-- Virtual planes in the parallel world -->
 <position name="mainDetectorVirtualPlane_pos" z="22000.00" unit="mm"/>
 
-<!-- Z position of the plane about which the two arrays of showermax
-detectors are placed -->
-<position name="showerMaxDetectorCenter" x="0.0" y="0.0" z="23000.00" unit="mm"/>
+<!-- Z position of center of the two arrays of showermax detectors -->
+<position name="showerMaxDetectorFaceUS" z="24000.00" unit="mm"/>
+<position name="showerMaxDetectorCenter" z="24000.00+76.00" unit="mm"/>
 
 <!-- Z position of the center of the lucite stack of the pion detector. -->
 <position name="pionDetectorCenter" x="0.0" y="0.0" z="24250.00" unit="mm"/>

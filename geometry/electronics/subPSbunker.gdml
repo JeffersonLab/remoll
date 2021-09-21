@@ -22,33 +22,40 @@
          x="16799.56" y="4215" z="11249.914"/>
 
     <box lunit="mm" name="psBunkerRegion_s1"
-         x="16799.56" y="4215" z="11249.914"/>
+         x="10000" y="4215" z="11249.914"/>
 
     <box lunit="mm" name="psBunkerRegion_s2"
-         x="15399.56" y="4215+1" z="8449.914"/>
-    
+         x="8600" y="4215+1" z="8449.914"/>
+ 
     <box lunit="mm" name="psBunkerRegion_s3"
-         x="1000+1" y="4215+1" z="1400+1"/>
-              
+         x="6000+1" y="4215+1" z="1400"/>
+    
     <box lunit="mm" name="LargepsBox"
          x="2500" y="1397" z="1424"/>
    
     <box lunit="mm" name="SmallpsBox"
          x="1017" y="2540" z="1017"/>
            
-    <subtraction name ="psBunkerRegion_sub1">
+    <subtraction name ="psBunkerRegion_sub">
       <first ref="psBunkerRegion_s1"/>
       <second ref="psBunkerRegion_s2"/>
       <position name="psBunkerRegionsub_pos" lunit="mm" x="+700" y="0" z="0" />
     </subtraction>
 
-    <subtraction name ="psBunkerWall_solid">
+    <subtraction name ="psBunkerRegion_sub1">
+      <first ref="psBunkerRegion_sub"/>
+      <second ref="psBunkerRegion_s3"/>
+      <position name="psBunkerRegionsub_pos1" lunit="mm" x="2000+0.5" y="0" z="5624.957" />
+    </subtraction>
+
+    <subtraction name ="psBunkerRegion_sub2">
       <first ref="psBunkerRegion_sub1"/>
       <second ref="psBunkerRegion_s3"/>
-      <position name="psBunkerRegion_pos" lunit="mm" x="+15799.56/2" y="0" z="+11249.914/2-1400/2" />
+      <position name="psBunkerRegionsub_pos1" lunit="mm" x="2000+0.5" y="0" z="-5624.957" />
     </subtraction>
-    
-  </solids>
+
+   
+   </solids>
 
   <structure>
 
@@ -118,12 +125,13 @@
 
     <volume name="psBunkerWall_log">
       <materialref ref="Concrete"/>
-      <solidref ref="psBunkerWall_solid"/>
+      <solidref ref="psBunkerRegion_sub2"/>
       <auxiliary auxtype="Color" auxvalue="Green"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
 
-    <volume name="psbunker">
+  
+      <volume name="psbunker">
       <materialref ref="G4_AIR"/>
       <solidref ref="psBunkerRegion_solid"/>
       <auxiliary auxtype="Color" auxvalue="White"/>
@@ -131,6 +139,7 @@
 
       <physvol name="psBunkerWall_phys">
         <volumeref ref="psBunkerWall_log"/>
+         <position name="psBunkerWall_pos" lunit="mm" x="-3399.78" y="0" z="0" />
       </physvol>
 
       <physvol name="Lbox1_phys">

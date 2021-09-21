@@ -160,10 +160,10 @@
       </physvol>-->
       
       <!-- ShowerMax Detectors--> 
-      <!-- <physvol> -->
-      <!--   <file name="showermax/showerMaxGen.gdml"/> -->
-      <!--   <positionref ref="showerMaxDetectorCenter"/> -->
-      <!-- </physvol> -->
+       <physvol> 
+       <file name="showermax/showerMaxGen.gdml"/> 
+         <positionref ref="showerMaxDetectorCenter"/> 
+       </physvol> 
       
 
       <!-- Pion Detectors -->
