@@ -5,6 +5,7 @@
 
 
 <define>
+	<variable name="iloop" value="0"/>
 </define>
 
 <materials>
@@ -30,27 +31,6 @@
 
 
 <solids>
-
-        <!--
-                     <arb8 name="Col5_solid1" v1x="74.22" v1y="17.25"
-             v2x="180.22" v2y="54.15"
-             v3x="180.22" v3y="-54.15"
-             v4x="74.22" v4y="-17.25"
-             v5x="74.22" v5y="17.25"
-             v6x="180.22" v6y="54.15"
-             v7x="180.22" v7y="-54.15"
-             v8x="74.22" v8y="-17.25"
-             dz="35" lunit="mm"/>
-
-        <arb8 name="Col5_solid2" v1x="116.38" v1y="12.75"
-             v2x="180.22" v2y="33.5"
-             v3x="180.22" v3y="-33.5"
-             v4x="116.38" v4y="-12.75"
-             v5x="116.38" v5y="12.75"
-             v6x="180.22" v6y="33.5"
-             v7x="180.22" v7y="-33.5"
-             v8x="116.38" v8y="-12.75"
-        dz="35" lunit="mm"/>-->
 
         <xtru name="Col5_solid1" lunit="mm">
                 <twoDimVertex x="-176" y="32.6"/>
@@ -493,20 +473,46 @@
 
         <box lunit="mm" name="Coll6_2_Box_solid" x="125" y="25" z="100"/>
 
+        <xtru name="Coll6B_solid1" lunit="mm">
+                <twoDimVertex x="-61.92" y="2.54"/>
+                <twoDimVertex x="-54.69" y="-29.16"/>
+                <twoDimVertex x="-122.47" y="-61.80"/>
+                <twoDimVertex x="-133.35" y="-39.22"/>
+                <twoDimVertex x="-133.35" y="2.54"/>
+                <twoDimVertex x="-61.92" y="2.54"/>
+                <section zOrder="1" zPosition="-34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+                <section zOrder="2" zPosition="34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+        <cone aunit="deg" deltaphi="35" lunit="mm" name="Coll6B_Cylinder_solid1" rmax1="61.98" rmax2="67.47" rmin1="50" rmin2="55" startphi="175" z="70"/>
+        <subtraction name="Coll6B_solid_1">
+           <first ref="Coll6B_solid1"/>
+           <second ref="Coll6B_Cylinder_solid1"/>
+           <position name="Coll6B_Sub_pos1" unit="mm" x="0" y="0" z="0" />
+        </subtraction>
+
+        <xtru name="Coll6B_solid2" lunit="mm">
+                <twoDimVertex x="-68.43" y="-2.54"/>
+                <twoDimVertex x="-133.35" y="-2.54"/>
+                <twoDimVertex x="-133.35" y="39.22"/>
+                <twoDimVertex x="-122.47" y="61.80"/>
+                <twoDimVertex x="-60.55" y="31.98"/>
+                <twoDimVertex x="-68.43" y="-2.54"/>
+                <section zOrder="1" zPosition="-34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+                <section zOrder="2" zPosition="34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+        <cone aunit="deg" deltaphi="35" lunit="mm" name="Coll6B_Cylinder_solid2" rmax1="68.47" rmax2="73.97" rmin1="59" rmin2="64" startphi="150" z="70"/>
+        <subtraction name="Coll6B_solid_2">
+           <first ref="Coll6B_solid2"/>
+           <second ref="Coll6B_Cylinder_solid2"/>
+           <position name="Coll6B_Sub_pos2" unit="mm" x="0" y="0" z="0" />
+        </subtraction>
+
+
         <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll6_2_Ring_solid">
            <zplane rmin="62" rmax="125.0" z="0"/>
            <zplane rmin="69.9" rmax="125.0" z="100"/>
         </polycone>
 
-         <cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6_2_Cylinder_solid" rmax1="125" rmax2="125" rmin1="62" rmin2="62" startphi="0" z="100"/>
-
-        <!--    <subtraction name="Coll6_2_solid">
-                           <first ref="Coll6_2_Box_solid"/>
-           <second ref="Coll6_2_Cylinder_solid"/>
-           <position name="Coll6_2_Sub_pos" unit="mm" x="90./2" y="0" z="0" />
-   </subtraction>-->
-
-        <box lunit="mm" name="EPShieldAtColl5_solid" x="74.22-46" y="10" z="70"/>
 
                     <!-- Lintels solid -->
         <arb8 name="Lintel_s1"
@@ -592,31 +598,32 @@
                 <auxiliary auxtype="DetNo" auxvalue="2006"/>
         </volume>
 
-        <volume name="Coll6_2_Ring_logic">
+	<!--        <volume name="Coll6_2_Ring_logic">
                 <materialref ref="G4_CW95"/>
                 <solidref ref="Coll6_2_Ring_solid"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
                 <auxiliary auxtype="Alpha" auxvalue="0.5"/>
                 <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
                 <auxiliary auxtype="DetNo" auxvalue="2007"/>
-        </volume>
+	</volume>-->
 
-<!-- This is the handle of Coll5 -->
-        <volume name="EPShieldAtColl5_logic">
+        <volume name="Coll6B_logic1">
                 <materialref ref="G4_CW95"/>
-                <solidref ref="EPShieldAtColl5_solid"/>
+                <solidref ref="Coll6B_solid_1"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
                 <auxiliary auxtype="Alpha" auxvalue="0.5"/>
                 <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-                <auxiliary auxtype="DetNo" auxvalue="2005"/>
+                <auxiliary auxtype="DetNo" auxvalue="2007"/>
         </volume>
 
- <!--    <volume name="logic_Col5_accep">
-                         <materialref ref="Vacuum"/>
-                <solidref ref="Col5_solid2"/>
-                <auxiliary auxtype="Color" auxvalue="Yellow"/>
-                <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-        </volume>-->
+        <volume name="Coll6B_logic2">
+                <materialref ref="G4_CW95"/>
+                <solidref ref="Coll6B_solid_2"/>
+                <auxiliary auxtype="Color" auxvalue="blue"/>
+                <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+                <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+                <auxiliary auxtype="DetNo" auxvalue="2007"/>
+        </volume>
 
         <volume name="logic1_Col5">
                 <materialref ref="G4_CW95"/>
@@ -1983,10 +1990,25 @@
                         <rotation name="rot_dsshield7" x="0" y="0" z="-12*pi/7."/>
                 </physvol>
 
+		<!--
                 <physvol name="Coll6_2_Ring_pv">
                         <volumeref ref="Coll6_2_Ring_logic"/>
                         <position name="Coll6Ring_pos" x="0" y="0" z="1172.106+1504.95+(13335.194-13332.736)"/>
-                </physvol>
+		</physvol>-->
+
+		<loop for="iloop" from="0" to="6" step="1">
+                <physvol>
+                        <volumeref ref="Coll6B_logic1"/>
+                        <position name="Coll6Ring_pos1" x="0" y="0" z="2617.541+(13335.194-13332.736)"/>
+                        <rotation name="Coll6_rot11" unit="deg" x="0" y="0" z="-iloop*360./7."/>
+		</physvol>
+
+                <physvol>
+                        <volumeref ref="Coll6B_logic2"/>
+                        <position name="Coll6Ring_pos2" x="0" y="0" z="2617.541+82.55+(13335.194-13332.736)"/>
+                        <rotation name="Coll6_rot21" unit="deg" x="0" y="0" z="-iloop*360./7."/>
+		</physvol>
+		</loop>
 
                   <physvol name="phys_Col5_11">
                         <volumeref ref="logic1_Col5"/>
