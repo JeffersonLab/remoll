@@ -424,6 +424,19 @@
     <fraction n="0.035" ref="Nickel"/>
   </material>
 
+  <material name="CW90" state="solid"><!--EA17 from Eagle Alloys -->
+    <D value="17.0" unit="g/cm3"/>
+    <fraction n="0.9000" ref="Tungsten"/>
+    <fraction n="0.040" ref="Copper"/>
+    <fraction n="0.060" ref="Nickel"/>
+  </material>
+
+  <material name="CW80" state="solid">
+    <D value="15.56" unit="g/cm3"/>
+    <fraction n="0.80" ref="Tungsten"/>
+    <fraction n="0.20" ref="Copper"/>
+  </material>
+
   <!-- Defined for the next material "Water-CW" for Col1 water channel -->
   <material name="Water" state="liquid">
     <D value="1.0" unit="g/cm3"/>
