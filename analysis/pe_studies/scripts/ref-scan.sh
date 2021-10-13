@@ -128,8 +128,8 @@ z_point=0.0
 # Added to adjust how the beam hits the quartz. Raster is set to 0.1 to minimize it. x_p and y_p are new as well
 raster_x=0.1
 raster_y=0.1
-xspread=0.0
-yspread=0.0
+x_spread=0.0
+y_spread=0.0
 
 defaultName="refScanOut.root"
 outputName="refScanOut.root"
@@ -225,8 +225,8 @@ $ring,$qR,$qL,$overlap,$qThick,$num2,$num3,$refL,$ref_angle,$refD,$lg_angle,$pmt
         sed -i 's;'"/remoll/evgen/beam/rasy 25.0 mm"';'"/remoll/evgen/beam/rasy ${raster_y} mm"';g' macros/scans_${geom}_${name}.mac
 
         #Setting the beam spread to the full dimension of the quartz
-        sed -i 's;'"/remoll/evgen/beam/xspread 25.0 mm"';'"/remoll/evgen/beam/rasx ${x_spread} mm"';g' macros/scans_${geom}_${name}.mac
-        sed -i 's;'"/remoll/evgen/beam/xspread 25.0 mm"';'"/remoll/evgen/beam/rasx ${y_spread} mm"';g' macros/scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/evgen/beam/xspread 25.0 mm"';'"/remoll/evgen/beam/xspread ${x_spread} mm"';g' macros/scans_${geom}_${name}.mac
+        sed -i 's;'"/remoll/evgen/beam/yspread 25.0 mm"';'"/remoll/evgen/beam/yspread ${y_spread} mm"';g' macros/scans_${geom}_${name}.mac
 
         #End of changes to beam
 
@@ -283,7 +283,8 @@ source remoll.sh
         chmod 755 runscript_${geom}_${name}.sh
     fi
     if [[ "$pass" == "1" || "$secondpass" == "1" ]] ; then
-        qsub runscript_${geom}_${name}.sh
+       # qsub runscript_${geom}_${name}.sh
+       ./runscript_${geom}_${name}.sh &
     fi
     cd -
     secondpass="$pass"

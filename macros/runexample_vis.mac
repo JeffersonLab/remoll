@@ -4,8 +4,8 @@
 /remoll/physlist/optical/enable
 
 # This is the current working geometry
-/remoll/setgeofile geometry/mollerMother.gdml
-
+#/remoll/setgeofile geometry_sandbox/detector_R5o.gdml The default
+/remoll/setgeofile analysis/pe_studies/ref-scans/R6/out_R6_15.0_degrees_88.5_L_92.0_D_0.9_ref_1_cer_1_scint/detectorR6.gdml
 #/remoll/likekryptonite  true
 
 #Below the this energy, the tracks are killed
@@ -35,13 +35,16 @@
 /remoll/evgen/beam/origin -987.5 0.0 -150.0 mm
 #/remoll/evgen/beam/x -987.5 mm
 /remoll/evgen/beam/direction -0.0523 0.0 0.9986
-/remoll/evgen/beam/rasx 105.0 mm
-/remoll/evgen/beam/rasy 78.0 mm
+#/remoll/evgen/beam/rasx 105.0 mm Default
+/remoll/evgen/beam/rasx 100.00 mm
+#/remoll/evgen/beam/rasy 78.0 mm Default
+/remoll/evgen/beam/rasy 255.82 mm
 #/remoll/evgen/beam/x -987.5 mm
 #/remoll/evgen/beam/z -150.0 mm
 #/remoll/evgen/beam/px -0.0523
 #/remoll/evgen/beam/pz 0.9986 
 /remoll/filename remollout_r5o_beam_default.root
+#/remoll/filename remollout_r6_beam_default.root
 
 
 ## External Generator

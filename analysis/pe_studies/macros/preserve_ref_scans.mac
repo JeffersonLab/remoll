@@ -59,8 +59,8 @@
 /remoll/evgen/beam/rasx 25.0 mm # Overwritten by ref-scan.sh to be 0.1
 /remoll/evgen/beam/rasy 25.0 mm # Overwritten by ref-scan.sh to be 0.1
 #Adding a spread (removes the old role of the raster, values given here are irrelevant)
-/remoll/evgen/beam/xspread 25.0
-/remoll/evgen/beam/yspread 25.0
+/remoll/evgen/beam/xspread 25.0 mm
+/remoll/evgen/beam/yspread 25.0 mm
 /remoll/beamene 8000 MeV
 
 /remoll/evgen/beam/partName e-
