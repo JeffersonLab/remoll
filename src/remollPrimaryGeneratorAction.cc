@@ -35,7 +35,7 @@
 #include "remollGenHyperon.hh"
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
-: fEventGen(0),fPriGen(0),fParticleGun(0),fBeamTarg(0),fEvent(0),fMessenger(0),fEffCrossSection(0)
+: fEventGen(0),fPriGen(0),fParticleGun(0),fEvent(0),fMessenger(0),fEffCrossSection(0)
 {
     static bool has_been_warned = false;
     if (! has_been_warned) {
@@ -72,9 +72,6 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     #endif
     #endif
 
-    // Create beam target
-    fBeamTarg = new remollBeamTarget();
-
     // Default generator
     G4String default_generator = "moller";
     SetGenerator(default_generator);
@@ -91,7 +88,6 @@ remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
     fPriGenMap.clear();
     if (fEvGenMessenger) delete fEvGenMessenger;
     if (fMessenger) delete fMessenger;
-    if (fBeamTarg)  delete fBeamTarg;
     if (fEventGen)  delete fEventGen;
 }
 
@@ -131,7 +127,7 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
 
     // Set the beam target
     if (fEventGen) {
-      fEventGen->SetBeamTarget(fBeamTarg);
+      fEventGen->SetBeamTarget(&fBeamTarg);
     }
 }
 
@@ -206,10 +202,10 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     // Calculate rate
     SamplingType_t sampling_type = fEventGen->GetSamplingType();
     if (fEvent->fRate == 0) { // If the rate is set to 0 then calculate it using the cross section
-        fEvent->fRate  = fEvent->fEffXs * fBeamTarg->GetEffLumin(sampling_type) / nthrown;
+        fEvent->fRate  = fEvent->fEffXs * fBeamTarg.GetEffLumin(sampling_type) / nthrown;
 
     } else { // For LUND - calculate rate and cross section
-        fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg->GetEffLumin(sampling_type);
+        fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg.GetEffLumin(sampling_type);
         fEvent->fRate  = fEvent->fRate / nthrown;
     }
 
