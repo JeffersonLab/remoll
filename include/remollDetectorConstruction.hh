@@ -4,6 +4,7 @@
 #include "G4GDMLParser.hh"
 #include "G4GDMLAuxStructType.hh"
 #include "G4VUserDetectorConstruction.hh"
+#include "G4GenericMessenger.hh"
 #include "G4Types.hh"
 
 #include <vector>
@@ -15,7 +16,6 @@ class G4Tubs;
 class G4LogicalVolume;
 class G4VPhysicalVolume;
 class G4VSensitiveDetector;
-class G4GenericMessenger;
 class G4UserLimits;
 
 class remollGlobalField;
@@ -50,7 +50,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   private:
 
-    G4GDMLParser *fGDMLParser;
+    G4GDMLParser fGDMLParser;
 
     G4bool fGDMLValidate;
     G4bool fGDMLOverlapCheck;
@@ -67,8 +67,14 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
       fGDMLFile = gdmlfile.substr(i + 1);
     }
 
-    G4GenericMessenger* fMessenger;
-    G4GenericMessenger* fGeometryMessenger;
+    G4GenericMessenger fMessenger{
+        this,
+        "/remoll/",
+        "Remoll properties"};
+    G4GenericMessenger fGeometryMessenger{
+        this,
+        "/remoll/geometry/",
+        "Remoll geometry properties"};
 
     void ReloadGeometry(const G4String gdmlfile);
 
@@ -87,8 +93,10 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   private:
 
-    G4GenericMessenger* fUserLimitsMessenger;
-
+    G4GenericMessenger fUserLimitsMessenger{
+        this,
+        "/remoll/geometry/userlimits/",
+        "Remoll geometry properties"};
 
   public:
 
@@ -101,7 +109,10 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 
   private:
 
-    G4GenericMessenger* fKryptoniteMessenger;
+    G4GenericMessenger fKryptoniteMessenger{
+        this,
+        "/remoll/kryptonite/",
+        "Remoll kryptonite properties"};
     static G4UserLimits* fKryptoniteUserLimits;
     G4bool fKryptoniteEnable;
     G4int fKryptoniteVerbose;

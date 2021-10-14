@@ -12,6 +12,7 @@
 #include "remollSystemOfUnits.hh"
 
 #include "G4String.hh"
+#include "G4GenericMessenger.hh"
 
 #include <map>
 #include <vector>
@@ -19,8 +20,6 @@
 
 class TFile;
 class TTree;
-
-class G4GenericMessenger;
 
 class remollGenericDetectorHit;
 class remollGenericDetectorSum;
@@ -116,7 +115,7 @@ class remollIO {
 	TFile *fFile;
 	TTree *fTree;
 
-        G4GenericMessenger* fMessenger;
+        G4GenericMessenger fMessenger{this,"/remoll/","Remoll properties"};
 
         G4String fFilename;
 

@@ -11,8 +11,6 @@
 #include "G4RunManager.hh"
 #endif
 
-#include "G4GenericMessenger.hh"
-
 #include "G4GeometryManager.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
@@ -57,34 +55,29 @@ remollBeamTarget::remollBeamTarget()
     fDefaultMat = new G4Material("Default_proton", 1.0, 1.0, 1e-19*g/mole);
 
     // Create generic messenger
-    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
+    fMessenger.DeclarePropertyWithUnit("beamcurr","microampere",fBeamCurrent,"Beam current");
+    fMessenger.DeclarePropertyWithUnit("beamene","GeV",fBeamEnergy,"Beam energy");
 
-    fMessenger->DeclarePropertyWithUnit("beamcurr","microampere",fBeamCurrent,"Beam current");
-    fMessenger->DeclarePropertyWithUnit("beamene","GeV",fBeamEnergy,"Beam energy");
+    fMessenger.DeclareProperty("oldras",fOldRaster,"Old (no ang corln) or new (ang corl) raster");
+    fMessenger.DeclarePropertyWithUnit("rasx","cm",fRasterX,"Square raster width x (horizontal)");
+    fMessenger.DeclarePropertyWithUnit("rasy","cm",fRasterY,"Square raster width y (vertical)");
 
-    fMessenger->DeclareProperty("oldras",fOldRaster,"Old (no ang corln) or new (ang corl) raster");
-    fMessenger->DeclarePropertyWithUnit("rasx","cm",fRasterX,"Square raster width x (horizontal)");
-    fMessenger->DeclarePropertyWithUnit("rasy","cm",fRasterY,"Square raster width y (vertical)");
+    fMessenger.DeclarePropertyWithUnit("beam_x0","cm",fX0,"beam initial position in x (horizontal)");
+    fMessenger.DeclarePropertyWithUnit("beam_y0","cm",fY0,"beam initial position in y (vertical)");
+    fMessenger.DeclarePropertyWithUnit("beam_ph0","deg",fPh0,"beam initial direction in x (horizontal)");
+    fMessenger.DeclarePropertyWithUnit("beam_th0","deg",fTh0,"beam initial direction in y (vertical)");
+    fMessenger.DeclarePropertyWithUnit("beam_corrph","deg",fCorrPh,"beam correlated angle (horizontal)");
+    fMessenger.DeclarePropertyWithUnit("beam_corrth","deg",fCorrTh,"beam correlated angle (vertical)");
+    fMessenger.DeclarePropertyWithUnit("beam_dph","deg",fdPh,"beam gaussian spread in x (horizontal)");
+    fMessenger.DeclarePropertyWithUnit("beam_dth","deg",fdTh,"beam gaussian spread in y (vertical)");
 
-    fMessenger->DeclarePropertyWithUnit("beam_x0","cm",fX0,"beam initial position in x (horizontal)");
-    fMessenger->DeclarePropertyWithUnit("beam_y0","cm",fY0,"beam initial position in y (vertical)");
-    fMessenger->DeclarePropertyWithUnit("beam_ph0","deg",fPh0,"beam initial direction in x (horizontal)");
-    fMessenger->DeclarePropertyWithUnit("beam_th0","deg",fTh0,"beam initial direction in y (vertical)");
-    fMessenger->DeclarePropertyWithUnit("beam_corrph","deg",fCorrPh,"beam correlated angle (horizontal)");
-    fMessenger->DeclarePropertyWithUnit("beam_corrth","deg",fCorrTh,"beam correlated angle (vertical)");
-    fMessenger->DeclarePropertyWithUnit("beam_dph","deg",fdPh,"beam gaussian spread in x (horizontal)");
-    fMessenger->DeclarePropertyWithUnit("beam_dth","deg",fdTh,"beam gaussian spread in y (vertical)");
-
-    fMessengerTarget = new G4GenericMessenger(this,"/remoll/target/","Remoll target properties");
-    fMessengerTarget->DeclareMethod("mother",&remollBeamTarget::SetActiveTargetMother,"Set target mother name").SetStates(G4State_Idle);
-    fMessengerTarget->DeclareMethod("volume",&remollBeamTarget::SetActiveTargetVolume,"Set target volume name").SetStates(G4State_Idle);
-    fMessengerTarget->DeclareMethod("print",&remollBeamTarget::PrintTargetInfo).SetStates(G4State_Idle);
+    fTargetMessenger.DeclareMethod("mother",&remollBeamTarget::SetActiveTargetMother,"Set target mother name").SetStates(G4State_Idle);
+    fTargetMessenger.DeclareMethod("volume",&remollBeamTarget::SetActiveTargetVolume,"Set target volume name").SetStates(G4State_Idle);
+    fTargetMessenger.DeclareMethod("print",&remollBeamTarget::PrintTargetInfo).SetStates(G4State_Idle);
 }
 
 remollBeamTarget::~remollBeamTarget()
 {
-    delete fMessengerTarget;
-    delete fMessenger;
     delete fMS;
 }
 

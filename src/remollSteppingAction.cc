@@ -4,7 +4,6 @@
 #include "G4Track.hh"
 #include "G4Material.hh"
 #include "G4MaterialTable.hh"
-#include "G4GenericMessenger.hh"
 
 remollSteppingAction::remollSteppingAction()
 {
