@@ -20,7 +20,6 @@
 #include "Randomize.hh"
 
 #include "remollBeamTarget.hh"
-#include "remollMultScatt.hh"
 
 #include <math.h>
 
@@ -47,9 +46,6 @@ remollBeamTarget::remollBeamTarget()
   fX0(0.0),fY0(0.0),fTh0(0.0),fPh0(0.0),
   fdTh(0.0),fdPh(0.0),fCorrTh(0.0),fCorrPh(0.0)
 {
-    // Create new multiple scattering
-    fMS = new remollMultScatt();
-
     // Infrared energy cutoff
     fEnergyCut = 1e-6 * MeV;
 
@@ -85,7 +81,6 @@ remollBeamTarget::~remollBeamTarget()
 {
     delete fMessengerTarget;
     delete fMessenger;
-    delete fMS;
 }
 
 G4double remollBeamTarget::GetEffLumin(SamplingType_t sampling_type)
@@ -425,9 +420,9 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
     // Sample multiple scattering angles
     G4double msth = 0, msph = 0;
     if (ms.size() > 0) {
-	fMS->Init(fBeamEnergy, ms);
-	msth = fMS->GenerateMSPlane();
-	msph = fMS->GenerateMSPlane();
+	fMS.Init(fBeamEnergy, ms);
+	msth = fMS.GenerateMSPlane();
+	msph = fMS.GenerateMSPlane();
     }
     assert( !std::isnan(msth) && !std::isnan(msph) );
     assert( !std::isinf(msth) && !std::isinf(msph) );
