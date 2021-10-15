@@ -50,12 +50,12 @@ remollIO::remollIO(const G4String& outputfile)
 remollIO::~remollIO()
 {
     // Delete tree
-    if (fTree) {
+    if (fTree != nullptr) {
         delete fTree;
         fTree = NULL;
     }
     // Delete file
-    if (fFile) {
+    if (fFile != nullptr) {
         delete fFile;
         fFile = NULL;
     }
@@ -63,14 +63,14 @@ remollIO::~remollIO()
 
 void remollIO::InitializeTree()
 {
-    if (fFile) {
+    if (fFile != nullptr) {
         fFile->Close();
         delete fFile;
         fFile = NULL;
         fTree = NULL;
     }
 
-    if (fTree) {
+    if (fTree != nullptr) {
         delete fTree;
         fTree = NULL;
     }
@@ -105,7 +105,7 @@ void remollIO::InitializeTree()
 
 void remollIO::FillTree()
 {
-    if( !fTree ){
+    if( fTree == nullptr ){
         G4cerr << "Error " << __PRETTY_FUNCTION__ << ": "
             << __FILE__ <<  " line " << __LINE__
             << " - Trying to fill non-existent tree" << G4endl;
@@ -132,7 +132,7 @@ void remollIO::Flush()
 
 void remollIO::WriteTree()
 {
-    if (!fFile)
+    if (fFile == nullptr)
       return;
 
     if (!fFile->IsOpen()) {
@@ -166,7 +166,7 @@ void remollIO::WriteTree()
 
 void remollIO::SetEventData(const remollEvent *ev)
 {
-  if (! ev) return;
+  if (ev == nullptr) return;
 
   fRate   = ev->fRate*s;
 
@@ -177,7 +177,7 @@ void remollIO::SetEventData(const remollEvent *ev)
 
   // Beam data
   const remollBeamTarget* bt = ev->GetBeamTarget();
-  if (bt)
+  if (bt != nullptr)
     fBm = bt->GetBeamTargetIO();
 }
 
@@ -267,15 +267,15 @@ void remollIO::SearchGDMLforFiles(G4String fn)
     str_docURI.erase(str_docURI.find_last_of('/') + 1);
     // remove cwd at begin
     char cwd[MAXPATHLEN];
-    if (getcwd(cwd,MAXPATHLEN) && str_docURI.find(cwd) == 0) {
+    if ((getcwd(cwd,MAXPATHLEN) != nullptr) && str_docURI.find(cwd) == 0) {
       str_docURI.erase(0, strlen(cwd) + 1);
     }
 
     // Get doctype and entities
     xercesc::DOMDocumentType* xmlDocType = xmlDoc->getDoctype();
-    if (xmlDocType) {
+    if (xmlDocType != nullptr) {
         xercesc::DOMNamedNodeMap* xmlNamedNodeMap = xmlDocType->getEntities();
-        if (xmlNamedNodeMap) {
+        if (xmlNamedNodeMap != nullptr) {
             for (XMLSize_t xx = 0; xx < xmlNamedNodeMap->getLength(); ++xx) {
                 xercesc::DOMNode* currentNode = xmlNamedNodeMap->item(xx);
                 if (currentNode->getNodeType() == xercesc::DOMNode::ENTITY_NODE) { // is entity
@@ -309,7 +309,7 @@ void remollIO::TraverseChildren( xercesc::DOMElement *thisel )
 
     for( XMLSize_t xx = 0; xx < nodeCount; ++xx ){
         xercesc::DOMNode* currentNode = children->item(xx);
-        if( currentNode->getNodeType() ){   // true is not NULL
+        if( currentNode->getNodeType() != 0u ){   // true is not NULL
 
             if (currentNode->getNodeType() == xercesc::DOMNode::ELEMENT_NODE) { // is element
                 xercesc::DOMElement* currentElement

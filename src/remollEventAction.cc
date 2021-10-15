@@ -54,7 +54,7 @@ void remollEventAction::EndOfEventAction(const G4Event* aEvent)
   auto n = HCE->GetCapacity();
   for (decltype(n) hcidx = 0; hcidx < n; hcidx++) {
     G4VHitsCollection* thiscol = HCE->GetHC(hcidx);
-    if (thiscol){ // This is NULL if nothing is stored
+    if (thiscol != nullptr){ // This is NULL if nothing is stored
 
       // Dynamic cast to test types, process however see fit and feed to IO
 

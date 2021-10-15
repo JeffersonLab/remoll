@@ -38,9 +38,9 @@ remollPhysicsList::remollPhysicsList()
   EnableStepLimiterPhysics();
   EnableParallelPhysics();
   DisableOpticalPhysics();
-  G4cout << "remoll: step limiter physics is " << (fStepLimiterPhysics? "enabled":"disabled") << G4endl;
-  G4cout << "remoll: parallel physics is "     << (fParallelPhysics?    "enabled":"disabled") << G4endl;
-  G4cout << "remoll: optical physics is "      << (fOpticalPhysics?     "enabled":"disabled") << G4endl;
+  G4cout << "remoll: step limiter physics is " << (fStepLimiterPhysics != nullptr? "enabled":"disabled") << G4endl;
+  G4cout << "remoll: parallel physics is "     << (fParallelPhysics != nullptr?    "enabled":"disabled") << G4endl;
+  G4cout << "remoll: optical physics is "      << (fOpticalPhysics != nullptr?     "enabled":"disabled") << G4endl;
 
   // Create commands
   fPhysListMessenger.DeclareMethod(
@@ -126,7 +126,7 @@ void remollPhysicsList::SetParallelPhysics(G4bool flag)
 
 void remollPhysicsList::EnableParallelPhysics()
 {
-  if (fParallelPhysics) {
+  if (fParallelPhysics != nullptr) {
     G4cout << "Parallel physics already active" << G4endl;
     return;
   }
@@ -145,7 +145,7 @@ void remollPhysicsList::EnableParallelPhysics()
 
 void remollPhysicsList::DisableParallelPhysics()
 {
-  if (!fParallelPhysics) {
+  if (fParallelPhysics == nullptr) {
     G4cout << "Parallel physics not active" << G4endl;
     return;
   }
@@ -170,7 +170,7 @@ void remollPhysicsList::SetOpticalPhysics(G4bool flag)
 
 void remollPhysicsList::EnableOpticalPhysics()
 {
-  if (fOpticalPhysics) {
+  if (fOpticalPhysics != nullptr) {
     G4cout << "Optical physics already active" << G4endl;
     return;
   }
@@ -188,7 +188,7 @@ void remollPhysicsList::EnableOpticalPhysics()
 
 void remollPhysicsList::DisableOpticalPhysics()
 {
-  if (!fOpticalPhysics) {
+  if (fOpticalPhysics == nullptr) {
     G4cout << "Optical physics not active" << G4endl;
     return;
   }
@@ -213,7 +213,7 @@ void remollPhysicsList::SetStepLimiterPhysics(G4bool flag)
 
 void remollPhysicsList::EnableStepLimiterPhysics()
 {
-  if (fStepLimiterPhysics) {
+  if (fStepLimiterPhysics != nullptr) {
     G4cout << "Step limiter already active" << G4endl;
     return;
   }
@@ -235,7 +235,7 @@ void remollPhysicsList::EnableStepLimiterPhysics()
 
 void remollPhysicsList::DisableStepLimiterPhysics()
 {
-  if (!fStepLimiterPhysics) {
+  if (fStepLimiterPhysics == nullptr) {
     G4cout << "Step limiter physics not active" << G4endl;
     return;
   }
@@ -320,7 +320,7 @@ void remollPhysicsList::RegisterReferencePhysList(G4String name)
   }
 
   // Remove previous reference physics list
-  if (fReferencePhysList) RemoveReferencePhysList();
+  if (fReferencePhysList != nullptr) RemoveReferencePhysList();
 
   // Get reference physics list
   fReferencePhysList = factory.GetReferencePhysList(name);

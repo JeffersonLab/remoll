@@ -68,7 +68,7 @@ void remollVEventGen::SetNumberOfParticles(G4int n)
   fNumberOfParticles = n;
 
   // Delete old particle gun
-  if (fParticleGun) {
+  if (fParticleGun != nullptr) {
     delete fParticleGun;
     fParticleGun = 0;
   }

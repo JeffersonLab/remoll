@@ -63,7 +63,7 @@ void HepMCG4AsciiInterface::Initialize()
 HepMC::GenEvent* HepMCG4AsciiInterface::GenerateHepMCEvent()
 {
   HepMC::GenEvent* evt= asciiInput-> read_next_event();
-  if(!evt) return 0; // no more event
+  if(evt == nullptr) return 0; // no more event
 
   if(verbose>0) evt-> print();
 

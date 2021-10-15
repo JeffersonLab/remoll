@@ -134,7 +134,7 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     }
 
     // Delete old primary event
-    if (fEvent) {
+    if (fEvent != nullptr) {
       delete fEvent;
       fEvent = 0;
     }

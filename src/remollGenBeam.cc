@@ -120,7 +120,7 @@ void remollGenBeam::SetPolarizationZ(double sz){ fPolarization.setZ(sz); }
 void remollGenBeam::SetPartName(G4String& name){
   G4ParticleTable* particleTable = G4ParticleTable::GetParticleTable();
   G4ParticleDefinition* particle = particleTable->FindParticle(name);
-  if (particle) fParticleName = name;
+  if (particle != nullptr) fParticleName = name;
   else {
     G4cerr << "remollGenBeam: particle " << name << " not recognized." << G4endl;
     exit(-1);

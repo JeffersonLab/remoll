@@ -255,7 +255,7 @@ void remollDetectorConstruction::EnableKryptoniteVolume(G4String name)
 
   // Find volume
   G4LogicalVolume* logical_volume = G4LogicalVolumeStore::GetInstance()->GetVolume(name);
-  if (! logical_volume) {
+  if (logical_volume == nullptr) {
     G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
     return;
   }
@@ -398,7 +398,7 @@ void remollDetectorConstruction::AbsolutePosition(G4String name, G4ThreeVector p
 
   // Find volume
   G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
-  if (! physical_volume) {
+  if (physical_volume == nullptr) {
     G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
     return;
   }
@@ -424,7 +424,7 @@ void remollDetectorConstruction::RelativePosition(G4String name, G4ThreeVector p
 
   // Find volume
   G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
-  if (! physical_volume) {
+  if (physical_volume == nullptr) {
     G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
     return;
   }
@@ -450,7 +450,7 @@ void remollDetectorConstruction::AbsoluteRotation(G4String name, G4ThreeVector r
 
   // Find volume
   G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
-  if (! physical_volume) {
+  if (physical_volume == nullptr) {
     G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
     return;
   }
@@ -489,7 +489,7 @@ void remollDetectorConstruction::RelativeRotation(G4String name, G4ThreeVector r
 
   // Find volume
   G4VPhysicalVolume* physical_volume = G4PhysicalVolumeStore::GetInstance()->GetVolume(name);
-  if (! physical_volume) {
+  if (physical_volume == nullptr) {
     G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
     return;
   }
@@ -557,11 +557,11 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 
     // Change directory
     char cwd[MAXPATHLEN];
-    if (!getcwd(cwd,MAXPATHLEN)) {
+    if (getcwd(cwd,MAXPATHLEN) == nullptr) {
       G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR no current working directory" << G4endl;
       exit(-1);
     }
-    if (chdir(fGDMLPath)) {
+    if (chdir(fGDMLPath) != 0) {
       G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
       exit(-1);
     }
@@ -597,7 +597,7 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     io->GrabGDMLFiles(fGDMLFile);
 
     // Change directory back
-    if (chdir(cwd)) {
+    if (chdir(cwd) != 0) {
       G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
       exit(-1);
     }
@@ -778,7 +778,7 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
       if ((*vit).type == "Visibility") {
         G4Colour colour(1.0,1.0,1.0);
         const G4VisAttributes* visAttribute_old = ((*iter).first)->GetVisAttributes();
-        if (visAttribute_old)
+        if (visAttribute_old != nullptr)
           colour = visAttribute_old->GetColour();
         G4VisAttributes visAttribute_new(colour);
         if ((*vit).value == "true")
@@ -815,7 +815,7 @@ void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
         G4Colour colour(1.0,1.0,1.0);
         const G4VisAttributes* visAttribute_old = ((*iter).first)->GetVisAttributes();
 
-        if (visAttribute_old)
+        if (visAttribute_old != nullptr)
           colour = visAttribute_old->GetColour();
 
         G4Colour colour_new(
@@ -926,11 +926,11 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
                 it_dettype  = NextAuxWithType(++it_dettype, list.end(), "DetType")) {
 
         // Set detector type
-        if (remollsd) remollsd->SetDetectorType(it_dettype->value);
+        if (remollsd != nullptr) remollsd->SetDetectorType(it_dettype->value);
 
         // Print detector type
         if (fVerboseLevel > 0)
-          if (remollsd) remollsd->PrintDetectorType();
+          if (remollsd != nullptr) remollsd->PrintDetectorType();
 
       }
 
@@ -964,7 +964,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 void remollDetectorConstruction::LoadMagneticField()
 {
   // Remove existing field and load new field
-  if (fGlobalField) delete fGlobalField;
+  delete fGlobalField;
   fGlobalField = new remollGlobalField();
 }
 
@@ -985,7 +985,7 @@ void remollDetectorConstruction::SetUserLimits(
 {
   // Find volume
   G4LogicalVolume* logical_volume = G4LogicalVolumeStore::GetInstance()->GetVolume(name);
-  if (! logical_volume) {
+  if (logical_volume == nullptr) {
     G4cerr << __FILE__ << " line " << __LINE__ << ": Warning volume " << name << " unknown" << G4endl;
     return;
   }
@@ -1008,7 +1008,7 @@ void remollDetectorConstruction::SetUserLimits(
 {
   // Get user limits
   G4UserLimits* userlimits = logical_volume->GetUserLimits();
-  if (! userlimits) {
+  if (userlimits == nullptr) {
     userlimits = new G4UserLimits();
     logical_volume->SetUserLimits(userlimits);
   }
@@ -1136,7 +1136,7 @@ void remollDetectorConstruction::PrintGeometryTree(
   }
   // Print sensitive detector
   G4VSensitiveDetector* sd = aVolume->GetLogicalVolume()->GetSensitiveDetector();
-  if (print && sd)
+  if (print && (sd != nullptr))
   {
     remollGenericDetector* remollsd = dynamic_cast<remollGenericDetector*>(sd);
     G4cout << " [" << remollsd->GetDetNo() << "]";
