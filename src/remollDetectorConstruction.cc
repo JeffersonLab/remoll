@@ -370,12 +370,12 @@ remollDetectorConstruction::~remollDetectorConstruction()
 
 void remollDetectorConstruction::AddMesh(const G4String& filename)
 {
-  G4Material* material = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
   #ifdef __USE_CADMESH
     // Read mesh
     auto mesh = CADMesh::TessellatedMesh::FromSTL(filename);
 
     // Extract solids
+    G4Material* material = G4NistManager::Instance()->FindOrBuildMaterial("G4_Galactic");
     for (auto solid: mesh->GetSolids()) {
       auto lv = new G4LogicalVolume(solid, material, filename);
       lv->SetVisAttributes(G4Colour(0.0,1.0,0.0,1.0));
