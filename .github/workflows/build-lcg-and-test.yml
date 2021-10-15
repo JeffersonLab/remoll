@@ -4,11 +4,11 @@ on: [push, pull_request]
 
 env:
   LCG: "LCG_101"
-  sys: "x86_64-centos7-clang12-opt"
+  sys: "x86_64-ubuntu2004-gcc9-opt"
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
     steps:
@@ -32,7 +32,7 @@ jobs:
         retention-days: 1
           
   test_geometries:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: build
     strategy:
       fail-fast: false
@@ -64,7 +64,7 @@ jobs:
         retention-days: 3
 
   test_macros:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     needs: build
     strategy:
       fail-fast: false
