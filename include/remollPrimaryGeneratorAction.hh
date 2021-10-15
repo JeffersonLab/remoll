@@ -1,6 +1,8 @@
 #ifndef remollPrimaryGeneratorAction_h
 #define remollPrimaryGeneratorAction_h 1
 
+#include "remollBeamTarget.hh"
+
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4VPrimaryGenerator.hh"
 #include "G4GenericMessenger.hh"
@@ -11,7 +13,6 @@
 
 class G4ParticleGun;
 class G4Event;
-class remollBeamTarget;
 class remollVEventGen;
 class remollEvent;
 
@@ -39,7 +40,7 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 
     G4ParticleGun* fParticleGun;
 
-    remollBeamTarget *fBeamTarg;
+    remollBeamTarget fBeamTarg;
 
 
     remollEvent *fEvent;
