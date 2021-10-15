@@ -1,0 +1,54 @@
+/remoll/setgeofile geometry/mollerMother.gdml
+/remoll/physlist/register QGSP_BERT_HP
+/remoll/physlist/parallel/enable
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+/run/initialize
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+/remoll/evgen/set moller
+
+/remoll/oldras false
+/remoll/beam_corrph 0.02134
+/remoll/beam_corrth 0.02134
+
+/remoll/beamene 11 GeV
+/remoll/beamcurr 65 microampere
+
+/remoll/SD/disable_all
+/remoll/SD/enable 28
+/remoll/SD/detect lowenergyneutral 28
+/remoll/SD/detect secondaries 28
+/remoll/SD/detect boundaryhits 28
+
+/remoll/SD/enable 70
+/remoll/SD/detect lowenergyneutral 70
+/remoll/SD/detect secondaries 70
+/remoll/SD/detect boundaryhits 70
+
+/remoll/SD/enable 7141
+/remoll/SD/detect lowenergyneutral 7141
+/remoll/SD/detect secondaries 7141
+/remoll/SD/detect boundaryhits 7141
+
+/remoll/SD/enable 7142
+/remoll/SD/detect lowenergyneutral 7142
+/remoll/SD/detect secondaries 7142
+/remoll/SD/detect boundaryhits 7142
+
+/remoll/SD/enable 7144
+/remoll/SD/detect lowenergyneutral 7144
+/remoll/SD/detect secondaries 7144
+/remoll/SD/detect boundaryhits 7144
+
+/remoll/SD/enable 7146
+/remoll/SD/detect lowenergyneutral 7146
+/remoll/SD/detect secondaries 7146
+/remoll/SD/detect boundaryhits 7146
+
+/remoll/SD/enable 7148
+/remoll/SD/detect lowenergyneutral 7148
+/remoll/SD/detect secondaries 7148
+/remoll/SD/detect boundaryhits 7148
+
+/run/beamOn 50000
