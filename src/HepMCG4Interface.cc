@@ -49,7 +49,7 @@ HepMCG4Interface::HepMCG4Interface()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 HepMCG4Interface::~HepMCG4Interface()
 {
-  if (hepmcEvent != nullptr) delete hepmcEvent;
+  delete hepmcEvent;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -127,7 +127,7 @@ HepMC::GenEvent* HepMCG4Interface::GenerateHepMCEvent()
 void HepMCG4Interface::GeneratePrimaryVertex(G4Event* anEvent)
 {
   // delete previous event object
-  if (hepmcEvent != nullptr) delete hepmcEvent;
+  delete hepmcEvent;
 
   // generate next event
   hepmcEvent = GenerateHepMCEvent();

@@ -86,9 +86,9 @@ remollGlobalField::remollGlobalField()
 
 remollGlobalField::~remollGlobalField()
 {
-  if (fEquation != nullptr)        delete fEquation;
-  if (fStepper != nullptr)         delete fStepper;
-  if (fChordFinder != nullptr)     delete fChordFinder;
+         delete fEquation;
+          delete fStepper;
+      delete fChordFinder;
 }
 
 void remollGlobalField::SetAccuracyParameters()
@@ -117,7 +117,7 @@ void remollGlobalField::PrintAccuracyParameters()
 
 void remollGlobalField::SetEquation()
 {
-  if (fEquation != nullptr) delete fEquation;
+  delete fEquation;
 
   switch (fEquationType)
   {
@@ -139,7 +139,7 @@ void remollGlobalField::SetEquation()
 
 void remollGlobalField::SetStepper()
 {
-  if (fStepper != nullptr) delete fStepper;
+  delete fStepper;
 
   switch (fStepperType)
   {
@@ -175,7 +175,7 @@ void remollGlobalField::SetStepper()
 
 void remollGlobalField::SetChordFinder()
 {
-  if (fChordFinder != nullptr) delete fChordFinder;
+  delete fChordFinder;
 
   fChordFinder = new G4ChordFinder(this,fMinStep,fStepper);
   fChordFinder->GetIntegrationDriver()->SetVerboseLevel(0);

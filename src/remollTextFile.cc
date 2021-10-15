@@ -42,12 +42,12 @@ remollTextFile::remollTextFile(const remollTextFile& r)
 const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
     TObject::operator=(r);
 
-    if (fFilename != nullptr) { delete[] fFilename; }
+    delete[] fFilename; 
     fFilenameSize = r.fFilenameSize;
     fFilename = new char[r.fFilenameSize];
     strncpy(fFilename, r.fFilename, fFilenameSize);
 
-    if (fBuffer != nullptr) { delete[] fBuffer; }
+    delete[] fBuffer; 
     fBufferSize = r.fBufferSize;
     fBuffer = new char[r.fBufferSize];
     memcpy(fBuffer, r.fBuffer, fBufferSize);
@@ -56,8 +56,8 @@ const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
 }
 
 remollTextFile::~remollTextFile(){
-    if (fFilename != nullptr) { delete[] fFilename; }
-    if (fBuffer != nullptr)   { delete[] fBuffer; }
+    delete[] fFilename; 
+      delete[] fBuffer; 
 }
 
 void remollTextFile::copyFileIn(const char *fn){

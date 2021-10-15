@@ -964,7 +964,7 @@ G4VPhysicalVolume* remollDetectorConstruction::Construct()
 void remollDetectorConstruction::LoadMagneticField()
 {
   // Remove existing field and load new field
-  if (fGlobalField != nullptr) delete fGlobalField;
+  delete fGlobalField;
   fGlobalField = new remollGlobalField();
 }
 
