@@ -139,7 +139,7 @@ void remollGenC12::GenInelastic(G4double beamE,G4double theta,
     G4int A=12;
     G4int Z=6;
     G4int bad=F1F2IN09(Z, A, Q2/GeV/GeV, W2/GeV/GeV, F1, F2);  
-    if(bad){
+    if(bad != 0){
       G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << G4endl;	
       G4cerr << "  result was (-1 = Q2,W2 out of range in resmodd | -2 = A<3 | 1 inf/nan F1/F2) : " << bad <<G4endl;
       G4cerr << "     Q2 W2 A "<<Q2/GeV/GeV<<" "<<W2/GeV/GeV<<" "<<A<< G4endl;

@@ -131,11 +131,11 @@ G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
 
   // Change directory
   char cwd[MAXPATHLEN];
-  if (!getcwd(cwd,MAXPATHLEN)) {
+  if (getcwd(cwd,MAXPATHLEN) == nullptr) {
     G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR no current working directory" << G4endl;
     exit(-1);
   }
-  if (chdir(fGDMLPath)) {
+  if (chdir(fGDMLPath) != 0) {
     G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
     exit(-1);
   }
@@ -156,7 +156,7 @@ G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
   io->GrabGDMLFiles(fGDMLFile);
 
   // Change directory back
-  if (chdir(cwd)) {
+  if (chdir(cwd) != 0) {
     G4cerr << __FILE__ << " line " << __LINE__ << ": ERROR cannot change directory" << G4endl;
     exit(-1);
   }
@@ -208,7 +208,7 @@ void remollParallelConstruction::ParseAuxiliaryVisibilityInfo()
       if ((*vit).type == "Visibility") {
         G4Colour colour(1.0,1.0,1.0);
         const G4VisAttributes* visAttribute_old = ((*iter).first)->GetVisAttributes();
-        if (visAttribute_old)
+        if (visAttribute_old != nullptr)
           colour = visAttribute_old->GetColour();
         G4VisAttributes visAttribute_new(colour);
         if ((*vit).value == "true")
@@ -245,7 +245,7 @@ void remollParallelConstruction::ParseAuxiliaryVisibilityInfo()
         G4Colour colour(1.0,1.0,1.0);
         const G4VisAttributes* visAttribute_old = ((*iter).first)->GetVisAttributes();
 
-        if (visAttribute_old)
+        if (visAttribute_old != nullptr)
           colour = visAttribute_old->GetColour();
 
         G4Colour colour_new(

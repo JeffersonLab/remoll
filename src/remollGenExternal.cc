@@ -44,7 +44,7 @@ remollGenExternal::~remollGenExternal()
   G4AutoLock inFileLock(&inFileMutex);
 
   // Close file which deletes tree
-  if (fFile) {
+  if (fFile != nullptr) {
     fFile->Close();
     fTree = 0;
   }
@@ -56,21 +56,21 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
 
   G4cout << "Setting the external file to " << filename << " from " << fFile << G4endl;
   // Close previous file
-  if (fFile) {
+  if (fFile != nullptr) {
     fFile->Close();
     fFile = 0;
   }
 
   // Try to open filename
   fFile = new TFile(filename);
-  if (! fFile) {
+  if (fFile == nullptr) {
     G4cerr << "Could not open external event file " << filename << G4endl;
     return;
   }
 
   // Try to find tree in file
   fFile->GetObject("T",fTree);
-  if (! fTree) {
+  if (fTree == nullptr) {
     G4cerr << "Could not find tree T in event file (SetGenExternalFile)" << filename << G4endl;
     return;
   }
@@ -79,14 +79,14 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
   fEntries = fTree->GetEntries();
 
   // Initialize tree
-  if (fTree->GetBranch("hit")) {
+  if (fTree->GetBranch("hit") != nullptr) {
     fTree->SetBranchAddress("hit", &fHit);
   } else {
     G4cerr << "Could not find branch hit in event file " << filename << G4endl;
     return;
   }
 
-  if (fTree->GetBranch("ev")) {
+  if (fTree->GetBranch("ev") != nullptr) {
     fTree->SetBranchAddress("ev", &fEvent);
   } else {
     G4cerr << "Could not find branch ev in event file " << filename << G4endl;
@@ -99,7 +99,7 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
   G4AutoLock inFileLock(&inFileMutex);
 
   // Check whether three exists
-  if (! fTree) {
+  if (fTree == nullptr) {
     G4cerr << "Could not find tree T in event file (SamplePhysics)" << G4endl;
     return;
   }

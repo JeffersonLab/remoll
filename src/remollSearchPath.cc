@@ -22,7 +22,7 @@ remollSearchPath::remollSearchPath() {
 }
 
 remollSearchPath *remollSearchPath::getInstance() {
-  if (!fInstance) {
+  if (fInstance == nullptr) {
     fInstance = new remollSearchPath();
   }
   return fInstance;

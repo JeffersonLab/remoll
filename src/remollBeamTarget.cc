@@ -169,15 +169,15 @@ void remollBeamTarget::UpdateInfo()
         G4Box* box = dynamic_cast<G4Box*>(solid);
 
         // Assume everything is non-nested tubes
-	if (!tubs && !box) {
+	if ((tubs == nullptr) && (box == nullptr)) {
 	    G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
 		":  Target volume " << volume->GetName() << " not made of G4Tubs or G4Box" << G4endl;
 	    exit(1);
 	}
 
         G4double z_half_length = 0;
-        if (tubs) z_half_length = tubs->GetZHalfLength();
-        if (box)  z_half_length = box->GetZHalfLength();
+        if (tubs != nullptr) z_half_length = tubs->GetZHalfLength();
+        if (box != nullptr)  z_half_length = box->GetZHalfLength();
 
         fTotalTargetEffectiveLength += 2.0 * z_half_length * material->GetDensity();
 
@@ -296,15 +296,15 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
         G4Tubs* tubs = dynamic_cast<G4Tubs*>(solid);
         G4Box* box = dynamic_cast<G4Box*>(solid);
 
-        if (!tubs && !box) {
+        if ((tubs == nullptr) && (box == nullptr)) {
           G4cerr << "ERROR:  " << __PRETTY_FUNCTION__ << " line " << __LINE__ <<
                     ":  Target volume " << volume->GetName() << " not made of G4Tubs or G4Box" << G4endl;
 	    continue; // exit(1);
         }
 
         G4double z_half_length = 0;
-        if (box)  z_half_length = box->GetZHalfLength();
-        if (tubs) z_half_length = tubs->GetZHalfLength();
+        if (box != nullptr)  z_half_length = box->GetZHalfLength();
+        if (tubs != nullptr) z_half_length = tubs->GetZHalfLength();
 
         // Effective length of this target volume
         G4double effective_length = z_half_length*2.0 * material->GetDensity();
@@ -345,7 +345,7 @@ remollVertex remollBeamTarget::SampleVertex(SamplingType_t sampling_type)
                 break;
 	}
 
-	if( material->GetBaseMaterial() ){
+	if( material->GetBaseMaterial() != nullptr ){
 	    G4cerr << __FILE__ << " " << __PRETTY_FUNCTION__ << ":  The material you're using isn't" <<
 		" defined in a way we can use for multiple scattering calculations" << G4endl;
 	    G4cerr << "Aborting" << G4endl; 

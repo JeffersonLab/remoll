@@ -24,7 +24,7 @@ remollTrackingAction::remollTrackingAction()
 void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 {
   G4VUserTrackInformation* usertrackinfo = aTrack->GetUserInformation();
-  if (! usertrackinfo) {
+  if (usertrackinfo == nullptr) {
     #if G4VERSION_NUMBER >= 1030
     aTrack->SetUserInformation(new remollUserTrackInformation());
     #else
@@ -69,10 +69,10 @@ void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 void remollTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 {
   G4VUserTrackInformation* usertrackinfo = aTrack->GetUserInformation();
-  if (usertrackinfo) {
+  if (usertrackinfo != nullptr) {
     remollUserTrackInformation* remollusertrackinfo =
         dynamic_cast<remollUserTrackInformation*>(usertrackinfo);
-    if (remollusertrackinfo) {
+    if (remollusertrackinfo != nullptr) {
       G4StepStatus stepstatus = aTrack->GetStep()->GetPostStepPoint()->GetStepStatus();
       remollusertrackinfo->SetStepStatus(stepstatus);
     }

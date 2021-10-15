@@ -40,13 +40,13 @@ remollGenHyperon::remollGenHyperon()
 remollGenHyperon::~remollGenHyperon()
 {
   G4AutoLock lock(&remollGenHyperonMutex);
-  if (fFileReader) { delete fFileReader; fFileReader = 0; }
+  if (fFileReader != nullptr) { delete fFileReader; fFileReader = 0; }
 }
 
 remollFileReader* remollGenHyperon::GetFileReader() const
 {
   G4AutoLock lock(&remollGenHyperonMutex);
-  if (! fFileReader) {
+  if (fFileReader == nullptr) {
     fFileReader = new remollFileReader(fFile,fSkip,fDebugLevel);
   }
   return fFileReader;
@@ -57,7 +57,7 @@ void remollGenHyperon::SamplePhysics(remollVertex* /*vert*/, remollEvent* evt)
   remollFileEvent event;
 
   // Limit scope of mutex to read from buffered file
-  if (GetFileReader()) {
+  if (GetFileReader() != nullptr) {
     G4AutoLock lock(&remollGenHyperonMutex);
     event = fFileReader->GetAnEvent(); // don't use GetFileReader, race condition
   }

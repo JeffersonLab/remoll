@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
     #endif
 
     // Warn if LIBGL_ALWAYS_INDIRECT is set
-    if (std::getenv("LIBGL_ALWAYS_INDIRECT")) {
+    if (std::getenv("LIBGL_ALWAYS_INDIRECT") != nullptr) {
       G4cerr << "remoll: Environment variable LIBGL_ALWAYS_INDIRECT is set." << G4endl;
       G4cerr << "remoll: This may interfere with visualization. Unset wih:" << G4endl;
       G4cerr << "remoll: tcsh>  unsetenv LIBGL_ALWAYS_INDIRECT" << G4endl;
@@ -196,7 +196,7 @@ int main(int argc, char** argv) {
     G4String searchpath = ".";
     searchpath += ":" + std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll";
     searchpath += ":" + std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/macros";
-    if (macro.size())
+    if (macro.size() != 0u)
     {
       // Run in batch mode
       // Copy contents of macro into buffer to be written out into ROOT file

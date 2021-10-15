@@ -86,9 +86,9 @@ remollGlobalField::remollGlobalField()
 
 remollGlobalField::~remollGlobalField()
 {
-  if (fEquation)        delete fEquation;
-  if (fStepper)         delete fStepper;
-  if (fChordFinder)     delete fChordFinder;
+  if (fEquation != nullptr)        delete fEquation;
+  if (fStepper != nullptr)         delete fStepper;
+  if (fChordFinder != nullptr)     delete fChordFinder;
 }
 
 void remollGlobalField::SetAccuracyParameters()
@@ -117,7 +117,7 @@ void remollGlobalField::PrintAccuracyParameters()
 
 void remollGlobalField::SetEquation()
 {
-  if (fEquation) delete fEquation;
+  if (fEquation != nullptr) delete fEquation;
 
   switch (fEquationType)
   {
@@ -139,7 +139,7 @@ void remollGlobalField::SetEquation()
 
 void remollGlobalField::SetStepper()
 {
-  if (fStepper) delete fStepper;
+  if (fStepper != nullptr) delete fStepper;
 
   switch (fStepperType)
   {
@@ -175,7 +175,7 @@ void remollGlobalField::SetStepper()
 
 void remollGlobalField::SetChordFinder()
 {
-  if (fChordFinder) delete fChordFinder;
+  if (fChordFinder != nullptr) delete fChordFinder;
 
   fChordFinder = new G4ChordFinder(this,fMinStep,fStepper);
   fChordFinder->GetIntegrationDriver()->SetVerboseLevel(0);
@@ -258,7 +258,7 @@ void remollGlobalField::GetFieldValue(const G4double p[], G4double *field) const
 void remollGlobalField::SetZOffset(const G4String& name, G4double offset)
 {
   remollMagneticField *field = GetFieldByName(name);
-  if (field) {
+  if (field != nullptr) {
     G4AutoLock lock(&remollGlobalFieldMutex);
     field->SetZoffset(offset);
   } else {
@@ -270,7 +270,7 @@ void remollGlobalField::SetZOffset(const G4String& name, G4double offset)
 void remollGlobalField::SetInterpolationType(const G4String& name, const G4String& type)
 {
   remollMagneticField *field = GetFieldByName(name);
-  if (field) {
+  if (field != nullptr) {
     G4AutoLock lock(&remollGlobalFieldMutex);
     field->SetInterpolationType(type);
   } else {
@@ -282,7 +282,7 @@ void remollGlobalField::SetInterpolationType(const G4String& name, const G4Strin
 void remollGlobalField::SetFieldScale(const G4String& name, G4double scale)
 {
   remollMagneticField *field = GetFieldByName(name);
-  if (field) {
+  if (field != nullptr) {
     G4AutoLock lock(&remollGlobalFieldMutex);
     field->SetFieldScale(scale);
   } else {
@@ -294,7 +294,7 @@ void remollGlobalField::SetFieldScale(const G4String& name, G4double scale)
 void remollGlobalField::SetMagnetCurrent(const G4String& name, G4double current)
 {
   remollMagneticField *field = GetFieldByName(name);
-  if (field) {
+  if (field != nullptr) {
     G4AutoLock lock(&remollGlobalFieldMutex);
     field->SetRefCurrent(current);
   } else {

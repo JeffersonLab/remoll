@@ -49,7 +49,7 @@ HepMCG4Interface::HepMCG4Interface()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 HepMCG4Interface::~HepMCG4Interface()
 {
-  if (hepmcEvent) delete hepmcEvent;
+  if (hepmcEvent != nullptr) delete hepmcEvent;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -81,7 +81,7 @@ void HepMCG4Interface::HepMC2G4(const HepMC::GenEvent* hepmcevt,
          pitr  = (*vitr)->particles_begin(HepMC::children);
          pitr != (*vitr)->particles_end(HepMC::children); ++pitr) {
 
-      if (!(*pitr)->end_vertex() && (*pitr)->status() == 1) {
+      if (((*pitr)->end_vertex() == nullptr) && (*pitr)->status() == 1) {
         qvtx = true;
         break;
       }
@@ -127,11 +127,11 @@ HepMC::GenEvent* HepMCG4Interface::GenerateHepMCEvent()
 void HepMCG4Interface::GeneratePrimaryVertex(G4Event* anEvent)
 {
   // delete previous event object
-  if (hepmcEvent) delete hepmcEvent;
+  if (hepmcEvent != nullptr) delete hepmcEvent;
 
   // generate next event
   hepmcEvent = GenerateHepMCEvent();
-  if (! hepmcEvent) {
+  if (hepmcEvent == nullptr) {
     G4cout << "HepMCInterface: no generated particles. run terminated..."
            << G4endl;
     G4RunManager::GetRunManager()->AbortRun();
