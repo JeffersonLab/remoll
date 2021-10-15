@@ -7,6 +7,7 @@
 #include "remollMultScatt.hh"
 
 #include "G4ThreeVector.hh"
+#include "G4GenericMessenger.hh"
 #include <vector>
 
 /*!
@@ -26,7 +27,6 @@
 
 */
 
-class G4GenericMessenger;
 class G4VPhysicalVolume;
 class G4Material;
 
@@ -100,8 +100,14 @@ class remollBeamTarget {
         bool fAlreadyWarned_LH2;
 
     private:
-	G4GenericMessenger* fMessenger;
-	G4GenericMessenger* fMessengerTarget;
+	G4GenericMessenger fMessenger{
+            this,
+            "/remoll/",
+            "Remoll properties"};
+	G4GenericMessenger fTargetMessenger{
+            this,
+            "/remoll/target/",
+            "Remoll target properties"};
 
 	G4Material *fDefaultMat;
 

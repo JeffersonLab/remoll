@@ -2,7 +2,6 @@
 
 // Geant4 includes
 #include "G4Material.hh"
-#include "G4GenericMessenger.hh"
 
 // remoll includes
 #include "remollBeamTarget.hh"
@@ -29,13 +28,13 @@ remollGenHyperon::remollGenHyperon()
   fRUnit(cm),fPUnit(GeV),fWUnit(barn)
 {
   // Add to generic messenger
-  fThisGenMessenger->DeclareProperty("debug",fDebugLevel,"Debug level");
-  fThisGenMessenger->DeclareProperty("file",fFile,"Input filename");
-  fThisGenMessenger->DeclareProperty("skip",fSkip,"Number of lines to skip");
-  fThisGenMessenger->DeclareProperty("particle",fParticle,"Particle name");
-  fThisGenMessenger->DeclarePropertyWithUnit("runit","cm",fRUnit,"Units of position");
-  fThisGenMessenger->DeclarePropertyWithUnit("punit","GeV",fPUnit,"Units of momentum");
-  fThisGenMessenger->DeclarePropertyWithUnit("wunit","barn",fWUnit,"Units of weight");
+  fThisGenMessenger.DeclareProperty("debug",fDebugLevel,"Debug level");
+  fThisGenMessenger.DeclareProperty("file",fFile,"Input filename");
+  fThisGenMessenger.DeclareProperty("skip",fSkip,"Number of lines to skip");
+  fThisGenMessenger.DeclareProperty("particle",fParticle,"Particle name");
+  fThisGenMessenger.DeclarePropertyWithUnit("runit","cm",fRUnit,"Units of position");
+  fThisGenMessenger.DeclarePropertyWithUnit("punit","GeV",fPUnit,"Units of momentum");
+  fThisGenMessenger.DeclarePropertyWithUnit("wunit","barn",fWUnit,"Units of weight");
 }
 
 remollGenHyperon::~remollGenHyperon()
