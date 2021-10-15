@@ -163,24 +163,24 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
       fEvent = fEventGen->GenerateEvent();
       for (unsigned int pidx = 0; pidx < fEvent->fPartType.size(); pidx++) {
 
-        double p = fEvent->fPartMom[pidx].mag();
+        double p = fEvent->fPartRealMom[pidx].mag();
         double m = fEvent->fPartType[pidx]->GetPDGMass();
         double kinE = sqrt(p*p + m*m) - m;
 
         fParticleGun->SetParticleDefinition(fEvent->fPartType[pidx]);
         fParticleGun->SetParticleEnergy(kinE);
         fParticleGun->SetParticlePosition(fEvent->fPartPos[pidx]);
-        fParticleGun->SetParticleMomentumDirection(fEvent->fPartMom[pidx].unit());
+        fParticleGun->SetParticleMomentumDirection(fEvent->fPartRealMom[pidx].unit());
 
         G4ThreeVector pol(0,0,0);
         if (pidx == 0) {
           if (cross.mag() !=0) {
             if (cross.mag() == 1) //transverse polarization
-              pol = G4ThreeVector( (fEvent->fPartMom[0].unit()).cross(cross));
+              pol = G4ThreeVector( (fEvent->fPartRealMom[0].unit()).cross(cross));
             else if (fBeamPol.contains("+") ) //positive helicity
-              pol = fEvent->fPartMom[0].unit();
+              pol = fEvent->fPartRealMom[0].unit();
             else //negative helicity
-              pol = - fEvent->fPartMom[0].unit();
+              pol = - fEvent->fPartRealMom[0].unit();
           }
         }
         fParticleGun->SetParticlePolarization(pol);
