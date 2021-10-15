@@ -82,7 +82,7 @@ class remollBeamTarget {
         remollBeamTarget();
 	virtual ~remollBeamTarget();
 
-	G4double GetEffLumin(SamplingType_t);
+	G4double GetEffLumin(SamplingType_t) const;
 
 	remollVertex SampleVertex(SamplingType_t);
 

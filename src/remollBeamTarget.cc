@@ -76,7 +76,7 @@ remollBeamTarget::~remollBeamTarget()
 {
 }
 
-G4double remollBeamTarget::GetEffLumin(SamplingType_t sampling_type)
+G4double remollBeamTarget::GetEffLumin(SamplingType_t sampling_type) const
 {
     if (sampling_type == kNoTargetVolume)
         return fBeamCurrent / (e_SI*coulomb); // no length, just frequency
