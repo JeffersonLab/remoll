@@ -1,8 +1,23 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 project(remoll VERSION 0.1 LANGUAGES CXX C)
+
+# Export compile commands as json for run-clang-tidy
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Also use clang-tidy integration in CMake
+option(ENABLE_CLANG_TIDY "Enable clang-tidy integration in cmake" OFF)
+if(ENABLE_CLANG_TIDY)
+  find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+  if (CLANG_TIDY_EXE)
+    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE}" CACHE STRING "" FORCE)
+  else()
+    set(CMAKE_CXX_CLANG_TIDY "" CACHE STRING "" FORCE)
+  endif()
+endif()
 
 # Disallow in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
