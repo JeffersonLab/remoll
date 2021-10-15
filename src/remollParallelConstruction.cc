@@ -2,11 +2,9 @@
 
 #include <sys/param.h>
 
-#include <G4GDMLParser.hh>
 #include <G4LogicalVolume.hh>
 #include <G4PVPlacement.hh>
 #include <G4SDManager.hh>
-#include <G4GenericMessenger.hh>
 #include <G4VisAttributes.hh>
 #include <G4Colour.hh>
 #include "G4UnitsTable.hh"
@@ -22,11 +20,9 @@
 remollParallelConstruction::remollParallelConstruction(const G4String& name, const G4String& gdmlfile)
 : G4VUserParallelWorld(name),
   fGDMLPath(""),fGDMLFile(""),
-  fGDMLParser(0),
   fGDMLValidate(false),
   fGDMLOverlapCheck(true),
   fVerboseLevel(0),
-  fParallelMessenger(0),
   fWorldVolume(0),
   fWorldName(name)
 {
@@ -36,35 +32,29 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
     SetGDMLFile(gdmlfile);
   }
 
-  // Create GDML parser
-  fGDMLParser = new G4GDMLParser();
-
   // New units
   new G4UnitDefinition("inch","in","Length",25.4*CLHEP::millimeter);
 
   // Create parallel geometry messenger
-  fParallelMessenger = new G4GenericMessenger(this,
-      "/remoll/parallel/",
-      "Remoll parallel geometry properties");
-  fParallelMessenger->DeclareMethod(
+  fParallelMessenger.DeclareMethod(
       "setfile",
       &remollParallelConstruction::SetGDMLFile,
       "Set parallel geometry GDML file")
           .SetStates(G4State_PreInit)
           .SetDefaultValue("")
           .command->GetParameter(0)->SetOmittable(true);
-  fParallelMessenger->DeclareProperty(
+  fParallelMessenger.DeclareProperty(
       "verbose",
       fVerboseLevel,
       "Set geometry verbose level")
           .SetStates(G4State_PreInit);
-  fParallelMessenger->DeclareProperty(
+  fParallelMessenger.DeclareProperty(
       "validate",
       fGDMLValidate,
       "Set GMDL validate flag")
           .SetStates(G4State_PreInit)
           .SetDefaultValue("true");
-  fParallelMessenger->DeclareProperty(
+  fParallelMessenger.DeclareProperty(
       "overlapcheck",
       fGDMLOverlapCheck,
       "Set GMDL overlap check flag")
@@ -75,8 +65,6 @@ remollParallelConstruction::remollParallelConstruction(const G4String& name, con
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 remollParallelConstruction::~remollParallelConstruction()
 {
-  delete fGDMLParser;
-  delete fParallelMessenger;
 }
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
@@ -131,9 +119,7 @@ void remollParallelConstruction::ConstructSD()
 G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
 {
   // Clear parser
-  //fGDMLParser->Clear(); // FIXME doesn't clear auxmap, instead just recreate
-  if (fGDMLParser) delete fGDMLParser;
-  fGDMLParser = new G4GDMLParser();
+  //fGDMLParser.Clear(); // FIXME doesn't clear auxmap, instead just recreate
 
   // Print GDML warning
   PrintGDMLWarning();
@@ -155,14 +141,14 @@ G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
   }
 
   // Parse GDML file
-  fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
+  fGDMLParser.SetOverlapCheck(fGDMLOverlapCheck);
   // hide output if not validating or checking overlaps
   // https://bugzilla-geant4.kek.jp/show_bug.cgi?id=2358
   if (! fGDMLOverlapCheck && ! fGDMLValidate)
     G4cout.setstate(std::ios_base::failbit);
-  fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+  fGDMLParser.Read(fGDMLFile,fGDMLValidate);
   G4cout.clear();
-  G4VPhysicalVolume* parallelvolume = fGDMLParser->GetWorldVolume();
+  G4VPhysicalVolume* parallelvolume = fGDMLParser.GetWorldVolume();
   G4LogicalVolume* parallellogical = parallelvolume->GetLogicalVolume();
 
   // Add GDML files to IO
@@ -190,7 +176,7 @@ G4VPhysicalVolume* remollParallelConstruction::ParseGDMLFile()
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo......
 void remollParallelConstruction::PrintAuxiliaryInfo() const
 {
-  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  const G4GDMLAuxMapType* auxmap = fGDMLParser.GetAuxMap();
   G4cout << "Found " << auxmap->size()
          << " volume(s) with auxiliary information."
          << G4endl << G4endl;
@@ -200,7 +186,7 @@ void remollParallelConstruction::PrintAuxiliaryInfo() const
 void remollParallelConstruction::ParseAuxiliaryVisibilityInfo()
 {
   // Loop over volumes with auxiliary information
-  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  const G4GDMLAuxMapType* auxmap = fGDMLParser.GetAuxMap();
   for(G4GDMLAuxMapType::const_iterator
       iter  = auxmap->begin();
       iter != auxmap->end(); iter++) {
@@ -301,7 +287,7 @@ void remollParallelConstruction::ParseAuxiliarySensDetInfo()
   if (fVerboseLevel > 0)
       G4cout << "Beginning sensitive detector assignment" << G4endl;
 
-  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  const G4GDMLAuxMapType* auxmap = fGDMLParser.GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
       G4LogicalVolume* myvol = (*iter).first;
       if (fVerboseLevel > 0)

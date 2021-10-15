@@ -3,7 +3,6 @@
 #include "G4TransportationManager.hh"
 #include "G4FieldManager.hh"
 #include "G4UImanager.hh"
-#include "G4GenericMessenger.hh"
 
 #include "G4PropagatorInField.hh"
 
@@ -65,33 +64,28 @@ remollGlobalField::remollGlobalField()
     fFieldManager->SetDetectorField(this);
 
     // Create generic messenger
-    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-    fMessenger->DeclareMethod("addfield",&remollGlobalField::AddNewField,"Add magnetic field");
+    fMessenger.DeclareMethod("addfield",&remollGlobalField::AddNewField,"Add magnetic field");
 
     // Create global field messenger
-    fGlobalFieldMessenger = new G4GenericMessenger(this,"/remoll/field/","Remoll global field properties");
-    fGlobalFieldMessenger->DeclareMethod("equationtype",&remollGlobalField::SetEquationType,"Set equation type: \n 0: B-field, no spin (default); \n 2: B-field, with spin");
-    fGlobalFieldMessenger->DeclareMethod("steppertype",&remollGlobalField::SetStepperType,"Set stepper type: \n 0: ExplicitEuler; \n 1: ImplicitEuler; \n 2: SimpleRunge; \n 3: SimpleHeum; \n 4: ClassicalRK4 (default); \n 5: CashKarpRKF45");
-    fGlobalFieldMessenger->DeclareMethod("print",&remollGlobalField::PrintAccuracyParameters,"Print the accuracy parameters");
-    fGlobalFieldMessenger->DeclareProperty("epsmin",fEpsMin,"Set the minimum epsilon of the field propagator");
-    fGlobalFieldMessenger->DeclareProperty("epsmax",fEpsMax,"Set the maximum epsilon of the field propagator");
-    fGlobalFieldMessenger->DeclareProperty("minstep",fMinStep,"Set the minimum step of the chord finder");
-    fGlobalFieldMessenger->DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
-    fGlobalFieldMessenger->DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
-    fGlobalFieldMessenger->DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
-    fGlobalFieldMessenger->DeclareMethod("interpolation",&remollGlobalField::SetInterpolationType,"Set magnetic field interpolation type");
-    fGlobalFieldMessenger->DeclareMethod("zoffset",&remollGlobalField::SetZOffset,"Set magnetic field z offset");
-    fGlobalFieldMessenger->DeclareMethod("scale",&remollGlobalField::SetFieldScale,"Scale magnetic field by factor");
-    fGlobalFieldMessenger->DeclareMethod("current",&remollGlobalField::SetMagnetCurrent,"Scale magnetic field by current");
-    fGlobalFieldMessenger->DeclareMethod("value",&remollGlobalField::PrintFieldValue,"Print the field value at a given point (in m)");
-    fGlobalFieldMessenger->DeclareProperty("verbose",fVerboseLevel,"Set the verbose level");
+    fGlobalFieldMessenger.DeclareMethod("equationtype",&remollGlobalField::SetEquationType,"Set equation type: \n 0: B-field, no spin (default); \n 2: B-field, with spin");
+    fGlobalFieldMessenger.DeclareMethod("steppertype",&remollGlobalField::SetStepperType,"Set stepper type: \n 0: ExplicitEuler; \n 1: ImplicitEuler; \n 2: SimpleRunge; \n 3: SimpleHeum; \n 4: ClassicalRK4 (default); \n 5: CashKarpRKF45");
+    fGlobalFieldMessenger.DeclareMethod("print",&remollGlobalField::PrintAccuracyParameters,"Print the accuracy parameters");
+    fGlobalFieldMessenger.DeclareProperty("epsmin",fEpsMin,"Set the minimum epsilon of the field propagator");
+    fGlobalFieldMessenger.DeclareProperty("epsmax",fEpsMax,"Set the maximum epsilon of the field propagator");
+    fGlobalFieldMessenger.DeclareProperty("minstep",fMinStep,"Set the minimum step of the chord finder");
+    fGlobalFieldMessenger.DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
+    fGlobalFieldMessenger.DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
+    fGlobalFieldMessenger.DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
+    fGlobalFieldMessenger.DeclareMethod("interpolation",&remollGlobalField::SetInterpolationType,"Set magnetic field interpolation type");
+    fGlobalFieldMessenger.DeclareMethod("zoffset",&remollGlobalField::SetZOffset,"Set magnetic field z offset");
+    fGlobalFieldMessenger.DeclareMethod("scale",&remollGlobalField::SetFieldScale,"Scale magnetic field by factor");
+    fGlobalFieldMessenger.DeclareMethod("current",&remollGlobalField::SetMagnetCurrent,"Scale magnetic field by current");
+    fGlobalFieldMessenger.DeclareMethod("value",&remollGlobalField::PrintFieldValue,"Print the field value at a given point (in m)");
+    fGlobalFieldMessenger.DeclareProperty("verbose",fVerboseLevel,"Set the verbose level");
 }
 
 remollGlobalField::~remollGlobalField()
 {
-  delete fMessenger;
-  delete fGlobalFieldMessenger;
-
   if (fEquation)        delete fEquation;
   if (fStepper)         delete fStepper;
   if (fChordFinder)     delete fChordFinder;

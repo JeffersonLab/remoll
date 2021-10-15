@@ -6,9 +6,9 @@
  */
 
 #include "remollGenExternal.hh"
+
 // Geant4 headers
 #include "G4ParticleTable.hh"
-#include "G4GenericMessenger.hh"
 
 // ROOT headers
 #include "TFile.h"
@@ -33,10 +33,10 @@ remollGenExternal::remollGenExternal()
   fSamplingType = kNoTargetVolume;
 
   // Add to generic messenger
-  fThisGenMessenger->DeclareMethod("file",&remollGenExternal::SetGenExternalFile,"External generator event filename");
-  fThisGenMessenger->DeclareMethod("zOffset",&remollGenExternal::SetGenExternalZOffset,"External generator zOffset");
-  fThisGenMessenger->DeclareMethod("detid",&remollGenExternal::SetGenExternalDetID,"External generator detector ID");
-  fThisGenMessenger->DeclareMethod("startEvent",&remollGenExternal::SetGenExternalEntry,"External generator starting event: -1 starts random,  n starts at n (default n=0)");
+  fThisGenMessenger.DeclareMethod("file",&remollGenExternal::SetGenExternalFile,"External generator event filename");
+  fThisGenMessenger.DeclareMethod("zOffset",&remollGenExternal::SetGenExternalZOffset,"External generator zOffset");
+  fThisGenMessenger.DeclareMethod("detid",&remollGenExternal::SetGenExternalDetID,"External generator detector ID");
+  fThisGenMessenger.DeclareMethod("startEvent",&remollGenExternal::SetGenExternalEntry,"External generator starting event: -1 starts random,  n starts at n (default n=0)");
 }
 
 remollGenExternal::~remollGenExternal()
