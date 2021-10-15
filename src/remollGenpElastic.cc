@@ -9,7 +9,6 @@
 #include "remollEvent.hh"
 #include "remollVertex.hh"
 #include "remollBeamTarget.hh"
-#include "remollMultScatt.hh"
 #include "remolltypes.hh"
 
 #include <math.h>
@@ -229,7 +228,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // as anything less than three sigma of the characteristic
     // width
     
-    if( th < 3.0*fBeamTarg->fMS->GetPDGTh() ){
+    if( th < 3.0*fBeamTarg->GetMultScatt().GetPDGTh() ){
 	sigma = 0.0;
     }
 

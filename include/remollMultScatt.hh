@@ -90,7 +90,7 @@ class remollMultScatt {
 	double GenerateMSPlane(double p, const std::tuple<double,double,double>& m);
 	double GenerateMSPlane(double p, const std::vector<std::tuple<double,double,double>>& m);
 
-	double GetPDGTh(){ return fthpdg; }
+	double GetPDGTh() const { return fthpdg; }
 
     private:
 

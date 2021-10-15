@@ -4,6 +4,7 @@
 #include "remolltypes.hh"
 #include "remollglobs.hh"
 #include "remollVertex.hh"
+#include "remollMultScatt.hh"
 
 #include "G4ThreeVector.hh"
 #include "G4GenericMessenger.hh"
@@ -28,7 +29,6 @@
 
 class G4VPhysicalVolume;
 class G4Material;
-class remollMultScatt;
 
 class remollBeamTarget {
 
@@ -90,8 +90,12 @@ class remollBeamTarget {
 	G4double fBeamCurrent;
 	G4double fBeamPolarization;
 
-	remollMultScatt *fMS;
+    private:
+	remollMultScatt fMS;
+    public:
+        const remollMultScatt& GetMultScatt() const { return fMS; }
 
+    private:
 	bool fAlreadyWarned;
         bool fAlreadyWarned_LH2;
 
