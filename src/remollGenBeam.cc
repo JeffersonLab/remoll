@@ -8,7 +8,6 @@
 #include "G4VPhysicalVolume.hh"
 #include "G4LogicalVolume.hh"
 #include "G4PhysicalConstants.hh"
-#include "G4GenericMessenger.hh"
 #include "G4ParticleTable.hh"
 
 #include "Randomize.hh"
@@ -40,44 +39,44 @@ remollGenBeam::remollGenBeam()
     fSamplingType = kNoTargetVolume;
     fApplyMultScatt = true;
 
-    fThisGenMessenger->DeclarePropertyWithUnit("rasterRefZ","mm",fRasterRefZ,"Raster Origin Z: z unit");
-    fThisGenMessenger->DeclarePropertyWithUnit("origin","mm",fOriginMean,"origin position mean: x y z unit");
-    fThisGenMessenger->DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginXMean,"origin x position mean");
-    fThisGenMessenger->DeclareMethodWithUnit("y","mm",&remollGenBeam::SetOriginYMean,"origin y position mean");
-    fThisGenMessenger->DeclareMethodWithUnit("z","mm",&remollGenBeam::SetOriginZMean,"origin z position mean");
+    fThisGenMessenger.DeclarePropertyWithUnit("rasterRefZ","mm",fRasterRefZ,"Raster Origin Z: z unit");
+    fThisGenMessenger.DeclarePropertyWithUnit("origin","mm",fOriginMean,"origin position mean: x y z unit");
+    fThisGenMessenger.DeclareMethodWithUnit("x","mm",&remollGenBeam::SetOriginXMean,"origin x position mean");
+    fThisGenMessenger.DeclareMethodWithUnit("y","mm",&remollGenBeam::SetOriginYMean,"origin y position mean");
+    fThisGenMessenger.DeclareMethodWithUnit("z","mm",&remollGenBeam::SetOriginZMean,"origin z position mean");
 
-    fThisGenMessenger->DeclarePropertyWithUnit("originspread","mm",fOriginSpread,"origin position spread: x y z unit");
-    fThisGenMessenger->DeclareMethodWithUnit("xspread","mm",&remollGenBeam::SetOriginXSpread,"origin x position spread");
-    fThisGenMessenger->DeclareMethodWithUnit("yspread","mm",&remollGenBeam::SetOriginYSpread,"origin y position spread");
-    fThisGenMessenger->DeclareMethodWithUnit("zspread","mm",&remollGenBeam::SetOriginZSpread,"origin z position spread");
-    fThisGenMessenger->DeclareMethod("xmodel",&remollGenBeam::SetOriginXModel,"origin x position model: flat, gauss");
-    fThisGenMessenger->DeclareMethod("ymodel",&remollGenBeam::SetOriginYModel,"origin y position model: flat, gauss");
-    fThisGenMessenger->DeclareMethod("zmodel",&remollGenBeam::SetOriginZModel,"origin z position model: flat, gauss");
+    fThisGenMessenger.DeclarePropertyWithUnit("originspread","mm",fOriginSpread,"origin position spread: x y z unit");
+    fThisGenMessenger.DeclareMethodWithUnit("xspread","mm",&remollGenBeam::SetOriginXSpread,"origin x position spread");
+    fThisGenMessenger.DeclareMethodWithUnit("yspread","mm",&remollGenBeam::SetOriginYSpread,"origin y position spread");
+    fThisGenMessenger.DeclareMethodWithUnit("zspread","mm",&remollGenBeam::SetOriginZSpread,"origin z position spread");
+    fThisGenMessenger.DeclareMethod("xmodel",&remollGenBeam::SetOriginXModel,"origin x position model: flat, gauss");
+    fThisGenMessenger.DeclareMethod("ymodel",&remollGenBeam::SetOriginYModel,"origin y position model: flat, gauss");
+    fThisGenMessenger.DeclareMethod("zmodel",&remollGenBeam::SetOriginZModel,"origin z position model: flat, gauss");
 
-    fThisGenMessenger->DeclareProperty("direction",fDirection,"direction vector (will be normalized): x y z");
-    fThisGenMessenger->DeclareMethod("px",&remollGenBeam::SetDirectionX,"direction x (vector will be normalized before use)");
-    fThisGenMessenger->DeclareMethod("py",&remollGenBeam::SetDirectionY,"direction y (vector will be normalized before use)");
-    fThisGenMessenger->DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"direction z (vector will be normalized before use)");
-    fThisGenMessenger->DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"direction vector theta angle");
-    fThisGenMessenger->DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"direction vector phi angle");
-    fThisGenMessenger->DeclareProperty("isotropic",fIsotropic,"direction is isotropic");
-    fThisGenMessenger->DeclarePropertyWithUnit("isotropic_theta_min","deg",fIsotropicThetaMin,"minimum theta in isotropic direction");
-    fThisGenMessenger->DeclarePropertyWithUnit("isotropic_theta_max","deg",fIsotropicThetaMax,"maximum theta in isotropic direction");
+    fThisGenMessenger.DeclareProperty("direction",fDirection,"direction vector (will be normalized): x y z");
+    fThisGenMessenger.DeclareMethod("px",&remollGenBeam::SetDirectionX,"direction x (vector will be normalized before use)");
+    fThisGenMessenger.DeclareMethod("py",&remollGenBeam::SetDirectionY,"direction y (vector will be normalized before use)");
+    fThisGenMessenger.DeclareMethod("pz",&remollGenBeam::SetDirectionZ,"direction z (vector will be normalized before use)");
+    fThisGenMessenger.DeclareMethodWithUnit("th","deg",&remollGenBeam::SetDirectionTh,"direction vector theta angle");
+    fThisGenMessenger.DeclareMethodWithUnit("ph","deg",&remollGenBeam::SetDirectionPh,"direction vector phi angle");
+    fThisGenMessenger.DeclareProperty("isotropic",fIsotropic,"direction is isotropic");
+    fThisGenMessenger.DeclarePropertyWithUnit("isotropic_theta_min","deg",fIsotropicThetaMin,"minimum theta in isotropic direction");
+    fThisGenMessenger.DeclarePropertyWithUnit("isotropic_theta_max","deg",fIsotropicThetaMax,"maximum theta in isotropic direction");
 
-    fThisGenMessenger->DeclarePropertyWithUnit("originshift","mm",fOriginShift,"origin shift along direction vector: s unit");
+    fThisGenMessenger.DeclarePropertyWithUnit("originshift","mm",fOriginShift,"origin shift along direction vector: s unit");
 
-    fThisGenMessenger->DeclareProperty("polarization",fPolarization,"polarization vector (will be normalized): x y z");
-    fThisGenMessenger->DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
-    fThisGenMessenger->DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
-    fThisGenMessenger->DeclareMethod("sz",&remollGenBeam::SetPolarizationZ,"z component of polarization");
+    fThisGenMessenger.DeclareProperty("polarization",fPolarization,"polarization vector (will be normalized): x y z");
+    fThisGenMessenger.DeclareMethod("sx",&remollGenBeam::SetPolarizationX,"x component of polarization");
+    fThisGenMessenger.DeclareMethod("sy",&remollGenBeam::SetPolarizationY,"y component of polarization");
+    fThisGenMessenger.DeclareMethod("sz",&remollGenBeam::SetPolarizationZ,"z component of polarization");
 
-    fThisGenMessenger->DeclareMethodWithUnit("rasrefz","mm",&remollGenBeam::SetRasterRefZ,"reference z position where raster is defined");
-    fThisGenMessenger->DeclareMethodWithUnit("rasx","mm",&remollGenBeam::SetRasterX,"raster x spread perpendicular to the beam at z = 0");
-    fThisGenMessenger->DeclareMethodWithUnit("rasy","mm",&remollGenBeam::SetRasterY,"raster y spread perpendicular to the beam at z = 0");
-    fThisGenMessenger->DeclareMethod("corrx",&remollGenBeam::SetCorrelationX,"sensitivity of direction to position in x (in mrad/mm)");
-    fThisGenMessenger->DeclareMethod("corry",&remollGenBeam::SetCorrelationY,"sensitivity of direction to position in y (in mrad/mm)");
+    fThisGenMessenger.DeclareMethodWithUnit("rasrefz","mm",&remollGenBeam::SetRasterRefZ,"reference z position where raster is defined");
+    fThisGenMessenger.DeclareMethodWithUnit("rasx","mm",&remollGenBeam::SetRasterX,"raster x spread perpendicular to the beam at z = 0");
+    fThisGenMessenger.DeclareMethodWithUnit("rasy","mm",&remollGenBeam::SetRasterY,"raster y spread perpendicular to the beam at z = 0");
+    fThisGenMessenger.DeclareMethod("corrx",&remollGenBeam::SetCorrelationX,"sensitivity of direction to position in x (in mrad/mm)");
+    fThisGenMessenger.DeclareMethod("corry",&remollGenBeam::SetCorrelationY,"sensitivity of direction to position in y (in mrad/mm)");
 
-    fThisGenMessenger->DeclareMethod("partName",&remollGenBeam::SetPartName,"name of particle to shoot");
+    fThisGenMessenger.DeclareMethod("partName",&remollGenBeam::SetPartName,"name of particle to shoot");
 }
 
 remollGenBeam::~remollGenBeam() { }

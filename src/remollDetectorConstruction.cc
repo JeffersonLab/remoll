@@ -5,7 +5,6 @@
 #include "remollGlobalField.hh"
 #include "remollIO.hh"
 
-#include "G4GenericMessenger.hh"
 #include "G4GeometryManager.hh"
 #include "G4GeometryTolerance.hh"
 #include "G4FieldManager.hh"
@@ -56,15 +55,10 @@ G4UserLimits* remollDetectorConstruction::fKryptoniteUserLimits = new G4UserLimi
 
 remollDetectorConstruction::remollDetectorConstruction(const G4String& name, const G4String& gdmlfile)
 : fVerboseLevel(0),
-  fGDMLParser(0),
   fGDMLValidate(false),
   fGDMLOverlapCheck(true),
   fGDMLPath(""),
   fGDMLFile(""),
-  fMessenger(0),
-  fGeometryMessenger(0),
-  fUserLimitsMessenger(0),
-  fKryptoniteMessenger(0),
   fKryptoniteEnable(true),
   fKryptoniteVerbose(0),
   fWorldVolume(0),
@@ -82,166 +76,153 @@ remollDetectorConstruction::remollDetectorConstruction(const G4String& name, con
   // New units
   new G4UnitDefinition("inch","in","Length",25.4*CLHEP::millimeter);
 
-  // Create GDML parser
-  fGDMLParser = new G4GDMLParser();
-
   // Create generic messenger
-  fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-  fMessenger->DeclareMethod(
+  fMessenger.DeclareMethod(
       "setgeofile",
       &remollDetectorConstruction::SetGDMLFile,
       "Set geometry GDML file")
       .SetStates(G4State_PreInit);
-  fMessenger->DeclareMethod(
+  fMessenger.DeclareMethod(
       "printgeometry",
       &remollDetectorConstruction::PrintGeometry,
       "Print the geometry tree")
       .SetStates(G4State_Idle)
       .SetDefaultValue("false");
-  fMessenger->DeclareMethod(
+  fMessenger.DeclareMethod(
       "printelements",
       &remollDetectorConstruction::PrintElements,
       "Print the elements")
       .SetStates(G4State_Idle);
-  fMessenger->DeclareMethod(
+  fMessenger.DeclareMethod(
       "printmaterials",
       &remollDetectorConstruction::PrintMaterials,
       "Print the materials")
       .SetStates(G4State_Idle);
 
   // Create geometry messenger
-  fGeometryMessenger = new G4GenericMessenger(this,
-      "/remoll/geometry/",
-      "Remoll geometry properties");
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "setfile",
       &remollDetectorConstruction::SetGDMLFile,
       "Set geometry GDML file")
       .SetStates(G4State_PreInit);
-  fGeometryMessenger->DeclareProperty(
+  fGeometryMessenger.DeclareProperty(
       "verbose",
       fVerboseLevel,
       "Set geometry verbose level")
           .SetStates(G4State_PreInit,G4State_Idle);
-  fGeometryMessenger->DeclareProperty(
+  fGeometryMessenger.DeclareProperty(
       "validate",
       fGDMLValidate,
       "Set GMDL validate flag")
           .SetStates(G4State_PreInit)
           .SetDefaultValue("true");
-  fGeometryMessenger->DeclareProperty(
+  fGeometryMessenger.DeclareProperty(
       "overlapcheck",
       fGDMLOverlapCheck,
       "Set GMDL overlap check flag")
           .SetStates(G4State_PreInit)
           .SetDefaultValue("true");
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "load",
       &remollDetectorConstruction::ReloadGeometry,
       "Reload the geometry")
       .SetStates(G4State_PreInit,G4State_Idle);
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "printelements",
       &remollDetectorConstruction::PrintElements,
       "Print the elements")
       .SetStates(G4State_Idle);
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "printmaterials",
       &remollDetectorConstruction::PrintMaterials,
       "Print the materials")
       .SetStates(G4State_Idle);
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "printgeometry",
       &remollDetectorConstruction::PrintGeometry,
       "Print the geometry tree")
       .SetStates(G4State_Idle)
       .SetDefaultValue("false");
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "printoverlaps",
       &remollDetectorConstruction::PrintOverlaps,
       "Print the geometry overlap")
       .SetStates(G4State_Idle);
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "absolute_position",
       &remollDetectorConstruction::AbsolutePosition,
       "Set the position of volume in parent frame [mm]")
       .SetStates(G4State_PreInit,G4State_Idle);
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "relative_position",
       &remollDetectorConstruction::RelativePosition,
       "Position a volume relative to current position [mm]")
       .SetStates(G4State_PreInit,G4State_Idle);
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "absolute_rotation",
       &remollDetectorConstruction::AbsoluteRotation,
       "Set the rotation of volume in parent frame [deg]")
       .SetStates(G4State_PreInit,G4State_Idle);
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "relative_rotation",
       &remollDetectorConstruction::RelativeRotation,
       "Rotate a volume relative to current orientation [deg]")
       .SetStates(G4State_PreInit,G4State_Idle);
-  fGeometryMessenger->DeclareMethod(
+  fGeometryMessenger.DeclareMethod(
       "addmesh",
       &remollDetectorConstruction::AddMesh,
       "Add mesh file (ascii stl, ascii ply, ascii obj)")
       .SetStates(G4State_Idle);
 
   // Create user limits messenger
-  fUserLimitsMessenger = new G4GenericMessenger(this,
-      "/remoll/geometry/userlimits/",
-      "Remoll geometry properties");
-  fUserLimitsMessenger->DeclareMethod(
+  fUserLimitsMessenger.DeclareMethod(
       "usermaxallowedstep",
       &remollDetectorConstruction::SetUserMaxAllowedStep,
       "Set user limit MaxAllowedStep for logical volume")
       .SetStates(G4State_Idle);
-  fUserLimitsMessenger->DeclareMethod(
+  fUserLimitsMessenger.DeclareMethod(
       "usermaxtracklength",
       &remollDetectorConstruction::SetUserMaxTrackLength,
       "Set user limit MaxTrackLength for logical volume")
       .SetStates(G4State_Idle);
-  fUserLimitsMessenger->DeclareMethod(
+  fUserLimitsMessenger.DeclareMethod(
       "usermaxtime",
       &remollDetectorConstruction::SetUserMaxTime,
       "Set user limit MaxTime for logical volume")
       .SetStates(G4State_Idle);
-  fUserLimitsMessenger->DeclareMethod(
+  fUserLimitsMessenger.DeclareMethod(
       "userminekine",
       &remollDetectorConstruction::SetUserMinEkine,
       "Set user limit MinEkine for logical volume")
       .SetStates(G4State_Idle);
-  fUserLimitsMessenger->DeclareMethod(
+  fUserLimitsMessenger.DeclareMethod(
       "userminrange",
       &remollDetectorConstruction::SetUserMinRange,
       "Set user limit MinRange for logical volume")
       .SetStates(G4State_Idle);
 
   // Create kryptonite messenger
-  fKryptoniteMessenger = new G4GenericMessenger(this,
-      "/remoll/kryptonite/",
-      "Remoll kryptonite properties");
-  fKryptoniteMessenger->DeclareMethod(
+  fKryptoniteMessenger.DeclareMethod(
       "verbose",
       &remollDetectorConstruction::SetKryptoniteVerbose,
       "Set verbose level");
-  fKryptoniteMessenger->DeclareMethod(
+  fKryptoniteMessenger.DeclareMethod(
       "enable",
       &remollDetectorConstruction::EnableKryptonite,
       "Treat materials as kryptonite");
-  fKryptoniteMessenger->DeclareMethod(
+  fKryptoniteMessenger.DeclareMethod(
       "disable",
       &remollDetectorConstruction::DisableKryptonite,
       "Treat materials as regular");
-  fKryptoniteMessenger->DeclareMethod(
+  fKryptoniteMessenger.DeclareMethod(
       "add",
       &remollDetectorConstruction::AddKryptoniteCandidate,
       "Add specified material to list of kryptonite candidates");
-  fKryptoniteMessenger->DeclareMethod(
+  fKryptoniteMessenger.DeclareMethod(
       "list",
       &remollDetectorConstruction::ListKryptoniteCandidates,
       "List kryptonite candidate materials");
-  fKryptoniteMessenger->DeclareMethod(
+  fKryptoniteMessenger.DeclareMethod(
       "volume",
       &remollDetectorConstruction::EnableKryptoniteVolume,
       "Treat volume as kryptonite");
@@ -385,11 +366,6 @@ remollDetectorConstruction::~remollDetectorConstruction()
       delete lv;
       delete pv;
     }
-    delete fGDMLParser;
-    delete fMessenger;
-    delete fGeometryMessenger;
-    delete fKryptoniteMessenger;
-    delete fUserLimitsMessenger;
 }
 
 void remollDetectorConstruction::AddMesh(const G4String& filename)
@@ -566,7 +542,7 @@ void remollDetectorConstruction::PrintGDMLWarning() const
 G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 {
     // Clear parser
-    fGDMLParser->Clear();
+    fGDMLParser.Clear();
 
     // Print parsing options
     G4cout << "Reading " << fGDMLFile << G4endl;
@@ -591,14 +567,14 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
     }
 
     // Parse GDML file
-    fGDMLParser->SetOverlapCheck(fGDMLOverlapCheck);
+    fGDMLParser.SetOverlapCheck(fGDMLOverlapCheck);
     // hide output if not validating or checking overlaps
     // https://bugzilla-geant4.kek.jp/show_bug.cgi?id=2358
     if (! fGDMLOverlapCheck && ! fGDMLValidate)
       G4cout.setstate(std::ios_base::failbit);
-    fGDMLParser->Read(fGDMLFile,fGDMLValidate);
+    fGDMLParser.Read(fGDMLFile,fGDMLValidate);
     G4cout.clear();
-    G4VPhysicalVolume* worldvolume = fGDMLParser->GetWorldVolume();
+    G4VPhysicalVolume* worldvolume = fGDMLParser.GetWorldVolume();
 
     // Print tolerances
     if (fVerboseLevel > 0) {
@@ -632,7 +608,7 @@ G4VPhysicalVolume* remollDetectorConstruction::ParseGDMLFile()
 
 void remollDetectorConstruction::PrintAuxiliaryInfo() const
 {
-  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  const G4GDMLAuxMapType* auxmap = fGDMLParser.GetAuxMap();
   G4cout << "Found " << auxmap->size()
          << " volume(s) with auxiliary information."
          << G4endl << G4endl;
@@ -650,7 +626,7 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
     // how to improve this, you are welcome to :-)
 
     // Loop over volumes with auxiliary information
-    const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+    const G4GDMLAuxMapType* auxmap = fGDMLParser.GetAuxMap();
     for(G4GDMLAuxMapType::const_iterator
         iter  = auxmap->begin();
         iter != auxmap->end(); iter++) {
@@ -746,7 +722,7 @@ void remollDetectorConstruction::ParseAuxiliaryTargetInfo()
 
 void remollDetectorConstruction::ParseAuxiliaryUserLimits()
 {
-  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  const G4GDMLAuxMapType* auxmap = fGDMLParser.GetAuxMap();
   for(G4GDMLAuxMapType::const_iterator
       iter  = auxmap->begin();
       iter != auxmap->end(); iter++) {
@@ -780,7 +756,7 @@ void remollDetectorConstruction::ParseAuxiliaryUserLimits()
 void remollDetectorConstruction::ParseAuxiliaryVisibilityInfo()
 {
   // Loop over volumes with auxiliary information
-  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  const G4GDMLAuxMapType* auxmap = fGDMLParser.GetAuxMap();
   for(G4GDMLAuxMapType::const_iterator
       iter  = auxmap->begin();
       iter != auxmap->end(); iter++) {
@@ -871,7 +847,7 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
   std::map<int, std::pair<G4String, G4LogicalVolume*>> detnomap;
 
   // Loop over all volumes with auxiliary tags
-  const G4GDMLAuxMapType* auxmap = fGDMLParser->GetAuxMap();
+  const G4GDMLAuxMapType* auxmap = fGDMLParser.GetAuxMap();
   for (G4GDMLAuxMapType::const_iterator iter  = auxmap->begin(); iter != auxmap->end(); iter++) {
 
       G4LogicalVolume* myvol = (*iter).first;
