@@ -24,12 +24,12 @@
   <tube
     name="trackingVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmax="1400" rmin="0" z="1" lunit="mm"/>
+    rmax="1800" rmin="0" z="1" lunit="mm"/>
 
   <tube
     name="collarVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmax="1200" rmin="0" z="1" lunit="mm"/>
+    rmax="1900" rmin="0" z="1" lunit="mm"/>
 
   <tube
     name="dumpVirtualPlane_solid"
@@ -39,27 +39,344 @@
   <tube
     name="samVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmax="732.79" rmin="0" z="1" lunit="mm"/>
- 
-  <tube
-    name="gemVirtualPlane_solid"
-    startphi="0" deltaphi="360" aunit="deg"
-    rmin="1450" rmax="1460" z="2700" lunit="mm"/>
+    rmax="1000" rmin="0" z="1" lunit="mm"/>
 
   <tube
-    name="showerMaxVirtualPlane_solid"
+    name="VirtualPlane1_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="0" rmax="2000" z="1" lunit="mm"/>
+    rmax="1199" rmin="0" z="1" lunit="mm"/>
 
- 
 </solids>
 
 <structure>
-  <volume name="trackingDetectorVirtualPlane_log">
+
+  <volume name="tgtPbCollar_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="36"/>
+  </volume>
+
+  <volume name="USPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="37"/>
+  </volume>
+
+  <volume name="Col2Ent_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="38"/>
+  </volume>
+
+  <volume name="Col2Exit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="39"/>
+  </volume>
+
+  <volume name="USCoil1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="40"/>
+  </volume>
+
+  <volume name="USCoil2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="41"/>
+  </volume>
+
+  <volume name="USCoil3_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="42"/>
+  </volume>
+
+  <volume name="USCoil4_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="43"/>
+  </volume>
+
+  <volume name="Col4Ent_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="44"/>
+  </volume>
+
+  <volume name="Col4Exit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="45"/>
+  </volume>
+
+  <volume name="PbWallEnt_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="46"/>
+  </volume>
+
+  <volume name="PbWallExit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="47"/>
+  </volume>
+
+  <volume name="PhotonBlockerUS_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="30"/>
+    <auxiliary auxtype="DetNo" auxvalue="48"/>
+  </volume>
+
+  <volume name="PhotonBlockerDS_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="49"/>
+  </volume>
+
+  <volume name="DSCoil2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="50"/>
+  </volume>
+
+  <volume name="DSCoil3_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="51"/>
+  </volume>
+
+  <volume name="DSCoil4_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="52"/>
+  </volume>
+
+  <volume name="DSCoil5_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="53"/>
+  </volume>
+
+  <volume name="DSCoil6_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="54"/>
+  </volume>
+
+  <volume name="DSCoil7_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="55"/>
+  </volume>
+
+  <volume name="DSCoil8_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="56"/>
+  </volume>
+
+  <volume name="DSCoil9_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="57"/>
+  </volume>
+
+  <volume name="Col5Ent_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="58"/>
+  </volume>
+
+  <volume name="Col5Mid_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="76"/>
+  </volume>
+
+  <volume name="Col5Exit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="77"/>
+  </volume>
+
+  <volume name="LintelEnt_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="59"/>
+  </volume>
+
+  <volume name="LintelExit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="60"/>
+  </volume>
+
+  <volume name="DSCoil10_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="78"/>
+  </volume>
+
+  <volume name="DSCoil11_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="61"/>
+  </volume>
+
+  <volume name="DSCoil12_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="62"/>
+  </volume>
+
+  <volume name="DSCoil13_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="63"/>
+  </volume>
+
+  <volume name="DSCoil14_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="64"/>
+  </volume>
+
+  <volume name="DSCoil15_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="65"/>
+  </volume>
+
+  <volume name="DSCoil16_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="66"/>
+  </volume>
+
+  <volume name="Col6Ent_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="67"/>
+  </volume>
+
+  <volume name="Col6Exit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="68"/>
+  </volume>
+
+  <volume name="DSCoil17_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="69"/>
+  </volume>
+
+  <volume name="Collar1Ent_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="70"/>
+  </volume>
+
+  <volume name="collar1Exit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="71"/>
+  </volume>
+
+  <volume name="Drift1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="72"/>
+  </volume>
+
+  <volume name="Drift2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73"/>
+  </volume>
+
+  <volume name="collar2Ent_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="collarVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="74"/>
+  </volume>
+
+  <volume name="Collar2Exit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="75"/>
+  </volume>
+
+  <volume name="gemVirtualPlane1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="32"/>
+  </volume>
+
+  <volume name="gemVirtualPlane2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="33"/>
+  </volume>
+
+  <volume name="gemVirtualPlane3_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="34"/>
+  </volume>
+
+  <volume name="gemVirtualPlane4_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="35"/>
   </volume>
 
   <volume name="mainDetectorVirtualPlane_log">
@@ -69,6 +386,13 @@
     <auxiliary auxtype="DetNo" auxvalue="28"/>
   </volume>
 
+  <volume name="showerMaxVir_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="30"/>
+  </volume>
+
   <volume name="pionDetectorVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="VirtualPlane_solid"/>
@@ -76,117 +400,247 @@
     <auxiliary auxtype="DetNo" auxvalue="29"/>
   </volume>
 
-  <volume name="collar1VirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="collarVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="40"/>
-  </volume>
-
-  <volume name="collar2VirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="collarVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="41"/>
-  </volume>
-
-  <volume name="gemVirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="gemVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="50"/>
-  </volume>
-
-  <volume name="SAMus_neckdown_VirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="samVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="55"/>
-  </volume>
-
- <volume name="SAMds_neckdown_VirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="samVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="56"/>
-  </volume>
-
- <volume name="SAMus_flange_VirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="samVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="57"/>
-  </volume>
-
- <volume name="SAMds_flange_VirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="samVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="58"/>
-  </volume>
-
-
-  <volume name="dumpEntranceVirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="samVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="43"/>
-  </volume>
-
-  <volume name="donutUSVirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="dumpVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="44"/>
-  </volume>
-
-  <volume name="donutDSVirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="dumpVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="45"/>
-  </volume>
-
-  <volume name="n2atmoVirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="dumpVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="46"/>
-  </volume>
-
-  <volume name="sieveVirtualPlane_log">
+  <volume name="HallExit_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="60"/>
-  </volume>
-
-  <volume name="showerMaxVirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="showerMaxVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="70"/>
+    <auxiliary auxtype="DetNo" auxvalue="31"/>
   </volume>
 
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
 
+    <physvol name="tgtPbCollar_phys">
+      <volumeref ref="tgtPbCollar_log"/>
+      <position  name="tgtPbCollar_pos" unit="mm" x="0" y="0" z="-1449+0.5"/>
+    </physvol>
+
+    <physvol name="USPlane_phys">
+      <volumeref ref="USPlane_log"/>
+      <position name="USPlane_pos" unit="mm" x="0" y="0" z="-400+.5"/>
+    </physvol>
+
+    <physvol name="Col2Ent_phys">
+      <volumeref ref="Col2Ent_log"/>
+      <position name="Col2Ent_pos" unit="mm" x="0" y="0" z="750-0.5"/>
+    </physvol>
+
+    <physvol name="Col2Exit_phys">
+      <volumeref ref="Col2Exit_log"/>
+      <position name="Col2Exit_pos" unit="mm" x="0" y="0" z="900"/>
+    </physvol>
+
+    <physvol name="USCoil1_phys">
+      <volumeref ref="USCoil1_log"/>
+      <position  name="USCoil1_pos" unit="mm" x="0" y="0" z="1300"/>
+    </physvol>
+
+    <physvol name="USCoil2_phys">
+      <volumeref ref="USCoil2_log"/>
+      <position  name="USCoil2_pos" unit="mm" x="0" y="0" z="1800"/>
+    </physvol>
+
+    <physvol name="USCoil3_phys">
+      <volumeref ref="USCoil3_log"/>
+      <position  name="USCoil3_pos" unit="mm" x="0" y="0" z="2300"/>
+    </physvol>
+
+    <physvol name="USCoil4_phys">
+      <volumeref ref="USCoil4_log"/>
+      <position  name="USCoil4_pos" unit="mm" x="0" y="0" z="2800"/>
+    </physvol>
+
+    <physvol name="Col4Ent_phys">
+      <volumeref ref="Col4Ent_log"/>
+      <position name="Col4Ent_pos" unit="mm" x="0" y="0" z="3225-0.5"/>
+    </physvol>
+
+    <physvol name="Col4Exit_phys">
+      <volumeref ref="Col4Exit_log"/>
+      <position name="Col4Exit_pos" unit="mm" x="0" y="0" z="3225+150+0.5"/>
+    </physvol>
+
+    <physvol name="PbWallEnt_phys">
+      <volumeref ref="PbWallEnt_log"/>
+      <position name="PbWallEnt_pos" unit="mm" x="0" y="0" z="3879.25-0.5"/>
+    </physvol>
+
+    <physvol name="PbWallExit_phys">
+      <volumeref ref="PbWallExit_log"/>
+      <position name="PbWallExit_pos" unit="mm" x="0" y="0" z="3879.25+250+0.5"/>
+    </physvol>
+
+    <physvol name="PhotonBlockerUS_phys">
+      <volumeref ref="PhotonBlockerUS_log"/>
+      <position  name="PhotonBlockerUS_pos" unit="mm" x="0" y="0" z="4707.5-0.5"/>
+    </physvol>
+
+    <physvol name="PhotonBlockerDS_phys">
+      <volumeref ref="PhotonBlockerDS_log"/>
+      <position  name="PhotonBlockerDS_pos" unit="mm" x="0" y="0" z="4809.1+0.6"/>
+    </physvol>
+
+    <physvol name="DSCoil2_phys">
+      <volumeref ref="DSCoil2_log"/>
+      <position  name="DSCoil2_pos" unit="mm" x="0" y="0" z="5200+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil3_phys">
+      <volumeref ref="DSCoil3_log"/>
+      <position  name="DSCoil3_pos" unit="mm" x="0" y="0" z="5500+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil4_phys">
+      <volumeref ref="DSCoil4_log"/>
+      <position  name="DSCoil4_pos" unit="mm" x="0" y="0" z="5800+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil5_phys">
+      <volumeref ref="DSCoil5_log"/>
+      <position  name="DSCoil5_pos" unit="mm" x="0" y="0" z="6100+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil6_phys">
+      <volumeref ref="DSCoil6_log"/>
+      <position  name="DSCoil6_pos" unit="mm" x="0" y="0" z="6400+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil7_phys">
+      <volumeref ref="DSCoil7_log"/>
+      <position  name="DSCoil7_pos" unit="mm" x="0" y="0" z="6700+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil8_phys">
+      <volumeref ref="DSCoil8_log"/>
+      <position  name="DSCoil8_pos" unit="mm" x="0" y="0" z="7000+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil9_phys">
+      <volumeref ref="DSCoil9_log"/>
+      <position  name="DSCoil9_pos" unit="mm" x="0" y="0" z="7300+0.5"/>
+    </physvol>
+
+    <physvol name="Col5Ent_phys">
+      <volumeref ref="Col5Ent_log"/>
+      <position  name="Col5Ent_pos" unit="mm" x="0" y="0" z="7547.93-0.5"/>
+    </physvol>
+
+    <physvol name="Col5Mid_phys">
+      <volumeref ref="Col5Mid_log"/>
+      <position  name="Col5Mid_pos" unit="mm" x="0" y="0" z="7660.63"/>
+    </physvol>
+
+    <physvol name="Col5Exit_phys">
+      <volumeref ref="Col5Exit_log"/>
+      <position  name="Col5Exit_pos" unit="mm" x="0" y="0" z="7760.63+0.5"/>
+    </physvol>
+
+    <physvol name="LintelEnt_phys">
+      <volumeref ref="LintelEnt_log"/>
+      <position name="LintelEnt_pos" unit="mm" x="0" y="0" z="7800-0.5"/>
+    </physvol>
+
+    <physvol name="LintelExit_phys">
+      <volumeref ref="LintelExit_log"/>
+      <position name="LintelExit_pos" unit="mm" x="0" y="0" z="7800+70+1.0"/>
+    </physvol>
+
+    <physvol name="DSCoil10_phys">
+      <volumeref ref="DSCoil10_log"/>
+      <position  name="DSCoil10_pos" unit="mm" x="0" y="0" z="8432.54-0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil11_phys">
+      <volumeref ref="DSCoil11_log"/>
+      <position  name="DSCoil11_pos" unit="mm" x="0" y="0" z="8535.89+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil12_phys">
+      <volumeref ref="DSCoil12_log"/>
+      <position  name="DSCoil12_pos" unit="mm" x="0" y="0" z="8800+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil13_phys">
+      <volumeref ref="DSCoil13_log"/>
+      <position  name="DSCoil13_pos" unit="mm" x="0" y="0" z="9200+0.5"/>
+    </physvol>
+
+    <physvol name="Col6Ent_phys">
+      <volumeref ref="Col6Ent_log"/>
+      <position name="Col6Ent_pos" unit="mm" x="0" y="0" z="9507.3-0.5"/>
+    </physvol>
+
+    <physvol name="Col6Exit_phys">
+      <volumeref ref="Col6Exit_log"/>
+      <position name="Col6Exit_pos" unit="mm" x="0" y="0" z="9607.3+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil14_phys">
+      <volumeref ref="DSCoil14_log"/>
+      <position  name="DSCoil14_pos" unit="mm" x="0" y="0" z="10000+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil15_phys">
+      <volumeref ref="DSCoil15_log"/>
+      <position  name="DSCoil15_pos" unit="mm" x="0" y="0" z="10500+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil16_phys">
+      <volumeref ref="DSCoil16_log"/>
+      <position  name="DSCoil16_pos" unit="mm" x="0" y="0" z="11012.25-0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil17_phys">
+      <volumeref ref="DSCoil17_log"/>
+      <position  name="DSCoil17_pos" unit="mm" x="0" y="0" z="11500+0.5"/>
+    </physvol>
+
+    <physvol name="Collar1Ent_phys">
+      <volumeref ref="Collar1Ent_log"/>
+      <position name="Collar1Ent_pos" unit="mm" x="0" y="0" z="11875.09-0.5"/>
+    </physvol>
+
+    <physvol name="collar1Exit_phys">
+      <volumeref ref="collar1Exit_log"/>
+      <position name="Collar1Exit_pos" unit="mm" x="0" y="0" z="11875.09+150+0.5"/>
+    </physvol>
+
+    <physvol name="Drift1_phys">
+      <volumeref ref="Drift1_log"/>
+      <position name="Drift1_pos" unit="mm" x="0" y="0" z="14000+0.5"/>
+    </physvol>
+
+    <physvol name="Drift2_phys">
+      <volumeref ref="Drift2_log"/>
+      <position name="Drift2_pos" unit="mm" x="0" y="0" z="16500+0.5"/>
+    </physvol>
+
+    <physvol name="collar2Ent_phys">
+      <volumeref ref="collar2Ent_log"/>
+      <position name="Collar2Ent_pos" unit="mm" x="0" y="0" z="19182.69-0.5"/>
+    </physvol>
+
+    <physvol name="Collar2Exit_phys">
+      <volumeref ref="Collar2Exit_log"/>
+      <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="19182.69+150+0.6"/>
+    </physvol>
+
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
-      <volumeref ref="trackingDetectorVirtualPlane_log"/>
+      <volumeref ref="gemVirtualPlane1_log"/>
       <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
     </physvol>
     <physvol name="trackingDetectorVirtualPlaneFront2_phys">
-      <volumeref ref="trackingDetectorVirtualPlane_log"/>
+      <volumeref ref="gemVirtualPlane2_log"/>
       <positionref ref="trackingDetectorVirtualPlaneFront2_pos"/>
     </physvol>
     <physvol name="trackingDetectorVirtualPlaneBack1_phys">
-      <volumeref ref="trackingDetectorVirtualPlane_log"/>
+      <volumeref ref="gemVirtualPlane3_log"/>
       <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
     </physvol>
     <physvol name="trackingDetectorVirtualPlaneBack2_phys">
-      <volumeref ref="trackingDetectorVirtualPlane_log"/>
+      <volumeref ref="gemVirtualPlane4_log"/>
       <positionref ref="trackingDetectorVirtualPlaneBack2_pos"/>
     </physvol>
     
@@ -196,83 +650,23 @@
       <positionref ref="mainDetectorVirtualPlane_pos"/>
     </physvol>
 
+    <!-- Main detector plane -->
+    <physvol name="showerMaxVir_phys">
+      <volumeref ref="showerMaxVir_log"/>
+      <positionref ref="showerMaxDetectorFaceUS"/>
+    </physvol>
+
     <!-- Pion detector plane -->
     <physvol name="pionDetectorVirtualPlane_phys">
       <volumeref ref="pionDetectorVirtualPlane_log"/>
       <positionref ref="pionDetectorVirtualPlane_pos"/>
     </physvol>
 
-
-  <!-- SAM detector planes -->
-
-    <physvol name="SAMus_neckdown_VirtualPlane_phys">
-      <volumeref ref="SAMus_neckdown_VirtualPlane_log"/>
-      <positionref ref="SAMus_neckdown_VirtualPlane_pos"/>
+    <physvol name="HallExit_phys">
+      <volumeref ref="HallExit_log"/>
+      <position  name="HallExit_pos" unit="mm" x="0" y="0" z="26200"/>
     </physvol>
 
-   <physvol name="SAMds_neckdown_VirtualPlane_phys">
-      <volumeref ref="SAMds_neckdown_VirtualPlane_log"/>
-      <positionref ref="SAMds_neckdown_VirtualPlane_pos"/>
-    </physvol>
- 
-   <physvol name="SAMus_flange_VirtualPlane_phys">
-      <volumeref ref="SAMus_flange_VirtualPlane_log"/>
-      <positionref ref="SAMus_flange_VirtualPlane_pos"/>
-    </physvol>
-
-   <physvol name="SAMds_flange_VirtualPlane_phys">
-      <volumeref ref="SAMds_flange_VirtualPlane_log"/>
-      <positionref ref="SAMds_flange_VirtualPlane_pos"/>
-    </physvol>
-
-
-
-    <!-- Beamline detector planes -->
-    <physvol name="collar1VirtualPlane_phys">
-      <volumeref ref="collar1VirtualPlane_log"/>
-      <positionref ref="collar1VirtualPlane_pos"/>
-    </physvol>
-
-    <physvol name="collar2VirtualPlane_phys">
-      <volumeref ref="collar2VirtualPlane_log"/>
-      <positionref ref="collar2VirtualPlane_pos"/>
-    </physvol>
-
-    <physvol name="gemVirtualPlane_phys">
-      <volumeref ref="gemVirtualPlane_log"/>
-      <positionref ref="gemVirtualPlane_pos"/>
-    </physvol>
-
-
-   <physvol name="dumpEntranceVirtualPlane_phys">
-      <volumeref ref="dumpEntranceVirtualPlane_log"/>
-      <positionref ref="dumpEntranceVirtualPlane_pos"/>
-    </physvol>
-
-    <physvol name="donutUSVirtualPlane_phys">
-      <volumeref ref="donutUSVirtualPlane_log"/>
-      <positionref ref="donutUSVirtualPlane_pos"/>
-    </physvol>
-
-    <physvol name="donutDSVirtualPlane_phys">
-      <volumeref ref="donutDSVirtualPlane_log"/>
-      <positionref ref="donutDSVirtualPlane_pos"/>
-    </physvol>
-
-    <physvol name="n2atmoVirtualPlane_phys">
-      <volumeref ref="n2atmoVirtualPlane_log"/>
-      <positionref ref="n2atmoVirtualPlane_pos"/>
-    </physvol>
-
-    <physvol name="sieveVirtualPlane_phys">
-      <volumeref ref="sieveVirtualPlane_log"/>
-      <positionref ref="sieveVirtualPlane_pos"/>
-    </physvol>
-
-    <physvol name="showerMaxVirtualPlane_phys">
-      <volumeref ref="showerMaxVirtualPlane_log"/>
-      <positionref ref="showerMaxVirtualPlane_pos"/>
-    </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 </structure>
