@@ -64,16 +64,16 @@
     </physvol>
 
     <!-- Front Tracking Detectors -->
-    <physvol>
+    <!--    <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
       <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
-    </physvol>
+    </physvol>-->
 
     <!-- Back Tracking Detectors -->
-    <physvol>
+    <!--   <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
       <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
-    </physvol>
+    </physvol>-->
 
     <!-- Main Detectors -->
     <!--
