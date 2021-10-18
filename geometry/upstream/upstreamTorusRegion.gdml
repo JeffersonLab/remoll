@@ -738,7 +738,7 @@
 <structure>
     
     <volume name="logicUScoll_1">
-      <materialref ref="CW95"/>
+      <materialref ref="CW85"/>
       <solidref ref="Coll1_solid1"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
@@ -788,7 +788,7 @@
 
 <!---Col2 acceptance part1 -->
     <volume name="logic_Col2_lowerR_accep1">
-      <materialref ref="CW95"/>
+      <materialref ref="CW85"/>
       <solidref ref="Col2_lowerR_accep1_S"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -812,7 +812,7 @@
 
 
     <volume name="Col2_accep1">
-      <materialref ref="CW95"/>
+      <materialref ref="CW85"/>
       <solidref ref="uscyl_1"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -894,7 +894,7 @@
 
 <!---Col2 acceptance part2 -->
     <volume name="logic_Col2_lowerR_accep2">
-      <materialref ref="CW95"/>
+      <materialref ref="CW85"/>
       <solidref ref="Col2_lowerR_accep2_S"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -918,7 +918,7 @@
 
 
     <volume name="Col2_accep2">
-      <materialref ref="CW95"/>
+      <materialref ref="CW85"/>
       <solidref ref="uscyl_1_2"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -1104,7 +1104,7 @@
 
       <!--Collimator 4 logic -->
    <volume name="logic_lowerR_accep1">
-      <materialref ref="CW95"/>
+      <materialref ref="CW85"/>
       <solidref ref="lowerR_accep1_S"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -1135,7 +1135,7 @@
     </volume>
 
     <volume name="logic_Col4_accep1">
-      <materialref ref="CW95"/>
+      <materialref ref="CW85"/>
       <solidref ref="pdscyl"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -1228,7 +1228,7 @@
  
 <!-- Second part of Collimator 4 acceptance -->
     <volume name="logic_lowerR_accep2">
-      <materialref ref="CW95"/>
+      <materialref ref="CW85"/>
       <solidref ref="lowerR_accep2_S"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -1259,7 +1259,7 @@
     </volume>
 
     <volume name="logic_Col4_accep2">
-      <materialref ref="CW95"/>
+      <materialref ref="CW85"/>
       <solidref ref="pdscyl"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="collDet"/>

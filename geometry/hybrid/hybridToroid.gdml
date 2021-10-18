@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE gdml [
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
 <gdml
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
@@ -922,7 +926,7 @@
 
 <!--This is part of coll5 -->
         <volume name="Coll5_logic1">
-                <materialref ref="G4_CW95"/>
+                <materialref ref="CW90"/>
                 <solidref ref="Coll5_solid1"/>
                 <auxiliary auxtype="Color" auxvalue="Blue"/>
                 <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -933,7 +937,7 @@
         </volume>
 
         <volume name="Coll5_logic2">
-                <materialref ref="G4_CW95"/>
+                <materialref ref="CW90"/>
                 <solidref ref="Coll5_solid2"/>
                 <auxiliary auxtype="Color" auxvalue="Blue"/>
                 <auxiliary auxtype="SensDet" auxvalue="collDet"/>
@@ -946,7 +950,7 @@
 <!--This is part of coll6 -->
 
         <volume name="Coll6A_logic1">
-                <materialref ref="G4_CW95"/>
+                <materialref ref="CW90"/>
                 <solidref ref="Coll6A_solid_1"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
                 <auxiliary auxtype="Alpha" auxvalue="0.5"/>
@@ -955,7 +959,7 @@
         </volume>
 
         <volume name="Coll6A_logic2">
-                <materialref ref="G4_CW95"/>
+                <materialref ref="CW90"/>
                 <solidref ref="Coll6A_solid_2"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
                 <auxiliary auxtype="Alpha" auxvalue="0.5"/>
@@ -964,7 +968,7 @@
         </volume>
 
         <volume name="Coll6B_logic1">
-                <materialref ref="G4_CW95"/>
+                <materialref ref="CW90"/>
                 <solidref ref="Coll6B_solid_1"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
                 <auxiliary auxtype="Alpha" auxvalue="0.5"/>
@@ -973,7 +977,7 @@
         </volume>
 
         <volume name="Coll6B_logic2">
-                <materialref ref="G4_CW95"/>
+                <materialref ref="CW90"/>
                 <solidref ref="Coll6B_solid_2"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
                 <auxiliary auxtype="Alpha" auxvalue="0.5"/>
