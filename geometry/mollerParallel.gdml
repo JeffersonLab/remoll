@@ -92,7 +92,7 @@
   <box lunit="mm" name="hybridIronVirtualPlane_solid"
        x="2860"
        y="1"
-       z="15000-680+100-1"/>
+       z="15000-680+100-1+80"/>
 
   <box lunit="mm" name="dsHybridVirtualPlane_solid"
        x="8000" 
@@ -844,10 +844,10 @@
       <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1670" z="852.5 + 610/2 + 86/2"/>
     </physvol>
 
-    <physvol    name="hybridIronVirtualPlane_phys">
+   <!-- <physvol    name="hybridIronVirtualPlane_phys">
       <volumeref ref="hybridIronVirtualPlane_log"/>
-      <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000-680/2-40/2"/>
-    </physvol>
+      <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000-680/2-40/2+80/2"/>
+    </physvol>-->
 
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
@@ -922,12 +922,12 @@
 
     <physvol name="dsHybridVirtualPlane1_phys">
       <volumeref ref="dsHybridVirtualPlane1_log"/>
-      <position name="dsHybridVirtualPlane1_pos" unit="mm" y="0" z="18848"/>
+      <position name="dsHybridVirtualPlane1_pos" unit="mm" y="0" z="19332.69-400-1"/>
     </physvol>
     
     <physvol name="dsHybridVirtualPlane2_phys">
       <volumeref ref="dsHybridVirtualPlane2_log"/>
-      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19002+250"/>
+      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19332.69+1"/>
     </physvol>
 
     <physvol name="DSCoil11_phys">
