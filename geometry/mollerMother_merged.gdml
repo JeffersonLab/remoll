@@ -19,122 +19,189 @@
 
   <solids>
     &world;
-    
-    <box lunit="mm" name="hybridConcrete2" x="4000" y="5000" z="150"/>
-    <box lunit="mm" name="hybridConcrete3" x="2700+1" y="2700+1" z="150+1"/>
-    <box lunit="mm" name="hybridConcrete4" x="4000" y="5000" z="250"/>
-    <cone name="Collar2_tube2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1051" rmin2="0" rmax2="1051" z="250+1"/>
-
+ 
     <box lunit="mm" name="hybridIronSupport_solid"
 	 x="2860"
 	 y="50"
-	 z="15000-680+100-1"/>
-
-     <subtraction name="hybridConcreteShielding2_sub">
-       <first ref = "hybridConcrete2"/>
-       <second ref = "hybridConcrete3"/>
-       <position name ="hybridConcreteSub2" lunit="mm" x="0" y="965/2" z="0" />
+	 z="15000-680+100-1+80"/>
+    
+    <tube
+      name="GemRotator_solid"
+      startphi="0" deltaphi="360" aunit="deg"
+      rmax="1614.145" rmin="1614.145-25.4" z="1" lunit="mm"/>
+      
+    <box lunit="mm" name="GemRotatorSupport_solid11"
+      x="248.33"
+      y="1415.481"
+      z="248.33/2"/>
+     
+    <box lunit="mm" name="GemRotatorSupport_solid21"
+      x="248.33"
+      y="1787.976"
+      z="248.33/2"/>
+      
+    <box lunit="mm" name="GemRotatorSupport_solid12"
+     x="197.53"
+     y="1415.481+1"
+     z="197.53/2"/>
+     
+    <box lunit="mm" name="GemRotatorSupport_solid22"
+      x="197.53"
+      y="1787.976+1"
+      z="197.53/2"/>
+     
+     <subtraction name="GemRotatorSupport_sub1">
+       <first ref="GemRotatorSupport_solid11"/>
+       <second ref="GemRotatorSupport_solid12"/>
+       <position name ="GemRotatorSupport_sub_pos" lunit="mm" x="0" y="0" z="0"/>
      </subtraction>
-    
-  <subtraction name="hybridConcreteShielding3_sub">
-      <first ref = "hybridConcrete4"/>
-      <second ref = "Collar2_tube2"/>
-      <position name ="hybridConcreteSub3" lunit="mm" x="0" y="965/2" z="0" />
-    </subtraction>
-    
+     
+     <subtraction name="GemRotatorSupport_sub2">
+       <first ref="GemRotatorSupport_solid21"/>
+       <second ref="GemRotatorSupport_solid22"/>
+       <position name ="GemRotatorSupport_sub_pos" lunit="mm" x="0" y="0" z="0"/>
+     </subtraction>
+     
   </solids>
 
   <structure>
 
-    <volume name="hybridIronSupport_logic">
-      <materialref ref="G4_Fe"/>
-      <solidref ref="hybridIronSupport_solid"/>
-      <auxiliary auxtype="Color" auxvalue="gray"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.8"/>
-    </volume>
-
-    <volume name="hybridConcreteShielding2_log">
-      <materialref ref="barite"/>
-      <solidref ref="hybridConcreteShielding2_sub"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
-    </volume>
-    
-    <volume name="hybridConcreteShielding3_log">
-      <materialref ref="barite"/>
-      <solidref ref="hybridConcreteShielding3_sub"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
-    </volume>
-    
-    <volume name="logicMother">
-      <materialref ref="G4_AIR"/>
-      <solidref ref="world_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-
-      <!-- Target region -->
-      <physvol>
-	<file name="target/subTargetRegion.gdml"/>
-	<positionref ref="targetCenter"/>
-      </physvol>
-
-      <!-- Hall -->
-      <physvol>
-	<file name="hall/hallDaughter_dump.gdml"/>
-	<positionref ref="hallCenter"/>
-      </physvol>
-
-      <!-- SBS Bunker -->
-      <physvol>
-	<file name="electronics/subSBSbunker.gdml"/>
-	<position name="sbsBunker_pos" x="8740" y="-3000 + 2000" z="-15180."/>
-	<rotation name="rot_y30" unit="deg" y="30"/>
-      </physvol>
+   <volume name="GemRotator_log">
+     <materialref ref="G4_Al"/>
+     <solidref ref="GemRotator_solid"/>
+     <auxiliary auxtype="Color" auxvalue="gray"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.8"/>
+   </volume>
+   
+   <volume name="GemRotatorSupport1_log">
+     <materialref ref="G4_Fe"/>
+     <solidref ref="GemRotatorSupport_sub1"/>
+     <auxiliary auxtype="Color" auxvalue="gray"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.8"/>
+   </volume>
+   
+   <volume name="GemRotatorSupport2_log">
+     <materialref ref="G4_Fe"/>
+     <solidref ref="GemRotatorSupport_sub2"/>
+     <auxiliary auxtype="Color" auxvalue="gray"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.8"/>
+   </volume>
       
-      <!-- Upstream region -->
-      <physvol>
-	<file name="upstream/upstream_Conf8.gdml"/>
+  <volume name="hybridIronSupport_logic">
+    <materialref ref="G4_Fe"/>
+    <solidref ref="hybridIronSupport_solid"/>
+    <auxiliary auxtype="Color" auxvalue="gray"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.8"/>
+  </volume>
+    
+  <volume name="logicMother">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="world_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+   <!-- Target region -->
+   <physvol>
+    <file name="target/subTargetRegion.gdml"/>
+    <positionref ref="targetCenter"/>
+   </physvol>
+
+   <!-- Hall -->
+   <physvol>
+    <file name="hall/hallDaughter_dump.gdml"/>
+    <positionref ref="hallCenter"/>
+   </physvol>
+
+   <!-- SBS Bunker -->
+   <physvol>
+    <file name="electronics/subSBSbunker.gdml"/>
+    <position name="sbsBunker_pos" x="8740" y="-3000 + 2000" z="-15180."/>
+    <rotation name="rot_y30" unit="deg" y="30"/>
+   </physvol>
+      
+   <!-- Upstream region -->
+   <physvol>
+    <file name="upstream/upstream_Conf8.gdml"/>
 	<!-- <file name="upstream/upstream.gdml"/> -->
 	<positionref ref="upstreamCenter"/>
-      </physvol>
+   </physvol>
 
       <!-- PS Bunker -->
-      <physvol name="magnetPSbunker">
-	<file name="electronics/subPSbunker.gdml"/>
-        <positionref ref="magnetPSbunker_pos"/>
-      </physvol>
+   <physvol name="magnetPSbunker">
+    <file name="electronics/subPSbunker.gdml"/>
+    <positionref ref="magnetPSbunker_pos"/>
+   </physvol>
 
-      <!-- Hybrid region -->
-      <physvol>
-	<file name="hybrid/hybridDaughter_merged.gdml"/>
+   <!-- Hybrid region -->
+   <physvol>
+    <file name="hybrid/hybridDaughter_merged.gdml"/>
 	<positionref ref="hybridCenter"/>
-      </physvol>
-
-      <physvol name="hybridIronSupport">
-        <volumeref ref="hybridIronSupport_logic"/>
-        <position name="hybridIronSupport_pos" unit="mm" x="0" y="-1700" z="12000-680/2-40/2"/>
-      </physvol>
-      
-      <physvol name="hybridConcreteShielding2_phys">
-        <volumeref ref="hybridConcreteShielding2_log"/>
-        <position name="hybridConcreteShielding2_pos" unit="mm" x="0" y="-965/2" z="17460+1590-250+100+10+10+5"/>
-      </physvol>
-      
-       <physvol name="hybridConcreteShielding3_phys">
-        <volumeref ref="hybridConcreteShielding3_log"/>
-        <position name="hybridConcreteShielding3_pos" unit="mm" x="0" y="-965/2" z="17460+1590-250+376-50"/>
-      </physvol>
+   </physvol>
+ 
+     <!--<physvol name="hybridIronSupport">
+      <volumeref ref="hybridIronSupport_logic"/>
+      <position name="hybridIronSupport_pos" unit="mm" x="0" y="-1700" z="12000-680/2-40/2+80/2"/>
+     </physvol>-->
   
-      <!-- Downstream beampipe -->    
-      <physvol>
-	<file name="beampipe/premoller/beampipeRaster.gdml"/>
-      </physvol>
-      <physvol>
-	<file name="beampipe/downstream/beampipeDSMother.gdml"/>
-      </physvol>
+      <!-- Downstream beampipe -->
+    <physvol>
+     <file name="beampipe/premoller/beampipeRaster.gdml"/>
+    </physvol>
+    <physvol>
+     <file name="beampipe/downstream/beampipeDSMother.gdml"/>
+    </physvol>
+      
 
-      
-      
+    <!-- GEM Rotator -->
+    <physvol name="GemRotatorSupport1_ph">
+     <volumeref ref="GemRotatorSupport1_log"/>
+     <position name="GemRotatorSupport1_pos" unit="mm" x="-248.33*2-248.33/2" y="-2980+1415.481/2" z="19132.69+400/2+1000/2"/>
+    </physvol>
+    
+    <physvol name="GemRotatorSupport2_ph">
+     <volumeref ref="GemRotatorSupport2_log"/>
+     <position name="GemRotatorSupport2_pos" unit="mm" x="2*(-248.33*2-248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2"/>
+    </physvol>
+    
+    <physvol name="GemRotatorSupport3_ph">
+     <volumeref ref="GemRotatorSupport1_log"/>
+     <position name="GemRotatorSupport3_pos" unit="mm" x="-(-248.33*2-248.33/2)" y="-2980+1415.481/2" z="19132.69+400/2+1000/2"/>
+    </physvol>
+    
+    <physvol name="GemRotatorSupport4_ph">
+     <volumeref ref="GemRotatorSupport2_log"/>
+     <position name="GemRotatorSupport4_pos" unit="mm" x="2*(248.33*2+248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2"/>
+    </physvol>
+    
+    <physvol name="GemRotator1_phys">
+     <volumeref ref="GemRotator_log"/>
+     <position name="GemRotator1_pos" unit="mm" x="0" y="0" z="19132.69+400/2+1000/2"/>
+    </physvol>
+    
+    <physvol name="GemRotator2_phys">
+     <volumeref ref="GemRotator_log"/>
+     <position name="GemRotator2_pos" unit="mm" x="0" y="0" z="19132.69+400/2+1000/2+4*248.33"/>
+    </physvol>
+    
+    <physvol name="GemRotatorSupport5_ph">
+     <volumeref ref="GemRotatorSupport1_log"/>
+     <position name="GemRotatorSupport5_pos" unit="mm" x="-248.33*2-248.33/2" y="-2980+1415.481/2" z="19132.69+400/2+1000/2+4*248.33"/>
+    </physvol>
+    
+    <physvol name="GemRotatorSupport6_ph">
+     <volumeref ref="GemRotatorSupport2_log"/>
+     <position name="GemRotatorSupport6_pos" unit="mm" x="2*(-248.33*2-248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2+4*248.33"/>
+    </physvol>
+    
+    <physvol name="GemRotatorSupport7_ph">
+     <volumeref ref="GemRotatorSupport1_log"/>
+     <position name="GemRotatorSupport7_pos" unit="mm" x="-(-248.33*2-248.33/2)" y="-2980+1415.481/2" z="19132.69+400/2+1000/2+4*248.33"/>
+    </physvol>
+    
+    <physvol name="GemRotatorSupport8_ph">
+     <volumeref ref="GemRotatorSupport2_log"/>
+     <position name="GemRotatorSupport8_pos" unit="mm" x="2*(248.33*2+248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2+4*248.33"/>
+    </physvol>
+     
       <!-- Tracking Detectors--> 
       <!--
 	  <physvol>
@@ -159,13 +226,12 @@
 	<rotation name="lefthut_rot" unit="deg" y="-45"/>
       </physvol>-->
       
-      <!-- ShowerMax Detectors--> 
-       <physvol> 
-       <file name="showermax/showerMaxGen.gdml"/> 
-         <positionref ref="showerMaxDetectorCenter"/> 
-       </physvol> 
+   <!-- ShowerMax Detectors-->
+    <physvol>
+     <file name="showermax/showerMaxGen.gdml"/>
+     <positionref ref="showerMaxDetectorCenter"/>
+    </physvol>
       
-
       <!-- Pion Detectors -->
       <!-- <physvol> -->
       <!--   <file name="pion/pionDetectorSystem.gdml"/> -->
