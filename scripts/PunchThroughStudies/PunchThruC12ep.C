@@ -1,5 +1,5 @@
 // Simple example macro for reroot analysis of remoll simulations for MOLLER
-//
+//  
 //  Need to use reroot (CERN's root compiled with special remoll libraries,
 //  or root when you have linked to ibremoll.so, i.e. by a command like
 //    setenv LD_PRELOAD build/libremoll.so
