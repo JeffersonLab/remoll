@@ -7,8 +7,8 @@
 //
 //  Run using (for example):
 //   build/reroot
-//   .L scripts/BlockerPunchThru##0.C
-//   BlockerPunchThru##0()
+//   .L scripts/BlockerPunchThru.C
+//   BlockerPunchThru()
 //
 //  Can put multiple root files in the script, and they will be chained together.
 //
@@ -22,7 +22,7 @@
 //  main detector rings are plotted (xy and r).
 
 #include <TF1.h>
-void BlockerPunchThru##0()
+void BlockerPunchThru()
 {
   //Allow Tree to use the root files that you call
   TChain* T = new TChain("T");

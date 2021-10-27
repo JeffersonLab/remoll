@@ -7,8 +7,8 @@
 //
 //  Run using (for example):
 //   build/reroot
-//   .L scripts/PunchThru##C12ep.C
-//   PunchThru##C12ep()
+//   .L scripts/PunchThruC12ep.C
+//   PunchThruC12ep()
 //
 //  Can put multiple root files in the script, and they will be chained together. You must
 //  specify which root files that this should run over.
@@ -30,7 +30,7 @@
 //  signal is likely to see.
 
 #include <TF1.h>
-void PunchThru##C12ep()
+void PunchThruC12ep()
 {
   //Allow Tree to use the root files that you call
   TChain* T = new TChain("T");
