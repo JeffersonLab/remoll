@@ -10,6 +10,12 @@
 //   .L scripts/PunchThruC12ep.C
 //   PunchThruC12ep()
 //
+//
+//  This script is for a generic sieve thickness, ##, but to use the scripts, you should
+//  change this to whatever thickness you want to look at. For example, if you want
+//  to analyze a 100mm sieve, you should use find and replace to change all of the
+//  ##s to 100s.
+//
 //  Can put multiple root files in the script, and they will be chained together. You must
 //  specify which root files that this should run over.
 

@@ -10,6 +10,12 @@
 //   .L scripts/BlockerPunchThru.C
 //   BlockerPunchThru()
 //
+//
+//  This script is for a generic blocker thickness, ##, but to use the scripts, you should
+//  change this to whatever thickness you want to look at. For example, if you want
+//  to analyze a 100mm sieve, you should use find and replace to change all of the
+//  ##s to 100s.
+//
 //  Can put multiple root files in the script, and they will be chained together.
 //
 //  This script will take root files of a certain Blocker thickness. It will first loop
