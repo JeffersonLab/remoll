@@ -1,5 +1,5 @@
 // Simple example macro for reroot analysis of remoll simulations for MOLLER
-//  
+//
 //  Need to use reroot (CERN's root compiled with special remoll libraries,
 //  or root when you have linked to ibremoll.so, i.e. by a command like
 //    setenv LD_PRELOAD build/libremoll.so
@@ -7,14 +7,8 @@
 //
 //  Run using (for example):
 //   build/reroot
-//   .L scripts/PunchThruC12ep.C
-//   PunchThruC12ep()
-//
-//
-//  This script is for a generic sieve thickness, ##, but to use the scripts, you should
-//  change this to whatever thickness you want to look at. For example, if you want
-//  to analyze a 100mm sieve, you should use find and replace to change all of the
-//  ##s to 100s.
+//   .L scripts/PunchThru90C12ep.C
+//   PunchThru90C12ep()
 //
 //  Can put multiple root files in the script, and they will be chained together. You must
 //  specify which root files that this should run over.
@@ -22,7 +16,7 @@
 //  This script was written with the intention of looking at ep scattering on the C12
 //  thin target, but the script should work for any event generator and any target.
 //
-//  This script will take root files of a certain sieve thickness, ##mm. It will first loop
+//  This script will take root files of a certain sieve thickness, 90mm. It will first loop
 //  through the events and flag any in which a primary particle hits a sieve hole.
 //  Then it will exclude these flagged events and plot electrons and positrons that hit
 //  upstream and downstream of the surface of the sieve. Those particles that hit
@@ -41,17 +35,17 @@ void PunchThruC12ep()
   //Allow Tree to use the root files that you call
   TChain* T = new TChain("T");
 
-  //Add files from the directory "rootfilesPT/", "##" is the sieve thickness in mm. Replace these root files with whatever root files you would like to analyze.
-  T->Add("rootfilesPT/WSieveC12_ep_100k_80mm0.root");
-  T->Add("rootfilesPT/WSieveC12_ep_100k_##mm1.root");
-  T->Add("rootfilesPT/WSieveC12_ep_100k_##mm2.root");
-  T->Add("rootfilesPT/WSieveC12_ep_100k_##mm3.root");
-  T->Add("rootfilesPT/WSieveC12_ep_100k_##mm4.root");
-  T->Add("rootfilesPT/WSieveC12_ep_100k_##mm5.root");
-  T->Add("rootfilesPT/WSieveC12_ep_100k_##mm6.root");
-  T->Add("rootfilesPT/WSieveC12_ep_100k_##mm7.root");
-  T->Add("rootfilesPT/WSieveC12_ep_100k_##mm8.root");
-  T->Add("rootfilesPT/WSieveC12_ep_100k_##mm9.root");
+  //Add files from the directory "rootfilesPT/", "90" is the sieve thickness in mm. Replace these root files with whatever root files you would like to analyze.
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm0.root");
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm1.root");
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm2.root");
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm3.root");
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm4.root");
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm5.root");
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm6.root");
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm7.root");
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm8.root");
+  T->Add("rootfilesPT/WSieveC12_ep_100k_90mm9.root");
 
   //Define variables that we will loop over later
   Double_t rate = 0;
@@ -72,42 +66,42 @@ void PunchThruC12ep()
   //---Sieve surface histograms---
 
   //2D histogram for e+ and e- hitting the upstream sieve surface
-  TH2F *us_sieve_virt = new TH2F("us_sieve_virt","Upstream Sieve (##mm) Virtual Detector Charged Particle Hits for ep Scattering with Thin Carbon Target", 7000, -150, 150, 7000, -150, 150);
+  TH2F *us_sieve_virt = new TH2F("us_sieve_virt","Upstream Sieve (90mm) Virtual Detector Charged Particle Hits for ep Scattering with Thin Carbon Target", 7000, -150, 150, 7000, -150, 150);
   us_sieve_virt -> GetXaxis() -> SetTitle("x Position of Hits [mm]");
   us_sieve_virt -> GetYaxis() -> SetTitle("y Position of Hits [mm]");
 
   //2D histogram for e+ and e- hitting the downstream sieve surface, i.e., the particles that punch through the sieve
-  TH2F *ds_sieve_virt = new TH2F("ds_sieve_virt","Downstream Sieve (##mm) Virtual Detector Charged Particle Hits for ep Scattering with Thin Carbon Target", 7000, -150, 150, 7000, -150, 150);
+  TH2F *ds_sieve_virt = new TH2F("ds_sieve_virt","Downstream Sieve (90mm) Virtual Detector Charged Particle Hits for ep Scattering with Thin Carbon Target", 7000, -150, 150, 7000, -150, 150);
   ds_sieve_virt -> GetXaxis() -> SetTitle("x Position of Hits [mm]");
   ds_sieve_virt -> GetYaxis() -> SetTitle("y Position of Hits [mm]");
 
   //---Main detector histograms---
 
   //2D histogram for e+ and e- that punch through the sieve and make it to the main detector on the rings (xy plot)
-  TH2F *punch_thru_main = new TH2F("punch_thru_main","Charged Particles that Exited the Downstream Sieve (##mm) Surface and Hit the Main Detector for ep Scattering with Thin Carbon Target", 1000, -1200, 1200, 1000, -1200, 1200);
+  TH2F *punch_thru_main = new TH2F("punch_thru_main","Charged Particles that Exited the Downstream Sieve (90mm) Surface and Hit the Main Detector for ep Scattering with Thin Carbon Target", 1000, -1200, 1200, 1000, -1200, 1200);
   punch_thru_main -> GetXaxis() -> SetTitle("x Position of Hits [mm]");
   punch_thru_main -> GetYaxis() -> SetTitle("y Position of Hits [mm]");
 
   //1D histogram for e+ and e- that punch through the sieve and make it to the main detector on the rings (r plot)
-  TH1F *radial_main = new TH1F("radial_main","Charged Particles that Exit the Downstream Sieve (##mm) Surface and Hit the Main Detector", 1000, 650, 1200);
+  TH1F *radial_main = new TH1F("radial_main","Charged Particles that Exit the Downstream Sieve (90mm) Surface and Hit the Main Detector", 1000, 650, 1200);
   radial_main -> GetXaxis() -> SetTitle("r Position of Hits [mm]");
 
   //2D histogram for electrons and positrons that make it to the main detector on the rings after passing through the sieve holes (xy plot)
-  TH2F *main_holes = new TH2F("main_holes","Charged Particles that Pass Through the Sieve Holes (##mm) and Hit the Main Detector for ep Scattering with Thin Carbon Target", 1000, -1200, 1200, 1000, -1200, 1200);
+  TH2F *main_holes = new TH2F("main_holes","Charged Particles that Pass Through the Sieve Holes (90mm) and Hit the Main Detector for ep Scattering with Thin Carbon Target", 1000, -1200, 1200, 1000, -1200, 1200);
   main_holes -> GetXaxis() -> SetTitle("x Position of Hits [mm]");
   main_holes -> GetYaxis() -> SetTitle("y Position of Hits [mm]");
 
   //1D histogram for electrons and positrons that make it to the main detector on the rings after passing through the sieve holes (r plot)
-  TH1F *radial_main_holes = new TH1F("radial_main_holes","Charged Particles that Pass Through the Sieve Holes (##mm) and Hit the Main Detector", 1000, 650, 1200);
+  TH1F *radial_main_holes = new TH1F("radial_main_holes","Charged Particles that Pass Through the Sieve Holes (90mm) and Hit the Main Detector", 1000, 650, 1200);
   radial_main_holes -> GetXaxis() -> SetTitle("r Position of Hits [mm]");
 
   //2D histogram for all electrons and positrons that make it to the main detector on the rings (xy plot)
-  TH2F *main_all = new TH2F("main_all","All Charged Particles that Hit the Main Detector for ep Scattering with Thin Carbon Target and a ##mm Sieve", 1000, -1200, 1200, 1000, -1200, 1200);
+  TH2F *main_all = new TH2F("main_all","All Charged Particles that Hit the Main Detector for ep Scattering with Thin Carbon Target and a 90mm Sieve", 1000, -1200, 1200, 1000, -1200, 1200);
   main_all -> GetXaxis() -> SetTitle("x Position of Hits [mm]");
   main_all -> GetYaxis() -> SetTitle("y Position of Hits [mm]");
 
   //1D histogram for all electrons and positrons that make it to the main detector on the rings (r plot)
-  TH1F *radial_main_all = new TH1F("radial_main_all","All Charged Particles that Hit the Main Detector for ep Scattering with Thin Carbon Target and a ##mm Sieve", 1000, 650, 1200);
+  TH1F *radial_main_all = new TH1F("radial_main_all","All Charged Particles that Hit the Main Detector for ep Scattering with Thin Carbon Target and a 90mm Sieve", 1000, 650, 1200);
   radial_main_all -> GetXaxis() -> SetTitle("r Position of Hits [mm]");
 
 //----------------------------------------------------------------------------
@@ -294,7 +288,7 @@ void PunchThruC12ep()
   ds_sieve_virt -> Draw();
 
   //Save the canvas as an image in the director "remoll/images/PT/"
-  virt -> SaveAs("images/NewPT/Punch_Thru_US_DS_WSieve_##.png");
+  virt -> SaveAs("images/NewPT/Punch_Thru_US_DS_WSieve_90.png");
 
   //---Main Detector Punch Through---
 
@@ -313,7 +307,7 @@ void PunchThruC12ep()
   radial_main -> Draw();
 
   //Save the canvas as an image in the director "remoll/images/PT/"
-  main -> SaveAs("images/NewPT/Punch_Thru_Main_WSieve_##.png");
+  main -> SaveAs("images/NewPT/Punch_Thru_Main_WSieve_90.png");
 
 
   //---Main Detector All---
@@ -333,7 +327,7 @@ void PunchThruC12ep()
   radial_main_all -> Draw();
 
   //Save the canvas as an image in the director "remoll/images/PT/"
-  main_for_all -> SaveAs("images/NewPT/Punch_Thru_Main_All_WSieve_##.png");
+  main_for_all -> SaveAs("images/NewPT/Punch_Thru_Main_All_WSieve_90.png");
 
   //---Main Detector Holes---
 
@@ -352,7 +346,7 @@ void PunchThruC12ep()
   radial_main_holes -> Draw();
 
   //Save the canvas as an image in the director "remoll/images/PT/"
-  main_for_holes -> SaveAs("images/NewPT/Punch_Thru_Main_Holes_WSieve_##.png");
+  main_for_holes -> SaveAs("images/NewPT/Punch_Thru_Main_Holes_WSieve_90.png");
 
-}//end PunchThru##C12ep()
+}//end PunchThru90C12ep()
 

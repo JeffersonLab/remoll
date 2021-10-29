@@ -1,5 +1,5 @@
 // Simple example macro for reroot analysis of remoll simulations for MOLLER
-//  
+//
 //  Need to use reroot (CERN's root compiled with special remoll libraries,
 //  or root when you have linked to ibremoll.so, i.e. by a command like
 //    setenv LD_PRELOAD build/libremoll.so
@@ -7,14 +7,8 @@
 //
 //  Run using (for example):
 //   build/reroot
-//   .L scripts/BlockerPunchThru.C
-//   BlockerPunchThru()
-//
-//
-//  This script is for a generic blocker thickness, ##, but to use the scripts, you should
-//  change this to whatever thickness you want to look at. For example, if you want
-//  to analyze a 100mm sieve, you should use find and replace to change all of the
-//  ##s to 100s.
+//   .L scripts/BlockerPunchThru090.C
+//   BlockerPunchThru090()
 //
 //  Can put multiple root files in the script, and they will be chained together.
 //
@@ -22,7 +16,7 @@
 //  through the events and flag any in which a primary particle hits a Blocker hole.
 //  Then it will exclude these flagged events and plot electrons and positrons that hit
 //  upstream and downstream of the surface of the Blocker. Those particles that hit
-//  downstream of the surface are flagged as "punch through particles". 
+//  downstream of the surface are flagged as "punch through particles".
 //  Punch-through particles are plotted on the rings of the main detector. An
 //  xy plot and radial plot are included. Finally, all charged particles that reach the
 //  main detector rings are plotted (xy and r).
@@ -33,17 +27,17 @@ void BlockerPunchThru()
   //Allow Tree to use the root files that you call
   TChain* T = new TChain("T");
 
-  //Add files from the directory "rootfilesPT/", "##0" is the Blocker thickness in mm. Replace these root files with whatever root files you would like to analyze.
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm0.root");
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm1.root");
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm2.root");
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm3.root");
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm4.root");
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm5.root");
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm6.root");
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm7.root");
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm8.root");
-  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_##0mm9.root");
+  //Add files from the directory "rootfilesPT/", "090" is the Blocker thickness in mm. Replace these root files with whatever root files you would like to analyze.
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm0.root");
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm1.root");
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm2.root");
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm3.root");
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm4.root");
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm5.root");
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm6.root");
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm7.root");
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm8.root");
+  T->Add("rootfilesPT/blocker/WBlockerC12_ep_100k_090mm9.root");
 
   //Define variables that we will loop over later
   Double_t rate = 0;
@@ -64,34 +58,34 @@ void BlockerPunchThru()
   //---Blocker Surfaces---
 
   //2D histogram for e+ and e- hitting the upstream Blocker surface
-  TH2F *us_Blocker_virt = new TH2F("us_Blocker_virt","Upstream Blocker (##0mm) Virtual Detector Charged Particle Hits", 100, -150, 150, 100, -150, 150);
+  TH2F *us_Blocker_virt = new TH2F("us_Blocker_virt","Upstream Blocker (090mm) Virtual Detector Charged Particle Hits", 100, -150, 150, 100, -150, 150);
   us_Blocker_virt -> GetXaxis() -> SetTitle("x Position of Hits [mm]");
   us_Blocker_virt -> GetYaxis() -> SetTitle("y Position of Hits [mm]");
 
   //2D histogram for e+ and e- hitting the downstream Blocker surface, i.e., the particles that punch through the Blocker
-  TH2F *ds_Blocker_virt = new TH2F("ds_Blocker_virt","Downstream Blocker (##0mm) Virtual Detector Charged Particle Hits", 100, -150, 150, 100, -150, 150);
+  TH2F *ds_Blocker_virt = new TH2F("ds_Blocker_virt","Downstream Blocker (090mm) Virtual Detector Charged Particle Hits", 100, -150, 150, 100, -150, 150);
   ds_Blocker_virt -> GetXaxis() -> SetTitle("x Position of Hits [mm]");
   ds_Blocker_virt -> GetYaxis() -> SetTitle("y Position of Hits [mm]");
 
   //---Main Detector PT---
 
   //1D histogram for e+ and e- that punch through the Blocker and make it to the main detector on the rings
-  TH1F *radial_main = new TH1F("radial_main","Energies of Charged Particles that Exited the Downstream Blocker (##0mm) Surface and Hit the Main Detector", 50, 0, 1500);
+  TH1F *radial_main = new TH1F("radial_main","Energies of Charged Particles that Exited the Downstream Blocker (090mm) Surface and Hit the Main Detector", 50, 0, 1500);
   radial_main -> GetXaxis() -> SetTitle("Energies of Hits [MeV]");
 
   //2D histogram for particles that punch through the Blocker and make it to the main detector on the rings (xy plot)
-  TH2F *punch_thru_xy_main = new TH2F("punch_thru_xy_main","Charged Particles that Exited the Downstream Blocker (##0mm) Surface and Hit the Main Detector", 100, -1200, 1200, 100, -1200, 1200);
+  TH2F *punch_thru_xy_main = new TH2F("punch_thru_xy_main","Charged Particles that Exited the Downstream Blocker (090mm) Surface and Hit the Main Detector", 100, -1200, 1200, 100, -1200, 1200);
   punch_thru_xy_main -> GetXaxis() -> SetTitle("x Position of Hits [mm]");
   punch_thru_xy_main -> GetYaxis() -> SetTitle("y Position of Hits [mm]");
 
   //---All Charged Particles---
 
   //1D histogram for e+ and e- that make it to the main detector on the rings
-  TH1F *radial_main_all = new TH1F("radial_main_all","Energies of All Charged Particles that Hit the Main Detector for a ##0mm Blocker", 50, 0, 1500);
+  TH1F *radial_main_all = new TH1F("radial_main_all","Energies of All Charged Particles that Hit the Main Detector for a 090mm Blocker", 50, 0, 1500);
   radial_main_all -> GetXaxis() -> SetTitle("Energies of Hits [MeV]");
 
   //2D histogram for particles that make it to the main detector on the rings (xy plot)
-  TH2F *xy_main_all = new TH2F("xy_main_all","All Charged Particles that Hit the Main Detector for a ##0mm Blocker", 100, -1200, 1200, 100, -1200, 1200);
+  TH2F *xy_main_all = new TH2F("xy_main_all","All Charged Particles that Hit the Main Detector for a 090mm Blocker", 100, -1200, 1200, 100, -1200, 1200);
   xy_main_all -> GetXaxis() -> SetTitle("x Position of Hits [mm]");
   xy_main_all -> GetYaxis() -> SetTitle("y Position of Hits [mm]");
 
@@ -126,7 +120,7 @@ void BlockerPunchThru()
           {
             ds_Blocker_virt -> Fill(hit.x, hit.y, rate);
             //Flag particles as "punch through particles"
-            punch_thru = true; 
+            punch_thru = true;
           }//end downstream if
 
       }//end pid and hole if
@@ -175,7 +169,7 @@ void BlockerPunchThru()
   ds_Blocker_virt -> Draw("colz");
 
   //Save the canvas as an image in the director "remoll/images/Blocker/"
-  virt -> SaveAs("images/Blocker/Punch_Thru_US_DS_WBlocker_##0.png");
+  virt -> SaveAs("images/Blocker/Punch_Thru_US_DS_WBlocker_090.png");
 
 
   //---Main Detector PT---
@@ -195,7 +189,7 @@ void BlockerPunchThru()
   radial_main -> Draw("B");
 
   //Save the canvas as an image in the director "remoll/images/Blocker/"
-  main -> SaveAs("images/Blocker/Punch_Thru_Main_WBlocker_##0.png");
+  main -> SaveAs("images/Blocker/Punch_Thru_Main_WBlocker_090.png");
 
 
   //---Main Detector---
@@ -215,7 +209,7 @@ void BlockerPunchThru()
   radial_main_all -> Draw("B");
 
   //Save the canvas as an image in the director "remoll/images/Blocker/"
-  main_all_charged -> SaveAs("images/Blocker/Main_All_WBlocker_##0.png");
+  main_all_charged -> SaveAs("images/Blocker/Main_All_WBlocker_090.png");
 
 
 }//end BlockerPunchThru()
