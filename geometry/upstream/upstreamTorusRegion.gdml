@@ -60,31 +60,17 @@
     <constant name="Col2_x0_highR" value ="Col2_OR*sin(SEPTANT*pi/(4*180.))"/>
     <constant name="Col2_y0_highR" value ="Col2_OR*cos(SEPTANT*pi/(4*180))"/>
 
-    <constant name="Col2_x1_lowR" value ="Col2_x0_lowR+50*tan(0.5*pi/180.)"/>
+    <constant name="Col2_x1_lowR" value ="8.202"/>
     <constant name="Col2_y1_lowR" value ="sqrt(Col2_IR*Col2_IR-Col2_x1_lowR*Col2_x1_lowR)"/>
 
-    <constant name="Col2_x1_lowR1" value ="Col2_x0_lowR+25.005*2*tan(0.5*pi/180.)"/>
-    <constant name="Col2_y1_lowR1" value ="sqrt(Col2_IR*Col2_IR-Col2_x1_lowR1*Col2_x1_lowR1)"/>
+    <constant name="Col2_x1_highR" value ="23.180"/>
+    <constant name="Col2_y1_highR" value ="sqrt(pow(Col2_OR+50*tan(1.5*pi/180.),2)-Col2_x1_highR*Col2_x1_highR)"/>
 
-    <constant name="Col2_x1_highR" value ="Col2_x0_highR+50*tan(0.5*pi/180.)"/>
-    <constant name="Col2_y1_highR" value ="sqrt(Col2_OR*Col2_OR-Col2_x1_highR*Col2_x1_highR)"/>
-    <constant name="Col2_angle1" value ="atan(Col2_x1_highR/Col2_y1_highR)"/>
-
-    <constant name="Col2_x1_highR1" value ="Col2_x0_highR+25.005*2*tan(0.5*pi/180.)"/>
-    <constant name="Col2_y1_highR1" value ="sqrt(Col2_OR*Col2_OR-Col2_x1_highR1*Col2_x1_highR1)"/>
-
-    <constant name="Col2_x2_lowR" value ="Col2_x0_lowR+100*tan(0.5*pi/180.)"/>
+    <constant name="Col2_x2_lowR" value ="8.616"/>
     <constant name="Col2_y2_lowR" value ="sqrt(Col2_IR*Col2_IR-Col2_x2_lowR*Col2_x2_lowR)"/>
 
-    <constant name="Col2_x2_lowR1" value ="Col2_x0_lowR+(100+0.005/2.)*tan(0.5*pi/180.)"/>
-    <constant name="Col2_y2_lowR1" value ="sqrt(Col2_IR*Col2_IR-Col2_x2_lowR1*Col2_x2_lowR1)"/>
-
-    <constant name="Col2_x2_highR" value ="Col2_x0_highR+100*tan(0.5*pi/180.)"/>
-    <constant name="Col2_y2_highR" value ="sqrt(Col2_OR*Col2_OR-Col2_x2_highR*Col2_x2_highR)"/>
-    <constant name="Col2_angle2" value ="atan(Col2_x2_highR/Col2_y2_highR)"/>
-
-    <constant name="Col2_x2_highR1" value ="Col2_x0_highR+(100+0.005/2.)*tan(0.5*pi/180.)"/>
-    <constant name="Col2_y2_highR1" value ="sqrt(Col2_OR*Col2_OR-Col2_x2_highR1*Col2_x2_highR1)"/>
+    <constant name="Col2_x2_highR" value ="23.887"/>
+    <constant name="Col2_y2_highR" value ="sqrt(pow(Col2_OR+100*tan(1.5*pi/180.),2)-Col2_x2_highR*Col2_x2_highR)"/>
 
    <position name="Col2_accep_pos" unit="mm" x="0" y="0" z="25.0"/>
 
@@ -336,6 +322,24 @@
     <!-- v10 --> 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
       <zplane rmin="20.0" rmax="27" z="0"/> 
+      <zplane rmin="17.5625" rmax="27" z="65"/> 
+      <zplane rmin="17.5625" rmax="25.4" z="65"/> 
+      <zplane rmin="17.0" rmax="25.4" z="80"/> 
+      <zplane rmin="17.0" rmax="22.0" z="80"/> 
+      <zplane rmin="16.25" rmax="22.0" z="100"/> 
+      <zplane rmin="15.1" rmax="22.0" z="190"/> 
+      <zplane rmin="14.1" rmax="22.0" z="310"/> 
+      <zplane rmin="13.629" rmax="22.0" z="400"/> 
+      <zplane rmin="14.452" rmax="22.0" z="695"/> 
+      <zplane rmin="14.452" rmax="24.0" z="695"/> 
+      <zplane rmin="14.491" rmax="24.0" z="709"/> 
+      <zplane rmin="14.491" rmax="22.0" z="709"/> 
+      <zplane rmin="14.536" rmax="22.0" z="725"/> 
+    </polycone>
+
+    <!-- v10 backup--> 
+    <!--    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
+      <zplane rmin="20.0" rmax="27" z="0"/> 
       <zplane rmin="16.25" rmax="27" z="100"/> 
       <zplane rmin="16.12" rmax="27.0" z="110"/> 
       <zplane rmin="16.12" rmax="25.4" z="110"/> 
@@ -349,8 +353,7 @@
       <zplane rmin="14.491" rmax="24.0" z="709"/> 
       <zplane rmin="14.491" rmax="22.0" z="709"/> 
       <zplane rmin="14.536" rmax="22.0" z="725"/> 
-    </polycone>
-
+    </polycone>-->
 
     <!-- v11
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
@@ -399,13 +402,13 @@
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="col1_h20_CW_solid" 
 	  rmax1="25.4" rmax2="25.4" rmin1="22" rmin2="22" 
-	  startphi="0" z="522"/>
+	  startphi="0" z="522+59"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="col1_jacket_solid"> 
       <zplane rmin="25.4" rmax="27.5" z="0"/> 
-      <zplane rmin="25.4" rmax="27.5" z="465"/> 
-      <zplane rmin="25.4" rmax="27.3" z="465"/> 
-      <zplane rmin="25.4" rmax="27.3" z="515"/> 
+      <zplane rmin="25.4" rmax="27.5" z="465+45"/> 
+      <zplane rmin="25.4" rmax="27.3" z="465+45"/> 
+      <zplane rmin="25.4" rmax="27.3" z="515+45"/> 
     </polycone>
 
 
@@ -485,9 +488,13 @@
             v4x="Col2_x0_highR" v4y="Col2_y0_highR" 
             v5x="Col2_x1_lowR" v5y="Col2_y1_lowR" 
             v6x="-Col2_x1_lowR" v6y="Col2_y1_lowR" 
-            v7x="-Col2_x1_highR-50*tan(1.5*pi/180.)*sin(Col2_angle1)" v7y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
-            v8x="Col2_x1_highR+50*tan(1.5*pi/180.)*sin(Col2_angle1)" v8y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
+            v7x="-Col2_x1_highR" v7y="Col2_y1_highR" 
+            v8x="Col2_x1_highR" v8y="Col2_y1_highR" 
             dz="25" lunit="mm"/>
+    <!--
+	    v7x="-Col2_x1_highR-50*tan(1.5*pi/180.)*sin(Col2_angle1)" v7y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
+	    v8x="Col2_x1_highR+50*tan(1.5*pi/180.)*sin(Col2_angle1)" v8y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)"
+	    -->
 
     <arb8 name="Col2_lowerR_box2" v1x="25" v1y="25" 
             v2x="-25" v2y="25" 
@@ -497,7 +504,7 @@
             v6x="-25" v6y="25" 
             v7x="-25" v7y="Col2_y1_lowR" 
             v8x="25" v8y="Col2_y1_lowR" 
-            dz="25.005" lunit="mm"/>
+            dz="25.000" lunit="mm"/>
 
     <cone aunit="deg" deltaphi="40" lunit="mm" name="Col2_lowerR_tube2" rmax1="Col2_IR" rmin1="30" rmax2="Col2_IR" rmin2="30" startphi="70" z="50"/>
 
@@ -507,9 +514,9 @@
             v4x="45" v4y="Col2_y0_highR" 
             v5x="45" v5y="85" 
             v6x="-45" v6y="85" 
-            v7x="-45" v7y="Col2_y1_highR1+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
-            v8x="45" v8y="Col2_y1_highR1+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
-            dz="25.005" lunit="mm"/>
+            v7x="-45" v7y="Col2_y1_highR" 
+            v8x="45" v8y="Col2_y1_highR" 
+            dz="25.000" lunit="mm"/>
 
     <cone aunit="deg" deltaphi="40" lunit="mm" name="Col2_largeR_tube2" rmax1="Col2_OR" rmin1="95" rmax2="Col2_OR+50*tan(1.5*pi/180)" rmin2="95" startphi="70" z="50"/>
 
@@ -526,12 +533,12 @@
 <!--Col2 acceptance part3 -->
     <arb8 name="Col2_accep3_s1" v1x="Col2_x1_lowR" v1y="Col2_y1_lowR" 
 	    v2x="-Col2_x1_lowR" v2y="Col2_y1_lowR" 
-            v3x="-Col2_x1_highR-50*tan(1.5*pi/180.)*sin(Col2_angle1)" v3y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
-            v4x="Col2_x1_highR+50*tan(1.5*pi/180.)*sin(Col2_angle1)" v4y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
+            v3x="-Col2_x1_highR" v3y="Col2_y1_highR" 
+            v4x="Col2_x1_highR" v4y="Col2_y1_highR" 
             v5x="Col2_x2_lowR" v5y="Col2_y2_lowR" 
             v6x="-Col2_x2_lowR" v6y="Col2_y2_lowR" 
-            v7x="-Col2_x2_highR-100*tan(1.5*pi/180.)*sin(Col2_angle2)" v7y="Col2_y2_highR+100*tan(1.5*pi/180.)*cos(Col2_angle2)" 
-            v8x="Col2_x2_highR+100*tan(1.5*pi/180.)*sin(Col2_angle2)" v8y="Col2_y2_highR+100*tan(1.5*pi/180.)*cos(Col2_angle2)" 
+            v7x="-Col2_x2_highR" v7y="Col2_y2_highR" 
+            v8x="Col2_x2_highR" v8y="Col2_y2_highR" 
             dz="25" lunit="mm"/>
 
     <arb8 name="Col2_lowerR_box3" v1x="25" v1y="25" 
@@ -542,19 +549,19 @@
             v6x="-25" v6y="25" 
             v7x="-25" v7y="Col2_y2_lowR" 
             v8x="25" v8y="Col2_y2_lowR" 
-            dz="25.005" lunit="mm"/>
+            dz="25.000" lunit="mm"/>
 
     <cone aunit="deg" deltaphi="40" lunit="mm" name="Col2_lowerR_tube3" rmax1="Col2_IR" rmin1="30" rmax2="Col2_IR" rmin2="30" startphi="70" z="50"/>
 
     <arb8 name="Col2_largeR_box3" v1x="45" v1y="85" 
             v2x="-45" v2y="85" 
-            v3x="-45" v3y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
-            v4x="45" v4y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
+            v3x="-45" v3y="Col2_y1_highR" 
+            v4x="45" v4y="Col2_y1_highR" 
             v5x="45" v5y="85" 
             v6x="-45" v6y="85" 
-            v7x="-45" v7y="Col2_y2_highR+100*tan(1.5*pi/180.)*cos(Col2_angle2)" 
-            v8x="45" v8y="Col2_y2_highR+100*tan(1.5*pi/180.)*cos(Col2_angle2)" 
-            dz="25.005" lunit="mm"/>
+            v7x="-45" v7y="Col2_y2_highR" 
+            v8x="45" v8y="Col2_y2_highR" 
+            dz="25.000" lunit="mm"/>
 
     <cone aunit="deg" deltaphi="40" lunit="mm" name="Col2_largeR_tube3" rmax1="Col2_OR+50*tan(1.5*pi/180.)" rmin1="95" rmax2="Col2_OR+100*tan(1.5*pi/180.)" rmin2="95" startphi="70" z="50"/>
 
@@ -1515,7 +1522,7 @@
 
       <physvol name="col1_h20_phys1">
         <volumeref ref="col1_h20_logic1"/>
-	<position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7"/><!-- center position wrt target center = 5036 mm-->
+	<position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7-59"/><!-- center position wrt target center = 5036 mm-->
       </physvol>
 
       <physvol name="col1_h20_phys2">
@@ -1525,12 +1532,12 @@
 
       <physvol name="col1_h20_CW_phys">
         <volumeref ref="col1_h20_CW_logic"/>
-	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2."/><!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2.-59./2."/><!-- center position wrt target center = 5191.5 mm-->
      </physvol>
 
       <physvol name="col1_jacket_phys">
         <volumeref ref="col1_jacket_logic"/>
-	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110"/> <!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110-45"/> <!-- center position wrt target center = 5191.5 mm-->
      </physvol>
 
       <physvol name="Phys_Col2_accep1">
