@@ -271,12 +271,14 @@
       <materialref ref="G4_Pb"/>
       <solidref ref="solidCollar1"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="DetNo" auxvalue="2015"/>
     </volume>
     
     <volume name="logicCollar2">
       <materialref ref="G4_Pb"/>
       <solidref ref="solidCollar2"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="DetNo" auxvalue="2016"/>
     </volume>
 
     <volume name="logicBariteHole">
