@@ -2406,7 +2406,7 @@
 		</physvol>
 		</loop>
 
-		<loop for="iloop" from="0" to="1" step="1">
+		<loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                   <volumeref ref="Coll6B_logic1"/>
                   <position x="0" y="0" z="2617.541+(13335.194-13332.736)"/>

@@ -271,6 +271,9 @@
       <materialref ref="G4_Pb"/>
       <solidref ref="solidCollar1"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2015"/>
     </volume>
     
@@ -278,6 +281,9 @@
       <materialref ref="G4_Pb"/>
       <solidref ref="solidCollar2"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetNo" auxvalue="2016"/>
     </volume>
 
@@ -417,6 +423,7 @@
     <materialref ref="CW85"/>
     <solidref ref="PhotonBlocker_solid3"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
     <auxiliary auxtype="DetNo" auxvalue="2014"/>
@@ -426,6 +433,7 @@
     <materialref ref="CW85"/>
     <solidref ref="PhotonBlocker_solid4"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
     <auxiliary auxtype="DetNo" auxvalue="2014"/>
@@ -435,6 +443,7 @@
     <materialref ref="CW85"/>
     <solidref ref="PhotonBlocker_solid6"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
     <auxiliary auxtype="DetNo" auxvalue="2014"/>
