@@ -79,6 +79,7 @@
         <xtru name="Coll5_solid2_1" lunit="mm">
                 <twoDimVertex x="40.28" y="22.22"/>
                 <twoDimVertex x="91.34" y="46.80"/>
+                <twoDimVertex x="96.13" y="36.86"/>
                 <twoDimVertex x="105.18" y="35.11"/>
                 <twoDimVertex x="155.87" y="45.10"/>
                 <twoDimVertex x="172.71" y="46.99"/>
