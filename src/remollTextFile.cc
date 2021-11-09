@@ -42,12 +42,12 @@ remollTextFile::remollTextFile(const remollTextFile& r)
 const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
     TObject::operator=(r);
 
-    if (fFilename) { delete[] fFilename; }
+    delete[] fFilename; 
     fFilenameSize = r.fFilenameSize;
     fFilename = new char[r.fFilenameSize];
     strncpy(fFilename, r.fFilename, fFilenameSize);
 
-    if (fBuffer) { delete[] fBuffer; }
+    delete[] fBuffer; 
     fBufferSize = r.fBufferSize;
     fBuffer = new char[r.fBufferSize];
     memcpy(fBuffer, r.fBuffer, fBufferSize);
@@ -56,8 +56,8 @@ const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
 }
 
 remollTextFile::~remollTextFile(){
-    if (fFilename) { delete[] fFilename; }
-    if (fBuffer)   { delete[] fBuffer; }
+    delete[] fFilename; 
+      delete[] fBuffer; 
 }
 
 void remollTextFile::copyFileIn(const char *fn){
@@ -115,14 +115,14 @@ void remollTextFile::RecreateInDir(const char *adir, bool clobber ){
     if( ret == -1 && errno != EEXIST ){ 
 	fprintf(stderr, "%s - %s\n", thisdir, strerror(errno) );
 	delete thisdir;
-	delete catpath;
+	delete[] catpath;
 	return;
     }
 
     Recreate(catpath, clobber);
 
     delete thisdir;
-    delete catpath;
+    delete[] catpath;
 }
 
 void remollTextFile::Recreate(const char *fn, bool clobber ){

@@ -241,7 +241,7 @@ G4ThreeVector remollTrackReconstruct::EvaluateTrack(std::vector <G4double> rPosX
   // invert matXZ
   G4double detXZ = matXZ[0][0]*matXZ[1][1] - matXZ[0][1]*matXZ[1][0];
 
-  if(!detXZ){
+  if(detXZ == 0.0){
     //    G4cerr << "** Can't invert the matrix because determinant is ZERO **" << G4endl;
     return G4ThreeVector(-1000/m,-1000/m,0); // in m
   }

@@ -3,6 +3,7 @@
 #include "G4OpticalPhoton.hh"
 #include "G4SDManager.hh"
 #include "G4GenericMessenger.hh"
+#include "G4PhysicalConstants.hh"
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
@@ -60,7 +61,7 @@ void remollGenericDetector::BuildStaticMessenger()
   G4AutoLock lock(&remollGenericDetectorMutex);
 
   // If already built, just return
-  if (fStaticMessenger) return;
+  if (fStaticMessenger != nullptr) return;
 
   fStaticMessenger = new G4GenericMessenger(this,"/remoll/SD/","Remoll SD properties");
   fStaticMessenger->DeclareMethod(
@@ -160,7 +161,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     G4double edep = step->GetTotalEnergyDeposit();
 
     // Create a detector sum for this detector, if necessary
-    if (! fSumMap.count(copyID)) {
+    if (fSumMap.count(copyID) == 0u) {
       remollGenericDetectorSum* sum = new remollGenericDetectorSum(fDetNo, copyID);
       fSumMap[copyID] = sum;
       fSumColl->insert(sum);
@@ -170,7 +171,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     sum->AddEDep(pid, pos, edep);
 
     // Create a running sum for this detector, if necessary
-    if (! fRunningSumMap.count(copyID)) {
+    if (fRunningSumMap.count(copyID) == 0u) {
       remollGenericDetectorSum* sum = new remollGenericDetectorSum(fDetNo, copyID);
       fRunningSumMap[copyID] = sum;
     }
@@ -222,7 +223,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
       G4VUserTrackInformation* usertrackinfo = track->GetUserInformation();
       remollUserTrackInformation* remollusertrackinfo =
           dynamic_cast<remollUserTrackInformation*>(usertrackinfo);
-      if (remollusertrackinfo) {
+      if (remollusertrackinfo != nullptr) {
         // if stored postpoint status is fGeomBoundary
         if (remollusertrackinfo->GetStepStatus() == fGeomBoundary)
           firststepinvolume = true;
@@ -303,6 +304,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     hit->fE = track->GetTotalEnergy();
     hit->fM = particle->GetPDGMass();
     hit->fK = track->GetKineticEnergy();
+    hit->fBeta = track->GetVelocity() / c_light;
 
     hit->fTrID  = track->GetTrackID();
     hit->fmTrID = track->GetParentID();

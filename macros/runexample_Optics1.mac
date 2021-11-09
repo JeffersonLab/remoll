@@ -1,0 +1,30 @@
+#  Example file
+
+# This must be called before initialize
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+
+# This must be explicitly called
+/run/initialize
+
+# Set target ladder position
+/control/execute macros/target/Optics1.mac
+
+# Load magnetic fields
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+# Raster and initial angle stuff
+/remoll/rasx 0 mm
+/remoll/rasy 0 mm
+
+/remoll/evgen/set elasticC12
+#/remoll/evgen/set quasielasticC12
+#/remoll/evgen/set inelasticC12
+
+/remoll/beamcurr 85 microampere
+
+/remoll/seed 123456
+
+/remoll/target/print
+/run/beamOn 100
+

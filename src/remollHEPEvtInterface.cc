@@ -52,20 +52,20 @@ remollHEPEvtInterface::remollHEPEvtInterface()
 remollHEPEvtInterface::~remollHEPEvtInterface()
 {
   G4AutoLock lock(&remollHEPEvtInterfaceMutex);
-  if(fHEPEvtInterface) { delete fHEPEvtInterface; fHEPEvtInterface = 0; }
+  if(fHEPEvtInterface != nullptr) { delete fHEPEvtInterface; fHEPEvtInterface = 0; }
   delete fMessenger;
 }
 
 void remollHEPEvtInterface::Initialize()
 {
   G4AutoLock lock(&remollHEPEvtInterfaceMutex);
-  if (fHEPEvtInterface) { delete fHEPEvtInterface; fHEPEvtInterface = 0; }
+  if (fHEPEvtInterface != nullptr) { delete fHEPEvtInterface; fHEPEvtInterface = 0; }
   fHEPEvtInterface = new G4HEPEvtInterface(fFilename,fVerbose);
 }
 
 void remollHEPEvtInterface::GeneratePrimaryVertex(G4Event* anEvent)
 {
   G4AutoLock lock(&remollHEPEvtInterfaceMutex);
-  if (!fHEPEvtInterface) { Initialize(); }
+  if (fHEPEvtInterface == nullptr) { Initialize(); }
   fHEPEvtInterface->GeneratePrimaryVertex(anEvent);
 }

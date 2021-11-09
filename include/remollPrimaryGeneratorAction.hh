@@ -1,16 +1,18 @@
 #ifndef remollPrimaryGeneratorAction_h
 #define remollPrimaryGeneratorAction_h 1
 
+#include "remollBeamTarget.hh"
+
 #include "G4VUserPrimaryGeneratorAction.hh"
 #include "G4VPrimaryGenerator.hh"
+#include "G4GenericMessenger.hh"
 #include "G4String.hh"
 
 #include <map>
+#include <memory>
 
-class G4GenericMessenger;
 class G4ParticleGun;
 class G4Event;
-class remollBeamTarget;
 class remollVEventGen;
 class remollEvent;
 
@@ -28,23 +30,22 @@ class remollPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
     void SetGenerator(G4String&);
 
   private:
-    std::map<G4String,remollVEventGen*> fEvGenMap;
-    remollVEventGen *fEventGen;
+    std::map<G4String,std::shared_ptr<remollVEventGen>> fEvGenMap;
+    std::shared_ptr<remollVEventGen> fEventGen;
     G4String fEventGenName;
 
-    std::map<G4String,G4VPrimaryGenerator*> fPriGenMap;
-    G4VPrimaryGenerator *fPriGen;
+    std::map<G4String,std::shared_ptr<G4VPrimaryGenerator>> fPriGenMap;
+    std::shared_ptr<G4VPrimaryGenerator> fPriGen;
     G4String fPriGenName;
 
     G4ParticleGun* fParticleGun;
 
-    remollBeamTarget *fBeamTarg;
+    remollBeamTarget fBeamTarg;
 
 
     remollEvent *fEvent;
 
-    G4GenericMessenger* fMessenger;
-    G4GenericMessenger* fEvGenMessenger;
+    G4GenericMessenger fEvGenMessenger{this,"/remoll/evgen/","Remoll event generator properties"};
 
     G4double fEffCrossSection;
 };

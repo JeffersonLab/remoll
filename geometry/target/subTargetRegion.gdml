@@ -54,7 +54,7 @@
   <subtraction name ="targetRegion_solid">
      <first ref="targetRegion_solid1"/>
      <second ref="targetRegion_solid2"/>
-     <position name="MotherSub_pos" lunit="mm" x="0" y=" - 3000 - 5000./2. + 20" z="0" />
+     <position name="MotherSub_pos" unit="mm" x="0" y=" - 3000 - 5000./2. + 20" z="0" />
              <!--2980 mm is the distance of beam center from the hall floor-->
    </subtraction>
 
@@ -129,7 +129,7 @@
   <subtraction name="concrete_sub1">
     <first ref = "concrete_outerbox"/>
     <second ref = "concrete_innerbox"/>
-    <position name ="concreteSub1" lunit="mm" x="0" y="-concreteThickness" z="0" />
+    <position name ="concreteSub1" unit="mm" x="0" y="-concreteThickness" z="0" />
   </subtraction>
 
   <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
@@ -138,8 +138,8 @@
   <subtraction name="concrete_sub">
     <first ref = "concrete_sub1"/>
     <second ref = "Shield_tube"/>
-	    <!--<position name ="concreteSub1" lunit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />-->
-    <position name ="concreteSub1" lunit="mm" x="0" y="-370" z="0" />
+	    <!--<position name ="concreteSub" unit="mm" x="0" y="-1.*(concreteBoxy/2.-3040)" z="0" />-->
+    <position name ="concreteSub" unit="mm" x="0" y="-370" z="0" />
   </subtraction>
 
   <!--shielding front lead -->
@@ -150,7 +150,7 @@
   <subtraction name="lead_sub">
     <first ref = "lead_box"/>
     <second ref = "Shield_tube_lead"/>
-    <position name ="leadSub1" lunit="mm" x="leadBoxx/2.-1880" y="-1.*(leadBoxy/2.-1150)" z="0" />
+    <position name ="leadSub1" unit="mm" x="leadBoxx/2.-1880" y="-1.*(leadBoxy/2.-1150)" z="0" />
   </subtraction>
 
   <!--vacuum detectors for monitoring skyshine  chandan-->
@@ -169,7 +169,7 @@
     <subtraction name="tgtOuterDetxy_solid">
       <first ref = "tgtOuterDetxy_solid0"/>
       <second ref = "tgtDet_sub"/>
-      <position name ="detSub1" lunit="mm" x="0" y="-390" z="0" />
+      <position name ="detSub1" unit="mm" x="0" y="-390" z="0" />
     </subtraction>
 
     <box lunit="mm" name="tgtInnerDetyz_solid"
@@ -179,7 +179,7 @@
     <subtraction name="tgtInnerDetxy_solid">
       <first ref = "tgtInnerDetxy_solid0"/>
       <second ref = "tgtDet_sub"/>
-      <position name ="detSub2" lunit="mm" x="0" y="-390" z="0" />
+      <position name ="detSub2" unit="mm" x="0" y="-390" z="0" />
     </subtraction>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s1"
@@ -226,27 +226,6 @@
 </solids>
 
 <structure>
-
-  <volume name="h2Targ">
-    <materialref ref="G4_lH2"/>
-    <solidref ref="target_solid"/>
-    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-  </volume>
-
-  <volume name="USAlTarg">
-    <materialref ref="G4_Al"/>
-    <solidref ref="AlWindow"/>
-    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
-    <auxiliary auxtype="Color" auxvalue="white"/>
-  </volume>
-
-  <volume name="DSAlTarg">
-    <materialref ref="G4_Al"/>
-    <solidref ref="AlWindow"/>
-    <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
-    <auxiliary auxtype="Color" auxvalue="white"/>
-  </volume>
 
   <volume name="targetChamber">
     <materialref ref="Aluminum"/>
@@ -305,6 +284,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="skyshineVacuumDet1_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_1"/>
     <auxiliary auxtype="DetNo" auxvalue="5555"/>
   </volume>
@@ -313,6 +293,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="skyshineVacuumDet2_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="shyshineVacuumDet_2"/>
     <auxiliary auxtype="DetNo" auxvalue="5556"/>
   </volume>
@@ -321,6 +302,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtOuterDetyz_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5540"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -331,6 +313,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtOuterDetyz_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5541"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -342,6 +325,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtOuterDetxy_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5542"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -352,6 +336,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtOuterDetxy_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtOuterDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5543"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -362,6 +347,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtInnerDetyz_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5544"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -372,6 +358,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtInnerDetyz_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5545"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -383,6 +370,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtInnerDetxy_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5546"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -393,6 +381,7 @@
     <materialref ref="VacuumDet"/>
     <solidref ref="tgtInnerDetxy_solid"/>
     <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
     <auxiliary auxtype="SensDet" auxvalue="tgtInnerDet0"/>
     <auxiliary auxtype="DetNo" auxvalue="5547"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
@@ -412,26 +401,14 @@
   <volume name="targetRegion">
     <materialref ref="VacuumTarg"/>
     <solidref ref="targetRegion_solid"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
     <physvol>
       <volumeref ref="TargWindow_logic"/>
       <position name="targ_vac_window" unit="mm" x="0" y="0" z="1500"/>
     </physvol>
 
-    <physvol>
-      <volumeref ref="USAlTarg"/>
-      <position name="targ_upstream_window" unit="mm" x="0" y="0" z="-625-1"/>
-    </physvol>
-
-    <physvol>
-      <volumeref ref="h2Targ"/>
-      <position name="targ_center1" unit="mm" x="0" y="0" z="0"/>
-    </physvol>
-
-    <physvol>
-      <volumeref ref="DSAlTarg"/>
-	<position name="targ_downstream_window" unit="mm" x="0" y="0" z="625+1"/>
+    <physvol name="targetLadder">
+      <file name="target/targetLadder.gdml"/>
     </physvol>
 
     <physvol>
@@ -520,7 +497,7 @@
       <position name="tgtInnerDet3_pos" unit="mm" x="0" y="390" z="1101"/>
     </physvol>
 
-    <auxiliary auxtype="TargetSystem" auxvalue=""/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
 </structure>

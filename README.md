@@ -1,6 +1,6 @@
 # Simulations for the MOLLER Experiment at Jefferson Lab
 
-[![Build Status](http://travis-ci.org/JeffersonLab/remoll.svg?branch=develop)](https://travis-ci.org/JeffersonLab/remoll)
+[![Build Status](https://github.com/JeffersonLab/remoll/actions/workflows/docker-image.yml/badge.svg?branch=develop)](https://github.com/JeffersonLab/remoll/actions/workflows/docker-image.yml)
 
 ## Community
 
