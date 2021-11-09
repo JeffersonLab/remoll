@@ -35,7 +35,7 @@
       <materialref ref="G4_AIR"/>
       <solidref ref="pionDetectorSystem_solid"/>
 
-      <physvol>
+<!--      <physvol>
         <file name="pion/TS/pionDetectorTSOpenSector.gdml"/>
         <positionref ref="pionDetectorTSFrontCenterPosition"/>
       </physvol>
@@ -43,14 +43,14 @@
       <physvol>
         <file name="pion/GEM/pionDetectorGEMOpenSector.gdml"/>
         <positionref ref="pionDetectorGEMFrontCenterPosition"/>
-      </physvol>
+      </physvol>   -->
 
       <physvol>
         <file name="pion/Lucite/pionDetectorLuciteSector.gdml"/>
         <positionref ref="pionDetectorLuciteCenterPosition"/>
       </physvol>
 
-      <physvol>
+<!--      <physvol>
         <file name="pion/GEM/pionDetectorGEMOpenSector.gdml"/>
         <positionref ref="pionDetectorGEMBackCenterPosition"/>
       </physvol>
@@ -58,7 +58,7 @@
       <physvol>
         <file name="pion/TS/pionDetectorTSOpenSector.gdml"/>
         <positionref ref="pionDetectorTSBackCenterPosition"/>
-      </physvol>
+      </physvol> -->
 
 <!--
       <physvol>
