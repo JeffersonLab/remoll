@@ -50,6 +50,20 @@
 
 <structure>
 
+  <volume name="tgtR1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="79"/>
+  </volume>
+
+  <volume name="tgtR2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="80"/>
+  </volume>
+
   <volume name="tgtPbCollar_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="samVirtualPlane_solid"/>
@@ -411,6 +425,16 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
 
+    <physvol name="tgtR1_phys">
+      <volumeref ref="tgtR1_log"/>
+      <position  name="tgtR1_pos" unit="mm" x="0" y="0" z="-3700"/>
+    </physvol>
+
+    <physvol name="tgtR2_phys">
+      <volumeref ref="tgtR2_log"/>
+      <position  name="tgtR2_pos" unit="mm" x="0" y="0" z="-2750"/>
+    </physvol>
+
     <physvol name="tgtPbCollar_phys">
       <volumeref ref="tgtPbCollar_log"/>
       <position  name="tgtPbCollar_pos" unit="mm" x="0" y="0" z="-1449+0.5"/>
@@ -553,42 +577,42 @@
 
     <physvol name="DSCoil11_phys">
       <volumeref ref="DSCoil11_log"/>
-      <position  name="DSCoil11_pos" unit="mm" x="0" y="0" z="8535.89+0.5"/>
+      <position  name="DSCoil11_pos" unit="mm" x="0" y="0" z="8800+0.5"/>
     </physvol>
 
     <physvol name="DSCoil12_phys">
       <volumeref ref="DSCoil12_log"/>
-      <position  name="DSCoil12_pos" unit="mm" x="0" y="0" z="8800+0.5"/>
-    </physvol>
-
-    <physvol name="DSCoil13_phys">
-      <volumeref ref="DSCoil13_log"/>
-      <position  name="DSCoil13_pos" unit="mm" x="0" y="0" z="9200+0.5"/>
+      <position  name="DSCoil12_pos" unit="mm" x="0" y="0" z="9200+0.5"/>
     </physvol>
 
     <physvol name="Col6Ent_phys">
       <volumeref ref="Col6Ent_log"/>
-      <position name="Col6Ent_pos" unit="mm" x="0" y="0" z="9507.3-0.5"/>
+      <position name="Col6Ent_pos" unit="mm" x="0" y="0" z="9546.21-0.5"/>
     </physvol>
 
     <physvol name="Col6Exit_phys">
       <volumeref ref="Col6Exit_log"/>
-      <position name="Col6Exit_pos" unit="mm" x="0" y="0" z="9607.3+0.5"/>
+      <position name="Col6Exit_pos" unit="mm" x="0" y="0" z="9698.61+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil13_phys">
+      <volumeref ref="DSCoil13_log"/>
+      <position  name="DSCoil13_pos" unit="mm" x="0" y="0" z="10000+0.5"/>
     </physvol>
 
     <physvol name="DSCoil14_phys">
       <volumeref ref="DSCoil14_log"/>
-      <position  name="DSCoil14_pos" unit="mm" x="0" y="0" z="10000+0.5"/>
+      <position  name="DSCoil14_pos" unit="mm" x="0" y="0" z="10500+0.5"/>
     </physvol>
 
     <physvol name="DSCoil15_phys">
       <volumeref ref="DSCoil15_log"/>
-      <position  name="DSCoil15_pos" unit="mm" x="0" y="0" z="10500+0.5"/>
+      <position  name="DSCoil15_pos" unit="mm" x="0" y="0" z="10917.81-0.5"/>
     </physvol>
 
     <physvol name="DSCoil16_phys">
       <volumeref ref="DSCoil16_log"/>
-      <position  name="DSCoil16_pos" unit="mm" x="0" y="0" z="11012.25-0.5"/>
+      <position  name="DSCoil16_pos" unit="mm" x="0" y="0" z="11070.21+0.5"/>
     </physvol>
 
     <physvol name="DSCoil17_phys">
