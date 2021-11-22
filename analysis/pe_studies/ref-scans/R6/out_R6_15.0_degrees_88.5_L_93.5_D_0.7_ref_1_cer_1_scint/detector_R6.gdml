@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+	<!ENTITY materials SYSTEM "materialsOptical.xml"> 
+	<!ENTITY solids_R6 SYSTEM "solids_R6.xml"> 
+	<!ENTITY matrices_R6 SYSTEM "matrices_R6.xml">
+]> 
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+
+<define>
+&matrices_R6;
+</define>
+&materials; 
+&solids_R6;
+
+<structure>
+
+<volume name="quartzRecVol_640210">
+         <materialref ref="Quartz"/>
+         <solidref ref="quartzSol_640210"/> 
+         <auxiliary auxtype="Color" auxvalue="red"/> 
+         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+         <auxiliary auxtype="DetType" auxvalue="boundaryhits"/> 
+         <auxiliary auxtype="DetNo" auxvalue="640211"/>  
+</volume>
+<skinsurface name="quartzRecVol_640210_skin" surfaceproperty="Quartz" >
+         <volumeref ref="quartzRecVol_640210"/>
+</skinsurface>
+ 
+<volume name="refVol_640210">
+         <materialref ref="QsimAir"/>
+         <solidref ref="refSol1_640210"/> 
+         <auxiliary auxtype="Color" auxvalue="green"/> 
+         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+         <auxiliary auxtype="DetType" auxvalue="boundaryhits"/> 
+         <auxiliary auxtype="DetNo" auxvalue="640212"/>  
+</volume>
+
+<volume name="refVolSkin_640210">
+         <materialref ref="AlMylar"/>
+         <solidref ref="refSolSkin1_640210"/> 
+         <auxiliary auxtype="Color" auxvalue="brown"/> 
+         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
+         <auxiliary auxtype="DetNo" auxvalue="640213"/>  
+</volume>
+
+<skinsurface name="refVolSkin_640210_skin" surfaceproperty="Mylar" >
+         <volumeref ref="refVolSkin_640210"/>
+</skinsurface>
+
+<volume name="reflectorVol_640210">
+         <materialref ref="AlMylar"/>
+         <solidref ref="reflectorSol_640210"/> 
+         <auxiliary auxtype="Color" auxvalue="red"/> 
+ 	     <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
+	     <auxiliary auxtype="DetNo" auxvalue="640214"/>  
+</volume>
+
+<skinsurface name="reflectorVol_640210_skin" surfaceproperty="Mylar" > <!-- Aluminium -->
+         <volumeref ref="reflectorVol_640210"/>
+</skinsurface>
+ 
+<volume name="lgVol_640210">
+         <materialref ref="QsimAir"/>
+         <solidref ref="lgSol_640210"/> 
+         <auxiliary auxtype="Color" auxvalue="blue"/> 
+         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+         <auxiliary auxtype="DetType" auxvalue="boundaryhits"/> 
+         <auxiliary auxtype="DetNo" auxvalue="640216"/>  
+</volume>
+
+<volume name="lgVolSkin_640210">
+         <materialref ref="AlMylar"/>
+         <solidref ref="lgSolSkin_640210"/> 
+         <auxiliary auxtype="Color" auxvalue="brown"/> 
+ 	     <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/> 
+	     <auxiliary auxtype="DetNo" auxvalue="640215"/>  
+</volume>
+
+<skinsurface name="lgVolSkin_640210_skin" surfaceproperty="Mylar" >
+         <volumeref ref="lgVolSkin_640210"/>
+</skinsurface>
+ 
+<volume name="pmtVol_640210">
+         <materialref ref="Aluminium"/>
+         <solidref ref="pmtSol_640210"/> 
+         <auxiliary auxtype="Color" auxvalue="red"/> 
+ 	     <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+         <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> 
+	     <auxiliary auxtype="DetNo" auxvalue="640217"/>  
+</volume>
+
+<!--
+<skinsurface name="pmtVol_640210_skin" surfaceproperty="Aluminium" >
+         <volumeref ref="pmtVol_640210"/>
+</skinsurface>
+-->
+ 
+<volume name="pmtCathodeVol_640210">
+         <materialref ref="Photocathode"/>
+         <solidref ref="pmtCathodeSol_640210"/> 
+         <auxiliary auxtype="Color" auxvalue="green"/> 
+         <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+         <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+         <auxiliary auxtype="DetNo" auxvalue="640210"/>
+</volume>
+
+<skinsurface name="pmtCathodeVol_640210_skin" surfaceproperty="Cathode" >
+         <volumeref ref="pmtCathodeVol_640210"/>
+</skinsurface>
+ 
+<volume name="pmtSkinVol_640210">
+         <materialref ref="Aluminium"/>
+         <solidref ref="pmtSkinSol_640210"/> 
+         <auxiliary auxtype="Color" auxvalue="grey"/> 
+</volume>
+
+<!--
+<skinsurface name="pmtSkinVol_640210_skin" surfaceproperty="Aluminium" >
+         <volumeref ref="pmtSkinVol_640210"/>
+</skinsurface>
+-->
+ 
+<volume name="TotalDetectorVol_640210">
+    <materialref ref="QsimAir"/>
+    <solidref ref="TotalDetectorLogicSol_640210"/> 
+    <physvol name="quartzRec_640210">
+         <volumeref ref="quartzRecVol_640210"/>
+		 <position name="quartzRecPos_640210" unit="mm" x="0" y="0" z="0"/>
+		 <rotation name="quartzRecRot_640210" unit="rad" x="0" y="0" z="0"/>
+    </physvol> 
+
+
+    <!--
+    <physvol name="ref_640210">
+		 <volumeref ref="refVol_640210"/>
+		 <position name="refPos_640210" unit="mm" x="0" y="0" z="94.25"/>
+		 <rotation name="refRot_640210" unit="rad" x="-pi/2" y="0" z="0"/>
+    </physvol>
+    --> 
+
+         <physvol name="refSkin_640210">
+		 <volumeref ref="refVolSkin_640210"/>
+		 <position name="refSkinPos_640210" unit="mm" x="0" y="0" z="94.25"/>
+		 <rotation name="refSkinRot_640210" unit="rad" x="-pi/2" y="0" z="0"/>
+    </physvol> 
+
+         <physvol name="reflector_640210">
+		 <volumeref ref="reflectorVol_640210"/>
+		 <position name="reflectorPos_640210" unit="mm" x="0" y="0" z="94.25"/>
+		 <rotation name="reflectorRot_640210" unit="rad" x="-pi/2" y="0" z="0"/>
+    </physvol> 
+
+
+    <!--
+    <physvol name="lg_640210">
+	 	<volumeref ref="lgVol_640210"/>
+	 	<position name="lgPos_640210" unit="mm" x="-19.9774377389549" y="0" z="202.088581208177"/>
+		<rotation name="lgRot_640210" unit="rad" x="0" y="0.10471975511966" z="0"/>
+    </physvol>
+    --> 
+
+    <physvol name="lgSkin_640210">
+	 	<volumeref ref="lgVolSkin_640210"/>
+		<position name="lgSkinPos_640210" unit="mm" x="-19.9774377389549" y="0" z="202.088581208177"/>
+		<rotation name="lgSkinRot_640210" unit="rad" x="0" y="0.10471975511966" z="0"/>
+    </physvol> 
+
+
+    <physvol name="pmt_640210">
+      <volumeref ref="pmtVol_640210"/>
+      <position name="pmtPos_640210" unit="mm" x="-22.5035243209132" y="0" z="339.417254327041"/>
+		<rotation name="pmtRot_640210" unit="rad" x="0" y="-0.0523598775598299" z="0"/>
+    </physvol> 
+
+    <physvol name="pmtCathode_640210">
+	    <volumeref ref="pmtCathodeVol_640210"/>
+		<position name="pmtCathodePos_640210" unit="mm" x="-26.2953977557349" y="0" z="263.321683778743"/>
+      <rotation name="pmtCathodeRot_640210" unit="rad" x="0" y="-0.0523598775598299" z="0"/>
+    </physvol> 
+
+    <physvol name="pmtSkin_640210">
+		<volumeref ref="pmtSkinVol_640210"/>
+		<position name="pmtSkinPos_640210" unit="mm" x="-22.5414430552614" y="0" z="338.656298621558"/>
+      <rotation name="pmtSkinRot_640210" unit="rad" x="0" y="-0.0523598775598299" z="0"/>
+    </physvol> 
+  
+</volume>
+
+<volume name="logicMotherVol_R6"> 
+	<materialref ref="QsimAir"/>
+	<solidref ref="logicMotherSol_R6"/>
+
+    <physvol name="detector_640210">
+	    <volumeref ref="TotalDetectorVol_640210"/>
+      <!-- Easy origin, just uncomment these to put the quartz center at the origin
+      <position name="detectorPos_640210" unit="mm" x="0" y="0" z="0"/>
+      <rotation name="detectorRot_640210" unit="rad" x="0" y="0" z="0"/>
+      -->
+	    <position name="detectorPos_640210" unit="mm" x="-270" y="0" z="1090"/>
+    	<rotation name="detectorRot_640210" unit="rad" x="0" y="0.0523598775598299" z="0"/>
+    </physvol> 
+
+</volume>
+
+</structure>
+
+
+<setup name="logicMother_R6" version="1.0">
+	<world ref="logicMotherVol_R6"/>
+</setup>
+
+</gdml>

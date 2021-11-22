@@ -1,0 +1,181 @@
+#  Example file
+
+# store tracks
+#/tracking/storeTrajectory 1
+
+# This must be called before initialize
+/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+# Parallel world geometry is optional - detector 28 (the primary detector array's idealize vacuum detector) is included in this parallel world now.
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+
+#/remoll/physlist/register QGSP_BERT_HP
+/remoll/physlist/parallel/enable 
+# if optical physics is turned on it will only work if parallel physics is not turned on.
+#/remoll/physlist/optical/enable 
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/SD/disable_all
+/remoll/SD/enable 104011
+/remoll/SD/enable 104017
+/remoll/SD/enable 104015
+/remoll/SD/enable 104014
+/remoll/SD/enable 140111
+/remoll/SD/enable 140117
+/remoll/SD/enable 140115
+/remoll/SD/enable 140114
+/remoll/SD/enable 140211
+/remoll/SD/enable 140217
+/remoll/SD/enable 140215
+/remoll/SD/enable 140214
+/remoll/SD/enable 204011
+/remoll/SD/enable 204017
+/remoll/SD/enable 204015
+/remoll/SD/enable 204014
+/remoll/SD/enable 240111
+/remoll/SD/enable 240117
+/remoll/SD/enable 240115
+/remoll/SD/enable 240114
+/remoll/SD/enable 240211
+/remoll/SD/enable 240217
+/remoll/SD/enable 240215
+/remoll/SD/enable 240214
+/remoll/SD/enable 304011
+/remoll/SD/enable 304017
+/remoll/SD/enable 304015
+/remoll/SD/enable 304014
+/remoll/SD/enable 340111
+/remoll/SD/enable 340117
+/remoll/SD/enable 340115
+/remoll/SD/enable 340114
+/remoll/SD/enable 340211
+/remoll/SD/enable 340217
+/remoll/SD/enable 340215
+/remoll/SD/enable 340214
+/remoll/SD/enable 404011
+/remoll/SD/enable 404017
+/remoll/SD/enable 404015
+/remoll/SD/enable 404014
+/remoll/SD/enable 440111
+/remoll/SD/enable 440117
+/remoll/SD/enable 440115
+/remoll/SD/enable 440114
+/remoll/SD/enable 440211
+/remoll/SD/enable 440217
+/remoll/SD/enable 440215
+/remoll/SD/enable 440214
+/remoll/SD/enable 504001
+/remoll/SD/enable 504007
+/remoll/SD/enable 504005
+/remoll/SD/enable 504004
+/remoll/SD/enable 504011
+/remoll/SD/enable 504017
+/remoll/SD/enable 504015
+/remoll/SD/enable 504014
+/remoll/SD/enable 504021
+/remoll/SD/enable 504027
+/remoll/SD/enable 504025
+/remoll/SD/enable 504024
+/remoll/SD/enable 540101
+/remoll/SD/enable 540107
+/remoll/SD/enable 540105
+/remoll/SD/enable 540104
+/remoll/SD/enable 540111
+/remoll/SD/enable 540117
+/remoll/SD/enable 540115
+/remoll/SD/enable 540114
+/remoll/SD/enable 540121
+/remoll/SD/enable 540127
+/remoll/SD/enable 540125
+/remoll/SD/enable 540124
+/remoll/SD/enable 540201
+/remoll/SD/enable 540207
+/remoll/SD/enable 540205
+/remoll/SD/enable 540204
+/remoll/SD/enable 540211
+/remoll/SD/enable 540217
+/remoll/SD/enable 540215
+/remoll/SD/enable 540214
+/remoll/SD/enable 540221
+/remoll/SD/enable 540227
+/remoll/SD/enable 540225
+/remoll/SD/enable 540224
+/remoll/SD/enable 604011
+/remoll/SD/enable 604017
+/remoll/SD/enable 604015
+/remoll/SD/enable 604014
+/remoll/SD/enable 640111
+/remoll/SD/enable 640117
+/remoll/SD/enable 640115
+/remoll/SD/enable 640114
+/remoll/SD/enable 640211
+/remoll/SD/enable 640217
+/remoll/SD/enable 640215
+/remoll/SD/enable 640214
+
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+#/remoll/beam_x0 0 mm
+#/remoll/beam_y0 0 mm
+# initial angle
+#/remoll/beam_th0 0 mrad
+#/remoll/beam_ph0 0 mrad
+# gaussian spread widths
+#/remoll/beam_dth 0 mrad
+#/remoll/beam_dph 0 mrad
+
+#/remoll/evgen/set beam
+# To hit Ring 5 open in septant 4
+#/remoll/evgen/beam/x -1300 mm
+#/remoll/evgen/beam/rasx -30 mm
+#/remoll/evgen/beam/origin -987.5 0 -50 mm
+#/remoll/evgen/beam/direction (-0.0523,0,0.9986)
+# Mainz test energy
+#/remoll/beamene 855 MeV
+
+/remoll/evgen/set moller
+#/remoll/evgen/thcommin 30.0 deg
+#/remoll/evgen/thcommax 150.0 deg
+#/remoll/evgen/set elastic 
+#/remoll/evgen/thmin 0.1 deg
+#/remoll/evgen/thmax 2.0 deg
+#/remoll/evgen/emin 80.0 MeV
+#/remoll/evgen/set inelastic 
+#/remoll/evgen/set pion
+#/remoll/piontype pi+
+#/remoll/evgen/set pion_LUND
+#/remoll/evgen/set inelasticAl
+#/remoll/evgen/set quasielasticAl
+#/remoll/evgen/set elasticAl
+#/remoll/evgen/set external
+#/remoll/externalfile remollout.root
+#/remoll/externaldetid 4051
+
+#/remoll/evgen/beamPolarization +L
+#/remoll/field/equationtype 2
+#/remoll/field/steppertype 2
+#/remoll/field/print
+
+/remoll/beamene 11 GeV
+
+/remoll/beamcurr 65 microampere
+
+# Make interactions with W, Cu, and Pb
+# realistic rather than pure absorbers
+/control/execute macros/kryptonite.mac
+
+/process/list
+
+# Specify random number seed
+#/remoll/seed 123456
+
+/remoll/filename remollout_parallel_moller.root
+
+#/tracking/verbose 2
+/remoll/printtargetinfo
+/run/beamOn 100000

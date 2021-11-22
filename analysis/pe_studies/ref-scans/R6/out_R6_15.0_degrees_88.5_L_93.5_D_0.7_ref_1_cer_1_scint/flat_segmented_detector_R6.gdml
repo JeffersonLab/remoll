@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<solids>
+
+    <box name = "quartzLogicParallel_640210" x="99.8629534754574" y="255.815401792312" z="1"/>
+    <box name = "refLogicParallel_640210" x="84.1685016921211" y="255.815401792312" z="1"/>
+    <trap name = "lgLogicParallel_640210" z="125.90002157015" theta="0.0" phi="0.0" y1="255.815401792312" x1="1" x2="1" y2="76.2" x3="1" x4="1" alpha1="0.0" alpha2="0.0" aunit="rad" lunit="mm"/>
+    <box name = "pmtLogicParallel_640210" x="152.4" y="76.2" z="1"/>
+    <box lunit="mm" name="flat_parallel_solid_640210" z="462.431476737729" y="261.915401792312" x="1.1"/>
+
+<!-- Box to hold the detector array inside of -->
+
+<box lunit="mm" name="flat_parallel_solid2" x="2010" y="3010" z="3010"/>
+
+</solids>
+
+<structure>
+
+
+  <volume name="quartzVolParallel_640210">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="quartzLogicParallel_640210"/> 
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+    <auxiliary auxtype="DetNo" auxvalue="640211"/>  
+  </volume>
+
+  <volume name="reflectorVolParallel_640210">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="refLogicParallel_640210"/> 
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+    <auxiliary auxtype="DetNo" auxvalue="640214"/>  
+  </volume>
+
+  <volume name="lgVolSkinParallel_640210">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="lgLogicParallel_640210"/> 
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+    <auxiliary auxtype="DetNo" auxvalue="640215"/>  
+  </volume>
+
+  <volume name="pmtSkinVolParallel_640210">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="pmtLogicParallel_640210"/> 
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/> 
+    <auxiliary auxtype="DetNo" auxvalue="640217"/>
+  </volume>
+
+  <volume name="Flat_Segmented_ParallelWorld_logical_640210">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="flat_parallel_solid_640210"/>
+      
+    <physvol name="quartzVolParallel_phys_640210">
+      <volumeref ref="quartzVolParallel_640210"/>
+      <position name="quartzVolParallelPos_640210" unit="mm" x="0" y="0" z="-181.234261631136"/>
+      <rotation name="quartzVolParallelRot_640210" unit="rad" x="0.0" y="pi/2" z="0"/>
+    </physvol> 
+
+    <physvol name="reflectorVolParallel_phys_640210">
+      <volumeref ref="reflectorVolParallel_640210"/>
+      <position name="reflectorVolParallelPos_640210" unit="mm" x="0" y="0" z="-89.2185340473464"/>
+      <rotation name="reflectorVolParallelRot_640210" unit="rad" x="0.0" y="pi/2" z="0"/>
+    </physvol> 
+
+    <physvol name="lgVolSkinParallel_phys_640210">
+      <volumeref ref="lgVolSkinParallel_640210"/>
+      <position name="lgVolSkinParallelPos_640210" unit="mm" x="0" y="0" z="15.8157275837892"/>
+      <rotation name="lgVolSkinParallelRot_640210" unit="rad" x="0.0" y="0.0" z="0"/>
+    </physvol> 
+
+    <physvol name="pmtSkinVolParallel_phys_640210">
+      <volumeref ref="pmtSkinVolParallel_640210"/>
+      <position name="pmtSkinVolParallelPos_640210" unit="mm" x="0" y="0" z="154.965738368864"/>
+      <rotation name="pmtSkinVolParallelRot_640210" unit="rad" x="0.0" y="pi/2" z="0"/>
+    </physvol>
+  </volume>
+
+  <volume name="Flat_Segmented_ParallelWorld_physical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="flat_parallel_solid2"/>
+    
+    <physvol name="Flat_Segmented_ParallelWorld_physical_640210">
+      <volumeref ref="Flat_Segmented_ParallelWorld_logical_640210"/>
+	    <position name="Flat_DetectorPos_640210" unit="mm" x="-270" y="0" z="1271.23426163114"/>
+    	<rotation name="Flat_DetectorRot_640210" unit="rad" x="0" y="0.0*0.0523598775598299" z="0"/>
+    </physvol>
+    
+  </volume>
+    
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="Flat_Segmented_ParallelWorld_physical"/>
+</setup>
+
+</gdml>
