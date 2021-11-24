@@ -446,9 +446,9 @@
   <!--The following material is defined to aviod complicated coll1 design
   The matrial is defined by 44% of H2O and 56% of CW95 -->
   <material name="Water_CW" state="solid">
-    <D value="5.65" unit="g/cm3"/>
+    <D value="5.96" unit="g/cm3"/>
     <fraction n="0.69" ref="Water"/>
-    <fraction n="0.31" ref="CW85"/>
+    <fraction n="0.31" ref="CW90"/>
   </material>
   
   <material name="Tyvek" state="solid">
