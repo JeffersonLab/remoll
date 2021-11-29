@@ -19,7 +19,7 @@
 
     <constant name="DELTAT" value ="1.0"/>
 
-    <position name="posCOLL1" unit="mm" x="0" y="0" z="-1825"/>
+    <position name="posCOLL1" unit="mm" x="0" y="0" z="-1825+150"/>
 
     <!-- main coll, adjust this -->
     <position name="posCOLL2_CW" unit="mm" x="0" y="0" z="5925-UOFFSET-50-75-50"/> <!-- upstream end of CW piece is 5250mm with respect to targetrcenter -->
@@ -321,20 +321,20 @@
     -->
     <!-- v10 --> 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="25.4" z="0"/> 
+      <zplane rmin="20.0+0.3" rmax="25.4" z="0"/> 
       <!--      <zplane rmin="18.875" rmax="27" z="30"/>--> 
-      <zplane rmin="18.875" rmax="25.4" z="30"/> 
-      <zplane rmin="18.5" rmax="25.4" z="40"/> 
-      <zplane rmin="18.5" rmax="22.0" z="40"/> 
-      <zplane rmin="16.25" rmax="22.0" z="100"/> 
-      <zplane rmin="15.1" rmax="22.0" z="190"/> 
-      <zplane rmin="14.1" rmax="22.0" z="310"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="14.452" rmax="22.0" z="695"/> 
-      <zplane rmin="14.452" rmax="24.0" z="695"/> 
-      <zplane rmin="14.491" rmax="24.0" z="709"/> 
-      <zplane rmin="14.491" rmax="22.0" z="709"/> 
-      <zplane rmin="14.536" rmax="22.0" z="725"/> 
+      <zplane rmin="18.875+0.3" rmax="25.4" z="30"/> 
+      <zplane rmin="18.5+0.3" rmax="25.4" z="40"/> 
+      <zplane rmin="18.5+0.3" rmax="22.0" z="40"/> 
+      <zplane rmin="16.25+0.3" rmax="22.0" z="100"/> 
+      <zplane rmin="15.1+0.3" rmax="22.0" z="190"/> 
+      <zplane rmin="14.1+0.3" rmax="22.0" z="310"/> 
+      <zplane rmin="13.9" rmax="22.0" z="400"/> 
+      <zplane rmin="14.427" rmax="22.0" z="695-150"/> 
+      <zplane rmin="14.427" rmax="24.0" z="695-150"/> 
+      <zplane rmin="14.478" rmax="24.0" z="709-150"/> 
+      <zplane rmin="14.478" rmax="22.0" z="709-150"/> 
+      <zplane rmin="14.536" rmax="22.0" z="725-150"/> 
     </polycone>
 
     <!-- v10 backup--> 
@@ -402,15 +402,15 @@
 
     <cone aunit="deg" deltaphi="360" lunit="mm" name="col1_h20_CW_solid" 
 	  rmax1="25.4" rmax2="25.4" rmin1="22" rmin2="22" 
-	  startphi="0" z="522+59+34"/>
+	  startphi="0" z="522+59+34-150"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="col1_jacket_solid"> 
 	    <!--<zplane rmin="25.4" rmax="27.5+1.0" z="0"/> 
 	    <zplane rmin="25.4" rmax="27.5+1.0" z="465+45+35"/> -->
-      <zplane rmin="25.4" rmax="27.0" z="0"/> 
-      <zplane rmin="25.4" rmax="33.5" z="465+45+35+30"/> 
-      <zplane rmin="25.4" rmax="27.3" z="465+45+35+30"/> 
-      <zplane rmin="25.4" rmax="27.3" z="515+45+35+30"/> 
+      <zplane rmin="25.4" rmax="29.5" z="0"/> 
+      <zplane rmin="25.4" rmax="33.5" z="465+45+35+30-150"/> 
+      <zplane rmin="25.4" rmax="27.3" z="465+45+35+30-150"/> 
+      <zplane rmin="25.4" rmax="27.3" z="515+45+35+30-150"/> 
     </polycone>
 
 
@@ -1524,7 +1524,7 @@
 
       <physvol name="col1_h20_phys1">
         <volumeref ref="col1_h20_logic1"/>
-	<position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7-59-37"/><!-- center position wrt target center = 5036 mm-->
+	<position ref="col1_h20_pos1" x="0" y="0" z="-1825+139+7-59-37+150"/><!-- center position wrt target center = 5036 mm-->
       </physvol>
 
       <physvol name="col1_h20_phys2">
@@ -1534,12 +1534,12 @@
 
       <physvol name="col1_h20_CW_phys">
         <volumeref ref="col1_h20_CW_logic"/>
-	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2.-59./2.-34./2"/><!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_h20_CW_pos" x="0" y="0" z="-1825+139+14+522./2.-59./2.-34./2+150./2"/><!-- center position wrt target center = 5191.5 mm-->
      </physvol>
 
       <physvol name="col1_jacket_phys">
         <volumeref ref="col1_jacket_logic"/>
-	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110-45-35-30"/> <!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110-45-35-30+150"/> <!-- center position wrt target center = 5191.5 mm-->
      </physvol>
 
       <physvol name="Phys_Col2_accep1">
