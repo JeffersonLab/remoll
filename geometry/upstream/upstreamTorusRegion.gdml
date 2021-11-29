@@ -321,8 +321,8 @@
     -->
     <!-- v10 --> 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="18.875" rmax="27" z="30"/> 
+      <zplane rmin="20.0" rmax="25.4" z="0"/> 
+      <!--      <zplane rmin="18.875" rmax="27" z="30"/>--> 
       <zplane rmin="18.875" rmax="25.4" z="30"/> 
       <zplane rmin="18.5" rmax="25.4" z="40"/> 
       <zplane rmin="18.5" rmax="22.0" z="40"/> 
@@ -405,10 +405,12 @@
 	  startphi="0" z="522+59+34"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="col1_jacket_solid"> 
-      <zplane rmin="25.4" rmax="27.5+1.0" z="0"/> 
-      <zplane rmin="25.4" rmax="27.5+1.0" z="465+45+35"/> 
-      <zplane rmin="25.4" rmax="27.3" z="465+45+35"/> 
-      <zplane rmin="25.4" rmax="27.3" z="515+45+35"/> 
+	    <!--<zplane rmin="25.4" rmax="27.5+1.0" z="0"/> 
+	    <zplane rmin="25.4" rmax="27.5+1.0" z="465+45+35"/> -->
+      <zplane rmin="25.4" rmax="27.0" z="0"/> 
+      <zplane rmin="25.4" rmax="33.5" z="465+45+35+30"/> 
+      <zplane rmin="25.4" rmax="27.3" z="465+45+35+30"/> 
+      <zplane rmin="25.4" rmax="27.3" z="515+45+35+30"/> 
     </polycone>
 
 
@@ -1537,7 +1539,7 @@
 
       <physvol name="col1_jacket_phys">
         <volumeref ref="col1_jacket_logic"/>
-	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110-45-35"/> <!-- center position wrt target center = 5191.5 mm-->
+	<position ref="col1_jacket_pos" x="0" y="0" z="-1825+110-45-35-30"/> <!-- center position wrt target center = 5191.5 mm-->
      </physvol>
 
       <physvol name="Phys_Col2_accep1">
