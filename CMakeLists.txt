@@ -4,6 +4,8 @@
 cmake_minimum_required(VERSION 3.5)
 project(remoll VERSION 0.1 LANGUAGES CXX C)
 
+set(CMAKE_CXX_STANDARD 14)
+
 # Disallow in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
   message(FATAL_ERROR "remoll requires an out-of-source build.")
