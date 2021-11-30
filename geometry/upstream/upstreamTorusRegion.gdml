@@ -408,7 +408,7 @@
 	    <!--<zplane rmin="25.4" rmax="27.5+1.0" z="0"/> 
 	    <zplane rmin="25.4" rmax="27.5+1.0" z="465+45+35"/> -->
       <zplane rmin="25.4" rmax="29.5" z="0"/> 
-      <zplane rmin="25.4" rmax="33.5" z="465+45+35+30-150"/> 
+      <zplane rmin="25.4" rmax="30.5" z="465+45+35+30-150"/> 
       <zplane rmin="25.4" rmax="27.3" z="465+45+35+30-150"/> 
       <zplane rmin="25.4" rmax="27.3" z="515+45+35+30-150"/> 
     </polycone>
