@@ -5,14 +5,14 @@
 <!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <!--Used to resolve why hall detector missing any hits and how to include the detector+hall mother volume without making any volume overlaps or encapsulations -->
 <define>
   &matrices;
 
-  <constant name="width_mother" value="90000."/>
-  <constant name="height_mother" value="90000."/>
+  <constant name="width_mother" value="75000."/>
+  <constant name="height_mother" value="50000."/>
   <constant name="length_mother" value="90000."/>
 
   <!-- Hall - wall, floor and "dump" -->

@@ -4,7 +4,7 @@
 /remoll/kryptonite/add G4_Pb
 /remoll/kryptonite/list
 
-/remoll/kryptonite/set true
+/remoll/kryptonite/enable
 /run/beamOn 100
-/remoll/kryptonite/set false
+/remoll/kryptonite/disable
 /run/beamOn 100

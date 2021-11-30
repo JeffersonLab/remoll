@@ -1,9 +1,10 @@
 /run/initialize
 
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+/control/execute macros/kryptonite.mac
 
-/remoll/gen moller
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+/remoll/evgen/set moller
 
 /remoll/field/equationtype 2
 /run/beamOn 100

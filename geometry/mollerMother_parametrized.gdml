@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY world SYSTEM "solids/world.xml">
+<!ENTITY positions SYSTEM "positions.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define> 
+  &positions;
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  &world;
+</solids>
+
+<structure>
+
+  <volume name="logicMother">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="world_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+    <!-- Target region -->
+    <physvol>
+      <file name="target/subTargetRegion.gdml"/>
+      <positionref ref="targetCenter"/>
+    </physvol>
+
+    <!-- Hall -->
+    <physvol>
+      <file name="hall/hallDaughter_dump.gdml"/>
+      <positionref ref="hallCenter"/>
+    </physvol>
+
+    <!-- SBS Bunker -->
+    <physvol>
+      <file name="electronics/subSBSbunker.gdml"/>
+      <position name="sbsBunker_pos" x="8740" y="-3000 + 2000" z="-15180."/>
+      <rotation name="rot_y30" unit="deg" y="30"/>
+    </physvol>
+ 
+    <!-- Upstream region -->
+    <physvol>
+      <file name="upstream/upstreamDaughter_merged.gdml"/>
+      <positionref ref="upstreamCenter"/>
+    </physvol>
+
+    <!-- Hybrid region -->
+    <physvol>
+      <file name="hybrid/hybridDaughter_merged.gdml"/>
+      <positionref ref="hybridCenter"/>
+    </physvol>
+
+    <!-- Downstream beampipe -->
+    <physvol>
+      <file name="beampipe/premoller/beampipeRaster.gdml"/>
+    </physvol>
+    <physvol>
+      <file name="beampipe/downstream/beampipeDSMother.gdml"/>
+    </physvol>
+
+    <!-- Front Tracking Detectors -->
+    <physvol>
+      <file name="tracking/trackingDaughter.gdml"/>
+      <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
+    </physvol>
+
+    <!-- Back Tracking Detectors -->
+    <physvol>
+      <file name="tracking/trackingDaughter.gdml"/>
+      <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
+    </physvol>
+
+    <!-- Main Detectors -->
+    <physvol>
+      <file name="detector/detector.gdml"/>
+      <positionref ref="detectorCenter"/>
+      <rotation name="detectorRot" x="0" y="90" z="0" unit="deg"/>
+    </physvol>
+
+    <!-- electronics hut for left side --> 
+    <physvol>
+      <file name="huts/lefthut.gdml"/>
+      <positionref ref="lefthut_pos"/>
+      <rotation name="lefthut_rot" unit="deg" y="-45"/>
+    </physvol>
+
+    <!-- ShowerMax Detectors -->
+    <physvol>
+      <file name="showermax/showerMaxGen.gdml"/>
+      <positionref ref="showerMaxDetectorCenter"/>
+    </physvol>
+    
+    <!-- Lead Donut -->
+    <physvol>
+      <file name="donut/donutConcreteLead.gdml"/>
+      <positionref ref="donutConcreteLeadFaceUS"/>
+    </physvol>
+   
+    <!-- Pion Detectors -->
+    <physvol>
+      <file name="pion/pionDetectorSystem.gdml"/>
+      <positionref ref="pionDetectorSystemFaceUS"/>
+    </physvol>
+
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="logicMother"/>
+</setup>
+ 
+</gdml> 

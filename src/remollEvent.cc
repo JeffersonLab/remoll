@@ -48,7 +48,7 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
   std::vector<remollEventParticle_t> parts;
   for (size_t idx = 0; idx < fPartType.size(); idx++) {
     remollEventParticle_t part;
-    part.pid = (fPartType[idx]? fPartType[idx]->GetPDGEncoding(): 0);
+    part.pid = (fPartType[idx] != nullptr? fPartType[idx]->GetPDGEncoding(): 0);
     part.sx = fPartSpin[idx].x();
     part.sy = fPartSpin[idx].y();
     part.sz = fPartSpin[idx].z();
@@ -73,17 +73,20 @@ std::vector<remollEventParticle_t> remollEvent::GetEventParticleIO() const {
 
     if(trajectoryContainer==0){
     }
-    else for(G4int i = 0; i < trajectoryContainer->entries(); i++){
-      //Only store trajectories of primary particles
-      if(((*trajectoryContainer)[i]->GetParentID() == 0) && ((*trajectoryContainer)[i]->GetTrackID() == G4int(idx+1))){
-        //Store each point in the container in the remollEventParticle_t structure
-        for(int j = 0; j<(*trajectoryContainer)[i]->GetPointEntries(); j++){
-          G4TrajectoryPoint* point = (G4TrajectoryPoint*)((*trajectoryContainer)[i]->GetPoint(j));
-          part.tjx.push_back(point->GetPosition()[0]);
-          part.tjy.push_back(point->GetPosition()[1]);
-          part.tjz.push_back(point->GetPosition()[2]);
+    else {
+      auto n = trajectoryContainer->entries();
+      for(decltype(n) i = 0; i < n; i++) {
+        //Only store trajectories of primary particles
+        if(((*trajectoryContainer)[i]->GetParentID() == 0) && ((*trajectoryContainer)[i]->GetTrackID() == G4int(idx+1))){
+          //Store each point in the container in the remollEventParticle_t structure
+          for(int j = 0; j<(*trajectoryContainer)[i]->GetPointEntries(); j++){
+            G4TrajectoryPoint* point = (G4TrajectoryPoint*)((*trajectoryContainer)[i]->GetPoint(j));
+            part.tjx.push_back(point->GetPosition()[0]);
+            part.tjy.push_back(point->GetPosition()[1]);
+            part.tjz.push_back(point->GetPosition()[2]);
+          }
+          break;
         }
-        break;
       }
     }
     parts.push_back(part);
@@ -178,7 +181,7 @@ G4bool remollEvent::EventIsSane(){
     }
 
     for(unsigned int i = 0; i < fPartPos.size(); i++ ){
-	if( !fPartType[i] ){ return false; }
+	if( fPartType[i] == nullptr ){ return false; }
 
 	if( std::isnan(fPartPos[i].x()) || std::isinf(fPartPos[i].x()) ) return false;
 	if( std::isnan(fPartPos[i].y()) || std::isinf(fPartPos[i].y()) ) return false;
@@ -206,7 +209,7 @@ void remollEvent::Print(){
     unsigned int i;
 
     for( i = 0; i < fPartPos.size(); i++ ){
-	if( !fPartType[i] ){
+	if( fPartType[i] == nullptr ){
 	    G4cout << "\tParticle type for " << i << " not defined" << G4endl;
 	} else {
 	    G4cout << "\t" << fPartType[i]->GetParticleName() << ":" << G4endl;

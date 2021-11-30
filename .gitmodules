@@ -1,0 +1,9 @@
+[submodule "geometry/generators/remoll-coil-generator"]
+	path = geometry/generators/remoll-coil-generator
+	url = https://github.com/jeffersonlab/remoll-coil-generator.git
+[submodule "geometry/generators/remoll-detector-generator"]
+	path = geometry/generators/remoll-detector-generator
+	url = https://github.com/JeffersonLab/remoll-detector-generator.git
+[submodule "geometry/generators/remoll-showermax-generator"]
+	path = geometry/generators/remoll-showermax-generator
+	url = https://github.com/jeffersonlab/remoll-showermax-generator.git

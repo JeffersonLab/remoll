@@ -9,7 +9,6 @@
 #include "remollEvent.hh"
 #include "remollVertex.hh"
 #include "remollBeamTarget.hh"
-#include "remollMultScatt.hh"
 #include "remolltypes.hh"
 
 #include <math.h>
@@ -39,16 +38,16 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     double beamE = fBeamTarg->fBeamEnergy;
     double Ekin  = beamE - electron_mass_c2;
 
-    std::vector <G4VPhysicalVolume *> targVols = fBeamTarg->GetTargetVolumes();
+    auto targVols = fBeamTarg->GetTargetVolumes();
 
     bool bypass_target = false;
 
-    std::vector<G4VPhysicalVolume *>::iterator it = targVols.begin();
+    auto it = targVols.begin();
     if( targVols.size() > 0 ){
-	while( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" 
+	while( (*it).first->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" 
 		&& it != targVols.end() ){ it++; }
 
-	if( (*it)->GetLogicalVolume()->GetMaterial()->GetName() != "LiquidHydrogen" ){
+	if( (*it).first->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" ){
 	    G4cerr << __FILE__ << " line " << __LINE__ << ": WARNING could not find target" << G4endl;
 	    bypass_target = true;
 	}
@@ -66,7 +65,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double bt;
     if( !bypass_target ){
-	bt = (4.0/3.0)*(fBeamTarg->fTravelledLength/(*it)->GetLogicalVolume()->GetMaterial()->GetRadlen()
+	bt = (4.0/3.0)*(fBeamTarg->fTravelledLength/(*it).first->GetLogicalVolume()->GetMaterial()->GetRadlen()
 		+ int_bt);
     } else {
 	bt = 0.0;
@@ -221,7 +220,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     double sigma = sigma_mott*(ef/beamE)*(ffpart1 + ffpart2);
 
-    double V = 2.0*pi*(cthmin - cthmax)*samp_fact;
+    double V = (fPh_max - fPh_min) * (cthmin - cthmax) * samp_fact;
 
     // Suppress too low angles from being generated
     // If we're in the multiple-scattering regime
@@ -229,7 +228,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     // as anything less than three sigma of the characteristic
     // width
     
-    if( th < 3.0*fBeamTarg->fMS->GetPDGTh() ){
+    if( th < 3.0*fBeamTarg->GetMultScatt().GetPDGTh() ){
 	sigma = 0.0;
     }
 

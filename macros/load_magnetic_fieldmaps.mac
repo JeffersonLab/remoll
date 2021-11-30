@@ -1,0 +1,8 @@
+# These are the current reference magnetic field maps
+#
+# Instead of including magnetic field maps directly in your macros,
+# consider loading this macro with
+#   /control/execute macros/load_magnetic_fieldmaps.mac
+
+/remoll/addfield map_directory/V2U.1a.50cm.parallel.txt
+/remoll/addfield map_directory/V2DSg.9.75cm.parallel.txt

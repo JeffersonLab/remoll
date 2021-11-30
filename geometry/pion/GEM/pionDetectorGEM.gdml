@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!DOCTYPE gdml [
-  <!ENTITY materials SYSTEM "pionMaterials.xml">
-  <!ENTITY matrices SYSTEM "pionMatrices.xml">
-]>
-
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
   <quantity name="pionDetectorGEMThickness" type="length" value="2.54" unit="cm"/>
-  <quantity name="pionDetectorGEMWidth" type="length" value="60.0" unit="cm"/>
-  <quantity name="pionDetectorGEMHeight" type="length" value="50.0" unit="cm"/>
+  <quantity name="pionDetectorGEMWidth" type="length" value="60.00" unit="cm"/>
+  <quantity name="pionDetectorGEMHeight" type="length" value="16.00" unit="cm"/>
 </define>
 
 <materials>
@@ -41,7 +36,7 @@
   </volume>
 
   <volume name="pionDetectorGEM_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorGEMPlane_solid"/>
 
     <physvol name="pionDetectorGEM_physical">

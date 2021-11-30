@@ -3,6 +3,7 @@
 #include "G4OpticalPhoton.hh"
 #include "G4SDManager.hh"
 #include "G4GenericMessenger.hh"
+#include "G4PhysicalConstants.hh"
 
 #include "remollGenericDetectorHit.hh"
 #include "remollGenericDetectorSum.hh"
@@ -60,7 +61,7 @@ void remollGenericDetector::BuildStaticMessenger()
   G4AutoLock lock(&remollGenericDetectorMutex);
 
   // If already built, just return
-  if (fStaticMessenger) return;
+  if (fStaticMessenger != nullptr) return;
 
   fStaticMessenger = new G4GenericMessenger(this,"/remoll/SD/","Remoll SD properties");
   fStaticMessenger->DeclareMethod(
@@ -93,8 +94,17 @@ void remollGenericDetector::BuildStaticMessenger()
     "Print all detectors");
 
   fStaticMessenger->DeclareMethod(
+    "summary",
+    &remollGenericDetector::PrintSummary,
+    "Print all detectors");
+
+  fStaticMessenger->DeclareMethod(
     "detect",
     &remollGenericDetector::SetOneDetectorType,
+    "Set detector type");
+  fStaticMessenger->DeclareMethod(
+    "detect_range",
+    &remollGenericDetector::SetRangeDetectorType,
     "Set detector type");
 }
 
@@ -115,7 +125,6 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     //   individual hit
     // - if we do write an individual hit we return true
 
-
     // Ignore this detector if disabled as set by /remoll/SD/disable
     if (! fEnabled) {
       static bool has_been_warned = false;
@@ -125,13 +134,12 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
         G4cout << "remoll:   /remoll/SD/print_all" << G4endl;
         G4cout << "remoll:   /remoll/SD/enable_all" << G4endl;
         G4cout << "remoll:   /remoll/SD/disable_all" << G4endl;
-        G4cout << "remoll:   /remoll/SD/enable 4001" << G4endl;
-        G4cout << "remoll:   /remoll/SD/disable 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/enable " << fDetNo << G4endl;
+        G4cout << "remoll:   /remoll/SD/disable " << fDetNo << G4endl;
         has_been_warned = true;
       }
       return false;
     }
-
 
     // Get the step point and track
     G4Track*     track = step->GetTrack();
@@ -146,20 +154,29 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     G4int copyID = volume->GetCopyNo();
 
 
-    // Create a detector sum for this detector, if necessary
-    if (! fSumMap.count(copyID)) {
-      remollGenericDetectorSum* sum = new remollGenericDetectorSum(fDetNo, copyID);
-      fSumMap[copyID] = sum;
-      fSumColl->insert(sum);
-    }
-
     // Add energy deposit to detector sum
     G4int pid = particle->GetPDGEncoding();
     G4ThreeVector pos = prepoint->GetPosition();
     G4double edep = step->GetTotalEnergyDeposit();
+
+    // Create a detector sum for this detector, if necessary
+    if (fSumMap.count(copyID) == 0u) {
+      remollGenericDetectorSum* sum = new remollGenericDetectorSum(fDetNo, copyID);
+      fSumMap[copyID] = sum;
+      fSumColl->insert(sum);
+    }
+    // Add to sum for this event only
     remollGenericDetectorSum* sum = fSumMap[copyID];
     sum->AddEDep(pid, pos, edep);
 
+    // Create a running sum for this detector, if necessary
+    if (fRunningSumMap.count(copyID) == 0u) {
+      remollGenericDetectorSum* sum = new remollGenericDetectorSum(fDetNo, copyID);
+      fRunningSumMap[copyID] = sum;
+    }
+    // Add to running sum of all events
+    remollGenericDetectorSum* runningsum = fRunningSumMap[copyID];
+    runningsum->AddEDep(pid, pos, edep);
 
     // Ignore optical photons as hits as set by DetType == opticalphoton
     if (! fDetectOpticalPhotons
@@ -170,7 +187,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
         G4cout << "remoll: To save optical photon hits, use the following in gdml:" << G4endl;
         G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"opticalphoton\"/>" << G4endl;
         G4cout << "remoll: or use the following in your macro:" << G4endl;
-        G4cout << "remoll:   /remoll/SD/detect opticalphoton 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/detect opticalphoton " << fDetNo << G4endl;
         has_been_warned = true;
       }
       return false;
@@ -181,14 +198,14 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     G4double charge = particle->GetPDGCharge();
     if (! fDetectLowEnergyNeutrals
         && particle != G4OpticalPhoton::OpticalPhotonDefinition()
-        && charge == 0.0 && track->GetTotalEnergy() < 0.1*CLHEP::MeV) {
+        && charge == 0.0 && track->GetKineticEnergy() < 0.1*CLHEP::MeV) {
       static bool has_been_warned = false;
       if (! has_been_warned) {
         G4cout << "remoll: <0.1 MeV neutrals simulated but not stored for some detectors." << G4endl;
         G4cout << "remoll: To save low energy neutral hits, use the following in gdml:" << G4endl;
         G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"lowenergyneutral\"/>" << G4endl;
         G4cout << "remoll: or use the following in your macro:" << G4endl;
-        G4cout << "remoll:   /remoll/SD/detect lowenergyneutral 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/detect lowenergyneutral " << fDetNo << G4endl;
         has_been_warned = true;
       }
       return false;
@@ -205,7 +222,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
       G4VUserTrackInformation* usertrackinfo = track->GetUserInformation();
       remollUserTrackInformation* remollusertrackinfo =
           dynamic_cast<remollUserTrackInformation*>(usertrackinfo);
-      if (remollusertrackinfo) {
+      if (remollusertrackinfo != nullptr) {
         // if stored postpoint status is fGeomBoundary
         if (remollusertrackinfo->GetStepStatus() == fGeomBoundary)
           firststepinvolume = true;
@@ -222,7 +239,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
         G4cout << "remoll: To save entry boundary hits alone, use the following in gdml:" << G4endl;
         G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"boundaryhits\"/>" << G4endl;
         G4cout << "remoll: or use the following in your macro:" << G4endl;
-        G4cout << "remoll:   /remoll/SD/detect boundaryhits 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/detect boundaryhits " << fDetNo << G4endl;
         has_been_warned = true;
       }
       return false;
@@ -239,7 +256,7 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
         G4cout << "remoll: To save secondary track hits too, use the following in gdml:" << G4endl;
         G4cout << "remoll:   <auxiliary auxtype=\"DetType\" auxvalue=\"secondaries\"/>" << G4endl;
         G4cout << "remoll: or use the following in your macro:" << G4endl;
-        G4cout << "remoll:   /remoll/SD/detect secondaries 4001" << G4endl;
+        G4cout << "remoll:   /remoll/SD/detect secondaries " << fDetNo << G4endl;
         has_been_warned = true;
       }
       return false;
@@ -269,9 +286,13 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     G4ThreeVector local_position = point->GetTouchable()->GetHistory()->GetTopTransform().TransformPoint(global_position);
     hit->f3X  = global_position;
     hit->f3Xl = local_position;
-
     hit->f3V  = track->GetVertexPosition();
-    hit->f3P  = track->GetMomentum();
+    
+    G4ThreeVector global_momentum = track->GetMomentum();
+    //just do the rotation without the translation
+    hit->f3Pl = point->GetTouchable()->GetHistory()->GetTopTransform().TransformAxis(global_momentum);
+    hit->f3P  = global_momentum;
+
     hit->f3S  = track->GetPolarization();
 
     hit->fTime = point->GetGlobalTime();
@@ -281,6 +302,8 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     hit->fP = track->GetMomentum().mag();
     hit->fE = track->GetTotalEnergy();
     hit->fM = particle->GetPDGMass();
+    hit->fK = track->GetKineticEnergy();
+    hit->fBeta = track->GetVelocity() / c_light;
 
     hit->fTrID  = track->GetTrackID();
     hit->fmTrID = track->GetParentID();

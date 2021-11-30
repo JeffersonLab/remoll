@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
+<gdml 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+</define>
+
+<solids>
+  <box lunit="m" name="righthut_world_solid" 
+       x="4.4" y="3.6" z="4.2"/> 
+
+  <box lunit="m" name="righthut_front_solid" 
+       x="4.2" y="2.5" z="1.0"/> 
+
+  <box lunit="m" name="righthut_side_solid" 
+       x="1.0" y="2.5" z="3.0"/> 
+
+  <box lunit="m" name="righthut_top_solid" 
+       x="4.2" y="1.0" z="4.0"/> 
+
+  <box lunit="m" name="righthut_Det_inside_solid" 
+       x="2.2-0.01" y="2.5-0.01" z="3.0-0.01"/> 
+
+  <box lunit="m" name="righthut_Det_outside_box1" 
+       x="4.4-0.02" y="3.6-0.02" z="4.2-0.02"/> 
+
+  <box lunit="m" name="righthut_Det_outside_box2" 
+       x="4.4-0.09" y="3.6+0.5-0.09" z="4.2-0.09"/> 
+
+  <subtraction name ="righthut_Det_outside_solid">
+    <first ref="righthut_Det_outside_box1"/>
+    <second ref="righthut_Det_outside_box2"/>
+    <position name="righthut_DetSub_pos" unit="mm" x="0" y=" -500./2" z="0" />
+  </subtraction>
+
+  
+</solids>
+
+<structure>
+  <volume name="righthut_front_logic">
+    <materialref ref="Concrete"/>
+    <solidref ref="righthut_front_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Green"/>
+  </volume>
+
+  <volume name="righthut_side_logic">
+    <materialref ref="Concrete"/>
+    <solidref ref="righthut_side_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Green"/>
+  </volume>
+
+  <volume name="righthut_top_logic">
+    <materialref ref="Concrete"/>
+    <solidref ref="righthut_top_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Green"/>
+  </volume>
+
+  <volume name="righthut_Det_inside_logic">
+    <materialref ref="Vacuum"/>
+    <solidref ref="righthut_Det_inside_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    <auxiliary auxtype="SensDet" auxvalue="hutDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="6668"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="righthut_Det_outside_logic">
+    <materialref ref="Vacuum"/>
+    <solidref ref="righthut_Det_outside_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    <auxiliary auxtype="SensDet" auxvalue="hutDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="6669"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+
+  <volume name="righthut">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="righthut_world_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    
+    <physvol name="righthut_front_pv">
+      <volumeref ref="righthut_front_logic"/>
+      <position name="righthut_front_pos" unit="mm" x="0" y="-550" z="-1500"/>
+    </physvol>
+	   
+    <physvol name="righthut_side_pv1">
+      <volumeref ref="righthut_side_logic"/>
+      <position name="righthut_side_pos1" unit="mm" x="1100+500" y="-550" z="-4200./2+(3000./2+1000+100)"/>
+    </physvol>
+    
+    <physvol name="righthut_side_pv2">
+      <volumeref ref="righthut_side_logic"/>
+      <position name="righthut_side_pos2" unit="mm" x="-(1100+500)" y="-550" z="-4200./2+(3000./2+1000+100)"/>
+    </physvol>
+    
+    <physvol name="righthut_top_pv">
+      <volumeref ref="righthut_top_logic"/>
+      <position name="righthut_top_pos" unit="mm" x="0" y="3600./2.-100-500" z="0.0"/>
+    </physvol>
+    
+    <physvol name="righthut_Det_inside_pv">
+      <volumeref ref="righthut_Det_inside_logic"/>
+      <position name="righthut_Det_inside_pos" unit="mm" x="0" y="-550" z="(1000.)/2."/>
+    </physvol>
+    
+    <physvol name="righthut_Det_outside_pv">
+      <volumeref ref="righthut_Det_outside_logic"/>
+      <position name="righthut_Det_outside_pos" unit="mm" x="0" y="0" z="0.0"/>
+    </physvol>
+ 
+  </volume>
+
+</structure>
+
+<setup name="righthutshield" version="1.0">
+  <world ref="righthut"/>
+</setup>
+
+</gdml>

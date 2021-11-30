@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define>
+  </define>
+
+  <materials>
+  </materials>
+
+  <solids>
+
+    <box lunit="cm" name="diffuserPlate_world" x="51." y="51."
+	 z="6*2.54"/>
+
+    <box lunit="cm" name="diffuserPlateSingle_solid" x="50." y="50."
+	 z="3.026"/>
+
+    <box lunit="cm" name="diffuserPlateBackDet_solid" x="50." y="50."
+	 z="0.1"/>
+
+    <!-- based on drawing JL0058964 -->
+    <!-- Plate labeled 6 0.125 in-->
+    <box lunit="cm" name="diffuserPlate_solid0" x="50." y="50."
+	 z="0.318"/>
+    <!-- Plate labeled 5,4 0.094 in-->
+    <box lunit="cm" name="diffuserPlate_solid1" x="50." y="50."
+	 z="0.239"/>
+    <!-- Plate labeled 3 0.063 in-->
+    <box lunit="cm" name="diffuserPlate_solid2" x="50." y="50."
+	 z="0.160"/>
+    <!-- Plate labeled 2 0.032 in-->
+    <box lunit="cm" name="diffuserPlate_solid3" x="50." y="50."
+	 z="0.081"/>
+    <tube name="diffuserBolt_solid" aunit="deg" startphi="0" deltaphi="360"
+	  lunit="cm" rmin="0.0" rmax="1"
+	  z="5*2.54"/>
+    <union name="diffuserPlate_solid4">
+      <first ref="diffuserBolt_solid"/>
+      <second ref="diffuserPlate_solid0"/>
+      <position name="diffuserPlate_unionPos1"
+		y="20" z="-6.141"/><!--(-5*2.54 + 0.318 + 0.1)/2/> -->
+    </union>
+    <union name="diffuserPlate_solid5">
+      <first ref="diffuserPlate_solid4"/>
+      <second ref="diffuserPlate_solid0"/>
+      <position name="diffuserPlate_unionPos2"
+		y="20" z="-5.107"/><!-- (-5*2.54 + 0.318 + 0.1)/2 + 0.318 + 0.716 -->
+    </union>
+    <union name="diffuserPlate_solid6">
+      <first ref="diffuserPlate_solid5"/>
+      <second ref="diffuserPlate_solid0"/>
+      <position name="diffuserPlate_unionPos3"
+		y="20" z="-4.073"/><!-- (-5*2.54 + 0.318 + 0.1)/2 + 2*(0.318 + 0.716) -->
+    </union>
+    <union name="diffuserPlate_solid7">
+      <first ref="diffuserPlate_solid6"/>
+      <second ref="diffuserPlate_solid0"/>
+      <position name="diffuserPlate_unionPos4"
+		y="20" z="-3.039"/><!-- (-5*2.54 + 0.318 + 0.1)/2 + 3*(0.318 + 0.716) -->
+    </union>
+    <union name="diffuserPlate_solid8">
+      <first ref="diffuserPlate_solid7"/>
+      <second ref="diffuserPlate_solid0"/>
+      <position name="diffuserPlate_unionPos5"
+		y="20" z="-2.005"/><!-- (-5*2.54 + 0.318 + 0.1)/2 + 4*(0.318 + 0.716) -->
+    </union>
+    <union name="diffuserPlate_solid9">
+      <first ref="diffuserPlate_solid8"/>
+      <second ref="diffuserPlate_solid1"/>
+      <position name="diffuserPlate_unionPos6"
+		y="20" z="-1.011"/><!-- (-5*2.54 + 0.239 + 0.1)/2 + 5*0.318 + 5*0.716 -->
+    </union>
+    <union name="diffuserPlate_solid10">
+      <first ref="diffuserPlate_solid9"/>
+      <second ref="diffuserPlate_solid1"/>
+      <position name="diffuserPlate_unionPos7"
+		y="20" z="-0.056"/><!-- (-5*2.54 + 0.239 + 0.1)/2 + 5*0.318 + 0.239 + 6*0.716 -->
+    </union>
+    <union name="diffuserPlate_solid11">
+      <first ref="diffuserPlate_solid10"/>
+      <second ref="diffuserPlate_solid1"/>
+      <position name="diffuserPlate_unionPos8"
+		y="20" z="0.900"/><!-- (-5*2.54 + 0.239 + 0.1)/2 + 5*0.318 + 2*0.239 + 7*0.716 -->
+    </union>
+    <union name="diffuserPlate_solid12">
+      <first ref="diffuserPlate_solid11"/>
+      <second ref="diffuserPlate_solid1"/>
+      <position name="diffuserPlate_unionPos9"
+		y="20" z="1.855"/><!-- (-5*2.54 + 0.239 + 0.1)/2 + 5*0.318 + 3*0.239 + 8*0.716 -->
+    </union>
+    <union name="diffuserPlate_solid13">
+      <first ref="diffuserPlate_solid12"/>
+      <second ref="diffuserPlate_solid2"/>
+      <position name="diffuserPlate_unionPos10"
+		y="20" z="2.77"/><!-- (-5*2.54 + 0.160 + 0.1)/2 + 5*0.318 + 4*0.239 + 9*0.716 -->
+    </union>
+    <union name="diffuserPlate_solid14">
+      <first ref="diffuserPlate_solid13"/>
+      <second ref="diffuserPlate_solid2"/>
+      <position name="diffuserPlate_unionPos11"
+		y="20" z="3.65"/><!-- (-5*2.54 + 0.160 + 0.1)/2 + 5*0.318 + 4*0.239 + 0.160 + 10*0.716 -->
+    </union>
+    <union name="diffuserPlate_solid15">
+      <first ref="diffuserPlate_solid14"/>
+      <second ref="diffuserPlate_solid3"/>
+      <position name="diffuserPlate_unionPos12"
+		y="20" z="4.483"/><!-- (-5*2.54 + 0.081 + 0.1)/2 + 5*0.318 + 4*0.239 + 2*0.160 + 11*0.716 -->
+    </union>
+    <union name="diffuserPlate_solid16">
+      <first ref="diffuserPlate_solid15"/>
+      <second ref="diffuserPlate_solid3"/>
+      <position name="diffuserPlate_unionPos13"
+		y="20" z="5.28"/><!-- (-5*2.54 + 0.081 + 0.1)/2 + 5*0.318 + 4*0.239 + 2*0.160 + 12*0.716 + 0.081 -->
+    </union>
+
+  </solids>
+
+  <structure>
+    <!-- <volume name="diffuserPlate_logic"> -->
+    <!--   <materialref ref="G4_Al"/> -->
+    <!--   <solidref ref="diffuserPlate_solid16"/> -->
+    <!-- </volume> -->
+
+    <volume name="diffuserPlate_logic">
+      <materialref ref="G4_Al"/>
+      <solidref ref="diffuserPlateSingle_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+
+    <volume name="diffuserPlateBackDet_logic">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="diffuserPlateBackDet_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="51"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    </volume>
+
+    <volume name="diffuserRegion">
+      <materialref ref="G4_AIR"/>
+      <solidref ref="diffuserPlate_world"/>
+
+      <physvol name="diffuser">
+	<volumeref ref="diffuserPlate_logic"/>
+	<position name="diffuserBolt_position" z="0"/>
+      </physvol>
+
+      <physvol name="diffuserBackDet">
+	<volumeref ref="diffuserPlateBackDet_logic"/>
+	<position name="diffuserBackDet_position" z="20"/>
+      </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
+    </volume>
+
+  </structure>
+
+
+  <setup name="dumpDiffuser" version="1.0">
+    <world ref="diffuserRegion"/>
+  </setup>
+
+</gdml>

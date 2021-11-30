@@ -138,7 +138,7 @@ void remollGenAl::GenInelastic(G4double beamE,G4double theta,
     G4int A=27;
     G4int Z=13;
     G4int bad=F1F2IN09(Z, A, Q2/GeV/GeV, W2/GeV/GeV, F1, F2);  
-    if(bad){
+    if(bad != 0){
       G4cerr << "ERROR: " << __FILE__ << " line " << __LINE__ << G4endl;	
       G4cerr << "  result was (-1 = Q2,W2 out of range in resmodd | -2 = A<3 | 1 inf/nan F1/F2) : " << bad <<G4endl;
       G4cerr << "     Q2 W2 A "<<Q2/GeV/GeV<<" "<<W2/GeV/GeV<<" "<<A<< G4endl;
@@ -207,7 +207,7 @@ void remollGenAl::GenQuasiElastic(G4double beamE,G4double theta,
   effectiveXsection = xsect;
 
   ///~~~ Aymmetry calculation
-  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (QWp);
+  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2 * (QWp);
 }
 
 void remollGenAl::GenElastic(G4double beamE,G4double theta,
@@ -252,5 +252,5 @@ void remollGenAl::GenElastic(G4double beamE,G4double theta,
   fWeight = effectiveXsection*sin(theta);  
   
   ///~~~ Aymmetry calculation
-  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2/GeV/GeV * (QWp + QWn*(A-Z)/Z);
+  asym= -GF/(4.*pi*fine_structure_const*sqrt(2.)) * Q2 * (QWp + QWn*(A-Z)/Z);
 }

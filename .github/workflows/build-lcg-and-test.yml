@@ -1,0 +1,96 @@
+name: Build LCG and Test
+
+on: [push, pull_request]
+
+env:
+  LCG: "LCG_101"
+  sys: "x86_64-ubuntu2004-gcc9-opt"
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cvmfs-contrib/github-action-cvmfs@v2
+      with:
+        cvmfs_repositories: 'sft.cern.ch,geant4.cern.ch'
+    - uses: aidasoft/run-lcg-view@v1
+      with:
+        release-platform: ${{ env.LCG }}/${{ env.sys }}
+        run: |
+          cmake -Bbuild -S. -DCMAKE_INSTALL_PREFIX=install/
+          cmake --build build 
+          cmake --build build --target install
+    - run: |
+        tar -cvf install.tar install/
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ env.LCG }}-${{ env.sys }}
+        path: install.tar
+        retention-days: 1
+          
+  test_geometries:
+    runs-on: ubuntu-20.04
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: ["load", "validate", "overlap"]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cvmfs-contrib/github-action-cvmfs@v2
+      with:
+        cvmfs_repositories: 'sft.cern.ch,geant4.cern.ch'
+    - uses: actions/download-artifact@v2
+      with:
+        name: ${{ env.LCG }}-${{ env.sys }}
+    - run: |
+        tar -xvf install.tar
+    - uses: aidasoft/run-lcg-view@v1
+      with:
+        release-platform: ${{ env.LCG }}/${{ env.sys }}
+        run: |
+          mkdir -p logfiles rootfiles
+          source install/bin/remoll.sh
+          scripts/tests/test_geometries.sh ${{ matrix.suite }}
+          ls -al logfiles rootfiles
+    - uses: actions/upload-artifact@v2
+      with:
+        name: test_geometries_${{ matrix.suite }}_logfiles
+        path: |
+          logfiles/
+        retention-days: 3
+
+  test_macros:
+    runs-on: ubuntu-20.04
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        suite: ["unit", "commit", "release"]
+    steps:
+    - uses: actions/checkout@v2
+    - uses: cvmfs-contrib/github-action-cvmfs@v2
+      with:
+        cvmfs_repositories: 'sft.cern.ch,geant4.cern.ch'
+    - uses: actions/download-artifact@v2
+      with:
+        name: ${{ env.LCG }}-${{ env.sys }}
+    - run: |
+        tar -xvf install.tar
+    - uses: aidasoft/run-lcg-view@v1
+      with:
+        release-platform: ${{ env.LCG }}/${{ env.sys }}
+        run: |
+          mkdir -p logfiles rootfiles
+          source install/bin/remoll.sh
+          scripts/tests/test_macros.sh ${{ matrix.suite }}
+          ls -al logfiles rootfiles
+    - uses: actions/upload-artifact@v2
+      with:
+        name: test_macros_${{ matrix.suite }}_logfiles
+        path: |
+          logfiles/
+        retention-days: 3

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <polycone name="raster_beampipe_outer_solid"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="0" rmax="102" z="-20000.0"/>
+    <zplane rmin="0" rmax="102" z="-7690.0"/>
+  </polycone>
+  <polycone name="raster_beampipe_inner_solid"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="0" rmax="100" z="-20000.0"/>
+    <zplane rmin="0" rmax="100" z="-7690.0"/>
+  </polycone>
+</solids>
+
+<structure>
+  <volume name="raster_beampipe_inner_logic">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="raster_beampipe_inner_solid"/>
+  </volume>
+
+  <volume name="raster_beampipe_outer_logic">
+    <materialref ref="G4_Al"/>
+    <solidref ref="raster_beampipe_outer_solid"/>
+
+    <physvol name="raster_beampipe_inner_pv">
+      <volumeref ref="raster_beampipe_inner_logic"/>
+    </physvol>
+
+  </volume>
+
+</structure>
+
+<setup name="raster_beampipe" version="1.0">
+  <world ref="raster_beampipe_outer_logic"/>
+</setup>
+
+</gdml>

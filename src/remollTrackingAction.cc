@@ -7,13 +7,10 @@
 #include "G4Version.hh"
 #include "G4TrackingManager.hh"
 #include "G4OpticalPhoton.hh"
-#include "G4GenericMessenger.hh"
 
 remollTrackingAction::remollTrackingAction()
-: fMessenger(0),fTrackingFlag(3)
 {
-  fMessenger = new G4GenericMessenger(this,"/remoll/tracking/","Remoll tracking properties");
-  fMessenger->DeclareProperty("set",fTrackingFlag)
+  fMessenger.DeclareProperty("set",fTrackingFlag)
     .SetGuidance("Select tracking flag")
     .SetGuidance(" 0 : Track primary electrons only")
     .SetGuidance(" 1 : Track primary electrons and optical photons only")
@@ -24,15 +21,10 @@ remollTrackingAction::remollTrackingAction()
     .SetStates(G4State_PreInit,G4State_Idle);
 }
 
-remollTrackingAction::~remollTrackingAction()
-{
-  delete fMessenger;
-}
-
 void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 {
   G4VUserTrackInformation* usertrackinfo = aTrack->GetUserInformation();
-  if (! usertrackinfo) {
+  if (usertrackinfo == nullptr) {
     #if G4VERSION_NUMBER >= 1030
     aTrack->SetUserInformation(new remollUserTrackInformation());
     #else
@@ -77,10 +69,10 @@ void remollTrackingAction::PreUserTrackingAction(const G4Track* aTrack)
 void remollTrackingAction::PostUserTrackingAction(const G4Track* aTrack)
 {
   G4VUserTrackInformation* usertrackinfo = aTrack->GetUserInformation();
-  if (usertrackinfo) {
+  if (usertrackinfo != nullptr) {
     remollUserTrackInformation* remollusertrackinfo =
         dynamic_cast<remollUserTrackInformation*>(usertrackinfo);
-    if (remollusertrackinfo) {
+    if (remollusertrackinfo != nullptr) {
       G4StepStatus stepstatus = aTrack->GetStep()->GetPostStepPoint()->GetStepStatus();
       remollusertrackinfo->SetStepStatus(stepstatus);
     }

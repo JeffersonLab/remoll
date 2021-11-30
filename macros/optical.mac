@@ -24,7 +24,7 @@
 /remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
 /remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
 
-/remoll/kryptonite/set false
+/remoll/kryptonite/disable
 
 /remoll/filename remollout.root
 

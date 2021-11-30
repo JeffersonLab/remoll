@@ -5,7 +5,7 @@
 <!ENTITY materials SYSTEM "../materials.xml">
 ]>
 
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
   <define>
     &matrices;
@@ -13,8 +13,9 @@
     <constant name="y_increase_targ" value="0.0"/>
     <constant name="YOFFSET_targ" value="-1*y_increase_targ/2"/>
 
+    <constant name="targetCenterZ" value="0"/>
     <constant name="tubeTarget_rmax" value="40"/>
-    <constant name="tubeTarget_length" value="1500"/>
+    <constant name="tubeTarget_length" value="1250"/>
     <constant name="AlWindowTarget_length" value="0.127"/>
 
     <!-- Mother volume parameters -->
@@ -370,21 +371,21 @@
  <structure>
 
    <volume name="h2Targ">
-     <materialref ref="LiquidHydrogen"/>
+     <materialref ref="G4_lH2"/>
      <solidref ref="tubeTarget"/>
      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
    </volume>
 
    <volume name="USAlTarg">
-     <materialref ref="Aluminum"/>
+     <materialref ref="G4_Al"/>
      <solidref ref="AlWindow"/>
-     <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
+     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
    </volume>
 
    <volume name="DSAlTarg">
-     <materialref ref="Aluminum"/>
+     <materialref ref="G4_Al"/>
      <solidref ref="AlWindow"/>
-     <!-- <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/> -->
+     <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
    </volume>
 
    <volume name="TargShield_topdisk_logic">
@@ -492,17 +493,17 @@
 
      <physvol>
        <volumeref ref="USAlTarg"/>
-       <position name="targ_upstream_window" unit="mm" x="0" y="YOFFSET_targ" z="-750-1"/>
+       <position name="targ_upstream_window" unit="mm" x="0" y="YOFFSET_targ" z="targetCenterZ-(AlWindowTarget_length+tubeTarget_length)/2"/>
      </physvol>
 
      <physvol>
        <volumeref ref="h2Targ"/>
-       <position name="targ_center1" unit="mm" x="0" y="YOFFSET_targ" z="0"/>
+       <position name="targ_center1" unit="mm" x="0" y="YOFFSET_targ" z="targetCenterZ"/>
      </physvol>
 
      <physvol>
        <volumeref ref="DSAlTarg"/>
-       <position name="targ_downstream_window" unit="mm" x="0" y="YOFFSET_targ" z="750+1"/>
+       <position name="targ_downstream_window" unit="mm" x="0" y="YOFFSET_targ" z="targetCenterZ+(AlWindowTarget_length+tubeTarget_length)/2"/>
      </physvol>
 
      <physvol>

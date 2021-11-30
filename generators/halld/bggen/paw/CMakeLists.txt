@@ -36,6 +36,9 @@ endif (Fortran_COMPILER_NAME MATCHES "gfortran.*")
 execute_process(COMMAND cernlib -dy packlib mathlib OUTPUT_VARIABLE CERNLIB)
 string(STRIP ${CERNLIB} CERNLIB)
 
+# links
+execute_process(COMMAND ./bggen.sh WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+
 # executable
 add_executable(bgg_read.exe bgg_read.f)
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schema/gdml.xsd">
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
   <quantity name="pionDetectorTSThickness" type="length" value="2.54" unit="cm"/>
   <quantity name="pionDetectorTSWidth" type="length" value="70.0" unit="cm"/>
-  <quantity name="pionDetectorTSHeight" type="length" value="60.0" unit="cm"/>
+  <quantity name="pionDetectorTSHeight" type="length" value="16.0" unit="cm"/>
 </define>
 
 <materials>
@@ -30,7 +30,7 @@
   </volume>
 
   <volume name="pionDetectorTS_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorTSPlane_solid"/>
 
     <physvol name="pionDetectorTS_physical">

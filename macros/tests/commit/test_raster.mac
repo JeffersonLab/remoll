@@ -1,14 +1,12 @@
 # This must be called before initialize
 /remoll/geometry/setfile geometry/mollerMother.gdml
 /remoll/parallel/setfile geometry/mollerParallel.gdml 
-/remoll/physlist/parallel/enable
 
 # This must be explicitly called
 /run/initialize
 
 # Field maps
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+/control/execute macros/load_magnetic_fieldmaps.mac
 
 # Raster and initial angle stuff
 /remoll/oldras true
@@ -50,21 +48,14 @@
 #/remoll/evgen/phmin -20.0 deg
 #/remoll/evgen/phmax +20.0 deg
 
-# Target positioning
-#/remoll/targpos  10 cm
-#/remoll/targlen 100 cm
-
 # Beam current for rate
 /remoll/beamcurr 85 microampere
 
-# Make interactions with W, Cu, and Pb
-# realistic rather than pure absorbers
-/remoll/kryptonite/set true
-
+# Seed
 /remoll/seed 123456
 
 # Output
 /remoll/filename test_raster.root
 
 # Shoot
-/run/beamOn 1000
+/run/beamOn 100

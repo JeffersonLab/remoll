@@ -7,34 +7,66 @@
 -->
      
 <!-- Hall center position (MOLLER target is upstream of pivot) -->
-<position name="hallCenter" x="0" y="0" z="6087." unit="mm"/>
+<position name="hallCenter" x="0.0" y="0.0" z="0.0" unit="mm"/>
 
 <!-- Target position -->
-<position name="targetCenter" x="0" y="0" z="0" unit="mm"/>
+<position name="targetCenter" x="0.0" y="0.0" z="-4500.00" unit="mm"/>
 
 <!-- Upstream spectrometer position -->
-<position name="upstreamCenter" x="0" y="0" z="7000." unit="mm"/>
+<position name="upstreamCenter" x="0.0" y="0.0" z="2000.00" unit="mm"/>
 
 <!-- Hybrid spectrometer position -->
-<position name="hybridCenter" x="0" y="0" z="13366.57" unit="mm"/>
+<position name="hybridCenter" x="0.0" y="0.0" z="11016.865-8.73/2" unit="mm"/>
 
-<!-- Physical tracking detector position -->
-<position name="trackingCenter" x="0" y="0" z="26635." unit="mm"/>
 <!-- Virtual planes in the parallel world -->
-<position name="trackingDetectorVirtualPlaneCenter_pos" z="25.635" unit="m"/>
-<position name="trackingDetectorVirtualPlaneFront1_pos" z="-1.45" unit="m"/>
-<position name="trackingDetectorVirtualPlaneFront2_pos" z="-1.25" unit="m"/>
-<position name="trackingDetectorVirtualPlaneBack1_pos"  z="+1.25" unit="m"/>
-<position name="trackingDetectorVirtualPlaneBack2_pos"  z="+1.45" unit="m"/>
+<position name="trackingDetectorVirtualPlaneFront1_pos" z="19.280" unit="m"/>
+<position name="trackingDetectorVirtualPlaneFront2_pos" z="19.280+0.500" unit="m"/>
+<position name="trackingDetectorVirtualPlaneBack1_pos"  z="20.194" unit="m"/>
+<position name="trackingDetectorVirtualPlaneBack2_pos"  z="20.194+0.500" unit="m"/>
 
 <!-- Physical main detector array position -->
-<position name="detectorCenter" x="0" y="0" z="28500." unit="mm"/>
+<position name="detectorCenter" x="0.0" y="0.0" z="22000.00" unit="mm"/>
+
+<!--position of right electronics shield hut -->
+<position name="righthut_pos" x="-5000" y="-3000.+3600./2+20" z="22000"/> <!--Beam height from hall floor is 3m; 3600mm is det hut height.-->
+	
+<!--position of left electronics shield hut -->
+<position name="lefthut_pos" x="5000" y="-3000.+3600./2+20" z="22000"/> <!--Beam height from hall floor is 3m; 3600mm is det hut height.-->
+	
 <!-- Virtual planes in the parallel world -->
-<position name="mainDetectorVirtualPlane_pos" z="28.500" unit="m"/>
+<position name="mainDetectorVirtualPlane_pos" z="22000.00" unit="mm"/>
 
-<!-- Z position of the plane about which the two arrays of showermax
-detectors are placed -->
-<position name="showerMaxDetectorCenter" x="0" y="0" z="28750." unit="mm"/>
+<!-- Z position of center of the two arrays of showermax detectors -->
+<position name="showerMaxDetectorFaceUS" z="23920.00-87.00" unit="mm"/>
+<position name="showerMaxDetectorCenter" z="23920.00" unit="mm"/>
 
-<!-- Z position of the center of the lucite stack of the pion detector. -->
-<position name="pionDetectorCenter" x="0" y="0" z="29600." unit="mm"/>
+<!-- Z position of the US and DS face of the concrete and lead donut (400 mm thick) -->
+<position name="donutConcreteLeadFaceUS" z="24450.00" unit="mm"/>
+<position name="donutConcreteLeadFaceDS" z="24450.00+400.00" unit="mm"/>
+
+<!-- Z position of the US and DS face of the pion detector system -->
+<position name="pionDetectorSystemFaceUS" z="24850.00" unit="mm"/>
+<position name="pionDetectorSystemFaceDS" z="24850.00+1200.00" unit="mm"/>
+<!-- Virtual planes in the parallel world -->
+<position name="pionDetectorVirtualPlane_pos" z="24900.00+450.00" unit="mm"/>
+
+<!-- Beamline detectors for radiation -->
+<position name="collar1VirtualPlane_pos" z="12250.00" unit="mm"/>
+<position name="collar2VirtualPlane_pos" z="18900.00" unit="mm"/>
+<position name="gemVirtualPlane_pos" z="20375.00" unit="mm"/>
+<position name="SAMus_neckdown_VirtualPlane_pos" z="24882.42" unit="mm"/>
+<position name="SAMds_neckdown_VirtualPlane_pos" z="25280.87" unit="mm"/>
+<position name="SAMus_flange_VirtualPlane_pos" z="26424.6" unit="mm"/>
+<position name="SAMds_flange_VirtualPlane_pos" z="26550.00" unit="mm"/>
+<position name="dumpEntranceVirtualPlane_pos" z="26500.00" unit="mm"/>
+<position name="donutUSVirtualPlane_pos" z="24450.00" unit="mm"/>
+<position name="donutDSVirtualPlane_pos" z="24450.00+400.00" unit="mm"/>
+<position name="n2atmoVirtualPlane_pos" z="31525.00" unit="mm"/>
+
+<!-- Sieve position -->
+<position name="sieveActualCenter_pos" z="-1895.00" x="200" unit="mm"/>
+<position name="sieveVirtualPlane_pos" z="-1895.00" unit="mm"/>
+
+<!-- Showermax virtual plane detector position (between open and trans)  -->
+<position name="showerMaxVirtualPlane_pos" z="23920.00-97.00" unit="mm"/>
+

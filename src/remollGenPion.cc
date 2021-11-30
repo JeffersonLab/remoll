@@ -1,7 +1,6 @@
 #include "remollBeamTarget.hh"
 #include "remollGenPion.hh"
 
-#include "G4GenericMessenger.hh"
 #include "G4String.hh"
 #include "Randomize.hh"
 
@@ -34,8 +33,8 @@ remollGenPion::remollGenPion()
     fE_max = -1.0*GeV; // negative to automatically pick beam energy
 
     // Add to generic messenger
-    fThisGenMessenger->DeclareMethod("piontype",&remollGenPion::SetPionTypeByString_Deprecated,"Generate pion type");
-    fThisGenMessenger->DeclareMethod("settype",&remollGenPion::SetPionTypeByString,"Generate pion type");
+    fThisGenMessenger.DeclareMethod("piontype",&remollGenPion::SetPionTypeByString_Deprecated,"Generate pion type");
+    fThisGenMessenger.DeclareMethod("settype",&remollGenPion::SetPionTypeByString,"Generate pion type");
 }
 
 remollGenPion::~remollGenPion() { }

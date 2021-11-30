@@ -3,7 +3,6 @@
 #include "G4TransportationManager.hh"
 #include "G4FieldManager.hh"
 #include "G4UImanager.hh"
-#include "G4GenericMessenger.hh"
 
 #include "G4PropagatorInField.hh"
 
@@ -33,13 +32,11 @@
 
 #define __GLOBAL_NDIM 3
 
-G4ThreadLocal remollGlobalField* remollGlobalField::fObject = 0;
+#include "G4Threading.hh"
+#include "G4AutoLock.hh"
+namespace { G4Mutex remollGlobalFieldMutex = G4MUTEX_INITIALIZER; }
 
-remollGlobalField* remollGlobalField::GetObject()
-{
-  if (!fObject) new remollGlobalField();
-  return fObject;
-}
+std::vector<remollMagneticField*> remollGlobalField::fFields;
 
 remollGlobalField::remollGlobalField()
 // NOTE: when changing defaults below, also change guidance in messenger commands
@@ -49,11 +46,9 @@ remollGlobalField::remollGlobalField()
   fEpsMin(1.0e-5*mm),fEpsMax(1.0e-4*mm),
   fEquation(0),fEquationDoF(0),
   fFieldManager(0),fFieldPropagator(0),
-  fStepper(0),fChordFinder(0)
+  fStepper(0),fChordFinder(0),
+  fVerboseLevel(0)
 {
-    // Set static pointer
-    fObject = this;
-
     // Get field propagator and managers
     G4TransportationManager* transportationmanager = G4TransportationManager::GetTransportationManager();
     fFieldPropagator = transportationmanager->GetPropagatorInField();
@@ -69,32 +64,31 @@ remollGlobalField::remollGlobalField()
     fFieldManager->SetDetectorField(this);
 
     // Create generic messenger
-    fMessenger = new G4GenericMessenger(this,"/remoll/","Remoll properties");
-    fMessenger->DeclareMethod("addfield",&remollGlobalField::AddNewField,"Add magnetic field");
-    fMessenger->DeclareMethod("scalefield",&remollGlobalField::SetFieldScaleByString,"Scale magnetic field");
-    fMessenger->DeclareMethod("magcurrent",&remollGlobalField::SetMagnetCurrentByString,"Scale magnetic field by current");
+    fMessenger.DeclareMethod("addfield",&remollGlobalField::AddNewField,"Add magnetic field");
 
     // Create global field messenger
-    fGlobalFieldMessenger = new G4GenericMessenger(this,"/remoll/field/","Remoll global field properties");
-    fGlobalFieldMessenger->DeclareMethod("equationtype",&remollGlobalField::SetEquationType,"Set equation type: \n 0: B-field, no spin (default); \n 2: B-field, with spin");
-    fGlobalFieldMessenger->DeclareMethod("steppertype",&remollGlobalField::SetStepperType,"Set stepper type: \n 0: ExplicitEuler; \n 1: ImplicitEuler; \n 2: SimpleRunge; \n 3: SimpleHeum; \n 4: ClassicalRK4 (default); \n 5: CashKarpRKF45");
-    fGlobalFieldMessenger->DeclareMethod("print",&remollGlobalField::PrintAccuracyParameters,"Print the accuracy parameters");
-    fGlobalFieldMessenger->DeclareProperty("epsmin",fEpsMin,"Set the minimum epsilon of the field propagator");
-    fGlobalFieldMessenger->DeclareProperty("epsmax",fEpsMax,"Set the maximum epsilon of the field propagator");
-    fGlobalFieldMessenger->DeclareProperty("minstep",fMinStep,"Set the minimum step of the chord finder");
-    fGlobalFieldMessenger->DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
-    fGlobalFieldMessenger->DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
-    fGlobalFieldMessenger->DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
+    fGlobalFieldMessenger.DeclareMethod("equationtype",&remollGlobalField::SetEquationType,"Set equation type: \n 0: B-field, no spin (default); \n 2: B-field, with spin");
+    fGlobalFieldMessenger.DeclareMethod("steppertype",&remollGlobalField::SetStepperType,"Set stepper type: \n 0: ExplicitEuler; \n 1: ImplicitEuler; \n 2: SimpleRunge; \n 3: SimpleHeum; \n 4: ClassicalRK4 (default); \n 5: CashKarpRKF45");
+    fGlobalFieldMessenger.DeclareMethod("print",&remollGlobalField::PrintAccuracyParameters,"Print the accuracy parameters");
+    fGlobalFieldMessenger.DeclareProperty("epsmin",fEpsMin,"Set the minimum epsilon of the field propagator");
+    fGlobalFieldMessenger.DeclareProperty("epsmax",fEpsMax,"Set the maximum epsilon of the field propagator");
+    fGlobalFieldMessenger.DeclareProperty("minstep",fMinStep,"Set the minimum step of the chord finder");
+    fGlobalFieldMessenger.DeclareProperty("deltachord",fDeltaChord,"Set delta chord for the chord finder");
+    fGlobalFieldMessenger.DeclareProperty("deltaonestep",fDeltaOneStep,"Set delta one step for the field manager");
+    fGlobalFieldMessenger.DeclareProperty("deltaintersection",fMinStep,"Set delta intersection for the field manager");
+    fGlobalFieldMessenger.DeclareMethod("interpolation",&remollGlobalField::SetInterpolationType,"Set magnetic field interpolation type");
+    fGlobalFieldMessenger.DeclareMethod("zoffset",&remollGlobalField::SetZOffset,"Set magnetic field z offset");
+    fGlobalFieldMessenger.DeclareMethod("scale",&remollGlobalField::SetFieldScale,"Scale magnetic field by factor");
+    fGlobalFieldMessenger.DeclareMethod("current",&remollGlobalField::SetMagnetCurrent,"Scale magnetic field by current");
+    fGlobalFieldMessenger.DeclareMethod("value",&remollGlobalField::PrintFieldValue,"Print the field value at a given point (in m)");
+    fGlobalFieldMessenger.DeclareProperty("verbose",fVerboseLevel,"Set the verbose level");
 }
 
 remollGlobalField::~remollGlobalField()
 {
-  delete fMessenger;
-  delete fGlobalFieldMessenger;
-
-  if (fEquation)        delete fEquation;
-  if (fStepper)         delete fStepper;
-  if (fChordFinder)     delete fChordFinder;
+         delete fEquation;
+          delete fStepper;
+      delete fChordFinder;
 }
 
 void remollGlobalField::SetAccuracyParameters()
@@ -123,17 +117,17 @@ void remollGlobalField::PrintAccuracyParameters()
 
 void remollGlobalField::SetEquation()
 {
-  if (fEquation) delete fEquation;
+  delete fEquation;
 
   switch (fEquationType)
   {
     case 0:
-      G4cout << "G4Mag_UsualEqRhs is called with 6 dof" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4Mag_UsualEqRhs is called with 6 dof" << G4endl;
       fEquation = new G4Mag_UsualEqRhs(this);
       fEquationDoF = 6;
       break;
     case 2:
-      G4cout << "G4Mag_SpinEqRhs is called with 12 dof" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4Mag_SpinEqRhs is called with 12 dof" << G4endl;
       fEquation = new G4Mag_SpinEqRhs(this);
       fEquationDoF = 12;
       break;
@@ -145,33 +139,33 @@ void remollGlobalField::SetEquation()
 
 void remollGlobalField::SetStepper()
 {
-  if (fStepper) delete fStepper;
+  delete fStepper;
 
   switch (fStepperType)
   {
     case 0:
       fStepper = new G4ExplicitEuler(fEquation, fEquationDoF);
-      G4cout << "G4ExplicitEuler is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4ExplicitEuler is called" << G4endl;
       break;
     case 1:
       fStepper = new G4ImplicitEuler(fEquation, fEquationDoF);
-      G4cout << "G4ImplicitEuler is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4ImplicitEuler is called" << G4endl;
       break;
     case 2:
       fStepper = new G4SimpleRunge(fEquation, fEquationDoF);
-      G4cout << "G4SimpleRunge is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4SimpleRunge is called" << G4endl;
       break;
     case 3:
       fStepper = new G4SimpleHeum(fEquation, fEquationDoF);
-      G4cout << "G4SimpleHeum is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4SimpleHeum is called" << G4endl;
       break;
     case 4:
       fStepper = new G4ClassicalRK4(fEquation, fEquationDoF);
-      G4cout << "G4ClassicalRK4 (default) is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4ClassicalRK4 (default) is called" << G4endl;
       break;
     case 5:
       fStepper = new G4CashKarpRKF45(fEquation, fEquationDoF);
-      G4cout << "G4CashKarpRKF45 is called" << G4endl;
+      if (fVerboseLevel > 0) G4cout << "G4CashKarpRKF45 is called" << G4endl;
       break;
     default: fStepper = 0;
   }
@@ -181,7 +175,7 @@ void remollGlobalField::SetStepper()
 
 void remollGlobalField::SetChordFinder()
 {
-  if (fChordFinder) delete fChordFinder;
+  delete fChordFinder;
 
   fChordFinder = new G4ChordFinder(this,fMinStep,fStepper);
   fChordFinder->GetIntegrationDriver()->SetVerboseLevel(0);
@@ -190,137 +184,121 @@ void remollGlobalField::SetChordFinder()
 
 void remollGlobalField::AddNewField(G4String& name)
 {
-    remollMagneticField *thisfield = new remollMagneticField(name);
+  // Lock mutex to ensure only 1 thread is loading a field
+  G4AutoLock lock(&remollGlobalFieldMutex);
 
-    if (thisfield->IsInit()) {
-        fFields.push_back(thisfield);
+  // If this field has already been loaded
+  if (GetFieldByName(name) != 0) return;
 
-        // I don't know why it's necessary to do the following - SPR 1/24/13
-        // Recreating the chord finder makes stepping bearable
-        // in cases where you change the geometry.
-        G4TransportationManager::GetTransportationManager()->GetFieldManager()->CreateChordFinder(this);
+  // Load new field
+  remollMagneticField *thisfield = new remollMagneticField(name);
+  fFields.push_back(thisfield);
 
-        G4cout << __FUNCTION__ << ": field " << name << " was added." << G4endl;
+  if (fVerboseLevel > 0)
+    G4cout << __FUNCTION__ << ": field " << name << " was added." << G4endl;
 
-        // Add file data to output data stream
+  // Add file data to output data stream
+  remollRunData *rd = remollRun::GetRunData();
 
-        remollRunData *rd = remollRun::GetRunData();
+  // FIXME disabled TMD5 functionality as long as CentOS 7.2 is common
+  // due to kernel bug when running singularity containers
 
-        // FIXME disabled TMD5 functionality as long as CentOS 7.2 is common
-        // due to kernel bug when running singularity containers
+  //TMD5 *md5 = TMD5::FileChecksum(name.data());
 
-        //TMD5 *md5 = TMD5::FileChecksum(name.data());
+  filedata_t fdata;
 
-        filedata_t fdata;
+  strcpy(fdata.filename, name.data());
+  strcpy(fdata.hashsum, "no hash" ); // md5->AsString() );
 
-        strcpy(fdata.filename, name.data());
-        strcpy(fdata.hashsum, "no hash" ); // md5->AsString() );
+  //G4cout << "MD5 checksum " << md5->AsString() << G4endl;
 
-        //G4cout << "MD5 checksum " << md5->AsString() << G4endl;
+  //delete md5;
 
-        //delete md5;
+  struct stat fs;
+  stat(name.data(), &fs);
+  fdata.timestamp = TTimeStamp( fs.st_mtime );
 
-        struct stat fs;
-        stat(name.data(), &fs);
-        fdata.timestamp = TTimeStamp( fs.st_mtime );
+  if (fVerboseLevel > 0)
+    G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
 
-        G4cout << __FUNCTION__ << ": field timestamp = " << fdata.timestamp << G4endl;
-
-        rd->AddMagData(fdata);
-
-    } else {
-        G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-            << ": field " << name << " was not initialized." << G4endl;
-    }
+  rd->AddMagData(fdata);
 }
 
-remollMagneticField* remollGlobalField::GetFieldByName(const G4String& name)
+remollMagneticField* remollGlobalField::GetFieldByName(const G4String& name) const
 {
-    std::vector<remollMagneticField*>::iterator it = fFields.begin();
-    while (it != fFields.end()) {
-        if ((*it)->GetName() == name) break;
-        it++;
-    }
+    for (auto it = fFields.begin(); it != fFields.end(); it++)
+        if ((*it)->GetName() == name)
+          return (*it);
 
-    if (it != fFields.end()) {
-        return (*it);
-    } else {
-        G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-            << ": field " << name << " not found." << G4endl;
-        return NULL;
-    }
+    return 0;
 }
 
-void remollGlobalField::GetFieldValue( const G4double p[], G4double *resB) const
+void remollGlobalField::PrintFieldValue(const G4ThreeVector& r)
 {
-    G4double Bsum [__GLOBAL_NDIM], thisB[__GLOBAL_NDIM];
-
+    G4double B[__GLOBAL_NDIM];
+    G4double p[] = {r.x()*m, r.y()*m, r.z()*m, 0.0};
+    GetFieldValue(p, B);
+    G4cout << "At r" << r << " [m]: B = ";
     for (int i = 0; i < __GLOBAL_NDIM; i++) {
-        Bsum[i] = 0.0;
+        G4cout << B[i]/tesla << " ";
     }
-
-    std::vector<remollMagneticField*>::const_iterator it = fFields.begin();
-    for (it = fFields.begin(); it != fFields.end(); it++) {
-        (*it)->GetFieldValue(p, thisB);
-        for (int i = 0; i < __GLOBAL_NDIM; i++) {
-          Bsum[i] += thisB[i];
-        }
-    }
-
-    for (int i = 0; i < __GLOBAL_NDIM; i++) {
-        resB[i] = Bsum[i];
-    }
+    G4cout << "T" << G4endl;
 }
 
-void remollGlobalField::SetFieldScaleByString(G4String& name_scale)
+void remollGlobalField::GetFieldValue(const G4double p[], G4double *field) const
 {
-  std::istringstream iss(name_scale);
+    // Field is not initialized to zero by geant4
+    field[0] = 0.0;
+    field[1] = 0.0;
+    field[2] = 0.0;
+    for (auto it = fFields.begin(); it != fFields.end(); it++)
+        (*it)->AddFieldValue(p, field);
+}
 
-  G4String name, scalestr;
-  iss >> name;
-  iss >> scalestr;
+void remollGlobalField::SetZOffset(const G4String& name, G4double offset)
+{
+  remollMagneticField *field = GetFieldByName(name);
+  if (field != nullptr) {
+    G4AutoLock lock(&remollGlobalFieldMutex);
+    field->SetZoffset(offset);
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " offset failed" << G4endl;
+  }
+}
 
-  G4double scaleval = atof(scalestr);
-  SetFieldScale(name, scaleval);
+void remollGlobalField::SetInterpolationType(const G4String& name, const G4String& type)
+{
+  remollMagneticField *field = GetFieldByName(name);
+  if (field != nullptr) {
+    G4AutoLock lock(&remollGlobalFieldMutex);
+    field->SetInterpolationType(type);
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " interpolation type failed" << G4endl;
+  }
 }
 
 void remollGlobalField::SetFieldScale(const G4String& name, G4double scale)
 {
-    remollMagneticField *field = GetFieldByName(name);
-    if (field) {
-        field->SetFieldScale(scale);
-    } else {
-        G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-            << ": field " << name << " scaling failed" << G4endl;
-    }
-}
-
-void remollGlobalField::SetMagnetCurrentByString(G4String& name_scale)
-{
-  std::istringstream iss(name_scale);
-
-  G4String name, scalestr, scaleunit;
-  iss >> name;
-  iss >> scalestr;
-  iss >> scaleunit;
-
-  if (scaleunit != "A") {
-    // FIXME: less snark and more functionality?
-    G4cerr << __FILE__ << " line " << __LINE__ <<  ":\n\tGraaaah - just put the current for " <<  name <<  " in amps..." << G4endl;
-    exit(1);
+  remollMagneticField *field = GetFieldByName(name);
+  if (field != nullptr) {
+    G4AutoLock lock(&remollGlobalFieldMutex);
+    field->SetFieldScale(scale);
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " scaling failed" << G4endl;
   }
-
-  G4double scaleval = atof(scalestr);
-  SetMagnetCurrent(name, scaleval);
 }
 
-void remollGlobalField::SetMagnetCurrent(const G4String& name, G4double scale)
+void remollGlobalField::SetMagnetCurrent(const G4String& name, G4double current)
 {
-    remollMagneticField *field = GetFieldByName(name);
-    if (field) {
-        field->SetMagnetCurrent(scale);
-    } else {
-        G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
-            << ": field " << name << " scaling failed" << G4endl;
-    }
+  remollMagneticField *field = GetFieldByName(name);
+  if (field != nullptr) {
+    G4AutoLock lock(&remollGlobalFieldMutex);
+    field->SetRefCurrent(current);
+  } else {
+    G4cerr << "WARNING " << __FILE__ << " line " << __LINE__
+           << ": field " << name << " scaling failed" << G4endl;
+  }
 }

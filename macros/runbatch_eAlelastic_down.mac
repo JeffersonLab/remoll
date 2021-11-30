@@ -4,8 +4,8 @@
 # This must be explicitly called
 /run/initialize
 
-/remoll/addfield map_directory/blockyHybrid_rm_3.0.txt
-/remoll/addfield map_directory/blockyUpstream_rm_1.1.txt
+# Load magnetic fieldmaps
+/control/execute macros/load_magnetic_fieldmaps.mac
 
 # Raster and initial angle stuff
 /remoll/oldras true
@@ -19,8 +19,6 @@
 /remoll/gen elasticAl
 
 /remoll/targname DSAlTarg
-#/remoll/targpos   +75.0 cm
-#/remoll/targlen  0.0127 cm
 
 /remoll/beamcurr 85 microampere
 

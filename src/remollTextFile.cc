@@ -11,8 +11,9 @@ remollTextFile::remollTextFile()
     fFilenameSize = 0;
     fFilename = NULL;
 
-    fBufferSize = 0;
-    fBuffer = NULL;
+    fBufferSize = 1;
+    fBuffer = new char[1];
+    fBuffer[0] = '\0';
 }
 
 remollTextFile::remollTextFile(const char *fn)
@@ -20,8 +21,9 @@ remollTextFile::remollTextFile(const char *fn)
     fFilenameSize = 0;
     fFilename = NULL;
 
-    fBufferSize = 0;
-    fBuffer = NULL;
+    fBufferSize = 1;
+    fBuffer = new char[1];
+    fBuffer[0] = '\0';
 
     copyFileIn(fn);
 }
@@ -40,12 +42,12 @@ remollTextFile::remollTextFile(const remollTextFile& r)
 const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
     TObject::operator=(r);
 
-    if (fFilename) { delete[] fFilename; }
+    delete[] fFilename; 
     fFilenameSize = r.fFilenameSize;
     fFilename = new char[r.fFilenameSize];
     strncpy(fFilename, r.fFilename, fFilenameSize);
 
-    if (fBuffer) { delete[] fBuffer; }
+    delete[] fBuffer; 
     fBufferSize = r.fBufferSize;
     fBuffer = new char[r.fBufferSize];
     memcpy(fBuffer, r.fBuffer, fBufferSize);
@@ -54,8 +56,8 @@ const remollTextFile& remollTextFile::operator=(const remollTextFile& r){
 }
 
 remollTextFile::~remollTextFile(){
-    if (fFilename) { delete[] fFilename; }
-    if (fBuffer)   { delete[] fBuffer; }
+    delete[] fFilename; 
+      delete[] fBuffer; 
 }
 
 void remollTextFile::copyFileIn(const char *fn){
@@ -74,9 +76,10 @@ void remollTextFile::copyFileIn(const char *fn){
 	fFilename = new char[fFilenameSize];
 	strncpy(fFilename, fn, fFilenameSize);
 
-	fBufferSize = filedata.st_size;
-	fBuffer = new char[filedata.st_size];
+	fBufferSize = filedata.st_size+1;
+	fBuffer = new char[fBufferSize];
 	size_t size = fread(fBuffer, sizeof(char), filedata.st_size, fd);
+	fBuffer[fBufferSize-1] = '\0';
 	if( (long int) size != filedata.st_size ){
 	    fprintf(stderr, "%s line %d: ERROR file %s cannot be fully read (%lld of %lld read)\n",
 		    __PRETTY_FUNCTION__, __LINE__, fn,(unsigned long long int)  size, (unsigned long long int)  filedata.st_size);
@@ -112,14 +115,14 @@ void remollTextFile::RecreateInDir(const char *adir, bool clobber ){
     if( ret == -1 && errno != EEXIST ){ 
 	fprintf(stderr, "%s - %s\n", thisdir, strerror(errno) );
 	delete thisdir;
-	delete catpath;
+	delete[] catpath;
 	return;
     }
 
     Recreate(catpath, clobber);
 
     delete thisdir;
-    delete catpath;
+    delete[] catpath;
 }
 
 void remollTextFile::Recreate(const char *fn, bool clobber ){

@@ -4,7 +4,7 @@
 /tracking/storeTrajectory 1
 
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 
 # This must be explicitly called
 /run/initialize
@@ -44,7 +44,7 @@
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
-#/remoll/kryptonite/set true
+#/control/execute macros/kryptonite.mac
 
 
 #create moller output file

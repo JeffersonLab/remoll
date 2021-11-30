@@ -7,6 +7,7 @@
 
 #include "G4String.hh"
 #include "G4ThreeVector.hh"
+#include "G4GenericMessenger.hh"
 
 /*!
    Generic base class for event generators
@@ -23,7 +24,6 @@
 */
 
 class G4ParticleGun;
-class G4GenericMessenger;
 
 class remollEvent;
 class remollBeamTarget;
@@ -44,7 +44,9 @@ class remollVEventGen {
 	  fBeamTarg = bt;
 	}
 
-	void SetSampType( SampType_t st ) { fSampType = st; }
+	void SetSamplingType(SamplingType_t type) { fSamplingType = type; }
+	SamplingType_t GetSamplingType() const { return fSamplingType; }
+
 	void SetDoMultScatt( G4bool multscatt ){ fApplyMultScatt = multscatt; }
 
         void SetEmin(double emin) { fE_min = emin; }
@@ -90,14 +92,17 @@ public:
 
     protected:
 
-	SampType_t fSampType;
+	SamplingType_t fSamplingType;
 	G4bool     fApplyMultScatt;
 
     private:
 	// Generic messenger as protected to be used in derived classes
-	G4GenericMessenger* fEvGenMessenger;
+	G4GenericMessenger fEvGenMessenger{
+            this,
+            "/remoll/evgen/",
+            "Remoll event generator properties"};
     protected:
-	G4GenericMessenger* fThisGenMessenger;
+	G4GenericMessenger fThisGenMessenger;
 };
 
 

@@ -7,10 +7,11 @@
 */
 
 #include "G4MagneticField.hh"
+#include "G4GenericMessenger.hh"
+#include "G4ThreeVector.hh"
 
 #include <vector>
 
-class G4GenericMessenger;
 class G4EquationOfMotion;
 class G4MagIntegratorStepper;
 class G4ChordFinder;
@@ -22,19 +23,18 @@ class remollMagneticField;
 class remollGlobalField : public G4MagneticField {
     public:
         remollGlobalField();
-	virtual ~remollGlobalField();
+        virtual ~remollGlobalField();
 
-        /// GetObject() returns the single remollGlobalField object.
-        /// It is constructed, if necessary.
-        static remollGlobalField* GetObject();
+        void AddNewField(G4String& name);
 
-	void AddNewField(G4String& name);
-	void SetFieldScaleByString(G4String& name_scale);
-	void SetFieldScale(const G4String& name, G4double scale);
-        void SetMagnetCurrentByString(G4String& name_scale);
-	void SetMagnetCurrent(const G4String& name, G4double scale);
+        void SetInterpolationType(const G4String& name, const G4String& type);
+        void SetZOffset(const G4String& name, G4double offset);
+        void SetFieldScale(const G4String& name, G4double scale);
+        void SetMagnetCurrent(const G4String& name, G4double current);
 
-	void GetFieldValue(const G4double[], G4double*) const;
+        void PrintFieldValue(const G4ThreeVector&);
+
+        void GetFieldValue(const G4double[], G4double*) const;
 
     private:
         /// Set the stepper
@@ -47,6 +47,9 @@ class remollGlobalField : public G4MagneticField {
         void SetChordFinder();
 
     public:
+        /// Set verbose level
+        void SetVerboseLevel(G4int i) { fVerboseLevel = i; }
+
         /// Set the stepper types
         void SetEquationType(G4int i) { fEquationType = i; SetEquation(); }
 
@@ -89,7 +92,7 @@ class remollGlobalField : public G4MagneticField {
         G4double fEpsMax;
 
         G4EquationOfMotion*     fEquation;
-	G4int                   fEquationDoF;
+        G4int                   fEquationDoF;
 
         G4FieldManager*         fFieldManager;
         G4PropagatorInField*    fFieldPropagator;
@@ -97,15 +100,23 @@ class remollGlobalField : public G4MagneticField {
         G4ChordFinder*          fChordFinder;
 
     private:
-	std::vector<remollMagneticField*> fFields;
+        static std::vector<remollMagneticField*> fFields;
 
-	remollMagneticField* GetFieldByName(const G4String& name);
+        remollMagneticField* GetFieldByName(const G4String& name) const;
 
-	G4GenericMessenger* fMessenger;
-	G4GenericMessenger* fGlobalFieldMessenger;
+        G4GenericMessenger fMessenger{
+            this,
+            "/remoll/",
+            "Remoll properties"
+        };
+        G4GenericMessenger fGlobalFieldMessenger{
+            this,
+            "/remoll/field/",
+            "Remoll global field properties"
+        };
 
-    private:
-        static G4ThreadLocal remollGlobalField* fObject;
+        G4int fVerboseLevel;
+
 };
 
 

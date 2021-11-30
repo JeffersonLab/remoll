@@ -1,0 +1,12 @@
+/run/numberOfThreads 1
+/run/initialize
+
+/remoll/field/value 0.0 +0.16 9.55
+/remoll/field/value 0.0 -0.16 9.55
+/remoll/field/value +0.16 0.0 9.55
+/remoll/field/value -0.16 0.0 9.55
+/control/execute macros/load_magnetic_fieldmaps.mac
+/remoll/field/value 0.0 +0.16 9.55
+/remoll/field/value 0.0 -0.16 9.55
+/remoll/field/value +0.16 0.0 9.55
+/remoll/field/value -0.16 0.0 9.55
