@@ -78,7 +78,10 @@ void skimTree(string finNm, int testRun=0, int beamGen=1){
 long getEvents(string fnm){
   TFile* ifile = new TFile(fnm.c_str(),"READ");
   TTree* itree = (TTree*)ifile->Get("T");
-  long evn = itree->GetEntries();
+  long evn=0;
+  if(itree)
+    evn = itree->GetEntries();
+
   ifile->Close();
   delete ifile;
 
@@ -90,6 +93,9 @@ long processOne(string fnm){
 
   TFile* ifile = new TFile(fnm.c_str(),"READ");
   TTree* itree = (TTree*)ifile->Get("T");
+
+  if(!itree) 
+    return 0;
 
   long nEntries = itree->GetEntries();
   cout<<"\tTotal events: "<<nEntries<<endl;
@@ -103,12 +109,9 @@ long processOne(string fnm){
   for (long i=0; i < nEntries;i++){
     itree->GetEntry(i);
     for(int j=0; j<hit->size(); j++){
-      if((hit->at(j).det == 5701 || hit->at(j).det == 5702 || 
-	  hit->at(j).det == 5703 || hit->at(j).det == 5704 || 
-	  hit->at(j).det == 5705) &&
-      	 hit->at(j).r>100  && hit->at(j).pz > 0 )
-      // if(hit->at(j).det == 28 &&
-      // 	 hit->at(j).r>600 && hit->at(j).r<1200 && hit->at(j).pz<0 )
+      if((hit->at(j).det == 5522 || hit->at(j).det == 5523 || 
+	  hit->at(j).det == 5524) &&
+      	 hit->at(j).r>500  && hit->at(j).pz < 0 )
 	{
 	  newhit->push_back(hit->at(j));	
 	  newrate = rate/scaleRate;
