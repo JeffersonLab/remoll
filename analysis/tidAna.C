@@ -118,7 +118,10 @@ long processOne(string fnm){
       else if(hit->at(j).pid==22) sp=3;
       else if(hit->at(j).pid==2112) sp=4;
 
-      //cout<<nD<<" "<<sp<<endl;
+      if(hit->at(j).edep==0) continue;
+
+      // cout<<nD<<" "<<sp<<" "<<hit->at(j).edep<<endl;
+      // std::cin.ignore();
 
       hXY[nD][0][sp]->Fill(hit->at(j).x,hit->at(j).y,rate);
       hXY[nD][1][sp]->Fill(hit->at(j).x,hit->at(j).y,rate*hit->at(j).edep);
@@ -136,7 +139,8 @@ void writeOutput(){
 
   const double vol = 0.5*0.5*0.1; // cm3
   //  const double density = 2.32/1000;//SiO2 kg/cm3
-  const double density = 2.33/1000;//Si kg/cm3
+  //const double density = 2.33/1000;//Si kg/cm3
+  const double density = 1.8/1000;//Viton kg/cm3
   const double MeV2J = 1.6e-13;
   const double nElecPerS = 60e-6/(1.6e-19);
   const double h2s = 3600;
