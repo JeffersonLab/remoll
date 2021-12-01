@@ -67,9 +67,10 @@
 
     <!--Concrete Shielding-->
     <volume name="coll1TopShield_logic">
-      <materialref ref="Concrete"/>
+      <materialref ref="barite"/>
+      <!-- <materialref ref="Concrete"/> -->
       <solidref ref="coll1TopShielding_solid"/>
-      <auxiliary auxtype="Color" auxvalue="green"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
     </volume>
 
     <volume name="coll1SideShield_logic">
@@ -108,7 +109,7 @@
       <!--shielding placement-->
       <physvol name="coll1TopShielding">
         <volumeref ref="coll1TopShield_logic"/>
-        <position name="coll1TopShield_pos" unit="mm" x="0" y="915.67 + 1400/2 - 10 + 12.43" z="1287.5-250/2 - 2000 + 86/2"/>
+        <position name="coll1TopShield_pos" unit="mm" x="0" y="915.67 + 1400/2 - 10 + 13.43" z="1287.5-250/2 - 2000 + 86/2"/>
       </physvol>
 
       <physvol name="coll1LeftShielding">
