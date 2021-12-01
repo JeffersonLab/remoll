@@ -8,8 +8,8 @@
 // > gSystem->Load("radDamage_cc.so");
 //
 // //Load in the script, and run it
-// >.L pmtRegAna.C
-// > c1ShldAna(<remoll output file>)
+// >.L hybridBottomdetAna.C
+// > hybridBottomdetAna(<remoll output file>)
 
 
 R__LOAD_LIBRARY(radDamage_cc.so)
@@ -18,6 +18,7 @@ R__LOAD_LIBRARY(radDamage_cc.so)
 #include <iterator>
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 TFile *fout;
@@ -35,11 +36,11 @@ beamLineDetHistos xDet;
 
 void initHisto();
 void initHisto_detX();
-void initHisto_det5614();
+void initHisto_Botdet();
 void fillHisto_detX();
-void fillHisto_det5614();
+void fillHisto_Botdet();
 void writeOutput_detX();
-void writeOutput_det5614();
+void writeOutput_Botdet();
 
 void writeOutput();
 long processOne(string);
@@ -61,7 +62,7 @@ struct hitx{
     energy(energy_), time(time_), posx(posx_), posy(posy_), pZ(pZ_) { };
 };
 
-void c1ShldAna(const string& finName = "./remollout.root", const int testRun=0){
+void hybridBottomdetAna(const string& finName = "./remollout.root", const int testRun=0){
   fileNm = finName;
 
   initHisto();
@@ -126,8 +127,16 @@ long processOne(string fnm){
   vector<int> procID;
   int sector(-1);
 
-  std::vector<hitx> hits5614;
+  std::vector<hitx> hits5714;
   hitx bHit;
+  ofstream output_5714;
+  ofstream output_28;
+  ofstream output_28_part;
+
+  output_5714.open("output_5714_v16.txt",  ofstream::app);
+  output_28.open("output_28_v16.txt",  ofstream::app);
+  output_28_part.open("output_28_part_v16.txt",  ofstream::app);
+
   for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
     currentEvNr++;
     if( float(event+1)/nEntries*100 > currentProc){
@@ -135,12 +144,13 @@ long processOne(string fnm){
       currentProc+=procStep;
     }
    
-    hits5614.clear();
+    hits5714.clear();
 
     for(int j=0;j<hit->size();j++){
 
       if(std::isnan(rate) || std::isinf(rate)) continue;
       rate=1; //this is for beam simulations only (right now)
+      if (hit->at(j).det != 5714) continue;
 
       int sp = spM[int(hit->at(j).pid)]-1;
         
@@ -162,48 +172,19 @@ long processOne(string fnm){
       int det = hit->at(j).det;
       double pz = hit->at(j).pz;
       
-      //beam perp: 5620, 5543
-      //side det: 5600, 5610, 5601, 5611, 
-      //top/bot det: 5603,5613, 5614
-      //magnetPShutFrontFace: 5710
-      //hybridIronVirtualPlane: 5714
+      //hybrid bot det: 5714
       double localXX = xx;
       double localYY = yy;
       double localRR = rr;
       double localPZ = pz;
-      if( det == 5600 || det == 5610 ){
-	localXX = (zz - 1200.5); //857.5 for config5
-	localYY = yy;
-	localRR = sqrt(localXX*localXX + localYY*localYY);
-	localPZ = -hit->at(j).px;
-      }else if( det == 5601 || det == 5611 ){
-	localXX = (zz - 1200.5); //857.5 for config5
-	localYY = yy;
-	localRR = sqrt(localXX*localXX + localYY*localYY);
-	localPZ = hit->at(j).px;
-      }else if( det == 5603 || det == 5613 ){
-	localXX = (zz - 1200.5); //857.5 for config5
-	localYY = xx;
-	localRR = sqrt(localXX*localXX + localYY*localYY);
-	localPZ = hit->at(j).py;
-      }else if( det==5614){
-	localXX = (zz - 1200.5); //857.5 for config5
-	localYY = xx;
-	localRR = sqrt(localXX*localXX + localYY*localYY);
-	localPZ = -hit->at(j).py;
-      }else if( det==5714){ 
-	localXX = (zz - 12000); // y="-1670" z="12000" in mollerparallel.gdml
-	localYY = xx;
-	localRR = sqrt(localXX*localXX + localYY*localYY);
-	localPZ = -hit->at(j).py;
-      }
-      else if( det==5710){ 
-	localXX = (zz - 8000); //x="5740" y="-1000" z="8000" in mollerparallel.gdml
-	localYY = (yy + 1000);
-	localRR = sqrt(localXX*localXX + localYY*localYY);
-      }
+        
+      localXX = (zz - 11640); // y="-1670" z="12000" in mollerparallel.gdml
+      localYY = xx;
+      localRR = sqrt(localXX*localXX + localYY*localYY);
+      localPZ = -hit->at(j).py;
+      
 
-      if ( det==5614 && hit->at(j).pid==11) {
+      if (hit->at(j).pid==11) {
 	bHit.evid =event;
 	bHit.dID = hit->at(j).det;
 	bHit.tID = hit->at(j).trid;
@@ -213,18 +194,15 @@ long processOne(string fnm){
 	bHit.posx = localXX;
 	bHit.posy = localYY;
 	bHit.pZ = localPZ;
-	hits5614.push_back(bHit);
+	hits5714.push_back(bHit);
       }
-                
+                 
       beamLine.fillHisto(det, sp, rdDmg, localPZ, localXX, localYY, 
 			 kinE, localRR,vx0,vy0,vz0,0);
         
-      if((det==5620 || det==5619 ) && rr > 265) beamLineHole.fillHisto(det, sp, rdDmg, localPZ, localXX, localYY,
-								       kinE, localRR,vx0,vy0,vz0,0);
-
-      if(det==5614 && hit->at(j).trid==1 && hit->at(j).pid==11) beamLineem.fillHisto_det5614(det, rdDmg, localPZ, localXX, localYY,
-                                                                                             kinE, localRR,vx0,vy0,vz0,0);
-
+      if(hit->at(j).trid==1 && hit->at(j).pid==11) beamLineem.fillHisto_Botdet(det, rdDmg, localPZ, localXX, localYY,
+									       kinE, localRR,vx0,vy0,vz0,0);
+        
       if(hit->at(j).trid==1 && hit->at(j).mtrid==0 && kinE>1) beamLine.fillHisto(det, 4, rdDmg, localPZ, localXX, localYY,
 										 kinE, localRR,vx0,vy0,vz0,0);      
 
@@ -236,7 +214,7 @@ long processOne(string fnm){
     for(int j=0;j<hit->size();j++){
       if(std::isnan(rate) || std::isinf(rate)) continue;
       rate=1; //this is for beam simulations only (right now)
-      if ( hit->at(j).det != 28) continue;
+      if (hit->at(j).det != 28) continue;
 
       double kinE = hit->at(j).k;
       double rdDmg[2] = {rate,rate*kinE};
@@ -245,8 +223,13 @@ long processOne(string fnm){
       double yy = hit->at(j).y;
       int det = hit->at(j).det;
       double pz = hit->at(j).pz;
-        
-      for (auto &k : hits5614){
+      double vz0 = hit->at(j).vz;
+      double vx0 = hit->at(j).vx;
+      double vy0 = hit->at(j).vy;
+      int idx = 0;
+
+      for (auto &k : hits5714){
+     
 	double _kinE = k.energy;
 	double _rr = sqrt(k.posx*k.posx + k.posy*k.posy);
 	double _rdDmg[2] = {rate,rate*_kinE};
@@ -256,8 +239,16 @@ long processOne(string fnm){
 	double _pz = k.pZ;
 
 	if (hit->at(j).trid  == k.tID ){
+	  ++idx;
 	  xDet.fillHisto_detX(_det, _rdDmg, _pz, _xx, _yy,_kinE, _rr);
-	  if(hit->at(j).pid == 11)   xDet.fillHisto_detX(det, rdDmg, pz, xx, yy,kinE, rr);
+	  output_5714 <<  std::setprecision(12) << k.tID  << " " << k.PID  << " " << _det << " "  << _xx << " " << _yy << " " << _rr << " " <<  _kinE << " " << _pz << " " << k.time <<endl;
+
+        
+	  if(idx == 1 && hit->at(j).pid == 11) {  xDet.fillHisto_detX(det, rdDmg, pz, xx, yy,kinE, rr);
+            output_28 <<  std::setprecision(12) << hit->at(j).trid << " " << hit->at(j).pid  << " " << det << " "  << xx << " " << yy << " " << rr << " " <<  kinE << " " << pz << " " << hit->at(j).t <<endl;
+            if((rr>600 && rr<1200) && kinE>1)    output_28_part <<  std::setprecision(12) << hit->at(j).trid << " " << hit->at(j).pid  << " " << det << " "  << xx << " " << yy << " " << rr << " " <<  kinE << " " << pz << " " << hit->at(j).t <<endl;
+
+	  }
 	}
 
       }
@@ -271,7 +262,7 @@ long processOne(string fnm){
 
 
 void initHisto(){
-  string foutNm = Form("%s_c1CollAnaV1.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_Det5714.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -280,27 +271,11 @@ void initHisto(){
   // 				  const float vyRgMin , const float vyRgMax, 
   // 				  const float vzRgMin , const float vzRgMax,
   // 				  const string postfix = "", const float range=2000, const int subDet=0)
-  beamLine.initHisto(fout,5620,"After C4PbWall"    ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-  beamLine.initHisto(fout,5619,"Before C4PbWall"   ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-  beamLine.initHisto(fout,5543,"After Tgt bunker"  ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-
-  beamLine.initHisto(fout,5600,"c1 In  Beam Right" ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-  beamLine.initHisto(fout,5610,"c1 Out Beam Right" ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-  beamLine.initHisto(fout,5601,"c1 In  Beam Left"  ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-  beamLine.initHisto(fout,5611,"c1 Out Beam Left"  ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-
-  beamLine.initHisto(fout,5613,"c1 Out Top"        ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-  beamLine.initHisto(fout,5603,"c1 In  Top"        ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-  beamLine.initHisto(fout,5614,"c1 Out Bottom"     ,-3500,3500,-3500,3500,-5600,6000,"",3500);
-  beamLine.initHisto(fout,5714,"c1 hybrid Bottom"  ,-3500,3500,-3500,3500,-5600,25000,"",8000);
-  beamLine.initHisto(fout,5710,"c1 magnetPShut Front Face" ,-4000,4000,-4000,4000,-5600,15000,"",6000);
-
-  beamLineHole.initHisto(fout,5620,"After C4PbWall with Hole" ,-3500,3500,-3500,3500,-5600,6000,"hole",3500);
-  beamLineHole.initHisto(fout,5619,"Before C4PbWall with Hole" ,-3500,3500,-3500,3500,-5600,6000,"hole",3500);
-  beamLineem.initHisto_det5614(fout,5614,"c1 Out Bottom trackid==1","tr",3500);
+  beamLine.initHisto(fout,5714,"c1 Out Bottom"     ,-4500,4500,-4500,4500,-5600,25000,"",8000);
+  beamLineem.initHisto_Botdet(fout,5714,"c1 Out Bottom trackid==1","tr",8000);
 
   xDet.initHisto_detX(fout,28,"Main detector for only electrons");
-  xDet.initHisto_detX(fout,5614,"c1 Out Bottom detector for only electrons");
+  xDet.initHisto_detX(fout,5714,"c1 Out Bottom detector for only electrons");
 
 }
 
@@ -309,26 +284,12 @@ void writeOutput(){
   double scaleFactor = 1./nFiles;
   if(beamGen)
     scaleFactor = 1./nTotEv;
-
-  beamLine.writeOutput(fout,5543,scaleFactor);
-  beamLine.writeOutput(fout,5620,scaleFactor);
-  beamLine.writeOutput(fout,5619,scaleFactor);
-  beamLine.writeOutput(fout,5600,scaleFactor);
-  beamLine.writeOutput(fout,5601,scaleFactor);
-  beamLine.writeOutput(fout,5603,scaleFactor);
-  beamLine.writeOutput(fout,5610,scaleFactor);
-  beamLine.writeOutput(fout,5611,scaleFactor);
-  beamLine.writeOutput(fout,5613,scaleFactor);
-  beamLine.writeOutput(fout,5614,scaleFactor);
   beamLine.writeOutput(fout,5714,scaleFactor);
-  beamLine.writeOutput(fout,5710,scaleFactor);
     
-  beamLineHole.writeOutput(fout,5619,scaleFactor);
-  beamLineHole.writeOutput(fout,5620,scaleFactor);
-  beamLineem.writeOutput_det5614(fout,5614,scaleFactor);
+  beamLineem.writeOutput_Botdet(fout,5714,scaleFactor);
 
   xDet.writeOutput_detX(fout,28,scaleFactor);
-  xDet.writeOutput_detX(fout,5614,scaleFactor);
+  xDet.writeOutput_detX(fout,5714,scaleFactor);
 
   fout->Close();
 }

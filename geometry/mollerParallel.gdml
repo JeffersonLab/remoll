@@ -24,7 +24,7 @@
   <tube
     name="trackingVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmax="1400" rmin="0" z="1" lunit="mm"/>
+    rmax="2400" rmin="0" z="1" lunit="mm"/>
 
   <tube
     name="collarVirtualPlane_solid"
@@ -41,10 +41,10 @@
     startphi="0" deltaphi="360" aunit="deg"
     rmax="307" rmin="0" z="1" lunit="mm"/>
 
-  <tube
+    <!-- <tube
     name="gemVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="1450" rmax="1460" z="2700" lunit="mm"/>
+    rmin="1450" rmax="1460" z="2700" lunit="mm"/>-->
 
   <sphere name="targetSphere_solid" 
 	  rmin="700" rmax="701" lunit="mm"
@@ -76,9 +76,6 @@
 
   <box lunit="mm" name="usHybridVirtualPlane_solid"
        x="5000" y="6000" z="1"/>
-       
-  <box lunit="mm" name="usHybridVirtualPlane2_solid"
-       x="5000" y="6000" z="1"/>
             
   <box lunit="mm" name="coll1InnerSideVirtualPlane_solid"
        x="1" y="1286.5*2" z="4335 + 610 + 86"/>
@@ -93,10 +90,59 @@
        x="4262" y="1" z="4335 + 610 + 86"/>
 
   <box lunit="mm" name="hybridIronVirtualPlane_solid"
-	 x="4261"
-	 y="1"
-	 z="15000"/>
+       x="2860"
+       y="1"
+       z="15000-680+100-1+80"/>
 
+  <box lunit="mm" name="dsHybridVirtualPlane_solid"
+       x="8000" 
+       y="6000"
+       z="1"/>
+
+  <box lunit="mm" name="dsCoilVirtualPlane_solid"
+       x="2700"
+       y="2700"
+       z="1"/>
+       
+  <box lunit="mm" name="PSbunkerOuterFrontVP_solid"
+       x="1"
+       y="4215"
+       z="11249.914"/>
+       
+  <box lunit="mm" name="PSbunkerOuterSideLeftVP_solid"
+       x="16799.56"
+       y="4215"
+       z="1"/>
+  
+  <box lunit="mm" name="PSbunkerOuterSideRightVP_solid"
+       x="16799.56-1000"
+       y="4215"
+       z="1"/>
+   
+  <box lunit="mm" name="PSbunkerInnerFrontVP_solid"
+     x="1"
+     y="4215"
+     z="8449.914"/>
+  
+  <box lunit="mm" name="PSbunkerInnerSideLeftVP_solid"
+       x="15399.56"
+       y="4215"
+       z="1"/>
+  
+  <box lunit="mm" name="PSbunkerInnerSideRightVP_solid"
+       x="15399.56-1000"
+       y="4215"
+       z="1"/>
+ 
+ <box lunit="mm" name="PSbunkerTopVP_solid"
+      x="16799.56"
+      y="1"
+      z="11249.914"/>
+
+ <box lunit="mm" name="RasterPS_solid" x="800" y="2500" z="800"/>
+
+ <box name="USTorus_VirtualPlane_solid" lunit="mm" x="2000" y="2000" z="1"/>
+      
 </solids>
 
 <structure>
@@ -290,7 +336,7 @@
   
   <volume name="usHybridVirtualPlane2_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="usHybridVirtualPlane2_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
@@ -416,12 +462,192 @@
     <auxiliary auxtype="DetNo" auxvalue="41"/>
   </volume>
 
-  <volume name="gemVirtualPlane_log">
+  <volume name="dsHybridVirtualPlane1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsHybridVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5719"/>
+  </volume>
+
+  <volume name="dsHybridVirtualPlane2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsHybridVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5720"/>
+  </volume>
+
+  <volume name="DSCoil11_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5695"/>
+  </volume>
+
+  <volume name="DSCoil12_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5696"/>
+  </volume>
+
+  <volume name="DSCoil13_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5697"/>
+  </volume>
+  
+  <volume name="At9p5_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5698"/>
+  </volume>
+
+  <volume name="At9p6_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5699"/>
+  </volume>
+  
+  <volume name="At10p7_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5705"/>
+  </volume>
+  
+  <volume name="At11p01_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5706"/>
+  </volume>
+
+  <volume name="At11p11_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5707"/>
+  </volume>
+
+  <volume name="DSCoil17_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="dsCoilVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5708"/>
+  </volume>
+  
+  <volume name="PSbunkerOuterFrontVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerOuterFrontVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5840"/>
+  </volume>
+  
+  <volume name="PSbunkerOuterSideLeftVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerOuterSideLeftVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5842"/>
+  </volume>
+  
+  <volume name="PSbunkerOuterSideRightVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerOuterSideRightVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5843"/>
+  </volume>
+  
+  <volume name="PSbunkerInnerFrontVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerInnerFrontVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5850"/>
+  </volume>
+  
+  <volume name="PSbunkerInnerSideLeftVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerInnerSideLeftVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5852"/>
+  </volume>
+  
+  <volume name="PSbunkerInnerSideRightVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerInnerSideRightVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5853"/>
+  </volume>
+  
+  <volume name="PSbunkerTopVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="PSbunkerTopVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5845"/>
+  </volume>
+  
+  <!--<volume name="gemVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="gemVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="50"/>
-  </volume>
+  </volume>-->
 
   <volume name="SAMusVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
@@ -456,6 +682,46 @@
     <solidref ref="dumpVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="46"/>
+  </volume>
+
+  <volume name="RasterPS_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="RasterPS_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5521"/>
+  </volume>
+
+   <volume name="USTorus_VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="USTorus_VirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5522"/>
+  </volume>
+
+   <volume name="USTorus_VirtualPlane1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="USTorus_VirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5523"/>
+  </volume>
+
+  <volume name="USTorus_VirtualPlane2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="USTorus_VirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5524"/>
   </volume>
 
   <volume name="ParallelWorld_logical">
@@ -588,16 +854,10 @@
       <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1670" z="852.5 + 610/2 + 86/2"/>
     </physvol>
 
-    <physvol    name="magnetPShutFrontFace_phys">
-      <volumeref ref="magnetPShutFrontFace_log"/>
-      <position name="magnetPShutFrontFace_pos" unit="mm" x="5740" y="-1000" z="8000"/>\
-      <rotation name="magnetPShutFrontFace_rot" unit="deg" y="90"/>
-    </physvol>
-
-    <physvol    name="hybridIronVirtualPlane_phys">
+   <!-- <physvol    name="hybridIronVirtualPlane_phys">
       <volumeref ref="hybridIronVirtualPlane_log"/>
-      <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000"/>
-    </physvol>
+      <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000-680/2-40/2+80/2"/>
+    </physvol>-->
 
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
@@ -640,10 +900,10 @@
       <positionref ref="collar2VirtualPlane_pos"/>
     </physvol>
 
-    <physvol name="gemVirtualPlane_phys">
+    <!--<physvol name="gemVirtualPlane_phys">
       <volumeref ref="gemVirtualPlane_log"/>
       <positionref ref="gemVirtualPlane_pos"/>
-    </physvol>
+    </physvol>-->
 
     <physvol name="SAMusVirtualPlane_phys">
       <volumeref ref="SAMusVirtualPlane_log"/>
@@ -670,6 +930,116 @@
       <positionref ref="n2atmoVirtualPlane_pos"/>
     </physvol>
 
+    <physvol name="dsHybridVirtualPlane1_phys">
+      <volumeref ref="dsHybridVirtualPlane1_log"/>
+      <position name="dsHybridVirtualPlane1_pos" unit="mm" y="0" z="19332.69-400-1"/>
+    </physvol>
+    
+    <physvol name="dsHybridVirtualPlane2_phys">
+      <volumeref ref="dsHybridVirtualPlane2_log"/>
+      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19332.69+1"/>
+    </physvol>
+
+    <physvol name="DSCoil11_phys">
+      <volumeref ref="DSCoil11_log"/>
+      <position  name="DSCoil11_pos" unit="mm" x="0" y="0" z="8300+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil12_phys">
+      <volumeref ref="DSCoil12_log"/>
+      <position  name="DSCoil12_pos" unit="mm" x="0" y="0" z="8800+0.5"/>
+    </physvol>
+
+    <physvol name="DSCoil13_phys">
+      <volumeref ref="DSCoil13_log"/>
+      <position  name="DSCoil13_pos" unit="mm" x="0" y="0" z="9200+0.5"/>
+    </physvol>
+    
+    <physvol name="DSCoil17_phys">
+      <volumeref ref="DSCoil17_log"/>
+      <position  name="DSCoil17_pos" unit="mm" x="0" y="0" z="11500+0.5"/>
+    </physvol>
+
+    <physvol name="At9p5_phys">
+      <volumeref ref="At9p5_log"/>
+      <position  name="At9p5_pos" unit="mm" x="0" y="0" z="9507.3-0.6"/>
+    </physvol>
+
+    <physvol name="At9p6_phys">
+      <volumeref ref="At9p6_log"/>
+      <position  name="At9p6_pos" unit="mm" x="0" y="0" z="9607.3+0.6"/>
+    </physvol>
+    
+    <physvol name="At10p7_phys">
+      <volumeref ref="At10p7_log"/>
+      <position  name="At10p7_pos" unit="mm" x="0" y="0" z="10700"/>
+    </physvol>
+    
+    <physvol name="At11p01_phys">
+      <volumeref ref="At11p01_log"/>
+      <position  name="At11p01_pos" unit="mm" x="0" y="0" z="11012.25-0.6"/>
+    </physvol>
+
+    <physvol name="At11p11_phys">
+      <volumeref ref="At11p11_log"/>
+      <position  name="At11p11_pos" unit="mm" x="0" y="0" z="11112.25+0.6"/>
+    </physvol>
+    
+    <physvol name="PSbunkerOuterFrontVP_phys">
+      <volumeref ref="PSbunkerOuterFrontVP_log"/>
+      <position name="PSbunkerOuterFrontVP_pos" unit="mm" x="4123.944-1" y="-948.86+75" z="10447.957"/>
+    </physvol>
+    
+    <physvol name="PSbunkerOuterSideLeftVP_phys">
+      <volumeref ref="PSbunkerOuterSideLeftVP_log"/>
+      <position name="PSbunkerOuterSideLeftVP_pos" unit="mm" x="4123.944+16799.56/2" y="-948.86+75" z="10447.957-11249.914/2-1"/>
+    </physvol>
+    
+    <physvol name="PSbunkerOuterSideRightVP_phys">
+      <volumeref ref="PSbunkerOuterSideRightVP_log"/>
+      <position name="PSbunkerOuterSideRightVP_pos" unit="mm" x="4123.944+16799.56/2-500" y="-948.86+75" z="10447.957+11249.914/2+1"/>
+    </physvol>
+    
+    <physvol name="PSbunkerInnerFrontVP_phys">
+      <volumeref ref="PSbunkerInnerFrontVP_log"/>
+      <position name="PSbunkerInnerFrontVP_pos" unit="mm" x="4123.944+1400+1" y="-948.86+75" z="10447.957"/>
+    </physvol>
+    
+    <physvol name="PSbunkerInnerSideLeftVP_phys">
+      <volumeref ref="PSbunkerInnerSideLeftVP_log"/>
+      <position name="PSbunkerInnerSideLeftVP_pos" unit="mm" x="4123.944+16799.56/2+700+1" y="-948.86+75" z="10447.957-11249.914/2+1400+1"/>
+    </physvol>
+    
+    <physvol name="PSbunkerInnerSideRightVP_phys">
+      <volumeref ref="PSbunkerInnerSideRightVP_log"/>
+      <position name="PSbunkerInnerSideRightVP_pos" unit="mm" x="4123.944+16799.56/2+700-500+1" y="-948.86+75" z="10447.957+11249.914/2-1400-1"/>
+    </physvol>
+    
+    <physvol name="PSbunkerTopVP_phys">
+      <volumeref ref="PSbunkerTopVP_log"/>
+      <position name="PSbunkerTopVP_pos" unit="mm" x="4123.944+16799.56/2+1" y="-948.86+75+4215/2+1" z="10447.957"/>
+    </physvol>
+
+  <physvol name="RasterPS_phys">
+      <volumeref ref="RasterPS_log"/>
+      <position name="RasterPS_pos" unit="mm" x="-1500" y="-948.86-857.5+75" z="-19500"/>
+    </physvol>
+
+   <physvol name="USTorus_VirtualPlane_phys">
+      <volumeref ref="USTorus_VirtualPlane_log"/>
+      <position name="USTorus_VirtualPlane_pos" unit="mm" x="0" y="-150" z="2000"/>
+    </physvol>
+
+  <physvol name="USTorus_VirtualPlane1_phys">
+      <volumeref ref="USTorus_VirtualPlane1_log"/>
+      <position name="USTorus_VirtualPlane1_pos" unit="mm" x="0" y="-150" z="2900"/>
+    </physvol>
+
+  <physvol name="USTorus_VirtualPlane2_phys">
+      <volumeref ref="USTorus_VirtualPlane2_log"/>
+      <position name="USTorus_VirtualPlane2_pos" unit="mm" x="0" y="-150" z="1100"/>
+    </physvol>
+    
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 </structure>

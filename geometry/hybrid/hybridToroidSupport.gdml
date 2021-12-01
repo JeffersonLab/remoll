@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+    &matrices;
+    
+    <constant name="SEPTANT" value ="360./7"/>
+
+</define>
+
+&materials;
+
+<solids>
+ 
+ <!--Support Assy-->
+ <box lunit="mm" name="DS_toroidSupportMother_1" x="3000-2" y="3100" z="7460"/>
+ <box lunit="mm" name="DS_toroidSupportMother_2" x="3000-2+1" y="300" z="7460+1"/>
+
+ <box lunit="mm" name="BasePlate_solid"  x="2755.9" y="91.948" z="7454.9"/>
+ <box lunit="mm" name="BasePlate2_solid"  x="2374.9" y="9.652" z="7150.1"/>
+ <box lunit="mm" name="DSendPlate_solid"  x="2400.3" y="1418.59" z="127"/>
+ <tube aunit="deg" deltaphi="360/2" lunit="mm" name="DSendTop_solid" rmax="1200.15" rmin="0" startphi="0" z="127"/>
+ 
+ <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="DSend_sub">
+   <zplane rmin="0" rmax="749.3" z="0.0"/>
+   <zplane rmin="0" rmax="749.3" z="82.55"/>
+   <zplane rmin="0" rmax="675.64" z="82.55"/>
+   <zplane rmin="0" rmax="675.64" z="82.55+19.05"/>
+   <zplane rmin="0" rmax="688.34" z="82.55+19.05"/>
+   <zplane rmin="0" rmax="688.34" z="82.55+19.05+25.4+1"/>
+ </polycone>
+ 
+ <box lunit="mm" name="UPendPlate_solid"  x="2400.3" y="1435.1" z="127"/>
+ <tube aunit="deg" deltaphi="360/2" lunit="mm" name="UPendPlate_sub1" rmax="330.2" rmin="0" startphi="180" z="127+1"/>
+ <tube aunit="deg" deltaphi="360/2" lunit="mm" name="UPendTop_solid" rmax="1200.15" rmin="330.2" startphi="0" z="127"/>
+ 
+ <box lunit="mm" name="DSenclosureSidePlate_solid"  x="50.8" y="1384.3" z="7353.3"/>
+ <tube aunit="deg" deltaphi="360/4" lunit="mm" name="DSenclosureSidetop1_solid" rmax="1250.95" rmin="1200.15" startphi="0" z="7353.3"/>
+ <tube aunit="deg" deltaphi="360/4" lunit="mm" name="DSenclosureSidetop2_solid" rmax="1250.95" rmin="1200.15" startphi="90" z="7353.3"/>
+ 
+ <box lunit="mm" name="TMDSendPlate_solid"  x="1778" y="1136.65" z="25.4"/>
+ <tube aunit="deg" deltaphi="360/2" lunit="mm" name="TMDSendTop_solid" rmax="889" rmin="635" startphi="0" z="25.4"/>
+ <tube aunit="deg" deltaphi="360/2" lunit="mm" name="TMDSendPlate_sub1" rmax="635" rmin="0" startphi="180" z="25.4+1"/>
+ 
+ <box lunit="mm" name="TM4DSendPlate_solid"  x="1930.4" y="1136.65" z="25.4"/>
+ <tube aunit="deg" deltaphi="360/2" lunit="mm" name="TM4DSendTop_solid" rmax="965.2" rmin="711.2" startphi="0" z="25.4"/>
+ <tube aunit="deg" deltaphi="360/2" lunit="mm" name="TM4DSendPlate_sub1" rmax="711.2" rmin="0" startphi="180" z="25.4+1"/>
+
+ <box lunit="mm" name="TM4MidPlate_solid"  x="1930.4" y="1136.65" z="25.4"/>
+ <tube aunit="deg" deltaphi="360/2" lunit="mm" name="TM4MidTop_solid" rmax="965.2" rmin="711.2" startphi="0" z="25.4"/>
+ <tube aunit="deg" deltaphi="360/2" lunit="mm" name="TM4MidPlate_sub1" rmax="711.2" rmin="0" startphi="180" z="25.4+1"/>
+ 
+ <box lunit="mm" name="TM4MidPlateSides_sub"  x="235.204" y="235.204" z="25.4+1"/>
+ <box lunit="mm" name="TM4CoilSupport1_solid"  x="152.4" y="152.4" z="2641.6"/>
+ <box lunit="mm" name="TM4CoilSupport2_solid"  x="127" y="127" z="2641.6+1"/>
+
+ <box lunit="mm" name="TMSupport1_solid"  x="101.6" y="101.6" z="562.102"/>
+ <box lunit="mm" name="TMSupport2_solid"  x="88.9" y="88.9" z="562.102+1"/>
+
+ <box lunit="mm" name="TM4CoilSupport3_solid"  x="152.4" y="152.4" z="1479.55"/>
+ <box lunit="mm" name="TM4CoilSupport4_solid"  x="127" y="127" z="1479.55+1"/>
+
+ <box lunit="mm" name="TM4CoilSupport5_solid"  x="152.4" y="152.4" z="1174.75"/>
+ <box lunit="mm" name="TM4CoilSupport6_solid"  x="127" y="127" z="1174.75+1"/>
+ 
+ <subtraction name="DS_toroidSupportMother_solid">
+   <first ref="DS_toroidSupportMother_1"/>
+   <second ref="DS_toroidSupportMother_2"/>
+   <position name="DS_toroidSupportMother_pos" unit="mm" x="0" y="3100/2-300/2" z="0" />
+ </subtraction>
+ 
+ <union name ="BasePlate_union">
+   <first ref="BasePlate_solid"/>
+   <second ref="BasePlate2_solid"/>
+   <position name ="BasePlate_union_pos" lunit="mm" x="0" y="91.948/2" z="0" />
+ </union>
+ 
+ <subtraction name="UPendPlate_sub">
+   <first ref="UPendPlate_solid"/>
+   <second ref="UPendPlate_sub1"/>
+   <position name ="UPendPlate_sub_pos" lunit="mm" x="0" y="1435.1/2" z="0" />
+ </subtraction>
+ 
+ <subtraction name="DSendPlate_sub">
+   <first ref="DSendPlate_solid"/>
+   <second ref="DSend_sub"/>
+   <position name ="DSendPlate_sub_pos" lunit="mm" x="0" y="1418.59/2" z="-127/2" />
+ </subtraction>
+ 
+ <subtraction name="DSendTop_sub">
+   <first ref="DSendTop_solid"/>
+   <second ref="DSend_sub"/>
+   <position name ="DSendTop_sub_pos" lunit="mm" x="0" y="0" z="-127/2-1" />
+ </subtraction>
+ 
+ <subtraction name="TMDSendPlate_sub">
+   <first ref="TMDSendPlate_solid"/>
+   <second ref="TMDSendPlate_sub1"/>
+   <position name ="TMDSendPlate_sub_pos" lunit="mm" x="0" y="1136.65/2" z="0" />
+ </subtraction>
+ 
+ <subtraction name="TM4DSendPlate_sub">
+   <first ref="TM4DSendPlate_solid"/>
+   <second ref="TM4DSendPlate_sub1"/>
+   <position name ="TM4DSendPlate_sub_pos" lunit="mm" x="0" y="1136.65/2" z="0" />
+ </subtraction>
+ 
+ <subtraction name="TM4MidPlate_sub1st">
+   <first ref="TM4MidPlate_solid"/>
+   <second ref="TM4MidPlate_sub1"/>
+   <position name ="TM4MidPlate_sub_pos" lunit="mm" x="0" y="1136.65/2" z="0" />
+ </subtraction>
+ 
+ <subtraction name="TM4MidPlate_sub2nd">
+   <first ref="TM4MidPlate_sub1st"/>
+   <second ref="TM4MidPlateSides_sub"/>
+   <position name ="TM4MidPlate_sub2nd_pos" lunit="mm" x="-1930.4/2+235.204/2-1" y="-1136.65/2+235.204/2-1" z="0" />
+ </subtraction>
+ 
+ <subtraction name="TM4MidPlate_sub">
+   <first ref="TM4MidPlate_sub2nd"/>
+   <second ref="TM4MidPlateSides_sub"/>
+   <position name ="TM4MidPlate_sub_pos" lunit="mm" x="1930.4/2-235.204/2+1" y="-1136.65/2+235.204/2-1" z="0"/>
+ </subtraction>
+
+ <subtraction name="TM4CoilSupport_solid_sub">
+   <first ref="TM4CoilSupport1_solid"/>
+   <second ref="TM4CoilSupport2_solid"/>
+   <position name ="TM4CoilSupport_solid_sub_pos" lunit="mm" x="0" y="0" z="0"/>
+ </subtraction>
+
+ <subtraction name="TM4CoilSupportHalf1_solid_sub">
+   <first ref="TM4CoilSupport3_solid"/>
+   <second ref="TM4CoilSupport4_solid"/>
+   <position name ="TM4CoilSupportHalf1_solid_sub_pos" lunit="mm" x="0" y="0" z="0"/>
+ </subtraction>
+ 
+ <subtraction name="TM4CoilSupportHalf2_solid_sub">
+   <first ref="TM4CoilSupport5_solid"/>
+   <second ref="TM4CoilSupport6_solid"/>
+   <position name ="TM4CoilSupportHalf2_solid_sub_pos" lunit="mm" x="0" y="0" z="0"/>
+ </subtraction>
+ 
+ <subtraction name="TMSupport_solid_sub">
+   <first ref="TMSupport1_solid"/>
+   <second ref="TMSupport2_solid"/>
+   <position name ="TMSupport_solid_sub_pos" lunit="mm" x="0" y="0" z="0"/>
+ </subtraction>
+ 
+  </solids>
+
+  <structure>
+   
+    <volume name="BasePlate_log">
+     <materialref ref="G4_Al"/>
+     <solidref ref="BasePlate_union"/>
+     <auxiliary auxtype="Color" auxvalue="gray"/>
+    </volume>
+    
+    <volume name="UPendPlate_log">
+     <materialref ref="G4_Al"/>
+     <solidref ref="UPendPlate_sub"/>
+     <auxiliary auxtype="Color" auxvalue="gray"/>
+    </volume>
+    
+    <volume name="UPendTop_log">
+     <materialref ref="G4_Al"/>
+     <solidref ref="UPendTop_solid"/>
+     <auxiliary auxtype="Color" auxvalue="gray"/>
+    </volume>
+    
+    <volume name="DSendPlate_log">
+     <materialref ref="G4_Al"/>
+     <solidref ref="DSendPlate_sub"/>
+     <auxiliary auxtype="Color" auxvalue="gray"/>
+    </volume>
+    
+    <volume name="DSendTop_log">
+     <materialref ref="G4_Al"/>
+     <solidref ref="DSendTop_sub"/>
+     <auxiliary auxtype="Color" auxvalue="gray"/>
+    </volume>
+    
+     <volume name="DSenclosureSidePlate1_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="DSenclosureSidePlate_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="DSenclosureSidePlate2_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="DSenclosureSidePlate_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="DSenclosureSidetop1_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="DSenclosureSidetop1_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="DSenclosureSidetop2_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="DSenclosureSidetop2_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TMDSendPlate_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TMDSendPlate_sub"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>`
+     
+     <volume name="TMDSendTop_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TMDSendTop_solid"/>`
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TMUSendPlate_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TMDSendPlate_sub"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TMUSendTop_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TMDSendTop_solid"/>`
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TM4DSendPlate_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TM4DSendPlate_sub"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>`
+     
+     <volume name="TM4DSendTop_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TM4DSendTop_solid"/>`
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TM4USendPlate_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TM4DSendPlate_sub"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>`
+     
+     <volume name="TM4USendTop_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TM4DSendTop_solid"/>`
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TM4MidPlate_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TM4MidPlate_sub"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TM4MidTop_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TM4MidTop_solid"/>`
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+
+     <volume name="TM4CoilSupport_solid_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TM4CoilSupport_solid_sub"/>`
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TM4CoilSupportHalf1_solid_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TM4CoilSupportHalf1_solid_sub"/>`
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TM4CoilSupportHalf2_solid_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TM4CoilSupportHalf2_solid_sub"/>`
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="TMSupport_solid_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="TMSupport_solid_sub"/>`
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+     </volume>
+     
+     <volume name="DS_toroidSupportMother">
+        <materialref ref="G4_Galactic"/>
+        <solidref ref="DS_toroidSupportMother_solid"/>
+        <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+          
+      <physvol name="DScoil">
+        <file name="hybrid/hybridToroid.gdml"/>
+        <position name="pos_hybridToroid" x="0" y="0" z="-90"/>
+      </physvol>
+          
+      <physvol name="BasePlate_phys">
+        <volumeref ref="BasePlate_log"/>
+        <position name="BasePlate_pos" x="0" y="-1463.548+9.652/2" z="12151.36-11287.5-7454.9/2+2864.764"/>
+      </physvol>
+   
+      <physvol name="UPendPlate_phys">
+        <volumeref ref="UPendPlate_log"/>
+        <position name="UPendPlate_pos" x="0" y="-106.4514 - (2631.44/2 -1435.1/2)+1" z="8425.18-11287.5+127/2+7454.9/2-7454.9+2864.764"/>
+      </physvol>
+      
+      <physvol name="UPendTop_phys">
+        <volumeref ref="UPendTop_log"/>
+        <position name="UPendTop_pos" x="0" y="-106.4514 - (2631.44/2 -1435.1/2) + 1435.1/2 + 1" z="8425.18-11287.5+127/2+7454.9/2-7454.9+2864.764"/>
+      </physvol>
+      
+      <physvol name="DSendPlate_phys">
+        <volumeref ref="DSendPlate_log"/>
+        <position name="DSendPlate_pos" x="0" y="-106.4514 - (2631.44/2 -1418.59/2)+1" z="12151.36-11287.5-127/2+2864.764"/>
+      </physvol>
+      
+      <physvol name="DSendTop_phys">
+        <volumeref ref="DSendTop_log"/>
+        <position name="DSendTop_pos" x="0" y="-106.4514 - (2631.44/2 -1418.59/2)+ 1418.59/2 + 1" z="12151.36-11287.5-127/2+2864.764"/>
+      </physvol>
+      
+      <physvol name="DSenclosureSidePlate1_phys">
+        <volumeref ref="DSenclosureSidePlate1_log"/>
+        <position name="DSenclosureSidePlate1_pos" x="2501.9/2-50.8/2" y="-79.375 - (2687.32/2 -1384.3/2)+1" z="12151.36-11287.5-7353.3/2+2864.764"/>
+      </physvol>
+      
+      <physvol name="DSenclosureSidePlate2_phys">
+        <volumeref ref="DSenclosureSidePlate2_log"/>
+        <position name="DSenclosureSidePlate2_pos" x="-2501.9/2+50.8/2" y="-79.375 - (2687.32/2 -1384.3/2)+1" z="12151.36-11287.5-7353.3/2+2864.764"/>
+      </physvol>
+      
+      <physvol name="DSenclosureSidetop1_phys">
+        <volumeref ref="DSenclosureSidetop1_log"/>
+        <position name="DSenclosureSidetop1_pos" x="0" y="-79.375 - (2687.32/2 - 1384.3/2)+  1384.3/2 + 1" z="12151.36-11287.5-7353.3/2+2864.764"/>
+      </physvol>
+      
+      <physvol name="DSenclosureSidetop2_phys">
+        <volumeref ref="DSenclosureSidetop2_log"/>
+        <position name="DSenclosureSidetop2_pos" x="0" y="-79.375 - (2687.32/2 - 1384.3/2) + 1384.3/2 + 1" z="12151.36-11287.5-7353.3/2+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM1DSendPlate_phys">
+       <volumeref ref="TMDSendPlate_log"/>
+       <position name="TM1DSendPlate_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2)" z="5730.24-11287.5+2864.764"/>
+      </physvol>
+     
+     <physvol name="TM1DSendTop_phys">
+       <volumeref ref="TMDSendTop_log"/>
+       <position name="TM1DSendTop_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2) + 1136.65/2 + 1" z="5730.24-11287.5+2864.764"/>
+     </physvol>
+     
+      <physvol name="TM1USendPlate_phys">
+        <volumeref ref="TMUSendPlate_log"/>
+        <position name="TM1USendPlate_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2)" z="5105.4-11287.5+2864.764"/>
+      </physvol>
+     
+      <physvol name="TM1USendTop_phys">
+        <volumeref ref="TMUSendTop_log"/>
+        <position name="TM1USendTop_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2) + 1136.65/2 + 1" z="5105.4-11287.5+2864.764"/>
+      </physvol>
+     
+      <physvol name="TM2DSendPlate_phys">
+        <volumeref ref="TMDSendPlate_log"/>
+        <position name="TM2DSendPlate_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2)" z="6748.78-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM2DSendTop_phys">
+        <volumeref ref="TMDSendTop_log"/>
+        <position name="TM2DSendTop_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2) + 1136.65/2 + 1" z="6748.78-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM2USendPlate_phys">
+        <volumeref ref="TMUSendPlate_log"/>
+        <position name="TM2USendPlate_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2)" z="6121.4-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM2USendTop_phys">
+        <volumeref ref="TMUSendTop_log"/>
+        <position name="TM2USendTop_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2) + 1136.65/2 + 1" z="6121.4-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM3DSendPlate_phys">
+        <volumeref ref="TMDSendPlate_log"/>
+        <position name="TM3DSendPlate_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2)" z="7787.64-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM3DSendTop_phys">
+        <volumeref ref="TMDSendTop_log"/>
+        <position name="TM3DSendTop_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2) + 1136.65/2 + 1" z="7787.64-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM3USendPlate_phys">
+        <volumeref ref="TMUSendPlate_log"/>
+        <position name="TM3USendPlate_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2)" z="7162.8-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM3USendTop_phys">
+        <volumeref ref="TMUSendTop_log"/>
+        <position name="TM3USendTop_pos" x="0" y="-125.0696 - (2023.11/2 - 1136.65/2) + 1136.65/2 + 1" z="7162.8-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM4DSendPlate_phys">
+        <volumeref ref="TM4DSendPlate_log"/>
+        <position name="TM4DSendPlate_pos" x="0" y="-87.0712 - (2099.056/2 - 1136.65/2)" z="11125.2-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM4DSendTop_phys">
+        <volumeref ref="TM4DSendTop_log"/>
+        <position name="TM4DSendTop_pos" x="0" y="-87.0712 - (2099.056/2 - 1136.65/2) + 1136.65/2 + 1" z="11125.2-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM4USendPlate_phys">
+        <volumeref ref="TM4USendPlate_log"/>
+        <position name="TM4USendPlate_pos" x="0" y="-87.0712 - (2099.056/2 - 1136.65/2)" z="8420.1-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM4USendTop_phys">
+        <volumeref ref="TM4USendTop_log"/>
+        <position name="TM4USendTop_pos" x="0" y="-87.0712 - (2099.056/2 - 1136.65/2) + 1136.65/2 + 1" z="8420.1-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM4MidPlate_phys">
+        <volumeref ref="TM4MidPlate_log"/>
+        <position name="TM4MidPlate_pos" x="0" y="-87.0712 - (2099.056/2 - 1136.65/2)" z="9618.98-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM4MidTop_phys">
+        <volumeref ref="TM4MidTop_log"/>
+        <position name="TM4MidTop_pos" x="0" y="-87.0712 - (2099.056/2 - 1136.65/2) + 1136.65/2 + 1" z="9618.98-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM4CoilSupportBeam_solid1_phys">
+        <volumeref ref="TM4CoilSupport_solid_log"/>
+        <position name="TM4CoilSupportBeam_solid1_pos" x="822.452" y="-968.502-12.7/2" z="9771.38-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM4CoilSupportBeam_solid2_phys">
+        <volumeref ref="TM4CoilSupport_solid_log"/>
+        <position name="TM4CoilSupportBeam_solid2_pos" x="-822.452" y="-968.502-12.7/2" z="9771.38-11287.5+2864.764"/>
+      </physvol>
+  
+      <physvol name="TM4CoilSupport_solid1_phys">
+        <volumeref ref="TM4CoilSupportHalf1_solid_log"/>
+        <position name="TM4CoilSupport_solid1_pos" x="841.502" y="0" z="9632.696-11287.5+1479.55/2+2864.764"/>
+        <rotation name="TM4CoilSupport_solid1_rot" unit="deg" x="0" y="0" z="0*SEPTANT"/>
+      </physvol>
+     
+      <physvol name="TM4CoilSupport_solid2_phys">
+        <volumeref ref="TM4CoilSupportHalf1_solid_log"/>
+        <position name="TM4CoilSupport_solid2_pos" x="524.51" y="657.86" z="9632.696-11287.5+1479.55/2+2864.764"/>
+        <rotation name="TM4CoilSupport_solid2_rot" unit="deg" x="0" y="0" z="1*SEPTANT"/>
+      </physvol>
+     
+      <physvol name="TM4CoilSupport_solid3_phys">
+        <volumeref ref="TM4CoilSupportHalf1_solid_log"/>
+        <position name="TM4CoilSupport_solid3_pos" x="-187.2234" y="820.166" z="9632.696-11287.5+1479.55/2+2864.764"/>
+        <rotation name="TM4CoilSupport_solid3_rot" unit="deg" x="0" y="0" z="2*SEPTANT"/>
+      </physvol>
+     
+      <physvol name="TM4CoilSupport_solid4_phys">
+        <volumeref ref="TM4CoilSupportHalf1_solid_log"/>
+        <position name="TM4CoilSupport_solid4_pos" x="-757.936" y="364.998" z="9632.696-11287.5+1479.55/2+2864.764"/>
+        <rotation name="TM4CoilSupport_solid4_rot" unit="deg" x="0" y="0" z="3*SEPTANT"/>
+      </physvol>
+     
+      <physvol name="TM4CoilSupport_solid5_phys">
+        <volumeref ref="TM4CoilSupportHalf1_solid_log"/>
+        <position name="TM4CoilSupport_solid5_pos" x="-757.936" y="-364.998" z="9632.696-11287.5+1479.55/2+2864.764"/>
+        <rotation name="TM4CoilSupport_solid5_rot" unit="deg" x="0" y="0" z="4*SEPTANT"/>
+      </physvol>
+     
+      <physvol name="TM4CoilSupport_solid6_phys">
+        <volumeref ref="TM4CoilSupportHalf1_solid_log"/>
+        <position name="TM4CoilSupport_solid6_pos" x="-187.2234" y="-820.166" z="9632.696-11287.5+1479.55/2+2864.764"/>
+        <rotation name="TM4CoilSupport_solid6_rot" unit="deg" x="0" y="0" z="5*SEPTANT"/>
+      </physvol>
+     
+      <physvol name="TM4CoilSupport_solid7_phys">
+        <volumeref ref="TM4CoilSupportHalf1_solid_log"/>
+        <position name="TM4CoilSupport_solid7_pos" x="524.51" y="-657.86" z="9632.696-11287.5+1479.55/2+2864.764"/>
+        <rotation name="TM4CoilSupport_solid7_rot" unit="deg" x="0" y="0" z="6*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM4CoilSupportHalf2_solid1_phys">
+        <volumeref ref="TM4CoilSupportHalf2_solid_log"/>
+        <position name="TM4CoilSupportHalf2_solid1_pos" x="841.502" y="0" z="8432.546-11287.5+1174.75/2+2864.764"/>
+        <rotation name="TM4CoilSupportHalf2_solid1_rot" unit="deg" x="0" y="0" z="0*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM4CoilSupportHalf2_solid2_phys">
+        <volumeref ref="TM4CoilSupportHalf2_solid_log"/>
+        <position name="TM4CoilSupportHalf2_solid2_pos" x="524.51" y="657.86" z="8432.546-11287.5+1174.75/2+2864.764"/>
+        <rotation name="TM4CoilSupportHalf2_solid2_rot" unit="deg" x="0" y="0" z="1*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM4CoilSupportHalf2_solid3_phys">
+        <volumeref ref="TM4CoilSupportHalf2_solid_log"/>
+        <position name="TM4CoilSupportHalf2_solid3_pos" x="-187.2234" y="820.166" z="8432.546-11287.5+1174.75/2+2864.764"/>
+        <rotation name="TM4CoilSupportHalf2_solid3_rot" unit="deg" x="0" y="0" z="2*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM4CoilSupportHalf2_solid4_phys">
+        <volumeref ref="TM4CoilSupportHalf2_solid_log"/>
+        <position name="TM4CoilSupportHalf2_solid4_pos" x="-757.936" y="364.998" z="8432.546-11287.5+1174.75/2+2864.764"/>
+        <rotation name="TM4CoilSupportHalf2_solid4_rot" unit="deg" x="0" y="0" z="3*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM4CoilSupportHalf2_solid5_phys">
+        <volumeref ref="TM4CoilSupportHalf2_solid_log"/>
+        <position name="TM4CoilSupportHalf2_solid5_pos" x="-757.936" y="-364.998" z="8432.546-11287.5+1174.75/2+2864.764"/>
+        <rotation name="TM4CoilSupportHalf2_solid5_rot" unit="deg" x="0" y="0" z="4*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM4CoilSupportHalf2_solid6_phys">
+        <volumeref ref="TM4CoilSupportHalf2_solid_log"/>
+        <position name="TM4CoilSupportHalf2_solid6_pos" x="-187.2234" y="-820.166" z="8432.546-11287.5+1174.75/2+2864.764"/>
+        <rotation name="TM4CoilSupportHalf2_solid6_rot" unit="deg" x="0" y="0" z="5*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM4CoilSupportHalf2_solid7_phys">
+        <volumeref ref="TM4CoilSupportHalf2_solid_log"/>
+        <position name="TM4CoilSupportHalf2_solid7_pos" x="524.51" y="-657.86" z="8432.546-11287.5+1174.75/2+2864.764"/>
+        <rotation name="TM4CoilSupportHalf2_solid7_rot" unit="deg" x="0" y="0" z="6*SEPTANT"/>
+      </physvol>
+      <physvol name="TM3SupportBeam_solid1_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM3SupportBeam_solid1_pos" x="781.05" y="-990.6" z="7475.22-11287.5+2864.764"/>
+      </physvol>
+        
+      <physvol name="TM3SupportBeam_solid2_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM3SupportBeam_solid2_pos" x="-781.05" y="-990.6" z="7475.22-11287.5+2864.764"/>
+      </physvol>
+        
+      <physvol name="TM3Support_solid1_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM3Support_solid1_pos" x="765.302" y="0" z="7475.22-11287.5+2864.764"/>
+        <rotation name="TM3Support_solid1_rot" unit="deg" x="0" y="0" z="0*SEPTANT"/>
+      </physvol>
+        
+      <physvol name="TM3Support_solid2_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM3Support_solid2_pos" x="477.012" y="598.17" z="7475.22-11287.5+2864.764"/>
+        <rotation name="TM3Support_solid2_rot" unit="deg" x="0" y="0" z="1*SEPTANT"/>
+      </physvol>
+        
+      <physvol name="TM3Support_solid3_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM3Support_solid3_pos" x="-170.2562" y="745.998" z="7475.22-11287.5+2864.764"/>
+        <rotation name="TM3Support_solid3_rot" unit="deg" x="0" y="0" z="2*SEPTANT"/>
+      </physvol>
+    
+      <physvol name="TM3Support_solid4_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM3Support_solid4_pos" x="-689.356" y="331.978" z="7475.22-11287.5+2864.764"/>
+        <rotation name="TM3Support_solid4_rot" unit="deg" x="0" y="0" z="3*SEPTANT"/>
+      </physvol>
+    
+      <physvol name="TM3Support_solid5_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM3Support_solid5_pos" x="-689.356" y="-331.978" z="7475.22-11287.5+2864.764"/>
+        <rotation name="TM3Support_solid5_rot" unit="deg" x="0" y="0" z="4*SEPTANT"/>
+      </physvol>
+    
+      <physvol name="TM3Support_solid6_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM3Support_solid6_pos" x="-170.2562" y="-745.998" z="7475.22-11287.5+2864.764"/>
+        <rotation name="TM3Support_solid6_rot" unit="deg" x="0" y="0" z="5*SEPTANT"/>
+      </physvol>
+    
+      <physvol name="TM3Support_solid7_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM3Support_solid7_pos" x="477.012" y="-598.17" z="7475.22-11287.5+2864.764"/>
+        <rotation name="TM3Support_solid7_rot" unit="deg" x="0" y="0" z="6*SEPTANT"/>
+      </physvol>
+
+      <physvol name="TM2SupportBeam_solid1_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM2SupportBeam_solid1_pos" x="781.05" y="-990.6" z="6436.36-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM2SupportBeam_solid2_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM2SupportBeam_solid2_pos" x="-781.05" y="-990.6" z="6436.36-11287.5+2864.764"/>
+      </physvol>
+      
+      <physvol name="TM2Support_solid1_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM2Support_solid1_pos" x="765.302" y="0" z="6436.36-11287.5+2864.764"/>
+        <rotation name="TM2Support_solid1_rot" unit="deg" x="0" y="0" z="0*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM2Support_solid2_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM2Support_solid2_pos" x="477.012" y="598.17" z="6436.36-11287.5+2864.764"/>
+        <rotation name="TM2Support_solid2_rot" unit="deg" x="0" y="0" z="1*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM2Support_solid3_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM2Support_solid3_pos" x="-170.2562" y="745.998" z="6436.36-11287.5+2864.764"/>
+        <rotation name="TM2Support_solid3_rot" unit="deg" x="0" y="0" z="2*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM2Support_solid4_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM2Support_solid4_pos" x="-689.356" y="331.978" z="6436.36-11287.5+2864.764"/>
+        <rotation name="TM2Support_solid4_rot" unit="deg" x="0" y="0" z="3*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM2Support_solid5_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM2Support_solid5_pos" x="-689.356" y="-331.978" z="6436.36-11287.5+2864.764"/>
+        <rotation name="TM2Support_solid5_rot" unit="deg" x="0" y="0" z="4*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM2Support_solid6_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM2Support_solid6_pos" x="-170.2562" y="-745.998" z="6436.36-11287.5+2864.764"/>
+        <rotation name="TM2Support_solid6_rot" unit="deg" x="0" y="0" z="5*SEPTANT"/>
+      </physvol>
+      
+      <physvol name="TM2Support_solid7_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM2Support_solid7_pos" x="477.012" y="-598.17" z="6436.36-11287.5+2864.764"/>
+        <rotation name="TM2Support_solid7_rot" unit="deg" x="0" y="0" z="6*SEPTANT"/>
+      </physvol>
+
+      <physvol name="TM1SupportBeam_solid1_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM1SupportBeam_solid1_pos" x="781.05" y="-990.6" z="5417.82-11287.5+2864.764"/>
+      </physvol>
+        
+      <physvol name="TM1SupportBeam_solid2_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM1SupportBeam_solid2_pos" x="-781.05" y="-990.6" z="5417.82-11287.5+2864.764"/>
+      </physvol>
+        
+      <physvol name="TM1Support_solid1_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM1Support_solid1_pos" x="765.302" y="0" z="5417.82-11287.5+2864.764"/>
+        <rotation name="TM1Support_solid1_rot" unit="deg" x="0" y="0" z="0*SEPTANT"/>
+      </physvol>
+        
+      <physvol name="TM1Support_solid2_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM1Support_solid2_pos" x="477.012" y="598.17" z="5417.82-11287.5+2864.764"/>
+        <rotation name="TM1Support_solid2_rot" unit="deg" x="0" y="0" z="1*SEPTANT"/>
+      </physvol>
+        
+      <physvol name="TM1Support_solid3_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM1Support_solid3_pos" x="-170.2562" y="745.998" z="5417.82-11287.5+2864.764"/>
+        <rotation name="TM1Support_solid3_rot" unit="deg" x="0" y="0" z="2*SEPTANT"/>
+      </physvol>
+        
+      <physvol name="TM1Support_solid4_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM1Support_solid4_pos" x="-689.356" y="331.978" z="5417.82-11287.5+2864.764"/>
+        <rotation name="TM1Support_solid4_rot" unit="deg" x="0" y="0" z="3*SEPTANT"/>
+      </physvol>
+        
+      <physvol name="TM1Support_solid5_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM1Support_solid5_pos" x="-689.356" y="-331.978" z="5417.82-11287.5+2864.764"/>
+        <rotation name="TM1Support_solid5_rot" unit="deg" x="0" y="0" z="4*SEPTANT"/>
+      </physvol>
+        
+      <physvol name="TM1Support_solid6_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM1Support_solid6_pos" x="-170.2562" y="-745.998" z="5417.82-11287.5+2864.764"/>
+        <rotation name="TM1Support_solid6_rot" unit="deg" x="0" y="0" z="5*SEPTANT"/>
+      </physvol>
+        
+      <physvol name="TM1Support_solid7_phys">
+        <volumeref ref="TMSupport_solid_log"/>
+        <position name="TM1Support_solid7_pos" x="477.012" y="-598.17" z="5417.82-11287.5+2864.764"/>
+        <rotation name="TM1Support_solid7_rot" unit="deg" x="0" y="0" z="6*SEPTANT"/>
+      </physvol>
+     
+    </volume>
+  </structure>
+
+  <setup name="DS_toroidSupportWorld" version="1.0">
+    <world ref="DS_toroidSupportMother"/>
+  </setup>
+
+</gdml>
