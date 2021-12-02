@@ -21,6 +21,40 @@ void niceLogXBins(TH1*h)
   delete[] new_bins;
 }
 
+void TwoDniceLogXBins(TH2*h)
+{
+  TAxis *axis = h->GetXaxis();
+  int bins = axis->GetNbins();
+
+  double from = axis->GetXmin();
+  double to = axis->GetXmax();
+  double width = (to - from) / bins;
+  double *new_bins = new double[bins + 1];
+
+  for (int i = 0; i <= bins; i++) {
+    new_bins[i] = pow(10, from + i * width);
+  }
+  axis->Set(bins, new_bins);
+  delete[] new_bins;
+}
+
+void TwoDniceLogYBins(TH2*h)
+{
+  TAxis *axis = h->GetYaxis();
+  int bins = axis->GetNbins();
+
+  double from = axis->GetXmin();
+  double to = axis->GetXmax();
+  double width = (to - from) / bins;
+  double *new_bins = new double[bins + 1];
+
+  for (int i = 0; i <= bins; i++) {
+    new_bins[i] = pow(10, from + i * width);
+  }
+  axis->Set(bins, new_bins);
+  delete[] new_bins;
+}
+
 TH1* dNdXscaleLogX(TH1*h){
   TH1* h2=(TH1*)h->Clone(Form("%s_dNdX",h->GetName()));
   h2->GetYaxis()->SetTitle("dN/dX");
