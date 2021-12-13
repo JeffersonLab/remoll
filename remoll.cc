@@ -19,6 +19,8 @@ typedef G4RunManager RunManager;
 #include "G4Version.hh"
 #include "G4UImanager.hh"
 
+#include "remollIO.hh"
+
 #include "remollRun.hh"
 #include "remollRunData.hh"
 
@@ -26,6 +28,8 @@ typedef G4RunManager RunManager;
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
 #include "remollParallelConstruction.hh"
+
+#include "remollSearchPath.hh"
 
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
@@ -42,7 +46,7 @@ typedef G4RunManager RunManager;
 namespace {
   void PrintUsage() {
     G4cerr << "Usage: " << G4endl;
-    G4cerr << " remoll [-g geometry] [-m macro] [-u UIsession] [-r seed] ";
+    G4cerr << " remoll [-f] [-g geometry] [-m macro] [-u UIsession] [-r seed] [-o outputfile] ";
 #ifdef G4MULTITHREADED
     G4cerr << "[-t nThreads] ";
 #endif
@@ -61,6 +65,14 @@ int main(int argc, char** argv) {
     gROOT->Reset();
     #endif
 
+    // Warn if LIBGL_ALWAYS_INDIRECT is set
+    if (std::getenv("LIBGL_ALWAYS_INDIRECT") != nullptr) {
+      G4cerr << "remoll: Environment variable LIBGL_ALWAYS_INDIRECT is set." << G4endl;
+      G4cerr << "remoll: This may interfere with visualization. Unset wih:" << G4endl;
+      G4cerr << "remoll: tcsh>  unsetenv LIBGL_ALWAYS_INDIRECT" << G4endl;
+      G4cerr << "remoll: bash>  unset LIBGL_ALWAYS_INDIRECT" << G4endl;
+    }
+
     // Initialize the random seed
     G4long seed = time(0) + (int) getpid();
     // Open /dev/urandom
@@ -78,6 +90,8 @@ int main(int argc, char** argv) {
     G4String session;
     G4String geometry_gdmlfile;
     G4String parallel_gdmlfile;
+    G4String outputfile;
+    __attribute__((unused)) G4bool force = false;
 #ifdef G4MULTITHREADED
     G4int threads = 0;
 #endif
@@ -88,6 +102,8 @@ int main(int argc, char** argv) {
       else if (G4String(argv[i]) == "-p") parallel_gdmlfile = argv[++i];
       else if (G4String(argv[i]) == "-u") session  = argv[++i];
       else if (G4String(argv[i]) == "-r") seed     = atol(argv[++i]);
+      else if (G4String(argv[i]) == "-o") outputfile = argv[++i];
+      else if (G4String(argv[i]) == "-f") force    = true;
 #ifdef G4MULTITHREADED
       else if (G4String(argv[i]) == "-t") threads  = atoi(argv[++i]);
 #endif
@@ -97,6 +113,27 @@ int main(int argc, char** argv) {
         return 1;
       }
     }
+
+    //-------------------------------
+    // Check dependency versions
+    //-------------------------------
+    #if G4VERSION_NUMBER < 1060
+    if (! force) {
+      G4cerr << "WARNING: You are running with an older geant4 version." << G4endl;
+      G4cerr << "WARNING: The encouraged version of geant4 is 10.6.2." << G4endl;
+      G4cerr << "WARNING: Pass the option '-f' to ignore this warning." << G4endl;
+      exit(-1);
+    }
+    #endif
+
+    #if ROOT_VERSION_CODE < ROOT_VERSION(6,14,4)
+    if (! force) {
+      G4cerr << "WARNING: You are running with an older ROOT version." << G4endl;
+      G4cerr << "WARNING: The encouraged version of ROOT is 6.14.4." << G4endl;
+      G4cerr << "WARNING: Pass the option '-f' to ignore this warning." << G4endl;
+      exit(-1);
+    }
+    #endif
 
 
     //-------------------------------
@@ -108,7 +145,14 @@ int main(int argc, char** argv) {
     #endif
 
     // Set the default random seed
+    G4cout << G4endl << "remoll: Random seed: " << seed << G4endl;
     G4Random::setTheSeed(seed);
+
+    // Create remoll IO object with output file name
+    if (outputfile.size() > 0)
+      remollIO::GetInstance(outputfile);
+    else
+      remollIO::GetInstance();
 
     // Detector geometry
     G4String material_name = "material";
@@ -147,18 +191,27 @@ int main(int argc, char** argv) {
     G4cout << "remoll: see also https://github.com/JeffersonLab/remoll/issues/130" << G4endl;
     #endif
 
+
     // Define UI session for interactive mode
-    if (macro.size())
+    G4String searchpath = ".";
+    searchpath += ":" + std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll";
+    searchpath += ":" + std::string(CMAKE_INSTALL_FULL_DATADIR) + "/remoll/macros";
+    if (macro.size() != 0u)
     {
       // Run in batch mode
       // Copy contents of macro into buffer to be written out into ROOT file
-      remollRun::GetRunData()->SetMacroFile(macro);
-      UImanager->ExecuteMacroFile(macro);
+      UImanager->SetMacroSearchPath(searchpath);
+      UImanager->ParseMacroSearchPath();
+      remollRun::GetRunData()->SetMacroFile((remollSearchPath::resolve(macro)).c_str());
+      UImanager->ExecuteMacroFile((remollSearchPath::resolve(macro)).c_str());
     } else {
       // Define UI session for interactive mode
       G4UIExecutive* ui = new G4UIExecutive(argc,argv,session);
-      if (ui->IsGUI())
-        UImanager->ApplyCommand("/control/execute macros/gui.mac");
+      if (ui->IsGUI()) {
+        UImanager->SetMacroSearchPath(searchpath);
+        UImanager->ParseMacroSearchPath();
+        UImanager->ExecuteMacroFile((remollSearchPath::resolve("macros/gui.mac")).c_str());
+      }
       ui->SessionStart();
       delete ui;
     }

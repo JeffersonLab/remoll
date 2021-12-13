@@ -1,10 +1,24 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 project(remoll VERSION 0.1 LANGUAGES CXX C)
 
 set(CMAKE_CXX_STANDARD 14)
+# Export compile commands as json for run-clang-tidy
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Also use clang-tidy integration in CMake
+option(ENABLE_CLANG_TIDY "Enable clang-tidy integration in cmake" OFF)
+if(ENABLE_CLANG_TIDY)
+  find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+  if (CLANG_TIDY_EXE)
+    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE}" CACHE STRING "" FORCE)
+  else()
+    set(CMAKE_CXX_CLANG_TIDY "" CACHE STRING "" FORCE)
+  endif()
+endif()
 
 # Disallow in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -86,7 +100,7 @@ list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
 #----------------------------------------------------------------------------
 # Boost
 #
-find_package(Boost QUIET COMPONENTS iostreams filesystem)
+find_package(Boost QUIET OPTIONAL_COMPONENTS iostreams filesystem)
 if(Boost_FOUND)
   message(STATUS "Boost found --> building with boost enabled.")
   include_directories(${Boost_INCLUDE_DIRS})
@@ -104,6 +118,42 @@ else()
   message(STATUS "Boost not found.")
 endif()
 
+#----------------------------------------------------------------------------
+# Find CADMesh libraries
+set(cadmesh_LIBRARIES "")
+find_package(cadmesh QUIET)
+if(cadmesh_FOUND)
+    # Pretty sure at some point cadmesh will update to use lowercase
+    include_directories(${CADMESH_INCLUDE_DIRS})
+    include_directories(${cadmesh_INCLUDE_DIRS})
+    link_directories(${cadmesh_LIBRARY_DIR})
+    ADD_DEFINITIONS(-D__USE_CADMESH)
+
+    find_path(TETGEN_INCLUDE_DIRS tetgen.h
+        PATHS
+        $ENV{TETGEN_PATH}
+        $ENV{TETGEN_PATH}/tetgen
+        /usr/local/include
+        /usr/include)
+    find_library(TETGEN_LIBRARIES NAMES tetgen tet
+        PATHS
+        $ENV{TETGEN_PATH}
+        $ENV{TETGEN_PATH}/tetgen
+        /usr/local/lib
+        /usr/lib)
+    if(TETGEN_INCLUDE_DIRS)
+        if(TETGEN_LIBRARIES)
+            include_directories(${TETGEN_INCLUDE_DIRS})
+            ADD_DEFINITIONS(-D__USE_CADMESH_TETGEN)
+        endif()
+    endif()
+
+    find_package(assimp QUIET)
+    if(assimp_FOUND)
+        include_directories(${ASSIMP_INCLUDE_DIRS})
+        ADD_DEFINITIONS(-D__USE_CADMESH_ASSIMP)
+    endif()
+endif()
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -202,6 +252,7 @@ target_link_libraries(lib${PROJECT_NAME}
     ${Boost_LIBRARIES}
     ${HEPMC_LIBRARIES}
     ${PYTHIA6_LIBRARIES}
+    ${cadmesh_LIBRARIES}
   )
 
 install(TARGETS lib${PROJECT_NAME}

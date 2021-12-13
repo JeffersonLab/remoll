@@ -32,19 +32,19 @@
     rmax="1200" rmin="0" z="1" lunit="mm"/>
 
   <tube
-    name="samVirtualPlane_solid"
-    startphi="0" deltaphi="360" aunit="deg"
-    rmax="660" rmin="0" z="1" lunit="mm"/>
-
-  <tube
     name="dumpVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
     rmax="307" rmin="0" z="1" lunit="mm"/>
 
-    <!-- <tube
+  <tube
+    name="samVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="732.79" rmin="0" z="1" lunit="mm"/>
+ 
+  <tube
     name="gemVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="1450" rmax="1460" z="2700" lunit="mm"/>-->
+    rmin="1450" rmax="1460" z="2700" lunit="mm"/>
 
   <sphere name="targetSphere_solid" 
 	  rmin="700" rmax="701" lunit="mm"
@@ -143,6 +143,11 @@
 
  <box name="USTorus_VirtualPlane_solid" lunit="mm" x="2000" y="2000" z="1"/>
       
+  <tube
+    name="showerMaxVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="0" rmax="2000" z="1" lunit="mm"/>
+
 </solids>
 
 <structure>
@@ -649,12 +654,34 @@
     <auxiliary auxtype="DetNo" auxvalue="50"/>
   </volume>-->
 
-  <volume name="SAMusVirtualPlane_log">
+  <volume name="SAMus_neckdown_VirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="samVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="42"/>
+    <auxiliary auxtype="DetNo" auxvalue="55"/>
   </volume>
+
+ <volume name="SAMds_neckdown_VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="56"/>
+  </volume>
+
+ <volume name="SAMus_flange_VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="57"/>
+  </volume>
+
+ <volume name="SAMds_flange_VirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="58"/>
+  </volume>
+
 
   <volume name="dumpEntranceVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
@@ -722,6 +749,19 @@
     <auxiliary auxtype="Alpha" auxvalue="1"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="5524"/>
+
+  <volume name="sieveVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="60"/>
+  </volume>
+
+  <volume name="showerMaxVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="showerMaxVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="70"/>
   </volume>
 
   <volume name="ParallelWorld_logical">
@@ -889,6 +929,31 @@
       <positionref ref="pionDetectorVirtualPlane_pos"/>
     </physvol>
 
+
+  <!-- SAM detector planes -->
+
+    <physvol name="SAMus_neckdown_VirtualPlane_phys">
+      <volumeref ref="SAMus_neckdown_VirtualPlane_log"/>
+      <positionref ref="SAMus_neckdown_VirtualPlane_pos"/>
+    </physvol>
+
+   <physvol name="SAMds_neckdown_VirtualPlane_phys">
+      <volumeref ref="SAMds_neckdown_VirtualPlane_log"/>
+      <positionref ref="SAMds_neckdown_VirtualPlane_pos"/>
+    </physvol>
+ 
+   <physvol name="SAMus_flange_VirtualPlane_phys">
+      <volumeref ref="SAMus_flange_VirtualPlane_log"/>
+      <positionref ref="SAMus_flange_VirtualPlane_pos"/>
+    </physvol>
+
+   <physvol name="SAMds_flange_VirtualPlane_phys">
+      <volumeref ref="SAMds_flange_VirtualPlane_log"/>
+      <positionref ref="SAMds_flange_VirtualPlane_pos"/>
+    </physvol>
+
+
+
     <!-- Beamline detector planes -->
     <physvol name="collar1VirtualPlane_phys">
       <volumeref ref="collar1VirtualPlane_log"/>
@@ -905,12 +970,8 @@
       <positionref ref="gemVirtualPlane_pos"/>
     </physvol>-->
 
-    <physvol name="SAMusVirtualPlane_phys">
-      <volumeref ref="SAMusVirtualPlane_log"/>
-      <positionref ref="SAMusVirtualPlane_pos"/>
-    </physvol>
 
-    <physvol name="dumpEntranceVirtualPlane_phys">
+   <physvol name="dumpEntranceVirtualPlane_phys">
       <volumeref ref="dumpEntranceVirtualPlane_log"/>
       <positionref ref="dumpEntranceVirtualPlane_pos"/>
     </physvol>
@@ -1036,10 +1097,19 @@
     </physvol>
 
   <physvol name="USTorus_VirtualPlane2_phys">
-      <volumeref ref="USTorus_VirtualPlane2_log"/>
-      <position name="USTorus_VirtualPlane2_pos" unit="mm" x="0" y="-150" z="1100"/>
-    </physvol>
+    <volumeref ref="USTorus_VirtualPlane2_log"/>
+    <position name="USTorus_VirtualPlane2_pos" unit="mm" x="0" y="-150" z="1100"/>
+  </physvol>
     
+  <physvol name="sieveVirtualPlane_phys">
+      <volumeref ref="sieveVirtualPlane_log"/>
+      <positionref ref="sieveVirtualPlane_pos"/>
+    </physvol>
+
+    <physvol name="showerMaxVirtualPlane_phys">
+      <volumeref ref="showerMaxVirtualPlane_log"/>
+      <positionref ref="showerMaxVirtualPlane_pos"/>
+    </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 </structure>

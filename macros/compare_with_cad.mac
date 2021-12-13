@@ -1,0 +1,50 @@
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+
+/run/initialize
+
+/control/execute macros/load_meshes.mac
+
+/control/execute vis/SQt.mac
+
+/control/execute vis/section_xz.mac
+/vis/viewer/zoomTo 40
+/vis/viewer/set/targetPoint 0 0 -10 m
+/vis/ogl/export section_xz_-10.svg
+/vis/viewer/set/targetPoint 0 0 -5 m
+/vis/ogl/export section_xz_-05.svg
+/vis/viewer/set/targetPoint 0 0 0 m
+/vis/ogl/export section_xz_00.svg
+/vis/viewer/set/targetPoint 0 0 5 m
+/vis/ogl/export section_xz_05.svg
+/vis/viewer/set/targetPoint 0 0 10 m
+/vis/ogl/export section_xz_10.svg
+/vis/viewer/set/targetPoint 0 0 15 m
+/vis/ogl/export section_xz_15.svg
+/vis/viewer/set/targetPoint 0 0 20 m
+/vis/ogl/export section_xz_20.svg
+/vis/viewer/set/targetPoint 0 0 25 m
+/vis/ogl/export section_xz_25.svg
+/vis/viewer/set/targetPoint 0 0 30 m
+/vis/ogl/export section_xz_30.svg
+
+/control/execute vis/section_yz.mac
+/vis/viewer/zoomTo 40
+/vis/viewer/set/targetPoint 0 0 -10 m
+/vis/ogl/export section_yz_-10.svg
+/vis/viewer/set/targetPoint 0 0 -5 m
+/vis/ogl/export section_yz_-05.svg
+/vis/viewer/set/targetPoint 0 0 0 m
+/vis/ogl/export section_yz_00.svg
+/vis/viewer/set/targetPoint 0 0 5 m
+/vis/ogl/export section_yz_05.svg
+/vis/viewer/set/targetPoint 0 0 10 m
+/vis/ogl/export section_yz_10.svg
+/vis/viewer/set/targetPoint 0 0 15 m
+/vis/ogl/export section_yz_15.svg
+/vis/viewer/set/targetPoint 0 0 20 m
+/vis/ogl/export section_yz_20.svg
+/vis/viewer/set/targetPoint 0 0 25 m
+/vis/ogl/export section_yz_25.svg
+/vis/viewer/set/targetPoint 0 0 30 m
+/vis/ogl/export section_yz_30.svg

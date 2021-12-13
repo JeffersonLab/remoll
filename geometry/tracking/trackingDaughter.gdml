@@ -4,14 +4,8 @@
       xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
-  <constant name="PHI" value="360.0/7.0"/>
-  <quantity name="PHI1" type="angle" value="0.5*PHI" unit="deg"/>
-  <quantity name="PHI2" type="angle" value="1.5*PHI" unit="deg"/>
-  <quantity name="PHI3" type="angle" value="2.5*PHI" unit="deg"/>
-  <quantity name="PHI4" type="angle" value="3.5*PHI" unit="deg"/>
-  <quantity name="PHI5" type="angle" value="4.5*PHI" unit="deg"/>
-  <quantity name="PHI6" type="angle" value="5.5*PHI" unit="deg"/>
-  <quantity name="PHI7" type="angle" value="6.5*PHI" unit="deg"/>
+  <constant name="PHI" value="2*pi/7"/>
+  <variable name="i" value="0"/>
 
   <quantity name="GEMThickness"   type="length" value="30" unit="mm"/>
 
@@ -29,10 +23,8 @@
 
   <quantity name="GEMPositionRadius" type="length" value="0.85" unit="m"/>
 
-  <position name="GEMTrackingPlaneFront1_pos" z="-1.10" unit="m"/>
-  <position name="GEMTrackingPlaneFront2_pos" z="-0.90" unit="m"/>
-  <position name="GEMTrackingPlaneBack1_pos"  z="+0.90" unit="m"/>
-  <position name="GEMTrackingPlaneBack2_pos"  z="+1.10" unit="m"/>
+  <position name="GEMTrackingPlane1_pos" z="0.0" unit="m"/>
+  <position name="GEMTrackingPlane2_pos" z="0.5" unit="m"/>
 </define>
 
 <materials>
@@ -59,13 +51,16 @@
 </materials>
 
 <solids>
-  <tube name="GEMTrackingWorld_sol"
-    startphi="0" deltaphi="360" aunit="deg"
-    rmin="605" rmax="2000" z="2500" lunit="mm"/>
+  <polycone name="GEMTrackingWorld_sol"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="650" rmax="2000.0" z="    0-100.0"/>
+    <zplane rmin="650" rmax="2000.0" z="500.0+100.0"/>
+  </polycone>
 
   <tube name="GEMTrackingPlane_sol"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="610" rmax="1900" z="100" lunit="mm"/>
+    rmin="650" rmax="1900" z="100" lunit="mm"/>
 
   <box name="GEMDetector_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="10.0*cm"/>
 
@@ -110,7 +105,7 @@
   </volume>
 
   <volume name="GEMDetector_log">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="GEMDetector_sol"/>
 
     <physvol name="GEMFrame_phys">
@@ -135,76 +130,36 @@
   </volume>
 
   <volume name="GEMTrackingPlane_log">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="GEMTrackingPlane_sol"/>
 
-    <physvol name="GEMDetector_sector1_phys">
-      <volumeref ref="GEMDetector_log"/>
-      <position name="GEMDetector_sector1_pos" x="GEMPositionRadius*cos(PHI1)" y="GEMPositionRadius*sin(PHI1)"/>
-      <rotation name="GEMDetector_sector1_rot" z="-PHI1"/>
-    </physvol>	
-    
-    <physvol name="GEMDetector_sector2_phys">
-      <volumeref ref="GEMDetector_log"/>
-      <position name="GEMDetector_sector2_pos" x="GEMPositionRadius*cos(PHI2)" y="GEMPositionRadius*sin(PHI2)"/>
-      <rotation name="GEMDetector_sector2_rot" z="-PHI2"/>
-    </physvol>	
-    
-    <physvol name="GEMDetector_sector3_phys">
-      <volumeref ref="GEMDetector_log"/>
-      <position name="GEMDetector_sector3_pos" x="GEMPositionRadius*cos(PHI3)" y="GEMPositionRadius*sin(PHI3)"/>
-      <rotation name="GEMDetector_sector3_rot" z="-PHI3"/>
-    </physvol>	
-    
-    <physvol name="GEMDetector_sector4_phys">
-      <volumeref ref="GEMDetector_log"/>
-      <position name="GEMDetector_sector4_pos" x="GEMPositionRadius*cos(PHI4)" y="GEMPositionRadius*sin(PHI4)"/>
-      <rotation name="GEMDetector_sector4_rot" z="-PHI4"/>
-    </physvol>	
-    
-    <physvol name="GEMDetector_sector5_phys">
-      <volumeref ref="GEMDetector_log"/>
-      <position name="GEMDetector_sector5_pos" x="GEMPositionRadius*cos(PHI5)" y="GEMPositionRadius*sin(PHI5)"/>
-      <rotation name="GEMDetector_sector5_rot" z="-PHI5"/>
-    </physvol>	
-    
-    <physvol name="GEMDetector_sector6_phys">
-      <volumeref ref="GEMDetector_log"/>
-      <position name="GEMDetector_sector6_pos" x="GEMPositionRadius*cos(PHI6)" y="GEMPositionRadius*sin(PHI6)"/>
-      <rotation name="GEMDetector_sector6_rot" z="-PHI6"/>
-    </physvol>	
-    
-    <physvol name="GEMDetector_sector7_phys">
-      <volumeref ref="GEMDetector_log"/>
-      <position name="GEMDetector_sector7_pos" x="GEMPositionRadius*cos(PHI7)" y="GEMPositionRadius*sin(PHI7)"/>
-      <rotation name="GEMDetector_sector7_rot" z="-PHI7"/>
-    </physvol>	
-    
+    <loop for="i" from="1" to="7" step="1">
+      <physvol name="GEMDetector_sector_phys[i+1]">
+        <volumeref ref="GEMDetector_log"/>
+        <position name="GEMDetector_sector_pos[i+1]" 
+                  x="GEMPositionRadius*cos((i-0.5)*PHI)" 
+                  y="GEMPositionRadius*sin((i-0.5)*PHI)"/>
+        <rotation name="GEMDetector_sector_rot[i+1]"
+                  z="-(i-0.5)*PHI"/>
+      </physvol>	
+    </loop>
+
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 
   <volume name="GEMTrackingWorld_log">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="GEMTrackingWorld_sol"/>
 
-    <physvol name="GEMTrackingPlaneFront1_phys">
+    <physvol name="GEMTrackingPlane1_phys">
       <volumeref ref="GEMTrackingPlane_log"/>
-      <positionref ref="GEMTrackingPlaneFront1_pos"/>
+      <positionref ref="GEMTrackingPlane1_pos"/>
     </physvol>	
-    <physvol name="GEMTrackingPlaneFront2_phys">
+    <physvol name="GEMTrackingPlane2_phys">
       <volumeref ref="GEMTrackingPlane_log"/>
-      <positionref ref="GEMTrackingPlaneFront2_pos"/>
+      <positionref ref="GEMTrackingPlane2_pos"/>
     </physvol>	
-
-    <physvol name="GEMTrackingPlaneBack1_phys">
-      <volumeref ref="GEMTrackingPlane_log"/>
-      <positionref ref="GEMTrackingPlaneBack1_pos"/>
-    </physvol>	
-    <physvol name="GEMTrackingPlaneBack2_phys">
-      <volumeref ref="GEMTrackingPlane_log"/>
-      <positionref ref="GEMTrackingPlaneBack2_pos"/>
-    </physvol>	
-
+    
   </volume>
 
 </structure>

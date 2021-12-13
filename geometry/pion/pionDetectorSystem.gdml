@@ -4,130 +4,66 @@
 
 <define>
    <!-- Full pion detector system dimensions -->
-   <quantity name="pionDetectorSystemInnerRadius" type="length" value="0.82" unit="m"/>
+   <quantity name="pionDetectorSystemInnerRadius" type="length" value="1.02" unit="m"/>
    <quantity name="pionDetectorSystemOuterRadius" type="length" value="2.00" unit="m"/>
-   <quantity name="pionDetectorSystemLength" type="length" value="1.45" unit="m"/>
+   <quantity name="pionDetectorSystemLength"      type="length" value="1.00" unit="m"/>
+   <!-- Adding some for information -->
+   <!-- Positions of detectors within full pion detector system, referenced to front -->
+   <position name="pionDetectorLuciteCenterPosition"      z="2.54*cm"/> <!-- 2.0*inch thick -->
+   <position name="pionDetectorGEMFrontCenterPosition"    z="0.15*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorTSFrontCenterPosition"     z="0.25*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorTSBackCenterPosition"      z="0.85*m"/> <!-- 0.10*m thick -->
+   <position name="pionDetectorGEMBackCenterPosition"     z="0.95*m"/> <!-- 0.10*m thick -->
 
-   <!-- Lead donut dimensions -->
-   <quantity name="pionDetectorLeadDonutThickness" type="length" value="0.20" unit="m"/>
-   <quantity name="pionDetectorLeadDonutInnerRadius" type="length" value="0.960" unit="m"/>
-   <quantity name="pionDetectorLeadDonutOuterRadius" type="length" value="1.160" unit="m"/>
-
-   <!-- Virtual detector dimensions (before and after lead donut) -->
-   <quantity name="pionDetectorVirtualDetThickness" type="length" value="1.0" unit="cm"/>
-
-   <!-- Derived position of lead donut and virtual detectors -->
-   <position name="pionDetectorVirtualDetPositionFront"
-             x="0" y="0"
-             z="-pionDetectorSystemLength/2.0
-             +pionDetectorVirtualDetThickness/2.0"/>
-   <position name="pionDetectorLeadDonutPosition"
-             x="0" y="0" 
-             z="-pionDetectorSystemLength/2.0
-             +pionDetectorVirtualDetThickness
-             +pionDetectorLeadDonutThickness/2.0"/>
-   <position name="pionDetectorVirtualDetPositionBack"
-             x="0" y="0"
-             z="-pionDetectorSystemLength/2.0
-             +pionDetectorVirtualDetThickness
-             +pionDetectorLeadDonutThickness
-             +pionDetectorVirtualDetThickness/2.0"/>
-
-   <!-- Positions of detectors within full pion detector system -->
-   <quantity name="pionDetectorLuciteCenter" type="length"
-             value="-pionDetectorSystemLength/2.0
-                    +pionDetectorVirtualDetThickness
-                    +pionDetectorLeadDonutThickness
-                    +pionDetectorVirtualDetThickness
-                    +0.58*m"/>
-
-   <position name="pionDetectorGEMFrontPosition"    x="0"   y="0"   z="pionDetectorLuciteCenter-0.52*m"/> <!-- 0.10*m thick -->
-   <position name="pionDetectorTSFrontPosition"     x="0"   y="0"   z="pionDetectorLuciteCenter-0.41*m"/> <!-- 0.10*m thick -->
-   <position name="pionDetectorLucitePosition"      x="0"   y="0"   z="pionDetectorLuciteCenter+0.00*m"/> <!-- 0.69*m thick -->
-   <position name="pionDetectorTSBackPosition"      x="0"   y="0"   z="pionDetectorLuciteCenter+0.41*m"/> <!-- 0.10*m thick -->
-   <position name="pionDetectorGEMBackPosition"     x="0"   y="0"   z="pionDetectorLuciteCenter+0.52*m"/> <!-- 0.10*m thick -->
-   <position name="pionDetectorCalorimeterPosition" x="1*m" y="1*m" z="pionDetectorLuciteCenter+0.66*m"/>
+   <position name="pionDetectorCalorimeterCenterPosition" x="1*m" y="1*m" z="0.66*m"/> <!-- 0.20*m thick -->
 </define>
 
 <materials>
 </materials>
 
 <solids>
-    <tube name="pionDetectorLeadDonut_solid"
-      rmin="pionDetectorLeadDonutInnerRadius"
-      rmax="pionDetectorLeadDonutOuterRadius"
-      z="pionDetectorLeadDonutThickness"
-      deltaphi="360.0" aunit="deg"/>
-    <tube name="pionDetectorSystem_solid"
-      rmin="pionDetectorSystemInnerRadius"
-      rmax="pionDetectorSystemOuterRadius"
-      z="pionDetectorSystemLength"
-      deltaphi="360.0" aunit="deg"/>
+    <polycone name="pionDetectorSystem_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="pionDetectorSystemInnerRadius" rmax="pionDetectorSystemOuterRadius" z="0.0*m"/>
+      <zplane rmin="pionDetectorSystemInnerRadius" rmax="pionDetectorSystemOuterRadius" z="pionDetectorSystemLength"/>
+    </polycone>
 </solids>
 
 <structure>
 
-    <volume name="pionDetectorLeadDonut_logical">
-      <!-- for testing with electron: disable lead and turn into G4_Galactic -->
-      <!-- <materialref ref="G4_Galactic"/> -->
-      <materialref ref="G4_Pb"/>
-      <solidref ref="pionDetectorLeadDonut_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="pionDetectorLeadDonut_SD"/>
-      <auxiliary auxtype="DetNo" auxvalue="8009"/>
-      <auxiliary auxtype="Color" auxvalue="Gray"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-    </volume>
-
     <volume name="pionDetectorSystem_logical">
-      <materialref ref="G4_Galactic"/>
+      <materialref ref="G4_AIR"/>
       <solidref ref="pionDetectorSystem_solid"/>
 
       <physvol>
-        <file name="pion/pionDetectorVirtualDet.gdml"
-           volname="pionDetectorVirtualDetVacuum_logical"/>
-        <positionref ref="pionDetectorVirtualDetPositionFront"/>
-      </physvol>
-
-      <physvol>
-        <volumeref ref="pionDetectorLeadDonut_logical"/>
-        <positionref ref="pionDetectorLeadDonutPosition"/>
-      </physvol>
-
-      <physvol>
-        <file name="pion/pionDetectorVirtualDet.gdml"
-           volname="pionDetectorVirtualDetVacuumKryptonite_logical"/>
-        <positionref ref="pionDetectorVirtualDetPositionBack"/>
-      </physvol>
-
-      <physvol>
         <file name="pion/TS/pionDetectorTSOpenSector.gdml"/>
-        <positionref ref="pionDetectorTSFrontPosition"/>
+        <positionref ref="pionDetectorTSFrontCenterPosition"/>
       </physvol>
 
       <physvol>
         <file name="pion/GEM/pionDetectorGEMOpenSector.gdml"/>
-        <positionref ref="pionDetectorGEMFrontPosition"/>
+        <positionref ref="pionDetectorGEMFrontCenterPosition"/>
       </physvol>
 
       <physvol>
         <file name="pion/Lucite/pionDetectorLuciteSector.gdml"/>
-        <positionref ref="pionDetectorLucitePosition"/>
+        <positionref ref="pionDetectorLuciteCenterPosition"/>
       </physvol>
 
       <physvol>
         <file name="pion/GEM/pionDetectorGEMOpenSector.gdml"/>
-        <positionref ref="pionDetectorGEMBackPosition"/>
+        <positionref ref="pionDetectorGEMBackCenterPosition"/>
       </physvol>
 
       <physvol>
         <file name="pion/TS/pionDetectorTSOpenSector.gdml"/>
-        <positionref ref="pionDetectorTSBackPosition"/>
+        <positionref ref="pionDetectorTSBackCenterPosition"/>
       </physvol>
 
 <!--
       <physvol>
         <file name="pion/Calorimeter/pionDetectorCalorimeter.gdml"/>
-        <positionref ref="pionDetectorCalorimeterPosition"/>
+        <positionref ref="pionDetectorCalorimeterCenterPosition"/>
       </physvol>
 -->
 

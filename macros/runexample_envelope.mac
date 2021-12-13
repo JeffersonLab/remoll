@@ -1,6 +1,6 @@
 # Macrofile
 # This must be called before initialize
-/remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 # This must be explicitly called
 /run/initialize
 /remoll/tracking/set 0
