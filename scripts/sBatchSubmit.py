@@ -6,16 +6,15 @@ def main():
 
     email = "vdoomra@jlab.org"
 
-    config = "moller_shieldConf17"
+    config = "moller_shieldConf20"
 
-    sourceDir = "/work/halla/moller12gev/vdoomra/remoll"
-    outDir = "/volatile/halla/moller12gev/vdoomra/"+config
+    sourceDir = "/work/halla/moller12gev/ciprian/moller/remoll"
+    outDir = "/volatile/halla/moller12gev/ciprian/"+config
 
     activeDetectors = [28, 30, 99, 101, ## MD, GEMs, roof, wall
                        5530, 5543, 5555, 5556, 5510, ##tgt
                        5603, 5613, 5614, 5619, 5620, ##coll1
                        5695, 5696, 5697, 5698, 5699, 5705, 5706, 5707, 5708, ##dsCoil
-                       5714, ##hybridbottom
                        5719, 5720, ##driftPipe
                        5521, ##RasterBox
                        5840, 5842, 5843, 5845, 5850, 5852, 5853, ##PSBunkerVirtualPlanes
@@ -24,10 +23,10 @@ def main():
 
     if not os.path.exists(outDir):
        os.makedirs(outDir)
-    nrEv   = 100000 #100000
+    nrEv   = 50000 #100000
     nrStart= 0
-    nrStop = 4 #(nrStop -nrStart)
-    submit  = 0 ## submit is 1 to submit job, submit is 0 to create folder without submitting the jobs
+    nrStop = 2000 #(nrStop -nrStart)
+    submit  = 1 ## submit is 1 to submit job, submit is 0 to create folder without submitting the jobs
 
     print('Running ' + str(nrEv*(nrStop - nrStart)) + ' events...')
 
@@ -157,6 +156,7 @@ def make_tarfile(sourceDir):
     tar.add(sourceDir+"/geometry/upstream/upstream_Conf8.gdml" ,arcname="geometry/upstream/upstream_Conf8.gdml")
     tar.add(sourceDir+"/geometry/upstream/upstreamBeampipe.gdml" ,arcname="geometry/upstream/upstreamBeampipe.gdml")
     tar.add(sourceDir+"/geometry/hybrid/hybridToroid.gdml" ,arcname="geometry/hybrid/hybridToroid.gdml")
+    tar.add(sourceDir+"/geometry/hybrid/hybridToroidSupport.gdml" ,arcname="geometry/hybrid/hybridToroidSupport.gdml")
     tar.add(sourceDir+"/geometry/hybrid/hybridDaughter_merged.gdml" ,arcname="geometry/hybrid/hybridDaughter_merged.gdml")
     tar.add(sourceDir+"/geometry/huts/lefthut.gdml" ,arcname="geometry/huts/lefthut.gdml")
     tar.add(sourceDir+"/geometry/showermax/showerMaxGen.gdml" ,arcname="geometry/showermax/showerMaxGen.gdml")
