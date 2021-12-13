@@ -36,7 +36,7 @@
 #include <memory>
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
-  : fEventGen(0),fPriGen(0),fParticleGun(0),fBeamTarg(0),fEvent(0),fRateCopy(0),fEffCrossSection(0)
+  : fEventGen(0),fPriGen(0),fParticleGun(0),fEvent(0),fRateCopy(0),fEffCrossSection(0)
 {
     static bool has_been_warned = false;
     if (! has_been_warned) {
@@ -80,7 +80,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     // Create event generator messenger
     fEvGenMessenger.DeclareMethod("set",&remollPrimaryGeneratorAction::SetGenerator,"Select physics generator");
     fEvGenMessenger.DeclarePropertyWithUnit("sigma","picobarn",fEffCrossSection,"Set effective cross section");
-    fEvGenMessenger->DeclareProperty("copyRate",fRateCopy,"ExtGen: copy rate from previous sim");
+    fEvGenMessenger.DeclareProperty("copyRate",fRateCopy,"ExtGen: copy rate from previous sim");
 }
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
