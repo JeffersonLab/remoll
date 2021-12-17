@@ -350,7 +350,7 @@
       <!-- Pion Detectors -->
       <physvol>
         <file name="pion/pionDetectorSystem.gdml"/>
-        <positionref ref="pionDetectorCenter"/>
+        <positionref ref="pionDetectorSystemFaceUS"/>
       </physvol>
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>

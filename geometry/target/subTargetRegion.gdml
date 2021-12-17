@@ -102,7 +102,6 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s3"
           rmin="14.2" rmax="38.6" z="0.3"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s4"
-<<<<<<< HEAD
           rmin="38.6" rmax="140-0.01" z="0.5"/>
 
     <union name ="window_solid1">

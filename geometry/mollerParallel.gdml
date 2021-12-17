@@ -134,20 +134,20 @@
        y="4215"
        z="1"/>
  
- <box lunit="mm" name="PSbunkerTopVP_solid"
-      x="16799.56"
-      y="1"
-      z="11249.914"/>
-
- <box lunit="mm" name="RasterPS_solid" x="800" y="2500" z="800"/>
-
- <box name="USTorus_VirtualPlane_solid" lunit="mm" x="2000" y="2000" z="1"/>
-      
+  <box lunit="mm" name="PSbunkerTopVP_solid"
+       x="16799.56"
+       y="1"
+       z="11249.914"/>
+  
+  <box lunit="mm" name="RasterPS_solid" x="800" y="2500" z="800"/>
+  
+  <box name="USTorus_VirtualPlane_solid" lunit="mm" x="2000" y="2000" z="1"/>
+  
   <tube
-    name="showerMaxVirtualPlane_solid"
-    startphi="0" deltaphi="360" aunit="deg"
-    rmin="0" rmax="2000" z="1" lunit="mm"/>
-
+      name="showerMaxVirtualPlane_solid"
+      startphi="0" deltaphi="360" aunit="deg"
+      rmin="0" rmax="2000" z="1" lunit="mm"/>
+  
 </solids>
 
 <structure>
@@ -187,7 +187,7 @@
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
-   <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="5530"/>
   </volume>
 
@@ -749,6 +749,7 @@
     <auxiliary auxtype="Alpha" auxvalue="1"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="5524"/>
+  </volume>
 
   <volume name="sieveVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
@@ -1110,6 +1111,7 @@
       <volumeref ref="showerMaxVirtualPlane_log"/>
       <positionref ref="showerMaxVirtualPlane_pos"/>
     </physvol>
+
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
   </volume>
 </structure>
