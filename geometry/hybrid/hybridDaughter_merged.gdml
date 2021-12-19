@@ -64,7 +64,7 @@
     <constant name="bellows5flange_Rthickness" value="29.9-bellows5_eps"/>
     <constant name="bellows5_length" value="100"/>
     <constant name="bellows5_Rthickness" value="28.4"/>
-    <constant name="bellows5_zpos" value="23430-4500-(11016.865-8.73/2+150/2+400/2)"/>
+    <constant name="bellows5_zpos" value="23430-4500-(11016.865-8.73/2+75+200)"/>
     <constant name="bellows5flangeUS_zpos" value="bellows5_zpos - bellows5_length/2 - bellows5flange_length/2 - bellows5_eps/2"/>
     <constant name="bellows5flangeDS_zpos" value="bellows5_zpos + bellows5_length/2 + bellows5flange_length/2 + bellows5_eps/2"/>
 
@@ -193,7 +193,6 @@
     <!--collar solids -->
     <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="612" rmax1="750" rmin2="621" rmax2="750" z="100+50"/>
     <!--<cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1013" rmax1="1315" rmin2="1022" rmax2="1315" z="100+50"/>-->
-
 
     <!-- drift pipe -->
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Driftpipe">

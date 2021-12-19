@@ -32,16 +32,18 @@
 <solids>
 
 	<xtru name="solid_C_mid"  lunit="mm">
-		<twoDimVertex x="108.681" y="1792.73" />
-		<twoDimVertex x="104.066" y="0.0" />
-		<twoDimVertex x="-104.066" y="0.0" />
-		<twoDimVertex x="-99.451" y="1792.73" />
+		<twoDimVertex x="118.633" y="1777.957" />
+		<twoDimVertex x="118.633" y="573.018" />
+		<twoDimVertex x="108.922" y="517.943" />
+		<twoDimVertex x="108.922" y="0.0" />
+		<twoDimVertex x="-108.922" y="0.0" />
+		<twoDimVertex x="-108.922" y="1777.957" />
 		<section zOrder="1" zPosition="-4.5" xOffset="0" yOffset="0" scalingFactor="1"/>
 		<section zOrder="2" zPosition="4.5" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
-	<tube name="solid_C_front" rmin="0" rmax="104.066" z="9.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+	<tube name="solid_C_front" rmin="0" rmax="108.922" z="9.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
-	<tube name="solid_C_back" rmin="0" rmax="104.066" z="9.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+	<tube name="solid_C_back" rmin="0" rmax="113.7775" z="9.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
 	<union name="node_solid_C_frontmid">
 		<first ref="solid_C_front"/>
@@ -53,21 +55,23 @@
 	<union name="solid_C">
 		<first ref="node_solid_C_frontmid"/>
 		<second ref="solid_C_back"/>
-		<position name="position_node_solid_C" x="4.615"  y="-1792.73"/>
+		<position name="position_node_solid_C" x="4.8555"  y="-1777.957"/>
 		<rotation name="rotation_node_solid_C" x="-pi"/>
 	</union>
 
 	<xtru name="solid_outer_E_mid"  lunit="mm">
-		<twoDimVertex x="109.681" y="1792.73" />
-		<twoDimVertex x="105.066" y="0.0" />
-		<twoDimVertex x="-105.066" y="0.0" />
-		<twoDimVertex x="-100.451" y="1792.73" />
+		<twoDimVertex x="119.633" y="1777.957" />
+		<twoDimVertex x="119.633" y="573.018" />
+		<twoDimVertex x="109.922" y="517.943" />
+		<twoDimVertex x="109.922" y="0.0" />
+		<twoDimVertex x="-109.922" y="0.0" />
+		<twoDimVertex x="-109.922" y="1777.957" />
 		<section zOrder="1" zPosition="-5.5" xOffset="0" yOffset="0" scalingFactor="1"/>
 		<section zOrder="2" zPosition="5.5" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
-	<tube name="solid_outer_E_front" rmin="0" rmax="105.066" z="11.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+	<tube name="solid_outer_E_front" rmin="0" rmax="109.922" z="11.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
-	<tube name="solid_outer_E_back" rmin="0" rmax="105.066" z="11.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+	<tube name="solid_outer_E_back" rmin="0" rmax="114.7775" z="11.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
 	<union name="node_solid_outer_E_frontmid">
 		<first ref="solid_outer_E_front"/>
@@ -79,21 +83,23 @@
 	<union name="solid_outer_E">
 		<first ref="node_solid_outer_E_frontmid"/>
 		<second ref="solid_outer_E_back"/>
-		<position name="position_node_solid_outer_E" x="4.615"  y="-1792.73"/>
+		<position name="position_node_solid_outer_E" x="4.8555"  y="-1777.957"/>
 		<rotation name="rotation_node_solid_outer_E" x="-pi"/>
 	</union>
 
 	<xtru name="solid_inner_E_mid"  lunit="mm">
-		<twoDimVertex x="70.547" y="1792.73" />
-		<twoDimVertex x="65.932" y="0.0" />
-		<twoDimVertex x="-65.932" y="0.0" />
-		<twoDimVertex x="-61.317" y="1792.73" />
+		<twoDimVertex x="70.788" y="1777.957" />
+		<twoDimVertex x="70.788" y="573.018" />
+		<twoDimVertex x="61.077" y="517.943" />
+		<twoDimVertex x="61.077" y="0.0" />
+		<twoDimVertex x="-61.077" y="0.0" />
+		<twoDimVertex x="-61.077" y="1777.957" />
 		<section zOrder="1" zPosition="-4.5" xOffset="0" yOffset="0" scalingFactor="1"/>
 		<section zOrder="2" zPosition="4.5" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
-	<tube name="solid_inner_E_front" rmin="0" rmax="65.932" z="9.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+	<tube name="solid_inner_E_front" rmin="0" rmax="61.077" z="9.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
-	<tube name="solid_inner_E_back" rmin="0" rmax="65.932" z="9.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+	<tube name="solid_inner_E_back" rmin="0" rmax="65.9325" z="9.0" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
 
 	<union name="node_solid_inner_E_frontmid">
 		<first ref="solid_inner_E_front"/>
@@ -105,12 +111,538 @@
 	<union name="solid_inner_E">
 		<first ref="node_solid_inner_E_frontmid"/>
 		<second ref="solid_inner_E_back"/>
-		<position name="position_node_solid_inner_E" x="4.615"  y="-1792.73"/>
+		<position name="position_node_solid_inner_E" x="4.8555"  y="-1777.957"/>
 		<rotation name="rotation_node_solid_inner_E" x="-pi"/>
 	</union>
 
-	<cone name="solid_US_toroidMother" rmin1="30.142"  rmax1="245.899" rmin2="30.4304375" rmax2="245.899" z="2048.862" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
-
+	<xtru name="solid_shield1_top_1"  lunit="mm">
+		<twoDimVertex x="33.0" y="-6.2" />
+		<twoDimVertex x="33.0" y="-6.7" />
+		<twoDimVertex x="50.0" y="-9.2" />
+		<twoDimVertex x="100.0" y="-9.2" />
+		<twoDimVertex x="100.0" y="-6.2" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_top_1"  lunit="mm">
+		<twoDimVertex x="33.0" y="-6.2" />
+		<twoDimVertex x="33.0" y="-6.7" />
+		<twoDimVertex x="50.0" y="-9.2" />
+		<twoDimVertex x="100.0" y="-9.2" />
+		<twoDimVertex x="100.0" y="-6.2" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_top_1"  lunit="mm">
+		<twoDimVertex x="33.0" y="-6.2" />
+		<twoDimVertex x="33.0" y="-6.7" />
+		<twoDimVertex x="50.0" y="-9.2" />
+		<twoDimVertex x="100.0" y="-9.2" />
+		<twoDimVertex x="100.0" y="-6.2" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_top_1"  lunit="mm">
+		<twoDimVertex x="33.0" y="-6.2" />
+		<twoDimVertex x="33.0" y="-6.7" />
+		<twoDimVertex x="50.0" y="-9.2" />
+		<twoDimVertex x="100.0" y="-9.2" />
+		<twoDimVertex x="100.0" y="-6.2" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_bot_1"  lunit="mm">
+		<twoDimVertex x="100.0" y="6.2" />
+		<twoDimVertex x="100.0" y="9.2" />
+		<twoDimVertex x="50.0" y="9.2" />
+		<twoDimVertex x="33.0" y="6.7" />
+		<twoDimVertex x="33.0" y="6.2" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_bot_1"  lunit="mm">
+		<twoDimVertex x="100.0" y="6.2" />
+		<twoDimVertex x="100.0" y="9.2" />
+		<twoDimVertex x="50.0" y="9.2" />
+		<twoDimVertex x="33.0" y="6.7" />
+		<twoDimVertex x="33.0" y="6.2" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_bot_1"  lunit="mm">
+		<twoDimVertex x="100.0" y="6.2" />
+		<twoDimVertex x="100.0" y="9.2" />
+		<twoDimVertex x="50.0" y="9.2" />
+		<twoDimVertex x="33.0" y="6.7" />
+		<twoDimVertex x="33.0" y="6.2" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_bot_1"  lunit="mm">
+		<twoDimVertex x="100.0" y="6.2" />
+		<twoDimVertex x="100.0" y="9.2" />
+		<twoDimVertex x="50.0" y="9.2" />
+		<twoDimVertex x="33.0" y="6.7" />
+		<twoDimVertex x="33.0" y="6.2" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_top_2"  lunit="mm">
+		<twoDimVertex x="25.4225186526" y="21.9348021499" />
+		<twoDimVertex x="25.8134343939" y="21.623057249" />
+		<twoDimVertex x="38.3673397316" y="33.3554679463" />
+		<twoDimVertex x="69.5418298246" y="72.4470420697" />
+		<twoDimVertex x="67.1963353772" y="74.3175114753" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_top_2"  lunit="mm">
+		<twoDimVertex x="25.4225186526" y="21.9348021499" />
+		<twoDimVertex x="25.8134343939" y="21.623057249" />
+		<twoDimVertex x="38.3673397316" y="33.3554679463" />
+		<twoDimVertex x="69.5418298246" y="72.4470420697" />
+		<twoDimVertex x="67.1963353772" y="74.3175114753" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_top_2"  lunit="mm">
+		<twoDimVertex x="25.4225186526" y="21.9348021499" />
+		<twoDimVertex x="25.8134343939" y="21.623057249" />
+		<twoDimVertex x="38.3673397316" y="33.3554679463" />
+		<twoDimVertex x="69.5418298246" y="72.4470420697" />
+		<twoDimVertex x="67.1963353772" y="74.3175114753" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_top_2"  lunit="mm">
+		<twoDimVertex x="25.4225186526" y="21.9348021499" />
+		<twoDimVertex x="25.8134343939" y="21.623057249" />
+		<twoDimVertex x="38.3673397316" y="33.3554679463" />
+		<twoDimVertex x="69.5418298246" y="72.4470420697" />
+		<twoDimVertex x="67.1963353772" y="74.3175114753" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_bot_2"  lunit="mm">
+		<twoDimVertex x="57.5016249946" y="82.0487850183" />
+		<twoDimVertex x="55.1561305472" y="83.9192544239" />
+		<twoDimVertex x="23.9816404542" y="44.8276803005" />
+		<twoDimVertex x="15.3368925288" y="29.9778205939" />
+		<twoDimVertex x="15.72780827" y="29.666075693" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_bot_2"  lunit="mm">
+		<twoDimVertex x="57.5016249946" y="82.0487850183" />
+		<twoDimVertex x="55.1561305472" y="83.9192544239" />
+		<twoDimVertex x="23.9816404542" y="44.8276803005" />
+		<twoDimVertex x="15.3368925288" y="29.9778205939" />
+		<twoDimVertex x="15.72780827" y="29.666075693" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_bot_2"  lunit="mm">
+		<twoDimVertex x="57.5016249946" y="82.0487850183" />
+		<twoDimVertex x="55.1561305472" y="83.9192544239" />
+		<twoDimVertex x="23.9816404542" y="44.8276803005" />
+		<twoDimVertex x="15.3368925288" y="29.9778205939" />
+		<twoDimVertex x="15.72780827" y="29.666075693" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_bot_2"  lunit="mm">
+		<twoDimVertex x="57.5016249946" y="82.0487850183" />
+		<twoDimVertex x="55.1561305472" y="83.9192544239" />
+		<twoDimVertex x="23.9816404542" y="44.8276803005" />
+		<twoDimVertex x="15.3368925288" y="29.9778205939" />
+		<twoDimVertex x="15.72780827" y="29.666075693" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_top_3"  lunit="mm">
+		<twoDimVertex x="-1.29863776503" y="33.5522508925" />
+		<twoDimVertex x="-0.81117380894" y="33.6635113595" />
+		<twoDimVertex x="-2.15670990574" y="50.7935882015" />
+		<twoDimVertex x="-13.2827566036" y="99.5399838106" />
+		<twoDimVertex x="-16.2075403401" y="98.8724210087" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_top_3"  lunit="mm">
+		<twoDimVertex x="-1.29863776503" y="33.5522508925" />
+		<twoDimVertex x="-0.81117380894" y="33.6635113595" />
+		<twoDimVertex x="-2.15670990574" y="50.7935882015" />
+		<twoDimVertex x="-13.2827566036" y="99.5399838106" />
+		<twoDimVertex x="-16.2075403401" y="98.8724210087" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_top_3"  lunit="mm">
+		<twoDimVertex x="-1.29863776503" y="33.5522508925" />
+		<twoDimVertex x="-0.81117380894" y="33.6635113595" />
+		<twoDimVertex x="-2.15670990574" y="50.7935882015" />
+		<twoDimVertex x="-13.2827566036" y="99.5399838106" />
+		<twoDimVertex x="-16.2075403401" y="98.8724210087" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_top_3"  lunit="mm">
+		<twoDimVertex x="-1.29863776503" y="33.5522508925" />
+		<twoDimVertex x="-0.81117380894" y="33.6635113595" />
+		<twoDimVertex x="-2.15670990574" y="50.7935882015" />
+		<twoDimVertex x="-13.2827566036" y="99.5399838106" />
+		<twoDimVertex x="-16.2075403401" y="98.8724210087" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_bot_3"  lunit="mm">
+		<twoDimVertex x="-28.2966464512" y="96.1131614277" />
+		<twoDimVertex x="-31.2214301877" y="95.4455986258" />
+		<twoDimVertex x="-20.0953834899" y="46.6992030167" />
+		<twoDimVertex x="-13.8752078322" y="30.6817308445" />
+		<twoDimVertex x="-13.3877438761" y="30.7929913115" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_bot_3"  lunit="mm">
+		<twoDimVertex x="-28.2966464512" y="96.1131614277" />
+		<twoDimVertex x="-31.2214301877" y="95.4455986258" />
+		<twoDimVertex x="-20.0953834899" y="46.6992030167" />
+		<twoDimVertex x="-13.8752078322" y="30.6817308445" />
+		<twoDimVertex x="-13.3877438761" y="30.7929913115" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_bot_3"  lunit="mm">
+		<twoDimVertex x="-28.2966464512" y="96.1131614277" />
+		<twoDimVertex x="-31.2214301877" y="95.4455986258" />
+		<twoDimVertex x="-20.0953834899" y="46.6992030167" />
+		<twoDimVertex x="-13.8752078322" y="30.6817308445" />
+		<twoDimVertex x="-13.3877438761" y="30.7929913115" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_bot_3"  lunit="mm">
+		<twoDimVertex x="-28.2966464512" y="96.1131614277" />
+		<twoDimVertex x="-31.2214301877" y="95.4455986258" />
+		<twoDimVertex x="-20.0953834899" y="46.6992030167" />
+		<twoDimVertex x="-13.8752078322" y="30.6817308445" />
+		<twoDimVertex x="-13.3877438761" y="30.7929913115" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_top_4"  lunit="mm">
+		<twoDimVertex x="-27.0418934583" y="19.9041703719" />
+		<twoDimVertex x="-26.8249515887" y="20.3546548058" />
+		<twoDimVertex x="-41.0567129952" y="29.9831005406" />
+		<twoDimVertex x="-86.1051563904" y="51.6772874965" />
+		<twoDimVertex x="-87.4068076077" y="48.9743808928" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_top_4"  lunit="mm">
+		<twoDimVertex x="-27.0418934583" y="19.9041703719" />
+		<twoDimVertex x="-26.8249515887" y="20.3546548058" />
+		<twoDimVertex x="-41.0567129952" y="29.9831005406" />
+		<twoDimVertex x="-86.1051563904" y="51.6772874965" />
+		<twoDimVertex x="-87.4068076077" y="48.9743808928" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_top_4"  lunit="mm">
+		<twoDimVertex x="-27.0418934583" y="19.9041703719" />
+		<twoDimVertex x="-26.8249515887" y="20.3546548058" />
+		<twoDimVertex x="-41.0567129952" y="29.9831005406" />
+		<twoDimVertex x="-86.1051563904" y="51.6772874965" />
+		<twoDimVertex x="-87.4068076077" y="48.9743808928" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_top_4"  lunit="mm">
+		<twoDimVertex x="-27.0418934583" y="19.9041703719" />
+		<twoDimVertex x="-26.8249515887" y="20.3546548058" />
+		<twoDimVertex x="-41.0567129952" y="29.9831005406" />
+		<twoDimVertex x="-86.1051563904" y="51.6772874965" />
+		<twoDimVertex x="-87.4068076077" y="48.9743808928" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_bot_4"  lunit="mm">
+		<twoDimVertex x="-92.7869659728" y="37.8023669308" />
+		<twoDimVertex x="-94.0886171901" y="35.0994603271" />
+		<twoDimVertex x="-49.040173795" y="13.4052733712" />
+		<twoDimVertex x="-32.6389936929" y="8.28167197593" />
+		<twoDimVertex x="-32.4220518233" y="8.73215640988" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_bot_4"  lunit="mm">
+		<twoDimVertex x="-92.7869659728" y="37.8023669308" />
+		<twoDimVertex x="-94.0886171901" y="35.0994603271" />
+		<twoDimVertex x="-49.040173795" y="13.4052733712" />
+		<twoDimVertex x="-32.6389936929" y="8.28167197593" />
+		<twoDimVertex x="-32.4220518233" y="8.73215640988" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_bot_4"  lunit="mm">
+		<twoDimVertex x="-92.7869659728" y="37.8023669308" />
+		<twoDimVertex x="-94.0886171901" y="35.0994603271" />
+		<twoDimVertex x="-49.040173795" y="13.4052733712" />
+		<twoDimVertex x="-32.6389936929" y="8.28167197593" />
+		<twoDimVertex x="-32.4220518233" y="8.73215640988" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_bot_4"  lunit="mm">
+		<twoDimVertex x="-92.7869659728" y="37.8023669308" />
+		<twoDimVertex x="-94.0886171901" y="35.0994603271" />
+		<twoDimVertex x="-49.040173795" y="13.4052733712" />
+		<twoDimVertex x="-32.6389936929" y="8.28167197593" />
+		<twoDimVertex x="-32.4220518233" y="8.73215640988" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_top_5"  lunit="mm">
+		<twoDimVertex x="-32.4220518233" y="-8.73215640988" />
+		<twoDimVertex x="-32.6389936929" y="-8.28167197593" />
+		<twoDimVertex x="-49.040173795" y="-13.4052733712" />
+		<twoDimVertex x="-94.0886171901" y="-35.0994603271" />
+		<twoDimVertex x="-92.7869659728" y="-37.8023669308" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_top_5"  lunit="mm">
+		<twoDimVertex x="-32.4220518233" y="-8.73215640988" />
+		<twoDimVertex x="-32.6389936929" y="-8.28167197593" />
+		<twoDimVertex x="-49.040173795" y="-13.4052733712" />
+		<twoDimVertex x="-94.0886171901" y="-35.0994603271" />
+		<twoDimVertex x="-92.7869659728" y="-37.8023669308" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_top_5"  lunit="mm">
+		<twoDimVertex x="-32.4220518233" y="-8.73215640988" />
+		<twoDimVertex x="-32.6389936929" y="-8.28167197593" />
+		<twoDimVertex x="-49.040173795" y="-13.4052733712" />
+		<twoDimVertex x="-94.0886171901" y="-35.0994603271" />
+		<twoDimVertex x="-92.7869659728" y="-37.8023669308" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_top_5"  lunit="mm">
+		<twoDimVertex x="-32.4220518233" y="-8.73215640988" />
+		<twoDimVertex x="-32.6389936929" y="-8.28167197593" />
+		<twoDimVertex x="-49.040173795" y="-13.4052733712" />
+		<twoDimVertex x="-94.0886171901" y="-35.0994603271" />
+		<twoDimVertex x="-92.7869659728" y="-37.8023669308" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_bot_5"  lunit="mm">
+		<twoDimVertex x="-87.4068076077" y="-48.9743808928" />
+		<twoDimVertex x="-86.1051563904" y="-51.6772874965" />
+		<twoDimVertex x="-41.0567129952" y="-29.9831005406" />
+		<twoDimVertex x="-26.8249515887" y="-20.3546548058" />
+		<twoDimVertex x="-27.0418934583" y="-19.9041703719" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_bot_5"  lunit="mm">
+		<twoDimVertex x="-87.4068076077" y="-48.9743808928" />
+		<twoDimVertex x="-86.1051563904" y="-51.6772874965" />
+		<twoDimVertex x="-41.0567129952" y="-29.9831005406" />
+		<twoDimVertex x="-26.8249515887" y="-20.3546548058" />
+		<twoDimVertex x="-27.0418934583" y="-19.9041703719" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_bot_5"  lunit="mm">
+		<twoDimVertex x="-87.4068076077" y="-48.9743808928" />
+		<twoDimVertex x="-86.1051563904" y="-51.6772874965" />
+		<twoDimVertex x="-41.0567129952" y="-29.9831005406" />
+		<twoDimVertex x="-26.8249515887" y="-20.3546548058" />
+		<twoDimVertex x="-27.0418934583" y="-19.9041703719" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_bot_5"  lunit="mm">
+		<twoDimVertex x="-87.4068076077" y="-48.9743808928" />
+		<twoDimVertex x="-86.1051563904" y="-51.6772874965" />
+		<twoDimVertex x="-41.0567129952" y="-29.9831005406" />
+		<twoDimVertex x="-26.8249515887" y="-20.3546548058" />
+		<twoDimVertex x="-27.0418934583" y="-19.9041703719" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_top_6"  lunit="mm">
+		<twoDimVertex x="-13.3877438761" y="-30.7929913115" />
+		<twoDimVertex x="-13.8752078322" y="-30.6817308445" />
+		<twoDimVertex x="-20.0953834899" y="-46.6992030167" />
+		<twoDimVertex x="-31.2214301877" y="-95.4455986258" />
+		<twoDimVertex x="-28.2966464512" y="-96.1131614277" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_top_6"  lunit="mm">
+		<twoDimVertex x="-13.3877438761" y="-30.7929913115" />
+		<twoDimVertex x="-13.8752078322" y="-30.6817308445" />
+		<twoDimVertex x="-20.0953834899" y="-46.6992030167" />
+		<twoDimVertex x="-31.2214301877" y="-95.4455986258" />
+		<twoDimVertex x="-28.2966464512" y="-96.1131614277" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_top_6"  lunit="mm">
+		<twoDimVertex x="-13.3877438761" y="-30.7929913115" />
+		<twoDimVertex x="-13.8752078322" y="-30.6817308445" />
+		<twoDimVertex x="-20.0953834899" y="-46.6992030167" />
+		<twoDimVertex x="-31.2214301877" y="-95.4455986258" />
+		<twoDimVertex x="-28.2966464512" y="-96.1131614277" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_top_6"  lunit="mm">
+		<twoDimVertex x="-13.3877438761" y="-30.7929913115" />
+		<twoDimVertex x="-13.8752078322" y="-30.6817308445" />
+		<twoDimVertex x="-20.0953834899" y="-46.6992030167" />
+		<twoDimVertex x="-31.2214301877" y="-95.4455986258" />
+		<twoDimVertex x="-28.2966464512" y="-96.1131614277" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_bot_6"  lunit="mm">
+		<twoDimVertex x="-16.2075403401" y="-98.8724210087" />
+		<twoDimVertex x="-13.2827566036" y="-99.5399838106" />
+		<twoDimVertex x="-2.15670990574" y="-50.7935882015" />
+		<twoDimVertex x="-0.81117380894" y="-33.6635113595" />
+		<twoDimVertex x="-1.29863776503" y="-33.5522508925" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_bot_6"  lunit="mm">
+		<twoDimVertex x="-16.2075403401" y="-98.8724210087" />
+		<twoDimVertex x="-13.2827566036" y="-99.5399838106" />
+		<twoDimVertex x="-2.15670990574" y="-50.7935882015" />
+		<twoDimVertex x="-0.81117380894" y="-33.6635113595" />
+		<twoDimVertex x="-1.29863776503" y="-33.5522508925" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_bot_6"  lunit="mm">
+		<twoDimVertex x="-16.2075403401" y="-98.8724210087" />
+		<twoDimVertex x="-13.2827566036" y="-99.5399838106" />
+		<twoDimVertex x="-2.15670990574" y="-50.7935882015" />
+		<twoDimVertex x="-0.81117380894" y="-33.6635113595" />
+		<twoDimVertex x="-1.29863776503" y="-33.5522508925" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_bot_6"  lunit="mm">
+		<twoDimVertex x="-16.2075403401" y="-98.8724210087" />
+		<twoDimVertex x="-13.2827566036" y="-99.5399838106" />
+		<twoDimVertex x="-2.15670990574" y="-50.7935882015" />
+		<twoDimVertex x="-0.81117380894" y="-33.6635113595" />
+		<twoDimVertex x="-1.29863776503" y="-33.5522508925" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_top_7"  lunit="mm">
+		<twoDimVertex x="15.72780827" y="-29.666075693" />
+		<twoDimVertex x="15.3368925288" y="-29.9778205939" />
+		<twoDimVertex x="23.9816404542" y="-44.8276803005" />
+		<twoDimVertex x="55.1561305472" y="-83.9192544239" />
+		<twoDimVertex x="57.5016249946" y="-82.0487850183" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_top_7"  lunit="mm">
+		<twoDimVertex x="15.72780827" y="-29.666075693" />
+		<twoDimVertex x="15.3368925288" y="-29.9778205939" />
+		<twoDimVertex x="23.9816404542" y="-44.8276803005" />
+		<twoDimVertex x="55.1561305472" y="-83.9192544239" />
+		<twoDimVertex x="57.5016249946" y="-82.0487850183" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_top_7"  lunit="mm">
+		<twoDimVertex x="15.72780827" y="-29.666075693" />
+		<twoDimVertex x="15.3368925288" y="-29.9778205939" />
+		<twoDimVertex x="23.9816404542" y="-44.8276803005" />
+		<twoDimVertex x="55.1561305472" y="-83.9192544239" />
+		<twoDimVertex x="57.5016249946" y="-82.0487850183" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_top_7"  lunit="mm">
+		<twoDimVertex x="15.72780827" y="-29.666075693" />
+		<twoDimVertex x="15.3368925288" y="-29.9778205939" />
+		<twoDimVertex x="23.9816404542" y="-44.8276803005" />
+		<twoDimVertex x="55.1561305472" y="-83.9192544239" />
+		<twoDimVertex x="57.5016249946" y="-82.0487850183" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield1_bot_7"  lunit="mm">
+		<twoDimVertex x="67.1963353772" y="-74.3175114753" />
+		<twoDimVertex x="69.5418298246" y="-72.4470420697" />
+		<twoDimVertex x="38.3673397316" y="-33.3554679463" />
+		<twoDimVertex x="25.8134343939" y="-21.623057249" />
+		<twoDimVertex x="25.4225186526" y="-21.9348021499" />
+		<section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield2_bot_7"  lunit="mm">
+		<twoDimVertex x="67.1963353772" y="-74.3175114753" />
+		<twoDimVertex x="69.5418298246" y="-72.4470420697" />
+		<twoDimVertex x="38.3673397316" y="-33.3554679463" />
+		<twoDimVertex x="25.8134343939" y="-21.623057249" />
+		<twoDimVertex x="25.4225186526" y="-21.9348021499" />
+		<section zOrder="1" zPosition="-100" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield3_bot_7"  lunit="mm">
+		<twoDimVertex x="67.1963353772" y="-74.3175114753" />
+		<twoDimVertex x="69.5418298246" y="-72.4470420697" />
+		<twoDimVertex x="38.3673397316" y="-33.3554679463" />
+		<twoDimVertex x="25.8134343939" y="-21.623057249" />
+		<twoDimVertex x="25.4225186526" y="-21.9348021499" />
+		<section zOrder="1" zPosition="-350" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="350" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_shield4_bot_7"  lunit="mm">
+		<twoDimVertex x="67.1963353772" y="-74.3175114753" />
+		<twoDimVertex x="69.5418298246" y="-72.4470420697" />
+		<twoDimVertex x="38.3673397316" y="-33.3554679463" />
+		<twoDimVertex x="25.8134343939" y="-21.623057249" />
+		<twoDimVertex x="25.4225186526" y="-21.9348021499" />
+		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_connector_1">
+		 <zplane rmin="19" rmax="22" z="-16.075"/>
+		 <zplane rmin="19" rmax="22" z="16.075"/>
+	</polycone>
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_connector_2">
+		 <zplane rmin="19" rmax="33" z="-25.0"/>
+		 <zplane rmin="19" rmax="33" z="25.0"/>
+	</polycone>
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_connector_3">
+		 <zplane rmin="19" rmax="27" z="-4.0"/>
+		 <zplane rmin="19" rmax="27" z="4.0"/>
+	</polycone>
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_long">
+		 <zplane rmin="27" rmax="32" z="-1017.85"/>
+		 <zplane rmin="27" rmax="32" z="1024.15"/>
+	</polycone>
+	<polycone aunit="deg" startphi="0" deltaphi="28.0" lunit="mm" name="solid_twobounce_groove">
+		 <zplane rmin="32" rmax="36" z="-1017.85"/>
+		 <zplane rmin="32" rmax="36" z="1024.15"/>
+	</polycone>
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_US_toroidMother">
+		 <zplane rmin="0" rmax="262.555" z="-1100"/>
+		 <zplane rmin="0" rmax="262.555" z="1024.32825"/>
+	</polycone>
 </solids>
 
 
@@ -149,6 +681,70 @@
 		<auxiliary auxtype="DetNo" auxvalue="4008"/>
 	</volume>
 
+	<volume name="logic_shield1_top_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_top_1"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4015"/>
+	</volume>
+
+	<volume name="logic_shield2_top_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_top_1"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4022"/>
+	</volume>
+
+	<volume name="logic_shield3_top_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_top_1"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4029"/>
+	</volume>
+
+	<volume name="logic_shield4_top_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_top_1"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4036"/>
+	</volume>
+
+	<volume name="logic_shield1_bot_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_bot_1"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4015"/>
+	</volume>
+
+	<volume name="logic_shield2_bot_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_bot_1"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4022"/>
+	</volume>
+
+	<volume name="logic_shield3_bot_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_bot_1"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4029"/>
+	</volume>
+
+	<volume name="logic_shield4_bot_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_bot_1"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4036"/>
+	</volume>
+
 	<volume name="logic_inner_E_2">
 		<materialref ref="G10"/>
 		<solidref ref="solid_inner_E"/>
@@ -180,6 +776,70 @@
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="4009"/>
+	</volume>
+
+	<volume name="logic_shield1_top_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_top_2"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4016"/>
+	</volume>
+
+	<volume name="logic_shield2_top_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_top_2"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4023"/>
+	</volume>
+
+	<volume name="logic_shield3_top_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_top_2"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4030"/>
+	</volume>
+
+	<volume name="logic_shield4_top_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_top_2"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4037"/>
+	</volume>
+
+	<volume name="logic_shield1_bot_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_bot_2"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4016"/>
+	</volume>
+
+	<volume name="logic_shield2_bot_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_bot_2"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4023"/>
+	</volume>
+
+	<volume name="logic_shield3_bot_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_bot_2"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4030"/>
+	</volume>
+
+	<volume name="logic_shield4_bot_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_bot_2"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4037"/>
 	</volume>
 
 	<volume name="logic_inner_E_3">
@@ -215,6 +875,70 @@
 		<auxiliary auxtype="DetNo" auxvalue="4010"/>
 	</volume>
 
+	<volume name="logic_shield1_top_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_top_3"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4017"/>
+	</volume>
+
+	<volume name="logic_shield2_top_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_top_3"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4024"/>
+	</volume>
+
+	<volume name="logic_shield3_top_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_top_3"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4031"/>
+	</volume>
+
+	<volume name="logic_shield4_top_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_top_3"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4038"/>
+	</volume>
+
+	<volume name="logic_shield1_bot_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_bot_3"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4017"/>
+	</volume>
+
+	<volume name="logic_shield2_bot_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_bot_3"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4024"/>
+	</volume>
+
+	<volume name="logic_shield3_bot_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_bot_3"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4031"/>
+	</volume>
+
+	<volume name="logic_shield4_bot_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_bot_3"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4038"/>
+	</volume>
+
 	<volume name="logic_inner_E_4">
 		<materialref ref="G10"/>
 		<solidref ref="solid_inner_E"/>
@@ -246,6 +970,70 @@
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="4011"/>
+	</volume>
+
+	<volume name="logic_shield1_top_4">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_top_4"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4018"/>
+	</volume>
+
+	<volume name="logic_shield2_top_4">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_top_4"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4025"/>
+	</volume>
+
+	<volume name="logic_shield3_top_4">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_top_4"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4032"/>
+	</volume>
+
+	<volume name="logic_shield4_top_4">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_top_4"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4039"/>
+	</volume>
+
+	<volume name="logic_shield1_bot_4">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_bot_4"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4018"/>
+	</volume>
+
+	<volume name="logic_shield2_bot_4">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_bot_4"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4025"/>
+	</volume>
+
+	<volume name="logic_shield3_bot_4">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_bot_4"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4032"/>
+	</volume>
+
+	<volume name="logic_shield4_bot_4">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_bot_4"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4039"/>
 	</volume>
 
 	<volume name="logic_inner_E_5">
@@ -281,6 +1069,70 @@
 		<auxiliary auxtype="DetNo" auxvalue="4012"/>
 	</volume>
 
+	<volume name="logic_shield1_top_5">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_top_5"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4019"/>
+	</volume>
+
+	<volume name="logic_shield2_top_5">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_top_5"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4026"/>
+	</volume>
+
+	<volume name="logic_shield3_top_5">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_top_5"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4033"/>
+	</volume>
+
+	<volume name="logic_shield4_top_5">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_top_5"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4040"/>
+	</volume>
+
+	<volume name="logic_shield1_bot_5">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_bot_5"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4019"/>
+	</volume>
+
+	<volume name="logic_shield2_bot_5">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_bot_5"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4026"/>
+	</volume>
+
+	<volume name="logic_shield3_bot_5">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_bot_5"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4033"/>
+	</volume>
+
+	<volume name="logic_shield4_bot_5">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_bot_5"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4040"/>
+	</volume>
+
 	<volume name="logic_inner_E_6">
 		<materialref ref="G10"/>
 		<solidref ref="solid_inner_E"/>
@@ -312,6 +1164,70 @@
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="4013"/>
+	</volume>
+
+	<volume name="logic_shield1_top_6">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_top_6"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4020"/>
+	</volume>
+
+	<volume name="logic_shield2_top_6">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_top_6"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4027"/>
+	</volume>
+
+	<volume name="logic_shield3_top_6">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_top_6"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4034"/>
+	</volume>
+
+	<volume name="logic_shield4_top_6">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_top_6"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4041"/>
+	</volume>
+
+	<volume name="logic_shield1_bot_6">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_bot_6"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4020"/>
+	</volume>
+
+	<volume name="logic_shield2_bot_6">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_bot_6"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4027"/>
+	</volume>
+
+	<volume name="logic_shield3_bot_6">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_bot_6"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4034"/>
+	</volume>
+
+	<volume name="logic_shield4_bot_6">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_bot_6"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4041"/>
 	</volume>
 
 	<volume name="logic_inner_E_7">
@@ -347,49 +1263,555 @@
 		<auxiliary auxtype="DetNo" auxvalue="4014"/>
 	</volume>
 
+	<volume name="logic_shield1_top_7">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_top_7"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4021"/>
+	</volume>
+
+	<volume name="logic_shield2_top_7">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_top_7"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4028"/>
+	</volume>
+
+	<volume name="logic_shield3_top_7">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_top_7"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4035"/>
+	</volume>
+
+	<volume name="logic_shield4_top_7">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_top_7"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4042"/>
+	</volume>
+
+	<volume name="logic_shield1_bot_7">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield1_bot_7"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4021"/>
+	</volume>
+
+	<volume name="logic_shield2_bot_7">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield2_bot_7"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4028"/>
+	</volume>
+
+	<volume name="logic_shield3_bot_7">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield3_bot_7"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4035"/>
+	</volume>
+
+	<volume name="logic_shield4_bot_7">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_shield4_bot_7"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="4042"/>
+	</volume>
+
+	<volume name="logic_twobounce_connector_1">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_twobounce_connector_1"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="90"/>
+	</volume>
+
+	<volume name="logic_twobounce_connector_2">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_twobounce_connector_2"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="91"/>
+	</volume>
+
+	<volume name="logic_twobounce_connector_3">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_twobounce_connector_3"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="92"/>
+	</volume>
+
+	<volume name="logic_twobounce_long">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_twobounce_long"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="95"/>
+	</volume>
+
+	<volume name="logic_twobounce_groove">
+		<materialref ref="G4_W"/>
+		<solidref ref="solid_twobounce_groove"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="96"/>
+	</volume>
+
 	<volume name="US_toroidMother">
 		<materialref ref="G4_Galactic"/>
 		<solidref ref="solid_US_toroidMother"/>
 		<physvol name="ucoil_1">
 			<volumeref ref="logic_outer_E_1"/>
-			<position name="pos_ucoil_1" x="135.218" y="0.0" z="-896.975"/>
+			<position name="pos_ucoil_1" x="141.922" y="0.0" z="-891.015"/>
 			<rotation name="rot_ucoil_1" x="pi/2" y="0.0" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_top_1">
+			<volumeref ref="logic_shield1_top_1"/>
+			<position name="pos_shield1_top_1" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_top_1" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_top_1">
+			<volumeref ref="logic_shield2_top_1"/>
+			<position name="pos_shield2_top_1" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_top_1" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_top_1">
+			<volumeref ref="logic_shield3_top_1"/>
+			<position name="pos_shield3_top_1" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_top_1" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_top_1">
+			<volumeref ref="logic_shield4_top_1"/>
+			<position name="pos_shield4_top_1" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_top_1" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_bot_1">
+			<volumeref ref="logic_shield1_bot_1"/>
+			<position name="pos_shield1_bot_1" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_bot_1" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_bot_1">
+			<volumeref ref="logic_shield2_bot_1"/>
+			<position name="pos_shield2_bot_1" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_bot_1" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_bot_1">
+			<volumeref ref="logic_shield3_bot_1"/>
+			<position name="pos_shield3_bot_1" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_bot_1" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_bot_1">
+			<volumeref ref="logic_shield4_bot_1"/>
+			<position name="pos_shield4_bot_1" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_bot_1" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_groove_1">
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_1" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_1" x="0" y="0" z="-0.204452855234"/>
 		</physvol>
 
 		<physvol name="ucoil_2">
 			<volumeref ref="logic_outer_E_2"/>
-			<position name="pos_ucoil_2" x="84.3070440277" y="105.717689396" z="-896.975"/>
+			<position name="pos_ucoil_2" x="88.4869196594" y="110.959087655" z="-891.015"/>
 			<rotation name="rot_ucoil_2" x="pi/2" y="0.897597901026" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_top_2">
+			<volumeref ref="logic_shield1_top_2"/>
+			<position name="pos_shield1_top_2" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_top_2" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_top_2">
+			<volumeref ref="logic_shield2_top_2"/>
+			<position name="pos_shield2_top_2" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_top_2" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_top_2">
+			<volumeref ref="logic_shield3_top_2"/>
+			<position name="pos_shield3_top_2" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_top_2" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_top_2">
+			<volumeref ref="logic_shield4_top_2"/>
+			<position name="pos_shield4_top_2" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_top_2" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_bot_2">
+			<volumeref ref="logic_shield1_bot_2"/>
+			<position name="pos_shield1_bot_2" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_bot_2" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_bot_2">
+			<volumeref ref="logic_shield2_bot_2"/>
+			<position name="pos_shield2_bot_2" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_bot_2" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_bot_2">
+			<volumeref ref="logic_shield3_bot_2"/>
+			<position name="pos_shield3_bot_2" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_bot_2" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_bot_2">
+			<volumeref ref="logic_shield4_bot_2"/>
+			<position name="pos_shield4_bot_2" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_bot_2" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_groove_2">
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_2" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_2" x="0" y="0" z="0.693145045792"/>
 		</physvol>
 
 		<physvol name="ucoil_3">
 			<volumeref ref="logic_outer_E_3"/>
-			<position name="pos_ucoil_3" x="-30.0888356477" y="131.827802429" z="-896.975"/>
+			<position name="pos_ucoil_3" x="-31.5806159889" y="138.363719153" z="-891.015"/>
 			<rotation name="rot_ucoil_3" x="pi/2" y="1.79519580205" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_top_3">
+			<volumeref ref="logic_shield1_top_3"/>
+			<position name="pos_shield1_top_3" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_top_3" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_top_3">
+			<volumeref ref="logic_shield2_top_3"/>
+			<position name="pos_shield2_top_3" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_top_3" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_top_3">
+			<volumeref ref="logic_shield3_top_3"/>
+			<position name="pos_shield3_top_3" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_top_3" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_top_3">
+			<volumeref ref="logic_shield4_top_3"/>
+			<position name="pos_shield4_top_3" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_top_3" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_bot_3">
+			<volumeref ref="logic_shield1_bot_3"/>
+			<position name="pos_shield1_bot_3" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_bot_3" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_bot_3">
+			<volumeref ref="logic_shield2_bot_3"/>
+			<position name="pos_shield2_bot_3" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_bot_3" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_bot_3">
+			<volumeref ref="logic_shield3_bot_3"/>
+			<position name="pos_shield3_bot_3" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_bot_3" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_bot_3">
+			<volumeref ref="logic_shield4_bot_3"/>
+			<position name="pos_shield4_bot_3" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_bot_3" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_groove_3">
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_3" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_3" x="0" y="0" z="1.59074294682"/>
 		</physvol>
 
 		<physvol name="ucoil_4">
 			<volumeref ref="logic_outer_E_4"/>
-			<position name="pos_ucoil_4" x="-121.82720838" y="58.668891436" z="-896.975"/>
+			<position name="pos_ucoil_4" x="-127.86730367" y="61.577648023" z="-891.015"/>
 			<rotation name="rot_ucoil_4" x="pi/2" y="2.69279370308" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_top_4">
+			<volumeref ref="logic_shield1_top_4"/>
+			<position name="pos_shield1_top_4" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_top_4" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_top_4">
+			<volumeref ref="logic_shield2_top_4"/>
+			<position name="pos_shield2_top_4" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_top_4" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_top_4">
+			<volumeref ref="logic_shield3_top_4"/>
+			<position name="pos_shield3_top_4" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_top_4" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_top_4">
+			<volumeref ref="logic_shield4_top_4"/>
+			<position name="pos_shield4_top_4" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_top_4" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_bot_4">
+			<volumeref ref="logic_shield1_bot_4"/>
+			<position name="pos_shield1_bot_4" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_bot_4" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_bot_4">
+			<volumeref ref="logic_shield2_bot_4"/>
+			<position name="pos_shield2_bot_4" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_bot_4" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_bot_4">
+			<volumeref ref="logic_shield3_bot_4"/>
+			<position name="pos_shield3_bot_4" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_bot_4" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_bot_4">
+			<volumeref ref="logic_shield4_bot_4"/>
+			<position name="pos_shield4_bot_4" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_bot_4" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_groove_4">
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_4" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_4" x="0" y="0" z="2.48834084784"/>
 		</physvol>
 
 		<physvol name="ucoil_5">
 			<volumeref ref="logic_outer_E_5"/>
-			<position name="pos_ucoil_5" x="-121.82720838" y="-58.668891436" z="-896.975"/>
+			<position name="pos_ucoil_5" x="-127.86730367" y="-61.577648023" z="-891.015"/>
 			<rotation name="rot_ucoil_5" x="pi/2" y="3.5903916041" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_top_5">
+			<volumeref ref="logic_shield1_top_5"/>
+			<position name="pos_shield1_top_5" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_top_5" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_top_5">
+			<volumeref ref="logic_shield2_top_5"/>
+			<position name="pos_shield2_top_5" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_top_5" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_top_5">
+			<volumeref ref="logic_shield3_top_5"/>
+			<position name="pos_shield3_top_5" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_top_5" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_top_5">
+			<volumeref ref="logic_shield4_top_5"/>
+			<position name="pos_shield4_top_5" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_top_5" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_bot_5">
+			<volumeref ref="logic_shield1_bot_5"/>
+			<position name="pos_shield1_bot_5" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_bot_5" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_bot_5">
+			<volumeref ref="logic_shield2_bot_5"/>
+			<position name="pos_shield2_bot_5" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_bot_5" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_bot_5">
+			<volumeref ref="logic_shield3_bot_5"/>
+			<position name="pos_shield3_bot_5" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_bot_5" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_bot_5">
+			<volumeref ref="logic_shield4_bot_5"/>
+			<position name="pos_shield4_bot_5" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_bot_5" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_groove_5">
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_5" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_5" x="0" y="0" z="3.38593874887"/>
 		</physvol>
 
 		<physvol name="ucoil_6">
 			<volumeref ref="logic_outer_E_6"/>
-			<position name="pos_ucoil_6" x="-30.0888356477" y="-131.827802429" z="-896.975"/>
+			<position name="pos_ucoil_6" x="-31.5806159889" y="-138.363719153" z="-891.015"/>
 			<rotation name="rot_ucoil_6" x="pi/2" y="4.48798950513" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_top_6">
+			<volumeref ref="logic_shield1_top_6"/>
+			<position name="pos_shield1_top_6" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_top_6" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_top_6">
+			<volumeref ref="logic_shield2_top_6"/>
+			<position name="pos_shield2_top_6" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_top_6" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_top_6">
+			<volumeref ref="logic_shield3_top_6"/>
+			<position name="pos_shield3_top_6" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_top_6" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_top_6">
+			<volumeref ref="logic_shield4_top_6"/>
+			<position name="pos_shield4_top_6" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_top_6" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_bot_6">
+			<volumeref ref="logic_shield1_bot_6"/>
+			<position name="pos_shield1_bot_6" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_bot_6" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_bot_6">
+			<volumeref ref="logic_shield2_bot_6"/>
+			<position name="pos_shield2_bot_6" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_bot_6" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_bot_6">
+			<volumeref ref="logic_shield3_bot_6"/>
+			<position name="pos_shield3_bot_6" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_bot_6" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_bot_6">
+			<volumeref ref="logic_shield4_bot_6"/>
+			<position name="pos_shield4_bot_6" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_bot_6" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_groove_6">
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_6" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_6" x="0" y="0" z="4.28353664989"/>
 		</physvol>
 
 		<physvol name="ucoil_7">
 			<volumeref ref="logic_outer_E_7"/>
-			<position name="pos_ucoil_7" x="84.3070440277" y="-105.717689396" z="-896.975"/>
+			<position name="pos_ucoil_7" x="88.4869196594" y="-110.959087655" z="-891.015"/>
 			<rotation name="rot_ucoil_7" x="pi/2" y="5.38558740615" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_top_7">
+			<volumeref ref="logic_shield1_top_7"/>
+			<position name="pos_shield1_top_7" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_top_7" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_top_7">
+			<volumeref ref="logic_shield2_top_7"/>
+			<position name="pos_shield2_top_7" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_top_7" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_top_7">
+			<volumeref ref="logic_shield3_top_7"/>
+			<position name="pos_shield3_top_7" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_top_7" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_top_7">
+			<volumeref ref="logic_shield4_top_7"/>
+			<position name="pos_shield4_top_7" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_top_7" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield1_bot_7">
+			<volumeref ref="logic_shield1_bot_7"/>
+			<position name="pos_shield1_bot_7" x="0" y="0" z="-952.0365"/>
+			<rotation name="rot_shield1_bot_7" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield2_bot_7">
+			<volumeref ref="logic_shield2_bot_7"/>
+			<position name="pos_shield2_bot_7" x="0" y="0" z="-802.0365"/>
+			<rotation name="rot_shield2_bot_7" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield3_bot_7">
+			<volumeref ref="logic_shield3_bot_7"/>
+			<position name="pos_shield3_bot_7" x="0" y="0" z="-352.0365"/>
+			<rotation name="rot_shield3_bot_7" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="shield4_bot_7">
+			<volumeref ref="logic_shield4_bot_7"/>
+			<position name="pos_shield4_bot_7" x="0" y="0" z="372.9635"/>
+			<rotation name="rot_shield4_bot_7" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_groove_7">
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_7" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_7" x="0" y="0" z="5.18113455092"/>
+		</physvol>
+
+		<physvol name="twobounce_connector_1">
+			<volumeref ref="logic_twobounce_connector_1"/>
+			<position name="pos_twobounce_connector_1" x="0" y="0" z="-1083.925"/>
+			<rotation name="rot_twobounce_connector_1" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_connector_2">
+			<volumeref ref="logic_twobounce_connector_2"/>
+			<position name="pos_twobounce_connector_2" x="0" y="0" z="-1042.85"/>
+			<rotation name="rot_twobounce_connector_2" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_connector_3">
+			<volumeref ref="logic_twobounce_connector_3"/>
+			<position name="pos_twobounce_connector_3" x="0" y="0" z="-1013.85"/>
+			<rotation name="rot_twobounce_connector_3" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="twobounce_long">
+			<volumeref ref="logic_twobounce_long"/>
+			<position name="pos_twobounce_long" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_long" x="0" y="0" z="0"/>
 		</physvol>
 
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>

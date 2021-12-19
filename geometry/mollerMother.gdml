@@ -262,16 +262,16 @@
       </physvol>
       
     <!-- Front Tracking Detectors -->
-    <physvol>
+    <!--    <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
       <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
-    </physvol>
+    </physvol>-->
 
     <!-- Back Tracking Detectors -->
-    <physvol>
+    <!--   <physvol>
       <file name="tracking/trackingDaughter.gdml"/>
       <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
-    </physvol>
+    </physvol>-->
 
 
       <!-- GEM Rotator -->
@@ -333,7 +333,6 @@
 	  <rotation name="detectorRot" x="0" y="90" z="0" unit="deg"/>
 	  </physvol>
       -->
-
       
       <!-- ShowerMax Detectors-->
       <physvol>

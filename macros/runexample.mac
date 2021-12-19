@@ -42,7 +42,7 @@
 # Mainz test energy
 #/remoll/beamene 855 MeV
 
-/remoll/evgen/set moller
+/remoll/evgen/set elastic
 #/remoll/evgen/thcommin 30.0 deg
 #/remoll/evgen/thcommax 150.0 deg
 #/remoll/evgen/set elastic 
@@ -81,5 +81,6 @@
 /remoll/filename remollout.root
 
 #/tracking/verbose 2
-/remoll/target/print
+
+#/remoll/printtargetinfo
 /run/beamOn 100

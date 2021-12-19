@@ -37,10 +37,10 @@
       <solidref ref="solid_shield_US_beampipe_l"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="55"/>
+      <!--      <auxiliary auxtype="DetNo" auxvalue="55"/>-->
     </volume>
-    
-    <volume name="upstreamBeampipe">
+ 
+    <volume name="logicUpstreamBeampipe">
       <materialref ref="G4_Galactic"/>
       <solidref ref="solid_shield_US_beampipe_mother"/> 
 
