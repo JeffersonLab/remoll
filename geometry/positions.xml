@@ -68,5 +68,5 @@
 <position name="sieveVirtualPlane_pos" z="-1895.00" unit="mm"/>
 
 <!-- Showermax virtual plane detector position (between open and trans)  -->
-<position name="showerMaxVirtualPlane_pos" z="23920.00-97.00" unit="mm"/>
+<position name="showerMaxVirtualPlane_pos" z="23920.00-90.00" unit="mm"/>
 
