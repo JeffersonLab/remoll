@@ -312,7 +312,7 @@
    
       <physvol name="UPendPlate_phys">
         <volumeref ref="UPendPlate_log"/>
-        <position name="UPendPlate_pos" x="0" y="-106.4514 - (2631.44/2 -1435.1/2)+1" z="8425.18-11287.5+127/2+7454.9/2-7454.9+2864.764"/>
+        <position name="UPendPlate_pos" x="0" y="-106.4514 - (2631.44/2 -1435.1/2)+0.95" z="8425.18-11287.5+127/2+7454.9/2-7454.9+2864.764"/>
       </physvol>
       
       <physvol name="UPendTop_phys">
