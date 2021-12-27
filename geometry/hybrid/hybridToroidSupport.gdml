@@ -332,7 +332,7 @@
       
       <physvol name="DSenclosureSidePlate1_phys">
         <volumeref ref="DSenclosureSidePlate1_log"/>
-        <position name="DSenclosureSidePlate1_pos" x="2501.9/2-50.8/2" y="-79.375 - (2687.32/2 -1384.3/2)+1" z="12151.36-11287.5-7353.3/2+2864.764"/>
+        <position name="DSenclosureSidePlate1_pos" x="2501.9/2-50.8/2+0.8" y="-79.375 - (2687.32/2 -1384.3/2)+1+0.8" z="12151.36-11287.5-7353.3/2+2864.764-50"/>
       </physvol>
       
       <physvol name="DSenclosureSidePlate2_phys">
