@@ -1516,7 +1516,11 @@
 	      <position name="Pbwall_accep_pos" x="0" y="0" z="-125"/>
       </physvol>
     </volume>
-
+    <volume name="vacuumPbWall_logic">
+      <materialref ref="Lead"/>
+      <solidref ref="vacuumPbWall_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+    </volume>
     <volume name="upstreamTorusRegion">
       <materialref ref="G4_Galactic"/>
       <solidref ref="tubeUpstream"/>
