@@ -66,8 +66,8 @@
  <box lunit="mm" name="TM4CoilSupport3_solid"  x="152.4" y="152.4" z="1479.55"/>
  <box lunit="mm" name="TM4CoilSupport4_solid"  x="127" y="127" z="1479.55+1"/>
 
- <box lunit="mm" name="TM4CoilSupport5_solid"  x="152.4" y="152.4" z="1174.75"/>
- <box lunit="mm" name="TM4CoilSupport6_solid"  x="127" y="127" z="1174.75+1"/>
+ <box lunit="mm" name="TM4CoilSupport5_solid"  x="152.4" y="152.4" z="1174.75-3"/>
+ <box lunit="mm" name="TM4CoilSupport6_solid"  x="127" y="127" z="1174.75+1-3"/>
  
  <subtraction name="DS_toroidSupportMother_solid">
    <first ref="DS_toroidSupportMother_1"/>
