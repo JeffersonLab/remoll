@@ -129,7 +129,7 @@
       
       <physvol>
 	<volumeref ref="DSconcreteShielding"/>
-	<position name="DSconcreteShielding_pos" unit="mm" x="0" y="-420 + 127.65/2 + 18 + 12.43/2" z="4005-250/2- 2000 + 86/2"/>
+	<position name="DSconcreteShielding_pos" unit="mm" x="0" y="-420 + 127.65/2 + 18 + 12.43/2" z="4005-250/2- 2000 + 86/2 + 0.1"/>
       </physvol>
 
       <physvol name="dsBarite">
