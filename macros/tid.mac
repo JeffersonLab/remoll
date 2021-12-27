@@ -9,17 +9,14 @@
 /remoll/SD/enable 1
 /remoll/SD/detect lowenergyneutral 1
 /remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
 
 /remoll/SD/enable 2
 /remoll/SD/detect lowenergyneutral 2
 /remoll/SD/detect secondaries 2
-/remoll/SD/detect boundaryhits 2
 
 /remoll/SD/enable 3
 /remoll/SD/detect lowenergyneutral 3
 /remoll/SD/detect secondaries 3
-/remoll/SD/detect boundaryhits 3
 
 
 ## External Generator
