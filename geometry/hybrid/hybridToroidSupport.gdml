@@ -447,7 +447,7 @@
       
       <physvol name="TM4CoilSupportBeam_solid2_phys">
         <volumeref ref="TM4CoilSupport_solid_log"/>
-        <position name="TM4CoilSupportBeam_solid2_pos" x="-822.452" y="-968.502-12.7/2" z="9771.38-11287.5+2864.764"/>
+        <position name="TM4CoilSupportBeam_solid2_pos" x="-822.452" y="-968.502-12.7/2-4" z="9771.38-11287.5+2864.764"/>
       </physvol>
   
       <physvol name="TM4CoilSupport_solid1_phys">
