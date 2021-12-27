@@ -26,7 +26,7 @@ TH2D *plotOne(string fnm, int detID){
 
   TFile *fin=TFile::Open(fnm.c_str(),"READ");
   TH2D *h[5];
-  const string spTit[5]={"o","ep","em","g","n"};
+  const string spTit[5]={"o","em","ep","g","n"};
   for(int i=0;i<5;i++){
     h[i]=(TH2D*)fin->Get(Form("hXY_dt2_wg2_%s",spTit[i].c_str()));
     c1->cd(i+1);
