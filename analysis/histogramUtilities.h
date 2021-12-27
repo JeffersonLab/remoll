@@ -21,6 +21,40 @@ void niceLogXBins(TH1*h)
   delete[] new_bins;
 }
 
+void TwoDniceLogXBins(TH2*h)
+{
+  TAxis *axis = h->GetXaxis();
+  int bins = axis->GetNbins();
+
+  double from = axis->GetXmin();
+  double to = axis->GetXmax();
+  double width = (to - from) / bins;
+  double *new_bins = new double[bins + 1];
+
+  for (int i = 0; i <= bins; i++) {
+    new_bins[i] = pow(10, from + i * width);
+  }
+  axis->Set(bins, new_bins);
+  delete[] new_bins;
+}
+
+void TwoDniceLogYBins(TH2*h)
+{
+  TAxis *axis = h->GetYaxis();
+  int bins = axis->GetNbins();
+
+  double from = axis->GetXmin();
+  double to = axis->GetXmax();
+  double width = (to - from) / bins;
+  double *new_bins = new double[bins + 1];
+
+  for (int i = 0; i <= bins; i++) {
+    new_bins[i] = pow(10, from + i * width);
+  }
+  axis->Set(bins, new_bins);
+  delete[] new_bins;
+}
+
 TH1* dNdXscaleLogX(TH1*h){
   TH1* h2=(TH1*)h->Clone(Form("%s_dNdX",h->GetName()));
   h2->GetYaxis()->SetTitle("dN/dX");
@@ -160,6 +194,37 @@ void drawQuartzOutline(TVirtualPad *pad){
 	      	
     }
   }
+}
+
+TCanvas *compare2(string fn1,string fn2,string hnm1,string hnm2){
+  TFile *f1=TFile::Open(fn1.c_str(),"READ");
+  TFile *f2=TFile::Open(fn2.c_str(),"READ");
+
+  if(f1->IsZombie() || f2->IsZombie())
+    return nullptr; 
+
+  string cnm = hnm1.substr(hnm1.find_last_of("/")+1);
+
+  auto c1=new TCanvas(cnm.c_str(),cnm.c_str());
+  c1->Divide(2);
+  c1->cd(1);
+  TH1F *h1=(TH1F*)f1->Get(hnm1.c_str());
+  TH1F *h2=(TH1F*)f2->Get(hnm2.c_str());
+
+  h2->SetTitle(Form("%s blue(1st), red(2nd)",h1->GetTitle()));
+  h2->GetXaxis()->SetRangeUser(0,600);
+  h1->SetLineColor(4);
+  h2->SetLineColor(2);
+  h2->DrawCopy();
+  h1->DrawCopy("same");
+
+  c1->cd(2);
+  h1->Divide(h2);
+  h1->DrawCopy();
+
+  f2->Close();
+  f1->Close();
+  return c1;
 }
 
 #endif //__HISTOUTIL_H

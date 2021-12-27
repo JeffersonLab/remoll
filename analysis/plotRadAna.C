@@ -6,26 +6,36 @@ TCanvas* plotCompare1DMD(string hNms,string cNm);
 TCanvas* plotCompare2D(vector<string> hNms,string cNm);
 TCanvas *plot2DMD(string hNms, string cNm, string sp);
 TCanvas *rMD(string hXY);
+TCanvas *plotMDringRates(vector<string> hNms,string cNm);
+TCanvas *plotRatioMDringRates(vector<string> hNms,string cNm);
 
-double scale=1/1000.;
+//const double scale=1/1000.;
 //TFile *fin=TFile::Open("../beamGeoV1_radAnaV4.root","READ");
 //TFile *fin=TFile::Open("../beamGeoV2_radAnaV4.root","READ");
-TFile *fin=TFile::Open("../beamGeoV2_radAnaV4_correctMD.root","READ");
+//TFile *fin=TFile::Open("../beamGeoV2_radAnaV4_correctMD.root","READ");
+
+const double scale=1;
+TFile *fin2=TFile::Open("/phenix/spin/phnxsp01/ciprian/mollerOut/targetShieldStudy_Sep21/radAnaV5_Config1.root","READ");
+//TFile *fin2=TFile::Open("/phenix/spin/phnxsp01/ciprian/mollerOut/targetShieldStudy_Nov21/radAnaV5_Config2.root","READ");
+TFile *fin=TFile::Open("/phenix/spin/phnxsp01/ciprian/mollerOut/targetShieldStudy_Jan23_Config3/tgtShld_conf3_radAnaV5.root","READ");
 
 void plotRadAna(){
   vector<string> hNms;
   for(int i=0;i<nSpecies;i++)
-  //   hNms.push_back(Form("det28/d28_mdHits_%s_ER0_Dmg2",spH[i].c_str()));
+    hNms.push_back(Form("det28/d28_mdHits_%s_ER0_Dmg0",spH[i].c_str()));
   //hNms.push_back(Form("det45/d45_r_%s_Pg1_Dmg0",spH[i].c_str()));
   //hNms.push_back(Form("det45/d45_energy_Pl1_%s",spH[i].c_str()));
-  hNms.push_back(Form("det28/d28_energyNEIL_R7_%s",spH[i].c_str()));
+    //hNms.push_back(Form("det28/d28_energyNEIL_R7_%s",spH[i].c_str()));
     //hNms.push_back(Form("det28/d28_energy_R7_%s",spH[i].c_str()));
   //hNms.push_back(Form("det28/d28_xy_R0_%s_Dmg0",spH[i].c_str()));
   
-  auto *c1=plotCompare1D(hNms,"kinE");
+  auto *c1=plotMDringRates(hNms,"kinE");
+  //auto *c1=plotRatioMDringRates(hNms,"kinE");
+  //auto *c1=plotCompare1D(hNms,"kinE");
+  //auto *c1=plotCompare1D(hNms,"kinE");
   //auto *c1=plotCompare2D(hNms,"xyHits");
 
-  // auto *c1=plotCompare1DMD("det28/d28_z0","zSource");
+  //auto *c1=plotCompare1DMD("det28/d28_z0","zSource");
   // return;
 
   // TH2D* h=(TH2D*)fin->Get("det28/d28_z0x0_R7_e1_Dmg0");
@@ -42,6 +52,80 @@ void plotRadAna(){
   //auto *c1=rMD("det28/d28_xy_R7_e1_Dmg1");
 
   //auto *c1=plot2DMD("det28/d28_z0x0","z0gamma","e1_Dmg1");
+}
+
+TCanvas *plotMDringRates(vector<string> hNms,string cNm){
+
+  auto *c1=new TCanvas(cNm.c_str(),cNm.c_str(),1800,800);
+  c1->Divide(1);
+
+  gStyle->SetOptStat(0);
+
+  for(int i=0;i<hNms.size();i++){
+    TH1D *h=(TH1D*)fin->Get(hNms[i].c_str());
+    if(h==nullptr) {
+      cout<<"can't find "<<hNms[i]<<endl;
+      continue;
+    }
+    h->SetLineWidth(2);
+    h->SetLineColor(spCls[i]);
+    h->SetMarkerColor(spCls[i]);
+    h->Scale(scale);
+
+    if(i==0){
+      h->GetYaxis()->SetTitle("hits per electron on target");
+      h->GetYaxis()->SetRangeUser(1e-9,5e-3);
+      h->DrawCopy("h");
+    }else{
+      h->DrawCopy("same&&h");
+    }
+  }
+
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  gPad->SetLogy(1);
+
+  return c1;
+}
+
+TCanvas *plotRatioMDringRates(vector<string> hNms,string cNm){
+
+  auto *c1=new TCanvas(cNm.c_str(),cNm.c_str(),1800,800);
+  c1->Divide(1);
+
+  gStyle->SetOptStat(0);
+
+  for(int i=0;i<hNms.size();i++){
+    TH1D *h1=(TH1D*)fin->Get(hNms[i].c_str());
+    TH1D *h2=(TH1D*)fin2->Get(hNms[i].c_str());
+    if(h1==nullptr || h2==nullptr) {
+      cout<<"can't find "<<hNms[i]<<endl;
+      continue;
+    }
+    TH1D *h=(TH1D*)h2->Clone(Form("ratio%s",h2->GetName()));
+
+    h->Divide(h1);
+    h->SetLineWidth(2);
+    h->SetLineColor(spCls[i]);
+    h->SetMarkerColor(spCls[i]);
+    h->Scale(scale);
+    // cout<<i<<" "<<h1->GetTitle()<<endl;
+    //h->Fit("pol0");
+    // cout<<endl;
+    if(i==0){
+      h->GetYaxis()->SetTitle("hits per electron on target");
+      h->GetYaxis()->SetRangeUser(0,10);
+      h->DrawCopy("h");
+    }else{
+      h->DrawCopy("same&&h");
+    }
+  }
+
+  gPad->SetGridx(1);
+  gPad->SetGridy(1);
+  //gPad->SetLogy(1);
+
+  return c1;
 }
 
 TCanvas* plotCompare1D(vector<string> hNms,string cNm){
@@ -116,7 +200,7 @@ TCanvas* rMD(string hNm){
       double yy = h->GetYaxis()->GetBinCenter(j);
       double r = sqrt(xx*xx + yy*yy);
       double val = h->GetBinContent(i,j);
-      if(!isnan(val))
+      if(!std::isnan(val))
 	 hr->Fill(r,val);
     }
 

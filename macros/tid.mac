@@ -1,0 +1,100 @@
+# This is the current working geometry
+/remoll/setgeofile geometry/tid.gdml
+
+/remoll/physlist/register QGSP_BERT_HP
+/run/initialize
+
+/remoll/SD/disable_all
+
+/remoll/SD/enable 1
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
+
+/remoll/SD/enable 2
+/remoll/SD/detect lowenergyneutral 2
+/remoll/SD/detect secondaries 2
+
+/remoll/SD/enable 3
+/remoll/SD/detect lowenergyneutral 3
+/remoll/SD/detect secondaries 3
+
+
+## External Generator
+/remoll/evgen/set external
+/remoll/evgen/copyRate 1
+/remoll/evgen/external/startEvent 0
+
+# /remoll/evgen/external/file analysis/o_conf14_pzG0_remollSkimTree.root ##1559661
+# /remoll/evgen/external/detid 5701
+# /remoll/evgen/external/zOffset -5445
+# /remoll/filename o_tid_conf14_5701_pzG0.root
+
+# /remoll/evgen/external/file analysis/o_conf14_pzG0_remollSkimTree.root
+# /remoll/evgen/external/detid 5702
+# /remoll/evgen/external/zOffset -6457
+# /remoll/filename o_tid_conf14_5702_pzG0.root
+
+# /remoll/evgen/external/file analysis/o_conf14_pzG0_remollSkimTree.root
+# /remoll/evgen/external/detid 5703
+# /remoll/evgen/external/zOffset -7470
+# /remoll/filename o_tid_conf14_5703_pzG0.root
+
+# /remoll/evgen/external/file analysis/o_conf14_pzG0_remollSkimTree.root 
+# /remoll/evgen/external/detid 5704
+# /remoll/evgen/external/zOffset -8810
+# /remoll/filename o_tid_conf14_5704_pzG0.root
+
+# /remoll/evgen/external/file analysis/o_conf14_pzG0_remollSkimTree.root 
+# /remoll/evgen/external/detid 5705
+# /remoll/evgen/external/zOffset -10710
+# /remoll/filename o_tid_conf14_5705_pzG0.root
+
+# /remoll/evgen/external/file analysis/o_conf14_pzL0_remollSkimTree.root ##534453
+# /remoll/evgen/external/detid 5701
+# /remoll/evgen/external/zOffset -5425
+# /remoll/filename o_tid_conf14_5701_pzL0.root
+
+# /remoll/evgen/external/file analysis/o_conf14_pzL0_remollSkimTree.root
+# /remoll/evgen/external/detid 5702
+# /remoll/evgen/external/zOffset -6437
+# /remoll/filename o_tid_conf14_5702_pzL0.root
+
+# /remoll/evgen/external/file analysis/o_conf14_pzL0_remollSkimTree.root
+# /remoll/evgen/external/detid 5703
+# /remoll/evgen/external/zOffset -7450
+# /remoll/filename o_tid_conf14_5703_pzL0.root
+
+# /remoll/evgen/external/file analysis/o_conf14_pzL0_remollSkimTree.root 
+# /remoll/evgen/external/detid 5704
+# /remoll/evgen/external/zOffset -8790
+# /remoll/filename o_tid_conf14_5704_pzL0.root
+
+/remoll/evgen/external/file analysis/o_conf14_pzL0_remollSkimTree.root 
+/remoll/evgen/external/detid 5705
+/remoll/evgen/external/zOffset -10690
+/remoll/filename o_tid_conf14_5705_pzL0.root
+
+# /remoll/evgen/external/file analysis/o_epEMD_pzG0_remollSkimTree.root ##470933
+# /remoll/evgen/external/detid 28
+# /remoll/evgen/external/zOffset -22010
+# /remoll/filename o_tid_epE_pzG0_MD_quartz.root
+
+# /remoll/evgen/external/file analysis/o_epEMD_pzL0_remollSkimTree.root ##41044
+# /remoll/evgen/external/detid 28
+# /remoll/evgen/external/zOffset -21990
+# /remoll/filename o_tid_epE_pzL0_MD_quartz.root
+
+# /remoll/evgen/external/file analysis/o_eeMD_pzG0_remollSkimTree.root ##2563334
+# /remoll/evgen/external/detid 28
+# /remoll/evgen/external/zOffset -22010
+# /remoll/filename o_tid_ee_pzG0_MD_quartz.root
+
+# /remoll/evgen/external/file analysis/o_eeMD_pzL0_remollSkimTree.root ##529731
+# /remoll/evgen/external/detid 28
+# /remoll/evgen/external/zOffset -21990
+# /remoll/filename o_tid_ee_pzL0_MD_quartz.root
+
+## this shold be the same number of events as the skim output
+### if you want your rate calculation to be ok for non-beam generators
+/run/beamOn 534453
+

@@ -86,6 +86,13 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
     return;
   }
 
+  if (fTree->GetBranch("rate")) {
+    fTree->SetBranchAddress("rate", &rate);
+  }else{
+    G4cerr << "Warning! could not find rate branch. Set rate to 1"<<G4endl;
+    rate = 1;
+  }
+
   if (fTree->GetBranch("ev") != nullptr) {
     fTree->SetBranchAddress("ev", &fEvent);
   } else {
@@ -112,12 +119,14 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
     if (fEntry >= fEntries)
         fEntry = 0;
     fTree->GetEntry(fEntry++);
-
     // Weighting completely handled by event file
     evt->SetEffCrossSection(fEvent->xs*microbarn);
     evt->SetQ2(fEvent->Q2);
     evt->SetW2(fEvent->W2);
     evt->SetAsymmetry(fEvent->A*ppb);
+    if(!std::isnan(rate) && !std::isinf(rate)){
+      evt->SetRate(rate/s);
+    }
 
     // Loop over all hits in this event
     for (size_t i = 0; i < fHit->size(); i++) {

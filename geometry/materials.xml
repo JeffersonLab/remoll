@@ -228,6 +228,11 @@
   </element>
 
 
+<!--add bellows custom material less dense G4_STAINLESS-STEEL like example here -->
+  <material name="SSbellows" state="solid">
+    <D value="0.896" unit="g/cm3"/>
+    <fraction n="1.0" ref="G4_STAINLESS-STEEL"/>
+  </material>
   
   <material Z="1" name="VacuumTarg" state="gas">
     <T unit="K" value="2.73"/>
@@ -419,6 +424,18 @@
     <fraction n="0.035" ref="Nickel"/>
   </material>
 
+  <material name="CW90" state="solid"><!--EA17 from Eagle Alloys -->
+    <D value="17.0" unit="g/cm3"/>
+    <fraction n="0.9000" ref="Tungsten"/>
+    <fraction n="0.100" ref="Copper"/>
+  </material>
+
+  <material name="CW85" state="solid">
+    <D value="16." unit="g/cm3"/>
+    <fraction n="0.85" ref="Tungsten"/>
+    <fraction n="0.15" ref="Copper"/>
+  </material>
+
   <!-- Defined for the next material "Water-CW" for Col1 water channel -->
   <material name="Water" state="liquid">
     <D value="1.0" unit="g/cm3"/>
@@ -429,9 +446,9 @@
   <!--The following material is defined to aviod complicated coll1 design
   The matrial is defined by 44% of H2O and 56% of CW95 -->
   <material name="Water_CW" state="solid">
-    <D value="10.52" unit="g/cm3"/>
-    <fraction n="0.44" ref="Water"/>
-    <fraction n="0.56" ref="CW95"/>
+    <D value="5.96" unit="g/cm3"/>
+    <fraction n="0.69" ref="Water"/>
+    <fraction n="0.31" ref="CW90"/>
   </material>
   
   <material name="Tyvek" state="solid">

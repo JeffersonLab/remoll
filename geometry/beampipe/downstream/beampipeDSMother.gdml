@@ -20,8 +20,10 @@
     <polycone name="solid_DSbeampipe_vacuum"
               aunit="deg" startphi="0" deltaphi="360"
               lunit="mm">
-      <zplane rmin="0" rmax="950" z="19000.0"/>
-      <zplane rmin="0" rmax="600" z="19000.0"/>
+	    <!--<zplane rmin="0" rmax="950" z="19000.0"/>
+      <zplane rmin="0" rmax="600" z="19000.0"/>-->
+      <zplane rmin="0" rmax="1019" z="19332.69+0.02"/>
+      <zplane rmin="0" rmax="600" z="19332.69+0.02"/>
       <zplane rmin="0" rmax="770" z="26500.0"/>
     </polycone>
 
@@ -279,17 +281,17 @@
       <materialref ref="G4_Galactic"/>
       <solidref ref="solid_DSbeampipe_vacuum"/>
 
-      <physvol name="DSpipe2_DSpipe2_2">
+ <!--      <physvol name="DSpipe2_DSpipe2_2">
 	<volumeref ref="logic_DSpipe2_2"/>
       </physvol>
 
-      <physvol name="DSpipe2_DSplate">
+     <physvol name="DSpipe2_DSplate">
 	<volumeref ref="logic_DSpipe2_DSplate"/>
       </physvol>
 
       <physvol name="DSpipe2_bellow">
 	<volumeref ref="logic_DSpipe2_bellow"/>
-      </physvol>
+      </physvol>-->
 
       <physvol name="DSpipe3_DSpipe">
 	<volumeref ref="logic_DSpipe3"/>

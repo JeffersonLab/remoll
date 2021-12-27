@@ -1,0 +1,14 @@
+# Use this open statement to create an OpenGL view:
+/vis/open OGL 600x600-0+0  
+
+# This is the current working geometry
+/remoll/setgeofile geometry/tid.gdml
+
+#/remoll/setphysicslist QGSP_BERT_EMV
+
+/run/initialize
+
+/remoll/beamene 855 MeV
+/remoll/beamcurr 50 microampere
+
+/control/execute vis/vis.mac

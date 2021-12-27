@@ -4,6 +4,7 @@
 cmake_minimum_required(VERSION 3.8)
 project(remoll VERSION 0.1 LANGUAGES CXX C)
 
+set(CMAKE_CXX_STANDARD 14)
 # Export compile commands as json for run-clang-tidy
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 

@@ -36,7 +36,7 @@
 #include <memory>
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
-: fEventGen(0),fPriGen(0),fParticleGun(0),fEvent(0),fEffCrossSection(0)
+  : fEventGen(0),fPriGen(0),fParticleGun(0),fEvent(0),fRateCopy(0),fEffCrossSection(0)
 {
     static bool has_been_warned = false;
     if (! has_been_warned) {
@@ -80,6 +80,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     // Create event generator messenger
     fEvGenMessenger.DeclareMethod("set",&remollPrimaryGeneratorAction::SetGenerator,"Select physics generator");
     fEvGenMessenger.DeclarePropertyWithUnit("sigma","picobarn",fEffCrossSection,"Set effective cross section");
+    fEvGenMessenger.DeclareProperty("copyRate",fRateCopy,"ExtGen: copy rate from previous sim");
 }
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
@@ -194,12 +195,13 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     // Get number of thrown events
     G4double nthrown = remollRun::GetRunData()->GetNthrown();
 
+
     // Calculate rate
     SamplingType_t sampling_type = fEventGen->GetSamplingType();
     if (fEvent->fRate == 0) { // If the rate is set to 0 then calculate it using the cross section
         fEvent->fRate  = fEvent->fEffXs * fBeamTarg.GetEffLumin(sampling_type) / nthrown;
 
-    } else { // For LUND - calculate rate and cross section
+    } else if(!fRateCopy){ // For LUND - calculate rate and cross section
         fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg.GetEffLumin(sampling_type);
         fEvent->fRate  = fEvent->fRate / nthrown;
     }
