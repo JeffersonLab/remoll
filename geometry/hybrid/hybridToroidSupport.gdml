@@ -40,9 +40,9 @@
  <tube aunit="deg" deltaphi="360/2" lunit="mm" name="UPendPlate_sub1" rmax="330.2" rmin="0" startphi="180" z="127+1"/>
  <tube aunit="deg" deltaphi="360/2" lunit="mm" name="UPendTop_solid" rmax="1200.15" rmin="330.2" startphi="0" z="127"/>
  
- <box lunit="mm" name="DSenclosureSidePlate_solid"  x="50.8" y="1384.3" z="7353.3"/>
- <tube aunit="deg" deltaphi="360/4" lunit="mm" name="DSenclosureSidetop1_solid" rmax="1250.95" rmin="1200.15" startphi="0" z="7353.3"/>
- <tube aunit="deg" deltaphi="360/4" lunit="mm" name="DSenclosureSidetop2_solid" rmax="1250.95" rmin="1200.15" startphi="90" z="7353.3"/>
+ <box lunit="mm" name="DSenclosureSidePlate_solid"  x="50.8" y="1384.3" z="7353.3-155"/>
+ <tube aunit="deg" deltaphi="360/4" lunit="mm" name="DSenclosureSidetop1_solid" rmax="1250.95" rmin="1200.15" startphi="0" z="7353.3-155"/>
+ <tube aunit="deg" deltaphi="360/4" lunit="mm" name="DSenclosureSidetop2_solid" rmax="1250.95" rmin="1200.15" startphi="90" z="7353.3-155"/>
  
  <box lunit="mm" name="TMDSendPlate_solid"  x="1778" y="1136.65" z="25.4"/>
  <tube aunit="deg" deltaphi="360/2" lunit="mm" name="TMDSendTop_solid" rmax="889" rmin="635" startphi="0" z="25.4"/>
