@@ -1463,26 +1463,6 @@
       <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19332.69+1"/>
     </physvol>
 
-    <physvol name="DSCoil11_phys">
-      <volumeref ref="DSCoil11_log"/>
-      <position  name="DSCoil11_pos" unit="mm" x="0" y="0" z="8300+0.5"/>
-    </physvol>
-
-    <physvol name="DSCoil12_phys">
-      <volumeref ref="DSCoil12_log"/>
-      <position  name="DSCoil12_pos" unit="mm" x="0" y="0" z="8800+0.5"/>
-    </physvol>
-
-    <physvol name="DSCoil13_phys">
-      <volumeref ref="DSCoil13_log"/>
-      <position  name="DSCoil13_pos" unit="mm" x="0" y="0" z="9200+0.5"/>
-    </physvol>
-    
-    <physvol name="DSCoil17_phys">
-      <volumeref ref="DSCoil17_log"/>
-      <position  name="DSCoil17_pos" unit="mm" x="0" y="0" z="11500+0.5"/>
-    </physvol>
-
     <physvol name="At9p5_phys">
       <volumeref ref="At9p5_log"/>
       <position  name="At9p5_pos" unit="mm" x="0" y="0" z="9507.3-0.6"/>
