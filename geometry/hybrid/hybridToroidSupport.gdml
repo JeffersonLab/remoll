@@ -307,7 +307,7 @@
           
       <physvol name="BasePlate_phys">
         <volumeref ref="BasePlate_log"/>
-        <position name="BasePlate_pos" x="0" y="-1463.548+9.652/2" z="12151.36-11287.5-7454.9/2+2864.764"/>
+        <position name="BasePlate_pos" x="0" y="-1463.548+9.652/2-8.5" z="12151.36-11287.5-7454.9/2+2864.764"/>
       </physvol>
    
       <physvol name="UPendPlate_phys">
