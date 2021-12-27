@@ -184,7 +184,8 @@
       <zplane rmin="230" rmax="236.35" z="PbWall_length/2."/>
       <zplane rmin="230+125*tan(8*pi/180.)" rmax="236.35+125*tan(8*pi/180.)" z="PbWall_length"/>
     </polycone>
-
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_solid" 
+	  rmax="550" rmin="219" startphi="0" z="102"/>
     <!-- Feb 2020 New Collimator1 (combined Coll1 & Coll2) -->
     <!--  V1   
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
