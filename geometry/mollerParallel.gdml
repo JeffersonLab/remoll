@@ -506,7 +506,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="samVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="44"/>
+    <auxiliary auxtype="DetNo" auxvalue="144"/>
   </volume>
 
   <volume name="dsHybridVirtualPlane1_log">
