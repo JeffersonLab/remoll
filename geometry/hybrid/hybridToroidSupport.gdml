@@ -78,7 +78,7 @@
  <union name ="BasePlate_union">
    <first ref="BasePlate_solid"/>
    <second ref="BasePlate2_solid"/>
-   <position name ="BasePlate_union_pos" lunit="mm" x="0" y="91.948/2" z="0" />
+   <position name ="BasePlate_union_pos" lunit="mm" x="0" y="91.948/2-8.5/4" z="0" />
  </union>
  
  <subtraction name="UPendPlate_sub">
