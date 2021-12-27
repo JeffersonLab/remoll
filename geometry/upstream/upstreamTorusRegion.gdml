@@ -1613,7 +1613,11 @@
         <position name="PbWall_pos" x="0" y="0" z="2005-0.75"/>
       </physvol>
 
-     
+     <!-- mini - Lead wall DS of collimator 4 -->
+      <physvol name="vacuumPbWall">
+        <volumeref ref="vacuumPbWall_logic"/>
+        <position name="vacuumPbWall_pos" x="0" y="0" z="1665-0.75"/>
+      </physvol>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>
