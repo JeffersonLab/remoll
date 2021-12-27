@@ -436,7 +436,7 @@
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="79"/>
+    <auxiliary auxtype="DetNo" auxvalue="27"/>
   </volume>
 
   <volume name="tgtR1_log">
