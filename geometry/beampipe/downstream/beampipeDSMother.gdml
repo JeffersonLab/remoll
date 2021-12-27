@@ -22,7 +22,8 @@
               lunit="mm">
 	    <!--<zplane rmin="0" rmax="950" z="19000.0"/>
       <zplane rmin="0" rmax="600" z="19000.0"/>-->
-      <zplane rmin="0" rmax="580" z="19794.0"/>
+      <zplane rmin="0" rmax="1019" z="19332.69+0.02"/>
+      <zplane rmin="0" rmax="600" z="19332.69+0.02"/>
       <zplane rmin="0" rmax="770" z="26500.0"/>
     </polycone>
 
