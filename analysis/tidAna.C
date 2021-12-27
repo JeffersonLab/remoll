@@ -16,7 +16,7 @@ const int nSp=5;
 // [Det1 Det2 Det3][hits eDep TID][nSp]
 TH2D *hXY[nWg][nDt][nSp];
 const string wgTit[nWg]={"hits [#/whole run]","eDet[MeV/whole run]", "TID[rad/whole run]"};
-const string spTit[nSp]={"o","ep","em","g","n"};
+const string spTit[nSp]={"o","em","ep","g","n"};
 
 long nTotEv(0);
 string fin;
