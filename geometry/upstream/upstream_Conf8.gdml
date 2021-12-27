@@ -134,7 +134,7 @@
 
       <physvol name="dsBarite">
 	<volumeref ref="dsBarite_logic"/>
-	<position name="dsBarite_pos" unit="mm" x="0" y="0" z="4005-250/2- 2000 + 86/2"/>
+	<position name="dsBarite_pos" unit="mm" x="0" y="0" z="4005-250/2- 2000 + 86/2 + 0.1"/>
       </physvol>
 
       <physvol>
