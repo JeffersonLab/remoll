@@ -40,7 +40,7 @@
       <!--      <auxiliary auxtype="DetNo" auxvalue="55"/>-->
     </volume>
  
-    <volume name="logicUpstreamBeampipe">
+    <volume name="upstreamBeampipe">
       <materialref ref="G4_Galactic"/>
       <solidref ref="solid_shield_US_beampipe_mother"/> 
 
