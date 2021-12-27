@@ -322,7 +322,7 @@
       
       <physvol name="DSendPlate_phys">
         <volumeref ref="DSendPlate_log"/>
-        <position name="DSendPlate_pos" x="0" y="-106.4514 - (2631.44/2 -1418.59/2)+1" z="12151.36-11287.5-127/2+2864.764"/>
+        <position name="DSendPlate_pos" x="0" y="-106.4514 - (2631.44/2 -1418.59/2)+1" z="12151.36-11287.5-127/2+2864.764+0.8"/>
       </physvol>
       
       <physvol name="DSendTop_phys">
