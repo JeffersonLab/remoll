@@ -138,27 +138,6 @@
 
   <structure>
 
-    <volume name="h2Targ">
-      <materialref ref="G4_lH2"/>
-      <solidref ref="target_solid"/>
-      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
-      <auxiliary auxtype="Color" auxvalue="blue"/>
-    </volume>
-
-    <volume name="USAlTarg">
-      <materialref ref="G4_Al"/>
-      <solidref ref="AlWindow"/>
-      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
-      <auxiliary auxtype="Color" auxvalue="white"/>
-    </volume>
-
-    <volume name="DSAlTarg">
-      <materialref ref="G4_Al"/>
-      <solidref ref="AlWindow"/>
-      <auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
-      <auxiliary auxtype="Color" auxvalue="white"/>
-    </volume>
-
     <volume name="targetUSBeamPipeVacuum">
       <materialref ref="G4_Galactic"/>
       <solidref ref="targetUSBeamPipeInner_solid"/>
@@ -246,19 +225,8 @@
 	<position name="targ_vac_window" unit="mm" x="0" y="0" z="1500"/>
       </physvol>
 
-      <physvol>
-	<volumeref ref="USAlTarg"/>
-	<position name="targ_upstream_window" unit="mm" x="0" y="0" z="-625-1"/>
-      </physvol>
-
-      <physvol>
-	<volumeref ref="h2Targ"/>
-	<position name="targ_center1" unit="mm" x="0" y="0" z="0"/>
-      </physvol>
-
-      <physvol>
-	<volumeref ref="DSAlTarg"/>
-	<position name="targ_downstream_window" unit="mm" x="0" y="0" z="625+1"/>
+      <physvol name="targetLadder">
+	<file name="target/targetLadder.gdml"/>
       </physvol>
 
       <physvol>
@@ -310,7 +278,6 @@
 	<position name="innerBarite_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2."/>
       </physvol>
 
-      <auxiliary auxtype="TargetSystem" auxvalue=""/>
     </volume>
 
   </structure>
