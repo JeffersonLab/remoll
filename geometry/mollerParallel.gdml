@@ -143,11 +143,6 @@
   
   <box name="USTorus_VirtualPlane_solid" lunit="mm" x="2000" y="2000" z="1"/>
   
-  <tube
-      name="showerMaxVirtualPlane_solid"
-      startphi="0" deltaphi="360" aunit="deg"
-      rmin="0" rmax="2000" z="1" lunit="mm"/>
-  
 </solids>
 
 <structure>
@@ -1023,7 +1018,7 @@
     <auxiliary auxtype="DetNo" auxvalue="28"/>
   </volume>
 
-  <volume name="showerMaxVir_log">
+  <volume name="showerMaxVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
@@ -1042,13 +1037,6 @@
     <solidref ref="VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="31"/>
-  </volume>
-
-  <volume name="showerMaxVirtualPlane_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="showerMaxVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="970"/>
   </volume>
 
   <volume name="ParallelWorld_logical">
@@ -1441,10 +1429,10 @@
       <positionref ref="mainDetectorVirtualPlane_pos"/>
     </physvol>
 
-    <!-- Main detector plane -->
-    <physvol name="showerMaxVir_phys">
-      <volumeref ref="showerMaxVir_log"/>
-      <positionref ref="showerMaxDetectorFaceUS"/>
+    <!-- ShowerMax detector plane -->
+    <physvol name="showerMaxVirtualPlane_phys">
+      <volumeref ref="showerMaxVirtualPlane_log"/>
+      <positionref ref="showerMaxVirtualPlane_pos"/>
     </physvol>
 
     <!-- Pion detector plane -->
@@ -1551,11 +1539,6 @@
     <physvol name="HallExit_phys">
       <volumeref ref="HallExit_log"/>
       <position  name="HallExit_pos" unit="mm" x="0" y="0" z="26200"/>
-    </physvol>
-
-    <physvol name="showerMaxVirtualPlane_phys">
-      <volumeref ref="showerMaxVirtualPlane_log"/>
-      <positionref ref="showerMaxVirtualPlane_pos"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
