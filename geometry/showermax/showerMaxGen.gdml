@@ -193,7 +193,7 @@
 			<position name="pos_logic_mirror_box_top_0" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_0">
 			<volumeref ref="logic_pmt_filter_0"/>
 			<position name="pos_logic_pmt_filter0" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter0" x="0" y="-pi/2" z="0"/>
@@ -541,7 +541,7 @@
 			<position name="pos_logic_mirror_box_top_2" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_2">
 			<volumeref ref="logic_pmt_filter_2"/>
 			<position name="pos_logic_pmt_filter2" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter2" x="0" y="-pi/2" z="0"/>
@@ -715,7 +715,7 @@
 			<position name="pos_logic_mirror_box_top_3" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_3">
 			<volumeref ref="logic_pmt_filter_3"/>
 			<position name="pos_logic_pmt_filter3" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter3" x="0" y="-pi/2" z="0"/>
@@ -889,7 +889,7 @@
 			<position name="pos_logic_mirror_box_top_4" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_4">
 			<volumeref ref="logic_pmt_filter_4"/>
 			<position name="pos_logic_pmt_filter4" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter4" x="0" y="-pi/2" z="0"/>
@@ -1063,7 +1063,7 @@
 			<position name="pos_logic_mirror_box_top_5" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_5">
 			<volumeref ref="logic_pmt_filter_5"/>
 			<position name="pos_logic_pmt_filter5" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter5" x="0" y="-pi/2" z="0"/>
@@ -1237,7 +1237,7 @@
 			<position name="pos_logic_mirror_box_top_6" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_6">
 			<volumeref ref="logic_pmt_filter_6"/>
 			<position name="pos_logic_pmt_filter6" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter6" x="0" y="-pi/2" z="0"/>
@@ -1411,7 +1411,7 @@
 			<position name="pos_logic_mirror_box_top_7" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_7">
 			<volumeref ref="logic_pmt_filter_7"/>
 			<position name="pos_logic_pmt_filter7" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter7" x="0" y="-pi/2" z="0"/>
@@ -1585,7 +1585,7 @@
 			<position name="pos_logic_mirror_box_top_8" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_8">
 			<volumeref ref="logic_pmt_filter_8"/>
 			<position name="pos_logic_pmt_filter8" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter8" x="0" y="-pi/2" z="0"/>
@@ -1759,7 +1759,7 @@
 			<position name="pos_logic_mirror_box_top_9" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_9">
 			<volumeref ref="logic_pmt_filter_9"/>
 			<position name="pos_logic_pmt_filter9" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter9" x="0" y="-pi/2" z="0"/>
@@ -1933,7 +1933,7 @@
 			<position name="pos_logic_mirror_box_top_10" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_10">
 			<volumeref ref="logic_pmt_filter_10"/>
 			<position name="pos_logic_pmt_filter10" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter10" x="0" y="-pi/2" z="0"/>
@@ -2107,7 +2107,7 @@
 			<position name="pos_logic_mirror_box_top_11" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_11">
 			<volumeref ref="logic_pmt_filter_11"/>
 			<position name="pos_logic_pmt_filter11" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter11" x="0" y="-pi/2" z="0"/>
@@ -2281,7 +2281,7 @@
 			<position name="pos_logic_mirror_box_top_12" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_12">
 			<volumeref ref="logic_pmt_filter_12"/>
 			<position name="pos_logic_pmt_filter12" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter12" x="0" y="-pi/2" z="0"/>
@@ -2455,7 +2455,7 @@
 			<position name="pos_logic_mirror_box_top_13" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_13">
 			<volumeref ref="logic_pmt_filter_13"/>
 			<position name="pos_logic_pmt_filter13" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter13" x="0" y="-pi/2" z="0"/>
@@ -2629,7 +2629,7 @@
 			<position name="pos_logic_mirror_box_top_14" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_14">
 			<volumeref ref="logic_pmt_filter_14"/>
 			<position name="pos_logic_pmt_filter14" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter14" x="0" y="-pi/2" z="0"/>
@@ -2803,7 +2803,7 @@
 			<position name="pos_logic_mirror_box_top_15" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_15">
 			<volumeref ref="logic_pmt_filter_15"/>
 			<position name="pos_logic_pmt_filter15" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter15" x="0" y="-pi/2" z="0"/>
@@ -2977,7 +2977,7 @@
 			<position name="pos_logic_mirror_box_top_16" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_16">
 			<volumeref ref="logic_pmt_filter_16"/>
 			<position name="pos_logic_pmt_filter16" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter16" x="0" y="-pi/2" z="0"/>
@@ -3151,7 +3151,7 @@
 			<position name="pos_logic_mirror_box_top_17" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_17">
 			<volumeref ref="logic_pmt_filter_17"/>
 			<position name="pos_logic_pmt_filter17" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter17" x="0" y="-pi/2" z="0"/>
@@ -3325,7 +3325,7 @@
 			<position name="pos_logic_mirror_box_top_18" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_18">
 			<volumeref ref="logic_pmt_filter_18"/>
 			<position name="pos_logic_pmt_filter18" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter18" x="0" y="-pi/2" z="0"/>
@@ -3499,7 +3499,7 @@
 			<position name="pos_logic_mirror_box_top_19" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_19">
 			<volumeref ref="logic_pmt_filter_19"/>
 			<position name="pos_logic_pmt_filter19" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter19" x="0" y="-pi/2" z="0"/>
@@ -3673,7 +3673,7 @@
 			<position name="pos_logic_mirror_box_top_20" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_20">
 			<volumeref ref="logic_pmt_filter_20"/>
 			<position name="pos_logic_pmt_filter20" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter20" x="0" y="-pi/2" z="0"/>
@@ -3847,7 +3847,7 @@
 			<position name="pos_logic_mirror_box_top_21" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_21">
 			<volumeref ref="logic_pmt_filter_21"/>
 			<position name="pos_logic_pmt_filter21" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter21" x="0" y="-pi/2" z="0"/>
@@ -4021,7 +4021,7 @@
 			<position name="pos_logic_mirror_box_top_22" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_22">
 			<volumeref ref="logic_pmt_filter_22"/>
 			<position name="pos_logic_pmt_filter22" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter22" x="0" y="-pi/2" z="0"/>
@@ -4195,7 +4195,7 @@
 			<position name="pos_logic_mirror_box_top_23" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_23">
 			<volumeref ref="logic_pmt_filter_23"/>
 			<position name="pos_logic_pmt_filter23" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter23" x="0" y="-pi/2" z="0"/>
@@ -4369,7 +4369,7 @@
 			<position name="pos_logic_mirror_box_top_24" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_24">
 			<volumeref ref="logic_pmt_filter_24"/>
 			<position name="pos_logic_pmt_filter24" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter24" x="0" y="-pi/2" z="0"/>
@@ -4543,7 +4543,7 @@
 			<position name="pos_logic_mirror_box_top_25" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_25">
 			<volumeref ref="logic_pmt_filter_25"/>
 			<position name="pos_logic_pmt_filter25" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter25" x="0" y="-pi/2" z="0"/>
@@ -4717,7 +4717,7 @@
 			<position name="pos_logic_mirror_box_top_26" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_26">
 			<volumeref ref="logic_pmt_filter_26"/>
 			<position name="pos_logic_pmt_filter26" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter26" x="0" y="-pi/2" z="0"/>
@@ -4891,7 +4891,7 @@
 			<position name="pos_logic_mirror_box_top_27" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_1">
+		<physvol name="pmt_filter_27">
 			<volumeref ref="logic_pmt_filter_27"/>
 			<position name="pos_logic_pmt_filter27" x= "333.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter27" x="0" y="-pi/2" z="0"/>
