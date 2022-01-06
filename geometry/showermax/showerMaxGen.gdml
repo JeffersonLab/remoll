@@ -24,6 +24,7 @@
 
 
 <solids>
+	<tube name="solid_pmt_filter" rmin="0" rmax="38.1" z="5.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
 	<tube name="solid_pmt_window" rmin="0" rmax="38.1" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
 	<tube name="solid_pmt_cathode" rmin="0" rmax="38.1" z="3e-06" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
 	<box name="solid_mirror_box_tungstenquartz_1" lunit="mm" x="160.0" y="266.0" z="57.0"/>
@@ -66,11 +67,11 @@
 		<position name="pos_logic_mirror_box_tungstenquartz_frontplate_backplate" z="0" y="0" x="-10.805"/>
 		<rotation name="rot_logic_mirror_box_tungstenquartz_frontplate_backplate" x="0" y="0" z="0"/>
 	</union>
-	<box name="solid_logic_mirror_box_4" lunit="mm" z="186.058003" y="266.0" x="86.868"/>
+	<box name="solid_logic_mirror_box_4" lunit="mm" z="191.058003" y="266.0" x="86.868"/>
 	<union name="solid_logic_mirror_box">
 		<first ref="solid_mirror_box_bot_1"/>
 		<second ref="solid_logic_mirror_box_4"/>
-		<position name="pos_logic_mirror_box" z="126.7600015" y="0" x="0"/>
+		<position name="pos_logic_mirror_box" z="129.2600015" y="0" x="0"/>
 		<rotation name="rot_logic_mirror_box" x="0" y="0" z="0"/>
 	</union>
 	<box name="solid_front_back_plate" lunit="mm" x="181.61" y="313.944" z="6.35"/>
@@ -99,6 +100,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_0">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7009"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_0">
 		<materialref ref="G4_Quartz"/>
@@ -185,9 +193,14 @@
 			<position name="pos_logic_mirror_box_top_0" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_0"/>
+			<position name="pos_logic_pmt_filter0" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter0" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_0">
 			<volumeref ref="logic_pmt_window_0"/>
-			<position name="pos_logic_pmt_window_0" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_0" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_0">
@@ -261,6 +274,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_1">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7019"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_1">
 		<materialref ref="G4_Quartz"/>
@@ -347,9 +367,14 @@
 			<position name="pos_logic_mirror_box_top_1" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_1"/>
+			<position name="pos_logic_pmt_filter1" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter1" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_1">
 			<volumeref ref="logic_pmt_window_1"/>
-			<position name="pos_logic_pmt_window_1" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_1" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_1">
@@ -423,6 +448,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_2">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7029"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_2">
 		<materialref ref="G4_Quartz"/>
@@ -509,9 +541,14 @@
 			<position name="pos_logic_mirror_box_top_2" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_2"/>
+			<position name="pos_logic_pmt_filter2" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter2" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_2">
 			<volumeref ref="logic_pmt_window_2"/>
-			<position name="pos_logic_pmt_window_2" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_2" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_2">
@@ -585,6 +622,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_3">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7039"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_3">
 		<materialref ref="G4_Quartz"/>
@@ -671,9 +715,14 @@
 			<position name="pos_logic_mirror_box_top_3" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_3"/>
+			<position name="pos_logic_pmt_filter3" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter3" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_3">
 			<volumeref ref="logic_pmt_window_3"/>
-			<position name="pos_logic_pmt_window_3" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_3" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_3">
@@ -747,6 +796,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_4">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7049"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_4">
 		<materialref ref="G4_Quartz"/>
@@ -833,9 +889,14 @@
 			<position name="pos_logic_mirror_box_top_4" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_4"/>
+			<position name="pos_logic_pmt_filter4" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter4" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_4">
 			<volumeref ref="logic_pmt_window_4"/>
-			<position name="pos_logic_pmt_window_4" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_4" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_4">
@@ -909,6 +970,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_5">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7059"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_5">
 		<materialref ref="G4_Quartz"/>
@@ -995,9 +1063,14 @@
 			<position name="pos_logic_mirror_box_top_5" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_5"/>
+			<position name="pos_logic_pmt_filter5" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter5" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_5">
 			<volumeref ref="logic_pmt_window_5"/>
-			<position name="pos_logic_pmt_window_5" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_5" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_5">
@@ -1071,6 +1144,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_6">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7069"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_6">
 		<materialref ref="G4_Quartz"/>
@@ -1157,9 +1237,14 @@
 			<position name="pos_logic_mirror_box_top_6" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_6"/>
+			<position name="pos_logic_pmt_filter6" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter6" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_6">
 			<volumeref ref="logic_pmt_window_6"/>
-			<position name="pos_logic_pmt_window_6" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_6" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_6">
@@ -1233,6 +1318,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_7">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7079"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_7">
 		<materialref ref="G4_Quartz"/>
@@ -1319,9 +1411,14 @@
 			<position name="pos_logic_mirror_box_top_7" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_7"/>
+			<position name="pos_logic_pmt_filter7" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter7" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_7">
 			<volumeref ref="logic_pmt_window_7"/>
-			<position name="pos_logic_pmt_window_7" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_7" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_7">
@@ -1395,6 +1492,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_8">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7089"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_8">
 		<materialref ref="G4_Quartz"/>
@@ -1481,9 +1585,14 @@
 			<position name="pos_logic_mirror_box_top_8" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_8"/>
+			<position name="pos_logic_pmt_filter8" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter8" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_8">
 			<volumeref ref="logic_pmt_window_8"/>
-			<position name="pos_logic_pmt_window_8" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_8" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_8">
@@ -1557,6 +1666,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_9">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7099"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_9">
 		<materialref ref="G4_Quartz"/>
@@ -1643,9 +1759,14 @@
 			<position name="pos_logic_mirror_box_top_9" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_9"/>
+			<position name="pos_logic_pmt_filter9" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter9" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_9">
 			<volumeref ref="logic_pmt_window_9"/>
-			<position name="pos_logic_pmt_window_9" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_9" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_9">
@@ -1719,6 +1840,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_10">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7109"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_10">
 		<materialref ref="G4_Quartz"/>
@@ -1805,9 +1933,14 @@
 			<position name="pos_logic_mirror_box_top_10" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_10"/>
+			<position name="pos_logic_pmt_filter10" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter10" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_10">
 			<volumeref ref="logic_pmt_window_10"/>
-			<position name="pos_logic_pmt_window_10" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_10" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_10">
@@ -1881,6 +2014,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_11">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7119"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_11">
 		<materialref ref="G4_Quartz"/>
@@ -1967,9 +2107,14 @@
 			<position name="pos_logic_mirror_box_top_11" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_11"/>
+			<position name="pos_logic_pmt_filter11" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter11" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_11">
 			<volumeref ref="logic_pmt_window_11"/>
-			<position name="pos_logic_pmt_window_11" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_11" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_11">
@@ -2043,6 +2188,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_12">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7129"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_12">
 		<materialref ref="G4_Quartz"/>
@@ -2129,9 +2281,14 @@
 			<position name="pos_logic_mirror_box_top_12" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_12"/>
+			<position name="pos_logic_pmt_filter12" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter12" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_12">
 			<volumeref ref="logic_pmt_window_12"/>
-			<position name="pos_logic_pmt_window_12" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_12" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_12">
@@ -2205,6 +2362,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_13">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7139"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_13">
 		<materialref ref="G4_Quartz"/>
@@ -2291,9 +2455,14 @@
 			<position name="pos_logic_mirror_box_top_13" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_13"/>
+			<position name="pos_logic_pmt_filter13" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter13" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_13">
 			<volumeref ref="logic_pmt_window_13"/>
-			<position name="pos_logic_pmt_window_13" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_13" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_13">
@@ -2367,6 +2536,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_14">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7149"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_14">
 		<materialref ref="G4_Quartz"/>
@@ -2453,9 +2629,14 @@
 			<position name="pos_logic_mirror_box_top_14" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_14"/>
+			<position name="pos_logic_pmt_filter14" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter14" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_14">
 			<volumeref ref="logic_pmt_window_14"/>
-			<position name="pos_logic_pmt_window_14" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_14" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_14">
@@ -2529,6 +2710,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_15">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7159"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_15">
 		<materialref ref="G4_Quartz"/>
@@ -2615,9 +2803,14 @@
 			<position name="pos_logic_mirror_box_top_15" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_15"/>
+			<position name="pos_logic_pmt_filter15" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter15" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_15">
 			<volumeref ref="logic_pmt_window_15"/>
-			<position name="pos_logic_pmt_window_15" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_15" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_15">
@@ -2691,6 +2884,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_16">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7169"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_16">
 		<materialref ref="G4_Quartz"/>
@@ -2777,9 +2977,14 @@
 			<position name="pos_logic_mirror_box_top_16" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_16"/>
+			<position name="pos_logic_pmt_filter16" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter16" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_16">
 			<volumeref ref="logic_pmt_window_16"/>
-			<position name="pos_logic_pmt_window_16" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_16" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_16">
@@ -2853,6 +3058,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_17">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7179"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_17">
 		<materialref ref="G4_Quartz"/>
@@ -2939,9 +3151,14 @@
 			<position name="pos_logic_mirror_box_top_17" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_17"/>
+			<position name="pos_logic_pmt_filter17" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter17" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_17">
 			<volumeref ref="logic_pmt_window_17"/>
-			<position name="pos_logic_pmt_window_17" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_17" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_17">
@@ -3015,6 +3232,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_18">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7189"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_18">
 		<materialref ref="G4_Quartz"/>
@@ -3101,9 +3325,14 @@
 			<position name="pos_logic_mirror_box_top_18" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_18"/>
+			<position name="pos_logic_pmt_filter18" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter18" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_18">
 			<volumeref ref="logic_pmt_window_18"/>
-			<position name="pos_logic_pmt_window_18" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_18" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_18">
@@ -3177,6 +3406,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_19">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7199"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_19">
 		<materialref ref="G4_Quartz"/>
@@ -3263,9 +3499,14 @@
 			<position name="pos_logic_mirror_box_top_19" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_19"/>
+			<position name="pos_logic_pmt_filter19" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter19" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_19">
 			<volumeref ref="logic_pmt_window_19"/>
-			<position name="pos_logic_pmt_window_19" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_19" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_19">
@@ -3339,6 +3580,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_20">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7209"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_20">
 		<materialref ref="G4_Quartz"/>
@@ -3425,9 +3673,14 @@
 			<position name="pos_logic_mirror_box_top_20" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_20"/>
+			<position name="pos_logic_pmt_filter20" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter20" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_20">
 			<volumeref ref="logic_pmt_window_20"/>
-			<position name="pos_logic_pmt_window_20" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_20" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_20">
@@ -3501,6 +3754,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_21">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7219"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_21">
 		<materialref ref="G4_Quartz"/>
@@ -3587,9 +3847,14 @@
 			<position name="pos_logic_mirror_box_top_21" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_21"/>
+			<position name="pos_logic_pmt_filter21" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter21" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_21">
 			<volumeref ref="logic_pmt_window_21"/>
-			<position name="pos_logic_pmt_window_21" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_21" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_21">
@@ -3663,6 +3928,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_22">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7229"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_22">
 		<materialref ref="G4_Quartz"/>
@@ -3749,9 +4021,14 @@
 			<position name="pos_logic_mirror_box_top_22" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_22"/>
+			<position name="pos_logic_pmt_filter22" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter22" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_22">
 			<volumeref ref="logic_pmt_window_22"/>
-			<position name="pos_logic_pmt_window_22" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_22" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_22">
@@ -3825,6 +4102,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_23">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7239"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_23">
 		<materialref ref="G4_Quartz"/>
@@ -3911,9 +4195,14 @@
 			<position name="pos_logic_mirror_box_top_23" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_23"/>
+			<position name="pos_logic_pmt_filter23" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter23" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_23">
 			<volumeref ref="logic_pmt_window_23"/>
-			<position name="pos_logic_pmt_window_23" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_23" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_23">
@@ -3987,6 +4276,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_24">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7249"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_24">
 		<materialref ref="G4_Quartz"/>
@@ -4073,9 +4369,14 @@
 			<position name="pos_logic_mirror_box_top_24" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_24"/>
+			<position name="pos_logic_pmt_filter24" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter24" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_24">
 			<volumeref ref="logic_pmt_window_24"/>
-			<position name="pos_logic_pmt_window_24" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_24" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_24">
@@ -4149,6 +4450,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_25">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7259"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_25">
 		<materialref ref="G4_Quartz"/>
@@ -4235,9 +4543,14 @@
 			<position name="pos_logic_mirror_box_top_25" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_25"/>
+			<position name="pos_logic_pmt_filter25" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter25" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_25">
 			<volumeref ref="logic_pmt_window_25"/>
-			<position name="pos_logic_pmt_window_25" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_25" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_25">
@@ -4311,6 +4624,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_26">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7269"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_26">
 		<materialref ref="G4_Quartz"/>
@@ -4397,9 +4717,14 @@
 			<position name="pos_logic_mirror_box_top_26" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_26"/>
+			<position name="pos_logic_pmt_filter26" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter26" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_26">
 			<volumeref ref="logic_pmt_window_26"/>
-			<position name="pos_logic_pmt_window_26" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_26" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_26">
@@ -4473,6 +4798,13 @@
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_mirror_box_top"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_27">
+		<materialref ref="G4_Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="7279"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_27">
 		<materialref ref="G4_Quartz"/>
@@ -4559,9 +4891,14 @@
 			<position name="pos_logic_mirror_box_top_27" x="238.991" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_top_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
+		<physvol name="pmt_filter_1">
+			<volumeref ref="logic_pmt_filter_27"/>
+			<position name="pos_logic_pmt_filter27" x= "333.02" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_filter27" x="0" y="-pi/2" z="0"/>
+		</physvol>
 		<physvol name="pmt_window_27">
 			<volumeref ref="logic_pmt_window_27"/>
-			<position name="pos_logic_pmt_window_27" x="332.02" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_27" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_27">
