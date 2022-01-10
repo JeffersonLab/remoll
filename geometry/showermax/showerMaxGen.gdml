@@ -26,7 +26,8 @@
 <solids>
 	<tube name="solid_pmt_filter" rmin="0" rmax="38.1" z="5.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
 	<tube name="solid_pmt_window" rmin="0" rmax="38.1" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
-	<tube name="solid_pmt_cathode" rmin="0" rmax="38.1" z="3e-06" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt" rmin="0" rmax="38.1" z="150" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_base" rmin="0" rmax="38.1" z="50" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
 	<box name="solid_mirror_box_tungstenquartz_1" lunit="mm" x="160.0" y="266.0" z="57.0"/>
 	<box name="solid_mirror_box_tungstenquartz_2" lunit="mm" x="161.0" y="265.0" z="56.0"/>
 	<subtraction name="solid_mirror_box_tungstenquartz">
@@ -67,11 +68,11 @@
 		<position name="pos_logic_mirror_box_tungstenquartz_frontplate_backplate" z="0" y="0" x="-10.805"/>
 		<rotation name="rot_logic_mirror_box_tungstenquartz_frontplate_backplate" x="0" y="0" z="0"/>
 	</union>
-	<box name="solid_logic_mirror_box_4" lunit="mm" z="191.058003" y="266.0" x="86.868"/>
+	<box name="solid_logic_mirror_box_4" lunit="mm" z="391.058" y="266.0" x="86.868"/>
 	<union name="solid_logic_mirror_box">
 		<first ref="solid_mirror_box_bot_1"/>
 		<second ref="solid_logic_mirror_box_4"/>
-		<position name="pos_logic_mirror_box" z="129.2600015" y="0" x="0"/>
+		<position name="pos_logic_mirror_box" z="229.26" y="0" x="0"/>
 		<rotation name="rot_logic_mirror_box" x="0" y="0" z="0"/>
 	</union>
 	<box name="solid_front_back_plate" lunit="mm" x="181.61" y="313.944" z="6.35"/>
@@ -105,20 +106,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7009"/>
+		<auxiliary auxtype="DetNo" auxvalue="70010"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_0">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70011"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_0">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_0">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7000"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70012"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_0">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70013"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_0">
 		<materialref ref="G4_Al"/>
@@ -203,10 +213,15 @@
 			<position name="pos_logic_pmt_window_0" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_0">
-			<volumeref ref="logic_pmt_cathode_0"/>
-			<position name="pos_logic_pmt_cathode_0" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_0" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_0">
+			<volumeref ref="logic_pmt_0"/>
+			<position name="pos_logic_pmt_0" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_0">
+			<volumeref ref="logic_pmt_base_0"/>
+			<position name="pos_logic_pmt_base0" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_0">
 			<volumeref ref="logic_front_back_plate_0"/>
@@ -279,20 +294,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7019"/>
+		<auxiliary auxtype="DetNo" auxvalue="70110"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_1">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70111"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_1">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_1">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7010"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70112"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_1">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70113"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_1">
 		<materialref ref="G4_Al"/>
@@ -377,10 +401,15 @@
 			<position name="pos_logic_pmt_window_1" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_1">
-			<volumeref ref="logic_pmt_cathode_1"/>
-			<position name="pos_logic_pmt_cathode_1" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_1" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_1">
+			<volumeref ref="logic_pmt_1"/>
+			<position name="pos_logic_pmt_1" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_1" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_1">
+			<volumeref ref="logic_pmt_base_1"/>
+			<position name="pos_logic_pmt_base1" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_1">
 			<volumeref ref="logic_front_back_plate_1"/>
@@ -453,20 +482,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7029"/>
+		<auxiliary auxtype="DetNo" auxvalue="70210"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_2">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70211"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_2">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_2">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7020"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70212"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_2">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70213"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_2">
 		<materialref ref="G4_Al"/>
@@ -551,10 +589,15 @@
 			<position name="pos_logic_pmt_window_2" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_2">
-			<volumeref ref="logic_pmt_cathode_2"/>
-			<position name="pos_logic_pmt_cathode_2" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_2" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_2">
+			<volumeref ref="logic_pmt_2"/>
+			<position name="pos_logic_pmt_2" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_2" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_2">
+			<volumeref ref="logic_pmt_base_2"/>
+			<position name="pos_logic_pmt_base2" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_2">
 			<volumeref ref="logic_front_back_plate_2"/>
@@ -627,20 +670,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7039"/>
+		<auxiliary auxtype="DetNo" auxvalue="70310"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_3">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70311"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_3">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_3">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7030"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70312"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_3">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70313"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_3">
 		<materialref ref="G4_Al"/>
@@ -725,10 +777,15 @@
 			<position name="pos_logic_pmt_window_3" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_3">
-			<volumeref ref="logic_pmt_cathode_3"/>
-			<position name="pos_logic_pmt_cathode_3" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_3" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_3">
+			<volumeref ref="logic_pmt_3"/>
+			<position name="pos_logic_pmt_3" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_3" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_3">
+			<volumeref ref="logic_pmt_base_3"/>
+			<position name="pos_logic_pmt_base3" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_3">
 			<volumeref ref="logic_front_back_plate_3"/>
@@ -801,20 +858,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7049"/>
+		<auxiliary auxtype="DetNo" auxvalue="70410"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_4">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70411"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_4">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_4">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7040"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70412"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_4">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70413"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_4">
 		<materialref ref="G4_Al"/>
@@ -899,10 +965,15 @@
 			<position name="pos_logic_pmt_window_4" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_4">
-			<volumeref ref="logic_pmt_cathode_4"/>
-			<position name="pos_logic_pmt_cathode_4" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_4" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_4">
+			<volumeref ref="logic_pmt_4"/>
+			<position name="pos_logic_pmt_4" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_4" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_4">
+			<volumeref ref="logic_pmt_base_4"/>
+			<position name="pos_logic_pmt_base4" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_4">
 			<volumeref ref="logic_front_back_plate_4"/>
@@ -975,20 +1046,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7059"/>
+		<auxiliary auxtype="DetNo" auxvalue="70510"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_5">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70511"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_5">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_5">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7050"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70512"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_5">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70513"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_5">
 		<materialref ref="G4_Al"/>
@@ -1073,10 +1153,15 @@
 			<position name="pos_logic_pmt_window_5" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_5">
-			<volumeref ref="logic_pmt_cathode_5"/>
-			<position name="pos_logic_pmt_cathode_5" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_5" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_5">
+			<volumeref ref="logic_pmt_5"/>
+			<position name="pos_logic_pmt_5" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_5" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_5">
+			<volumeref ref="logic_pmt_base_5"/>
+			<position name="pos_logic_pmt_base5" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_5">
 			<volumeref ref="logic_front_back_plate_5"/>
@@ -1149,20 +1234,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7069"/>
+		<auxiliary auxtype="DetNo" auxvalue="70610"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_6">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70611"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_6">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_6">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7060"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70612"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_6">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70613"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_6">
 		<materialref ref="G4_Al"/>
@@ -1247,10 +1341,15 @@
 			<position name="pos_logic_pmt_window_6" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_6">
-			<volumeref ref="logic_pmt_cathode_6"/>
-			<position name="pos_logic_pmt_cathode_6" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_6" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_6">
+			<volumeref ref="logic_pmt_6"/>
+			<position name="pos_logic_pmt_6" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_6" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_6">
+			<volumeref ref="logic_pmt_base_6"/>
+			<position name="pos_logic_pmt_base6" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_6">
 			<volumeref ref="logic_front_back_plate_6"/>
@@ -1323,20 +1422,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7079"/>
+		<auxiliary auxtype="DetNo" auxvalue="70710"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_7">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70711"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_7">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_7">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7070"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70712"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_7">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70713"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_7">
 		<materialref ref="G4_Al"/>
@@ -1421,10 +1529,15 @@
 			<position name="pos_logic_pmt_window_7" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_7">
-			<volumeref ref="logic_pmt_cathode_7"/>
-			<position name="pos_logic_pmt_cathode_7" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_7" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_7">
+			<volumeref ref="logic_pmt_7"/>
+			<position name="pos_logic_pmt_7" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_7" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_7">
+			<volumeref ref="logic_pmt_base_7"/>
+			<position name="pos_logic_pmt_base7" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_7">
 			<volumeref ref="logic_front_back_plate_7"/>
@@ -1497,20 +1610,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7089"/>
+		<auxiliary auxtype="DetNo" auxvalue="70810"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_8">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70811"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_8">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_8">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7080"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70812"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_8">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70813"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_8">
 		<materialref ref="G4_Al"/>
@@ -1595,10 +1717,15 @@
 			<position name="pos_logic_pmt_window_8" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_8">
-			<volumeref ref="logic_pmt_cathode_8"/>
-			<position name="pos_logic_pmt_cathode_8" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_8" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_8">
+			<volumeref ref="logic_pmt_8"/>
+			<position name="pos_logic_pmt_8" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_8" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_8">
+			<volumeref ref="logic_pmt_base_8"/>
+			<position name="pos_logic_pmt_base8" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_8">
 			<volumeref ref="logic_front_back_plate_8"/>
@@ -1671,20 +1798,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7099"/>
+		<auxiliary auxtype="DetNo" auxvalue="70910"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_9">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70911"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_9">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_9">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7090"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="70912"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_9">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70913"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_9">
 		<materialref ref="G4_Al"/>
@@ -1769,10 +1905,15 @@
 			<position name="pos_logic_pmt_window_9" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_9">
-			<volumeref ref="logic_pmt_cathode_9"/>
-			<position name="pos_logic_pmt_cathode_9" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_9" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_9">
+			<volumeref ref="logic_pmt_9"/>
+			<position name="pos_logic_pmt_9" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_9" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_9">
+			<volumeref ref="logic_pmt_base_9"/>
+			<position name="pos_logic_pmt_base9" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_9">
 			<volumeref ref="logic_front_back_plate_9"/>
@@ -1845,20 +1986,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7109"/>
+		<auxiliary auxtype="DetNo" auxvalue="71010"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_10">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71011"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_10">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_10">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7100"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71012"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_10">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71013"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_10">
 		<materialref ref="G4_Al"/>
@@ -1943,10 +2093,15 @@
 			<position name="pos_logic_pmt_window_10" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_10">
-			<volumeref ref="logic_pmt_cathode_10"/>
-			<position name="pos_logic_pmt_cathode_10" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_10" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_10">
+			<volumeref ref="logic_pmt_10"/>
+			<position name="pos_logic_pmt_10" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_10" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_10">
+			<volumeref ref="logic_pmt_base_10"/>
+			<position name="pos_logic_pmt_base10" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_10">
 			<volumeref ref="logic_front_back_plate_10"/>
@@ -2019,20 +2174,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7119"/>
+		<auxiliary auxtype="DetNo" auxvalue="71110"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_11">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71111"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_11">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_11">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7110"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71112"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_11">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71113"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_11">
 		<materialref ref="G4_Al"/>
@@ -2117,10 +2281,15 @@
 			<position name="pos_logic_pmt_window_11" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_11">
-			<volumeref ref="logic_pmt_cathode_11"/>
-			<position name="pos_logic_pmt_cathode_11" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_11" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_11">
+			<volumeref ref="logic_pmt_11"/>
+			<position name="pos_logic_pmt_11" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_11" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_11">
+			<volumeref ref="logic_pmt_base_11"/>
+			<position name="pos_logic_pmt_base11" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_11">
 			<volumeref ref="logic_front_back_plate_11"/>
@@ -2193,20 +2362,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7129"/>
+		<auxiliary auxtype="DetNo" auxvalue="71210"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_12">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71211"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_12">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_12">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7120"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71212"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_12">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71213"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_12">
 		<materialref ref="G4_Al"/>
@@ -2291,10 +2469,15 @@
 			<position name="pos_logic_pmt_window_12" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_12">
-			<volumeref ref="logic_pmt_cathode_12"/>
-			<position name="pos_logic_pmt_cathode_12" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_12" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_12">
+			<volumeref ref="logic_pmt_12"/>
+			<position name="pos_logic_pmt_12" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_12" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_12">
+			<volumeref ref="logic_pmt_base_12"/>
+			<position name="pos_logic_pmt_base12" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_12">
 			<volumeref ref="logic_front_back_plate_12"/>
@@ -2367,20 +2550,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7139"/>
+		<auxiliary auxtype="DetNo" auxvalue="71310"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_13">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71311"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_13">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_13">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7130"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71312"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_13">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71313"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_13">
 		<materialref ref="G4_Al"/>
@@ -2465,10 +2657,15 @@
 			<position name="pos_logic_pmt_window_13" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_13">
-			<volumeref ref="logic_pmt_cathode_13"/>
-			<position name="pos_logic_pmt_cathode_13" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_13" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_13">
+			<volumeref ref="logic_pmt_13"/>
+			<position name="pos_logic_pmt_13" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_13" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_13">
+			<volumeref ref="logic_pmt_base_13"/>
+			<position name="pos_logic_pmt_base13" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_13">
 			<volumeref ref="logic_front_back_plate_13"/>
@@ -2541,20 +2738,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7149"/>
+		<auxiliary auxtype="DetNo" auxvalue="71410"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_14">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71411"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_14">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_14">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7140"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71412"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_14">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71413"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_14">
 		<materialref ref="G4_Al"/>
@@ -2639,10 +2845,15 @@
 			<position name="pos_logic_pmt_window_14" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_14">
-			<volumeref ref="logic_pmt_cathode_14"/>
-			<position name="pos_logic_pmt_cathode_14" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_14" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_14">
+			<volumeref ref="logic_pmt_14"/>
+			<position name="pos_logic_pmt_14" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_14" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_14">
+			<volumeref ref="logic_pmt_base_14"/>
+			<position name="pos_logic_pmt_base14" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_14">
 			<volumeref ref="logic_front_back_plate_14"/>
@@ -2715,20 +2926,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7159"/>
+		<auxiliary auxtype="DetNo" auxvalue="71510"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_15">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71511"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_15">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_15">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7150"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71512"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_15">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71513"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_15">
 		<materialref ref="G4_Al"/>
@@ -2813,10 +3033,15 @@
 			<position name="pos_logic_pmt_window_15" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_15">
-			<volumeref ref="logic_pmt_cathode_15"/>
-			<position name="pos_logic_pmt_cathode_15" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_15" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_15">
+			<volumeref ref="logic_pmt_15"/>
+			<position name="pos_logic_pmt_15" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_15" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_15">
+			<volumeref ref="logic_pmt_base_15"/>
+			<position name="pos_logic_pmt_base15" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_15">
 			<volumeref ref="logic_front_back_plate_15"/>
@@ -2889,20 +3114,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7169"/>
+		<auxiliary auxtype="DetNo" auxvalue="71610"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_16">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71611"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_16">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_16">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7160"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71612"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_16">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71613"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_16">
 		<materialref ref="G4_Al"/>
@@ -2987,10 +3221,15 @@
 			<position name="pos_logic_pmt_window_16" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_16">
-			<volumeref ref="logic_pmt_cathode_16"/>
-			<position name="pos_logic_pmt_cathode_16" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_16" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_16">
+			<volumeref ref="logic_pmt_16"/>
+			<position name="pos_logic_pmt_16" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_16" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_16">
+			<volumeref ref="logic_pmt_base_16"/>
+			<position name="pos_logic_pmt_base16" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_16">
 			<volumeref ref="logic_front_back_plate_16"/>
@@ -3063,20 +3302,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7179"/>
+		<auxiliary auxtype="DetNo" auxvalue="71710"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_17">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71711"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_17">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_17">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7170"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71712"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_17">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71713"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_17">
 		<materialref ref="G4_Al"/>
@@ -3161,10 +3409,15 @@
 			<position name="pos_logic_pmt_window_17" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_17">
-			<volumeref ref="logic_pmt_cathode_17"/>
-			<position name="pos_logic_pmt_cathode_17" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_17" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_17">
+			<volumeref ref="logic_pmt_17"/>
+			<position name="pos_logic_pmt_17" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_17" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_17">
+			<volumeref ref="logic_pmt_base_17"/>
+			<position name="pos_logic_pmt_base17" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_17">
 			<volumeref ref="logic_front_back_plate_17"/>
@@ -3237,20 +3490,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7189"/>
+		<auxiliary auxtype="DetNo" auxvalue="71810"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_18">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71811"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_18">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_18">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7180"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71812"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_18">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71813"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_18">
 		<materialref ref="G4_Al"/>
@@ -3335,10 +3597,15 @@
 			<position name="pos_logic_pmt_window_18" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_18">
-			<volumeref ref="logic_pmt_cathode_18"/>
-			<position name="pos_logic_pmt_cathode_18" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_18" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_18">
+			<volumeref ref="logic_pmt_18"/>
+			<position name="pos_logic_pmt_18" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_18" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_18">
+			<volumeref ref="logic_pmt_base_18"/>
+			<position name="pos_logic_pmt_base18" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_18">
 			<volumeref ref="logic_front_back_plate_18"/>
@@ -3411,20 +3678,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7199"/>
+		<auxiliary auxtype="DetNo" auxvalue="71910"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_19">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="71911"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_19">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_19">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7190"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="71912"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_19">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="71913"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_19">
 		<materialref ref="G4_Al"/>
@@ -3509,10 +3785,15 @@
 			<position name="pos_logic_pmt_window_19" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_19">
-			<volumeref ref="logic_pmt_cathode_19"/>
-			<position name="pos_logic_pmt_cathode_19" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_19" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_19">
+			<volumeref ref="logic_pmt_19"/>
+			<position name="pos_logic_pmt_19" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_19" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_19">
+			<volumeref ref="logic_pmt_base_19"/>
+			<position name="pos_logic_pmt_base19" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_19">
 			<volumeref ref="logic_front_back_plate_19"/>
@@ -3585,20 +3866,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7209"/>
+		<auxiliary auxtype="DetNo" auxvalue="72010"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_20">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="72011"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_20">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_20">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7200"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="72012"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_20">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="72013"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_20">
 		<materialref ref="G4_Al"/>
@@ -3683,10 +3973,15 @@
 			<position name="pos_logic_pmt_window_20" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_20">
-			<volumeref ref="logic_pmt_cathode_20"/>
-			<position name="pos_logic_pmt_cathode_20" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_20" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_20">
+			<volumeref ref="logic_pmt_20"/>
+			<position name="pos_logic_pmt_20" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_20" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_20">
+			<volumeref ref="logic_pmt_base_20"/>
+			<position name="pos_logic_pmt_base20" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_20">
 			<volumeref ref="logic_front_back_plate_20"/>
@@ -3759,20 +4054,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7219"/>
+		<auxiliary auxtype="DetNo" auxvalue="72110"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_21">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="72111"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_21">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_21">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7210"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="72112"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_21">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="72113"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_21">
 		<materialref ref="G4_Al"/>
@@ -3857,10 +4161,15 @@
 			<position name="pos_logic_pmt_window_21" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_21">
-			<volumeref ref="logic_pmt_cathode_21"/>
-			<position name="pos_logic_pmt_cathode_21" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_21" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_21">
+			<volumeref ref="logic_pmt_21"/>
+			<position name="pos_logic_pmt_21" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_21" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_21">
+			<volumeref ref="logic_pmt_base_21"/>
+			<position name="pos_logic_pmt_base21" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_21">
 			<volumeref ref="logic_front_back_plate_21"/>
@@ -3933,20 +4242,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7229"/>
+		<auxiliary auxtype="DetNo" auxvalue="72210"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_22">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="72211"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_22">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_22">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7220"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="72212"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_22">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="72213"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_22">
 		<materialref ref="G4_Al"/>
@@ -4031,10 +4349,15 @@
 			<position name="pos_logic_pmt_window_22" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_22">
-			<volumeref ref="logic_pmt_cathode_22"/>
-			<position name="pos_logic_pmt_cathode_22" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_22" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_22">
+			<volumeref ref="logic_pmt_22"/>
+			<position name="pos_logic_pmt_22" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_22" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_22">
+			<volumeref ref="logic_pmt_base_22"/>
+			<position name="pos_logic_pmt_base22" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_22">
 			<volumeref ref="logic_front_back_plate_22"/>
@@ -4107,20 +4430,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7239"/>
+		<auxiliary auxtype="DetNo" auxvalue="72310"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_23">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="72311"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_23">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_23">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7230"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="72312"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_23">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="72313"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_23">
 		<materialref ref="G4_Al"/>
@@ -4205,10 +4537,15 @@
 			<position name="pos_logic_pmt_window_23" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_23">
-			<volumeref ref="logic_pmt_cathode_23"/>
-			<position name="pos_logic_pmt_cathode_23" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_23" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_23">
+			<volumeref ref="logic_pmt_23"/>
+			<position name="pos_logic_pmt_23" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_23" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_23">
+			<volumeref ref="logic_pmt_base_23"/>
+			<position name="pos_logic_pmt_base23" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_23">
 			<volumeref ref="logic_front_back_plate_23"/>
@@ -4281,20 +4618,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7249"/>
+		<auxiliary auxtype="DetNo" auxvalue="72410"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_24">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="72411"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_24">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_24">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7240"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="72412"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_24">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="72413"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_24">
 		<materialref ref="G4_Al"/>
@@ -4379,10 +4725,15 @@
 			<position name="pos_logic_pmt_window_24" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_24">
-			<volumeref ref="logic_pmt_cathode_24"/>
-			<position name="pos_logic_pmt_cathode_24" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_24" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_24">
+			<volumeref ref="logic_pmt_24"/>
+			<position name="pos_logic_pmt_24" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_24" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_24">
+			<volumeref ref="logic_pmt_base_24"/>
+			<position name="pos_logic_pmt_base24" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_24">
 			<volumeref ref="logic_front_back_plate_24"/>
@@ -4455,20 +4806,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7259"/>
+		<auxiliary auxtype="DetNo" auxvalue="72510"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_25">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="72511"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_25">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_25">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7250"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="72512"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_25">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="72513"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_25">
 		<materialref ref="G4_Al"/>
@@ -4553,10 +4913,15 @@
 			<position name="pos_logic_pmt_window_25" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_25">
-			<volumeref ref="logic_pmt_cathode_25"/>
-			<position name="pos_logic_pmt_cathode_25" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_25" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_25">
+			<volumeref ref="logic_pmt_25"/>
+			<position name="pos_logic_pmt_25" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_25" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_25">
+			<volumeref ref="logic_pmt_base_25"/>
+			<position name="pos_logic_pmt_base25" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_25">
 			<volumeref ref="logic_front_back_plate_25"/>
@@ -4629,20 +4994,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7269"/>
+		<auxiliary auxtype="DetNo" auxvalue="72610"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_26">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="72611"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_26">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_26">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7260"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="72612"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_26">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="72613"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_26">
 		<materialref ref="G4_Al"/>
@@ -4727,10 +5101,15 @@
 			<position name="pos_logic_pmt_window_26" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_26">
-			<volumeref ref="logic_pmt_cathode_26"/>
-			<position name="pos_logic_pmt_cathode_26" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_26" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_26">
+			<volumeref ref="logic_pmt_26"/>
+			<position name="pos_logic_pmt_26" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_26" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_26">
+			<volumeref ref="logic_pmt_base_26"/>
+			<position name="pos_logic_pmt_base26" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_26">
 			<volumeref ref="logic_front_back_plate_26"/>
@@ -4803,20 +5182,29 @@
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_filter"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
-		<auxiliary auxtype="DetNo" auxvalue="7279"/>
+		<auxiliary auxtype="DetNo" auxvalue="72710"/>
 		<auxiliary auxtype="Color" auxvalue="magenta"/>
 	</volume>
 	<volume name="logic_pmt_window_27">
 		<materialref ref="G4_Quartz"/>
 		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="72711"/>
 		<auxiliary auxtype="Color" auxvalue="blue"/>
 	</volume>
-	<volume name="logic_pmt_cathode_27">
-		<materialref ref="G4_Cathode"/>
-		<solidref ref="solid_pmt_cathode"/>
+	<volume name="logic_pmt_27">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
-		<auxiliary auxtype="DetNo" auxvalue="7270"/>
-		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="DetNo" auxvalue="72712"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_pmt_base_27">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="72713"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
 	<volume name="logic_front_back_plate_27">
 		<materialref ref="G4_Al"/>
@@ -4901,10 +5289,15 @@
 			<position name="pos_logic_pmt_window_27" x="337.02" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
-		<physvol name="pmt_cathode_27">
-			<volumeref ref="logic_pmt_cathode_27"/>
-			<position name="pos_logic_pmt_cathode_27" x="333.5200015" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_cathode_27" x="0" y="-pi/2" z="0"/>
+		<physvol name="pmt_27">
+			<volumeref ref="logic_pmt_27"/>
+			<position name="pos_logic_pmt_27" x="413.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_27" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_27">
+			<volumeref ref="logic_pmt_base_27"/>
+			<position name="pos_logic_pmt_base27" x="513.52" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="front_plate_27">
 			<volumeref ref="logic_front_back_plate_27"/>
