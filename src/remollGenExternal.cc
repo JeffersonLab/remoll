@@ -104,7 +104,6 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
 void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt)
 {
   G4AutoLock inFileLock(&inFileMutex);
-
   // Check whether three exists
   if (fTree == nullptr) {
     G4cerr << "Could not find tree T in event file (SamplePhysics)" << G4endl;
@@ -113,17 +112,22 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
   // Loop until we find at least one event with some particles
   int number_of_particles = 0;
   do {
-
     // Read next event from tree and increment
-    //fTree->GetEntry(fEntry++);
     if (fEntry >= fEntries)
         fEntry = 0;
     fTree->GetEntry(fEntry++);
     // Weighting completely handled by event file
-    evt->SetEffCrossSection(fEvent->xs*microbarn);
-    evt->SetQ2(fEvent->Q2);
-    evt->SetW2(fEvent->W2);
-    evt->SetAsymmetry(fEvent->A*ppb);
+    if(fEvent){
+      evt->SetEffCrossSection(fEvent->xs*microbarn);
+      evt->SetQ2(fEvent->Q2);
+      evt->SetW2(fEvent->W2);
+      evt->SetAsymmetry(fEvent->A*ppb);
+    }else{
+      evt->SetEffCrossSection(microbarn);
+      evt->SetQ2(999);
+      evt->SetW2(999);
+      evt->SetAsymmetry(1*ppb);
+    }
     if(!std::isnan(rate) && !std::isinf(rate)){
       evt->SetRate(rate/s);
     }
