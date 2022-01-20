@@ -6,6 +6,7 @@
 #include "G4VUserDetectorConstruction.hh"
 #include "G4GenericMessenger.hh"
 #include "G4Types.hh"
+#include "G4Version.hh"
 
 #include <vector>
 #include <set>
@@ -178,9 +179,16 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
         const G4GDMLAuxListType::const_iterator& end,
         const G4String& type)
     {
+      auto icompare = [](const G4String& lhs, const G4String& rhs) {
+        #if G4VERSION_NUMBER < 1100
+          return lhs.compareTo(rhs, G4String::ignoreCase);
+        #else
+          return G4StrUtil::icompare(lhs, rhs);
+        #endif
+      };
       return std::find_if(begin, end,
-        [type](const G4GDMLAuxStructType& element) {
-          return element.type.compareTo(type, G4String::ignoreCase) == 0;} );
+        [icompare,type](const G4GDMLAuxStructType& element) {
+          return (icompare(element.type, type) == 0);} );
     }
 
     void PrintAuxiliaryInfo() const;
