@@ -178,7 +178,7 @@ remollMagneticField::remollMagneticField(const G4String& filename)
       exit(1);
     }
     // Set file as source
-    fFilename = remollSearchPath::resolve(std::string(fFilename));
+    //fFilename = remollSearchPath::resolve(std::string(fFilename));
     inputfile.open(fFilename.data());
 #endif
 
