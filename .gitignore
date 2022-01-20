@@ -52,6 +52,7 @@ build*
 bldXcode
 map_directory
 output
+.vscode
 
 #ignore rad_dose radiation analysis work (another repository on sbujlab github)
 rad_analysis
