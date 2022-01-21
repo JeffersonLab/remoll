@@ -569,5 +569,25 @@
     <fraction n="0.56" ref="G4_CALCIUM_OXIDE"/>
     <fraction n="0.44" ref="G4_CARBON_DIOXIDE"/>
   </material>
+  
+  <!-- from hybridToroid.gdml -->
+  <material name="G4_CW95" state="solid">
+    <D value="18.0" unit="g/cm3"/>
+    <fraction n="0.9500" ref="G4_W"/>
+    <fraction n="0.015" ref="G4_Cu"/>
+    <fraction n="0.035" ref="G4_Ni"/>
+  </material>
+  <material name="Epoxy" state="solid">
+    <D value="1.3" unit="g/cm3"/>
+    <fraction n="0.5354" ref="C"/>
+    <fraction n="0.1318" ref="H"/>
+    <fraction n="0.3328" ref="O"/>
+  </material>
+  <material name="G10" state="solid">
+    <D value="1.3" unit="g/cm3"/>
+    <fraction n="0.773" ref="G4_SILICON_DIOXIDE"/>
+    <fraction n="0.147" ref="Epoxy"/>
+    <fraction n="0.080" ref="G4_Cl"/>
+  </material>
 
 </materials>

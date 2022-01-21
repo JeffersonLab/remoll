@@ -680,7 +680,7 @@
 
       <physvol name="DSpipe1">
         <volumeref ref="logic_DSpipe1"/>
-        <position name="DSpipe1_pos" x="0" y="0" z="18511.52 - 11287.5 + 68.58"/>
+        <position name="DSpipe1_pos" x="0" y="0" z="18511.52 - 11287.5 + 78.486 + 0.25"/>
       </physvol>
 
       <physvol name="DSpipe_flange">

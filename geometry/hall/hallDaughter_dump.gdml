@@ -280,7 +280,10 @@
     <box lunit="cm" name="boxDumpUSSub" x="dumpUSSub_width" y="dumpUSSub_height" z="dumpUSSub_length*1.005"/>
     <box lunit="cm" name="boxDumpDSSub1" x="dumpDSSub_width1" y="dumpDSSub_height1" z="dumpDSSub_length1"/>
     <box lunit="cm" name="boxDumpDSSub2" x="dumpDSSub_width2" y="dumpDSSub_height2" z="dumpDSSub_length2"/>
-
+    <box lunit="cm" name="krypto1" x="dump_width" y="1" z="dump_length"/>
+    <box lunit="cm" name="krypto2" x="1" y="dump_height+14" z="dump_length"/>
+    <box lunit="cm" name="krypto3" x="dump_width" y="dump_height+18" z="1"/>
+    
     <subtraction name="dumpSub_A">
       <first ref="boxDumpBulk"/>
       <second ref="boxDumpUSSub"/>
@@ -484,6 +487,27 @@
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
+
+    <volume name="krypto_logic1">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto1"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+   </volume>
+
+    <volume name="krypto_logic2">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto2"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+   </volume>
+
+    <volume name="krypto_logic3">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto3"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+   </volume>
     
     <volume name="dumpTempShield_left_logic">
       <materialref ref="Lead"/>
@@ -636,7 +660,32 @@
         <volumeref ref="dump_logic"/>
         <positionref ref="dump_center"/>
       </physvol>
+      
+      <physvol name="krytpoTop_phys">
+       <volumeref ref="krypto_logic1"/>
+       <position name="kryptoTop_pos" unit="cm" x="0" y="60.05*i2cm" z="dump_center_z"/>
+      </physvol>
 
+      <physvol name="krytpoBottom_phys">
+       <volumeref ref="krypto_logic1"/>
+       <position name="kryptoBottom_pos" unit="cm" x="0" y="-91*i2cm" z="dump_center_z"/>
+      </physvol>
+
+      <physvol name="krytpoLeft_phys">
+       <volumeref ref="krypto_logic2"/>
+       <position name="kryptoLeft_pos" unit="cm" x="54*i2cm+1/1.8" y="-15*i2cm" z="dump_center_z"/>
+      </physvol>
+
+      <physvol name="krytpoRight_phys">
+       <volumeref ref="krypto_logic2"/>
+       <position name="kryptoRight_pos" unit="cm" x="-54*i2cm-1/1.8" y="-15*i2cm" z="dump_center_z"/>
+      </physvol>
+
+     <physvol name="krytpoEndDS_phys">
+       <volumeref ref="krypto_logic3"/>
+       <position name="kryptoEndDS_pos" unit="cm" x="0" y="-15.5*i2cm" z="2256.5*i2cm"/>
+      </physvol>
+     
       <physvol name="dumpTempShield_left">
         <volumeref ref="dumpTempShield_left_logic"/>
         <positionref ref="dumpTempShield_left_center"/>
