@@ -66,8 +66,13 @@
 
     <box lunit="mm" name="coll1TopShielding_solid"
 	 x="4261"
-	 y="1400"
+	 y="1200"
 	 z="USBoxmother_length - USBoxmothersubtract_length - 10 + 610 + 86 - 186"/>
+
+   <box lunit="mm" name="coll1TopShielding_solid_Pb"
+	 x="4261"
+	 y="200"
+	 z="USBoxmother_length - USBoxmothersubtract_length - 10 + 610 + 86 - 186 "/>
 
     <box lunit="mm" name="pivotIron_solid"
 	 x="4261"
@@ -84,6 +89,13 @@
       <!-- <materialref ref="Concrete"/> -->
       <solidref ref="coll1TopShielding_solid"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
+    </volume>
+
+   <volume name="coll1TopShield_logic_Pb">
+      <materialref ref="G4_Pb"/>
+      <!-- <materialref ref="Concrete"/> -->
+      <solidref ref="coll1TopShielding_solid_Pb"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
     </volume>
 
     <volume name="coll1SideShield_logic">
@@ -128,7 +140,12 @@
       <!--shielding placement-->
       <physvol name="coll1TopShielding">
         <volumeref ref="coll1TopShield_logic"/>
-        <position name="coll1TopShield_pos" unit="mm" x="0" y="915.67 + 1400/2 - 10 + 13.43 + 1" z="1287.5-250/2 - 2000 + 86/2 - 186/2"/>
+        <position name="coll1TopShield_pos" unit="mm" x="0" y="915.67 + 1400/2 - 10 + 13.43 + 1+100" z="1287.5-250/2 - 2000 + 86/2 - 186/2"/>
+      </physvol>
+
+     <physvol name="coll1TopShielding_Pb">
+        <volumeref ref="coll1TopShield_logic_Pb"/>
+        <position name="coll1TopShield_pos_Pb" unit="mm" x="0" y="915.67 + 1400/2 - 10 + 13.43 + 1+200-801" z="1287.5-250/2 - 2000 + 86/2 - 186/2"/>
       </physvol>
 
       <physvol name="coll1LeftShielding">
