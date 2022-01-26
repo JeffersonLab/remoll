@@ -172,7 +172,7 @@
       </subtraction>
       
     <!-- Lead shielding solids -->
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid" rmin="0" rmax="540" z="PbWall_length"/>
+    <box lunit="mm" name="PbWall_solid" x="540*2" y="540*2" z="PbWall_length"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall_accep_solid">
       <zplane rmin="0" rmax="238.35" z="0"/>
