@@ -4,6 +4,8 @@
 
 <define>
    <variable name="i" value="0"/>
+   <constant name="N_P" value="14"/>
+   <constant name="PHI" value="360.0/N_P"/>
 
    <!-- Full concrete and lead donut system dimensions -->
    <quantity name="donutSystemLength" type="length" value="0.6" unit="m"/>
@@ -13,6 +15,9 @@
    <!-- Flare out to allow for fins holding the beam pipe -->
    <quantity name="donutSystemFlareZ" type="length" value="1.1*2.54" unit="cm"/> <!-- FIXME: this should be 8 in -->
    <quantity name="donutSystemFlareR" type="length" value="11.1*2.54" unit="cm"/>
+
+   <!-- Pion detector position -->
+   <position name="donutPionDetectorCenterPosition" z="0.5" unit="m"/>
 
    <!-- Aluminum sleeve thickness -->
    <quantity name="donutSleeveThickness" type="length" value="0.75" unit="in"/>
@@ -39,6 +44,11 @@
    <quantity name="donutPionInnerShieldEnd"           value="donutPionInnerShieldStart+donutPionInnerShieldLength"/>
    <quantity name="donutPionInnerShieldInnerSleeveThickness" value="donutSleeveThickness"/>
    <quantity name="donutPionInnerShieldOuterSleeveThickness" value="donutSleeveThickness/3"/>
+
+   <!-- Pion detector sector -->
+   <quantity name="donutPionDetectorSectorLength" type="length" value="0.20" unit="m"/>
+   <quantity name="donutPionDetectorSectorStart"  value="donutLeadEnd"/>
+   <quantity name="donutPionDetectorSectorEnd"    value="donutPionDetectorSectorStart+donutPionDetectorSectorLength"/>
 
    <!-- Pion outer shielding -->
    <quantity name="donutPionOuterShieldStart"         value="donutLeadEnd"/>
@@ -94,6 +104,37 @@
    <quantity name="donutBeamPipeSupportFinFlareUS" type="length" value="1.0" unit="in"/> <!-- FIXME: should be ~7.5 in -->
    <quantity name="donutBeamPipeSupportFinFlareDS" type="length" value="1.0" unit="in"/> <!-- FIXME: should be ~7.5 in -->
    <quantity name="donutBeamPipeSupportFinFlareR" type="length" value="11.0" unit="in"/>
+
+  <!--
+    The Cherenkov critical angle for n = 1.5 materials is cos(theta_c) = 1/n,
+    or theta_c = 48 degrees. In other words, beta = 1 charged particles will
+    emit photons at that angle, and moderately relativistic charged particles
+    with beta between 1/n and 1 will emit photons between 0 and theta_c.
+
+    Detector placement at theta_c will cause some photons to be emitted parallel
+    to the planes, while some others will be emitted nearly perpendicular to the
+    planes. Better split the difference go for theta_c/2 = 24 degrees, methinks.
+
+    This variable implements the global rotation of the entire lucite/lightguide
+    assembly. There are also angles that can be set independently for lucite and
+    for lightguide.
+    
+    A good choice for this parameter is about 5.0 degrees, to be chosen consistent
+    with the average angle of pions behind the spectrometer magnets.
+  
+    donutPionDetectorSectorAngleBase is +90.0 degrees for the configuration with
+    PMT radially outward; -90.0 degrees is with the PMT radially inward.
+  -->
+  <quantity name="donutPionDetectorSectorAngleBase" type="angle" value="+90.0" unit="deg"/>
+  <quantity name="donutPionDetectorSectorAnglePitch" type="angle" value="-90.0" unit="deg"/>
+  
+  <!--
+    The center of the lucite detector is placed radially, and longitudinally with respect to
+    the upstream face of the sector volume.
+  -->
+  <quantity name="donutPionDetectorCenterRadialPosition"       type="length" value="1.110" unit="m"/>
+  <quantity name="donutPionDetectorCenterLongitudinalPosition" type="length" value="7.0" unit="cm"/>
+
 </define>
 
 <materials>
@@ -259,6 +300,19 @@
               aunit="deg" startphi="0" deltaphi="360">
       <zplane rmin="donutPionInnerShieldOuterRadiusUS" rmax="donutPionInnerShieldOuterRadiusUS+donutPionInnerShieldOuterSleeveThickness" z="donutPionInnerShieldStart"/>
       <zplane rmin="donutPionInnerShieldOuterRadiusDS" rmax="donutPionInnerShieldOuterRadiusDS+donutPionInnerShieldOuterSleeveThickness" z="donutPionInnerShieldEnd"/>
+    </polycone>
+
+    <!-- Pion detector segment -->
+    <polycone name="donutPionDetectorSector_solid"
+      startphi="-PHI/2.0" deltaphi="PHI" aunit="deg">
+      <zplane
+        rmin="donutPionInnerShieldOuterRadiusUS+donutPionInnerShieldOuterSleeveThickness"
+        rmax="donutPionOuterShieldInnerRadiusUS-donutPionOuterShieldInnerSleeveThickness"
+        z="donutPionDetectorSectorStart"/>
+      <zplane
+        rmin="donutPionInnerShieldOuterRadiusDS+donutPionInnerShieldOuterSleeveThickness"
+        rmax="donutPionOuterShieldInnerRadiusDS-donutPionOuterShieldInnerSleeveThickness"
+        z="donutPionDetectorSectorEnd"/>
     </polycone>
 
     <!-- Pion outer shield -->
@@ -521,6 +575,21 @@
       <solidref ref="donutPionInnerShieldSleeveOuter_solid"/>
     </volume>
 
+    <volume name="donutPionDetectorSector_logical">
+      <materialref ref="G4_AIR"/>
+      <solidref ref="donutPionDetectorSector_solid"/>
+      <physvol name="donutPionDetector_physical">
+        <file name="pion/Lucite/pionDetectorLucite.gdml"/>
+        <position name="donutPionDetector_position"
+          x="donutPionDetectorCenterRadialPosition"
+          z="donutPionDetectorSectorStart+donutPionDetectorCenterLongitudinalPosition"/>
+        <rotation name="donutPionDetector_rotation"
+          z="donutPionDetectorSectorAngleBase"
+          y="-(donutPionDetectorSectorAngleBase+donutPionDetectorSectorAnglePitch)"/>
+        <!-- x rotation 180: layer 1 in the back -->
+      </physvol>
+    </volume>
+
     <volume name="donutPionOuterShield_logical">
       <materialref ref="G4_Pb"/>
       <solidref ref="donutPionOuterShield_solid"/>
@@ -611,6 +680,7 @@
       <solidref ref="donutSystem_solid"/>
 
       <!-- Frame -->
+<!--
       <physvol name="donutIBeamFrameVertical_right_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
         <position x="-donutIBeamFrameWidth/2-donutIBeamWidth/2" z="donutIBeamFramePosition"/>
@@ -631,14 +701,16 @@
         <position y="donutIBeamFrameHeightBot-donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" y="90" z="0" unit="deg"/>
       </physvol>
-
+-->
       <!-- Plate -->
+<!--
       <physvol name="donutPlate_physical">
         <volumeref ref="donutPlate_logical"/>
         <position z="donutIBeamFramePosition-donutIBeamHeight/2-donutPlateThickness/2"/>
       </physvol>
-
+-->
       <!-- Struts -->
+<!--
       <physvol name="donutIBeamStrut_top_right_physical">
         <volumeref ref="donutIBeamStrut_logical"/>
         <position
@@ -671,7 +743,7 @@
           z="donutIBeamFramePosition"/>
         <rotation x="-90" y="-135" z="0" unit="deg"/>
       </physvol>
-
+-->
       <!-- Lead donut -->
       <physvol name="donutLead_physical">
         <volumeref ref="donutLead_logical"/>
@@ -824,6 +896,14 @@
         <physvol name="donutBeamPipeSupportFin_physical">
           <volumeref ref="donutBeamPipeSupportFin_logical"/>
           <rotation x="-90.0" y="i*360.0/7" unit="deg"/>
+        </physvol>
+      </loop>
+
+      <!-- Pion detectors -->
+      <loop for="i" from="0" to="N_P-1" step="1">
+        <physvol name="donutPionDetectorSector_physical[i]">
+          <volumeref ref="donutPionDetectorSector_logical"/>
+          <rotation z="-i*PHI" unit="deg"/>
         </physvol>
       </loop>
 
