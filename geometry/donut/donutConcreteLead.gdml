@@ -680,7 +680,6 @@
       <solidref ref="donutSystem_solid"/>
 
       <!-- Frame -->
-<!--
       <physvol name="donutIBeamFrameVertical_right_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
         <position x="-donutIBeamFrameWidth/2-donutIBeamWidth/2" z="donutIBeamFramePosition"/>
@@ -701,16 +700,14 @@
         <position y="donutIBeamFrameHeightBot-donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" y="90" z="0" unit="deg"/>
       </physvol>
--->
+
       <!-- Plate -->
-<!--
       <physvol name="donutPlate_physical">
         <volumeref ref="donutPlate_logical"/>
         <position z="donutIBeamFramePosition-donutIBeamHeight/2-donutPlateThickness/2"/>
       </physvol>
--->
+
       <!-- Struts -->
-<!--
       <physvol name="donutIBeamStrut_top_right_physical">
         <volumeref ref="donutIBeamStrut_logical"/>
         <position
@@ -743,7 +740,7 @@
           z="donutIBeamFramePosition"/>
         <rotation x="-90" y="-135" z="0" unit="deg"/>
       </physvol>
--->
+
       <!-- Lead donut -->
       <physvol name="donutLead_physical">
         <volumeref ref="donutLead_logical"/>
