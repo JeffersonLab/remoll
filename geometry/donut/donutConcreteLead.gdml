@@ -228,7 +228,7 @@
     <box name="donutTopSupportFlat_solid"
          x="donutTopSupportWidth"
          y="donutTopSupportThickness"
-         z="donutLeadEnd"/>
+         z="donutLeadEnd-donutLeadStart"/>
     <box name="donutTopSupportInnerFlangeNoCut_solid"
          x="donutTopSupportInnerRibDistance/2-donutTopSupportThickness"
          y="donutIBeamFrameHeightTop-donutTopSupportThickness"
@@ -306,7 +306,7 @@
     <box name="donutBotSupportFlat_solid"
          x="donutBotSupportWidth"
          y="donutBotSupportThickness"
-         z="donutLeadEnd"/>
+         z="donutLeadEnd-donutLeadStart"/>
     <box name="donutBotSupportInnerFlangeNoCut_solid"
          x="donutBotSupportInnerRibDistance/2-donutBotSupportThickness"
          y="-donutIBeamFrameHeightBot-donutBotSupportThickness"
