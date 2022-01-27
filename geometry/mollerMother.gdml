@@ -347,10 +347,11 @@
       </physvol>
 
       <!-- Pion Detectors -->
-      <physvol>
+      <!-- Note: disabled here and now inside the pion donut -->
+      <!--physvol>
         <file name="pion/pionDetectorSystem.gdml"/>
         <positionref ref="pionDetectorSystemFaceUS"/>
-      </physvol>
+      </physvol-->
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
