@@ -6,7 +6,7 @@
    <variable name="i" value="0"/>
 
    <!-- Full concrete and lead donut system dimensions -->
-   <quantity name="donutSystemLength" type="length" value="0.4" unit="m"/>
+   <quantity name="donutSystemLength" type="length" value="0.6" unit="m"/>
    <quantity name="donutSystemWidth"  type="length" value="5.0" unit="m"/>
    <quantity name="donutSystemHeight" type="length" value="5.8" unit="m"/>
    <quantity name="donutSystemInnerRadius" type="length" value="0.736" unit="m"/>
