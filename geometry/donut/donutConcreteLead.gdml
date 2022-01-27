@@ -436,19 +436,13 @@
 
     <!-- Plate support fin -->
     <xtru name="donutPlateSupportFin_solid">
-      <twoDimVertex x="donutPlateRadius-0.1"
-                    y="donutConcreteStart"/>
-      <twoDimVertex x="donutConcreteOuterRadiusUS+1.1*donutSleeveThickness"
-                    y="donutConcreteStart"/>
-      <twoDimVertex x="donutConcreteOuterRadiusDS+1.1*donutSleeveThickness+0.1"
-                    y="donutConcreteEnd-0.1"/>
-      <twoDimVertex x="min(donutConcreteOuterRadiusDS,donutLeadOuterRadiusUS)-0.1+1.1*donutSleeveThickness"
-                    y="donutConcreteEnd"/>
-      <twoDimVertex x="donutLeadOuterRadiusUS+1.1*donutSleeveThickness+0.1"
-                    y="donutLeadStart+0.1"/>
+      <twoDimVertex x="donutPlateRadius"
+                    y="donutLeadStart"/>
+      <twoDimVertex x="donutLeadOuterRadiusUS+1.1*donutSleeveThickness"
+                    y="donutLeadStart"/>
       <twoDimVertex x="donutLeadOuterRadiusDS+1.1*donutSleeveThickness"
                     y="donutLeadEnd"/>
-      <twoDimVertex x="donutPlateRadius-0.1"
+      <twoDimVertex x="donutPlateRadius"
                     y="donutLeadEnd"/>
       <section zOrder="1" zPosition="-donutBeamPipeSupportFinThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="+donutBeamPipeSupportFinThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
