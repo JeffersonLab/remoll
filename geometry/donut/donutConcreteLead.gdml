@@ -520,6 +520,7 @@
       <materialref ref="G4_AIR"/>
       <solidref ref="donutSystem_solid"/>
 
+      <!-- Frame -->
       <physvol name="donutIBeamFrameVertical_right_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
         <position x="-donutIBeamFrameWidth/2-donutIBeamWidth/2" z="donutSystemLength/2"/>
