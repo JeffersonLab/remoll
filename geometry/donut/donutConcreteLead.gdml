@@ -14,20 +14,43 @@
    <quantity name="donutSystemFlareZ" type="length" value="1.1*2.54" unit="cm"/> <!-- FIXME: this should be 8 in -->
    <quantity name="donutSystemFlareR" type="length" value="11.1*2.54" unit="cm"/>
 
-   <!-- Thin virtual detectors on US and DS side -->
-   <quantity name="donutVirtualDetectorThickness" type="length" value="0.1" unit="mm"/>
+   <!-- Aluminum sleeve thickness -->
+   <quantity name="donutSleeveThickness" type="length" value="0.75" unit="in"/>
 
    <!-- Lead donut dimensions -->
    <quantity name="donutLeadStart"         type="length" value="0.20" unit="m"/>
-   <quantity name="donutLeadThickness"     type="length" value="0.20" unit="m"/>
+   <quantity name="donutLeadLength"        type="length" value="0.20" unit="m"/>
    <quantity name="donutLeadInnerRadiusUS" type="length" value="1.040" unit="m"/>
    <quantity name="donutLeadOuterRadiusUS" type="length" value="1.200" unit="m"/>
    <quantity name="donutLeadInnerRadiusDS" type="length" value="1.050" unit="m"/>
    <quantity name="donutLeadOuterRadiusDS" type="length" value="1.210" unit="m"/>
-   <quantity name="donutLeadEnd"           value="donutLeadStart+donutLeadThickness"/>
+   <quantity name="donutLeadEnd"           value="donutLeadStart+donutLeadLength"/>
+   <quantity name="donutLeadInnerSleeveThickness" value="donutSleeveThickness"/>
+   <quantity name="donutLeadOuterSleeveThickness" value="donutSleeveThickness"/>
 
-   <!-- Aluminum sleeve thickness -->
-   <quantity name="donutSleeveThickness" type="length" value="0.75" unit="in"/>
+   <!-- Pion inner shielding -->
+   <quantity name="donutPionInnerShieldStart"         value="donutLeadEnd"/>
+   <quantity name="donutPionInnerShieldLength"        type="length" value="0.20" unit="m"/>
+   <quantity name="donutPionInnerShieldThickness"     type="length" value="1.0*2.54" unit="cm"/>
+   <quantity name="donutPionInnerShieldInnerRadiusUS" type="length" value="1.050" unit="m"/>
+   <quantity name="donutPionInnerShieldInnerRadiusDS" type="length" value="1.060" unit="m"/>
+   <quantity name="donutPionInnerShieldOuterRadiusUS" value="donutPionInnerShieldInnerRadiusUS+donutPionInnerShieldThickness"/>
+   <quantity name="donutPionInnerShieldOuterRadiusDS" value="donutPionInnerShieldInnerRadiusDS+donutPionInnerShieldThickness"/>
+   <quantity name="donutPionInnerShieldEnd"           value="donutPionInnerShieldStart+donutPionInnerShieldLength"/>
+   <quantity name="donutPionInnerShieldInnerSleeveThickness" value="donutSleeveThickness"/>
+   <quantity name="donutPionInnerShieldOuterSleeveThickness" value="donutSleeveThickness/3"/>
+
+   <!-- Pion outer shielding -->
+   <quantity name="donutPionOuterShieldStart"         value="donutLeadEnd"/>
+   <quantity name="donutPionOuterShieldLength"        type="length" value="0.20" unit="m"/>
+   <quantity name="donutPionOuterShieldThickness"     type="length" value="1.0*2.54" unit="cm"/>
+   <quantity name="donutPionOuterShieldOuterRadiusUS" type="length" value="1.210" unit="m"/>
+   <quantity name="donutPionOuterShieldOuterRadiusDS" type="length" value="1.220" unit="m"/>
+   <quantity name="donutPionOuterShieldInnerRadiusUS" value="donutPionOuterShieldOuterRadiusUS-donutPionOuterShieldThickness"/>
+   <quantity name="donutPionOuterShieldInnerRadiusDS" value="donutPionOuterShieldOuterRadiusDS-donutPionOuterShieldThickness"/>
+   <quantity name="donutPionOuterShieldEnd"           value="donutPionOuterShieldStart+donutPionOuterShieldLength"/>
+   <quantity name="donutPionOuterShieldInnerSleeveThickness" value="donutSleeveThickness/3"/>
+   <quantity name="donutPionOuterShieldOuterSleeveThickness" value="donutSleeveThickness"/>
 
    <!-- Donut frame I-beams, W 16 x 67 -->
    <!-- Ref: https://www.engineeringtoolbox.com/docs/documents/1313/steel-beam.png -->
@@ -186,42 +209,55 @@
       <second ref="donutSystemFlare_solid"/>
     </union>
 
+    <!-- Main lead donut -->
     <polycone name="donutLead_solid"
               aunit="deg" startphi="0" deltaphi="360">
       <zplane rmin="donutLeadInnerRadiusUS" rmax="donutLeadOuterRadiusUS" z="donutLeadStart"/>
       <zplane rmin="donutLeadInnerRadiusDS" rmax="donutLeadOuterRadiusDS" z="donutLeadEnd"/>
     </polycone>
-    <polycone name="donutLeadVirtualDetectorUS_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutLeadInnerRadiusUS" rmax="donutLeadOuterRadiusUS" z="donutLeadStart"/>
-      <zplane rmin="donutLeadInnerRadiusUS
-                   +donutVirtualDetectorThickness/donutLeadThickness
-                   *(donutLeadInnerRadiusDS-donutLeadInnerRadiusUS)"
-              rmax="donutLeadOuterRadiusUS
-                   +donutVirtualDetectorThickness/donutLeadThickness
-                   *(donutLeadOuterRadiusDS-donutLeadOuterRadiusUS)"
-              z="donutLeadStart+donutVirtualDetectorThickness"/>
-    </polycone>
-    <polycone name="donutLeadVirtualDetectorDS_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutLeadInnerRadiusDS
-                   -donutVirtualDetectorThickness/donutLeadThickness
-                   *(donutLeadInnerRadiusDS-donutLeadInnerRadiusUS)"
-              rmax="donutLeadOuterRadiusDS
-                   -donutVirtualDetectorThickness/donutLeadThickness
-                   *(donutLeadOuterRadiusDS-donutLeadOuterRadiusUS)"
-              z="donutLeadEnd-donutVirtualDetectorThickness"/>
-      <zplane rmin="donutLeadInnerRadiusDS" rmax="donutLeadOuterRadiusDS" z="donutLeadEnd"/>
-    </polycone>
     <polycone name="donutLeadSleeveInner_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutLeadInnerRadiusUS-donutSleeveThickness" rmax="donutLeadInnerRadiusUS" z="donutLeadStart"/>
-      <zplane rmin="donutLeadInnerRadiusDS-donutSleeveThickness" rmax="donutLeadInnerRadiusDS" z="donutLeadEnd"/>
+      <zplane rmin="donutLeadInnerRadiusUS-donutLeadInnerSleeveThickness" rmax="donutLeadInnerRadiusUS" z="donutLeadStart"/>
+      <zplane rmin="donutLeadInnerRadiusDS-donutLeadInnerSleeveThickness" rmax="donutLeadInnerRadiusDS" z="donutLeadEnd"/>
     </polycone>
     <polycone name="donutLeadSleeveOuter_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutLeadOuterRadiusUS" rmax="donutLeadOuterRadiusUS+donutSleeveThickness" z="donutLeadStart"/>
-      <zplane rmin="donutLeadOuterRadiusDS" rmax="donutLeadOuterRadiusDS+donutSleeveThickness" z="donutLeadEnd"/>
+      <zplane rmin="donutLeadOuterRadiusUS" rmax="donutLeadOuterRadiusUS+donutLeadOuterSleeveThickness" z="donutLeadStart"/>
+      <zplane rmin="donutLeadOuterRadiusDS" rmax="donutLeadOuterRadiusDS+donutLeadOuterSleeveThickness" z="donutLeadEnd"/>
+    </polycone>
+
+    <!-- Pion inner shield -->
+    <polycone name="donutPionInnerShield_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionInnerShieldInnerRadiusUS" rmax="donutPionInnerShieldOuterRadiusUS" z="donutPionInnerShieldStart"/>
+      <zplane rmin="donutPionInnerShieldInnerRadiusDS" rmax="donutPionInnerShieldOuterRadiusDS" z="donutPionInnerShieldEnd"/>
+    </polycone>
+    <polycone name="donutPionInnerShieldSleeveInner_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionInnerShieldInnerRadiusUS-donutPionInnerShieldInnerSleeveThickness" rmax="donutPionInnerShieldInnerRadiusUS" z="donutPionInnerShieldStart"/>
+      <zplane rmin="donutPionInnerShieldInnerRadiusDS-donutPionInnerShieldInnerSleeveThickness" rmax="donutPionInnerShieldInnerRadiusDS" z="donutPionInnerShieldEnd"/>
+    </polycone>
+    <polycone name="donutPionInnerShieldSleeveOuter_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionInnerShieldOuterRadiusUS" rmax="donutPionInnerShieldOuterRadiusUS+donutPionInnerShieldOuterSleeveThickness" z="donutPionInnerShieldStart"/>
+      <zplane rmin="donutPionInnerShieldOuterRadiusDS" rmax="donutPionInnerShieldOuterRadiusDS+donutPionInnerShieldOuterSleeveThickness" z="donutPionInnerShieldEnd"/>
+    </polycone>
+
+    <!-- Pion outer shield -->
+    <polycone name="donutPionOuterShield_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionOuterShieldInnerRadiusUS" rmax="donutPionOuterShieldOuterRadiusUS" z="donutPionOuterShieldStart"/>
+      <zplane rmin="donutPionOuterShieldInnerRadiusDS" rmax="donutPionOuterShieldOuterRadiusDS" z="donutPionOuterShieldEnd"/>
+    </polycone>
+    <polycone name="donutPionOuterShieldSleeveInner_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionOuterShieldInnerRadiusUS-donutPionOuterShieldInnerSleeveThickness" rmax="donutPionOuterShieldInnerRadiusUS" z="donutPionOuterShieldStart"/>
+      <zplane rmin="donutPionOuterShieldInnerRadiusDS-donutPionOuterShieldInnerSleeveThickness" rmax="donutPionOuterShieldInnerRadiusDS" z="donutPionOuterShieldEnd"/>
+    </polycone>
+    <polycone name="donutPionOuterShieldSleeveOuter_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionOuterShieldOuterRadiusUS" rmax="donutPionOuterShieldOuterRadiusUS+donutPionOuterShieldOuterSleeveThickness" z="donutPionOuterShieldStart"/>
+      <zplane rmin="donutPionOuterShieldOuterRadiusDS" rmax="donutPionOuterShieldOuterRadiusDS+donutPionOuterShieldOuterSleeveThickness" z="donutPionOuterShieldEnd"/>
     </polycone>
 
     <!-- Top support -->
@@ -414,31 +450,9 @@
       <solidref ref="donutIBeamStrut_solid"/>
     </volume>
 
-    <volume name="donutLeadVirtualDetectorUS_logical">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="donutLeadVirtualDetectorUS_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="donutLeadUS"/>
-      <auxiliary auxtype="DetNo" auxvalue="8019"/>
-      <auxiliary auxtype="Color" auxvalue="Red"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-    </volume>
-    <volume name="donutLeadVirtualDetectorDS_logical">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="donutLeadVirtualDetectorDS_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="donutLeadDS"/>
-      <auxiliary auxtype="DetNo" auxvalue="8021"/>
-      <auxiliary auxtype="Color" auxvalue="Green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-    </volume>
     <volume name="donutLead_logical">
       <materialref ref="G4_Pb"/>
       <solidref ref="donutLead_solid"/>
-      <physvol name="donutLeadVirtualDetectorUS_physical">
-        <volumeref ref="donutLeadVirtualDetectorUS_logical"/>
-      </physvol>
-      <physvol name="donutLeadVirtualDetectorDS_physical">
-        <volumeref ref="donutLeadVirtualDetectorDS_logical"/>
-      </physvol>
       <auxiliary auxtype="SensDet" auxvalue="donutLead_SD"/>
       <auxiliary auxtype="DetNo" auxvalue="8020"/>
       <auxiliary auxtype="Color" auxvalue="Black"/>
@@ -451,6 +465,40 @@
     <volume name="donutLeadSleeveOuter_logical">
       <materialref ref="G4_Al"/>
       <solidref ref="donutLeadSleeveOuter_solid"/>
+    </volume>
+
+    <volume name="donutPionInnerShield_logical">
+      <materialref ref="G4_Pb"/>
+      <solidref ref="donutPionInnerShield_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutPionInnerShield_SD"/>
+      <auxiliary auxtype="DetNo" auxvalue="8021"/>
+      <auxiliary auxtype="Color" auxvalue="Black"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="donutPionInnerShieldSleeveInner_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPionInnerShieldSleeveInner_solid"/>
+    </volume>
+    <volume name="donutPionInnerShieldSleeveOuter_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPionInnerShieldSleeveOuter_solid"/>
+    </volume>
+
+    <volume name="donutPionOuterShield_logical">
+      <materialref ref="G4_Pb"/>
+      <solidref ref="donutPionOuterShield_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutPionOuterShield_SD"/>
+      <auxiliary auxtype="DetNo" auxvalue="8021"/>
+      <auxiliary auxtype="Color" auxvalue="Black"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="donutPionOuterShieldSleeveInner_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPionOuterShieldSleeveInner_solid"/>
+    </volume>
+    <volume name="donutPionOuterShieldSleeveOuter_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPionOuterShieldSleeveOuter_solid"/>
     </volume>
 
     <volume name="donutTopSupportFlat_logical">
@@ -585,6 +633,28 @@
       </physvol>
       <physvol name="donutLeadSleeveOuter_physical">
         <volumeref ref="donutLeadSleeveOuter_logical"/>
+      </physvol>
+
+      <!-- Pion inner shield -->
+      <physvol name="donutPionInnerShield_physical">
+        <volumeref ref="donutPionInnerShield_logical"/>
+      </physvol>
+      <physvol name="donutPionInnerShieldSleeveInner_physical">
+        <volumeref ref="donutPionInnerShieldSleeveInner_logical"/>
+      </physvol>
+      <physvol name="donutPionInnerShieldSleeveOuter_physical">
+        <volumeref ref="donutPionInnerShieldSleeveOuter_logical"/>
+      </physvol>
+
+      <!-- Pion outer shield -->
+      <physvol name="donutPionOuterShield_physical">
+        <volumeref ref="donutPionOuterShield_logical"/>
+      </physvol>
+      <physvol name="donutPionOuterShieldSleeveInner_physical">
+        <volumeref ref="donutPionOuterShieldSleeveInner_logical"/>
+      </physvol>
+      <physvol name="donutPionOuterShieldSleeveOuter_physical">
+        <volumeref ref="donutPionOuterShieldSleeveOuter_logical"/>
       </physvol>
 
       <!-- Top support -->
