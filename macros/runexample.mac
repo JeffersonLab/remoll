@@ -65,6 +65,11 @@
 /remoll/field/steppertype 2
 /remoll/field/print
 
+/remoll/SD/disable_all
+
+/remoll/SD/enable 28
+
+
 /remoll/beamene 11 GeV
 
 /remoll/beamcurr 85 microampere
@@ -78,8 +83,8 @@
 # Specify random number seed
 /remoll/seed 123456
 
-/remoll/filename remollout.root
+/remoll/filename remollout_moller_det28.root
 
 #/tracking/verbose 2
 /remoll/printtargetinfo
-/run/beamOn 100
+/run/beamOn 100000

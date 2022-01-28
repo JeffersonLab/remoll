@@ -26,7 +26,7 @@
 /remoll/evgen/external/startEvent 0
 
 #/remoll/evgen/external/file analysis/o_remollSkimTree.root ##425 events all at x,y at 0.0
-/remoll/evgen/external/file analysis/o_remollSkimTree_24838.root ## events 24838 x,y uniformly distributed +/-100 mm
+/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_24838.root ## events 24838 x,y uniformly distributed +/-100 mm
 /remoll/evgen/external/detid 28
 #/remoll/evgen/external/zOffset -21900
 /remoll/filename o_tid_28_moller.root
