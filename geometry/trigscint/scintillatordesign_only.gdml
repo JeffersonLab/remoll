@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "trigscintMaterials.xml">
+  <!ENTITY matrices SYSTEM "trigscintMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define> 
+<!-- <position name="v1" x ="238.63" y="0" z="278"  lunit="mm"/> 
+<position name="v2" x ="-238.63" y="0" z="278" lunit="mm"/>
+<position name="v3" x="0" y="0" z="600" lunit="mm"/>
+
+<position name="v4" x ="138.63" y="0" z="178"  lunit="mm"/> 
+<position name="v5" x ="-138.63" y="0" z="178" lunit="mm"/>
+<position name="v6" x="0" y="0" z="600" lunit="mm"/>  -->
+<quantity name="mylar_thickness" type="length" value="0.10" unit="mm"/>
+<quantity name="lguide_height" type="length" value="350" unit="mm"/> <!-- 700 -->
+<quantity name="location_curved_disk_from_scint_bottom" value="614.512" unit="mm"/> 
+
+&matrices;
+  </define>
+
+&materials;
+
+  <solids>
+
+    <box lunit="mm" name="world_solid"
+	 x="5000"
+	 y="5000"
+	 z="200"/>
+    
+    <!--Create the scintillator -->
+    <trd name = "scint_sol"  x1="284.82" x2="574.63" y1="10" y2="10" z="550" lunit= "mm"/>
+
+    <tube name = "scint_bottom_curve" rmin="0" rmax="635" z="20" deltaphi="6.28318530718" startphi="0" aunit="rad" lunit= "mm"/>
+
+    <!-- This subtraction creates a curved bottom for the scintillator by subtracting the disk shape from the scintillator solid -->
+    <subtraction name="scint_sol_bottom_curved">
+    <first ref="scint_sol"/>
+    <second ref="scint_bottom_curve"/>
+    <position name="scint_sol_bottom_curved_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="-550/2 - 614.512"/>
+    <rotation name ="scint_sol_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
+    </subtraction>
+
+    <!-- To create a wrapping for the scintillator with  mylar_thickness we first create a solid-->
+    <trd name = "scint_sol_mylar_1"  x1="284.82 + mylar_thickness" x2="574.63+mylar_thickness" y1="10+mylar_thickness" y2="10+mylar_thickness" z="550+mylar_thickness" lunit= "mm"/>
+
+    <!-- This subtraction creates a curved bottom for the scintillator wrapping by subtracting the disk shape from the scintillator solid -->
+    <subtraction name="scint_sol_mylar_1_bottom_curved">
+    <first ref="scint_sol_mylar_1"/>
+    <second ref="scint_bottom_curve"/>
+    <position name="scint_sol_mylar_bottom_curved_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="-550/2 - 614.512-mylar_thickness"/>
+    <rotation name ="scint_sol_mylar_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
+    </subtraction>
+    
+    
+    <!--Create solid with same size as the  scintillator -->
+    <trd name = "scint_sub_sol"  x1="284.82" x2="574.63" y1="10" y2="10" z="550" lunit= "mm"/>
+    
+    <!-- This subtraction creates a hollow space for the scintillator by subtracting the scintillator solid with flat bottom-->
+<!--
+    <subtraction name="scint_sol_mylar_2">
+    <first ref="scint_sol_mylar_1"/>
+    <second ref="scint_sol"/>
+    <position name="scint_sol_mylar_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="0.0"/>
+    </subtraction>
+-->
+
+    <!-- This subtraction creates a hollow space for the scintillator by subtracting the scintillator solid -->
+    <subtraction name="scint_sol_mylar_2">
+    <first ref="scint_sol_mylar_1_bottom_curved"/>
+    <second ref="scint_sol_bottom_curved"/>
+    <position name="scint_sol_mylar_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="0.0"/>
+    </subtraction>	
+
+     <!-- We need to clear to top of the wrapping where light guide is glues to the scintillator. So to subtract this top of the wrap we use this box with exact size as the top of the wrap solid scint_sol_mylar_1 -->
+    <box name = "scint_top_sub_sol" x= "574.63 + mylar_thickness + mylar_thickness" y= "10 + mylar_thickness + mylar_thickness" z= "mylar_thickness + mylar_thickness" lunit= "mm"/>
+
+    <!-- This subtraction creates the hollow space for the scintillator with top of the wrap now removed. If we don't do this light guide will overlap with the mylar wrapping   -->
+    <subtraction name="scint_sol_mylar_solid">
+    <first ref="scint_sol_mylar_2"/>
+    <second ref="scint_top_sub_sol"/>
+    <position name="scint_sol_mylar_solid_subtraction_position2"
+	      x="0.0"
+	      y="0.0"
+	      z="550.0/2 + mylar_thickness"/>
+    </subtraction>
+
+    
+    <!--Create the light guide -->
+    <trd name = "lguide_sol" x1="51" x2="574.63" y1="10" y2="10" z="lguide_height" lunit= "mm"/>
+    
+    <!--Create the mylar cover for light guide we first create a solid -->
+    <trd name = "lguide_sol_mylar_1" x1="51 + mylar_thickness" x2="574.63 + mylar_thickness" y1="10 + mylar_thickness" y2="10 + mylar_thickness" z="lguide_height + mylar_thickness" lunit= "mm"/>
+    <trd name = "lguide_sol_sub" x1="51" x2="574.63" y1="10" y2="10" z="lguide_height + 4*mylar_thickness" lunit= "mm"/>
+        <!-- This subtraction creates a hollow space for the light guide mylar by subtracting the light guide solid -->
+    <subtraction name="lguide_sol_mylar_2">
+    <first ref="lguide_sol_mylar_1"/>
+    <second ref="lguide_sol"/>
+    <position name="lguide_sol_mylar_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="0.0"/>
+    </subtraction>
+
+    <box name = "lguide_mylar_bot_sub_sol" x= "574.63 + mylar_thickness + mylar_thickness" y= "10 + mylar_thickness + mylar_thickness" z= "mylar_thickness + mylar_thickness + 0.1" lunit= "mm"/>
+
+    <subtraction name="lguide_sol_mylar_3">
+    <first ref="lguide_sol_mylar_2"/>
+    <second ref="lguide_mylar_bot_sub_sol"/>
+    <position name="lguide_sol_mylar_solid_subtraction_position2"
+	      x="0.0"
+	      y="0.0"
+	      z="lguide_height/2 + mylar_thickness"/>
+    </subtraction>
+
+    <box name = "lguide_mylar_top_sub_sol" x= "51 + mylar_thickness + mylar_thickness" y= "10 + mylar_thickness + mylar_thickness" z= "mylar_thickness + mylar_thickness + 0.1" lunit= "mm"/>
+
+    <subtraction name="lguide_sol_mylar">
+    <first ref="lguide_sol_mylar_3"/>
+    <second ref="lguide_mylar_top_sub_sol"/>
+    <position name="lguide_sol_mylar_solid_subtraction_position3"
+	      x="0.0"
+	      y="0.0"
+	      z="-1*lguide_height/2 - mylar_thickness"/>
+    </subtraction>
+
+    <!--Create the PMT surface -->
+    <box name = "pmt_sol" x= "51" y= "10" z= "0.1" lunit= "mm"/>
+
+    <opticalsurface
+	name="Mylar_surface"
+	model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
+      <property name="REFLECTIVITY" ref="REFLECTIVITY_MYLAR"/>
+    </opticalsurface>
+
+    <opticalsurface
+	name="Lucite_surface"
+	model="glisur" finish="polishedlumirrorair" type="dielectric_dielectric" value="1.00">
+      <property name="RINDEX" ref="RINDEX_LUCITE_surf"/>
+      <property name="SPECULARLOBECONSTANT"  ref="SPECLOBE_LUCITE"/>
+      <property name="SPECULARSPIKECONSTANT" ref="SPECSPIKE_LUCITE"/>
+      <property name="BACKSCATTERCONSTANT"   ref="BACKSCATTER_LUCITE"/>
+    </opticalsurface>
+
+    <opticalsurface
+	name="EJ200_surface"
+	model="glisur" finish="polishedlumirrorair" type="dielectric_dielectric"  value="1.0">
+        <property name="RINDEX" ref="RINDEX_EJ200_surf"/>
+        <property name="SPECULARLOBECONSTANT"  ref="SPECLOBE_EJ200"/>
+        <property name="SPECULARSPIKECONSTANT" ref="SPECSPIKE_EJ200"/>
+        <property name="BACKSCATTERCONSTANT"   ref="BACKSCATTER_EJ200"/>
+        <!-- <property name="REFLECTIVITY" ref="REFLECTIVITY_EJ200"/> -->
+    </opticalsurface>
+
+   <opticalsurface
+    name="CsPhotocathode_surface"
+    model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
+    <property name="REFLECTIVITY" ref="REFLECTIVITY_CATHODE"/>
+    <property name="EFFICIENCY"   ref="EFFICIENCY_CATHODE"/>
+   </opticalsurface>
+
+  </solids>
+
+  <structure>
+    
+
+    <volume name="lguide_log">
+      <materialref ref="Lucite"/>
+      <!-- <materialref ref="PLASTIC_SC_VINYLTOLUENE"/> -->
+      <solidref ref="lguide_sol"/>
+      <auxiliary auxtype="Color" auxvalue="White"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.7"/>
+    </volume>
+
+
+    <skinsurface name="lguide_log_skin"
+                 surfaceproperty="Lucite_surface">
+      <volumeref ref="lguide_log"/>
+    </skinsurface>
+
+
+    <volume name="scint_log">
+      <materialref ref="PLASTIC_SC_VINYLTOLUENE"/>
+      <solidref ref="scint_sol_bottom_curved"/> <!-- flat bottom scint name scint_sol -->
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+
+<!-- EJ200_surface  Lucite_surface-->
+
+    <skinsurface name="scint_log_skin" 
+                    surfaceproperty="EJ200_surface">
+      <volumeref ref="scint_log"/>
+    </skinsurface>
+
+
+    <volume name="scint_mylar_log">
+      <materialref ref="G4_MYLAR"/> <!--G4_MYLAR G4_Al Mylar -->
+      <solidref ref="scint_sol_mylar_solid"/>
+      <auxiliary auxtype="Color" auxvalue="yellow"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+
+
+    <skinsurface name="scint_mylar_log_skin"
+		 surfaceproperty="Mylar_surface">
+      <volumeref ref="scint_mylar_log"/>
+    </skinsurface>
+
+
+    <volume name="lguide_mylar_log">
+      <materialref ref="G4_MYLAR"/>
+      <solidref ref="lguide_sol_mylar"/>
+      <auxiliary auxtype="Color" auxvalue="yellow"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+
+
+    <skinsurface name="lguide_mylar_log_skin"
+		 surfaceproperty="Mylar_surface">
+      <volumeref ref="lguide_mylar_log"/>
+    </skinsurface>
+
+
+   <volume name="pmt_log">
+      <materialref ref="CsPhotocathode"/>
+      <solidref ref="pmt_sol"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="DetNo" auxvalue="10"/>
+      <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>
+      <!-- <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> -->
+    </volume> 	
+    <skinsurface name="pmt_log_skin"
+                 surfaceproperty="CsPhotocathode_surface">
+      <volumeref ref="pmt_log"/>
+    </skinsurface>
+
+    <volume name="trig_scint_log">
+      <materialref ref="Air"/> <!-- G4_Galactic -->
+      <solidref ref="world_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+         
+ 
+      <physvol name="pmt_phys">
+        <volumeref ref="pmt_log"/>
+        <position name="pmt_pos" unit="mm" x= "0" y = "275+lguide_height+0.04999999999" z="0"/>   
+        <rotation name ="pmt_rot" unit="deg" x ="90"/>     
+      </physvol>
+    
+      <physvol name="lguide_phys">
+        <volumeref ref="lguide_log"/>
+        <position name="top_pos" unit="mm" x= "0" y = "275+lguide_height/2" z="0"/>
+        <rotation name ="top_rot" unit="deg" x ="270"/>
+      </physvol>
+     
+  
+      <physvol name="scint_phys">
+	<volumeref ref="scint_log"/>
+        <position name="front_pos" unit="mm" y= "0" z="0"/>
+        <rotation name ="front_rot" unit="deg" x ="90"/>
+      </physvol>
+
+
+<!--Need to check optical properties of the mylar wrap as this is absorbing too much optical photons -->
+
+
+      <physvol name="scint_mylar_phys">
+	<volumeref ref="scint_mylar_log"/>
+        <position name="front_pos" unit="mm" y= "0" z="0"/>
+        <rotation name ="front_rot" unit="deg" x ="90"/>
+      </physvol>
+
+
+
+      <physvol name="lguide_mylar_phys">
+	<volumeref ref="lguide_mylar_log"/>
+        <position name="front_pos" unit="mm" y= "275+lguide_height/2" z="0"/>
+        <rotation name ="front_rot" unit="deg" x ="270"/>
+      </physvol>
+     
+
+      
+    </volume>
+  </structure>
+  
+  <setup name="Default" version="1.0">
+    <world ref="trig_scint_log"/>
+  </setup>
+  
+</gdml>

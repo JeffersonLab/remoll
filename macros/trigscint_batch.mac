@@ -1,0 +1,26 @@
+/remoll/physlist/optical/enable
+ 
+/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
+#/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
+#/remoll/physlist/register QGSP_BERT_HP
+/run/initialize
+
+/remoll/SD/disable_all
+
+/remoll/SD/enable 10
+/remoll/SD/detect opticalphoton 1
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+/remoll/evgen/set external
+#/remoll/evgen/copyRate 1
+/remoll/evgen/external/startEvent 0
+
+/remoll/evgen/external/file analysis/o_remollSkimTree_24838.root 
+/remoll/evgen/external/detid 28
+#/remoll/evgen/external/zOffset -21900
+/remoll/filename o_trigscint_moller_lg350mm_Mylar_10k_pe.root
+
+#/run/beamOn 24838
+/run/beamOn 10000

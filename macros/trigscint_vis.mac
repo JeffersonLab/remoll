@@ -1,0 +1,37 @@
+# Use this open statement to create an OpenGL view:
+/vis/open OGL 600x600-0+0  
+
+# This is the current working geometry
+#/remoll/setgeofile geometry/detector/tid.gdml
+#/remoll/setgeofile geometry/detector/scintillatordesign.gdml
+#/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
+/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
+/remoll/geometry/overlapcheck true
+#/remoll/setgeofile geometry/pion/Lucite/pionDetectorLucite.gdml
+
+
+#/remoll/setphysicslist QGSP_BERT_EMV
+
+/remoll/physlist/optical/enable
+
+/run/initialize
+
+#/remoll/beamene 855 MeV
+#/remoll/beamcurr 50 microampere
+
+##testing external generator
+## External Generator
+/remoll/evgen/set external
+#/remoll/evgen/copyRate 1
+/remoll/evgen/external/startEvent 0
+
+#/remoll/evgen/external/file analysis/o_remollSkimTree.root ##425 events all at x,y at 0.0
+/remoll/evgen/external/file analysis/o_remollSkimTree_24838.root ## events 24838 x,y uniformly distributed +/-100 mm
+/remoll/evgen/external/detid 28
+#/remoll/evgen/external/zOffset -21900
+/remoll/filename o_tid_28_moller.root
+
+/control/execute vis/vis.mac
+
+#/control/execute macros/tid_vis.mac
+
