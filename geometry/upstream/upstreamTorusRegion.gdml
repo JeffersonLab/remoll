@@ -172,18 +172,24 @@
       </subtraction>
       
     <!-- Lead shielding solids -->
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid" rmin="0" rmax="540" z="PbWall_length"/>
+    <box lunit="mm" name="PbWall_solid_1" x="540*2" y="540*2" z="PbWall_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_2" rmax="240" rmin="0" startphi="0" z="PbWall_length+1"/>
+    <subtraction name ="PbWall_solid">
+      <first ref="PbWall_solid_1"/>
+      <second ref="PbWall_solid_2"/>
+      <position name ="PbWall_solid_p" lunit="mm" x="0" y="0" z="0" />
+    </subtraction>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall_accep_solid">
       <zplane rmin="0" rmax="238.35" z="0"/>
       <zplane rmin="0" rmax="238.35" z="PbWall_length/2."/>
-      <zplane rmin="0" rmax="238.35+125*tan(8*pi/180.)" z="PbWall_length"/>
+      <zplane rmin="0" rmax="238.35+(PbWall_length/2)*tan(8*pi/180.)" z="PbWall_length"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Beampipe_under_PbWall_solid">
       <zplane rmin="230" rmax="236.35" z="0"/>
       <zplane rmin="230" rmax="236.35" z="PbWall_length/2."/>
-      <zplane rmin="230+125*tan(8*pi/180.)" rmax="236.35+125*tan(8*pi/180.)" z="PbWall_length"/>
+      <zplane rmin="230+(PbWall_length/2)*tan(8*pi/180.)" rmax="236.35+(PbWall_length/2)*tan(8*pi/180.)" z="PbWall_length"/>
     </polycone>
     
     <!--<tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_solid"
@@ -1497,7 +1503,7 @@
     </volume>
 
       <!-- Hybrid wall -->
-    <volume name="Beampipe_under_PbWall_logic">
+   <!--<volume name="Beampipe_under_PbWall_logic">
       <materialref ref="G4_Al"/>
       <solidref ref="Beampipe_under_PbWall_solid"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
@@ -1512,7 +1518,7 @@
       <physvol name="phys_PbWall_acce">
 	      <volumeref ref="Beampipe_under_PbWall_logic"/>
       </physvol>
-    </volume>
+    </volume>-->
 
     <volume name="PbWall_logic">
       <materialref ref="Lead"/>
@@ -1520,10 +1526,10 @@
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
       <auxiliary auxtype="DetNo" auxvalue="6031"/>
-      <physvol name="phys_PbWall_acce">
+      <!--<physvol name="phys_PbWall_acce">
 	      <volumeref ref="PbWall_accep_logic"/>
 	      <position name="Pbwall_accep_pos" x="0" y="0" z="-150/2"/>
-      </physvol>
+      </physvol>-->
     </volume>
     <!--<volume name="vacuumPbWall_logic">
       <materialref ref="Lead"/>

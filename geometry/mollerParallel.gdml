@@ -106,8 +106,8 @@
        
   <box lunit="mm" name="PSbunkerOuterFrontVP_solid"
        x="1"
-       y="3429"
-       z="9512.3"/>
+       y="3429+2571"
+       z="9512.3+9541.7"/>
        
   <box lunit="mm" name="PSbunkerOuterSideLeftVP_solid"
        x="11742.42"
@@ -735,7 +735,7 @@
 
   <volume name="DSCoil2_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingVirtualPlane_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="50"/>
   </volume>
@@ -763,7 +763,7 @@
 
   <volume name="DSCoil6_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingVirtualPlane_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="54"/>
   </volume>
@@ -784,7 +784,7 @@
 
   <volume name="DSCoil9_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingVirtualPlane_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="57"/>
   </volume>
@@ -826,7 +826,7 @@
 
   <volume name="DSCoil10_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingVirtualPlane_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="78"/>
   </volume>
@@ -1478,7 +1478,7 @@
     
     <physvol name="PSbunkerOuterFrontVP_phys">
       <volumeref ref="PSbunkerOuterFrontVP_log"/>
-      <position name="PSbunkerOuterFrontVP_pos" unit="mm" x="4123.944-1" y="-948.86+75" z="10447.957"/>
+      <position name="PSbunkerOuterFrontVP_pos" unit="mm" x="4123.944-1" y="-948.86+75+2571/2" z="279.5+19054/2"/>
     </physvol>
     
     <physvol name="PSbunkerOuterSideLeftVP_phys">
