@@ -24,7 +24,7 @@
   <tube
     name="trackingVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmax="2800" rmin="0" z="1" lunit="mm"/>
+    rmax="2600" rmin="0" z="1" lunit="mm"/>
 
   <tube
     name="collarVirtualPlane_solid"
