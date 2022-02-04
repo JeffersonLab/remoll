@@ -60,8 +60,7 @@
 
     <!--shielding concrete -->
     <box lunit="mm" name="concreteDS" x="concreteBoxx" y="concreteBoxy-concreteThickness-1246" z="concreteThickness"/>
-    <box lunit="mm" name="concreteTop" x="concreteBoxx" y="1200" z="concreteBoxz"/>
-    <box lunit="mm" name="concreteTop_Pb" x="concreteBoxx" y="200" z="concreteBoxz"/>
+    <box lunit="mm" name="concreteTop" x="concreteBoxx" y="concreteThickness" z="concreteBoxz"/>
     <box lunit="mm" name="concreteLeft" 
 	 x="concreteThickness" 
 	 y="concreteBoxy-concreteThickness-1248" 
@@ -70,12 +69,11 @@
 	 x="concreteThickness" 
 	 y="concreteBoxy-concreteThickness-1248-1480" 
 	 z="concreteBoxz-concreteThickness"/>
+
     <tube aunit="deg" lunit="mm" deltaphi="360" name="concreteRoofhole"
           rmin="0" rmax="1000"
           z="concreteThickness+2.0"/>
-    <tube aunit="deg" lunit="mm" deltaphi="360" name="concreteRoofhole_Pb"
-          rmin="0" rmax="1000"
-          z="200+2.0"/>
+
     <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
           rmin="0" rmax="453" z="concreteThickness+2.0"/>
 
@@ -96,13 +94,6 @@
       <position name = "concreteTopsub" lunit="mm" x="0" y="0" z="0"/>
       <rotation name = "rotConcreteTopsub" aunit="rad" x="pi/2.0" y="0" z="0"/>
     </subtraction>
-
-    <subtraction name="concreteTop_sub_Pb">
-      <first ref = "concreteTop_Pb"/>
-      <second ref = "concreteRoofhole_Pb"/>
-      <position name = "concreteTopsub_Pb" lunit="mm" x="0" y="0" z="0"/>
-      <rotation name = "rotConcreteTopsub_Pb" aunit="rad" x="pi/2.0" y="0" z="0"/>
-    </subtraction>    
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="window_s1"
           rmin="0" rmax="5.95" z="0.1"/>
@@ -181,18 +172,9 @@
     </volume>
 
     <volume name="ConcreteShieldTop">
-      <materialref ref="barite"/>
-      <!-- <materialref ref="Concrete"/> -->
+      <materialref ref="Concrete"/>
       <solidref ref="concreteTop_sub"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
-    </volume>
-
-   <volume name="ConcreteShieldTop_Pb">
-      <materialref ref="G4_Pb"/>
-      <!-- <materialref ref="Concrete"/> -->
-      <solidref ref="concreteTop_sub_Pb"/>
-      <auxiliary auxtype="Color" auxvalue="Red"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
 
@@ -268,12 +250,7 @@
 
       <physvol>
 	<volumeref ref="ConcreteShieldTop"/>
-	<position name="ConcreteShieldTop_pos" unit="mm" x="0" y="1889.5" z="0"/>
-      </physvol>
-
-     <physvol>
-	<volumeref ref="ConcreteShieldTop_Pb"/>
-	<position name="ConcreteShieldTop_pos_Pb" unit="mm" x="0" y="1189" z="0"/>
+	<position name="ConcreteShieldTop_pos" unit="mm" x="0" y="1789" z="0"/>
       </physvol>
 
       <physvol>
