@@ -26,7 +26,7 @@
 /gui/addButton geom "MOLLER Experiment"           "/remoll/geometry/setfile geometry/mollerMother.gdml"
 /gui/addButton geom "MOLLER Experiment (w. dets)" "/remoll/geometry/setfile geometry/mollerMother_parametrized.gdml"
 /gui/addButton geom "Only pion system"            "/remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml"
-/gui/addButton geom "Only showermax"              "/remoll/geometry/setfile geometry/showerMaxDetector.gdml"
+/gui/addButton geom "Only showermax"              "/remoll/geometry/setfile geometry/showermax/showerMaxGen.gdml"
 /gui/addButton geom "No parallel"                 "/remoll/parallel/setfile "
 #
 # Initialize menu :
