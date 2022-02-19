@@ -100,4 +100,36 @@
     <fraction n="0.599848" ref="Carbon"/>
     <fraction n="0.319614" ref="Oxygen"/>
   </material>
+
+<!-- Cladding(polyethylene) G4_POLYETHYLENE (C_2H_4)_N-Polypropylene -->
+  <material name="Pethylene1" formula="(C2H4)n">
+    <property name="ABSLENGTH" ref="ABSLENGTH_Cladding1"/>
+    <property name="RINDEX"    ref="RINDEX_Cladding1"/>
+    <MEE value="56.5" unit="eV"/>
+    <D value="1.20" unit="g/cm3"/>
+    <fraction n="0.144" ref="Hydrogen"/>
+    <fraction n="0.856" ref="Carbon"/>
+  </material>
+<!-- Double cladding(flourinated polyethylene) G4_POLYETHYLENE (C_2H_4)_N-Polypropylene -->
+  <material name="Pethylene2" formula="(C2H4)n">
+    <property name="ABSLENGTH" ref="ABSLENGTH_Cladding2"/>
+    <property name="RINDEX"    ref="RINDEX_Cladding2"/>
+    <MEE value="56.5" unit="eV"/>
+    <D value="1.40" unit="g/cm3"/>
+    <fraction n="0.144" ref="Hydrogen"/>
+    <fraction n="0.856" ref="Carbon"/>
+  </material>
+<!-- Fiber(PMMA) G4_PMMA (C_5H_8O_2)_N -->
+  <material name="PMMA" formula="(C5O2H8)n">
+    <property name="WLSABSLENGTH" ref="ABSLENGTH_PMMA"/>
+    <property name="RINDEX"    ref="RINDEX_PMMA"/>
+    <property name="WLSCOMPONENT"    ref="WLSCOMPONENT_PMMA"/>
+    <property name="WLSTIMECONSTANT"    ref="WLSTIMECONSTANT_PMMA"/>
+    <MEE value="125.663" unit="eV"/>
+    <D value="1.18" unit="g/cm3"/>
+    <fraction n="0.080538" ref="Hydrogen"/>
+    <fraction n="0.599848" ref="Carbon"/>
+    <fraction n="0.319614" ref="Oxygen"/>
+  </material>
+
 </materials>
