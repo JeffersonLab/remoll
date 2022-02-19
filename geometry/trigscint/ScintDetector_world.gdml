@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <position name="ScintDetectorCenter" z="0.0*m"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box lunit="mm" name="world_solid"
+	 x="5000"
+	 y="5000"
+	 z="200"/>
+</solids>
+
+<structure>
+
+  <volume name="world_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="world_solid"/>
+
+    <physvol>
+      <file name="scintillatordesign_wls_oneside.gdml"/>
+      <positionref ref="ScintDetectorCenter"/>
+      <rotation x="90*deg"/>
+    </physvol>
+
+    
+      
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="world_logical"/>
+</setup>
+
+</gdml>
