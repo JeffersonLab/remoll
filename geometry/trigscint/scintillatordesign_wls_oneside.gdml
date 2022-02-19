@@ -240,8 +240,8 @@
     <opticalsurface
 	name="EJ200_surface"
 	model="glisur" finish="ground" type="dielectric_dielectric"  value="1.0">
-        <property name="RINDEX" ref="RINDEX_EJ200_surf"/>
-        <property name="REFLECTIVITY" ref="REFLECTIVITY_EJ200"/>
+<!--        <property name="RINDEX" ref="RINDEX_EJ200_surf"/>
+        <property name="REFLECTIVITY" ref="REFLECTIVITY_EJ200"/> -->
     </opticalsurface>
 
    <opticalsurface
@@ -472,7 +472,7 @@
       <solidref ref="wls_pmt_disk_sol"/>
       <auxiliary auxtype="Color" auxvalue="red"/>
       <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-      <auxiliary auxtype="DetNo" auxvalue="1013"/>
+      <auxiliary auxtype="DetNo" auxvalue="1014"/>
       <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
       <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/> 
     </volume> 	
