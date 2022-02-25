@@ -67,7 +67,7 @@
 	 z="concreteBoxz-concreteThickness"/>
     <box lunit="mm" name="concreteRight" 
 	 x="concreteThickness" 
-	 y="concreteBoxy-concreteThickness-1248-1480" 
+	 y="concreteBoxy-concreteThickness-1248"
 	 z="concreteBoxz-concreteThickness"/>
 
     <tube aunit="deg" lunit="mm" deltaphi="360" name="concreteRoofhole"
@@ -265,7 +265,7 @@
 	<volumeref ref="ConcreteShieldRight"/>
 	<position name="ConcreteShieldRight_pos" unit="mm" 
 		  x="-concreteBoxx/2+700" 
-		  y="concreteBoxy/2.-4292 +740" 
+		  y="concreteBoxy/2.-4292" 
 		  z="-concreteThickness/2"/>
       </physvol>
       
