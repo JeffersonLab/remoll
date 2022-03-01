@@ -14,7 +14,7 @@
   <!--
     For enclosing volumes we merely scale up the actual volume by a small factor.
   -->
-  <constant name="SCALE" value="0.1"/>
+  <constant name="SCALE" value="0.05"/>
   <constant name="SCALE_UP" value="1.0+SCALE"/>
   <constant name="SCALE_DOWN" value="1.0-SCALE"/>
   <scale name="scale_up" x="SCALE_UP" y="SCALE_UP" z="SCALE_UP"/>
@@ -40,7 +40,7 @@
   <constant name="pionDetectorLuciteWedgeBevelFraction" value="0.01"/> <!-- in ]0, 1[ -->
   <constant name="pionDetectorLuciteWedgeHeightFraction" value="0.5"/> <!-- in ]0, inf[ -->
 
-  <quantity name="pionDetectorLuciteReflectorLightGuideHeight" type="length" value="40.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteReflectorLightGuideHeight" type="length" value="0.01" unit="cm"/>
   <quantity name="pionDetectorLuciteReflectorHeightFraction" value="0.5"/>
   <quantity name="pionDetectorLuciteLightGuideHeightFraction"
             value="1.0-pionDetectorLuciteReflectorHeightFraction"/>
