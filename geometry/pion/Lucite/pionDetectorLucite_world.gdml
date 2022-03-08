@@ -26,11 +26,11 @@
       <rotation x="90*deg"/>
     </physvol>
 
-    <physvol>
+<!--    <physvol>
       <file name="pionDetectorLucite.gdml" volname="pionDetectorLuciteShieldDS_logical"/>
       <positionref ref="pionDetectorShieldCenter"/>
       <rotation x="90*deg"/>
-    </physvol>
+    </physvol>  -->
       
   </volume>
 
