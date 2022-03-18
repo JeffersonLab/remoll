@@ -326,14 +326,18 @@
       </physvol>
       
       <!-- Main Detectors -->
-      <!--
 	  <physvol>
 	  <file name="detector/detector.gdml"/>
 	  <positionref ref="detectorCenter"/>
 	  <rotation name="detectorRot" x="0" y="90" z="0" unit="deg"/>
 	  </physvol>
-      -->
       
+    <!-- PMT region shielding-->
+    <physvol>
+      <file name="shielding/shielding.gdml"/>
+      <position name="PMTShield" x="0" y="0" z="22521.3"/>
+    </physvol>
+
       <!-- ShowerMax Detectors-->
       <physvol>
 	<file name="showermax/showerMaxGen.gdml"/>
