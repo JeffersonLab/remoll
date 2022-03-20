@@ -43,14 +43,14 @@
 	</subtraction>
 	<box name="solid_front_back_plate" lunit="mm" x="181.698" y="313.8" z="6.35"/>
 	<box name="solid_uBracket_1" lunit="mm" x="15.88" y="23.88" z="50.8"/>
-	<box name="solid_uBracket_legSpace" lunit="mm" x="16.88" y="17.73" z="38.1"/>
+	<box name="solid_uBracket_legSpace" lunit="mm" x="16.880000000000003" y="17.73" z="38.1"/>
 	<subtraction name="solid_uBracket_2">
 		<first ref="solid_uBracket_1"/>
 		<second ref="solid_uBracket_legSpace"/>
-		<position name="pos_subtract_uBracket" x="0" y="-3.175" z="0"/>
+		<position name="pos_subtract_uBracket" x="0" y="-3.174999999999999" z="0"/>
 		<rotation name="rot_subtract_uBracket" x="0" y="0" z="0"/>
 	</subtraction>
-	<box name="solid_ledge" lunit="mm" x="21.698" y="6.35" z="63.5"/>
+	<box name="solid_ledge" lunit="mm" x="21.698000000000008" y="6.35" z="63.5"/>
 	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="56.976"  x2="86.868" y1="266.0"  y2="266.0" z="67.462"/>
 	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="55.976"  x2="85.868" y1="265.0"  y2="265.0" z="68.462"/>
 	<subtraction name="solid_mirror_box_bot">
@@ -74,31 +74,31 @@
 	<subtraction name="solid_web_plate_2">
 		<first ref="solid_web_plate_1"/>
 		<second ref="solid_web_plate_hole_small"/>
-		<position name="pos_subtract_web_plate_hole_small" x="177.92" y="0" z="0"/>
+		<position name="pos_subtract_web_plate_hole_small" x="177.92000000000002" y="0" z="0"/>
 		<rotation name="rot_subtract_web_plate_hole_small" x="pi/2" y="0" z="0"/>
 	</subtraction>
 	<subtraction name="solid_web_plate_3">
 		<first ref="solid_web_plate_2"/>
 		<second ref="solid_web_plate_hole_small"/>
-		<position name="pos_subtract_web_plate_hole_small" x="127.12" y="0" z="0"/>
+		<position name="pos_subtract_web_plate_hole_small" x="127.12000000000002" y="0" z="0"/>
 		<rotation name="rot_subtract_web_plate_hole_small" x="pi/2" y="0" z="0"/>
 	</subtraction>
 	<subtraction name="solid_web_plate_4">
 		<first ref="solid_web_plate_3"/>
 		<second ref="solid_web_plate_hole_small"/>
-		<position name="pos_subtract_web_plate_hole_small" x="76.32" y="0" z="0"/>
+		<position name="pos_subtract_web_plate_hole_small" x="76.32000000000002" y="0" z="0"/>
 		<rotation name="rot_subtract_web_plate_hole_small" x="pi/2" y="0" z="0"/>
 	</subtraction>
 	<subtraction name="solid_web_plate_5">
 		<first ref="solid_web_plate_4"/>
 		<second ref="solid_web_plate_hole_small"/>
-		<position name="pos_subtract_web_plate_hole_small" x="25.52" y="0" z="0"/>
+		<position name="pos_subtract_web_plate_hole_small" x="25.52000000000004" y="0" z="0"/>
 		<rotation name="rot_subtract_web_plate_hole_small" x="pi/2" y="0" z="0"/>
 	</subtraction>
 	<subtraction name="solid_web_plate_6">
 		<first ref="solid_web_plate_5"/>
 		<second ref="solid_web_plate_hole_big"/>
-		<position name="pos_subtract_web_plate_hole_big" x="-28.455" y="0" z="0"/>
+		<position name="pos_subtract_web_plate_hole_big" x="-28.454999999999963" y="0" z="0"/>
 		<rotation name="rot_subtract_web_plate_hole_big" x="pi/2" y="0" z="0"/>
 	</subtraction>
 	<subtraction name="solid_web_plate_7">
@@ -119,25 +119,25 @@
 	<subtraction name="solid_top_support_3">
 		<first ref="solid_top_support_2"/>
 		<second ref="solid_top_support_corner_cut"/>
-		<position name="pos_subtract_top_support" x="0" y="161.639" z="47.35"/>
+		<position name="pos_subtract_top_support" x="0" y="161.63899999999998" z="47.35"/>
 		<rotation name="rot_subtract_top_support" x="0" y="0" z="0"/>
 	</subtraction>
 	<subtraction name="solid_top_support_4">
 		<first ref="solid_top_support_3"/>
 		<second ref="solid_top_support_corner_cut"/>
-		<position name="pos_subtract_top_support" x="0" y="-161.639" z="47.35"/>
+		<position name="pos_subtract_top_support" x="0" y="-161.63899999999998" z="47.35"/>
 		<rotation name="rot_subtract_top_support" x="0" y="0" z="0"/>
 	</subtraction>
 	<subtraction name="solid_top_support_5">
 		<first ref="solid_top_support_4"/>
 		<second ref="solid_top_support_corner_cut"/>
-		<position name="pos_subtract_top_support" x="0" y="-161.639" z="-47.35"/>
+		<position name="pos_subtract_top_support" x="0" y="-161.63899999999998" z="-47.35"/>
 		<rotation name="rot_subtract_top_support" x="0" y="0" z="0"/>
 	</subtraction>
 	<subtraction name="solid_top_support_6">
 		<first ref="solid_top_support_5"/>
 		<second ref="solid_top_support_corner_cut"/>
-		<position name="pos_subtract_top_support" x="0" y="161.639" z="-47.35"/>
+		<position name="pos_subtract_top_support" x="0" y="161.63899999999998" z="-47.35"/>
 		<rotation name="rot_subtract_top_support" x="0" y="0" z="0"/>
 	</subtraction>
 	<tube name="solid_pmt_filter" rmin="0" rmax="38.1" z="5.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
@@ -154,7 +154,7 @@
 	<union name="solid_singledet_1">
 		<first ref="solid_stack_region"/>
 		<second ref="solid_mirror_box_bot_region"/>
-			<position name="pos_mirror_box_bot" x="124.58" y="0" z="4.0"/>
+			<position name="pos_mirror_box_bot" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_mirror_box_bot" x="0" y="pi/2" z="0"/>
 	</union>
 	<union name="solid_singledet_2">
@@ -166,14 +166,14 @@
 	<union name="solid_singledet_3">
 		<first ref="solid_singledet_2"/>
 		<second ref="solid_top_support_6"/>
-			<position name="pos_top_support" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support" x="0" y="0" z="0"/>
 	</union>
 	<cone name="solid_pmt_region" rmin1="0"  rmax1="50.0" rmin2="0" rmax2="50.0"  z="218.0" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 	<union name="solid_singledet_4">
 		<first ref="solid_singledet_3"/>
 		<second ref="solid_pmt_region"/>
-			<position name="pos_pmt_region" x="456.719" y="0" z="4.0"/>
+			<position name="pos_pmt_region" x="456.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_pmt_region" x="0" y="pi/2" z="0"/>
 	</union>
 	<box name="solid_webplate_region" lunit="mm" x="432.19" y="313.8" z="63.5"/>
@@ -266,6 +266,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_0">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_0">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -321,12 +326,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_0">
 			<volumeref ref="logic_si_chip_1_0"/>
-			<position name="pos_logic_si_chip_1_0" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_0" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_0" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_0">
 			<volumeref ref="logic_si_chip_2_0"/>
-			<position name="pos_logic_si_chip_2_0" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_0" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_0" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -337,11 +342,6 @@
 	<volume name="logic_top_support_0">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_0">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_0">
@@ -370,7 +370,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_0">
 			<volumeref ref="logic_mirror_box_bot_0"/>
-			<position name="pos_logic_mirror_box_bot_0" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_0" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_0">
@@ -380,22 +380,22 @@
 		</physvol>
 		<physvol name="top_support_0">
 			<volumeref ref="logic_top_support_0"/>
-			<position name="pos_top_support_0" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_0" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_0" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_0">
 			<volumeref ref="logic_pmt_filter_0"/>
-			<position name="pos_logic_pmt_filter_0" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_0" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_0">
 			<volumeref ref="logic_pmt_window_0"/>
-			<position name="pos_logic_pmt_window_0" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_0" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_0">
 			<volumeref ref="logic_pmt_0"/>
-			<position name="pos_logic_pmt_0" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_0" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_0">
@@ -405,7 +405,7 @@
 		</physvol>
 		<physvol name="pmt_housing_0">
 			<volumeref ref="logic_pmt_housing_0"/>
-			<position name="pos_logic_pmt_housing_0" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_0" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_0">
@@ -490,7 +490,7 @@
 		</physvol>
 		<physvol name="tungsten_0_1">
 			<volumeref ref="logic_tungsten_0_1"/>
-			<position name="pos_logic_tungsten_0_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_0_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_0_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_0_2">
@@ -580,6 +580,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_1">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_1">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -635,12 +640,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_1">
 			<volumeref ref="logic_si_chip_1_1"/>
-			<position name="pos_logic_si_chip_1_1" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_1" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_1" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_1">
 			<volumeref ref="logic_si_chip_2_1"/>
-			<position name="pos_logic_si_chip_2_1" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_1" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_1" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -651,11 +656,6 @@
 	<volume name="logic_top_support_1">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_1">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_1">
@@ -684,7 +684,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_1">
 			<volumeref ref="logic_mirror_box_bot_1"/>
-			<position name="pos_logic_mirror_box_bot_1" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_1" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_1">
@@ -694,22 +694,22 @@
 		</physvol>
 		<physvol name="top_support_1">
 			<volumeref ref="logic_top_support_1"/>
-			<position name="pos_top_support_1" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_1" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_1">
 			<volumeref ref="logic_pmt_filter_1"/>
-			<position name="pos_logic_pmt_filter_1" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_1" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_1">
 			<volumeref ref="logic_pmt_window_1"/>
-			<position name="pos_logic_pmt_window_1" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_1" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_1">
 			<volumeref ref="logic_pmt_1"/>
-			<position name="pos_logic_pmt_1" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_1" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_1">
@@ -719,7 +719,7 @@
 		</physvol>
 		<physvol name="pmt_housing_1">
 			<volumeref ref="logic_pmt_housing_1"/>
-			<position name="pos_logic_pmt_housing_1" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_1" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_1" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_1">
@@ -804,7 +804,7 @@
 		</physvol>
 		<physvol name="tungsten_1_1">
 			<volumeref ref="logic_tungsten_1_1"/>
-			<position name="pos_logic_tungsten_1_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_1_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_1_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_1_2">
@@ -894,6 +894,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_2">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_2">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -949,12 +954,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_2">
 			<volumeref ref="logic_si_chip_1_2"/>
-			<position name="pos_logic_si_chip_1_2" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_2" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_2" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_2">
 			<volumeref ref="logic_si_chip_2_2"/>
-			<position name="pos_logic_si_chip_2_2" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_2" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_2" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -965,11 +970,6 @@
 	<volume name="logic_top_support_2">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_2">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_2">
@@ -998,7 +998,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_2">
 			<volumeref ref="logic_mirror_box_bot_2"/>
-			<position name="pos_logic_mirror_box_bot_2" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_2" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_2">
@@ -1008,22 +1008,22 @@
 		</physvol>
 		<physvol name="top_support_2">
 			<volumeref ref="logic_top_support_2"/>
-			<position name="pos_top_support_2" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_2" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_2" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_2">
 			<volumeref ref="logic_pmt_filter_2"/>
-			<position name="pos_logic_pmt_filter_2" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_2" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_2">
 			<volumeref ref="logic_pmt_window_2"/>
-			<position name="pos_logic_pmt_window_2" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_2" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_2">
 			<volumeref ref="logic_pmt_2"/>
-			<position name="pos_logic_pmt_2" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_2" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_2">
@@ -1033,7 +1033,7 @@
 		</physvol>
 		<physvol name="pmt_housing_2">
 			<volumeref ref="logic_pmt_housing_2"/>
-			<position name="pos_logic_pmt_housing_2" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_2" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_2" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_2">
@@ -1118,7 +1118,7 @@
 		</physvol>
 		<physvol name="tungsten_2_1">
 			<volumeref ref="logic_tungsten_2_1"/>
-			<position name="pos_logic_tungsten_2_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_2_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_2_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_2_2">
@@ -1208,6 +1208,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_3">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_3">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -1263,12 +1268,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_3">
 			<volumeref ref="logic_si_chip_1_3"/>
-			<position name="pos_logic_si_chip_1_3" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_3" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_3" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_3">
 			<volumeref ref="logic_si_chip_2_3"/>
-			<position name="pos_logic_si_chip_2_3" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_3" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_3" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -1279,11 +1284,6 @@
 	<volume name="logic_top_support_3">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_3">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_3">
@@ -1312,7 +1312,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_3">
 			<volumeref ref="logic_mirror_box_bot_3"/>
-			<position name="pos_logic_mirror_box_bot_3" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_3" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_3">
@@ -1322,22 +1322,22 @@
 		</physvol>
 		<physvol name="top_support_3">
 			<volumeref ref="logic_top_support_3"/>
-			<position name="pos_top_support_3" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_3" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_3" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_3">
 			<volumeref ref="logic_pmt_filter_3"/>
-			<position name="pos_logic_pmt_filter_3" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_3" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_3">
 			<volumeref ref="logic_pmt_window_3"/>
-			<position name="pos_logic_pmt_window_3" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_3" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_3">
 			<volumeref ref="logic_pmt_3"/>
-			<position name="pos_logic_pmt_3" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_3" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_3">
@@ -1347,7 +1347,7 @@
 		</physvol>
 		<physvol name="pmt_housing_3">
 			<volumeref ref="logic_pmt_housing_3"/>
-			<position name="pos_logic_pmt_housing_3" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_3" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_3" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_3">
@@ -1432,7 +1432,7 @@
 		</physvol>
 		<physvol name="tungsten_3_1">
 			<volumeref ref="logic_tungsten_3_1"/>
-			<position name="pos_logic_tungsten_3_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_3_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_3_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_3_2">
@@ -1522,6 +1522,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_4">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_4">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -1577,12 +1582,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_4">
 			<volumeref ref="logic_si_chip_1_4"/>
-			<position name="pos_logic_si_chip_1_4" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_4" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_4" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_4">
 			<volumeref ref="logic_si_chip_2_4"/>
-			<position name="pos_logic_si_chip_2_4" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_4" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_4" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -1593,11 +1598,6 @@
 	<volume name="logic_top_support_4">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_4">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_4">
@@ -1626,7 +1626,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_4">
 			<volumeref ref="logic_mirror_box_bot_4"/>
-			<position name="pos_logic_mirror_box_bot_4" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_4" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_4">
@@ -1636,22 +1636,22 @@
 		</physvol>
 		<physvol name="top_support_4">
 			<volumeref ref="logic_top_support_4"/>
-			<position name="pos_top_support_4" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_4" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_4" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_4">
 			<volumeref ref="logic_pmt_filter_4"/>
-			<position name="pos_logic_pmt_filter_4" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_4" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_4">
 			<volumeref ref="logic_pmt_window_4"/>
-			<position name="pos_logic_pmt_window_4" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_4" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_4">
 			<volumeref ref="logic_pmt_4"/>
-			<position name="pos_logic_pmt_4" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_4" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_4">
@@ -1661,7 +1661,7 @@
 		</physvol>
 		<physvol name="pmt_housing_4">
 			<volumeref ref="logic_pmt_housing_4"/>
-			<position name="pos_logic_pmt_housing_4" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_4" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_4" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_4">
@@ -1746,7 +1746,7 @@
 		</physvol>
 		<physvol name="tungsten_4_1">
 			<volumeref ref="logic_tungsten_4_1"/>
-			<position name="pos_logic_tungsten_4_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_4_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_4_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_4_2">
@@ -1836,6 +1836,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_5">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_5">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -1891,12 +1896,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_5">
 			<volumeref ref="logic_si_chip_1_5"/>
-			<position name="pos_logic_si_chip_1_5" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_5" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_5" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_5">
 			<volumeref ref="logic_si_chip_2_5"/>
-			<position name="pos_logic_si_chip_2_5" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_5" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_5" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -1907,11 +1912,6 @@
 	<volume name="logic_top_support_5">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_5">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_5">
@@ -1940,7 +1940,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_5">
 			<volumeref ref="logic_mirror_box_bot_5"/>
-			<position name="pos_logic_mirror_box_bot_5" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_5" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_5">
@@ -1950,22 +1950,22 @@
 		</physvol>
 		<physvol name="top_support_5">
 			<volumeref ref="logic_top_support_5"/>
-			<position name="pos_top_support_5" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_5" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_5" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_5">
 			<volumeref ref="logic_pmt_filter_5"/>
-			<position name="pos_logic_pmt_filter_5" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_5" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_5">
 			<volumeref ref="logic_pmt_window_5"/>
-			<position name="pos_logic_pmt_window_5" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_5" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_5">
 			<volumeref ref="logic_pmt_5"/>
-			<position name="pos_logic_pmt_5" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_5" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_5">
@@ -1975,7 +1975,7 @@
 		</physvol>
 		<physvol name="pmt_housing_5">
 			<volumeref ref="logic_pmt_housing_5"/>
-			<position name="pos_logic_pmt_housing_5" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_5" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_5" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_5">
@@ -2060,7 +2060,7 @@
 		</physvol>
 		<physvol name="tungsten_5_1">
 			<volumeref ref="logic_tungsten_5_1"/>
-			<position name="pos_logic_tungsten_5_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_5_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_5_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_5_2">
@@ -2150,6 +2150,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_6">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_6">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -2205,12 +2210,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_6">
 			<volumeref ref="logic_si_chip_1_6"/>
-			<position name="pos_logic_si_chip_1_6" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_6" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_6" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_6">
 			<volumeref ref="logic_si_chip_2_6"/>
-			<position name="pos_logic_si_chip_2_6" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_6" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_6" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -2221,11 +2226,6 @@
 	<volume name="logic_top_support_6">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_6">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_6">
@@ -2254,7 +2254,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_6">
 			<volumeref ref="logic_mirror_box_bot_6"/>
-			<position name="pos_logic_mirror_box_bot_6" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_6" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_6">
@@ -2264,22 +2264,22 @@
 		</physvol>
 		<physvol name="top_support_6">
 			<volumeref ref="logic_top_support_6"/>
-			<position name="pos_top_support_6" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_6" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_6" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_6">
 			<volumeref ref="logic_pmt_filter_6"/>
-			<position name="pos_logic_pmt_filter_6" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_6" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_6">
 			<volumeref ref="logic_pmt_window_6"/>
-			<position name="pos_logic_pmt_window_6" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_6" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_6">
 			<volumeref ref="logic_pmt_6"/>
-			<position name="pos_logic_pmt_6" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_6" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_6">
@@ -2289,7 +2289,7 @@
 		</physvol>
 		<physvol name="pmt_housing_6">
 			<volumeref ref="logic_pmt_housing_6"/>
-			<position name="pos_logic_pmt_housing_6" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_6" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_6" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_6">
@@ -2374,7 +2374,7 @@
 		</physvol>
 		<physvol name="tungsten_6_1">
 			<volumeref ref="logic_tungsten_6_1"/>
-			<position name="pos_logic_tungsten_6_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_6_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_6_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_6_2">
@@ -2464,6 +2464,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_7">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_7">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -2519,12 +2524,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_7">
 			<volumeref ref="logic_si_chip_1_7"/>
-			<position name="pos_logic_si_chip_1_7" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_7" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_7" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_7">
 			<volumeref ref="logic_si_chip_2_7"/>
-			<position name="pos_logic_si_chip_2_7" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_7" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_7" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -2535,11 +2540,6 @@
 	<volume name="logic_top_support_7">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_7">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_7">
@@ -2568,7 +2568,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_7">
 			<volumeref ref="logic_mirror_box_bot_7"/>
-			<position name="pos_logic_mirror_box_bot_7" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_7" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_7">
@@ -2578,22 +2578,22 @@
 		</physvol>
 		<physvol name="top_support_7">
 			<volumeref ref="logic_top_support_7"/>
-			<position name="pos_top_support_7" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_7" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_7" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_7">
 			<volumeref ref="logic_pmt_filter_7"/>
-			<position name="pos_logic_pmt_filter_7" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_7" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_7">
 			<volumeref ref="logic_pmt_window_7"/>
-			<position name="pos_logic_pmt_window_7" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_7" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_7">
 			<volumeref ref="logic_pmt_7"/>
-			<position name="pos_logic_pmt_7" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_7" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_7">
@@ -2603,7 +2603,7 @@
 		</physvol>
 		<physvol name="pmt_housing_7">
 			<volumeref ref="logic_pmt_housing_7"/>
-			<position name="pos_logic_pmt_housing_7" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_7" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_7" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_7">
@@ -2688,7 +2688,7 @@
 		</physvol>
 		<physvol name="tungsten_7_1">
 			<volumeref ref="logic_tungsten_7_1"/>
-			<position name="pos_logic_tungsten_7_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_7_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_7_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_7_2">
@@ -2778,6 +2778,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_8">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_8">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -2833,12 +2838,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_8">
 			<volumeref ref="logic_si_chip_1_8"/>
-			<position name="pos_logic_si_chip_1_8" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_8" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_8" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_8">
 			<volumeref ref="logic_si_chip_2_8"/>
-			<position name="pos_logic_si_chip_2_8" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_8" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_8" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -2849,11 +2854,6 @@
 	<volume name="logic_top_support_8">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_8">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_8">
@@ -2882,7 +2882,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_8">
 			<volumeref ref="logic_mirror_box_bot_8"/>
-			<position name="pos_logic_mirror_box_bot_8" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_8" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_8">
@@ -2892,22 +2892,22 @@
 		</physvol>
 		<physvol name="top_support_8">
 			<volumeref ref="logic_top_support_8"/>
-			<position name="pos_top_support_8" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_8" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_8" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_8">
 			<volumeref ref="logic_pmt_filter_8"/>
-			<position name="pos_logic_pmt_filter_8" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_8" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_8">
 			<volumeref ref="logic_pmt_window_8"/>
-			<position name="pos_logic_pmt_window_8" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_8" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_8">
 			<volumeref ref="logic_pmt_8"/>
-			<position name="pos_logic_pmt_8" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_8" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_8">
@@ -2917,7 +2917,7 @@
 		</physvol>
 		<physvol name="pmt_housing_8">
 			<volumeref ref="logic_pmt_housing_8"/>
-			<position name="pos_logic_pmt_housing_8" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_8" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_8" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_8">
@@ -3002,7 +3002,7 @@
 		</physvol>
 		<physvol name="tungsten_8_1">
 			<volumeref ref="logic_tungsten_8_1"/>
-			<position name="pos_logic_tungsten_8_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_8_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_8_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_8_2">
@@ -3092,6 +3092,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_9">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_9">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -3147,12 +3152,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_9">
 			<volumeref ref="logic_si_chip_1_9"/>
-			<position name="pos_logic_si_chip_1_9" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_9" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_9" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_9">
 			<volumeref ref="logic_si_chip_2_9"/>
-			<position name="pos_logic_si_chip_2_9" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_9" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_9" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -3163,11 +3168,6 @@
 	<volume name="logic_top_support_9">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_9">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_9">
@@ -3196,7 +3196,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_9">
 			<volumeref ref="logic_mirror_box_bot_9"/>
-			<position name="pos_logic_mirror_box_bot_9" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_9" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_9">
@@ -3206,22 +3206,22 @@
 		</physvol>
 		<physvol name="top_support_9">
 			<volumeref ref="logic_top_support_9"/>
-			<position name="pos_top_support_9" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_9" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_9" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_9">
 			<volumeref ref="logic_pmt_filter_9"/>
-			<position name="pos_logic_pmt_filter_9" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_9" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_9">
 			<volumeref ref="logic_pmt_window_9"/>
-			<position name="pos_logic_pmt_window_9" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_9" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_9">
 			<volumeref ref="logic_pmt_9"/>
-			<position name="pos_logic_pmt_9" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_9" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_9">
@@ -3231,7 +3231,7 @@
 		</physvol>
 		<physvol name="pmt_housing_9">
 			<volumeref ref="logic_pmt_housing_9"/>
-			<position name="pos_logic_pmt_housing_9" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_9" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_9" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_9">
@@ -3316,7 +3316,7 @@
 		</physvol>
 		<physvol name="tungsten_9_1">
 			<volumeref ref="logic_tungsten_9_1"/>
-			<position name="pos_logic_tungsten_9_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_9_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_9_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_9_2">
@@ -3406,6 +3406,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_10">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_10">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -3461,12 +3466,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_10">
 			<volumeref ref="logic_si_chip_1_10"/>
-			<position name="pos_logic_si_chip_1_10" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_10" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_10" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_10">
 			<volumeref ref="logic_si_chip_2_10"/>
-			<position name="pos_logic_si_chip_2_10" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_10" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_10" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -3477,11 +3482,6 @@
 	<volume name="logic_top_support_10">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_10">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_10">
@@ -3510,7 +3510,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_10">
 			<volumeref ref="logic_mirror_box_bot_10"/>
-			<position name="pos_logic_mirror_box_bot_10" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_10" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_10">
@@ -3520,22 +3520,22 @@
 		</physvol>
 		<physvol name="top_support_10">
 			<volumeref ref="logic_top_support_10"/>
-			<position name="pos_top_support_10" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_10" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_10" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_10">
 			<volumeref ref="logic_pmt_filter_10"/>
-			<position name="pos_logic_pmt_filter_10" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_10" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_10">
 			<volumeref ref="logic_pmt_window_10"/>
-			<position name="pos_logic_pmt_window_10" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_10" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_10">
 			<volumeref ref="logic_pmt_10"/>
-			<position name="pos_logic_pmt_10" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_10" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_10">
@@ -3545,7 +3545,7 @@
 		</physvol>
 		<physvol name="pmt_housing_10">
 			<volumeref ref="logic_pmt_housing_10"/>
-			<position name="pos_logic_pmt_housing_10" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_10" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_10" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_10">
@@ -3630,7 +3630,7 @@
 		</physvol>
 		<physvol name="tungsten_10_1">
 			<volumeref ref="logic_tungsten_10_1"/>
-			<position name="pos_logic_tungsten_10_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_10_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_10_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_10_2">
@@ -3720,6 +3720,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_11">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_11">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -3775,12 +3780,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_11">
 			<volumeref ref="logic_si_chip_1_11"/>
-			<position name="pos_logic_si_chip_1_11" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_11" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_11" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_11">
 			<volumeref ref="logic_si_chip_2_11"/>
-			<position name="pos_logic_si_chip_2_11" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_11" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_11" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -3791,11 +3796,6 @@
 	<volume name="logic_top_support_11">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_11">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_11">
@@ -3824,7 +3824,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_11">
 			<volumeref ref="logic_mirror_box_bot_11"/>
-			<position name="pos_logic_mirror_box_bot_11" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_11" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_11">
@@ -3834,22 +3834,22 @@
 		</physvol>
 		<physvol name="top_support_11">
 			<volumeref ref="logic_top_support_11"/>
-			<position name="pos_top_support_11" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_11" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_11" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_11">
 			<volumeref ref="logic_pmt_filter_11"/>
-			<position name="pos_logic_pmt_filter_11" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_11" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_11">
 			<volumeref ref="logic_pmt_window_11"/>
-			<position name="pos_logic_pmt_window_11" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_11" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_11">
 			<volumeref ref="logic_pmt_11"/>
-			<position name="pos_logic_pmt_11" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_11" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_11">
@@ -3859,7 +3859,7 @@
 		</physvol>
 		<physvol name="pmt_housing_11">
 			<volumeref ref="logic_pmt_housing_11"/>
-			<position name="pos_logic_pmt_housing_11" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_11" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_11" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_11">
@@ -3944,7 +3944,7 @@
 		</physvol>
 		<physvol name="tungsten_11_1">
 			<volumeref ref="logic_tungsten_11_1"/>
-			<position name="pos_logic_tungsten_11_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_11_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_11_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_11_2">
@@ -4034,6 +4034,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_12">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_12">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -4089,12 +4094,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_12">
 			<volumeref ref="logic_si_chip_1_12"/>
-			<position name="pos_logic_si_chip_1_12" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_12" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_12" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_12">
 			<volumeref ref="logic_si_chip_2_12"/>
-			<position name="pos_logic_si_chip_2_12" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_12" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_12" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -4105,11 +4110,6 @@
 	<volume name="logic_top_support_12">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_12">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_12">
@@ -4138,7 +4138,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_12">
 			<volumeref ref="logic_mirror_box_bot_12"/>
-			<position name="pos_logic_mirror_box_bot_12" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_12" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_12">
@@ -4148,22 +4148,22 @@
 		</physvol>
 		<physvol name="top_support_12">
 			<volumeref ref="logic_top_support_12"/>
-			<position name="pos_top_support_12" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_12" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_12" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_12">
 			<volumeref ref="logic_pmt_filter_12"/>
-			<position name="pos_logic_pmt_filter_12" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_12" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_12">
 			<volumeref ref="logic_pmt_window_12"/>
-			<position name="pos_logic_pmt_window_12" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_12" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_12">
 			<volumeref ref="logic_pmt_12"/>
-			<position name="pos_logic_pmt_12" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_12" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_12">
@@ -4173,7 +4173,7 @@
 		</physvol>
 		<physvol name="pmt_housing_12">
 			<volumeref ref="logic_pmt_housing_12"/>
-			<position name="pos_logic_pmt_housing_12" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_12" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_12" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_12">
@@ -4258,7 +4258,7 @@
 		</physvol>
 		<physvol name="tungsten_12_1">
 			<volumeref ref="logic_tungsten_12_1"/>
-			<position name="pos_logic_tungsten_12_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_12_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_12_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_12_2">
@@ -4348,6 +4348,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_13">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_13">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -4403,12 +4408,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_13">
 			<volumeref ref="logic_si_chip_1_13"/>
-			<position name="pos_logic_si_chip_1_13" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_13" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_13" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_13">
 			<volumeref ref="logic_si_chip_2_13"/>
-			<position name="pos_logic_si_chip_2_13" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_13" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_13" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -4419,11 +4424,6 @@
 	<volume name="logic_top_support_13">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_13">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_13">
@@ -4452,7 +4452,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_13">
 			<volumeref ref="logic_mirror_box_bot_13"/>
-			<position name="pos_logic_mirror_box_bot_13" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_13" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_13">
@@ -4462,22 +4462,22 @@
 		</physvol>
 		<physvol name="top_support_13">
 			<volumeref ref="logic_top_support_13"/>
-			<position name="pos_top_support_13" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_13" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_13" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_13">
 			<volumeref ref="logic_pmt_filter_13"/>
-			<position name="pos_logic_pmt_filter_13" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_13" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_13">
 			<volumeref ref="logic_pmt_window_13"/>
-			<position name="pos_logic_pmt_window_13" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_13" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_13">
 			<volumeref ref="logic_pmt_13"/>
-			<position name="pos_logic_pmt_13" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_13" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_13">
@@ -4487,7 +4487,7 @@
 		</physvol>
 		<physvol name="pmt_housing_13">
 			<volumeref ref="logic_pmt_housing_13"/>
-			<position name="pos_logic_pmt_housing_13" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_13" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_13" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_13">
@@ -4572,7 +4572,7 @@
 		</physvol>
 		<physvol name="tungsten_13_1">
 			<volumeref ref="logic_tungsten_13_1"/>
-			<position name="pos_logic_tungsten_13_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_13_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_13_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_13_2">
@@ -4662,6 +4662,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_14">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_14">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -4717,12 +4722,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_14">
 			<volumeref ref="logic_si_chip_1_14"/>
-			<position name="pos_logic_si_chip_1_14" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_14" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_14" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_14">
 			<volumeref ref="logic_si_chip_2_14"/>
-			<position name="pos_logic_si_chip_2_14" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_14" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_14" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -4733,11 +4738,6 @@
 	<volume name="logic_top_support_14">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_14">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_14">
@@ -4766,7 +4766,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_14">
 			<volumeref ref="logic_mirror_box_bot_14"/>
-			<position name="pos_logic_mirror_box_bot_14" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_14" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_14">
@@ -4776,22 +4776,22 @@
 		</physvol>
 		<physvol name="top_support_14">
 			<volumeref ref="logic_top_support_14"/>
-			<position name="pos_top_support_14" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_14" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_14" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_14">
 			<volumeref ref="logic_pmt_filter_14"/>
-			<position name="pos_logic_pmt_filter_14" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_14" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_14">
 			<volumeref ref="logic_pmt_window_14"/>
-			<position name="pos_logic_pmt_window_14" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_14" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_14">
 			<volumeref ref="logic_pmt_14"/>
-			<position name="pos_logic_pmt_14" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_14" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_14">
@@ -4801,7 +4801,7 @@
 		</physvol>
 		<physvol name="pmt_housing_14">
 			<volumeref ref="logic_pmt_housing_14"/>
-			<position name="pos_logic_pmt_housing_14" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_14" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_14" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_14">
@@ -4886,7 +4886,7 @@
 		</physvol>
 		<physvol name="tungsten_14_1">
 			<volumeref ref="logic_tungsten_14_1"/>
-			<position name="pos_logic_tungsten_14_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_14_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_14_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_14_2">
@@ -4976,6 +4976,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_15">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_15">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -5031,12 +5036,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_15">
 			<volumeref ref="logic_si_chip_1_15"/>
-			<position name="pos_logic_si_chip_1_15" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_15" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_15" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_15">
 			<volumeref ref="logic_si_chip_2_15"/>
-			<position name="pos_logic_si_chip_2_15" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_15" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_15" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -5047,11 +5052,6 @@
 	<volume name="logic_top_support_15">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_15">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_15">
@@ -5080,7 +5080,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_15">
 			<volumeref ref="logic_mirror_box_bot_15"/>
-			<position name="pos_logic_mirror_box_bot_15" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_15" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_15">
@@ -5090,22 +5090,22 @@
 		</physvol>
 		<physvol name="top_support_15">
 			<volumeref ref="logic_top_support_15"/>
-			<position name="pos_top_support_15" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_15" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_15" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_15">
 			<volumeref ref="logic_pmt_filter_15"/>
-			<position name="pos_logic_pmt_filter_15" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_15" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_15">
 			<volumeref ref="logic_pmt_window_15"/>
-			<position name="pos_logic_pmt_window_15" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_15" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_15">
 			<volumeref ref="logic_pmt_15"/>
-			<position name="pos_logic_pmt_15" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_15" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_15">
@@ -5115,7 +5115,7 @@
 		</physvol>
 		<physvol name="pmt_housing_15">
 			<volumeref ref="logic_pmt_housing_15"/>
-			<position name="pos_logic_pmt_housing_15" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_15" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_15" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_15">
@@ -5200,7 +5200,7 @@
 		</physvol>
 		<physvol name="tungsten_15_1">
 			<volumeref ref="logic_tungsten_15_1"/>
-			<position name="pos_logic_tungsten_15_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_15_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_15_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_15_2">
@@ -5290,6 +5290,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_16">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_16">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -5345,12 +5350,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_16">
 			<volumeref ref="logic_si_chip_1_16"/>
-			<position name="pos_logic_si_chip_1_16" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_16" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_16" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_16">
 			<volumeref ref="logic_si_chip_2_16"/>
-			<position name="pos_logic_si_chip_2_16" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_16" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_16" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -5361,11 +5366,6 @@
 	<volume name="logic_top_support_16">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_16">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_16">
@@ -5394,7 +5394,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_16">
 			<volumeref ref="logic_mirror_box_bot_16"/>
-			<position name="pos_logic_mirror_box_bot_16" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_16" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_16">
@@ -5404,22 +5404,22 @@
 		</physvol>
 		<physvol name="top_support_16">
 			<volumeref ref="logic_top_support_16"/>
-			<position name="pos_top_support_16" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_16" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_16" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_16">
 			<volumeref ref="logic_pmt_filter_16"/>
-			<position name="pos_logic_pmt_filter_16" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_16" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_16">
 			<volumeref ref="logic_pmt_window_16"/>
-			<position name="pos_logic_pmt_window_16" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_16" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_16">
 			<volumeref ref="logic_pmt_16"/>
-			<position name="pos_logic_pmt_16" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_16" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_16">
@@ -5429,7 +5429,7 @@
 		</physvol>
 		<physvol name="pmt_housing_16">
 			<volumeref ref="logic_pmt_housing_16"/>
-			<position name="pos_logic_pmt_housing_16" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_16" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_16" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_16">
@@ -5514,7 +5514,7 @@
 		</physvol>
 		<physvol name="tungsten_16_1">
 			<volumeref ref="logic_tungsten_16_1"/>
-			<position name="pos_logic_tungsten_16_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_16_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_16_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_16_2">
@@ -5604,6 +5604,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_17">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_17">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -5659,12 +5664,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_17">
 			<volumeref ref="logic_si_chip_1_17"/>
-			<position name="pos_logic_si_chip_1_17" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_17" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_17" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_17">
 			<volumeref ref="logic_si_chip_2_17"/>
-			<position name="pos_logic_si_chip_2_17" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_17" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_17" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -5675,11 +5680,6 @@
 	<volume name="logic_top_support_17">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_17">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_17">
@@ -5708,7 +5708,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_17">
 			<volumeref ref="logic_mirror_box_bot_17"/>
-			<position name="pos_logic_mirror_box_bot_17" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_17" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_17">
@@ -5718,22 +5718,22 @@
 		</physvol>
 		<physvol name="top_support_17">
 			<volumeref ref="logic_top_support_17"/>
-			<position name="pos_top_support_17" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_17" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_17" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_17">
 			<volumeref ref="logic_pmt_filter_17"/>
-			<position name="pos_logic_pmt_filter_17" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_17" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_17">
 			<volumeref ref="logic_pmt_window_17"/>
-			<position name="pos_logic_pmt_window_17" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_17" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_17">
 			<volumeref ref="logic_pmt_17"/>
-			<position name="pos_logic_pmt_17" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_17" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_17">
@@ -5743,7 +5743,7 @@
 		</physvol>
 		<physvol name="pmt_housing_17">
 			<volumeref ref="logic_pmt_housing_17"/>
-			<position name="pos_logic_pmt_housing_17" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_17" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_17" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_17">
@@ -5828,7 +5828,7 @@
 		</physvol>
 		<physvol name="tungsten_17_1">
 			<volumeref ref="logic_tungsten_17_1"/>
-			<position name="pos_logic_tungsten_17_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_17_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_17_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_17_2">
@@ -5918,6 +5918,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_18">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_18">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -5973,12 +5978,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_18">
 			<volumeref ref="logic_si_chip_1_18"/>
-			<position name="pos_logic_si_chip_1_18" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_18" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_18" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_18">
 			<volumeref ref="logic_si_chip_2_18"/>
-			<position name="pos_logic_si_chip_2_18" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_18" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_18" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -5989,11 +5994,6 @@
 	<volume name="logic_top_support_18">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_18">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_18">
@@ -6022,7 +6022,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_18">
 			<volumeref ref="logic_mirror_box_bot_18"/>
-			<position name="pos_logic_mirror_box_bot_18" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_18" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_18">
@@ -6032,22 +6032,22 @@
 		</physvol>
 		<physvol name="top_support_18">
 			<volumeref ref="logic_top_support_18"/>
-			<position name="pos_top_support_18" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_18" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_18" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_18">
 			<volumeref ref="logic_pmt_filter_18"/>
-			<position name="pos_logic_pmt_filter_18" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_18" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_18">
 			<volumeref ref="logic_pmt_window_18"/>
-			<position name="pos_logic_pmt_window_18" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_18" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_18">
 			<volumeref ref="logic_pmt_18"/>
-			<position name="pos_logic_pmt_18" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_18" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_18">
@@ -6057,7 +6057,7 @@
 		</physvol>
 		<physvol name="pmt_housing_18">
 			<volumeref ref="logic_pmt_housing_18"/>
-			<position name="pos_logic_pmt_housing_18" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_18" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_18" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_18">
@@ -6142,7 +6142,7 @@
 		</physvol>
 		<physvol name="tungsten_18_1">
 			<volumeref ref="logic_tungsten_18_1"/>
-			<position name="pos_logic_tungsten_18_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_18_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_18_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_18_2">
@@ -6232,6 +6232,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_19">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_19">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -6287,12 +6292,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_19">
 			<volumeref ref="logic_si_chip_1_19"/>
-			<position name="pos_logic_si_chip_1_19" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_19" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_19" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_19">
 			<volumeref ref="logic_si_chip_2_19"/>
-			<position name="pos_logic_si_chip_2_19" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_19" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_19" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -6303,11 +6308,6 @@
 	<volume name="logic_top_support_19">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_19">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_19">
@@ -6336,7 +6336,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_19">
 			<volumeref ref="logic_mirror_box_bot_19"/>
-			<position name="pos_logic_mirror_box_bot_19" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_19" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_19">
@@ -6346,22 +6346,22 @@
 		</physvol>
 		<physvol name="top_support_19">
 			<volumeref ref="logic_top_support_19"/>
-			<position name="pos_top_support_19" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_19" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_19" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_19">
 			<volumeref ref="logic_pmt_filter_19"/>
-			<position name="pos_logic_pmt_filter_19" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_19" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_19">
 			<volumeref ref="logic_pmt_window_19"/>
-			<position name="pos_logic_pmt_window_19" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_19" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_19">
 			<volumeref ref="logic_pmt_19"/>
-			<position name="pos_logic_pmt_19" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_19" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_19">
@@ -6371,7 +6371,7 @@
 		</physvol>
 		<physvol name="pmt_housing_19">
 			<volumeref ref="logic_pmt_housing_19"/>
-			<position name="pos_logic_pmt_housing_19" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_19" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_19" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_19">
@@ -6456,7 +6456,7 @@
 		</physvol>
 		<physvol name="tungsten_19_1">
 			<volumeref ref="logic_tungsten_19_1"/>
-			<position name="pos_logic_tungsten_19_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_19_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_19_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_19_2">
@@ -6546,6 +6546,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_20">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_20">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -6601,12 +6606,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_20">
 			<volumeref ref="logic_si_chip_1_20"/>
-			<position name="pos_logic_si_chip_1_20" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_20" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_20" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_20">
 			<volumeref ref="logic_si_chip_2_20"/>
-			<position name="pos_logic_si_chip_2_20" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_20" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_20" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -6617,11 +6622,6 @@
 	<volume name="logic_top_support_20">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_20">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_20">
@@ -6650,7 +6650,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_20">
 			<volumeref ref="logic_mirror_box_bot_20"/>
-			<position name="pos_logic_mirror_box_bot_20" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_20" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_20">
@@ -6660,22 +6660,22 @@
 		</physvol>
 		<physvol name="top_support_20">
 			<volumeref ref="logic_top_support_20"/>
-			<position name="pos_top_support_20" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_20" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_20" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_20">
 			<volumeref ref="logic_pmt_filter_20"/>
-			<position name="pos_logic_pmt_filter_20" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_20" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_20">
 			<volumeref ref="logic_pmt_window_20"/>
-			<position name="pos_logic_pmt_window_20" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_20" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_20">
 			<volumeref ref="logic_pmt_20"/>
-			<position name="pos_logic_pmt_20" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_20" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_20">
@@ -6685,7 +6685,7 @@
 		</physvol>
 		<physvol name="pmt_housing_20">
 			<volumeref ref="logic_pmt_housing_20"/>
-			<position name="pos_logic_pmt_housing_20" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_20" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_20" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_20">
@@ -6770,7 +6770,7 @@
 		</physvol>
 		<physvol name="tungsten_20_1">
 			<volumeref ref="logic_tungsten_20_1"/>
-			<position name="pos_logic_tungsten_20_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_20_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_20_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_20_2">
@@ -6860,6 +6860,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_21">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_21">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -6915,12 +6920,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_21">
 			<volumeref ref="logic_si_chip_1_21"/>
-			<position name="pos_logic_si_chip_1_21" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_21" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_21" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_21">
 			<volumeref ref="logic_si_chip_2_21"/>
-			<position name="pos_logic_si_chip_2_21" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_21" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_21" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -6931,11 +6936,6 @@
 	<volume name="logic_top_support_21">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_21">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_21">
@@ -6964,7 +6964,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_21">
 			<volumeref ref="logic_mirror_box_bot_21"/>
-			<position name="pos_logic_mirror_box_bot_21" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_21" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_21">
@@ -6974,22 +6974,22 @@
 		</physvol>
 		<physvol name="top_support_21">
 			<volumeref ref="logic_top_support_21"/>
-			<position name="pos_top_support_21" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_21" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_21" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_21">
 			<volumeref ref="logic_pmt_filter_21"/>
-			<position name="pos_logic_pmt_filter_21" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_21" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_21">
 			<volumeref ref="logic_pmt_window_21"/>
-			<position name="pos_logic_pmt_window_21" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_21" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_21">
 			<volumeref ref="logic_pmt_21"/>
-			<position name="pos_logic_pmt_21" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_21" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_21">
@@ -6999,7 +6999,7 @@
 		</physvol>
 		<physvol name="pmt_housing_21">
 			<volumeref ref="logic_pmt_housing_21"/>
-			<position name="pos_logic_pmt_housing_21" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_21" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_21" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_21">
@@ -7084,7 +7084,7 @@
 		</physvol>
 		<physvol name="tungsten_21_1">
 			<volumeref ref="logic_tungsten_21_1"/>
-			<position name="pos_logic_tungsten_21_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_21_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_21_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_21_2">
@@ -7174,6 +7174,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_22">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_22">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -7229,12 +7234,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_22">
 			<volumeref ref="logic_si_chip_1_22"/>
-			<position name="pos_logic_si_chip_1_22" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_22" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_22" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_22">
 			<volumeref ref="logic_si_chip_2_22"/>
-			<position name="pos_logic_si_chip_2_22" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_22" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_22" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -7245,11 +7250,6 @@
 	<volume name="logic_top_support_22">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_22">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_22">
@@ -7278,7 +7278,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_22">
 			<volumeref ref="logic_mirror_box_bot_22"/>
-			<position name="pos_logic_mirror_box_bot_22" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_22" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_22">
@@ -7288,22 +7288,22 @@
 		</physvol>
 		<physvol name="top_support_22">
 			<volumeref ref="logic_top_support_22"/>
-			<position name="pos_top_support_22" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_22" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_22" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_22">
 			<volumeref ref="logic_pmt_filter_22"/>
-			<position name="pos_logic_pmt_filter_22" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_22" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_22">
 			<volumeref ref="logic_pmt_window_22"/>
-			<position name="pos_logic_pmt_window_22" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_22" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_22">
 			<volumeref ref="logic_pmt_22"/>
-			<position name="pos_logic_pmt_22" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_22" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_22">
@@ -7313,7 +7313,7 @@
 		</physvol>
 		<physvol name="pmt_housing_22">
 			<volumeref ref="logic_pmt_housing_22"/>
-			<position name="pos_logic_pmt_housing_22" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_22" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_22" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_22">
@@ -7398,7 +7398,7 @@
 		</physvol>
 		<physvol name="tungsten_22_1">
 			<volumeref ref="logic_tungsten_22_1"/>
-			<position name="pos_logic_tungsten_22_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_22_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_22_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_22_2">
@@ -7488,6 +7488,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_23">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_23">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -7543,12 +7548,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_23">
 			<volumeref ref="logic_si_chip_1_23"/>
-			<position name="pos_logic_si_chip_1_23" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_23" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_23" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_23">
 			<volumeref ref="logic_si_chip_2_23"/>
-			<position name="pos_logic_si_chip_2_23" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_23" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_23" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -7559,11 +7564,6 @@
 	<volume name="logic_top_support_23">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_23">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_23">
@@ -7592,7 +7592,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_23">
 			<volumeref ref="logic_mirror_box_bot_23"/>
-			<position name="pos_logic_mirror_box_bot_23" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_23" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_23">
@@ -7602,22 +7602,22 @@
 		</physvol>
 		<physvol name="top_support_23">
 			<volumeref ref="logic_top_support_23"/>
-			<position name="pos_top_support_23" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_23" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_23" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_23">
 			<volumeref ref="logic_pmt_filter_23"/>
-			<position name="pos_logic_pmt_filter_23" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_23" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_23">
 			<volumeref ref="logic_pmt_window_23"/>
-			<position name="pos_logic_pmt_window_23" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_23" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_23">
 			<volumeref ref="logic_pmt_23"/>
-			<position name="pos_logic_pmt_23" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_23" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_23">
@@ -7627,7 +7627,7 @@
 		</physvol>
 		<physvol name="pmt_housing_23">
 			<volumeref ref="logic_pmt_housing_23"/>
-			<position name="pos_logic_pmt_housing_23" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_23" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_23" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_23">
@@ -7712,7 +7712,7 @@
 		</physvol>
 		<physvol name="tungsten_23_1">
 			<volumeref ref="logic_tungsten_23_1"/>
-			<position name="pos_logic_tungsten_23_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_23_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_23_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_23_2">
@@ -7802,6 +7802,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_24">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_24">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -7857,12 +7862,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_24">
 			<volumeref ref="logic_si_chip_1_24"/>
-			<position name="pos_logic_si_chip_1_24" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_24" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_24" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_24">
 			<volumeref ref="logic_si_chip_2_24"/>
-			<position name="pos_logic_si_chip_2_24" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_24" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_24" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -7873,11 +7878,6 @@
 	<volume name="logic_top_support_24">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_24">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_24">
@@ -7906,7 +7906,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_24">
 			<volumeref ref="logic_mirror_box_bot_24"/>
-			<position name="pos_logic_mirror_box_bot_24" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_24" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_24">
@@ -7916,22 +7916,22 @@
 		</physvol>
 		<physvol name="top_support_24">
 			<volumeref ref="logic_top_support_24"/>
-			<position name="pos_top_support_24" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_24" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_24" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_24">
 			<volumeref ref="logic_pmt_filter_24"/>
-			<position name="pos_logic_pmt_filter_24" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_24" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_24">
 			<volumeref ref="logic_pmt_window_24"/>
-			<position name="pos_logic_pmt_window_24" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_24" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_24">
 			<volumeref ref="logic_pmt_24"/>
-			<position name="pos_logic_pmt_24" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_24" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_24">
@@ -7941,7 +7941,7 @@
 		</physvol>
 		<physvol name="pmt_housing_24">
 			<volumeref ref="logic_pmt_housing_24"/>
-			<position name="pos_logic_pmt_housing_24" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_24" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_24" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_24">
@@ -8026,7 +8026,7 @@
 		</physvol>
 		<physvol name="tungsten_24_1">
 			<volumeref ref="logic_tungsten_24_1"/>
-			<position name="pos_logic_tungsten_24_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_24_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_24_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_24_2">
@@ -8116,6 +8116,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_25">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_25">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -8171,12 +8176,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_25">
 			<volumeref ref="logic_si_chip_1_25"/>
-			<position name="pos_logic_si_chip_1_25" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_25" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_25" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_25">
 			<volumeref ref="logic_si_chip_2_25"/>
-			<position name="pos_logic_si_chip_2_25" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_25" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_25" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -8187,11 +8192,6 @@
 	<volume name="logic_top_support_25">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_25">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_25">
@@ -8220,7 +8220,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_25">
 			<volumeref ref="logic_mirror_box_bot_25"/>
-			<position name="pos_logic_mirror_box_bot_25" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_25" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_25">
@@ -8230,22 +8230,22 @@
 		</physvol>
 		<physvol name="top_support_25">
 			<volumeref ref="logic_top_support_25"/>
-			<position name="pos_top_support_25" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_25" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_25" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_25">
 			<volumeref ref="logic_pmt_filter_25"/>
-			<position name="pos_logic_pmt_filter_25" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_25" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_25">
 			<volumeref ref="logic_pmt_window_25"/>
-			<position name="pos_logic_pmt_window_25" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_25" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_25">
 			<volumeref ref="logic_pmt_25"/>
-			<position name="pos_logic_pmt_25" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_25" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_25">
@@ -8255,7 +8255,7 @@
 		</physvol>
 		<physvol name="pmt_housing_25">
 			<volumeref ref="logic_pmt_housing_25"/>
-			<position name="pos_logic_pmt_housing_25" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_25" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_25" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_25">
@@ -8340,7 +8340,7 @@
 		</physvol>
 		<physvol name="tungsten_25_1">
 			<volumeref ref="logic_tungsten_25_1"/>
-			<position name="pos_logic_tungsten_25_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_25_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_25_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_25_2">
@@ -8430,6 +8430,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_26">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_26">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -8485,12 +8490,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_26">
 			<volumeref ref="logic_si_chip_1_26"/>
-			<position name="pos_logic_si_chip_1_26" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_26" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_26" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_26">
 			<volumeref ref="logic_si_chip_2_26"/>
-			<position name="pos_logic_si_chip_2_26" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_26" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_26" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -8501,11 +8506,6 @@
 	<volume name="logic_top_support_26">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_26">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_26">
@@ -8534,7 +8534,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_26">
 			<volumeref ref="logic_mirror_box_bot_26"/>
-			<position name="pos_logic_mirror_box_bot_26" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_26" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_26">
@@ -8544,22 +8544,22 @@
 		</physvol>
 		<physvol name="top_support_26">
 			<volumeref ref="logic_top_support_26"/>
-			<position name="pos_top_support_26" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_26" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_26" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_26">
 			<volumeref ref="logic_pmt_filter_26"/>
-			<position name="pos_logic_pmt_filter_26" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_26" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_26">
 			<volumeref ref="logic_pmt_window_26"/>
-			<position name="pos_logic_pmt_window_26" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_26" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_26">
 			<volumeref ref="logic_pmt_26"/>
-			<position name="pos_logic_pmt_26" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_26" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_26">
@@ -8569,7 +8569,7 @@
 		</physvol>
 		<physvol name="pmt_housing_26">
 			<volumeref ref="logic_pmt_housing_26"/>
-			<position name="pos_logic_pmt_housing_26" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_26" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_26" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_26">
@@ -8654,7 +8654,7 @@
 		</physvol>
 		<physvol name="tungsten_26_1">
 			<volumeref ref="logic_tungsten_26_1"/>
-			<position name="pos_logic_tungsten_26_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_26_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_26_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_26_2">
@@ -8744,6 +8744,11 @@
 		<solidref ref="solid_web_plate_7"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
+	<volume name="logic_uBracket_27">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
 	<volume name="logic_ledge_27">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
@@ -8799,12 +8804,12 @@
 		<solidref ref="solid_pmt_base"/>
 		<physvol name="pmt_si_chip_1_27">
 			<volumeref ref="logic_si_chip_1_27"/>
-			<position name="pos_logic_si_chip_1_27" x="0" y="0" z="8"/>
+			<position name="pos_logic_si_chip_1_27" x="0" y="0" z="-8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_1_27" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_si_chip_2_27">
 			<volumeref ref="logic_si_chip_2_27"/>
-			<position name="pos_logic_si_chip_2_27" x="0" y="0" z="-9"/>
+			<position name="pos_logic_si_chip_2_27" x="0" y="0" z="8.333333333333334"/>
 			<rotation name="rot_logic_si_chip_2_27" x="0" y="pi/2" z="0"/>
 		</physvol>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
@@ -8815,11 +8820,6 @@
 	<volume name="logic_top_support_27">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_top_support_6"/>
-		<auxiliary auxtype="Color" auxvalue="grey"/>
-	</volume>
-	<volume name="logic_uBracket_27">
-		<materialref ref="G4_Al"/>
-		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
 	<volume name="logic_pmt_housing_27">
@@ -8848,7 +8848,7 @@
 		</physvol>
 		<physvol name="mirror_box_bot_27">
 			<volumeref ref="logic_mirror_box_bot_27"/>
-			<position name="pos_logic_mirror_box_bot_27" x="124.58" y="0" z="4.0"/>
+			<position name="pos_logic_mirror_box_bot_27" x="124.58000000000001" y="0" z="4.0"/>
 			<rotation name="rot_logic_mirror_box_bot_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="mirror_box_top_27">
@@ -8858,22 +8858,22 @@
 		</physvol>
 		<physvol name="top_support_27">
 			<volumeref ref="logic_top_support_27"/>
-			<position name="pos_top_support_27" x="344.544" y="0" z="4.0"/>
+			<position name="pos_top_support_27" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_27" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="pmt_filter_27">
 			<volumeref ref="logic_pmt_filter_27"/>
-			<position name="pos_logic_pmt_filter_27" x= "350.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_filter_27" x= "350.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_filter_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_window_27">
 			<volumeref ref="logic_pmt_window_27"/>
-			<position name="pos_logic_pmt_window_27" x="354.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_27" x="354.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_27">
 			<volumeref ref="logic_pmt_27"/>
-			<position name="pos_logic_pmt_27" x="430.719" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_27" x="430.71900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_27">
@@ -8883,7 +8883,7 @@
 		</physvol>
 		<physvol name="pmt_housing_27">
 			<volumeref ref="logic_pmt_housing_27"/>
-			<position name="pos_logic_pmt_housing_27" x="454.219" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_housing_27" x="454.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_housing_27" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_lid_27">
@@ -8968,7 +8968,7 @@
 		</physvol>
 		<physvol name="tungsten_27_1">
 			<volumeref ref="logic_tungsten_27_1"/>
-			<position name="pos_logic_tungsten_27_1" x="0" y="0" z="4.508"/>
+			<position name="pos_logic_tungsten_27_1" x="0" y="0" z="4.507999999999999"/>
 			<rotation name="rot_logic_tungsten_27_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="quartz_27_2">
@@ -8998,143 +8998,143 @@
 		<solidref ref="solid_showerMaxMother"/>
 		<physvol name="singledet_00">
 			<volumeref ref="logic_singledet_00"/>
-			<position name="pos_singledet_0" x="-1100.0" y="1.34711147906e-13" z="-41"/>
-			<rotation name="rot_singledet_0" x="0" y="0" z="-3.14159265359"/>
+			<position name="pos_singledet_0" x="-1100.0" y="1.3471114790620886e-13" z="-41"/>
+			<rotation name="rot_singledet_0" x="0" y="0" z="-3.141592653589793"/>
 		</physvol>
 		<physvol name="singledet_01">
 			<volumeref ref="logic_singledet_01"/>
-			<position name="pos_singledet_1" x="-1076.32041505" y="-245.663111088" z="41"/>
-			<rotation name="rot_singledet_1" x="0" y="0" z="-3.36599212885"/>
+			<position name="pos_singledet_1" x="-1076.3204150487334" y="-245.66311108777097" z="41"/>
+			<rotation name="rot_singledet_1" x="0" y="0" z="-3.365992128846207"/>
 		</physvol>
 		<physvol name="singledet_02">
 			<volumeref ref="logic_singledet_02"/>
-			<position name="pos_singledet_2" x="-991.065754693" y="-477.272113029" z="-41"/>
-			<rotation name="rot_singledet_2" x="0" y="0" z="-3.5903916041"/>
+			<position name="pos_singledet_2" x="-991.065754692661" y="-477.2721130293138" z="-41"/>
+			<rotation name="rot_singledet_2" x="0" y="0" z="-3.5903916041026207"/>
 		</physvol>
 		<physvol name="singledet_03">
 			<volumeref ref="logic_singledet_03"/>
-			<position name="pos_singledet_3" x="-863.141956645" y="-688.332741252" z="41"/>
-			<rotation name="rot_singledet_3" x="0" y="0" z="-3.81479107936"/>
+			<position name="pos_singledet_3" x="-863.141956644705" y="-688.3327412520416" z="41"/>
+			<rotation name="rot_singledet_3" x="0" y="0" z="-3.8147910793590345"/>
 		</physvol>
 		<physvol name="singledet_04">
 			<volumeref ref="logic_singledet_04"/>
-			<position name="pos_singledet_4" x="-685.838782045" y="-860.014630715" z="-41"/>
-			<rotation name="rot_singledet_4" x="0" y="0" z="-4.03919055462"/>
+			<position name="pos_singledet_4" x="-685.838782044607" y="-860.0146307148326" z="-41"/>
+			<rotation name="rot_singledet_4" x="0" y="0" z="-4.039190554615448"/>
 		</physvol>
 		<physvol name="singledet_05">
 			<volumeref ref="logic_singledet_05"/>
-			<position name="pos_singledet_5" x="-479.007647986" y="-994.669630164" z="41"/>
-			<rotation name="rot_singledet_5" x="0" y="0" z="-4.26359002987"/>
+			<position name="pos_singledet_5" x="-479.00764798578433" y="-994.6696301642706" z="41"/>
+			<rotation name="rot_singledet_5" x="0" y="0" z="-4.263590029871862"/>
 		</physvol>
 		<physvol name="singledet_06">
 			<volumeref ref="logic_singledet_06"/>
-			<position name="pos_singledet_6" x="-244.773027352" y="-1072.4207034" z="-41"/>
-			<rotation name="rot_singledet_6" x="0" y="0" z="-4.48798950513"/>
+			<position name="pos_singledet_6" x="-244.77302735194604" y="-1072.420703400006" z="-41"/>
+			<rotation name="rot_singledet_6" x="0" y="0" z="-4.487989505128276"/>
 		</physvol>
 		<physvol name="singledet_07">
 			<volumeref ref="logic_singledet_07"/>
-			<position name="pos_singledet_7" x="-2.02801509939e-13" y="-1104.0" z="41"/>
-			<rotation name="rot_singledet_7" x="0" y="0" z="-4.71238898038"/>
+			<position name="pos_singledet_7" x="-2.0280150993880168e-13" y="-1104.0" z="41"/>
+			<rotation name="rot_singledet_7" x="0" y="0" z="-4.71238898038469"/>
 		</physvol>
 		<physvol name="singledet_08">
 			<volumeref ref="logic_singledet_08"/>
-			<position name="pos_singledet_8" x="244.773027352" y="-1072.4207034" z="-41"/>
-			<rotation name="rot_singledet_8" x="0" y="0" z="-4.93678845564"/>
+			<position name="pos_singledet_8" x="244.77302735194564" y="-1072.420703400006" z="-41"/>
+			<rotation name="rot_singledet_8" x="0" y="0" z="-4.9367884556411035"/>
 		</physvol>
 		<physvol name="singledet_09">
 			<volumeref ref="logic_singledet_09"/>
-			<position name="pos_singledet_9" x="479.007647986" y="-994.669630164" z="41"/>
-			<rotation name="rot_singledet_9" x="0" y="0" z="-5.1611879309"/>
+			<position name="pos_singledet_9" x="479.007647985784" y="-994.6696301642709" z="41"/>
+			<rotation name="rot_singledet_9" x="0" y="0" z="-5.161187930897517"/>
 		</physvol>
 		<physvol name="singledet_10">
 			<volumeref ref="logic_singledet_10"/>
-			<position name="pos_singledet_10" x="685.838782045" y="-860.014630715" z="-41"/>
-			<rotation name="rot_singledet_10" x="0" y="0" z="-5.38558740615"/>
+			<position name="pos_singledet_10" x="685.8387820446067" y="-860.014630714833" z="-41"/>
+			<rotation name="rot_singledet_10" x="0" y="0" z="-5.385587406153931"/>
 		</physvol>
 		<physvol name="singledet_11">
 			<volumeref ref="logic_singledet_11"/>
-			<position name="pos_singledet_11" x="863.141956645" y="-688.332741252" z="41"/>
-			<rotation name="rot_singledet_11" x="0" y="0" z="-5.60998688141"/>
+			<position name="pos_singledet_11" x="863.1419566447048" y="-688.332741252042" z="41"/>
+			<rotation name="rot_singledet_11" x="0" y="0" z="-5.609986881410345"/>
 		</physvol>
 		<physvol name="singledet_12">
 			<volumeref ref="logic_singledet_12"/>
-			<position name="pos_singledet_12" x="991.065754693" y="-477.272113029" z="-41"/>
-			<rotation name="rot_singledet_12" x="0" y="0" z="-5.83438635667"/>
+			<position name="pos_singledet_12" x="991.0657546926609" y="-477.2721130293142" z="-41"/>
+			<rotation name="rot_singledet_12" x="0" y="0" z="-5.834386356666759"/>
 		</physvol>
 		<physvol name="singledet_13">
 			<volumeref ref="logic_singledet_13"/>
-			<position name="pos_singledet_13" x="1076.32041505" y="-245.663111088" z="41"/>
-			<rotation name="rot_singledet_13" x="0" y="0" z="-6.05878583192"/>
+			<position name="pos_singledet_13" x="1076.3204150487331" y="-245.66311108777137" z="41"/>
+			<rotation name="rot_singledet_13" x="0" y="0" z="-6.058785831923172"/>
 		</physvol>
 		<physvol name="singledet_14">
 			<volumeref ref="logic_singledet_14"/>
-			<position name="pos_singledet_14" x="1100.0" y="-2.69422295812e-13" z="-41"/>
-			<rotation name="rot_singledet_14" x="0" y="0" z="-6.28318530718"/>
+			<position name="pos_singledet_14" x="1100.0" y="-2.6942229581241773e-13" z="-41"/>
+			<rotation name="rot_singledet_14" x="0" y="0" z="-6.283185307179586"/>
 		</physvol>
 		<physvol name="singledet_15">
 			<volumeref ref="logic_singledet_15"/>
-			<position name="pos_singledet_15" x="1076.32041505" y="245.663111088" z="41"/>
-			<rotation name="rot_singledet_15" x="0" y="0" z="-6.50758478244"/>
+			<position name="pos_singledet_15" x="1076.3204150487334" y="245.66311108777086" z="41"/>
+			<rotation name="rot_singledet_15" x="0" y="0" z="-6.507584782436"/>
 		</physvol>
 		<physvol name="singledet_16">
 			<volumeref ref="logic_singledet_16"/>
-			<position name="pos_singledet_16" x="991.065754693" y="477.272113029" z="-41"/>
-			<rotation name="rot_singledet_16" x="0" y="0" z="-6.73198425769"/>
+			<position name="pos_singledet_16" x="991.0657546926611" y="477.2721130293137" z="-41"/>
+			<rotation name="rot_singledet_16" x="0" y="0" z="-6.731984257692414"/>
 		</physvol>
 		<physvol name="singledet_17">
 			<volumeref ref="logic_singledet_17"/>
-			<position name="pos_singledet_17" x="863.141956645" y="688.332741252" z="41"/>
-			<rotation name="rot_singledet_17" x="0" y="0" z="-6.95638373295"/>
+			<position name="pos_singledet_17" x="863.1419566447051" y="688.3327412520415" z="41"/>
+			<rotation name="rot_singledet_17" x="0" y="0" z="-6.956383732948828"/>
 		</physvol>
 		<physvol name="singledet_18">
 			<volumeref ref="logic_singledet_18"/>
-			<position name="pos_singledet_18" x="685.838782045" y="860.014630715" z="-41"/>
-			<rotation name="rot_singledet_18" x="0" y="0" z="-7.18078320821"/>
+			<position name="pos_singledet_18" x="685.8387820446071" y="860.0146307148325" z="-41"/>
+			<rotation name="rot_singledet_18" x="0" y="0" z="-7.180783208205241"/>
 		</physvol>
 		<physvol name="singledet_19">
 			<volumeref ref="logic_singledet_19"/>
-			<position name="pos_singledet_19" x="479.007647986" y="994.669630164" z="41"/>
-			<rotation name="rot_singledet_19" x="0" y="0" z="-7.40518268346"/>
+			<position name="pos_singledet_19" x="479.00764798578444" y="994.6696301642706" z="41"/>
+			<rotation name="rot_singledet_19" x="0" y="0" z="-7.405182683461655"/>
 		</physvol>
 		<physvol name="singledet_20">
 			<volumeref ref="logic_singledet_20"/>
-			<position name="pos_singledet_20" x="244.773027352" y="1072.4207034" z="-41"/>
-			<rotation name="rot_singledet_20" x="0" y="0" z="-7.62958215872"/>
+			<position name="pos_singledet_20" x="244.77302735194615" y="1072.4207034000058" z="-41"/>
+			<rotation name="rot_singledet_20" x="0" y="0" z="-7.629582158718069"/>
 		</physvol>
 		<physvol name="singledet_21">
 			<volumeref ref="logic_singledet_21"/>
-			<position name="pos_singledet_21" x="3.38002516565e-13" y="1104.0" z="41"/>
-			<rotation name="rot_singledet_21" x="0" y="0" z="-7.85398163397"/>
+			<position name="pos_singledet_21" x="3.380025165646695e-13" y="1104.0" z="41"/>
+			<rotation name="rot_singledet_21" x="0" y="0" z="-7.853981633974483"/>
 		</physvol>
 		<physvol name="singledet_22">
 			<volumeref ref="logic_singledet_22"/>
-			<position name="pos_singledet_22" x="-244.773027352" y="1072.4207034" z="-41"/>
-			<rotation name="rot_singledet_22" x="0" y="0" z="-8.07838110923"/>
+			<position name="pos_singledet_22" x="-244.7730273519455" y="1072.420703400006" z="-41"/>
+			<rotation name="rot_singledet_22" x="0" y="0" z="-8.078381109230897"/>
 		</physvol>
 		<physvol name="singledet_23">
 			<volumeref ref="logic_singledet_23"/>
-			<position name="pos_singledet_23" x="-479.007647986" y="994.669630164" z="41"/>
-			<rotation name="rot_singledet_23" x="0" y="0" z="-8.30278058449"/>
+			<position name="pos_singledet_23" x="-479.0076479857839" y="994.6696301642709" z="41"/>
+			<rotation name="rot_singledet_23" x="0" y="0" z="-8.30278058448731"/>
 		</physvol>
 		<physvol name="singledet_24">
 			<volumeref ref="logic_singledet_24"/>
-			<position name="pos_singledet_24" x="-685.838782045" y="860.014630715" z="-41"/>
-			<rotation name="rot_singledet_24" x="0" y="0" z="-8.52718005974"/>
+			<position name="pos_singledet_24" x="-685.8387820446065" y="860.0146307148331" z="-41"/>
+			<rotation name="rot_singledet_24" x="0" y="0" z="-8.527180059743724"/>
 		</physvol>
 		<physvol name="singledet_25">
 			<volumeref ref="logic_singledet_25"/>
-			<position name="pos_singledet_25" x="-863.141956645" y="688.332741252" z="41"/>
-			<rotation name="rot_singledet_25" x="0" y="0" z="-8.751579535"/>
+			<position name="pos_singledet_25" x="-863.1419566447047" y="688.3327412520422" z="41"/>
+			<rotation name="rot_singledet_25" x="0" y="0" z="-8.751579535000138"/>
 		</physvol>
 		<physvol name="singledet_26">
 			<volumeref ref="logic_singledet_26"/>
-			<position name="pos_singledet_26" x="-991.065754693" y="477.272113029" z="-41"/>
-			<rotation name="rot_singledet_26" x="0" y="0" z="-8.97597901026"/>
+			<position name="pos_singledet_26" x="-991.0657546926608" y="477.2721130293143" z="-41"/>
+			<rotation name="rot_singledet_26" x="0" y="0" z="-8.975979010256552"/>
 		</physvol>
 		<physvol name="singledet_27">
 			<volumeref ref="logic_singledet_27"/>
-			<position name="pos_singledet_27" x="-1076.32041505" y="245.663111088" z="41"/>
-			<rotation name="rot_singledet_27" x="0" y="0" z="-9.20037848551"/>
+			<position name="pos_singledet_27" x="-1076.3204150487331" y="245.66311108777148" z="41"/>
+			<rotation name="rot_singledet_27" x="0" y="0" z="-9.200378485512966"/>
 		</physvol>
 		<physvol name="support_ring">
 			<volumeref ref="logic_support_ring"/>
