@@ -140,7 +140,7 @@
     <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
 
     <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
-    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 610/2 + 500/2"/>
+    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 610/2 + 500/2 - 418/2"/>
 
     <!--need to subtract 50/2 to accomdate for the beampipe moving downstream due to collimator thickness increasing. An additional 75 mm subtracted to move the beampipe upstream.-->
     <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" 
@@ -154,7 +154,7 @@
     <constant name="inner_nose_shield_US_beampipe_center_z" value="inner_nose_shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2+0.001-50/2-75"/>
     <position name="inner_nose_shield_US_beampipe_center" unit="mm" x="0" y="0" z="inner_nose_shield_US_beampipe_center_z"/>
 
-    <constant name="PbWall_length" value="250"/>
+    <constant name="PbWall_length" value="150"/>
      
 </define> 
 
@@ -162,8 +162,9 @@
 
 <solids>
 
-      <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_1" rmax="550" rmin="0" startphi="0" z="USBoxmother_length"/>
-      <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_2" rmax="550+1" rmin="0" startphi="0" z="USBoxmothersubtract_length - 610 - 500"/>
+      <box lunit="mm" name="tubeUpstream_1" x="540*2+0.75" y="540*2+0.75" z="USBoxmother_length"/>
+      <box lunit="mm" name="tubeUpstream_2" x="540*2+1.75" y="540*2+1.75" z="USBoxmothersubtract_length - 610 - 500 + 418 + 2.05"/>
+
       <subtraction name="tubeUpstream">
         <first ref="tubeUpstream_1"/>
         <second ref="tubeUpstream_2"/>
@@ -171,21 +172,35 @@
       </subtraction>
       
     <!-- Lead shielding solids -->
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid" rmin="0" rmax="540" z="PbWall_length"/>
+    <box lunit="mm" name="PbWall_solid_1" x="540*2" y="540*2" z="PbWall_length"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_2" rmax="240" rmin="0" startphi="0" z="PbWall_length+1"/>
+    <subtraction name ="PbWall_solid">
+      <first ref="PbWall_solid_1"/>
+      <second ref="PbWall_solid_2"/>
+      <position name ="PbWall_solid_p" lunit="mm" x="0" y="0" z="0" />
+    </subtraction>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall_accep_solid">
       <zplane rmin="0" rmax="238.35" z="0"/>
       <zplane rmin="0" rmax="238.35" z="PbWall_length/2."/>
-      <zplane rmin="0" rmax="238.35+125*tan(8*pi/180.)" z="PbWall_length"/>
+      <zplane rmin="0" rmax="238.35+(PbWall_length/2)*tan(8*pi/180.)" z="PbWall_length"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Beampipe_under_PbWall_solid">
       <zplane rmin="230" rmax="236.35" z="0"/>
       <zplane rmin="230" rmax="236.35" z="PbWall_length/2."/>
-      <zplane rmin="230+125*tan(8*pi/180.)" rmax="236.35+125*tan(8*pi/180.)" z="PbWall_length"/>
+      <zplane rmin="230+(PbWall_length/2)*tan(8*pi/180.)" rmax="236.35+(PbWall_length/2)*tan(8*pi/180.)" z="PbWall_length"/>
     </polycone>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_solid" 
-	  rmax="550" rmin="219" startphi="0" z="102"/>
+    
+    <!--<tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_solid"
+	  rmax="550" rmin="219" startphi="0" z="102"/>-->
+   <!-- <box lunit="mm" name="vacuumPbWall_1" x="550*2" y="550*2" z="150"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_2" rmax="219" rmin="0" startphi="0" z="150+1"/>
+    <subtraction name ="vacuumPbWall_solid">
+        <first ref="vacuumPbWall_1"/>
+        <second ref="vacuumPbWall_2"/>
+        <position name ="vacuumPbWall_p" lunit="mm" x="0" y="0" z="0" />
+    </subtraction>-->
     <!-- Feb 2020 New Collimator1 (combined Coll1 & Coll2) -->
     <!--  V1   
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
@@ -1488,7 +1503,7 @@
     </volume>
 
       <!-- Hybrid wall -->
-    <volume name="Beampipe_under_PbWall_logic">
+   <!--<volume name="Beampipe_under_PbWall_logic">
       <materialref ref="G4_Al"/>
       <solidref ref="Beampipe_under_PbWall_solid"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
@@ -1503,7 +1518,7 @@
       <physvol name="phys_PbWall_acce">
 	      <volumeref ref="Beampipe_under_PbWall_logic"/>
       </physvol>
-    </volume>
+    </volume>-->
 
     <volume name="PbWall_logic">
       <materialref ref="Lead"/>
@@ -1511,16 +1526,16 @@
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
       <auxiliary auxtype="DetNo" auxvalue="6031"/>
-      <physvol name="phys_PbWall_acce">
+      <!--<physvol name="phys_PbWall_acce">
 	      <volumeref ref="PbWall_accep_logic"/>
-	      <position name="Pbwall_accep_pos" x="0" y="0" z="-125"/>
-      </physvol>
+	      <position name="Pbwall_accep_pos" x="0" y="0" z="-150/2"/>
+      </physvol>-->
     </volume>
-    <volume name="vacuumPbWall_logic">
+    <!--<volume name="vacuumPbWall_logic">
       <materialref ref="Lead"/>
       <solidref ref="vacuumPbWall_solid"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
-    </volume>
+    </volume>-->
     <volume name="upstreamTorusRegion">
       <materialref ref="G4_Galactic"/>
       <solidref ref="tubeUpstream"/>
@@ -1610,14 +1625,14 @@
       <!-- Lead wall DS of collimator 4 -->
       <physvol>
         <volumeref ref="PbWall_logic"/>
-        <position name="PbWall_pos" x="0" y="0" z="2005-0.75"/>
+        <position name="PbWall_pos" x="0" y="0" z="1665-48/2"/>
       </physvol>
 
      <!-- mini - Lead wall DS of collimator 4 -->
-      <physvol name="vacuumPbWall">
+      <!--<physvol name="vacuumPbWall">
         <volumeref ref="vacuumPbWall_logic"/>
-        <position name="vacuumPbWall_pos" x="0" y="0" z="1665-0.75"/>
-      </physvol>
+        <position name="vacuumPbWall_pos" x="0" y="0" z="1665-48/2"/>
+      </physvol>-->
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>

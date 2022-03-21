@@ -19,7 +19,7 @@
 <position name="hybridCenter" x="0.0" y="0.0" z="11016.865-8.73/2+150/2+400/2" unit="mm"/>
 
 <!-- PS Bunker position -->
-<position name="magnetPSbunker_pos" x="4123.944+8399.78" y="-948.86+75" z="10447.957"/>
+<position name="magnetPSbunker_pos" x="4123.944+5871.21" y="-948.86+75" z="10447.957"/>
 
 <!-- Virtual planes in the parallel world -->
 <position name="trackingDetectorVirtualPlaneFront1_pos" z="19.5029" unit="m"/>
