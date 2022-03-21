@@ -4,8 +4,10 @@
 # This is the current working geometry
 #/remoll/setgeofile geometry/detector/tid.gdml
 #/remoll/setgeofile geometry/detector/scintillatordesign.gdml
-#/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
-/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
+/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
+#/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
+#/remoll/geometry/setfile geometry/trigscint/ScintDetector_world.gdml
+#/remoll/geometry/setfile geometry/trigscint/original/ScintDetector_world.gdml
 /remoll/geometry/overlapcheck true
 #/remoll/setgeofile geometry/pion/Lucite/pionDetectorLucite.gdml
 
@@ -26,12 +28,12 @@
 /remoll/evgen/external/startEvent 0
 
 #/remoll/evgen/external/file analysis/o_remollSkimTree.root ##425 events all at x,y at 0.0
-/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_24838.root ## events 24838 x,y uniformly distributed +/-100 mm
+/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_fullactivearea_24838.root ## events 24838 x,y uniformly distributed +/-100 mm
 /remoll/evgen/external/detid 28
 #/remoll/evgen/external/zOffset -21900
 /remoll/filename o_tid_28_moller.root
 
 /control/execute vis/vis.mac
 
-#/control/execute macros/tid_vis.mac
+#/control/execute macros/trigscint_vis.mac
 

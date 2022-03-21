@@ -1,7 +1,9 @@
 /remoll/physlist/optical/enable
  
-/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
-#/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
+#/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
+/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
+#/remoll/geometry/setfile geometry/trigscint/original/ScintDetector_world.gdml
+#/remoll/geometry/setfile geometry/trigscint/ScintDetector_world.gdml
 #/remoll/physlist/register QGSP_BERT_HP
 /run/initialize
 
@@ -17,10 +19,10 @@
 #/remoll/evgen/copyRate 1
 /remoll/evgen/external/startEvent 0
 
-/remoll/evgen/external/file analysis/o_remollSkimTree_24838.root 
+/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_fullactivearea_24838.root
 /remoll/evgen/external/detid 28
 #/remoll/evgen/external/zOffset -21900
-/remoll/filename o_trigscint_moller_lg350mm_Mylar_10k_pe.root
+/remoll/filename o_trigscint_original_moller_wls_1k_fullactivearea_pe_1.root
 
 #/run/beamOn 24838
-/run/beamOn 10000
+/run/beamOn 1000

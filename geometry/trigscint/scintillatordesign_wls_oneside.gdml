@@ -21,12 +21,14 @@
       2 mil = 0.05 mm.
   -->
 <quantity name="mylar_thickness" type="length" value="0.05" unit="mm"/>
-
+<quantity name="air_gap" type="length" value="0.025" unit="mm"/> 
 <quantity name="groove_thickness" type="length" value="3" unit="mm"/>
 <quantity name="groove_separation" type="length" value="50" unit="mm"/>
 <quantity name="groove_depth" type="length" value="3" unit="mm"/>
 <quantity name="scint_height" type="length" value="550" unit="mm"/>
 <quantity name="scint_thickness" type="length" value="10" unit="mm"/>
+<quantity name="scint_bottom_width" type="length" value="284.82" unit="mm"/>
+<quantity name="scint_top_width" type="length" value="574.63" unit="mm"/>
 <quantity name="scint_curvature" type="length" value="635" unit="mm"/>
 <quantity name="lguide_height" type="length" value="350" unit="mm"/> <!-- 700 -->
 <quantity name="location_curved_disk_from_scint_bottom" value="614.512" unit="mm"/> 
@@ -59,7 +61,7 @@
 	 z="200"/>
     
     <!--Create the scintillator -->
-    <trd name = "scint_sol"  x1="284.82" x2="574.63" y1="scint_thickness" y2="scint_thickness" z="scint_height" lunit= "mm"/>
+    <trd name = "scint_sol"  x1="scint_bottom_width" x2="scint_top_width" y1="scint_thickness" y2="scint_thickness" z="scint_height" lunit= "mm"/>
 
     <tube name = "scint_bottom_curve" rmin="0" rmax="scint_curvature" z="20" deltaphi="6.28318530718" startphi="0" aunit="rad" lunit= "mm"/>
 
@@ -135,9 +137,11 @@
 
 
     <!-- To create a wrapping for the scintillator with  mylar_thickness we first create a solid-->
-    <trd name = "scint_sol_mylar_1"  x1="284.82 + mylar_thickness" x2="574.63+mylar_thickness" y1="10+mylar_thickness" y2="10+mylar_thickness" z="550+mylar_thickness" lunit= "mm"/>
+    <trd name = "scint_sol_mylar_1"  x1="scint_bottom_width + mylar_thickness" x2="scint_top_width + mylar_thickness" y1="scint_thickness + mylar_thickness + air_gap" y2="scint_thickness + mylar_thickness + air_gap" z="scint_height + mylar_thickness + air_gap" lunit= "mm"/>
+<!-- actual scint.  <trd name = "scint_sol"  x1="scint_bottom_width" x2="scint_top_width" y1="scint_thickness" y2="scint_thickness" z="scint_height" lunit= "mm"/> -->
+    <trd name = "scint_sol_mylar_1_1"  x1="scint_bottom_width" x2="scint_top_width" y1="scint_thickness + air_gap" y2="scint_thickness + air_gap" z="scint_height + air_gap + 2*mylar_thickness" lunit= "mm"/>
 
-    <trd name = "scaled_scint_sol_mylar_1"  x1="SCALE_UP*(284.82 + mylar_thickness)" x2="SCALE_UP*(574.63+mylar_thickness)" y1="SCALE_UP*(10+mylar_thickness)" y2="SCALE_UP*(10+mylar_thickness)" z="SCALE_UP*(550+mylar_thickness)" lunit= "mm"/>
+    <trd name = "scaled_scint_sol_mylar_1"  x1="SCALE_UP*(scint_bottom_width + mylar_thickness + air_gap)" x2="SCALE_UP*(scint_top_width+mylar_thickness + air_gap)" y1="SCALE_UP*(scint_thickness + mylar_thickness + air_gap)" y2="SCALE_UP*(scint_thickness + mylar_thickness + air_gap)" z="SCALE_UP*(scint_height + mylar_thickness + air_gap)" lunit= "mm"/>
     <tube name = "scaled_scint_bottom_curve" rmin="0" rmax="SCALE_DOWN*635" z="20" deltaphi="6.28318530718" startphi="0" aunit="rad" lunit= "mm"/>
 
     <!-- This subtraction creates a curved bottom for the scintillator wrapping by subtracting	 the disk shape from the scintillator solid -->
@@ -147,10 +151,21 @@
     <position name="scint_sol_mylar_bottom_curved_solid_subtraction_position1"
 	      x="0.0"
 	      y="0.0"
-	      z="-550/2 - 614.512-mylar_thickness"/>
+	      z="-scint_height/2 - 614.512 - mylar_thickness - air_gap"/>
     <rotation name ="scint_sol_mylar_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
     </subtraction>
-    
+<!--
+    <subtraction name="scint_sol_mylar_1_1_bottom_curved">
+    <first ref="scint_sol_mylar_1_1"/>
+    <second ref="scint_bottom_curve"/>
+    <position name="scint_sol_mylar_bottom_curved_solid_subtraction_position2"
+              x="0.0"
+              y="0.0"
+              z="-scint_height/2 - 614.512 - air_gap"/>
+    <rotation name ="scint_sol_mylar_bottom_curved_solid_subtraction_rot2" unit="deg" x="90"/>
+    </subtraction>
+    -->
+
 <!-- Create a scaled scint_sol_mylar_1_bottom_curved -->
     <subtraction name="scaled_scint_sol_mylar_1_bottom_curved">
     <first ref="scaled_scint_sol_mylar_1"/>
@@ -158,14 +173,15 @@
     <position name="scaled_scint_sol_mylar_bottom_curved_solid_subtraction_position1"
 	      x="0.0"
 	      y="0.0"
-	      z="-550/2 - 614.512-mylar_thickness"/>
+	      z="-scint_height/2 - 614.512 - mylar_thickness - air_gap"/>
     <rotation name ="scaled_scint_sol_mylar_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
     </subtraction>
     
-    <!-- This subtraction creates a hollow space for the scintillator by subtracting the scintillator solid -->
+    <!-- This subtraction creates a hollow space for the scintillator by subtracting the scintillator solid + air_gap -->
     <subtraction name="scint_sol_mylar_2">
     <first ref="scint_sol_mylar_1_bottom_curved"/>
-    <second ref="scint_sol_bottom_curved"/>
+    <!-- <second ref="scint_sol_bottom_curved"/> -->
+    <second ref="scint_sol_mylar_1_1"/>
     <position name="scint_sol_mylar_solid_subtraction_position1"
 	      x="0.0"
 	      y="0.0"
@@ -182,7 +198,7 @@
     <position name="scint_sol_mylar_solid_subtraction_position2"
 	      x="0.0"
 	      y="0.0"
-	      z="550.0/2 + mylar_thickness"/>
+	      z="scint_height/2 + mylar_thickness + air_gap"/>
     </subtraction>
 
 <!-- WLS: The Fiber-->
@@ -224,13 +240,13 @@
 
     <opticalsurface
 	name="Mylar_surface"
-	model="glisur" finish="groundteflonair" type="dielectric_metal" value="1.0">
+	model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
       <property name="REFLECTIVITY" ref="REFLECTIVITY_MYLAR"/>
     </opticalsurface>
 
     <opticalsurface
 	name="Lucite_surface"
-	model="glisur" finish="polished" type="dielectric_dielectric" value="1.00">
+	model="unified" finish="PolishedFrontPainted" type="dielectric_dielectric" value="1.00">
       <property name="RINDEX" ref="RINDEX_LUCITE_surf"/>
       <property name="SPECULARLOBECONSTANT"  ref="SPECLOBE_LUCITE"/>
       <property name="SPECULARSPIKECONSTANT" ref="SPECSPIKE_LUCITE"/>
@@ -239,9 +255,14 @@
 
     <opticalsurface
 	name="EJ200_surface"
-	model="glisur" finish="ground" type="dielectric_dielectric"  value="1.0">
-<!--        <property name="RINDEX" ref="RINDEX_EJ200_surf"/>
-        <property name="REFLECTIVITY" ref="REFLECTIVITY_EJ200"/> -->
+	model="unified" finish="ground" type="dielectric_dielectric"  value="1.0"> <!-- glisur unified ground polished  -->
+        <!-- <property name="RINDEX" ref="RINDEX_EJ200_surf"/> -->
+        <property name="REFLECTIVITY" ref="REFLECTIVITY_EJ200"/>
+
+        <property name="SPECULARLOBECONSTANT"  ref="SPECLOBE_EJ200"/>
+        <property name="SPECULARSPIKECONSTANT" ref="SPECSPIKE_EJ200"/>
+        <property name="BACKSCATTERCONSTANT"   ref="BACKSCATTER_EJ200"/>
+
     </opticalsurface>
 
    <opticalsurface
@@ -646,8 +667,6 @@
         <position name="front_pos" unit="mm" y= "0" z="0"/>        
       </physvol>
 -->
-
-    
       
     </volume>
   </structure>
