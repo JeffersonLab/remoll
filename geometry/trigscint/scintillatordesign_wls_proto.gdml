@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "trigscintMaterials.xml">
+  <!ENTITY matrices SYSTEM "trigscintMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define> 
+<!--
+    For enclosing volumes we merely scale up the actual volume by a small factor.
+  -->
+  <constant name="SCALE" value="0.1"/>
+  <constant name="SCALE_UP" value="1.0+SCALE"/>
+  <constant name="SCALE_DOWN" value="1.0-SCALE"/>
+
+<!--
+    Common thicknesses of aluminized mylar foils are:
+      5 mil = 0.125 mm,
+      2 mil = 0.05 mm.
+  -->
+<quantity name="mylar_thickness" type="length" value="0.05" unit="mm"/>
+
+<quantity name="groove_thickness" type="length" value="1.5" unit="mm"/>
+<quantity name="groove_separation" type="length" value="100" unit="mm"/>
+<quantity name="groove_depth" type="length" value="1.5" unit="mm"/>
+<quantity name="scint_height" type="length" value="400" unit="mm"/>
+<quantity name="scint_width" type="length" value="300" unit="mm"/>
+<quantity name="scint_thickness" type="length" value="10" unit="mm"/>
+<quantity name="scint_curvature" type="length" value="635" unit="mm"/>
+<quantity name="lguide_height" type="length" value="350" unit="mm"/> <!-- 700 -->
+<quantity name="location_curved_disk_from_scint_bottom" value="614.512" unit="mm"/> 
+
+<quantity name="WLS_length_extend" type="length" value="10" unit="mm"/>
+<quantity name="WLS_length" type="length" value="scint_height + WLS_length_extend" unit="mm"/>
+<quantity name="Fiber_rmin" type="length" value="0.0" unit="mm"/>
+<quantity name="Fiber_rmax" type="length" value="0.50" unit="mm"/>
+<quantity name="Clad1_rmin" type="length" value="0.0" unit="mm"/>
+<quantity name="Clad1_rmax" type="length" value="(Fiber_rmax + 0.015*Fiber_rmax)" unit="mm"/>
+<quantity name="Clad2_rmin" type="length" value="0.0" unit="mm"/>
+<quantity name="Clad2_rmax" type="length" value="(Clad1_rmax + 0.015*Fiber_rmax)" unit="mm"/>
+
+<quantity name="WLS_det_thickness" type="length" value="0.1" unit="mm"/>
+
+&matrices;
+  </define>
+
+&materials;
+
+  <solids>
+
+  <!-- x in azimuthal direction -->
+  <!-- y in downstream beam direction -->
+  <!-- z in radial outward direction -->
+
+    <box lunit="mm" name="world_solid"
+	 x="5000"
+	 y="5000"
+	 z="200"/>
+    
+    <!--Create the scintillator -->
+    <trd name = "scint_sol"  x1="scint_width" x2="scint_width" y1="scint_thickness" y2="scint_thickness" z="scint_height" lunit= "mm"/>
+
+    <box name = "scint_groove_sol" x= "groove_thickness" y= "groove_depth" z= "600" lunit= "mm"/>
+
+    <subtraction name="scint_sol_bottom_curved_groove1">
+    <first ref="scint_sol"/>
+    <second ref="scint_groove_sol"/>
+    <position name="scint_sol_groove_curved_solid_subtraction_position1"
+	      x="0.0-groove_separation/2"
+	      y="scint_thickness/2-groove_depth/2+0.05"
+	      z="0.0"/>    
+    </subtraction>
+    <subtraction name="scint_sol_bottom_curved_groove2">
+    <first ref="scint_sol_bottom_curved_groove1"/>
+    <second ref="scint_groove_sol"/>
+    <position name="scint_sol_groove_curved_solid_subtraction_position2"
+	      x="0.0+groove_separation/2"
+	      y="scint_thickness/2-groove_depth/2+0.05"
+	      z="0.0"/>    
+    </subtraction>
+
+
+    <!-- To create a wrapping for the scintillator with  mylar_thickness we first create a solid-->
+    <trd name = "scint_sol_mylar_1"  x1="scint_width + mylar_thickness" x2="scint_width+mylar_thickness" y1="scint_thickness+mylar_thickness" y2="scint_thickness+mylar_thickness" z="scint_height+mylar_thickness" lunit= "mm"/>
+
+    <trd name = "scaled_scint_sol_mylar_1"  x1="SCALE_UP*(scint_width + mylar_thickness)" x2="SCALE_UP*(scint_width+mylar_thickness)" y1="SCALE_UP*(scint_thickness+mylar_thickness)" y2="SCALE_UP*(scint_thickness+mylar_thickness)" z="SCALE_UP*(scint_height+mylar_thickness)" lunit= "mm"/>
+   
+
+       
+    <!-- This subtraction creates a hollow space for the scintillator by subtracting the scintillator solid -->
+     <trd name = "scint_sol_to_sub"  x1="scint_width" x2="scint_width" y1="scint_thickness" y2="scint_thickness" z="scint_height+mylar_thickness*3" lunit= "mm"/>
+    <subtraction name="scint_sol_mylar_2">
+    <first ref="scint_sol_mylar_1"/>
+    <second ref="scint_sol_to_sub"/>
+    <position name="scint_sol_mylar_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="0.0"/>
+    </subtraction>	
+
+     <!-- We need to clear to top of the wrapping where light guide is glues to the scintillator. So to subtract this top of the wrap we use this box with exact size as the top of the wrap solid scint_sol_mylar_1 -->
+    <box name = "scint_top_sub_sol" x= "scint_width + mylar_thickness + mylar_thickness" y= "scint_thickness + mylar_thickness + mylar_thickness" z= "mylar_thickness + mylar_thickness" lunit= "mm"/>
+
+    <!-- This subtraction creates the hollow space for the scintillator with top of the wrap now removed. If we don't do this light guide will overlap with the mylar wrapping   -->
+    <subtraction name="scint_sol_mylar_solid">
+    <first ref="scint_sol_mylar_2"/>
+    <second ref="scint_top_sub_sol"/>
+    <position name="scint_sol_mylar_solid_subtraction_position2"
+	      x="0.0"
+	      y="0.0"
+	      z="scint_height/2 + mylar_thickness"/>
+    </subtraction>
+
+<!-- WLS: The Fiber-->
+    <tube name = "wls_fiber_tube_sol" rmin="Fiber_rmin" rmax="Fiber_rmax" z="WLS_length" deltaphi="360.0" startphi="0.0" aunit="deg" lunit= "mm"/>
+<!-- WLS: The Cladding1-->
+    <tube name = "wls_clad1_tube_sol" rmin="Clad1_rmin" rmax="Clad1_rmax" z="WLS_length" deltaphi="360.0" startphi="0.0" aunit="deg" lunit= "mm"/>
+<!-- WLS: The Cladding1-->
+    <tube name = "wls_clad2_tube_sol" rmin="Clad2_rmin" rmax="Clad2_rmax" z="WLS_length" deltaphi="360.0" startphi="0.0" aunit="deg" lunit= "mm"/>
+<!-- volume to keep WLS, PMT and sens. detetector -->
+    <tube name = "wls_housing_tube_sol" rmin="Clad2_rmin" rmax="Clad2_rmax" z="WLS_length+10" deltaphi="360.0" startphi="0.0" aunit="deg" lunit= "mm"/>
+    
+    <!--Create the light guide -->
+    <trd name = "lguide_sol" x1="scint_width" x2="scint_width" y1="scint_thickness" y2="scint_thickness" z="lguide_height" lunit= "mm"/>
+    <trd name = "scaled_lguide_sol" x1="SCALE_UP*scint_width" x2="SCALE_UP*scint_width" y1="SCALE_UP*scint_thickness" y2="SCALE_UP*scint_thickness" z="SCALE_UP*lguide_height" lunit= "mm"/>
+    
+   
+
+    
+
+
+    <!--Create the PMT surface -->
+    <box name = "pmt_sol" x= "51" y= "10" z= "WLS_det_thickness" lunit= "mm"/>
+
+   <!--Create the PMT surface for WLS fiber-->
+   <tube name = "wls_pmt_disk_sol" rmin="Clad2_rmin" rmax="Clad2_rmax" z="WLS_det_thickness" deltaphi="360.0" startphi="0.0" aunit="deg" lunit= "mm"/>
+   <!--Create the sens det for WLS fiber-->
+   <tube name = "sens_det_sol" rmin="Clad2_rmin" rmax="Clad2_rmax" z="WLS_det_thickness" deltaphi="360.0" startphi="0.0" aunit="deg" lunit= "mm"/>
+
+<!-- Create union of scaled scint_sol_mylar_1_bottom_curved and scaled lguide_sol_mylar_1 This will house the scint+lguide+pmt -->
+
+     <union name="scaled_scint_lguide_sol" >
+            <first ref="scaled_scint_sol_mylar_1"/>
+            <second ref="scaled_lguide_sol"/>
+            <rotation name ="scaled_scint_lguide_sol_union_rot1" unit="deg" x="180"/>
+            <position name="scaled_scint_lguide_sol_union_pos" x="0" y="0" z="SCALE_UP*(scint_height/2+lguide_height/2)"/>
+            
+     </union>
+
+    <opticalsurface
+	name="Mylar_surface"
+	model="glisur" finish="groundteflonair" type="dielectric_metal" value="1.0">
+      <property name="REFLECTIVITY" ref="REFLECTIVITY_MYLAR"/>
+    </opticalsurface>
+
+    <opticalsurface
+	name="Lucite_surface"
+	model="glisur" finish="polished" type="dielectric_dielectric" value="1.00">
+      <property name="RINDEX" ref="RINDEX_LUCITE_surf"/>
+      <property name="SPECULARLOBECONSTANT"  ref="SPECLOBE_LUCITE"/>
+      <property name="SPECULARSPIKECONSTANT" ref="SPECSPIKE_LUCITE"/>
+      <property name="BACKSCATTERCONSTANT"   ref="BACKSCATTER_LUCITE"/>
+    </opticalsurface>
+
+    <opticalsurface
+	name="EJ200_surface"
+	model="glisur" finish="polished" type="dielectric_dielectric"  value="1.0">
+        <property name="RINDEX" ref="RINDEX_EJ200_surf"/>
+        <property name="REFLECTIVITY" ref="REFLECTIVITY_EJ200"/>
+    </opticalsurface>
+
+   <opticalsurface
+    name="CsPhotocathode_surface"
+    model="glisur" finish="polishedlumirrorair" type="dielectric_metal" value="1.0">
+    <property name="REFLECTIVITY" ref="REFLECTIVITY_CATHODE"/>
+    <property name="EFFICIENCY"   ref="EFFICIENCY_CATHODE"/>
+   </opticalsurface>
+
+  </solids>
+
+  <structure>
+    
+<!-- Create the WLS fiber structure -->
+   <volume name="wls_fiber_log">
+      <materialref ref="PMMA"/> 
+      <solidref ref="wls_fiber_tube_sol"/>
+      <auxiliary auxtype="Color" auxvalue="cyan"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="wls_clad1_log">
+      <materialref ref="Pethylene1"/> 
+      <solidref ref="wls_clad1_tube_sol"/>
+      <physvol name="wls_fiber_phys">
+         <volumeref ref="wls_fiber_log"/>
+         <position name="wls_fiber_log_pos"
+                x="0.0" y="0.0" z="0.0"/>
+      </physvol>
+      <auxiliary auxtype="Color" auxvalue="yellow"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="wls_clad2_log">
+      <materialref ref="Pethylene2"/> 
+      <solidref ref="wls_clad2_tube_sol"/>
+      <physvol name="wls_clad1_phys">
+         <volumeref ref="wls_clad1_log"/>
+         <position name="wls_clad1_log_pos"
+                x="0.0" y="0.0" z="0.0"/>
+      </physvol>
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+
+    <volume name="wls_pmt1_log">
+      <materialref ref="CsPhotocathode"/>
+      <solidref ref="wls_pmt_disk_sol"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="DetNo" auxvalue="1001"/>
+      <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/> 
+    </volume> 	
+    <skinsurface name="wls_pmt1_log_skin"
+                 surfaceproperty="CsPhotocathode_surface">
+      <volumeref ref="wls_pmt1_log"/>
+    </skinsurface>
+
+    <volume name="wls_pmt2_log">
+      <materialref ref="CsPhotocathode"/>
+      <solidref ref="wls_pmt_disk_sol"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="DetNo" auxvalue="1002"/>
+      <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/> 
+    </volume> 	
+    <skinsurface name="wls_pmt2_log_skin"
+                 surfaceproperty="CsPhotocathode_surface">
+      <volumeref ref="wls_pmt2_log"/>
+    </skinsurface>
+
+    <volume name="wls_pmt3_log">
+      <materialref ref="CsPhotocathode"/>
+      <solidref ref="wls_pmt_disk_sol"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="DetNo" auxvalue="1003"/>
+      <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/> 
+    </volume> 	
+    <skinsurface name="wls_pmt3_log_skin"
+                 surfaceproperty="CsPhotocathode_surface">
+      <volumeref ref="wls_pmt3_log"/>
+    </skinsurface>
+
+    <volume name="wls_pmt4_log">
+      <materialref ref="CsPhotocathode"/>
+      <solidref ref="wls_pmt_disk_sol"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="DetNo" auxvalue="1004"/>
+      <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/> 
+    </volume> 	
+    <skinsurface name="wls_pmt4_log_skin"
+                 surfaceproperty="CsPhotocathode_surface">
+      <volumeref ref="wls_pmt4_log"/>
+    </skinsurface>
+
+
+    <volume name="scint_log">
+      <materialref ref="PLASTIC_SC_VINYLTOLUENE"/>
+      <solidref ref="scint_sol_bottom_curved_groove2"/> 
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+
+    <skinsurface name="scint_log_skin"
+		 surfaceproperty="EJ200_surface">
+      <volumeref ref="scint_log"/>
+    </skinsurface>
+
+    <volume name="scint_mylar_log">
+      <materialref ref="Mylar"/> <!--G4_MYLAR -->
+      <solidref ref="scint_sol_mylar_solid"/>
+      <auxiliary auxtype="Color" auxvalue="yellow"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <skinsurface name="scint_mylar_log_skin"
+		 surfaceproperty="Mylar_surface">
+      <volumeref ref="scint_mylar_log"/>
+    </skinsurface>
+
+    
+   <volume name="pmt_log">
+      <materialref ref="CsPhotocathode"/>
+      <solidref ref="pmt_sol"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="DetNo" auxvalue="10"/>
+      <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>
+      <!-- <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> -->
+    </volume> 	
+    <skinsurface name="pmt_log_skin"
+                 surfaceproperty="CsPhotocathode_surface">
+      <volumeref ref="pmt_log"/>
+    </skinsurface>
+
+ 
+
+    <volume name="trig_scint_log">
+      <materialref ref="Air"/> <!-- G4_Galactic -->
+      <solidref ref="scaled_scint_lguide_sol"/>   <!-- world_solid -->
+      
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+         
+ 
+      <physvol name="scint_phys">
+	<volumeref ref="scint_log"/>
+        <position name="front_pos" unit="mm" y= "0" z="0"/>
+        <!-- <rotation name ="front_rot" unit="deg" x ="180"/> -->
+      </physvol>
+
+<!--Place WLS housing wls_clad2_log use (WLS_length_extend+18) or WLS_length_extend+3 to keep the WLS bottom within the scintillator -->
+     <physvol name="wls_clad2_phys1">
+	<volumeref ref="wls_clad2_log"/>
+        <position name="wls_clad2_pos1" unit="mm" x="0.0-groove_separation/2" y= "scint_thickness/2-Clad2_rmax" z="0.0"/>
+     </physvol>
+<!-- add two PMTs top and bottom ends to each WLS  -->
+     <physvol name="wls_pmt_top_phys1">
+	<volumeref ref="wls_pmt1_log"/>
+        <position name="wls_pmt_top_phys1_pos1" unit="mm" x="0.0-groove_separation/2" y= "scint_thickness/2-Clad2_rmax" z="WLS_length/2+WLS_det_thickness/2"/>
+     </physvol>
+     <physvol name="wls_pmt_bottom_phys1">
+	<volumeref ref="wls_pmt2_log"/>
+        <position name="wls_pmt_bottom_phys1_pos1" unit="mm" x="0.0-groove_separation/2" y= "scint_thickness/2-Clad2_rmax" z="-WLS_length/2-WLS_det_thickness/2"/>
+     </physvol>
+
+     <physvol name="wls_clad2_phys2">
+	<volumeref ref="wls_clad2_log"/>
+        <position name="wls_clad2_pos2" unit="mm" x="0.0+groove_separation/2" y= "scint_thickness/2-Clad2_rmax" z="0.0"/>
+     </physvol>   
+     <physvol name="wls_pmt_top_phys2">
+	<volumeref ref="wls_pmt3_log"/>
+        <position name="wls_pmt_top_phys2_pos1" unit="mm" x="0.0+groove_separation/2" y= "scint_thickness/2-Clad2_rmax" z="WLS_length/2+WLS_det_thickness/2"/>
+     </physvol>
+     <physvol name="wls_pmt_bottom_phys2">
+	<volumeref ref="wls_pmt4_log"/>
+        <position name="wls_pmt_bottom_phys2_pos1" unit="mm" x="0.0+groove_separation/2" y= "scint_thickness/2-Clad2_rmax" z="-WLS_length/2-WLS_det_thickness/2"/>
+     </physvol>
+
+
+
+
+<!--Need to check optical properties of the mylar wrap as this is absorbing too much optical photons   -->
+
+<!--
+      <physvol name="scint_mylar_phys">
+	<volumeref ref="scint_mylar_log"/>
+        <position name="front_pos" unit="mm" y= "0" z="0"/>        
+      </physvol>
+-->
+
+    
+      
+    </volume>
+  </structure>
+  
+  <setup name="Default" version="1.0">
+    <world ref="trig_scint_log"/>
+  </setup>
+  
+</gdml>
