@@ -4,8 +4,8 @@
 # This is the current working geometry
 #/remoll/setgeofile geometry/detector/tid.gdml
 #/remoll/setgeofile geometry/detector/scintillatordesign.gdml
-/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
-#/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
+#/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
+/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
 #/remoll/geometry/setfile geometry/trigscint/ScintDetector_world.gdml
 #/remoll/geometry/setfile geometry/trigscint/original/ScintDetector_world.gdml
 /remoll/geometry/overlapcheck true
@@ -20,6 +20,15 @@
 
 #/remoll/beamene 855 MeV
 #/remoll/beamcurr 50 microampere
+
+/remoll/SD/disable_all
+
+/remoll/SD/enable 10
+/remoll/SD/detect opticalphoton 1
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
 
 ##testing external generator
 ## External Generator
