@@ -126,7 +126,7 @@
     PMT radially outward; -90.0 degrees is with the PMT radially inward.
   -->
   <quantity name="donutPionDetectorSectorAngleBase" type="angle" value="+90.0" unit="deg"/>
-  <quantity name="donutPionDetectorSectorAnglePitch" type="angle" value="-87.1.0" unit="deg"/>
+  <quantity name="donutPionDetectorSectorAnglePitch" type="angle" value="-87.1" unit="deg"/>
   
   <!--
     The center of the lucite detector is placed radially, and longitudinally with respect to
