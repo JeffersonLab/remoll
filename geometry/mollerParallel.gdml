@@ -140,10 +140,16 @@
       z="9512.3+9541.7"/>
   
   <box lunit="mm" name="RasterPS_solid" x="800" y="2500" z="800"/>
+  
+  <box lunit="mm" name="TargetVP_solid" x="1000" y="1" z="1250"/>
  
   <box lunit="mm" name="UStorusBottomVP_solid" x="4262-1600-4" y="1" z="4335 + 610 + 86 - 186 - 2"/>
       
   <box name="USTorus_VirtualPlane_solid" lunit="mm" x="2000" y="1400" z="1"/>
+  
+  <box lunit="mm" name="DSBottomVP_solid" x="2755.9" y="1" z="7454.9"/>
+ 
+  <box lunit="mm" name="DriftBottomVP_solid" x="2544.572" y="1" z="5974.08"/>
   
 </solids>
 
@@ -306,6 +312,28 @@
     <auxiliary auxtype="DetNo" auxvalue="5531"/>
   </volume>
 
+  <volume name="targetBottomVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5548"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+  
+  <volume name="targetTopVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5549"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+  </volume>
+  
   <volume name="sbsBunkerFrontFace_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="sbsBunkerFrontFace_solid"/>
@@ -456,6 +484,16 @@
     <auxiliary auxtype="DetNo" auxvalue="5714"/>
   </volume>
 
+  <volume name="DSBottomVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="DSBottomVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5715"/>
+  </volume>
+  
   <!--<volume name="trackingDetectorVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
@@ -751,6 +789,34 @@
     <auxiliary auxtype="DetNo" auxvalue="47"/>
   </volume>
 
+  <volume name="Bellows3US_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="483"/>
+  </volume>
+  
+  <volume name="Bellows3DS_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="484"/>
+  </volume>
+  
+  <volume name="Bellows4US_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="485"/>
+  </volume>
+  
+  <volume name="Bellows4DS_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="samVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="486"/>
+  </volume>
+  
   <volume name="PhotonBlockerUS_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
@@ -863,12 +929,12 @@
     <auxiliary auxtype="DetNo" auxvalue="78"/>
   </volume>
 
-  <volume name="DSCoil11_log">
+ <!-- <volume name="DSCoil11_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="61"/>
-  </volume>
+  </volume>-->
 
   <volume name="RasterPS_log">
     <materialref ref="G4_Galactic"/>
@@ -917,19 +983,19 @@
     <auxiliary auxtype="DetNo" auxvalue="270"/>
   </volume>
 
-  <volume name="DSCoil12_log">
+  <!--<volume name="DSCoil12_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="62"/>
-  </volume>
+  </volume>-->
 
-  <volume name="DSCoil13_log">
+  <!--<volume name="DSCoil13_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="63"/>
-  </volume>
+  </volume>-->
 
   <volume name="DSCoil14_log">
     <materialref ref="G4_Galactic"/>
@@ -966,12 +1032,12 @@
     <auxiliary auxtype="DetNo" auxvalue="68"/>
   </volume>
 
-  <volume name="DSCoil17_log">
+  <!--<volume name="DSCoil17_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="69"/>
-  </volume>
+  </volume>-->
 
   <volume name="Collar1Ent_log">
     <materialref ref="G4_Galactic"/>
@@ -1001,6 +1067,16 @@
     <auxiliary auxtype="DetNo" auxvalue="73"/>
   </volume>
 
+  <volume name="DriftBottomVP_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="DriftBottomVP_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5716"/>
+  </volume>
+  
   <volume name="collar2Ent_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="collarVirtualPlane_solid"/>
@@ -1114,6 +1190,16 @@
     <physvol    name="skyshineVacuumDet2VirtualPlane_phys">
       <volumeref ref="skyshineVacuumDet2VirtualPlane_log"/>
       <position name="skyshineVacuumDet2VirtualPlane_pos" unit="mm" x="0" y="3850" z="-4502"/>
+    </physvol>
+    
+    <physvol    name="targetBottomVP_phys">
+      <volumeref ref="targetBottomVP_log"/>
+      <position name="targetBottomVP_pos" unit="mm" x="0 + 1" y="-1000" z="-4502"/>
+    </physvol>
+    
+    <physvol    name="targetTopVP_phys">
+      <volumeref ref="targetTopVP_log"/>
+      <position name="targetTopVP_pos" unit="mm" x="0 + 1" y="1000" z="-4502"/>
     </physvol>
     
     <physvol    name="tgtOuterDet0VirtualPlane_phys">
@@ -1297,6 +1383,26 @@
       <position name="PbWallExit_pos" unit="mm" x="0" y="0" z="3879.25+250+0.5"/>
     </physvol>
 
+    <physvol name="Bellows3US_phys">
+      <volumeref ref="Bellows3US_log"/>
+      <position name="Bellows3US_pos" unit="mm" x="0" y="0" z="11287.5-6851.5-419.4/2-1-44.1/2"/>
+    </physvol>
+
+    <physvol name="Bellows3DS_phys">
+      <volumeref ref="Bellows3DS_log"/>
+      <position name="Bellows3DS_pos" unit="mm" x="0" y="0" z="11287.5-6851.5+419.4/2+1+44.1/2"/>
+    </physvol>
+    
+    <physvol name="Bellows4US_phys">
+      <volumeref ref="Bellows4US_log"/>
+      <position name="Bellows4US_pos" unit="mm" x="0" y="0" z="11287.5+(12328.144-11287.5)+31.75/2"/>
+    </physvol>
+
+    <physvol name="Bellows4DS_phys">
+      <volumeref ref="Bellows4DS_log"/>
+      <position name="Bellows4DS_pos" unit="mm" x="0" y="0" z="11287.5+(12639.294-11287.5)+31.75/2"/>
+    </physvol>
+    
     <physvol name="PhotonBlockerUS_phys">
       <volumeref ref="PhotonBlockerUS_log"/>
       <position  name="PhotonBlockerUS_pos" unit="mm" x="0" y="0" z="4707.5-0.5"/>
@@ -1452,6 +1558,16 @@
       <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="19182.69+150+0.6"/>
     </physvol>-->
 
+    <physvol name="DSBottomVP_phys">
+      <volumeref ref="DSBottomVP_log"/>
+      <position name="DSBottomVP_pos" unit="mm" x="0" y="-1463.548+91.948/2-9.652/2+1" z="11287.5+(12151.36-11287.5-7454.9/2)"/>
+    </physvol>
+    
+    <physvol name="DriftBottomVP_phys">
+      <volumeref ref="DriftBottomVP_log"/>
+      <position name="DriftBottomVP_pos" unit="mm" x="0" y="-1272.286-100" z="11287.5+(12854.94 - 11287.5)+5974.08/2"/>
+    </physvol>
+    
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
       <volumeref ref="gemVirtualPlane1_log"/>
