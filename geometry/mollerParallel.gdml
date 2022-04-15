@@ -24,7 +24,7 @@
   <tube
     name="trackingVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmax="2400" rmin="0" z="1" lunit="mm"/>
+    rmax="2600" rmin="0" z="1" lunit="mm"/>
 
   <tube
     name="collarVirtualPlane_solid"
@@ -39,7 +39,7 @@
   <tube
     name="samVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmax="1000" rmin="0" z="1" lunit="mm"/>
+    rmax="900" rmin="0" z="1" lunit="mm"/>
 
   <tube
     name="VirtualPlane1_solid"
@@ -75,19 +75,19 @@
        x="11000" y="4500" z="1"/>
 
   <box lunit="mm" name="usHybridVirtualPlane_solid"
-       x="5000" y="6000" z="1"/>
+       x="5000+2000" y="6000" z="1"/>
             
   <box lunit="mm" name="coll1InnerSideVirtualPlane_solid"
-       x="1" y="1286.5*2" z="4335 + 610 + 86"/>
+       x="1" y="1286.5*2" z="4335 + 610 + 86 - 186"/>
 
   <box lunit="mm" name="coll1OuterSideVirtualPlane_solid"
-       x="1" y="6000" z="4335 + 610 + 86"/>
+       x="1" y="6000" z="4335 + 610 + 86 - 186 - 2"/>
 
   <box lunit="mm" name="coll1InnerTopVirtualPlane_solid"
-       x="2660" y="1" z="4335 + 610 + 86"/>
+       x="2660" y="1" z="4335 + 610 + 86 - 186"/>
 
   <box lunit="mm" name="coll1OuterTopVirtualPlane_solid"
-       x="4262" y="1" z="4335 + 610 + 86"/>
+       x="4262" y="1" z="4335 + 610 + 86 - 186 - 2"/>
 
   <box lunit="mm" name="hybridIronVirtualPlane_solid"
        x="2860"
@@ -106,41 +106,41 @@
        
   <box lunit="mm" name="PSbunkerOuterFrontVP_solid"
        x="1"
-       y="4215"
-       z="11249.914"/>
+       y="3429+2571"
+       z="9512.3+9541.7"/>
        
   <box lunit="mm" name="PSbunkerOuterSideLeftVP_solid"
-       x="16799.56"
-       y="4215"
+       x="11742.42"
+       y="3429"
        z="1"/>
-  
+
   <box lunit="mm" name="PSbunkerOuterSideRightVP_solid"
-       x="16799.56-1000"
-       y="4215"
+       x="11742.42"
+       y="3429"
        z="1"/>
    
   <box lunit="mm" name="PSbunkerInnerFrontVP_solid"
      x="1"
-     y="4215"
-     z="8449.914"/>
+     y="3429"
+     z="6464.3"/>
   
   <box lunit="mm" name="PSbunkerInnerSideLeftVP_solid"
-       x="15399.56"
-       y="4215"
-       z="1"/>
-  
-  <box lunit="mm" name="PSbunkerInnerSideRightVP_solid"
-       x="15399.56-1000"
-       y="4215"
+       x="10218.42"
+       y="3429"
        z="1"/>
  
-  <box lunit="mm" name="PSbunkerTopVP_solid"
-       x="16799.56"
-       y="1"
-       z="11249.914"/>
+  <box lunit="mm" name="PSbunkerInnerSideRightVP_solid"
+       x="10218.42"
+       y="3429"
+       z="1"/>
+ 
+ <box lunit="mm" name="PSbunkerTopVP_solid"
+      x="11742.42"
+      y="1"
+      z="9512.3"/>
   
   <box lunit="mm" name="RasterPS_solid" x="800" y="2500" z="800"/>
-  
+ 
   <box name="USTorus_VirtualPlane_solid" lunit="mm" x="2000" y="2000" z="1"/>
   
 </solids>
@@ -424,7 +424,7 @@
     <auxiliary auxtype="DetNo" auxvalue="5714"/>
   </volume>
 
-  <volume name="trackingDetectorVirtualPlane_log">
+  <!--<volume name="trackingDetectorVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
@@ -432,7 +432,7 @@
     <auxiliary auxtype="Alpha" auxvalue="1"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="27"/>
-  </volume>
+  </volume>-->
 
   <volume name="tgtR1_log">
     <materialref ref="G4_Galactic"/>
@@ -735,7 +735,7 @@
 
   <volume name="DSCoil2_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingVirtualPlane_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="50"/>
   </volume>
@@ -763,7 +763,7 @@
 
   <volume name="DSCoil6_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingVirtualPlane_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="54"/>
   </volume>
@@ -784,7 +784,7 @@
 
   <volume name="DSCoil9_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingVirtualPlane_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="57"/>
   </volume>
@@ -826,7 +826,7 @@
 
   <volume name="DSCoil10_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="trackingVirtualPlane_solid"/>
+    <solidref ref="usHybridVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="78"/>
   </volume>
@@ -1126,7 +1126,7 @@
 
     <physvol    name="usHybridVirtualPlane_phys">
       <volumeref ref="usHybridVirtualPlane_log"/>
-      <position name="usHybridVirtualPlane_pos" unit="mm" z="3630 + 86"/>
+      <position name="usHybridVirtualPlane_pos" unit="mm" z="3630 + 86 - 186 + 0.5"/>
     </physvol>
     
     <physvol    name="usHybridVirtualPlane2_phys">
@@ -1136,37 +1136,37 @@
 
     <physvol    name="coll1InnerLeftVirtualPlane_phys">
       <volumeref ref="coll1InnerLeftVirtualPlane_log"/>
-      <position name="coll1InnerLeftVirtualPlane_pos" unit="mm" x="1331-1" y="-370.83" z="852.5 + 610/2 + 86/2"/>
+      <position name="coll1InnerLeftVirtualPlane_pos" unit="mm" x="1331-1" y="-370.83" z="852.5 + 610/2 + 86/2 - 186/2"/>
     </physvol>
 
     <physvol    name="coll1OuterLeftVirtualPlane_phys">
       <volumeref ref="coll1OuterLeftVirtualPlane_log"/>
-      <position name="coll1OuterLeftVirtualPlane_pos" unit="mm" x="+1331+801" z="852.5 + 610/2 + 86/2"/>
+      <position name="coll1OuterLeftVirtualPlane_pos" unit="mm" x="+1331+801" z="852.5 + 610/2 + 86/2 - 186/2 - 0.5"/>
     </physvol>
 
     <physvol    name="coll1InnerRightVirtualPlane_phys">
       <volumeref ref="coll1InnerRightVirtualPlane_log"/>
-      <position name="coll1InnerRightVirtualPlane_pos" unit="mm" x="-1331+1" y="-370.83" z="852.5 + 610/2 + 86/2"/>
+      <position name="coll1InnerRightVirtualPlane_pos" unit="mm" x="-1331+1" y="-370.83" z="852.5 + 610/2 + 86/2 - 186/2"/>
     </physvol>
 
     <physvol    name="coll1OuterRightVirtualPlane_phys">
       <volumeref ref="coll1OuterRightVirtualPlane_log"/>
-      <position name="coll1OuterRightVirtualPlane_pos" unit="mm" x="-1331-801" z="852.5 + 610/2 + 86/2"/>
+      <position name="coll1OuterRightVirtualPlane_pos" unit="mm" x="-1331-801" z="852.5 + 610/2 + 86/2 - 186/2 - 0.5"/>
     </physvol>
 
     <physvol    name="coll1InnerTopVirtualPlane_phys">
       <volumeref ref="coll1InnerTopVirtualPlane_log"/>
-      <position name="coll1InnerTopVirtualPlane_pos" unit="mm" y="905.5" z="852.5 + 610/2 + 86/2"/>
+      <position name="coll1InnerTopVirtualPlane_pos" unit="mm" y="905.5+11.5" z="852.5 + 610/2 + 86/2 - 186/2 - 0.5"/>
     </physvol>
 
     <physvol    name="coll1OuterTopVirtualPlane_phys">
       <volumeref ref="coll1OuterTopVirtualPlane_log"/>
-      <position name="coll1OuterTopVirtualPlane_pos" unit="mm" y="915.67+1405" z="852.50 + 610/2 + 86/2"/>
+      <position name="coll1OuterTopVirtualPlane_pos" unit="mm" y="915.67+1405" z="852.50 + 610/2 + 86/2 - 186/2"/>
     </physvol>
 
     <physvol    name="coll1OuterBottomVirtualPlane_phys">
       <volumeref ref="coll1OuterBottomVirtualPlane_log"/>
-      <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1670" z="852.5 + 610/2 + 86/2"/>
+      <position name="coll1OuterBottomVirtualPlane_pos" unit="mm" y="-1670" z="852.5 + 610/2 + 86/2 - 186/2 - 0.5"/>
     </physvol>
 
    <!-- <physvol    name="hybridIronVirtualPlane_phys">
@@ -1175,10 +1175,10 @@
     </physvol>-->
 
     <!-- Tracking planes -->
-    <physvol name="trackingDetectorVirtualPlaneFront1_phys">
+   <!--<physvol name="trackingDetectorVirtualPlaneFront1_phys">
       <volumeref ref="trackingDetectorVirtualPlane_log"/>
       <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
-    </physvol>
+    </physvol>-->
 
     <physvol name="tgtR1_phys">
       <volumeref ref="tgtR1_log"/>
@@ -1400,10 +1400,10 @@
       <position name="Collar2Ent_pos" unit="mm" x="0" y="0" z="19182.69-0.5"/>
     </physvol>
 
-    <physvol name="Collar2Exit_phys">
+    <!--<physvol name="Collar2Exit_phys">
       <volumeref ref="Collar2Exit_log"/>
       <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="19182.69+150+0.6"/>
-    </physvol>
+    </physvol>-->
 
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
@@ -1478,37 +1478,37 @@
     
     <physvol name="PSbunkerOuterFrontVP_phys">
       <volumeref ref="PSbunkerOuterFrontVP_log"/>
-      <position name="PSbunkerOuterFrontVP_pos" unit="mm" x="4123.944-1" y="-948.86+75" z="10447.957"/>
+      <position name="PSbunkerOuterFrontVP_pos" unit="mm" x="4123.944-1" y="-948.86+75+2571/2" z="279.5+19054/2"/>
     </physvol>
     
     <physvol name="PSbunkerOuterSideLeftVP_phys">
       <volumeref ref="PSbunkerOuterSideLeftVP_log"/>
-      <position name="PSbunkerOuterSideLeftVP_pos" unit="mm" x="4123.944+16799.56/2" y="-948.86+75" z="10447.957-11249.914/2-1"/>
+      <position name="PSbunkerOuterSideLeftVP_pos" unit="mm" x="4123.944+5871.21" y="-948.86+75" z="10447.957-4756.15-1"/>
     </physvol>
     
     <physvol name="PSbunkerOuterSideRightVP_phys">
       <volumeref ref="PSbunkerOuterSideRightVP_log"/>
-      <position name="PSbunkerOuterSideRightVP_pos" unit="mm" x="4123.944+16799.56/2-500" y="-948.86+75" z="10447.957+11249.914/2+1"/>
+      <position name="PSbunkerOuterSideRightVP_pos" unit="mm" x="4123.944+5871.21" y="-948.86+75" z="10447.957+4756.15+1"/>
     </physvol>
     
     <physvol name="PSbunkerInnerFrontVP_phys">
       <volumeref ref="PSbunkerInnerFrontVP_log"/>
-      <position name="PSbunkerInnerFrontVP_pos" unit="mm" x="4123.944+1400+1" y="-948.86+75" z="10447.957"/>
+      <position name="PSbunkerInnerFrontVP_pos" unit="mm" x="4123.944+1524+1" y="-948.86+75" z="10447.957"/>
     </physvol>
     
     <physvol name="PSbunkerInnerSideLeftVP_phys">
       <volumeref ref="PSbunkerInnerSideLeftVP_log"/>
-      <position name="PSbunkerInnerSideLeftVP_pos" unit="mm" x="4123.944+16799.56/2+700+1" y="-948.86+75" z="10447.957-11249.914/2+1400+1"/>
+      <position name="PSbunkerInnerSideLeftVP_pos" unit="mm" x="4123.944+5109.21+2+1524" y="-948.86+75" z="10447.957-4756.15+1+1524"/>
     </physvol>
     
     <physvol name="PSbunkerInnerSideRightVP_phys">
       <volumeref ref="PSbunkerInnerSideRightVP_log"/>
-      <position name="PSbunkerInnerSideRightVP_pos" unit="mm" x="4123.944+16799.56/2+700-500+1" y="-948.86+75" z="10447.957+11249.914/2-1400-1"/>
+      <position name="PSbunkerInnerSideRightVP_pos" unit="mm" x="4123.944+5109.21+2+1524" y="-948.86+75" z="10447.957-1524+4756.15-1"/>
     </physvol>
     
     <physvol name="PSbunkerTopVP_phys">
       <volumeref ref="PSbunkerTopVP_log"/>
-      <position name="PSbunkerTopVP_pos" unit="mm" x="4123.944+16799.56/2+1" y="-948.86+75+4215/2+1" z="10447.957"/>
+      <position name="PSbunkerTopVP_pos" unit="mm" x="4123.944+5871.21+1" y="-948.86+75+3429/2+1" z="10447.957"/>
     </physvol>
 
   <physvol name="RasterPS_phys">

@@ -4,7 +4,7 @@
 
 <define>
    <variable name="i" value="0"/>
-   <constant name="N_P" value="14"/>
+   <constant name="N_P" value="28"/>
    <constant name="PHI" value="360.0/N_P"/>
 
    <!-- Full concrete and lead donut system dimensions -->
@@ -36,7 +36,7 @@
    <!-- Pion inner shielding -->
    <quantity name="donutPionInnerShieldStart"         value="donutLeadEnd"/>
    <quantity name="donutPionInnerShieldLength"        type="length" value="0.20" unit="m"/>
-   <quantity name="donutPionInnerShieldThickness"     type="length" value="1.0*2.54" unit="cm"/>
+   <quantity name="donutPionInnerShieldThickness"     type="length" value="2.0*2.54" unit="cm"/>
    <quantity name="donutPionInnerShieldInnerRadiusUS" type="length" value="1.050" unit="m"/>
    <quantity name="donutPionInnerShieldInnerRadiusDS" type="length" value="1.060" unit="m"/>
    <quantity name="donutPionInnerShieldOuterRadiusUS" value="donutPionInnerShieldInnerRadiusUS+donutPionInnerShieldThickness"/>
@@ -53,7 +53,7 @@
    <!-- Pion outer shielding -->
    <quantity name="donutPionOuterShieldStart"         value="donutLeadEnd"/>
    <quantity name="donutPionOuterShieldLength"        type="length" value="0.20" unit="m"/>
-   <quantity name="donutPionOuterShieldThickness"     type="length" value="1.0*2.54" unit="cm"/>
+   <quantity name="donutPionOuterShieldThickness"     type="length" value="2.0*2.54" unit="cm"/>
    <quantity name="donutPionOuterShieldOuterRadiusUS" type="length" value="1.210" unit="m"/>
    <quantity name="donutPionOuterShieldOuterRadiusDS" type="length" value="1.220" unit="m"/>
    <quantity name="donutPionOuterShieldInnerRadiusUS" value="donutPionOuterShieldOuterRadiusUS-donutPionOuterShieldThickness"/>
@@ -126,14 +126,14 @@
     PMT radially outward; -90.0 degrees is with the PMT radially inward.
   -->
   <quantity name="donutPionDetectorSectorAngleBase" type="angle" value="+90.0" unit="deg"/>
-  <quantity name="donutPionDetectorSectorAnglePitch" type="angle" value="-90.0" unit="deg"/>
+  <quantity name="donutPionDetectorSectorAnglePitch" type="angle" value="-87.1" unit="deg"/>
   
   <!--
     The center of the lucite detector is placed radially, and longitudinally with respect to
     the upstream face of the sector volume.
   -->
-  <quantity name="donutPionDetectorCenterRadialPosition"       type="length" value="1.110" unit="m"/>
-  <quantity name="donutPionDetectorCenterLongitudinalPosition" type="length" value="7.0" unit="cm"/>
+  <quantity name="donutPionDetectorCenterRadialPosition"       type="length" value="1.130" unit="m"/>
+  <quantity name="donutPionDetectorCenterLongitudinalPosition" type="length" value="5.0" unit="cm"/>
 
 </define>
 

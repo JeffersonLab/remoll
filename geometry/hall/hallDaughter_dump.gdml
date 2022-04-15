@@ -250,7 +250,7 @@
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="out_cylwall" rmin="0.0" rmax="radius_of_cylwall+1.*thick_cylwall" z="height_cylwall" />
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="in_cylwall" rmin="0.0" rmax="radius_of_cylwall" z="1*height_cylwall-1*thick_cylwall" />
 
-  <box lunit="cm" name="hall_dumphole" x="dump_width" z="1.1*dump_height" y="3*hall_cylwall_thickness"/>
+  <box lunit="cm" name="hall_dumphole" x="dump_width+0.25" z="1.1*dump_height" y="3*hall_cylwall_thickness"/>
 
   <subtraction name ="cylwall_full">
       <first ref="out_cylwall"/>
@@ -280,7 +280,10 @@
     <box lunit="cm" name="boxDumpUSSub" x="dumpUSSub_width" y="dumpUSSub_height" z="dumpUSSub_length*1.005"/>
     <box lunit="cm" name="boxDumpDSSub1" x="dumpDSSub_width1" y="dumpDSSub_height1" z="dumpDSSub_length1"/>
     <box lunit="cm" name="boxDumpDSSub2" x="dumpDSSub_width2" y="dumpDSSub_height2" z="dumpDSSub_length2"/>
-
+    <box lunit="cm" name="krypto1" x="dump_width" y="0.1" z="dump_length"/>
+    <box lunit="cm" name="krypto2" x="0.1" y="dump_height+16" z="dump_length"/>
+    <box lunit="cm" name="krypto3" x="dump_width" y="dump_height+18" z="0.1"/>
+    
     <subtraction name="dumpSub_A">
       <first ref="boxDumpBulk"/>
       <second ref="boxDumpUSSub"/>
@@ -484,6 +487,41 @@
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
+
+    <volume name="krytpoBottom_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto1"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+    <volume name="krytpoTop_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto1"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="krytpoRight_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto2"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="krytpoLeft_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto2"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+    <volume name="krytpoEndDS_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto3"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
     
     <volume name="dumpTempShield_left_logic">
       <materialref ref="Lead"/>
@@ -539,7 +577,7 @@
       <solidref ref="ndDonut_outer_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-   </volume>
+    </volume>
     
     <volume name="ndPipeDS_logic">
       <materialref ref="Aluminum"/>
@@ -636,7 +674,32 @@
         <volumeref ref="dump_logic"/>
         <positionref ref="dump_center"/>
       </physvol>
+      
+      <physvol name="krytpoTop_phys">
+       <volumeref ref="krytpoTop_log"/>
+       <position name="kryptoTop_pos" unit="cm" x="0" y="60.05*i2cm" z="dump_center_z"/>
+      </physvol>
 
+      <physvol name="krytpoBottom_phys">
+       <volumeref ref="krytpoBottom_log"/>
+       <position name="kryptoBottom_pos" unit="cm" x="0" y="-91*i2cm+2" z="dump_center_z"/>
+      </physvol>
+
+      <physvol name="krytpoLeft_phys">
+       <volumeref ref="krytpoLeft_log"/>
+       <position name="kryptoLeft_pos" unit="cm" x="54*i2cm+0.1-0.04" y="-15*i2cm-0.3" z="dump_center_z"/>
+      </physvol>
+
+      <physvol name="krytpoRight_phys">
+       <volumeref ref="krytpoRight_log"/>
+       <position name="kryptoRight_pos" unit="cm" x="-54*i2cm-0.1+0.04" y="-15*i2cm-0.3" z="dump_center_z"/>
+      </physvol>
+
+      <physvol name="krytpoEndDS_phys">
+       <volumeref ref="krytpoEndDS_log"/>
+       <position name="kryptoEndDS_pos" unit="cm" x="0" y="-15.5*i2cm" z="2256.5*i2cm"/>
+      </physvol>
+     
       <physvol name="dumpTempShield_left">
         <volumeref ref="dumpTempShield_left_logic"/>
         <positionref ref="dumpTempShield_left_center"/>

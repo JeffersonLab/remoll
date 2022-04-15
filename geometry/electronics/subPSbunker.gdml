@@ -19,39 +19,24 @@
   <solids>
 
     <box lunit="mm" name="psBunkerRegion_solid"
-         x="16799.56" y="4215" z="11249.914"/>
+         x="11745" y="3430" z="9515"/>
 
     <box lunit="mm" name="psBunkerRegion_s1"
-         x="10000" y="4215" z="11249.914"/>
+         x="11742.42" y="3429" z="9512.3"/>
 
     <box lunit="mm" name="psBunkerRegion_s2"
-         x="8600" y="4215+1" z="8449.914"/>
+         x="10218.42" y="3429+1" z="6464.3"/>
  
-    <box lunit="mm" name="psBunkerRegion_s3"
-         x="6000+1" y="4215+1" z="1400"/>
-    
     <box lunit="mm" name="LargepsBox"
-         x="2500" y="1397" z="1424"/>
-   
+         x="2999.74" y="2199.64" z="1625.6"/>
+
     <box lunit="mm" name="SmallpsBox"
-         x="1017" y="2540" z="1017"/>
+         x="2438.4" y="2235.2" z="1397"/>
            
     <subtraction name ="psBunkerRegion_sub">
       <first ref="psBunkerRegion_s1"/>
       <second ref="psBunkerRegion_s2"/>
-      <position name="psBunkerRegionsub_pos" lunit="mm" x="+700" y="0" z="0" />
-    </subtraction>
-
-    <subtraction name ="psBunkerRegion_sub1">
-      <first ref="psBunkerRegion_sub"/>
-      <second ref="psBunkerRegion_s3"/>
-      <position name="psBunkerRegionsub_pos1" lunit="mm" x="2000+0.5" y="0" z="5624.957" />
-    </subtraction>
-
-    <subtraction name ="psBunkerRegion_sub2">
-      <first ref="psBunkerRegion_sub1"/>
-      <second ref="psBunkerRegion_s3"/>
-      <position name="psBunkerRegionsub_pos1" lunit="mm" x="2000+0.5" y="0" z="-5624.957" />
+      <position name="psBunkerRegionsub_pos" lunit="mm" x="+762" y="0" z="0" />
     </subtraction>
 
    
@@ -107,25 +92,10 @@
       <auxiliary auxtype="DetNo" auxvalue="5865"/>
     </volume>
     
-    <volume name="Sbox2_log">
-      <materialref ref="G4_Fe"/>
-      <solidref ref="SmallpsBox"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="Color" auxvalue="Cyan"/>
-      <auxiliary auxtype="DetNo" auxvalue="5866"/>
-    </volume>
-    
-    <volume name="Sbox3_log">
-      <materialref ref="G4_Fe"/>
-      <solidref ref="SmallpsBox"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="Color" auxvalue="Cyan"/>
-      <auxiliary auxtype="DetNo" auxvalue="5867"/>
-    </volume>
 
     <volume name="psBunkerWall_log">
       <materialref ref="Concrete"/>
-      <solidref ref="psBunkerRegion_sub2"/>
+      <solidref ref="psBunkerRegion_sub"/>
       <auxiliary auxtype="Color" auxvalue="Green"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
@@ -139,48 +109,39 @@
 
       <physvol name="psBunkerWall_phys">
         <volumeref ref="psBunkerWall_log"/>
-         <position name="psBunkerWall_pos" lunit="mm" x="-3399.78" y="0" z="0" />
+         <position name="psBunkerWall_pos" lunit="mm" x="0" y="0" z="0" />
       </physvol>
 
       <physvol name="Lbox1_phys">
         <volumeref ref="Lbox1_log"/>
-        <position name="Lbox1_pos" unit="mm" x="-12523.724+7569.2" y="-4215/2+1397/2" z="-10447.957+8303.26"/>
+        <position name="Lbox1_pos" unit="mm" x="-2237.74" y="-614.68" z="1352.55"/>
       </physvol>
     
       <physvol name="Lbox2_phys">
         <volumeref ref="Lbox2_log"/>
-        <position name="Lbox2_pos" unit="mm" x="-12523.724+10490.2" y="-4215/2+1397/2" z="-10447.957+8303.26"/>
+        <position name="Lbox2_pos" unit="mm" x="-2237.74" y="-614.48" z="-1352.55"/>
       </physvol>
     
       <physvol name="Lbox3_phys">
         <volumeref ref="Lbox3_log"/>
-        <position name="Lbox3_pos" unit="mm" x="-12523.724+13538.2" y="-4215/2+1397/2" z="-10447.957+8303.26"/>
+        <position name="Lbox3_pos" unit="mm" x="1066.8" y="-614.48" z="-1352.55"/>
       </physvol>
     
       <physvol name="Lbox4_phys">
         <volumeref ref="Lbox4_log"/>
-        <position name="Lbox4_pos" unit="mm" x="-12523.724+16713.2" y="-4215/2+1397/2" z="-10447.957+8303.26"/>
+        <position name="Lbox4_pos" unit="mm" x="1066.8" y="-614.48" z="1352.55"/>
       </physvol>
     
       <physvol name="Lbox5_phys">
         <volumeref ref="Lbox5_log"/>
-        <position name="Lbox5_pos" unit="mm" x="-12523.724+7569.2" y="-4215/2+1397/2" z="-10447.957+11732.26"/>
+        <position name="Lbox5_pos" unit="mm" x="4371.34" y="-614.48" z="1352.55"/>
       </physvol>
     
       <physvol name="Sbox1_phys">
         <volumeref ref="Sbox1_log"/>
-        <position name="Sbox1_pos" unit="mm" x="-12523.724+11925.3" y="-4215/2+2540/2" z="-10447.957+12197.08"/>
+        <position name="Sbox1_pos" unit="mm" x="4371.34+280.67" y="-614.48+35.56/2" z="-1352.55"/>
       </physvol>
 
-      <physvol name="Sbox2_phys">
-        <volumeref ref="Sbox2_log"/>
-        <position name="Sbox2_pos" unit="mm" x="-12523.724+14084.3" y="-4215/2+2540/2" z="-10447.957+12235.18"/>
-      </physvol>
-    
-      <physvol name="Sbox3_phys">
-        <volumeref ref="Sbox3_log"/>
-        <position name="Sbox3_pos" unit="mm" x="-12523.724+16243.3" y="-4215/2+2540/2" z="-10447.957+12273.28"/>
-      </physvol>
     
     </volume>
     
