@@ -20,7 +20,7 @@
     &world;
     
     <cone name="solidCollar2_InnerRing" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1010" rmax1="1146.35" rmin2="1019" rmax2="1146.35" z="100+50"/> <!--the information of the inner ring is taken from Chandan Ghosh-->
-    <cone name="solidCollar2_OuterRing" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1133.65" rmax1="1315" rmin2="1133.65" rmax2="1315" z="100+50"/><!--the information of the outer ring is taken from Moller-doc-793-v2-->
+    <cone name="solidCollar2_OuterRing" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1120.95" rmax1="1315" rmin2="1120.95" rmax2="1315" z="100+50"/><!--the information of the outer ring is taken from Moller-doc-793-v2-->
 
     <!--DS Hybrid shielding concrete-->
     <box lunit="mm" name="Barite_Collar2_solid" x="4000" y="5000" z="400"/>
@@ -63,7 +63,7 @@
     
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_1">
       <zplane rmin="504.775" rmax="509.5375" z="0.0"/>
-      <zplane rmin="506.1201" rmax="510.8826" z="36"/>
+      <zplane rmin="506.1201" rmax="510.8826" z="36-5.075"/>
     </polycone>
 
     <tube
@@ -212,7 +212,8 @@
 
       <!-- Hybrid region -->
       <physvol>
-	<file name="hybrid/hybridDaughter_merged.gdml"/>
+    <!--<file name="hybrid/hybridDaughter_merged.gdml"/>-->
+	<file name="hybrid/hybridDaughter_unified.gdml"/>
 	<positionref ref="hybridCenter"/>
       </physvol>
       
@@ -250,7 +251,7 @@
       
       <physvol name="DSpipe2_DSpipe2_1">
 	<volumeref ref="logic_DSpipe2_1"/>
-	<position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="8009.19+11287.5"/>
+	<position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="8009.19+11287.5+5.075"/>
       </physvol>
       
       <!-- Downstream beampipe -->
