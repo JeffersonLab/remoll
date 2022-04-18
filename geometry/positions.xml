@@ -67,7 +67,7 @@
 
 <!-- Sieve position -->
 <position name="sieveActualCenter_pos" z="-1895.00" x="200" unit="mm"/>
-<position name="sieveVirtualPlane_pos" z="-1895.00" unit="mm"/>
+<position name="sieveVirtualPlane_pos" z="105.00" unit="mm"/>
 
 <!-- Showermax virtual plane detector position -->
 <position name="showerMaxVirtualPlane_pos" z="23920.00-90.00" unit="mm"/>

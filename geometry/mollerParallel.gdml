@@ -60,10 +60,10 @@
        x="8690" y="1.0" z="6350"/>
        
   <box lunit="mm" name="tgtOuterDetyz_solid"
-       x="1" y="6700" z="6350"/>
+       x="1" y="6700-1231" z="6350"/>
        
   <box lunit="mm" name="VPtgtOuterDetxy_solid"
-       x="7690" y="6700" z="1"/>
+       x="7690" y="6700-1231" z="1"/>
        
   <box lunit="mm" name="tgtInnerDetyz_solid"
        x="1" y="3000" z="2200"/>
@@ -151,6 +151,11 @@
  
   <box lunit="mm" name="DriftBottomVP_solid" x="2544.572" y="1" z="5974.08"/>
   
+  <tube aunit="deg" deltaphi="360" lunit="mm" name="FlatDetat3p65m_solid"
+    rmax="26507.6 - 0.2" rmin="0" startphi="0" z="0.1"/>
+    
+  <box name="sieve_VirtualPlane_solid" lunit="mm" x="2000" y="1000" z="1"/>
+    
 </solids>
 
 <structure>
@@ -978,7 +983,7 @@
 
   <volume name="sieveVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="VirtualPlane_solid"/>
+    <solidref ref="sieve_VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="270"/>
   </volume>
@@ -1147,6 +1152,13 @@
     <auxiliary auxtype="DetNo" auxvalue="31"/>
   </volume>
 
+  <volume name="FlatDetat3p65m_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="FlatDetat3p65m_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="100"/>
+  </volume>
+
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
@@ -1182,14 +1194,14 @@
       <position name="targetPbWallDSVirtualPlane_pos" unit="mm" z="-2800+60"/>
     </physvol>
     
-    <physvol    name="skyshineVacuumDet1VirtualPlane_phys">
+   <!-- <physvol    name="skyshineVacuumDet1VirtualPlane_phys">
       <volumeref ref="skyshineVacuumDet1VirtualPlane_log"/>
       <position name="skyshineVacuumDet1VirtualPlane_pos" unit="mm" x="0" y="1829/2.+1200" z="-4502"/>
-    </physvol>
+    </physvol>-->
 
     <physvol    name="skyshineVacuumDet2VirtualPlane_phys">
       <volumeref ref="skyshineVacuumDet2VirtualPlane_log"/>
-      <position name="skyshineVacuumDet2VirtualPlane_pos" unit="mm" x="0" y="3850" z="-4502"/>
+      <position name="skyshineVacuumDet2VirtualPlane_pos" unit="mm" x="0" y="2500+1" z="-4502"/>
     </physvol>
     
     <physvol    name="targetBottomVP_phys">
@@ -1204,25 +1216,25 @@
     
     <physvol    name="tgtOuterDet0VirtualPlane_phys">
       <volumeref ref="tgtOuterDet0VirtualPlane_log"/>
-      <position name="tgtOuterDet0VirtualPlane_pos" unit="mm" x="7690/2 + 1" y="390" z="-4502"/>
+      <position name="tgtOuterDet0VirtualPlane_pos" unit="mm" x="7690/2 + 1" y="390-1231/2-10" z="-4502"/>
     </physvol>
 
     <physvol    name="tgtOuterDet1VirtualPlane_phys">
       <volumeref ref="tgtOuterDet1VirtualPlane_log"/>
-      <position name="tgtOuterDet1VirtualPlane_pos" unit="mm" x="-7690/2 - 1" y="390" z="-4502"/>
+      <position name="tgtOuterDet1VirtualPlane_pos" unit="mm" x="-7690/2 - 1" y="390-1231/2-10" z="-4502"/>
     </physvol>
 
     <physvol    name="tgtOuterDet2VirtualPlane_phys">
       <volumeref ref="tgtOuterDet2VirtualPlane_log"/>
-      <position name="tgtOuterDet2VirtualPlane_pos" unit="mm" x="0" y="390" z="-7677"/>
+      <position name="tgtOuterDet2VirtualPlane_pos" unit="mm" x="0" y="390-1231/2-10" z="-7677"/>
     </physvol>
 
     <physvol    name="tgtOuterDet3VirtualPlane_phys">
       <volumeref ref="tgtOuterDet3VirtualPlane_log"/>
-      <position name="tgtOuterDet3VirtualPlane_pos" unit="mm" x="0" y="390" z="-1325"/>
+      <position name="tgtOuterDet3VirtualPlane_pos" unit="mm" x="0" y="390-1231/2-10" z="-1325"/>
     </physvol>
     
-    <physvol    name="tgtInnerDet0VirtualPlane_phys">
+    <!--<physvol    name="tgtInnerDet0VirtualPlane_phys">
       <volumeref ref="tgtInnerDet0VirtualPlane_log"/>
       <position name="tgtInnerDet0VirtualPlane_pos" unit="mm" x="1101" y="390" z="-4502"/>
     </physvol>
@@ -1235,11 +1247,11 @@
     <physvol    name="tgtInnerDet2VirtualPlane_phys">
       <volumeref ref="tgtInnerDet2VirtualPlane_log"/>
       <position name="tgtInnerDet2VirtualPlane_pos" unit="mm" x="0" y="390" z="-5602"/>
-    </physvol>
+    </physvol>-->
 
     <physvol    name="tgtInnerDet3VirtualPlane_phys">
       <volumeref ref="tgtInnerDet3VirtualPlane_log"/>
-      <position name="tgtInnerDet3VirtualPlane_pos" unit="mm" x="0" y="390" z="-3400"/>
+      <position name="tgtInnerDet3VirtualPlane_pos" unit="mm" x="0" y="0" z="-3400"/>
     </physvol>
 
     <physvol    name="usHybridVirtualPlane_phys">
@@ -1702,6 +1714,12 @@
     <physvol name="HallExit_phys">
       <volumeref ref="HallExit_log"/>
       <position  name="HallExit_pos" unit="mm" x="0" y="0" z="26200"/>
+    </physvol>
+
+   <physvol name="FlatDetat3p65m_phys">
+      <volumeref ref="FlatDetat3p65m_log"/>
+      <position  name="FlatDetat3p65m_pos" unit="mm" x="0" y="3650" z="0"/>
+      <rotation name="FlatDetat3p65m_rot" unit="deg" x="90"  y="0"   z="0"/>
     </physvol>
 
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
