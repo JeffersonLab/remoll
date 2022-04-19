@@ -10,7 +10,7 @@
 <materials>
 	<material name="G4_Quartz" state="solid">
 		<MEE unit="eV" value="139.2"/>
-		<D value="2.2" unit="g/cm3"/>
+		<D value="2.201" unit="g/cm3"/>
 		<fraction n="0.467465468463971" ref="G4_Si"/>
 		<fraction n="0.532534531536029" ref="G4_O"/>
 	</material>
@@ -33,6 +33,7 @@
 		<section zOrder="2" zPosition="132.5" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<box name="solid_tungsten" lunit="mm" x="160.0" y="265.0" z="8.0"/>
+	<box name="solid_spacer" lunit="mm" x="160.0" y="265.0" z="0.85"/>
 	<box name="solid_suitcase_tungstenquartz_1" lunit="mm" x="160.5" y="266.0" z="64.976"/>
 	<box name="solid_suitcase_tungstenquartz_2" lunit="mm" x="161.0" y="265.0" z="63.976"/>
 	<subtraction name="solid_suitcase_tungstenquartz">
@@ -50,7 +51,14 @@
 		<position name="pos_subtract_uBracket" x="0" y="-3.174999999999999" z="0"/>
 		<rotation name="rot_subtract_uBracket" x="0" y="0" z="0"/>
 	</subtraction>
-	<box name="solid_ledge" lunit="mm" x="21.698000000000008" y="6.35" z="63.5"/>
+	<box name="solid_ledge_1" lunit="mm" x="21.698000000000008" y="6.35" z="63.5"/>
+	<box name="solid_ledge_2" lunit="mm" x="10" y="15" z="50.8"/>
+	<union name="solid_ledge">
+		<first ref="solid_ledge_1"/>
+		<second ref="solid_ledge_2"/>
+			<position name="pos_union_ledge" x="5.849000000000004" y="-10.675" z="0"/>
+			<rotation name="rot_union_ledge" x="0" y="0" z="0"/>
+	</union>
 	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="56.976"  x2="86.868" y1="266.0"  y2="266.0" z="67.462"/>
 	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="55.976"  x2="85.868" y1="265.0"  y2="265.0" z="68.462"/>
 	<subtraction name="solid_mirror_box_bot">
@@ -140,10 +148,10 @@
 		<position name="pos_subtract_top_support" x="0" y="161.63899999999998" z="-47.35"/>
 		<rotation name="rot_subtract_top_support" x="0" y="0" z="0"/>
 	</subtraction>
-	<tube name="solid_pmt_filter" rmin="0" rmax="38.1" z="5.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
-	<tube name="solid_pmt_window" rmin="0" rmax="38.1" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
-	<tube name="solid_pmt" rmin="0" rmax="38.1" z="150" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
-	<tube name="solid_pmt_base" rmin="0" rmax="38.1" z="50" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_filter" rmin="0" rmax="38.099999999999994" z="5.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_window" rmin="0" rmax="38.099999999999994" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt" rmin="0" rmax="38.099999999999994" z="150" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_base" rmin="0" rmax="38.099999999999994" z="50" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
 	<box name="solid_si_chip" lunit="mm" x="0.5" y="50" z="50"/>
 	<cone name="solid_pmt_housing" rmin1="42"  rmax1="45.0" rmin2="42" rmax2="45.0"  z="213.0" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 	<cone name="solid_pmt_housing_lid" rmin1="0"  rmax1="48.0" rmin2="0" rmax2="48.0"  z="3.0" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
@@ -183,14 +191,14 @@
 			<position name="pos_webplate_region" x="216.095" y="0" z="0"/>
 			<rotation name="rot_webplate_region" x="0" y="0" z="0"/>
 	</union>
-	<box name="solid_strut_region" lunit="mm" x="381.0" y="370.878" z="37.83"/>
+	<box name="solid_strut_region" lunit="mm" x="381.0" y="370.878" z="36.83"/>
 	<union name="solid_singledet_6">
 		<first ref="solid_singledet_5"/>
 		<second ref="solid_strut_region"/>
-			<position name="pos_strut_region" x="538.219" y="0" z="4.5"/>
+			<position name="pos_strut_region" x="538.219" y="0" z="4.0"/>
 			<rotation name="rot_strut_region" x="0" y="0" z="0"/>
 	</union>
-	<cone name="solid_support_ring" rmin1="1800"  rmax1="2090" rmin2="1800" rmax2="2090"  z="40" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<cone name="solid_support_ring" rmin1="1727.1999999999998"  rmax1="1981.1999999999998" rmin2="1727.1999999999998" rmax2="1981.1999999999998"  z="44.449999999999996" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 	<cone name="solid_showerMaxMother" rmin1="730"  rmax1="2100" rmin2="730" rmax2="2100"  z="258.736" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 </solids>
 
@@ -251,6 +259,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7001"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_0_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70020"/>
+	</volume>
+	<volume name="logic_spacer_0_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70021"/>
+	</volume>
+	<volume name="logic_spacer_0_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70022"/>
+	</volume>
+	<volume name="logic_spacer_0_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70023"/>
+	</volume>
+	<volume name="logic_spacer_0_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70024"/>
+	</volume>
+	<volume name="logic_spacer_0_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70025"/>
+	</volume>
+	<volume name="logic_spacer_0_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70026"/>
+	</volume>
+	<volume name="logic_spacer_0_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70027"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_0">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -271,9 +335,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_0">
+	<volume name="logic_ledge_left_0">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70028"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70029"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_0">
@@ -444,14 +517,14 @@
 			<rotation name="rot_web_plate_0" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_0">
-			<volumeref ref="logic_ledge_0"/>
-			<position name="pos_ledge_0" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_0" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_0"/>
+			<position name="pos_ledge_right_0" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_0" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_0">
-			<volumeref ref="logic_ledge_0"/>
-			<position name="pos_ledge_0" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_0" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_0"/>
+			<position name="pos_ledge_left_0" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_0" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_0">
 			<volumeref ref="logic_uBracket_0"/>
@@ -513,6 +586,46 @@
 			<position name="pos_logic_tungsten_0_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_0_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_0_0">
+			<volumeref ref="logic_spacer_0_0"/>
+			<position name="pos_logic_spacer_0_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_0_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_0_1">
+			<volumeref ref="logic_spacer_0_1"/>
+			<position name="pos_logic_spacer_0_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_0_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_0_2">
+			<volumeref ref="logic_spacer_0_2"/>
+			<position name="pos_logic_spacer_0_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_0_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_0_3">
+			<volumeref ref="logic_spacer_0_3"/>
+			<position name="pos_logic_spacer_0_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_0_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_0_4">
+			<volumeref ref="logic_spacer_0_4"/>
+			<position name="pos_logic_spacer_0_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_0_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_0_5">
+			<volumeref ref="logic_spacer_0_5"/>
+			<position name="pos_logic_spacer_0_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_0_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_0_6">
+			<volumeref ref="logic_spacer_0_6"/>
+			<position name="pos_logic_spacer_0_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_0_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_0_7">
+			<volumeref ref="logic_spacer_0_7"/>
+			<position name="pos_logic_spacer_0_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_0_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_1_0">
@@ -565,6 +678,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7011"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_1_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70120"/>
+	</volume>
+	<volume name="logic_spacer_1_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70121"/>
+	</volume>
+	<volume name="logic_spacer_1_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70122"/>
+	</volume>
+	<volume name="logic_spacer_1_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70123"/>
+	</volume>
+	<volume name="logic_spacer_1_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70124"/>
+	</volume>
+	<volume name="logic_spacer_1_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70125"/>
+	</volume>
+	<volume name="logic_spacer_1_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70126"/>
+	</volume>
+	<volume name="logic_spacer_1_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70127"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_1">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -585,9 +754,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_1">
+	<volume name="logic_ledge_left_1">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70128"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70129"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_1">
@@ -758,14 +936,14 @@
 			<rotation name="rot_web_plate_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_1">
-			<volumeref ref="logic_ledge_1"/>
-			<position name="pos_ledge_1" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_1" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_1"/>
+			<position name="pos_ledge_right_1" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_1" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_1">
-			<volumeref ref="logic_ledge_1"/>
-			<position name="pos_ledge_1" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_1" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_1"/>
+			<position name="pos_ledge_left_1" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_1">
 			<volumeref ref="logic_uBracket_1"/>
@@ -827,6 +1005,46 @@
 			<position name="pos_logic_tungsten_1_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_1_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_1_0">
+			<volumeref ref="logic_spacer_1_0"/>
+			<position name="pos_logic_spacer_1_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_1_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_1_1">
+			<volumeref ref="logic_spacer_1_1"/>
+			<position name="pos_logic_spacer_1_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_1_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_1_2">
+			<volumeref ref="logic_spacer_1_2"/>
+			<position name="pos_logic_spacer_1_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_1_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_1_3">
+			<volumeref ref="logic_spacer_1_3"/>
+			<position name="pos_logic_spacer_1_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_1_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_1_4">
+			<volumeref ref="logic_spacer_1_4"/>
+			<position name="pos_logic_spacer_1_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_1_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_1_5">
+			<volumeref ref="logic_spacer_1_5"/>
+			<position name="pos_logic_spacer_1_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_1_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_1_6">
+			<volumeref ref="logic_spacer_1_6"/>
+			<position name="pos_logic_spacer_1_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_1_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_1_7">
+			<volumeref ref="logic_spacer_1_7"/>
+			<position name="pos_logic_spacer_1_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_1_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_2_0">
@@ -879,6 +1097,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7021"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_2_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70220"/>
+	</volume>
+	<volume name="logic_spacer_2_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70221"/>
+	</volume>
+	<volume name="logic_spacer_2_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70222"/>
+	</volume>
+	<volume name="logic_spacer_2_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70223"/>
+	</volume>
+	<volume name="logic_spacer_2_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70224"/>
+	</volume>
+	<volume name="logic_spacer_2_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70225"/>
+	</volume>
+	<volume name="logic_spacer_2_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70226"/>
+	</volume>
+	<volume name="logic_spacer_2_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70227"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_2">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -899,9 +1173,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_2">
+	<volume name="logic_ledge_left_2">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70228"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70229"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_2">
@@ -1072,14 +1355,14 @@
 			<rotation name="rot_web_plate_2" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_2">
-			<volumeref ref="logic_ledge_2"/>
-			<position name="pos_ledge_2" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_2" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_2"/>
+			<position name="pos_ledge_right_2" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_2" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_2">
-			<volumeref ref="logic_ledge_2"/>
-			<position name="pos_ledge_2" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_2" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_2"/>
+			<position name="pos_ledge_left_2" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_2" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_2">
 			<volumeref ref="logic_uBracket_2"/>
@@ -1141,6 +1424,46 @@
 			<position name="pos_logic_tungsten_2_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_2_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_2_0">
+			<volumeref ref="logic_spacer_2_0"/>
+			<position name="pos_logic_spacer_2_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_2_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_2_1">
+			<volumeref ref="logic_spacer_2_1"/>
+			<position name="pos_logic_spacer_2_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_2_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_2_2">
+			<volumeref ref="logic_spacer_2_2"/>
+			<position name="pos_logic_spacer_2_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_2_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_2_3">
+			<volumeref ref="logic_spacer_2_3"/>
+			<position name="pos_logic_spacer_2_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_2_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_2_4">
+			<volumeref ref="logic_spacer_2_4"/>
+			<position name="pos_logic_spacer_2_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_2_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_2_5">
+			<volumeref ref="logic_spacer_2_5"/>
+			<position name="pos_logic_spacer_2_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_2_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_2_6">
+			<volumeref ref="logic_spacer_2_6"/>
+			<position name="pos_logic_spacer_2_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_2_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_2_7">
+			<volumeref ref="logic_spacer_2_7"/>
+			<position name="pos_logic_spacer_2_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_2_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_3_0">
@@ -1193,6 +1516,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7031"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_3_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70320"/>
+	</volume>
+	<volume name="logic_spacer_3_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70321"/>
+	</volume>
+	<volume name="logic_spacer_3_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70322"/>
+	</volume>
+	<volume name="logic_spacer_3_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70323"/>
+	</volume>
+	<volume name="logic_spacer_3_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70324"/>
+	</volume>
+	<volume name="logic_spacer_3_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70325"/>
+	</volume>
+	<volume name="logic_spacer_3_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70326"/>
+	</volume>
+	<volume name="logic_spacer_3_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70327"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_3">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -1213,9 +1592,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_3">
+	<volume name="logic_ledge_left_3">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70328"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70329"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_3">
@@ -1386,14 +1774,14 @@
 			<rotation name="rot_web_plate_3" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_3">
-			<volumeref ref="logic_ledge_3"/>
-			<position name="pos_ledge_3" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_3" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_3"/>
+			<position name="pos_ledge_right_3" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_3" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_3">
-			<volumeref ref="logic_ledge_3"/>
-			<position name="pos_ledge_3" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_3" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_3"/>
+			<position name="pos_ledge_left_3" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_3" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_3">
 			<volumeref ref="logic_uBracket_3"/>
@@ -1455,6 +1843,46 @@
 			<position name="pos_logic_tungsten_3_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_3_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_3_0">
+			<volumeref ref="logic_spacer_3_0"/>
+			<position name="pos_logic_spacer_3_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_3_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_3_1">
+			<volumeref ref="logic_spacer_3_1"/>
+			<position name="pos_logic_spacer_3_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_3_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_3_2">
+			<volumeref ref="logic_spacer_3_2"/>
+			<position name="pos_logic_spacer_3_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_3_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_3_3">
+			<volumeref ref="logic_spacer_3_3"/>
+			<position name="pos_logic_spacer_3_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_3_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_3_4">
+			<volumeref ref="logic_spacer_3_4"/>
+			<position name="pos_logic_spacer_3_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_3_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_3_5">
+			<volumeref ref="logic_spacer_3_5"/>
+			<position name="pos_logic_spacer_3_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_3_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_3_6">
+			<volumeref ref="logic_spacer_3_6"/>
+			<position name="pos_logic_spacer_3_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_3_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_3_7">
+			<volumeref ref="logic_spacer_3_7"/>
+			<position name="pos_logic_spacer_3_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_3_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_4_0">
@@ -1507,6 +1935,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7041"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_4_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70420"/>
+	</volume>
+	<volume name="logic_spacer_4_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70421"/>
+	</volume>
+	<volume name="logic_spacer_4_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70422"/>
+	</volume>
+	<volume name="logic_spacer_4_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70423"/>
+	</volume>
+	<volume name="logic_spacer_4_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70424"/>
+	</volume>
+	<volume name="logic_spacer_4_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70425"/>
+	</volume>
+	<volume name="logic_spacer_4_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70426"/>
+	</volume>
+	<volume name="logic_spacer_4_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70427"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_4">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -1527,9 +2011,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_4">
+	<volume name="logic_ledge_left_4">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70428"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70429"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_4">
@@ -1700,14 +2193,14 @@
 			<rotation name="rot_web_plate_4" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_4">
-			<volumeref ref="logic_ledge_4"/>
-			<position name="pos_ledge_4" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_4" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_4"/>
+			<position name="pos_ledge_right_4" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_4" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_4">
-			<volumeref ref="logic_ledge_4"/>
-			<position name="pos_ledge_4" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_4" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_4"/>
+			<position name="pos_ledge_left_4" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_4" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_4">
 			<volumeref ref="logic_uBracket_4"/>
@@ -1769,6 +2262,46 @@
 			<position name="pos_logic_tungsten_4_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_4_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_4_0">
+			<volumeref ref="logic_spacer_4_0"/>
+			<position name="pos_logic_spacer_4_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_4_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_4_1">
+			<volumeref ref="logic_spacer_4_1"/>
+			<position name="pos_logic_spacer_4_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_4_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_4_2">
+			<volumeref ref="logic_spacer_4_2"/>
+			<position name="pos_logic_spacer_4_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_4_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_4_3">
+			<volumeref ref="logic_spacer_4_3"/>
+			<position name="pos_logic_spacer_4_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_4_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_4_4">
+			<volumeref ref="logic_spacer_4_4"/>
+			<position name="pos_logic_spacer_4_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_4_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_4_5">
+			<volumeref ref="logic_spacer_4_5"/>
+			<position name="pos_logic_spacer_4_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_4_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_4_6">
+			<volumeref ref="logic_spacer_4_6"/>
+			<position name="pos_logic_spacer_4_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_4_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_4_7">
+			<volumeref ref="logic_spacer_4_7"/>
+			<position name="pos_logic_spacer_4_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_4_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_5_0">
@@ -1821,6 +2354,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7051"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_5_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70520"/>
+	</volume>
+	<volume name="logic_spacer_5_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70521"/>
+	</volume>
+	<volume name="logic_spacer_5_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70522"/>
+	</volume>
+	<volume name="logic_spacer_5_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70523"/>
+	</volume>
+	<volume name="logic_spacer_5_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70524"/>
+	</volume>
+	<volume name="logic_spacer_5_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70525"/>
+	</volume>
+	<volume name="logic_spacer_5_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70526"/>
+	</volume>
+	<volume name="logic_spacer_5_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70527"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_5">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -1841,9 +2430,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_5">
+	<volume name="logic_ledge_left_5">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70528"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70529"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_5">
@@ -2014,14 +2612,14 @@
 			<rotation name="rot_web_plate_5" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_5">
-			<volumeref ref="logic_ledge_5"/>
-			<position name="pos_ledge_5" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_5" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_5"/>
+			<position name="pos_ledge_right_5" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_5" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_5">
-			<volumeref ref="logic_ledge_5"/>
-			<position name="pos_ledge_5" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_5" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_5"/>
+			<position name="pos_ledge_left_5" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_5" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_5">
 			<volumeref ref="logic_uBracket_5"/>
@@ -2083,6 +2681,46 @@
 			<position name="pos_logic_tungsten_5_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_5_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_5_0">
+			<volumeref ref="logic_spacer_5_0"/>
+			<position name="pos_logic_spacer_5_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_5_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_5_1">
+			<volumeref ref="logic_spacer_5_1"/>
+			<position name="pos_logic_spacer_5_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_5_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_5_2">
+			<volumeref ref="logic_spacer_5_2"/>
+			<position name="pos_logic_spacer_5_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_5_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_5_3">
+			<volumeref ref="logic_spacer_5_3"/>
+			<position name="pos_logic_spacer_5_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_5_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_5_4">
+			<volumeref ref="logic_spacer_5_4"/>
+			<position name="pos_logic_spacer_5_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_5_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_5_5">
+			<volumeref ref="logic_spacer_5_5"/>
+			<position name="pos_logic_spacer_5_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_5_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_5_6">
+			<volumeref ref="logic_spacer_5_6"/>
+			<position name="pos_logic_spacer_5_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_5_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_5_7">
+			<volumeref ref="logic_spacer_5_7"/>
+			<position name="pos_logic_spacer_5_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_5_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_6_0">
@@ -2135,6 +2773,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7061"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_6_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70620"/>
+	</volume>
+	<volume name="logic_spacer_6_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70621"/>
+	</volume>
+	<volume name="logic_spacer_6_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70622"/>
+	</volume>
+	<volume name="logic_spacer_6_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70623"/>
+	</volume>
+	<volume name="logic_spacer_6_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70624"/>
+	</volume>
+	<volume name="logic_spacer_6_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70625"/>
+	</volume>
+	<volume name="logic_spacer_6_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70626"/>
+	</volume>
+	<volume name="logic_spacer_6_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70627"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_6">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -2155,9 +2849,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_6">
+	<volume name="logic_ledge_left_6">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70628"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70629"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_6">
@@ -2328,14 +3031,14 @@
 			<rotation name="rot_web_plate_6" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_6">
-			<volumeref ref="logic_ledge_6"/>
-			<position name="pos_ledge_6" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_6" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_6"/>
+			<position name="pos_ledge_right_6" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_6" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_6">
-			<volumeref ref="logic_ledge_6"/>
-			<position name="pos_ledge_6" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_6" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_6"/>
+			<position name="pos_ledge_left_6" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_6" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_6">
 			<volumeref ref="logic_uBracket_6"/>
@@ -2397,6 +3100,46 @@
 			<position name="pos_logic_tungsten_6_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_6_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_6_0">
+			<volumeref ref="logic_spacer_6_0"/>
+			<position name="pos_logic_spacer_6_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_6_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_6_1">
+			<volumeref ref="logic_spacer_6_1"/>
+			<position name="pos_logic_spacer_6_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_6_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_6_2">
+			<volumeref ref="logic_spacer_6_2"/>
+			<position name="pos_logic_spacer_6_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_6_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_6_3">
+			<volumeref ref="logic_spacer_6_3"/>
+			<position name="pos_logic_spacer_6_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_6_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_6_4">
+			<volumeref ref="logic_spacer_6_4"/>
+			<position name="pos_logic_spacer_6_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_6_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_6_5">
+			<volumeref ref="logic_spacer_6_5"/>
+			<position name="pos_logic_spacer_6_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_6_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_6_6">
+			<volumeref ref="logic_spacer_6_6"/>
+			<position name="pos_logic_spacer_6_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_6_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_6_7">
+			<volumeref ref="logic_spacer_6_7"/>
+			<position name="pos_logic_spacer_6_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_6_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_7_0">
@@ -2449,6 +3192,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7071"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_7_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70720"/>
+	</volume>
+	<volume name="logic_spacer_7_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70721"/>
+	</volume>
+	<volume name="logic_spacer_7_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70722"/>
+	</volume>
+	<volume name="logic_spacer_7_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70723"/>
+	</volume>
+	<volume name="logic_spacer_7_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70724"/>
+	</volume>
+	<volume name="logic_spacer_7_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70725"/>
+	</volume>
+	<volume name="logic_spacer_7_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70726"/>
+	</volume>
+	<volume name="logic_spacer_7_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70727"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_7">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -2469,9 +3268,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_7">
+	<volume name="logic_ledge_left_7">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70728"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70729"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_7">
@@ -2642,14 +3450,14 @@
 			<rotation name="rot_web_plate_7" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_7">
-			<volumeref ref="logic_ledge_7"/>
-			<position name="pos_ledge_7" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_7" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_7"/>
+			<position name="pos_ledge_right_7" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_7" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_7">
-			<volumeref ref="logic_ledge_7"/>
-			<position name="pos_ledge_7" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_7" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_7"/>
+			<position name="pos_ledge_left_7" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_7" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_7">
 			<volumeref ref="logic_uBracket_7"/>
@@ -2711,6 +3519,46 @@
 			<position name="pos_logic_tungsten_7_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_7_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_7_0">
+			<volumeref ref="logic_spacer_7_0"/>
+			<position name="pos_logic_spacer_7_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_7_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_7_1">
+			<volumeref ref="logic_spacer_7_1"/>
+			<position name="pos_logic_spacer_7_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_7_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_7_2">
+			<volumeref ref="logic_spacer_7_2"/>
+			<position name="pos_logic_spacer_7_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_7_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_7_3">
+			<volumeref ref="logic_spacer_7_3"/>
+			<position name="pos_logic_spacer_7_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_7_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_7_4">
+			<volumeref ref="logic_spacer_7_4"/>
+			<position name="pos_logic_spacer_7_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_7_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_7_5">
+			<volumeref ref="logic_spacer_7_5"/>
+			<position name="pos_logic_spacer_7_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_7_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_7_6">
+			<volumeref ref="logic_spacer_7_6"/>
+			<position name="pos_logic_spacer_7_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_7_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_7_7">
+			<volumeref ref="logic_spacer_7_7"/>
+			<position name="pos_logic_spacer_7_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_7_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_8_0">
@@ -2763,6 +3611,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7081"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_8_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70820"/>
+	</volume>
+	<volume name="logic_spacer_8_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70821"/>
+	</volume>
+	<volume name="logic_spacer_8_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70822"/>
+	</volume>
+	<volume name="logic_spacer_8_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70823"/>
+	</volume>
+	<volume name="logic_spacer_8_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70824"/>
+	</volume>
+	<volume name="logic_spacer_8_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70825"/>
+	</volume>
+	<volume name="logic_spacer_8_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70826"/>
+	</volume>
+	<volume name="logic_spacer_8_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70827"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_8">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -2783,9 +3687,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_8">
+	<volume name="logic_ledge_left_8">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70828"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_8">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70829"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_8">
@@ -2956,14 +3869,14 @@
 			<rotation name="rot_web_plate_8" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_8">
-			<volumeref ref="logic_ledge_8"/>
-			<position name="pos_ledge_8" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_8" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_8"/>
+			<position name="pos_ledge_right_8" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_8" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_8">
-			<volumeref ref="logic_ledge_8"/>
-			<position name="pos_ledge_8" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_8" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_8"/>
+			<position name="pos_ledge_left_8" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_8" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_8">
 			<volumeref ref="logic_uBracket_8"/>
@@ -3025,6 +3938,46 @@
 			<position name="pos_logic_tungsten_8_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_8_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_8_0">
+			<volumeref ref="logic_spacer_8_0"/>
+			<position name="pos_logic_spacer_8_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_8_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_8_1">
+			<volumeref ref="logic_spacer_8_1"/>
+			<position name="pos_logic_spacer_8_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_8_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_8_2">
+			<volumeref ref="logic_spacer_8_2"/>
+			<position name="pos_logic_spacer_8_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_8_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_8_3">
+			<volumeref ref="logic_spacer_8_3"/>
+			<position name="pos_logic_spacer_8_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_8_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_8_4">
+			<volumeref ref="logic_spacer_8_4"/>
+			<position name="pos_logic_spacer_8_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_8_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_8_5">
+			<volumeref ref="logic_spacer_8_5"/>
+			<position name="pos_logic_spacer_8_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_8_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_8_6">
+			<volumeref ref="logic_spacer_8_6"/>
+			<position name="pos_logic_spacer_8_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_8_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_8_7">
+			<volumeref ref="logic_spacer_8_7"/>
+			<position name="pos_logic_spacer_8_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_8_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_9_0">
@@ -3077,6 +4030,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7091"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_9_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70920"/>
+	</volume>
+	<volume name="logic_spacer_9_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70921"/>
+	</volume>
+	<volume name="logic_spacer_9_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70922"/>
+	</volume>
+	<volume name="logic_spacer_9_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70923"/>
+	</volume>
+	<volume name="logic_spacer_9_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70924"/>
+	</volume>
+	<volume name="logic_spacer_9_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70925"/>
+	</volume>
+	<volume name="logic_spacer_9_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70926"/>
+	</volume>
+	<volume name="logic_spacer_9_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70927"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_9">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -3097,9 +4106,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_9">
+	<volume name="logic_ledge_left_9">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70928"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_9">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70929"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_9">
@@ -3270,14 +4288,14 @@
 			<rotation name="rot_web_plate_9" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_9">
-			<volumeref ref="logic_ledge_9"/>
-			<position name="pos_ledge_9" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_9" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_9"/>
+			<position name="pos_ledge_right_9" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_9" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_9">
-			<volumeref ref="logic_ledge_9"/>
-			<position name="pos_ledge_9" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_9" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_9"/>
+			<position name="pos_ledge_left_9" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_9" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_9">
 			<volumeref ref="logic_uBracket_9"/>
@@ -3339,6 +4357,46 @@
 			<position name="pos_logic_tungsten_9_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_9_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_9_0">
+			<volumeref ref="logic_spacer_9_0"/>
+			<position name="pos_logic_spacer_9_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_9_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_9_1">
+			<volumeref ref="logic_spacer_9_1"/>
+			<position name="pos_logic_spacer_9_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_9_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_9_2">
+			<volumeref ref="logic_spacer_9_2"/>
+			<position name="pos_logic_spacer_9_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_9_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_9_3">
+			<volumeref ref="logic_spacer_9_3"/>
+			<position name="pos_logic_spacer_9_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_9_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_9_4">
+			<volumeref ref="logic_spacer_9_4"/>
+			<position name="pos_logic_spacer_9_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_9_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_9_5">
+			<volumeref ref="logic_spacer_9_5"/>
+			<position name="pos_logic_spacer_9_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_9_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_9_6">
+			<volumeref ref="logic_spacer_9_6"/>
+			<position name="pos_logic_spacer_9_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_9_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_9_7">
+			<volumeref ref="logic_spacer_9_7"/>
+			<position name="pos_logic_spacer_9_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_9_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_10_0">
@@ -3391,6 +4449,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7101"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_10_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71020"/>
+	</volume>
+	<volume name="logic_spacer_10_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71021"/>
+	</volume>
+	<volume name="logic_spacer_10_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71022"/>
+	</volume>
+	<volume name="logic_spacer_10_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71023"/>
+	</volume>
+	<volume name="logic_spacer_10_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71024"/>
+	</volume>
+	<volume name="logic_spacer_10_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71025"/>
+	</volume>
+	<volume name="logic_spacer_10_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71026"/>
+	</volume>
+	<volume name="logic_spacer_10_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71027"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_10">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -3411,9 +4525,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_10">
+	<volume name="logic_ledge_left_10">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71028"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_10">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71029"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_10">
@@ -3584,14 +4707,14 @@
 			<rotation name="rot_web_plate_10" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_10">
-			<volumeref ref="logic_ledge_10"/>
-			<position name="pos_ledge_10" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_10" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_10"/>
+			<position name="pos_ledge_right_10" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_10" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_10">
-			<volumeref ref="logic_ledge_10"/>
-			<position name="pos_ledge_10" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_10" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_10"/>
+			<position name="pos_ledge_left_10" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_10" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_10">
 			<volumeref ref="logic_uBracket_10"/>
@@ -3653,6 +4776,46 @@
 			<position name="pos_logic_tungsten_10_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_10_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_10_0">
+			<volumeref ref="logic_spacer_10_0"/>
+			<position name="pos_logic_spacer_10_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_10_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_10_1">
+			<volumeref ref="logic_spacer_10_1"/>
+			<position name="pos_logic_spacer_10_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_10_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_10_2">
+			<volumeref ref="logic_spacer_10_2"/>
+			<position name="pos_logic_spacer_10_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_10_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_10_3">
+			<volumeref ref="logic_spacer_10_3"/>
+			<position name="pos_logic_spacer_10_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_10_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_10_4">
+			<volumeref ref="logic_spacer_10_4"/>
+			<position name="pos_logic_spacer_10_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_10_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_10_5">
+			<volumeref ref="logic_spacer_10_5"/>
+			<position name="pos_logic_spacer_10_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_10_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_10_6">
+			<volumeref ref="logic_spacer_10_6"/>
+			<position name="pos_logic_spacer_10_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_10_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_10_7">
+			<volumeref ref="logic_spacer_10_7"/>
+			<position name="pos_logic_spacer_10_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_10_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_11_0">
@@ -3705,6 +4868,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7111"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_11_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71120"/>
+	</volume>
+	<volume name="logic_spacer_11_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71121"/>
+	</volume>
+	<volume name="logic_spacer_11_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71122"/>
+	</volume>
+	<volume name="logic_spacer_11_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71123"/>
+	</volume>
+	<volume name="logic_spacer_11_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71124"/>
+	</volume>
+	<volume name="logic_spacer_11_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71125"/>
+	</volume>
+	<volume name="logic_spacer_11_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71126"/>
+	</volume>
+	<volume name="logic_spacer_11_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71127"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_11">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -3725,9 +4944,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_11">
+	<volume name="logic_ledge_left_11">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71128"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_11">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71129"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_11">
@@ -3898,14 +5126,14 @@
 			<rotation name="rot_web_plate_11" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_11">
-			<volumeref ref="logic_ledge_11"/>
-			<position name="pos_ledge_11" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_11" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_11"/>
+			<position name="pos_ledge_right_11" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_11" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_11">
-			<volumeref ref="logic_ledge_11"/>
-			<position name="pos_ledge_11" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_11" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_11"/>
+			<position name="pos_ledge_left_11" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_11" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_11">
 			<volumeref ref="logic_uBracket_11"/>
@@ -3967,6 +5195,46 @@
 			<position name="pos_logic_tungsten_11_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_11_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_11_0">
+			<volumeref ref="logic_spacer_11_0"/>
+			<position name="pos_logic_spacer_11_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_11_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_11_1">
+			<volumeref ref="logic_spacer_11_1"/>
+			<position name="pos_logic_spacer_11_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_11_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_11_2">
+			<volumeref ref="logic_spacer_11_2"/>
+			<position name="pos_logic_spacer_11_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_11_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_11_3">
+			<volumeref ref="logic_spacer_11_3"/>
+			<position name="pos_logic_spacer_11_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_11_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_11_4">
+			<volumeref ref="logic_spacer_11_4"/>
+			<position name="pos_logic_spacer_11_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_11_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_11_5">
+			<volumeref ref="logic_spacer_11_5"/>
+			<position name="pos_logic_spacer_11_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_11_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_11_6">
+			<volumeref ref="logic_spacer_11_6"/>
+			<position name="pos_logic_spacer_11_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_11_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_11_7">
+			<volumeref ref="logic_spacer_11_7"/>
+			<position name="pos_logic_spacer_11_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_11_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_12_0">
@@ -4019,6 +5287,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7121"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_12_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71220"/>
+	</volume>
+	<volume name="logic_spacer_12_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71221"/>
+	</volume>
+	<volume name="logic_spacer_12_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71222"/>
+	</volume>
+	<volume name="logic_spacer_12_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71223"/>
+	</volume>
+	<volume name="logic_spacer_12_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71224"/>
+	</volume>
+	<volume name="logic_spacer_12_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71225"/>
+	</volume>
+	<volume name="logic_spacer_12_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71226"/>
+	</volume>
+	<volume name="logic_spacer_12_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71227"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_12">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -4039,9 +5363,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_12">
+	<volume name="logic_ledge_left_12">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71228"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_12">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71229"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_12">
@@ -4212,14 +5545,14 @@
 			<rotation name="rot_web_plate_12" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_12">
-			<volumeref ref="logic_ledge_12"/>
-			<position name="pos_ledge_12" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_12" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_12"/>
+			<position name="pos_ledge_right_12" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_12" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_12">
-			<volumeref ref="logic_ledge_12"/>
-			<position name="pos_ledge_12" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_12" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_12"/>
+			<position name="pos_ledge_left_12" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_12" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_12">
 			<volumeref ref="logic_uBracket_12"/>
@@ -4281,6 +5614,46 @@
 			<position name="pos_logic_tungsten_12_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_12_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_12_0">
+			<volumeref ref="logic_spacer_12_0"/>
+			<position name="pos_logic_spacer_12_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_12_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_12_1">
+			<volumeref ref="logic_spacer_12_1"/>
+			<position name="pos_logic_spacer_12_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_12_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_12_2">
+			<volumeref ref="logic_spacer_12_2"/>
+			<position name="pos_logic_spacer_12_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_12_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_12_3">
+			<volumeref ref="logic_spacer_12_3"/>
+			<position name="pos_logic_spacer_12_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_12_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_12_4">
+			<volumeref ref="logic_spacer_12_4"/>
+			<position name="pos_logic_spacer_12_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_12_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_12_5">
+			<volumeref ref="logic_spacer_12_5"/>
+			<position name="pos_logic_spacer_12_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_12_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_12_6">
+			<volumeref ref="logic_spacer_12_6"/>
+			<position name="pos_logic_spacer_12_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_12_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_12_7">
+			<volumeref ref="logic_spacer_12_7"/>
+			<position name="pos_logic_spacer_12_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_12_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_13_0">
@@ -4333,6 +5706,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7131"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_13_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71320"/>
+	</volume>
+	<volume name="logic_spacer_13_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71321"/>
+	</volume>
+	<volume name="logic_spacer_13_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71322"/>
+	</volume>
+	<volume name="logic_spacer_13_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71323"/>
+	</volume>
+	<volume name="logic_spacer_13_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71324"/>
+	</volume>
+	<volume name="logic_spacer_13_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71325"/>
+	</volume>
+	<volume name="logic_spacer_13_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71326"/>
+	</volume>
+	<volume name="logic_spacer_13_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71327"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_13">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -4353,9 +5782,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_13">
+	<volume name="logic_ledge_left_13">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71328"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_13">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71329"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_13">
@@ -4526,14 +5964,14 @@
 			<rotation name="rot_web_plate_13" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_13">
-			<volumeref ref="logic_ledge_13"/>
-			<position name="pos_ledge_13" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_13" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_13"/>
+			<position name="pos_ledge_right_13" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_13" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_13">
-			<volumeref ref="logic_ledge_13"/>
-			<position name="pos_ledge_13" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_13" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_13"/>
+			<position name="pos_ledge_left_13" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_13" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_13">
 			<volumeref ref="logic_uBracket_13"/>
@@ -4595,6 +6033,46 @@
 			<position name="pos_logic_tungsten_13_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_13_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_13_0">
+			<volumeref ref="logic_spacer_13_0"/>
+			<position name="pos_logic_spacer_13_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_13_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_13_1">
+			<volumeref ref="logic_spacer_13_1"/>
+			<position name="pos_logic_spacer_13_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_13_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_13_2">
+			<volumeref ref="logic_spacer_13_2"/>
+			<position name="pos_logic_spacer_13_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_13_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_13_3">
+			<volumeref ref="logic_spacer_13_3"/>
+			<position name="pos_logic_spacer_13_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_13_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_13_4">
+			<volumeref ref="logic_spacer_13_4"/>
+			<position name="pos_logic_spacer_13_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_13_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_13_5">
+			<volumeref ref="logic_spacer_13_5"/>
+			<position name="pos_logic_spacer_13_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_13_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_13_6">
+			<volumeref ref="logic_spacer_13_6"/>
+			<position name="pos_logic_spacer_13_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_13_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_13_7">
+			<volumeref ref="logic_spacer_13_7"/>
+			<position name="pos_logic_spacer_13_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_13_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_14_0">
@@ -4647,6 +6125,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7141"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_14_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71420"/>
+	</volume>
+	<volume name="logic_spacer_14_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71421"/>
+	</volume>
+	<volume name="logic_spacer_14_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71422"/>
+	</volume>
+	<volume name="logic_spacer_14_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71423"/>
+	</volume>
+	<volume name="logic_spacer_14_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71424"/>
+	</volume>
+	<volume name="logic_spacer_14_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71425"/>
+	</volume>
+	<volume name="logic_spacer_14_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71426"/>
+	</volume>
+	<volume name="logic_spacer_14_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71427"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_14">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -4667,9 +6201,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_14">
+	<volume name="logic_ledge_left_14">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71428"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_14">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71429"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_14">
@@ -4840,14 +6383,14 @@
 			<rotation name="rot_web_plate_14" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_14">
-			<volumeref ref="logic_ledge_14"/>
-			<position name="pos_ledge_14" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_14" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_14"/>
+			<position name="pos_ledge_right_14" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_14" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_14">
-			<volumeref ref="logic_ledge_14"/>
-			<position name="pos_ledge_14" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_14" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_14"/>
+			<position name="pos_ledge_left_14" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_14" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_14">
 			<volumeref ref="logic_uBracket_14"/>
@@ -4909,6 +6452,46 @@
 			<position name="pos_logic_tungsten_14_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_14_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_14_0">
+			<volumeref ref="logic_spacer_14_0"/>
+			<position name="pos_logic_spacer_14_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_14_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_14_1">
+			<volumeref ref="logic_spacer_14_1"/>
+			<position name="pos_logic_spacer_14_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_14_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_14_2">
+			<volumeref ref="logic_spacer_14_2"/>
+			<position name="pos_logic_spacer_14_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_14_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_14_3">
+			<volumeref ref="logic_spacer_14_3"/>
+			<position name="pos_logic_spacer_14_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_14_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_14_4">
+			<volumeref ref="logic_spacer_14_4"/>
+			<position name="pos_logic_spacer_14_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_14_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_14_5">
+			<volumeref ref="logic_spacer_14_5"/>
+			<position name="pos_logic_spacer_14_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_14_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_14_6">
+			<volumeref ref="logic_spacer_14_6"/>
+			<position name="pos_logic_spacer_14_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_14_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_14_7">
+			<volumeref ref="logic_spacer_14_7"/>
+			<position name="pos_logic_spacer_14_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_14_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_15_0">
@@ -4961,6 +6544,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7151"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_15_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71520"/>
+	</volume>
+	<volume name="logic_spacer_15_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71521"/>
+	</volume>
+	<volume name="logic_spacer_15_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71522"/>
+	</volume>
+	<volume name="logic_spacer_15_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71523"/>
+	</volume>
+	<volume name="logic_spacer_15_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71524"/>
+	</volume>
+	<volume name="logic_spacer_15_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71525"/>
+	</volume>
+	<volume name="logic_spacer_15_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71526"/>
+	</volume>
+	<volume name="logic_spacer_15_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71527"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_15">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -4981,9 +6620,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_15">
+	<volume name="logic_ledge_left_15">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71528"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_15">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71529"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_15">
@@ -5154,14 +6802,14 @@
 			<rotation name="rot_web_plate_15" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_15">
-			<volumeref ref="logic_ledge_15"/>
-			<position name="pos_ledge_15" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_15" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_15"/>
+			<position name="pos_ledge_right_15" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_15" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_15">
-			<volumeref ref="logic_ledge_15"/>
-			<position name="pos_ledge_15" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_15" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_15"/>
+			<position name="pos_ledge_left_15" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_15" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_15">
 			<volumeref ref="logic_uBracket_15"/>
@@ -5223,6 +6871,46 @@
 			<position name="pos_logic_tungsten_15_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_15_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_15_0">
+			<volumeref ref="logic_spacer_15_0"/>
+			<position name="pos_logic_spacer_15_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_15_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_15_1">
+			<volumeref ref="logic_spacer_15_1"/>
+			<position name="pos_logic_spacer_15_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_15_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_15_2">
+			<volumeref ref="logic_spacer_15_2"/>
+			<position name="pos_logic_spacer_15_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_15_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_15_3">
+			<volumeref ref="logic_spacer_15_3"/>
+			<position name="pos_logic_spacer_15_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_15_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_15_4">
+			<volumeref ref="logic_spacer_15_4"/>
+			<position name="pos_logic_spacer_15_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_15_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_15_5">
+			<volumeref ref="logic_spacer_15_5"/>
+			<position name="pos_logic_spacer_15_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_15_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_15_6">
+			<volumeref ref="logic_spacer_15_6"/>
+			<position name="pos_logic_spacer_15_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_15_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_15_7">
+			<volumeref ref="logic_spacer_15_7"/>
+			<position name="pos_logic_spacer_15_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_15_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_16_0">
@@ -5275,6 +6963,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7161"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_16_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71620"/>
+	</volume>
+	<volume name="logic_spacer_16_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71621"/>
+	</volume>
+	<volume name="logic_spacer_16_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71622"/>
+	</volume>
+	<volume name="logic_spacer_16_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71623"/>
+	</volume>
+	<volume name="logic_spacer_16_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71624"/>
+	</volume>
+	<volume name="logic_spacer_16_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71625"/>
+	</volume>
+	<volume name="logic_spacer_16_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71626"/>
+	</volume>
+	<volume name="logic_spacer_16_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71627"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_16">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -5295,9 +7039,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_16">
+	<volume name="logic_ledge_left_16">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71628"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_16">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71629"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_16">
@@ -5468,14 +7221,14 @@
 			<rotation name="rot_web_plate_16" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_16">
-			<volumeref ref="logic_ledge_16"/>
-			<position name="pos_ledge_16" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_16" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_16"/>
+			<position name="pos_ledge_right_16" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_16" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_16">
-			<volumeref ref="logic_ledge_16"/>
-			<position name="pos_ledge_16" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_16" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_16"/>
+			<position name="pos_ledge_left_16" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_16" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_16">
 			<volumeref ref="logic_uBracket_16"/>
@@ -5537,6 +7290,46 @@
 			<position name="pos_logic_tungsten_16_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_16_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_16_0">
+			<volumeref ref="logic_spacer_16_0"/>
+			<position name="pos_logic_spacer_16_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_16_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_16_1">
+			<volumeref ref="logic_spacer_16_1"/>
+			<position name="pos_logic_spacer_16_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_16_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_16_2">
+			<volumeref ref="logic_spacer_16_2"/>
+			<position name="pos_logic_spacer_16_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_16_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_16_3">
+			<volumeref ref="logic_spacer_16_3"/>
+			<position name="pos_logic_spacer_16_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_16_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_16_4">
+			<volumeref ref="logic_spacer_16_4"/>
+			<position name="pos_logic_spacer_16_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_16_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_16_5">
+			<volumeref ref="logic_spacer_16_5"/>
+			<position name="pos_logic_spacer_16_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_16_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_16_6">
+			<volumeref ref="logic_spacer_16_6"/>
+			<position name="pos_logic_spacer_16_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_16_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_16_7">
+			<volumeref ref="logic_spacer_16_7"/>
+			<position name="pos_logic_spacer_16_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_16_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_17_0">
@@ -5589,6 +7382,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7171"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_17_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71720"/>
+	</volume>
+	<volume name="logic_spacer_17_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71721"/>
+	</volume>
+	<volume name="logic_spacer_17_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71722"/>
+	</volume>
+	<volume name="logic_spacer_17_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71723"/>
+	</volume>
+	<volume name="logic_spacer_17_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71724"/>
+	</volume>
+	<volume name="logic_spacer_17_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71725"/>
+	</volume>
+	<volume name="logic_spacer_17_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71726"/>
+	</volume>
+	<volume name="logic_spacer_17_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71727"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_17">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -5609,9 +7458,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_17">
+	<volume name="logic_ledge_left_17">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71728"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_17">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71729"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_17">
@@ -5782,14 +7640,14 @@
 			<rotation name="rot_web_plate_17" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_17">
-			<volumeref ref="logic_ledge_17"/>
-			<position name="pos_ledge_17" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_17" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_17"/>
+			<position name="pos_ledge_right_17" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_17" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_17">
-			<volumeref ref="logic_ledge_17"/>
-			<position name="pos_ledge_17" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_17" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_17"/>
+			<position name="pos_ledge_left_17" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_17" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_17">
 			<volumeref ref="logic_uBracket_17"/>
@@ -5851,6 +7709,46 @@
 			<position name="pos_logic_tungsten_17_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_17_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_17_0">
+			<volumeref ref="logic_spacer_17_0"/>
+			<position name="pos_logic_spacer_17_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_17_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_17_1">
+			<volumeref ref="logic_spacer_17_1"/>
+			<position name="pos_logic_spacer_17_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_17_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_17_2">
+			<volumeref ref="logic_spacer_17_2"/>
+			<position name="pos_logic_spacer_17_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_17_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_17_3">
+			<volumeref ref="logic_spacer_17_3"/>
+			<position name="pos_logic_spacer_17_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_17_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_17_4">
+			<volumeref ref="logic_spacer_17_4"/>
+			<position name="pos_logic_spacer_17_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_17_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_17_5">
+			<volumeref ref="logic_spacer_17_5"/>
+			<position name="pos_logic_spacer_17_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_17_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_17_6">
+			<volumeref ref="logic_spacer_17_6"/>
+			<position name="pos_logic_spacer_17_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_17_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_17_7">
+			<volumeref ref="logic_spacer_17_7"/>
+			<position name="pos_logic_spacer_17_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_17_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_18_0">
@@ -5903,6 +7801,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7181"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_18_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71820"/>
+	</volume>
+	<volume name="logic_spacer_18_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71821"/>
+	</volume>
+	<volume name="logic_spacer_18_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71822"/>
+	</volume>
+	<volume name="logic_spacer_18_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71823"/>
+	</volume>
+	<volume name="logic_spacer_18_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71824"/>
+	</volume>
+	<volume name="logic_spacer_18_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71825"/>
+	</volume>
+	<volume name="logic_spacer_18_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71826"/>
+	</volume>
+	<volume name="logic_spacer_18_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71827"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_18">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -5923,9 +7877,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_18">
+	<volume name="logic_ledge_left_18">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71828"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_18">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71829"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_18">
@@ -6096,14 +8059,14 @@
 			<rotation name="rot_web_plate_18" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_18">
-			<volumeref ref="logic_ledge_18"/>
-			<position name="pos_ledge_18" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_18" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_18"/>
+			<position name="pos_ledge_right_18" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_18" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_18">
-			<volumeref ref="logic_ledge_18"/>
-			<position name="pos_ledge_18" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_18" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_18"/>
+			<position name="pos_ledge_left_18" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_18" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_18">
 			<volumeref ref="logic_uBracket_18"/>
@@ -6165,6 +8128,46 @@
 			<position name="pos_logic_tungsten_18_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_18_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_18_0">
+			<volumeref ref="logic_spacer_18_0"/>
+			<position name="pos_logic_spacer_18_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_18_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_18_1">
+			<volumeref ref="logic_spacer_18_1"/>
+			<position name="pos_logic_spacer_18_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_18_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_18_2">
+			<volumeref ref="logic_spacer_18_2"/>
+			<position name="pos_logic_spacer_18_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_18_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_18_3">
+			<volumeref ref="logic_spacer_18_3"/>
+			<position name="pos_logic_spacer_18_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_18_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_18_4">
+			<volumeref ref="logic_spacer_18_4"/>
+			<position name="pos_logic_spacer_18_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_18_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_18_5">
+			<volumeref ref="logic_spacer_18_5"/>
+			<position name="pos_logic_spacer_18_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_18_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_18_6">
+			<volumeref ref="logic_spacer_18_6"/>
+			<position name="pos_logic_spacer_18_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_18_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_18_7">
+			<volumeref ref="logic_spacer_18_7"/>
+			<position name="pos_logic_spacer_18_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_18_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_19_0">
@@ -6217,6 +8220,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7191"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_19_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71920"/>
+	</volume>
+	<volume name="logic_spacer_19_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71921"/>
+	</volume>
+	<volume name="logic_spacer_19_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71922"/>
+	</volume>
+	<volume name="logic_spacer_19_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71923"/>
+	</volume>
+	<volume name="logic_spacer_19_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71924"/>
+	</volume>
+	<volume name="logic_spacer_19_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71925"/>
+	</volume>
+	<volume name="logic_spacer_19_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71926"/>
+	</volume>
+	<volume name="logic_spacer_19_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="71927"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_19">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -6237,9 +8296,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_19">
+	<volume name="logic_ledge_left_19">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="71928"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_19">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="71929"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_19">
@@ -6410,14 +8478,14 @@
 			<rotation name="rot_web_plate_19" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_19">
-			<volumeref ref="logic_ledge_19"/>
-			<position name="pos_ledge_19" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_19" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_19"/>
+			<position name="pos_ledge_right_19" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_19" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_19">
-			<volumeref ref="logic_ledge_19"/>
-			<position name="pos_ledge_19" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_19" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_19"/>
+			<position name="pos_ledge_left_19" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_19" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_19">
 			<volumeref ref="logic_uBracket_19"/>
@@ -6479,6 +8547,46 @@
 			<position name="pos_logic_tungsten_19_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_19_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_19_0">
+			<volumeref ref="logic_spacer_19_0"/>
+			<position name="pos_logic_spacer_19_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_19_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_19_1">
+			<volumeref ref="logic_spacer_19_1"/>
+			<position name="pos_logic_spacer_19_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_19_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_19_2">
+			<volumeref ref="logic_spacer_19_2"/>
+			<position name="pos_logic_spacer_19_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_19_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_19_3">
+			<volumeref ref="logic_spacer_19_3"/>
+			<position name="pos_logic_spacer_19_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_19_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_19_4">
+			<volumeref ref="logic_spacer_19_4"/>
+			<position name="pos_logic_spacer_19_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_19_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_19_5">
+			<volumeref ref="logic_spacer_19_5"/>
+			<position name="pos_logic_spacer_19_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_19_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_19_6">
+			<volumeref ref="logic_spacer_19_6"/>
+			<position name="pos_logic_spacer_19_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_19_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_19_7">
+			<volumeref ref="logic_spacer_19_7"/>
+			<position name="pos_logic_spacer_19_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_19_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_20_0">
@@ -6531,6 +8639,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7201"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_20_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72020"/>
+	</volume>
+	<volume name="logic_spacer_20_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72021"/>
+	</volume>
+	<volume name="logic_spacer_20_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72022"/>
+	</volume>
+	<volume name="logic_spacer_20_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72023"/>
+	</volume>
+	<volume name="logic_spacer_20_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72024"/>
+	</volume>
+	<volume name="logic_spacer_20_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72025"/>
+	</volume>
+	<volume name="logic_spacer_20_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72026"/>
+	</volume>
+	<volume name="logic_spacer_20_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72027"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_20">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -6551,9 +8715,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_20">
+	<volume name="logic_ledge_left_20">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="72028"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_20">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="72029"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_20">
@@ -6724,14 +8897,14 @@
 			<rotation name="rot_web_plate_20" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_20">
-			<volumeref ref="logic_ledge_20"/>
-			<position name="pos_ledge_20" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_20" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_20"/>
+			<position name="pos_ledge_right_20" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_20" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_20">
-			<volumeref ref="logic_ledge_20"/>
-			<position name="pos_ledge_20" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_20" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_20"/>
+			<position name="pos_ledge_left_20" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_20" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_20">
 			<volumeref ref="logic_uBracket_20"/>
@@ -6793,6 +8966,46 @@
 			<position name="pos_logic_tungsten_20_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_20_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_20_0">
+			<volumeref ref="logic_spacer_20_0"/>
+			<position name="pos_logic_spacer_20_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_20_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_20_1">
+			<volumeref ref="logic_spacer_20_1"/>
+			<position name="pos_logic_spacer_20_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_20_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_20_2">
+			<volumeref ref="logic_spacer_20_2"/>
+			<position name="pos_logic_spacer_20_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_20_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_20_3">
+			<volumeref ref="logic_spacer_20_3"/>
+			<position name="pos_logic_spacer_20_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_20_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_20_4">
+			<volumeref ref="logic_spacer_20_4"/>
+			<position name="pos_logic_spacer_20_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_20_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_20_5">
+			<volumeref ref="logic_spacer_20_5"/>
+			<position name="pos_logic_spacer_20_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_20_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_20_6">
+			<volumeref ref="logic_spacer_20_6"/>
+			<position name="pos_logic_spacer_20_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_20_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_20_7">
+			<volumeref ref="logic_spacer_20_7"/>
+			<position name="pos_logic_spacer_20_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_20_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_21_0">
@@ -6845,6 +9058,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7211"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_21_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72120"/>
+	</volume>
+	<volume name="logic_spacer_21_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72121"/>
+	</volume>
+	<volume name="logic_spacer_21_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72122"/>
+	</volume>
+	<volume name="logic_spacer_21_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72123"/>
+	</volume>
+	<volume name="logic_spacer_21_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72124"/>
+	</volume>
+	<volume name="logic_spacer_21_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72125"/>
+	</volume>
+	<volume name="logic_spacer_21_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72126"/>
+	</volume>
+	<volume name="logic_spacer_21_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72127"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_21">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -6865,9 +9134,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_21">
+	<volume name="logic_ledge_left_21">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="72128"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_21">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="72129"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_21">
@@ -7038,14 +9316,14 @@
 			<rotation name="rot_web_plate_21" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_21">
-			<volumeref ref="logic_ledge_21"/>
-			<position name="pos_ledge_21" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_21" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_21"/>
+			<position name="pos_ledge_right_21" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_21" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_21">
-			<volumeref ref="logic_ledge_21"/>
-			<position name="pos_ledge_21" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_21" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_21"/>
+			<position name="pos_ledge_left_21" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_21" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_21">
 			<volumeref ref="logic_uBracket_21"/>
@@ -7107,6 +9385,46 @@
 			<position name="pos_logic_tungsten_21_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_21_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_21_0">
+			<volumeref ref="logic_spacer_21_0"/>
+			<position name="pos_logic_spacer_21_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_21_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_21_1">
+			<volumeref ref="logic_spacer_21_1"/>
+			<position name="pos_logic_spacer_21_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_21_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_21_2">
+			<volumeref ref="logic_spacer_21_2"/>
+			<position name="pos_logic_spacer_21_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_21_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_21_3">
+			<volumeref ref="logic_spacer_21_3"/>
+			<position name="pos_logic_spacer_21_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_21_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_21_4">
+			<volumeref ref="logic_spacer_21_4"/>
+			<position name="pos_logic_spacer_21_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_21_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_21_5">
+			<volumeref ref="logic_spacer_21_5"/>
+			<position name="pos_logic_spacer_21_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_21_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_21_6">
+			<volumeref ref="logic_spacer_21_6"/>
+			<position name="pos_logic_spacer_21_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_21_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_21_7">
+			<volumeref ref="logic_spacer_21_7"/>
+			<position name="pos_logic_spacer_21_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_21_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_22_0">
@@ -7159,6 +9477,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7221"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_22_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72220"/>
+	</volume>
+	<volume name="logic_spacer_22_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72221"/>
+	</volume>
+	<volume name="logic_spacer_22_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72222"/>
+	</volume>
+	<volume name="logic_spacer_22_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72223"/>
+	</volume>
+	<volume name="logic_spacer_22_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72224"/>
+	</volume>
+	<volume name="logic_spacer_22_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72225"/>
+	</volume>
+	<volume name="logic_spacer_22_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72226"/>
+	</volume>
+	<volume name="logic_spacer_22_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72227"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_22">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -7179,9 +9553,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_22">
+	<volume name="logic_ledge_left_22">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="72228"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_22">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="72229"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_22">
@@ -7352,14 +9735,14 @@
 			<rotation name="rot_web_plate_22" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_22">
-			<volumeref ref="logic_ledge_22"/>
-			<position name="pos_ledge_22" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_22" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_22"/>
+			<position name="pos_ledge_right_22" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_22" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_22">
-			<volumeref ref="logic_ledge_22"/>
-			<position name="pos_ledge_22" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_22" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_22"/>
+			<position name="pos_ledge_left_22" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_22" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_22">
 			<volumeref ref="logic_uBracket_22"/>
@@ -7421,6 +9804,46 @@
 			<position name="pos_logic_tungsten_22_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_22_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_22_0">
+			<volumeref ref="logic_spacer_22_0"/>
+			<position name="pos_logic_spacer_22_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_22_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_22_1">
+			<volumeref ref="logic_spacer_22_1"/>
+			<position name="pos_logic_spacer_22_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_22_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_22_2">
+			<volumeref ref="logic_spacer_22_2"/>
+			<position name="pos_logic_spacer_22_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_22_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_22_3">
+			<volumeref ref="logic_spacer_22_3"/>
+			<position name="pos_logic_spacer_22_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_22_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_22_4">
+			<volumeref ref="logic_spacer_22_4"/>
+			<position name="pos_logic_spacer_22_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_22_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_22_5">
+			<volumeref ref="logic_spacer_22_5"/>
+			<position name="pos_logic_spacer_22_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_22_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_22_6">
+			<volumeref ref="logic_spacer_22_6"/>
+			<position name="pos_logic_spacer_22_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_22_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_22_7">
+			<volumeref ref="logic_spacer_22_7"/>
+			<position name="pos_logic_spacer_22_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_22_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_23_0">
@@ -7473,6 +9896,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7231"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_23_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72320"/>
+	</volume>
+	<volume name="logic_spacer_23_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72321"/>
+	</volume>
+	<volume name="logic_spacer_23_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72322"/>
+	</volume>
+	<volume name="logic_spacer_23_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72323"/>
+	</volume>
+	<volume name="logic_spacer_23_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72324"/>
+	</volume>
+	<volume name="logic_spacer_23_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72325"/>
+	</volume>
+	<volume name="logic_spacer_23_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72326"/>
+	</volume>
+	<volume name="logic_spacer_23_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72327"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_23">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -7493,9 +9972,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_23">
+	<volume name="logic_ledge_left_23">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="72328"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_23">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="72329"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_23">
@@ -7666,14 +10154,14 @@
 			<rotation name="rot_web_plate_23" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_23">
-			<volumeref ref="logic_ledge_23"/>
-			<position name="pos_ledge_23" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_23" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_23"/>
+			<position name="pos_ledge_right_23" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_23" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_23">
-			<volumeref ref="logic_ledge_23"/>
-			<position name="pos_ledge_23" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_23" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_23"/>
+			<position name="pos_ledge_left_23" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_23" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_23">
 			<volumeref ref="logic_uBracket_23"/>
@@ -7735,6 +10223,46 @@
 			<position name="pos_logic_tungsten_23_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_23_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_23_0">
+			<volumeref ref="logic_spacer_23_0"/>
+			<position name="pos_logic_spacer_23_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_23_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_23_1">
+			<volumeref ref="logic_spacer_23_1"/>
+			<position name="pos_logic_spacer_23_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_23_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_23_2">
+			<volumeref ref="logic_spacer_23_2"/>
+			<position name="pos_logic_spacer_23_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_23_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_23_3">
+			<volumeref ref="logic_spacer_23_3"/>
+			<position name="pos_logic_spacer_23_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_23_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_23_4">
+			<volumeref ref="logic_spacer_23_4"/>
+			<position name="pos_logic_spacer_23_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_23_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_23_5">
+			<volumeref ref="logic_spacer_23_5"/>
+			<position name="pos_logic_spacer_23_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_23_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_23_6">
+			<volumeref ref="logic_spacer_23_6"/>
+			<position name="pos_logic_spacer_23_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_23_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_23_7">
+			<volumeref ref="logic_spacer_23_7"/>
+			<position name="pos_logic_spacer_23_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_23_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_24_0">
@@ -7787,6 +10315,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7241"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_24_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72420"/>
+	</volume>
+	<volume name="logic_spacer_24_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72421"/>
+	</volume>
+	<volume name="logic_spacer_24_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72422"/>
+	</volume>
+	<volume name="logic_spacer_24_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72423"/>
+	</volume>
+	<volume name="logic_spacer_24_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72424"/>
+	</volume>
+	<volume name="logic_spacer_24_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72425"/>
+	</volume>
+	<volume name="logic_spacer_24_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72426"/>
+	</volume>
+	<volume name="logic_spacer_24_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72427"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_24">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -7807,9 +10391,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_24">
+	<volume name="logic_ledge_left_24">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="72428"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_24">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="72429"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_24">
@@ -7980,14 +10573,14 @@
 			<rotation name="rot_web_plate_24" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_24">
-			<volumeref ref="logic_ledge_24"/>
-			<position name="pos_ledge_24" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_24" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_24"/>
+			<position name="pos_ledge_right_24" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_24" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_24">
-			<volumeref ref="logic_ledge_24"/>
-			<position name="pos_ledge_24" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_24" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_24"/>
+			<position name="pos_ledge_left_24" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_24" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_24">
 			<volumeref ref="logic_uBracket_24"/>
@@ -8049,6 +10642,46 @@
 			<position name="pos_logic_tungsten_24_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_24_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_24_0">
+			<volumeref ref="logic_spacer_24_0"/>
+			<position name="pos_logic_spacer_24_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_24_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_24_1">
+			<volumeref ref="logic_spacer_24_1"/>
+			<position name="pos_logic_spacer_24_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_24_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_24_2">
+			<volumeref ref="logic_spacer_24_2"/>
+			<position name="pos_logic_spacer_24_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_24_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_24_3">
+			<volumeref ref="logic_spacer_24_3"/>
+			<position name="pos_logic_spacer_24_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_24_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_24_4">
+			<volumeref ref="logic_spacer_24_4"/>
+			<position name="pos_logic_spacer_24_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_24_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_24_5">
+			<volumeref ref="logic_spacer_24_5"/>
+			<position name="pos_logic_spacer_24_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_24_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_24_6">
+			<volumeref ref="logic_spacer_24_6"/>
+			<position name="pos_logic_spacer_24_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_24_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_24_7">
+			<volumeref ref="logic_spacer_24_7"/>
+			<position name="pos_logic_spacer_24_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_24_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_25_0">
@@ -8101,6 +10734,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7251"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_25_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72520"/>
+	</volume>
+	<volume name="logic_spacer_25_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72521"/>
+	</volume>
+	<volume name="logic_spacer_25_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72522"/>
+	</volume>
+	<volume name="logic_spacer_25_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72523"/>
+	</volume>
+	<volume name="logic_spacer_25_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72524"/>
+	</volume>
+	<volume name="logic_spacer_25_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72525"/>
+	</volume>
+	<volume name="logic_spacer_25_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72526"/>
+	</volume>
+	<volume name="logic_spacer_25_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72527"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_25">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -8121,9 +10810,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_25">
+	<volume name="logic_ledge_left_25">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="72528"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_25">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="72529"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_25">
@@ -8294,14 +10992,14 @@
 			<rotation name="rot_web_plate_25" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_25">
-			<volumeref ref="logic_ledge_25"/>
-			<position name="pos_ledge_25" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_25" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_25"/>
+			<position name="pos_ledge_right_25" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_25" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_25">
-			<volumeref ref="logic_ledge_25"/>
-			<position name="pos_ledge_25" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_25" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_25"/>
+			<position name="pos_ledge_left_25" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_25" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_25">
 			<volumeref ref="logic_uBracket_25"/>
@@ -8363,6 +11061,46 @@
 			<position name="pos_logic_tungsten_25_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_25_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_25_0">
+			<volumeref ref="logic_spacer_25_0"/>
+			<position name="pos_logic_spacer_25_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_25_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_25_1">
+			<volumeref ref="logic_spacer_25_1"/>
+			<position name="pos_logic_spacer_25_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_25_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_25_2">
+			<volumeref ref="logic_spacer_25_2"/>
+			<position name="pos_logic_spacer_25_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_25_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_25_3">
+			<volumeref ref="logic_spacer_25_3"/>
+			<position name="pos_logic_spacer_25_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_25_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_25_4">
+			<volumeref ref="logic_spacer_25_4"/>
+			<position name="pos_logic_spacer_25_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_25_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_25_5">
+			<volumeref ref="logic_spacer_25_5"/>
+			<position name="pos_logic_spacer_25_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_25_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_25_6">
+			<volumeref ref="logic_spacer_25_6"/>
+			<position name="pos_logic_spacer_25_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_25_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_25_7">
+			<volumeref ref="logic_spacer_25_7"/>
+			<position name="pos_logic_spacer_25_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_25_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_26_0">
@@ -8415,6 +11153,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7261"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_26_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72620"/>
+	</volume>
+	<volume name="logic_spacer_26_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72621"/>
+	</volume>
+	<volume name="logic_spacer_26_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72622"/>
+	</volume>
+	<volume name="logic_spacer_26_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72623"/>
+	</volume>
+	<volume name="logic_spacer_26_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72624"/>
+	</volume>
+	<volume name="logic_spacer_26_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72625"/>
+	</volume>
+	<volume name="logic_spacer_26_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72626"/>
+	</volume>
+	<volume name="logic_spacer_26_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72627"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_26">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -8435,9 +11229,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_26">
+	<volume name="logic_ledge_left_26">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="72628"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_26">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="72629"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_26">
@@ -8608,14 +11411,14 @@
 			<rotation name="rot_web_plate_26" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_26">
-			<volumeref ref="logic_ledge_26"/>
-			<position name="pos_ledge_26" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_26" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_26"/>
+			<position name="pos_ledge_right_26" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_26" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_26">
-			<volumeref ref="logic_ledge_26"/>
-			<position name="pos_ledge_26" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_26" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_26"/>
+			<position name="pos_ledge_left_26" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_26" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_26">
 			<volumeref ref="logic_uBracket_26"/>
@@ -8677,6 +11480,46 @@
 			<position name="pos_logic_tungsten_26_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_26_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_26_0">
+			<volumeref ref="logic_spacer_26_0"/>
+			<position name="pos_logic_spacer_26_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_26_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_26_1">
+			<volumeref ref="logic_spacer_26_1"/>
+			<position name="pos_logic_spacer_26_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_26_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_26_2">
+			<volumeref ref="logic_spacer_26_2"/>
+			<position name="pos_logic_spacer_26_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_26_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_26_3">
+			<volumeref ref="logic_spacer_26_3"/>
+			<position name="pos_logic_spacer_26_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_26_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_26_4">
+			<volumeref ref="logic_spacer_26_4"/>
+			<position name="pos_logic_spacer_26_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_26_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_26_5">
+			<volumeref ref="logic_spacer_26_5"/>
+			<position name="pos_logic_spacer_26_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_26_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_26_6">
+			<volumeref ref="logic_spacer_26_6"/>
+			<position name="pos_logic_spacer_26_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_26_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_26_7">
+			<volumeref ref="logic_spacer_26_7"/>
+			<position name="pos_logic_spacer_26_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_26_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="logic_quartz_27_0">
@@ -8729,6 +11572,62 @@
 		<auxiliary auxtype="DetNo" auxvalue="7271"/>
 		<auxiliary auxtype="Color" auxvalue="red"/>
 	</volume>
+	<volume name="logic_spacer_27_0">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72720"/>
+	</volume>
+	<volume name="logic_spacer_27_1">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72721"/>
+	</volume>
+	<volume name="logic_spacer_27_2">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72722"/>
+	</volume>
+	<volume name="logic_spacer_27_3">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72723"/>
+	</volume>
+	<volume name="logic_spacer_27_4">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72724"/>
+	</volume>
+	<volume name="logic_spacer_27_5">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72725"/>
+	</volume>
+	<volume name="logic_spacer_27_6">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72726"/>
+	</volume>
+	<volume name="logic_spacer_27_7">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="72727"/>
+	</volume>
 	<volume name="logic_suitcase_tungstenquartz_27">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_suitcase_tungstenquartz"/>
@@ -8749,9 +11648,18 @@
 		<solidref ref="solid_uBracket_2"/>
 		<auxiliary auxtype="Color" auxvalue="grey"/>
 	</volume>
-	<volume name="logic_ledge_27">
+	<volume name="logic_ledge_left_27">
 		<materialref ref="G4_NYLON-6-6"/>
 		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="72728"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_27">
+		<materialref ref="G4_NYLON-6-6"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="72729"/>
 		<auxiliary auxtype="Color" auxvalue="brown"/>
 	</volume>
 	<volume name="logic_mirror_box_bot_27">
@@ -8922,14 +11830,14 @@
 			<rotation name="rot_web_plate_27" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_right_27">
-			<volumeref ref="logic_ledge_27"/>
-			<position name="pos_ledge_27" x="80.0" y="136.375" z="0"/>
-			<rotation name="rot_ledge_27" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_right_27"/>
+			<position name="pos_ledge_right_27" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_27" x="3.141592653589793" y="0" z="0"/>
 		</physvol>
 		<physvol name="ledge_left_27">
-			<volumeref ref="logic_ledge_27"/>
-			<position name="pos_ledge_27" x="80.0" y="-136.375" z="0"/>
-			<rotation name="rot_ledge_27" x="0" y="0" z="0"/>
+			<volumeref ref="logic_ledge_left_27"/>
+			<position name="pos_ledge_left_27" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_27" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="uBracket_bottom_left_27">
 			<volumeref ref="logic_uBracket_27"/>
@@ -8991,154 +11899,59 @@
 			<position name="pos_logic_tungsten_27_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_27_3" x="0" y="0" z="0"/>
 		</physvol>
+		<physvol name="spacer_27_0">
+			<volumeref ref="logic_spacer_27_0"/>
+			<position name="pos_logic_spacer_27_0" x="0" y="0" z="31.554000000000002"/>
+			<rotation name="rot_logic_spacer_27_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_27_1">
+			<volumeref ref="logic_spacer_27_1"/>
+			<position name="pos_logic_spacer_27_1" x="0" y="0" z="24.684"/>
+			<rotation name="rot_logic_spacer_27_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_27_2">
+			<volumeref ref="logic_spacer_27_2"/>
+			<position name="pos_logic_spacer_27_2" x="0" y="0" z="15.814000000000002"/>
+			<rotation name="rot_logic_spacer_27_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_27_3">
+			<volumeref ref="logic_spacer_27_3"/>
+			<position name="pos_logic_spacer_27_3" x="0" y="0" z="8.944000000000003"/>
+			<rotation name="rot_logic_spacer_27_3" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_27_4">
+			<volumeref ref="logic_spacer_27_4"/>
+			<position name="pos_logic_spacer_27_4" x="0" y="0" z="0.07400000000000206"/>
+			<rotation name="rot_logic_spacer_27_4" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_27_5">
+			<volumeref ref="logic_spacer_27_5"/>
+			<position name="pos_logic_spacer_27_5" x="0" y="0" z="-6.795999999999998"/>
+			<rotation name="rot_logic_spacer_27_5" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_27_6">
+			<volumeref ref="logic_spacer_27_6"/>
+			<position name="pos_logic_spacer_27_6" x="0" y="0" z="-15.665999999999997"/>
+			<rotation name="rot_logic_spacer_27_6" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_27_7">
+			<volumeref ref="logic_spacer_27_7"/>
+			<position name="pos_logic_spacer_27_7" x="0" y="0" z="-22.535999999999998"/>
+			<rotation name="rot_logic_spacer_27_7" x="0" y="0" z="0"/>
+		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="showerMaxMother">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_showerMaxMother"/>
-		<physvol name="singledet_00">
-			<volumeref ref="logic_singledet_00"/>
-			<position name="pos_singledet_0" x="-1100.0" y="1.3471114790620886e-13" z="-41"/>
-			<rotation name="rot_singledet_0" x="0" y="0" z="-3.141592653589793"/>
-		</physvol>
-		<physvol name="singledet_01">
-			<volumeref ref="logic_singledet_01"/>
-			<position name="pos_singledet_1" x="-1076.3204150487334" y="-245.66311108777097" z="41"/>
-			<rotation name="rot_singledet_1" x="0" y="0" z="-3.365992128846207"/>
-		</physvol>
-		<physvol name="singledet_02">
-			<volumeref ref="logic_singledet_02"/>
-			<position name="pos_singledet_2" x="-991.065754692661" y="-477.2721130293138" z="-41"/>
-			<rotation name="rot_singledet_2" x="0" y="0" z="-3.5903916041026207"/>
-		</physvol>
-		<physvol name="singledet_03">
-			<volumeref ref="logic_singledet_03"/>
-			<position name="pos_singledet_3" x="-863.141956644705" y="-688.3327412520416" z="41"/>
-			<rotation name="rot_singledet_3" x="0" y="0" z="-3.8147910793590345"/>
-		</physvol>
-		<physvol name="singledet_04">
-			<volumeref ref="logic_singledet_04"/>
-			<position name="pos_singledet_4" x="-685.838782044607" y="-860.0146307148326" z="-41"/>
-			<rotation name="rot_singledet_4" x="0" y="0" z="-4.039190554615448"/>
-		</physvol>
-		<physvol name="singledet_05">
-			<volumeref ref="logic_singledet_05"/>
-			<position name="pos_singledet_5" x="-479.00764798578433" y="-994.6696301642706" z="41"/>
-			<rotation name="rot_singledet_5" x="0" y="0" z="-4.263590029871862"/>
-		</physvol>
-		<physvol name="singledet_06">
-			<volumeref ref="logic_singledet_06"/>
-			<position name="pos_singledet_6" x="-244.77302735194604" y="-1072.420703400006" z="-41"/>
-			<rotation name="rot_singledet_6" x="0" y="0" z="-4.487989505128276"/>
-		</physvol>
-		<physvol name="singledet_07">
-			<volumeref ref="logic_singledet_07"/>
-			<position name="pos_singledet_7" x="-2.0280150993880168e-13" y="-1104.0" z="41"/>
-			<rotation name="rot_singledet_7" x="0" y="0" z="-4.71238898038469"/>
-		</physvol>
-		<physvol name="singledet_08">
-			<volumeref ref="logic_singledet_08"/>
-			<position name="pos_singledet_8" x="244.77302735194564" y="-1072.420703400006" z="-41"/>
-			<rotation name="rot_singledet_8" x="0" y="0" z="-4.9367884556411035"/>
-		</physvol>
-		<physvol name="singledet_09">
-			<volumeref ref="logic_singledet_09"/>
-			<position name="pos_singledet_9" x="479.007647985784" y="-994.6696301642709" z="41"/>
-			<rotation name="rot_singledet_9" x="0" y="0" z="-5.161187930897517"/>
-		</physvol>
-		<physvol name="singledet_10">
-			<volumeref ref="logic_singledet_10"/>
-			<position name="pos_singledet_10" x="685.8387820446067" y="-860.014630714833" z="-41"/>
-			<rotation name="rot_singledet_10" x="0" y="0" z="-5.385587406153931"/>
-		</physvol>
-		<physvol name="singledet_11">
-			<volumeref ref="logic_singledet_11"/>
-			<position name="pos_singledet_11" x="863.1419566447048" y="-688.332741252042" z="41"/>
-			<rotation name="rot_singledet_11" x="0" y="0" z="-5.609986881410345"/>
-		</physvol>
-		<physvol name="singledet_12">
-			<volumeref ref="logic_singledet_12"/>
-			<position name="pos_singledet_12" x="991.0657546926609" y="-477.2721130293142" z="-41"/>
-			<rotation name="rot_singledet_12" x="0" y="0" z="-5.834386356666759"/>
-		</physvol>
-		<physvol name="singledet_13">
-			<volumeref ref="logic_singledet_13"/>
-			<position name="pos_singledet_13" x="1076.3204150487331" y="-245.66311108777137" z="41"/>
-			<rotation name="rot_singledet_13" x="0" y="0" z="-6.058785831923172"/>
-		</physvol>
-		<physvol name="singledet_14">
-			<volumeref ref="logic_singledet_14"/>
-			<position name="pos_singledet_14" x="1100.0" y="-2.6942229581241773e-13" z="-41"/>
-			<rotation name="rot_singledet_14" x="0" y="0" z="-6.283185307179586"/>
-		</physvol>
-		<physvol name="singledet_15">
-			<volumeref ref="logic_singledet_15"/>
-			<position name="pos_singledet_15" x="1076.3204150487334" y="245.66311108777086" z="41"/>
-			<rotation name="rot_singledet_15" x="0" y="0" z="-6.507584782436"/>
-		</physvol>
-		<physvol name="singledet_16">
-			<volumeref ref="logic_singledet_16"/>
-			<position name="pos_singledet_16" x="991.0657546926611" y="477.2721130293137" z="-41"/>
-			<rotation name="rot_singledet_16" x="0" y="0" z="-6.731984257692414"/>
-		</physvol>
-		<physvol name="singledet_17">
-			<volumeref ref="logic_singledet_17"/>
-			<position name="pos_singledet_17" x="863.1419566447051" y="688.3327412520415" z="41"/>
-			<rotation name="rot_singledet_17" x="0" y="0" z="-6.956383732948828"/>
-		</physvol>
-		<physvol name="singledet_18">
-			<volumeref ref="logic_singledet_18"/>
-			<position name="pos_singledet_18" x="685.8387820446071" y="860.0146307148325" z="-41"/>
-			<rotation name="rot_singledet_18" x="0" y="0" z="-7.180783208205241"/>
-		</physvol>
-		<physvol name="singledet_19">
-			<volumeref ref="logic_singledet_19"/>
-			<position name="pos_singledet_19" x="479.00764798578444" y="994.6696301642706" z="41"/>
-			<rotation name="rot_singledet_19" x="0" y="0" z="-7.405182683461655"/>
-		</physvol>
-		<physvol name="singledet_20">
-			<volumeref ref="logic_singledet_20"/>
-			<position name="pos_singledet_20" x="244.77302735194615" y="1072.4207034000058" z="-41"/>
-			<rotation name="rot_singledet_20" x="0" y="0" z="-7.629582158718069"/>
-		</physvol>
 		<physvol name="singledet_21">
 			<volumeref ref="logic_singledet_21"/>
 			<position name="pos_singledet_21" x="3.380025165646695e-13" y="1104.0" z="41"/>
 			<rotation name="rot_singledet_21" x="0" y="0" z="-7.853981633974483"/>
 		</physvol>
-		<physvol name="singledet_22">
-			<volumeref ref="logic_singledet_22"/>
-			<position name="pos_singledet_22" x="-244.7730273519455" y="1072.420703400006" z="-41"/>
-			<rotation name="rot_singledet_22" x="0" y="0" z="-8.078381109230897"/>
-		</physvol>
-		<physvol name="singledet_23">
-			<volumeref ref="logic_singledet_23"/>
-			<position name="pos_singledet_23" x="-479.0076479857839" y="994.6696301642709" z="41"/>
-			<rotation name="rot_singledet_23" x="0" y="0" z="-8.30278058448731"/>
-		</physvol>
-		<physvol name="singledet_24">
-			<volumeref ref="logic_singledet_24"/>
-			<position name="pos_singledet_24" x="-685.8387820446065" y="860.0146307148331" z="-41"/>
-			<rotation name="rot_singledet_24" x="0" y="0" z="-8.527180059743724"/>
-		</physvol>
-		<physvol name="singledet_25">
-			<volumeref ref="logic_singledet_25"/>
-			<position name="pos_singledet_25" x="-863.1419566447047" y="688.3327412520422" z="41"/>
-			<rotation name="rot_singledet_25" x="0" y="0" z="-8.751579535000138"/>
-		</physvol>
-		<physvol name="singledet_26">
-			<volumeref ref="logic_singledet_26"/>
-			<position name="pos_singledet_26" x="-991.0657546926608" y="477.2721130293143" z="-41"/>
-			<rotation name="rot_singledet_26" x="0" y="0" z="-8.975979010256552"/>
-		</physvol>
-		<physvol name="singledet_27">
-			<volumeref ref="logic_singledet_27"/>
-			<position name="pos_singledet_27" x="-1076.3204150487331" y="245.66311108777148" z="41"/>
-			<rotation name="rot_singledet_27" x="0" y="0" z="-9.200378485512966"/>
-		</physvol>
 		<physvol name="support_ring">
 			<volumeref ref="logic_support_ring"/>
-			<position name="pos_support_ring)" x="0" y="0" z="5"/>
+			<position name="pos_support_ring)" x="0" y="0" z="4.0"/>
 			<rotation name="rot_support_ring" x="0" y="0" z="0"/>
 		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
