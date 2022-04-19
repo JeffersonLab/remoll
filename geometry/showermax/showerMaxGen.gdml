@@ -11944,10 +11944,145 @@
 	<volume name="showerMaxMother">
 		<materialref ref="G4_AIR"/>
 		<solidref ref="solid_showerMaxMother"/>
+		<physvol name="singledet_00">
+			<volumeref ref="logic_singledet_00"/>
+			<position name="pos_singledet_0" x="-1100.0" y="1.3471114790620886e-13" z="-41"/>
+			<rotation name="rot_singledet_0" x="0" y="0" z="-3.141592653589793"/>
+		</physvol>
+		<physvol name="singledet_01">
+			<volumeref ref="logic_singledet_01"/>
+			<position name="pos_singledet_1" x="-1076.3204150487334" y="-245.66311108777097" z="41"/>
+			<rotation name="rot_singledet_1" x="0" y="0" z="-3.365992128846207"/>
+		</physvol>
+		<physvol name="singledet_02">
+			<volumeref ref="logic_singledet_02"/>
+			<position name="pos_singledet_2" x="-991.065754692661" y="-477.2721130293138" z="-41"/>
+			<rotation name="rot_singledet_2" x="0" y="0" z="-3.5903916041026207"/>
+		</physvol>
+		<physvol name="singledet_03">
+			<volumeref ref="logic_singledet_03"/>
+			<position name="pos_singledet_3" x="-863.141956644705" y="-688.3327412520416" z="41"/>
+			<rotation name="rot_singledet_3" x="0" y="0" z="-3.8147910793590345"/>
+		</physvol>
+		<physvol name="singledet_04">
+			<volumeref ref="logic_singledet_04"/>
+			<position name="pos_singledet_4" x="-685.838782044607" y="-860.0146307148326" z="-41"/>
+			<rotation name="rot_singledet_4" x="0" y="0" z="-4.039190554615448"/>
+		</physvol>
+		<physvol name="singledet_05">
+			<volumeref ref="logic_singledet_05"/>
+			<position name="pos_singledet_5" x="-479.00764798578433" y="-994.6696301642706" z="41"/>
+			<rotation name="rot_singledet_5" x="0" y="0" z="-4.263590029871862"/>
+		</physvol>
+		<physvol name="singledet_06">
+			<volumeref ref="logic_singledet_06"/>
+			<position name="pos_singledet_6" x="-244.77302735194604" y="-1072.420703400006" z="-41"/>
+			<rotation name="rot_singledet_6" x="0" y="0" z="-4.487989505128276"/>
+		</physvol>
+		<physvol name="singledet_07">
+			<volumeref ref="logic_singledet_07"/>
+			<position name="pos_singledet_7" x="-2.0280150993880168e-13" y="-1104.0" z="41"/>
+			<rotation name="rot_singledet_7" x="0" y="0" z="-4.71238898038469"/>
+		</physvol>
+		<physvol name="singledet_08">
+			<volumeref ref="logic_singledet_08"/>
+			<position name="pos_singledet_8" x="244.77302735194564" y="-1072.420703400006" z="-41"/>
+			<rotation name="rot_singledet_8" x="0" y="0" z="-4.9367884556411035"/>
+		</physvol>
+		<physvol name="singledet_09">
+			<volumeref ref="logic_singledet_09"/>
+			<position name="pos_singledet_9" x="479.007647985784" y="-994.6696301642709" z="41"/>
+			<rotation name="rot_singledet_9" x="0" y="0" z="-5.161187930897517"/>
+		</physvol>
+		<physvol name="singledet_10">
+			<volumeref ref="logic_singledet_10"/>
+			<position name="pos_singledet_10" x="685.8387820446067" y="-860.014630714833" z="-41"/>
+			<rotation name="rot_singledet_10" x="0" y="0" z="-5.385587406153931"/>
+		</physvol>
+		<physvol name="singledet_11">
+			<volumeref ref="logic_singledet_11"/>
+			<position name="pos_singledet_11" x="863.1419566447048" y="-688.332741252042" z="41"/>
+			<rotation name="rot_singledet_11" x="0" y="0" z="-5.609986881410345"/>
+		</physvol>
+		<physvol name="singledet_12">
+			<volumeref ref="logic_singledet_12"/>
+			<position name="pos_singledet_12" x="991.0657546926609" y="-477.2721130293142" z="-41"/>
+			<rotation name="rot_singledet_12" x="0" y="0" z="-5.834386356666759"/>
+		</physvol>
+		<physvol name="singledet_13">
+			<volumeref ref="logic_singledet_13"/>
+			<position name="pos_singledet_13" x="1076.3204150487331" y="-245.66311108777137" z="41"/>
+			<rotation name="rot_singledet_13" x="0" y="0" z="-6.058785831923172"/>
+		</physvol>
+		<physvol name="singledet_14">
+			<volumeref ref="logic_singledet_14"/>
+			<position name="pos_singledet_14" x="1100.0" y="-2.6942229581241773e-13" z="-41"/>
+			<rotation name="rot_singledet_14" x="0" y="0" z="-6.283185307179586"/>
+		</physvol>
+		<physvol name="singledet_15">
+			<volumeref ref="logic_singledet_15"/>
+			<position name="pos_singledet_15" x="1076.3204150487334" y="245.66311108777086" z="41"/>
+			<rotation name="rot_singledet_15" x="0" y="0" z="-6.507584782436"/>
+		</physvol>
+		<physvol name="singledet_16">
+			<volumeref ref="logic_singledet_16"/>
+			<position name="pos_singledet_16" x="991.0657546926611" y="477.2721130293137" z="-41"/>
+			<rotation name="rot_singledet_16" x="0" y="0" z="-6.731984257692414"/>
+		</physvol>
+		<physvol name="singledet_17">
+			<volumeref ref="logic_singledet_17"/>
+			<position name="pos_singledet_17" x="863.1419566447051" y="688.3327412520415" z="41"/>
+			<rotation name="rot_singledet_17" x="0" y="0" z="-6.956383732948828"/>
+		</physvol>
+		<physvol name="singledet_18">
+			<volumeref ref="logic_singledet_18"/>
+			<position name="pos_singledet_18" x="685.8387820446071" y="860.0146307148325" z="-41"/>
+			<rotation name="rot_singledet_18" x="0" y="0" z="-7.180783208205241"/>
+		</physvol>
+		<physvol name="singledet_19">
+			<volumeref ref="logic_singledet_19"/>
+			<position name="pos_singledet_19" x="479.00764798578444" y="994.6696301642706" z="41"/>
+			<rotation name="rot_singledet_19" x="0" y="0" z="-7.405182683461655"/>
+		</physvol>
+		<physvol name="singledet_20">
+			<volumeref ref="logic_singledet_20"/>
+			<position name="pos_singledet_20" x="244.77302735194615" y="1072.4207034000058" z="-41"/>
+			<rotation name="rot_singledet_20" x="0" y="0" z="-7.629582158718069"/>
+		</physvol>
 		<physvol name="singledet_21">
 			<volumeref ref="logic_singledet_21"/>
 			<position name="pos_singledet_21" x="3.380025165646695e-13" y="1104.0" z="41"/>
 			<rotation name="rot_singledet_21" x="0" y="0" z="-7.853981633974483"/>
+		</physvol>
+		<physvol name="singledet_22">
+			<volumeref ref="logic_singledet_22"/>
+			<position name="pos_singledet_22" x="-244.7730273519455" y="1072.420703400006" z="-41"/>
+			<rotation name="rot_singledet_22" x="0" y="0" z="-8.078381109230897"/>
+		</physvol>
+		<physvol name="singledet_23">
+			<volumeref ref="logic_singledet_23"/>
+			<position name="pos_singledet_23" x="-479.0076479857839" y="994.6696301642709" z="41"/>
+			<rotation name="rot_singledet_23" x="0" y="0" z="-8.30278058448731"/>
+		</physvol>
+		<physvol name="singledet_24">
+			<volumeref ref="logic_singledet_24"/>
+			<position name="pos_singledet_24" x="-685.8387820446065" y="860.0146307148331" z="-41"/>
+			<rotation name="rot_singledet_24" x="0" y="0" z="-8.527180059743724"/>
+		</physvol>
+		<physvol name="singledet_25">
+			<volumeref ref="logic_singledet_25"/>
+			<position name="pos_singledet_25" x="-863.1419566447047" y="688.3327412520422" z="41"/>
+			<rotation name="rot_singledet_25" x="0" y="0" z="-8.751579535000138"/>
+		</physvol>
+		<physvol name="singledet_26">
+			<volumeref ref="logic_singledet_26"/>
+			<position name="pos_singledet_26" x="-991.0657546926608" y="477.2721130293143" z="-41"/>
+			<rotation name="rot_singledet_26" x="0" y="0" z="-8.975979010256552"/>
+		</physvol>
+		<physvol name="singledet_27">
+			<volumeref ref="logic_singledet_27"/>
+			<position name="pos_singledet_27" x="-1076.3204150487331" y="245.66311108777148" z="41"/>
+			<rotation name="rot_singledet_27" x="0" y="0" z="-9.200378485512966"/>
 		</physvol>
 		<physvol name="support_ring">
 			<volumeref ref="logic_support_ring"/>
