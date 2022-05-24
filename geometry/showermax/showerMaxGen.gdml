@@ -43,6 +43,13 @@
 		<rotation name="rot_subtract_suitcase_tungstenquartz_12" x="0" y="0" z="0"/>
 	</subtraction>
 	<box name="solid_front_back_plate" lunit="mm" x="181.698" y="313.8" z="6.35"/>
+	<box name="solid_front_plate_hole" lunit="mm" x="81.28" y="213.35999999999999" z="7.35"/>
+	<subtraction name="solid_front_plate">
+		<first ref="solid_front_back_plate"/>
+		<second ref="solid_front_plate_hole"/>
+		<position name="pos_subtract_front_plate" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_front_plate" x="0" y="0" z="0"/>
+	</subtraction>
 	<box name="solid_uBracket_1" lunit="mm" x="15.88" y="23.88" z="50.8"/>
 	<box name="solid_uBracket_legSpace" lunit="mm" x="16.880000000000003" y="17.73" z="38.1"/>
 	<subtraction name="solid_uBracket_2">
@@ -51,14 +58,7 @@
 		<position name="pos_subtract_uBracket" x="0" y="-3.174999999999999" z="0"/>
 		<rotation name="rot_subtract_uBracket" x="0" y="0" z="0"/>
 	</subtraction>
-	<box name="solid_ledge_1" lunit="mm" x="21.698000000000008" y="6.35" z="63.5"/>
-	<box name="solid_ledge_2" lunit="mm" x="10" y="15" z="50.8"/>
-	<union name="solid_ledge">
-		<first ref="solid_ledge_1"/>
-		<second ref="solid_ledge_2"/>
-			<position name="pos_union_ledge" x="5.849000000000004" y="-10.675" z="0"/>
-			<rotation name="rot_union_ledge" x="0" y="0" z="0"/>
-	</union>
+	<box name="solid_ledge" lunit="mm" x="21.698000000000008" y="6.35" z="63.5"/>
 	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="56.976"  x2="86.868" y1="266.0"  y2="266.0" z="67.462"/>
 	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="55.976"  x2="85.868" y1="265.0"  y2="265.0" z="68.462"/>
 	<subtraction name="solid_mirror_box_bot">
@@ -325,6 +325,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_0">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_0">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -497,7 +502,7 @@
 			<rotation name="rot_strut_0" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_0">
-			<volumeref ref="logic_front_back_plate_0"/>
+			<volumeref ref="logic_front_plate_0"/>
 			<position name="pos_logic_front_plate_0" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_0" x="0" y="0" z="0"/>
 		</physvol>
@@ -744,6 +749,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_1">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_1">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -916,7 +926,7 @@
 			<rotation name="rot_strut_1" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_1">
-			<volumeref ref="logic_front_back_plate_1"/>
+			<volumeref ref="logic_front_plate_1"/>
 			<position name="pos_logic_front_plate_1" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_1" x="0" y="0" z="0"/>
 		</physvol>
@@ -1163,6 +1173,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_2">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_2">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -1335,7 +1350,7 @@
 			<rotation name="rot_strut_2" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_2">
-			<volumeref ref="logic_front_back_plate_2"/>
+			<volumeref ref="logic_front_plate_2"/>
 			<position name="pos_logic_front_plate_2" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_2" x="0" y="0" z="0"/>
 		</physvol>
@@ -1582,6 +1597,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_3">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_3">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -1754,7 +1774,7 @@
 			<rotation name="rot_strut_3" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_3">
-			<volumeref ref="logic_front_back_plate_3"/>
+			<volumeref ref="logic_front_plate_3"/>
 			<position name="pos_logic_front_plate_3" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_3" x="0" y="0" z="0"/>
 		</physvol>
@@ -2001,6 +2021,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_4">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_4">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -2173,7 +2198,7 @@
 			<rotation name="rot_strut_4" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_4">
-			<volumeref ref="logic_front_back_plate_4"/>
+			<volumeref ref="logic_front_plate_4"/>
 			<position name="pos_logic_front_plate_4" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_4" x="0" y="0" z="0"/>
 		</physvol>
@@ -2420,6 +2445,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_5">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_5">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -2592,7 +2622,7 @@
 			<rotation name="rot_strut_5" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_5">
-			<volumeref ref="logic_front_back_plate_5"/>
+			<volumeref ref="logic_front_plate_5"/>
 			<position name="pos_logic_front_plate_5" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_5" x="0" y="0" z="0"/>
 		</physvol>
@@ -2839,6 +2869,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_6">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_6">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -3011,7 +3046,7 @@
 			<rotation name="rot_strut_6" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_6">
-			<volumeref ref="logic_front_back_plate_6"/>
+			<volumeref ref="logic_front_plate_6"/>
 			<position name="pos_logic_front_plate_6" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_6" x="0" y="0" z="0"/>
 		</physvol>
@@ -3258,6 +3293,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_7">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_7">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -3430,7 +3470,7 @@
 			<rotation name="rot_strut_7" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_7">
-			<volumeref ref="logic_front_back_plate_7"/>
+			<volumeref ref="logic_front_plate_7"/>
 			<position name="pos_logic_front_plate_7" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_7" x="0" y="0" z="0"/>
 		</physvol>
@@ -3677,6 +3717,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_8">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_8">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -3849,7 +3894,7 @@
 			<rotation name="rot_strut_8" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_8">
-			<volumeref ref="logic_front_back_plate_8"/>
+			<volumeref ref="logic_front_plate_8"/>
 			<position name="pos_logic_front_plate_8" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_8" x="0" y="0" z="0"/>
 		</physvol>
@@ -4096,6 +4141,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_9">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_9">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -4268,7 +4318,7 @@
 			<rotation name="rot_strut_9" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_9">
-			<volumeref ref="logic_front_back_plate_9"/>
+			<volumeref ref="logic_front_plate_9"/>
 			<position name="pos_logic_front_plate_9" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_9" x="0" y="0" z="0"/>
 		</physvol>
@@ -4515,6 +4565,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_10">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_10">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -4687,7 +4742,7 @@
 			<rotation name="rot_strut_10" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_10">
-			<volumeref ref="logic_front_back_plate_10"/>
+			<volumeref ref="logic_front_plate_10"/>
 			<position name="pos_logic_front_plate_10" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_10" x="0" y="0" z="0"/>
 		</physvol>
@@ -4934,6 +4989,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_11">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_11">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -5106,7 +5166,7 @@
 			<rotation name="rot_strut_11" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_11">
-			<volumeref ref="logic_front_back_plate_11"/>
+			<volumeref ref="logic_front_plate_11"/>
 			<position name="pos_logic_front_plate_11" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_11" x="0" y="0" z="0"/>
 		</physvol>
@@ -5353,6 +5413,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_12">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_12">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -5525,7 +5590,7 @@
 			<rotation name="rot_strut_12" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_12">
-			<volumeref ref="logic_front_back_plate_12"/>
+			<volumeref ref="logic_front_plate_12"/>
 			<position name="pos_logic_front_plate_12" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_12" x="0" y="0" z="0"/>
 		</physvol>
@@ -5772,6 +5837,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_13">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_13">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -5944,7 +6014,7 @@
 			<rotation name="rot_strut_13" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_13">
-			<volumeref ref="logic_front_back_plate_13"/>
+			<volumeref ref="logic_front_plate_13"/>
 			<position name="pos_logic_front_plate_13" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_13" x="0" y="0" z="0"/>
 		</physvol>
@@ -6191,6 +6261,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_14">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_14">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -6363,7 +6438,7 @@
 			<rotation name="rot_strut_14" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_14">
-			<volumeref ref="logic_front_back_plate_14"/>
+			<volumeref ref="logic_front_plate_14"/>
 			<position name="pos_logic_front_plate_14" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_14" x="0" y="0" z="0"/>
 		</physvol>
@@ -6610,6 +6685,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_15">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_15">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -6782,7 +6862,7 @@
 			<rotation name="rot_strut_15" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_15">
-			<volumeref ref="logic_front_back_plate_15"/>
+			<volumeref ref="logic_front_plate_15"/>
 			<position name="pos_logic_front_plate_15" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_15" x="0" y="0" z="0"/>
 		</physvol>
@@ -7029,6 +7109,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_16">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_16">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -7201,7 +7286,7 @@
 			<rotation name="rot_strut_16" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_16">
-			<volumeref ref="logic_front_back_plate_16"/>
+			<volumeref ref="logic_front_plate_16"/>
 			<position name="pos_logic_front_plate_16" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_16" x="0" y="0" z="0"/>
 		</physvol>
@@ -7448,6 +7533,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_17">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_17">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -7620,7 +7710,7 @@
 			<rotation name="rot_strut_17" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_17">
-			<volumeref ref="logic_front_back_plate_17"/>
+			<volumeref ref="logic_front_plate_17"/>
 			<position name="pos_logic_front_plate_17" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_17" x="0" y="0" z="0"/>
 		</physvol>
@@ -7867,6 +7957,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_18">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_18">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -8039,7 +8134,7 @@
 			<rotation name="rot_strut_18" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_18">
-			<volumeref ref="logic_front_back_plate_18"/>
+			<volumeref ref="logic_front_plate_18"/>
 			<position name="pos_logic_front_plate_18" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_18" x="0" y="0" z="0"/>
 		</physvol>
@@ -8286,6 +8381,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_19">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_19">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -8458,7 +8558,7 @@
 			<rotation name="rot_strut_19" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_19">
-			<volumeref ref="logic_front_back_plate_19"/>
+			<volumeref ref="logic_front_plate_19"/>
 			<position name="pos_logic_front_plate_19" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_19" x="0" y="0" z="0"/>
 		</physvol>
@@ -8705,6 +8805,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_20">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_20">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -8877,7 +8982,7 @@
 			<rotation name="rot_strut_20" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_20">
-			<volumeref ref="logic_front_back_plate_20"/>
+			<volumeref ref="logic_front_plate_20"/>
 			<position name="pos_logic_front_plate_20" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_20" x="0" y="0" z="0"/>
 		</physvol>
@@ -9124,6 +9229,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_21">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_21">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -9296,7 +9406,7 @@
 			<rotation name="rot_strut_21" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_21">
-			<volumeref ref="logic_front_back_plate_21"/>
+			<volumeref ref="logic_front_plate_21"/>
 			<position name="pos_logic_front_plate_21" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_21" x="0" y="0" z="0"/>
 		</physvol>
@@ -9543,6 +9653,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_22">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_22">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -9715,7 +9830,7 @@
 			<rotation name="rot_strut_22" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_22">
-			<volumeref ref="logic_front_back_plate_22"/>
+			<volumeref ref="logic_front_plate_22"/>
 			<position name="pos_logic_front_plate_22" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_22" x="0" y="0" z="0"/>
 		</physvol>
@@ -9962,6 +10077,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_23">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_23">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -10134,7 +10254,7 @@
 			<rotation name="rot_strut_23" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_23">
-			<volumeref ref="logic_front_back_plate_23"/>
+			<volumeref ref="logic_front_plate_23"/>
 			<position name="pos_logic_front_plate_23" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_23" x="0" y="0" z="0"/>
 		</physvol>
@@ -10381,6 +10501,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_24">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_24">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -10553,7 +10678,7 @@
 			<rotation name="rot_strut_24" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_24">
-			<volumeref ref="logic_front_back_plate_24"/>
+			<volumeref ref="logic_front_plate_24"/>
 			<position name="pos_logic_front_plate_24" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_24" x="0" y="0" z="0"/>
 		</physvol>
@@ -10800,6 +10925,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_25">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_25">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -10972,7 +11102,7 @@
 			<rotation name="rot_strut_25" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_25">
-			<volumeref ref="logic_front_back_plate_25"/>
+			<volumeref ref="logic_front_plate_25"/>
 			<position name="pos_logic_front_plate_25" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_25" x="0" y="0" z="0"/>
 		</physvol>
@@ -11219,6 +11349,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_26">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_26">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -11391,7 +11526,7 @@
 			<rotation name="rot_strut_26" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_26">
-			<volumeref ref="logic_front_back_plate_26"/>
+			<volumeref ref="logic_front_plate_26"/>
 			<position name="pos_logic_front_plate_26" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_26" x="0" y="0" z="0"/>
 		</physvol>
@@ -11638,6 +11773,11 @@
 		<solidref ref="solid_front_back_plate"/>
 		<auxiliary auxtype="Color" auxvalue="orange"/>
 	</volume>
+	<volume name="logic_front_plate_27">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
 	<volume name="logic_web_plate_27">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_web_plate_7"/>
@@ -11810,7 +11950,7 @@
 			<rotation name="rot_strut_27" x="0" y="0" z="0"/>
 		</physvol>
 		<physvol name="front_plate_27">
-			<volumeref ref="logic_front_back_plate_27"/>
+			<volumeref ref="logic_front_plate_27"/>
 			<position name="pos_logic_front_plate_27" x="0" y="0" z="-35.663"/>
 			<rotation name="rot_logic_front_plate_27" x="0" y="0" z="0"/>
 		</physvol>
@@ -11966,7 +12106,7 @@
 		</physvol>
 		<physvol name="singledet_04">
 			<volumeref ref="logic_singledet_04"/>
-			<position name="pos_singledet_4" x="-685.838782044607" y="-860.0146307148326" z="-41"/>
+			<position name="pos_singledet_4" x="-685.8387820446071" y="-860.0146307148326" z="-41"/>
 			<rotation name="rot_singledet_4" x="0" y="0" z="-4.039190554615448"/>
 		</physvol>
 		<physvol name="singledet_05">
@@ -11976,7 +12116,7 @@
 		</physvol>
 		<physvol name="singledet_06">
 			<volumeref ref="logic_singledet_06"/>
-			<position name="pos_singledet_6" x="-244.77302735194604" y="-1072.420703400006" z="-41"/>
+			<position name="pos_singledet_6" x="-244.77302735194604" y="-1072.4207034000058" z="-41"/>
 			<rotation name="rot_singledet_6" x="0" y="0" z="-4.487989505128276"/>
 		</physvol>
 		<physvol name="singledet_07">
@@ -11986,7 +12126,7 @@
 		</physvol>
 		<physvol name="singledet_08">
 			<volumeref ref="logic_singledet_08"/>
-			<position name="pos_singledet_8" x="244.77302735194564" y="-1072.420703400006" z="-41"/>
+			<position name="pos_singledet_8" x="244.77302735194561" y="-1072.420703400006" z="-41"/>
 			<rotation name="rot_singledet_8" x="0" y="0" z="-4.9367884556411035"/>
 		</physvol>
 		<physvol name="singledet_09">
@@ -12006,7 +12146,7 @@
 		</physvol>
 		<physvol name="singledet_12">
 			<volumeref ref="logic_singledet_12"/>
-			<position name="pos_singledet_12" x="991.0657546926609" y="-477.2721130293142" z="-41"/>
+			<position name="pos_singledet_12" x="991.0657546926609" y="-477.27211302931414" z="-41"/>
 			<rotation name="rot_singledet_12" x="0" y="0" z="-5.834386356666759"/>
 		</physvol>
 		<physvol name="singledet_13">
@@ -12021,7 +12161,7 @@
 		</physvol>
 		<physvol name="singledet_15">
 			<volumeref ref="logic_singledet_15"/>
-			<position name="pos_singledet_15" x="1076.3204150487334" y="245.66311108777086" z="41"/>
+			<position name="pos_singledet_15" x="1076.3204150487334" y="245.6631110877708" z="41"/>
 			<rotation name="rot_singledet_15" x="0" y="0" z="-6.507584782436"/>
 		</physvol>
 		<physvol name="singledet_16">
@@ -12031,12 +12171,12 @@
 		</physvol>
 		<physvol name="singledet_17">
 			<volumeref ref="logic_singledet_17"/>
-			<position name="pos_singledet_17" x="863.1419566447051" y="688.3327412520415" z="41"/>
+			<position name="pos_singledet_17" x="863.141956644705" y="688.3327412520416" z="41"/>
 			<rotation name="rot_singledet_17" x="0" y="0" z="-6.956383732948828"/>
 		</physvol>
 		<physvol name="singledet_18">
 			<volumeref ref="logic_singledet_18"/>
-			<position name="pos_singledet_18" x="685.8387820446071" y="860.0146307148325" z="-41"/>
+			<position name="pos_singledet_18" x="685.8387820446072" y="860.0146307148325" z="-41"/>
 			<rotation name="rot_singledet_18" x="0" y="0" z="-7.180783208205241"/>
 		</physvol>
 		<physvol name="singledet_19">
@@ -12061,7 +12201,7 @@
 		</physvol>
 		<physvol name="singledet_23">
 			<volumeref ref="logic_singledet_23"/>
-			<position name="pos_singledet_23" x="-479.0076479857839" y="994.6696301642709" z="41"/>
+			<position name="pos_singledet_23" x="-479.0076479857838" y="994.6696301642709" z="41"/>
 			<rotation name="rot_singledet_23" x="0" y="0" z="-8.30278058448731"/>
 		</physvol>
 		<physvol name="singledet_24">
