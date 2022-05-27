@@ -37,7 +37,7 @@
 <position name="lefthut_pos" x="5000" y="-3000.+3600./2+20" z="22000"/> <!--Beam height from hall floor is 3m; 3600mm is det hut height.-->
 	
 <!-- Virtual planes in the parallel world -->
-<position name="mainDetectorVirtualPlane_pos" z="22200.00" unit="mm"/>
+<position name="mainDetectorVirtualPlane_pos" z="22500.00" unit="mm"/>
 
 <!-- Z position of center of the two arrays of showermax detectors -->
 <position name="showerMaxDetectorCenter" z="23920.00" unit="mm"/>
