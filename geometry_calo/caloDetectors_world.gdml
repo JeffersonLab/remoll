@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <position name="CaloDetectorCenter" z="0.0*mm"/>
+  <position name="Ecal_Center" x="0.0*mm" y="320*mm" z="1154*mm"/>
+  <position name="Hadcal_Center" x="0.0*mm" y="-1780.0*mm" z="1942.5*mm"/>
+  <!-- <position name="Hadcal_Center" x="0.0*mm" y="-1942.5*mm" z="1942.5*mm"/> -->
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box lunit="mm" name="world_solid"
+	 x="10000"
+	 y="10000"
+	 z="10000"/>
+</solids>
+
+<structure>
+
+  <volume name="world_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="world_solid"/>
+
+    <physvol>
+      <file name="target.gdml"/>
+      <positionref ref="CaloDetectorCenter"/>
+      
+      </physvol>
+     
+    <physvol>
+      <file name="ecal.gdml"/>
+      <positionref ref="Ecal_Center"/>
+      <rotation x="15.5*deg"/>
+    </physvol>
+
+    <physvol>
+      <file name="hadcal.gdml"/>
+      <positionref ref="Hadcal_Center"/>
+      <rotation x="-42.5*deg"/>
+    </physvol>
+  
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="world_logical"/>
+</setup>
+
+</gdml>

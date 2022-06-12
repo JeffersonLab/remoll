@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "trigscintMaterials.xml">
+  <!ENTITY matrices SYSTEM "trigscintMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+	<constant name="ecal_unit_length" value="20.0"/>
+	<quantity name="ecal_width" type="length" value="1*ecal_unit_length" unit="mm"/>
+	<quantity name="ecal_height" type="length" value="10*ecal_unit_length" unit="mm"/>
+	<quantity name="ecal_length" type="length" value="200" unit="mm"/>
+
+	<quantity name="ecalmother_width" type="length" value="1.1*ecal_width" unit="mm"/>
+	<quantity name="ecalmother_height" type="length" value="1.1*ecal_height" unit="mm"/>
+	<quantity name="ecalmother_length" type="length" value="2.2*ecal_length" unit="mm"/>
+
+	<quantity name="ecal_sensdet_length" type="length" value="0.1" unit="mm"/>
+
+	&matrices;
+</define>
+
+&materials;
+
+<solids>
+	<box name="ecalmother_solid" x="ecalmother_width" y="ecalmother_height" z="ecalmother_length" lunit="mm"/>
+	<box name="ecal_solid" x="ecal_width" y="ecal_height" z="ecal_length" lunit="mm"/>
+	<box name="ecal_sensdet_solid" x="ecal_width" y="ecal_height" z="ecal_sensdet_length" lunit="mm"/>
+</solids>
+
+<structure>
+
+	<volume name="ecal_sensdet_logical">
+    		<materialref ref="G4_Galactic"/>
+    		<solidref ref="ecal_sensdet_solid"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+      		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+		<auxiliary auxtype="SensDet" auxvalue="EcalFrontDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="1001"/>    		
+  	</volume>
+
+	<volume name="ecal_logical">
+    		<materialref ref="G4_PbWO4"/>
+    		<solidref ref="ecal_solid"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+     		<auxiliary auxtype="SensDet" auxvalue="ECalorimeterDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="1101"/>
+  	</volume>
+
+	<volume name="ecalmother_logical">
+    		<materialref ref="G4_Galactic"/>
+    		<solidref ref="ecalmother_solid"/>
+
+		<physvol>
+			 <volumeref ref="ecal_logical"/>
+			 <position name="ecal_pos" unit="mm"  z="ecal_length/2"/>
+    		</physvol>
+
+		<physvol>
+			 <volumeref ref="ecal_sensdet_logical"/>
+			 <position name="ecal_sensdet_pos" unit="mm"  z="-1*ecal_sensdet_length/2" />
+    		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  	</volume>
+		     
+</structure>
+
+<setup name="ecalmother" version="1.0">
+  <world ref="ecalmother_logical"/>
+</setup>
+
+</gdml>

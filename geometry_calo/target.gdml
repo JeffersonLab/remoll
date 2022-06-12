@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "trigscintMaterials.xml">
+  <!ENTITY matrices SYSTEM "trigscintMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+	<quantity name="target_radius" type="length" value="40" unit="mm"/>
+	<quantity name="target_length" type="length" value="300" unit="mm"/>
+
+	&matrices;
+</define>
+
+&materials;
+
+<solids>
+	<box name="TargetWorld_solid" x="3*target_radius" y="3*target_radius" z="target_length+target_length" lunit="mm"/>
+	<!-- <tube name="TargetLH2_solid" aunit="deg" lunit="mm" deltaphi="360"         rmax="target_radius + 4.0" rmin="0" z="target_length+2*0.127"/> -->
+	<tube name="TargetLH2_solid" aunit="deg" lunit="mm" deltaphi="360" rmax="target_radius" rmin="0" z="target_length"/>
+	<tube aunit="deg" deltaphi="360" lunit="mm" name="tubeTarget" rmax="target_radius" rmin="0" startphi="0" z="target_length"/>
+</solids>
+
+<structure>
+
+	<volume name="h2Targ">
+    		<materialref ref="G4_lH2"/>
+    		<solidref ref="tubeTarget"/>
+		<auxiliary auxtype="TargetSamplingVolume" auxvalue=""/>
+  	</volume>
+
+
+	<volume name="logicTarget">
+    		<materialref ref="G4_Galactic"/>
+    		<solidref ref="TargetWorld_solid"/>
+
+		<physvol>
+		  <volumeref ref="h2Targ"/>
+		  <position name="targ_center" unit="mm" x="0" y="0" z="0.0"/>
+		</physvol>
+
+		<auxiliary auxtype="TargetSystem" auxvalue=""/>
+  	</volume>
+		     
+</structure>
+
+<setup name="Target" version="1.0">
+  <world ref="logicTarget"/>
+</setup>
+
+</gdml>

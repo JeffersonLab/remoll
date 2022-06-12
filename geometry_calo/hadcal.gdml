@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "trigscintMaterials.xml">
+  <!ENTITY matrices SYSTEM "trigscintMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+	<constant name="hadcal_unit_length" value="155"/>
+	<quantity name="hadcal_width" type="length" value="1*hadcal_unit_length" unit="mm"/>
+	<quantity name="hadcal_height" type="length" value="4*hadcal_unit_length" unit="mm"/>
+	<quantity name="hadcal_length" type="length" value="1000" unit="mm"/>
+
+	<quantity name="hadcalmother_width" type="length" value="1.1*hadcal_width" unit="mm"/>
+	<quantity name="hadcalmother_height" type="length" value="1.1*hadcal_height" unit="mm"/>
+	<quantity name="hadcalmother_length" type="length" value="2.1*hadcal_length" unit="mm"/>
+
+	<quantity name="hadcal_sensdet_length" type="length" value="0.1" unit="mm"/>
+	<quantity name="hadcal_scint_length" type="length" value="10" unit="mm"/>
+	<quantity name="hadcal_leadwall_length" type="length" value="76.2" unit="mm"/>
+
+	<quantity name="hadcal_scint_separation" type="length" value="10" unit="mm"/>
+	<quantity name="hadcal_leadwall_separation" type="length" value="10" unit="mm"/>
+	&matrices;
+</define>
+
+&materials;
+
+<solids>
+	<box name="hadcalmother_solid" x="hadcalmother_width" y="hadcalmother_height" z="hadcalmother_length" lunit="mm"/>
+	<box name="hadcal_solid" x="hadcal_width" y="hadcal_height" z="hadcal_length" lunit="mm"/>
+	<box name="hadcal_sensdet1_solid" x="hadcal_width" y="hadcal_height" z="hadcal_sensdet_length" lunit="mm"/>
+	<box name="hadcal_sensdet2_solid" x="hadcal_width" y="hadcal_height" z="hadcal_sensdet_length" lunit="mm"/>
+	<box name="hadcal_sensdet3_solid" x="hadcal_width" y="hadcal_height" z="hadcal_sensdet_length" lunit="mm"/>
+
+	<box name="hadcal_scint_solid" x="hadcal_width" y="hadcal_height" z="hadcal_scint_length" lunit="mm"/>
+
+	<box name="hadcal_leadwall_solid" x="hadcal_width" y="hadcal_height" z="hadcal_leadwall_length" lunit="mm"/>
+</solids>
+
+<structure>
+
+	<volume name="hadcal_sensdet1_logical">
+    		<materialref ref="G4_Galactic"/>
+    		<solidref ref="hadcal_sensdet1_solid"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+      		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+		<auxiliary auxtype="SensDet" auxvalue="HcalFrontDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="1012"/>    		
+  	</volume>
+	<volume name="hadcal_sensdet2_logical">
+    		<materialref ref="G4_Galactic"/>
+    		<solidref ref="hadcal_sensdet2_solid"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+      		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+		<auxiliary auxtype="SensDet" auxvalue="ScintFrontDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="1022"/>    		
+  	</volume>
+	<volume name="hadcal_sensdet3_logical">
+    		<materialref ref="G4_Galactic"/>
+    		<solidref ref="hadcal_sensdet3_solid"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+      		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+		<auxiliary auxtype="SensDet" auxvalue="PbWallFrontDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="1032"/>    		
+  	</volume>
+
+	<volume name="hadcal_logical">
+    		<materialref ref="G4_PbWO4"/> <!-- G4_PbWO4 G4_Galactic-->
+    		<solidref ref="hadcal_solid"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+ 		<auxiliary auxtype="SensDet" auxvalue="HCalorimeterDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="1102"/>
+  	</volume>
+
+	<volume name="hadcal_scint_logical">
+    		<materialref ref="PLASTIC_SC_VINYLTOLUENE"/>
+    		<solidref ref="hadcal_scint_solid"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>      	
+  	</volume>
+
+	<volume name="hadcal_leadwall_logical">
+    		<materialref ref="G4_Pb"/>
+    		<solidref ref="hadcal_leadwall_solid"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>      	
+  	</volume>
+
+	<volume name="hadcalmother_logical">
+    		<materialref ref="G4_Galactic"/>
+    		<solidref ref="hadcalmother_solid"/>
+
+		<physvol>
+			 <volumeref ref="hadcal_logical"/>
+			 <position name="hadcal_pos" unit="mm"  z="hadcal_length/2"/>
+    		</physvol>
+
+		<physvol>
+			 <volumeref ref="hadcal_sensdet1_logical"/>
+			 <position name="hadcal_sensdet_pos" unit="mm"  z="-1*hadcal_sensdet_length/2" />
+    		</physvol>
+
+		<physvol>
+			 <volumeref ref="hadcal_scint_logical"/>
+			 <position name="hadcal_scint_pos" unit="mm"  z="-1*hadcal_scint_separation"/>
+    		</physvol>
+
+		<physvol>
+			 <volumeref ref="hadcal_sensdet2_logical"/>
+			 <position name="hadcal_sensdet_pos" unit="mm"  z="-1*hadcal_scint_length-hadcal_scint_separation-hadcal_sensdet_length/2" />
+    		</physvol>
+
+		<physvol>
+			 <volumeref ref="hadcal_leadwall_logical"/>
+			 <position name="hadcal_scint_pos" unit="mm"  z="-hadcal_leadwall_length/2-hadcal_leadwall_separation-hadcal_scint_separation-hadcal_scint_length"/>
+    		</physvol>
+
+		<physvol>
+			 <volumeref ref="hadcal_sensdet3_logical"/>
+			 <position name="hadcal_sensdet_pos" unit="mm"  z="-1.1*hadcal_leadwall_separation - hadcal_leadwall_length - hadcal_scint_length-hadcal_scint_separation-hadcal_sensdet_length/2" />
+    		</physvol>
+		
+		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  	</volume>
+		     
+</structure>
+
+<setup name="hadcalmother" version="1.0">
+  <world ref="hadcalmother_logical"/>
+</setup>
+
+</gdml>

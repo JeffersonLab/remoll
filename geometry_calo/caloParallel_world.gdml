@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <position name="CaloDetectorCenter" z="0.0*mm"/>
+  <position name="Ecal_Center" x="0.0*mm" y="320*mm" z="1154*mm"/>
+  <position name="Hadcal_Center" x="0.0*mm" y="1780*mm" z="1942.5*mm"/>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+  <box lunit="mm" name="parallel_solid"
+	 x="10000"
+	 y="10000"
+	 z="10000"/>
+
+<tube
+    name="VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="2900" rmin="0" z="1" lunit="mm"/>
+
+
+
+</solids>
+
+
+
+<structure>
+
+  <volume name="MainVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5500"/>
+  </volume>
+
+
+  <volume name="parallel_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="parallel_solid"/>
+
+    <physvol    name="MainVirtualPlane_phys">
+      <volumeref ref="MainVirtualPlane_log"/>
+      <position name="MainVirtualPlane_pos" unit="mm" z="1000.0"/>
+    </physvol>  
+    
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="parallel_logical"/>
+</setup>
+
+</gdml>
