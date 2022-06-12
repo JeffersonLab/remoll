@@ -153,7 +153,8 @@ void remollBeamTarget::UpdateInfo()
     }
 
     // Get absolute position
-    fMotherTargetAbsolutePosition = fTargetMothers[fActiveTargetMother].first->GetTranslation().z() - 4500;
+    //    fMotherTargetAbsolutePosition = fTargetMothers[fActiveTargetMother].first->GetTranslation().z() - 4500;
+    fMotherTargetAbsolutePosition = fTargetMothers[fActiveTargetMother].first->GetTranslation().z() - 0.0;
 
     for (auto it =  fTargetVolumes[fActiveTargetMother].begin();
               it != fTargetVolumes[fActiveTargetMother].end();

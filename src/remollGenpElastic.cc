@@ -294,6 +294,10 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 	    G4ThreeVector(ef*cos(ph)*sin(th), ef*sin(ph)*sin(th), ef*cos(th) ), 
 	    "e-" );
 
+    //recoil proton
+    evt->ProduceNewParticle( G4ThreeVector(0.0, 0.0, 0.0), 
+			     G4ThreeVector(0.0-ef*cos(ph)*sin(th), 0.0-ef*sin(ph)*sin(th), sqrt(beamE*beamE - electron_mass_c2*electron_mass_c2)-ef*cos(th) ), "proton" );
+
     return;
 
 }
