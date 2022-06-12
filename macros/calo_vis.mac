@@ -1,0 +1,83 @@
+# Use this open statement to create an OpenGL view:
+/vis/open OGL 600x600-0+0  
+
+# This is the current working geometry
+
+#/remoll/geometry/setfile geometry/calo_det/caloDetectors_world.gdml
+/remoll/geometry/setfile geometry_calo/caloDetectors_world.gdml
+/remoll/parallel/setfile geometry_calo/caloParallel_world.gdml
+/remoll/geometry/overlapcheck true
+
+
+#/remoll/setphysicslist QGSP_BERT_EMV
+
+#/remoll/physlist/optical/enable
+
+/run/initialize
+
+/remoll/beamene 6.6 GeV
+#/remoll/beamcurr 50 microampere
+
+
+#/remoll/SD/disable_all
+
+/remoll/SD/enable 1001
+#/remoll/SD/detect lowenergyneutral 1
+#/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+
+/remoll/SD/enable 1101
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+/remoll/SD/enable 1012
+#/remoll/SD/detect lowenergyneutral 1
+#/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+/remoll/SD/enable 1022
+#/remoll/SD/detect lowenergyneutral 1
+#/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+/remoll/SD/enable 1032
+#/remoll/SD/detect lowenergyneutral 1
+#/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+
+
+/remoll/SD/enable 1102
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+
+# Raster is on by default with 5x5mm
+#/remoll/rasx 5 mm
+#/remoll/rasy 5 mm 
+
+## Beam generator
+#/remoll/evgen/set beam
+#/remoll/evgen/beam/origin 0.0 0.0 -250.0 mm
+
+#Elastic
+/remoll/evgen/set elastic
+/remoll/evgen/thmin 10.5 deg
+/remoll/evgen/thmax 20.0 deg
+
+#external eicRate hits
+#/remoll/evgen/set external
+###/remoll/evgen/copyRate 1
+#/remoll/evgen/external/startEvent 0
+#/remoll/evgen/external/file analysis/o_proton_11667events_remollSkimTree.root
+#/remoll/evgen/external/file analysis/o_ep_100000events_remollSkimTree.root
+#/remoll/evgen/external/detid 999
+
+
+
+/remoll/filename o_calo_vis.root
+/control/execute vis/vis.mac
+#/control/execute macros/calo_vis.mac

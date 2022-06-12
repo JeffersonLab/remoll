@@ -1,0 +1,84 @@
+
+/remoll/geometry/setfile geometry_calo/caloDetectors_world.gdml
+/remoll/parallel/setfile geometry_calo/caloParallel_world.gdml
+#/remoll/physlist/register QGSP_BERT_HP
+/run/initialize
+
+
+
+/remoll/beamene 6.6 GeV
+/remoll/beamcurr 70 microampere
+# Raster is on by default with 5x5mm
+/remoll/rasx 0 mm
+/remoll/rasy 0 mm 
+
+## Beam generator
+#/remoll/evgen/set beam
+#/remoll/evgen/beam/origin 0.0 0.0 -500.0 mm
+
+##/remoll/SD/disable_all
+/remoll/SD/enable 1001
+#/remoll/SD/detect lowenergyneutral 1
+#/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+
+/remoll/SD/enable 1101
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+/remoll/SD/enable 1012
+#/remoll/SD/detect lowenergyneutral 1
+#/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+/remoll/SD/enable 1022
+#/remoll/SD/detect lowenergyneutral 1
+#/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+/remoll/SD/enable 1032
+#/remoll/SD/detect lowenergyneutral 1
+#/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+
+
+/remoll/SD/enable 1102
+/remoll/SD/detect lowenergyneutral 1
+/remoll/SD/detect secondaries 1
+/remoll/SD/detect boundaryhits 1
+
+
+
+
+### ep elastic electrons
+
+#Elastic
+/remoll/evgen/set elastic
+/remoll/evgen/thmin 10.5 deg
+/remoll/evgen/thmax 20.0 deg
+
+### /remoll/evgen/emin  0.0 MeV
+### /remoll/evgen/emax 6.6 GeV
+
+
+### external events
+#/remoll/evgen/set external
+##/remoll/evgen/copyRate 1
+#/remoll/evgen/external/startEvent 0
+#/remoll/evgen/external/file analysis/o_proton_11667events_remollSkimTree.root
+#/remoll/evgen/external/file analysis/o_ep_100000events_remollSkimTree.root
+#/remoll/evgen/external/detid 999
+
+
+# Specify random number seed
+##/remoll/seed 1234
+
+
+#/remoll/filename /volatile/halla/moller12gev/rakithab/work/testout.root
+/remoll/filename testout.root
+
+/run/beamOn 1000
+#/run/beamOn 11667
