@@ -1377,12 +1377,12 @@
 
     <physvol name="Collar1Ent_phys">
       <volumeref ref="Collar1Ent_log"/>
-      <position name="Collar1Ent_pos" unit="mm" x="0" y="0" z="11875.09-0.5"/>
+      <position name="Collar1Ent_pos" unit="mm" x="0" y="0" z="11767.12-0.5"/>
     </physvol>
 
     <physvol name="collar1Exit_phys">
       <volumeref ref="collar1Exit_log"/>
-      <position name="Collar1Exit_pos" unit="mm" x="0" y="0" z="11875.09+150+0.5"/>
+      <position name="Collar1Exit_pos" unit="mm" x="0" y="0" z="11767.12+150+0.5"/>
     </physvol>
 
     <physvol name="Drift1_phys">
@@ -1397,13 +1397,13 @@
 
     <physvol name="collar2Ent_phys">
       <volumeref ref="collar2Ent_log"/>
-      <position name="Collar2Ent_pos" unit="mm" x="0" y="0" z="19182.69-0.5"/>
+      <position name="Collar2Ent_pos" unit="mm" x="0" y="0" z="19132.69-0.5"/>
     </physvol>
 
-    <!--<physvol name="Collar2Exit_phys">
+    <physvol name="Collar2Exit_phys">
       <volumeref ref="Collar2Exit_log"/>
-      <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="19182.69+150+0.6"/>
-    </physvol>-->
+      <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="19132.69+150+0.6"/>
+    </physvol>
 
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">

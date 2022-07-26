@@ -13,6 +13,7 @@
         
         <constant name="PI" value="1.*pi"/>
         <constant name="DOFFSET" value="13366.57+5300.59/2-8.73/2"/>
+        <constant name="hybridcenter" value="11287.5"/>
         <constant name="DEGRAD" value="PI/180."/>
         <constant name="SEPTANT" value ="360./7"/>
         <position name="CENTER" unit="mm" x="0" y="0" z="0"/>
@@ -193,7 +194,7 @@
         </polycone>
         
         <!--collar solids -->
-        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="612" rmax1="750" rmin2="621" rmax2="750" z="100+50"/>
+        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="620" rmax1="750" rmin2="630" rmax2="750" z="100+50"/>
         <!--<cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1013" rmax1="1315" rmin2="1022" rmax2="1315" z="100+50"/>-->
         
         <!-- drift pipe -->
@@ -3018,7 +3019,7 @@
             
             <physvol name="collar1">
                 <volumeref ref="logicCollar1"/>
-                <position unit="mm" name="collar1pos" x="0" y="0" z="16950.09-DOFFSET-150./2.-400./2"/>
+                <position unit="mm" name="collar1pos" x="0" y="0" z="11767.12+150./2-hybridcenter"/>
                 <!--<position lunit="mm" name="collar1pos" x="0" y="0" z="17350-25-DOFFSET"/>-->
                 <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
             </physvol>
