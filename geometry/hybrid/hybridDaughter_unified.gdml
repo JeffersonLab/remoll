@@ -3821,7 +3821,7 @@
                     <position x="0" y="0" z="2594.767-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
-		</loop>
+	    </loop>
             
         </volume>
     </structure>
