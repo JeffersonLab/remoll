@@ -1022,7 +1022,15 @@
 		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>        
     
-        
+        <xtru name="solid_C1_mid"  lunit="mm">
+            <twoDimVertex x="88.989" y="856.309" />
+            <twoDimVertex x="66.292" y="0.0" />
+            <twoDimVertex x="-66.292" y="0.0" />
+            <twoDimVertex x="-66.292" y="856.309" />
+            <section zOrder="1" zPosition="-10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+	    
         <tube name="solid_C1_front" rmin="0" rmax="66.292" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
         
         <tube name="solid_C1_back" rmin="0" rmax="77.6405" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
