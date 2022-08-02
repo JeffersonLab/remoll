@@ -3775,174 +3775,61 @@
                 </physvol>
             </loop>
             
-            <!--SubCoil 1 support -->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic1"/>
-                    <position x="0" y="0" z="-3092.596-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic2"/>
-                    <position x="0" y="0" z="-3092.596-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic2"/>
-                    <position x="0" y="0" z="-3092.596-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic1"/>
-                    <position x="0" y="0" z="-3092.596+358.78-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic2"/>
-                    <position x="0" y="0" z="-3092.596+358.78-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic2"/>
-                    <position x="0" y="0" z="-3092.596+358.78-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
             
-            <!--SubCoil 2 support -->
             <loop for="iloop" from="0" to="6" step="1">
+		<!--SubCoil 1 support -->
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic1"/>
-                    <position x="0" y="0" z="-2074.406-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_1"/>
+                    <position x="0" y="0" z="-3168.268-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic2"/>
-                    <position x="0" y="0" z="-2074.406-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_2"/>
+                    <position x="0" y="0" z="-2809.493-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+                
+		<!--SubCoil 2 support -->
+                <physvol>
+                    <volumeref ref="logic_clamp_3"/>
+                    <position x="0" y="0" z="-2143.724-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic2"/>
-                    <position x="0" y="0" z="-2074.406-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_4"/>
+                    <position x="0" y="0" z=-1784.949-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+		    
+	        <!--SubCoil 3 support -->    
+                <physvol>
+                    <volumeref ref="logic_clamp_5"/>
+                    <position x="0" y="0" z="-1100.525-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic1"/>
-                    <position x="0" y="0" z="-2074.406+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_6"/>
+                    <position x="0" y="0" z="-741.75-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+		
+                <!--SubCoil 4 support -->    
+                <physvol>
+                    <volumeref ref="logic_clamp_7"/>
+                    <position x="0" y="0" z="156.367-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic2"/>
-                    <position x="0" y="0" z="-2074.406+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_8"/>
+                    <position x="0" y="0" z="1223.167-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic2"/>
-                    <position x="0" y="0" z="-2074.406+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
+		<physvol>
+                    <volumeref ref="logic_clamp_9"/>
+                    <position x="0" y="0" z="2594.767-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
-            </loop>
-            
-            <!--SubCoil 3 support -->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic1"/>
-                    <position x="0" y="0" z="-1034.771-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic2"/>
-                    <position x="0" y="0" z="-1034.771-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic2"/>
-                    <position x="0" y="0" z="-1034.771-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic1"/>
-                    <position x="0" y="0" z="-1034.771+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic3"/>
-                    <position x="0" y="0" z="-1034.771+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic3"/>
-                    <position x="0" y="0" z="-1034.771+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
-            
-            <!--SubCoil 4 support Clamp1-->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp1_logic1"/>
-                    <position x="0" y="0" z="222.874-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp1_logic2"/>
-                    <position x="0" y="0" z="222.874-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp1_logic2"/>
-                    <position x="0" y="0" z="222.874-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
-            
-            <!--SubCoil 4 support Clamp2-->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic1"/>
-                    <position x="0" y="0" z="1289.674-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic2"/>
-                    <position x="0" y="0" z="1289.674-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic2"/>
-                    <position x="0" y="0" z="1289.674-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic3"/>
-                    <position x="0" y="0" z="1248.399-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic3"/>
-                    <position x="0" y="0" z="1330.949-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
-            
-            <!--SubCoil 4 support Clamp3-->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp3_logic1"/>
-                    <position x="0" y="0" z="2661.274-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp3_logic2"/>
-                    <position x="0" y="0" z="2661.274-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp3_logic2"/>
-                    <position x="0" y="0" z="2661.274-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
+		</loop>
             
         </volume>
     </structure>
