@@ -3789,7 +3789,7 @@
                 </physvol>
                 <physvol>
                     <volumeref ref="logic_clamp_4"/>
-                    <position x="0" y="0" z=-1784.949-2864.764-90"/>
+                    <position x="0" y="0" z="-1784.949-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
 		    
