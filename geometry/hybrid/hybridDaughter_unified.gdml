@@ -555,19 +555,20 @@
         
         <!--    Solid for Collimator 6A -->
         <xtru name="Coll6A_solid1" lunit="mm">
-            <twoDimVertex x="52.77" y="-7.79"/>
-            <twoDimVertex x="46.90" y="-25.41"/>
-            <twoDimVertex x="91.58" y="-46.92"/>
-            <twoDimVertex x="95.25" y="-46.92"/>
-            <twoDimVertex x="95.25" y="-27.87"/>
-            <twoDimVertex x="98.42" y="-27.87"/>
-            <twoDimVertex x="98.42" y="-24.70"/>
-            <twoDimVertex x="70.79" y="-24.70"/>
-            <twoDimVertex x="70.79" y="-7.79"/>
-            <section zOrder="1" zPosition="-34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="49.836" y="-7.792"/>
+            <twoDimVertex x="49.836" y="-24.000"/>
+            <twoDimVertex x="95.250" y="-45.870"/>
+            <twoDimVertex x="95.250" y="-35.113"/>
+            <twoDimVertex x="91.821" y="-35.113"/>
+            <twoDimVertex x="91.821" y="-26.985"/>
+            <twoDimVertex x="95.250" y="-26.985"/>
+            <twoDimVertex x="95.250" y="-25.080"/>
+            <twoDimVertex x="70.787" y="-25.080"/>
+            <twoDimVertex x="70.787" y="-7.792"/>
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="30" lunit="mm" name="Coll6A_Cylinder_solid1" rmax1="53.34" rmax2="56.02" rmin1="45" rmin2="50" startphi="-30" z="70"/>
+        <cone aunit="deg" deltaphi="30" lunit="mm" name="Coll6A_Cylinder_solid1" rmax1="55.314" rmax2="57.982" rmin1="45" rmin2="50" startphi="-30" z="70"/>
         <subtraction name="Coll6A_solid_1">
             <first ref="Coll6A_solid1"/>
             <second ref="Coll6A_Cylinder_solid1"/>
@@ -575,19 +576,21 @@
         </subtraction>
         
         <xtru name="Coll6A_solid2" lunit="mm">
-            <twoDimVertex x="46.76" y="26.78"/>
-            <twoDimVertex x="55.97" y="7.79"/>
-            <twoDimVertex x="70.79" y="7.79"/>
-            <twoDimVertex x="70.79" y="24.70"/>
-            <twoDimVertex x="98.42" y="24.70"/>
-            <twoDimVertex x="98.42" y="27.87"/>
-            <twoDimVertex x="95.25" y="27.87"/>
-            <twoDimVertex x="95.25" y="46.92"/>
-            <twoDimVertex x="91.58" y="46.92"/>
-            <section zOrder="1" zPosition="-34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="50.277" y="29.851"/>
+            <twoDimVertex x="50.277" y="7.792"/>
+            <twoDimVertex x="70.787" y="7.792"/>
+            <twoDimVertex x="70.787" y="25.080"/>
+            <twoDimVertex x="95.250" y="25.080"/>
+            <twoDimVertex x="95.250" y="26.985"/>
+            <twoDimVertex x="91.821" y="26.985"/>
+            <twoDimVertex x="91.821" y="35.113"/>
+            <twoDimVertex x="95.250" y="35.113"/>
+            <twoDimVertex x="95.250" y="45.870"/>
+            <twoDimVertex x="93.046" y="50.447"/>
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="35" lunit="mm" name="Coll6A_Cylinder_solid2" rmax1="56.51" rmax2="59.19" rmin1="45" rmin2="50" startphi="5" z="70"/>
+        <cone aunit="deg" deltaphi="35" lunit="mm" name="Coll6A_Cylinder_solid2" rmax1="58.471" rmax2="61.143" rmin1="45" rmin2="50" startphi="5" z="70"/>
         <subtraction name="Coll6A_solid_2">
             <first ref="Coll6A_solid2"/>
             <second ref="Coll6A_Cylinder_solid2"/>
