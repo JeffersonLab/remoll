@@ -36,27 +36,27 @@
     <!--shielding concrete-->
     <box lunit="mm" name="DSconcrete" x="4261" y="5160 + 127.65 + 12.43" z="500 - 86 + 186"/>
     <box lunit="mm" name="ShieldDS_tube" x="1200*2+1" y="1200*2+1" z="500 - 86 + 186 + 1"/>
-    <box lunit="mm" name="DSconcrete_sub" x="4261+1" y="1400+0.5" z="500 - 86 + 186+1"/>
+    <box lunit="mm" name="DSconcrete_sub2" x="4261+1" y="1400+0.5" z="500 - 86 + 186+1"/>
 
-    <box lunit="mm" name="dsBarite_1" x="1200*2" y="1200*2" z="500 - 86 "/>
-    <box lunit="mm" name="dsBarite_2" x="540*2+1-100" y="540*2+1-100" z="500 - 86 + 1"/>
-    <box lunit="mm" name="dsBarite_sub" x="1200*2+1" y="279.9+1" z="500 - 86 +1"/>
+    <box lunit="mm" name="dsBarite_1" x="1200*2" y="1200*2" z="500 - 86 - 3 "/>
+    <box lunit="mm" name="dsBarite_2" x="540*2+1-100" y="540*2+1-100" z="500 - 86 - 3 + 1"/>
+    <box lunit="mm" name="dsBarite_sub" x="1200*2+1" y="279.9+1" z="500 - 86 - 3 +1"/>
 
     <subtraction name="dsBarite_sub1">
       <first ref = "dsBarite_1"/>
       <second ref = "dsBarite_2"/>
-      <position name ="dsBarite_solid_sub1_p" lunit="mm" x="0" y="0" z="0" />
+      <position name ="dsBarite_sub1_pos" lunit="mm" x="0" y="0" z="0" />
     </subtraction>
     
     <subtraction name="dsBarite_solid">
       <first ref = "dsBarite_sub1"/>
       <second ref = "dsBarite_sub"/>
-      <position name ="dsBarite_solid_sub2_p" lunit="mm" x="0" y="1200-279.9/2" z="0" />
+      <position name ="dsBarite_solid_pos" lunit="mm" x="0" y="1200-279.9/2" z="0" />
     </subtraction>
        
-    <box lunit="mm" name="dsBarite_3" x="1200*2" y="1200*2" z="186"/>
-    <box lunit="mm" name="dsBarite_4" x="540*2+1" y="540*2+1" z="186+1"/>
-    <box lunit="mm" name="dsBarite2_sub" x="1200*2+1" y="279.9+1" z="186+1"/>
+    <box lunit="mm" name="dsBarite_3" x="1200*2" y="1200*2" z="186+3"/>
+    <box lunit="mm" name="dsBarite_4" x="533.4*2+1" y="533.4*2+1" z="186+3+1"/>
+    <box lunit="mm" name="dsBarite2_sub2" x="1200*2+1" y="279.9+1" z="186+3+1"/>
 
     <subtraction name="dsBarite2_sub1">
       <first ref = "dsBarite_3"/>
@@ -66,20 +66,20 @@
 
     <subtraction name="dsBarite2_solid">
       <first ref = "dsBarite2_sub1"/>
-      <second ref = "dsBarite2_sub"/>
-      <position name ="dsBarite2_solid_sub1_p" lunit="mm" x="0" y="1200-279.9/2" z="0" />
+      <second ref = "dsBarite2_sub2"/>
+      <position name ="dsBarite2_solid_sub_p" lunit="mm" x="0" y="1200-279.9/2" z="0" />
     </subtraction>
        
     <subtraction name="DSconcreteShielding_sub1">
       <first ref = "DSconcrete"/>
       <second ref = "ShieldDS_tube"/>
-      <position name ="DSconcreteSub1_p" lunit="mm" x="0" y="420-127.65/2 - 18 - 12.43/2" z="0" />
+      <position name ="DSconcreteShielding_sub1_pos" lunit="mm" x="0" y="420-127.65/2 - 18 - 12.43/2" z="0" />
     </subtraction>
 
     <subtraction name="DSconcreteShielding_sub">
       <first ref = "DSconcreteShielding_sub1"/>
-      <second ref = "DSconcrete_sub"/>
-      <position name ="DSconcreteSub2_p" lunit="mm" x="0" y="5300.08/2-1400/2" z="0" />
+      <second ref = "DSconcrete_sub2"/>
+      <position name ="DSconcreteShielding_sub_pos" lunit="mm" x="0" y="5300.08/2-1400/2" z="0" />
     </subtraction>
     
     <box lunit="mm" name="coll1SideShielding_solid"
@@ -92,21 +92,30 @@
 	 y="1400"
 	 z="USBoxmother_length - USBoxmothersubtract_length - 10 + 610 + 86 - 186 + 600"/>
 
-     <box lunit="mm" name="coll1TopShielding_sub"
-      x="4261+1"
-      y="507.952"
-      z="2519.172"/>
+    <box lunit="mm" name="coll1TopShielding_sub"
+     x="4261+1"
+     y="507.952"
+     z="2519.172"/>
 
-      <subtraction name="coll1TopShielding_solid">
-        <first ref = "coll1TopShielding_solid1"/>
-        <second ref = "coll1TopShielding_sub"/>
-        <position name ="coll1TopShielding_p" lunit="mm" x="0" y="1400/2-507.952/2" z="-(4955+600)/2+2519.172/2" />
-      </subtraction>
+    <subtraction name="coll1TopShielding_solid">
+      <first ref = "coll1TopShielding_solid1"/>
+      <second ref = "coll1TopShielding_sub"/>
+      <position name ="coll1TopShielding_p" lunit="mm" x="0" y="1400/2-507.952/2" z="-(4955+600)/2+2519.172/2" />
+    </subtraction>
       
     <box lunit="mm" name="pivotIron_solid"
 	 x="4261"
 	 y="50"
 	 z="USBoxmother_length - USBoxmothersubtract_length - 10 + 610 + 86 - 186"/>
+    
+    <box lunit="mm" name="PbWall_solid_2_1" x="533.4*2" y="533.4*2" z="101.6"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_2_2" rmax="346.18" rmin="0" startphi="0" z="101.6+1"/>
+
+    <subtraction name ="PbWall_2">
+      <first ref="PbWall_solid_2_1"/>
+      <second ref="PbWall_solid_2_2"/>
+      <position name ="PbWall_2_pos" lunit="mm" x="0" y="0" z="0" />
+    </subtraction>
     
   </solids>
 
@@ -131,6 +140,14 @@
       <solidref ref="pivotIron_solid"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="Alpha" auxvalue="0.8"/>
+    </volume>
+    
+    <volume name="PbWall_2_logic">
+      <materialref ref="Lead"/>
+      <solidref ref="PbWall_2"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
+      <auxiliary auxtype="DetNo" auxvalue="6034"/>
     </volume>
     
     <volume name="DSconcreteShielding">
@@ -180,6 +197,12 @@
         <position name="pivotIron_pos" unit="mm" x="0" y="-1700" z="1287.5-250/2 - 2000 + 86/2 - 186/2"/>
       </physvol>
       
+      <!-- Lead wall DS of collimator 4 -->
+      <physvol>
+        <volumeref ref="PbWall_2_logic"/>
+        <position name="PbWall_2_pos" x="0" y="0" z="1618.10+101.6/2"/>
+      </physvol>
+      
       <physvol>
         <volumeref ref="DSconcreteShielding"/>
         <position name="DSconcreteShielding_pos" unit="mm" x="0" y="-420 + 127.65/2 + 18 + 12.43/2" z="4005-250/2- 2000 + 86/2 - 186/2 + 1"/>
@@ -187,12 +210,12 @@
 
       <physvol name="dsBarite">
         <volumeref ref="dsBarite_logic"/>
-        <position name="dsBarite_pos" unit="mm" x="0" y="0" z="4005-250/2 - 2000 + 86/2 + 1"/>
+        <position name="dsBarite_pos" unit="mm" x="0" y="0" z="4005-250/2 - 2000 + 86/2  + 3/2 + 1"/>
       </physvol>
 
       <physvol name="dsBarite2">
         <volumeref ref="dsBarite2_logic"/>
-        <position name="dsBarite2_pos" unit="mm" x="0" y="0" z="1665 + 48 - 186/2 + 2.7 + 1"/>
+        <position name="dsBarite2_pos" unit="mm" x="0" y="0" z="1665 + 48 - 186/2 + 2.7 + 3/2 + 1"/>
       </physvol>
 
       <physvol>

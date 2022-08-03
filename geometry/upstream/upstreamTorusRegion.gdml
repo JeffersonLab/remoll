@@ -140,7 +140,7 @@
     <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
 
     <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
-    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 610/2 + 500/2 - 418/2"/>
+    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 610/2 + 500/2 - 418/2 + 4/2 + 101.6/2"/>
 
     <!--need to subtract 50/2 to accomdate for the beampipe moving downstream due to collimator thickness increasing. An additional 75 mm subtracted to move the beampipe upstream.-->
     <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" 
@@ -154,7 +154,7 @@
     <constant name="inner_nose_shield_US_beampipe_center_z" value="inner_nose_shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2+0.001-50/2-75"/>
     <position name="inner_nose_shield_US_beampipe_center" unit="mm" x="0" y="0" z="inner_nose_shield_US_beampipe_center_z"/>
 
-    <constant name="PbWall_length" value="150"/>
+    <constant name="PbWall_length" value="152.40"/>
      
 </define> 
 
@@ -162,25 +162,40 @@
 
 <solids>
 
-      <box lunit="mm" name="tubeUpstream_1" x="540*2+0.75" y="540*2+0.75" z="USBoxmother_length"/>
-      <box lunit="mm" name="tubeUpstream_2" x="540*2+1.75" y="540*2+1.75" z="USBoxmothersubtract_length - 610 - 500 + 418 + 2.05"/>
-
-      <subtraction name="tubeUpstream">
-        <first ref="tubeUpstream_1"/>
-        <second ref="tubeUpstream_2"/>
-        <positionref ref="USmothersubtract_center_2" />
-      </subtraction>
-      
+    <box lunit="mm" name="tubeUpstream_1" x="533.4*2+0.75" y="533.4*2+0.75" z="USBoxmother_length"/>
+    <box lunit="mm" name="tubeUpstream_2" x="533.4*2+1.75" y="533.4*2+1.75" z="USBoxmothersubtract_length - 610 - 500 + 418 + 2.05 - 4 + 101.6"/>
+    <box lunit="mm" name="PbWall_solid" x="533.4*2+1.75" y="533.4*2+1.75" z="101.6"/>
+    
     <!-- Lead shielding solids -->
-    <box lunit="mm" name="PbWall_solid_1" x="540*2" y="540*2" z="PbWall_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_2" rmax="240" rmin="0" startphi="0" z="PbWall_length+1"/>
-    <subtraction name ="PbWall_solid">
-      <first ref="PbWall_solid_1"/>
-      <second ref="PbWall_solid_2"/>
-      <position name ="PbWall_solid_p" lunit="mm" x="0" y="0" z="0" />
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_1_1" rmax="330.20" rmin="230" startphi="0" z="101.60"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_1_2" rmax="406.40" rmin="230" startphi="0" z="50.80"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_1_3" rmax="346.18" rmin="0" startphi="0" z="101.6+1"/>
+
+    <union name ="PbWall_1">
+      <first ref="PbWall_solid_1_1"/>
+      <second ref="PbWall_solid_1_2"/>
+      <position name ="PbWall_1_pos" lunit="mm" x="0" y="0" z="-101.60/2-50.80/2-0.1" />
+    </union>
+
+    <subtraction name ="PbWall_sub">
+      <first ref="PbWall_solid"/>
+      <second ref="PbWall_solid_1_3"/>
+      <position name ="PbWall_sub_pos" lunit="mm" x="0" y="0" z="0" />
+    </subtraction>
+    
+    <union name ="tubeUpstream_union">
+      <first ref="tubeUpstream_2"/>
+      <second ref="PbWall_sub"/>
+      <position name ="tubeUpstream_union_pos" lunit="mm" x="0" y="0" z="-(USBoxmothersubtract_length - 610 - 500 + 418 + 2.05 - 4 + 101.6)/2 - 101.6/2 + 0.5" />
+    </union>
+
+    <subtraction name="tubeUpstream">
+      <first ref="tubeUpstream_1"/>
+      <second ref="tubeUpstream_union"/>
+      <positionref ref="USmothersubtract_center_2" />
     </subtraction>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall_accep_solid">
+    <!--<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall_accep_solid">
       <zplane rmin="0" rmax="238.35" z="0"/>
       <zplane rmin="0" rmax="238.35" z="PbWall_length/2."/>
       <zplane rmin="0" rmax="238.35+(PbWall_length/2)*tan(8*pi/180.)" z="PbWall_length"/>
@@ -190,7 +205,7 @@
       <zplane rmin="230" rmax="236.35" z="0"/>
       <zplane rmin="230" rmax="236.35" z="PbWall_length/2."/>
       <zplane rmin="230+(PbWall_length/2)*tan(8*pi/180.)" rmax="236.35+(PbWall_length/2)*tan(8*pi/180.)" z="PbWall_length"/>
-    </polycone>
+    </polycone>-->
     
     <!--<tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_solid"
 	  rmax="550" rmin="219" startphi="0" z="102"/>-->
@@ -1520,17 +1535,18 @@
       </physvol>
     </volume>-->
 
-    <volume name="PbWall_logic">
+    <volume name="PbWall_1_logic">
       <materialref ref="Lead"/>
-      <solidref ref="PbWall_solid"/>
+      <solidref ref="PbWall_1"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
-      <auxiliary auxtype="DetNo" auxvalue="6031"/>
+      <auxiliary auxtype="DetNo" auxvalue="6033"/>
       <!--<physvol name="phys_PbWall_acce">
 	      <volumeref ref="PbWall_accep_logic"/>
 	      <position name="Pbwall_accep_pos" x="0" y="0" z="-150/2"/>
       </physvol>-->
     </volume>
+    
     <!--<volume name="vacuumPbWall_logic">
       <materialref ref="Lead"/>
       <solidref ref="vacuumPbWall_solid"/>
@@ -1544,7 +1560,6 @@
         <volumeref ref="logicUScoll_1"/>
         <positionref ref="posCOLL1"/>
       </physvol>
-
 
       <physvol name="col1_h20_phys1">
         <volumeref ref="col1_h20_logic1"/>
@@ -1624,8 +1639,8 @@
 
       <!-- Lead wall DS of collimator 4 -->
       <physvol>
-        <volumeref ref="PbWall_logic"/>
-        <position name="PbWall_pos" x="0" y="0" z="1665-48/2"/>
+        <volumeref ref="PbWall_1_logic"/>
+        <position name="PbWall_1_pos" x="0" y="0" z="1665-48/2+2.5+50.8/2"/>
       </physvol>
 
      <!-- mini - Lead wall DS of collimator 4 -->

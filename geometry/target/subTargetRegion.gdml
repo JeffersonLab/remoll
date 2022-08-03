@@ -36,7 +36,7 @@
   <solids>
 
     <box lunit="m" name="targetRegion_solid1"
-	 x="10" y="15" z="6.38"/>
+	 x="10" y="6" z="6.38"/>
 
     <box lunit="m" name="targetRegion_solid2"
 	 x="11" y="5" z="6.4"/>

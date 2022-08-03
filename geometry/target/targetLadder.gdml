@@ -121,7 +121,7 @@
   <volume name="TargetAlDummy4pctUS_logical">
     <materialref ref="G4_Al"/>
     <solidref ref="TargetAlDummy4pct_solid"/>
-    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="USAl"/>
   </volume>
   <volume name="TargetAlDummy2pctDS_logical">
     <materialref ref="G4_Al"/>
