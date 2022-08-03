@@ -91,6 +91,9 @@
 	 y="1787.976+1"
 	 z="197.53/2"/>
     
+    <box lunit="mm" name="GemRack"
+        x="600" y="2000" z="600"/>
+        
     <subtraction name="Barite_Collar2_sub">
       <first ref = "Barite_Collar2_solid"/>
       <second ref = "Collar2_tube"/>
@@ -173,6 +176,22 @@
       <solidref ref="GemRotatorSupport_sub2"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="Alpha" auxvalue="0.8"/>
+    </volume>
+    
+    <volume name="GemRackRight_log">
+      <materialref ref="Kryptonite"/>
+      <solidref ref="GemRack"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+      <auxiliary auxtype="DetNo" auxvalue="332"/>
+    </volume>
+    
+    <volume name="GemRackLeft_log">
+      <materialref ref="Kryptonite"/>
+      <solidref ref="GemRack"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+      <auxiliary auxtype="DetNo" auxvalue="333"/>
     </volume>
     
     <volume name="logicMother">
@@ -276,22 +295,22 @@
 
 
       <!-- GEM Rotator -->
-      <physvol name="GemRotatorSupport1_ph">
+      <physvol name="GemRotatorSupport1_phys">
 	<volumeref ref="GemRotatorSupport1_log"/>
 	<position name="GemRotatorSupport1_pos" unit="mm" x="-248.33*2-248.33/2" y="-2980+1415.481/2" z="19132.69+400/2+1000/2"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport2_ph">
+      <physvol name="GemRotatorSupport2_phys">
 	<volumeref ref="GemRotatorSupport2_log"/>
 	<position name="GemRotatorSupport2_pos" unit="mm" x="2*(-248.33*2-248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport3_ph">
+      <physvol name="GemRotatorSupport3_phys">
 	<volumeref ref="GemRotatorSupport1_log"/>
 	<position name="GemRotatorSupport3_pos" unit="mm" x="-(-248.33*2-248.33/2)" y="-2980+1415.481/2" z="19132.69+400/2+1000/2"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport4_ph">
+      <physvol name="GemRotatorSupport4_phys">
 	<volumeref ref="GemRotatorSupport2_log"/>
 	<position name="GemRotatorSupport4_pos" unit="mm" x="2*(248.33*2+248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2"/>
       </physvol>
@@ -306,24 +325,34 @@
 	<position name="GemRotator2_pos" unit="mm" x="0" y="0" z="19132.69+400/2+1000/2+4*248.33"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport5_ph">
+      <physvol name="GemRotatorSupport5_phys">
 	<volumeref ref="GemRotatorSupport1_log"/>
 	<position name="GemRotatorSupport5_pos" unit="mm" x="-248.33*2-248.33/2" y="-2980+1415.481/2" z="19132.69+400/2+1000/2+4*248.33"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport6_ph">
+      <physvol name="GemRotatorSupport6_phys">
 	<volumeref ref="GemRotatorSupport2_log"/>
 	<position name="GemRotatorSupport6_pos" unit="mm" x="2*(-248.33*2-248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2+4*248.33"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport7_ph">
+      <physvol name="GemRotatorSupport7_phys">
 	<volumeref ref="GemRotatorSupport1_log"/>
 	<position name="GemRotatorSupport7_pos" unit="mm" x="-(-248.33*2-248.33/2)" y="-2980+1415.481/2" z="19132.69+400/2+1000/2+4*248.33"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport8_ph">
+      <physvol name="GemRotatorSupport8_phys">
 	<volumeref ref="GemRotatorSupport2_log"/>
 	<position name="GemRotatorSupport8_pos" unit="mm" x="2*(248.33*2+248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2+4*248.33"/>
+      </physvol>
+      
+      <physvol name="GemRackRight_phys">
+        <volumeref ref="GemRackRight_log"/>
+        <position name="GemRackRight_pos" unit="mm" x="-1614.145 - 320" y="-2980+1787.976/2 + (2000-1787.976)/2" z="19132.69+400/2+1000/2 - 10"/>
+      </physvol>
+      
+      <physvol name="GemRackLeft_phys">
+        <volumeref ref="GemRackLeft_log"/>
+        <position name="GemRackLeft_pos" unit="mm" x="1614.145 + 320" y="-2980+1787.976/2 + (2000-1787.976)/2" z="19132.69+400/2+1000/2 - 10"/>
       </physvol>
       
       <!-- Main Detectors -->

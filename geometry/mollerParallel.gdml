@@ -1131,6 +1131,90 @@
     <auxiliary auxtype="DetNo" auxvalue="28"/>
   </volume>
 
+  <volume name="Ring1Front_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="120"/>
+  </volume>
+  
+  <volume name="Ring1Back_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="121"/>
+  </volume>
+  
+  <volume name="Ring2Front_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="122"/>
+  </volume>
+  
+  <volume name="Ring2Back_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="123"/>
+  </volume>
+  
+  <volume name="Ring3Front_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="124"/>
+  </volume>
+  
+  <volume name="Ring3Back_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="125"/>
+  </volume>
+  
+  <volume name="Ring4Front_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="126"/>
+  </volume>
+  
+  <volume name="Ring4Back_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="127"/>
+  </volume>
+  
+  <volume name="Ring5Front_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="128"/>
+  </volume>
+  
+  <volume name="Ring5Back_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="129"/>
+  </volume>
+  
+  <volume name="Ring6Front_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="130"/>
+  </volume>
+  
+  <volume name="Ring6Back_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="131"/>
+  </volume>
+  
   <volume name="showerMaxVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="VirtualPlane_solid"/>
@@ -1355,7 +1439,7 @@
       <position name="Col2Exit_pos" unit="mm" x="0" y="200" z="900"/>
     </physvol>
 
-    <physvol name="USCoil1_phys">
+    <!--<physvol name="USCoil1_phys">
       <volumeref ref="USCoil1_log"/>
       <position  name="USCoil1_pos" unit="mm" x="0" y="200" z="1300"/>
     </physvol>
@@ -1373,7 +1457,7 @@
     <physvol name="USCoil4_phys">
       <volumeref ref="USCoil4_log"/>
       <position  name="USCoil4_pos" unit="mm" x="0" y="200" z="2800"/>
-    </physvol>
+    </physvol>-->
 
     <physvol name="Col4Ent_phys">
       <volumeref ref="Col4Ent_log"/>
@@ -1570,7 +1654,7 @@
       <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="19182.69+150+0.6"/>
     </physvol>-->
 
-    <physvol name="DSBottomVP_phys">
+    <!--<physvol name="DSBottomVP_phys">
       <volumeref ref="DSBottomVP_log"/>
       <position name="DSBottomVP_pos" unit="mm" x="0" y="-1463.548+91.948/2-9.652/2+1" z="11287.5+(12151.36-11287.5-7454.9/2)"/>
     </physvol>
@@ -1578,7 +1662,7 @@
     <physvol name="DriftBottomVP_phys">
       <volumeref ref="DriftBottomVP_log"/>
       <position name="DriftBottomVP_pos" unit="mm" x="0" y="-1272.286-100" z="11287.5+(12854.94 - 11287.5)+5974.08/2"/>
-    </physvol>
+    </physvol>-->
     
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
@@ -1603,7 +1687,67 @@
       <volumeref ref="mainDetectorVirtualPlane_log"/>
       <positionref ref="mainDetectorVirtualPlane_pos"/>
     </physvol>
-
+    
+    <physvol name="Ring1Front_phys">
+      <volumeref ref="Ring1Front_log"/>
+      <position name="Ring1Front_pos" unit="mm" z="22200.00 + 1145"/>
+    </physvol>
+    
+    <physvol name="Ring1Back_phys">
+      <volumeref ref="Ring1Back_log"/>
+      <position name="Ring1Back_pos" unit="mm" z="22200.00 + 1271"/>
+    </physvol>
+    
+    <physvol name="Ring2Front_phys">
+      <volumeref ref="Ring2Front_log"/>
+      <position name="Ring2Front_pos" unit="mm" z="22200.00 + 897"/>
+    </physvol>
+    
+    <physvol name="Ring2Back_phys">
+      <volumeref ref="Ring2Back_log"/>
+      <position name="Ring2Back_pos" unit="mm" z="22200.00 + 1023"/>
+    </physvol>
+    
+    <physvol name="Ring3Front_phys">
+      <volumeref ref="Ring3Front_log"/>
+      <position name="Ring3Front_pos" unit="mm" z="22200.00 + 649"/>
+    </physvol>
+    
+    <physvol name="Ring3Back_phys">
+      <volumeref ref="Ring3Back_log"/>
+      <position name="Ring3Back_pos" unit="mm" z="22200.00 + 775"/>
+    </physvol>
+    
+    <physvol name="Ring4Front_phys">
+      <volumeref ref="Ring4Front_log"/>
+      <position name="Ring4Front_pos" unit="mm" z="22200.00 + 401"/>
+    </physvol>
+    
+    <physvol name="Ring4Back_phys">
+      <volumeref ref="Ring4Back_log"/>
+      <position name="Ring4Back_pos" unit="mm" z="22200.00 + 527"/>
+    </physvol>
+    
+    <physvol name="Ring5Front_phys">
+      <volumeref ref="Ring5Front_log"/>
+      <position name="Ring5Front_pos" unit="mm" z="22200.00 + 131"/>
+    </physvol>
+    
+    <physvol name="Ring5Back_phys">
+      <volumeref ref="Ring5Back_log"/>
+      <position name="Ring5Back_pos" unit="mm" z="22200.00 + 269"/>
+    </physvol>
+    
+    <physvol name="Ring6Front_phys">
+      <volumeref ref="Ring6Front_log"/>
+      <position name="Ring6Front_pos" unit="mm" z="22200.00 - 135"/>
+    </physvol>
+    
+    <physvol name="Ring6Back_phys">
+      <volumeref ref="Ring6Back_log"/>
+      <position name="Ring6Back_pos" unit="mm" z="22200.00 - 1"/>
+    </physvol>
+    
     <!-- ShowerMax detector plane -->
     <physvol name="showerMaxVirtualPlane_phys">
       <volumeref ref="showerMaxVirtualPlane_log"/>
@@ -1691,7 +1835,7 @@
       <position name="RasterPS_pos" unit="mm" x="-1500" y="-948.86-857.5+75" z="-19500"/>
     </physvol>
 
-   <physvol name="USTorus_VirtualPlane_phys">
+  <!--<physvol name="USTorus_VirtualPlane_phys">
       <volumeref ref="USTorus_VirtualPlane_log"/>
       <position name="USTorus_VirtualPlane_pos" unit="mm" x="0" y="200" z="2000"/>
     </physvol>
@@ -1704,7 +1848,7 @@
   <physvol name="USTorus_VirtualPlane2_phys">
     <volumeref ref="USTorus_VirtualPlane2_log"/>
     <position name="USTorus_VirtualPlane2_pos" unit="mm" x="0" y="200" z="1100"/>
-  </physvol>
+  </physvol>-->
     
   <physvol name="sieveVirtualPlane_phys">
     <volumeref ref="sieveVirtualPlane_log"/>
