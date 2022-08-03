@@ -555,6 +555,10 @@
         <second ref="cut_largeR_box3"/>
     </subtraction>
 
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="collar0_solid"
+          rmin="76.2" rmax="330" z="200"/>
+
+
 </solids>
 
 
@@ -1307,9 +1311,23 @@
       <auxiliary auxtype="DetNo" auxvalue="6033"/>
     </volume>
     
+    <volume name="collar0_logic">
+      <materialref ref="Lead"/>
+      <solidref ref="collar0_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
+      <auxiliary auxtype="DetNo" auxvalue="5688"/>
+    </volume>
+
+
     <volume name="upstreamTorusRegion">
       <materialref ref="G4_Galactic"/>
       <solidref ref="tubeUpstream"/>
+
+      <physvol name="collar0">
+        <volumeref ref="collar0_logic"/>
+        <position name="collar0_pos" unit="mm" z="-3100"/>
+      </physvol>
 
       <physvol name="UScoll_1">
         <volumeref ref="logicUScoll_1"/>

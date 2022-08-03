@@ -78,7 +78,8 @@
           rmin="0" rmax="453" z="concreteThickness+2.0"/>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="outerBarite_solid"
-          rmin="331" rmax="450" z="concreteThickness - 200"/>
+          rmin="165" rmax="450" z="concreteThickness - 200"/>
+
     <tube aunit="deg" deltaphi="360" lunit="mm" name="innerBarite_solid"
           rmin="150" rmax="330" z="500"/>
 
@@ -234,11 +235,11 @@
 	<volumeref ref="targetUSBeamPipe"/>
       </physvol>
       
-      <physvol>
-	<volumeref ref="LeadCollar_logic"/>
-	<position name="LeadCollar_pos" unit="mm" x="0" y="0"
-                  z="2851 + 100"/>
-      </physvol>
+      <!-- <physvol> -->
+      <!-- 	<volumeref ref="LeadCollar_logic"/> -->
+      <!-- 	<position name="LeadCollar_pos" unit="mm" x="0" y="0" -->
+      <!--             z="2851 + 100"/> -->
+      <!-- </physvol> -->
 
       <!--shielding placement-->
       <physvol>
@@ -274,10 +275,10 @@
 	<position name="outerBarite_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2. + 100"/>
       </physvol>
 
-      <physvol>
-	<volumeref ref="innerBarite_logic"/>
-	<position name="innerBarite_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2."/>
-      </physvol>
+      <!-- <physvol> -->
+      <!-- 	<volumeref ref="innerBarite_logic"/> -->
+      <!-- 	<position name="innerBarite_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2."/> -->
+      <!-- </physvol> -->
 
     </volume>
 

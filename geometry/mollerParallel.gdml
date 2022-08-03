@@ -50,8 +50,9 @@
 	  rmin="700" rmax="701" lunit="mm"
 	  deltaphi="360" deltatheta="180" aunit="deg"/>
 
-  <box lunit="mm" name="targetPbWallDS_solid" 
-       x="4000" y="3000" z="1"/>
+  <tube name="collar0VirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="0" rmax="400" z="1" lunit="mm"/>
        
   <box lunit="mm" name="skyshineVacuumDet1_solid"
        x="4889" y="1.0" z="3549"/>
@@ -307,14 +308,14 @@
   </volume>
   
   
-  <volume name="targetPbWallDSVirtualPlane_log">
+  <volume name="collar0VirtualPlane_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="targetPbWallDS_solid"/>
+    <solidref ref="collar0VirtualPlane_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="5531"/>
+    <auxiliary auxtype="DetNo" auxvalue="5689"/>
   </volume>
 
   <volume name="targetBottomVP_log">
@@ -521,13 +522,6 @@
     <solidref ref="samVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="80"/>
-  </volume>
-
-  <volume name="tgtPbCollar_log">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="samVirtualPlane_solid"/>
-    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="36"/>
   </volume>
 
   <volume name="USPlane_log">
@@ -1273,16 +1267,16 @@
       <positionref ref="targetCenter"/>
     </physvol>
 
-    <physvol    name="targetPbWallDSVirtualPlane_phys">
-      <volumeref ref="targetPbWallDSVirtualPlane_log"/>
-      <position name="targetPbWallDSVirtualPlane_pos" unit="mm" z="-2800+60"/>
+    <physvol    name="collar0USVirtualPlane_phys">
+      <volumeref ref="collar0VirtualPlane_log"/>
+      <position name="collar0USVirtualPlane_pos" unit="mm" z="-1250"/>
+    </physvol>
+
+    <physvol    name="collar0DSVirtualPlane_phys">
+      <volumeref ref="collar0VirtualPlane_log"/>
+      <position name="collar0DSVirtualPlane_pos" unit="mm" z="-950"/>
     </physvol>
     
-   <!-- <physvol    name="skyshineVacuumDet1VirtualPlane_phys">
-      <volumeref ref="skyshineVacuumDet1VirtualPlane_log"/>
-      <position name="skyshineVacuumDet1VirtualPlane_pos" unit="mm" x="0" y="1829/2.+1200" z="-4502"/>
-    </physvol>-->
-
     <physvol    name="skyshineVacuumDet2VirtualPlane_phys">
       <volumeref ref="skyshineVacuumDet2VirtualPlane_log"/>
       <position name="skyshineVacuumDet2VirtualPlane_pos" unit="mm" x="0" y="2500+1" z="-4502"/>
@@ -1318,21 +1312,6 @@
       <position name="tgtOuterDet3VirtualPlane_pos" unit="mm" x="0" y="390-1231/2-10" z="-1325"/>
     </physvol>
     
-    <!--<physvol    name="tgtInnerDet0VirtualPlane_phys">
-      <volumeref ref="tgtInnerDet0VirtualPlane_log"/>
-      <position name="tgtInnerDet0VirtualPlane_pos" unit="mm" x="1101" y="390" z="-4502"/>
-    </physvol>
-
-    <physvol    name="tgtInnerDet1VirtualPlane_phys">
-      <volumeref ref="tgtInnerDet1VirtualPlane_log"/>
-      <position name="tgtInnerDet1VirtualPlane_pos" unit="mm" x="-1101" y="390" z="-4502"/>
-    </physvol>
-
-    <physvol    name="tgtInnerDet2VirtualPlane_phys">
-      <volumeref ref="tgtInnerDet2VirtualPlane_log"/>
-      <position name="tgtInnerDet2VirtualPlane_pos" unit="mm" x="0" y="390" z="-5602"/>
-    </physvol>-->
-
     <physvol    name="tgtInnerDet3VirtualPlane_phys">
       <volumeref ref="tgtInnerDet3VirtualPlane_log"/>
       <position name="tgtInnerDet3VirtualPlane_pos" unit="mm" x="0" y="0" z="-3400"/>
@@ -1398,17 +1377,6 @@
       <position name="UStorusBottomVP3_pos" unit="mm" y="-762" z="852.5 + 610/2 + 86/2 - 186/2 - 0.5"/>
     </physvol>
     
-   <!-- <physvol    name="hybridIronVirtualPlane_phys">
-      <volumeref ref="hybridIronVirtualPlane_log"/>
-      <position name="hybridIronVirtualPlane_pos" unit="mm" y="-1670" z="12000-680/2-40/2+80/2"/>
-    </physvol>-->
-
-    <!-- Tracking planes -->
-   <!--<physvol name="trackingDetectorVirtualPlaneFront1_phys">
-      <volumeref ref="trackingDetectorVirtualPlane_log"/>
-      <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
-    </physvol>-->
-
     <physvol name="tgtR1_phys">
       <volumeref ref="tgtR1_log"/>
       <position  name="tgtR1_pos" unit="mm" x="0" y="0" z="-3700"/>
@@ -1417,11 +1385,6 @@
     <physvol name="tgtR2_phys">
       <volumeref ref="tgtR2_log"/>
       <position  name="tgtR2_pos" unit="mm" x="0" y="0" z="-2750"/>
-    </physvol>
-
-    <physvol name="tgtPbCollar_phys">
-      <volumeref ref="tgtPbCollar_log"/>
-      <position  name="tgtPbCollar_pos" unit="mm" x="0" y="0" z="-1449+0.5"/>
     </physvol>
 
     <physvol name="USPlane_phys">
@@ -1437,21 +1400,6 @@
     <physvol name="Col2Exit_phys">
       <volumeref ref="Col2Exit_log"/>
       <position name="Col2Exit_pos" unit="mm" x="0" y="200" z="900"/>
-    </physvol>
-
-    <!--<physvol name="USCoil1_phys">
-      <volumeref ref="USCoil1_log"/>
-      <position  name="USCoil1_pos" unit="mm" x="0" y="200" z="1300"/>
-    </physvol>
-
-    <physvol name="USCoil2_phys">
-      <volumeref ref="USCoil2_log"/>
-      <position  name="USCoil2_pos" unit="mm" x="0" y="200" z="1800"/>
-    </physvol>
-
-    <physvol name="USCoil3_phys">
-      <volumeref ref="USCoil3_log"/>
-      <position  name="USCoil3_pos" unit="mm" x="0" y="200" z="2300"/>
     </physvol>
 
     <physvol name="USCoil4_phys">
@@ -1648,21 +1596,6 @@
       <volumeref ref="collar2Ent_log"/>
       <position name="Collar2Ent_pos" unit="mm" x="0" y="0" z="19182.69-0.5"/>
     </physvol>
-
-    <!--<physvol name="Collar2Exit_phys">
-      <volumeref ref="Collar2Exit_log"/>
-      <position name="Collar2Exit_pos" unit="mm" x="0" y="0" z="19182.69+150+0.6"/>
-    </physvol>-->
-
-    <!--<physvol name="DSBottomVP_phys">
-      <volumeref ref="DSBottomVP_log"/>
-      <position name="DSBottomVP_pos" unit="mm" x="0" y="-1463.548+91.948/2-9.652/2+1" z="11287.5+(12151.36-11287.5-7454.9/2)"/>
-    </physvol>
-    
-    <physvol name="DriftBottomVP_phys">
-      <volumeref ref="DriftBottomVP_log"/>
-      <position name="DriftBottomVP_pos" unit="mm" x="0" y="-1272.286-100" z="11287.5+(12854.94 - 11287.5)+5974.08/2"/>
-    </physvol>-->
     
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
@@ -1834,21 +1767,6 @@
       <volumeref ref="RasterPS_log"/>
       <position name="RasterPS_pos" unit="mm" x="-1500" y="-948.86-857.5+75" z="-19500"/>
     </physvol>
-
-  <!--<physvol name="USTorus_VirtualPlane_phys">
-      <volumeref ref="USTorus_VirtualPlane_log"/>
-      <position name="USTorus_VirtualPlane_pos" unit="mm" x="0" y="200" z="2000"/>
-    </physvol>
-
-  <physvol name="USTorus_VirtualPlane1_phys">
-      <volumeref ref="USTorus_VirtualPlane1_log"/>
-      <position name="USTorus_VirtualPlane1_pos" unit="mm" x="0" y="200" z="2900"/>
-    </physvol>
-
-  <physvol name="USTorus_VirtualPlane2_phys">
-    <volumeref ref="USTorus_VirtualPlane2_log"/>
-    <position name="USTorus_VirtualPlane2_pos" unit="mm" x="0" y="200" z="1100"/>
-  </physvol>-->
     
   <physvol name="sieveVirtualPlane_phys">
     <volumeref ref="sieveVirtualPlane_log"/>
