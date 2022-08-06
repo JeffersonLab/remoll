@@ -823,14 +823,24 @@
 		<twoDimVertex x="399.415" y="12.7" />
 		<twoDimVertex x="396.24" y="12.7" />
 		<twoDimVertex x="396.24" y="26.149" />
-		<twoDimVertex x="152.4" y="26.149" />
-		<twoDimVertex x="101.6" y="14.973" />
-		<twoDimVertex x="101.6" y="13.45" />
+		<twoDimVertex x="175.26" y="26.149" />
+		<twoDimVertex x="175.26" y="24.625" />
+		<twoDimVertex x="148.527" y="24.625" />
+		<twoDimVertex x="148.527" y="26.149" />
+		<twoDimVertex x="141.542" y="26.149" />
+		<twoDimVertex x="141.542" y="24.625" />
+		<twoDimVertex x="103.906" y="24.625" />
+		<twoDimVertex x="103.906" y="13.45" />
 		<twoDimVertex x="330.2" y="13.45" />
 		<twoDimVertex x="330.2" y="-13.45" />
-		<twoDimVertex x="101.6" y="-13.45" />
-		<twoDimVertex x="101.6" y="-14.973" />
-		<twoDimVertex x="152.4" y="-26.149" />
+		<twoDimVertex x="103.906" y="-13.45" />
+		<twoDimVertex x="103.906" y="-24.625" />
+		<twoDimVertex x="141.542" y="-24.625" />
+		<twoDimVertex x="141.542" y="-26.149" />
+		<twoDimVertex x="148.527" y="-26.149" />
+		<twoDimVertex x="148.527" y="-24.625" />
+		<twoDimVertex x="175.26" y="-24.625" />
+		<twoDimVertex x="175.26" y="-26.149" />
 		<twoDimVertex x="396.24" y="-26.149" />
 		<twoDimVertex x="396.24" y="-12.7" />
 		<twoDimVertex x="399.415" y="-12.7" />
