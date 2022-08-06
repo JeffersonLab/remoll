@@ -443,7 +443,7 @@
         <subtraction name="Coll5_solid1">
             <first ref="Coll5_solid1_1"/>
             <second ref="Coll5_Cylinder_solid1"/>
-            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="100/2.0" />
         </subtraction>
         <xtru name="Coll5_solid2_1" lunit="mm">
             <twoDimVertex x="172.715" y="46.992"/>
@@ -467,7 +467,7 @@
         <subtraction name="Coll5_solid2">
             <first ref="Coll5_solid2_1"/>
             <second ref="Coll5_Cylinder_solid2"/>
-            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="100/2.0" />
         </subtraction>
         
         <!-- <xtru name="Coll5_solid1" lunit="mm">
@@ -3638,13 +3638,13 @@
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Coll5_logic1"/>
-                    <position unit="mm" x="0" y="0" z="-737.264+(13335.194-13332.736)-2864.764-90"/>
+                    <position unit="mm" x="0" y="0" z="-774.912-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
                 
                 <physvol>
                     <volumeref ref="Coll5_logic2"/>
-                    <position unit="mm" x="0" y="0" z="-737.264+100+12.7+(13335.194-13332.736)-2864.764-90"/>
+                    <position unit="mm" x="0" y="0" z="-662.187-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
             </loop>
