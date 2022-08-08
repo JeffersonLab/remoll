@@ -927,6 +927,13 @@
     <auxiliary auxtype="DetNo" auxvalue="67"/>
   </volume>
 
+  <volume name="Col6Mid_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="681"/>
+  </volume>
+
   <volume name="Col6Exit_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
@@ -1342,12 +1349,17 @@
 
     <physvol name="Col6Ent_phys">
       <volumeref ref="Col6Ent_log"/>
-      <position name="Col6Ent_pos" unit="mm" x="0" y="0" z="9546.21-0.5"/>
+      <position name="Col6Ent_pos" unit="mm" x="0" y="0" z="9555.904-0.5"/>
+    </physvol>
+	  
+    <physvol name="Col6Mid_phys">
+      <volumeref ref="Col6Mid_log"/>
+      <position name="Col6Mid_pos" unit="mm" x="0" y="0" z="9638.454-0.5"/>
     </physvol>
 
     <physvol name="Col6Exit_phys">
       <volumeref ref="Col6Exit_log"/>
-      <position name="Col6Exit_pos" unit="mm" x="0" y="0" z="9698.61+0.5"/>
+      <position name="Col6Exit_pos" unit="mm" x="0" y="0" z="9638.454+69.850+0.5"/>
     </physvol>
 
     <physvol name="DSCoil13_phys">
