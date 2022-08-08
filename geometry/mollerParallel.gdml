@@ -1314,12 +1314,12 @@
 
     <physvol name="Col5Mid_phys">
       <volumeref ref="Col5Mid_log"/>
-      <position  name="Col5Mid_pos" unit="mm" x="0" y="0" z="7670.549-100-0.5"/>
+      <position  name="Col5Mid_pos" unit="mm" x="0" y="0" z="7670.549-0.5"/>
     </physvol>
 
     <physvol name="Col5Exit_phys">
       <volumeref ref="Col5Exit_log"/>
-      <position  name="Col5Exit_pos" unit="mm" x="0" y="0" z="7670.549+0.5"/>
+      <position  name="Col5Exit_pos" unit="mm" x="0" y="0" z="7670.549+100+0.5"/>
     </physvol>
 
     <physvol name="LintelEnt_phys">
