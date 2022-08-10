@@ -52,7 +52,7 @@
 
   <tube name="collar0VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
-    rmin="0" rmax="400" z="1" lunit="mm"/>
+    rmin="0" rmax="500" z="1" lunit="mm"/>
        
   <box lunit="mm" name="skyshineVacuumDet1_solid"
        x="4889" y="1.0" z="3549"/>
@@ -1269,12 +1269,12 @@
 
     <physvol    name="collar0USVirtualPlane_phys">
       <volumeref ref="collar0VirtualPlane_log"/>
-      <position name="collar0USVirtualPlane_pos" unit="mm" z="-1250"/>
+      <position name="collar0USVirtualPlane_pos" unit="mm" z="-1210"/>
     </physvol>
 
     <physvol    name="collar0DSVirtualPlane_phys">
       <volumeref ref="collar0VirtualPlane_log"/>
-      <position name="collar0DSVirtualPlane_pos" unit="mm" z="-950"/>
+      <position name="collar0DSVirtualPlane_pos" unit="mm" z="-990"/>
     </physvol>
     
     <physvol    name="skyshineVacuumDet2VirtualPlane_phys">
