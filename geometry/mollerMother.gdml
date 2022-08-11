@@ -23,7 +23,7 @@
     <cone name="solidCollar2_OuterRing" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1120.95" rmax1="1315" rmin2="1120.95" rmax2="1315" z="100+50"/><!--the information of the outer ring is taken from Moller-doc-793-v2-->
 
     <!--DS Hybrid shielding concrete-->
-    <box lunit="mm" name="Barite_Collar2_solid" x="4000" y="5000" z="400"/>
+    <box lunit="mm" name="Barite_Collar2_solid" x="4000+600" y="5000" z="400"/>
     <cone name="Collar2_tube" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1315+1" rmin2="0" rmax2="1315+1" z="400+1"/>
     
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe1_flange">
@@ -93,7 +93,10 @@
     
     <box lunit="mm" name="GemRack"
         x="600" y="2000" z="600"/>
-        
+      
+    <box lunit="mm" name="GemRackShielding"
+        x="600+170" y="2000" z="300"/>
+          
     <subtraction name="Barite_Collar2_sub">
       <first ref = "Barite_Collar2_solid"/>
       <second ref = "Collar2_tube"/>
@@ -194,6 +197,13 @@
       <auxiliary auxtype="DetNo" auxvalue="333"/>
     </volume>
     
+    <volume name="GemRackShield_log">
+      <materialref ref="Borated_Polythene"/>
+      <solidref ref="GemRackShielding"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+  
     <volume name="logicMother">
       <materialref ref="G4_AIR"/>
       <solidref ref="world_solid"/>
@@ -353,6 +363,16 @@
       <physvol name="GemRackLeft_phys">
         <volumeref ref="GemRackLeft_log"/>
         <position name="GemRackLeft_pos" unit="mm" x="1614.145 + 320" y="-2980+1787.976/2 + (2000-1787.976)/2" z="19132.69+400/2+1000/2 - 10"/>
+      </physvol>
+      
+      <physvol name="GemRackRightShield_phys">
+        <volumeref ref="GemRackShield_log"/>
+        <position name="GemRackRightShield_pos" unit="mm" x="-1614.145 - 320" y="-2980+1787.976/2 + (2000-1787.976)/2" z="19132.69+400/2+1000/2 - 10 + 320 + 270/2"/>
+      </physvol>
+      
+      <physvol name="GemRackLeftShield_phys">
+        <volumeref ref="GemRackShield_log"/>
+        <position name="GemRackLeftShield_pos" unit="mm" x="1614.145 + 320" y="-2980+1787.976/2 + (2000-1787.976)/2" z="19132.69+400/2+1000/2 - 10 + 320 + 270/2"/>
       </physvol>
       
       <!-- Main Detectors -->

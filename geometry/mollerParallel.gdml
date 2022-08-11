@@ -1402,11 +1402,6 @@
       <position name="Col2Exit_pos" unit="mm" x="0" y="200" z="900"/>
     </physvol>
 
-    <physvol name="USCoil4_phys">
-      <volumeref ref="USCoil4_log"/>
-      <position  name="USCoil4_pos" unit="mm" x="0" y="200" z="2800"/>
-    </physvol>-->
-
     <physvol name="Col4Ent_phys">
       <volumeref ref="Col4Ent_log"/>
       <position name="Col4Ent_pos" unit="mm" x="0" y="200" z="3225-0.5"/>
