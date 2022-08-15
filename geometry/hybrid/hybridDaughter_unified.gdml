@@ -422,82 +422,52 @@
         
         <!-- DS Coils/Lintels/Clamps from hybridToroid.gdml-->
         <xtru name="Coll5_solid1_1" lunit="mm">
-            <twoDimVertex x="42.70" y="-14.21"/>
-            <twoDimVertex x="39.38" y="-21.78"/>
-            <twoDimVertex x="88.90" y="-45.68"/>
-            <twoDimVertex x="94.13" y="-35.01"/>
-            <twoDimVertex x="103.20" y="-33.94"/>
-            <twoDimVertex x="156.30" y="-44.19"/>
-            <twoDimVertex x="173.32" y="-45.73"/>
-            <twoDimVertex x="173.32" y="-25.13"/>
-            <twoDimVertex x="149.30" y="-25.13"/>
-            <twoDimVertex x="149.30" y="-26.66"/>
-            <twoDimVertex x="144.14" y="-26.66"/>
-            <twoDimVertex x="144.14" y="-25.13"/>
-            <twoDimVertex x="99.17" y="-25.13"/>
-            <twoDimVertex x="99.17" y="-14.21"/>
-            <!--
-            <twoDimVertex x="-42.70" y="-14.21"/>
-            <twoDimVertex x="-99.17" y="-14.21"/>
-            <twoDimVertex x="-99.17" y="-25.13"/>
-            <twoDimVertex x="-144.14" y="-25.13"/>
-            <twoDimVertex x="-144.14" y="-26.66"/>
-            <twoDimVertex x="-149.30" y="-26.66"/>
-            <twoDimVertex x="-149.30" y="-25.13"/>
-            <twoDimVertex x="-173.32" y="-25.13"/>
-            <twoDimVertex x="-173.32" y="-45.73"/>
-            <twoDimVertex x="-156.30" y="-44.19"/>
-            <twoDimVertex x="-103.20" y="-33.94"/>
-            <twoDimVertex x="-94.13" y="-35.01"/>
-            <twoDimVertex x="-88.90" y="-45.68"/>
-            <twoDimVertex x="-39.38" y="-21.78"/>-->
-            <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="172.715" y="-25.133"/>
+            <twoDimVertex x="148.490" y="-25.133"/>
+            <twoDimVertex x="148.90" y="-26.657"/>
+            <twoDimVertex x="141.478" y="-26.657"/>
+            <twoDimVertex x="141.478" y="-25.133"/>
+            <twoDimVertex x="99.169" y="-25.133"/>
+            <twoDimVertex x="99.169" y="-14.211"/>
+            <twoDimVertex x="39.377" y="-14.211"/>
+            <twoDimVertex x="39.377" y="-21.782"/>
+            <twoDimVertex x="88.995" y="-45.677"/>
+            <twoDimVertex x="94.132" y="-35.009"/>
+            <twoDimVertex x="103.195" y="-33.936"/>
+            <twoDimVertex x="156.304" y="-44.194"/>
+            <twoDimVertex x="172.715" y="-45.676"/>
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
         <cone aunit="deg" deltaphi="20" lunit="mm" name="Coll5_Cylinder_solid1" rmax1="45" rmax2="45" rmin1="40" rmin2="40" startphi="327" z="101"/>
         <subtraction name="Coll5_solid1">
             <first ref="Coll5_solid1_1"/>
             <second ref="Coll5_Cylinder_solid1"/>
-            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="100/2.0" />
         </subtraction>
         <xtru name="Coll5_solid2_1" lunit="mm">
-            <twoDimVertex x="40.28" y="22.22"/>
-            <twoDimVertex x="91.34" y="46.80"/>
-            <twoDimVertex x="96.13" y="36.86"/>
-            <twoDimVertex x="105.18" y="35.11"/>
-            <twoDimVertex x="155.87" y="45.10"/>
-            <twoDimVertex x="172.71" y="46.99"/>
-            <twoDimVertex x="172.71" y="25.13"/>
-            <twoDimVertex x="149.30" y="25.13"/>
-            <twoDimVertex x="149.30" y="26.66"/>
-            <twoDimVertex x="144.14" y="26.66"/>
-            <twoDimVertex x="144.14" y="25.13"/>
-            <twoDimVertex x="99.17" y="25.13"/>
-            <twoDimVertex x="99.17" y="14.21"/>
-            <twoDimVertex x="43.75" y="14.21"/>
-            <!--
-            <twoDimVertex x="-40.28" y="22.22"/>
-            <twoDimVertex x="-43.75" y="14.21"/>
-            <twoDimVertex x="-99.17" y="14.21"/>
-            <twoDimVertex x="-99.17" y="25.13"/>
-            <twoDimVertex x="-144.14" y="25.13"/>
-            <twoDimVertex x="-144.14" y="26.66"/>
-            <twoDimVertex x="-149.30" y="26.66"/>
-            <twoDimVertex x="-149.30" y="25.13"/>
-            <twoDimVertex x="-172.71" y="25.13"/>
-            <twoDimVertex x="-172.71" y="46.99"/>
-            <twoDimVertex x="-155.87" y="45.10"/>
-            <twoDimVertex x="-105.18" y="35.11"/>
-            <twoDimVertex x="-91.34" y="46.80"/>
-            -->
-            <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="172.715" y="46.992"/>
+            <twoDimVertex x="172.715" y="25.133"/>
+            <twoDimVertex x="148.590" y="25.133"/>
+            <twoDimVertex x="148.590" y="26.657"/>
+            <twoDimVertex x="141.478" y="26.657"/>
+            <twoDimVertex x="141.478" y="25.133"/>
+            <twoDimVertex x="99.169" y="25.133"/>
+            <twoDimVertex x="99.169" y="14.211"/>
+            <twoDimVertex x="40.283" y="14.211"/>
+            <twoDimVertex x="40.283" y="22.218"/>
+            <twoDimVertex x="91.337" y="46.805"/>
+            <twoDimVertex x="96.127" y="36.885"/>
+            <twoDimVertex x="105.181" y="35.114"/>
+            <twoDimVertex x="155.870" y="45.095"/>
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
         <cone aunit="deg" deltaphi="20" lunit="mm" name="Coll5_Cylinder_solid2" rmax1="46" rmax2="46" rmin1="40" rmin2="40" startphi="12" z="101"/>
         <subtraction name="Coll5_solid2">
             <first ref="Coll5_solid2_1"/>
             <second ref="Coll5_Cylinder_solid2"/>
-            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="100/2.0" />
         </subtraction>
         
         <!-- <xtru name="Coll5_solid1" lunit="mm">
@@ -3762,13 +3732,13 @@
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Coll5_logic1"/>
-                    <position unit="mm" x="0" y="0" z="-737.264+(13335.194-13332.736)-2864.764-90"/>
+                    <position unit="mm" x="0" y="0" z="-774.912-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
                 
                 <physvol>
                     <volumeref ref="Coll5_logic2"/>
-                    <position unit="mm" x="0" y="0" z="-737.264+100+12.7+(13335.194-13332.736)-2864.764-90"/>
+                    <position unit="mm" x="0" y="0" z="-662.187-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
             </loop>
