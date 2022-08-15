@@ -920,19 +920,48 @@
     <auxiliary auxtype="DetNo" auxvalue="66"/>
   </volume>
 
-  <volume name="Col6Ent_log">
+  <volume name="Col6AEnt_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="67"/>
   </volume>
 
-  <volume name="Col6Exit_log">
+  <volume name="Col6AMid_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="681"/>
+  </volume>
+
+  <volume name="Col6AExit_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="trackingVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="68"/>
   </volume>
+	
+  <volume name="Col6BEnt_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="691"/>
+  </volume>
+
+  <volume name="Col6BMid_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="692"/>
+  </volume>
+
+  <volume name="Col6BExit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trackingVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="693"/>
+  </volume>
+
 
   <volume name="DSCoil17_log">
     <materialref ref="G4_Galactic"/>
@@ -1302,17 +1331,17 @@
 
     <physvol name="Col5Ent_phys">
       <volumeref ref="Col5Ent_log"/>
-      <position  name="Col5Ent_pos" unit="mm" x="0" y="0" z="7547.93-0.5"/>
+      <position  name="Col5Ent_pos" unit="mm" x="0" y="0" z="7557.824-0.5"/>
     </physvol>
 
     <physvol name="Col5Mid_phys">
       <volumeref ref="Col5Mid_log"/>
-      <position  name="Col5Mid_pos" unit="mm" x="0" y="0" z="7660.63"/>
+      <position  name="Col5Mid_pos" unit="mm" x="0" y="0" z="7670.549-0.5"/>
     </physvol>
 
     <physvol name="Col5Exit_phys">
       <volumeref ref="Col5Exit_log"/>
-      <position  name="Col5Exit_pos" unit="mm" x="0" y="0" z="7760.63+0.5"/>
+      <position  name="Col5Exit_pos" unit="mm" x="0" y="0" z="7670.549+100+0.5"/>
     </physvol>
 
     <physvol name="LintelEnt_phys">
@@ -1340,14 +1369,34 @@
       <position  name="DSCoil12_pos" unit="mm" x="0" y="0" z="9200+0.5"/>
     </physvol>
 
-    <physvol name="Col6Ent_phys">
-      <volumeref ref="Col6Ent_log"/>
-      <position name="Col6Ent_pos" unit="mm" x="0" y="0" z="9546.21-0.5"/>
+    <physvol name="Col6AEnt_phys">
+      <volumeref ref="Col6AEnt_log"/>
+      <position name="Col6AEnt_pos" unit="mm" x="0" y="0" z="9555.904-0.5"/>
+    </physvol>
+	  
+    <physvol name="Col6AMid_phys">
+      <volumeref ref="Col6AMid_log"/>
+      <position name="Col6AMid_pos" unit="mm" x="0" y="0" z="9638.454-0.5"/>
     </physvol>
 
-    <physvol name="Col6Exit_phys">
-      <volumeref ref="Col6Exit_log"/>
-      <position name="Col6Exit_pos" unit="mm" x="0" y="0" z="9698.61+0.5"/>
+    <physvol name="Col6AExit_phys">
+      <volumeref ref="Col6AExit_log"/>
+      <position name="Col6AExit_pos" unit="mm" x="0" y="0" z="9638.454+69.850+0.5"/>
+    </physvol>
+	
+    <physvol name="Col6BEnt_phys">
+      <volumeref ref="Col6BEnt_log"/>
+      <position name="Col6BEnt_pos" unit="mm" x="0" y="0" z="10927.504-0.5"/>
+    </physvol>
+	  
+    <physvol name="Col6BMid_phys">
+      <volumeref ref="Col6BMid_log"/>
+      <position name="Col6BMid_pos" unit="mm" x="0" y="0" z="11010.054-0.5"/>
+    </physvol>
+
+    <physvol name="Col6BExit_phys">
+      <volumeref ref="Col6BExit_log"/>
+      <position name="Col6BExit_pos" unit="mm" x="0" y="0" z="11010.054+69.850+0.5"/>
     </physvol>
 
     <physvol name="DSCoil13_phys">
