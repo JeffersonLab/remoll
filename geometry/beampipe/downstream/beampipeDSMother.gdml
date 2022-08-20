@@ -11,7 +11,6 @@
 
   <solids>
     <box name = "SAM_Detectors" x="20" y="13" z="6" unit="mm"/>
-    <tube name = "Vacuum_Insert" rmin="0" rmax="80" z="180" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
     <tube name = "SAM_cans" rmin="17.4625" rmax="19.05" z="142" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
     <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="90" lunit="mm" name="sam_can_spherical_cap"
             rmin="18.796"
@@ -73,7 +72,10 @@
       <zplane rmin="200.025" rmax="203.2" z="25991.766"/>
     </polycone>
 
-    <tube name = "Shield" rmin="203.454" rmax="403.454" z="300" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAM_support_placeholder">
+      <zplane rmin="203.2" rmax="260.03" z="26114.816"/>
+      <zplane rmin="203.2" rmax="260.03" z="26291.854"/>
+    </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAMpipeWithFlange">
       <zplane rmin="196.85" rmax="203.2" z="25991.766"/>
@@ -87,12 +89,6 @@
   </solids>
 
   <structure>
-
-    <volume name="logic_vacuum_insert">
-      <materialref ref="G4_Galactic"/>
-      <solidref ref="Vacuum_Insert"/>
-      <auxiliary auxtype="Color" auxvalue="Red"/>
-    </volume>
 
     <volume name="logic_SAM_Detectors">
       <materialref ref="G4_SILICON_DIOXIDE"/>
@@ -149,73 +145,10 @@
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
-    <volume name="logic_Shield">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="Shield"/>
+    <volume name="logic_SAM_support_placeholder">
+      <materialref ref="G4_Al"/>
+      <solidref ref="SAM_support_placeholder"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
-      <physvol name="hole1">
-        <volumeref ref="logic_vacuum_insert"/>
-        <rotation name="rotation1" x="90" y="45" unit="deg"/>
-        <position name="hole1_position" x="203.454+8" y="-203.454-8" z="0"/>
-      </physvol>
-
-
-      <physvol name="hole2">
-        <volumeref ref="logic_vacuum_insert"/>
-        <rotation name="rotation2" unit="deg" x="90"/>
-        <position name="hole2_position" x="0" y="-203.454-95" z="0"/>
-      </physvol>
-
-      
-
-      <physvol name="hole3">
-        <volumeref ref="logic_vacuum_insert"/>
-        <rotation name="rotation3" unit="deg" x="90" y="-45"/>
-        <position name="hole3_position" x="203.454+8" y="203.454+8" z="0"/>
-      </physvol>
-
-      
-
-      <physvol name="hole4">
-        <volumeref ref="logic_vacuum_insert"/>
-        <rotation name="rotation4" unit="deg" y="90"/>
-        <position name="hole4_position" x="-203.454-95" y="0" z="0"/>
-      </physvol>
-
-      
-
-      <physvol name="hole5">
-        <volumeref ref="logic_vacuum_insert"/>
-        <rotation name="rotation5" unit="deg" x="90" y="45"/>
-        <position name="hole5_position" x="-203.454-8" y="203.454+8" z="0"/>
-      </physvol>
-
-      
-
-      <physvol name="hole6">
-        <volumeref ref="logic_vacuum_insert"/>
-        <rotation name="rotation6" unit="deg" x="-90"/>
-        <position name="hole6_position" x="0" y="203.454+95" z="0"/>
-      </physvol>
-
-      
-
-
-      <physvol name="hole7">
-        <volumeref ref="logic_vacuum_insert"/>
-        <rotation name="rotation7" unit="deg" x="90" y="-45"/>
-        <position name="hole7_position" x="-203.454-8" y="-203.454-8" z="0"/>
-      </physvol>
-
-      
-
-      <physvol name="hole8">
-        <volumeref ref="logic_vacuum_insert"/>
-        <rotation name="rotation8" unit="deg" y="-90"/>
-        <position name="hole8_position" x="203.454+95" y="0" z="0"/>
-      </physvol>
-
-      
     </volume>
 
     <volume name="logic_SAMpipeWithFlange">
@@ -252,9 +185,8 @@
 	<volumeref ref="logic_Neckdown_bellows_flange_2"/>
       </physvol>
 
-      <physvol name="Shield">
-	<volumeref ref="logic_Shield"/>
-	<position name="Shield_position" unit="mm" x="0" y="0" z="25637.524+12.7+34.798+12.7+50+150"/>
+      <physvol name="SAM_support_placeholder">
+	<volumeref ref="logic_SAM_support_placeholder"/>
       </physvol>
 
       <physvol name="Sam_can_1">
