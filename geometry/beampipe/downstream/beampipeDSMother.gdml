@@ -64,13 +64,13 @@
       <zplane rmin="200.025" rmax="203.073" z="25916.149"/>
     </polycone>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_3">
-      <zplane rmin="203.454+6.35" rmax="246.888" z="25637.524"/>
-      <zplane rmin="203.454+6.35" rmax="246.888" z="25637.524+12.7"/>
-      <zplane rmin="200.152" rmax="246.888" z="25637.524+12.7"/>
-      <zplane rmin="200.152" rmax="246.888" z="25637.524+12.7+34.798"/>
-      <zplane rmin="203.454" rmax="246.888" z="25637.524+12.7+34.798"/>
-      <zplane rmin="203.454" rmax="246.888" z="25637.524+12.7+34.798+12.7"/>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_flange_2">
+      <zplane rmin="203.581" rmax="234.95" z="25905.482"/>
+      <zplane rmin="203.581" rmax="234.95" z="25918.182"/>
+      <zplane rmin="200.025" rmax="234.95" z="25918.182"/>
+      <zplane rmin="200.025" rmax="234.95" z="25962.378"/>
+      <zplane rmin="200.025" rmax="203.2" z="25962.378"/>
+      <zplane rmin="200.025" rmax="203.2" z="25991.766"/>
     </polycone>
 
     <tube name = "Shield" rmin="203.454" rmax="403.454" z="300" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
@@ -148,9 +148,9 @@
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
-    <volume name="logic_Neckdown_bellows_3">
+    <volume name="logic_Neckdown_bellows_flange_2">
       <materialref ref="G4_STAINLESS-STEEL"/>
-      <solidref ref="Neckdown_bellows_3"/>
+      <solidref ref="Neckdown_bellows_flange_2"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
@@ -260,8 +260,8 @@
 	<volumeref ref="logic_Neckdown_bellows"/>
       </physvol>
 
-      <physvol name="Neckdown_bellows_3">
-	<volumeref ref="logic_Neckdown_bellows_3"/>
+      <physvol name="Neckdown_bellows_flange_2">
+	<volumeref ref="logic_Neckdown_bellows_flange_2"/>
       </physvol>
 
       <physvol name="Shield">
