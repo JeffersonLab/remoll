@@ -42,7 +42,7 @@
       <zplane rmin="200.025" rmax="203.2" z="25315.010"/>
     </polycone>
 	
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_flange1">
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_flange_1">
       <zplane rmin="200.025" rmax="203.2" z="25315.010"/>
       <zplane rmin="200.025" rmax="203.2" z="25346.682"/>
       <zplane rmin="200.025" rmax="234.95" z="25346.682"/>
