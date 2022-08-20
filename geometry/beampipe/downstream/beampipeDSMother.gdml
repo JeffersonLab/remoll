@@ -45,9 +45,9 @@
     </polycone>
 	  
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_sub">
-      <zplane rmin="0" rmax="206.375" z="25200.710"/>
+      <zplane rmin="0" rmax="206.952" z="25200.710-1"/>
       <zplane rmin="0" rmax="203.2" z="25206.210"/>
-      <zplane rmin="0" rmax="688.4255" z="25486.355"/>
+      <zplane rmin="0" rmax="690.1576" z="25486.355+1"/>
     </polycone>
   
     <subtraction name="Neckdown">
