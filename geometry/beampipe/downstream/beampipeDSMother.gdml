@@ -58,12 +58,14 @@
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_DSpipe">
       <zplane rmin="200.025" rmax="203.2" z="25188.010"/>
       <zplane rmin="200.025" rmax="203.2" z="25315.010"/>
-    </polycone>
-	
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_flange_1">
       <zplane rmin="200.025" rmax="203.2" z="25315.010"/>
       <zplane rmin="200.025" rmax="203.2" z="25346.682"/>
       <zplane rmin="200.025" rmax="234.95" z="25346.682"/>
+      <zplane rmin="200.025" rmax="234.95" z="25375.130"/>	    
+    </polycone>
+	
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_flange_1">
+      <zplane rmin="200.025" rmax="234.95" z="25375.130"/>      
       <zplane rmin="200.025" rmax="234.95" z="25390.878"/>
       <zplane rmin="203.581" rmax="234.95" z="25390.878"/>
       <zplane rmin="203.581" rmax="234.95" z="25403.578"/>	    
@@ -86,9 +88,7 @@
       <zplane rmin="203.581" rmax="234.95" z="25905.482"/>
       <zplane rmin="203.581" rmax="234.95" z="25918.182"/>
       <zplane rmin="200.025" rmax="234.95" z="25918.182"/>
-      <zplane rmin="200.025" rmax="234.95" z="25962.378"/>
-      <zplane rmin="200.025" rmax="203.2" z="25962.378"/>
-      <zplane rmin="200.025" rmax="203.2" z="25991.766"/>
+      <zplane rmin="200.025" rmax="234.95" z="25933.930"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAM_support_placeholder">
@@ -97,6 +97,10 @@
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAMpipeWithFlange">
+      <zplane rmin="200.025" rmax="234.95" z="25933.930"/>
+      <zplane rmin="200.025" rmax="234.95" z="25962.378"/>
+      <zplane rmin="200.025" rmax="203.2" z="25962.378"/>
+      <zplane rmin="200.025" rmax="203.2" z="25991.766"/>
       <zplane rmin="196.85" rmax="203.2" z="25991.766"/>
       <zplane rmin="196.85" rmax="203.2" z="26694.741"/>
       <zplane rmin="196.85" rmax="584.2" z="26694.741"/>
@@ -155,7 +159,7 @@
     <volume name="logic_Neckdown_bellows">
       <materialref ref="G4_STAINLESS-STEEL"/>
       <solidref ref="Neckdown_bellows"/>
-      <auxiliary auxtype="Color" auxvalue="Blue"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
     </volume>
 
     <volume name="logic_Neckdown_bellows_flange_2">
