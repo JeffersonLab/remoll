@@ -27,8 +27,16 @@
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3">
-      <zplane rmin="525.0" rmax="544.05" z="19794.0"/>
-      <zplane rmin="713.74" rmax="732.79" z="25219.694"/>
+      <zplane rmin="521.7" rmax="528.052" z="19415.451 "/>
+      <zplane rmin="542.341" rmax="548.693" z="20238.112"/>
+      <zplane rmin="542.341" rmax="574.093" z="20238.112 "/>
+      <zplane rmin="542.341" rmax="574.093" z="20263.512"/>
+      <zplane rmin="542.341" rmax="548.693" z="20263.512"/>
+      <zplane rmin="562.7" rmax="569.0525" z="21099.991"/>
+      <zplane rmin="562.7" rmax="608.5" z="21099.991"/>
+      <zplane rmin="562.7" rmax="608.5" z="21125.391"/>
+      <zplane rmin="576.745" rmax="595.8" z="21125.391"/>
+      <zplane rmin="676.445" rmax="695.5" z="25472.105"/>
     </polycone>
     
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_mother">
