@@ -51,9 +51,17 @@
       <zplane rmin="203.581" rmax="234.95" z="25403.578"/>	    
     </polycone>	  
     
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_2">
-      <zplane rmin="196.85" rmax="203.2+6.35" z="25119.872"/>
-      <zplane rmin="196.85" rmax="203.2+6.35" z="25119.872+530.352"/>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows">
+      <zplane rmin="200.025" rmax="203.073" z="25392.912"/>
+      <zplane rmin="200.025" rmax="203.073" z="25467.509"/>
+      <zplane rmin="200.025" rmax="226.4155" z="25467.509"/>
+      <zplane rmin="200.025" rmax="226.4155" z="25470.557"/>
+      <zplane rmin="203.2" rmax="226.4155" z="25470.557"/>
+      <zplane rmin="203.2" rmax="226.4155" z="25838.504"/>
+      <zplane rmin="200.025" rmax="226.4155" z="25838.504"/>
+      <zplane rmin="200.025" rmax="226.4155" z="25841.552"/>
+      <zplane rmin="200.025" rmax="203.073" z="25841.552"/>
+      <zplane rmin="200.025" rmax="203.073" z="25916.149"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_3">
@@ -134,9 +142,9 @@
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume> 
 
-    <volume name="logic_Neckdown_bellows_2">
+    <volume name="logic_Neckdown_bellows">
       <materialref ref="G4_STAINLESS-STEEL"/>
-      <solidref ref="Neckdown_bellows_2"/>
+      <solidref ref="Neckdown_bellows"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
@@ -248,8 +256,8 @@
 	<volumeref ref="logic_Neckdown_bellows_flange_1"/>
       </physvol>
 
-      <physvol name="Neckdown_bellows_2">
-	<volumeref ref="logic_Neckdown_bellows_2"/>
+      <physvol name="Neckdown_bellows">
+	<volumeref ref="logic_Neckdown_bellows"/>
       </physvol>
 
       <physvol name="Neckdown_bellows_3">
