@@ -75,19 +75,14 @@
 
     <tube name = "Shield" rmin="203.454" rmax="403.454" z="300" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
 
-    
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAMpipe">
-      <zplane rmin="196.85" rmax="203.2" z="25637.524+12.7+34.798"/>
-      <zplane rmin="196.85" rmax="203.2" z="25637.524+12.7+34.798+735.838+53.74"/>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAMpipeWithFlange">
+      <zplane rmin="196.85" rmax="203.2" z="25991.766"/>
+      <zplane rmin="196.85" rmax="203.2" z="26694.741"/>
+      <zplane rmin="196.85" rmax="584.2" z="26694.741"/>
+      <zplane rmin="196.85" rmax="584.2" z="26704.266"/>
+      <zplane rmin="190.5" rmax="584.2" z="26704.266"/>
+      <zplane rmin="190.5" rmax="584.2" z="26720.141"/>
     </polycone>
-
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="neckdown_flange">
-      <zplane rmin="190.5" rmax="584.2" z="26420.86+53.74"/>
-      <zplane rmin="190.5" rmax="584.2" z="26446.26+53.74"/>
-    </polycone>
-
 
   </solids>
 
@@ -223,18 +218,11 @@
       
     </volume>
 
-    <volume name="logic_SAMpipe">
+    <volume name="logic_SAMpipeWithFlange">
       <materialref ref="G4_Al"/>
-      <solidref ref="SAMpipe"/>
+      <solidref ref="SAMpipeWithFlange"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
-
-    <volume name="logic_neckdown_flange">
-      <materialref ref="G4_Al"/>
-      <solidref ref="neckdown_flange"/>
-      <auxiliary auxtype="Color" auxvalue="Blue"/>
-    </volume>
-    
 
     <volume name="DSbeampipeMother">
       <materialref ref="G4_Galactic"/>
@@ -410,17 +398,11 @@
         <rotation name="sphere_rotation8" unit="deg" y="90"/>
         <position name="sphere_position8" x="45.25+6" y="0" z="25637.524+12.7+34.798+12.7+50+150"/>
       </physvol>
-
-     
-      <physvol name="SAMpipe">
-	<volumeref ref="logic_SAMpipe"/>
+    
+      <physvol name="SAMpipeWithFlange">
+	<volumeref ref="logic_SAMpipeWithFlange"/>
       </physvol>
-
-      <physvol name="neckdown_flange">
-	<volumeref ref="logic_neckdown_flange"/>
-      </physvol>
-
-
+  
     </volume>
 
   </structure>
