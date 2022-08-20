@@ -38,8 +38,8 @@
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_DSpipe">
-      <zplane rmin="196.85" rmax="203.2" z="24919.974"/>
-      <zplane rmin="196.85" rmax="203.2" z="25085.074"/>
+      <zplane rmin="200.025" rmax="203.2" z="25188.010"/>
+      <zplane rmin="200.025" rmax="203.2" z="25315.010"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_1">
