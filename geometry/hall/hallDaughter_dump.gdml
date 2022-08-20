@@ -215,9 +215,16 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallMother_1" rmax="radius_of_cylwall - 110." rmin="0" startphi="0" z="height_cylwall - thick_cylwall*2"/>
     <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
     <box lunit="mm" name="boxHallMother_in" x="width_mother - 2500." y="height_mother - 2500." z="length_mother - 2000."/>
+    <box lunit="mm" name="subDumpholeMother"  x="10*dumpUSSub_width" y="2*780" z="(26720.141-radius_of_cylwall+110)"/>
+
+    <subtraction name="boxHallMother_2">
+      <first ref="boxHallMother_out"/>
+      <second ref="subDumpholeMother"/>
+      <position ref="pos_subDumpholeMother" x="0" y="0" z="radius_of_cylwall-110+(26720.141-radius_of_cylwall+110)/2.0" unit="mm"/>
+    </subtraction>
 
     <subtraction name ="boxHallMother_1">
-      <first ref="boxHallMother_out"/>
+      <first ref="boxHallMother_2"/>
       <second ref="cylHallMother_1"/>
       <positionref ref="cylwall_center" />
       <rotationref ref="scRot_1"/>
