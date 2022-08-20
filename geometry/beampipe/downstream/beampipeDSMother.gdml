@@ -42,9 +42,10 @@
       <zplane rmin="0" rmax="688.4255" z="25486.355-25200.710"/>
     </polycone>
   
-    <subtraction name="Neckdown" >
-      <first  ref="Neckdown_mother" />
+    <subtraction name="Neckdown">
+      <first  ref="Neckdown_mother"/>
       <second ref="Neckdown_sub"/>
+      <position name="Neckdown_sub_pos" x="0" y="0" z="0" unit="mm"/>
     </subtraction>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_DSpipe">
