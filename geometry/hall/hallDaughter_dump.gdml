@@ -220,7 +220,7 @@
     <subtraction name="boxHallMother_2">
       <first ref="boxHallMother_out"/>
       <second ref="subDumpholeMother"/>
-      <position ref="pos_subDumpholeMother" x="0" y="0" z="radius_of_cylwall-110+(26720.141-radius_of_cylwall+110)/2.0" unit="mm"/>
+      <position name="pos_subDumpholeMother" x="0" y="0" z="radius_of_cylwall-110+(26720.141-radius_of_cylwall+110)/2.0" unit="mm"/>
     </subtraction>
 
     <subtraction name ="boxHallMother_1">
@@ -237,8 +237,15 @@
       <position z="26000."/>
     </subtraction>
 
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_2" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>
 
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>
+    <subtraction name="cylHallDet_1">
+      <first ref="cylHallDet_2"/>
+      <second ref="subDumpholeMother"/>
+      <position name="pos_subDumpholedet" x="0" z="-1.*center_cylwall - thick_cylwall/2" y="-1*(radius_of_cylwall-110+(26720.141-radius_of_cylwall+110)/2.0)" unit="mm"/>
+      <rotation name="rot_subDumpholedet" x="90" z="0" y="0" unit="deg"/>
+    </subtraction>
+
     <tube aunit="deg" deltaphi="360" lunit="mm" name="hallFlatLidDet_solid" 
 	  rmax="radius_max_cylHallDet - 0.2" rmin="0" startphi="0" z="0.1"/>
 
