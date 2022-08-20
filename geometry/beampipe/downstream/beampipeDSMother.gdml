@@ -31,10 +31,21 @@
       <zplane rmin="713.74" rmax="732.79" z="25219.694"/>
     </polycone>
     
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown">
-      <zplane rmin="203.2+0.254" rmax="216.154" z="24932.42"/>
-      <zplane rmin="720.09" rmax="732.79" z="25230.87"/>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_mother">
+      <zplane rmin="0" rmax="206.375" z="25200.710"/>
+      <zplane rmin="0" rmax="701.127" z="25486.355"/>
     </polycone>
+	  
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_sub">
+      <zplane rmin="0" rmax="206.375" z="0"/>
+      <zplane rmin="0" rmax="203.2" z="25206.210-25200.710"/>
+      <zplane rmin="0" rmax="688.4255" z="25486.355-25200.710"/>
+    </polycone>
+  
+    <subtraction name= =“Neckdown” >
+      <first  ref=“Neckdown_mother” />
+      <second ref=“Neckdown_sub”/>
+    </subtraction>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_DSpipe">
       <zplane rmin="200.025" rmax="203.2" z="25188.010"/>
