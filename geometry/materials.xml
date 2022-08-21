@@ -471,7 +471,7 @@
   
   <material name="Inconel625_Air" state="solid">
     <D value="0.001338" unit="g/cm3"/>
-    <fraction n="0.90" ref="G4_Air"/>
+    <fraction n="0.90" ref="G4_AIR"/>
     <fraction n="0.10" ref="Inconel625"/>
   </material> 
   
