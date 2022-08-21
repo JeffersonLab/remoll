@@ -151,21 +151,21 @@
 
     
     <volume name="logic_Neckdown_bellows_flange_1">
-      <materialref ref="G4_STAINLESS-STEEL"/>
+      <materialref ref="Inconel625"/>
       <solidref ref="Neckdown_bellows_flange_1"/>
-      <auxiliary auxtype="Color" auxvalue="Blue"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
     </volume> 
 
     <volume name="logic_Neckdown_bellows">
-      <materialref ref="G4_STAINLESS-STEEL"/>
+      <materialref ref="Inconel625_Air"/>
       <solidref ref="Neckdown_bellows"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
     </volume>
 
     <volume name="logic_Neckdown_bellows_flange_2">
-      <materialref ref="G4_STAINLESS-STEEL"/>
+      <materialref ref="Inconel625"/>
       <solidref ref="Neckdown_bellows_flange_2"/>
-      <auxiliary auxtype="Color" auxvalue="Blue"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
     </volume>
 
     <volume name="logic_SAM_support_placeholder">
