@@ -23,7 +23,7 @@
       <zplane rmin="0" rmax="600" z="19000.0"/>-->
       <zplane rmin="0" rmax="1019" z="19332.69+0.02"/>
       <zplane rmin="0" rmax="600" z="19332.69+0.02"/>
-      <zplane rmin="0" rmax="775" z="26720.141"/>
+      <zplane rmin="0" rmax="750" z="26720.141"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3">
