@@ -451,6 +451,30 @@
     <fraction n="0.31" ref="CW90"/>
   </material>
   
+  <material name="Inconel625" state="solid">
+    <D value="8.314" unit="g/cm3"/>
+    <fraction n="0.58" ref="G4_Ni"/>
+    <fraction n="0.20" ref="G4_Cr"/>
+    <fraction n="0.05" ref="G4_Fe"/>
+    <fraction n="0.10" ref="G4_Mo"/>
+    <fraction n="0.0307" ref="G4_Nb"/>
+    <fraction n="0.010" ref="G4_Ta"/>
+    <fraction n="0.001" ref="G4_C"/>
+    <fraction n="0.005" ref="G4_Mn"/>
+    <fraction n="0.005" ref="G4_Si"/>
+    <fraction n="0.00015" ref="G4_P"/>
+    <fraction n="0.00015" ref="G4_S"/>
+    <fraction n="0.004" ref="G4_Al"/>
+    <fraction n="0.004" ref="G4_Ti"/>
+    <fraction n="0.01" ref="G4_Co"/>
+  </materials>
+  
+  <material name="Inconel625_Air" state="solid">
+    <D value="0.001338" unit="g/cm3"/>
+    <fraction n="0.90" ref="G4_Air"/>
+    <fraction n="0.10" ref="Inconel625"/>
+  </materials> 
+  
   <material name="Tyvek" state="solid">
     <MEE unit="eV" value="56.5182975271737"/> 
     <D unit="g/cm3" value="0.96"/>
