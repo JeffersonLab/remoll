@@ -467,13 +467,13 @@
     <fraction n="0.004" ref="G4_Al"/>
     <fraction n="0.004" ref="G4_Ti"/>
     <fraction n="0.01" ref="G4_Co"/>
-  </materials>
+  </material>
   
   <material name="Inconel625_Air" state="solid">
     <D value="0.001338" unit="g/cm3"/>
     <fraction n="0.90" ref="G4_Air"/>
     <fraction n="0.10" ref="Inconel625"/>
-  </materials> 
+  </material> 
   
   <material name="Tyvek" state="solid">
     <MEE unit="eV" value="56.5182975271737"/> 
