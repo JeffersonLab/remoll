@@ -140,12 +140,16 @@
     <volume name="logic_Neckdown">
       <materialref ref="G4_Al"/>
       <solidref ref="Neckdown"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="800"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
     <volume name="logic_Neckdown_DSpipe">
       <materialref ref="G4_Al"/>
       <solidref ref="Neckdown_DSpipe"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="801"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
@@ -153,30 +157,40 @@
     <volume name="logic_Neckdown_bellows_flange_1">
       <materialref ref="Inconel625"/>
       <solidref ref="Neckdown_bellows_flange_1"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="802"/>
       <auxiliary auxtype="Color" auxvalue="Yellow"/>
     </volume> 
 
     <volume name="logic_Neckdown_bellows">
       <materialref ref="Inconel625_Air"/>
       <solidref ref="Neckdown_bellows"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="803"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
     </volume>
 
     <volume name="logic_Neckdown_bellows_flange_2">
       <materialref ref="Inconel625"/>
       <solidref ref="Neckdown_bellows_flange_2"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="804"/>
       <auxiliary auxtype="Color" auxvalue="Yellow"/>
     </volume>
 
     <volume name="logic_SAM_support_placeholder">
       <materialref ref="G4_Al"/>
       <solidref ref="SAM_support_placeholder"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="805"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
     <volume name="logic_SAMpipeWithFlange">
       <materialref ref="G4_Al"/>
       <solidref ref="SAMpipeWithFlange"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="806"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
