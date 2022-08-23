@@ -1086,7 +1086,7 @@
 
     <physvol name="hallFlatLidDet">
       <volumeref ref="hallFlatLidDet_logic"/>
-      <position name="hallFlatLidDet_pos" unit="mm" x="0" y="17770.0/2-4470.0-1" z="0"/>
+      <position name="hallFlatLidDet_pos" unit="mm" x="0" y="17770.0-4470.0-1" z="0"/>
       <rotation name="hallFlatLidDet_rot" unit="deg" x="90" y="0" z="0"/>
     </physvol>
 
