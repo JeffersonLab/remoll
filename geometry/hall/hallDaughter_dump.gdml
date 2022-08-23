@@ -237,18 +237,6 @@
       <position z="26000."/>
     </subtraction>
 
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_2" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>
-
-    <subtraction name="cylHallDet_1">
-      <first ref="cylHallDet_2"/>
-      <second ref="subDumpholeMother"/>
-      <position name="pos_subDumpholedet" x="0" z="-1.*center_cylwall - thick_cylwall/2" y="-1*(radius_of_cylwall-110+(26720.141-radius_of_cylwall+110)/2.0)" unit="mm"/>
-      <rotation name="rot_subDumpholedet" x="90" z="0" y="0" unit="deg"/>
-    </subtraction>
-
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="hallFlatLidDet_solid" 
-	  rmax="radius_max_cylHallDet - 0.2" rmin="0" startphi="0" z="0.1"/>
-
     <!--Hall A top wall -->
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  
 	  rmin="radius_topwall_in" rmax="radius_topwall_out"/>
@@ -276,16 +264,6 @@
       <second ref="hall_dumphole"/> 
       <positionref ref="hall_dumphole_sub_trans"/>
       <!-- <rotationref ref="scRot_1"/> -->
-  </subtraction>
-
-  <!--Hall A top wall detector -->
-  <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="halldet_top_shell"  rmin="radius_topwall_out+10" rmax="radius_topwall_out+10+1"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="halldet_top_sub" rmin="0.0" rmax="radius_topwall_out+11" z="2*(radius_topwall_out+10+1)" />
- 
-  <subtraction name ="topwalldet_solid">
-      <first ref="halldet_top_shell"/>
-      <second ref="halldet_top_sub"/>
-      <positionref ref="topwallTrans_1"/>
   </subtraction>
 
   <!-- Dump Enclosure -->
@@ -455,31 +433,6 @@
   </solids>
 
 <structure>
-
-    <volume name="hallVerticalWallDet_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="cylHallDet_1"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="99"/>
-    </volume>
-
-    <volume name="hallFlatLidDet_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="hallFlatLidDet_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="101"/>
-    </volume>
-
-    <volume name="topWallOuterDet_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="topwalldet_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="107"/>
-    </volume>
-
 
     <volume name="topwall_logic">
       <materialref ref="Concrete"/>
@@ -653,26 +606,8 @@
       <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
 
-      <physvol name="hallVerticalWallDet">
-        <volumeref ref="hallVerticalWallDet_logic"/>
-        <positionref ref="cylHallDet_1_center"/>
-	<rotationref ref="scRot_1"/>
-      </physvol>
-
-      <physvol name="hallFlatLidDet">
-        <volumeref ref="hallFlatLidDet_logic"/> <!-- this should be removed once we fix the hall lid CG -->
-        <position name="hallFlatLidDet_pos" unit="mm" y="center_cylwall + height_cylwall/2. - 1"/>
-	<rotationref ref="scRot_1"/>
-      </physvol>
-
       <physvol name="topWall">
         <volumeref ref="topwall_logic"/>
-        <positionref ref="topwall_center"/>
-        <rotationref ref="scRot_1"/>
-      </physvol>
-
-      <physvol name="topWallOuterDet">
-        <volumeref ref="topWallOuterDet_logic"/>
         <positionref ref="topwall_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
