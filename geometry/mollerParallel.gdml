@@ -16,6 +16,17 @@
 
 <solids>
   &world;
+  
+  <tube  
+    name="hallVerticalWallDet_solid" 
+    startphi="0" deltaphi="360" aunit="deg" 
+    rmax="26517.6-10" rmin="26517.6-10-0.1" z="17770.-1487." lunit="mm"/>
+
+  <tube 
+    name="hallFlatLidDet_solid"
+    startphi="0" deltaphi="360" aunit="deg"  
+    rmax="26517.6-10-0.2" rmin="0" z="0.1" lunit="mm"/>
+
   <tube
     name="VirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
@@ -146,6 +157,26 @@
 </solids>
 
 <structure>
+	
+  <volume name="hallVerticalWallDet_logic">
+     <materialref ref="G4_Galactic"/>
+     <solidref ref="hallVerticalWallDet_solid"/>
+     <auxiliary auxtype="Visibility" auxvalue="true"/>
+     <auxiliary auxtype="Color" auxvalue="yellow"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+     <auxiliary auxtype="DetNo" auxvalue="99"/>
+   </volume>
+
+   <volume name="hallFlatLidDet_logic">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="hallFlatLidDet_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>	   
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="101"/>
+  </volume>
 
   <volume name="tgtPbCollar_log">
     <materialref ref="G4_Galactic"/>
@@ -1046,6 +1077,18 @@
   <volume name="ParallelWorld_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="parallel_solid"/>
+	  
+    <physvol name="hallVerticalWallDet">
+      <volumeref ref="hallVerticalWallDet_logic"/>
+      <position name="hallVerticalWallDet_pos" unit="mm" x="0" y="(17770.0/2-4470.0) + 1487.0/2" z="0"/>
+      <rotation name="hallVerticalWallDet_rot" unit="deg" x="90" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="hallFlatLidDet">
+      <volumeref ref="hallFlatLidDet_logic"/>
+      <position name="hallFlatLidDet_pos" unit="mm" x="0" y="17770.0-4470.0-1" z="0"/>
+      <rotation name="hallFlatLidDet_rot" unit="deg" x="90" y="0" z="0"/>
+    </physvol>
 
     <physvol name="tgtPbCollar_phys">
       <volumeref ref="tgtPbCollar_log"/>
