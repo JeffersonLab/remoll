@@ -92,10 +92,7 @@
 	 z="197.53/2"/>
     
     <box lunit="mm" name="GemRack"
-        x="600" y="2000" z="600"/>
-      
-    <box lunit="mm" name="GemRackShielding"
-        x="600+170" y="2000" z="300"/>
+        x="700" y="2200" z="900"/>
           
     <subtraction name="Barite_Collar2_sub">
       <first ref = "Barite_Collar2_solid"/>
@@ -195,13 +192,6 @@
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="Color" auxvalue="Red"/>
       <auxiliary auxtype="DetNo" auxvalue="333"/>
-    </volume>
-    
-    <volume name="GemRackShield_log">
-      <materialref ref="Borated_Polythene"/>
-      <solidref ref="GemRackShielding"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
-      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
   
     <volume name="logicMother">
@@ -357,23 +347,14 @@
       
       <physvol name="GemRackRight_phys">
         <volumeref ref="GemRackRight_log"/>
-        <position name="GemRackRight_pos" unit="mm" x="-1614.145 - 320" y="-2980+1787.976/2 + (2000-1787.976)/2" z="19132.69+400/2+1000/2 - 10"/>
+        <position name="GemRackRight_pos" unit="mm" x="-1614.145 - 320" y="-2980+1787.976/2 + (2200-1787.976)/2" z="18632.69-900/2"/>
       </physvol>
       
       <physvol name="GemRackLeft_phys">
         <volumeref ref="GemRackLeft_log"/>
-        <position name="GemRackLeft_pos" unit="mm" x="1614.145 + 320" y="-2980+1787.976/2 + (2000-1787.976)/2" z="19132.69+400/2+1000/2 - 10"/>
+        <position name="GemRackLeft_pos" unit="mm" x="1614.145 + 320" y="-2980+1787.976/2 + (2200-1787.976)/2" z="18632.69-900/2"/>
       </physvol>
       
-      <physvol name="GemRackRightShield_phys">
-        <volumeref ref="GemRackShield_log"/>
-        <position name="GemRackRightShield_pos" unit="mm" x="-1614.145 - 320" y="-2980+1787.976/2 + (2000-1787.976)/2" z="19132.69+400/2+1000/2 - 10 + 320 + 270/2"/>
-      </physvol>
-      
-      <physvol name="GemRackLeftShield_phys">
-        <volumeref ref="GemRackShield_log"/>
-        <position name="GemRackLeftShield_pos" unit="mm" x="1614.145 + 320" y="-2980+1787.976/2 + (2000-1787.976)/2" z="19132.69+400/2+1000/2 - 10 + 320 + 270/2"/>
-      </physvol>
       
       <!-- Main Detectors -->
       <!--
