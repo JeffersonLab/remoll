@@ -1167,7 +1167,7 @@
     <auxiliary auxtype="DetNo" auxvalue="70"/>
   </volume>
 
-  <volume name="collar1Exit_log">
+  <volume name="Collar1Exit_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
@@ -1691,12 +1691,12 @@
 
     <physvol name="Collar1Ent_phys">
       <volumeref ref="Collar1Ent_log"/>
-      <position name="Collar1Ent_pos" unit="mm" x="0" y="0" z="11875.09-0.5"/>
+      <position name="Collar1Ent_pos" unit="mm" x="0" y="0" z="11814.4958-1"/>
     </physvol>
 
-    <physvol name="collar1Exit_phys">
-      <volumeref ref="collar1Exit_log"/>
-      <position name="Collar1Exit_pos" unit="mm" x="0" y="0" z="11875.09+150+0.5"/>
+    <physvol name="Collar1Exit_phys">
+      <volumeref ref="Collar1Exit_log"/>
+      <position name="Collar1Exit_pos" unit="mm" x="0" y="0" z="11966.4958+1"/>
     </physvol>
 
     <physvol name="Drift1_phys">

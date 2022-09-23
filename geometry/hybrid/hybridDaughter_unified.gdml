@@ -193,7 +193,7 @@
         </polycone>
         
         <!--collar solids -->
-        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="612" rmax1="750" rmin2="621" rmax2="750" z="100+50"/>
+        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="605.8789" rmax1="755.8659" rmin2="616.077" rmax2="755.8659" z="100+50"/>
         <!--<cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1013" rmax1="1315" rmin2="1022" rmax2="1315" z="100+50"/>-->
         
         <!-- drift pipe -->
@@ -1278,6 +1278,8 @@
         <volume name="logicCollar1">
             <materialref ref="G4_Pb"/>
             <solidref ref="solidCollar1"/>
+            <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+            <auxiliary auxtype="DetNo" auxvalue="170"/>
         </volume>
         
         <!--<volume name="logicCollar2">
@@ -3015,10 +3017,11 @@
             <volumeref ref="bellows5flangeDS_log"/>
             <positionref ref="bellows5flangeDS_pos"/>
             </physvol>-->
-            
+      
             <physvol name="collar1">
                 <volumeref ref="logicCollar1"/>
-                <position unit="mm" name="collar1pos" x="0" y="0" z="16950.09-DOFFSET-150./2.-400./2"/>
+                <position unit="mm" name="collar1pos" x="0" y="0" z="11815.4958+150./2-11287.5"/>
+                <!--<position unit="mm" name="collar1pos" x="0" y="0" z="16950.09-DOFFSET-150./2.-400./2"/>-->
                 <!--<position lunit="mm" name="collar1pos" x="0" y="0" z="17350-25-DOFFSET"/>-->
                 <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
             </physvol>
