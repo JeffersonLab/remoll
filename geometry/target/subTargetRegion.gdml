@@ -36,15 +36,15 @@
   <solids>
 
     <box lunit="m" name="targetRegion_solid1"
-	 x="10" y="6" z="6.38"/>
+	 x="8.1" y="9.964" z="6.38"/>
 
     <box lunit="m" name="targetRegion_solid2"
-	 x="11" y="5" z="6.4"/>
+	 x="8.2" y="4" z="6.4"/>
 
     <subtraction name ="targetRegion_solid">
       <first ref="targetRegion_solid1"/>
       <second ref="targetRegion_solid2"/>
-      <position name="MotherSub_pos" lunit="mm" x="0" y=" - 3000 - 5000./2. + 20" z="0" />
+      <position name="MotherSub_pos" lunit="mm" x="0" y=" -9964/2 " z="0" />
       <!--2980 mm is the distance of beam center from the hall floor-->
     </subtraction>
 
@@ -59,15 +59,15 @@
           rmin="74" rmax="330" z="200"/>
 
     <!--shielding concrete -->
-    <box lunit="mm" name="concreteDS" x="concreteBoxx" y="concreteBoxy-concreteThickness-1246" z="concreteThickness"/>
+    <box lunit="mm" name="concreteDS" x="concreteBoxx" y="concreteBoxy-concreteThickness-1246+26.312" z="concreteThickness"/>
     <box lunit="mm" name="concreteTop" x="concreteBoxx" y="concreteThickness" z="concreteBoxz"/>
     <box lunit="mm" name="concreteLeft" 
 	 x="concreteThickness" 
-	 y="concreteBoxy-concreteThickness-1248" 
+	 y="concreteBoxy-concreteThickness-1248+28.312"
 	 z="concreteBoxz-concreteThickness"/>
     <box lunit="mm" name="concreteRight" 
 	 x="concreteThickness" 
-	 y="concreteBoxy-concreteThickness-1248"
+	 y="concreteBoxy-concreteThickness-1248+28.312"
 	 z="concreteBoxz-concreteThickness"/>
 
     <tube aunit="deg" lunit="mm" deltaphi="360" name="concreteRoofhole"
@@ -75,7 +75,7 @@
           z="concreteThickness+2.0"/>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
-          rmin="0" rmax="453" z="concreteThickness+2.0"/>
+          rmin="0" rmax="451" z="concreteThickness+2.0"/>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tgt2US_pipe2_solid"
           rmin="146.05" rmax="152.4" z="concreteThickness + 200"/>
@@ -245,20 +245,20 @@
       <physvol>
 	<volumeref ref="ConcreteShieldDS"/>
 	<position name="ConcreteShieldDS_pos" unit="mm" x="0" 
-		  y="concreteBoxy/2.-4292" 
+		  y="concreteBoxy/2.-4292 +1.156"
 		  z="concreteBoxz/2. - concreteThickness/2."/>
       </physvol>
 
       <physvol>
 	<volumeref ref="ConcreteShieldTop"/>
-	<position name="ConcreteShieldTop_pos" unit="mm" x="0" y="1789" z="0"/>
+	<position name="ConcreteShieldTop_pos" unit="mm" x="0" y="1099.312+concreteThickness/2.+0.05" z="0"/>
       </physvol>
 
       <physvol>
 	<volumeref ref="ConcreteShieldLeft"/>
 	<position name="ConcreteShieldLeft_pos" unit="mm" 
 		  x="concreteBoxx/2-700" 
-		  y="concreteBoxy/2.-4292" 
+		  y="concreteBoxy/2.-4292+1.156"
 		  z="-concreteThickness/2"/>
       </physvol>
       
@@ -266,7 +266,7 @@
 	<volumeref ref="ConcreteShieldRight"/>
 	<position name="ConcreteShieldRight_pos" unit="mm" 
 		  x="-concreteBoxx/2+700" 
-		  y="concreteBoxy/2.-4292" 
+		  y="concreteBoxy/2.-4292+1.156"
 		  z="-concreteThickness/2"/>
       </physvol>
       

@@ -19,7 +19,7 @@
   <solids>
 
     <box lunit="mm" name="psBunkerRegion_solid"
-         x="13600" y="3430" z="17390"/>
+         x="13600+10" y="3430+10" z="17390"/>
 
     <box lunit="mm" name="psBunkerRegion_s1"
          x="6781.8" y="3429" z="13119.354"/>

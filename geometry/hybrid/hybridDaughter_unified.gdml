@@ -16,7 +16,7 @@
         <constant name="DEGRAD" value="PI/180."/>
         <constant name="SEPTANT" value ="360./7"/>
         <position name="CENTER" unit="mm" x="0" y="0" z="0"/>
-        <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435-150/2-400/2"/>
+        <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435-150/2-400/2+560/2"/>
         
         <constant name="DELTAT" value ="1.0"/>
         
@@ -29,20 +29,6 @@
         <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73+150.+400"/>
         
         <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL4_z + 150/2+1425-150/2-400/2"/>
-        
-        <constant name="bellows3_eps" value="0.35"/>
-        <constant name="bellows3_IR" value="330+bellows3_eps/2"/>
-        <constant name="bellows3flange_length" value="44.45-bellows3_eps"/>
-        <constant name="bellows3flange_Rthickness" value="88.5-bellows3_eps"/>
-        <constant name="bellows3_length" value="419.4"/>
-        <constant name="bellows3_Rthickness" value="31.0"/>
-        <constant name="bellows3_zpos" value="8946-4500-(11016.865-8.73/2+150/2+400/2)"/>
-        <constant name="bellows3flangeUS_zpos" value="bellows3_zpos - bellows3_length/2 - bellows3flange_length/2 - bellows3_eps/2"/>
-        <constant name="bellows3flangeDS_zpos" value="bellows3_zpos + bellows3_length/2 + bellows3flange_length/2 + bellows3_eps/2"/>
-        
-        <position name="bellows3physical_pos" z="bellows3_zpos-10" unit="mm"/>
-        <position name="bellows3flangeUS_pos" z="bellows3flangeUS_zpos-10" unit="mm"/>
-        <position name="bellows3flangeDS_pos" z="bellows3flangeDS_zpos-10" unit="mm"/>
         
         <constant name="bellows4_eps" value="0.1"/>
         <constant name="bellows4_IR" value="675+bellows4_eps/2"/>
@@ -81,19 +67,6 @@
     <solids>
         
         <!--add bellows -->
-        <tube
-        name="bellows3physical_solid"
-        startphi="0" deltaphi="360" aunit="deg"
-        rmin="bellows3_IR" rmax="bellows3_IR+bellows3_Rthickness" z="bellows3_length" lunit="mm"/>
-        <tube
-        name="bellows3flangeUS_solid"
-        startphi="0" deltaphi="360" aunit="deg"
-        rmin="bellows3_IR" rmax="bellows3_IR+bellows3flange_Rthickness" z="bellows3flange_length" lunit="mm"/>
-        <tube
-        name="bellows3flangeDS_solid"
-        startphi="0" deltaphi="360" aunit="deg"
-        rmin="bellows3_IR" rmax="bellows3_IR+bellows3flange_Rthickness" z="bellows3flange_length" lunit="mm"/>
-        
         <tube
         name="bellows4physical_solid"
         startphi="0" deltaphi="360" aunit="deg"
@@ -164,7 +137,7 @@
         rmin="bellows5_IR" rmax="bellows5_IR+bellows5flange_Rthickness" z="bellows5flange_length" lunit="mm"/>
         
         <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here-->
-        <box lunit="mm" name="boxDownstream_2" x="boxDSMother_width + 1" y="boxDSMother_height + 1" z="1115"/>
+        <box lunit="mm" name="boxDownstream_2" x="boxDSMother_width + 1" y="boxDSMother_height + 1" z="1115+560"/>
         <box lunit="mm" name="boxDownstream_3" x="boxDSMother_width + 1" y="boxDSMother_height + 1" z="302+400"/>
         <box lunit="mm" name="boxDownstream_4" x="boxDSMother_width + 1" y="180" z="boxDSMother_length+1"/>
         
@@ -1335,26 +1308,7 @@
             <solidref ref="solid_DSpipe_flange"/>
             <auxiliary auxtype="Color" auxvalue="blue"/>
         </volume>
-        
-        <!--add bellows G4_STAINLESS-STEEL -->
-        <volume name="bellows3physical_log">
-            <materialref ref="SSbellows"/>
-            <solidref ref="bellows3physical_solid"/>
-            <auxiliary auxtype="Color" auxvalue="Pink"/>
-        </volume>
-        
-        <volume name="bellows3flangeUS_log">
-            <materialref ref="G4_STAINLESS-STEEL"/>
-            <solidref ref="bellows3flangeUS_solid"/>
-            <auxiliary auxtype="Color" auxvalue="Orange"/>
-        </volume>
-        
-        <volume name="bellows3flangeDS_log">
-            <materialref ref="G4_STAINLESS-STEEL"/>
-            <solidref ref="bellows3flangeDS_solid"/>
-            <auxiliary auxtype="Color" auxvalue="Orange"/>
-        </volume>
-        
+                
         <volume name="DSendtube_log">
             <materialref ref="G4_Al"/>
             <solidref ref="solid_DSendtube"/>
@@ -2935,22 +2889,6 @@
             <physvol name="Driftpipe_vacuum">
                 <volumeref ref="logicDriftpipe_vacuum"/>
                 <position name="Driftpipe_vacuum_pos" x="0" y="0" z="18689.32 - 11287.5"/>
-            </physvol>
-            
-            <!--add bellows G4_STAINLESS-STEEL and custom bellows SS material  -->
-            <physvol name="bellows3physical_phys">
-                <volumeref ref="bellows3physical_log"/>
-                <positionref ref="bellows3physical_pos"/>
-            </physvol>
-            
-            <physvol name="bellows3flangeUS_phys">
-                <volumeref ref="bellows3flangeUS_log"/>
-                <positionref ref="bellows3flangeUS_pos"/>
-            </physvol>
-            
-            <physvol name="bellows3flangeDS_phys">
-                <volumeref ref="bellows3flangeDS_log"/>
-                <positionref ref="bellows3flangeDS_pos"/>
             </physvol>
             
             <physvol name="DSendtube_phys">
