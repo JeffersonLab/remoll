@@ -26,6 +26,8 @@
     <box lunit="mm" name="Barite_Collar2_solid" x="4000" y="5000" z="400"/>
     <cone name="Collar2_tube" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1315+1" rmin2="0" rmax2="1315+1" z="400+1"/>
     
+    <tube name = "solid_DSpipe_vacuumtube" rmin="0" rmax="550" z="400" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
+    
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe1_flange">
       <zplane rmin="497.0" rmax="499.5" z="0.0"/>
       <zplane rmin="497.0" rmax="499.5" z="5"/>
@@ -129,7 +131,7 @@
       <auxiliary auxtype="Color" auxvalue="Brown"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
-
+    
     <volume name="logic_DSpipe1_flange">
       <materialref ref="G4_Al"/>
       <solidref ref="solid_DSpipe1_flange"/>
@@ -153,6 +155,31 @@
       <solidref ref="solid_DSpipe2_1"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
+    
+    <volume name="logic_DSpipe_vacuumtube">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="solid_DSpipe_vacuumtube"/>
+      <physvol name="DSpipe1_flange">
+    <volumeref ref="logic_DSpipe1_flange"/>
+    <position name="DSpipe1_flange" x="0" y="0" z="7784.19+11287.5-19132.69"/>
+      </physvol>
+
+      <physvol name="DSpipe1_bellow">
+    <volumeref ref="logic_DSpipe1_bellow"/>
+    <position name="DSpipe1_bellow_pos" x="0" y="0" z="7809.19+11287.5-19132.69"/>
+      </physvol>
+
+      <physvol name="DSpipe2_USplate">
+    <volumeref ref="logic_DSpipe2_USplate"/>
+    <position name="DSpipe2_USplate_pos" x="0" y="0" z="7989.19+11287.5-19132.69"/>
+      </physvol>
+      
+      <physvol name="DSpipe2_DSpipe2_1">
+    <volumeref ref="logic_DSpipe2_1"/>
+    <position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="8009.19+11287.5+5.075-19132.69"/>
+      </physvol>
+    </volume>
+    
 
     <volume name="GemRotator_log">
       <materialref ref="G4_Al"/>
@@ -234,25 +261,10 @@
 	<position name="Barite_Collar2_pos" unit="mm" x="0" y="-960/2" z="24016.09-16012.5-125.-150./2.+241.6-400/2+11287.5"/>
       </physvol>
       
-      <physvol name="DSpipe1_flange">
-	<volumeref ref="logic_DSpipe1_flange"/>
-	<position name="DSpipe1_flange" x="0" y="0" z="7784.19+11287.5"/>
-      </physvol>
-
-      <physvol name="DSpipe1_bellow">
-	<volumeref ref="logic_DSpipe1_bellow"/>
-	<position name="DSpipe1_bellow_pos" x="0" y="0" z="7809.19+11287.5"/>
-      </physvol>
-
-      <physvol name="DSpipe2_USplate">
-	<volumeref ref="logic_DSpipe2_USplate"/>
-	<position name="DSpipe2_USplate_pos" x="0" y="0" z="7989.19+11287.5"/>
-      </physvol>
-      
-      <physvol name="DSpipe2_DSpipe2_1">
-	<volumeref ref="logic_DSpipe2_1"/>
-	<position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="8009.19+11287.5+5.075"/>
-      </physvol>
+      <physvol name="DSpipe_vacuumtube_phys">
+    <volumeref ref="logic_DSpipe_vacuumtube"/>
+    <position name="DSpipe_vacuumtube_pos" x="0" y="0" z="24016.09-16012.5-125.-150./2.+241.6-400/2+11287.5"/>
+      </physvol>   
       
       <!-- Downstream beampipe -->
       <physvol>

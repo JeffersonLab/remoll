@@ -13,6 +13,7 @@
         
         <constant name="PI" value="1.*pi"/>
         <constant name="DOFFSET" value="13366.57+5300.59/2-8.73/2"/>
+        <constant name="hybridcenter" value="11287.5"/>
         <constant name="DEGRAD" value="PI/180."/>
         <constant name="SEPTANT" value ="360./7"/>
         <position name="CENTER" unit="mm" x="0" y="0" z="0"/>
@@ -186,14 +187,8 @@
             <position name="boxDownstream_pos" unit="mm" x="0" y="boxDSMother_height/2-180/2" z="0" />
         </subtraction>
         
-        <!--this is one bounce photon shield -->
-        <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SubCoil1EpoxyShield1_solid">
-            <zplane rmin="32.5" rmax="38.5" z="0"/>
-            <zplane rmin="32.6715" rmax="38.6715" z="51.45"/>
-        </polycone>
-        
         <!--collar solids -->
-        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="612" rmax1="750" rmin2="621" rmax2="750" z="100+50"/>
+        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="620" rmax1="750" rmin2="630" rmax2="750" z="100+50"/>
         <!--<cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1013" rmax1="1315" rmin2="1022" rmax2="1315" z="100+50"/>-->
         
         <!-- drift pipe -->
@@ -421,82 +416,52 @@
         
         <!-- DS Coils/Lintels/Clamps from hybridToroid.gdml-->
         <xtru name="Coll5_solid1_1" lunit="mm">
-            <twoDimVertex x="42.70" y="-14.21"/>
-            <twoDimVertex x="39.38" y="-21.78"/>
-            <twoDimVertex x="88.90" y="-45.68"/>
-            <twoDimVertex x="94.13" y="-35.01"/>
-            <twoDimVertex x="103.20" y="-33.94"/>
-            <twoDimVertex x="156.30" y="-44.19"/>
-            <twoDimVertex x="173.32" y="-45.73"/>
-            <twoDimVertex x="173.32" y="-25.13"/>
-            <twoDimVertex x="149.30" y="-25.13"/>
-            <twoDimVertex x="149.30" y="-26.66"/>
-            <twoDimVertex x="144.14" y="-26.66"/>
-            <twoDimVertex x="144.14" y="-25.13"/>
-            <twoDimVertex x="99.17" y="-25.13"/>
-            <twoDimVertex x="99.17" y="-14.21"/>
-            <!--
-            <twoDimVertex x="-42.70" y="-14.21"/>
-            <twoDimVertex x="-99.17" y="-14.21"/>
-            <twoDimVertex x="-99.17" y="-25.13"/>
-            <twoDimVertex x="-144.14" y="-25.13"/>
-            <twoDimVertex x="-144.14" y="-26.66"/>
-            <twoDimVertex x="-149.30" y="-26.66"/>
-            <twoDimVertex x="-149.30" y="-25.13"/>
-            <twoDimVertex x="-173.32" y="-25.13"/>
-            <twoDimVertex x="-173.32" y="-45.73"/>
-            <twoDimVertex x="-156.30" y="-44.19"/>
-            <twoDimVertex x="-103.20" y="-33.94"/>
-            <twoDimVertex x="-94.13" y="-35.01"/>
-            <twoDimVertex x="-88.90" y="-45.68"/>
-            <twoDimVertex x="-39.38" y="-21.78"/>-->
-            <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="172.715" y="-25.133"/>
+            <twoDimVertex x="148.490" y="-25.133"/>
+            <twoDimVertex x="148.90" y="-26.657"/>
+            <twoDimVertex x="141.478" y="-26.657"/>
+            <twoDimVertex x="141.478" y="-25.133"/>
+            <twoDimVertex x="99.169" y="-25.133"/>
+            <twoDimVertex x="99.169" y="-14.211"/>
+            <twoDimVertex x="39.377" y="-14.211"/>
+            <twoDimVertex x="39.377" y="-21.782"/>
+            <twoDimVertex x="88.995" y="-45.677"/>
+            <twoDimVertex x="94.132" y="-35.009"/>
+            <twoDimVertex x="103.195" y="-33.936"/>
+            <twoDimVertex x="156.304" y="-44.194"/>
+            <twoDimVertex x="172.715" y="-45.676"/>
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
         <cone aunit="deg" deltaphi="20" lunit="mm" name="Coll5_Cylinder_solid1" rmax1="45" rmax2="45" rmin1="40" rmin2="40" startphi="327" z="101"/>
         <subtraction name="Coll5_solid1">
             <first ref="Coll5_solid1_1"/>
             <second ref="Coll5_Cylinder_solid1"/>
-            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="100/2.0" />
         </subtraction>
         <xtru name="Coll5_solid2_1" lunit="mm">
-            <twoDimVertex x="40.28" y="22.22"/>
-            <twoDimVertex x="91.34" y="46.80"/>
-            <twoDimVertex x="96.13" y="36.86"/>
-            <twoDimVertex x="105.18" y="35.11"/>
-            <twoDimVertex x="155.87" y="45.10"/>
-            <twoDimVertex x="172.71" y="46.99"/>
-            <twoDimVertex x="172.71" y="25.13"/>
-            <twoDimVertex x="149.30" y="25.13"/>
-            <twoDimVertex x="149.30" y="26.66"/>
-            <twoDimVertex x="144.14" y="26.66"/>
-            <twoDimVertex x="144.14" y="25.13"/>
-            <twoDimVertex x="99.17" y="25.13"/>
-            <twoDimVertex x="99.17" y="14.21"/>
-            <twoDimVertex x="43.75" y="14.21"/>
-            <!--
-            <twoDimVertex x="-40.28" y="22.22"/>
-            <twoDimVertex x="-43.75" y="14.21"/>
-            <twoDimVertex x="-99.17" y="14.21"/>
-            <twoDimVertex x="-99.17" y="25.13"/>
-            <twoDimVertex x="-144.14" y="25.13"/>
-            <twoDimVertex x="-144.14" y="26.66"/>
-            <twoDimVertex x="-149.30" y="26.66"/>
-            <twoDimVertex x="-149.30" y="25.13"/>
-            <twoDimVertex x="-172.71" y="25.13"/>
-            <twoDimVertex x="-172.71" y="46.99"/>
-            <twoDimVertex x="-155.87" y="45.10"/>
-            <twoDimVertex x="-105.18" y="35.11"/>
-            <twoDimVertex x="-91.34" y="46.80"/>
-            -->
-            <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="172.715" y="46.992"/>
+            <twoDimVertex x="172.715" y="25.133"/>
+            <twoDimVertex x="148.590" y="25.133"/>
+            <twoDimVertex x="148.590" y="26.657"/>
+            <twoDimVertex x="141.478" y="26.657"/>
+            <twoDimVertex x="141.478" y="25.133"/>
+            <twoDimVertex x="99.169" y="25.133"/>
+            <twoDimVertex x="99.169" y="14.211"/>
+            <twoDimVertex x="40.283" y="14.211"/>
+            <twoDimVertex x="40.283" y="22.218"/>
+            <twoDimVertex x="91.337" y="46.805"/>
+            <twoDimVertex x="96.127" y="36.885"/>
+            <twoDimVertex x="105.181" y="35.114"/>
+            <twoDimVertex x="155.870" y="45.095"/>
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="100" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
         <cone aunit="deg" deltaphi="20" lunit="mm" name="Coll5_Cylinder_solid2" rmax1="46" rmax2="46" rmin1="40" rmin2="40" startphi="12" z="101"/>
         <subtraction name="Coll5_solid2">
             <first ref="Coll5_solid2_1"/>
             <second ref="Coll5_Cylinder_solid2"/>
-            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll5_Sub_pos1" unit="mm" x="0" y="0" z="100/2.0" />
         </subtraction>
         
         <!-- <xtru name="Coll5_solid1" lunit="mm">
@@ -554,325 +519,476 @@
         
         <!--    Solid for Collimator 6A -->
         <xtru name="Coll6A_solid1" lunit="mm">
-            <twoDimVertex x="52.77" y="-7.79"/>
-            <twoDimVertex x="46.90" y="-25.41"/>
-            <twoDimVertex x="91.58" y="-46.92"/>
-            <twoDimVertex x="95.25" y="-46.92"/>
-            <twoDimVertex x="95.25" y="-27.87"/>
-            <twoDimVertex x="98.42" y="-27.87"/>
-            <twoDimVertex x="98.42" y="-24.70"/>
-            <twoDimVertex x="70.79" y="-24.70"/>
-            <twoDimVertex x="70.79" y="-7.79"/>
-            <section zOrder="1" zPosition="-34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="49.836" y="-7.792"/>
+            <twoDimVertex x="49.836" y="-24.000"/>
+            <twoDimVertex x="95.250" y="-45.870"/>
+            <twoDimVertex x="95.250" y="-35.113"/>
+            <twoDimVertex x="91.821" y="-35.113"/>
+            <twoDimVertex x="91.821" y="-26.985"/>
+            <twoDimVertex x="95.250" y="-26.985"/>
+            <twoDimVertex x="95.250" y="-25.080"/>
+            <twoDimVertex x="70.787" y="-25.080"/>
+            <twoDimVertex x="70.787" y="-7.792"/>
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="30" lunit="mm" name="Coll6A_Cylinder_solid1" rmax1="53.34" rmax2="56.02" rmin1="45" rmin2="50" startphi="-30" z="70"/>
+        <cone aunit="deg" deltaphi="30" lunit="mm" name="Coll6A_Cylinder_solid1" rmax1="55.314" rmax2="57.982" rmin1="45" rmin2="50" startphi="-30" z="70"/>
         <subtraction name="Coll6A_solid_1">
             <first ref="Coll6A_solid1"/>
             <second ref="Coll6A_Cylinder_solid1"/>
-            <position name="Coll6A_Sub_pos1" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll6A_Sub_pos1" unit="mm" x="0" y="0" z="69.850/2" />
         </subtraction>
         
         <xtru name="Coll6A_solid2" lunit="mm">
-            <twoDimVertex x="46.76" y="26.78"/>
-            <twoDimVertex x="55.97" y="7.79"/>
-            <twoDimVertex x="70.79" y="7.79"/>
-            <twoDimVertex x="70.79" y="24.70"/>
-            <twoDimVertex x="98.42" y="24.70"/>
-            <twoDimVertex x="98.42" y="27.87"/>
-            <twoDimVertex x="95.25" y="27.87"/>
-            <twoDimVertex x="95.25" y="46.92"/>
-            <twoDimVertex x="91.58" y="46.92"/>
-            <section zOrder="1" zPosition="-34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="50.277" y="29.851"/>
+            <twoDimVertex x="50.277" y="7.792"/>
+            <twoDimVertex x="70.787" y="7.792"/>
+            <twoDimVertex x="70.787" y="25.080"/>
+            <twoDimVertex x="95.250" y="25.080"/>
+            <twoDimVertex x="95.250" y="26.985"/>
+            <twoDimVertex x="91.821" y="26.985"/>
+            <twoDimVertex x="91.821" y="35.113"/>
+            <twoDimVertex x="95.250" y="35.113"/>
+            <twoDimVertex x="95.250" y="45.870"/>
+            <twoDimVertex x="93.046" y="50.447"/>
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="35" lunit="mm" name="Coll6A_Cylinder_solid2" rmax1="56.51" rmax2="59.19" rmin1="45" rmin2="50" startphi="5" z="70"/>
+        <cone aunit="deg" deltaphi="35" lunit="mm" name="Coll6A_Cylinder_solid2" rmax1="58.471" rmax2="61.143" rmin1="45" rmin2="50" startphi="5" z="70"/>
         <subtraction name="Coll6A_solid_2">
             <first ref="Coll6A_solid2"/>
             <second ref="Coll6A_Cylinder_solid2"/>
-            <position name="Coll6A_Sub_pos2" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll6A_Sub_pos2" unit="mm" x="0" y="0" z="69.850/2" />
         </subtraction>
         
         <!--    Solid for Collimator 6B -->
         <xtru name="Coll6B_solid1" lunit="mm">
-            <twoDimVertex x="61.92" y="2.54"/>
-            <twoDimVertex x="133.35" y="2.54"/>
-            <twoDimVertex x="133.35" y="-26.98"/>
-            <twoDimVertex x="129.92" y="-26.98"/>
-            <twoDimVertex x="129.92" y="-35.11"/>
-            <twoDimVertex x="133.35" y="-35.11"/>
-            <twoDimVertex x="133.35" y="-39.22"/>
-            <twoDimVertex x="122.47" y="-61.80"/>
-            <twoDimVertex x="54.69" y="-29.16"/>
-            <section zOrder="1" zPosition="-34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="53.978" y="-25.995"/>
+            <twoDimVertex x="108.116" y="-52.066"/>
+            <twoDimVertex x="115.027" y="-37.716"/>
+            <twoDimVertex x="113.030" y="-37.716"/>
+            <twoDimVertex x="113.030" y="-35.113"/>
+            <twoDimVertex x="109.601" y="-35.113"/>
+            <twoDimVertex x="109.601" y="-26.985"/>
+            <twoDimVertex x="113.030" y="-26.985"/>
+            <twoDimVertex x="113.030" y="-24.381"/>
+            <twoDimVertex x="120.000" y="-24.381"/>
+            <twoDimVertex x="120.000" y="0.000"/>
+            <twoDimVertex x="53.978" y="0.000"/>               
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="35" lunit="mm" name="Coll6B_Cylinder_solid1" rmax1="61.98" rmax2="67.47" rmin1="50" rmin2="55" startphi="330" z="71"/>
+        <cone aunit="deg" deltaphi="35" lunit="mm" name="Coll6B_Cylinder_solid1" rmax1="59.911" rmax2="65.411" rmin1="50" rmin2="52" startphi="330" z="71"/>
         <subtraction name="Coll6B_solid_1">
             <first ref="Coll6B_solid1"/>
             <second ref="Coll6B_Cylinder_solid1"/>
-            <position name="Coll6B_Sub_pos1" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll6B_Sub_pos1" unit="mm" x="0" y="0" z="69.850/2" />
         </subtraction>
         
         <xtru name="Coll6B_solid2" lunit="mm">
-            <twoDimVertex x="68.43" y="-2.54"/>
-            <twoDimVertex x="133.35" y="-2.54"/>
-            <twoDimVertex x="133.35" y="26.98"/>
-            <twoDimVertex x="129.92" y="26.98"/>
-            <twoDimVertex x="129.92" y="35.11"/>
-            <twoDimVertex x="133.35" y="35.11"/>
-            <twoDimVertex x="133.35" y="39.22"/>
-            <twoDimVertex x="122.47" y="61.80"/>
-            <twoDimVertex x="60.55" y="31.98"/>
-            <section zOrder="1" zPosition="-34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <twoDimVertex x="57.455" y="-5.080"/>
+            <twoDimVertex x="120.000" y="-5.080"/>
+            <twoDimVertex x="120.000" y="24.381"/>
+            <twoDimVertex x="113.030" y="24.381"/>
+            <twoDimVertex x="113.030" y="26.985"/>
+            <twoDimVertex x="109.601" y="26.985"/>
+            <twoDimVertex x="109.601" y="35.113"/>
+            <twoDimVertex x="113.030" y="35.113"/>
+            <twoDimVertex x="113.030" y="37.716"/>
+            <twoDimVertex x="115.027" y="37.716"/>
+            <twoDimVertex x="105.912" y="56.643"/>
+            <twoDimVertex x="57.455" y="33.307"/>
+            <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+            <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="35" lunit="mm" name="Coll6B_Cylinder_solid2" rmax1="68.47" rmax2="73.97" rmin1="59" rmin2="64" startphi="-5" z="71"/>
+        <cone aunit="deg" deltaphi="50" lunit="mm" name="Coll6B_Cylinder_solid2" rmax1="66.411" rmax2="71.912" rmin1="55" rmin2="56" startphi="-15" z="71"/>
         <subtraction name="Coll6B_solid_2">
             <first ref="Coll6B_solid2"/>
             <second ref="Coll6B_Cylinder_solid2"/>
-            <position name="Coll6B_Sub_pos2" unit="mm" x="0" y="0" z="0" />
+            <position name="Coll6B_Sub_pos2" unit="mm" x="0" y="0" z="69.850/2" />
         </subtraction>
         
-        
+     
         <!-- SubCoil1 support -->
-        <xtru name="SubCoil1_Clamp_S1" lunit="mm">
-            <twoDimVertex x="-323.85" y="10.69"/>
-            <twoDimVertex x="-323.85" y="-10.69"/>
-            <twoDimVertex x="-399.41" y="-10.69"/>
-            <twoDimVertex x="-399.41" y="-29.74"/>
-            <twoDimVertex x="-507.36" y="-29.74"/>
-            <twoDimVertex x="-507.36" y="-86.89"/>
-            <twoDimVertex x="-526.41" y="-86.89"/>
-            <twoDimVertex x="-526.41" y="-101.60"/>
-            <twoDimVertex x="-551.81" y="-101.60"/>
-            <twoDimVertex x="-551.81" y="101.60"/>
-            <twoDimVertex x="-526.41" y="101.60"/>
-            <twoDimVertex x="-526.41" y="86.89"/>
-            <twoDimVertex x="-507.36" y="86.89"/>
-            <twoDimVertex x="-507.36" y="29.74"/>
-            <twoDimVertex x="-399.41" y="29.74"/>
-            <twoDimVertex x="-399.41" y="10.69"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <xtru name="SubCoil1_Clamp_S2" lunit="mm">
-            <twoDimVertex x="-66.04" y="12.88"/>
-            <twoDimVertex x="-66.04" y="11.35"/>
-            <twoDimVertex x="-396.24" y="11.35"/>
-            <twoDimVertex x="-396.24" y="24.05"/>
-            <twoDimVertex x="-116.84" y="24.05"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <!-- SubCoil2 support -->
-        <xtru name="SubCoil2_Clamp_S1" lunit="mm">
-            <twoDimVertex x="-323.85" y="12.31"/>
-            <twoDimVertex x="-323.85" y="-12.31"/>
-            <twoDimVertex x="-399.41" y="-12.31"/>
-            <twoDimVertex x="-399.41" y="-31.36"/>
-            <twoDimVertex x="-507.36" y="-31.36"/>
-            <twoDimVertex x="-507.36" y="-88.51"/>
-            <twoDimVertex x="-526.41" y="-88.51"/>
-            <twoDimVertex x="-526.41" y="-101.60"/>
-            <twoDimVertex x="-551.81" y="-101.60"/>
-            <twoDimVertex x="-551.81" y="101.60"/>
-            <twoDimVertex x="-526.41" y="101.60"/>
-            <twoDimVertex x="-526.41" y="88.51"/>
-            <twoDimVertex x="-507.36" y="88.51"/>
-            <twoDimVertex x="-507.36" y="31.36"/>
-            <twoDimVertex x="-399.41" y="31.36"/>
-            <twoDimVertex x="-399.41" y="12.31"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <xtru name="SubCoil2_Clamp_S2" lunit="mm">
-            <twoDimVertex x="-81.91" y="14.48"/>
-            <twoDimVertex x="-81.91" y="12.95"/>
-            <twoDimVertex x="-396.24" y="12.95"/>
-            <twoDimVertex x="-396.24" y="25.65"/>
-            <twoDimVertex x="-132.71" y="25.65"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <!-- SubCoil3 support -->
-        <xtru name="SubCoil3_Clamp_S1" lunit="mm">
-            <twoDimVertex x="-323.85" y="12.70"/>
-            <twoDimVertex x="-323.85" y="-12.70"/>
-            <twoDimVertex x="-399.41" y="-12.70"/>
-            <twoDimVertex x="-399.41" y="-31.75"/>
-            <twoDimVertex x="-507.36" y="-31.75"/>
-            <twoDimVertex x="-507.36" y="-88.90"/>
-            <twoDimVertex x="-526.41" y="-88.90"/>
-            <twoDimVertex x="-526.41" y="-101.60"/>
-            <twoDimVertex x="-551.81" y="-101.60"/>
-            <twoDimVertex x="-551.81" y="101.60"/>
-            <twoDimVertex x="-526.41" y="101.60"/>
-            <twoDimVertex x="-526.41" y="88.90"/>
-            <twoDimVertex x="-507.36" y="88.90"/>
-            <twoDimVertex x="-507.36" y="31.75"/>
-            <twoDimVertex x="-399.41" y="31.75"/>
-            <twoDimVertex x="-399.41" y="12.70"/>
-            <section zOrder="1" zPosition="-76.245" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.245" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <xtru name="SubCoil3_Clamp_S2" lunit="mm">
-            <twoDimVertex x="-81.91" y="14.48"/>
-            <twoDimVertex x="-81.91" y="12.95"/>
-            <twoDimVertex x="-396.24" y="12.95"/>
-            <twoDimVertex x="-396.24" y="25.65"/>
-            <twoDimVertex x="-132.71" y="25.65"/>
-            <section zOrder="1" zPosition="-76.245" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.245" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <xtru name="SubCoil3_Clamp_S3" lunit="mm">
-            <twoDimVertex x="-103.91" y="24.63"/>
-            <twoDimVertex x="-103.91" y="13.45"/>
-            <twoDimVertex x="-396.24" y="13.45"/>
-            <twoDimVertex x="-396.24" y="25.13"/>
-            <twoDimVertex x="-152.40" y="25.13"/>
-            <!--<twoDimVertex x="-396.24" y="26.15"/>
-            <twoDimVertex x="-152.40" y="26.15"/>-->
-            <twoDimVertex x="-152.40" y="24.12"/>
-            <twoDimVertex x="-149.22" y="24.12"/>
-            <twoDimVertex x="-149.22" y="26.15"/>
-            <twoDimVertex x="-144.78" y="26.15"/>
-            <twoDimVertex x="-144.78" y="24.63"/>
-            <section zOrder="1" zPosition="-76.245" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.245" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <!-- SubCoil4 support -->
-        <!-- Clamp 1 -->
-        <xtru name="SubCoil4_Clamp1_S1" lunit="mm">
-            <twoDimVertex x="-451" y="24.70"/>
-            <twoDimVertex x="-451" y="-24.70"/>
-            <twoDimVertex x="-501.01" y="-24.70"/>
-            <twoDimVertex x="-501.01" y="-34.93"/>
-            <twoDimVertex x="-583.56" y="-34.93"/>
-            <twoDimVertex x="-583.56" y="-92.08"/>
-            <twoDimVertex x="-602.61" y="-92.08"/>
-            <twoDimVertex x="-602.61" y="-101.60"/>
-            <twoDimVertex x="-628.01" y="-101.60"/>
-            <twoDimVertex x="-628.01" y="101.60"/>
-            <twoDimVertex x="-602.61" y="101.60"/>
-            <twoDimVertex x="-602.61" y="92.08"/>
-            <twoDimVertex x="-583.56" y="92.08"/>
-            <twoDimVertex x="-583.56" y="34.93"/>
-            <twoDimVertex x="-501.01" y="34.93"/>
-            <twoDimVertex x="-501.01" y="24.70"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <xtru name="SubCoil4_Clamp1_S2" lunit="mm">
-            <twoDimVertex x="-101.60" y="26.60"/>
-            <twoDimVertex x="-101.60" y="24.70"/>
-            <twoDimVertex x="-501.01" y="24.70"/>
-            <twoDimVertex x="-501.01" y="34.22"/>
-            <twoDimVertex x="-221.61" y="34.22"/>
-            <twoDimVertex x="-217.41" y="31.05"/>
-            <twoDimVertex x="-187.71" y="31.05"/>
-            <twoDimVertex x="-183.51" y="34.22"/>
-            <twoDimVertex x="-127" y="34.22"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <!-- Clamp 2 -->
-        <xtru name="SubCoil4_Clamp2_S1" lunit="mm">
-            <twoDimVertex x="-400.69" y="34.22"/>
-            <twoDimVertex x="-400.69" y="-34.22"/>
-            <twoDimVertex x="-445.77" y="-34.22"/>
-            <twoDimVertex x="-445.77" y="-15.88"/>
-            <twoDimVertex x="-475.61" y="-15.88"/>
-            <twoDimVertex x="-475.61" y="-34.93"/>
-            <twoDimVertex x="-583.56" y="-34.93"/>
-            <twoDimVertex x="-583.56" y="-92.08"/>
-            <twoDimVertex x="-602.61" y="-92.08"/>
-            <twoDimVertex x="-602.61" y="-101.60"/>
-            <twoDimVertex x="-628.01" y="-101.60"/>
-            <twoDimVertex x="-628.01" y="101.60"/>
-            <twoDimVertex x="-602.61" y="101.60"/>
-            <twoDimVertex x="-602.61" y="92.08"/>
-            <twoDimVertex x="-583.56" y="92.08"/>
-            <twoDimVertex x="-583.56" y="34.93"/>
-            <twoDimVertex x="-475.61" y="34.93"/>
-            <twoDimVertex x="-475.61" y="15.88"/>
-            <twoDimVertex x="-445.77" y="15.88"/>
-            <twoDimVertex x="-445.77" y="34.22"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <xtru name="SubCoil4_Clamp2_S2" lunit="mm">
-            <twoDimVertex x="-95.25" y="34.22"/>
-            <twoDimVertex x="-95.25" y="27.87"/>
-            <twoDimVertex x="-98.42" y="27.87"/>
-            <twoDimVertex x="-98.42" y="24.70"/>
-            <twoDimVertex x="-400.69" y="24.70"/>
-            <twoDimVertex x="-400.69" y="34.22"/>
-            <twoDimVertex x="-373.02" y="34.22"/>
-            <twoDimVertex x="-373.02" y="29.14"/>
-            <twoDimVertex x="-308.97" y="29.14"/>
-            <twoDimVertex x="-308.97" y="34.22"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <xtru name="SubCoil4_Clamp2_S3" lunit="mm">
-            <twoDimVertex x="-95.25" y="46.92"/>
-            <twoDimVertex x="-95.25" y="34.22"/>
-            <twoDimVertex x="-107.95" y="34.22"/>
-            <twoDimVertex x="-107.95" y="46.92"/>
-            <section zOrder="1" zPosition="-34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="34.925" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <!-- Clamp 3 -->
-        <xtru name="SubCoil4_Clamp3_S1" lunit="mm">
-            <twoDimVertex x="-475.61" y="34.93"/>
-            <twoDimVertex x="-475.61" y="-34.93"/>
-            <twoDimVertex x="-583.56" y="-34.93"/>
-            <twoDimVertex x="-583.56" y="-92.08"/>
-            <twoDimVertex x="-602.61" y="-92.08"/>
-            <twoDimVertex x="-602.61" y="-101.60"/>
-            <twoDimVertex x="-628.01" y="-101.60"/>
-            <twoDimVertex x="-628.01" y="101.60"/>
-            <twoDimVertex x="-602.61" y="101.60"/>
-            <twoDimVertex x="-602.61" y="92.08"/>
-            <twoDimVertex x="-583.56" y="92.08"/>
-            <twoDimVertex x="-583.56" y="34.93"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
-        <xtru name="SubCoil4_Clamp3_S2" lunit="mm">
-            <twoDimVertex x="-133.35" y="37.40"/>
-            <twoDimVertex x="-133.35" y="35.05"/>
-            <twoDimVertex x="-130.17" y="35.05"/>
-            <twoDimVertex x="-130.17" y="27.05"/>
-            <twoDimVertex x="-133.35" y="27.05"/>
-            <twoDimVertex x="-133.35" y="24.70"/>
-            <twoDimVertex x="-382.96" y="24.70"/>
-            <twoDimVertex x="-382.96" y="0.0"/>
-            <twoDimVertex x="-475.61" y="0.0"/>
-            <twoDimVertex x="-475.61" y="15.88"/>
-            <twoDimVertex x="-445.13" y="15.88"/>
-            <twoDimVertex x="-445.13" y="11.11"/>
-            <twoDimVertex x="-409.17" y="12.81"/>
-            <twoDimVertex x="-377.58" y="31.05"/>
-            <twoDimVertex x="-327.02" y="37.40"/>
-            <section zOrder="1" zPosition="-76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="76.2" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        
+	<xtru name="solid_clamp_1"  lunit="mm">
+		<twoDimVertex x="551.815" y="101.6" />
+		<twoDimVertex x="526.415" y="101.6" />
+		<twoDimVertex x="526.415" y="86.893" />
+		<twoDimVertex x="507.365" y="86.893" />
+		<twoDimVertex x="507.365" y="48.793" />
+		<twoDimVertex x="501.785" y="35.323" />
+		<twoDimVertex x="488.315" y="29.743" />
+		<twoDimVertex x="399.415" y="29.743" />
+		<twoDimVertex x="399.415" y="10.693" />
+		<twoDimVertex x="396.24" y="10.693" />
+		<twoDimVertex x="396.24" y="24.054" />
+		<twoDimVertex x="116.84" y="24.054" />
+		<twoDimVertex x="66.04" y="12.878" />
+		<twoDimVertex x="66.04" y="11.354" />
+		<twoDimVertex x="330.2" y="11.354" />
+		<twoDimVertex x="330.2" y="-11.354" />
+		<twoDimVertex x="66.04" y="-11.354" />
+		<twoDimVertex x="66.04" y="-12.878" />
+		<twoDimVertex x="116.84" y="-24.054" />
+		<twoDimVertex x="396.24" y="-24.054" />
+		<twoDimVertex x="396.24" y="-10.693" />
+		<twoDimVertex x="399.415" y="-10.693" />
+		<twoDimVertex x="399.415" y="-29.743" />
+		<twoDimVertex x="488.315" y="-29.743" />
+		<twoDimVertex x="501.785" y="-35.323" />
+		<twoDimVertex x="507.365" y="-48.793" />
+		<twoDimVertex x="507.365" y="-86.893" />
+		<twoDimVertex x="526.415" y="-86.893" />
+		<twoDimVertex x="526.415" y="-101.6" />
+		<twoDimVertex x="551.815" y="-101.6" />
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_clamp_2"  lunit="mm">
+		<twoDimVertex x="551.815" y="101.6" />
+		<twoDimVertex x="526.415" y="101.6" />
+		<twoDimVertex x="526.415" y="86.893" />
+		<twoDimVertex x="507.365" y="86.893" />
+		<twoDimVertex x="507.365" y="48.793" />
+		<twoDimVertex x="501.785" y="35.323" />
+		<twoDimVertex x="488.315" y="29.743" />
+		<twoDimVertex x="399.415" y="29.743" />
+		<twoDimVertex x="399.415" y="10.693" />
+		<twoDimVertex x="396.24" y="10.693" />
+		<twoDimVertex x="396.24" y="24.054" />
+		<twoDimVertex x="116.84" y="24.054" />
+		<twoDimVertex x="66.04" y="12.878" />
+		<twoDimVertex x="66.04" y="11.354" />
+		<twoDimVertex x="330.2" y="11.354" />
+		<twoDimVertex x="330.2" y="-11.354" />
+		<twoDimVertex x="66.04" y="-11.354" />
+		<twoDimVertex x="66.04" y="-12.878" />
+		<twoDimVertex x="116.84" y="-24.054" />
+		<twoDimVertex x="396.24" y="-24.054" />
+		<twoDimVertex x="396.24" y="-10.693" />
+		<twoDimVertex x="399.415" y="-10.693" />
+		<twoDimVertex x="399.415" y="-29.743" />
+		<twoDimVertex x="488.315" y="-29.743" />
+		<twoDimVertex x="501.785" y="-35.323" />
+		<twoDimVertex x="507.365" y="-48.793" />
+		<twoDimVertex x="507.365" y="-86.893" />
+		<twoDimVertex x="526.415" y="-86.893" />
+		<twoDimVertex x="526.415" y="-101.6" />
+		<twoDimVertex x="551.815" y="-101.6" />
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	    
+        <!-- SubCoil2 support -->	    
+	<xtru name="solid_clamp_3"  lunit="mm">
+		<twoDimVertex x="551.815" y="101.6" />
+		<twoDimVertex x="526.415" y="101.6" />
+		<twoDimVertex x="526.415" y="88.506" />
+		<twoDimVertex x="507.365" y="88.506" />
+		<twoDimVertex x="507.365" y="50.406" />
+		<twoDimVertex x="501.785" y="36.936" />
+		<twoDimVertex x="488.315" y="31.356" />
+		<twoDimVertex x="399.415" y="31.356" />
+		<twoDimVertex x="399.415" y="12.306" />
+		<twoDimVertex x="396.24" y="12.306" />
+		<twoDimVertex x="396.24" y="25.654" />
+		<twoDimVertex x="132.715" y="25.654" />
+		<twoDimVertex x="81.915" y="14.478" />
+		<twoDimVertex x="81.915" y="12.954" />
+		<twoDimVertex x="330.2" y="12.954" />
+		<twoDimVertex x="330.2" y="-12.954" />
+		<twoDimVertex x="81.915" y="-12.954" />
+		<twoDimVertex x="81.915" y="-14.478" />
+		<twoDimVertex x="132.715" y="-25.654" />
+		<twoDimVertex x="396.24" y="-25.654" />
+		<twoDimVertex x="396.24" y="-12.306" />
+		<twoDimVertex x="399.415" y="-12.306" />
+		<twoDimVertex x="399.415" y="-31.356" />
+		<twoDimVertex x="488.315" y="-31.356" />
+		<twoDimVertex x="501.785" y="-36.936" />
+		<twoDimVertex x="507.365" y="-50.406" />
+		<twoDimVertex x="507.365" y="-88.506" />
+		<twoDimVertex x="526.415" y="-88.506" />
+		<twoDimVertex x="526.415" y="-101.6" />
+		<twoDimVertex x="551.815" y="-101.6" />
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_clamp_4"  lunit="mm">
+		<twoDimVertex x="551.815" y="101.6" />
+		<twoDimVertex x="526.415" y="101.6" />
+		<twoDimVertex x="526.415" y="88.506" />
+		<twoDimVertex x="507.365" y="88.506" />
+		<twoDimVertex x="507.365" y="50.406" />
+		<twoDimVertex x="501.785" y="36.936" />
+		<twoDimVertex x="488.315" y="31.356" />
+		<twoDimVertex x="399.415" y="31.356" />
+		<twoDimVertex x="399.415" y="12.306" />
+		<twoDimVertex x="396.24" y="12.306" />
+		<twoDimVertex x="396.24" y="25.654" />
+		<twoDimVertex x="132.715" y="25.654" />
+		<twoDimVertex x="81.915" y="14.478" />
+		<twoDimVertex x="81.915" y="12.954" />
+		<twoDimVertex x="330.2" y="12.954" />
+		<twoDimVertex x="330.2" y="-12.954" />
+		<twoDimVertex x="81.915" y="-12.954" />
+		<twoDimVertex x="81.915" y="-14.478" />
+		<twoDimVertex x="132.715" y="-25.654" />
+		<twoDimVertex x="396.24" y="-25.654" />
+		<twoDimVertex x="396.24" y="-12.306" />
+		<twoDimVertex x="399.415" y="-12.306" />
+		<twoDimVertex x="399.415" y="-31.356" />
+		<twoDimVertex x="488.315" y="-31.356" />
+		<twoDimVertex x="501.785" y="-36.936" />
+		<twoDimVertex x="507.365" y="-50.406" />
+		<twoDimVertex x="507.365" y="-88.506" />
+		<twoDimVertex x="526.415" y="-88.506" />
+		<twoDimVertex x="526.415" y="-101.6" />
+		<twoDimVertex x="551.815" y="-101.6" />
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	    
+	<!-- SubCoil3 support -->    
+	<xtru name="solid_clamp_5"  lunit="mm">
+		<twoDimVertex x="551.815" y="101.6" />
+		<twoDimVertex x="526.415" y="101.6" />
+		<twoDimVertex x="526.415" y="88.9" />
+		<twoDimVertex x="507.365" y="88.9" />
+		<twoDimVertex x="507.365" y="50.8" />
+		<twoDimVertex x="501.785" y="37.33" />
+		<twoDimVertex x="488.315" y="31.75" />
+		<twoDimVertex x="399.415" y="31.75" />
+		<twoDimVertex x="399.415" y="12.7" />
+		<twoDimVertex x="396.24" y="12.7" />
+		<twoDimVertex x="396.24" y="26.149" />
+		<twoDimVertex x="152.4" y="26.149" />
+		<twoDimVertex x="101.6" y="14.973" />
+		<twoDimVertex x="101.6" y="13.45" />
+		<twoDimVertex x="330.2" y="13.45" />
+		<twoDimVertex x="330.2" y="-13.45" />
+		<twoDimVertex x="101.6" y="-13.45" />
+		<twoDimVertex x="101.6" y="-14.973" />
+		<twoDimVertex x="152.4" y="-26.149" />
+		<twoDimVertex x="396.24" y="-26.149" />
+		<twoDimVertex x="396.24" y="-12.7" />
+		<twoDimVertex x="399.415" y="-12.7" />
+		<twoDimVertex x="399.415" y="-31.75" />
+		<twoDimVertex x="488.315" y="-31.75" />
+		<twoDimVertex x="501.785" y="-37.33" />
+		<twoDimVertex x="507.365" y="-50.8" />
+		<twoDimVertex x="507.365" y="-88.9" />
+		<twoDimVertex x="526.415" y="-88.9" />
+		<twoDimVertex x="526.415" y="-101.6" />
+		<twoDimVertex x="551.815" y="-101.6" />
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_clamp_6"  lunit="mm">
+		<twoDimVertex x="551.815" y="101.6" />
+		<twoDimVertex x="526.415" y="101.6" />
+		<twoDimVertex x="526.415" y="88.9" />
+		<twoDimVertex x="507.365" y="88.9" />
+		<twoDimVertex x="507.365" y="50.8" />
+		<twoDimVertex x="501.785" y="37.33" />
+		<twoDimVertex x="488.315" y="31.75" />
+		<twoDimVertex x="399.415" y="31.75" />
+		<twoDimVertex x="399.415" y="12.7" />
+		<twoDimVertex x="396.24" y="12.7" />
+		<twoDimVertex x="396.24" y="26.149" />
+		<twoDimVertex x="175.26" y="26.149" />
+		<twoDimVertex x="175.26" y="24.625" />
+		<twoDimVertex x="148.527" y="24.625" />
+		<twoDimVertex x="148.527" y="26.149" />
+		<twoDimVertex x="141.542" y="26.149" />
+		<twoDimVertex x="141.542" y="24.625" />
+		<twoDimVertex x="103.906" y="24.625" />
+		<twoDimVertex x="103.906" y="13.45" />
+		<twoDimVertex x="330.2" y="13.45" />
+		<twoDimVertex x="330.2" y="-13.45" />
+		<twoDimVertex x="103.906" y="-13.45" />
+		<twoDimVertex x="103.906" y="-24.625" />
+		<twoDimVertex x="141.542" y="-24.625" />
+		<twoDimVertex x="141.542" y="-26.149" />
+		<twoDimVertex x="148.527" y="-26.149" />
+		<twoDimVertex x="148.527" y="-24.625" />
+		<twoDimVertex x="175.26" y="-24.625" />
+		<twoDimVertex x="175.26" y="-26.149" />
+		<twoDimVertex x="396.24" y="-26.149" />
+		<twoDimVertex x="396.24" y="-12.7" />
+		<twoDimVertex x="399.415" y="-12.7" />
+		<twoDimVertex x="399.415" y="-31.75" />
+		<twoDimVertex x="488.315" y="-31.75" />
+		<twoDimVertex x="501.785" y="-37.33" />
+		<twoDimVertex x="507.365" y="-50.8" />
+		<twoDimVertex x="507.365" y="-88.9" />
+		<twoDimVertex x="526.415" y="-88.9" />
+		<twoDimVertex x="526.415" y="-101.6" />
+		<twoDimVertex x="551.815" y="-101.6" />
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	
+	<!-- SubCoil4 support -->
+	<xtru name="solid_clamp_7"  lunit="mm">
+		<twoDimVertex x="628.015" y="101.6" />
+		<twoDimVertex x="602.615" y="101.6" />
+		<twoDimVertex x="602.615" y="92.075" />
+		<twoDimVertex x="583.565" y="92.075" />
+		<twoDimVertex x="583.565" y="53.975" />
+		<twoDimVertex x="577.985" y="40.505" />
+		<twoDimVertex x="564.515" y="34.925" />
+		<twoDimVertex x="507.365" y="34.925" />
+		<twoDimVertex x="507.365" y="24.699" />
+		<twoDimVertex x="504.19" y="24.699" />
+		<twoDimVertex x="504.19" y="34.224" />
+		<twoDimVertex x="221.615" y="34.224" />
+		<twoDimVertex x="213.215" y="31.049" />
+		<twoDimVertex x="191.915" y="31.049" />
+		<twoDimVertex x="183.515" y="34.224" />
+		<twoDimVertex x="127.0" y="34.224" />
+		<twoDimVertex x="101.6" y="26.604" />
+		<twoDimVertex x="101.6" y="24.7" />
+		<twoDimVertex x="457.352" y="24.7" />
+		<twoDimVertex x="457.352" y="-24.7" />
+		<twoDimVertex x="101.6" y="-24.7" />
+		<twoDimVertex x="101.6" y="-26.604" />
+		<twoDimVertex x="127.0" y="-34.224" />
+		<twoDimVertex x="183.515" y="-34.224" />
+		<twoDimVertex x="191.915" y="-31.049" />
+		<twoDimVertex x="213.215" y="-31.049" />
+		<twoDimVertex x="221.615" y="-34.224" />
+		<twoDimVertex x="504.19" y="-34.224" />
+		<twoDimVertex x="504.19" y="-24.699" />
+		<twoDimVertex x="507.365" y="-24.699" />
+		<twoDimVertex x="507.365" y="-34.925" />
+		<twoDimVertex x="564.515" y="-34.925" />
+		<twoDimVertex x="577.985" y="-40.505" />
+		<twoDimVertex x="583.565" y="-53.975" />
+		<twoDimVertex x="583.565" y="-92.075" />
+		<twoDimVertex x="602.615" y="-92.075" />
+		<twoDimVertex x="602.615" y="-101.6" />
+		<twoDimVertex x="628.015" y="-101.6" />
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_clamp_8"  lunit="mm">
+		<twoDimVertex x="628.015" y="101.6" />
+		<twoDimVertex x="602.615" y="101.6" />
+		<twoDimVertex x="602.615" y="92.075" />
+		<twoDimVertex x="583.565" y="92.075" />
+		<twoDimVertex x="583.565" y="53.975" />
+		<twoDimVertex x="577.985" y="40.505" />
+		<twoDimVertex x="564.515" y="34.925" />
+		<twoDimVertex x="475.615" y="34.925" />
+		<twoDimVertex x="475.615" y="15.875" />
+		<twoDimVertex x="472.44" y="15.875" />
+		<twoDimVertex x="472.44" y="34.224" />
+		<twoDimVertex x="373.021" y="34.224" />
+		<twoDimVertex x="365.813" y="30.447" />
+		<twoDimVertex x="357.781" y="29.144" />
+		<twoDimVertex x="324.209" y="29.144" />
+		<twoDimVertex x="313.97" y="31.299" />
+		<twoDimVertex x="305.469" y="37.399" />
+		<twoDimVertex x="139.7" y="37.399" />
+		<twoDimVertex x="139.7" y="34.224" />
+		<twoDimVertex x="104.775" y="34.224" />
+		<twoDimVertex x="101.6" y="37.399" />
+		<twoDimVertex x="95.25" y="37.399" />
+		<twoDimVertex x="95.25" y="35.049" />
+		<twoDimVertex x="92.075" y="35.049" />
+		<twoDimVertex x="91.821" y="26.985" />
+		<twoDimVertex x="95.25" y="26.985" />
+		<twoDimVertex x="95.25" y="24.7" />
+		<twoDimVertex x="409.575" y="24.7" />
+		<twoDimVertex x="409.575" y="-24.7" />
+		<twoDimVertex x="95.25" y="-24.7" />
+		<twoDimVertex x="95.25" y="-26.985" />
+		<twoDimVertex x="91.821" y="-26.985" />
+		<twoDimVertex x="92.075" y="-35.049" />
+		<twoDimVertex x="95.25" y="-35.049" />
+		<twoDimVertex x="95.25" y="-37.399" />
+		<twoDimVertex x="101.6" y="-37.399" />
+		<twoDimVertex x="104.775" y="-34.224" />
+		<twoDimVertex x="139.7" y="-34.224" />
+		<twoDimVertex x="139.7" y="-37.399" />
+		<twoDimVertex x="305.469" y="-37.399" />
+		<twoDimVertex x="313.97" y="-31.299" />
+		<twoDimVertex x="324.209" y="-29.144" />
+		<twoDimVertex x="357.781" y="-29.144" />
+		<twoDimVertex x="365.813" y="-30.447" />
+		<twoDimVertex x="373.021" y="-34.224" />
+		<twoDimVertex x="472.44" y="-34.224" />
+		<twoDimVertex x="472.44" y="-15.875" />
+		<twoDimVertex x="475.615" y="-15.875" />
+		<twoDimVertex x="475.615" y="-34.925" />
+		<twoDimVertex x="564.515" y="-34.925" />
+		<twoDimVertex x="577.985" y="-40.505" />
+		<twoDimVertex x="583.565" y="-53.975" />
+		<twoDimVertex x="583.565" y="-92.075" />
+		<twoDimVertex x="602.615" y="-92.075" />
+		<twoDimVertex x="602.615" y="-101.6" />
+		<twoDimVertex x="628.015" y="-101.6" />
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<xtru name="solid_clamp_9"  lunit="mm">
+		<twoDimVertex x="628.015" y="101.6" />
+		<twoDimVertex x="602.615" y="101.6" />
+		<twoDimVertex x="602.615" y="92.075" />
+		<twoDimVertex x="583.565" y="92.075" />
+		<twoDimVertex x="583.565" y="53.975" />
+		<twoDimVertex x="577.985" y="40.505" />
+		<twoDimVertex x="564.515" y="34.925" />
+		<twoDimVertex x="475.615" y="34.925" />
+		<twoDimVertex x="475.615" y="15.875" />
+		<twoDimVertex x="445.135" y="15.875" />
+		<twoDimVertex x="440.72" y="12.365" />
+		<twoDimVertex x="435.221" y="11.113" />
+		<twoDimVertex x="415.518" y="11.113" />
+		<twoDimVertex x="412.231" y="11.545" />
+		<twoDimVertex x="409.168" y="12.814" />
+		<twoDimVertex x="377.584" y="31.049" />
+		<twoDimVertex x="327.025" y="37.399" />
+		<twoDimVertex x="113.03" y="37.399" />
+		<twoDimVertex x="113.03" y="35.05" />
+		<twoDimVertex x="109.855" y="35.05" />
+		<twoDimVertex x="109.855" y="27.049" />
+		<twoDimVertex x="113.03" y="27.049" />
+		<twoDimVertex x="113.03" y="24.7" />
+		<twoDimVertex x="380.211" y="24.7" />
+		<twoDimVertex x="382.01" y="23.956" />
+		<twoDimVertex x="382.757" y="22.159" />
+		<twoDimVertex x="382.757" y="-22.159" />
+		<twoDimVertex x="382.01" y="-23.956" />
+		<twoDimVertex x="380.211" y="-24.7" />
+		<twoDimVertex x="113.03" y="-24.7" />
+		<twoDimVertex x="113.03" y="-27.049" />
+		<twoDimVertex x="109.855" y="-27.049" />
+		<twoDimVertex x="109.855" y="-35.05" />
+		<twoDimVertex x="113.03" y="-35.05" />
+		<twoDimVertex x="113.03" y="-37.399" />
+		<twoDimVertex x="327.025" y="-37.399" />
+		<twoDimVertex x="377.584" y="-31.049" />
+		<twoDimVertex x="409.168" y="-12.814" />
+		<twoDimVertex x="412.231" y="-11.545" />
+		<twoDimVertex x="415.518" y="-11.113" />
+		<twoDimVertex x="435.221" y="-11.113" />
+		<twoDimVertex x="440.72" y="-12.365" />
+		<twoDimVertex x="445.135" y="-15.875" />
+		<twoDimVertex x="475.615" y="-15.875" />
+		<twoDimVertex x="475.615" y="-34.925" />
+		<twoDimVertex x="564.515" y="-34.925" />
+		<twoDimVertex x="577.985" y="-40.505" />
+		<twoDimVertex x="583.565" y="-53.975" />
+		<twoDimVertex x="583.565" y="-92.075" />
+		<twoDimVertex x="602.615" y="-92.075" />
+		<twoDimVertex x="602.615" y="-101.6" />
+		<twoDimVertex x="628.015" y="-101.6" />
+		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>    
+	    
         <xtru name="solid_C1_mid"  lunit="mm">
             <twoDimVertex x="88.989" y="856.309" />
             <twoDimVertex x="66.292" y="0.0" />
@@ -881,6 +997,7 @@
             <section zOrder="1" zPosition="-10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
             <section zOrder="2" zPosition="10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
+	    
         <tube name="solid_C1_front" rmin="0" rmax="66.292" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
         
         <tube name="solid_C1_back" rmin="0" rmax="77.6405" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
@@ -1285,15 +1402,6 @@
         <solidref ref="solidCollar2"/>
         </volume>-->
         
-        <volume name="SubCoil1EpoxyShield1_logic">
-            <materialref ref="Tungsten"/>
-            <solidref ref="SubCoil1EpoxyShield1_solid"/>
-            <auxiliary auxtype="Color" auxvalue="blue"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-            <auxiliary auxtype="DetNo" auxvalue="61"/>
-        </volume>
-        
         <volume name="logicDriftpipe">
             <materialref ref="Aluminum"/>
             <solidref ref="solid_Driftpipe"/>
@@ -1684,7 +1792,6 @@
             <auxiliary auxtype="Color" auxvalue="blue"/>
             <auxiliary auxtype="Alpha" auxvalue="0.5"/>
             <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-            <!--            <auxiliary auxtype="DetNo" auxvalue="61"/>-->
         </volume>
         
         <volume name="SubCoil2EpoxyShield_logic">
@@ -1756,118 +1863,60 @@
             <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
             <auxiliary auxtype="DetNo" auxvalue="2007"/>
         </volume>
-        
-        <volume name="SubCoil1_Clamp_logic1">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil1_Clamp_S1"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil1_Clamp_logic2">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil1_Clamp_S2"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil2_Clamp_logic1">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil2_Clamp_S1"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil2_Clamp_logic2">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil2_Clamp_S2"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil3_Clamp_logic1">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil3_Clamp_S1"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil3_Clamp_logic2">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil3_Clamp_S2"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil3_Clamp_logic3">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil3_Clamp_S3"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil4_Clamp1_logic1">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil4_Clamp1_S1"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil4_Clamp1_logic2">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil4_Clamp1_S2"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil4_Clamp2_logic1">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil4_Clamp2_S1"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil4_Clamp2_logic2">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil4_Clamp2_S2"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil4_Clamp2_logic3">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil4_Clamp2_S3"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil4_Clamp3_logic1">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil4_Clamp3_S1"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil4_Clamp3_logic2">
-            <materialref ref="G4_Al"/>
-            <solidref ref="SubCoil4_Clamp3_S2"/>
-            <auxiliary auxtype="Color" auxvalue="gray"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
+            
+        <volume name="logic_clamp_1">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_clamp_1"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+
+	<volume name="logic_clamp_2">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_clamp_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+
+	<volume name="logic_clamp_3">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_clamp_3"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+
+	<volume name="logic_clamp_4">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_clamp_4"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+
+	<volume name="logic_clamp_5">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_clamp_5"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+
+	<volume name="logic_clamp_6">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_clamp_6"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+
+	<volume name="logic_clamp_7">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_clamp_7"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+
+	<volume name="logic_clamp_8">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_clamp_8"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+
+	<volume name="logic_clamp_9">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_clamp_9"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
         
         <volume name="logic_inner_E1_1">
             <materialref ref="G10"/>
@@ -3018,7 +3067,7 @@
             
             <physvol name="collar1">
                 <volumeref ref="logicCollar1"/>
-                <position unit="mm" name="collar1pos" x="0" y="0" z="16950.09-DOFFSET-150./2.-400./2"/>
+                <position unit="mm" name="collar1pos" x="0" y="0" z="11767.12+150./2-hybridcenter"/>
                 <!--<position lunit="mm" name="collar1pos" x="0" y="0" z="17350-25-DOFFSET"/>-->
                 <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
             </physvol>
@@ -3028,13 +3077,6 @@
             <position unit="mm" name="collar2pos" x="0" y="0" z="19257.69-11287.5"/>
             <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
             </physvol>-->
-            
-            <!-- Downstream of coll4 central collimating beampipe -->
-            <!-- <physvol>
-            <volumeref ref="SubCoil1EpoxyShield1_logic"/>
-            <positionref ref="SubCoil1EpoxyShield1_center"/>
-            </physvol>-->
-            
             
             <!--<physvol name="DScoil">
             <file name="hybrid/hybridToroid.gdml"/>
@@ -3639,13 +3681,13 @@
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Coll6A_logic1"/>
-                    <position x="0" y="0" z="1245.941+(13335.194-13332.736)-2864.764-90"/>
+                    <position x="0" y="0" z="1223.168-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
                 
                 <physvol>
                     <volumeref ref="Coll6A_logic2"/>
-                    <position x="0" y="0" z="1245.941+82.55+(13335.194-13332.736)-2864.764-90"/>
+                    <position x="0" y="0" z="1305.718-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
             </loop>
@@ -3653,13 +3695,13 @@
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Coll6B_logic1"/>
-                    <position x="0" y="0" z="2617.541+(13335.194-13332.736)-2864.764-90"/>
+                    <position x="0" y="0" z="2594.768-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
                 
                 <physvol>
                     <volumeref ref="Coll6B_logic2"/>
-                    <position x="0" y="0" z="2617.541+82.55+(13335.194-13332.736)-2864.764-90"/>
+                    <position x="0" y="0" z="2677.318-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
             </loop>
@@ -3667,13 +3709,13 @@
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Coll5_logic1"/>
-                    <position unit="mm" x="0" y="0" z="-737.264+(13335.194-13332.736)-2864.764-90"/>
+                    <position unit="mm" x="0" y="0" z="-774.912-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
                 
                 <physvol>
                     <volumeref ref="Coll5_logic2"/>
-                    <position unit="mm" x="0" y="0" z="-737.264+100+12.7+(13335.194-13332.736)-2864.764-90"/>
+                    <position unit="mm" x="0" y="0" z="-662.187-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
             </loop>
@@ -3691,174 +3733,61 @@
                 </physvol>
             </loop>
             
-            <!--SubCoil 1 support -->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic1"/>
-                    <position x="0" y="0" z="-3092.596-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic2"/>
-                    <position x="0" y="0" z="-3092.596-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic2"/>
-                    <position x="0" y="0" z="-3092.596-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic1"/>
-                    <position x="0" y="0" z="-3092.596+358.78-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic2"/>
-                    <position x="0" y="0" z="-3092.596+358.78-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil1_Clamp_logic2"/>
-                    <position x="0" y="0" z="-3092.596+358.78-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
             
-            <!--SubCoil 2 support -->
             <loop for="iloop" from="0" to="6" step="1">
+		<!--SubCoil 1 support -->
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic1"/>
-                    <position x="0" y="0" z="-2074.406-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_1"/>
+                    <position x="0" y="0" z="-3168.268-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic2"/>
-                    <position x="0" y="0" z="-2074.406-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_2"/>
+                    <position x="0" y="0" z="-2809.493-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+                
+		<!--SubCoil 2 support -->
+                <physvol>
+                    <volumeref ref="logic_clamp_3"/>
+                    <position x="0" y="0" z="-2143.724-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic2"/>
-                    <position x="0" y="0" z="-2074.406-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_4"/>
+                    <position x="0" y="0" z="-1784.949-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+		    
+	        <!--SubCoil 3 support -->    
+                <physvol>
+                    <volumeref ref="logic_clamp_5"/>
+                    <position x="0" y="0" z="-1100.525-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic1"/>
-                    <position x="0" y="0" z="-2074.406+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_6"/>
+                    <position x="0" y="0" z="-741.75-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+		
+                <!--SubCoil 4 support -->    
+                <physvol>
+                    <volumeref ref="logic_clamp_7"/>
+                    <position x="0" y="0" z="156.367-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
                 <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic2"/>
-                    <position x="0" y="0" z="-2074.406+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
+                    <volumeref ref="logic_clamp_8"/>
+                    <position x="0" y="0" z="1223.167-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil2_Clamp_logic2"/>
-                    <position x="0" y="0" z="-2074.406+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
+		<physvol>
+                    <volumeref ref="logic_clamp_9"/>
+                    <position x="0" y="0" z="2594.767-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
                 </physvol>
-            </loop>
-            
-            <!--SubCoil 3 support -->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic1"/>
-                    <position x="0" y="0" z="-1034.771-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic2"/>
-                    <position x="0" y="0" z="-1034.771-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic2"/>
-                    <position x="0" y="0" z="-1034.771-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic1"/>
-                    <position x="0" y="0" z="-1034.771+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic3"/>
-                    <position x="0" y="0" z="-1034.771+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil3_Clamp_logic3"/>
-                    <position x="0" y="0" z="-1034.771+358.77-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
-            
-            <!--SubCoil 4 support Clamp1-->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp1_logic1"/>
-                    <position x="0" y="0" z="222.874-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp1_logic2"/>
-                    <position x="0" y="0" z="222.874-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp1_logic2"/>
-                    <position x="0" y="0" z="222.874-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
-            
-            <!--SubCoil 4 support Clamp2-->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic1"/>
-                    <position x="0" y="0" z="1289.674-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic2"/>
-                    <position x="0" y="0" z="1289.674-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic2"/>
-                    <position x="0" y="0" z="1289.674-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic3"/>
-                    <position x="0" y="0" z="1248.399-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp2_logic3"/>
-                    <position x="0" y="0" z="1330.949-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
-            
-            <!--SubCoil 4 support Clamp3-->
-            <loop for="iloop" from="0" to="6" step="1">
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp3_logic1"/>
-                    <position x="0" y="0" z="2661.274-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp3_logic2"/>
-                    <position x="0" y="0" z="2661.274-2864.764-90"/>
-                    <rotation unit="deg" x="0" y="0" z="(iloop+0.5)*360./7."/>
-                </physvol>
-                <physvol>
-                    <volumeref ref="SubCoil4_Clamp3_logic2"/>
-                    <position x="0" y="0" z="2661.274-2864.764-90"/>
-                    <rotation unit="deg" x="180" y="0" z="-(iloop+0.5)*360./7."/>
-                </physvol>
-            </loop>
+	    </loop>
             
         </volume>
     </structure>
