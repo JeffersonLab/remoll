@@ -544,21 +544,26 @@
     <auxiliary auxtype="DetNo" auxvalue="30"/>
   </volume>
 
-  <physvol name="showerMaxStackVirtualPlaneOpen_phys">
-    <volumeref ref="showerMaxStackVirtualPlaneOpen_log"/>
-    <positionref ref="showerMaxStackVirtualPlaneOpen_pos"/>
-  </physvol>
+<volume name="showerMaxStackVirtualPlaneOpen_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="70030"/>
+  </volume>
 
-  <physvol name="showerMaxStackVirtualPlaneClosed_phys">
-    <volumeref ref="showerMaxStackVirtualPlaneClosed_log"/>
-    <positionref ref="showerMaxStackVirtualPlaneClosed_pos"/>
-  </physvol>
+  <volume name="showerMaxStackVirtualPlaneClosed_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="71430"/>
+  </volume>
 
-  <physvol name="showerMaxStackVirtualPlaneTrans_phys">
-    <volumeref ref="showerMaxStackVirtualPlaneTrans_log"/>
-    <positionref ref="showerMaxStackVirtualPlaneTrans_pos"/>
-    <rotation name="showerMaxStackVirtualPlaneTrans_rot" unit="deg" z="90"/>
-  </physvol>
+  <volume name="showerMaxStackVirtualPlaneTrans_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="72130"/>
+  </volume>
 
   <volume name="pionDetectorVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
