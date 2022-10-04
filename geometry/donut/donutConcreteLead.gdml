@@ -4,9 +4,11 @@
 
 <define>
    <variable name="i" value="0"/>
+   <constant name="N_P" value="28"/>
+   <constant name="PHI" value="360.0/N_P"/>
 
    <!-- Full concrete and lead donut system dimensions -->
-   <quantity name="donutSystemLength" type="length" value="0.4" unit="m"/>
+   <quantity name="donutSystemLength" type="length" value="0.6" unit="m"/>
    <quantity name="donutSystemWidth"  type="length" value="5.0" unit="m"/>
    <quantity name="donutSystemHeight" type="length" value="5.8" unit="m"/>
    <quantity name="donutSystemInnerRadius" type="length" value="0.736" unit="m"/>
@@ -14,36 +16,58 @@
    <quantity name="donutSystemFlareZ" type="length" value="1.1*2.54" unit="cm"/> <!-- FIXME: this should be 8 in -->
    <quantity name="donutSystemFlareR" type="length" value="11.1*2.54" unit="cm"/>
 
-   <!-- Thin virtual detectors on US and DS side -->
-   <quantity name="donutVirtualDetectorThickness" type="length" value="0.1" unit="mm"/>
+   <!-- Pion detector position -->
+   <position name="donutPionDetectorCenterPosition" z="0.5" unit="m"/>
 
-   <!-- Concrete donut dimensions -->
-   <quantity name="donutConcreteStart"         type="length" value="0.00" unit="m"/>
-   <quantity name="donutConcreteThickness"     type="length" value="0.20" unit="m"/>
-   <quantity name="donutConcreteInnerRadiusUS" type="length" value="1.030" unit="m"/>
-   <quantity name="donutConcreteOuterRadiusUS" type="length" value="1.190" unit="m"/>
-   <quantity name="donutConcreteInnerRadiusDS" type="length" value="1.040" unit="m"/>
-   <quantity name="donutConcreteOuterRadiusDS" type="length" value="1.200" unit="m"/>
-   <quantity name="donutConcreteEnd"           value="donutConcreteStart+donutConcreteThickness"/>
+   <!-- Aluminum sleeve thickness -->
+   <quantity name="donutSleeveThickness" type="length" value="0.75" unit="in"/>
 
    <!-- Lead donut dimensions -->
    <quantity name="donutLeadStart"         type="length" value="0.20" unit="m"/>
-   <quantity name="donutLeadThickness"     type="length" value="0.20" unit="m"/>
+   <quantity name="donutLeadLength"        type="length" value="0.20" unit="m"/>
    <quantity name="donutLeadInnerRadiusUS" type="length" value="1.040" unit="m"/>
    <quantity name="donutLeadOuterRadiusUS" type="length" value="1.200" unit="m"/>
    <quantity name="donutLeadInnerRadiusDS" type="length" value="1.050" unit="m"/>
    <quantity name="donutLeadOuterRadiusDS" type="length" value="1.210" unit="m"/>
-   <quantity name="donutLeadEnd"           value="donutLeadStart+donutLeadThickness"/>
+   <quantity name="donutLeadEnd"           value="donutLeadStart+donutLeadLength"/>
+   <quantity name="donutLeadInnerSleeveThickness" value="donutSleeveThickness"/>
+   <quantity name="donutLeadOuterSleeveThickness" value="donutSleeveThickness"/>
 
-   <!-- Aluminum sleeve thickness -->
-   <quantity name="donutSleeveThickness" type="length" value="0.75" unit="in"/>
+   <!-- Pion inner shielding -->
+   <quantity name="donutPionInnerShieldStart"         value="donutLeadEnd"/>
+   <quantity name="donutPionInnerShieldLength"        type="length" value="0.20" unit="m"/>
+   <quantity name="donutPionInnerShieldThickness"     type="length" value="2.0*2.54" unit="cm"/>
+   <quantity name="donutPionInnerShieldInnerRadiusUS" type="length" value="1.050" unit="m"/>
+   <quantity name="donutPionInnerShieldInnerRadiusDS" type="length" value="1.060" unit="m"/>
+   <quantity name="donutPionInnerShieldOuterRadiusUS" value="donutPionInnerShieldInnerRadiusUS+donutPionInnerShieldThickness"/>
+   <quantity name="donutPionInnerShieldOuterRadiusDS" value="donutPionInnerShieldInnerRadiusDS+donutPionInnerShieldThickness"/>
+   <quantity name="donutPionInnerShieldEnd"           value="donutPionInnerShieldStart+donutPionInnerShieldLength"/>
+   <quantity name="donutPionInnerShieldInnerSleeveThickness" value="donutSleeveThickness"/>
+   <quantity name="donutPionInnerShieldOuterSleeveThickness" value="donutSleeveThickness/3"/>
+
+   <!-- Pion detector sector -->
+   <quantity name="donutPionDetectorSectorLength" type="length" value="0.20" unit="m"/>
+   <quantity name="donutPionDetectorSectorStart"  value="donutLeadEnd"/>
+   <quantity name="donutPionDetectorSectorEnd"    value="donutPionDetectorSectorStart+donutPionDetectorSectorLength"/>
+
+   <!-- Pion outer shielding -->
+   <quantity name="donutPionOuterShieldStart"         value="donutLeadEnd"/>
+   <quantity name="donutPionOuterShieldLength"        type="length" value="0.20" unit="m"/>
+   <quantity name="donutPionOuterShieldThickness"     type="length" value="2.0*2.54" unit="cm"/>
+   <quantity name="donutPionOuterShieldOuterRadiusUS" type="length" value="1.210" unit="m"/>
+   <quantity name="donutPionOuterShieldOuterRadiusDS" type="length" value="1.220" unit="m"/>
+   <quantity name="donutPionOuterShieldInnerRadiusUS" value="donutPionOuterShieldOuterRadiusUS-donutPionOuterShieldThickness"/>
+   <quantity name="donutPionOuterShieldInnerRadiusDS" value="donutPionOuterShieldOuterRadiusDS-donutPionOuterShieldThickness"/>
+   <quantity name="donutPionOuterShieldEnd"           value="donutPionOuterShieldStart+donutPionOuterShieldLength"/>
+   <quantity name="donutPionOuterShieldInnerSleeveThickness" value="donutSleeveThickness/3"/>
+   <quantity name="donutPionOuterShieldOuterSleeveThickness" value="donutSleeveThickness"/>
 
    <!-- Donut frame I-beams, W 16 x 67 -->
    <!-- Ref: https://www.engineeringtoolbox.com/docs/documents/1313/steel-beam.png -->
    <quantity name="donutIBeamFlangeThickness" type="length" value="0.665" unit="in"/>
    <quantity name="donutIBeamWebThickness"    type="length" value="0.395" unit="in"/>
    <quantity name="donutIBeamWidth"     type="length" value="10.235" unit="in"/>
-   <quantity name="donutIBeamHeight"    type="length" value="40.00"  unit="cm"/>
+   <quantity name="donutIBeamHeight"    type="length" value="20.00"  unit="cm"/>
    <!-- FIXME: increase mother volume to accomodate 16.375 in instead of 40 cm -->
    <!--quantity name="donutIBeamHeight"    type="length" value="16.33"  unit="in"/-->
 
@@ -52,6 +76,12 @@
    <quantity name="donutIBeamFrameHeight"    type="length" value="5.6896" unit="m"/>
    <quantity name="donutIBeamFrameHeightTop" type="length" value="+1.470" unit="m"/>
    <quantity name="donutIBeamFrameHeightBot" type="length" value="-1.470" unit="m"/>
+   <quantity name="donutIBeamFramePosition"  value="0.5*(donutLeadStart+donutLeadEnd)"/>
+
+   <!-- Aluminum plate thickness -->
+   <quantity name="donutPlateThickness" type="length" value="6.0" unit="in"/>
+   <quantity name="donutPlateRadius"    type="length" value="56.0" unit="in"/>
+   <quantity name="donutPlatePosition"  value="donutIBeamFramePosition-donutIBeamHeight/2-donutPlateThickness/2"/>
 
    <!-- Donut frame struts -->
    <quantity name="donutIBeamStrutInnerLength"    type="length" value="0.9426" unit="m"/>
@@ -74,6 +104,37 @@
    <quantity name="donutBeamPipeSupportFinFlareUS" type="length" value="1.0" unit="in"/> <!-- FIXME: should be ~7.5 in -->
    <quantity name="donutBeamPipeSupportFinFlareDS" type="length" value="1.0" unit="in"/> <!-- FIXME: should be ~7.5 in -->
    <quantity name="donutBeamPipeSupportFinFlareR" type="length" value="11.0" unit="in"/>
+
+  <!--
+    The Cherenkov critical angle for n = 1.5 materials is cos(theta_c) = 1/n,
+    or theta_c = 48 degrees. In other words, beta = 1 charged particles will
+    emit photons at that angle, and moderately relativistic charged particles
+    with beta between 1/n and 1 will emit photons between 0 and theta_c.
+
+    Detector placement at theta_c will cause some photons to be emitted parallel
+    to the planes, while some others will be emitted nearly perpendicular to the
+    planes. Better split the difference go for theta_c/2 = 24 degrees, methinks.
+
+    This variable implements the global rotation of the entire lucite/lightguide
+    assembly. There are also angles that can be set independently for lucite and
+    for lightguide.
+    
+    A good choice for this parameter is about 5.0 degrees, to be chosen consistent
+    with the average angle of pions behind the spectrometer magnets.
+  
+    donutPionDetectorSectorAngleBase is +90.0 degrees for the configuration with
+    PMT radially outward; -90.0 degrees is with the PMT radially inward.
+  -->
+  <quantity name="donutPionDetectorSectorAngleBase" type="angle" value="+90.0" unit="deg"/>
+  <quantity name="donutPionDetectorSectorAnglePitch" type="angle" value="-87.1" unit="deg"/>
+  
+  <!--
+    The center of the lucite detector is placed radially, and longitudinally with respect to
+    the upstream face of the sector volume.
+  -->
+  <quantity name="donutPionDetectorCenterRadialPosition"       type="length" value="1.130" unit="m"/>
+  <quantity name="donutPionDetectorCenterLongitudinalPosition" type="length" value="5.0" unit="cm"/>
+
 </define>
 
 <materials>
@@ -165,18 +226,30 @@
       <position name="donutIBeamStrut_pos" z="sqrt(2)*donutIBeamStrutLength/4" x="donutIBeamStrutLength/2+sqrt(2)*donutIBeamWidth/2-sqrt(2)*donutIBeamStrutLength/4"/>
       <rotation name="donutIBeamStrut_rot" y="135" unit="deg"/>
     </subtraction>
-    
+
+    <box name="donutPlateFull_solid"
+         x="donutIBeamFrameWidth+2*donutIBeamWidth"
+         y="(donutIBeamFrameHeightTop-donutIBeamFrameHeightBot)+2*donutIBeamWidth"
+         z="donutPlateThickness"/>
+    <tube name="donutPlateHole_solid"
+          rmin="0" rmax="donutPlateRadius" z="2*donutPlateThickness"
+          startphi="0" deltaphi="360" aunit="deg"/>
+    <subtraction name="donutPlate_solid">
+      <first ref="donutPlateFull_solid"/>
+      <second ref="donutPlateHole_solid"/>
+    </subtraction>
+
     <xtru name="donutSystemBox_solid">
       <twoDimVertex x="-donutSystemWidth/2" y="-donutSystemHeight/2"/>
       <twoDimVertex x="-donutSystemWidth/2" y="+donutSystemHeight/2"/>
       <twoDimVertex x="+donutSystemWidth/2" y="+donutSystemHeight/2"/>
       <twoDimVertex x="+donutSystemWidth/2" y="-donutSystemHeight/2"/>
-      <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="1" zPosition="min(0,donutPlatePosition-donutPlateThickness/2)" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="donutSystemLength" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
     <polycone name="donutSystemHole_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="0" rmax="donutSystemInnerRadius" z="0"/>
+      <zplane rmin="0" rmax="donutSystemInnerRadius" z="-donutPlateThickness"/>
       <zplane rmin="0" rmax="donutSystemInnerRadius" z="donutSystemLength"/>
     </polycone>
     <subtraction name="donutSystemBoxHole_solid">
@@ -195,87 +268,75 @@
       <second ref="donutSystemFlare_solid"/>
     </union>
 
-    <polycone name="donutConcrete_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutConcreteInnerRadiusUS" rmax="donutConcreteOuterRadiusUS" z="donutConcreteStart"/>
-      <zplane rmin="donutConcreteInnerRadiusDS" rmax="donutConcreteOuterRadiusDS" z="donutConcreteEnd"/>
-    </polycone>
-    <polycone name="donutConcreteVirtualDetectorUS_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutConcreteInnerRadiusUS" rmax="donutConcreteOuterRadiusUS" z="donutConcreteStart"/>
-      <zplane rmin="donutConcreteInnerRadiusUS
-                   +donutVirtualDetectorThickness/donutConcreteThickness
-                   *(donutConcreteInnerRadiusDS-donutConcreteInnerRadiusUS)"
-              rmax="donutConcreteOuterRadiusUS
-                   +donutVirtualDetectorThickness/donutConcreteThickness
-                   *(donutConcreteOuterRadiusDS-donutConcreteOuterRadiusUS)"
-              z="donutConcreteStart+donutVirtualDetectorThickness"/>
-    </polycone>
-    <polycone name="donutConcreteVirtualDetectorDS_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutConcreteInnerRadiusDS
-                   -donutVirtualDetectorThickness/donutConcreteThickness
-                   *(donutConcreteInnerRadiusDS-donutConcreteInnerRadiusUS)"
-              rmax="donutConcreteOuterRadiusDS
-                   -donutVirtualDetectorThickness/donutConcreteThickness
-                   *(donutConcreteOuterRadiusDS-donutConcreteOuterRadiusUS)"
-              z="donutConcreteEnd-donutVirtualDetectorThickness"/>
-      <zplane rmin="donutConcreteInnerRadiusDS" rmax="donutConcreteOuterRadiusDS" z="donutConcreteEnd"/>
-    </polycone>
-    <polycone name="donutConcreteSleeveInner_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutConcreteInnerRadiusUS-donutSleeveThickness" rmax="donutConcreteInnerRadiusUS" z="donutConcreteStart"/>
-      <zplane rmin="donutConcreteInnerRadiusDS-donutSleeveThickness" rmax="donutConcreteInnerRadiusDS" z="donutConcreteEnd"/>
-    </polycone>
-    <polycone name="donutConcreteSleeveOuter_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutConcreteOuterRadiusUS" rmax="donutConcreteOuterRadiusUS+donutSleeveThickness" z="donutConcreteStart"/>
-      <zplane rmin="donutConcreteOuterRadiusDS" rmax="donutConcreteOuterRadiusDS+donutSleeveThickness" z="donutConcreteEnd"/>
-    </polycone>
-
+    <!-- Main lead donut -->
     <polycone name="donutLead_solid"
               aunit="deg" startphi="0" deltaphi="360">
       <zplane rmin="donutLeadInnerRadiusUS" rmax="donutLeadOuterRadiusUS" z="donutLeadStart"/>
       <zplane rmin="donutLeadInnerRadiusDS" rmax="donutLeadOuterRadiusDS" z="donutLeadEnd"/>
     </polycone>
-    <polycone name="donutLeadVirtualDetectorUS_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutLeadInnerRadiusUS" rmax="donutLeadOuterRadiusUS" z="donutLeadStart"/>
-      <zplane rmin="donutLeadInnerRadiusUS
-                   +donutVirtualDetectorThickness/donutLeadThickness
-                   *(donutLeadInnerRadiusDS-donutLeadInnerRadiusUS)"
-              rmax="donutLeadOuterRadiusUS
-                   +donutVirtualDetectorThickness/donutLeadThickness
-                   *(donutLeadOuterRadiusDS-donutLeadOuterRadiusUS)"
-              z="donutLeadStart+donutVirtualDetectorThickness"/>
-    </polycone>
-    <polycone name="donutLeadVirtualDetectorDS_solid"
-              aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutLeadInnerRadiusDS
-                   -donutVirtualDetectorThickness/donutLeadThickness
-                   *(donutLeadInnerRadiusDS-donutLeadInnerRadiusUS)"
-              rmax="donutLeadOuterRadiusDS
-                   -donutVirtualDetectorThickness/donutLeadThickness
-                   *(donutLeadOuterRadiusDS-donutLeadOuterRadiusUS)"
-              z="donutLeadEnd-donutVirtualDetectorThickness"/>
-      <zplane rmin="donutLeadInnerRadiusDS" rmax="donutLeadOuterRadiusDS" z="donutLeadEnd"/>
-    </polycone>
     <polycone name="donutLeadSleeveInner_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutLeadInnerRadiusUS-donutSleeveThickness" rmax="donutLeadInnerRadiusUS" z="donutLeadStart"/>
-      <zplane rmin="donutLeadInnerRadiusDS-donutSleeveThickness" rmax="donutLeadInnerRadiusDS" z="donutLeadEnd"/>
+      <zplane rmin="donutLeadInnerRadiusUS-donutLeadInnerSleeveThickness" rmax="donutLeadInnerRadiusUS" z="donutLeadStart"/>
+      <zplane rmin="donutLeadInnerRadiusDS-donutLeadInnerSleeveThickness" rmax="donutLeadInnerRadiusDS" z="donutLeadEnd"/>
     </polycone>
     <polycone name="donutLeadSleeveOuter_solid"
               aunit="deg" startphi="0" deltaphi="360">
-      <zplane rmin="donutLeadOuterRadiusUS" rmax="donutLeadOuterRadiusUS+donutSleeveThickness" z="donutLeadStart"/>
-      <zplane rmin="donutLeadOuterRadiusDS" rmax="donutLeadOuterRadiusDS+donutSleeveThickness" z="donutLeadEnd"/>
+      <zplane rmin="donutLeadOuterRadiusUS" rmax="donutLeadOuterRadiusUS+donutLeadOuterSleeveThickness" z="donutLeadStart"/>
+      <zplane rmin="donutLeadOuterRadiusDS" rmax="donutLeadOuterRadiusDS+donutLeadOuterSleeveThickness" z="donutLeadEnd"/>
+    </polycone>
+
+    <!-- Pion inner shield -->
+    <polycone name="donutPionInnerShield_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionInnerShieldInnerRadiusUS" rmax="donutPionInnerShieldOuterRadiusUS" z="donutPionInnerShieldStart"/>
+      <zplane rmin="donutPionInnerShieldInnerRadiusDS" rmax="donutPionInnerShieldOuterRadiusDS" z="donutPionInnerShieldEnd"/>
+    </polycone>
+    <polycone name="donutPionInnerShieldSleeveInner_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionInnerShieldInnerRadiusUS-donutPionInnerShieldInnerSleeveThickness" rmax="donutPionInnerShieldInnerRadiusUS" z="donutPionInnerShieldStart"/>
+      <zplane rmin="donutPionInnerShieldInnerRadiusDS-donutPionInnerShieldInnerSleeveThickness" rmax="donutPionInnerShieldInnerRadiusDS" z="donutPionInnerShieldEnd"/>
+    </polycone>
+    <polycone name="donutPionInnerShieldSleeveOuter_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionInnerShieldOuterRadiusUS" rmax="donutPionInnerShieldOuterRadiusUS+donutPionInnerShieldOuterSleeveThickness" z="donutPionInnerShieldStart"/>
+      <zplane rmin="donutPionInnerShieldOuterRadiusDS" rmax="donutPionInnerShieldOuterRadiusDS+donutPionInnerShieldOuterSleeveThickness" z="donutPionInnerShieldEnd"/>
+    </polycone>
+
+    <!-- Pion detector segment -->
+    <polycone name="donutPionDetectorSector_solid"
+      startphi="-PHI/2.0" deltaphi="PHI" aunit="deg">
+      <zplane
+        rmin="donutPionInnerShieldOuterRadiusUS+donutPionInnerShieldOuterSleeveThickness"
+        rmax="donutPionOuterShieldInnerRadiusUS-donutPionOuterShieldInnerSleeveThickness"
+        z="donutPionDetectorSectorStart"/>
+      <zplane
+        rmin="donutPionInnerShieldOuterRadiusDS+donutPionInnerShieldOuterSleeveThickness"
+        rmax="donutPionOuterShieldInnerRadiusDS-donutPionOuterShieldInnerSleeveThickness"
+        z="donutPionDetectorSectorEnd"/>
+    </polycone>
+
+    <!-- Pion outer shield -->
+    <polycone name="donutPionOuterShield_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionOuterShieldInnerRadiusUS" rmax="donutPionOuterShieldOuterRadiusUS" z="donutPionOuterShieldStart"/>
+      <zplane rmin="donutPionOuterShieldInnerRadiusDS" rmax="donutPionOuterShieldOuterRadiusDS" z="donutPionOuterShieldEnd"/>
+    </polycone>
+    <polycone name="donutPionOuterShieldSleeveInner_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionOuterShieldInnerRadiusUS-donutPionOuterShieldInnerSleeveThickness" rmax="donutPionOuterShieldInnerRadiusUS" z="donutPionOuterShieldStart"/>
+      <zplane rmin="donutPionOuterShieldInnerRadiusDS-donutPionOuterShieldInnerSleeveThickness" rmax="donutPionOuterShieldInnerRadiusDS" z="donutPionOuterShieldEnd"/>
+    </polycone>
+    <polycone name="donutPionOuterShieldSleeveOuter_solid"
+              aunit="deg" startphi="0" deltaphi="360">
+      <zplane rmin="donutPionOuterShieldOuterRadiusUS" rmax="donutPionOuterShieldOuterRadiusUS+donutPionOuterShieldOuterSleeveThickness" z="donutPionOuterShieldStart"/>
+      <zplane rmin="donutPionOuterShieldOuterRadiusDS" rmax="donutPionOuterShieldOuterRadiusDS+donutPionOuterShieldOuterSleeveThickness" z="donutPionOuterShieldEnd"/>
     </polycone>
 
     <!-- Top support -->
     <box name="donutTopSupportFlat_solid"
          x="donutTopSupportWidth"
          y="donutTopSupportThickness"
-         z="donutLeadEnd-donutConcreteStart"/>
+         z="donutLeadEnd-donutLeadStart"/>
     <box name="donutTopSupportInnerFlangeNoCut_solid"
          x="donutTopSupportInnerRibDistance/2-donutTopSupportThickness"
          y="donutIBeamFrameHeightTop-donutTopSupportThickness"
@@ -285,7 +346,7 @@
          y="donutIBeamFrameHeightTop-donutTopSupportThickness"
          z="donutTopSupportThickness"/>
     <tube name="donutTopSupportFlangeCut_solid"
-          rmin="0" rmax="max(donutConcreteOuterRadiusDS,donutLeadOuterRadiusUS)+donutSleeveThickness+1.05*donutTopSupportThickness"
+          rmin="0" rmax="donutLeadOuterRadiusUS+donutSleeveThickness+1.05*donutTopSupportThickness"
           z="2*donutTopSupportThickness" startphi="0" deltaphi="360" aunit="deg"/>
     <subtraction name="donutTopSupportInnerFlange_solid">
       <first ref="donutTopSupportInnerFlangeNoCut_solid"/>
@@ -302,43 +363,31 @@
         y="-(donutIBeamFrameHeightTop-donutTopSupportThickness)/2"/>
     </subtraction>
     <xtru name="donutTopSupportCenterRib_solid">
-      <twoDimVertex x="donutConcreteStart"
+      <twoDimVertex x="donutLeadStart"
                     y="(donutIBeamFrameHeightTop-donutTopSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="(donutIBeamFrameHeightTop-donutTopSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="(donutLeadOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)"/>
-      <twoDimVertex x="donutLeadStart+0.1"
-                    y="(donutLeadOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)+0.1"/>
-      <twoDimVertex x="0.5*(donutLeadStart+donutConcreteEnd)"
-                    y="(max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)+donutSleeveThickness+donutTopSupportThickness)"/>
-      <twoDimVertex x="donutConcreteEnd-0.1"
-                    y="(donutConcreteOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)+0.1"/>
-      <twoDimVertex x="donutConcreteStart"
-                    y="(donutConcreteOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)"/>
+      <twoDimVertex x="donutLeadStart"
+                    y="(donutLeadOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)"/>
       <section zOrder="1" zPosition="-donutTopSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="+donutTopSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
     <xtru name="donutTopSupportInnerRib_solid">
-      <twoDimVertex x="donutConcreteStart"
+      <twoDimVertex x="donutLeadStart"
                     y="(donutIBeamFrameHeightTop-donutTopSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="(donutIBeamFrameHeightTop-donutTopSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="sqrt((donutLeadOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportInnerRibDistance/2)^2)+donutTopSupportThickness/2"/>
-      <twoDimVertex x="donutLeadStart+0.1"
+      <twoDimVertex x="donutLeadStart"
                     y="sqrt((donutLeadOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportInnerRibDistance/2)^2)+donutTopSupportThickness/2"/>
-      <twoDimVertex x="0.5*(donutLeadStart+donutConcreteEnd)"
-                    y="sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)-0.1+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportInnerRibDistance/2)^2)+donutTopSupportThickness/2"/>
-      <twoDimVertex x="donutConcreteEnd-0.1"
-                    y="sqrt((donutConcreteOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportInnerRibDistance/2)^2)+donutTopSupportThickness/2"/>
-      <twoDimVertex x="donutConcreteStart"
-                    y="sqrt((donutConcreteOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportInnerRibDistance/2)^2)+donutTopSupportThickness/2"/>
       <section zOrder="1" zPosition="-donutTopSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="+donutTopSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
     <xtru name="donutTopSupportOuterRib_solid">
-      <twoDimVertex x="donutConcreteStart"
+      <twoDimVertex x="donutLeadStart"
                     y="(donutIBeamFrameHeightTop-donutTopSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="(donutIBeamFrameHeightTop-donutTopSupportThickness)"/>
@@ -346,26 +395,9 @@
                     y="sqrt((donutLeadOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportOuterRibDistance/2)^2)+donutTopSupportThickness/2"/>
       <twoDimVertex x="donutLeadStart+0.1"
                     y="sqrt((donutLeadOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportOuterRibDistance/2)^2)+donutTopSupportThickness/2"/>
-      <twoDimVertex x="0.5*(donutLeadStart+donutConcreteEnd)"
-                    y="sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)-0.1+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportOuterRibDistance/2)^2)+donutTopSupportThickness/2"/>
-      <twoDimVertex x="donutConcreteEnd-0.1"
-                    y="sqrt((donutConcreteOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportOuterRibDistance/2)^2)+donutTopSupportThickness/2"/>
-      <twoDimVertex x="donutConcreteStart"
-                    y="sqrt((donutConcreteOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness)^2-(donutTopSupportOuterRibDistance/2)^2)+donutTopSupportThickness/2"/>
       <section zOrder="1" zPosition="-donutTopSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="+donutTopSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
-    <polycone name="donutTopSupportSleeveConcrete_solid"
-              aunit="deg" startphi="50" deltaphi="80">
-      <zplane
-        rmin="donutConcreteOuterRadiusUS+donutSleeveThickness"
-        rmax="donutConcreteOuterRadiusUS+donutSleeveThickness+donutTopSupportThickness"
-        z="donutConcreteStart"/>
-      <zplane
-        rmin="donutConcreteOuterRadiusDS+donutSleeveThickness"
-        rmax="donutConcreteOuterRadiusDS+donutSleeveThickness+donutTopSupportThickness"
-        z="donutConcreteEnd"/>
-    </polycone>
     <polycone name="donutTopSupportSleeveLead_solid"
               aunit="deg" startphi="50" deltaphi="80">
       <zplane
@@ -382,7 +414,7 @@
     <box name="donutBotSupportFlat_solid"
          x="donutBotSupportWidth"
          y="donutBotSupportThickness"
-         z="donutLeadEnd-donutConcreteStart"/>
+         z="donutLeadEnd-donutLeadStart"/>
     <box name="donutBotSupportInnerFlangeNoCut_solid"
          x="donutBotSupportInnerRibDistance/2-donutBotSupportThickness"
          y="-donutIBeamFrameHeightBot-donutBotSupportThickness"
@@ -392,7 +424,7 @@
          y="-donutIBeamFrameHeightBot-donutBotSupportThickness"
          z="donutBotSupportThickness"/>
     <tube name="donutBotSupportFlangeCut_solid"
-          rmin="0" rmax="max(donutConcreteOuterRadiusDS,donutLeadOuterRadiusUS)+donutSleeveThickness+1.03*donutBotSupportThickness"
+          rmin="0" rmax="donutLeadOuterRadiusUS+donutSleeveThickness+1.03*donutBotSupportThickness"
           z="2*donutBotSupportThickness" startphi="0" deltaphi="360" aunit="deg"/>
     <subtraction name="donutBotSupportInnerFlange_solid">
       <first ref="donutBotSupportInnerFlangeNoCut_solid"/>
@@ -409,70 +441,41 @@
         y="-(donutIBeamFrameHeightBot+donutBotSupportThickness)/2"/>
     </subtraction>
     <xtru name="donutBotSupportCenterRib_solid">
-      <twoDimVertex x="donutConcreteStart"
+      <twoDimVertex x="donutLeadStart"
                     y="(donutIBeamFrameHeightBot+donutBotSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="(donutIBeamFrameHeightBot+donutBotSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="-(donutLeadOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)"/>
-      <twoDimVertex x="donutLeadStart+0.1"
-                    y="-(donutLeadOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)-0.1"/>
-      <twoDimVertex x="0.5*(donutConcreteEnd+donutLeadStart)"
-                    y="-(max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)+donutSleeveThickness+donutBotSupportThickness)"/>
-      <twoDimVertex x="donutConcreteEnd-0.1"
-                    y="-(donutConcreteOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)-0.1"/>
-      <twoDimVertex x="donutConcreteStart"
-                    y="-(donutConcreteOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)"/>
+      <twoDimVertex x="donutLeadStart"
+                    y="-(donutLeadOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)"/>
       <section zOrder="1" zPosition="-donutBotSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="+donutBotSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
     <xtru name="donutBotSupportInnerRib_solid">
-      <twoDimVertex x="donutConcreteStart"
+      <twoDimVertex x="donutLeadStart"
                     y="(donutIBeamFrameHeightBot+donutBotSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="(donutIBeamFrameHeightBot+donutBotSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="-sqrt((donutLeadOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportInnerRibDistance/2)^2)-donutBotSupportThickness/2"/>
-      <twoDimVertex x="donutLeadStart+0.1"
+      <twoDimVertex x="donutLeadStart"
                     y="-sqrt((donutLeadOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportInnerRibDistance/2)^2)-donutBotSupportThickness/2"/>
-      <twoDimVertex x="0.5*(donutConcreteEnd+donutLeadStart)"
-                    y="-sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)-0.1+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportInnerRibDistance/2)^2)-donutBotSupportThickness/2"/>
-      <twoDimVertex x="donutConcreteEnd-0.1"
-                    y="-sqrt((donutConcreteOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportInnerRibDistance/2)^2)-donutBotSupportThickness/2"/>
-      <twoDimVertex x="donutConcreteStart"
-                    y="-sqrt((donutConcreteOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportInnerRibDistance/2)^2)-donutBotSupportThickness/2"/>
       <section zOrder="1" zPosition="-donutBotSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="+donutBotSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
     <xtru name="donutBotSupportOuterRib_solid">
-      <twoDimVertex x="donutConcreteStart"
+      <twoDimVertex x="donutLeadStart"
                     y="(donutIBeamFrameHeightBot+donutBotSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="(donutIBeamFrameHeightBot+donutBotSupportThickness)"/>
       <twoDimVertex x="donutLeadEnd"
                     y="-sqrt((donutLeadOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportOuterRibDistance/2)^2)-donutBotSupportThickness/2"/>
-      <twoDimVertex x="donutLeadStart+0.1"
+      <twoDimVertex x="donutLeadStart"
                     y="-sqrt((donutLeadOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportOuterRibDistance/2)^2)-donutBotSupportThickness/2"/>
-      <twoDimVertex x="0.5*(donutConcreteEnd+donutLeadStart)"
-                    y="-sqrt((max(donutLeadOuterRadiusUS,donutConcreteOuterRadiusDS)-0.1+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportOuterRibDistance/2)^2)-donutBotSupportThickness/2"/>
-      <twoDimVertex x="donutConcreteEnd-0.1"
-                    y="-sqrt((donutConcreteOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportOuterRibDistance/2)^2)-donutBotSupportThickness/2"/>
-      <twoDimVertex x="donutConcreteStart"
-                    y="-sqrt((donutConcreteOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness)^2-(donutBotSupportOuterRibDistance/2)^2)-donutBotSupportThickness/2"/>
       <section zOrder="1" zPosition="-donutBotSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
       <section zOrder="2" zPosition="+donutBotSupportThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
-    <polycone name="donutBotSupportSleeveConcrete_solid"
-              aunit="deg" startphi="40+180" deltaphi="100">
-      <zplane
-        rmin="donutConcreteOuterRadiusUS+donutSleeveThickness"
-        rmax="donutConcreteOuterRadiusUS+donutSleeveThickness+donutBotSupportThickness"
-        z="donutConcreteStart"/>
-      <zplane
-        rmin="donutConcreteOuterRadiusDS+donutSleeveThickness"
-        rmax="donutConcreteOuterRadiusDS+donutSleeveThickness+donutBotSupportThickness"
-        z="donutConcreteEnd"/>
-    </polycone>
     <polycone name="donutBotSupportSleeveLead_solid"
               aunit="deg" startphi="40+180" deltaphi="100">
       <zplane
@@ -485,20 +488,28 @@
         z="donutLeadEnd"/>
     </polycone>
 
+    <!-- Plate support fin -->
+    <xtru name="donutPlateSupportFin_solid">
+      <twoDimVertex x="donutPlateRadius"
+                    y="donutLeadStart"/>
+      <twoDimVertex x="donutLeadOuterRadiusUS+1.1*donutSleeveThickness"
+                    y="donutLeadStart"/>
+      <twoDimVertex x="donutLeadOuterRadiusDS+1.1*donutSleeveThickness"
+                    y="donutLeadEnd"/>
+      <twoDimVertex x="donutPlateRadius"
+                    y="donutLeadEnd"/>
+      <section zOrder="1" zPosition="-donutBeamPipeSupportFinThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="+donutBeamPipeSupportFinThickness/2" xOffset="0" yOffset="0" scalingFactor="1"/>
+    </xtru>
+
     <!-- Beampipe support fin -->
     <xtru name="donutBeamPipeSupportFin_solid">
       <twoDimVertex x="donutSystemInnerRadius"
                     y="-donutBeamPipeSupportFinFlareUS"/>
       <twoDimVertex x="donutSystemInnerRadius+donutBeamPipeSupportFinFlareR"
-                    y="donutConcreteStart"/>
-      <twoDimVertex x="donutConcreteInnerRadiusUS-1.1*donutSleeveThickness"
-                    y="donutConcreteStart"/>
-      <twoDimVertex x="donutConcreteInnerRadiusDS-1.1*donutSleeveThickness-0.1"
-                    y="donutConcreteEnd-0.1"/>
-      <twoDimVertex x="min(donutConcreteInnerRadiusDS,donutLeadInnerRadiusUS)+0.1-1.1*donutSleeveThickness"
-                    y="donutConcreteEnd"/>
-      <twoDimVertex x="donutLeadInnerRadiusUS-1.1*donutSleeveThickness-0.1"
-                    y="donutLeadStart+0.1"/>
+                    y="donutLeadStart"/>
+      <twoDimVertex x="donutLeadInnerRadiusUS-1.1*donutSleeveThickness"
+                    y="donutLeadStart"/>
       <twoDimVertex x="donutLeadInnerRadiusDS-1.1*donutSleeveThickness"
                     y="donutLeadEnd"/>
       <twoDimVertex x="donutSystemInnerRadius+donutBeamPipeSupportFinFlareR"
@@ -525,70 +536,14 @@
       <solidref ref="donutIBeamStrut_solid"/>
     </volume>
 
-    <volume name="donutConcreteVirtualDetectorUS_logical">
-      <materialref ref="G4_CONCRETE"/>
-      <solidref ref="donutConcreteVirtualDetectorUS_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="donutConcreteUS"/>
-      <auxiliary auxtype="DetNo" auxvalue="8016"/>
-      <auxiliary auxtype="Color" auxvalue="Red"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-    </volume>
-    <volume name="donutConcreteVirtualDetectorDS_logical">
-      <materialref ref="G4_CONCRETE"/>
-      <solidref ref="donutConcreteVirtualDetectorDS_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="donutConcreteDS"/>
-      <auxiliary auxtype="DetNo" auxvalue="8018"/>
-      <auxiliary auxtype="Color" auxvalue="Green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-    </volume>
-    <volume name="donutConcrete_logical">
-      <materialref ref="G4_CONCRETE"/>
-      <solidref ref="donutConcrete_solid"/>
-      <physvol name="donutConcreteVirtualDetectorUS_physical">
-        <volumeref ref="donutConcreteVirtualDetectorUS_logical"/>
-      </physvol>
-      <physvol name="donutConcreteVirtualDetectorDS_physical">
-        <volumeref ref="donutConcreteVirtualDetectorDS_logical"/>
-      </physvol>
-      <auxiliary auxtype="SensDet" auxvalue="donutConcrete"/>
-      <auxiliary auxtype="DetNo" auxvalue="8017"/>
-      <auxiliary auxtype="Color" auxvalue="Gray"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-    </volume>
-    <volume name="donutConcreteSleeveInner_logical">
-      <materialref ref="G4_Al"/>
-      <solidref ref="donutConcreteSleeveInner_solid"/>
-    </volume>
-    <volume name="donutConcreteSleeveOuter_logical">
-      <materialref ref="G4_Al"/>
-      <solidref ref="donutConcreteSleeveOuter_solid"/>
+    <volume name="donutPlate_logical">
+      <materialref ref="Al6061-T6"/>
+      <solidref ref="donutPlate_solid"/>
     </volume>
 
-    <volume name="donutLeadVirtualDetectorUS_logical">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="donutLeadVirtualDetectorUS_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="donutLeadUS"/>
-      <auxiliary auxtype="DetNo" auxvalue="8019"/>
-      <auxiliary auxtype="Color" auxvalue="Red"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-    </volume>
-    <volume name="donutLeadVirtualDetectorDS_logical">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="donutLeadVirtualDetectorDS_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="donutLeadDS"/>
-      <auxiliary auxtype="DetNo" auxvalue="8021"/>
-      <auxiliary auxtype="Color" auxvalue="Green"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-    </volume>
     <volume name="donutLead_logical">
       <materialref ref="G4_Pb"/>
       <solidref ref="donutLead_solid"/>
-      <physvol name="donutLeadVirtualDetectorUS_physical">
-        <volumeref ref="donutLeadVirtualDetectorUS_logical"/>
-      </physvol>
-      <physvol name="donutLeadVirtualDetectorDS_physical">
-        <volumeref ref="donutLeadVirtualDetectorDS_logical"/>
-      </physvol>
       <auxiliary auxtype="SensDet" auxvalue="donutLead_SD"/>
       <auxiliary auxtype="DetNo" auxvalue="8020"/>
       <auxiliary auxtype="Color" auxvalue="Black"/>
@@ -601,6 +556,55 @@
     <volume name="donutLeadSleeveOuter_logical">
       <materialref ref="G4_Al"/>
       <solidref ref="donutLeadSleeveOuter_solid"/>
+    </volume>
+
+    <volume name="donutPionInnerShield_logical">
+      <materialref ref="G4_Pb"/>
+      <solidref ref="donutPionInnerShield_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutPionInnerShield_SD"/>
+      <auxiliary auxtype="DetNo" auxvalue="8021"/>
+      <auxiliary auxtype="Color" auxvalue="Black"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="donutPionInnerShieldSleeveInner_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPionInnerShieldSleeveInner_solid"/>
+    </volume>
+    <volume name="donutPionInnerShieldSleeveOuter_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPionInnerShieldSleeveOuter_solid"/>
+    </volume>
+
+    <volume name="donutPionDetectorSector_logical">
+      <materialref ref="G4_AIR"/>
+      <solidref ref="donutPionDetectorSector_solid"/>
+      <physvol name="donutPionDetector_physical">
+        <file name="pion/Lucite/pionDetectorLucite.gdml"/>
+        <position name="donutPionDetector_position"
+          x="donutPionDetectorCenterRadialPosition"
+          z="donutPionDetectorSectorStart+donutPionDetectorCenterLongitudinalPosition"/>
+        <rotation name="donutPionDetector_rotation"
+          z="donutPionDetectorSectorAngleBase"
+          y="-(donutPionDetectorSectorAngleBase+donutPionDetectorSectorAnglePitch)"/>
+        <!-- x rotation 180: layer 1 in the back -->
+      </physvol>
+    </volume>
+
+    <volume name="donutPionOuterShield_logical">
+      <materialref ref="G4_Pb"/>
+      <solidref ref="donutPionOuterShield_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="donutPionOuterShield_SD"/>
+      <auxiliary auxtype="DetNo" auxvalue="8022"/>
+      <auxiliary auxtype="Color" auxvalue="Black"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+    </volume>
+    <volume name="donutPionOuterShieldSleeveInner_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPionOuterShieldSleeveInner_solid"/>
+    </volume>
+    <volume name="donutPionOuterShieldSleeveOuter_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPionOuterShieldSleeveOuter_solid"/>
     </volume>
 
     <volume name="donutTopSupportFlat_logical">
@@ -626,10 +630,6 @@
     <volume name="donutTopSupportOuterRib_logical">
       <materialref ref="G4_Al"/>
       <solidref ref="donutTopSupportOuterRib_solid"/>
-    </volume>
-    <volume name="donutTopSupportSleeveConcrete_logical">
-      <materialref ref="G4_Al"/>
-      <solidref ref="donutTopSupportSleeveConcrete_solid"/>
     </volume>
     <volume name="donutTopSupportSleeveLead_logical">
       <materialref ref="G4_Al"/>
@@ -660,13 +660,14 @@
       <materialref ref="G4_Al"/>
       <solidref ref="donutBotSupportOuterRib_solid"/>
     </volume>
-    <volume name="donutBotSupportSleeveConcrete_logical">
-      <materialref ref="G4_Al"/>
-      <solidref ref="donutBotSupportSleeveConcrete_solid"/>
-    </volume>
     <volume name="donutBotSupportSleeveLead_logical">
       <materialref ref="G4_Al"/>
       <solidref ref="donutBotSupportSleeveLead_solid"/>
+    </volume>
+
+    <volume name="donutPlateSupportFin_logical">
+      <materialref ref="G4_Al"/>
+      <solidref ref="donutPlateSupportFin_solid"/>
     </volume>
 
     <volume name="donutBeamPipeSupportFin_logical">
@@ -678,25 +679,32 @@
       <materialref ref="G4_AIR"/>
       <solidref ref="donutSystem_solid"/>
 
+      <!-- Frame -->
       <physvol name="donutIBeamFrameVertical_right_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
-        <position x="-donutIBeamFrameWidth/2-donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <position x="-donutIBeamFrameWidth/2-donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamFrameVertical_left_physical">
         <volumeref ref="donutIBeamFrameVertical_logical"/>
-        <position x="+donutIBeamFrameWidth/2+donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <position x="+donutIBeamFrameWidth/2+donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamFrameHorizontal_top_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
-        <position y="donutIBeamFrameHeightTop+donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <position y="donutIBeamFrameHeightTop+donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" y="90" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamFrameHorizontal_bot_physical">
         <volumeref ref="donutIBeamFrameHorizontal_logical"/>
-        <position y="donutIBeamFrameHeightBot-donutIBeamWidth/2" z="donutSystemLength/2"/>
+        <position y="donutIBeamFrameHeightBot-donutIBeamWidth/2" z="donutIBeamFramePosition"/>
         <rotation x="90" y="90" z="0" unit="deg"/>
+      </physvol>
+
+      <!-- Plate -->
+      <physvol name="donutPlate_physical">
+        <volumeref ref="donutPlate_logical"/>
+        <position z="donutIBeamFramePosition-donutIBeamHeight/2-donutPlateThickness/2"/>
       </physvol>
 
       <!-- Struts -->
@@ -705,7 +713,7 @@
         <position
           x="donutIBeamFrameWidth/2-sqrt(2)*donutIBeamStrutLength/4"
           y="donutIBeamFrameHeightTop-sqrt(2)*donutIBeamStrutLength/4"
-          z="donutSystemLength/2"/>
+          z="donutIBeamFramePosition"/>
         <rotation x="90" y="45" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamStrut_top_left_physical">
@@ -713,7 +721,7 @@
         <position
           x="-donutIBeamFrameWidth/2+sqrt(2)*donutIBeamStrutLength/4"
           y="donutIBeamFrameHeightTop-sqrt(2)*donutIBeamStrutLength/4"
-          z="donutSystemLength/2"/>
+          z="donutIBeamFramePosition"/>
         <rotation x="-90" y="-135" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamStrut_top_right_physical">
@@ -721,7 +729,7 @@
         <position
           x="donutIBeamFrameWidth/2-sqrt(2)*donutIBeamStrutLength/4"
           y="donutIBeamFrameHeightBot-donutIBeamWidth-sqrt(2)*donutIBeamStrutLength/4"
-          z="donutSystemLength/2"/>
+          z="donutIBeamFramePosition"/>
         <rotation x="90" y="45" z="0" unit="deg"/>
       </physvol>
       <physvol name="donutIBeamStrut_top_left_physical">
@@ -729,19 +737,8 @@
         <position
           x="-donutIBeamFrameWidth/2+sqrt(2)*donutIBeamStrutLength/4"
           y="donutIBeamFrameHeightBot-donutIBeamWidth-sqrt(2)*donutIBeamStrutLength/4"
-          z="donutSystemLength/2"/>
+          z="donutIBeamFramePosition"/>
         <rotation x="-90" y="-135" z="0" unit="deg"/>
-      </physvol>
-
-      <!-- Concrete donut -->
-      <physvol name="donutConcrete_physical">
-        <volumeref ref="donutConcrete_logical"/>
-      </physvol>
-      <physvol name="donutConcreteSleeveInner_physical">
-        <volumeref ref="donutConcreteSleeveInner_logical"/>
-      </physvol>
-      <physvol name="donutConcreteSleeveOuter_physical">
-        <volumeref ref="donutConcreteSleeveOuter_logical"/>
       </physvol>
 
       <!-- Lead donut -->
@@ -755,27 +752,50 @@
         <volumeref ref="donutLeadSleeveOuter_logical"/>
       </physvol>
 
+      <!-- Pion inner shield -->
+      <physvol name="donutPionInnerShield_physical">
+        <volumeref ref="donutPionInnerShield_logical"/>
+      </physvol>
+      <physvol name="donutPionInnerShieldSleeveInner_physical">
+        <volumeref ref="donutPionInnerShieldSleeveInner_logical"/>
+      </physvol>
+      <physvol name="donutPionInnerShieldSleeveOuter_physical">
+        <volumeref ref="donutPionInnerShieldSleeveOuter_logical"/>
+      </physvol>
+
+      <!-- Pion outer shield -->
+      <physvol name="donutPionOuterShield_physical">
+        <volumeref ref="donutPionOuterShield_logical"/>
+      </physvol>
+      <physvol name="donutPionOuterShieldSleeveInner_physical">
+        <volumeref ref="donutPionOuterShieldSleeveInner_logical"/>
+      </physvol>
+      <physvol name="donutPionOuterShieldSleeveOuter_physical">
+        <volumeref ref="donutPionOuterShieldSleeveOuter_logical"/>
+      </physvol>
+
       <!-- Top support -->
+      <!--
       <physvol name="donutTopSupportFlat_physical">
         <volumeref ref="donutTopSupportFlat_logical"/>
-        <position y="donutIBeamFrameHeightTop-donutTopSupportThickness/2" z="(donutConcreteStart+donutLeadEnd)/2"/>
+        <position y="donutIBeamFrameHeightTop-donutTopSupportThickness/2" z="(donutLeadStart+donutLeadEnd)/2"/>
       </physvol>
       <physvol name="donutTopSupportInnerFlange_physical">
         <volumeref ref="donutTopSupportInnerFlange_logical"/>
-        <position x="donutTopSupportInnerRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
+        <position x="donutTopSupportInnerRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="donutLeadStart"/>
       </physvol>
       <physvol name="donutTopSupportInnerFlange_physical">
         <volumeref ref="donutTopSupportInnerFlange_logical"/>
-        <position x="-donutTopSupportInnerRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
+        <position x="-donutTopSupportInnerRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="donutLeadStart"/>
         <rotation y="180" unit="deg"/>
       </physvol>
       <physvol name="donutTopSupportOuterFlange_physical">
         <volumeref ref="donutTopSupportOuterFlange_logical"/>
-        <position x="donutTopSupportInnerRibDistance/4+donutTopSupportOuterRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
+        <position x="donutTopSupportInnerRibDistance/4+donutTopSupportOuterRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="donutLeadStart"/>
       </physvol>
       <physvol name="donutTopSupportOuterFlange_physical">
         <volumeref ref="donutTopSupportOuterFlange_logical"/>
-        <position x="-donutTopSupportInnerRibDistance/4-donutTopSupportOuterRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
+        <position x="-donutTopSupportInnerRibDistance/4-donutTopSupportOuterRibDistance/4" y="(donutIBeamFrameHeightTop-donutTopSupportThickness)/2" z="donutLeadStart"/>
         <rotation y="180" unit="deg"/>
       </physvol>
       <physvol name="donutTopSupportCenterRib_physical">
@@ -802,34 +822,33 @@
         <position x="+donutTopSupportOuterRibDistance/2"/>
         <rotation y="90" unit="deg"/>
       </physvol>
-      <physvol name="donutTopSupportSleeveConcrete_physical">
-        <volumeref ref="donutTopSupportSleeveConcrete_logical"/>
-      </physvol>
       <physvol name="donutTopSupportSleeveLead_physical">
         <volumeref ref="donutTopSupportSleeveLead_logical"/>
       </physvol>
+      -->
 
       <!-- Bot support -->
+      <!--
       <physvol name="donutBotSupportFlat_physical">
         <volumeref ref="donutBotSupportFlat_logical"/>
-        <position y="donutIBeamFrameHeightBot+donutBotSupportThickness/2" z="(donutConcreteStart+donutLeadEnd)/2"/>
+        <position y="donutIBeamFrameHeightBot+donutBotSupportThickness/2" z="(donutLeadStart+donutLeadEnd)/2"/>
       </physvol>
       <physvol name="donutBotSupportInnerFlange_physical">
         <volumeref ref="donutBotSupportInnerFlange_logical"/>
-        <position x="donutBotSupportInnerRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
+        <position x="donutBotSupportInnerRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="donutLeadStart"/>
       </physvol>
       <physvol name="donutBotSupportInnerFlange_physical">
         <volumeref ref="donutBotSupportInnerFlange_logical"/>
-        <position x="-donutBotSupportInnerRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
+        <position x="-donutBotSupportInnerRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="donutLeadStart"/>
         <rotation y="180" unit="deg"/>
       </physvol>
       <physvol name="donutBotSupportOuterFlange_physical">
         <volumeref ref="donutBotSupportOuterFlange_logical"/>
-        <position x="donutBotSupportInnerRibDistance/4+donutBotSupportOuterRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
+        <position x="donutBotSupportInnerRibDistance/4+donutBotSupportOuterRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="donutLeadStart"/>
       </physvol>
       <physvol name="donutBotSupportOuterFlange_physical">
         <volumeref ref="donutBotSupportOuterFlange_logical"/>
-        <position x="-donutBotSupportInnerRibDistance/4-donutBotSupportOuterRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="(donutConcreteEnd+donutLeadStart)/2"/>
+        <position x="-donutBotSupportInnerRibDistance/4-donutBotSupportOuterRibDistance/4" y="(donutIBeamFrameHeightBot+donutBotSupportThickness)/2" z="donutLeadStart"/>
         <rotation y="180" unit="deg"/>
       </physvol>
       <physvol name="donutBotSupportCenterRib_physical">
@@ -856,17 +875,32 @@
         <position x="+donutBotSupportOuterRibDistance/2"/>
         <rotation y="90" unit="deg"/>
       </physvol>
-      <physvol name="donutBotSupportSleeveConcrete_physical">
-        <volumeref ref="donutBotSupportSleeveConcrete_logical"/>
-      </physvol>
       <physvol name="donutBotSupportSleeveLead_physical">
         <volumeref ref="donutBotSupportSleeveLead_logical"/>
       </physvol>
+      -->
 
+      <!-- Plate support fins -->
+      <loop for="i" from="0" to="6" step="1">
+        <physvol name="donutPlateSupportFin_physical">
+          <volumeref ref="donutPlateSupportFin_logical"/>
+          <rotation x="-90.0" y="i*360.0/7" unit="deg"/>
+        </physvol>
+      </loop>
+
+      <!-- Beam pipe support fins -->
       <loop for="i" from="0" to="6" step="1">
         <physvol name="donutBeamPipeSupportFin_physical">
           <volumeref ref="donutBeamPipeSupportFin_logical"/>
           <rotation x="-90.0" y="i*360.0/7" unit="deg"/>
+        </physvol>
+      </loop>
+
+      <!-- Pion detectors -->
+      <loop for="i" from="0" to="N_P-1" step="1">
+        <physvol name="donutPionDetectorSector_physical[i]">
+          <volumeref ref="donutPionDetectorSector_logical"/>
+          <rotation z="-i*PHI" unit="deg"/>
         </physvol>
       </loop>
 

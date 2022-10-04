@@ -742,7 +742,11 @@ void remollDetectorConstruction::ParseAuxiliaryUserLimits()
 	       << " Value: "   << (*vit).value << std::endl;
 
       // Skip if not starting with "User"
+      #if G4VERSION_NUMBER < 1100
       if (! (*vit).type.contains("User")) continue;
+      #else
+      if (! G4StrUtil::contains((*vit).type, "User")) continue;
+      #endif
 
       // Set user limits
       SetUserLimits(logical_volume, (*vit).type, (*vit).value);
@@ -1031,15 +1035,22 @@ void remollDetectorConstruction::SetUserLimits(
   G4double value = G4UIcmdWithADoubleAndUnit::GetNewDoubleValue(value_space_units);
 
   // Compare with allowed types while ignoring case
-  if      (type.compareTo("usermaxallowedstep", G4String::ignoreCase) == 0)
+  auto icompare = [](const G4String& lhs, const G4String& rhs) {
+    #if G4VERSION_NUMBER < 1100
+      return lhs.compareTo(rhs, G4String::ignoreCase);
+    #else
+      return G4StrUtil::icompare(lhs, rhs);
+    #endif
+  };
+  if      (icompare(type, "usermaxallowedstep") == 0)
     userlimits->SetMaxAllowedStep(value);
-  else if (type.compareTo("usermaxtracklength", G4String::ignoreCase) == 0)
+  else if (icompare(type, "usermaxtracklength") == 0)
     userlimits->SetUserMaxTrackLength(value);
-  else if (type.compareTo("usermaxtime", G4String::ignoreCase) == 0)
+  else if (icompare(type, "usermaxtime") == 0)
     userlimits->SetUserMaxTime(value);
-  else if (type.compareTo("userminekine", G4String::ignoreCase) == 0)
+  else if (icompare(type, "userminekine") == 0)
     userlimits->SetUserMinEkine(value);
-  else if (type.compareTo("userminrange", G4String::ignoreCase) == 0)
+  else if (icompare(type, "userminrange") == 0)
     userlimits->SetUserMinRange(value);
   else
     G4cerr << __FILE__ << " line " << __LINE__ << ": Warning user type " << type << " unknown" << G4endl;
