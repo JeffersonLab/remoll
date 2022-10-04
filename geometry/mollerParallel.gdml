@@ -55,19 +55,13 @@
   <box lunit="mm" name="PSbunkerOuterFrontVP_solid"
        x="1" y="3429+2571" z="9512.3+9541.7"/>
        
-  <box lunit="mm" name="PSbunkerOuterSideLeftVP_solid"
-       x="11742.42" y="3429" z="1"/>
-
-  <box lunit="mm" name="PSbunkerOuterSideRightVP_solid"
+  <box lunit="mm" name="PSbunkerOuterSideVP_solid"
        x="11742.42" y="3429" z="1"/>
    
   <box lunit="mm" name="PSbunkerInnerFrontVP_solid"
      x="1" y="3429" z="10071.3"/>
   
-  <box lunit="mm" name="PSbunkerInnerSideLeftVP_solid"
-       x="10218.42" y="3429" z="1"/>
- 
-  <box lunit="mm" name="PSbunkerInnerSideRightVP_solid"
+  <box lunit="mm" name="PSbunkerInnerSideVP_solid"
        x="10218.42" y="3429" z="1"/>
  
  <box lunit="mm" name="PSbunkerTopVP_solid"
@@ -212,14 +206,14 @@
 
   <volume name="PbWallEnt_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="midVirtualPlane_solid"/>
+    <solidref ref="smallVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="46"/>
   </volume>
 
   <volume name="PbWallExit_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="midVirtualPlane_solid"/>
+    <solidref ref="smallVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="47"/>
   </volume>
@@ -753,7 +747,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="largeVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="99"/>
+    <auxiliary auxtype="DetNo" auxvalue="31"/>
   </volume>
 
   <volume name="PSbunkerOuterFrontVP_log">
@@ -768,7 +762,7 @@
   
   <volume name="PSbunkerOuterSideLeftVP_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="PSbunkerOuterSideLeftVP_solid"/>
+    <solidref ref="PSbunkerOuterSideVP_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
@@ -778,7 +772,7 @@
   
   <volume name="PSbunkerOuterSideRightVP_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="PSbunkerOuterSideRightVP_solid"/>
+    <solidref ref="PSbunkerOuterSideVP_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
@@ -798,7 +792,7 @@
   
   <volume name="PSbunkerInnerSideLeftVP_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="PSbunkerInnerSideLeftVP_solid"/>
+    <solidref ref="PSbunkerInnerSideVP_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
@@ -808,7 +802,7 @@
   
   <volume name="PSbunkerInnerSideRightVP_log">
     <materialref ref="G4_Galactic"/>
-    <solidref ref="PSbunkerInnerSideRightVP_solid"/>
+    <solidref ref="PSbunkerInnerSideVP_solid"/>
     <auxiliary auxtype="Visibility" auxvalue="true"/>
     <auxiliary auxtype="Color" auxvalue="yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="1"/>
@@ -890,32 +884,32 @@
 
     <physvol name="Col2Ent_phys">
       <volumeref ref="Col2Ent_log"/>
-      <position name="Col2Ent_pos" unit="mm" x="0" y="200" z="750-0.5"/>
+      <position name="Col2Ent_pos" unit="mm" x="0" y="0" z="750-0.5"/>
     </physvol>
 
     <physvol name="Col2Exit_phys">
       <volumeref ref="Col2Exit_log"/>
-      <position name="Col2Exit_pos" unit="mm" x="0" y="200" z="900"/>
+      <position name="Col2Exit_pos" unit="mm" x="0" y="0" z="900"/>
     </physvol>
 
     <physvol name="Col4Ent_phys">
       <volumeref ref="Col4Ent_log"/>
-      <position name="Col4Ent_pos" unit="mm" x="0" y="200" z="3225-0.5"/>
+      <position name="Col4Ent_pos" unit="mm" x="0" y="0" z="3225-0.5"/>
     </physvol>
 
     <physvol name="Col4Exit_phys">
       <volumeref ref="Col4Exit_log"/>
-      <position name="Col4Exit_pos" unit="mm" x="0" y="200" z="3225+150+0.5"/>
+      <position name="Col4Exit_pos" unit="mm" x="0" y="0" z="3225+150+0.5"/>
     </physvol>
 
     <physvol name="PbWallEnt_phys">
       <volumeref ref="PbWallEnt_log"/>
-      <position name="PbWallEnt_pos" unit="mm" x="0" y="0" z="3879.25-0.5"/>
+      <position name="PbWallEnt_pos" unit="mm" x="0" y="0" z="3567.3-1"/>
     </physvol>
 
     <physvol name="PbWallExit_phys">
       <volumeref ref="PbWallExit_log"/>
-      <position name="PbWallExit_pos" unit="mm" x="0" y="0" z="3879.25+250+0.5"/>
+      <position name="PbWallExit_pos" unit="mm" x="0" y="0" z="3567.3+152.4+1"/>
     </physvol>
 
     <physvol name="Bellows3US_phys">

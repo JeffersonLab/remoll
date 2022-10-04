@@ -45,7 +45,7 @@
    <!--shielding concrete-->
    <box lunit="mm" name="DSbottomconcrete" x="838.2*7" y="1463.977" z="1109.98"/>
 
-   <box lunit="mm" name="DSbarite_1" x="2743.4" y="3327.27 + 270*2" z="586.6"/>
+   <box lunit="mm" name="DSbarite_1" x="2743.4+270*2" y="3327.27" z="586.6"/>
    <box lunit="mm" name="DSbarite_2" x="1067" y="1003.27" z="586.6+1"/>
 
     <subtraction name="DSbarite_sub">
