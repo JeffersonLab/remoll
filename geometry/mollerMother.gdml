@@ -23,7 +23,7 @@
     <cone name="solidCollar2_OuterRing" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1120.95" rmax1="1315" rmin2="1120.95" rmax2="1315" z="100+50"/><!--the information of the outer ring is taken from Moller-doc-793-v2-->
 
     <!--DS Hybrid shielding concrete-->
-    <box lunit="mm" name="Barite_Collar2_solid" x="4000" y="5000" z="400"/>
+    <box lunit="mm" name="Barite_Collar2_solid" x="4000+600" y="5000" z="400"/>
     <cone name="Collar2_tube" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="1315+1" rmin2="0" rmax2="1315+1" z="400+1"/>
     
     <tube name = "solid_DSpipe_vacuumtube" rmin="0" rmax="550" z="400" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
@@ -93,6 +93,9 @@
 	 y="1787.976+1"
 	 z="197.53/2"/>
     
+    <box lunit="mm" name="GemRack"
+        x="700" y="2200" z="900"/>
+          
     <subtraction name="Barite_Collar2_sub">
       <first ref = "Barite_Collar2_solid"/>
       <second ref = "Collar2_tube"/>
@@ -202,6 +205,22 @@
       <auxiliary auxtype="Alpha" auxvalue="0.8"/>
     </volume>
     
+    <volume name="GemRackRight_log">
+      <materialref ref="Kryptonite"/>
+      <solidref ref="GemRack"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+      <auxiliary auxtype="DetNo" auxvalue="332"/>
+    </volume>
+    
+    <volume name="GemRackLeft_log">
+      <materialref ref="Kryptonite"/>
+      <solidref ref="GemRack"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+      <auxiliary auxtype="DetNo" auxvalue="333"/>
+    </volume>
+  
     <volume name="logicMother">
       <materialref ref="G4_AIR"/>
       <solidref ref="world_solid"/>
@@ -288,22 +307,22 @@
 
 
       <!-- GEM Rotator -->
-      <physvol name="GemRotatorSupport1_ph">
+      <physvol name="GemRotatorSupport1_phys">
 	<volumeref ref="GemRotatorSupport1_log"/>
 	<position name="GemRotatorSupport1_pos" unit="mm" x="-248.33*2-248.33/2" y="-2980+1415.481/2" z="19132.69+400/2+1000/2"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport2_ph">
+      <physvol name="GemRotatorSupport2_phys">
 	<volumeref ref="GemRotatorSupport2_log"/>
 	<position name="GemRotatorSupport2_pos" unit="mm" x="2*(-248.33*2-248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport3_ph">
+      <physvol name="GemRotatorSupport3_phys">
 	<volumeref ref="GemRotatorSupport1_log"/>
 	<position name="GemRotatorSupport3_pos" unit="mm" x="-(-248.33*2-248.33/2)" y="-2980+1415.481/2" z="19132.69+400/2+1000/2"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport4_ph">
+      <physvol name="GemRotatorSupport4_phys">
 	<volumeref ref="GemRotatorSupport2_log"/>
 	<position name="GemRotatorSupport4_pos" unit="mm" x="2*(248.33*2+248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2"/>
       </physvol>
@@ -318,25 +337,36 @@
 	<position name="GemRotator2_pos" unit="mm" x="0" y="0" z="19132.69+400/2+1000/2+4*248.33"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport5_ph">
+      <physvol name="GemRotatorSupport5_phys">
 	<volumeref ref="GemRotatorSupport1_log"/>
 	<position name="GemRotatorSupport5_pos" unit="mm" x="-248.33*2-248.33/2" y="-2980+1415.481/2" z="19132.69+400/2+1000/2+4*248.33"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport6_ph">
+      <physvol name="GemRotatorSupport6_phys">
 	<volumeref ref="GemRotatorSupport2_log"/>
 	<position name="GemRotatorSupport6_pos" unit="mm" x="2*(-248.33*2-248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2+4*248.33"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport7_ph">
+      <physvol name="GemRotatorSupport7_phys">
 	<volumeref ref="GemRotatorSupport1_log"/>
 	<position name="GemRotatorSupport7_pos" unit="mm" x="-(-248.33*2-248.33/2)" y="-2980+1415.481/2" z="19132.69+400/2+1000/2+4*248.33"/>
       </physvol>
       
-      <physvol name="GemRotatorSupport8_ph">
+      <physvol name="GemRotatorSupport8_phys">
 	<volumeref ref="GemRotatorSupport2_log"/>
 	<position name="GemRotatorSupport8_pos" unit="mm" x="2*(248.33*2+248.33/2)" y="-2980+1787.976/2" z="19132.69+400/2+1000/2+4*248.33"/>
       </physvol>
+      
+      <physvol name="GemRackRight_phys">
+        <volumeref ref="GemRackRight_log"/>
+        <position name="GemRackRight_pos" unit="mm" x="-1614.145 - 320" y="-2980+1787.976/2 + (2200-1787.976)/2" z="18632.69-900/2"/>
+      </physvol>
+      
+      <physvol name="GemRackLeft_phys">
+        <volumeref ref="GemRackLeft_log"/>
+        <position name="GemRackLeft_pos" unit="mm" x="1614.145 + 320" y="-2980+1787.976/2 + (2200-1787.976)/2" z="18632.69-900/2"/>
+      </physvol>
+      
       
       <!-- Main Detectors -->
       <!--
@@ -354,10 +384,10 @@
       </physvol>
       
       <!-- Lead Donut -->
-      <physvol>
+     <!-- <physvol>
 	<file name="donut/donutConcreteLead.gdml"/>
 	<positionref ref="donutConcreteLeadFaceUS"/>
-      </physvol>
+      </physvol>-->
 
       <!-- Pion Detectors -->
       <!-- Note: disabled here and now inside the pion donut -->

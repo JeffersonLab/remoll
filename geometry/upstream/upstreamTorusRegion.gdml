@@ -140,7 +140,7 @@
     <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
 
     <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
-    <position name="USmothersubtract_center_2" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 610/2 + 500/2 - 418/2"/>
+    <position name="USmothersubtract_center" unit="mm" x="0" y="0" z="USBoxmother_length/2 - (740+615.5)/2"/>
 
     <!--need to subtract 50/2 to accomdate for the beampipe moving downstream due to collimator thickness increasing. An additional 75 mm subtracted to move the beampipe upstream.-->
     <position name="shield_US_beampipe_center" unit="mm" x="0" y="0" 
@@ -154,7 +154,21 @@
     <constant name="inner_nose_shield_US_beampipe_center_z" value="inner_nose_shield_US_beampipe_length/2 + posCOLL2z + COLL2_THICK/2+0.001-50/2-75"/>
     <position name="inner_nose_shield_US_beampipe_center" unit="mm" x="0" y="0" z="inner_nose_shield_US_beampipe_center_z"/>
 
-    <constant name="PbWall_length" value="150"/>
+    <constant name="PbWall_length" value="152.40"/>
+     
+     <constant name="bellows3_eps" value="0.35"/>
+     <constant name="bellows3_IR" value="330+bellows3_eps/2"/>
+     <constant name="bellows3flange_length" value="44.45-bellows3_eps"/>
+     <constant name="bellows3flange_Rthickness" value="88.5-bellows3_eps"/>
+     <constant name="bellows3_length" value="419.4"/>
+     <constant name="bellows3_Rthickness" value="31.0"/>
+     <constant name="bellows3_zpos" value="8946-4500-(11016.865-8.73/2+150/2+400/2)"/>
+     <constant name="bellows3flangeUS_zpos" value="bellows3_zpos - bellows3_length/2 - bellows3flange_length/2 - bellows3_eps/2"/>
+     <constant name="bellows3flangeDS_zpos" value="bellows3_zpos + bellows3_length/2 + bellows3flange_length/2 + bellows3_eps/2"/>
+     
+     <position name="bellows3physical_pos" z="bellows3_zpos-10+9287.5" unit="mm"/>
+     <position name="bellows3flangeUS_pos" z="bellows3flangeUS_zpos-10+9287.5" unit="mm"/>
+     <position name="bellows3flangeDS_pos" z="bellows3flangeDS_zpos-10+9287.5" unit="mm"/>
      
 </define> 
 
@@ -162,181 +176,40 @@
 
 <solids>
 
-      <box lunit="mm" name="tubeUpstream_1" x="540*2+0.75" y="540*2+0.75" z="USBoxmother_length"/>
-      <box lunit="mm" name="tubeUpstream_2" x="540*2+1.75" y="540*2+1.75" z="USBoxmothersubtract_length - 610 - 500 + 418 + 2.05"/>
-
-      <subtraction name="tubeUpstream">
-        <first ref="tubeUpstream_1"/>
-        <second ref="tubeUpstream_2"/>
-        <positionref ref="USmothersubtract_center_2" />
-      </subtraction>
-      
+    <box lunit="mm" name="tubeUpstream_1" x="533.4*2+0.75" y="533.4*2+0.75" z="USBoxmother_length"/>
+    <box lunit="mm" name="tubeUpstream_2_1" x="533.4*2+1.75" y="533.4*2+1.75" z="740+615.5"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_2_2" rmax="420" rmin="0" startphi="0" z="740"/>
+    
     <!-- Lead shielding solids -->
-    <box lunit="mm" name="PbWall_solid_1" x="540*2" y="540*2" z="PbWall_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_2" rmax="240" rmin="0" startphi="0" z="PbWall_length+1"/>
-    <subtraction name ="PbWall_solid">
-      <first ref="PbWall_solid_1"/>
-      <second ref="PbWall_solid_2"/>
-      <position name ="PbWall_solid_p" lunit="mm" x="0" y="0" z="0" />
+    <box lunit="mm" name="PbWall_solid" x="533.4*2+0.7" y="533.4*2+0.7" z="101.6"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_1_1" rmax="330.20" rmin="230" startphi="0" z="101.60"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_1_2" rmax="406.40" rmin="230" startphi="0" z="50.80"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_1_3" rmax="346.18" rmin="0" startphi="0" z="101.6+1"/>
+    
+    <subtraction name ="tubeUpstream_2">
+      <first ref="tubeUpstream_2_1"/>
+      <second ref="tubeUpstream_2_2"/>
+      <position name ="tubeUpstream_2_pos" lunit="mm" x="0" y="0" z="-(740+615.5)/2+740/2"/>
     </subtraction>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall_accep_solid">
-      <zplane rmin="0" rmax="238.35" z="0"/>
-      <zplane rmin="0" rmax="238.35" z="PbWall_length/2."/>
-      <zplane rmin="0" rmax="238.35+(PbWall_length/2)*tan(8*pi/180.)" z="PbWall_length"/>
-    </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Beampipe_under_PbWall_solid">
-      <zplane rmin="230" rmax="236.35" z="0"/>
-      <zplane rmin="230" rmax="236.35" z="PbWall_length/2."/>
-      <zplane rmin="230+(PbWall_length/2)*tan(8*pi/180.)" rmax="236.35+(PbWall_length/2)*tan(8*pi/180.)" z="PbWall_length"/>
-    </polycone>
+    <subtraction name ="tubeUpstream">
+      <first ref="tubeUpstream_1"/>
+      <second ref="tubeUpstream_2"/>
+      <positionref ref="USmothersubtract_center"/>
+    </subtraction>
     
-    <!--<tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_solid"
-	  rmax="550" rmin="219" startphi="0" z="102"/>-->
-   <!-- <box lunit="mm" name="vacuumPbWall_1" x="550*2" y="550*2" z="150"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="vacuumPbWall_2" rmax="219" rmin="0" startphi="0" z="150+1"/>
-    <subtraction name ="vacuumPbWall_solid">
-        <first ref="vacuumPbWall_1"/>
-        <second ref="vacuumPbWall_2"/>
-        <position name ="vacuumPbWall_p" lunit="mm" x="0" y="0" z="0" />
-    </subtraction>-->
-    <!-- Feb 2020 New Collimator1 (combined Coll1 & Coll2) -->
-    <!--  V1   
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="22.1" rmax="27" z="0"/> 
-      <zplane rmin="22.1" rmax="27" z="100"/> 
-      <zplane rmin="18.489" rmax="27" z="100"/> 
-      <zplane rmin="18.489" rmax="27" z="110"/> 
-      <zplane rmin="18.489" rmax="25.4" z="110"/> 
-      <zplane rmin="18.489" rmax="25.4" z="139"/> 
-      <zplane rmin="18.489" rmax="22.0" z="139"/> 
-      <zplane rmin="18.489" rmax="22.0" z="200"/> 
-      <zplane rmin="16.796" rmax="22.0" z="200"/> 
-      <zplane rmin="16.796" rmax="22.0" z="300"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
--->
-    <!-- V2 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="15.0" rmax="27" z="100"/> 
-      <zplane rmin="14.72" rmax="27.0" z="110"/> 
-      <zplane rmin="14.72" rmax="25.4" z="110"/> 
-      <zplane rmin="13.908" rmax="25.4" z="139"/> 
-      <zplane rmin="13.908" rmax="22.0" z="139"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
--->
-    <!--V3
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="18.489" rmax="27" z="100"/> 
-      <zplane rmin="18.327" rmax="27.0" z="110"/> 
-      <zplane rmin="18.327" rmax="25.4" z="110"/> 
-      <zplane rmin="17.8572" rmax="25.4" z="139"/> 
-      <zplane rmin="17.8572" rmax="22.0" z="139"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
--->
-    <!--V4  
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="16.5" rmax="27" z="100"/> 
-      <zplane rmin="16.404" rmax="27.0" z="110"/> 
-      <zplane rmin="16.404" rmax="25.4" z="110"/> 
-      <zplane rmin="16.127" rmax="25.4" z="139"/> 
-      <zplane rmin="16.127" rmax="22.0" z="139"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
- -->
-    <!--V5 not good 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="15.0" rmax="27" z="100"/> 
-      <zplane rmin="14.954" rmax="27.0" z="110"/> 
-      <zplane rmin="14.954" rmax="25.4" z="110"/> 
-      <zplane rmin="14.882" rmax="25.4" z="139"/> 
-      <zplane rmin="14.882" rmax="22.0" z="139"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
--->
-    <!--V7
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="16.25" rmax="27" z="100"/> 
-      <zplane rmin="16.163" rmax="27.0" z="110"/> 
-      <zplane rmin="16.163" rmax="25.4" z="110"/> 
-      <zplane rmin="15.909" rmax="25.4" z="139"/> 
-      <zplane rmin="15.909" rmax="22.0" z="139"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
--->
+    <union name ="PbWall_1">
+      <first ref="PbWall_solid_1_1"/>
+      <second ref="PbWall_solid_1_2"/>
+      <position name ="PbWall_1_pos" lunit="mm" x="0" y="0" z="-101.60/2-50.80/2-0.1" />
+    </union>
 
-    <!-- v8 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="16.25" rmax="27" z="100"/> 
-      <zplane rmin="16.12" rmax="27.0" z="110"/> 
-      <zplane rmin="16.12" rmax="25.4" z="110"/> 
-      <zplane rmin="15.73" rmax="25.4" z="139"/> 
-      <zplane rmin="15.73" rmax="22.0" z="139"/> 
-      <zplane rmin="14.0" rmax="22.0" z="270"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
--->
-    <!-- v9
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="16.25" rmax="27" z="100"/> 
-      <zplane rmin="16.12" rmax="27.0" z="110"/> 
-      <zplane rmin="16.12" rmax="25.4" z="110"/> 
-      <zplane rmin="15.73" rmax="25.4" z="139"/> 
-      <zplane rmin="15.73" rmax="22.0" z="139"/> 
-      <zplane rmin="14.53" rmax="22.0" z="230"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
-    -->
+    <subtraction name ="PbWall_2">
+      <first ref="PbWall_solid"/>
+      <second ref="PbWall_solid_1_3"/>
+      <position name ="PbWall_2_pos" lunit="mm" x="0" y="0" z="0" />
+    </subtraction>
+
     <!-- v10 --> 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
       <zplane rmin="20.0+0.3" rmax="25.4" z="0"/> 
@@ -355,60 +228,6 @@
       <zplane rmin="14.536" rmax="22.0" z="725-150"/> 
     </polycone>
 
-    <!-- v10 backup--> 
-    <!--    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="16.25" rmax="27" z="100"/> 
-      <zplane rmin="16.12" rmax="27.0" z="110"/> 
-      <zplane rmin="16.12" rmax="25.4" z="110"/> 
-      <zplane rmin="15.73" rmax="25.4" z="139"/> 
-      <zplane rmin="15.73" rmax="22.0" z="139"/> 
-      <zplane rmin="15.1" rmax="22.0" z="190"/> 
-      <zplane rmin="14.1" rmax="22.0" z="310"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="14.452" rmax="22.0" z="695"/> 
-      <zplane rmin="14.452" rmax="24.0" z="695"/> 
-      <zplane rmin="14.491" rmax="24.0" z="709"/> 
-      <zplane rmin="14.491" rmax="22.0" z="709"/> 
-      <zplane rmin="14.536" rmax="22.0" z="725"/> 
-    </polycone>-->
-
-    <!-- v11
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="16.25" rmax="27" z="100"/> 
-      <zplane rmin="16.12" rmax="27.0" z="110"/> 
-      <zplane rmin="16.12" rmax="25.4" z="110"/> 
-      <zplane rmin="15.73" rmax="25.4" z="139"/> 
-      <zplane rmin="15.73" rmax="22.0" z="139"/> 
-      <zplane rmin="15.1" rmax="22.0" z="190"/> 
-      <zplane rmin="14.5" rmax="22.0" z="310"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
--->
-    <!-- v12 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
-      <zplane rmin="20.0" rmax="27" z="0"/> 
-      <zplane rmin="16.25" rmax="27" z="100"/> 
-      <zplane rmin="16.12" rmax="27.0" z="110"/> 
-      <zplane rmin="16.12" rmax="25.4" z="110"/> 
-      <zplane rmin="15.73" rmax="25.4" z="139"/> 
-      <zplane rmin="15.73" rmax="22.0" z="139"/> 
-      <zplane rmin="15.1" rmax="22.0" z="190"/> 
-      <zplane rmin="14.3" rmax="22.0" z="310"/> 
-      <zplane rmin="13.629" rmax="22.0" z="400"/> 
-      <zplane rmin="13.852" rmax="22.0" z="480"/> 
-      <zplane rmin="13.852" rmax="24.0" z="480"/> 
-      <zplane rmin="13.891" rmax="24.0" z="494"/> 
-      <zplane rmin="13.891" rmax="22.0" z="494"/> 
-      <zplane rmin="13.908" rmax="22.0" z="500"/> 
-    </polycone>
--->
     <cone aunit="deg" deltaphi="360" lunit="mm" name="col1_h20_solid1" rmax1="25.4" rmax2="25.4" rmin1="22" rmin2="22" startphi="0" z="20"/>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="col1_h20_solid2"> 
@@ -433,8 +252,6 @@
 
 
     <!-- Coll2 -->
-
-	    <!--<cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_1" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_CW_U1" rmin2="COLL2_R1_CW_D1" startphi="0" z="COLL2_THICK_CW"/>-->
     <polycone aunit="deg" lunit="mm" name="uscyl_1" startphi="0" deltaphi="360">
 	    <zplane rmin="COLL2_R1_CW_U1" rmax="COLL2_R4_U" z="0"/>
 	    <zplane rmin="COLL2_R1_CW_D1" rmax="COLL2_R4_D" z="COLL2_THICK_CW/2"/>
@@ -445,7 +262,6 @@
 	    <zplane rmin="COLL2_R1_CW_D2" rmax="COLL2_R4_D" z="COLL2_THICK_CW/2."/>
     </polycone>
 
-	    <!--<cone aunit="deg" deltaphi="360" lunit="mm" name="uscyl_2" rmax1="COLL2_R4_U" rmax2="COLL2_R4_D" rmin1="COLL2_R1_Cu_U1" rmin2="COLL2_R1_Cu_D1" startphi="0" z="COLL2_THICK_Cu"/>-->
     <polycone aunit="deg" lunit="mm" name="uscyl_2" startphi="0" deltaphi="360">
 	    <zplane rmin="COLL2_R1_Cu_U1" rmax="COLL2_R4_U" z="0"/>
 	    <zplane rmin="COLL2_R1_Cu_D1" rmax="COLL2_R4_D" z="30"/>
@@ -511,10 +327,6 @@
             v7x="-Col2_x1_highR" v7y="Col2_y1_highR" 
             v8x="Col2_x1_highR" v8y="Col2_y1_highR" 
             dz="25" lunit="mm"/>
-    <!--
-	    v7x="-Col2_x1_highR-50*tan(1.5*pi/180.)*sin(Col2_angle1)" v7y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)" 
-	    v8x="Col2_x1_highR+50*tan(1.5*pi/180.)*sin(Col2_angle1)" v8y="Col2_y1_highR+50*tan(1.5*pi/180.)*cos(Col2_angle1)"
-	    -->
 
     <arb8 name="Col2_lowerR_box2" v1x="25" v1y="25" 
             v2x="-25" v2y="25" 
@@ -759,6 +571,24 @@
         <second ref="cut_largeR_box3"/>
     </subtraction>
 
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="collar0_solid"
+          rmin="76.2" rmax="330" z="200"/>
+
+    <!--add bellows -->
+    <tube
+    name="bellows3physical_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows3_IR" rmax="bellows3_IR+bellows3_Rthickness" z="bellows3_length" lunit="mm"/>
+    <tube
+    name="bellows3flangeUS_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows3_IR" rmax="bellows3_IR+bellows3flange_Rthickness" z="bellows3flange_length" lunit="mm"/>
+    <tube
+    name="bellows3flangeDS_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows3_IR" rmax="bellows3_IR+bellows3flange_Rthickness" z="bellows3flange_length" lunit="mm"/>
+          
+          
 </solids>
 
 
@@ -1502,49 +1332,62 @@
       </physvol>
     </volume>
 
-      <!-- Hybrid wall -->
-   <!--<volume name="Beampipe_under_PbWall_logic">
-      <materialref ref="G4_Al"/>
-      <solidref ref="Beampipe_under_PbWall_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Blue"/>
-      <auxiliary auxtype="SensDet" auxvalue="beampipeDet"/>
-    </volume>
-
-    <volume name="PbWall_accep_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="PbWall_accep_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="accepDet"/>
-      <physvol name="phys_PbWall_acce">
-	      <volumeref ref="Beampipe_under_PbWall_logic"/>
-      </physvol>
-    </volume>-->
-
-    <volume name="PbWall_logic">
+    <volume name="PbWall_1_logic">
       <materialref ref="Lead"/>
-      <solidref ref="PbWall_solid"/>
+      <solidref ref="PbWall_1"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
-      <auxiliary auxtype="DetNo" auxvalue="6031"/>
-      <!--<physvol name="phys_PbWall_acce">
-	      <volumeref ref="PbWall_accep_logic"/>
-	      <position name="Pbwall_accep_pos" x="0" y="0" z="-150/2"/>
-      </physvol>-->
+      <auxiliary auxtype="DetNo" auxvalue="6033"/>
     </volume>
-    <!--<volume name="vacuumPbWall_logic">
+    
+    <volume name="PbWall_2_logic">
       <materialref ref="Lead"/>
-      <solidref ref="vacuumPbWall_solid"/>
+      <solidref ref="PbWall_2"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
-    </volume>-->
+      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
+      <auxiliary auxtype="DetNo" auxvalue="6034"/>
+    </volume>
+    
+    <volume name="collar0_logic">
+      <materialref ref="Lead"/>
+      <solidref ref="collar0_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
+      <auxiliary auxtype="DetNo" auxvalue="5688"/>
+    </volume>
+
+    <!--add bellows G4_STAINLESS-STEEL and custom bellows SS material  -->
+    <volume name="bellows3physical_log">
+        <materialref ref="SSbellows"/>
+        <solidref ref="bellows3physical_solid"/>
+        <auxiliary auxtype="Color" auxvalue="Pink"/>
+    </volume>
+    
+    <volume name="bellows3flangeUS_log">
+        <materialref ref="G4_STAINLESS-STEEL"/>
+        <solidref ref="bellows3flangeUS_solid"/>
+        <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
+    
+    <volume name="bellows3flangeDS_log">
+        <materialref ref="G4_STAINLESS-STEEL"/>
+        <solidref ref="bellows3flangeDS_solid"/>
+        <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
+
     <volume name="upstreamTorusRegion">
       <materialref ref="G4_Galactic"/>
       <solidref ref="tubeUpstream"/>
+
+      <physvol name="collar0">
+        <volumeref ref="collar0_logic"/>
+        <position name="collar0_pos" unit="mm" z="-3100"/>
+      </physvol>
 
       <physvol name="UScoll_1">
         <volumeref ref="logicUScoll_1"/>
         <positionref ref="posCOLL1"/>
       </physvol>
-
 
       <physvol name="col1_h20_phys1">
         <volumeref ref="col1_h20_logic1"/>
@@ -1589,22 +1432,7 @@
       <physvol name="UScoil">
         <file name= "upstream/upstreamToroid.gdml"/>
       </physvol>
-<!--
-      <physvol>
-        <file name="upstream/upstreamBeampipe.gdml"/>
-        <positionref ref="shield_US_beampipe_center"/>
-      </physvol>
 
-      <physvol>
-        <file name="upstream/upstream_nose_shield_beampipe.gdml"/>
-        <positionref ref="nose_shield_US_beampipe_center"/>
-      </physvol>
-
-      <physvol>
-        <file name="upstream/inner_upstream_nose_shield_beampipe.gdml"/>
-        <positionref ref="inner_nose_shield_US_beampipe_center"/>
-      </physvol>
--->
       <!-- Collimator 4 -->
       <physvol name="phy_Col4_accep1">
         <volumeref ref="logic_Col4_accep1"/>
@@ -1624,15 +1452,30 @@
 
       <!-- Lead wall DS of collimator 4 -->
       <physvol>
-        <volumeref ref="PbWall_logic"/>
-        <position name="PbWall_pos" x="0" y="0" z="1665-48/2"/>
+        <volumeref ref="PbWall_1_logic"/>
+        <position name="PbWall_1_pos" x="0" y="0" z="1665-48/2+2.5+50.8/2"/>
       </physvol>
 
-     <!-- mini - Lead wall DS of collimator 4 -->
-      <!--<physvol name="vacuumPbWall">
-        <volumeref ref="vacuumPbWall_logic"/>
-        <position name="vacuumPbWall_pos" x="0" y="0" z="1665-48/2"/>
-      </physvol>-->
+      <physvol>
+        <volumeref ref="PbWall_2_logic"/>
+        <position name="PbWall_2_pos" x="0" y="0" z="1618.10+101.6/2"/>
+      </physvol>
+      
+      <physvol name="bellows3physical_phys">
+          <volumeref ref="bellows3physical_log"/>
+          <positionref ref="bellows3physical_pos"/>
+      </physvol>
+      
+      <physvol name="bellows3flangeUS_phys">
+          <volumeref ref="bellows3flangeUS_log"/>
+          <positionref ref="bellows3flangeUS_pos"/>
+      </physvol>
+      
+      <physvol name="bellows3flangeDS_phys">
+          <volumeref ref="bellows3flangeDS_log"/>
+          <positionref ref="bellows3flangeDS_pos"/>
+      </physvol>
+      
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
    </volume>
 </structure>
