@@ -14,6 +14,8 @@
   <constant name="SCALE" value="0.1"/>
   <constant name="SCALE_UP" value="1.0+SCALE"/>
   <constant name="SCALE_DOWN" value="1.0-SCALE"/>
+<!--Use this factor to control the area of the scint plane det size -->
+  <constant name="scint_fudicial_acceptance" value="0.999"/>
 
 <!--
     Common thicknesses of aluminized mylar foils are:
@@ -63,6 +65,10 @@
     <!--Create the scintillator -->
     <trd name = "scint_sol"  x1="scint_bottom_width" x2="scint_top_width" y1="scint_thickness" y2="scint_thickness" z="scint_height" lunit= "mm"/>
 
+    <!--Create the scintillator front sens det -->
+    <trd name = "scint_front_sens_sol"  x1="scint_bottom_width*scint_fudicial_acceptance" x2="scint_top_width*scint_fudicial_acceptance" y1="0.01" y2="0.01" z="scint_height*scint_fudicial_acceptance" lunit= "mm"/>
+
+
     <tube name = "scint_bottom_curve" rmin="0" rmax="scint_curvature" z="20" deltaphi="6.28318530718" startphi="0" aunit="rad" lunit= "mm"/>
 
     <!-- This subtraction creates a curved bottom for the scintillator by subtracting the disk shape from the scintillator solid -->
@@ -73,6 +79,17 @@
 	      x="0.0"
 	      y="0.0"
 	      z="-scint_height/2 - 614.512"/><!-- 614.512 distance to radius of curvature -->
+    <rotation name ="scint_sol_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
+    </subtraction>
+
+    <!-- This subtraction creates a curved bottom for the scintillator front sens det by subtracting the disk shape from the scintillator solid -->
+    <subtraction name="scint_front_sens_sol_bottom_curved">
+    <first ref="scint_front_sens_sol"/>
+    <second ref="scint_bottom_curve"/>
+    <position name="scint_front_sens_sol_bottom_curved_solid_subtraction_position1"
+              x="0.0"
+              y="0.0"
+              z="-scint_height/2 - 614.512"/><!-- 614.512 distance to radius of curvature -->
     <rotation name ="scint_sol_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
     </subtraction>
 
@@ -542,6 +559,15 @@
       <volumeref ref="pmt_log"/>
     </skinsurface>
 
+    <volume name="scint_front_sens_log">
+      <materialref ref="Air"/>
+      <solidref ref="scint_front_sens_sol_bottom_curved"/> 
+      <auxiliary auxtype="Color" auxvalue="cyan"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="DetNo" auxvalue="10000"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>      
+    </volume>
+
  
 
     <volume name="trig_scint_log">
@@ -562,6 +588,12 @@
 	<volumeref ref="scint_log"/>
         <position name="front_pos" unit="mm" y= "0" z="0"/>
         <!-- <rotation name ="front_rot" unit="deg" x ="180"/> -->
+      </physvol>
+
+      <physvol name="scint_front_sens_phys">
+        <volumeref ref="scint_front_sens_log"/>
+	<position name="scint_front_sens_pos" unit="mm" y= "-5.2" z="0"/>
+	<!-- <rotation name ="front_rot" unit="deg" x ="180"/> -->
       </physvol>
 
 <!--Place WLS housing wls_clad2_log use (WLS_length_extend+18) or WLS_length_extend+3 to keep the WLS bottom within the scintillator -->
@@ -661,12 +693,12 @@
 
 <!--Need to check optical properties of the mylar wrap as this is absorbing too much optical photons   -->
 
-<!--
+
       <physvol name="scint_mylar_phys">
 	<volumeref ref="scint_mylar_log"/>
         <position name="front_pos" unit="mm" y= "0" z="0"/>        
       </physvol>
--->
+
       
     </volume>
   </structure>
