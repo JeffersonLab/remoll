@@ -189,6 +189,34 @@
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="39"/>
   </volume>
+	
+  <volume name="USCoil1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="midVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="40"/>
+  </volume>
+
+  <volume name="USCoil2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="midVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="41"/>
+  </volume>
+	
+  <volume name="USCoil3_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="midVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="42"/>
+  </volume>
+	
+  <volume name="USCoil4_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="midVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="43"/>
+  </volume>
 
   <volume name="Col4Ent_log">
     <materialref ref="G4_Galactic"/>
@@ -886,10 +914,30 @@
       <volumeref ref="Col2Ent_log"/>
       <position name="Col2Ent_pos" unit="mm" x="0" y="0" z="750-0.5"/>
     </physvol>
-
+	
     <physvol name="Col2Exit_phys">
       <volumeref ref="Col2Exit_log"/>
       <position name="Col2Exit_pos" unit="mm" x="0" y="0" z="900"/>
+    </physvol>
+	  
+    <physvol name="USCoil1_phys">
+      <volumeref ref="USCoil1_log"/>
+      <position name="USCoil1_pos" unit="mm" x="0" y="0" z="1651"/>
+    </physvol>
+	  
+    <physvol name="USCoil2_phys">
+      <volumeref ref="USCoil2_log"/>
+      <position name="USCoil2_pos" unit="mm" x="0" y="0" z="1879.6"/>
+    </physvol>
+
+    <physvol name="USCoil3_phys">
+      <volumeref ref="USCoil3_log"/>
+      <position name="USCoil3_pos" unit="mm" x="0" y="0" z="2781.3"/>
+    </physvol>
+	  
+    <physvol name="USCoil4_phys">
+      <volumeref ref="USCoil4_log"/>
+      <position name="USCoil4_pos" unit="mm" x="0" y="0" z="3098.8"/>
     </physvol>
 
     <physvol name="Col4Ent_phys">
