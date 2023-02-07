@@ -384,10 +384,10 @@
       </physvol>
       
       <!-- Lead Donut -->
-     <!-- <physvol>
+      <physvol>
 	<file name="donut/donutConcreteLead.gdml"/>
 	<positionref ref="donutConcreteLeadFaceUS"/>
-      </physvol>-->
+      </physvol>
 
       <!-- Pion Detectors -->
       <!-- Note: disabled here and now inside the pion donut -->
