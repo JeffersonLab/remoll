@@ -1,0 +1,1140 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+ 
+ 
+	<solids>
+		<box lunit="m" name="DetectorArray_solid" x="20.0" y="20.0" z="20.0"/>
+	</solids>
+ 
+	<structure>
+		<volume name="DetectorArray_volume">
+			<materialref ref="G4_AIR"/>
+			<solidref ref="DetectorArray_solid"/>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg1_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="996.22" y="-80" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99763410272428" y="0" z="-270"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg1_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="996.22" y="80" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99763410272428" y="0" z="90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg1_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="1005.17" y="0" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99763410272428" y="0" z="90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg1_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="883.6" y="0" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99708537519869" y="0" z="90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg1_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="808.24" y="0" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00224758033941" y="0" z="90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg1_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="762.49" y="0" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00224758033953" y="0" z="90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg1_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="731.72" y="0" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99230923889332" y="0" z="90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg1_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="1101.41" y="0" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99973858911886" y="0" z="90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg1_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="971.24" y="221.69" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00106394456493" y="0" z="77.1363693023937"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg1_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="962.16" y="301.68" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00102144041703" y="0" z="77.1363693023936"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg1_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="997.77" y="145.69" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.0012502338421" y="0" z="77.1363693023936"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg1_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="868.15" y="198.16" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00122527969865" y="0" z="77.1394584060375"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg1_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="794.66" y="181.38" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99487897748325" y="0" z="77.1398647098126"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg1_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="750.16" y="171.22" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99496225842162" y="0" z="77.1399764002307"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg1_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="720.16" y="164.37" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.0036511046504" y="0" z="77.1380297370479"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg1_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="1080.58" y="246.66" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99985199406693" y="0" z="77.1396680098295"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg2_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="932.27" y="360.16" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99756475056213" y="0" z="64.2869393190475"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg2_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="862.85" y="504.32" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99748194539466" y="0" z="64.2869393190475"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg2_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="905.63" y="436.12" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99756475056213" y="0" z="64.2869393190475"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg2_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="796.09" y="383.37" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99718324709623" y="0" z="64.2843011655183"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg2_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="728.2" y="350.68" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.0020792280983" y="0" z="64.2859204923853"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg2_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="686.98" y="330.83" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00224197032247" y="0" z="64.2867348616001"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg2_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="659.26" y="317.48" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99215903683614" y="0" z="64.28552100451"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg2_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="992.34" y="477.88" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99985791843856" y="0" z="64.2864429654171"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg2_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="778.87" y="621.14" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00125096943197" y="0" z="51.4296691432744"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg2_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="735.98" y="689.27" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00110158279097" y="0" z="51.41960449999"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg2_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="835.75" y="564.18" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00125095792547" y="0" z="51.4252035776925"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg2_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="696.2" y="555.21" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00117179784088" y="0" z="51.4254732646494"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg2_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="637.27" y="508.21" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99489119518104" y="0" z="51.4254350380914"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg2_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="601.58" y="479.75" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99541711274725" y="0" z="51.4256749419164"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg2_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="577.53" y="460.56" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00363667055131" y="0" z="51.425963014265"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg2_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="866.55" y="691.07" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99981480575516" y="0" z="51.4255418585876"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg3_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="683.69" y="728.99" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99745726760163" y="0" z="38.5703308567256"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg3_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="558.59" y="828.75" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99757625130764" y="0" z="38.5747964223075"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg3_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="626.72" y="785.87" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99757625130764" y="0" z="38.5747964223075"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg3_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="550.92" y="690.82" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99721832550766" y="0" z="38.5728495018984"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg3_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="503.94" y="631.9" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.002276786191" y="0" z="38.5722072982198"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg3_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="475.41" y="596.14" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00227678985119" y="0" z="38.5723292704693"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg3_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="456.23" y="572.08" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99219327349989" y="0" z="38.5713864601968"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg3_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="686.73" y="861.11" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99981480575516" y="0" z="38.571361294392"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg3_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="432.24" y="897.56" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00120918624295" y="0" z="25.7066077069091"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg3_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="364.04" y="940.34" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00120918624295" y="0" z="25.7130606809524"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg3_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="508.2" y="870.92" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00120919843714" y="0" z="25.7130606809524"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg3_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="386.36" y="802.29" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00107722903831" y="0" z="25.7121081286902"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg3_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="353.66" y="734.38" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.9949274163605" y="0" z="25.7113625977412"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg3_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="333.86" y="693.25" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99492742409938" y="0" z="25.711876407795"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg3_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="320.51" y="665.53" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00414335225381" y="0" z="25.7114245133361"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg3_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="480.9" y="998.62" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99985791528861" y="0" z="25.7115715952134"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg4_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="299.69" y="953.44" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99760573194198" y="0" z="12.8566480785278"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg4_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="143.7" y="989.04" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99741967693589" y="0" z="12.8636306976064"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg4_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="223.69" y="979.96" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99760573194198" y="0" z="12.8550545545998"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg4_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="196.63" y="861.44" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.9969297088006" y="0" z="12.8579191418416"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg4_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="179.86" y="787.97" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00211414891051" y="0" z="12.8601352901874"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg4_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="169.68" y="743.37" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00247986696855" y="0" z="12.8569029663613"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg4_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="162.83" y="713.38" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99220764800981" y="0" z="12.8579105472007"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg4_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="245.1" y="1073.79" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99985199386394" y="0" z="12.8560351387451"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg4_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="0" y="996.22" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00108755974753" y="0" z="0"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg4_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="-80" y="1005.17" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00127863009874" y="0" z="0"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg4_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="80" y="1005.17" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00108755974753" y="0" z="0"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg4_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="0" y="890.48" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.0011722674036" y="0" z="-0.00268994269818279"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg4_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="0.01" y="815.1" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99509535773248" y="0" z="0"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg4_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="0.01" y="769.45" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99509537795284" y="0" z="0"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg4_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="0.01" y="738.69" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00375307004064" y="0" z="-0.00339028280751563"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg4_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="0" y="1108.37" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99973858172374" y="0" z="0"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg5_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="-143.67" y="989.05" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99760573194198" y="0" z="-12.8566480785279"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg5_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="-299.65" y="953.45" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99760573194198" y="0" z="-12.8550545545998"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg5_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="-223.65" y="979.97" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99746213827367" y="0" z="-12.8550545545998"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg5_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="-196.6" y="861.45" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99723355481482" y="0" z="-12.8579191418416"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg5_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="-179.83" y="787.98" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00219761751585" y="0" z="-12.8571954237482"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg5_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="-169.66" y="743.38" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00211415855684" y="0" z="-12.8537822553654"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg5_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="-162.81" y="713.38" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99220764540017" y="0" z="-12.8553596674151"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg5_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="-245.07" y="1073.8" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99985199787107" y="0" z="-12.8560351387451"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg5_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="-432.24" y="897.56" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00112628845284" y="0" z="-25.7161682809677"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg5_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="-508.2" y="870.92" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00112628845284" y="0" z="-25.7161682809677"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg5_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="-364.05" y="940.34" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00129843586788" y="0" z="-25.7195129551217"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg5_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="-386.36" y="802.3" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00117730181794" y="0" z="-25.7156988344817"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg5_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="-353.65" y="734.39" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99508979340774" y="0" z="-25.7153879225717"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg5_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="-333.84" y="693.26" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99492741822156" y="0" z="-25.7161490738739"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg5_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="-320.49" y="665.54" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00360229565095" y="0" z="-25.71447899549"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg5_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="-480.9" y="998.61" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99997462941771" y="0" z="-25.7145131578614"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg6_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="-558.56" y="828.77" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99757626091407" y="0" z="-38.5647311053794"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg6_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="-683.66" y="729.01" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99757625130764" y="0" z="-38.5747964223074"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg6_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="-626.69" y="785.89" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99757625130764" y="0" z="-38.5703308567256"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg6_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="-550.9" y="690.84" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99718443772954" y="0" z="-38.5707464403004"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg6_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="-503.91" y="631.92" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00227678619113" y="0" z="-38.5703270874121"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg6_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="-475.39" y="596.15" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00227678676049" y="0" z="-38.5698267347991"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg6_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="-456.21" y="572.1" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99219327349989" y="0" z="-38.5713864601968"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg6_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="-686.7" y="861.14" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99981481142005" y="0" z="-38.5696383727872"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg6_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="-778.87" y="621.14" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00107132519304" y="0" z="-51.4252035776925"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg6_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="-835.74" y="564.17" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00122070860362" y="0" z="-51.4296691432744"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg6_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="-735.99" y="689.27" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00107132519304" y="0" z="-51.4296691432743"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg6_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="-696.2" y="555.21" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00113787626666" y="0" z="-51.4309306419304"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg6_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="-637.26" y="508.22" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99512450981639" y="0" z="-51.4296729125879"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg6_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="-601.57" y="479.76" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99512451038444" y="0" z="-51.4301732652009"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg6_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="-577.52" y="460.58" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00363666277063" y="0" z="-51.4307272403967"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg6_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="-866.56" y="691.07" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99981481142005" y="0" z="-51.4303616272128"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg7_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="-862.84" y="504.35" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99748194539466" y="0" z="-64.2869393190477"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg7_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="-932.26" y="360.19" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.9976538845308" y="0" z="-64.2804870448784"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg7_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="-905.61" y="436.15" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.9976538845308" y="0" z="-64.2869393190476"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg7_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="-796.08" y="383.4" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99709039828762" y="0" z="-64.2830448738053"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg7_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="-728.19" y="350.7" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00241718339704" y="0" z="-64.2818951926889"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg7_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="-686.97" y="330.85" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00257997184032" y="0" z="-64.2838509261261"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg7_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="-659.25" y="317.5" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99189951536471" y="0" z="-64.2840499900813"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg7_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="-992.32" y="477.91" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99974950369418" y="0" z="-64.2835014161884"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg7_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="-971.24" y="221.69" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00129273781463" y="0" z="-77.1449454454002"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg7_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="-997.76" y="145.69" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00125022152464" y="0" z="-77.1449454454001"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg7_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="-962.16" y="301.68" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00125022152464" y="0" z="-77.1433519214721"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg7_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="-868.15" y="198.17" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00127297079991" y="0" z="-77.1447033650763"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg7_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="-794.66" y="181.4" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99532711631145" y="0" z="-77.145744511552"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg7_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="-750.16" y="171.24" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.9954103878198" y="0" z="-77.1462177446346"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg7_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="-720.16" y="164.39" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00423660604274" y="0" z="-77.1413349912903"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg7_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="-1080.58" y="246.65" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99990759573402" y="0" z="-77.1439648612549"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg8_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="-996.22" y="80.03" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99763410272428" y="0" z="-90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg8_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="-996.22" y="-79.97" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99744326354666" y="0" z="-90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg8_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="-1005.17" y="0.04" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99763410272428" y="0" z="-90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg8_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="-883.6" y="0.03" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99708537849572" y="0" z="-89.9973100573055"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg8_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="-808.24" y="0.03" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00224758449006" y="0" z="-89.9969844326845"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg8_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="-762.49" y="0.03" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00224758501595" y="0" z="-90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg8_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="-731.72" y="0.03" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.9917111518538" y="0" z="-90"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg8_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="-1101.41" y="0.04" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99973859133358" y="0" z="-89.9977963161106"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg8_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="-971.25" y="-221.66" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00125022152464" y="0" z="-102.856648078528"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg8_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="-962.17" y="-301.65" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00106394680686" y="0" z="-102.862036367149"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg8_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="-997.77" y="-145.66" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00125022494929" y="0" z="-102.856648078528"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg8_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="-868.16" y="-198.13" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00127296912344" y="0" z="-102.857919141842"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg8_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="-794.67" y="-181.36" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99496225778731" y="0" z="-102.857195423748"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg8_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="-750.17" y="-171.2" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99532710357597" y="0" z="-102.860023599769"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg8_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="-720.17" y="-164.35" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00365109205349" y="0" z="-102.85866500871"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg8_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="-1080.59" y="-246.62" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99985199386394" y="0" z="-102.858183582847"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg9_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="-932.29" y="-360.13" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99756474288783" y="0" z="-115.713060680952"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg9_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="-862.87" y="-504.29" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99756475506728" y="0" z="-115.716168280968"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg9_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="-905.64" y="-436.09" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99756474288783" y="0" z="-115.706607706909"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg9_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="-796.11" y="-383.35" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99718324993159" y="0" z="-115.71210812869"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg9_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="-728.21" y="-350.65" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00224196954869" y="0" z="-115.711362597741"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg9_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="-686.99" y="-330.81" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00224197032247" y="0" z="-115.711876407795"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg9_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="-659.27" y="-317.46" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99215901358134" y="0" z="-115.712895402685"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg9_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="-992.36" y="-477.85" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99985791528861" y="0" z="-115.712527665644"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg9_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="-778.89" y="-621.11" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00125096921121" y="0" z="-128.574796422307"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg9_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="-736.01" y="-689.24" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00122071822172" y="0" z="-128.570330856726"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg9_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="-835.77" y="-564.15" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.0012207182216" y="0" z="-128.570330856726"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg9_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="-696.22" y="-555.18" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00130540202344" y="0" z="-128.572849501898"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg9_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="-637.29" y="-508.19" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99512451020864" y="0" z="-128.57220729822"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg9_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="-601.6" y="-479.73" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99512450982552" y="0" z="-128.571822482625"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg9_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="-577.54" y="-460.54" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00326233860396" y="0" z="-128.571386460197"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg9_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="-866.58" y="-691.04" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99981480575516" y="0" z="-128.571012343115"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg10_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="-683.71" y="-728.97" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99745726760163" y="0" z="-141.429669143274"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg10_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="-558.62" y="-828.73" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99757626624382" y="0" z="-141.425203577693"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg10_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="-626.75" y="-785.84" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99745726760163" y="0" z="-141.424070264651"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg10_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="-550.94" y="-690.8" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.9970848950645" y="0" z="-141.425473264649"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg10_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="-503.96" y="-631.88" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00227678658426" y="0" z="-141.425435038091"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg10_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="-475.43" y="-596.12" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00227678985119" y="0" z="-141.427670729531"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg10_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="-456.25" y="-572.06" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99219328386572" y="0" z="-141.426499643632"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg10_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="-686.76" y="-861.09" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99981480639075" y="0" z="-141.425541858588"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg10_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="-432.27" y="-897.55" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00112628845284" y="0" z="-154.286939319048"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg10_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="-364.08" y="-940.32" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00120918624295" y="0" z="-154.286939319048"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg10_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="-508.23" y="-870.9" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00112628679949" y="0" z="-154.286939319048"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg10_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="-386.39" y="-802.28" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00127027957631" y="0" z="-154.28789187131"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg10_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="-353.69" y="-734.37" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99508977792412" y="0" z="-154.287329086263"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg10_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="-333.88" y="-693.24" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99508977569805" y="0" z="-154.283850926126"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg10_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="-320.53" y="-665.52" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00334178529363" y="0" z="-154.288575486664"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg10_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="-480.93" y="-998.6" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99974950490777" y="0" z="-154.288428404787"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg11_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="-299.72" y="-953.42" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99760572852145" y="0" z="-167.143351921472"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg11_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="-143.73" y="-989.04" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.9975632631192" y="0" z="-167.143351921472"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg11_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="-223.72" y="-979.96" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99760573194198" y="0" z="-167.143351921472"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg11_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="-196.66" y="-861.43" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99692970602534" y="0" z="-167.139458406038"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg11_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="-179.89" y="-787.97" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00247986612233" y="0" z="-167.139193516361"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg11_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="-169.71" y="-743.37" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00211414876196" y="0" z="-167.139976400231"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg11_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="-162.86" y="-713.37" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.9920745328318" y="0" z="-167.14133499129"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg11_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="-245.14" y="-1073.79" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99979637796569" y="0" z="-167.13966800983"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg11_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="-0.03" y="-996.22" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00127863009874" y="0" z="-180"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg11_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="79.97" y="-1005.17" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00127863009874" y="0" z="-180"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg11_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="-80.03" y="-1005.17" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00127863009874" y="0" z="-180"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg11_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="-0.03" y="-890.48" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00117227416171" y="0" z="-180"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg11_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="-0.03" y="-815.1" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99509537328742" y="0" z="-180"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg11_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="-0.03" y="-769.45" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99509537328754" y="0" z="-180"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg11_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="-0.03" y="-738.69" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00375307004064" y="0" z="-180"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg11_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="-0.03" y="-1108.37" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99998846471167" y="0" z="-180"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg12_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="143.63" y="-989.05" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99746213533858" y="0" z="-192.848072353728"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg12_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="299.62" y="-953.46" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99764819337144" y="0" z="-192.8550545546"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg12_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="223.62" y="-979.98" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99746213827367" y="0" z="-192.849665070987"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg12_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="196.57" y="-861.45" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99723354693979" y="0" z="-192.85469817488"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg12_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="179.81" y="-787.99" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00219760291102" y="0" z="-192.854255488448"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg12_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="169.63" y="-743.38" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00211416193411" y="0" z="-192.856190745833"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg12_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="162.78" y="-713.39" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99234073876644" y="0" z="-192.854605386645"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg12_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="245.03" y="-1073.81" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99990759577741" y="0" z="-192.85339642378"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg12_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="432.21" y="-897.58" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00112628845284" y="0" z="-205.716168280968"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg12_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="508.17" y="-870.93" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00112628845284" y="0" z="-205.716168280968"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg12_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="364.01" y="-940.35" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00120919392665" y="0" z="-205.713060680952"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg12_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="386.33" y="-802.31" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.0013632608332" y="0" z="-205.71210812869"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg12_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="353.62" y="-734.4" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99508977792412" y="0" z="-205.712670913737"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg12_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="333.82" y="-693.27" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99508977658641" y="0" z="-205.716149073874"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg12_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="320.47" y="-665.55" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00388276183127" y="0" z="-205.712895402685"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg12_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="480.87" y="-998.63" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99985791843856" y="0" z="-205.712527665644"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg13_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="558.54" y="-828.79" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99769524242896" y="0" z="-218.564731105379"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg13_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="683.64" y="-729.04" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99769524242896" y="0" z="-218.564731105379"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg13_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="626.67" y="-785.91" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99754602792094" y="0" z="-218.564731105379"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg13_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="550.87" y="-690.86" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99688373915578" y="0" z="-218.56906935807"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg13_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="503.89" y="-631.94" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00227679824193" y="0" z="-218.566089283562"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg13_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="475.37" y="-596.17" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00198352722274" y="0" z="-218.567324024792"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg13_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="456.19" y="-572.11" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99219326952577" y="0" z="-218.566622083143"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg13_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="686.67" y="-861.16" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99997060385794" y="0" z="-218.568264485091"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg13_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="778.85" y="-621.17" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00110158076619" y="0" z="-231.429669143274"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg13_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="835.72" y="-564.2" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00122070860362" y="0" z="-231.425203577693"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg13_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="735.97" y="-689.29" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00122070860362" y="0" z="-231.425203577693"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg13_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="696.18" y="-555.24" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00130540510166" y="0" z="-231.4292535597"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg13_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="637.25" y="-508.24" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99512450972046" y="0" z="-231.427315284211"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg13_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="601.56" y="-479.78" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99512450982552" y="0" z="-231.427670729531"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg13_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="577.5" y="-460.6" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00363666277075" y="0" z="-231.42384907347"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg13_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="866.53" y="-691.1" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99997060487138" y="0" z="-231.428638705608"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg14_R5-FF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_L_pos" x="862.82" y="-504.38" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_L_rot" x="2.99739914681653" y="0" z="-244.280487044878"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg14_R5-FF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_R_pos" x="932.25" y="-360.23" z="-78.98"/>
+				<rotation unit="deg" name="R5-FF-Quartz_R_rot" x="2.99739914681665" y="0" z="-244.280487044878"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg14_R5-BF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_C_pos" x="905.6" y="-436.19" z="78.08"/>
+				<rotation unit="deg" name="R5-BF-Quartz_C_rot" x="2.99739914681653" y="0" z="-244.280487044878"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg14_R4-FF-Quartz.gdml"/>
+				<position unit="mm" name="R4-FF-Quartz_pos" x="796.07" y="-383.43" z="248.47"/>
+				<rotation unit="deg" name="R4-FF-Quartz_rot" x="2.99718325273568" y="0" z="-244.281877637402"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg14_R3-FF-Quartz.gdml"/>
+				<position unit="mm" name="R3-FF-Quartz_pos" x="728.18" y="-350.73" z="525.97"/>
+				<rotation unit="deg" name="R3-FF-Quartz_rot" x="3.00224198718392" y="0" z="-244.281895192689"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg14_R2-FF-Quartz.gdml"/>
+				<position unit="mm" name="R2-FF-Quartz_pos" x="686.96" y="-330.88" z="798.78"/>
+				<rotation unit="deg" name="R2-FF-Quartz_rot" x="3.00207922007917" y="0" z="-244.279578037078"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg14_R1-FF-Quartz.gdml"/>
+				<position unit="mm" name="R1-FF-Quartz_pos" x="659.24" y="-317.53" z="1070.8"/>
+				<rotation unit="deg" name="R1-FF-Quartz_rot" x="2.99243842748177" y="0" z="-244.2809955397"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/FFSeg14_R6-FF-Quartz.gdml"/>
+				<position unit="mm" name="R6-FF-Quartz_pos" x="992.31" y="-477.95" z="-364.35"/>
+				<rotation unit="deg" name="R6-FF-Quartz_rot" x="2.99974950850589" y="0" z="-244.283501416188"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg14_R5-FF-Quartz_C.gdml"/>
+				<position unit="mm" name="R5-FF-Quartz_C_pos" x="971.23" y="-221.73" z="-78.11"/>
+				<rotation unit="deg" name="R5-FF-Quartz_C_rot" x="3.00125022494929" y="0" z="-257.136369302394"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg14_R5-BF-Quartz_R.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_R_pos" x="997.76" y="-145.73" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_R_rot" x="3.00125022494929" y="0" z="-257.137963632851"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg14_R5-BF-Quartz_L.gdml"/>
+				<position unit="mm" name="R5-BF-Quartz_L_pos" x="962.15" y="-301.71" z="78.95"/>
+				<rotation unit="deg" name="R5-BF-Quartz_L_rot" x="3.00106396206322" y="0" z="-257.1449454454"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg14_R4-BF-Quartz.gdml"/>
+				<position unit="mm" name="R4-BF-Quartz_pos" x="868.14" y="-198.2" z="382.61"/>
+				<rotation unit="deg" name="R4-BF-Quartz_rot" x="3.00127296912344" y="0" z="-257.142080858158"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg14_R3-BF-Quartz.gdml"/>
+				<position unit="mm" name="R3-BF-Quartz_pos" x="794.66" y="-181.42" z="660.12"/>
+				<rotation unit="deg" name="R3-BF-Quartz_rot" x="2.99532710771989" y="0" z="-257.142804576252"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg14_R2-BF-Quartz.gdml"/>
+				<position unit="mm" name="R2-BF-Quartz_pos" x="750.15" y="-171.26" z="932.92"/>
+				<rotation unit="deg" name="R2-BF-Quartz_rot" x="2.99532710856411" y="0" z="-257.143097033639"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg14_R1-BF-Quartz.gdml"/>
+				<position unit="mm" name="R1-BF-Quartz_pos" x="720.15" y="-164.42" z="1204.94"/>
+				<rotation unit="deg" name="R1-BF-Quartz_rot" x="3.00365109205349" y="0" z="-257.144640332585"/>
+			</physvol>
+			<physvol>
+				<file name="detector/ThinQuartz/DetectorArray/BFSeg14_R6-BF-Quartz.gdml"/>
+				<position unit="mm" name="R6-BF-Quartz_pos" x="1080.57" y="-246.69" z="-230.22"/>
+				<rotation unit="deg" name="R6-BF-Quartz_rot" x="2.99985199787107" y="0" z="-257.141816417153"/>
+			</physvol>
+			<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+		</volume>
+	</structure>
+ 
+	<setup name="Default" version="1.0">
+		<world ref="DetectorArray_volume"/>
+	</setup>
+</gdml>

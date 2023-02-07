@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+ 
+ 
+	<solids>
+		<arb8 name = "FFSeg10_R3-FF-Quartz_solid" v1x="-95" v1y="-30" v2x="-95" v2y="30" v3x="95" v3y="30" v4x="95" v4y="-30" v5x="-95" v5y="-30" v6x="-95" v6y="50" v7x="95" v7y="50" v8x="95" v8y="-30" dz="10" lunit= "mm"/>
+	</solids>
+ 
+	<structure>
+		<volume name="FFSeg10_R3-FF-Quartz">
+			<materialref ref="Quartz"/>
+			<solidref ref="FFSeg10_R3-FF-Quartz_solid"/>
+			<auxiliary auxtype="Color" auxvalue="magenta"/>
+			<auxiliary auxtype="SensDet" auxvalue="mainDetectorSD" />
+			<auxiliary auxtype="DetNo" auxvalue="151030"/>
+		</volume>
+	</structure>
+ 
+	<setup name="Default" version="1.0">
+		<world ref="FFSeg10_R3-FF-Quartz"/>
+	</setup>
+</gdml>
