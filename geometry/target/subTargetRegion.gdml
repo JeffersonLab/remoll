@@ -173,9 +173,9 @@
     </volume>
 
     <volume name="ConcreteShieldTop">
-      <materialref ref="Concrete"/>
+      <materialref ref="barite"/>
       <solidref ref="concreteTop_sub"/>
-      <auxiliary auxtype="Color" auxvalue="Green"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
 
