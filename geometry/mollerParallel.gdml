@@ -41,7 +41,25 @@
     name="smallVirtualPlane_solid"
     startphi="0" deltaphi="360" aunit="deg"
     rmax="1000" rmin="0" z="1" lunit="mm"/>
-
+  
+  <tube
+    name="tinyVirtualPlane_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="250" rmin="0" z="1" lunit="mm"/>
+    
+  <tube
+    name="linteldonutVP_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="820" rmin="460" z="1" lunit="mm"/>
+    
+  <tube
+    name="collar1donutVP_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmax="765" rmin="595" z="1" lunit="mm"/>
+      
+  <box lunit="mm" name="XLargeVirtualPlane_solid"
+    x="8100" y="6000" z="1"/>
+         
   <box lunit="mm" name="RasterPS_solid" x="800" y="2500" z="800"/>
 
   <box lunit="mm" name="sbsBunkerFrontFace_solid"  x="11000" y="4500" z="1"/>
@@ -225,6 +243,16 @@
     <auxiliary auxtype="DetNo" auxvalue="483"/>
   </volume>
   
+  <volume name="usHybridVirtualPlane3_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="XLargeVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5620"/>
+  </volume>
+
   <volume name="Bellows3DS_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="smallVirtualPlane_solid"/>
@@ -448,14 +476,21 @@
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="65"/>
   </volume>
-
+  
   <volume name="Col6AEnt_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="largeVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="66"/>
   </volume>
-
+  
+  <volume name="LintelMid_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="linteldonutVP_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="165"/>
+  </volume>
+  
   <volume name="LintelExit_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="largeVirtualPlane_solid"/>
@@ -561,6 +596,13 @@
     <auxiliary auxtype="DetNo" auxvalue="76"/>
   </volume>
 
+  <volume name="collar1Mid_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="collar1donutVP_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="177"/>
+  </volume>
+  
   <volume name="collar1Exit_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="largeVirtualPlane_solid"/>
@@ -595,7 +637,28 @@
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="79"/>
   </volume>
+  
+  <volume name="Drift3_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tinyVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="82"/>
+  </volume>
 
+  <volume name="Drift4_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="tinyVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="83"/>
+  </volume>
+  
+  <volume name="DSwindow_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="largeVirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="84"/>
+  </volume>
+  
   <volume name="collar2Ent_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="midVirtualPlane_solid"/>
@@ -610,6 +673,26 @@
     <auxiliary auxtype="DetNo" auxvalue="81"/>
   </volume>
 
+ <volume name="dsHybridVirtualPlane1_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="XLargeVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5719"/>
+  </volume>
+  
+  <volume name="dsHybridVirtualPlane2_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="XLargeVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5720"/>
+  </volume>
+  
   <volume name="gemVirtualPlane1_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="midVirtualPlane_solid"/>
@@ -917,6 +1000,11 @@
       <position name="Bellows3US_pos" unit="mm" x="0" y="0" z="11287.5-6851.5-419.4/2-1-44.1/2"/>
     </physvol>
 
+    <physvol    name="usHybridVirtualPlane3_phys">
+      <volumeref ref="usHybridVirtualPlane3_log"/>
+      <position name="usHybridVirtualPlane3_pos" unit="mm" z="4575.384+1"/>
+    </physvol>
+    
     <physvol name="Bellows3DS_phys">
       <volumeref ref="Bellows3DS_log"/>
       <position name="Bellows3DS_pos" unit="mm" x="0" y="0" z="11287.5-6851.5+419.4/2+1+44.1/2"/>
@@ -1082,6 +1170,11 @@
       <position name="Col6AEnt_pos" unit="mm" x="0" y="0" z="9555.904-0.5"/>
     </physvol>
 
+    <physvol name="LintelMid_phys">
+      <volumeref ref="LintelMid_log"/>
+      <position name="LintelMid_pos" unit="mm" x="0" y="0" z="9507.3+100/2"/>
+    </physvol>
+    
     <physvol name="LintelExit_phys">
       <volumeref ref="LintelExit_log"/>
       <position name="LintelExit_pos" unit="mm" x="0" y="0" z="9607.3-0.5"/>
@@ -1152,6 +1245,11 @@
       <position name="collar1Ent_pos" unit="mm" x="0" y="0" z="11814.4958-1"/>
     </physvol>
 
+    <physvol name="collar1Mid_phys">
+      <volumeref ref="collar1Mid_log"/>
+      <position name="collar1Mid_pos" unit="mm" x="0" y="0" z="11814.4958+152/2"/>
+    </physvol>
+    
     <physvol name="collar1Exit_phys">
       <volumeref ref="collar1Exit_log"/>
       <position name="collar1Exit_pos" unit="mm" x="0" y="0" z="11966.4958+1"/>
@@ -1177,6 +1275,23 @@
       <position name="Drift2_pos" unit="mm" x="0" y="0" z="16500+0.5"/>
     </physvol>
 
+    <physvol name="Drift3_phys">
+      <volumeref ref="Drift3_log"/>
+      <position name="Drift3_pos" unit="mm" x="1516.7737" y="218.44" z="16043.54424"/>
+      <rotation name="Drift3_rot" unit="deg" x="90" y="0" z="0"/>
+    </physvol>
+    
+    <physvol name="Drift4_phys">
+      <volumeref ref="Drift4_log"/>
+      <position name="Drift4_pos" unit="mm" x="-1516.7737" y="218.44" z="16043.54424"/>
+      <rotation name="Drift4_rot" unit="deg" x="90" y="0" z="0"/>
+    </physvol>
+    
+    <physvol name="DSwindow_phys">
+      <volumeref ref="DSwindow_log"/>
+      <position name="DSwindow_pos" unit="mm" x="0" y="0" z="18511.52-1"/>
+    </physvol>
+    
     <physvol name="collar2Ent_phys">
       <volumeref ref="collar2Ent_log"/>
       <position name="Collar2Ent_pos" unit="mm" x="0" y="0" z="19132.69-0.5"/>
@@ -1187,6 +1302,16 @@
       <position name="collar2Exit_pos" unit="mm" x="0" y="0" z="19132.69+150+0.6"/>
     </physvol>
 
+    <physvol name="dsHybridVirtualPlane1_phys">
+      <volumeref ref="dsHybridVirtualPlane1_log"/>
+      <position name="dsHybridVirtualPlane1_pos" unit="mm" y="0" z="19332.69-400-1"/>
+    </physvol>
+    
+    <physvol name="dsHybridVirtualPlane2_phys">
+      <volumeref ref="dsHybridVirtualPlane2_log"/>
+      <position name="dsHybridVirtualPlane2_pos" unit="mm" y="0" z="19332.69+1"/>
+    </physvol>
+    
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
       <volumeref ref="gemVirtualPlane1_log"/>
@@ -1211,7 +1336,7 @@
       <positionref ref="mainDetectorVirtualPlane_pos"/>
     </physvol>
     
-    <physvol name="Ring1Front_phys">
+    <!--<physvol name="Ring1Front_phys">
       <volumeref ref="Ring1Front_log"/>
       <position name="Ring1Front_pos" unit="mm" z="22200.00 + 1145"/>
     </physvol>
@@ -1269,7 +1394,7 @@
     <physvol name="Ring6Back_phys">
       <volumeref ref="Ring6Back_log"/>
       <position name="Ring6Back_pos" unit="mm" z="22200.00 - 1"/>
-    </physvol>
+    </physvol>-->
     
     <!-- ShowerMax detector plane -->
     <physvol name="showerMaxVirtualPlane_phys">
