@@ -1,0 +1,10 @@
+# Load geometry
+/remoll/geometry/setfile geometry/showermax/showerMaxGen.gdml
+/remoll/parallel/setfile 
+
+/run/initialize
+
+/vis/open OGLSQt 800x600
+/control/execute vis/vis.mac
+/vis/viewer/clearCutawayPlanes
+/vis/viewer/set/viewpointThetaPhi 180 0 deg
