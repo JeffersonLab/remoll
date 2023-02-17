@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 
-<!DOCTYPE gdml [
-<!ENTITY world SYSTEM "solids/world.xml">
-<!ENTITY matrices SYSTEM "matrices.xml">
-<!ENTITY materials SYSTEM "materials.xml">
-<!ENTITY positions SYSTEM "positions.xml">
-]>
-
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
   <define> 
-    &positions;
-    &matrices;
-
     <constant name="thickness" value="4000"/>
   </define>
 
-  &materials;
+  <materials>
+    <material name="Epoxy" state="solid">
+      <D value="1.3" unit="g/cm3"/>
+      <fraction n="0.5354" ref="C"/>
+      <fraction n="0.1318" ref="H"/>
+      <fraction n="0.3328" ref="O"/>
+    </material>
+    <material name="G10" state="solid">
+      <D value="1.3" unit="g/cm3"/>
+      <fraction n="0.773" ref="G4_SILICON_DIOXIDE"/>
+      <fraction n="0.147" ref="Epoxy"/>
+      <fraction n="0.080" ref="G4_Cl"/>
+    </material>  
+  </materials>
 
   <solids>
     <box lunit="mm" name="world_solid" x="1000" y="1000" z="9000"/>
