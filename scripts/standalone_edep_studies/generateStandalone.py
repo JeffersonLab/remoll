@@ -8,9 +8,9 @@ import argparse
 
 parser= argparse.ArgumentParser(description="Change material and thickness based on given input parameters. Example: python changeMaterial.py -m G4_Pb -t 400")
 parser.add_argument("-m", dest="material", action="store", required=True, help="Provide material")
-parser.add_argument("-t", dest="thickness", action="store", required=True, help="Provide a length that is 10 radiation length of the material")
+parser.add_argument("-t", dest="thickness", action="store", required=True, help="Provide a thickness in mm that is 10 radiation length of the material")
 parser.add_argument("-p", dest="particle", action="store", required=True, help="Provide particle name such as e+")
-parser.add_argument("-e", dest="energy", action="store", required=True, help="Provide energy of particle")
+parser.add_argument("-e", dest="energy", action="store", required=True, help="Provide energy of particle in MeV")
 parser.add_argument("-n", dest="nevents", action="store", required=True, help="Provide number of events")
 
 
@@ -85,12 +85,12 @@ out = " \
 /remoll/evgen/beam/corrx 0.0 \n \
 /remoll/evgen/beam/corry 0.0 \n \
 /remoll/evgen/beam/partName "+args.particle+" \n \
-/remoll/beamene "+args.energy+" \n \
+/remoll/beamene "+args.energy+" MeV\n \
 /remoll/evgen/beam/z -498 \n \
 /remoll/SD/enable_all \n \
 /remoll/SD/detect lowenergyneutral 10 \n \
 /remoll/SD/detect secondaries 10 \n \
-/remoll/filename "+args.particle+"_"+args.energy+".root\n \
+/remoll/filename "+args.material+"_"+args.thickness+"mm_"+args.particle+"_"+args.energy+"MeV.root\n \
 /run/beamOn "+args.nevents+"\n \
 "
 
