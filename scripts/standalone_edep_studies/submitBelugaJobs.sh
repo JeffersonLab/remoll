@@ -18,6 +18,4 @@ python scripts/standalone_edep_studies/generateStandalone.py -m G4_W -t 1000 -n 
 
 ./build/remoll macros/run.mac
 
-mv  G4_W_1000mm_e+_100MeV.root /lustre03/project/6049248/commonFiles/out 
-
-
+mv  G4_W_1000mm_e+_100MeV.root /lustre03/project/6049248/commonFiles/out/G4_W_1000mm_e+_100MeV_${SLURM_JOBID}_${SLURM_ARRAY_TASK_ID}.root
