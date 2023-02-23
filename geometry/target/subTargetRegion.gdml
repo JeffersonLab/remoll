@@ -86,7 +86,7 @@
 	 
     <polycone name = "tgt2US_pipe2_DSlink_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
 	  <zplane rmin="152.40" rmax="184.15" z="-1357.81+4500" />
-	  <zplane rmin="152.40" rmax="184.15" z="-1339.55-+4500" />
+	  <zplane rmin="152.40" rmax="184.15" z="-1339.55+4500" />
 	  <zplane rmin="163.13" rmax="184.15" z="-1339.55+4500" />
 	  <zplane rmin="163.13" rmax="184.15" z="-1329.24+4500" />
     </polycone>
