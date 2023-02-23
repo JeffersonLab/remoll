@@ -77,8 +77,12 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
           rmin="0" rmax="451" z="concreteThickness+2.0"/>
 
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="tgt2US_pipe2_solid"
-          rmin="146.05" rmax="152.4" z="concreteThickness + 200"/>
+    <polycone name = "tgt2US_pipe2_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm">  
+	  <zplane rmin="149.23" rmax="152.40" z="-2934.97+4500" />
+	  <zplane rmin="146.05" rmax="152.40" z="-2922.27+4500" /> 
+	  <zplane rmin="146.05" rmax="152.40" z="-1377.49+4500" />
+	  <zplane rmin="149.23" rmax="152.40" z="-1364.79+4500" />  
+    </polycone>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="outerBarite_solid"
           rmin="190.5" rmax="450" z="concreteThickness - 200"/>
@@ -277,7 +281,6 @@
 
       <physvol name="tgt2US_pipe2">
 	<volumeref ref="tgt2US_pipe2_logic"/>
-	<position name="tgt2US_pipe2_pos" unit="mm" z="concreteBoxz/2. - concreteThickness/2. - 100"/>
       </physvol>
 
     </volume>
