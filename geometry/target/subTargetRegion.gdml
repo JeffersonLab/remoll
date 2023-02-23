@@ -77,11 +77,27 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
           rmin="0" rmax="451" z="concreteThickness+2.0"/>
 
-    <polycone name = "tgt2US_pipe2_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm">  
+    <polycone name = "tgt2US_pipe2_USlink_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
+	  <zplane rmin="163.13" rmax="184.15" z="-2970.53+4500" />
+	  <zplane rmin="163.13" rmax="184.15" z="-2960.22+4500" />
+	  <zplane rmin="152.40" rmax="184.15" z="-2960.22+4500" />
+	  <zplane rmin="152.40" rmax="184.15" z="-2941.95+4500" />
+    </polycone>
+	 
+    <polycone name = "tgt2US_pipe2_DSlink_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
+	  <zplane rmin="152.40" rmax="184.15" z="-1357.81+4500" />
+	  <zplane rmin="152.40" rmax="184.15" z="-1339.55-+4500" />
+	  <zplane rmin="163.13" rmax="184.15" z="-1339.55+4500" />
+	  <zplane rmin="163.13" rmax="184.15" z="-1329.24+4500" />
+    </polycone>
+	  
+    <polycone name = "tgt2US_pipe2_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
+	  <zplane rmin="149.23" rmax="152.40" z="-2960.22+4500" />
 	  <zplane rmin="149.23" rmax="152.40" z="-2934.97+4500" />
 	  <zplane rmin="146.05" rmax="152.40" z="-2922.27+4500" /> 
 	  <zplane rmin="146.05" rmax="152.40" z="-1377.49+4500" />
-	  <zplane rmin="149.23" rmax="152.40" z="-1364.79+4500" />  
+	  <zplane rmin="149.23" rmax="152.40" z="-1364.79+4500" /> 
+	  <zplane rmin="149.23" rmax="152.40" z="-1339.55+4500" />
     </polycone>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="outerBarite_solid"
@@ -210,6 +226,20 @@
       <auxiliary auxtype="Color" auxvalue="Silver"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
+	  
+    <volume name="tgt2US_pipe2_USlink_logic">
+      <materialref ref="G4_Al"/>
+      <solidref ref="tgt2US_pipe2_USlink_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Grey"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+	  
+    <volume name="tgt2US_pipe2_DSlink_logic">
+      <materialref ref="G4_Al"/>
+      <solidref ref="tgt2US_pipe2_DSlink_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Grey"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
 
     <volume name="TargWindow_logic">
       <materialref ref="Aluminum"/>
@@ -281,6 +311,14 @@
 
       <physvol name="tgt2US_pipe2">
 	<volumeref ref="tgt2US_pipe2_logic"/>
+      </physvol>
+
+      <physvol name="tgt2US_pipe2_USlink">
+	<volumeref ref="tgt2US_pipe2_USlink_logic"/>
+      </physvol>
+	   
+      <physvol name="tgt2US_pipe2_DSlink">
+	<volumeref ref="tgt2US_pipe2_DSlink_logic"/>
       </physvol>
 
     </volume>
