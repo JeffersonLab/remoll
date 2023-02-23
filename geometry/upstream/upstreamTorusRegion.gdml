@@ -1478,7 +1478,6 @@
 	    
       <physvol name="bellows2physical_phys">
           <volumeref ref="bellows2physical_log"/>
-          <positionref ref="bellows2physical_pos"/>
       </physvol>
       
       <physvol name="bellows3physical_phys">
