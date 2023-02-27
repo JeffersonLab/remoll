@@ -1368,7 +1368,7 @@
     <!--add bellows G4_STAINLESS-STEEL and custom bellows SS material  -->
     <volume name="bellows2physical_log">
         <materialref ref="SSbellows"/>
-        <solidref ref="bellows3physical_solid"/>
+        <solidref ref="bellows2physical_solid"/>
         <auxiliary auxtype="Color" auxvalue="Pink"/>
     </volume>	
 	
