@@ -576,12 +576,12 @@
 
     <!--add bellows -->
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2physical_solid"> 
-      <zplane rmin="149.23" rmax="152.4" z="-831.17+7000"/> 
-      <zplane rmin="149.23" rmax="152.4" z="-773.05+7000"/> 
-      <zplane rmin="149.23" rmax="190.5" z="-773.05+7000"/>
-      <zplane rmin="149.23" rmax="190.5" z="-484.15+7000"/>
-      <zplane rmin="149.23" rmax="152.4" z="-484.15+7000"/> 
-      <zplane rmin="149.23" rmax="152.4" z="-424.51+7000"/> 
+      <zplane rmin="149.23" rmax="152.4" z="-831.17+2000"/> 
+      <zplane rmin="149.23" rmax="152.4" z="-773.05+2000"/> 
+      <zplane rmin="149.23" rmax="190.5" z="-773.05+2000"/>
+      <zplane rmin="149.23" rmax="190.5" z="-484.15+2000"/>
+      <zplane rmin="149.23" rmax="152.4" z="-484.15+2000"/> 
+      <zplane rmin="149.23" rmax="152.4" z="-424.51+2000"/> 
     </polycone>	
 		
     <tube
