@@ -357,7 +357,7 @@
 
       <!-- ShowerMax Detectors-->
       <physvol>
-	<file name="showermax/showerMaxGen.gdml"/>
+	<file name="showermax/showerMaxDetectorSystem.gdml"/>
 	<positionref ref="showerMaxDetectorCenter"/>
       </physvol>
       
