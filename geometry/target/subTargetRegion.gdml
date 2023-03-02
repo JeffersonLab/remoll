@@ -77,6 +77,13 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
           rmin="0" rmax="451" z="concreteThickness+2.0"/>
 	  
+    <polycone name = "bellows1USflange_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
+	  <zplane rmin="149.23" rmax="184.15" z="-3427.73+4500" />  
+	  <zplane rmin="149.23" rmax="184.15" z="-3401.69+4500" /> 
+	  <zplane rmin="152.40" rmax="184.15" z="-3401.69+4500" />
+	  <zplane rmin="152.40" rmax="184.15" z="-3399.15+4500" />
+    </polycone>
+	  
     <polycone name = "bellows1_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
 	  <zplane rmin="149.23" rmax="152.40" z="-3401.69+4500" />  
 	  <zplane rmin="149.23" rmax="152.40" z="-3343.58+4500" /> 
@@ -231,6 +238,13 @@
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
 	  
+    <volume name="bellows1USflange_logic">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="bellows1USflange_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+	  
     <volume name="bellows1_logic">
       <materialref ref="SSbellows"/>
       <solidref ref="bellows1_solid"/>
@@ -327,6 +341,10 @@
 	<position name="outerBarite_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2. + 100"/>
       </physvol>
 
+      <physvol name="bellows1USflange">
+	<volumeref ref="bellows1USflange_logic"/>
+      </physvol>
+	    
       <physvol name="bellows1">
 	<volumeref ref="bellows1_logic"/>
       </physvol>	    
