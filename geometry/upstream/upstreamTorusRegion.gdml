@@ -595,7 +595,7 @@
     </polycone>	
 	
     <!--add bellows -->
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2physical_solid"> 
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2_solid"> 
       <zplane rmin="149.23" rmax="152.4" z="-831.17-2000"/> 
       <zplane rmin="149.23" rmax="152.4" z="-773.05-2000"/> 
       <zplane rmin="149.23" rmax="190.5" z="-773.05-2000"/>
@@ -1414,9 +1414,9 @@
     </volume>
 
     <!--add bellows G4_STAINLESS-STEEL and custom bellows SS material  -->
-    <volume name="bellows2physical_log">
+    <volume name="bellows2_log">
         <materialref ref="SSbellows"/>
-        <solidref ref="bellows2physical_solid"/>
+        <solidref ref="bellows2_solid"/>
         <auxiliary auxtype="Color" auxvalue="Pink"/>
     </volume>	
     
@@ -1542,8 +1542,8 @@
           <volumeref ref="beampipeDScollar0_log"/>
       </physvol>
 	    
-      <physvol name="bellows2physical_phys">
-          <volumeref ref="bellows2physical_log"/>
+      <physvol name="bellows2_phys">
+          <volumeref ref="bellows2_log"/>
       </physvol>
 	   
       <physvol name="bellows2USflange_phys">
