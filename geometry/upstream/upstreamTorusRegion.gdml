@@ -1398,7 +1398,7 @@
     <volume name="flangeUScollar0_log">
       <materialref ref="G4_STAINLESS-STEEL"/>
       <solidref ref="flangeUScollar0_solid"/>
-      <auxiliary auxtype="Color" auxvalue="grey"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
     </volume>	
 	
     <volume name="beampipeUScollar0_log">
@@ -1423,7 +1423,7 @@
     <volume name="bellows2USflange_log">
         <materialref ref="G4_STAINLESS-STEEL"/>
         <solidref ref="bellows2USflange_solid"/>
-        <auxiliary auxtype="Color" auxvalue="Grey"/>
+        <auxiliary auxtype="Color" auxvalue="Orange"/>
     </volume>
 	
     <volume name="bellows3physical_log">
