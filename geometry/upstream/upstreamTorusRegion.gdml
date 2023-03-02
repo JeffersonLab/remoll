@@ -612,6 +612,13 @@
       <zplane rmin="149.23" rmax="152.4" z="-885.77-2000"/> 
       <zplane rmin="149.23" rmax="152.4" z="-892.76-2000"/> 
     </polycone>	
+	
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2DSflange_solid"> 
+      <zplane rmin="152.4" rmax="184.15" z="-428.58-2000"/> 
+      <zplane rmin="152.4" rmax="184.15" z="-424.51-2000"/> 
+      <zplane rmin="149.23" rmax="184.15" z="-424.51-2000"/>
+      <zplane rmin="149.23" rmax="184.15" z="-371.48-2000"/> 
+    </polycone>
 		
     <tube
     name="bellows3physical_solid"
@@ -1425,6 +1432,12 @@
         <solidref ref="bellows2USflange_solid"/>
         <auxiliary auxtype="Color" auxvalue="Orange"/>
     </volume>
+
+    <volume name="bellows2DSflange_log">
+        <materialref ref="G4_STAINLESS-STEEL"/>
+        <solidref ref="bellows2DSflange_solid"/>
+        <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
 	
     <volume name="bellows3physical_log">
         <materialref ref="SSbellows"/>
@@ -1548,6 +1561,10 @@
 	   
       <physvol name="bellows2USflange_phys">
           <volumeref ref="bellows2USflange_log"/>
+      </physvol>
+	    
+      <physvol name="bellows2DSflange_phys">
+          <volumeref ref="bellows2DSflange_log"/>
       </physvol>
       
       <physvol name="bellows3physical_phys">
