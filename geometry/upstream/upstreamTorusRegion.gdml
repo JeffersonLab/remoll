@@ -1421,7 +1421,7 @@
     </volume>	
     
     <volume name="bellows2USflange_log">
-        <materialref ref="G4_Al"/>
+        <materialref ref="G4_STAINLESS-STEEL"/>
         <solidref ref="bellows2USflange_solid"/>
         <auxiliary auxtype="Color" auxvalue="Grey"/>
     </volume>
