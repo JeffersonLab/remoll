@@ -573,7 +573,18 @@
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="collar0_solid"
           rmin="76.2" rmax="330" z="200"/>
-
+    
+    <!-- beampipe segments upstream and downstream of collar 0 enclosure -->
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="beampipeUScollar0_solid"> 
+      <zplane rmin="146.05" rmax="152.4" z="-1293.67-2000"/> 
+      <zplane rmin="146.05" rmax="152.4" z="-1200-2000"/>  
+    </polycone>	
+	
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="beampipeDScollar0_solid"> 
+      <zplane rmin="146.05" rmax="152.4" z="-892.76-2000"/> 
+      <zplane rmin="146.05" rmax="152.4" z="-1000-2000"/>  
+    </polycone>	
+	
     <!--add bellows -->
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2physical_solid"> 
       <zplane rmin="149.23" rmax="152.4" z="-831.17-2000"/> 
@@ -1373,6 +1384,19 @@
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
       <auxiliary auxtype="DetNo" auxvalue="5688"/>
     </volume>
+    
+    <!--beampipe segments upsetream and downstream of collar 0-->
+    <volume name="beampipeUScollar0_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="beampipeUScollar0_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+
+    <volume name="beampipeDScollar0_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="beampipeDScollar0_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
 
     <!--add bellows G4_STAINLESS-STEEL and custom bellows SS material  -->
     <volume name="bellows2physical_log">
@@ -1489,6 +1513,14 @@
       <physvol>
         <volumeref ref="PbWall_2_logic"/>
         <position name="PbWall_2_pos" x="0" y="0" z="1618.10+101.6/2"/>
+      </physvol>
+	    
+      <physvol name="beampipeUScollar0_phys">
+          <volumeref ref="beampipeUScollar0_log"/>
+      </physvol>
+	    
+      <physvol name="beampipeDScollar0_phys">
+          <volumeref ref="beampipeDScollar0_log"/>
       </physvol>
 	    
       <physvol name="bellows2physical_phys">
