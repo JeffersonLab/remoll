@@ -241,21 +241,21 @@
     <volume name="tgt2US_pipe2_logic">
       <materialref ref="G4_Al"/>
       <solidref ref="tgt2US_pipe2_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Silver"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
 	  
     <volume name="tgt2US_pipe2_USflange_logic">
       <materialref ref="G4_STAINLESS-STEEL"/>
       <solidref ref="tgt2US_pipe2_USflange_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Grey"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
 	  
     <volume name="tgt2US_pipe2_DSflange_logic">
       <materialref ref="G4_STAINLESS-STEEL"/>
       <solidref ref="tgt2US_pipe2_DSflange_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Grey"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
 
