@@ -14,7 +14,7 @@ cp -r /lustre03/project/6049248/commonFiles/remoll $TMPDIR
 
 cd $TMPDIR/remoll
 
-python scripts/standalone_edep_studies/generateStandalone.py -c script/standalone_edep_studies/DSconfig.list
+python scripts/standalone_edep_studies/generateStandalone.py -c scripts/standalone_edep_studies/DSconfig.list
 
 ./build/remoll macros/run.mac
 
