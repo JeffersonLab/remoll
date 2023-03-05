@@ -24,6 +24,6 @@ beam_y_pos, 0
 beam_z_pos, -20
 beam_th_dir, 10
 beam_ph_dir, 0
-run_macro, run.mac
-output_geometry, mollerMother.gdml
+run_macro, macros/run.mac
+output_geometry, geometry_standalone_edep/mollerMother.gdml
 max_step_limit_charged_particles, 0.1
