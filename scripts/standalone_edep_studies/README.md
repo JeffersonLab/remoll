@@ -19,3 +19,15 @@ Short jobs (nEvents<2000) can be run from command line:
 ./build/remoll macros/run.mac
 
 For long jobs (nEvents), adapt and use the given job submission script.
+
+Detector IDs:
+1, 6 = Outer most insulation layer
+2, 5 = Side Plates
+3, 4 = Inner most insulation layer
+7, 8 = Top and bottom insulation layer
+
+50-59: Conductor hole
+60-69: Conductor
+70-79: Gaps between conductor layers filled with insulation
+
+
