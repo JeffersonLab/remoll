@@ -1,3 +1,4 @@
+config_name, DSconfig
 single_slab, false
 nevents, 2000
 particle, e+
