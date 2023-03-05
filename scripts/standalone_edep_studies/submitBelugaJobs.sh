@@ -14,8 +14,8 @@ cp -r /lustre03/project/6049248/commonFiles/remoll $TMPDIR
 
 cd $TMPDIR/remoll
 
-python scripts/standalone_edep_studies/generateStandalone.py -m G4_W -t 1000 -n 1000 -p e+ -e 100
+python scripts/standalone_edep_studies/generateStandalone.py -c script/standalone_edep_studies/DSconfig.list
 
 ./build/remoll macros/run.mac
 
-mv  G4_W_1000mm_e+_100MeV.root /lustre03/project/6049248/commonFiles/out/G4_W_1000mm_e+_100MeV_${SLURM_JOBID}_${SLURM_ARRAY_TASK_ID}.root
+mv  DSconfig.root /lustre03/project/6049248/commonFiles/out/DSconfig_${SLURM_JOBID}_${SLURM_ARRAY_TASK_ID}.root
