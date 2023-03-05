@@ -329,7 +329,7 @@ for i in layerinfo[1]:
 /remoll/SD/detect lowenergyneutral "+str(i)+" \n\
 /remoll/SD/detect secondaries "+str(i)+" \n"
 out+="\
-/remoll/filename "+p["particle"]+"_"+p["energy"]+".root\n\
+/remoll/filename "+p["config_name"]+".root\n\
 /run/beamOn "+p["nevents"]+"\n\
 "
 
