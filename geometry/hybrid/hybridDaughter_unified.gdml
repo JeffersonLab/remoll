@@ -196,7 +196,7 @@
             <zplane rmin="688.34" rmax="1270" z="0.0"/>
             <zplane rmin="688.34" rmax="1270" z="22.098"/>
             <zplane rmin="1247.775" rmax="1270" z="22.098"/>
-            <zplane rmin="1247.775" rmax="1270" z="5422.9"/>   
+            <zplane rmin="1247.775" rmax="1270" z="5672.9-12.7"/>   
      </polycone>
         
         <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DriftPipe_VacuumFlg">
