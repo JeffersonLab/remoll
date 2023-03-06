@@ -32,14 +32,14 @@
         <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL4_z + 150/2+1425-150/2-400/2"/>
         
         <constant name="bellows4_eps" value="0.1"/>
-        <constant name="bellows4_IR" value="675+bellows4_eps/2"/>
-        <constant name="bellows4flange_length" value="50.75-bellows4_eps"/>
-        <constant name="bellows4flange_Rthickness" value="114.3-bellows4_eps"/>
-        <constant name="bellows4_length" value="148.0"/>
-        <constant name="bellows4_Rthickness" value="84.1"/>
-        <constant name="bellows4_zpos" value="17075-4500-(11016.865-8.73/2+150/2+400/2)"/>
-        <constant name="bellows4flangeUS_zpos" value="bellows4_zpos - bellows4_length/2 - bellows4flange_length/2 - bellows4_eps/2"/>
-        <constant name="bellows4flangeDS_zpos" value="bellows4_zpos + bellows4_length/2 + bellows4flange_length/2 + bellows4_eps/2"/>
+        <constant name="bellows4_IR" value="685.6"/>
+        <constant name="bellows4flange_length" value="15.24"/>
+        <constant name="bellows4flange_Rthickness" value="101.6"/>
+        <constant name="bellows4_length" value="369.57"/>
+        <constant name="bellows4_Rthickness" value="57.15"/>
+        <constant name="bellows4_zpos" value="12443.714-11287.5"/>
+        <constant name="bellows4flangeUS_zpos" value="bellows4_zpos - bellows4_length/2 - bellows4flange_length/2"/>
+        <constant name="bellows4flangeDS_zpos" value="bellows4_zpos + bellows4_length/2 + bellows4flange_length/2"/>
         
         <position name="bellows4physical_pos" z="bellows4_zpos" unit="mm"/>
         <position name="bellows4flangeUS_pos" z="bellows4flangeUS_zpos" unit="mm"/>
@@ -79,20 +79,27 @@
         <tube
         name="bellows4flangeDS_solid"
         startphi="0" deltaphi="360" aunit="deg"
-        rmin="bellows4_IR" rmax="bellows4_IR+bellows4flange_Rthickness" z="bellows4flange_length" lunit="mm"/>
+        rmin="bellows4_IR" rmax="812.8" z="bellows4flange_length" lunit="mm"/>
         
+       <!-- RR ok. the Wall thickness is 1/2". I buy that based on pic from E. Sun -->
         <tube
         name="solid_DSendtube"
         startphi="0" deltaphi="360" aunit="deg"
-        rmin="698.5-22.86-12.7/4" rmax="711.2-22.86-12.7/4" z="157.0228" lunit="mm"/>
+        rmin="685.8" rmax="695.8" z="60" lunit="mm"/>
         
-        <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSendtube_USflange">
+   <!--     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSendtube_USflange">
             <zplane rmin="698.5-22.86-12.7/4" rmax="711.2-22.86-12.7/4" z="0.0"/>
             <zplane rmin="698.5-22.86-12.7/4" rmax="715.01-22.86-12.7/4" z="15.24"/>
             <zplane rmin="698.5-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="15.24+3.81"/>
             <zplane rmin="698.5-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="15.24+3.81+25.4"/>
         </polycone>
-        
+        -->
+           <tube
+           name="solid_DSendtube_USflange"
+           startphi="0" deltaphi="360" aunit="deg"
+           rmin="685.8" rmax="787.4" z="31.75" lunit="mm"/>       
+
+ 
         <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_LowCycleBellows_flange">
             <zplane rmin="701.802+0.1-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="0.0"/>
             <zplane rmin="701.802+0.1-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="31.75"/>
@@ -110,19 +117,40 @@
             <zplane rmin="698.5-22.86-12.7/4" rmax="701.802-22.86-12.7/4" z="88.9+155.448"/>
             <zplane rmin="698.5-22.86-12.7/4" rmax="701.802-22.86-12.7/4" z="88.9+155.448+92.202"/>
         </polycone>
-        
+       
+      <!-- 
         <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSendtube_DSflange">
             <zplane rmin="698.5-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="0.0"/>
             <zplane rmin="698.5-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="25.4"/>
             <zplane rmin="698.5-22.86-12.7/4" rmax="715.01-22.86-12.7/4" z="25.4+3.81"/>
             <zplane rmin="698.5-22.86-12.7/4" rmax="711.2-22.86-12.7/4" z="25.4+3.81+15.24"/>
         </polycone>
-        
+--> 
+        <tube
+        name="solid_DSendtube_DSflange"
+        startphi="0" deltaphi="360" aunit="deg"
+        rmin="730.25" rmax="812.8" z="31.75" lunit="mm"/>
+                  
+       <!--
         <tube
         name="solid_DSpipeNeck"
         startphi="0" deltaphi="360" aunit="deg"
         rmin="698.5-22.86-12.7/4" rmax="711.2-22.86-12.7/4" z="168.8592" lunit="mm"/>
-        
+-->
+        <tube   
+        name="solid_DSpipeNeck"
+        startphi="0" deltaphi="360" aunit="deg"
+        rmin="723.9" rmax="730.25" z="118.5672" lunit="mm"/>     
+
+        <!-- RR adding Drift Pipe End -->
+        <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Driftpipe_end">
+        <zplane rmin="730.25" rmax="730.25" z="0"/>
+        <zplane rmin="730.25" rmax="730.25+25.4" z="25.4"/>
+        <zplane rmin="1270-25.4" rmax="1270" z="423.9-76.2"/> 
+        <zplane rmin="1270-25.4" rmax="1270" z="423.9"/>
+        </polycone>
+
+
         <!--add bellows -->
         <tube
         name="bellows5physical_solid"
@@ -161,15 +189,15 @@
         </subtraction>
         
         <!--collar solids -->
-        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="605.8789" rmax1="755.8659" rmin2="616.077" rmax2="755.8659" z="100+50"/>
+        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="613" rmax1="755.8659" rmin2="613+10" rmax2="755.8659" z="100+50"/>
         
         <!-- drift pipe -->
         <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Driftpipe">
-            <zplane rmin="688.34" rmax="1272.286" z="0.0"/>
-            <zplane rmin="688.34" rmax="1272.286" z="22.098"/>
-            <zplane rmin="1249.934" rmax="1272.286" z="22.098"/>
-            <zplane rmin="1249.934" rmax="1272.286" z="5974.08"/>
-        </polycone>
+            <zplane rmin="688.34" rmax="1270" z="0.0"/>
+            <zplane rmin="688.34" rmax="1270" z="22.098"/>
+            <zplane rmin="1247.775" rmax="1270" z="22.098"/>
+            <zplane rmin="1247.775" rmax="1270" z="5422.9"/>   
+     </polycone>
         
         <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DriftPipe_VacuumFlg">
             <zplane rmin="1272.286+1" rmax="1310.386" z="0.0"/>
@@ -467,25 +495,25 @@
         
         <!-- Lintels solid -->
         <arb8 name="Lintel_s1"
-        v1x="-494" v1y="-140"
-        v2x="-800" v2y="-100"
-        v3x="-800" v3y="0"
-        v4x="-478" v4y="0"
-        v5x="-499" v5y="-140"
-        v6x="-800" v6y="-100"
-        v7x="-800" v7y="0"
-        v8x="-483" v8y="0"
+        v1x="-500" v1y="-140"
+        v2x="-806.85" v2y="-100"
+        v3x="-806.85" v3y="0"
+        v4x="-484.85" v4y="0"
+        v5x="-505.85" v5y="-140"
+        v6x="-806.85" v6y="-100"
+        v7x="-806.85" v7y="0"
+        v8x="-489.85" v8y="0"
         dz="50" lunit="mm"/>
         
         <arb8 name="Lintel_s2"
-        v1x="-478" v1y="0"
-        v2x="-800" v2y="0"
-        v3x="-800" v3y="100"
-        v4x="-494" v4y="140"
-        v5x="-483" v5y="0"
-        v6x="-800" v6y="0"
-        v7x="-800" v7y="100"
-        v8x="-499" v8y="140"
+        v1x="-484.85" v1y="0"
+        v2x="-806.85" v2y="0"
+        v3x="-806.85" v3y="100"
+        v4x="-500.85" v4y="140"
+        v5x="-489.85" v5y="0"
+        v6x="-806.85" v6y="0"
+        v7x="-806.85" v7y="100"
+        v8x="-505.85" v8y="140"
         dz="50" lunit="mm"/>
         
         
@@ -1427,7 +1455,13 @@
             <solidref ref="solid_DSpipeNeck"/>
             <auxiliary auxtype="Color" auxvalue="Blue"/>
         </volume>
-        
+       
+        <volume name="logicDriftpipe_end">
+            <materialref ref="Aluminum"/>
+            <solidref ref="Driftpipe_end"/>
+            <auxiliary auxtype="Color" auxvalue="green"/>
+            </volume>
+ 
         <volume name="DSendtube_USflange_log">
             <materialref ref="G4_STAINLESS-STEEL"/>
             <solidref ref="solid_DSendtube_USflange"/>
@@ -1453,7 +1487,7 @@
         </volume>
         
         <volume name="bellows4physical_log">
-            <materialref ref="SSbellows"/>
+            <materialref ref="G4_STAINLESS-STEEL"/>
             <solidref ref="bellows4physical_solid"/>
             <auxiliary auxtype="Color" auxvalue="Pink"/>
         </volume>
@@ -2931,29 +2965,38 @@
             
             <physvol name="Driftpipe">
                 <volumeref ref="logicDriftpipe"/>
-                <position name="Driftpipe_pos" x="0" y="0" z="12854.94 - 11287.5"/>
+                <position name="Driftpipe_pos" x="0" y="0" z="13160.806 - 11287.5"/>
             </physvol>
             
             <physvol name="Driftpipe_vacuum">
                 <volumeref ref="logicDriftpipe_vacuum"/>
                 <position name="Driftpipe_vacuum_pos" x="0" y="0" z="18689.32 - 11287.5"/>
             </physvol>
-            
+           
+   
             <physvol name="DSendtube_phys">
                 <volumeref ref="DSendtube_log"/>
-                <position unit="mm" name="DSendtube_pos" x="0" y="0" z="12205.2334-11287.5"/>
+                <position unit="mm" name="DSendtube_pos" x="0" y="0" z="12227.814-46-11287.5"/>
             </physvol>
-            
+      
+      
             <physvol name="DSendtube_USflange_phys">
                 <volumeref ref="DSendtube_USflange_log"/>
-                <position unit="mm" name="DSendtube_USflange_pos" x="0" y="0" z="12283.694-11287.5"/>
+                <position unit="mm" name="DSendtube_USflange_pos" x="0" y="0" z="12227.814-11287.5"/>
             </physvol>
             
             <physvol name="DSendtube_DSflange_phys">
                 <volumeref ref="DSendtube_DSflange_log"/>
-                <position unit="mm" name="DSendtube_DSflange_pos" x="0" y="0" z="12671.044-11287.5"/>
+                <position unit="mm" name="DSendtube_DSflange_pos" x="0" y="0" z="(497.785*25.4)-11287.5+31.75/2."/>
             </physvol>
-            
+      
+           <physvol name="Driftpipe_endphys">
+               <volumeref ref="logicDriftpipe_end"/>
+               <position unit="mm" name="Driftpipeend_pos" x="0" y="0.01" z="(501.453*25.4)-11287.5"/>
+           </physvol>
+
+ 
+<!--     
             <physvol name="LowCycleBellows_flangeUS_phys">
                 <volumeref ref="LowCycleBellows_flange_log"/>
                 <position unit="mm" name="LowCycleBellows_flangeUS_pos" x="0" y="0" z="12328.144-11287.5"/>
@@ -2968,13 +3011,14 @@
                 <volumeref ref="LowCycleBellows_log"/>
                 <position unit="mm" name="LowCycleBellows_pos" x="0" y="0" z="12331.446-11287.5"/>
             </physvol>
-            
+-->    
+        
             <physvol name="DSpipeNeck_phys">
                 <volumeref ref="DSpipeNeck_log"/>
-                <position unit="mm" name="DSpipeNeck_pos" x="0" y="0" z="12799.06-11287.5"/>
+                <position unit="mm" name="DSpipeNeck_pos" x="0" y="0" z="(497.785*25.4)-11287.5+118.5672/2."/>
             </physvol>
             
-            <!-- <physvol name="bellows4physical_phys">
+             <physvol name="bellows4physical_phys">
             <volumeref ref="bellows4physical_log"/>
             <positionref ref="bellows4physical_pos"/>
             </physvol>
@@ -2988,7 +3032,7 @@
             <volumeref ref="bellows4flangeDS_log"/>
             <positionref ref="bellows4flangeDS_pos"/>
             </physvol>
-            
+            <!--
             <physvol name="bellows5physical_phys">
             <volumeref ref="bellows5physical_log"/>
             <positionref ref="bellows5physical_pos"/>
@@ -3603,13 +3647,13 @@
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Coll6A_logic1"/>
-                    <position x="0" y="0" z="1223.168-2864.764-90"/>
+                    <position x="0" y="0" z="1223.168-2864.764-90+136.9"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
                 
                 <physvol>
                     <volumeref ref="Coll6A_logic2"/>
-                    <position x="0" y="0" z="1305.718-2864.764-90"/>
+                    <position x="0" y="0" z="1305.718-2864.764-90+136.9"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
             </loop>
@@ -3645,12 +3689,12 @@
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Lintel_logic1"/>
-                    <position x="0" y="0" z="1222.106+(13335.194-13332.736)-2864.764-90"/>
+                    <position x="0" y="0" z="-1593.51"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
                 <physvol>
                     <volumeref ref="Lintel_logic2"/>
-                    <position x="0" y="0" z="1222.106+(13335.194-13332.736)-2864.764-90"/>
+                    <position x="0" y="0" z="-1593.51"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
             </loop>
