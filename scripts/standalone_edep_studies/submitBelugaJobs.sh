@@ -18,4 +18,4 @@ python scripts/standalone_edep_studies/generateStandalone.py -c scripts/standalo
 
 ./build/remoll macros/run.mac
 
-mv  USconfig.root /lustre03/project/6049248/commonFiles/out/USconfig1_${SLURM_JOBID}_${SLURM_ARRAY_TASK_ID}.root
+mv  USconfig.root /lustre03/project/6049248/commonFiles/out/USconfig_${SLURM_JOBID}_${SLURM_ARRAY_TASK_ID}.root
