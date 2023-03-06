@@ -10,6 +10,18 @@ import csv
 def printMaterials():
   out="\
   <materials> \n\
+    <material name=\"Epoxy\" state=\"solid\">\n\
+      <D value=\"1.3\" unit=\"g/cm3\"/>\n\
+      <fraction n=\"0.5354\" ref=\"C\"/>\n\
+      <fraction n=\"0.1318\" ref=\"H\"/>\n\
+      <fraction n=\"0.3328\" ref=\"O\"/>\n\
+    </material>\n\
+    <material name=\"G10\" state=\"solid\">\n\
+      <D value=\"1.3\" unit=\"g/cm3\"/>\n\
+      <fraction n=\"0.773\" ref=\"G4_SILICON_DIOXIDE\"/>\n\
+      <fraction n=\"0.147\" ref=\"Epoxy\"/>\n\
+      <fraction n=\"0.080\" ref=\"G4_Cl\"/>\n\
+    </material>\n\
     <material name=\"SGlass\" state=\"solid\"> \n\
       <D value=\"2.52\" unit=\"g/cm3\"/>   \n\
       <fraction n=\"0.80\" ref=\"G4_SILICON_DIOXIDE\"/> \n\
