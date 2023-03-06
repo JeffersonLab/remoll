@@ -1,6 +1,6 @@
-config_name, USconfig
+config_name, USconfig1
 single_slab, false
-nevents, 2000
+nevents, 100
 particle, e+
 energy, 100
 n_conductors, 5
@@ -19,11 +19,11 @@ conductor_mat, G4_Cu
 x_rotation, 0
 y_rotation, 0
 z_rotation, 0
-beam_x_pos, 0
-beam_y_pos, 0
+beam_x_pos, -220.81
+beam_y_pos, 59.17
 beam_z_pos, -20
-beam_th_dir, 10
-beam_ph_dir, 0
+beam_th_dir, 85
+beam_ph_dir, -15
 run_macro, macros/run.mac
 output_geometry, geometry_standalone_edep/mollerMother.gdml
 max_step_limit_charged_particles, 0.1
