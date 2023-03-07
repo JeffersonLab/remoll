@@ -636,9 +636,9 @@
                  <zplane rmin="32" rmax="36" z="1076.4499999999998"/>
         </polycone>
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_US_toroidMother">
-		 <zplane rmin="0" rmax="262.555" z="-1100"/>
-		 <zplane rmin="0" rmax="262.555" z="1024.32825"/>
-	</polycone>
+                 <zplane rmin="0" rmax="262.555" z="-1100"/>
+                 <zplane rmin="0" rmax="262.555" z="1089.1499999999996"/>
+        </polycone>
 </solids>
 
 
