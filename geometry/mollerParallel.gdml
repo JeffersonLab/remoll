@@ -68,6 +68,43 @@
       x="11742.42" y="1" z="9512.3+9541.7"/>
 
 
+ <!-- RR bellows 4 and its flanges -->
+         <!--add bellows -->
+        <tube
+        name="bellows4physical_Virtualsolid"
+        startphi="0" deltaphi="360" aunit="deg"
+        rmin="685.8" rmax="742.95" z="369.57" lunit="mm"/>
+        <tube
+        name="bellows4flangeUS_Virtualsolid"
+        startphi="0" deltaphi="360" aunit="deg"
+        rmin="685.8" rmax="787.4" z="15.24" lunit="mm"/>
+        <tube
+        name="bellows4flangeDS_Virtualsolid"
+        startphi="0" deltaphi="360" aunit="deg"
+        rmin="685.8" rmax="812.8" z="15.24" lunit="mm"/>
+
+   <!-- RR Al flange, Connection Pipe and Drift Pipe End -->
+       <tube
+        name="DSendtubeDSflange_Virtualsolid"
+        startphi="0" deltaphi="360" aunit="deg"
+        rmin="730.25" rmax="812.8" z="31.75" lunit="mm"/>
+
+       <tube   
+        name="DSpipeNeck_Virtualsolid"
+        startphi="0" deltaphi="360" aunit="deg"
+        rmin="723.9" rmax="730.25" z="118.5672" lunit="mm"/>
+
+       <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Driftpipeend_Virtualsolid">
+        <zplane rmin="730.25" rmax="730.25" z="0"/>
+        <zplane rmin="730.25" rmax="730.25+25.4" z="25.4"/>
+        <zplane rmin="1270-25.4" rmax="1270" z="423.9-76.2"/>
+        <zplane rmin="1270-25.4" rmax="1270" z="423.9"/>
+        </polycone>
+
+
+
+
+
 </solids>
 
 <structure>
@@ -371,7 +408,53 @@
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="530"/>
   </volume>
+
+  <!--RR bellows 4 and its flanges -->
+  <volume name="Bellows4USflange_Virtuallog">
+     <materialref ref="G4_Galactic"/>
+     <solidref ref="bellows4flangeUS_Virtualsolid"/>
+     <auxiliary auxtype="SensDet" auxvlaue="planeDet"/>
+     <auxiliary auxtype="DetNo" auxvalue="444"/>
+   </volume>
+
+   <volume name="Bellows4_Virtuallog">
+     <materialref ref="G4_Galactic"/>
+     <solidref ref="bellows4physical_Virtualsolid"/>
+     <auxiliary auxtype="SensDet" auxvlaue="planeDet"/>
+     <auxiliary auxtype="DetNo" auxvalue="445"/>
+   </volume>
   
+  <volume name="Bellows4DSflange_Virtuallog">
+     <materialref ref="G4_Galactic"/>
+     <solidref ref="bellows4flangeDS_Virtualsolid"/>
+     <auxiliary auxtype="SensDet" auxvlaue="planeDet"/>
+     <auxiliary auxtype="DetNo" auxvalue="446"/>
+   </volume>
+
+   <!-- RR Al DS bellows 4 before drift pipe -->
+   <volume name="DSendtubeDSflange_Virtuallog">
+      <materialref ref="G4_Galactic"/>
+     <solidref ref="DSendtubeDSflange_Virtualsolid"/>
+     <auxiliary auxtype="SensDet" auxvlaue="planeDet"/>
+     <auxiliary auxtype="DetNo" auxvalue="447"/>
+   </volume>
+
+   <volume name="DSpipeneck_Virtuallog">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="DSpipeNeck_Virtualsolid"/>
+      <auxiliary auxtype="SensDet" auxvlaue="planeDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="448"/>
+   </volume>
+
+
+  <volume name="Driftpipeend_Virtuallog">
+      <materialref ref="G4_Galactic"/>
+     <solidref ref="Driftpipeend_Virtualsolid"/>
+     <auxiliary auxtype="SensDet" auxvlaue="planeDet"/>
+     <auxiliary auxtype="DetNo" auxvalue="449"/>
+   </volume>
+
+
   <volume name="Col5Ent_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="largeVirtualPlane_solid"/>
@@ -567,6 +650,37 @@
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="77"/>
   </volume>
+
+<volume name="vacWallUp_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="largeVirtualPlane_solid"/>
+     <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="7000"/>
+  </volume>
+
+
+  <volume name="vacWallEnt_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="largeVirtualPlane_solid"/>
+     <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="7001"/>
+  </volume>
+
+
+  <volume name="vacWallExit_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="largeVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="7002"/>
+  </volume>
+
+
 
   <volume name="Bellows4US_log">
     <materialref ref="G4_Galactic"/>
@@ -1072,19 +1186,20 @@
       <position  name="DSCoil12_pos" unit="mm" x="0" y="0" z="9200+0.5"/>
     </physvol>
 
+ <!--RR changed these positions to reflect Lintel move from Prakash-->
     <physvol name="LintelEnt_phys">
       <volumeref ref="LintelEnt_log"/>
-      <position name="LintelEnt_pos" unit="mm" x="0" y="0" z="9507.3-0.5"/>
+      <position name="LintelEnt_pos" unit="mm" x="0" y="0" z="9643.99-0.5"/>
     </physvol>
 
     <physvol name="Col6AEnt_phys">
       <volumeref ref="Col6AEnt_log"/>
-      <position name="Col6AEnt_pos" unit="mm" x="0" y="0" z="9555.904-0.5"/>
+      <position name="Col6AEnt_pos" unit="mm" x="0" y="0" z="9692.594-0.5"/>
     </physvol>
 
     <physvol name="LintelExit_phys">
       <volumeref ref="LintelExit_log"/>
-      <position name="LintelExit_pos" unit="mm" x="0" y="0" z="9607.3-0.5"/>
+      <position name="LintelExit_pos" unit="mm" x="0" y="0" z="9743.99-0.5"/>
     </physvol>
 
     <physvol name="At9p61_phys">
@@ -1157,6 +1272,24 @@
       <position name="collar1Exit_pos" unit="mm" x="0" y="0" z="11966.4958+1"/>
     </physvol> 
 
+  <physvol name="vacWallUp_phys">
+      <volumeref ref="vacWallUp_log"/>
+      <position name="vacWallUp_pos" unit="mm" x="0" y="0" z="12030-1"/>
+    </physvol>
+
+
+   <physvol name="vacWallEnt_phys">
+      <volumeref ref="vacWallEnt_log"/>
+      <position name="vacWallEnt_pos" unit="mm" x="0" y="0" z="12115-1"/>
+    </physvol>
+
+    <physvol name="vacWallExit_phys">
+      <volumeref ref="vacWallExit_log"/>
+      <position name="vacWall1Exit_pos" unit="mm" x="0" y="0" z="12150+1"/>
+    </physvol>
+
+
+<!--
     <physvol name="Bellows4US_phys">
       <volumeref ref="Bellows4US_log"/>
       <position name="Bellows4US_pos" unit="mm" x="0" y="0" z="11287.5+(12328.144-11287.5)+31.75/2"/>
@@ -1166,6 +1299,44 @@
       <volumeref ref="Bellows4DS_log"/>
       <position name="Bellows4DS_pos" unit="mm" x="0" y="0" z="11287.5+(12639.294-11287.5)+31.75/2"/>
     </physvol>
+-->
+
+ <!--RR bellows4 pos -->
+ <physvol name="Bellows4USflange_Vphys">
+      <volumeref ref="Bellows4USflange_Virtuallog"/>
+      <position name="Bellows4USflange_pos" unit="mm" x="0" y="0" z="12443.714-369.57/2-15.24/2"/>
+    </physvol>
+
+<physvol name="Bellows4_Vphys">
+      <volumeref ref="Bellows4_Virtuallog"/>
+      <position name="Bellows4_pos" unit="mm" x="0" y="0" z="12443.714"/>
+    </physvol>
+
+
+<physvol name="Bellows4DSflange_Vphys">
+      <volumeref ref="Bellows4DSflange_Virtuallog"/>
+      <position name="Bellows4DSflange_pos" unit="mm" x="0" y="0" z="12443.714+369.57/2+15.24/2"/>
+    </physvol>
+
+    <!--RR aluminum DS bellows 4 before Drift pipe -->
+
+ <physvol name="DSendtubeDSflange_Vphys">
+      <volumeref ref="DSendtubeDSflange_Virtuallog"/>
+      <position name="DSendtubeDSflange_pos" unit="mm" x="0" y="0" z="(497.785*25.4)+31.75/2."/>
+    </physvol>
+
+
+  <physvol name="DSpipeneck_Vphys">
+      <volumeref ref="DSpipeneck_Virtuallog"/>
+     <position name="DSpipeNeck_pos" unit="mm" x="0" y="0" z="(497.785*25.4)+118.5672/2."/>
+    </physvol>
+
+
+<physvol name="Driftpipeend_Vphys">
+      <volumeref ref="Driftpipeend_Virtuallog"/>
+      <position name="DriftPipeend_pos" unit="mm" x="0" y="0" z="(501.453*25.4)"/>
+    </physvol>
+
     
     <physvol name="Drift1_phys">
       <volumeref ref="Drift1_log"/>
