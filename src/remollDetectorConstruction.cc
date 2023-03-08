@@ -938,6 +938,17 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
 
       }
 
+      // Find aux list entries with type CopyDepth
+      for (auto it_copydepth  = NextAuxWithType(list.begin(), list.end(), "CopyDepth");
+                it_copydepth != list.end();
+                it_copydepth  = NextAuxWithType(++it_copydepth, list.end(), "CopyDepth")) {
+
+        // Set copy depth
+        int copydepth = atoi(it_copydepth->value.data());
+        if (remollsd != nullptr) remollsd->SetCopyDepth(copydepth);
+
+      }
+
   } // end of loop over volumes
 
   if (fVerboseLevel > 0)
