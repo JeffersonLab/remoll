@@ -164,7 +164,7 @@
 	  
     <volume name="UpstreamEnclosurePipe_US_logic">
         <materialref ref="G4_Al"/>
-        <solidref ref="UplstreamEnclosurePipe_US_solid"/>
+        <solidref ref="UpstreamEnclosurePipe_US_solid"/>
         <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
    
