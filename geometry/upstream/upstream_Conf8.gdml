@@ -219,6 +219,7 @@
 	    
      <physvol name="UpstreamEnclosurePipe_US_phys">
        <volumeref ref="UpstreamEnclosurePipe_US_logic"/>
+       <position name="UpstreamEnclosurePipe_US_pos" unit="mm" y="-1000"/>
      </physvol>	    
 
       <physvol>
