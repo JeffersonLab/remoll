@@ -588,6 +588,15 @@
     startphi="0" deltaphi="360" aunit="deg"
     rmin="bellows3_IR" rmax="bellows3_IR+bellows3flange_Rthickness" z="bellows3flange_length" lunit="mm"/>
           
+    <!--MIT upstream enclosure -->
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="UpstreamEnclosurePipe_US_solid"> 
+      <zplane rmin="149.225" rmax="184.15" z="-400.050-2000"/> 
+      <zplane rmin="149.225" rmax="184.15" z="-371.475-2000"/> 
+      <zplane rmin="149.225" rmax="152.4" z="-371.475-2000"/>
+      <zplane rmin="149.225" rmax="152.4" z="-367.665-2000"/>
+      <zplane rmin="149.225" rmax="155.575" z="-367.665-2000"/> 
+      <zplane rmin="149.225" rmax="155.575" z="-204.597-2000"/> 
+    </polycone>	
           
 </solids>
 
@@ -1374,6 +1383,12 @@
         <solidref ref="bellows3flangeDS_solid"/>
         <auxiliary auxtype="Color" auxvalue="Orange"/>
     </volume>
+	
+    <volume name="UpstreamEnclosurePipe_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="UpstreamEnclosurePipe_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>	
 
     <volume name="upstreamTorusRegion">
       <materialref ref="G4_Galactic"/>
@@ -1474,6 +1489,10 @@
       <physvol name="bellows3flangeDS_phys">
           <volumeref ref="bellows3flangeDS_log"/>
           <positionref ref="bellows3flangeDS_pos"/>
+      </physvol>
+	    
+      <physvol name="UpstreamEnclosurePipe_US_phys">
+       <volumeref ref="UpstreamEnclosurePipe_US_logic"/>
       </physvol>
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
