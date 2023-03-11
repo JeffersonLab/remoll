@@ -209,6 +209,20 @@
       <second ref="PbWall_solid_1_3"/>
       <position name ="PbWall_2_pos" lunit="mm" x="0" y="0" z="0" />
     </subtraction>
+	
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall1_solid"> 
+      <zplane rmin="230" rmax="406.4" z="3541.903-2000"/> 
+      <zplane rmin="230" rmax="406.4" z="3592.703-2000"/> 
+      <zplane rmin="230" rmax="330.2" z="3592.703-2000"/> 
+      <zplane rmin="230" rmax="330.2" z="3694.303-2000"/> 
+    </polycone>
+	
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall2_solid"> 
+      <zplane rmin="22" rmax="25.4" z="0"/> 
+      <zplane rmin="22" rmax="25.4" z="20"/> 
+      <zplane rmin="24" rmax="25.4" z="20"/> 
+      <zplane rmin="24" rmax="25.4" z="30"/> 
+    </polycone>
 
     <!-- v10 --> 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
@@ -1374,7 +1388,7 @@
 
     <volume name="PbWall_1_logic">
       <materialref ref="Lead"/>
-      <solidref ref="PbWall_1"/>
+      <solidref ref="PbWall1_solid"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
       <auxiliary auxtype="DetNo" auxvalue="6033"/>
