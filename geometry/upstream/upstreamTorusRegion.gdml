@@ -176,8 +176,8 @@
 
 <solids>
 
-    <box lunit="mm" name="tubeUpstream_1" x="533.4*2+0.75" y="533.4*2+0.75" z="USBoxmother_length"/>
-    <box lunit="mm" name="tubeUpstream_2_1" x="533.4*2+1.75" y="533.4*2+1.75" z="740+615.5"/>
+    <box lunit="mm" name="tubeUpstream_1" x="533.4*2+0.75" y="700+0.75" z="USBoxmother_length"/>
+    <box lunit="mm" name="tubeUpstream_2_1" x="533.4*2+1.75" y="700+1.75" z="740+615.5"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_2_2" rmax="420" rmin="0" startphi="0" z="740"/>
     
     <subtraction name ="tubeUpstream_2">
