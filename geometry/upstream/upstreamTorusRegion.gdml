@@ -597,7 +597,27 @@
       <zplane rmin="149.225" rmax="155.575" z="-367.665-2000"/> 
       <zplane rmin="149.225" rmax="155.575" z="-204.597-2000"/> 
     </polycone>	
-          
+	
+    <arb8 name="EnclosureFront_US_full_solid" 
+      v1x="1104.9/2.0" v1y="517.6" 
+      v2x="-1104.9/2.0" v2y="517.6" 
+      v3x="-1104.9/2.0" v3y="-600" 
+      v4x="1104.9/2.0" v4y="-600" 
+      v5x="1104.9/2.0" v5y="517.6" 
+      v6x="-1104.9/2.0" v6y="517.6" 
+      v7x="-1104.9/2.0" v7y="-600" 
+      v8x="1104.9/2.0" v8y="-600" 
+      dz="25.4" lunit="mm"/>
+    
+    <tube name="EnclosureFront_US_subtract_solid"
+      startphi="0" deltaphi="360" aunit="deg"
+      rmin="0" rmax="155.575" z="52" lunit="mm"/>
+	
+    <subtraction name="EnclosureFront_US_solid">
+      <first ref="EnclosureFront_US_full_solid"/>
+      <second ref="EnclosureFront_US_subtract_solid"/>
+    </subtraction>    
+        
 </solids>
 
 
@@ -1388,6 +1408,12 @@
         <materialref ref="G4_Al"/>
         <solidref ref="UpstreamEnclosurePipe_US_solid"/>
         <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+	
+    <volume name="EnclosureFront_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureFront_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
 
     <volume name="upstreamTorusRegion">
@@ -1493,6 +1519,11 @@
 	    
       <physvol name="UpstreamEnclosurePipe_US_phys">
        <volumeref ref="UpstreamEnclosurePipe_US_logic"/>
+      </physvol>
+	    
+      <physvol name="EnclosureFront_US_phys">
+       <volumeref ref="EnclosureFront_US_logic"/>
+       <position name="EnclosureFront_US_pos" x="0" y="0" z="-204.597-25.4"/>
       </physvol>
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
