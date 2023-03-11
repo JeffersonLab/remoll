@@ -629,7 +629,9 @@
       <second ref="EnclosureBack_US_subtract_solid"/>
     </subtraction> 
 	
-    <box name="EnclosureRoof_US_solid" lunit="mm" x="1104.9" y="19.05" z="3592.703+204.597"/>
+    <box name="EnclosureRoof_US_solid" lunit="mm" x="1104.9-50.8" y="19.05" z="3592.703+204.597"/>
+	
+    <box name="EnclosureLeftRight_US_solid" lunit="mm" x="25.4" y="517.6+600" z="3592.703+204.597"/>
         
 </solids>
 
@@ -1440,6 +1442,18 @@
         <solidref ref="EnclosureRoof_US_solid"/>
         <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
+	
+    <volume name="EnclosureLeft_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureLeftRight_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>	
+	
+    <volume name="EnclosureRight_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureLeftRight_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
 
     <volume name="upstreamTorusRegion">
       <materialref ref="G4_Galactic"/>
@@ -1558,6 +1572,16 @@
       <physvol name="EnclosureRoof_US_phys">
        <volumeref ref="EnclosureRoof_US_logic"/>
        <position name="EnclosureRoof_US_pos" x="0" y="517.6-19.05/2.0" z="-204.597+(3592.703+204.597)/2.0-2000"/>
+      </physvol>
+	    
+      <physvol name="EnclosureLeft_US_phys">
+       <volumeref ref="EnclosureLeft_US_logic"/>
+       <position name="EnclosureLeft_US_pos" x="0" y="(517.6-600)/2.0" z="-204.597+(3592.703+204.597)/2.0-2000"/>
+      </physvol>
+	    
+      <physvol name="EnclosureRight_US_phys">
+       <volumeref ref="EnclosureRoof_US_logic"/>
+       <position name="EnclosureRoof_US_pos" x="0" y="(517.6-600)/2.0" z="-204.597+(3592.703+204.597)/2.0-2000"/>
       </physvol>
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
