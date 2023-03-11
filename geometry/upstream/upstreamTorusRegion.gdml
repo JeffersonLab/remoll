@@ -598,7 +598,7 @@
       <zplane rmin="149.225" rmax="155.575" z="-204.597-2000"/> 
     </polycone>	
 	
-    <arb8 name="EnclosureFront_US_full_solid" 
+    <arb8 name="EnclosureFrontBack_US_full_solid" 
       v1x="1104.9/2.0" v1y="517.6" 
       v2x="-1104.9/2.0" v2y="517.6" 
       v3x="-1104.9/2.0" v3y="-600" 
@@ -612,11 +612,22 @@
     <tube name="EnclosureFront_US_subtract_solid"
       startphi="0" deltaphi="360" aunit="deg"
       rmin="0" rmax="155.575" z="52" lunit="mm"/>
+    
+    <tube name="EnclosureBack_US_subtract_solid"
+      startphi="0" deltaphi="360" aunit="deg"
+      rmin="0" rmax="344.488" z="52" lunit="mm"/>
 	
+    <!--Front face of upstream enclosure-->	
     <subtraction name="EnclosureFront_US_solid">
-      <first ref="EnclosureFront_US_full_solid"/>
+      <first ref="EnclosureFrontBack_US_full_solid"/>
       <second ref="EnclosureFront_US_subtract_solid"/>
-    </subtraction>    
+    </subtraction>   
+	
+    <!--Back face of upstream enclosure-->	
+    <subtraction name="EnclosureBack_US_solid">
+      <first ref="EnclosureFrontBack_US_full_solid"/>
+      <second ref="EnclosureBack_US_subtract_solid"/>
+    </subtraction> 
         
 </solids>
 
@@ -1415,6 +1426,12 @@
         <solidref ref="EnclosureFront_US_solid"/>
         <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
+	
+     <volume name="EnclosureBack_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureBack_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>	
 
     <volume name="upstreamTorusRegion">
       <materialref ref="G4_Galactic"/>
@@ -1524,6 +1541,11 @@
       <physvol name="EnclosureFront_US_phys">
        <volumeref ref="EnclosureFront_US_logic"/>
        <position name="EnclosureFront_US_pos" x="0" y="0" z="-204.597-25.4-2000"/>
+      </physvol>
+	    
+      <physvol name="EnclosureBack_US_phys">
+       <volumeref ref="EnclosureBack_US_logic"/>
+       <position name="EnclosureBack_US_pos" x="0" y="0" z="3592.703+25.4-2000"/>
       </physvol>
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
