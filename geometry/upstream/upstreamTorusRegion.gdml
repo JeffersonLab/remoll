@@ -180,12 +180,6 @@
     <box lunit="mm" name="tubeUpstream_2_1" x="533.4*2+1.75" y="533.4*2+1.75" z="740+615.5"/>
     <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeUpstream_2_2" rmax="420" rmin="0" startphi="0" z="740"/>
     
-    <!-- Lead shielding solids -->
-    <box lunit="mm" name="PbWall_solid" x="533.4*2+0.7" y="533.4*2+0.7" z="101.6"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_1_1" rmax="330.20" rmin="230" startphi="0" z="101.60"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_1_2" rmax="406.40" rmin="230" startphi="0" z="50.80"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="PbWall_solid_1_3" rmax="346.18" rmin="0" startphi="0" z="101.6+1"/>
-    
     <subtraction name ="tubeUpstream_2">
       <first ref="tubeUpstream_2_1"/>
       <second ref="tubeUpstream_2_2"/>
@@ -197,19 +191,7 @@
       <second ref="tubeUpstream_2"/>
       <positionref ref="USmothersubtract_center"/>
     </subtraction>
-    
-    <union name ="PbWall_1">
-      <first ref="PbWall_solid_1_1"/>
-      <second ref="PbWall_solid_1_2"/>
-      <position name ="PbWall_1_pos" lunit="mm" x="0" y="0" z="-101.60/2-50.80/2-0.1" />
-    </union>
-
-    <subtraction name ="PbWall_2">
-      <first ref="PbWall_solid"/>
-      <second ref="PbWall_solid_1_3"/>
-      <position name ="PbWall_2_pos" lunit="mm" x="0" y="0" z="0" />
-    </subtraction>
-	
+    	
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall1_solid"> 
       <zplane rmin="230" rmax="406.4" z="3541.903-2000"/> 
       <zplane rmin="230" rmax="406.4" z="3592.703-2000"/> 
