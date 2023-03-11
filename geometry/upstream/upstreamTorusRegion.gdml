@@ -628,6 +628,8 @@
       <first ref="EnclosureFrontBack_US_full_solid"/>
       <second ref="EnclosureBack_US_subtract_solid"/>
     </subtraction> 
+	
+    <box name="EnclosureRoof_US_solid" lunit="mm" x="1104.9" y="19.05" z="3592.703+204.597"/>
         
 </solids>
 
@@ -1432,6 +1434,12 @@
         <solidref ref="EnclosureBack_US_solid"/>
         <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
+	
+    <volume name="EnclosureRoof_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureRoof_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>	
 
     <volume name="upstreamTorusRegion">
       <materialref ref="G4_Galactic"/>
@@ -1545,6 +1553,11 @@
       <physvol name="EnclosureBack_US_phys">
        <volumeref ref="EnclosureBack_US_logic"/>
        <position name="EnclosureBack_US_pos" x="0" y="0" z="3592.703+25.4-2000"/>
+      </physvol>
+	    
+      <physvol name="EnclosureRoof_US_phys">
+       <volumeref ref="EnclosureRoof_US_logic"/>
+       <position name="EnclosureRoof_US_pos" x="0" y="0" z="-204.597+(3592.703+204.597)/2.0-2000"/>
       </physvol>
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
