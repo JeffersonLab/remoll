@@ -1533,7 +1533,7 @@
 
       <physvol>
         <volumeref ref="PbWall_2_logic"/>
-        <position name="PbWall_2_pos" x="0" y="0" z="1618.10+101.6/2"/>
+        <position name="PbWall_2_pos" x="0" y="0" z="3592.703+50.8+101.6/2"/>
       </physvol>
       
       <physvol name="bellows3physical_phys">
