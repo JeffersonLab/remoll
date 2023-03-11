@@ -217,13 +217,17 @@
       <zplane rmin="230" rmax="330.2" z="3694.303-2000"/> 
     </polycone>
 	
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall2_solid"> 
-      <zplane rmin="22" rmax="25.4" z="0"/> 
-      <zplane rmin="22" rmax="25.4" z="20"/> 
-      <zplane rmin="24" rmax="25.4" z="20"/> 
-      <zplane rmin="24" rmax="25.4" z="30"/> 
-    </polycone>
-
+    <box lunit="mm" name="PbWall2_full_solid" x="533.4*2" y="533.4*2" z="101.6"/>
+	
+    <tube name="PbWall2_subtract_solid"
+      startphi="0" deltaphi="360" aunit="deg"
+      rmin="0" rmax="344.488" z="102" lunit="mm"/>
+		
+    <subtraction name="PbWall2_solid">
+      <first ref="PbWall2_full_solid"/>
+      <second ref="PbWall2_subtract_solid"/>
+    </subtraction>
+	
     <!-- v10 --> 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Coll1_solid1"> 
       <zplane rmin="20.0+0.3" rmax="25.4" z="0"/> 
@@ -1396,7 +1400,7 @@
     
     <volume name="PbWall_2_logic">
       <materialref ref="Lead"/>
-      <solidref ref="PbWall_2"/>
+      <solidref ref="PbWall2_solid"/>
       <auxiliary auxtype="Color" auxvalue="gray"/>
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
       <auxiliary auxtype="DetNo" auxvalue="6034"/>
