@@ -1525,7 +1525,6 @@
       <!-- Lead wall DS of collimator 4 -->
       <physvol>
         <volumeref ref="PbWall_1_logic"/>
-        <position name="PbWall_1_pos" x="0" y="0" z="1665-48/2+2.5+50.8/2"/>
       </physvol>
 
       <physvol>
