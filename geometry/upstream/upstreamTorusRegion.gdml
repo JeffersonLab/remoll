@@ -629,7 +629,7 @@
       <second ref="EnclosureBack_US_subtract_solid"/>
     </subtraction> 
 	
-    <box name="EnclosureRoof_US_solid" lunit="mm" x="1104.9" y="19.05" z="3592.703+204.597"/>
+    <box name="EnclosureRoof_US_solid" lunit="mm" x="1104.9" y="19.05" z="3592.703+50.8+204.597"/>
         
 </solids>
 
@@ -1557,7 +1557,7 @@
 	    
       <physvol name="EnclosureRoof_US_phys">
        <volumeref ref="EnclosureRoof_US_logic"/>
-       <position name="EnclosureRoof_US_pos" x="0" y="0" z="-204.597+(3592.703+204.597)/2.0-2000"/>
+       <position name="EnclosureRoof_US_pos" x="0" y="517.6-19.05/2.0" z="-204.597+(3592.703+50.8+204.597)/2.0-2000"/>
       </physvol>
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
