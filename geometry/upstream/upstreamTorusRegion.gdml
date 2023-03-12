@@ -621,6 +621,8 @@
     </subtraction> 
 	
     <box name="EnclosureRoof_US_solid" lunit="mm" x="1104.9-50.8" y="19.05" z="3592.703+204.597"/>
+
+    <box name="EnclosureFloor_US_solid" lunit="mm" x="1104.9-50.8" y="50.8" z="3592.703+204.597"/>
 	
     <box name="EnclosureLeftRight_US_solid" lunit="mm" x="25.4" y="517.6+650.8" z="3592.703+204.597"/>
         
@@ -1563,6 +1565,11 @@
       <physvol name="EnclosureRoof_US_phys">
        <volumeref ref="EnclosureRoof_US_logic"/>
        <position name="EnclosureRoof_US_pos" x="0" y="517.6-19.05/2.0" z="-204.597+(3592.703+204.597)/2.0-2000"/>
+      </physvol>
+
+      <physvol name="EnclosureFloor_US_phys">
+       <volumeref ref="EnclosureFloor_US_logic"/>
+       <position name="EnclosureFloor_US_pos" x="0" y="-600-50.8/2.0" z="-204.597+(3592.703+204.597)/2.0-2000"/>
       </physvol>
 	    
       <physvol name="EnclosureLeft_US_phys">
