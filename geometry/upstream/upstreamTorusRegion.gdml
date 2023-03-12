@@ -619,7 +619,7 @@
     <subtraction name="EnclosureBack_US_solid">
       <first ref="EnclosureFrontBack_US_full_solid"/>
       <second ref="EnclosureBack_US_subtract_solid"/>
-      <position name="EnclosureFront_US_subtract_pos" x="0" y="(650.8-517.6)/2" z="50.8"/>
+      <position name="EnclosureBack_US_subtract_pos" x="0" y="(650.8-517.6)/2" z="0"/>
     </subtraction> 
 	
     <box name="EnclosureRoof_US_solid" lunit="mm" x="1104.9-50.8" y="19.05" z="3592.703+204.597"/>
