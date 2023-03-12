@@ -1436,6 +1436,12 @@
         <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
 	
+    <volume name="EnclosureFloor_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureFloor_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>	
+	
     <volume name="EnclosureLeft_US_logic">
         <materialref ref="G4_Al"/>
         <solidref ref="EnclosureLeftRight_US_solid"/>
