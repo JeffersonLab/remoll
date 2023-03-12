@@ -598,17 +598,8 @@
       <zplane rmin="149.225" rmax="155.575" z="-204.597-2000"/> 
     </polycone>	
 	
-    <arb8 name="EnclosureFrontBack_US_full_solid" 
-      v1x="1104.9/2.0" v1y="517.6" 
-      v2x="1104.9/2.0" v2y="-600" 
-      v3x="-1104.9/2.0" v3y="-600" 
-      v4x="-1104.9/2.0" v4y="517.6" 
-      v5x="1104.9/2.0" v5y="517.6" 
-      v6x="1104.9/2.0" v6y="-600" 
-      v7x="-1104.9/2.0" v7y="-600" 
-      v8x="-1104.9/2.0" v8y="517.6" 
-      dz="25.4" lunit="mm"/>
-    
+    <box name="EnclosureFrontBack_US_full_solid" lunit="mm" x="1104.9" y="517.6+650.8" z="50.8"/>	
+        
     <tube name="EnclosureFront_US_subtract_solid"
       startphi="0" deltaphi="360" aunit="deg"
       rmin="0" rmax="155.575" z="52" lunit="mm"/>
@@ -1561,12 +1552,12 @@
 	    
       <physvol name="EnclosureFront_US_phys">
        <volumeref ref="EnclosureFront_US_logic"/>
-       <position name="EnclosureFront_US_pos" x="0" y="0" z="-204.597-25.4-2000"/>
+       <position name="EnclosureFront_US_pos" x="0" y="(517.6-650.8)/2.0" z="-204.597-25.4-2000"/>
       </physvol>
 	    
       <physvol name="EnclosureBack_US_phys">
        <volumeref ref="EnclosureBack_US_logic"/>
-       <position name="EnclosureBack_US_pos" x="0" y="0" z="3592.703+25.4-2000"/>
+       <position name="EnclosureBack_US_pos" x="0" y="(517.6-650.8)/2.0" z="3592.703+25.4-2000"/>
       </physvol>
 	    
       <physvol name="EnclosureRoof_US_phys">
