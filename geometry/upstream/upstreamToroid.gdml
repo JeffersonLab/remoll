@@ -620,19 +620,21 @@
 		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_long">
-                 <zplane rmin="25" rmax="30.875" z="-1076.325"/>
-                 <zplane rmin="25" rmax="30.875" z="-1063.625"/>
-                 <zplane rmin="25" rmax="32" z="-1063.625"/>
-                 <zplane rmin="25" rmax="32" z="1063.625"/>
-        </polycone>
-        <polycone aunit="deg" startphi="0" deltaphi="28.0" lunit="mm" name="solid_twobounce_groove">
-                 <zplane rmin="32" rmax="36" z="-1050.8000000000002"/>
-                 <zplane rmin="32" rmax="36" z="1076.4499999999998"/>
-        </polycone>
+		 <zplane rmin="25" rmax="30.875" z="-1076.3249999999998"/>
+		 <zplane rmin="25" rmax="30.875" z="-1063.625"/>
+		 <zplane rmin="25" rmax="32" z="-1063.625"/>
+		 <zplane rmin="25" rmax="32" z="1063.625"/>
+		 <zplane rmin="25" rmax="30.875" z="1063.625"/>
+		 <zplane rmin="25" rmax="30.875" z="1076.3249999999998"/>
+	</polycone>
+	<polycone aunit="deg" startphi="0" deltaphi="28.0" lunit="mm" name="solid_twobounce_groove">
+		 <zplane rmin="32" rmax="36" z="-1050.8000000000002"/>
+		 <zplane rmin="32" rmax="36" z="1076.4499999999998"/>
+	</polycone>
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_US_toroidMother">
-                 <zplane rmin="0" rmax="262.555" z="-1100"/>
-                 <zplane rmin="0" rmax="262.555" z="1089.1499999999996"/>
-        </polycone>
+		 <zplane rmin="0" rmax="262.555" z="-1100"/>
+		 <zplane rmin="0" rmax="262.555" z="1089.1499999999996"/>
+	</polycone>
 </solids>
 
 
@@ -1391,10 +1393,10 @@
 		</physvol>
 
 		<physvol name="twobounce_groove_1">
-                        <volumeref ref="logic_twobounce_groove"/>
-                        <position name="pos_twobounce_groove_1" x="0" y="0" z="12.824999999999818"/>
-                        <rotation name="rot_twobounce_groove_1" x="0" y="0" z="-0.20445285523362144"/>
-                </physvol>
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_1" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_1" x="0" y="0" z="-0.20445285523362144"/>
+		</physvol>
 
 		<physvol name="ucoil_2">
 			<volumeref ref="logic_outer_E_2"/>
@@ -1451,10 +1453,10 @@
 		</physvol>
 
 		<physvol name="twobounce_groove_2">
-                        <volumeref ref="logic_twobounce_groove"/>
-                        <position name="pos_twobounce_groove_2" x="0" y="0" z="12.824999999999818"/>
-                        <rotation name="rot_twobounce_groove_2" x="0" y="0" z="0.6931450457920337"/>
-                </physvol>
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_2" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_2" x="0" y="0" z="0.6931450457920337"/>
+		</physvol>
 
 		<physvol name="ucoil_3">
 			<volumeref ref="logic_outer_E_3"/>
@@ -1511,10 +1513,10 @@
 		</physvol>
 
 		<physvol name="twobounce_groove_3">
-                        <volumeref ref="logic_twobounce_groove"/>
-                        <position name="pos_twobounce_groove_3" x="0" y="0" z="12.824999999999818"/>
-                        <rotation name="rot_twobounce_groove_3" x="0" y="0" z="1.5907429468176888"/>
-                </physvol>
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_3" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_3" x="0" y="0" z="1.5907429468176888"/>
+		</physvol>
 
 		<physvol name="ucoil_4">
 			<volumeref ref="logic_outer_E_4"/>
@@ -1571,10 +1573,10 @@
 		</physvol>
 
 		<physvol name="twobounce_groove_4">
-                        <volumeref ref="logic_twobounce_groove"/>
-                        <position name="pos_twobounce_groove_4" x="0" y="0" z="12.824999999999818"/>
-                        <rotation name="rot_twobounce_groove_4" x="0" y="0" z="2.488340847843344"/>
-                </physvol>
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_4" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_4" x="0" y="0" z="2.488340847843344"/>
+		</physvol>
 
 		<physvol name="ucoil_5">
 			<volumeref ref="logic_outer_E_5"/>
@@ -1631,10 +1633,10 @@
 		</physvol>
 
 		<physvol name="twobounce_groove_5">
-                        <volumeref ref="logic_twobounce_groove"/>
-                        <position name="pos_twobounce_groove_5" x="0" y="0" z="12.824999999999818"/>
-                        <rotation name="rot_twobounce_groove_5" x="0" y="0" z="3.385938748868999"/>
-                </physvol>
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_5" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_5" x="0" y="0" z="3.385938748868999"/>
+		</physvol>
 
 		<physvol name="ucoil_6">
 			<volumeref ref="logic_outer_E_6"/>
@@ -1690,11 +1692,11 @@
 			<rotation name="rot_shield4_bot_6" x="0" y="0" z="0"/>
 		</physvol>
 
-		 <physvol name="twobounce_groove_6">
-                        <volumeref ref="logic_twobounce_groove"/>
-                        <position name="pos_twobounce_groove_6" x="0" y="0" z="12.824999999999818"/>
-                        <rotation name="rot_twobounce_groove_6" x="0" y="0" z="4.283536649894654"/>
-                </physvol>
+		<physvol name="twobounce_groove_6">
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_6" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_6" x="0" y="0" z="4.283536649894654"/>
+		</physvol>
 
 		<physvol name="ucoil_7">
 			<volumeref ref="logic_outer_E_7"/>
@@ -1751,16 +1753,16 @@
 		</physvol>
 
                 <physvol name="twobounce_groove_7">
-                        <volumeref ref="logic_twobounce_groove"/>
-                        <position name="pos_twobounce_groove_7" x="0" y="0" z="12.824999999999818"/>
-                        <rotation name="rot_twobounce_groove_7" x="0" y="0" z="5.1811345509203095"/>
-                </physvol>
+			<volumeref ref="logic_twobounce_groove"/>
+			<position name="pos_twobounce_groove_7" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_7" x="0" y="0" z="5.1811345509203095"/>
+		</physvol>
 
 		<physvol name="twobounce_long">
-                        <volumeref ref="logic_twobounce_long"/>
-                        <position name="pos_twobounce_long" x="0" y="0" z="12.824999999999818"/>
-                        <rotation name="rot_twobounce_long" x="0" y="0" z="0"/>
-                </physvol>
+			<volumeref ref="logic_twobounce_long"/>
+			<position name="pos_twobounce_long" x="0" y="0" z="12.824999999999818"/>
+			<rotation name="rot_twobounce_long" x="0" y="0" z="0"/>
+		</physvol>
 
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
