@@ -592,7 +592,7 @@
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="beampipeDScollar0_solid"> 
       <zplane rmin="146.05" rmax="152.4" z="-1000-2000"/> 
       <zplane rmin="146.05" rmax="152.4" z="-885.648-2000"/> 
-      <zplane rmin="146.05" rmax="184.15" z="-885.648-2000"/
+      <zplane rmin="146.05" rmax="184.15" z="-885.648-2000"/>
       <zplane rmin="146.05" rmax="184.15" z="-856.439-2000"/> 
     </polycone>	
 	
