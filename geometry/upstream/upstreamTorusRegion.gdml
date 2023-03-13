@@ -617,7 +617,7 @@
       <zplane rmin="152.4" rmax="184.15" z="-428.58-2000"/> 
       <zplane rmin="152.4" rmax="184.15" z="-424.51-2000"/> 
       <zplane rmin="149.23" rmax="184.15" z="-424.51-2000"/>
-      <zplane rmin="149.23" rmax="184.15" z="-371.48-2000"/> 
+      <zplane rmin="149.23" rmax="184.15" z="-400.050-2000"/> 
     </polycone>
 		
     <tube
