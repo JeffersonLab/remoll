@@ -1384,62 +1384,62 @@
     
     <physvol name="Ring1Front_phys">
       <volumeref ref="Ring1Front_log"/>
-      <position name="Ring1Front_pos" unit="mm" z="22200.00 + 1145"/>
+      <position name="Ring1Front_pos" unit="mm" z="22198.00 + 1070.8 + 21"/>
     </physvol>
     
     <physvol name="Ring1Back_phys">
       <volumeref ref="Ring1Back_log"/>
-      <position name="Ring1Back_pos" unit="mm" z="22200.00 + 1271"/>
+      <position name="Ring1Back_pos" unit="mm" z="22198.00 + 1204.94 + 21"/>
     </physvol>
     
     <physvol name="Ring2Front_phys">
       <volumeref ref="Ring2Front_log"/>
-      <position name="Ring2Front_pos" unit="mm" z="22200.00 + 897"/>
+      <position name="Ring2Front_pos" unit="mm" z="22198.00 + 798.78 + 21"/>
     </physvol>
     
     <physvol name="Ring2Back_phys">
       <volumeref ref="Ring2Back_log"/>
-      <position name="Ring2Back_pos" unit="mm" z="22200.00 + 1023"/>
+      <position name="Ring2Back_pos" unit="mm" z="22198.00 + 932.92 + 21"/>
     </physvol>
     
     <physvol name="Ring3Front_phys">
       <volumeref ref="Ring3Front_log"/>
-      <position name="Ring3Front_pos" unit="mm" z="22200.00 + 649"/>
+      <position name="Ring3Front_pos" unit="mm" z="22198.00 + 525.97 + 21"/>
     </physvol>
     
     <physvol name="Ring3Back_phys">
       <volumeref ref="Ring3Back_log"/>
-      <position name="Ring3Back_pos" unit="mm" z="22200.00 + 775"/>
+      <position name="Ring3Back_pos" unit="mm" z="22198.00 + 660.12 + 21"/>
     </physvol>
     
     <physvol name="Ring4Front_phys">
       <volumeref ref="Ring4Front_log"/>
-      <position name="Ring4Front_pos" unit="mm" z="22200.00 + 401"/>
+      <position name="Ring4Front_pos" unit="mm" z="22198.00 + 248.47 + 21"/>
     </physvol>
     
     <physvol name="Ring4Back_phys">
       <volumeref ref="Ring4Back_log"/>
-      <position name="Ring4Back_pos" unit="mm" z="22200.00 + 527"/>
+      <position name="Ring4Back_pos" unit="mm" z="22198.00 + 382.61 + 21"/>
     </physvol>
     
     <physvol name="Ring5Front_phys">
       <volumeref ref="Ring5Front_log"/>
-      <position name="Ring5Front_pos" unit="mm" z="22200.00 + 131"/>
+      <position name="Ring5Front_pos" unit="mm" z="22198.00 - 78.11 + 21"/>
     </physvol>
     
     <physvol name="Ring5Back_phys">
       <volumeref ref="Ring5Back_log"/>
-      <position name="Ring5Back_pos" unit="mm" z="22200.00 + 269"/>
+      <position name="Ring5Back_pos" unit="mm" z="22198.00 + 78.08 + 21"/>
     </physvol>
     
     <physvol name="Ring6Front_phys">
       <volumeref ref="Ring6Front_log"/>
-      <position name="Ring6Front_pos" unit="mm" z="22200.00 - 135"/>
+      <position name="Ring6Front_pos" unit="mm" z="22198.00 - 364.35 + 21"/>
     </physvol>
     
     <physvol name="Ring6Back_phys">
       <volumeref ref="Ring6Back_log"/>
-      <position name="Ring6Back_pos" unit="mm" z="22200.00 - 1"/>
+      <position name="Ring6Back_pos" unit="mm" z="22198.00 - 230.22 + 21"/>
     </physvol>
     
     <!-- ShowerMax detector plane -->
