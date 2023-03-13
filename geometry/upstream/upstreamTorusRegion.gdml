@@ -1403,9 +1403,9 @@
     
     <!--beampipe segments upsetream and downstream of collar 0-->
     <volume name="flangeUScollar0_log">
-      <materialref ref="G4_STAINLESS-STEEL"/>
+      <materialref ref="G4_Al"/>
       <solidref ref="flangeUScollar0_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Orange"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
 	
     <volume name="beampipeUScollar0_log">
