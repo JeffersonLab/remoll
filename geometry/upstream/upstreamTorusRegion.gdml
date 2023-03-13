@@ -590,8 +590,10 @@
     </polycone>	
 	
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="beampipeDScollar0_solid"> 
-      <zplane rmin="146.05" rmax="152.4" z="-892.76-2000"/> 
-      <zplane rmin="146.05" rmax="152.4" z="-1000-2000"/>  
+      <zplane rmin="146.05" rmax="152.4" z="-1000-2000"/> 
+      <zplane rmin="146.05" rmax="152.4" z="-885.648-2000"/> 
+      <zplane rmin="146.05" rmax="184.15" z="-885.648-2000"/>
+      <zplane rmin="146.05" rmax="184.15" z="-856.439-2000"/> 
     </polycone>	
 	
     <!--add bellows -->
@@ -605,12 +607,10 @@
     </polycone>	
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2USflange_solid"> 
-      <zplane rmin="152.4" rmax="184.15" z="-828.63-2000"/> 
-      <zplane rmin="152.4" rmax="184.15" z="-831.17-2000"/> 
+      <zplane rmin="149.23" rmax="184.15" z="-856.439-2000"/>
       <zplane rmin="149.23" rmax="184.15" z="-831.17-2000"/>
-      <zplane rmin="149.23" rmax="184.15" z="-885.77-2000"/>
-      <zplane rmin="149.23" rmax="152.4" z="-885.77-2000"/> 
-      <zplane rmin="149.23" rmax="152.4" z="-892.76-2000"/> 
+      <zplane rmin="152.4" rmax="184.15" z="-831.17-2000"/> 
+      <zplane rmin="152.4" rmax="184.15" z="-828.63-2000"/> 
     </polycone>	
 	
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2DSflange_solid"> 
@@ -1442,9 +1442,9 @@
     
     <!--beampipe segments upsetream and downstream of collar 0-->
     <volume name="flangeUScollar0_log">
-      <materialref ref="G4_STAINLESS-STEEL"/>
+      <materialref ref="G4_Al"/>
       <solidref ref="flangeUScollar0_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Orange"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
 	
     <volume name="beampipeUScollar0_log">

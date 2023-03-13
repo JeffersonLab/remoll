@@ -97,9 +97,7 @@
 	  <zplane rmin="152.40" rmax="184.15" z="-2999.10+4500" />  
 	  <zplane rmin="152.40" rmax="184.15" z="-2995.04+4500" /> 
 	  <zplane rmin="149.23" rmax="184.15" z="-2995.04+4500" />
-	  <zplane rmin="149.23" rmax="184.15" z="-2960.22+4500" />
-	  <zplane rmin="152.40" rmax="184.15" z="-2960.22+4500" />
-	  <zplane rmin="152.40" rmax="184.15" z="-2941.95+4500" />
+	  <zplane rmin="149.23" rmax="184.15" z="-2971.291+4500" />
     </polycone>
 	 
     <polycone name = "tgt2US_pipe2_DSflange_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
@@ -110,9 +108,9 @@
     </polycone>
 	  
     <polycone name = "tgt2US_pipe2_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
-	  <zplane rmin="149.23" rmax="152.40" z="-2960.22+4500" />
-	  <zplane rmin="149.23" rmax="152.40" z="-2934.97+4500" />
-	  <zplane rmin="146.05" rmax="152.40" z="-2922.27+4500" /> 
+	  <zplane rmin="146.05" rmax="184.15" z="-2971.291+4500" />
+	  <zplane rmin="146.05" rmax="184.15" z="-2941.954+4500" />
+	  <zplane rmin="146.05" rmax="152.40" z="-2941.954+4500" /> 
 	  <zplane rmin="146.05" rmax="152.40" z="-1377.49+4500" />
 	  <zplane rmin="149.23" rmax="152.40" z="-1364.79+4500" /> 
 	  <zplane rmin="149.23" rmax="152.40" z="-1339.55+4500" />
@@ -267,9 +265,9 @@
     </volume>
 	  
     <volume name="tgt2US_pipe2_DSflange_logic">
-      <materialref ref="G4_STAINLESS-STEEL"/>
+      <materialref ref="G4_Al"/>
       <solidref ref="tgt2US_pipe2_DSflange_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Orange"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
 
