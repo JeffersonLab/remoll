@@ -625,12 +625,6 @@
                  <zplane rmin="25" rmax="32" z="-1063.625"/>
                  <zplane rmin="25" rmax="32" z="1063.625"/>
         </polycone>
-        <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_long">
-                 <zplane rmin="25" rmax="30.875" z="-1076.3249999999998"/>
-                 <zplane rmin="25" rmax="30.875" z="-1063.625"/>
-                 <zplane rmin="25" rmax="32" z="-1063.625"/>
-                 <zplane rmin="25" rmax="32" z="1063.625"/>
-        </polycone>
         <polycone aunit="deg" startphi="0" deltaphi="28.0" lunit="mm" name="solid_twobounce_groove">
                  <zplane rmin="32" rmax="36" z="-1050.8000000000002"/>
                  <zplane rmin="32" rmax="36" z="1076.4499999999998"/>
