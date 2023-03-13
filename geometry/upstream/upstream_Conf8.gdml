@@ -102,7 +102,7 @@
       <second ref="wedge_backsub"/>
       <position unit="cm" name="rightwedge_trapezoid_pos" x="0" y="0" z="110"/>
     </subtraction>
-    
+	  	      
   </solids>
 
   <structure>
@@ -152,7 +152,7 @@
       <materialref ref="Concrete"/>
       <solidref ref="rightwedge_trapezoid_cut"/>
     </volume>
-   
+	     
     <volume name="upstream">
       <materialref ref="G4_AIR"/>  
       <solidref ref="boxConcreteShielding"/>
