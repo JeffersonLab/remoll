@@ -376,6 +376,11 @@
 	  <rotation name="detectorRot" x="0" y="90" z="0" unit="deg"/>
 	  </physvol>
       -->
+
+      <physvol>
+        <file name="detector/ThinQuartz/DetectorArray/DetectorArray.gdml"/>
+        <positionref ref="mainDetectorRing5MidPlane_pos"/>
+      </physvol>
       
       <!-- ShowerMax Detectors-->
       <physvol>
