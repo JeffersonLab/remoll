@@ -29,6 +29,7 @@
 
 <!-- Physical main detector array position -->
 <position name="detectorCenter" x="0.0" y="0.0" z="22000.00" unit="mm"/>
+<position name="mainDetectorRing5MidPlane_pos" z="22198.00" unit="mm"/>
 
 <!--position of right electronics shield hut -->
 <position name="righthut_pos" x="-5000" y="-3000.+3600./2+20" z="22000"/> <!--Beam height from hall floor is 3m; 3600mm is det hut height.-->
