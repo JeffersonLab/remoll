@@ -667,7 +667,7 @@
       <position name="EnclosureBack_US_subtract_pos" x="0" y="(650.8-517.6)/2" z="0"/>
     </subtraction> 
     
-    <box name="EnclosureFrontBack_SupportPlate_full_solid" lunit="mm" x="1104.9-50.8" y="778.51+202.49" z="25.4"/>
+    <box name="EnclosureFrontBack_SupportPlate_full_solid" lunit="mm" x="1104.9-50.8" y="778.51-202.49" z="25.4"/>
     <tube name="EnclosureFrontBack_SupportPlate_subtract_solid"
       startphi="0" deltaphi="360" aunit="deg"
       rmin="0" rmax="299.753" z="26" lunit="mm"/>
@@ -1702,12 +1702,12 @@
       
       <physvol name="EnclosureFront_SupportPlate_phys">
        <volumeref ref="EnclosureFront_SupportPlate_logic"/>
-       <position name="EnclosureFront_SupportPlate_pos" x="0" y="(778.51-202.49)/2.0" z="-946.025-25.4-2000"/>
+       <position name="EnclosureFront_SupportPlate_pos" x="0" y="(-778.51+202.49)/2.0" z="946.025-25.4-2000"/>
       </physvol>
       
       <physvol name="EnclosureBack_SupportPlate_phys">
        <volumeref ref="EnclosureBack_SupportPlate_logic"/>
-       <position name="EnclosureBack_SupportPlate_pos" x="0" y="(778.51-202.49)/2.0" z="3079.625+25.4-2000"/>
+       <position name="EnclosureBack_SupportPlate_pos" x="0" y="(-778.51+202.49)/2.0" z="3079.625+25.4-2000"/>
       </physvol> 
 	    
       <physvol name="EnclosureRoof_US_phys">
