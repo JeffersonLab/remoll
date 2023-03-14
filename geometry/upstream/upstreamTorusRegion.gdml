@@ -1517,10 +1517,16 @@
         <solidref ref="EnclosureFront_US_solid"/>
         <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
+    
+    <volume name="EnclosureBack_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureBack_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>	
 	
      <volume name="EnclosureFront_SupportPlate_logic">
         <materialref ref="G4_Al"/>
-        <solidref ref="EnclosureBack_US_solid"/>
+        <solidref ref="EnclosureFrontBack_SupportPlate_solid"/>
         <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
     
@@ -1530,11 +1536,7 @@
         <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>	
 	
-     <volume name="SupportBack_US_logic">
-        <materialref ref="G4_Al"/>
-        <solidref ref="EnclosureFrontBack_SupportPlate_solid"/>
-        <auxiliary auxtype="Color" auxvalue="blue"/>
-    </volume>	
+    
 	
     <volume name="EnclosureRoof_US_logic">
         <materialref ref="G4_Al"/>
