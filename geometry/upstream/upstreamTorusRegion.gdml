@@ -1702,12 +1702,12 @@
       
       <physvol name="EnclosureFront_SupportPlate_phys">
        <volumeref ref="EnclosureFront_SupportPlate_logic"/>
-       <position name="EnclosureFront_SupportPlate_pos" x="0" y="(397.51-381)/2.0" z="946.025-25.4/2.0-2000"/>
+       <position name="EnclosureFront_SupportPlate_pos" x="0" y="(-397.51+381)/2.0" z="946.025-25.4/2.0-2000"/>
       </physvol>
       
       <physvol name="EnclosureBack_SupportPlate_phys">
        <volumeref ref="EnclosureBack_SupportPlate_logic"/>
-       <position name="EnclosureBack_SupportPlate_pos" x="0" y="(397.51-381)/2.0" z="3079.625+25.4/2.0-2000"/>
+       <position name="EnclosureBack_SupportPlate_pos" x="0" y="(-397.51+381)/2.0" z="3079.625+25.4/2.0-2000"/>
       </physvol> 
 	    
       <physvol name="EnclosureRoof_US_phys">
