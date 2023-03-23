@@ -1194,7 +1194,7 @@
 
     <physvol name="Col6AEnt_phys">
       <volumeref ref="Col6AEnt_log"/>
-      <position name="Col6AEnt_pos" unit="mm" x="0" y="0" z="9692.594-0.5"/>
+      <position name="Col6AEnt_pos" unit="mm" x="0" y="0" z="9555.904-0.5"/>
     </physvol>
 
     <physvol name="LintelExit_phys">
