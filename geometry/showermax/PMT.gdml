@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE gdml [
+  <!ENTITY matrices SYSTEM "showerMaxMatrices.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+ <define>
+  <position name="t0" unit="mm" x="0" y="0" z="0" />
+  <rotation name="r0" unit="deg" x="90" y="0" z="0" />
+  <position name="t1" unit="mm" x="0" y="0" z="0" />
+  <rotation name="r1" unit="deg" x="0" y="180" z="0" />
+  <position name="t2" unit="mm" x="0" y="0" z="1.5+1.5e-6" />
+  <rotation name="r2" unit="deg" x="0" y="180" z="0" />
+  &matrices;
+ </define>
+ <materials>
+  <define>
+   <quantity type="density" name="universe_mean_density" value="1.e-25" unit="g/cm3" />
+  </define>
+  <element Z="8" formula="O" name="Oxygen" >
+   <atom value="16" />
+  </element>
+  <element Z="7" formula="N" name="Nitrogen" >
+   <atom value="14.01" />
+  </element>
+  <element Z="14" formula="Si" name="Silicon" >
+   <atom value="28.085" />
+  </element>
+  <element Z="51" formula="Sb" name="Antimony" >
+   <atom value="121.760" />
+  </element>
+  <element Z="55" formula="Cs" name="Caesium" >
+   <atom value="132.90545" />
+  </element>
+  <element Z="19" formula="K" name="Potassium" >
+   <atom value="39.0983" />
+  </element>
+  <material formula="noFormula" name="Air" >
+   <property name="RINDEX" ref="Air_RINDEX"/>
+   <D value="0.00129" />
+   <fraction n="0.3" ref="Oxygen" />
+   <fraction n="0.7" ref="Nitrogen" />
+  </material>
+  <material Z="1" name="vacuum" >
+   <T value="2.73" />
+   <P value=" 3.0E-18" unit="pascal" />
+   <Dref ref="universe_mean_density" />
+   <atom value="1.01" />
+  </material>
+  <material formula="SiO2" name="Quartz" >
+   <property name="RINDEX" ref="Quartz_RINDEX"/>
+   <property name="ABSLENGTH" ref="Quartz_ABSLENGTH_DATA"/>
+   <D value="2.203" />
+   <composite n="1" ref="Silicon" />
+   <composite n="2" ref="Oxygen" />
+  </material>
+  <material formula="K2CsSb" name="Bialkali" Z="39">
+   <property name="EFFICIENCY" ref="Cathode_EFFICIENCY"/>
+   <property name="REFLECTIVITY" ref="CathodeSurf_REFLECTIVITY"/>
+   <D value="3.46" unit="g/cm3"/>
+   <composite n="2" ref="Potassium" />
+   <composite n="1" ref="Caesium" />
+   <composite n="1" ref="Antimony" />
+  </material>
+ </materials>
+ <solids>
+  <box aunit="radian" lunit="mm" name="WorldBox" x="1000" y="1000" z="1000"/>
+  <tube name="pmt_window" rmin="0" rmax="50" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+  <tube name="cathode" rmin="0" rmax="50" z="3.0e-6" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+  <opticalsurface name="surf1" model="glisur" finish="ground" type="dielectric_dielectric" value="0.96" />
+  <opticalsurface name="surf2" model="glisur" finish="polished" type="dielectric_metal" value="1.0">
+    <property name="REFLECTIVITY" ref="CathodeSurf_REFLECTIVITY" />
+    <property name="EFFICIENCY" ref="Cathode_EFFICIENCY" />
+  </opticalsurface>
+ </solids>
+ <structure>
+  <volume name="pmt_window_log" >
+   <materialref ref="Quartz" />
+   <solidref ref="pmt_window" />
+  </volume>
+  <volume name="cathode_log" >
+   <materialref ref="Bialkali" />
+   <solidref ref="cathode" />
+   <auxiliary auxtype="SensDet" auxvalue="PhotoCathode"/>
+   <auxiliary auxtype="DetNo" auxvalue="77"/>
+   <auxiliary auxtype="Color" auxvalue="Yellow"/>
+   <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <skinsurface name="skinsrf1" surfaceproperty="surf2" >
+    <volumeref ref="cathode_log"/>
+  </skinsurface>
+  <volume name="World" >
+   <materialref ref="Air" />
+   <solidref ref="WorldBox" />
+   <physvol name="pmt_window_phys">
+    <volumeref ref="pmt_window_log" />
+    <positionref ref="t1" />
+    <rotationref ref="r1" />
+   </physvol>
+   <physvol name="cathode_phys">
+    <volumeref ref="cathode_log" />
+    <positionref ref="t2" />
+    <rotationref ref="r2" />
+   </physvol>
+  </volume>
+ </structure>
+ <setup name="Default" version="1.0" >
+  <world ref="World" />
+ </setup>
+</gdml>
