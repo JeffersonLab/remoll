@@ -386,6 +386,7 @@
 		<materialref ref="Cathode"/>
 		<solidref ref="solid_pmt_cathode"/>
 		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTcathode" />
+		<auxiliary auxtype="DetType" auxvalue="opticalphoton" />
 		<auxiliary auxtype="DetNo" auxvalue="70016"/>
 		<auxiliary auxtype="Color" auxvalue="green"/>
 	</volume>
@@ -472,29 +473,24 @@
 			<position name="pos_top_support_0" x="344.54400000000004" y="0" z="4.0"/>
 			<rotation name="rot_top_support_0" x="0" y="0" z="0"/>
 		</physvol>
-		<physvol name="pmt_filter_0">
-			<volumeref ref="logic_pmt_filter_0"/>
-			<position name="pos_logic_pmt_filter_0" x= "350.21900000000005" y="0" z="4.0"/>
-			<rotation name="rot_logic_pmt_filter_0" x="0" y="-pi/2" z="0"/>
-		</physvol>
 		<physvol name="pmt_window_0">
 			<volumeref ref="logic_pmt_window_0"/>
-			<position name="pos_logic_pmt_window_0" x="354.21900000000005" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_window_0" x="349.21900000000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_cathode_0">
 			<volumeref ref="logic_pmt_cathode_0"/>
-			<position name="pos_logic_pmt_cathode_0" x="355.71900150000005" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_cathode_0" x="350.71900150000005" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_0">
 			<volumeref ref="logic_pmt_0"/>
-			<position name="pos_logic_pmt_0" x="430.71900300000004" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_0" x="425.71900300000004" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_base_0">
 			<volumeref ref="logic_pmt_base_0"/>
-			<position name="pos_logic_pmt_base_0" x="530.719003" y="0" z="4.0"/>
+			<position name="pos_logic_pmt_base_0" x="525.719003" y="0" z="4.0"/>
 			<rotation name="rot_logic_pmt_base_0" x="0" y="-pi/2" z="0"/>
 		</physvol>
 		<physvol name="pmt_housing_0">
@@ -607,46 +603,6 @@
 			<position name="pos_logic_tungsten_0_3" x="0" y="0" z="-26.972"/>
 			<rotation name="rot_logic_tungsten_0_3" x="0" y="0" z="0"/>
 		</physvol>
-		<physvol name="spacer_0_0">
-			<volumeref ref="logic_spacer_0_0"/>
-			<position name="pos_logic_spacer_0_0" x="0" y="0" z="31.554000000000002"/>
-			<rotation name="rot_logic_spacer_0_0" x="0" y="0" z="0"/>
-		</physvol>
-		<physvol name="spacer_0_1">
-			<volumeref ref="logic_spacer_0_1"/>
-			<position name="pos_logic_spacer_0_1" x="0" y="0" z="24.684"/>
-			<rotation name="rot_logic_spacer_0_1" x="0" y="0" z="0"/>
-		</physvol>
-		<physvol name="spacer_0_2">
-			<volumeref ref="logic_spacer_0_2"/>
-			<position name="pos_logic_spacer_0_2" x="0" y="0" z="15.814000000000002"/>
-			<rotation name="rot_logic_spacer_0_2" x="0" y="0" z="0"/>
-		</physvol>
-		<physvol name="spacer_0_3">
-			<volumeref ref="logic_spacer_0_3"/>
-			<position name="pos_logic_spacer_0_3" x="0" y="0" z="8.944000000000003"/>
-			<rotation name="rot_logic_spacer_0_3" x="0" y="0" z="0"/>
-		</physvol>
-		<physvol name="spacer_0_4">
-			<volumeref ref="logic_spacer_0_4"/>
-			<position name="pos_logic_spacer_0_4" x="0" y="0" z="0.07400000000000206"/>
-			<rotation name="rot_logic_spacer_0_4" x="0" y="0" z="0"/>
-		</physvol>
-		<physvol name="spacer_0_5">
-			<volumeref ref="logic_spacer_0_5"/>
-			<position name="pos_logic_spacer_0_5" x="0" y="0" z="-6.795999999999998"/>
-			<rotation name="rot_logic_spacer_0_5" x="0" y="0" z="0"/>
-		</physvol>
-		<physvol name="spacer_0_6">
-			<volumeref ref="logic_spacer_0_6"/>
-			<position name="pos_logic_spacer_0_6" x="0" y="0" z="-15.665999999999997"/>
-			<rotation name="rot_logic_spacer_0_6" x="0" y="0" z="0"/>
-		</physvol>
-		<physvol name="spacer_0_7">
-			<volumeref ref="logic_spacer_0_7"/>
-			<position name="pos_logic_spacer_0_7" x="0" y="0" z="-22.535999999999998"/>
-			<rotation name="rot_logic_spacer_0_7" x="0" y="0" z="0"/>
-		</physvol>
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
 	</volume>
 	<volume name="showerMaxMother">
@@ -661,10 +617,8 @@
 	</volume>
 
 	<skinsurface name="quartz_skin_surface" surfaceproperty="quartz_surface" >
-		<volumeref ref="logic_quartz_0_0"/>
-		<volumeref ref="logic_quartz_0_1"/>
-		<volumeref ref="logic_quartz_0_2"/>
-		<volumeref ref="logic_quartz_0_3"/>
+		<volumeref ref="logic_pmt_window_0"/>
+		<volumeref ref="logic_pmt_filter_0"/>
 	</skinsurface>
 	<skinsurface name="suitcase_skin_surface" surfaceproperty="Al_mirror_surface" >
 		<volumeref ref="logic_suitcase_tungstenquartz_0"/>

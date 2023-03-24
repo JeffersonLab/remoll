@@ -280,7 +280,10 @@
 5.39*eV 0.48866000
 5.64*eV 0.39652700
 5.90*eV 0.43079500
-6.20*eV 0.52192200"/>
+6.20*eV 0.52192200"/>-->
+<matrix name="AluminumSurf_EFFICIENCY" coldim="2" values="
+1.55*eV 0.0
+6.20*eV 0.0"/>
 <matrix name="CathodeSurf_REFLECTIVITY" coldim="2" values="
 1.55*eV 0.125
 6.20*eV 0.125"/>
