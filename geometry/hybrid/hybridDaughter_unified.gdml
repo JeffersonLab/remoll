@@ -3647,13 +3647,13 @@
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Coll6A_logic1"/>
-                    <position x="0" y="0" z="1223.168-2864.764-90+136.9"/>
+                    <position x="0" y="0" z="1223.168-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
                 
                 <physvol>
                     <volumeref ref="Coll6A_logic2"/>
-                    <position x="0" y="0" z="1305.718-2864.764-90+136.9"/>
+                    <position x="0" y="0" z="1305.718-2864.764-90"/>
                     <rotation unit="deg" x="0" y="0" z="iloop*360./7."/>
                 </physvol>
             </loop>
