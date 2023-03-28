@@ -1770,12 +1770,12 @@
       
       <physvol name="EnclosureLipLeft_US_phys">
        <volumeref ref="EnclosureLipLeft_US_logic"/>
-       <position name="EnclosureLipLeft_US_pos" x="0" y="-600" z="-204.597+(3592.703+204.597)/2.0-2000"/>
+       <position name="EnclosureLipLeft_US_pos" x="-1104.9/2.0-184.15/2.0" y="-600" z="-204.597+(3592.703+204.597)/2.0-2000"/>
       </physvol>
       
       <physvol name="EnclosureLipRight_US_phys">
        <volumeref ref="EnclosureLipRight_US_logic"/>
-       <position name="EnclosureLipRight_US_pos" x="0" y="-600" z="-204.597+(3592.703+204.597)/2.0-2000"/>
+       <position name="EnclosureLipRight_US_pos" x="1104.9/2.0+184.15/2.0" y="-600" z="-204.597+(3592.703+204.597)/2.0-2000"/>
       </physvol>
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
