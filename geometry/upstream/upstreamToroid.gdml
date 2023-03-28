@@ -643,7 +643,7 @@
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_US_toroidMother">
                  <zplane rmin="0" rmax="299.753" z="-1100"/>
                  <zplane rmin="0" rmax="299.753" z="1105.0249999999996"/>
-        </polycone>
+  </polycone>
 </solids>
 
 
@@ -1827,7 +1827,7 @@
 			<rotation name="rot_support_bar_7" x="0" y="0" z="-5.834386356666759"/>
 		</physvol>
 
-                <physvol name="twobounce_groove_7">
+    <physvol name="twobounce_groove_7">
 			<volumeref ref="logic_twobounce_groove"/>
 			<position name="pos_twobounce_groove_7" x="0" y="0" z="0"/>
 			<rotation name="rot_twobounce_groove_7" x="0" y="0" z="5.1811345509203095"/>
