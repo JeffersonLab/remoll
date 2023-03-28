@@ -573,8 +573,53 @@
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="collar0_solid"
           rmin="76.2" rmax="330" z="200"/>
-
+    
+	
+	
+    <!-- beampipe segments upstream and downstream of collar 0 enclosure -->
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="flangeUScollar0_solid"> 
+      <zplane rmin="149.23" rmax="184.15" z="-1310-2000"/>
+      <zplane rmin="149.23" rmax="184.15" z="-1300.66-2000"/>
+      <zplane rmin="149.23" rmax="152.4" z="-1300.66-2000"/>  
+      <zplane rmin="149.23" rmax="152.4" z="-1293.67-2000"/> 
+    </polycone>		
+	
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="beampipeUScollar0_solid"> 
+      <zplane rmin="146.05" rmax="152.4" z="-1293.67-2000"/> 
+      <zplane rmin="146.05" rmax="152.4" z="-1200-2000"/>  
+    </polycone>	
+	
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="beampipeDScollar0_solid"> 
+      <zplane rmin="146.05" rmax="152.4" z="-1000-2000"/> 
+      <zplane rmin="146.05" rmax="152.4" z="-885.648-2000"/> 
+      <zplane rmin="146.05" rmax="184.15" z="-885.648-2000"/>
+      <zplane rmin="146.05" rmax="184.15" z="-856.439-2000"/> 
+    </polycone>	
+	
     <!--add bellows -->
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2_solid"> 
+      <zplane rmin="149.23" rmax="152.4" z="-831.17-2000"/> 
+      <zplane rmin="149.23" rmax="152.4" z="-773.05-2000"/> 
+      <zplane rmin="149.23" rmax="190.5" z="-773.05-2000"/>
+      <zplane rmin="149.23" rmax="190.5" z="-484.15-2000"/>
+      <zplane rmin="149.23" rmax="152.4" z="-484.15-2000"/> 
+      <zplane rmin="149.23" rmax="152.4" z="-424.51-2000"/> 
+    </polycone>	
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2USflange_solid"> 
+      <zplane rmin="149.23" rmax="184.15" z="-856.439-2000"/>
+      <zplane rmin="149.23" rmax="184.15" z="-831.17-2000"/>
+      <zplane rmin="152.4" rmax="184.15" z="-831.17-2000"/> 
+      <zplane rmin="152.4" rmax="184.15" z="-828.63-2000"/> 
+    </polycone>	
+	
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="bellows2DSflange_solid"> 
+      <zplane rmin="152.4" rmax="184.15" z="-428.58-2000"/> 
+      <zplane rmin="152.4" rmax="184.15" z="-424.51-2000"/> 
+      <zplane rmin="149.23" rmax="184.15" z="-424.51-2000"/>
+      <zplane rmin="149.23" rmax="184.15" z="-400.050-2000"/> 
+    </polycone>
+		
     <tube
     name="bellows3physical_solid"
     startphi="0" deltaphi="360" aunit="deg"
@@ -1355,8 +1400,45 @@
       <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/>
       <auxiliary auxtype="DetNo" auxvalue="5688"/>
     </volume>
+    
+    <!--beampipe segments upsetream and downstream of collar 0-->
+    <volume name="flangeUScollar0_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="flangeUScollar0_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>	
+	
+    <volume name="beampipeUScollar0_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="beampipeUScollar0_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+
+    <volume name="beampipeDScollar0_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="beampipeDScollar0_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
 
     <!--add bellows G4_STAINLESS-STEEL and custom bellows SS material  -->
+    <volume name="bellows2_log">
+        <materialref ref="SSbellows"/>
+        <solidref ref="bellows2_solid"/>
+        <auxiliary auxtype="Color" auxvalue="Pink"/>
+    </volume>	
+    
+    <volume name="bellows2USflange_log">
+        <materialref ref="G4_STAINLESS-STEEL"/>
+        <solidref ref="bellows2USflange_solid"/>
+        <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
+
+    <volume name="bellows2DSflange_log">
+        <materialref ref="G4_STAINLESS-STEEL"/>
+        <solidref ref="bellows2DSflange_solid"/>
+        <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
+	
     <volume name="bellows3physical_log">
         <materialref ref="SSbellows"/>
         <solidref ref="bellows3physical_solid"/>
@@ -1459,6 +1541,30 @@
       <physvol>
         <volumeref ref="PbWall_2_logic"/>
         <position name="PbWall_2_pos" x="0" y="0" z="1618.10+101.6/2"/>
+      </physvol>
+	    
+      <physvol name="flangeUScollar0_phys">
+          <volumeref ref="flangeUScollar0_log"/>
+      </physvol>
+	    
+      <physvol name="beampipeUScollar0_phys">
+          <volumeref ref="beampipeUScollar0_log"/>
+      </physvol>
+	    
+      <physvol name="beampipeDScollar0_phys">
+          <volumeref ref="beampipeDScollar0_log"/>
+      </physvol>
+	    
+      <physvol name="bellows2_phys">
+          <volumeref ref="bellows2_log"/>
+      </physvol>
+	   
+      <physvol name="bellows2USflange_phys">
+          <volumeref ref="bellows2USflange_log"/>
+      </physvol>
+	    
+      <physvol name="bellows2DSflange_phys">
+          <volumeref ref="bellows2DSflange_log"/>
       </physvol>
       
       <physvol name="bellows3physical_phys">
