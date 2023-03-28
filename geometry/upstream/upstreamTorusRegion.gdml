@@ -682,6 +682,10 @@
     <box name="EnclosureFloor_US_solid" lunit="mm" x="1104.9-50.8" y="50.8" z="3592.703+204.597"/>
 	
     <box name="EnclosureLeftRight_US_solid" lunit="mm" x="25.4" y="517.6+650.8" z="3592.703+204.597"/>
+    
+    <box name="EnclosureLipFrontBack_US_solid" lunit="mm" x="1104.9" y="101.6" z="184.15"/>
+    
+    <box name="EnclosureLipLeftRight_US_solid" lunit="mm" x="184.15" y="101.6" z="4267.19981"/>
         
 </solids>
 
@@ -1561,6 +1565,30 @@
         <solidref ref="EnclosureLeftRight_US_solid"/>
         <auxiliary auxtype="Color" auxvalue="blue"/>
     </volume>
+    
+    <volume name="EnclosureLipFront_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureLipFrontBack_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>	
+    
+    <volume name="EnclosureLipBack_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureLipFrontBack_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>	
+	
+    <volume name="EnclosureLipLeft_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureLipLeftRight_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+    
+    <volume name="EnclosureLipRight_US_logic">
+        <materialref ref="G4_Al"/>
+        <solidref ref="EnclosureLipLeftRight_US_solid"/>
+        <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
 
     <volume name="upstreamTorusRegion">
       <materialref ref="G4_Galactic"/>
@@ -1728,6 +1756,26 @@
       <physvol name="EnclosureRight_US_phys">
        <volumeref ref="EnclosureRight_US_logic"/>
        <position name="EnclosureRight_US_pos" x="-1104.9/2.0+25.4/2.0" y="(517.6-650.8)/2.0" z="-204.597+(3592.703+204.597)/2.0-2000"/>
+      </physvol>
+      
+      <physvol name="EnclosureLipFront_US_phys">
+       <volumeref ref="EnclosureLipFront_US_logic"/>
+       <position name="EnclosureLipFront_US_pos" x="0" y="-600" z="-204.597-50.8-184.15/2.0-2000"/>
+      </physvol>
+      
+      <physvol name="EnclosureLipBack_US_phys">
+       <volumeref ref="EnclosureLipBack_US_logic"/>
+       <position name="EnclosureLipBack_US_pos" x="0" y="-600" z="3592.703+50.8+184.15/2.0-2000"/>
+      </physvol>
+      
+      <physvol name="EnclosureLipLeft_US_phys">
+       <volumeref ref="EnclosureLipLeft_US_logic"/>
+       <position name="EnclosureLipLeft_US_pos" x="0" y="-600" z="-204.597+(3592.703+204.597)/2.0-2000"/>
+      </physvol>
+      
+      <physvol name="EnclosureLipRight_US_phys">
+       <volumeref ref="EnclosureLipRight_US_logic"/>
+       <position name="EnclosureLipRight_US_pos" x="0" y="-600" z="-204.597+(3592.703+204.597)/2.0-2000"/>
       </physvol>
       
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
