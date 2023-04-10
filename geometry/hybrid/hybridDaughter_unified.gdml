@@ -1370,18 +1370,7 @@
             <position name="position_node_solid_inner_E4_mid_back" x="71.774" y="-3567.258"/>
             <rotation name="rotation_node_solid_inner_E4_mid_back" x="-pi" y="0" z="0"/>
         </union>
-        
-        <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SubCoil1EpoxyShield2_solid">
-            <zplane rmin="32.6715" rmax="38.6715" z="0"/>
-            <zplane rmin="34.5" rmax="39.5" z="251.45"/>
-        </polycone>
-        
-        <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SubCoil2EpoxyShield_solid">
-            <zplane rmin="42.0" rmax="45.0" z="0"/>
-            <zplane rmin="42.0" rmax="45.0" z="170"/>
-        </polycone>
-        
-        
+                
     </solids>
     
     <structure>
@@ -1773,23 +1762,6 @@
             <auxiliary auxtype="Color" auxvalue="blue"/>
             <auxiliary auxtype="SensDet" auxvalue="collDet"/>
             <auxiliary auxtype="DetNo" auxvalue="2013"/>
-        </volume>
-        
-        <volume name="SubCoil1EpoxyShield2_logic">
-            <materialref ref="G4_CW95"/>
-            <solidref ref="SubCoil1EpoxyShield2_solid"/>
-            <auxiliary auxtype="Color" auxvalue="blue"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-        </volume>
-        
-        <volume name="SubCoil2EpoxyShield_logic">
-            <materialref ref="G4_CW95"/>
-            <solidref ref="SubCoil2EpoxyShield_solid"/>
-            <auxiliary auxtype="Color" auxvalue="blue"/>
-            <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-            <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-            <!--<auxiliary auxtype="DetNo" auxvalue="62"/>-->
         </volume>
         
         <!--This is part of coll5 -->
@@ -3633,17 +3605,7 @@
                 <position name="pos_dcoil4_7" x="117.60856958" y="-147.476481622" z="-235.749-2864.764-90"/>
                 <rotation name="rot_dcoil4_7" x="pi/2" y="5.38558740615" z="0"/>
             </physvol>
-            
-            <!-- <physvol name="SubCoil1EpoxyShield2_pv">
-            <volumeref ref="SubCoil1EpoxyShield2_logic"/>
-            <position name="SubCoil1EpoxyShield2_pos" unit="mm" x="0" y="0" z="-3483.744"/>
-            </physvol>-->
-            
-            <physvol name="SubCoil2EpoxyShield_pv">
-                <volumeref ref="SubCoil2EpoxyShield_logic"/>
-                <position name="SubCoil2EpoxyShield_pos" unit="mm" x="0" y="0" z="-1335.194+(13335.194-13332.736)-2864.764-90"/>
-            </physvol>
-            
+                     
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Coll6A_logic1"/>
