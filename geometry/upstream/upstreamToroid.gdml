@@ -619,30 +619,31 @@
 		<section zOrder="1" zPosition="-375" xOffset="0" yOffset="0" scalingFactor="1"/>
 		<section zOrder="2" zPosition="375" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
-	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_connector_1">
-		 <zplane rmin="19" rmax="22" z="-16.075"/>
-		 <zplane rmin="19" rmax="22" z="16.075"/>
-	</polycone>
-	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_connector_2">
-		 <zplane rmin="19" rmax="33" z="-25.0"/>
-		 <zplane rmin="19" rmax="33" z="25.0"/>
-	</polycone>
-	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_connector_3">
-		 <zplane rmin="19" rmax="27" z="-4.0"/>
-		 <zplane rmin="19" rmax="27" z="4.0"/>
-	</polycone>
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_twobounce_long">
-		 <zplane rmin="27" rmax="32" z="-1017.85"/>
-		 <zplane rmin="27" rmax="32" z="1024.15"/>
+		 <zplane rmin="25" rmax="30.875" z="-1076.3249999999998"/>
+		 <zplane rmin="25" rmax="30.875" z="-1063.625"/>
+		 <zplane rmin="25" rmax="32" z="-1063.625"/>
+		 <zplane rmin="25" rmax="32" z="1063.625"/>
+		 <zplane rmin="25" rmax="30.875" z="1063.625"/>
+		 <zplane rmin="25" rmax="30.875" z="1076.3249999999998"/>
 	</polycone>
 	<polycone aunit="deg" startphi="0" deltaphi="28.0" lunit="mm" name="solid_twobounce_groove">
-		 <zplane rmin="32" rmax="36" z="-1017.85"/>
-		 <zplane rmin="32" rmax="36" z="1024.15"/>
+		 <zplane rmin="32" rmax="36" z="-1050.8000000000002"/>
+		 <zplane rmin="32" rmax="36" z="1076.4499999999998"/>
+	</polycone>
+	<box aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_support_bar" x="50.8" y="25.4" z="2133.6000000000004"/>
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_support_front_plate">
+		 <zplane rmin="228.953" rmax="299.753" z="-1079.375"/>
+		 <zplane rmin="228.953" rmax="299.753" z="-1053.9750000000004"/>
+	</polycone>
+	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_support_end_plate">
+		 <zplane rmin="228.953" rmax="299.753" z="1079.625"/>
+		 <zplane rmin="228.953" rmax="299.753" z="1105.0249999999996"/>
 	</polycone>
 	<polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_US_toroidMother">
-		 <zplane rmin="0" rmax="262.555" z="-1100"/>
-		 <zplane rmin="0" rmax="262.555" z="1024.32825"/>
-	</polycone>
+                 <zplane rmin="0" rmax="299.753" z="-1100"/>
+                 <zplane rmin="0" rmax="299.753" z="1105.0249999999996"/>
+  </polycone>
 </solids>
 
 
@@ -1327,34 +1328,10 @@
 		<auxiliary auxtype="DetNo" auxvalue="4042"/>
 	</volume>
 
-	<volume name="logic_twobounce_connector_1">
-		<materialref ref="G4_W"/>
-		<solidref ref="solid_twobounce_connector_1"/>
-		<auxiliary auxtype="Color" auxvalue="blue"/>
-		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="90"/>
-	</volume>
-
-	<volume name="logic_twobounce_connector_2">
-		<materialref ref="G4_W"/>
-		<solidref ref="solid_twobounce_connector_2"/>
-		<auxiliary auxtype="Color" auxvalue="blue"/>
-		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="91"/>
-	</volume>
-
-	<volume name="logic_twobounce_connector_3">
-		<materialref ref="G4_W"/>
-		<solidref ref="solid_twobounce_connector_3"/>
-		<auxiliary auxtype="Color" auxvalue="blue"/>
-		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
-		<auxiliary auxtype="DetNo" auxvalue="92"/>
-	</volume>
-
 	<volume name="logic_twobounce_long">
 		<materialref ref="G4_W"/>
 		<solidref ref="solid_twobounce_long"/>
-		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="95"/>
 	</volume>
@@ -1362,9 +1339,33 @@
 	<volume name="logic_twobounce_groove">
 		<materialref ref="G4_W"/>
 		<solidref ref="solid_twobounce_groove"/>
-		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
 		<auxiliary auxtype="SensDet" auxvalue="coilDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="96"/>
+	</volume>
+	
+	<volume name="logic_support_front_plate">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_support_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="G4_Al"/>
+		<auxiliary auxtype="SensDet" auxvalue="enclosureDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="92"/>
+	</volume>
+
+	<volume name="logic_support_end_plate">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_support_end_plate"/>
+		<auxiliary auxtype="Color" auxvalue="G4_Al"/>
+		<auxiliary auxtype="SensDet" auxvalue="enclosureDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="93"/>
+	</volume>
+
+	<volume name="logic_support_bar">
+		<materialref ref="G4_Al"/>
+		<solidref ref="solid_support_bar"/>
+		<auxiliary auxtype="Color" auxvalue="G4_Al"/>
+		<auxiliary auxtype="SensDet" auxvalue="enclosureDet"/>
+		<auxiliary auxtype="DetNo" auxvalue="94"/>
 	</volume>
 
 	<volume name="US_toroidMother">
@@ -1427,7 +1428,13 @@
 		<physvol name="twobounce_groove_1">
 			<volumeref ref="logic_twobounce_groove"/>
 			<position name="pos_twobounce_groove_1" x="0" y="0" z="0"/>
-			<rotation name="rot_twobounce_groove_1" x="0" y="0" z="-0.204452855234"/>
+			<rotation name="rot_twobounce_groove_1" x="0" y="0" z="-0.20445285523362144"/>
+		</physvol>
+		
+		<physvol name="support_bar_1">
+			<volumeref ref="logic_support_bar"/>
+			<position name="pos_support_bar_1" x="229.16413445758403" y="110.35963069576826" z="12.824999999999818"/>
+			<rotation name="rot_support_bar_1" x="0" y="0" z="-0.4487989505128276"/>
 		</physvol>
 
 		<physvol name="ucoil_2">
@@ -1487,7 +1494,13 @@
 		<physvol name="twobounce_groove_2">
 			<volumeref ref="logic_twobounce_groove"/>
 			<position name="pos_twobounce_groove_2" x="0" y="0" z="0"/>
-			<rotation name="rot_twobounce_groove_2" x="0" y="0" z="0.693145045792"/>
+			<rotation name="rot_twobounce_groove_2" x="0" y="0" z="0.6931450457920337"/>
+		</physvol>
+		
+		<physvol name="support_bar_2">
+			<volumeref ref="logic_support_bar"/>
+			<position name="pos_support_bar_2" x="56.59886711459045" y="247.9758392471834" z="12.824999999999818"/>
+			<rotation name="rot_support_bar_2" x="0" y="0" z="-1.3463968515384828"/>
 		</physvol>
 
 		<physvol name="ucoil_3">
@@ -1547,7 +1560,13 @@
 		<physvol name="twobounce_groove_3">
 			<volumeref ref="logic_twobounce_groove"/>
 			<position name="pos_twobounce_groove_3" x="0" y="0" z="0"/>
-			<rotation name="rot_twobounce_groove_3" x="0" y="0" z="1.59074294682"/>
+			<rotation name="rot_twobounce_groove_3" x="0" y="0" z="1.5907429468176888"/>
+		</physvol>
+		
+		<physvol name="support_bar_3">
+			<volumeref ref="logic_support_bar"/>
+			<position name="pos_support_bar_3" x="-158.58650157217446" y="198.86118306019083" z="12.824999999999818"/>
+			<rotation name="rot_support_bar_3" x="0" y="0" z="-2.243994752564138"/>
 		</physvol>
 
 		<physvol name="ucoil_4">
@@ -1607,9 +1626,15 @@
 		<physvol name="twobounce_groove_4">
 			<volumeref ref="logic_twobounce_groove"/>
 			<position name="pos_twobounce_groove_4" x="0" y="0" z="0"/>
-			<rotation name="rot_twobounce_groove_4" x="0" y="0" z="2.48834084784"/>
+			<rotation name="rot_twobounce_groove_4" x="0" y="0" z="2.488340847843344"/>
 		</physvol>
 
+		<physvol name="support_bar_4">
+			<volumeref ref="logic_support_bar"/>
+			<position name="pos_support_bar_4" x="-254.353" y="3.1149258730352676e-14" z="12.824999999999818"/>
+			<rotation name="rot_support_bar_4" x="0" y="0" z="-3.141592653589793"/>
+		</physvol>
+		
 		<physvol name="ucoil_5">
 			<volumeref ref="logic_outer_E_5"/>
 			<position name="pos_ucoil_5" x="-127.86730367" y="-61.577648023" z="-891.015"/>
@@ -1667,7 +1692,13 @@
 		<physvol name="twobounce_groove_5">
 			<volumeref ref="logic_twobounce_groove"/>
 			<position name="pos_twobounce_groove_5" x="0" y="0" z="0"/>
-			<rotation name="rot_twobounce_groove_5" x="0" y="0" z="3.38593874887"/>
+			<rotation name="rot_twobounce_groove_5" x="0" y="0" z="3.385938748868999"/>
+		</physvol>
+		
+		<physvol name="support_bar_5">
+			<volumeref ref="logic_support_bar"/>
+			<position name="pos_support_bar_5" x="-158.5865015721745" y="-198.86118306019077" z="12.824999999999818"/>
+			<rotation name="rot_support_bar_5" x="0" y="0" z="-4.039190554615448"/>
 		</physvol>
 
 		<physvol name="ucoil_6">
@@ -1727,7 +1758,13 @@
 		<physvol name="twobounce_groove_6">
 			<volumeref ref="logic_twobounce_groove"/>
 			<position name="pos_twobounce_groove_6" x="0" y="0" z="0"/>
-			<rotation name="rot_twobounce_groove_6" x="0" y="0" z="4.28353664989"/>
+			<rotation name="rot_twobounce_groove_6" x="0" y="0" z="4.283536649894654"/>
+		</physvol>
+		
+		<physvol name="support_bar_6">
+			<volumeref ref="logic_support_bar"/>
+			<position name="pos_support_bar_6" x="56.5988671145904" y="-247.9758392471834" z="12.824999999999818"/>
+			<rotation name="rot_support_bar_6" x="0" y="0" z="-4.9367884556411035"/>
 		</physvol>
 
 		<physvol name="ucoil_7">
@@ -1783,35 +1820,35 @@
 			<position name="pos_shield4_bot_7" x="0" y="0" z="372.9635"/>
 			<rotation name="rot_shield4_bot_7" x="0" y="0" z="0"/>
 		</physvol>
+		
+		<physvol name="support_bar_7">
+			<volumeref ref="logic_support_bar"/>
+			<position name="pos_support_bar_7" x="229.164134457584" y="-110.35963069576832" z="12.824999999999818"/>
+			<rotation name="rot_support_bar_7" x="0" y="0" z="-5.834386356666759"/>
+		</physvol>
 
-		<physvol name="twobounce_groove_7">
+    <physvol name="twobounce_groove_7">
 			<volumeref ref="logic_twobounce_groove"/>
 			<position name="pos_twobounce_groove_7" x="0" y="0" z="0"/>
-			<rotation name="rot_twobounce_groove_7" x="0" y="0" z="5.18113455092"/>
-		</physvol>
-
-		<physvol name="twobounce_connector_1">
-			<volumeref ref="logic_twobounce_connector_1"/>
-			<position name="pos_twobounce_connector_1" x="0" y="0" z="-1083.925"/>
-			<rotation name="rot_twobounce_connector_1" x="0" y="0" z="0"/>
-		</physvol>
-
-		<physvol name="twobounce_connector_2">
-			<volumeref ref="logic_twobounce_connector_2"/>
-			<position name="pos_twobounce_connector_2" x="0" y="0" z="-1042.85"/>
-			<rotation name="rot_twobounce_connector_2" x="0" y="0" z="0"/>
-		</physvol>
-
-		<physvol name="twobounce_connector_3">
-			<volumeref ref="logic_twobounce_connector_3"/>
-			<position name="pos_twobounce_connector_3" x="0" y="0" z="-1013.85"/>
-			<rotation name="rot_twobounce_connector_3" x="0" y="0" z="0"/>
+			<rotation name="rot_twobounce_groove_7" x="0" y="0" z="5.1811345509203095"/>
 		</physvol>
 
 		<physvol name="twobounce_long">
 			<volumeref ref="logic_twobounce_long"/>
-			<position name="pos_twobounce_long" x="0" y="0" z="0"/>
+			<position name="pos_twobounce_long" x="0" y="0" z="12.824999999999818"/>
 			<rotation name="rot_twobounce_long" x="0" y="0" z="0"/>
+		</physvol>
+		
+		<physvol name="support_front_plate">
+			<volumeref ref="logic_support_front_plate"/>
+			<position name="pos_support_front_plate" x="0" y="0" z="0"/>
+			<rotation name="rot_support_front_plate" x="0" y="0" z="0"/>
+		</physvol>
+
+		<physvol name="support_end_plate">
+			<volumeref ref="logic_support_end_plate"/>
+			<position name="pos_support_end_plate" x="0" y="0" z="0"/>
+			<rotation name="rot_support_end_plate" x="0" y="0" z="0"/>
 		</physvol>
 
 		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
