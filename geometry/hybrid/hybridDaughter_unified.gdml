@@ -608,6 +608,47 @@
             <position name="Coll6B_Sub_pos2" unit="mm" x="0" y="0" z="69.850/2" />
         </subtraction>
         
+	<!--Tungsten belly plates -->
+	<xtru name="solid_epoxy_protector_1"  lunit="mm">
+                <twoDimVertex x="38" y="-11.35" />
+                <twoDimVertex x="41" y="-11.35" />
+                <twoDimVertex x="41" y="11.35" />
+                <twoDimVertex x="38" y="11.35" />
+                <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+                <section zOrder="2" zPosition="1002.2414999999983" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+        <xtru name="solid_epoxy_protector_2"  lunit="mm">
+                <twoDimVertex x="40.5" y="-12.95" />
+                <twoDimVertex x="43.5" y="-12.95" />
+                <twoDimVertex x="43.5" y="12.95" />
+                <twoDimVertex x="40.5" y="12.95" />
+                <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+                <section zOrder="2" zPosition="1022.5959999999995" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+        <xtru name="solid_epoxy_protector_3"  lunit="mm">
+                <twoDimVertex x="43" y="-13.45" />
+                <twoDimVertex x="46" y="-13.45" />
+                <twoDimVertex x="46" y="13.45" />
+                <twoDimVertex x="43" y="13.45" />
+                <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+                <section zOrder="2" zPosition="513.2700000000004" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+        <xtru name="solid_epoxy_protector_4"  lunit="mm">
+                <twoDimVertex x="43" y="-13.45" />
+                <twoDimVertex x="46" y="-13.45" />
+                <twoDimVertex x="46" y="13.45" />
+                <twoDimVertex x="43" y="13.45" />
+                <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+                <section zOrder="2" zPosition="460.41499999999905" xOffset="0" yOffset="0" scalingFactor="1"/>
+        </xtru>
+        <xtru name="solid_epoxy_protector_5"  lunit="mm">
+                <twoDimVertex x="52.808" y="-24.7" />
+                <twoDimVertex x="55.808" y="-24.7" />
+                <twoDimVertex x="55.808" y="24.7" />
+                <twoDimVertex x="52.808" y="24.7" />
+                <section zOrder="1" zPosition="0.0" xOffset="0.0" yOffset="0" scalingFactor="1"/>
+                <section zOrder="2" zPosition="1666.0330000000013" xOffset="21.844" yOffset="0" scalingFactor="1"/>
+        </xtru>
      
         <!-- SubCoil1 support -->
 	<xtru name="solid_clamp_1"  lunit="mm">
@@ -1824,7 +1865,37 @@
             <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
             <auxiliary auxtype="DetNo" auxvalue="2007"/>
         </volume>
-            
+        
+	 <volume name="logic_epoxy_protector_1">
+                <materialref ref="G4_W"/>
+                <solidref ref="solid_epoxy_protector_1"/>
+                <auxiliary auxtype="Color" auxvalue="blue"/>
+        </volume>
+
+        <volume name="logic_epoxy_protector_2">
+                <materialref ref="G4_W"/>
+                <solidref ref="solid_epoxy_protector_2"/>
+                <auxiliary auxtype="Color" auxvalue="blue"/>
+        </volume>
+
+        <volume name="logic_epoxy_protector_3">
+                <materialref ref="G4_W"/>
+                <solidref ref="solid_epoxy_protector_3"/>
+                <auxiliary auxtype="Color" auxvalue="blue"/>
+        </volume>
+
+        <volume name="logic_epoxy_protector_4">
+                <materialref ref="G4_W"/>
+                <solidref ref="solid_epoxy_protector_4"/>
+                <auxiliary auxtype="Color" auxvalue="blue"/>
+        </volume>
+
+        <volume name="logic_epoxy_protector_5">
+                <materialref ref="G4_W"/>
+                <solidref ref="solid_epoxy_protector_5"/>
+                <auxiliary auxtype="Color" auxvalue="blue"/>
+        </volume>
+	    
         <volume name="logic_clamp_1">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_clamp_1"/>
@@ -3661,6 +3732,39 @@
                 </physvol>
             </loop>
             
+	    <loop for="iloop" from="0" to="6" step="1">
+		
+                <physvol>
+                    <volumeref ref="logic_epoxy_protector_1"/>
+                    <position x="0" y="0" z="-3398.8009999999995-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+		    
+		<physvol>
+                    <volumeref ref="logic_epoxy_protector_2"/>
+                    <position x="0" y="0" z="-2382.130000000001-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+		    
+		<physvol>
+                    <volumeref ref="logic_epoxy_protector_3"/>
+                    <position x="0" y="0" z="-1346.0060000000012-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+		    
+		<physvol>
+                    <volumeref ref="logic_epoxy_protector_4"/>
+                    <position x="0" y="0" z="-832.7360000000008-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+		   
+		<physvol>
+                    <volumeref ref="logic_epoxy_protector_5"/>
+                    <position x="0" y="0" z="-235.74900000000162-2864.764-90"/>
+                    <rotation unit="deg" x="0" y="0" z="(iloop)*360./7."/>
+                </physvol>
+               
+            </loop>
             
             <loop for="iloop" from="0" to="6" step="1">
 		<!--SubCoil 1 support -->
