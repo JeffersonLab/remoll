@@ -1031,386 +1031,386 @@
 	</xtru>    
 	    
         <xtru name="solid_C1_mid"  lunit="mm">
-            <twoDimVertex x="88.989" y="856.309" />
-            <twoDimVertex x="66.292" y="0.0" />
-            <twoDimVertex x="-66.292" y="0.0" />
-            <twoDimVertex x="-66.292" y="856.309" />
-            <section zOrder="1" zPosition="-10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-	    
-        <tube name="solid_C1_front" rmin="0" rmax="66.292" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_C1_back" rmin="0" rmax="77.6405" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_C1_frontmid">
-            <first ref="solid_C1_front"/>
-            <second ref="solid_C1_mid"/>
-            <position name="position_node_solid_C1_frontmid" y="0"/>
-            <rotation name="rotation_node_solid_C1_frontmid" x="pi" />
-        </union>
-        
-        <union name="solid_C1">
-            <first ref="node_solid_C1_frontmid"/>
-            <second ref="solid_C1_back"/>
-            <position name="position_node_solid_C1" x="11.3485" y="-856.309"/>
-            <rotation name="rotation_node_solid_C1_back" x="-pi" />
-        </union>
-        
-        <xtru name="solid_outer_E1_mid"  lunit="mm">
-            <twoDimVertex x="89.989" y="856.309" />
-            <twoDimVertex x="67.292" y="0.0" />
-            <twoDimVertex x="-67.292" y="0.0" />
-            <twoDimVertex x="-67.292" y="856.309" />
-            <section zOrder="1" zPosition="-11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_outer_E1_front" rmin="0" rmax="67.292" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_outer_E1_back" rmin="0" rmax="78.6405" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_outer_E1_frontmid">
-            <first ref="solid_outer_E1_front"/>
-            <second ref="solid_outer_E1_mid"/>
-            <position name="position_node_solid_outer_E1_frontmid" y="0"/>
-            <rotation name="rotation_node_solid_outer_E1_frontmid" x="pi" />
-        </union>
-        
-        <union name="solid_outer_E1">
-            <first ref="node_solid_outer_E1_frontmid"/>
-            <second ref="solid_outer_E1_back"/>
-            <position name="position_node_solid_outer_E1" x="11.3485" y="-856.309"/>
-            <rotation name="rotation_node_solid_outer_E1_back" x="-pi" />
-        </union>
-        
-        <xtru name="solid_inner_E1_mid"  lunit="mm">
-            <twoDimVertex x="58.859" y="856.309" />
-            <twoDimVertex x="36.162" y="0.0" />
-            <twoDimVertex x="-36.162" y="0.0" />
-            <twoDimVertex x="-36.162" y="856.309" />
-            <section zOrder="1" zPosition="-10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_inner_E1_front" rmin="0" rmax="36.162" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_inner_E1_back" rmin="0" rmax="47.5105" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_inner_E1_frontmid">
-            <first ref="solid_inner_E1_front"/>
-            <second ref="solid_inner_E1_mid"/>
-            <position name="position_node_solid_inner_E1_frontmid" y="0"/>
-            <rotation name="rotation_node_solid_inner_E1_frontmid" x="pi" />
-        </union>
-        
-        <union name="solid_inner_E1">
-            <first ref="node_solid_inner_E1_frontmid"/>
-            <second ref="solid_inner_E1_back"/>
-            <position name="position_node_solid_inner_E1" x="11.3485" y="-856.309"/>
-            <rotation name="rotation_node_solid_inner_E1_back" x="-pi" />
-        </union>
-        
-        <xtru name="solid_C2_mid"  lunit="mm">
-            <twoDimVertex x="107.547" y="836.42" />
-            <twoDimVertex x="86.935" y="0.0" />
-            <twoDimVertex x="-86.935" y="0.0" />
-            <twoDimVertex x="-86.935" y="836.42" />
-            <section zOrder="1" zPosition="-11.95" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="11.95" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_C2_front" rmin="0" rmax="86.935" z="23.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_C2_back" rmin="0" rmax="97.241" z="23.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_C2_frontmid">
-            <first ref="solid_C2_front"/>
-            <second ref="solid_C2_mid"/>
-            <position name="position_node_solid_C2_frontmid" y="0"/>
-            <rotation name="rotation_node_solid_C2_frontmid" x="pi" />
-        </union>
-        
-        <union name="solid_C2">
-            <first ref="node_solid_C2_frontmid"/>
-            <second ref="solid_C2_back"/>
-            <position name="position_node_solid_C2" x="10.306" y="-836.42"/>
-            <rotation name="rotation_node_solid_C2_back" x="-pi" />
-        </union>
-        
-        <xtru name="solid_outer_E2_mid"  lunit="mm">
-            <twoDimVertex x="108.547" y="836.42" />
-            <twoDimVertex x="87.935" y="0.0" />
-            <twoDimVertex x="-87.935" y="0.0" />
-            <twoDimVertex x="-87.935" y="836.42" />
-            <section zOrder="1" zPosition="-12.95" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="12.95" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_outer_E2_front" rmin="0" rmax="87.935" z="25.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_outer_E2_back" rmin="0" rmax="98.241" z="25.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_outer_E2_frontmid">
-            <first ref="solid_outer_E2_front"/>
-            <second ref="solid_outer_E2_mid"/>
-            <position name="position_node_solid_outer_E2_frontmid" y="0"/>
-            <rotation name="rotation_node_solid_outer_E2_frontmid" x="pi" />
-        </union>
-        
-        <union name="solid_outer_E2">
-            <first ref="node_solid_outer_E2_frontmid"/>
-            <second ref="solid_outer_E2_back"/>
-            <position name="position_node_solid_outer_E2" x="10.306" y="-836.42"/>
-            <rotation name="rotation_node_solid_outer_E2_back" x="-pi" />
-        </union>
-        
-        <xtru name="solid_inner_E2_mid"  lunit="mm">
-            <twoDimVertex x="64.247" y="836.42" />
-            <twoDimVertex x="43.635" y="0.0" />
-            <twoDimVertex x="-43.635" y="0.0" />
-            <twoDimVertex x="-43.635" y="836.42" />
-            <section zOrder="1" zPosition="-11.95" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="11.95" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_inner_E2_front" rmin="0" rmax="43.635" z="23.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_inner_E2_back" rmin="0" rmax="53.941" z="23.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_inner_E2_frontmid">
-            <first ref="solid_inner_E2_front"/>
-            <second ref="solid_inner_E2_mid"/>
-            <position name="position_node_solid_inner_E2_frontmid" y="0"/>
-            <rotation name="rotation_node_solid_inner_E2_frontmid" x="pi" />
-        </union>
-        
-        <union name="solid_inner_E2">
-            <first ref="node_solid_inner_E2_frontmid"/>
-            <second ref="solid_inner_E2_back"/>
-            <position name="position_node_solid_inner_E2" x="10.306" y="-836.42"/>
-            <rotation name="rotation_node_solid_inner_E2_back" x="-pi" />
-        </union>
-        
-        <xtru name="solid_C3_mid"  lunit="mm">
-            <twoDimVertex x="119.94" y="747.81" />
-            <twoDimVertex x="109.27" y="0.0" />
-            <twoDimVertex x="-109.27" y="0.0" />
-            <twoDimVertex x="-109.27" y="747.81" />
-            <section zOrder="1" zPosition="-12.45" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="12.45" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_C3_front" rmin="0" rmax="109.27" z="24.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_C3_back" rmin="0" rmax="114.605" z="24.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_C3_frontmid">
-            <first ref="solid_C3_front"/>
-            <second ref="solid_C3_mid"/>
-            <position name="position_node_solid_C3_frontmid" y="0"/>
-            <rotation name="rotation_node_solid_C3_frontmid" x="pi" />
-        </union>
-        
-        <union name="solid_C3">
-            <first ref="node_solid_C3_frontmid"/>
-            <second ref="solid_C3_back"/>
-            <position name="position_node_solid_C3" x="5.335" y="-747.81"/>
-            <rotation name="rotation_node_solid_C3_back" x="-pi" />
-        </union>
-        
-        <xtru name="solid_outer_E3_mid"  lunit="mm">
-            <twoDimVertex x="120.94" y="747.81" />
-            <twoDimVertex x="110.27" y="0.0" />
-            <twoDimVertex x="-110.27" y="0.0" />
-            <twoDimVertex x="-110.27" y="747.81" />
-            <section zOrder="1" zPosition="-13.45" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="13.45" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_outer_E3_front" rmin="0" rmax="110.27" z="26.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_outer_E3_back" rmin="0" rmax="115.605" z="26.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_outer_E3_frontmid">
-            <first ref="solid_outer_E3_front"/>
-            <second ref="solid_outer_E3_mid"/>
-            <position name="position_node_solid_outer_E3_frontmid" y="0"/>
-            <rotation name="rotation_node_solid_outer_E3_frontmid" x="pi" />
-        </union>
-        
-        <union name="solid_outer_E3">
-            <first ref="node_solid_outer_E3_frontmid"/>
-            <second ref="solid_outer_E3_back"/>
-            <position name="position_node_solid_outer_E3" x="5.335" y="-747.81"/>
-            <rotation name="rotation_node_solid_outer_E3_back" x="-pi" />
-        </union>
-        
-        <xtru name="solid_inner_E3_mid"  lunit="mm">
-            <twoDimVertex x="58.19" y="747.81" />
-            <twoDimVertex x="47.52" y="0.0" />
-            <twoDimVertex x="-47.52" y="0.0" />
-            <twoDimVertex x="-47.52" y="747.81" />
-            <section zOrder="1" zPosition="-12.45" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="12.45" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_inner_E3_front" rmin="0" rmax="47.52" z="24.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_inner_E3_back" rmin="0" rmax="52.855" z="24.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_inner_E3_frontmid">
-            <first ref="solid_inner_E3_front"/>
-            <second ref="solid_inner_E3_mid"/>
-            <position name="position_node_solid_inner_E3_frontmid" y="0"/>
-            <rotation name="rotation_node_solid_inner_E3_frontmid" x="pi" />
-        </union>
-        
-        <union name="solid_inner_E3">
-            <first ref="node_solid_inner_E3_frontmid"/>
-            <second ref="solid_inner_E3_back"/>
-            <position name="position_node_solid_inner_E3" x="5.335" y="-747.81"/>
-            <rotation name="rotation_node_solid_inner_E3_back" x="-pi" />
-        </union>
-        
-        <xtru name="solid_C4_mid_mid"  lunit="mm">
-            <twoDimVertex x="203.1575" y="3567.258" />
-            <twoDimVertex x="187.1895" y="3006.591" />
-            <twoDimVertex x="100.40566" y="1663.33133" />
-            <twoDimVertex x="100.84262" y="1646.35649" />
-            <twoDimVertex x="102.3705" y="1629.47592" />
-            <twoDimVertex x="105.91083" y="1612.80528" />
-            <twoDimVertex x="110.50735" y="1596.45876" />
-            <twoDimVertex x="116.43994" y="1580.54837" />
-            <twoDimVertex x="123.66797" y="1565.18308" />
-            <twoDimVertex x="132.14192" y="1550.5647" />
-            <twoDimVertex x="141.80374" y="1536.50445" />
-            <twoDimVertex x="152.58724" y="1523.38756" />
-            <twoDimVertex x="167.61413" y="1505.10665" />
-            <twoDimVertex x="181.07521" y="1485.64392" />
-            <twoDimVertex x="192.87799" y="1465.1331" />
-            <twoDimVertex x="202.94134" y="1443.71517" />
-            <twoDimVertex x="211.19612" y="1421.5373" />
-            <twoDimVertex x="217.58558" y="1398.75192" />
-            <twoDimVertex x="222.06583" y="1375.5156" />
-            <twoDimVertex x="224.60607" y="1351.98804" />
-            <twoDimVertex x="225.18884" y="1328.33092" />
-            <twoDimVertex x="188.5235" y="462.317" />
-            <twoDimVertex x="131.8215" y="0.0" />
-            <twoDimVertex x="-131.8215" y="0.0" />
-            <twoDimVertex x="-109.9775" y="1666.033" />
-            <twoDimVertex x="-28.4915" y="3018.024" />
-            <twoDimVertex x="-59.6095" y="3567.258" />
-            <section zOrder="1" zPosition="-11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_C4_mid_front" rmin="0" rmax="131.8215" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_C4_mid_back" rmin="0" rmax="131.3835" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_C4_mid_frontmid">
-            <first ref="solid_C4_mid_front"/>
-            <second ref="solid_C4_mid_mid"/>
-            <position name="position_node_solid_C4_mid_frontmid" x="0" y="0" z="0"/>
-            <rotation name="rotation_node_solid_C4_mid_frontmid" x="pi" y="0" z="0"/>
-        </union>
-        
-        <union name="solid_C4_mid">
-            <first ref="node_solid_C4_mid_frontmid"/>
-            <second ref="solid_C4_mid_back"/>
-            <position name="position_node_solid_C4_mid_back" x="71.774" y="-3567.258"/>
-            <rotation name="rotation_node_solid_C4_mid_back" x="-pi" y="0" z="0"/>
-        </union>
-        
-        <xtru name="solid_outer_E4_mid_mid"  lunit="mm">
-            <twoDimVertex x="204.1575" y="3567.258" />
-            <twoDimVertex x="188.1895" y="3006.591" />
-            <twoDimVertex x="101.40566" y="1663.33133" />
-            <twoDimVertex x="101.84262" y="1646.35649" />
-            <twoDimVertex x="103.3705" y="1629.47592" />
-            <twoDimVertex x="106.91083" y="1612.80528" />
-            <twoDimVertex x="111.50735" y="1596.45876" />
-            <twoDimVertex x="117.43994" y="1580.54837" />
-            <twoDimVertex x="124.66797" y="1565.18308" />
-            <twoDimVertex x="133.14192" y="1550.5647" />
-            <twoDimVertex x="142.80374" y="1536.50445" />
-            <twoDimVertex x="153.58724" y="1523.38756" />
-            <twoDimVertex x="168.61413" y="1505.10665" />
-            <twoDimVertex x="182.07521" y="1485.64392" />
-            <twoDimVertex x="193.87799" y="1465.1331" />
-            <twoDimVertex x="203.94134" y="1443.71517" />
-            <twoDimVertex x="212.19612" y="1421.5373" />
-            <twoDimVertex x="218.58558" y="1398.75192" />
-            <twoDimVertex x="223.06583" y="1375.5156" />
-            <twoDimVertex x="225.60607" y="1351.98804" />
-            <twoDimVertex x="226.18884" y="1328.33092" />
-            <twoDimVertex x="189.5235" y="462.317" />
-            <twoDimVertex x="132.8215" y="0.0" />
-            <twoDimVertex x="-132.8215" y="0.0" />
-            <twoDimVertex x="-110.9775" y="1666.033" />
-            <twoDimVertex x="-29.4915" y="3018.024" />
-            <twoDimVertex x="-60.6095" y="3567.258" />
-            <section zOrder="1" zPosition="-24.7" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="24.7" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_outer_E4_mid_front" rmin="0" rmax="132.8215" z="49.4" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_outer_E4_mid_back" rmin="0" rmax="132.3835" z="49.4" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_outer_E4_mid_frontmid">
-            <first ref="solid_outer_E4_mid_front"/>
-            <second ref="solid_outer_E4_mid_mid"/>
-            <position name="position_node_solid_outer_E4_mid_frontmid" x="0" y="0" z="0"/>
-            <rotation name="rotation_node_solid_outer_E4_mid_frontmid" x="pi" y="0" z="0"/>
-        </union>
-        
-        <union name="solid_outer_E4_mid">
-            <first ref="node_solid_outer_E4_mid_frontmid"/>
-            <second ref="solid_outer_E4_mid_back"/>
-            <position name="position_node_solid_outer_E4_mid_back" x="71.774" y="-3567.258"/>
-            <rotation name="rotation_node_solid_outer_E4_mid_back" x="-pi" y="0" z="0"/>
-        </union>
-        
-        <xtru name="solid_inner_E4_mid_mid"  lunit="mm">
-            <twoDimVertex x="122.4575" y="3567.258" />
-            <twoDimVertex x="106.4895" y="3006.591" />
-            <twoDimVertex x="19.70566" y="1663.33133" />
-            <twoDimVertex x="20.14262" y="1646.35649" />
-            <twoDimVertex x="21.6705" y="1629.47592" />
-            <twoDimVertex x="25.21083" y="1612.80528" />
-            <twoDimVertex x="29.80735" y="1596.45876" />
-            <twoDimVertex x="35.73994" y="1580.54837" />
-            <twoDimVertex x="42.96797" y="1565.18308" />
-            <twoDimVertex x="51.44192" y="1550.5647" />
-            <twoDimVertex x="61.10374" y="1536.50445" />
-            <twoDimVertex x="71.88724" y="1523.38756" />
-            <twoDimVertex x="86.91413" y="1505.10665" />
-            <twoDimVertex x="100.37521" y="1485.64392" />
-            <twoDimVertex x="112.17799" y="1465.1331" />
-            <twoDimVertex x="122.24134" y="1443.71517" />
-            <twoDimVertex x="130.49612" y="1421.5373" />
-            <twoDimVertex x="136.88558" y="1398.75192" />
-            <twoDimVertex x="141.36583" y="1375.5156" />
-            <twoDimVertex x="143.90607" y="1351.98804" />
-            <twoDimVertex x="144.48884" y="1328.33092" />
-            <twoDimVertex x="107.8235" y="462.317" />
-            <twoDimVertex x="51.1215" y="0.0" />
-            <twoDimVertex x="-51.1215" y="0.0" />
-            <twoDimVertex x="-29.2775" y="1666.033" />
-            <twoDimVertex x="52.2085" y="3018.024" />
-            <twoDimVertex x="21.0905" y="3567.258" />
-            <section zOrder="1" zPosition="-11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-            <section zOrder="2" zPosition="11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
-        </xtru>
-        <tube name="solid_inner_E4_mid_front" rmin="0" rmax="51.1215" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <tube name="solid_inner_E4_mid_back" rmin="0" rmax="50.6835" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
-        
-        <union name="node_solid_inner_E4_mid_frontmid">
-            <first ref="solid_inner_E4_mid_front"/>
-            <second ref="solid_inner_E4_mid_mid"/>
-            <position name="position_node_solid_inner_E4_mid_frontmid" x="0" y="0" z="0"/>
-            <rotation name="rotation_node_solid_inner_E4_mid_frontmid" x="pi" y="0" z="0"/>
-        </union>
-        
-        <union name="solid_inner_E4_mid">
-            <first ref="node_solid_inner_E4_mid_frontmid"/>
-            <second ref="solid_inner_E4_mid_back"/>
-            <position name="position_node_solid_inner_E4_mid_back" x="71.774" y="-3567.258"/>
-            <rotation name="rotation_node_solid_inner_E4_mid_back" x="-pi" y="0" z="0"/>
-        </union>
+		<twoDimVertex x="88.989" y="856.3089999999993" />
+		<twoDimVertex x="66.292" y="0.0" />
+		<twoDimVertex x="-66.292" y="0.0" />
+		<twoDimVertex x="-66.292" y="856.3089999999993" />
+		<section zOrder="1" zPosition="-10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_C1_front" rmin="0" rmax="66.292" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_C1_back" rmin="0" rmax="77.6405" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_C1_frontmid">
+		<first ref="solid_C1_front"/>
+		<second ref="solid_C1_mid"/>
+		<position name="position_node_solid_C1_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_C1_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_C1">
+			<first ref="node_solid_C1_frontmid"/>
+			<second ref="solid_C1_back"/>
+			<position name="position_node_solid_C1" x="11.348500000000001" y="-856.3089999999993"/>
+			<rotation name="rotation_node_solid_C1_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_outer_E1_mid"  lunit="mm">
+		<twoDimVertex x="89.989" y="856.3089999999993" />
+		<twoDimVertex x="67.292" y="0.0" />
+		<twoDimVertex x="-67.292" y="0.0" />
+		<twoDimVertex x="-67.292" y="856.3089999999993" />
+		<section zOrder="1" zPosition="-11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_outer_E1_front" rmin="0" rmax="67.292" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_outer_E1_back" rmin="0" rmax="78.6405" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_outer_E1_frontmid">
+		<first ref="solid_outer_E1_front"/>
+		<second ref="solid_outer_E1_mid"/>
+		<position name="position_node_solid_outer_E1_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_outer_E1_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_outer_E1">
+			<first ref="node_solid_outer_E1_frontmid"/>
+			<second ref="solid_outer_E1_back"/>
+			<position name="position_node_solid_outer_E1" x="11.348500000000001" y="-856.3089999999993"/>
+			<rotation name="rotation_node_solid_outer_E1_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_inner_E1_mid"  lunit="mm">
+		<twoDimVertex x="58.85900000000001" y="856.3089999999993" />
+		<twoDimVertex x="36.162000000000006" y="0.0" />
+		<twoDimVertex x="-36.162000000000006" y="0.0" />
+		<twoDimVertex x="-36.162000000000006" y="856.3089999999993" />
+		<section zOrder="1" zPosition="-10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="10.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_inner_E1_front" rmin="0" rmax="36.162000000000006" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_inner_E1_back" rmin="0" rmax="47.51050000000001" z="20.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_inner_E1_frontmid">
+		<first ref="solid_inner_E1_front"/>
+		<second ref="solid_inner_E1_mid"/>
+		<position name="position_node_solid_inner_E1_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_inner_E1_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_inner_E1">
+			<first ref="node_solid_inner_E1_frontmid"/>
+			<second ref="solid_inner_E1_back"/>
+			<position name="position_node_solid_inner_E1" x="11.348500000000001" y="-856.3089999999993"/>
+			<rotation name="rotation_node_solid_inner_E1_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_C2_mid"  lunit="mm">
+		<twoDimVertex x="107.547" y="836.4200000000001" />
+		<twoDimVertex x="86.935" y="0.0" />
+		<twoDimVertex x="-86.935" y="0.0" />
+		<twoDimVertex x="-86.935" y="836.4200000000001" />
+		<section zOrder="1" zPosition="-11.95" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="11.95" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_C2_front" rmin="0" rmax="86.935" z="23.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_C2_back" rmin="0" rmax="97.241" z="23.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_C2_frontmid">
+		<first ref="solid_C2_front"/>
+		<second ref="solid_C2_mid"/>
+		<position name="position_node_solid_C2_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_C2_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_C2">
+			<first ref="node_solid_C2_frontmid"/>
+			<second ref="solid_C2_back"/>
+			<position name="position_node_solid_C2" x="10.305999999999983" y="-836.4200000000001"/>
+			<rotation name="rotation_node_solid_C2_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_outer_E2_mid"  lunit="mm">
+		<twoDimVertex x="108.547" y="836.4200000000001" />
+		<twoDimVertex x="87.935" y="0.0" />
+		<twoDimVertex x="-87.935" y="0.0" />
+		<twoDimVertex x="-87.935" y="836.4200000000001" />
+		<section zOrder="1" zPosition="-12.95" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="12.95" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_outer_E2_front" rmin="0" rmax="87.935" z="25.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_outer_E2_back" rmin="0" rmax="98.241" z="25.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_outer_E2_frontmid">
+		<first ref="solid_outer_E2_front"/>
+		<second ref="solid_outer_E2_mid"/>
+		<position name="position_node_solid_outer_E2_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_outer_E2_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_outer_E2">
+			<first ref="node_solid_outer_E2_frontmid"/>
+			<second ref="solid_outer_E2_back"/>
+			<position name="position_node_solid_outer_E2" x="10.305999999999983" y="-836.4200000000001"/>
+			<rotation name="rotation_node_solid_outer_E2_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_inner_E2_mid"  lunit="mm">
+		<twoDimVertex x="64.24700000000001" y="836.4200000000001" />
+		<twoDimVertex x="43.63499999999999" y="0.0" />
+		<twoDimVertex x="-43.635000000000005" y="0.0" />
+		<twoDimVertex x="-43.635000000000005" y="836.4200000000001" />
+		<section zOrder="1" zPosition="-11.95" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="11.95" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_inner_E2_front" rmin="0" rmax="43.635000000000005" z="23.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_inner_E2_back" rmin="0" rmax="53.941" z="23.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_inner_E2_frontmid">
+		<first ref="solid_inner_E2_front"/>
+		<second ref="solid_inner_E2_mid"/>
+		<position name="position_node_solid_inner_E2_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_inner_E2_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_inner_E2">
+			<first ref="node_solid_inner_E2_frontmid"/>
+			<second ref="solid_inner_E2_back"/>
+			<position name="position_node_solid_inner_E2" x="10.305999999999983" y="-836.4200000000001"/>
+			<rotation name="rotation_node_solid_inner_E2_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_C3_mid"  lunit="mm">
+		<twoDimVertex x="119.93999999999997" y="747.8099999999995" />
+		<twoDimVertex x="109.27000000000001" y="0.0" />
+		<twoDimVertex x="-109.27000000000001" y="0.0" />
+		<twoDimVertex x="-109.27000000000001" y="747.8099999999995" />
+		<section zOrder="1" zPosition="-12.45" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="12.45" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_C3_front" rmin="0" rmax="109.27000000000001" z="24.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_C3_back" rmin="0" rmax="114.60499999999999" z="24.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_C3_frontmid">
+		<first ref="solid_C3_front"/>
+		<second ref="solid_C3_mid"/>
+		<position name="position_node_solid_C3_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_C3_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_C3">
+			<first ref="node_solid_C3_frontmid"/>
+			<second ref="solid_C3_back"/>
+			<position name="position_node_solid_C3" x="5.3349999999999795" y="-747.8099999999995"/>
+			<rotation name="rotation_node_solid_C3_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_outer_E3_mid"  lunit="mm">
+		<twoDimVertex x="120.93999999999997" y="747.8099999999995" />
+		<twoDimVertex x="110.27000000000001" y="0.0" />
+		<twoDimVertex x="-110.27000000000001" y="0.0" />
+		<twoDimVertex x="-110.27000000000001" y="747.8099999999995" />
+		<section zOrder="1" zPosition="-13.45" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="13.45" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_outer_E3_front" rmin="0" rmax="110.27000000000001" z="26.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_outer_E3_back" rmin="0" rmax="115.60499999999999" z="26.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_outer_E3_frontmid">
+		<first ref="solid_outer_E3_front"/>
+		<second ref="solid_outer_E3_mid"/>
+		<position name="position_node_solid_outer_E3_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_outer_E3_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_outer_E3">
+			<first ref="node_solid_outer_E3_frontmid"/>
+			<second ref="solid_outer_E3_back"/>
+			<position name="position_node_solid_outer_E3" x="5.3349999999999795" y="-747.8099999999995"/>
+			<rotation name="rotation_node_solid_outer_E3_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_inner_E3_mid"  lunit="mm">
+		<twoDimVertex x="58.18999999999997" y="747.8099999999995" />
+		<twoDimVertex x="47.52000000000001" y="0.0" />
+		<twoDimVertex x="-47.52000000000001" y="0.0" />
+		<twoDimVertex x="-47.52000000000001" y="747.8099999999995" />
+		<section zOrder="1" zPosition="-12.45" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="12.45" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_inner_E3_front" rmin="0" rmax="47.52000000000001" z="24.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_inner_E3_back" rmin="0" rmax="52.85499999999999" z="24.9" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_inner_E3_frontmid">
+		<first ref="solid_inner_E3_front"/>
+		<second ref="solid_inner_E3_mid"/>
+		<position name="position_node_solid_inner_E3_frontmid" y="0"/>
+		<rotation name="rotation_node_solid_inner_E3_frontmid" x="pi" />
+	</union>
+
+		<union name="solid_inner_E3">
+			<first ref="node_solid_inner_E3_frontmid"/>
+			<second ref="solid_inner_E3_back"/>
+			<position name="position_node_solid_inner_E3" x="5.3349999999999795" y="-747.8099999999995"/>
+			<rotation name="rotation_node_solid_inner_E3_back" x="-pi" />
+		</union>
+
+	<xtru name="solid_C4_mid_mid"  lunit="mm">
+		<twoDimVertex x="203.15749999999997" y="3567.258" />
+		<twoDimVertex x="187.1895" y="3006.5910000000003" />
+		<twoDimVertex x="100.40566000000001" y="1663.331330000001" />
+		<twoDimVertex x="100.84262000000001" y="1646.3564900000001" />
+		<twoDimVertex x="102.37049999999999" y="1629.4759200000008" />
+		<twoDimVertex x="105.91082999999998" y="1612.8052800000005" />
+		<twoDimVertex x="110.50734999999997" y="1596.4587600000013" />
+		<twoDimVertex x="116.43993999999998" y="1580.5483700000004" />
+		<twoDimVertex x="123.66796999999997" y="1565.1830800000007" />
+		<twoDimVertex x="132.14191999999997" y="1550.5647000000008" />
+		<twoDimVertex x="141.80374" y="1536.5044500000004" />
+		<twoDimVertex x="152.58724" y="1523.387560000001" />
+		<twoDimVertex x="167.61413" y="1505.1066500000015" />
+		<twoDimVertex x="181.07520999999997" y="1485.6439200000004" />
+		<twoDimVertex x="192.87799" y="1465.133100000001" />
+		<twoDimVertex x="202.94133999999997" y="1443.7151700000013" />
+		<twoDimVertex x="211.19612" y="1421.5373" />
+		<twoDimVertex x="217.58558" y="1398.7519200000006" />
+		<twoDimVertex x="222.06583" y="1375.5156000000006" />
+		<twoDimVertex x="224.60607" y="1351.9880400000002" />
+		<twoDimVertex x="225.18883999999997" y="1328.3309200000003" />
+		<twoDimVertex x="188.5235" y="462.3170000000009" />
+		<twoDimVertex x="131.82150000000001" y="0.0" />
+		<twoDimVertex x="-131.82150000000001" y="0.0" />
+		<twoDimVertex x="-109.9775" y="1666.0330000000013" />
+		<twoDimVertex x="-28.491500000000002" y="3018.0240000000013" />
+		<twoDimVertex x="-59.6095" y="3567.258" />
+		<section zOrder="1" zPosition="-11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_C4_mid_front" rmin="0" rmax="131.82150000000001" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_C4_mid_back" rmin="0" rmax="131.38349999999997" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_C4_mid_frontmid">
+		<first ref="solid_C4_mid_front"/>
+			<second ref="solid_C4_mid_mid"/>
+			<position name="position_node_solid_C4_mid_frontmid" x="0" y="0" z="0"/>
+			<rotation name="rotation_node_solid_C4_mid_frontmid" x="pi" y="0" z="0"/>
+		</union>
+
+		<union name="solid_C4_mid">
+			<first ref="node_solid_C4_mid_frontmid"/>
+			<second ref="solid_C4_mid_back"/>
+			<position name="position_node_solid_C4_mid_back" x="71.774" y="-3567.258"/>
+			<rotation name="rotation_node_solid_C4_mid_back" x="-pi" y="0" z="0"/>
+		</union>
+
+	<xtru name="solid_outer_E4_mid_mid"  lunit="mm">
+		<twoDimVertex x="204.15749999999997" y="3567.258" />
+		<twoDimVertex x="188.1895" y="3006.5910000000003" />
+		<twoDimVertex x="101.40566000000001" y="1663.331330000001" />
+		<twoDimVertex x="101.84262000000001" y="1646.3564900000001" />
+		<twoDimVertex x="103.37049999999999" y="1629.4759200000008" />
+		<twoDimVertex x="106.91082999999998" y="1612.8052800000005" />
+		<twoDimVertex x="111.50734999999997" y="1596.4587600000013" />
+		<twoDimVertex x="117.43993999999998" y="1580.5483700000004" />
+		<twoDimVertex x="124.66796999999997" y="1565.1830800000007" />
+		<twoDimVertex x="133.14191999999997" y="1550.5647000000008" />
+		<twoDimVertex x="142.80374" y="1536.5044500000004" />
+		<twoDimVertex x="153.58724" y="1523.387560000001" />
+		<twoDimVertex x="168.61413" y="1505.1066500000015" />
+		<twoDimVertex x="182.07520999999997" y="1485.6439200000004" />
+		<twoDimVertex x="193.87799" y="1465.133100000001" />
+		<twoDimVertex x="203.94133999999997" y="1443.7151700000013" />
+		<twoDimVertex x="212.19612" y="1421.5373" />
+		<twoDimVertex x="218.58558" y="1398.7519200000006" />
+		<twoDimVertex x="223.06583" y="1375.5156000000006" />
+		<twoDimVertex x="225.60607" y="1351.9880400000002" />
+		<twoDimVertex x="226.18883999999997" y="1328.3309200000003" />
+		<twoDimVertex x="189.5235" y="462.3170000000009" />
+		<twoDimVertex x="132.82150000000001" y="0.0" />
+		<twoDimVertex x="-132.82150000000001" y="0.0" />
+		<twoDimVertex x="-110.9775" y="1666.0330000000013" />
+		<twoDimVertex x="-29.491500000000002" y="3018.0240000000013" />
+		<twoDimVertex x="-60.6095" y="3567.258" />
+		<section zOrder="1" zPosition="-24.7" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="24.7" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_outer_E4_mid_front" rmin="0" rmax="132.82150000000001" z="49.4" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_outer_E4_mid_back" rmin="0" rmax="132.38349999999997" z="49.4" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_outer_E4_mid_frontmid">
+		<first ref="solid_outer_E4_mid_front"/>
+			<second ref="solid_outer_E4_mid_mid"/>
+			<position name="position_node_solid_outer_E4_mid_frontmid" x="0" y="0" z="0"/>
+			<rotation name="rotation_node_solid_outer_E4_mid_frontmid" x="pi" y="0" z="0"/>
+		</union>
+
+		<union name="solid_outer_E4_mid">
+			<first ref="node_solid_outer_E4_mid_frontmid"/>
+			<second ref="solid_outer_E4_mid_back"/>
+			<position name="position_node_solid_outer_E4_mid_back" x="71.774" y="-3567.258"/>
+			<rotation name="rotation_node_solid_outer_E4_mid_back" x="-pi" y="0" z="0"/>
+		</union>
+
+	<xtru name="solid_inner_E4_mid_mid"  lunit="mm">
+		<twoDimVertex x="122.45749999999998" y="3567.258" />
+		<twoDimVertex x="106.48950000000002" y="3006.5910000000003" />
+		<twoDimVertex x="19.705660000000023" y="1663.331330000001" />
+		<twoDimVertex x="20.142620000000022" y="1646.3564900000001" />
+		<twoDimVertex x="21.670500000000004" y="1629.4759200000008" />
+		<twoDimVertex x="25.210829999999987" y="1612.8052800000005" />
+		<twoDimVertex x="29.807349999999985" y="1596.4587600000013" />
+		<twoDimVertex x="35.73993999999999" y="1580.5483700000004" />
+		<twoDimVertex x="42.96796999999998" y="1565.1830800000007" />
+		<twoDimVertex x="51.44191999999998" y="1550.5647000000008" />
+		<twoDimVertex x="61.103740000000016" y="1536.5044500000004" />
+		<twoDimVertex x="71.88724000000002" y="1523.387560000001" />
+		<twoDimVertex x="86.91413" y="1505.1066500000015" />
+		<twoDimVertex x="100.37520999999998" y="1485.6439200000004" />
+		<twoDimVertex x="112.17799000000002" y="1465.133100000001" />
+		<twoDimVertex x="122.24133999999998" y="1443.7151700000013" />
+		<twoDimVertex x="130.49612000000002" y="1421.5373" />
+		<twoDimVertex x="136.88558" y="1398.7519200000006" />
+		<twoDimVertex x="141.36583000000002" y="1375.5156000000006" />
+		<twoDimVertex x="143.90607" y="1351.9880400000002" />
+		<twoDimVertex x="144.48883999999998" y="1328.3309200000003" />
+		<twoDimVertex x="107.82350000000002" y="462.3170000000009" />
+		<twoDimVertex x="51.121500000000026" y="0.0" />
+		<twoDimVertex x="-51.1215" y="0.0" />
+		<twoDimVertex x="-29.277500000000003" y="1666.0330000000013" />
+		<twoDimVertex x="52.208500000000015" y="3018.0240000000013" />
+		<twoDimVertex x="21.09050000000002" y="3567.258" />
+		<section zOrder="1" zPosition="-11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="11.35" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<tube name="solid_inner_E4_mid_front" rmin="0" rmax="51.12150000000001" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<tube name="solid_inner_E4_mid_back" rmin="0" rmax="50.68349999999997" z="22.7" startphi="0" deltaphi="pi" aunit="rad" lunit="mm"/>
+
+	<union name="node_solid_inner_E4_mid_frontmid">
+		<first ref="solid_inner_E4_mid_front"/>
+			<second ref="solid_inner_E4_mid_mid"/>
+			<position name="position_node_solid_inner_E4_mid_frontmid" x="0" y="0" z="0"/>
+			<rotation name="rotation_node_solid_inner_E4_mid_frontmid" x="pi" y="0" z="0"/>
+		</union>
+
+		<union name="solid_inner_E4_mid">
+			<first ref="node_solid_inner_E4_mid_frontmid"/>
+			<second ref="solid_inner_E4_mid_back"/>
+			<position name="position_node_solid_inner_E4_mid_back" x="71.774" y="-3567.258"/>
+			<rotation name="rotation_node_solid_inner_E4_mid_back" x="-pi" y="0" z="0"/>
+		</union>
+
                 
     </solids>
     
@@ -3509,174 +3509,174 @@
             </physvol>
             
             <!-- DS Coils/Lintels/Clamps from hybridToroid.gdml-->
-            <physvol name="dcoil1_1">
-                <volumeref ref="logic_outer_E1_1"/>
-                <position name="pos_dcoil1_1" x="108.292" y="0.0" z="-3331.509-2864.764-90"/>
-                <rotation name="rot_dcoil1_1" x="pi/2" y="0.0" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil2_1">
-                <volumeref ref="logic_outer_E2_1"/>
-                <position name="pos_dcoil2_1" x="131.435" y="0.0" z="-2294.195-2864.764-90"/>
-                <rotation name="rot_dcoil2_1" x="pi/2" y="0.0" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil3_1">
-                <volumeref ref="logic_outer_E3_1"/>
-                <position name="pos_dcoil3_1" x="156.27" y="0.0" z="-1235.736-2864.764-90"/>
-                <rotation name="rot_dcoil3_1" x="pi/2" y="0.0" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil4_1">
-                <volumeref ref="logic_outer_E4_1"/>
-                <position name="pos_dcoil4_1" x="188.6295" y="0.0" z="-235.749-2864.764-90"/>
-                <rotation name="rot_dcoil4_1" x="pi/2" y="0.0" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil1_2">
-                <volumeref ref="logic_outer_E1_2"/>
-                <position name="pos_dcoil1_2" x="67.5189576229" y="84.6660948994" z="-3331.509-2864.764-90"/>
-                <rotation name="rot_dcoil1_2" x="pi/2" y="0.897597901026" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil2_2">
-                <volumeref ref="logic_outer_E2_2"/>
-                <position name="pos_dcoil2_2" x="81.9483821073" y="102.760020898" z="-2294.195-2864.764-90"/>
-                <rotation name="rot_dcoil2_2" x="pi/2" y="0.897597901026" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil3_2">
-                <volumeref ref="logic_outer_E3_2"/>
-                <position name="pos_dcoil3_2" x="97.4327513365" y="122.176805765" z="-1235.736-2864.764-90"/>
-                <rotation name="rot_dcoil3_2" x="pi/2" y="0.897597901026" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil4_2">
-                <volumeref ref="logic_outer_E4_2"/>
-                <position name="pos_dcoil4_2" x="117.60856958" y="147.476481622" z="-235.749-2864.764-90"/>
-                <rotation name="rot_dcoil4_2" x="pi/2" y="0.897597901026" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil1_3">
-                <volumeref ref="logic_outer_E1_3"/>
-                <position name="pos_dcoil1_3" x="-24.09723698" y="105.576893466" z="-3331.509-2864.764-90"/>
-                <rotation name="rot_dcoil1_3" x="pi/2" y="1.79519580205" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil2_3">
-                <volumeref ref="logic_outer_E2_3"/>
-                <position name="pos_dcoil2_3" x="-29.2470389545" y="128.139650138" z="-2294.195-2864.764-90"/>
-                <rotation name="rot_dcoil2_3" x="pi/2" y="1.79519580205" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil3_3">
-                <volumeref ref="logic_outer_E3_3"/>
-                <position name="pos_dcoil3_3" x="-34.7733463494" y="152.351984837" z="-1235.736-2864.764-90"/>
-                <rotation name="rot_dcoil3_3" x="pi/2" y="1.79519580205" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil4_3">
-                <volumeref ref="logic_outer_E4_3"/>
-                <position name="pos_dcoil4_3" x="-41.9740125117" y="183.900164611" z="-235.749-2864.764-90"/>
-                <rotation name="rot_dcoil4_3" x="pi/2" y="1.79519580205" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil1_4">
-                <volumeref ref="logic_outer_E1_4"/>
-                <position name="pos_dcoil1_4" x="-97.5677206429" y="46.9861378765" z="-3331.509-2864.764-90"/>
-                <rotation name="rot_dcoil1_4" x="pi/2" y="2.69279370308" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil2_4">
-                <volumeref ref="logic_outer_E2_4"/>
-                <position name="pos_dcoil2_4" x="-118.418843153" y="57.0275092509" z="-2294.195-2864.764-90"/>
-                <rotation name="rot_dcoil2_4" x="pi/2" y="2.69279370308" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil3_4">
-                <volumeref ref="logic_outer_E3_4"/>
-                <position name="pos_dcoil3_4" x="-140.794404987" y="67.8030119119" z="-1235.736-2864.764-90"/>
-                <rotation name="rot_dcoil3_4" x="pi/2" y="2.69279370308" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil4_4">
-                <volumeref ref="logic_outer_E4_4"/>
-                <position name="pos_dcoil4_4" x="-169.949307068" y="81.8432727679" z="-235.749-2864.764-90"/>
-                <rotation name="rot_dcoil4_4" x="pi/2" y="2.69279370308" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil1_5">
-                <volumeref ref="logic_outer_E1_5"/>
-                <position name="pos_dcoil1_5" x="-97.5677206429" y="-46.9861378765" z="-3331.509-2864.764-90"/>
-                <rotation name="rot_dcoil1_5" x="pi/2" y="3.5903916041" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil2_5">
-                <volumeref ref="logic_outer_E2_5"/>
-                <position name="pos_dcoil2_5" x="-118.418843153" y="-57.0275092509" z="-2294.195-2864.764-90"/>
-                <rotation name="rot_dcoil2_5" x="pi/2" y="3.5903916041" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil3_5">
-                <volumeref ref="logic_outer_E3_5"/>
-                <position name="pos_dcoil3_5" x="-140.794404987" y="-67.8030119119" z="-1235.736-2864.764-90"/>
-                <rotation name="rot_dcoil3_5" x="pi/2" y="3.5903916041" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil4_5">
-                <volumeref ref="logic_outer_E4_5"/>
-                <position name="pos_dcoil4_5" x="-169.949307068" y="-81.8432727679" z="-235.749-2864.764-90"/>
-                <rotation name="rot_dcoil4_5" x="pi/2" y="3.5903916041" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil1_6">
-                <volumeref ref="logic_outer_E1_6"/>
-                <position name="pos_dcoil1_6" x="-24.09723698" y="-105.576893466" z="-3331.509-2864.764-90"/>
-                <rotation name="rot_dcoil1_6" x="pi/2" y="4.48798950513" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil2_6">
-                <volumeref ref="logic_outer_E2_6"/>
-                <position name="pos_dcoil2_6" x="-29.2470389545" y="-128.139650138" z="-2294.195-2864.764-90"/>
-                <rotation name="rot_dcoil2_6" x="pi/2" y="4.48798950513" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil3_6">
-                <volumeref ref="logic_outer_E3_6"/>
-                <position name="pos_dcoil3_6" x="-34.7733463494" y="-152.351984837" z="-1235.736-2864.764-90"/>
-                <rotation name="rot_dcoil3_6" x="pi/2" y="4.48798950513" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil4_6">
-                <volumeref ref="logic_outer_E4_6"/>
-                <position name="pos_dcoil4_6" x="-41.9740125117" y="-183.900164611" z="-235.749-2864.764-90"/>
-                <rotation name="rot_dcoil4_6" x="pi/2" y="4.48798950513" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil1_7">
-                <volumeref ref="logic_outer_E1_7"/>
-                <position name="pos_dcoil1_7" x="67.5189576229" y="-84.6660948994" z="-3331.509-2864.764-90"/>
-                <rotation name="rot_dcoil1_7" x="pi/2" y="5.38558740615" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil2_7">
-                <volumeref ref="logic_outer_E2_7"/>
-                <position name="pos_dcoil2_7" x="81.9483821073" y="-102.760020898" z="-2294.195-2864.764-90"/>
-                <rotation name="rot_dcoil2_7" x="pi/2" y="5.38558740615" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil3_7">
-                <volumeref ref="logic_outer_E3_7"/>
-                <position name="pos_dcoil3_7" x="97.4327513365" y="-122.176805765" z="-1235.736-2864.764-90"/>
-                <rotation name="rot_dcoil3_7" x="pi/2" y="5.38558740615" z="0"/>
-            </physvol>
-            
-            <physvol name="dcoil4_7">
-                <volumeref ref="logic_outer_E4_7"/>
-                <position name="pos_dcoil4_7" x="117.60856958" y="-147.476481622" z="-235.749-2864.764-90"/>
-                <rotation name="rot_dcoil4_7" x="pi/2" y="5.38558740615" z="0"/>
-            </physvol>
-                     
+           	<physvol name="dcoil1_1">
+			<volumeref ref="logic_outer_E1_1"/>
+			<position name="pos_dcoil1_1" x="108.292" y="0.0" z="-3331.509000000001-2864.764-90"/>
+			<rotation name="rot_dcoil1_1" x="pi/2" y="0.0" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_1">
+			<volumeref ref="logic_outer_E2_1"/>
+			<position name="pos_dcoil2_1" x="134.435" y="0.0" z="-2294.1950000000006-2864.764-90"/>
+			<rotation name="rot_dcoil2_1" x="pi/2" y="0.0" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_1">
+			<volumeref ref="logic_outer_E3_1"/>
+			<position name="pos_dcoil3_1" x="159.27" y="0.0" z="-1235.7360000000017-2864.764-90"/>
+			<rotation name="rot_dcoil3_1" x="pi/2" y="0.0" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_1">
+			<volumeref ref="logic_outer_E4_1"/>
+			<position name="pos_dcoil4_1" x="188.6295" y="0.0" z="-235.74900000000252-2864.764-90"/>
+			<rotation name="rot_dcoil4_1" x="pi/2" y="0.0" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil1_2">
+			<volumeref ref="logic_outer_E1_2"/>
+			<position name="pos_dcoil1_2" x="67.51895762288598" y="84.66609489942789" z="-3331.509000000001-2864.764-90"/>
+			<rotation name="rot_dcoil1_2" x="pi/2" y="0.8975979010256552" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_2">
+			<volumeref ref="logic_outer_E2_2"/>
+			<position name="pos_dcoil2_2" x="83.81885151287885" y="105.1055153455896" z="-2294.1950000000006-2864.764-90"/>
+			<rotation name="rot_dcoil2_2" x="pi/2" y="0.8975979010256552" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_2">
+			<volumeref ref="logic_outer_E3_2"/>
+			<position name="pos_dcoil3_2" x="99.30322074204051" y="124.52230021268312" z="-1235.7360000000017-2864.764-90"/>
+			<rotation name="rot_dcoil3_2" x="pi/2" y="0.8975979010256552" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_2">
+			<volumeref ref="logic_outer_E4_2"/>
+			<position name="pos_dcoil4_2" x="117.608569579712" y="147.47648162220324" z="-235.74900000000252-2864.764-90"/>
+			<rotation name="rot_dcoil4_2" x="pi/2" y="0.8975979010256552" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil1_3">
+			<volumeref ref="logic_outer_E1_3"/>
+			<position name="pos_dcoil1_3" x="-24.09723697999719" y="105.57689346599405" z="-3331.509000000001-2864.764-90"/>
+			<rotation name="rot_dcoil1_3" x="pi/2" y="1.7951958020513104" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_3">
+			<volumeref ref="logic_outer_E2_3"/>
+			<position name="pos_dcoil2_3" x="-29.914601756417117" y="131.06443387416346" z="-2294.1950000000006-2864.764-90"/>
+			<rotation name="rot_dcoil2_3" x="pi/2" y="1.7951958020513104" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_3">
+			<volumeref ref="logic_outer_E3_3"/>
+			<position name="pos_dcoil3_3" x="-35.440909151222186" y="155.27676857319906" z="-1235.7360000000017-2864.764-90"/>
+			<rotation name="rot_dcoil3_3" x="pi/2" y="1.7951958020513104" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_3">
+			<volumeref ref="logic_outer_E4_3"/>
+			<position name="pos_dcoil4_3" x="-41.974012511712594" y="183.9001646109013" z="-235.74900000000252-2864.764-90"/>
+			<rotation name="rot_dcoil4_3" x="pi/2" y="1.7951958020513104" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil1_4">
+			<volumeref ref="logic_outer_E1_4"/>
+			<position name="pos_dcoil1_4" x="-97.56772064288876" y="46.98613787651862" z="-3331.509000000001-2864.764-90"/>
+			<rotation name="rot_dcoil1_4" x="pi/2" y="2.6927937030769655" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_4">
+			<volumeref ref="logic_outer_E2_4"/>
+			<position name="pos_dcoil2_4" x="-121.12174975646171" y="58.329160468268945" z="-2294.1950000000006-2864.764-90"/>
+			<rotation name="rot_dcoil2_4" x="pi/2" y="2.6927937030769655" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_4">
+			<volumeref ref="logic_outer_E3_4"/>
+			<position name="pos_dcoil3_4" x="-143.4973115908183" y="69.10466312925351" z="-1235.7360000000017-2864.764-90"/>
+			<rotation name="rot_dcoil3_4" x="pi/2" y="2.6927937030769655" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_4">
+			<volumeref ref="logic_outer_E4_4"/>
+			<position name="pos_dcoil4_4" x="-169.94930706799937" y="81.84327276787545" z="-235.74900000000252-2864.764-90"/>
+			<rotation name="rot_dcoil4_4" x="pi/2" y="2.6927937030769655" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil1_5">
+			<volumeref ref="logic_outer_E1_5"/>
+			<position name="pos_dcoil1_5" x="-97.56772064288877" y="-46.98613787651859" z="-3331.509000000001-2864.764-90"/>
+			<rotation name="rot_dcoil1_5" x="pi/2" y="3.5903916041026207" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_5">
+			<volumeref ref="logic_outer_E2_5"/>
+			<position name="pos_dcoil2_5" x="-121.12174975646172" y="-58.32916046826891" z="-2294.1950000000006-2864.764-90"/>
+			<rotation name="rot_dcoil2_5" x="pi/2" y="3.5903916041026207" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_5">
+			<volumeref ref="logic_outer_E3_5"/>
+			<position name="pos_dcoil3_5" x="-143.4973115908183" y="-69.10466312925347" z="-1235.7360000000017-2864.764-90"/>
+			<rotation name="rot_dcoil3_5" x="pi/2" y="3.5903916041026207" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_5">
+			<volumeref ref="logic_outer_E4_5"/>
+			<position name="pos_dcoil4_5" x="-169.94930706799937" y="-81.8432727678754" z="-235.74900000000252-2864.764-90"/>
+			<rotation name="rot_dcoil4_5" x="pi/2" y="3.5903916041026207" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil1_6">
+			<volumeref ref="logic_outer_E1_6"/>
+			<position name="pos_dcoil1_6" x="-24.09723697999722" y="-105.57689346599405" z="-3331.509000000001-2864.764-90"/>
+			<rotation name="rot_dcoil1_6" x="pi/2" y="4.487989505128276" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_6">
+			<volumeref ref="logic_outer_E2_6"/>
+			<position name="pos_dcoil2_6" x="-29.914601756417152" y="-131.06443387416346" z="-2294.1950000000006-2864.764-90"/>
+			<rotation name="rot_dcoil2_6" x="pi/2" y="4.487989505128276" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_6">
+			<volumeref ref="logic_outer_E3_6"/>
+			<position name="pos_dcoil3_6" x="-35.44090915122223" y="-155.27676857319906" z="-1235.7360000000017-2864.764-90"/>
+			<rotation name="rot_dcoil3_6" x="pi/2" y="4.487989505128276" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_6">
+			<volumeref ref="logic_outer_E4_6"/>
+			<position name="pos_dcoil4_6" x="-41.974012511712644" y="-183.9001646109013" z="-235.74900000000252-2864.764-90"/>
+			<rotation name="rot_dcoil4_6" x="pi/2" y="4.487989505128276" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil1_7">
+			<volumeref ref="logic_outer_E1_7"/>
+			<position name="pos_dcoil1_7" x="67.51895762288595" y="-84.66609489942789" z="-3331.509000000001-2864.764-90"/>
+			<rotation name="rot_dcoil1_7" x="pi/2" y="5.385587406153931" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil2_7">
+			<volumeref ref="logic_outer_E2_7"/>
+			<position name="pos_dcoil2_7" x="83.81885151287882" y="-105.10551534558961" z="-2294.1950000000006-2864.764-90"/>
+			<rotation name="rot_dcoil2_7" x="pi/2" y="5.385587406153931" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil3_7">
+			<volumeref ref="logic_outer_E3_7"/>
+			<position name="pos_dcoil3_7" x="99.30322074204047" y="-124.52230021268313" z="-1235.7360000000017-2864.764-90"/>
+			<rotation name="rot_dcoil3_7" x="pi/2" y="5.385587406153931" z="0"/>
+		</physvol>
+
+		<physvol name="dcoil4_7">
+			<volumeref ref="logic_outer_E4_7"/>
+			<position name="pos_dcoil4_7" x="117.60856957971195" y="-147.47648162220327" z="-235.74900000000252-2864.764-90"/>
+			<rotation name="rot_dcoil4_7" x="pi/2" y="5.385587406153931" z="0"/>
+		</physvol>
+		
             <loop for="iloop" from="0" to="6" step="1">
                 <physvol>
                     <volumeref ref="Coll6A_logic1"/>
