@@ -1871,30 +1871,40 @@
                 <materialref ref="G4_W"/>
                 <solidref ref="solid_epoxy_protector_1"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="bellyPlateDet"/>
+                <auxiliary auxtype="DetNo" auxvalue="3015"/> 
         </volume>
 
         <volume name="logic_epoxy_protector_2">
                 <materialref ref="G4_W"/>
                 <solidref ref="solid_epoxy_protector_2"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="bellyPlateDet"/>
+                <auxiliary auxtype="DetNo" auxvalue="3016"/>
         </volume>
 
         <volume name="logic_epoxy_protector_3">
                 <materialref ref="G4_W"/>
                 <solidref ref="solid_epoxy_protector_3"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="bellyPlateDet"/>
+                <auxiliary auxtype="DetNo" auxvalue="3017"/>
         </volume>
 
         <volume name="logic_epoxy_protector_4">
                 <materialref ref="G4_W"/>
                 <solidref ref="solid_epoxy_protector_4"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="bellyPlateDet"/>
+                <auxiliary auxtype="DetNo" auxvalue="3018"/>
         </volume>
 
         <volume name="logic_epoxy_protector_5">
                 <materialref ref="G4_W"/>
                 <solidref ref="solid_epoxy_protector_5"/>
                 <auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="bellyPlateDet"/>
+                <auxiliary auxtype="DetNo" auxvalue="3019"/>
         </volume>
 	    
         <volume name="logic_clamp_1">
