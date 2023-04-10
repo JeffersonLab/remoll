@@ -618,29 +618,30 @@
                 <section zOrder="2" zPosition="1002.2414999999983" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
         <xtru name="solid_epoxy_protector_2"  lunit="mm">
-                <twoDimVertex x="40.5" y="-12.95" />
                 <twoDimVertex x="43.5" y="-12.95" />
+                <twoDimVertex x="46.5" y="-12.95" />
+                <twoDimVertex x="46.5" y="12.95" />
                 <twoDimVertex x="43.5" y="12.95" />
-                <twoDimVertex x="40.5" y="12.95" />
                 <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
                 <section zOrder="2" zPosition="1022.5959999999995" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
         <xtru name="solid_epoxy_protector_3"  lunit="mm">
-                <twoDimVertex x="43" y="-13.45" />
                 <twoDimVertex x="46" y="-13.45" />
+                <twoDimVertex x="49" y="-13.45" />
+                <twoDimVertex x="49" y="13.45" />
                 <twoDimVertex x="46" y="13.45" />
-                <twoDimVertex x="43" y="13.45" />
                 <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
                 <section zOrder="2" zPosition="513.2700000000004" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
         <xtru name="solid_epoxy_protector_4"  lunit="mm">
-                <twoDimVertex x="43" y="-13.45" />
                 <twoDimVertex x="46" y="-13.45" />
+                <twoDimVertex x="49" y="-13.45" />
+                <twoDimVertex x="49" y="13.45" />
                 <twoDimVertex x="46" y="13.45" />
-                <twoDimVertex x="43" y="13.45" />
                 <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
                 <section zOrder="2" zPosition="460.41499999999905" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
+
         <xtru name="solid_epoxy_protector_5"  lunit="mm">
                 <twoDimVertex x="52.808" y="-24.7" />
                 <twoDimVertex x="55.808" y="-24.7" />
