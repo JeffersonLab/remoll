@@ -624,7 +624,7 @@
         <positionref ref="dump_center"/>
       </physvol>
       
-     <!-- <physvol name="krytpoTop_phys">
+      <physvol name="krytpoTop_phys">
        <volumeref ref="krytpoTop_log"/>
        <position name="kryptoTop_pos" unit="cm" x="0" y="60.05*i2cm" z="dump_center_z"/>
       </physvol>
@@ -647,7 +647,7 @@
       <physvol name="krytpoEndDS_phys">
        <volumeref ref="krytpoEndDS_log"/>
        <position name="kryptoEndDS_pos" unit="cm" x="0" y="-15.5*i2cm" z="2256.5*i2cm"/>
-      </physvol>-->
+      </physvol>
      
       <physvol name="dumpTempShield_left">
         <volumeref ref="dumpTempShield_left_logic"/>
