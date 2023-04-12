@@ -36,15 +36,15 @@
   <solids>
 
     <box lunit="m" name="targetRegion_solid1"
-	 x="10" y="15" z="6.38"/>
+	 x="8.1" y="9.964" z="6.38"/>
 
     <box lunit="m" name="targetRegion_solid2"
-	 x="11" y="5" z="6.4"/>
+	 x="8.2" y="4" z="6.4"/>
 
     <subtraction name ="targetRegion_solid">
       <first ref="targetRegion_solid1"/>
       <second ref="targetRegion_solid2"/>
-      <position name="MotherSub_pos" lunit="mm" x="0" y=" - 3000 - 5000./2. + 20" z="0" />
+      <position name="MotherSub_pos" lunit="mm" x="0" y=" -9964/2 " z="0" />
       <!--2980 mm is the distance of beam center from the hall floor-->
     </subtraction>
 
@@ -59,15 +59,15 @@
           rmin="74" rmax="330" z="200"/>
 
     <!--shielding concrete -->
-    <box lunit="mm" name="concreteDS" x="concreteBoxx" y="concreteBoxy-concreteThickness-1246" z="concreteThickness"/>
+    <box lunit="mm" name="concreteDS" x="concreteBoxx" y="concreteBoxy-concreteThickness-1246+26.312" z="concreteThickness"/>
     <box lunit="mm" name="concreteTop" x="concreteBoxx" y="concreteThickness" z="concreteBoxz"/>
     <box lunit="mm" name="concreteLeft" 
 	 x="concreteThickness" 
-	 y="concreteBoxy-concreteThickness-1248" 
+	 y="concreteBoxy-concreteThickness-1248+28.312"
 	 z="concreteBoxz-concreteThickness"/>
     <box lunit="mm" name="concreteRight" 
 	 x="concreteThickness" 
-	 y="concreteBoxy-concreteThickness-1248"
+	 y="concreteBoxy-concreteThickness-1248+28.312"
 	 z="concreteBoxz-concreteThickness"/>
 
     <tube aunit="deg" lunit="mm" deltaphi="360" name="concreteRoofhole"
@@ -75,12 +75,49 @@
           z="concreteThickness+2.0"/>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="Shield_tube"
-          rmin="0" rmax="453" z="concreteThickness+2.0"/>
+          rmin="0" rmax="451" z="concreteThickness+2.0"/>
+	  
+    <polycone name = "bellows1USflange_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
+	  <zplane rmin="149.23" rmax="184.15" z="-3427.73+4500" />  
+	  <zplane rmin="149.23" rmax="184.15" z="-3401.69+4500" /> 
+	  <zplane rmin="152.40" rmax="184.15" z="-3401.69+4500" />
+	  <zplane rmin="152.40" rmax="184.15" z="-3399.15+4500" />
+    </polycone>
+	  
+    <polycone name = "bellows1_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
+	  <zplane rmin="149.23" rmax="152.40" z="-3401.69+4500" />  
+	  <zplane rmin="149.23" rmax="152.40" z="-3343.58+4500" /> 
+	  <zplane rmin="149.23" rmax="190.50" z="-3343.58+4500" />
+	  <zplane rmin="149.23" rmax="190.50" z="-3054.68+4500" />
+	  <zplane rmin="149.23" rmax="152.40" z="-3054.68+4500" />
+	  <zplane rmin="149.23" rmax="152.40" z="-2995.04+4500" />
+    </polycone>
+
+    <polycone name = "tgt2US_pipe2_USflange_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
+	  <zplane rmin="152.40" rmax="184.15" z="-2999.10+4500" />  
+	  <zplane rmin="152.40" rmax="184.15" z="-2995.04+4500" /> 
+	  <zplane rmin="149.23" rmax="184.15" z="-2995.04+4500" />
+	  <zplane rmin="149.23" rmax="184.15" z="-2971.291+4500" />
+    </polycone>
+	 
+    <polycone name = "tgt2US_pipe2_DSflange_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
+	  <zplane rmin="152.40" rmax="184.15" z="-1357.81+4500" />
+	  <zplane rmin="152.40" rmax="184.15" z="-1339.55+4500" />
+	  <zplane rmin="149.23" rmax="184.15" z="-1339.55+4500" />
+	  <zplane rmin="149.23" rmax="184.15" z="-1310+4500" />
+    </polycone>
+	  
+    <polycone name = "tgt2US_pipe2_solid" startphi="0" deltaphi="360" aunit="deg" lunit= "mm"> 
+	  <zplane rmin="146.05" rmax="184.15" z="-2971.291+4500" />
+	  <zplane rmin="146.05" rmax="184.15" z="-2941.954+4500" />
+	  <zplane rmin="146.05" rmax="152.40" z="-2941.954+4500" /> 
+	  <zplane rmin="146.05" rmax="152.40" z="-1377.49+4500" />
+	  <zplane rmin="149.23" rmax="152.40" z="-1364.79+4500" /> 
+	  <zplane rmin="149.23" rmax="152.40" z="-1339.55+4500" />
+    </polycone>
 
     <tube aunit="deg" deltaphi="360" lunit="mm" name="outerBarite_solid"
-          rmin="331" rmax="450" z="concreteThickness - 200"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="innerBarite_solid"
-          rmin="150" rmax="330" z="500"/>
+          rmin="190.5" rmax="450" z="concreteThickness - 200"/>
 
     <subtraction name="concreteDS_sub">
       <first ref = "concreteDS"/>
@@ -198,11 +235,39 @@
       <auxiliary auxtype="Color" auxvalue="Brown"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
+	  
+    <volume name="bellows1USflange_logic">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="bellows1USflange_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+	  
+    <volume name="bellows1_logic">
+      <materialref ref="SSbellows"/>
+      <solidref ref="bellows1_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Pink"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
 
-    <volume name="innerBarite_logic">
-      <materialref ref="barite"/>
-      <solidref ref="innerBarite_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
+    <volume name="tgt2US_pipe2_logic">
+      <materialref ref="G4_Al"/>
+      <solidref ref="tgt2US_pipe2_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+	  
+    <volume name="tgt2US_pipe2_USflange_logic">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="tgt2US_pipe2_USflange_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+	  
+    <volume name="tgt2US_pipe2_DSflange_logic">
+      <materialref ref="G4_Al"/>
+      <solidref ref="tgt2US_pipe2_DSflange_solid"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
     </volume>
 
@@ -234,30 +299,30 @@
 	<volumeref ref="targetUSBeamPipe"/>
       </physvol>
       
-      <physvol>
-	<volumeref ref="LeadCollar_logic"/>
-	<position name="LeadCollar_pos" unit="mm" x="0" y="0"
-                  z="2851 + 100"/>
-      </physvol>
+      <!-- <physvol> -->
+      <!-- 	<volumeref ref="LeadCollar_logic"/> -->
+      <!-- 	<position name="LeadCollar_pos" unit="mm" x="0" y="0" -->
+      <!--             z="2851 + 100"/> -->
+      <!-- </physvol> -->
 
       <!--shielding placement-->
       <physvol>
 	<volumeref ref="ConcreteShieldDS"/>
 	<position name="ConcreteShieldDS_pos" unit="mm" x="0" 
-		  y="concreteBoxy/2.-4292" 
+		  y="concreteBoxy/2.-4292 +1.156"
 		  z="concreteBoxz/2. - concreteThickness/2."/>
       </physvol>
 
       <physvol>
 	<volumeref ref="ConcreteShieldTop"/>
-	<position name="ConcreteShieldTop_pos" unit="mm" x="0" y="1789" z="0"/>
+	<position name="ConcreteShieldTop_pos" unit="mm" x="0" y="1099.312+concreteThickness/2.+0.05" z="0"/>
       </physvol>
 
       <physvol>
 	<volumeref ref="ConcreteShieldLeft"/>
 	<position name="ConcreteShieldLeft_pos" unit="mm" 
 		  x="concreteBoxx/2-700" 
-		  y="concreteBoxy/2.-4292" 
+		  y="concreteBoxy/2.-4292+1.156"
 		  z="-concreteThickness/2"/>
       </physvol>
       
@@ -265,7 +330,7 @@
 	<volumeref ref="ConcreteShieldRight"/>
 	<position name="ConcreteShieldRight_pos" unit="mm" 
 		  x="-concreteBoxx/2+700" 
-		  y="concreteBoxy/2.-4292" 
+		  y="concreteBoxy/2.-4292+1.156"
 		  z="-concreteThickness/2"/>
       </physvol>
       
@@ -274,9 +339,24 @@
 	<position name="outerBarite_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2. + 100"/>
       </physvol>
 
-      <physvol>
-	<volumeref ref="innerBarite_logic"/>
-	<position name="innerBarite_pos" unit="mm" x="0" y="0" z="concreteBoxz/2. - concreteThickness/2."/>
+      <physvol name="bellows1USflange">
+	<volumeref ref="bellows1USflange_logic"/>
+      </physvol>
+	    
+      <physvol name="bellows1">
+	<volumeref ref="bellows1_logic"/>
+      </physvol>	    
+
+      <physvol name="tgt2US_pipe2">
+	<volumeref ref="tgt2US_pipe2_logic"/>
+      </physvol>
+
+      <physvol name="tgt2US_pipe2_USflange">
+	<volumeref ref="tgt2US_pipe2_USflange_logic"/>
+      </physvol>
+	   
+      <physvol name="tgt2US_pipe2_DSflange">
+	<volumeref ref="tgt2US_pipe2_DSflange_logic"/>
       </physvol>
 
     </volume>
