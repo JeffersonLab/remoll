@@ -391,7 +391,7 @@
 	<volumeref ref="tgt2US_pipe2_DSflange_logic"/>
       </physvol>
 
-      <!--target exit window>
+      <!--target exit window-->
   <physvol>
       <volumeref ref="TubeVol1"/>
       <position name="pos1" unit="cm" x="0.0" y="0.0" z="362.3056+0.02032/2.0"/>
