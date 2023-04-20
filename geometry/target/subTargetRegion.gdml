@@ -15,6 +15,7 @@
     <constant name="targetChamber_thickness" value="13."/>
     <constant name="targetChamberLid_thickness" value="76."/>
     <constant name="targetChamberHat_L" value="1000."/>
+    <constant name="TWOPI" value="2.*pi"/>	
 
 
     <!--constant for shieldings - dimension from Alan design -->
