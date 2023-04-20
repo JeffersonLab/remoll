@@ -5,6 +5,7 @@
 
 # This is the current working geometry
 /remoll/setgeofile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
 
 
 #/remoll/likekryptonite  true

@@ -63,6 +63,7 @@ class remollGenExternal : public remollVEventGen {
         static std::vector<remollGenericDetectorHit_t>* fHit;
 
         G4double fzOffset;
+        G4double rate;
 
         // Detector ID to consider
         G4int fDetectorID;

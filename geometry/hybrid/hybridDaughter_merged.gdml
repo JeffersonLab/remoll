@@ -7,7 +7,7 @@
 
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
-<define>
+  <define>
     &matrices;
 
     <constant name="PI" value="1.*pi"/>
@@ -15,448 +15,277 @@
     <constant name="DEGRAD" value="PI/180."/>
     <constant name="SEPTANT" value ="360./7"/>
     <position name="CENTER" unit="mm" x="0" y="0" z="0"/>
-
+    <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435-150/2-400/2"/>
 
     <constant name="DELTAT" value ="1.0"/>
-
-    <!-- coll at the center of hybrid toriod -->
-    <position name="posCOLL5" unit="mm" x="0" y="0" z="12835-DOFFSET"/>
-    <constant name="COLL5_THICK" value ="70.0"/>
 
     <!-- main collimator number 4, adjust this -->
     <constant name="col4shift" value ="1500"/>
     <constant name="posPCOLL4_z" value ="9825-DOFFSET-col4shift-50.0/2"/> <!--subtracting 50/2 from z to compensate for increased thickness so that downstream end still ends at the same point as before-->
-    <position name="posPCOLL4_1" unit="mm" x="0" y="0" z="posPCOLL4_z-50"/>
-    <position name="posPCOLL4_2" unit="mm" x="0" y="0" z="posPCOLL4_z"/>
-    <position name="posPCOLL4_3" unit="mm" x="0" y="0" z="posPCOLL4_z+50"/>
-    <constant name="PCOLL2_R1_U" value ="40"/> <!-- Was 38.0" for no good reason, then 30 -->
-    <constant name="PCOLL2_R1_D" value ="40"/> <!-- 8.0"/> -->
-    <constant name="PCOLL2_R4_U" value ="250"/>
-    <constant name="PCOLL2_R4_D" value ="250"/>
-    <constant name="PCOLL4_THICK" value ="150.0"/> <!--100.0 increased the thickness by 50% to prevent punch through-->
 
-    <!--
-       Shielding collimators dimensions
-      -->
-    <constant name="coll4shield_shift" value="1000/2"/>
-    <constant name="boxDSShieldColl1_inner_rmax" value="265"/>
-    <constant name="boxDSShieldColl1_width" value="5715"/>
-    <constant name="boxDSShieldColl1_height" value="5000/3"/> <!-- /2"/> FIXME new, reduce height a lot -->
-    <constant name="boxDSShieldColl1_length" value="1000 + 400 - coll4shield_shift"/>
-    <!-- Concrete Shield1 will be outside shielding block 4 -->
-    <constant name="DSConcreteShield1_side_thickness" value="400"/>
-    <constant name="DSConcreteShield1_top_thickness" value="400"/>
-    <constant name="DSConcreteShield1_bottom_thickness" value="400"/>
-    <constant name="DSConcreteShield1_length" value="boxDSShieldColl1_length + 1 + 1*DSConcreteShield1_side_thickness"/> <!-- was 2* -->
-    <constant name="DSConcreteShield1_height" value="boxDSShieldColl1_height + 1 + DSConcreteShield1_top_thickness + DSConcreteShield1_bottom_thickness"/>
-    <position name="boxDSConcreteShield1_trans2" unit="mm" x="0" y="0" z="0"/>
-    <position name="boxDSConcreteShield1_center" unit="mm" x="0" y="0" z="9020-DOFFSET - coll4shield_shift/2"/>
+    <constant name="boxDSMother_width" value="5800-2800"/>
+    <constant name="boxDSMother_height" value="5800+163-2800"/>
+    <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73+150.+400"/> 
 
-	    <!-- this is for Lead wall dimension -->
-    <constant name="PbWall_height" value="2400"/>
-    <constant name="PbWall_length" value="250"/>
-    <constant name="PbWall_width" value="2400"/>
-    <constant name="DSShield_local_inner_rmax" value="boxDSShieldColl1_inner_rmax"/>
-    <position name="boxDSShield_local_trans" unit="mm" x="0" y="0" z="0"/>
+    <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL4_z + 150/2+1425-150/2-400/2"/>
 
-    <constant name="boxDSMother_width" value="2700"/>
-    <constant name="boxDSMother_height" value="2700"/>
-    <constant name="boxDSMother_length" value="7865.68 + 2*950 + 900+5300.59+8.73"/> 
-    <position name="PbWall_center" unit="mm" x="0" y="0" z="-boxDSMother_length/2+854.25+250./2"/>
+    <constant name="bellows3_eps" value="0.35"/>
+    <constant name="bellows3_IR" value="330+bellows3_eps/2"/>
+    <constant name="bellows3flange_length" value="44.45-bellows3_eps"/>
+    <constant name="bellows3flange_Rthickness" value="88.5-bellows3_eps"/>
+    <constant name="bellows3_length" value="419.4"/>
+    <constant name="bellows3_Rthickness" value="31.0"/>
+    <constant name="bellows3_zpos" value="8946-4500-(11016.865-8.73/2+150/2+400/2)"/>
+    <constant name="bellows3flangeUS_zpos" value="bellows3_zpos - bellows3_length/2 - bellows3flange_length/2 - bellows3_eps/2"/>
+    <constant name="bellows3flangeDS_zpos" value="bellows3_zpos + bellows3_length/2 + bellows3flange_length/2 + bellows3_eps/2"/>
 
-    <position name="SubCoil1EpoxyShield1_center" unit="mm" x="0" y="0" z="posPCOLL4_z  + PCOLL4_THICK/2+1425"/>
+    <position name="bellows3physical_pos" z="bellows3_zpos-10" unit="mm"/>
+    <position name="bellows3flangeUS_pos" z="bellows3flangeUS_zpos-10" unit="mm"/>
+    <position name="bellows3flangeDS_pos" z="bellows3flangeDS_zpos-10" unit="mm"/>
 
+    <constant name="bellows4_eps" value="0.1"/>
+    <constant name="bellows4_IR" value="675+bellows4_eps/2"/>
+    <constant name="bellows4flange_length" value="50.75-bellows4_eps"/>
+    <constant name="bellows4flange_Rthickness" value="114.3-bellows4_eps"/>
+    <constant name="bellows4_length" value="148.0"/>
+    <constant name="bellows4_Rthickness" value="84.1"/>
+    <constant name="bellows4_zpos" value="17075-4500-(11016.865-8.73/2+150/2+400/2)"/>
+    <constant name="bellows4flangeUS_zpos" value="bellows4_zpos - bellows4_length/2 - bellows4flange_length/2 - bellows4_eps/2"/>
+    <constant name="bellows4flangeDS_zpos" value="bellows4_zpos + bellows4_length/2 + bellows4flange_length/2 + bellows4_eps/2"/>
 
-<!-- Dimensions for Collimator 4   -->    
-    <constant name="R0_lowR" value ="51.5"/>
-    <constant name="y0_lowR" value ="50.298"/>
-    <constant name="x0_lowR" value ="sqrt(R0_lowR*R0_lowR-y0_lowR*y0_lowR)"/>
+    <position name="bellows4physical_pos" z="bellows4_zpos" unit="mm"/>
+    <position name="bellows4flangeUS_pos" z="bellows4flangeUS_zpos" unit="mm"/>
+    <position name="bellows4flangeDS_pos" z="bellows4flangeDS_zpos" unit="mm"/>
 
-    <constant name="x1_lowR" value ="x0_lowR+50*tan(0.5*pi/180.)"/>
-    <constant name="y1_lowR" value ="sqrt(R0_lowR*R0_lowR-x1_lowR*x1_lowR)"/>
+    <constant name="bellows5_eps" value="0.1"/>
+    <constant name="bellows5_IR" value="500+bellows5_eps/2"/>
+	<!--<constant name="bellows5flange_length" value="48-bellows5_eps"/> -->
+    <constant name="bellows5flange_length" value="20-bellows5_eps"/>
+    <constant name="bellows5flange_Rthickness" value="29.9-bellows5_eps"/>
+    <constant name="bellows5_length" value="100"/>
+    <constant name="bellows5_Rthickness" value="28.4"/>
+    <constant name="bellows5_zpos" value="23430-4500-(11016.865-8.73/2+75+200)"/>
+    <constant name="bellows5flangeUS_zpos" value="bellows5_zpos - bellows5_length/2 - bellows5flange_length/2 - bellows5_eps/2"/>
+    <constant name="bellows5flangeDS_zpos" value="bellows5_zpos + bellows5_length/2 + bellows5flange_length/2 + bellows5_eps/2"/>
 
-    <constant name="x1_lowR1" value ="x0_lowR+25.005*2*tan(0.5*pi/180.)"/>
-    <constant name="y1_lowR1" value ="sqrt(R0_lowR*R0_lowR-x1_lowR1*x1_lowR1)"/>
+    <position name="bellows5physical_pos" z="bellows5_zpos" unit="mm"/>
+    <position name="bellows5flangeUS_pos" z="bellows5flangeUS_zpos" unit="mm"/>
+    <position name="bellows5flangeDS_pos" z="bellows5flangeDS_zpos" unit="mm"/>
 
-    <constant name="R0_highR" value ="185"/>
-    <constant name="y0_highR" value ="179.006"/>
-    <constant name="x0_highR" value ="sqrt(R0_highR*R0_highR-y0_highR*y0_highR)"/>
+    <position name="PhotonBlocker_pos" z="9258.3-4500-(11016.865-8.73/2+75+200)" unit="mm"/>
+  </define>
 
-    <constant name="x1_highR" value ="x0_highR+50*tan(0.5*pi/180.)"/>
-    <constant name="y1_highR" value ="sqrt(R0_highR*R0_highR-x1_highR*x1_highR)"/>
-    <constant name="angle1" value ="atan(x1_highR/y1_highR)"/>
-
-    <constant name="x1_highR1" value ="x0_highR+25.005*2*tan(0.5*pi/180.)"/>
-    <constant name="y1_highR1" value ="sqrt(R0_highR*R0_highR-x1_highR1*x1_highR1)"/>
-
-    <constant name="x2_lowR" value ="x0_lowR+100*tan(0.5*pi/180.)"/>
-    <constant name="y2_lowR" value ="sqrt(R0_lowR*R0_lowR-x2_lowR*x2_lowR)"/>
-
-    <constant name="x2_lowR1" value ="x0_lowR+(100+0.005/2.)*tan(0.5*pi/180.)"/>
-    <constant name="y2_lowR1" value ="sqrt(R0_lowR*R0_lowR-x2_lowR1*x2_lowR1)"/>
-
-    <constant name="x2_highR" value ="x0_highR+100*tan(0.5*pi/180.)"/>
-    <constant name="y2_highR" value ="sqrt(R0_highR*R0_highR-x2_highR*x2_highR)"/>
-    <constant name="angle2" value ="atan(x2_highR/y2_highR)"/>
-
-    <constant name="x2_highR1" value ="x0_highR+(100+0.005/2.)*tan(0.5*pi/180.)"/>
-    <constant name="y2_highR1" value ="sqrt(R0_highR*R0_highR-x2_highR1*x2_highR1)"/>
-
-   <rotation name="accep_rot1" unit="deg" x="0" y="0" z="SEPTANT*(0+0.25)"/>
-   <rotation name="accep_rot2" unit="deg" x="0" y="0" z="SEPTANT*(1+0.25)"/>
-   <rotation name="accep_rot3" unit="deg" x="0" y="0" z="SEPTANT*(2+0.25)"/>
-   <rotation name="accep_rot4" unit="deg" x="0" y="0" z="SEPTANT*(3+0.25)"/>
-   <rotation name="accep_rot5" unit="deg" x="0" y="0" z="SEPTANT*(4+0.25)"/>
-   <rotation name="accep_rot6" unit="deg" x="0" y="0" z="SEPTANT*(5+0.25)"/>
-   <rotation name="accep_rot7" unit="deg" x="0" y="0" z="SEPTANT*(6+0.25)"/>
-
-</define>
-
-&materials;
+  &materials;
 
 <solids>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeDownstream" rmax="4500" rmin="0" startphi="0" z="7865.68 + 2*950"/>
-    
-    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here - centered at union_2_center -->
 
+   <!--add bellows -->
+   <tube
+    name="bellows3physical_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows3_IR" rmax="bellows3_IR+bellows3_Rthickness" z="bellows3_length" lunit="mm"/>
+   <tube
+    name="bellows3flangeUS_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows3_IR" rmax="bellows3_IR+bellows3flange_Rthickness" z="bellows3flange_length" lunit="mm"/>
+   <tube
+    name="bellows3flangeDS_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows3_IR" rmax="bellows3_IR+bellows3flange_Rthickness" z="bellows3flange_length" lunit="mm"/>
+
+   <tube
+    name="bellows4physical_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows4_IR" rmax="bellows4_IR+bellows4_Rthickness" z="bellows4_length" lunit="mm"/>
+   <tube
+    name="bellows4flangeUS_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows4_IR" rmax="bellows4_IR+bellows4flange_Rthickness" z="bellows4flange_length" lunit="mm"/>
+   <tube
+    name="bellows4flangeDS_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows4_IR" rmax="bellows4_IR+bellows4flange_Rthickness" z="bellows4flange_length" lunit="mm"/>
+
+  <tube
+    name="solid_DSendtube"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="698.5-22.86-12.7/4" rmax="711.2-22.86-12.7/4" z="157.0228" lunit="mm"/>
+    
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSendtube_USflange">
+      <zplane rmin="698.5-22.86-12.7/4" rmax="711.2-22.86-12.7/4" z="0.0"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="715.01-22.86-12.7/4" z="15.24"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="15.24+3.81"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="15.24+3.81+25.4"/>
+    </polycone>
+    
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_LowCycleBellows_flange">
+      <zplane rmin="701.802+0.1-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="0.0"/>
+      <zplane rmin="701.802+0.1-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="31.75"/>
+    </polycone>
+    
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_LowCycleBellows">
+      <zplane rmin="698.5-22.86-12.7/4" rmax="701.802-22.86-12.7/4" z="0.0"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="701.802-22.86-12.7/4" z="88.9-3.302"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="778.002-22.86-12.7/4" z="88.9-3.302"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="778.002-22.86-12.7/4" z="88.9"/>
+      <zplane rmin="774.7-22.86-12.7/4" rmax="778.002-22.86-12.7/4" z="88.9"/>
+      <zplane rmin="774.7-22.86-12.7/4" rmax="778.002-22.86-12.7/4" z="88.9+155.448-3.302"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="778.002-22.86-12.7/4" z="88.9+155.448-3.302"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="778.002-22.86-12.7/4" z="88.9+155.448"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="701.802-22.86-12.7/4" z="88.9+155.448"/>
+      <zplane rmin="698.5-22.86-12.7/4" rmax="701.802-22.86-12.7/4" z="88.9+155.448+92.202"/>
+    </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSendtube_DSflange">
+        <zplane rmin="698.5-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="0.0"/>
+        <zplane rmin="698.5-22.86-12.7/4" rmax="825.5-22.86-12.7/4" z="25.4"/>
+        <zplane rmin="698.5-22.86-12.7/4" rmax="715.01-22.86-12.7/4" z="25.4+3.81"/>
+        <zplane rmin="698.5-22.86-12.7/4" rmax="711.2-22.86-12.7/4" z="25.4+3.81+15.24"/>
+    </polycone>
+    
+    <tube
+      name="solid_DSpipeNeck"
+      startphi="0" deltaphi="360" aunit="deg"
+      rmin="698.5-22.86-12.7/4" rmax="711.2-22.86-12.7/4" z="168.8592" lunit="mm"/>
+      
+   <!--add bellows -->
+   <tube
+    name="bellows5physical_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows5_IR" rmax="bellows5_IR+bellows5_Rthickness" z="bellows5_length" lunit="mm"/>
+   <tube
+    name="bellows5flangeUS_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows5_IR" rmax="bellows5_IR+bellows5flange_Rthickness" z="bellows5flange_length" lunit="mm"/>
+   <tube
+    name="bellows5flangeDS_solid"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="bellows5_IR" rmax="bellows5_IR+bellows5flange_Rthickness" z="bellows5flange_length" lunit="mm"/>
+
+    <box lunit="mm" name="boxDownstream_1" x="boxDSMother_width" y="boxDSMother_height" z="boxDSMother_length"/> <!-- Define the placement of the mother volume box here-->
+    <box lunit="mm" name="boxDownstream_2" x="boxDSMother_width + 1" y="boxDSMother_height + 1" z="1115"/>
+    <box lunit="mm" name="boxDownstream_3" x="boxDSMother_width + 1" y="boxDSMother_height + 1" z="302+400"/>
+    <box lunit="mm" name="boxDownstream_4" x="boxDSMother_width + 1" y="180" z="boxDSMother_length+1"/>
+
+    <subtraction name="boxDownstream_sub1">
+      <first ref="boxDownstream_1"/>
+      <second ref="boxDownstream_2"/>
+      <positionref ref="boxDownstream_center"/>
+    </subtraction>
+
+    <subtraction name="boxDownstream_sub2">
+      <first ref="boxDownstream_sub1"/>
+      <second ref="boxDownstream_3"/>
+      <position name="boxDownstream_sub2_pos" unit="mm" x="0" y="0" z="19332.69 + 153 - 11287.5 - 400/2 - 2" />
+    </subtraction>
+    
+    <subtraction name="boxDownstream">
+      <first ref="boxDownstream_sub2"/>
+      <second ref="boxDownstream_4"/>
+      <position name="boxDownstream_pos" unit="mm" x="0" y="boxDSMother_height/2-180/2" z="0" />
+    </subtraction>
+    
     <!--this is one bounce photon shield -->
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SubCoil1EpoxyShield1_solid"> 
       <zplane rmin="32.5" rmax="38.5" z="0"/> 
       <zplane rmin="32.6715" rmax="38.6715" z="51.45"/> 
     </polycone>
 
-    <cone aunit="deg" deltaphi="360" lunit="mm" name="pdscyl" rmax1="PCOLL2_R4_U" rmax2="PCOLL2_R4_D" rmin1="PCOLL2_R1_U" rmin2="PCOLL2_R1_D" startphi="0" z="50"/>
-
-    <arb8 name="Col4_accep1_s1" v1x="x0_lowR" v1y="y0_lowR" 
-            v2x="-x0_lowR" v2y="y0_lowR" 
-            v3x="-18.5" v3y="85" 
-            v4x="18.5" v4y="85" 
-            v5x="x0_lowR" v5y="y0_lowR" 
-            v6x="-x0_lowR" v6y="y0_lowR" 
-            v7x="-18.5" v7y="85" 
-            v8x="18.5" v8y="85" 
-            dz="25" lunit="mm"/>
-
-    <arb8 name="Col4_accep1_s2" v1x="18.5" v1y="85" 
-            v2x="-18.5" v2y="85" 
-            v3x="-x0_highR" v3y="y0_highR" 
-            v4x="x0_highR" v4y="y0_highR" 
-            v5x="18.5" v5y="85" 
-            v6x="-18.5" v6y="85" 
-            v7x="-x0_highR" v7y="y0_highR" 
-            v8x="x0_highR" v8y="y0_highR" 
-            dz="25" lunit="mm"/>
-
-    <arb8 name="cut_lowerR_box1" v1x="30" v1y="40" 
-            v2x="-30" v2y="40" 
-            v3x="-30" v3y="y0_lowR" 
-            v4x="30" v4y="y0_lowR" 
-            v5x="30" v5y="40" 
-            v6x="-30" v6y="40" 
-            v7x="-30" v7y="y0_lowR" 
-            v8x="30" v8y="y0_lowR" 
-                dz="25.005" lunit="mm"/>
-    <cone aunit="deg" deltaphi="30" lunit="mm" name="cut_lowerR_tube1" rmax1="R0_lowR" rmin1="45" rmax2="R0_lowR" rmin2="45" startphi="75" z="50"/>
-
-    <arb8 name="cut_largeR_box1" v1x="90" v1y="150" 
-            v2x="-90" v2y="150" 
-            v3x="-90" v3y="y0_highR" 
-            v4x="90" v4y="y0_highR" 
-            v5x="90" v5y="150" 
-            v6x="-90" v6y="150" 
-            v7x="-90" v7y="y0_highR" 
-            v8x="90" v8y="y0_highR" 
-            dz="25.005" lunit="mm"/>
-
-    <cone aunit="deg" deltaphi="50" lunit="mm" name="cut_largeR_tube1" rmax1="R0_highR" rmin1="175" rmax2="R0_highR" rmin2="175" startphi="65" z="50"/>
-
-    <subtraction name ="lowerR_accep1_S">
-        <first ref="cut_lowerR_tube1"/>
-        <second ref="cut_lowerR_box1"/>
-    </subtraction>
-
-    <subtraction name ="largeR_accep1_S">
-        <first ref="cut_largeR_tube1"/>
-        <second ref="cut_largeR_box1"/>
-    </subtraction>
-
-<arb8 name="Col4_accep2_s1" v1x="x0_lowR" v1y="y0_lowR" 
-        v2x="-x0_lowR" v2y="y0_lowR" 
-        v3x="-18.5" v3y="85" 
-        v4x="18.5" v4y="85" 
-        v5x="x1_lowR" v5y="y1_lowR" 
-        v6x="-x1_lowR" v6y="y1_lowR" 
-        v7x="-(18.5+50*tan(0.5*pi/180.))" v7y="85" 
-        v8x="18.5+50*tan(0.5*pi/180.)" v8y="85" 
-        dz="25" lunit="mm"/>
-
-    <arb8 name="Col4_accep2_s2" v1x="18.5" v1y="85" 
-            v2x="-18.5" v2y="85" 
-            v3x="-x0_highR" v3y="y0_highR" 
-            v4x="x0_highR" v4y="y0_highR" 
-            v5x="18.5+50*tan(0.5*pi/180.)" v5y="85" 
-            v6x="-(18.5+50*tan(0.5*pi/180.))" v6y="85" 
-            v7x="-x1_highR-50*tan(7.6*pi/180.)*sin(angle1)" v7y="y1_highR+50*tan(7.6*pi/180.)*cos(angle1)" 
-            v8x="x1_highR+50*tan(7.6*pi/180.)*sin(angle1)" v8y="y1_highR+50*tan(7.6*pi/180.)*cos(angle1)" 
-            dz="25" lunit="mm"/>
-
-    <arb8 name="cut_lowerR_box2" v1x="30" v1y="40" 
-            v2x="-30" v2y="40" 
-            v3x="-30" v3y="y0_lowR" 
-            v4x="30" v4y="y0_lowR" 
-            v5x="30" v5y="40" 
-            v6x="-30" v6y="40" 
-            v7x="-30" v7y="y1_lowR1" 
-            v8x="30" v8y="y1_lowR1" 
-            dz="25.005" lunit="mm"/>
-
-    <cone aunit="deg" deltaphi="30" lunit="mm" name="cut_lowerR_tube2" rmax1="R0_lowR" rmin1="45" rmax2="R0_lowR" rmin2="45" startphi="75" z="50"/>
-
-    <arb8 name="cut_largeR_box2" v1x="90" v1y="150" 
-            v2x="-90" v2y="150" 
-            v3x="-90" v3y="y0_highR" 
-            v4x="90" v4y="y0_highR" 
-            v5x="90" v5y="150" 
-            v6x="-90" v6y="150" 
-            v7x="-90" v7y="y1_highR1+50*tan(7.6*pi/180)*cos(angle1)" 
-            v8x="90" v8y="y1_highR1+50*tan(7.6*pi/180)*cos(angle1)" 
-            dz="25.005" lunit="mm"/>
-
-    <cone aunit="deg" deltaphi="50" lunit="mm" name="cut_largeR_tube2" rmax1="R0_highR" rmin1="175" rmax2="R0_highR+50*tan(7.6*pi/180.)" rmin2="175" startphi="65" z="50"/>
-
-    <subtraction name ="lowerR_accep2_S">
-        <first ref="cut_lowerR_tube2"/>
-        <second ref="cut_lowerR_box2"/> 
-    </subtraction>
-
-    <subtraction name ="largeR_accep2_S">
-        <first ref="cut_largeR_tube2"/>
-        <second ref="cut_largeR_box2"/> 
-    </subtraction>
-
-
-    <arb8 name="Col4_accep3_s1" v1x="x1_lowR" v1y="y1_lowR" 
-            v2x="-x1_lowR" v2y="y1_lowR" 
-            v3x="-18.5-50*tan(0.5*pi/180.)" v3y="85" 
-            v4x="18.5+50*tan(0.5*pi/180.)" v4y="85" 
-            v5x="x2_lowR" v5y="y2_lowR" 
-            v6x="-x2_lowR" v6y="y2_lowR" 
-            v7x="-(18.5+100*tan(0.5*pi/180.))" v7y="85" 
-            v8x="18.5+100*tan(0.5*pi/180.)" v8y="85" 
-            dz="25" lunit="mm"/>
-
-    <arb8 name="Col4_accep3_s2" v1x="18.5+50*tan(0.5*pi/180.)" v1y="85" 
-            v2x="-18.5-50*tan(0.5*pi/180.)" v2y="85" 
-            v3x="-x1_highR-50*tan(7.6*pi/180.)*sin(angle1)" v3y="y1_highR+50*tan(7.6*pi/180.)*cos(angle1)" 
-            v4x="x1_highR+50*tan(7.6*pi/180.)*sin(angle1)" v4y="y1_highR+50*tan(7.6*pi/180.)*cos(angle1)" 
-            v5x="18.5+100*tan(0.5*pi/180.)" v5y="85" 
-            v6x="-(18.5+100*tan(0.5*pi/180.))" v6y="85" 
-            v7x="-x2_highR-100*tan(7.6*pi/180.)*sin(angle2)" v7y="y2_highR+100*tan(7.6*pi/180.)*cos(angle2)" 
-            v8x="x2_highR+100*tan(7.6*pi/180.)*sin(angle2)" v8y="y2_highR+100*tan(7.6*pi/180.)*cos(angle2)" 
-            dz="25" lunit="mm"/>
-
-    <arb8 name="cut_lowerR_box3" v1x="30" v1y="40" 
-            v2x="-30" v2y="40" 
-            v3x="-30" v3y="y1_lowR1" 
-            v4x="30" v4y="y1_lowR1" 
-            v5x="30" v5y="40" 
-            v6x="-30" v6y="40" 
-            v7x="-30" v7y="y2_lowR1" 
-            v8x="30" v8y="y2_lowR1" 
-                dz="25.005" lunit="mm"/>
-    <cone aunit="deg" deltaphi="30" lunit="mm" name="cut_lowerR_tube3" rmax1="R0_lowR" rmin1="45" rmax2="R0_lowR" rmin2="45" startphi="75" z="50"/>
-
-    <arb8 name="cut_largeR_box3" v1x="90" v1y="150" 
-            v2x="-90" v2y="150" 
-            v3x="-90" v3y="y1_highR1+50*tan(7.6*pi/180)*cos(angle1)" 
-            v4x="90" v4y="y1_highR1+50*tan(7.6*pi/180)*cos(angle1)" 
-            v5x="90" v5y="150" 
-            v6x="-90" v6y="150" 
-            v7x="-90" v7y="y2_highR1+100*tan(7.6*pi/180)*cos(angle2)" 
-            v8x="90" v8y="y2_highR1+100*tan(7.6*pi/180)*cos(angle2)" 
-            dz="25.005" lunit="mm"/>
-
-    <cone aunit="deg" deltaphi="50" lunit="mm" name="cut_largeR_tube3" rmax1="R0_highR+50*tan(7.6*pi/180.)" rmin1="175" rmax2="R0_highR+100*tan(7.6*pi/180.)" rmin2="175" startphi="65" z="50"/>
-
-    <subtraction name ="lowerR_accep3_S">
-        <first ref="cut_lowerR_tube3"/>
-        <second ref="cut_lowerR_box3"/>
-    </subtraction>
-
-    <subtraction name ="largeR_accep3_S">
-        <first ref="cut_largeR_tube3"/>
-        <second ref="cut_largeR_box3"/>
-    </subtraction>
-
-    <!--concrete shield -->
-    <box lunit="mm" name="boxDSConcreteShield1_solid_1" x="DSConcreteShield1_height" y="DSConcreteShield1_height" z="DSConcreteShield1_length"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="DSConcreteShield1_beamTube_solid" rmax="boxDSShieldColl1_inner_rmax" rmin="0" startphi="0" z="DSConcreteShield1_length+10"/>
-
-    <subtraction name ="boxDSConcreteShield1_solid">
-      <first ref="boxDSConcreteShield1_solid_1"/>
-      <second ref="DSConcreteShield1_beamTube_solid"/>
-      <positionref ref="boxDSConcreteShield1_trans2" />
-    </subtraction>    
-
-    <!-- Lead shielding solids -->
-    <box lunit="mm" name="PbWall_solid" x="PbWall_width" y="PbWall_height" z="PbWall_length"/>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="PbWall_accep_solid">
-      <zplane rmin="0" rmax="238.35" z="0"/>
-      <zplane rmin="0" rmax="238.35" z="PbWall_length/2."/>
-      <zplane rmin="0" rmax="238.35+125*tan(8*pi/180.)" z="PbWall_length"/>
-    </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Beampipe_under_PbWall_solid">
-      <zplane rmin="230" rmax="236.35" z="0"/>
-      <zplane rmin="230" rmax="236.35" z="PbWall_length/2."/>
-      <zplane rmin="230+125*tan(8*pi/180.)" rmax="236.35+125*tan(8*pi/180.)" z="PbWall_length"/>
-    </polycone>
-
     <!--collar solids -->
-    <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="600" rmax1="750" rmin2="600" rmax2="750" z="100+50"/>
-    <cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="952" rmax1="1200" rmin2="952" rmax2="1200" z="100+50"/>
-
-	    <!-- Lintels solid -->
-    <xtru name="solidLintel1" lunit="mm">
-     <twoDimVertex x="107" y="160" />
-     <twoDimVertex x="107" y="-160" />
-     <twoDimVertex x="-107" y="-130" />
-     <twoDimVertex x="-107" y="130" />
-     <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
-     <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
-    </xtru>
-    
-    <xtru name="solidLintel2" lunit="mm">
-     <twoDimVertex x="107" y="160" />
-     <twoDimVertex x="107" y="-160" />
-     <twoDimVertex x="-107" y="-130" />
-     <twoDimVertex x="-107" y="130" />
-     <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
-     <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
-    </xtru>
-    
-    <xtru name="solidLintel3" lunit="mm">
-     <twoDimVertex x="107" y="160" />
-     <twoDimVertex x="107" y="-160" />
-     <twoDimVertex x="-107" y="-130" />
-     <twoDimVertex x="-107" y="130" />
-     <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
-     <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
-    </xtru>
-    
-    <xtru name="solidLintel4" lunit="mm">
-     <twoDimVertex x="107" y="160" />
-     <twoDimVertex x="107" y="-160" />
-     <twoDimVertex x="-107" y="-130" />
-     <twoDimVertex x="-107" y="130" />
-     <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
-     <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
-    </xtru>
-    
-    <xtru name="solidLintel5" lunit="mm">
-     <twoDimVertex x="107" y="160" />
-     <twoDimVertex x="107" y="-160" />
-     <twoDimVertex x="-107" y="-130" />
-     <twoDimVertex x="-107" y="130" />
-     <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
-     <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
-    </xtru>
-    
-    <xtru name="solidLintel6" lunit="mm">
-     <twoDimVertex x="107" y="160" />
-     <twoDimVertex x="107" y="-160" />
-     <twoDimVertex x="-107" y="-130" />
-     <twoDimVertex x="-107" y="130" />
-     <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
-     <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
-    </xtru>
-    
-    <xtru name="solidLintel7" lunit="mm">
-     <twoDimVertex x="107" y="160" />
-     <twoDimVertex x="107" y="-160" />
-     <twoDimVertex x="-107" y="-130" />
-     <twoDimVertex x="-107" y="130" />
-     <section zOrder="1" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1" />
-     <section zOrder="2" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1" />
-    </xtru>
+    <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="612" rmax1="750" rmin2="621" rmax2="750" z="100+50"/>
+    <!--<cone name="solidCollar2" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="1013" rmax1="1315" rmin2="1022" rmax2="1315" z="100+50"/>-->
 
     <!-- drift pipe -->
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Driftpipe">
-      <zplane rmin="600" rmax="1262.7" z="0.0"/>
-      <zplane rmin="600" rmax="1262.7" z="38.1"/>
-      <zplane rmin="1250" rmax="1262.7" z="38.1"/>
-      <zplane rmin="1250" rmax="1262.7" z="6352.6"/>
-      <zplane rmin="952" rmax="1262.7" z="6352.6"/>
-      <zplane rmin="1100.0" rmax="1300.0" z="6352.6"/>
-      <zplane rmin="1100.0" rmax="1300.0" z="6378.0"/>
+      <zplane rmin="688.34" rmax="1272.286" z="0.0"/>
+      <zplane rmin="688.34" rmax="1272.286" z="22.098"/>
+      <zplane rmin="1249.934" rmax="1272.286" z="22.098"/>
+      <zplane rmin="1249.934" rmax="1272.286" z="5974.08"/>
     </polycone>
 
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DriftPipe_VacuumFlg">
+      <zplane rmin="1272.286+1" rmax="1310.386" z="0.0"/>
+      <zplane rmin="1272.286+1" rmax="1322.324" z="96.012"/>
+      <zplane rmin="1272.286+1" rmax="1397" z="101.6"/>
+      <zplane rmin="1272.286" rmax="1397" z="101.6+63.5"/>
+    </polycone>
+    
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solDSTracker">
       <zplane rmin="2050" rmax="2060" z="8025-DOFFSET"/>
       <zplane rmin="2050" rmax="2060" z="23990-DOFFSET"/>
     </polycone>
 
-    <!--part of DS beampipe March 26 2020-->
+    <!--part of DS beampipe October 15 2021-->
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSwindow">
-      <zplane rmin="504.76" rmax="507.14125" z="0"/>
-      <zplane rmin="988" rmax="990.38125" z="280.4"/><!-- These numbers are from DK's design -->
+      <zplane rmin="520.954" rmax="521.97" z="0"/>
+      <zplane rmin="1067.562" rmax="1068.578" z="317.246"/><!-- These numbers are from DK's design -->
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSwindow_flange">
-      <zplane rmin="978.75" rmax="1300.0" z="0"/>
-      <zplane rmin="978.75+55.0" rmax="1300.0" z="31.75"/><!-- These numbers are from DK's design -->
+      <zplane rmin="1011.428" rmax="1397.0" z="0"/>
+      <zplane rmin="1067.562" rmax="1397.0" z="63.5"/><!-- These numbers are from DK's design -->
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe1">
-      <zplane rmin="500" rmax="504.7625" z="0.0"/>
-      <zplane rmin="500" rmax="504.7625" z="234.0"/><!-- These numbers are from DK's design -->
+      <zplane rmin="500.126" rmax="504.698" z="0.0"/>
+      <zplane rmin="500.126" rmax="504.698" z="149.098"/><!-- These numbers are from DK's design -->
+    </polycone>
+    
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe_flange"> <!--?? will be fixed?? -->
+      <zplane rmin="501.904" rmax="501.904" z="0.0"/>
+      <zplane rmin="500.126" rmax="508.54" z="3.556"/>
+      <zplane rmin="510.54-4.572" rmax="510.54" z="5.08"/>
+      <zplane rmin="509.778-4.572" rmax="509.778" z="6.858"/>
+      <zplane rmin="510.286-4.572" rmax="510.286" z="9.652"/>
+      <zplane rmin="500.126" rmax="500.126+4.572" z="10.922"/>
+      <zplane rmin="521.462-4.572" rmax="521.462" z="16.002"/>
+      <zplane rmin="519.176" rmax="519.176+4.572" z="21.844"/>
+      <zplane rmin="525.526-4.572" rmax="525.526" z="22.86"/>
+      <zplane rmin="520.7" rmax="520.7+4.572" z="24.638"/>
+      <zplane rmin="525.526-4.572" rmax="525.526" z="44.958"/>
+      <zplane rmin="520.7" rmax="520.7+4.572" z="50.038"/>
+      <zplane rmin="517.398-4.572" rmax="517.398" z="53.086"/>
+      <zplane rmin="504.698-4.572" rmax="504.698" z="56.134"/>
+      <zplane rmin="500.126" rmax="504.698" z="78.486"/>
     </polycone>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe1_flange">
-      <zplane rmin="497.0" rmax="499.5" z="0.0"/>
-      <zplane rmin="497.0" rmax="499.5" z="5"/>
-      <zplane rmin="497.0" rmax="505.0" z="5"/>
-      <zplane rmin="497.0" rmax="505.0" z="5+8"/>
-      <zplane rmin="497.0" rmax="529.0" z="5+8"/>
-      <zplane rmin="497.0" rmax="529.0" z="5+8+12"/>
-    </polycone>
+    <cone name="PhotonBlocker_solid1" lunit="mm" aunit="rad" startphi="-0.35" deltaphi="0.7" rmin1="57.5" rmax1="sqrt(59.98*59.98+15.57*15.57)" rmin2="57.5" rmax2="sqrt(59.98*59.98+15.57*15.57)" z="101.7"/>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe1_bellow">
-      <zplane rmin="500.0" rmax="529.0" z="0.0"/>
-      <zplane rmin="500.0" rmax="529.0" z="6.35"/>
-      <zplane rmin="500.0" rmax="506.35" z="6.35"/>
-      <zplane rmin="500.0" rmax="506.35" z="6.35+27.3"/>
-      <zplane rmin="500.0" rmax="529.0" z="6.35+27.3"/>
-      <zplane rmin="500.0" rmax="529.0" z="6.35+27.3+6.35"/>
-      <zplane rmin="500.0" rmax="528.6" z="6.35+27.3+6.35"/>
-      <zplane rmin="500.0" rmax="528.6" z="6.35+27.3+6.35+100"/>
-      <zplane rmin="500.0" rmax="529.76" z="6.35+27.3+6.35+100"/>
-      <zplane rmin="500.1206" rmax="529.76" z="6.35+27.3+6.35+100+6.35"/>
-      <zplane rmin="500.1206" rmax="506.5" z="6.35+27.3+6.35+100+6.35"/>
-      <zplane rmin="500.6394" rmax="506.5" z="6.35+27.3+6.35+100+6.35+27.3"/>
-      <zplane rmin="500.6394" rmax="529.76" z="6.35+27.3+6.35+100+6.35+27.3"/>
-      <zplane rmin="500.76" rmax="529.76" z="6.35+27.3+6.35+100+6.35+27.3+6.35"/>
-    </polycone>
+   <arb8 name="PhotonBlocker_solid2"
+    v1x="59.98" v1y="15.57" 
+    v2x="108.96" v2y="27.28" 
+    v3x="108.96" v3y="-27.28" 
+    v4x="59.98" v4y="-15.57" 
+    v5x="59.98" v5y="15.57" 
+    v6x="108.96" v6y="27.28" 
+    v7x="108.96" v7y="-27.28" 
+    v8x="59.98" v8y="-15.57" 
+    dz="50.8" lunit="mm"/>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_USplate">
-      <zplane rmin="500.76" rmax="529.75" z="0.0"/>
-      <zplane rmin="501.1608" rmax="529.75" z="12"/>
-      <zplane rmin="501.1608" rmax="505.565" z="12"/>
-      <zplane rmin="501.428" rmax="505.565" z="12+8"/>
-      <zplane rmin="501.428" rmax="504.925" z="12+8"/>
-      <zplane rmin="501.595" rmax="504.925" z="12+8+5"/>
-    </polycone>
+   <arb8 name="PhotonBlocker_solid6"
+    v1x="108.98" v1y="27.28" 
+    v2x="140.11" v2y="31.73" 
+    v3x="140.11" v3y="-31.73" 
+    v4x="108.98" v4y="-27.28" 
+    v5x="108.98" v5y="27.28" 
+    v6x="140.11" v6y="31.73" 
+    v7x="140.11" v7y="-31.73" 
+    v8x="108.98" v8y="-27.28" 
+    dz="50.8" lunit="mm"/>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_1">
-      <zplane rmin="504.926" rmax="509.5375" z="0.0"/>
-      <zplane rmin="506.1201" rmax="510.8826" z="36"/>
-    </polycone>
+   <subtraction name="PhotonBlocker_solid3">
+     <first ref="PhotonBlocker_solid2"/>
+     <second ref="PhotonBlocker_solid1"/>
+   </subtraction>
 
+   <cone name="PhotonBlocker_solid4" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="40.0" rmax1="sqrt(59.98*59.98+15.57*15.57)" rmin2="40.0" rmax2="sqrt(59.98*59.98+15.57*15.57)" z="101.6"/>
 
-</solids>
+   <cone name="PhotonBlocker_solid5" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="0" rmax1="145" rmin2="0" rmax2="145" z="101.6"/>
 
-<structure>
+ 
+  </solids>
+
+  <structure>
     <volume name="logicDSTracker">
       <materialref ref="G4_Fe"/>
       <solidref ref="solDSTracker"/>
@@ -464,459 +293,16 @@
       <auxiliary auxtype="DetNo" auxvalue="92"/>
     </volume>
 
-   <volume name="logic_lowerR_accep1">
-      <materialref ref="CW95"/>
-      <solidref ref="lowerR_accep1_S"/>
-      <auxiliary auxtype="Color" auxvalue="gray"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-
-    <volume name="logic_largeR_accep1">
-      <materialref ref="Vacuum"/>
-      <solidref ref="largeR_accep1_S"/>
-      <auxiliary auxtype="Color" auxvalue="Yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-
-    <volume name="logic_Col4_accep11">
-      <materialref ref="Vacuum"/>
-      <solidref ref="Col4_accep1_s1"/>
-      <auxiliary auxtype="Color" auxvalue="Yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <physvol name="phy_lowerR_accep1">
-        <volumeref ref="logic_lowerR_accep1"/>
-      </physvol>
-    </volume>
-
-    <volume name="logic_Col4_accep12">
-      <materialref ref="Vacuum"/>
-      <solidref ref="Col4_accep1_s2"/>
-      <auxiliary auxtype="Color" auxvalue="Yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-
-    <volume name="logic_Col4_accep1">
-      <materialref ref="CW95"/>
-      <solidref ref="pdscyl"/>
-      <auxiliary auxtype="Color" auxvalue="gray"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2004"/>
-      <physvol name="phy_lowerR_accep11">
-        <volumeref ref="logic_Col4_accep11"/>
-        <rotationref ref="accep_rot1"/>
-      </physvol>
-      <physvol name="phy_Col4_accep1_1">
-        <volumeref ref="logic_Col4_accep12"/>
-        <rotationref ref="accep_rot1"/>
-      </physvol>
-      <physvol name="phy_largeR_accep11">
-        <volumeref ref="logic_largeR_accep1"/>
-        <rotationref ref="accep_rot1"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep12">
-        <volumeref ref="logic_Col4_accep11"/>
-        <rotationref ref="accep_rot2"/>
-      </physvol>
-      <physvol name="phy_Col4_accep1_2">
-        <volumeref ref="logic_Col4_accep12"/>
-        <rotationref ref="accep_rot2"/>
-      </physvol>
-      <physvol name="phy_largeR_accep12">
-        <volumeref ref="logic_largeR_accep1"/>
-        <rotationref ref="accep_rot2"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep13">
-        <volumeref ref="logic_Col4_accep11"/>
-        <rotationref ref="accep_rot3"/>
-      </physvol>
-      <physvol name="phy_Col4_accep1_3">
-        <volumeref ref="logic_Col4_accep12"/>
-        <rotationref ref="accep_rot3"/>
-      </physvol>
-      <physvol name="phy_largeR_accep13">
-        <volumeref ref="logic_largeR_accep1"/>
-        <rotationref ref="accep_rot3"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep14">
-        <volumeref ref="logic_Col4_accep11"/>
-        <rotationref ref="accep_rot4"/>
-      </physvol>
-      <physvol name="phy_Col4_accep1_4">
-        <volumeref ref="logic_Col4_accep12"/>
-        <rotationref ref="accep_rot4"/>
-      </physvol>
-      <physvol name="phy_largeR_accep14">
-        <volumeref ref="logic_largeR_accep1"/>
-        <rotationref ref="accep_rot4"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep15">
-        <volumeref ref="logic_Col4_accep11"/>
-        <rotationref ref="accep_rot5"/>
-      </physvol>
-      <physvol name="phy_Col4_accep1_5">
-        <volumeref ref="logic_Col4_accep12"/>
-        <rotationref ref="accep_rot5"/>
-      </physvol>
-      <physvol name="phy_largeR_accep15">
-        <volumeref ref="logic_largeR_accep1"/>
-        <rotationref ref="accep_rot5"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep16">
-        <volumeref ref="logic_Col4_accep11"/>
-        <rotationref ref="accep_rot6"/>
-      </physvol>
-      <physvol name="phy_Col4_accep1_6">
-        <volumeref ref="logic_Col4_accep12"/>
-        <rotationref ref="accep_rot6"/>
-      </physvol>
-      <physvol name="phy_largeR_accep16">
-        <volumeref ref="logic_largeR_accep1"/>
-        <rotationref ref="accep_rot6"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep17">
-        <volumeref ref="logic_Col4_accep11"/>
-        <rotationref ref="accep_rot7"/>
-      </physvol>
-      <physvol name="phy_Col4_accep1_7">
-        <volumeref ref="logic_Col4_accep12"/>
-        <rotationref ref="accep_rot7"/>
-      </physvol>
-      <physvol name="phy_largeR_accep17">
-        <volumeref ref="logic_largeR_accep1"/>
-        <rotationref ref="accep_rot7"/>
-      </physvol>
-    </volume>
- 
-<!-- Second part of Collimator 4 acceptance -->
-    <volume name="logic_lowerR_accep2">
-      <materialref ref="CW95"/>
-      <solidref ref="lowerR_accep2_S"/>
-      <auxiliary auxtype="Color" auxvalue="gray"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-
-    <volume name="logic_largeR_accep2">
-      <materialref ref="Vacuum"/>
-      <solidref ref="largeR_accep2_S"/>
-      <auxiliary auxtype="Color" auxvalue="Yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-
-    <volume name="logic_Col4_accep21">
-      <materialref ref="Vacuum"/>
-      <solidref ref="Col4_accep2_s1"/>
-      <auxiliary auxtype="Color" auxvalue="yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <physvol name="phy_lowerR_accep2">
-                   <volumeref ref="logic_lowerR_accep2"/>
-      </physvol>
-    </volume>
-
-    <volume name="logic_Col4_accep22">
-      <materialref ref="Vacuum"/>
-      <solidref ref="Col4_accep2_s2"/>
-      <auxiliary auxtype="Color" auxvalue="Yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-
-    <volume name="logic_Col4_accep2">
-      <materialref ref="CW95"/>
-      <solidref ref="pdscyl"/>
-      <auxiliary auxtype="Color" auxvalue="gray"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2004"/>
-      <physvol name="phy_lowerR_accep21">
-        <volumeref ref="logic_Col4_accep21"/>
-        <rotationref ref="accep_rot1"/>
-      </physvol>
-      <physvol name="phy_Col4_accep2_1">
-        <volumeref ref="logic_Col4_accep22"/>
-        <rotationref ref="accep_rot1"/>
-      </physvol>
-      <physvol name="phy_largeR_accep21">
-        <volumeref ref="logic_largeR_accep2"/>
-        <rotationref ref="accep_rot1"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep22">
-        <volumeref ref="logic_Col4_accep21"/>
-        <rotationref ref="accep_rot2"/>
-      </physvol>
-      <physvol name="phy_Col4_accep2_2">
-        <volumeref ref="logic_Col4_accep22"/>
-        <rotationref ref="accep_rot2"/>
-      </physvol>
-      <physvol name="phy_largeR_accep22">
-        <volumeref ref="logic_largeR_accep2"/>
-        <rotationref ref="accep_rot2"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep23">
-        <volumeref ref="logic_Col4_accep11"/>
-        <rotationref ref="accep_rot3"/>
-      </physvol>
-      <physvol name="phy_Col4_accep2_3">
-        <volumeref ref="logic_Col4_accep22"/>
-        <rotationref ref="accep_rot3"/>
-      </physvol>
-      <physvol name="phy_largeR_accep23">
-        <volumeref ref="logic_largeR_accep2"/>
-        <rotationref ref="accep_rot3"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep24">
-        <volumeref ref="logic_Col4_accep21"/>
-        <rotationref ref="accep_rot4"/>
-      </physvol>
-      <physvol name="phy_Col4_accep2_4">
-        <volumeref ref="logic_Col4_accep22"/>
-        <rotationref ref="accep_rot4"/>
-      </physvol>
-      <physvol name="phy_largeR_accep24">
-        <volumeref ref="logic_largeR_accep2"/>
-        <rotationref ref="accep_rot4"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep25">
-        <volumeref ref="logic_Col4_accep21"/>
-        <rotationref ref="accep_rot5"/>
-      </physvol>
-      <physvol name="phy_Col4_accep2_5">
-        <volumeref ref="logic_Col4_accep22"/>
-        <rotationref ref="accep_rot5"/>
-      </physvol>
-      <physvol name="phy_largeR_accep25">
-        <volumeref ref="logic_largeR_accep2"/>
-        <rotationref ref="accep_rot5"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep26">
-        <volumeref ref="logic_Col4_accep21"/>
-        <rotationref ref="accep_rot6"/>
-      </physvol>
-      <physvol name="phy_Col4_accep2_6">
-        <volumeref ref="logic_Col4_accep22"/>
-        <rotationref ref="accep_rot6"/>
-      </physvol>
-      <physvol name="phy_largeR_accep26">
-        <volumeref ref="logic_largeR_accep2"/>
-        <rotationref ref="accep_rot6"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep27">
-        <volumeref ref="logic_Col4_accep21"/>
-        <rotationref ref="accep_rot7"/>
-      </physvol>
-      <physvol name="phy_Col4_accep2_7">
-        <volumeref ref="logic_Col4_accep22"/>
-        <rotationref ref="accep_rot7"/>
-      </physvol>
-      <physvol name="phy_largeR_accep27">
-        <volumeref ref="logic_largeR_accep2"/>
-        <rotationref ref="accep_rot7"/>
-      </physvol>
-    </volume>
- 
-<!-- third part of Collimator 4 acceptance -->
-    <volume name="logic_lowerR_accep3">
-      <materialref ref="Copper"/>
-      <solidref ref="lowerR_accep3_S"/>
-      <auxiliary auxtype="Color" auxvalue="magenta"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-
-    <volume name="logic_largeR_accep3">
-      <materialref ref="Vacuum"/>
-      <solidref ref="largeR_accep3_S"/>
-      <auxiliary auxtype="Color" auxvalue="Yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-
-    <volume name="logic_Col4_accep31">
-      <materialref ref="Vacuum"/>
-      <solidref ref="Col4_accep3_s1"/>
-      <auxiliary auxtype="Color" auxvalue="yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <physvol name="phy_lowerR_accep3">
-                   <volumeref ref="logic_lowerR_accep3"/>
-      </physvol>
-    </volume>
-
-    <volume name="logic_Col4_accep32">
-      <materialref ref="Vacuum"/>
-      <solidref ref="Col4_accep3_s2"/>
-      <auxiliary auxtype="Color" auxvalue="Yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-    </volume>
-
-    <volume name="logic_Col4_accep3">
-      <materialref ref="Copper"/>
-      <solidref ref="pdscyl"/>
-      <auxiliary auxtype="Color" auxvalue="magenta"/>
-      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="2004"/>
-      <physvol name="phy_lowerR_accep31">
-        <volumeref ref="logic_Col4_accep31"/>
-        <rotationref ref="accep_rot1"/>
-      </physvol>
-      <physvol name="phy_Col4_accep3_1">
-        <volumeref ref="logic_Col4_accep32"/>
-        <rotationref ref="accep_rot1"/>
-      </physvol>
-      <physvol name="phy_largeR_accep31">
-        <volumeref ref="logic_largeR_accep3"/>
-        <rotationref ref="accep_rot1"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep32">
-        <volumeref ref="logic_Col4_accep31"/>
-        <rotationref ref="accep_rot2"/>
-      </physvol>
-      <physvol name="phy_Col4_accep3_2">
-        <volumeref ref="logic_Col4_accep32"/>
-        <rotationref ref="accep_rot2"/>
-      </physvol>
-      <physvol name="phy_largeR_accep32">
-        <volumeref ref="logic_largeR_accep3"/>
-        <rotationref ref="accep_rot2"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep33">
-        <volumeref ref="logic_Col4_accep31"/>
-        <rotationref ref="accep_rot3"/>
-      </physvol>
-      <physvol name="phy_Col4_accep3_3">
-        <volumeref ref="logic_Col4_accep32"/>
-        <rotationref ref="accep_rot3"/>
-      </physvol>
-      <physvol name="phy_largeR_accep33">
-        <volumeref ref="logic_largeR_accep3"/>
-        <rotationref ref="accep_rot3"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep34">
-        <volumeref ref="logic_Col4_accep31"/>
-        <rotationref ref="accep_rot4"/>
-      </physvol>
-      <physvol name="phy_Col4_accep3_4">
-        <volumeref ref="logic_Col4_accep32"/>
-        <rotationref ref="accep_rot4"/>
-      </physvol>
-      <physvol name="phy_largeR_accep34">
-        <volumeref ref="logic_largeR_accep3"/>
-        <rotationref ref="accep_rot4"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep35">
-        <volumeref ref="logic_Col4_accep31"/>
-        <rotationref ref="accep_rot5"/>
-      </physvol>
-      <physvol name="phy_Col4_accep3_5">
-        <volumeref ref="logic_Col4_accep32"/>
-        <rotationref ref="accep_rot5"/>
-      </physvol>
-      <physvol name="phy_largeR_accep35">
-        <volumeref ref="logic_largeR_accep3"/>
-        <rotationref ref="accep_rot5"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep36">
-        <volumeref ref="logic_Col4_accep31"/>
-        <rotationref ref="accep_rot6"/>
-      </physvol>
-      <physvol name="phy_Col4_accep3_6">
-        <volumeref ref="logic_Col4_accep32"/>
-        <rotationref ref="accep_rot6"/>
-      </physvol>
-      <physvol name="phy_largeR_accep36">
-        <volumeref ref="logic_largeR_accep3"/>
-        <rotationref ref="accep_rot6"/>
-      </physvol>
-      <physvol name="phy_lowerR_accep37">
-        <volumeref ref="logic_Col4_accep31"/>
-        <rotationref ref="accep_rot7"/>
-      </physvol>
-      <physvol name="phy_Col4_accep3_7">
-        <volumeref ref="logic_Col4_accep32"/>
-        <rotationref ref="accep_rot7"/>
-      </physvol>
-      <physvol name="phy_largeR_accep37">
-        <volumeref ref="logic_largeR_accep3"/>
-        <rotationref ref="accep_rot7"/>
-      </physvol>
-    </volume>
-
-    <volume name="boxDSConcreteShield1_logic">
-      <materialref ref="Concrete"/>
-      <solidref ref="boxDSConcreteShield1_solid"/>
-      <auxiliary auxtype="Color" auxvalue="green"/>
-      <auxiliary auxtype="SensDet" auxvalue="Poly_Shielding_Block_3_Det"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6021"/>
-    </volume>
-
-    <volume name="Beampipe_under_PbWall_logic">
-      <materialref ref="G4_Al"/>
-      <solidref ref="Beampipe_under_PbWall_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Blue"/>
-      <auxiliary auxtype="SensDet" auxvalue="beampipeDet"/> <!-- NEW Sensitive detector FIXME -->
-    </volume>
-
-    <volume name="PbWall_accep_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="PbWall_accep_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Yellow"/>
-      <auxiliary auxtype="SensDet" auxvalue="accepDet"/> <!-- NEW Sensitive detector FIXME -->
-      <physvol name="phys_PbWall_acce">
-	      <volumeref ref="Beampipe_under_PbWall_logic"/>
-      </physvol>
-    </volume>
-
-    <volume name="PbWall_logic">
-      <materialref ref="Lead"/>
-      <solidref ref="PbWall_solid"/>
-      <auxiliary auxtype="Color" auxvalue="gray"/>
-      <auxiliary auxtype="SensDet" auxvalue="Shielding_Block_Local_Lead"/> <!-- NEW Sensitive detector FIXME -->
-      <auxiliary auxtype="DetNo" auxvalue="6031"/>
-      <physvol name="phys_PbWall_acce">
-	      <volumeref ref="PbWall_accep_logic"/>
-	      <position name="Pbwall_accep_pos" x="0" y="0" z="-125"/>
-      </physvol>
-    </volume>
-   
     <volume name="logicCollar1">
       <materialref ref="G4_Pb"/>
       <solidref ref="solidCollar1"/>
     </volume>
-    
-    <volume name="logicCollar2">
+
+    <!--<volume name="logicCollar2">
       <materialref ref="G4_Pb"/>
       <solidref ref="solidCollar2"/>
-    </volume>
-
-    <volume name="logicLintel1">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="solidLintel1"/>
-    </volume>
-
-    <volume name="logicLintel2">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="solidLintel2"/>
-    </volume>
-
-    <volume name="logicLintel3">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="solidLintel3"/>
-    </volume>
-
-    <volume name="logicLintel4">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="solidLintel4"/>
-    </volume>
-
-    <volume name="logicLintel5">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="solidLintel5"/>
-    </volume>
-
-    <volume name="logicLintel6">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="solidLintel6"/>
-    </volume>
-
-    <volume name="logicLintel7">
-      <materialref ref="G4_Pb"/>
-      <solidref ref="solidLintel7"/>
-    </volume>
-
+    </volume>-->
+    
     <volume name="SubCoil1EpoxyShield1_logic">
       <materialref ref="Tungsten"/>
       <solidref ref="SubCoil1EpoxyShield1_solid"/>
@@ -931,199 +317,387 @@
       <solidref ref="solid_Driftpipe"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="Color" auxvalue="blue"/>
-	      <!--<auxiliary auxtype="DetNo" auxvalue="52"/>-->
+      <!--<auxiliary auxtype="DetNo" auxvalue="52"/>-->
     </volume>
 
+    <volume name="logicDriftpipe_vacuum">
+      <materialref ref="Aluminum"/>
+      <solidref ref="solid_DriftPipe_VacuumFlg"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+    
     <!-- Part of Downstream beam pipe -->
-  <volume name="logicDSwindow">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSwindow"/>
-    <auxiliary auxtype="Color" auxvalue="magenta"/>
-  </volume>
+    <volume name="logicDSwindow">
+      <materialref ref="G4_Al"/>
+      <solidref ref="solid_DSwindow"/>
+      <auxiliary auxtype="Color" auxvalue="magenta"/>
+    </volume>
 
-  <volume name="logic_DSwindow_flange">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSwindow_flange"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-  </volume>
+    <volume name="logic_DSwindow_flange">
+      <materialref ref="G4_Al"/>
+      <solidref ref="solid_DSwindow_flange"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
 
-  <volume name="logic_DSpipe1">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe1"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-  </volume>
+    <volume name="logic_DSpipe1">
+      <materialref ref="G4_Al"/>
+      <solidref ref="solid_DSpipe1"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
 
-  <volume name="logic_DSpipe1_flange">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe1_flange"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>
-  </volume>
+    <volume name="logic_DSpipe_flange">
+      <materialref ref="G4_Al"/>
+      <solidref ref="solid_DSpipe_flange"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
 
-  <volume name="logic_DSpipe1_bellow">
-    <materialref ref="G4_STAINLESS-STEEL"/>
-    <solidref ref="solid_DSpipe1_bellow"/>
-    <auxiliary auxtype="Color" auxvalue="Brown"/>
-  </volume>
+    <!--add bellows G4_STAINLESS-STEEL -->
+    <volume name="bellows3physical_log">
+      <materialref ref="SSbellows"/>
+      <solidref ref="bellows3physical_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Pink"/>
+    </volume>
 
-  <volume name="logic_DSpipe2_USplate">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe2_USplate"/>
-    <auxiliary auxtype="Color" auxvalue="Blue"/>
-  </volume>
+    <volume name="bellows3flangeUS_log">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="bellows3flangeUS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
 
-  <volume name="logic_DSpipe2_1">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe2_1"/>
-    <auxiliary auxtype="Color" auxvalue="Blue"/>
-  </volume>
+    <volume name="bellows3flangeDS_log">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="bellows3flangeDS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
 
+    <volume name="DSendtube_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="solid_DSendtube"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+    
+    <volume name="DSpipeNeck_log">
+      <materialref ref="G4_Al"/>
+      <solidref ref="solid_DSpipeNeck"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+    
+    <volume name="DSendtube_USflange_log">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="solid_DSendtube_USflange"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+    
+    <volume name="DSendtube_DSflange_log">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="solid_DSendtube_DSflange"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+    
+    <volume name="LowCycleBellows_flange_log">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="solid_LowCycleBellows_flange"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+    
+    <volume name="LowCycleBellows_log">
+      <materialref ref="SSbellows"/>
+      <solidref ref="solid_LowCycleBellows"/>
+      <auxiliary auxtype="Color" auxvalue="Pink"/>
+    </volume>
+    
+    <volume name="bellows4physical_log">
+      <materialref ref="SSbellows"/>
+      <solidref ref="bellows4physical_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Pink"/>
+    </volume>
+
+    <volume name="bellows4flangeUS_log">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="bellows4flangeUS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
+  
+    <volume name="bellows4flangeDS_log">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="bellows4flangeDS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
+
+    <volume name="bellows5physical_log">
+      <materialref ref="SSbellows"/>
+      <solidref ref="bellows5physical_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Pink"/>
+    </volume>
+
+    <volume name="bellows5flangeUS_log">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="bellows5flangeUS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
+
+    <volume name="bellows5flangeDS_log">
+      <materialref ref="G4_STAINLESS-STEEL"/>
+      <solidref ref="bellows5flangeDS_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Orange"/>
+    </volume>
+
+    <volume name="PhotonBlocker_log1">
+      <materialref ref="CW90"/>
+      <solidref ref="PhotonBlocker_solid3"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetNo" auxvalue="2014"/>
+    </volume>
+  
+    <volume name="PhotonBlocker_log2">
+      <materialref ref="CW90"/>
+      <solidref ref="PhotonBlocker_solid4"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetNo" auxvalue="2014"/>
+    </volume>
+  
+    <volume name="PhotonBlocker_log3">
+      <materialref ref="CW90"/>
+      <solidref ref="PhotonBlocker_solid6"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetNo" auxvalue="2014"/>
+    </volume>
+  
+    <volume name="PhotonBlocker_log">
+      <materialref ref="Vacuum"/>
+      <solidref ref="PhotonBlocker_solid5"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <physvol name="PhotonBlocker_phys1_0">
+        <volumeref ref="PhotonBlocker_log1"/>
+        <rotation name="PhotonBlocker_rot0" unit="deg" x="0" y="0" z="SEPTANT*0"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys1_1">
+        <volumeref ref="PhotonBlocker_log1"/>
+        <rotation name="PhotonBlocker_rot1" unit="deg" x="0" y="0" z="SEPTANT*1"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys1_2">
+        <volumeref ref="PhotonBlocker_log1"/>
+        <rotation name="PhotonBlocker_rot2" unit="deg" x="0" y="0" z="SEPTANT*2"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys1_3">
+        <volumeref ref="PhotonBlocker_log1"/>
+        <rotation name="PhotonBlocker_rot3" unit="deg" x="0" y="0" z="SEPTANT*3"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys1_4">
+        <volumeref ref="PhotonBlocker_log1"/>
+        <rotation name="PhotonBlocker_rot4" unit="deg" x="0" y="0" z="SEPTANT*4"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys1_5">
+        <volumeref ref="PhotonBlocker_log1"/>
+        <rotation name="PhotonBlocker_rot5" unit="deg" x="0" y="0" z="SEPTANT*5"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys1_6">
+        <volumeref ref="PhotonBlocker_log1"/>
+        <rotation name="PhotonBlocker_rot6" unit="deg" x="0" y="0" z="SEPTANT*6"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys2_0">
+        <volumeref ref="PhotonBlocker_log3"/>
+        <rotation name="PhotonBlocker_rot0" unit="deg" x="0" y="0" z="SEPTANT*0"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys2_1">
+        <volumeref ref="PhotonBlocker_log3"/>
+        <rotation name="PhotonBlocker_rot1" unit="deg" x="0" y="0" z="SEPTANT*1"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys2_2">
+        <volumeref ref="PhotonBlocker_log3"/>
+        <rotation name="PhotonBlocker_rot2" unit="deg" x="0" y="0" z="SEPTANT*2"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys2_3">
+        <volumeref ref="PhotonBlocker_log3"/>
+        <rotation name="PhotonBlocker_rot3" unit="deg" x="0" y="0" z="SEPTANT*3"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys2_4">
+        <volumeref ref="PhotonBlocker_log3"/>
+        <rotation name="PhotonBlocker_rot4" unit="deg" x="0" y="0" z="SEPTANT*4"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys2_5">
+        <volumeref ref="PhotonBlocker_log3"/>
+        <rotation name="PhotonBlocker_rot5" unit="deg" x="0" y="0" z="SEPTANT*5"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys2_6">
+        <volumeref ref="PhotonBlocker_log3"/>
+        <rotation name="PhotonBlocker_rot6" unit="deg" x="0" y="0" z="SEPTANT*6"/>
+      </physvol>
+      <physvol name="PhotonBlocker_phys2">
+        <volumeref ref="PhotonBlocker_log2"/>
+      </physvol>
+  
+    </volume>
 
     <volume name="logicDownstream">
       <materialref ref="VacuumColl"/>
-      <!-- <solidref ref="tubeDownstream"/> -->
-      <solidref ref="boxDownstream_1"/>
+      <solidref ref="boxDownstream"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
       <physvol name="Driftpipe">
-          <volumeref ref="logicDriftpipe"/>
-	  <position name="Driftpipe_pos" x="0" y="0" z="boxDSMother_length/2-6595"/>
-        </physvol>
-
-      <!--
-      <physvol name="DStracker">
-        <volumeref ref="logicDSTracker"/>
-        <position name="DStracker_pos" unit="mm" x="0" y="0" z="0"/>
+        <volumeref ref="logicDriftpipe"/>
+	<position name="Driftpipe_pos" x="0" y="0" z="12854.94 - 11287.5"/>
       </physvol>
-      -->
+      
+      <physvol name="Driftpipe_vacuum">
+        <volumeref ref="logicDriftpipe_vacuum"/>
+        <position name="Driftpipe_vacuum_pos" x="0" y="0" z="18689.32 - 11287.5"/>
+      </physvol>
+
+      <!--add bellows G4_STAINLESS-STEEL and custom bellows SS material  -->
+      <physvol name="bellows3physical_phys">
+        <volumeref ref="bellows3physical_log"/>
+        <positionref ref="bellows3physical_pos"/>
+      </physvol>
+    
+      <physvol name="bellows3flangeUS_phys">
+        <volumeref ref="bellows3flangeUS_log"/>
+        <positionref ref="bellows3flangeUS_pos"/>
+      </physvol>
+    
+      <physvol name="bellows3flangeDS_phys">
+        <volumeref ref="bellows3flangeDS_log"/>
+        <positionref ref="bellows3flangeDS_pos"/>
+      </physvol>
+
+      <physvol name="DSendtube_phys">
+        <volumeref ref="DSendtube_log"/>
+        <position unit="mm" name="DSendtube_pos" x="0" y="0" z="12205.2334-11287.5"/>
+      </physvol>
+      
+      <physvol name="DSendtube_USflange_phys">
+        <volumeref ref="DSendtube_USflange_log"/>
+        <position unit="mm" name="DSendtube_USflange_pos" x="0" y="0" z="12283.694-11287.5"/>
+      </physvol>
+      
+      <physvol name="DSendtube_DSflange_phys">
+        <volumeref ref="DSendtube_DSflange_log"/>
+        <position unit="mm" name="DSendtube_DSflange_pos" x="0" y="0" z="12671.044-11287.5"/>
+      </physvol>
+      
+      <physvol name="LowCycleBellows_flangeUS_phys">
+        <volumeref ref="LowCycleBellows_flange_log"/>
+        <position unit="mm" name="LowCycleBellows_flangeUS_pos" x="0" y="0" z="12328.144-11287.5"/>
+      </physvol>
+      
+      <physvol name="LowCycleBellows_flangeDS_phys">
+        <volumeref ref="LowCycleBellows_flange_log"/>
+        <position unit="mm" name="LowCycleBellows_flangeDS_pos" x="0" y="0" z="12639.294-11287.5"/>
+      </physvol>
+      
+      <physvol name="LowCycleBellows_phys">
+        <volumeref ref="LowCycleBellows_log"/>
+        <position unit="mm" name="LowCycleBellows_pos" x="0" y="0" z="12331.446-11287.5"/>
+      </physvol>
+      
+      <physvol name="DSpipeNeck_phys">
+        <volumeref ref="DSpipeNeck_log"/>
+        <position unit="mm" name="DSpipeNeck_pos" x="0" y="0" z="12799.06-11287.5"/>
+      </physvol>
+    
+      <!-- <physvol name="bellows4physical_phys">
+        <volumeref ref="bellows4physical_log"/>
+        <positionref ref="bellows4physical_pos"/>
+      </physvol>
+
+      <physvol name="bellows4flangeUS_phys">
+        <volumeref ref="bellows4flangeUS_log"/>
+        <positionref ref="bellows4flangeUS_pos"/>
+      </physvol>
+    
+      <physvol name="bellows4flangeDS_phys">
+        <volumeref ref="bellows4flangeDS_log"/>
+        <positionref ref="bellows4flangeDS_pos"/>
+      </physvol>
+
+       <physvol name="bellows5physical_phys">
+        <volumeref ref="bellows5physical_log"/>
+        <positionref ref="bellows5physical_pos"/>
+      </physvol>
+    
+      <physvol name="bellows5flangeUS_phys">
+        <volumeref ref="bellows5flangeUS_log"/>
+        <positionref ref="bellows5flangeUS_pos"/>
+      </physvol>
+    
+      <physvol name="bellows5flangeDS_phys">
+        <volumeref ref="bellows5flangeDS_log"/>
+        <positionref ref="bellows5flangeDS_pos"/>
+      </physvol>-->
 
       <physvol name="collar1">
         <volumeref ref="logicCollar1"/>
-        <position unit="mm" name="collar1pos" x="0" y="0" z="17350-25-DOFFSET"/>
-        <rotation unit="rad" name="collar1rot" x="0" y="0" z="0"/>
+        <position unit="mm" name="collar1pos" x="0" y="0" z="16950.09-DOFFSET-150./2.-400./2"/>
+        <!--<position lunit="mm" name="collar1pos" x="0" y="0" z="17350-25-DOFFSET"/>-->
+        <rotation aunit="rad" name="collar1rot" x="0" y="0" z="0"/>
       </physvol>
 
-      <physvol name="collar2">
+     <!-- <physvol name="collar2">
         <volumeref ref="logicCollar2"/>
-        <position unit="mm" name="collar2pos" x="0" y="0" z="23950-25-DOFFSET"/>
-        <rotation unit="rad" name="collar2rot" x="0" y="0" z="0"/>
-      </physvol>
+        <position unit="mm" name="collar2pos" x="0" y="0" z="19257.69-11287.5"/>
+        <rotation aunit="rad" name="collar2rot" x="0" y="0" z="0"/>
+      </physvol>-->
 
-      <physvol name="lintel1">
-       <volumeref ref="logicLintel1"/>
-       <position name="lintel1pos" x="-542.0" y="6.63758565138e-14" z="12835-DOFFSET"/>
-       <rotation name="lintel1rot" x="0" y="0" z="-3.14159265359"/>
-      </physvol>
-      <physvol name="lintel2">
-       <volumeref ref="logicLintel2"/>
-       <position name="lintel2pos" x="-337.931472607" y="-423.752663498" z="12835-DOFFSET"/>
-       <rotation name="lintel2rot" x="0" y="0" z="-4.03919055462"/>
-      </physvol>
-      <physvol name="lintel3">
-       <volumeref ref="logicLintel3"/>
-       <position name="lintel3pos" x="120.606346204" y="-528.410928403" z="12835-DOFFSET"/>
-       <rotation name="lintel3rot" x="0" y="0" z="-4.93678845564"/>
-      </physvol>
-      <physvol name="lintel4">
-       <volumeref ref="logicLintel4"/>
-       <position name="lintel4pos" x="488.325126403" y="-235.164986602" z="12835-DOFFSET"/>
-       <rotation name="lintel4rot" x="0" y="0" z="-5.83438635667"/>
-      </physvol>
-      <physvol name="lintel5">
-       <volumeref ref="logicLintel5"/>
-       <position name="lintel5pos" x="488.325126403" y="235.164986602" z="12835-DOFFSET"/>
-       <rotation name="lintel5rot" x="0" y="0" z="-6.73198425769"/>
-      </physvol>
-      <physvol name="lintel6">
-       <volumeref ref="logicLintel6"/>
-       <position name="lintel6pos" x="120.606346204" y="528.410928403" z="12835-DOFFSET"/>
-       <rotation name="lintel6rot" x="0" y="0" z="-7.62958215872"/>
-      </physvol>
-      <physvol name="lintel7">
-       <volumeref ref="logicLintel7"/>
-       <position name="lintel7pos" x="-337.931472607" y="423.752663498" z="12835-DOFFSET"/>
-       <rotation name="lintel7rot" x="0" y="0" z="-8.52718005974"/>
-      </physvol>
-
-<!-- Downstream of coll4 central collimating beampipe -->
-      <physvol>
+      <!-- Downstream of coll4 central collimating beampipe -->
+     <!-- <physvol>
         <volumeref ref="SubCoil1EpoxyShield1_logic"/>
         <positionref ref="SubCoil1EpoxyShield1_center"/>
+      </physvol>-->
+
+     
+     <!--<physvol name="DScoil">
+       <file name="hybrid/hybridToroid.gdml"/>
+      <position name="pos_hybridToroid" x="0" y="0" z="13335.194-DOFFSET-75-200-(13335.194-13332.736)"/>
+     </physvol>-->
+     
+      <physvol name="DScoilSupport">
+        <file name="hybrid/hybridToroidSupport.gdml"/>
+        <position name="DScoilSupport_pos" x="0" y="0" z="13335.194-DOFFSET-75-200-(13335.194-13332.736)+90"/>
       </physvol>
-
-      <physvol name="DScoil">
-        <file name="hybrid/hybridToroid.gdml"/>
-        <position name="pos_hybridToroid" x="0" y="0" z="13335.194-DOFFSET"/>
-      </physvol>
-
-
-<!-- Collimator 4 -->
-      <physvol name="phy_Col4_accep1">
-        <volumeref ref="logic_Col4_accep1"/>
-        <positionref ref="posPCOLL4_1"/>
-      </physvol>
-
-      <physvol name="phy_Col4_accep2">
-        <volumeref ref="logic_Col4_accep2"/>
-        <positionref ref="posPCOLL4_2"/>
-      </physvol>
-
-      <physvol name="phy_Col4_accep3">
-        <volumeref ref="logic_Col4_accep3"/>
-        <positionref ref="posPCOLL4_3"/>
-      </physvol>
-
-<!--      <physvol>
-        <volumeref ref="boxDSConcreteShield1_logic"/>
-        <positionref ref="boxDSConcreteShield1_center"/>
-</physvol>-->
-
-      <!-- Lead wall DS of collimator 4 -->
-      <physvol>
-        <volumeref ref="PbWall_logic"/>
-        <positionref ref="PbWall_center"/>
-      </physvol>
-
+      
       <!-- this part of the downstream beampipe -->
-    <physvol name="DSwindow">
-      <volumeref ref="logicDSwindow"/>
-      <position name="DSwindow_pos" x="0" y="0" z="boxDSMother_length/2-484.88"/>
+      <physvol name="DSwindow">
+        <volumeref ref="logicDSwindow"/>
+        <position name="DSwindow_pos" x="0" y="0" z="18511.52 - 11287.5"/>
+      </physvol>
+     
+      <physvol name="DSwindow_flange">
+        <volumeref ref="logic_DSwindow_flange"/>
+        <position name="DSwindow_flange_pos" x="0" y="0" z="18854.42 - 11287.5"/>
+      </physvol>
+
+      <physvol name="DSpipe1">
+        <volumeref ref="logic_DSpipe1"/>
+        <position name="DSpipe1_pos" x="0" y="0" z="18511.52 - 11287.5 + 78.486 + 0.25"/>
+      </physvol>
+
+      <physvol name="DSpipe_flange">
+        <volumeref ref="logic_DSpipe_flange"/>
+        <position name="DSpipe_flange_pos" x="0" y="0" z="18511.52 - 11287.5"/>
+      </physvol>
+
+    <physvol name="PhotonBlocker_phys">
+      <volumeref ref="PhotonBlocker_log"/>
+      <positionref ref="PhotonBlocker_pos"/>
     </physvol>
+      
+    </volume>
+  </structure>
 
-    <physvol name="DSwindow_flange">
-      <volumeref ref="logic_DSwindow_flange"/>
-      <position name="DSwindow_flange_pos" x="0" y="0" z="boxDSMother_length/2-217.0"/>
-    </physvol>
-
-    <physvol name="DSpipe1">
-      <volumeref ref="logic_DSpipe1"/>
-      <position name="DSpipe1_pos" x="0" y="0" z="boxDSMother_length/2-490.0"/>
-    </physvol>
-
-    <physvol name="DSpipe1_flange">
-      <volumeref ref="logic_DSpipe1_flange"/>
-      <position name="DSpipe1_flange_pos" x="0" y="0" z="boxDSMother_length/2-261.0"/>
-    </physvol>
-
-    <physvol name="DSpipe1_bellow">
-      <volumeref ref="logic_DSpipe1_bellow"/>
-      <position name="DSpipe1_bellow_pos" x="0" y="0" z="boxDSMother_length/2-236.0"/>
-    </physvol>
-
-    <physvol name="DSpipe2_USplate">
-      <volumeref ref="logic_DSpipe2_USplate"/>
-      <position name="DSpipe1_USplate" x="0" y="0" z="boxDSMother_length/2-56.0"/>
-    </physvol>
-
-    <physvol name="DSpipe2_DSpipe2_1">
-      <volumeref ref="logic_DSpipe2_1"/>
-      <position name="DSpipe1_DSpipe2_1_pos" x="0" y="0" z="boxDSMother_length/2-36.0"/>
-    </physvol>
-
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-   </volume>
-</structure>
-
-<setup name="Default" version="1.0">
-	<world ref="logicDownstream"/>
-</setup>
+  <setup name="Default" version="1.0">
+    <world ref="logicDownstream"/>
+  </setup>
 
 </gdml>

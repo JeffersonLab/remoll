@@ -137,7 +137,7 @@
       <auxiliary auxtype="Color" auxvalue="Red"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="51"/>
+	    <!--<auxiliary auxtype="DetNo" auxvalue="51"/>-->
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     </volume>

@@ -228,6 +228,11 @@
   </element>
 
 
+<!--add bellows custom material less dense G4_STAINLESS-STEEL like example here -->
+  <material name="SSbellows" state="solid">
+    <D value="0.896" unit="g/cm3"/>
+    <fraction n="1.0" ref="G4_STAINLESS-STEEL"/>
+  </material>
   
   <material Z="1" name="VacuumTarg" state="gas">
     <T unit="K" value="2.73"/>
@@ -419,6 +424,18 @@
     <fraction n="0.035" ref="Nickel"/>
   </material>
 
+  <material name="CW90" state="solid"><!--EA17 from Eagle Alloys -->
+    <D value="17.0" unit="g/cm3"/>
+    <fraction n="0.9000" ref="Tungsten"/>
+    <fraction n="0.100" ref="Copper"/>
+  </material>
+
+  <material name="CW85" state="solid">
+    <D value="16." unit="g/cm3"/>
+    <fraction n="0.85" ref="Tungsten"/>
+    <fraction n="0.15" ref="Copper"/>
+  </material>
+
   <!-- Defined for the next material "Water-CW" for Col1 water channel -->
   <material name="Water" state="liquid">
     <D value="1.0" unit="g/cm3"/>
@@ -429,10 +446,34 @@
   <!--The following material is defined to aviod complicated coll1 design
   The matrial is defined by 44% of H2O and 56% of CW95 -->
   <material name="Water_CW" state="solid">
-    <D value="10.52" unit="g/cm3"/>
-    <fraction n="0.44" ref="Water"/>
-    <fraction n="0.56" ref="CW95"/>
+    <D value="5.96" unit="g/cm3"/>
+    <fraction n="0.69" ref="Water"/>
+    <fraction n="0.31" ref="CW90"/>
   </material>
+  
+  <material name="Inconel625" state="solid">
+    <D value="8.314" unit="g/cm3"/>
+    <fraction n="0.58" ref="G4_Ni"/>
+    <fraction n="0.20" ref="G4_Cr"/>
+    <fraction n="0.05" ref="G4_Fe"/>
+    <fraction n="0.10" ref="G4_Mo"/>
+    <fraction n="0.0307" ref="G4_Nb"/>
+    <fraction n="0.010" ref="G4_Ta"/>
+    <fraction n="0.001" ref="G4_C"/>
+    <fraction n="0.005" ref="G4_Mn"/>
+    <fraction n="0.005" ref="G4_Si"/>
+    <fraction n="0.00015" ref="G4_P"/>
+    <fraction n="0.00015" ref="G4_S"/>
+    <fraction n="0.004" ref="G4_Al"/>
+    <fraction n="0.004" ref="G4_Ti"/>
+    <fraction n="0.01" ref="G4_Co"/>
+  </material>
+  
+  <material name="Inconel625_Air" state="solid">
+    <D value="0.001338" unit="g/cm3"/>
+    <fraction n="0.90" ref="G4_AIR"/>
+    <fraction n="0.10" ref="Inconel625"/>
+  </material> 
   
   <material name="Tyvek" state="solid">
     <MEE unit="eV" value="56.5182975271737"/> 
@@ -551,6 +592,26 @@
     <D value="2.63" unit="g/cm3"/>
     <fraction n="0.56" ref="G4_CALCIUM_OXIDE"/>
     <fraction n="0.44" ref="G4_CARBON_DIOXIDE"/>
+  </material>
+  
+  <!-- from hybridToroid.gdml -->
+  <material name="G4_CW95" state="solid">
+    <D value="18.0" unit="g/cm3"/>
+    <fraction n="0.9500" ref="G4_W"/>
+    <fraction n="0.015" ref="G4_Cu"/>
+    <fraction n="0.035" ref="G4_Ni"/>
+  </material>
+  <material name="Epoxy" state="solid">
+    <D value="1.3" unit="g/cm3"/>
+    <fraction n="0.5354" ref="C"/>
+    <fraction n="0.1318" ref="H"/>
+    <fraction n="0.3328" ref="O"/>
+  </material>
+  <material name="G10" state="solid">
+    <D value="1.3" unit="g/cm3"/>
+    <fraction n="0.773" ref="G4_SILICON_DIOXIDE"/>
+    <fraction n="0.147" ref="Epoxy"/>
+    <fraction n="0.080" ref="G4_Cl"/>
   </material>
 
 </materials>

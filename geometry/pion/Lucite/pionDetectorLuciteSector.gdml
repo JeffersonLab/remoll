@@ -21,7 +21,7 @@
     you modify the angle below so as to avoid overlaps between this volume and
     the trigger scintillator and volumes.
   -->
-  <quantity name="pionDetectorLuciteLength" type="length" value="2.0*2.54" unit="cm"/>
+  <quantity name="pionDetectorLuciteLength" type="length" value="10.0*2.54" unit="cm"/>
 
   <!--
     The Cherenkov critical angle for n = 1.5 materials is cos(theta_c) = 1/n,
@@ -44,7 +44,7 @@
     PMT radially outward; -90.0 degrees is with the PMT radially inward.
   -->
   <quantity name="pionDetectorLuciteSectorAngleBase" type="angle" value="+90.0" unit="deg"/>
-  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="0.0" unit="rad"/>
+  <quantity name="pionDetectorLuciteSectorAnglePitch" type="angle" value="-90.0" unit="deg"/>
   
   <!--
     The lucite detector is placed radially in reference to the the center of the
@@ -56,18 +56,23 @@
   <!--
     The lucite detector shielding ...
   -->
-  <quantity name="pionDetectorLuciteShieldDSThickness" type="length" value="2.54/2" unit="cm"/>
-  <quantity name="pionDetectorLuciteShieldDSInsideWidth"  type="length" value="50.0" unit="cm"/>
-  <quantity name="pionDetectorLuciteShieldDSOutsideWidth" type="length" value="54.5" unit="cm"/>
+<!--  <quantity name="pionDetectorLuciteShieldDSThickness" type="length" value="2.54/2" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldDSInsideWidth"  type="length" value="49.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldDSOutsideWidth" type="length" value="53.5" unit="cm"/>
   <quantity name="pionDetectorLuciteShieldDSHeight" type="length" value="10" unit="cm"/>
   <quantity name="pionDetectorLuciteShieldDSTheta" type="angle" value="0" unit="deg"/>
   <quantity name="pionDetectorLuciteShieldDSThicknessInY"
-            value="pionDetectorLuciteShieldDSThickness/cos(pionDetectorLuciteShieldDSTheta)"/>
+            value="pionDetectorLuciteShieldDSThickness/cos(pionDetectorLuciteShieldDSTheta)"/>   -->
 
   <quantity name="pionDetectorLuciteShieldINThickness" type="length" value="2.54/2" unit="cm"/>
   <quantity name="pionDetectorLuciteShieldINInsideWidth"  type="length" value="49.0" unit="cm"/>
   <quantity name="pionDetectorLuciteShieldINOutsideWidth"  type="length" value="49.5" unit="cm"/>
-  <quantity name="pionDetectorLuciteShieldINDepth" type="length" value="1.8*2.54" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldINDepth" type="length" value="10*2.54" unit="cm"/>
+  
+  <quantity name="pionDetectorLuciteShieldOUThickness" type="length" value="2.54/2" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldOUInsideWidth"  type="length" value="49.0" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldOUOutsideWidth"  type="length" value="49.5" unit="cm"/>
+  <quantity name="pionDetectorLuciteShieldOUDepth" type="length" value="10*2.54" unit="cm"/> 
 
 </define>
 
@@ -76,9 +81,9 @@
 
 <solids>
   <tube name="pionDetectorLuciteSector_solid"
-    rmin="1.01*pionDetectorLuciteInnerRadius"
-    rmax="0.99*pionDetectorLuciteOuterRadius"
-    z="0.99*pionDetectorLuciteLength"
+    rmin="1.02*pionDetectorLuciteInnerRadius"
+    rmax="pionDetectorLuciteOuterRadius"
+    z="pionDetectorLuciteLength"
     startphi="-0.99*PHI/2.0" deltaphi="0.99*PHI" aunit="deg"/>
   <tube name="pionDetectorLuciteAllSectors_solid"
     rmin="pionDetectorLuciteInnerRadius"
@@ -86,7 +91,7 @@
     z="pionDetectorLuciteLength"
     startphi="0" deltaphi="360.0" aunit="deg"/>
 
-  <trap name="pionDetectorLuciteShieldDS_solid"
+<!--  <trap name="pionDetectorLuciteShieldDS_solid"
     alpha1="0.0" alpha2="0.0"
     theta="pionDetectorLuciteShieldDSTheta" phi="90.0*deg"
     x1="pionDetectorLuciteShieldDSInsideWidth"
@@ -95,7 +100,7 @@
     x4="pionDetectorLuciteShieldDSOutsideWidth"
     y1="pionDetectorLuciteShieldDSThicknessInY"
     y2="pionDetectorLuciteShieldDSThicknessInY"
-     z="pionDetectorLuciteShieldDSHeight"/>
+     z="pionDetectorLuciteShieldDSHeight"/>   -->
   <trap name="pionDetectorLuciteShieldIN_solid"
     alpha1="0.0" alpha2="0.0"
     theta="0.0" phi="0.0"
@@ -106,15 +111,25 @@
     y1="pionDetectorLuciteShieldINInsideWidth"
     y2="pionDetectorLuciteShieldINOutsideWidth"
      z="pionDetectorLuciteShieldINThickness"/>
+  <trap name="pionDetectorLuciteShieldOU_solid"
+    alpha1="0.0" alpha2="0.0"
+    theta="0.0" phi="0.0"
+    x1="pionDetectorLuciteShieldOUDepth"
+    x2="pionDetectorLuciteShieldOUDepth"
+    x3="pionDetectorLuciteShieldOUDepth"
+    x4="pionDetectorLuciteShieldOUDepth"
+    y1="pionDetectorLuciteShieldOUInsideWidth"
+    y2="pionDetectorLuciteShieldOUOutsideWidth"
+    z="pionDetectorLuciteShieldOUThickness"/>
 </solids>
 
 <structure>
-  <volume name="pionDetectorLuciteShieldDS_logical">
+<!--  <volume name="pionDetectorLuciteShieldDS_logical">
     <materialref ref="G4_Pb"/>
     <solidref ref="pionDetectorLuciteShieldDS_solid"/>
     <auxiliary auxtype="Color" auxvalue="Yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
-  </volume>
+  </volume>  -->
 
   <volume name="pionDetectorLuciteShieldIN_logical">
     <materialref ref="G4_Pb"/>
@@ -122,6 +137,14 @@
     <auxiliary auxtype="Color" auxvalue="Yellow"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
   </volume>
+  
+  <volume name="pionDetectorLuciteShieldOU_logical">
+    <materialref ref="G4_Pb"/>
+    <solidref ref="pionDetectorLuciteShieldOU_solid"/>
+    <auxiliary auxtype="Color" auxvalue="Yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
 
   <volume name="pionDetectorLuciteSector_logical">
     <materialref ref="G4_AIR"/>
@@ -136,7 +159,7 @@
                 y="-(pionDetectorLuciteSectorAngleBase+pionDetectorLuciteSectorAnglePitch)"/>
       <!-- x rotation 180: layer 1 in the back -->
     </physvol>
-    <physvol name="pionDetectorLuciteShieldDS_physical">
+<!--    <physvol name="pionDetectorLuciteShieldDS_physical">
       <volumeref ref="pionDetectorLuciteShieldDS_logical"/>
       <position name="pionDetectorLucite_position"
         x="pionDetectorLuciteInnerEdgeRadialPosition"
@@ -144,14 +167,21 @@
       <rotation name="pionDetectorLucite_rotation"
                 z="pionDetectorLuciteSectorAngleBase"
                 y="-(pionDetectorLuciteSectorAngleBase+pionDetectorLuciteSectorAnglePitch)"/>
-      <!-- x rotation 180: layer 1 in the back -->
-    </physvol>
+    </physvol> -->
     <physvol name="pionDetectorLuciteShieldIN_physical">
       <volumeref ref="pionDetectorLuciteShieldIN_logical"/>
       <position name="pionDetectorLucite_position"
-        x="pionDetectorLuciteInnerEdgeRadialPosition-5.75*cm"
+        x="pionDetectorLuciteInnerEdgeRadialPosition-3.54*cm"
         z="0"/>
       <rotation name="pionDetectorLuciteShieldIN_rotation"
+        y="-90*deg"/>
+    </physvol>
+    <physvol name="pionDetectorLuciteShieldOU_physical">
+      <volumeref ref="pionDetectorLuciteShieldOU_logical"/>
+      <position name="pionDetectorLucite_position"
+        x="pionDetectorLuciteInnerEdgeRadialPosition+3.54*cm"
+        z="0"/>
+      <rotation name="pionDetectorLuciteShieldOU_rotation"
         y="-90*deg"/>
     </physvol>
     <auxiliary auxtype="Alpha" auxvalue="0.05"/>

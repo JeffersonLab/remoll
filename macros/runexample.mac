@@ -71,8 +71,13 @@
 /remoll/field/print
 
 /remoll/beamene 11 GeV
+/remoll/beamcurr 65 microampere
 
-/remoll/beamcurr 85 microampere
+/remoll/SD/disable_all
+/remoll/SD/enable 28
+/remoll/SD/detect lowenergyneutral 28
+/remoll/SD/detect secondaries 28
+/remoll/SD/detect boundaryhits 28
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
@@ -86,6 +91,7 @@
 /remoll/filename remollout.root
 
 #/tracking/verbose 2
-/remoll/target/print
+
+#/remoll/printtargetinfo
 /run/beamOn 100
 

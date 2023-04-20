@@ -6,8 +6,8 @@ void mdRadiationDose(){
 
   string hnm = "d28_xy";
 
-  TH2D *hee=getPlot2D("../ee_UpdatedHybrid_radAnaV3.root",hnm,"ee");
-  TH2D *hep=getPlot2D("../epElastic_UpdatedHybrid_radAnaV3.root",hnm,"ep");
+  TH2D *hee=getPlot2D("deconv_210724_ee_tileConf22_procDeconvV1.root",hnm,"ee");
+  TH2D *hep=getPlot2D("deconv_210724_epE_tileConf22_procDeconvV1.root",hnm,"ep");
   
   TH2D *ht = (TH2D*)hee->Clone("htotal");
   ht->Add(hep);
@@ -32,6 +32,7 @@ void mdRadiationDose(){
   double MeV2rad = 100/6.24e9; //100rad = 1 Gy = 6.24 10^12 MeV/kg
   double doseScale = mipF * PACdays * hIn1day * h2s / area * MeV2rad / 1e6; // [Mrad]
 
+  gStyle->SetOptStat(0);
   auto *c1=new TCanvas();
   c1->Divide(2,2);
   hee->SetTitle("rate per 5x5 mm2 ee events");
@@ -130,13 +131,9 @@ void mdRadiationDose(){
 TH2D* getPlot2D(string fnm, string hnm,string thnm){
   TFile *fin=TFile::Open(fnm.c_str(),"READ");
   
-  TH2D *h1=(TH2D*)fin->Get(Form("det28/%s_R1_eP1_Dmg0",hnm.c_str()));
-  TH2D *h=(TH2D*)h1->Clone(thnm.c_str());
-  for(int i=2;i<7;i++){
-    TH2D *ht=(TH2D*)fin->Get(Form("det28/%s_R%d_eP1_Dmg0",hnm.c_str(),i));
-    h->Add(ht);
-  }
+  TH2D *h=(TH2D*)fin->Get("det28/det28XYrate_e1");
   h->SetDirectory(0);
+
   fin->Close();
   return h;
 }

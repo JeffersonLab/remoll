@@ -4,6 +4,7 @@
 #include "G4ParticleGun.hh"
 #include "G4ParticleTable.hh"
 #include "G4ParticleDefinition.hh"
+#include "G4Version.hh"
 
 #include "remollHEPEvtInterface.hh"
 #ifdef G4LIB_USE_HEPMC
@@ -36,7 +37,7 @@
 #include <memory>
 
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
-: fEventGen(0),fPriGen(0),fParticleGun(0),fEvent(0),fEffCrossSection(0)
+  : fEventGen(0),fPriGen(0),fParticleGun(0),fEvent(0),fRateCopy(0),fEffCrossSection(0)
 {
     static bool has_been_warned = false;
     if (! has_been_warned) {
@@ -80,6 +81,7 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     // Create event generator messenger
     fEvGenMessenger.DeclareMethod("set",&remollPrimaryGeneratorAction::SetGenerator,"Select physics generator");
     fEvGenMessenger.DeclarePropertyWithUnit("sigma","picobarn",fEffCrossSection,"Set effective cross section");
+    fEvGenMessenger.DeclareProperty("copyRate",fRateCopy,"ExtGen: copy rate from previous sim");
 }
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
@@ -149,14 +151,23 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     // 2. Using event generator interface
     if (fEventGen && !fPriGen) {
 
+      // Helper function
+      auto contains = [](const G4String& lhs, const G4String& rhs) {
+        #if G4VERSION_NUMBER < 1100
+          return lhs.contains(rhs);
+        #else
+          return G4StrUtil::contains(lhs, rhs);
+        #endif
+      };
+
       // Set beam polarization
       const G4String fBeamPol = fEventGen->GetBeamPolarization();
       G4ThreeVector cross(0,0,2);
       if (fBeamPol == "0") cross = G4ThreeVector(0,0,0);
       else {
-        if (fBeamPol.contains('V')) cross = G4ThreeVector(1,0,0);
-        else if(fBeamPol.contains('H')) cross = G4ThreeVector(0,1,0);
-        if (fBeamPol.contains('-')) cross *= -1;
+        if     (contains(fBeamPol, "V")) cross = G4ThreeVector(1,0,0);
+        else if(contains(fBeamPol, "H")) cross = G4ThreeVector(0,1,0);
+        if (contains(fBeamPol, "-")) cross *= -1;
       }
 
       // Create new primary event
@@ -177,7 +188,7 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
           if (cross.mag() !=0) {
             if (cross.mag() == 1) //transverse polarization
               pol = G4ThreeVector( (fEvent->fPartRealMom[0].unit()).cross(cross));
-            else if (fBeamPol.contains("+") ) //positive helicity
+            else if (contains(fBeamPol, "+") ) //positive helicity
               pol = fEvent->fPartRealMom[0].unit();
             else //negative helicity
               pol = - fEvent->fPartRealMom[0].unit();
@@ -194,12 +205,13 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     // Get number of thrown events
     G4double nthrown = remollRun::GetRunData()->GetNthrown();
 
+
     // Calculate rate
     SamplingType_t sampling_type = fEventGen->GetSamplingType();
     if (fEvent->fRate == 0) { // If the rate is set to 0 then calculate it using the cross section
         fEvent->fRate  = fEvent->fEffXs * fBeamTarg.GetEffLumin(sampling_type) / nthrown;
 
-    } else { // For LUND - calculate rate and cross section
+    } else if(!fRateCopy){ // For LUND - calculate rate and cross section
         fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg.GetEffLumin(sampling_type);
         fEvent->fRate  = fEvent->fRate / nthrown;
     }

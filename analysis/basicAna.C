@@ -11,7 +11,9 @@
 TFile *fout;
 vector<vector<TH1D*>> hAsym;
 TH1D *hScatAngP1,*hScatAngP2;
-TH1D *hRate,*rRate, *rRateAsym,*r,*sourceZ,*eRateAsym;
+TH1D *hRate,*rRate, *rRateAsym,*r,*eRateAsym;
+TH1D *sourceZ,*sourceZAll;
+TH2D *srcZXa, *srcZRa,*srcZRaEwght, *srcZmdRa;
 TH2D *hXY,*hXYrate, *hXYrateAsym;
 TH2D *hVtxAngR, *hAfterColl2AngR;
 TH2D *hVtxAngRrate, *hAfterColl2AngRrate;
@@ -32,6 +34,7 @@ int nFiles(0);
 long currentEvNr(0);
 
 float offsetR(0),offsetPhi(0);
+float detOffsetX(0),detOffsetY(0);
 const double pi = acos(-1);
 
 void initHisto();
@@ -40,7 +43,12 @@ void process();
 int findDetector(int &sector, double phi, double r);
 void writeOutput();
 
-void basicAna(const string& finName = "./remollout.root"){
+void basicAna(const string& finName = "./remollout.root", 
+	      float totalXoffset = 0, float totalYoffset = 0, float radialOffset = 0, float phiOffset=0){
+  detOffsetX = totalXoffset;
+  detOffsetY = totalYoffset;
+  offsetR = radialOffset;
+  offsetPhi = phiOffset;
   fin = finName;
   initHisto();
   process();
@@ -74,7 +82,7 @@ void process(){
 }
 
 void initHisto(){
-  string foutNm = Form("%s_bkgAnaV4.root",fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("%s_basicAnaV0.root",fin.substr(0,fin.find(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -120,7 +128,14 @@ void initHisto(){
   hXY = new TH2D("hXY","2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
   hXYrate = new TH2D("hXYrate","rate weighted 2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
   hXYrateAsym = new TH2D("hXYrateAsym","rate*asym weighted 2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
-  sourceZ = new TH1D("sourceZ","initial vertex for hit ;z position [m]",5000,-5500,-3500);
+  sourceZ = new TH1D("sourceZ","initial vertex for hit ;z position [m]",2000,-5600,-3400);
+  sourceZAll = new TH1D("sourceZAll","initial vertex for hit (all particles) ;z position [m]",5000,-5600,34000);
+
+  srcZXa = new TH2D("srcZXa","all particles ;src z position [m];src x position [mm]",5000,-5600,34000,200,-3000,3000);
+  srcZRa = new TH2D("srcZRa","all particles ;src z position [m];src r position [mm]",5000,-5600,34000,200,0,3000);
+  srcZmdRa = new TH2D("srcZmdRa","all particles ;src z position [m];r position on MD [mm]",5000,-5600,34000,200,600,1200);
+  srcZRaEwght = new TH2D("srcZRaEwght","all particles *E ;src z position [m];src r position [mm]",5000,-5600,34000,200,0,3000);
+
   beamRaster = new TH2D("beamRaster","sampling for ring 5 ;x raster [mm]; y raster [mm]",200,-8,8,200,-8,8);
   rBeamRaster = new TH2D("rBeamRaster","rate weighted ;x raster [mm]; y raster [mm]",200,-8,8,200,-8,8);
 
@@ -158,8 +173,8 @@ long processOne(string fnm){
   //t->SetBranchAddress("sum", &sum);
   
   long nEntries = t->GetEntries();
-  cout<<"\tTotal events: "<<nEntries<<endl;
-  float currentProc=1,procStep=10;
+  //cout<<"\tTotal events: "<<nEntries<<endl;
+  float currentProc=1,procStep=60;
   vector<int> procID;
   int sector(-1);
   double pi = acos(-1);
@@ -173,7 +188,7 @@ long processOne(string fnm){
     }
 
     if(currentEvNr % 10000 == 1 && currentEvNr>2){
-      cout<<"avg "<<currentEvNr<<" " <<event<<endl;
+      //cout<<"avg "<<currentEvNr<<" " <<event<<endl;
       leftRate->Fill(lR->GetMean());
       rightRate->Fill(rR->GetMean());
       lR->Reset();
@@ -213,11 +228,6 @@ long processOne(string fnm){
 
       if(hit->at(j).z <= 21999 || hit->at(j).z>22001) continue;
 
-      if(rate>1e10) continue;//this cut is not understandable ... there is some difference between YZ output and mine where rates >1e7 screw up the results
-
-      //select only e- and pi-
-      if(hit->at(j).pid!=11 && hit->at(j).pid!=-211) continue;
-
       //make sure this is the detector you want
       if(hit->at(j).det != 28) continue;
 
@@ -225,43 +235,59 @@ long processOne(string fnm){
       if( find(procID.begin(),procID.end(), hit->at(j).trid) != procID.end() ) continue;
       procID.push_back(hit->at(j).trid);
 
-      if(isnan(rate) || isinf(rate)) continue;
-      
-      if(hit->at(j).r < 500) continue;
+      const double xx = hit->at(j).x - detOffsetX;
+      const double yy = hit->at(j).y - detOffsetY;
+      const double rr = sqrt(xx*xx + yy*yy);
 
-      double phi = atan2(hit->at(j).y,hit->at(j).x);
+      if(std::isnan(rate) || std::isinf(rate)) continue;
+      
+      if(rr < 600 || rr>1200) continue;
+
+      sourceZAll->Fill(hit->at(j).vz);
+
+      srcZXa->Fill(hit->at(j).vz,hit->at(j).vx);
+      const double vrr = sqrt(hit->at(j).vx*hit->at(j).vx + hit->at(j).vy*hit->at(j).vy);
+      srcZRa->Fill(hit->at(j).vz,vrr);
+      srcZRaEwght->Fill(hit->at(j).vz,vrr,hit->at(j).k);
+      srcZmdRa->Fill(hit->at(j).vz,rr);
+
+      //select only e- and pi-
+      if(hit->at(j).pid!=11 && hit->at(j).pid!=-211) continue;
+
+      double phi = atan2(yy, xx);
       if(phi<0) phi+=2*pi;
-      int foundRing = findDetector(sector, phi, hit->at(j).r);
+
+      int foundRing = findDetector(sector, phi, rr);
       if(foundRing==-1) continue;
 
       ///HACK Cut to select one septant .. WARNING!! do not use in regular analysis
       //if(!(phi>=2*pi/7*6 && phi<2*pi/7*7)) continue;
 
-      double xx = bm->x;
-      double yy = bm->y;
+      double rxx = bm->x;
+      double ryy = bm->y;
       double gRate = rate/1e9;
-      xRateAll -> Fill(xx, gRate);
+      xRateAll -> Fill(rxx, gRate);
       if(foundRing == 4){
-	beamRaster -> Fill(xx,yy);
-	rBeamRaster -> Fill(xx,yy,gRate);
-	xRate -> Fill(xx, gRate);
+	beamRaster -> Fill(rxx,ryy);
+	rBeamRaster -> Fill(rxx,ryy,gRate);
+	xRate -> Fill(rxx, gRate);
 
-	if( xx > -2.5 && xx < -2.0)
+	if( rxx > -2.5 && rxx < -2.0)
 	  lR->Fill(gRate);
-	else if(xx > 2.0 && xx < 2.5)
+	else if(rxx > 2.0 && rxx < 2.5)
 	  rR->Fill(gRate);
       }
 
 
-      r->Fill(hit->at(j).r);
-      rRate->Fill(hit->at(j).r,rate);
-      rRateAsym->Fill(hit->at(j).r,rate*asym);
+      r->Fill(rr);
+      rRate->Fill(rr,rate);
+      rRateAsym->Fill(rr,rate*asym);
       if(foundRing == 4)
 	eRateAsym->Fill(hit->at(j).e,rate*asym);
       sourceZ->Fill(hit->at(j).vz);
-      hXY->Fill(hit->at(j).x,hit->at(j).y);
-      hXYrate->Fill(hit->at(j).x,hit->at(j).y,rate);
-      hXYrateAsym->Fill(hit->at(j).x,hit->at(j).y,rate*asym);
+      hXY->Fill(xx,yy);
+      hXYrate->Fill(xx,yy,rate);
+      hXYrateAsym->Fill(xx,yy,rate*asym);
 
       int hitRing5=0;
       if(foundRing == 4) hitRing5=1;
@@ -271,19 +297,19 @@ long processOne(string fnm){
 			   rate + hRate->GetBinContent(foundRing*3+sector+1));
       
       if(hit->at(j).trid==1 && scatAng[0]!=-1){
-	hVtxAngR -> Fill(hit->at(j).r,scatAng[0]);
-	hVtxAngRrate -> Fill(hit->at(j).r,scatAng[0],rate);
-	hVtxER -> Fill(hit->at(j).r,scatP[0]);
-	hVtxERrate -> Fill(hit->at(j).r,scatP[0],rate);
+	hVtxAngR -> Fill(rr,scatAng[0]);
+	hVtxAngRrate -> Fill(rr,scatAng[0],rate);
+	hVtxER -> Fill(rr,scatP[0]);
+	hVtxERrate -> Fill(rr,scatP[0],rate);
 	if(hitRing5){
 	  hVtxAngE -> Fill(scatAng[0],scatP[0]);
 	  hVtxAngErate -> Fill(scatAng[0],scatP[0],rate);
 	}
       }else if(hit->at(j).trid==2 && scatAng[1]!=-1){
-	hVtxAngR -> Fill(hit->at(j).r,scatAng[1]);
-	hVtxAngRrate -> Fill(hit->at(j).r,scatAng[1],rate);
-	hVtxER -> Fill(hit->at(j).r,scatP[1]);
-	hVtxERrate -> Fill(hit->at(j).r,scatP[1],rate);
+	hVtxAngR -> Fill(rr,scatAng[1]);
+	hVtxAngRrate -> Fill(rr,scatAng[1],rate);
+	hVtxER -> Fill(rr,scatP[1]);
+	hVtxERrate -> Fill(rr,scatP[1],rate);
 	if(hitRing5){
 	  hVtxAngE -> Fill(scatAng[1],scatP[1]);
 	  hVtxAngErate -> Fill(scatAng[1],scatP[1],rate);
@@ -291,19 +317,19 @@ long processOne(string fnm){
       }
 
       if(hit->at(j).trid==1 && afterColl2Ang[0]!=-1){
-	hAfterColl2AngR -> Fill(hit->at(j).r,afterColl2Ang[0]);
-	hAfterColl2AngRrate -> Fill(hit->at(j).r,afterColl2Ang[0],rate);
-	hAfterColl2ER -> Fill(hit->at(j).r,afterColl2P[0]);
-	hAfterColl2ERrate -> Fill(hit->at(j).r,afterColl2P[0],rate);
+	hAfterColl2AngR -> Fill(rr,afterColl2Ang[0]);
+	hAfterColl2AngRrate -> Fill(rr,afterColl2Ang[0],rate);
+	hAfterColl2ER -> Fill(rr,afterColl2P[0]);
+	hAfterColl2ERrate -> Fill(rr,afterColl2P[0],rate);
 	if(hitRing5){
 	  hAfterColl2AngE -> Fill(scatAng[0],afterColl2P[0]);
 	  hAfterColl2AngErate -> Fill(scatAng[0],afterColl2P[0],rate);
 	}
       }else if(hit->at(j).trid==2 && afterColl2Ang[1]!=-1){
-	hAfterColl2AngR -> Fill(hit->at(j).r,afterColl2Ang[1]);
-	hAfterColl2AngRrate -> Fill(hit->at(j).r,afterColl2Ang[1],rate);
-	hAfterColl2ER -> Fill(hit->at(j).r,afterColl2P[1]);
-	hAfterColl2ERrate -> Fill(hit->at(j).r,afterColl2P[1],rate);
+	hAfterColl2AngR -> Fill(rr,afterColl2Ang[1]);
+	hAfterColl2AngRrate -> Fill(rr,afterColl2Ang[1],rate);
+	hAfterColl2ER -> Fill(rr,afterColl2P[1]);
+	hAfterColl2ERrate -> Fill(rr,afterColl2P[1],rate);
 	if(hitRing5){
 	  hAfterColl2AngE -> Fill(scatAng[1],afterColl2P[1]);
 	  hAfterColl2AngErate -> Fill(scatAng[1],afterColl2P[1],rate);
@@ -379,6 +405,12 @@ void writeOutput(){
   hXYrateAsym->Write();
 
   sourceZ->Write();
+  sourceZAll->Write();
+  srcZXa->Write();
+  srcZRa->Write();
+  srcZRaEwght->Write();
+  srcZmdRa->Write();
+
 
   beamRaster->Write();
 
@@ -400,10 +432,11 @@ void writeOutput(){
   
 int findDetector(int &sector, double phi, double r){
 
-  //turn off for regular analysis
-  // double dPhiOffset = 2 * atan2( offsetPhi , 2*(r * 1000) );
-  // phi -= dPhiOffset;// "-" because we are moving the hit; i.e. the detector moves the other way
-
+  if(offsetPhi>0){
+    double dPhiOffset = 2 * atan2( offsetPhi , 2*(r * 1000) );
+    phi -= dPhiOffset;// "-" because we are moving the hit; i.e. the detector moves the other way
+  }
+ 
   const double secPhi = fmod(phi, 2*pi/7);
   
   //0,1,2 == closed, transition, open
@@ -437,13 +470,6 @@ int findDetector(int &sector, double phi, double r){
     {1070.0, 1060.0, 1055.0},
     {1170.0, 1170.0, 1170.0}
   };
-
-  // if ever you want to recover this it has to be reorganized
-  // const double rMin[8]={690, 730, 780, 855,  900,  855,  915, 1070};//initial CG estimation
-  // const double rMax[8]={730, 780, 855, 930, 1060, 1070, 1055, 1200};
-  // const double rMin[8]={0.690, 0.730, 0.780, 0.855, 0.935, 0.960, 0.960, 1.100};
-  // const double rMax[8]={0.730, 0.780, 0.855, 0.930, 1.040, 1.075, 1.100, 1.200};
-  //const int region2ring[8]={0,1,2,3,4,4,4,5};
 
   for(int i=0;i<nRings;i++)
     if( r >= rMin[i][sector] + offsetR && r <= rMax[i][sector] + offsetR)

@@ -227,8 +227,11 @@ void remollPhysicsList::EnableStepLimiterPhysics()
   // Create step limiter physics
   #if G4VERSION_NUMBER < 1000
   fStepLimiterPhysics = new G4StepLimiterBuilder(GetVerboseLevel());
-  #else
+  #elif G4VERSION_NUMBER < 1100
   fStepLimiterPhysics = new G4StepLimiterPhysics(GetVerboseLevel());
+  #else
+  fStepLimiterPhysics = new G4StepLimiterPhysics();
+  fStepLimiterPhysics->SetVerboseLevel(GetVerboseLevel());
   #endif
 
   // Register existing physics

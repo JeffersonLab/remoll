@@ -86,6 +86,13 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
     return;
   }
 
+  if (fTree->GetBranch("rate")) {
+    fTree->SetBranchAddress("rate", &rate);
+  }else{
+    G4cerr << "Warning! could not find rate branch. Set rate to 1"<<G4endl;
+    rate = 1;
+  }
+
   if (fTree->GetBranch("ev") != nullptr) {
     fTree->SetBranchAddress("ev", &fEvent);
   } else {
@@ -97,7 +104,6 @@ void remollGenExternal::SetGenExternalFile(G4String& filename)
 void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt)
 {
   G4AutoLock inFileLock(&inFileMutex);
-
   // Check whether three exists
   if (fTree == nullptr) {
     G4cerr << "Could not find tree T in event file (SamplePhysics)" << G4endl;
@@ -106,18 +112,25 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
   // Loop until we find at least one event with some particles
   int number_of_particles = 0;
   do {
-
     // Read next event from tree and increment
-    //fTree->GetEntry(fEntry++);
     if (fEntry >= fEntries)
         fEntry = 0;
     fTree->GetEntry(fEntry++);
-
     // Weighting completely handled by event file
-    evt->SetEffCrossSection(fEvent->xs*microbarn);
-    evt->SetQ2(fEvent->Q2);
-    evt->SetW2(fEvent->W2);
-    evt->SetAsymmetry(fEvent->A*ppb);
+    if(fEvent){
+      evt->SetEffCrossSection(fEvent->xs*microbarn);
+      evt->SetQ2(fEvent->Q2);
+      evt->SetW2(fEvent->W2);
+      evt->SetAsymmetry(fEvent->A*ppb);
+    }else{
+      evt->SetEffCrossSection(microbarn);
+      evt->SetQ2(999);
+      evt->SetW2(999);
+      evt->SetAsymmetry(1*ppb);
+    }
+    if(!std::isnan(rate) && !std::isinf(rate)){
+      evt->SetRate(rate/s);
+    }
 
     // Loop over all hits in this event
     for (size_t i = 0; i < fHit->size(); i++) {
@@ -135,7 +148,8 @@ void remollGenExternal::SamplePhysics(remollVertex* /* vert */, remollEvent* evt
       // Throw new particle
       G4ThreeVector r(hit.x,hit.y,hit.z);
       G4ThreeVector p(hit.px,hit.py,hit.pz);
-      r += fzOffset*p.unit();
+      G4ThreeVector zdir(0.0,0.0,1.0);
+      if (fzOffset!=0.0) r += fzOffset*zdir.unit();
       evt->ProduceNewParticle(r,p,particlename);
 
       number_of_particles++;
