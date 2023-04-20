@@ -160,14 +160,13 @@
 		z="0.2"/>
     </union>
 
-    <!......target exit window..............>
+    <!--target exit window-->
   <tube name="Tube_1" rmin="0.0" rmax="1.50114/2.0" z="0.02032" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>
   <tube name="Tube_2" rmin="1.50114/2.0" rmax="7.62/2.0" z="0.0635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
   <tube name="Tube_3" rmin="7.62/2.0" rmax="10.16/2.0" z="0.635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>   
   <tube name="Tube_4" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.27" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/> 
   <tube name="Tube_5" rmin="21.717/2.0" rmax="25.3238/2.0" z="0.1524" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>   
  	  
-    <!---------------------------------------> 	  
     <!-- Target upstream beampipe -->
     <polycone name="targetUSBeamPipeOuter_solid"
               aunit="deg" startphi="0" deltaphi="360"
@@ -288,7 +287,7 @@
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     </volume>
-    <!..................target exit window........................>
+    <!--target exit window-->
 
   <volume name="TubeVol1">
     <materialref ref="G4_Be"/>
@@ -337,7 +336,6 @@
       <position name="pos5" unit="cm" x="0.0" y="0.0" z="362.3056-0.0635-0.635-1.27-0.1524/2.0"/>
     </physvol>
     	  
-    <!------------------------------------------------------------->	  
 
     <volume name="targetRegion">
       <materialref ref="VacuumTarg"/>
