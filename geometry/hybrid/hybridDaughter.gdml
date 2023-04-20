@@ -6,6 +6,7 @@
     <constant name="DOFFSET" value="13366.57"/>
     <constant name="DEGRAD" value="PI/180."/>
     <constant name="SEPTANT" value ="360./7"/>
+    <constant name="TWOPI" value="2.*pi"/>	
     <position name="CENTER" unit="mm" x="0" y="0" z="0"/>
 
     <constant name="DELTAT" value ="1.0"/>
