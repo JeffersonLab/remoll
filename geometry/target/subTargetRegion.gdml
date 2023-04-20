@@ -296,19 +296,19 @@
     <auxiliary auxtype="Color" auxvalue="blue"/>   
   </volume>     
   <volume name="TubeVol2">
-    <materialref ref="Al"/>
+    <materialref ref="G4_Al"/>
     <solidref ref="Tube_2"/>
   </volume>    
   <volume name="TubeVol3">
-    <materialref ref="Al"/>
+    <materialref ref="G4_Al"/>
     <solidref ref="Tube_3"/>
   </volume>    
   <volume name="TubeVol4">
-    <materialref ref="Al"/>
+    <materialref ref="G4_Al"/>
     <solidref ref="Tube_4"/>
   </volume>    
   <volume name="TubeVol5">
-    <materialref ref="Al"/>
+    <materialref ref="G4_Al"/>
     <solidref ref="Tube_5"/>
   </volume>   	  
 
