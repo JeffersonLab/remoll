@@ -171,7 +171,7 @@
             <first ref="Tube_target_chamber_1"/>
             <second ref="Tube_target_chamber_3"/>
             <rotation name="rot_1" unit="deg" x="90" y="0" z="0"/>                        
-            <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(166.11/2.0+4.445/2.0-1.04/2.0)*10.0" z="0.0"/>
+            <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(166.11/2.0+4.445/2.0-1.04)*10.0" z="0.0"/>
    </subtraction>
         
   <subtraction name="target_exit_window_subtraction_1">
