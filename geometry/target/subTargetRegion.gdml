@@ -164,14 +164,12 @@
   <!--target chamber geometry-->
   <tube name="Tube_target_chamber_1" rmin="1661.1/2.0" rmax="1750.0/2.0" z="2387.60" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>   
   <tube name="Tube_target_chamber_2" rmin="0.0" rmax="1750.0/2.0" z="73.7" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
-  <tube name="Tube_target_chamber_3" rmin="0.0" rmax="200.0/2.0" z="44.45+2.0" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
-  <tube name="Tube_target_chamber_4" rmin="0.0" rmax="266.7/2.0" z="3.9" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>    	  
 
   <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Tube_target_chamber_3"> 
       <zplane rmin="0.0" rmax="200.0/2.0" z="0"/> 
       <zplane rmin="0.0" rmax="200.0/2.0" z="44.45"/>
       <zplane rmin="0.0" rmax="266.7/2.0" z="44.45"/> 
-      <zplane rmin="0.0" rmax="266.7/2.0" z="44.45+3.90"/>	  
+      <zplane rmin="0.0" rmax="266.7/2.0" z="44.45+30.90"/>	  
   </polycone>
 
     
