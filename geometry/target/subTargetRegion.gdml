@@ -325,7 +325,7 @@
     </volume>  
    <volume name="target_chamber_vol3">
     <materialref ref="G4_Al"/>
-    <solidref ref="target_exit_window_subtraction"/>
+    <solidref ref="target_exit_window_subtraction_1"/>
    </volume>   
 	  
 	  
