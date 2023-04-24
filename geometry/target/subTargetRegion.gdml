@@ -436,7 +436,7 @@
       </physvol>
 
 	    
-	 <~-- target chamber -->
+	 <!-- target chamber -->
     <physvol>
       <volumeref ref="target_chamber_vol1"/>
       <position name="pos6" unit="mm" x="0.0" y="0.0" z="0"/>
