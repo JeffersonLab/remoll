@@ -164,7 +164,9 @@
   <!--target chamber geometry-->
   <tube name="Tube_target_chamber_1" rmin="1661.1/2.0" rmax="1750.0/2.0" z="2387.60" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>   
   <tube name="Tube_target_chamber_2" rmin="0.0" rmax="1750.0/2.0" z="73.7" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
-  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Tube_target_chamber_3"> 
+  <tube name="Tube_target_chamber_3" rmin="0.0" rmax="200.0/2.0" z="39.1" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
+	  
+  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Tube_target_chamber_4"> 
       <zplane rmin="0.0" rmax="266.70/2.0" z="44.45"/> 
       <zplane rmin="0.0" rmax="266.70/2.0" z="44.45-10.4"/>      
       <zplane rmin="0.0" rmax="200.00/2.0" z="44.45-10.4"/> 
@@ -175,7 +177,7 @@
             <first ref="Tube_target_chamber_1"/>
             <second ref="Tube_target_chamber_3"/>
             <rotation name="rot_1" unit="deg" x="90" y="0" z="0"/>                        
-            <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(175.0/2.0-4.445-1.25)*10.0" z="0.0"/>
+            <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(166.11/2.0+3.91/2.0)*10.0" z="0.0"/>
    </subtraction>
         
 
