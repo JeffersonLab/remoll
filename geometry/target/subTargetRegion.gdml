@@ -171,7 +171,7 @@
       <zplane rmin="0.0" rmax="200.0/2.0" z="44.45"/>      
       <zplane rmin="200.0/2.0" rmax="266.70/2.0" z="44.45"/> 
       <zplane rmin="200.0/2.0" rmax="266.70/2.0" z="44.45+10.4"/>       
-     </polycone> 	  
+   </polycone> 	  
     
    <subtraction name="target_exit_window_subtraction">
             <first ref="Tube_target_chamber_1"/>
@@ -326,6 +326,10 @@
     </volume>  
    <volume name="target_chamber_vol3">
     <materialref ref="G4_Al"/>
+    <solidref ref="Tube_target_chamber_3"/>
+    </volume>  	  
+   <volume name="target_chamber_vol4">
+    <materialref ref="G4_Al"/>
     <solidref ref="target_exit_window_subtraction"/>
    </volume>   
 	  
@@ -457,7 +461,7 @@
     </physvol>     
     
     <physvol>
-      <volumeref ref="target_chamber_vol3"/>
+      <volumeref ref="target_chamber_vol4"/>
       <position name="pos9" unit="mm" x="0.0" y="0.0" z="0.0"/>
       <rotation name="rot3" unit="deg" x="90" y="0" z="0"/>            
     </physvol> 
