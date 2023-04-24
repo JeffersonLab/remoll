@@ -189,7 +189,8 @@
   <tube name="Tube_2" rmin="1.50114/2.0" rmax="7.62/2.0" z="0.0635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
   <tube name="Tube_3" rmin="7.62/2.0" rmax="10.16/2.0" z="0.635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>   
   <tube name="Tube_4" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.27" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/> 
-  <tube name="Tube_5" rmin="21.717/2.0" rmax="25.3238/2.0" z="0.1524" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>   
+  <tube name="Tube_5" rmin="21.717/2.0" rmax="25.3238/2.0" z="0.1524" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/> 
+  <tube name="Tube_6" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.04" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>    	  
 	  
 	  
  	  
@@ -345,19 +346,28 @@
   <volume name="TubeVol2">
     <materialref ref="G4_Al"/>
     <solidref ref="Tube_2"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
   </volume>    
   <volume name="TubeVol3">
     <materialref ref="G4_Al"/>
     <solidref ref="Tube_3"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
   </volume>    
   <volume name="TubeVol4">
     <materialref ref="G4_Al"/>
     <solidref ref="Tube_4"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
   </volume>    
   <volume name="TubeVol5">
     <materialref ref="G4_Al"/>
     <solidref ref="Tube_5"/>
-  </volume>   	  
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
+  </volume> 
+  <volume name="TubeVol6">
+    <materialref ref="Al"/>
+    <solidref ref="Tube_6"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           
+  </volume> 	  
 
  
     <volume name="targetRegion">
@@ -463,6 +473,36 @@
       <position name="pos9" unit="mm" x="0.0" y="0.0" z="0.0"/>
       <rotation name="rot3" unit="deg" x="90" y="0" z="0"/>            
     </physvol> 
+	    
+ <physvol>
+      <volumeref ref="TubeVol6"/>
+      <position name="pos6_a" unit="cm" x="0.0" y="0.0" z="87.66-0.02032/2.0-1.04/2.0"/>
+    </physvol>
+    
+   <physvol>
+      <volumeref ref="TubeVol1"/>
+      <position name="pos1" unit="cm" x="0.0" y="0.0" z="87.66-0.02032/2.0"/>
+    </physvol>
+   
+    <physvol>
+      <volumeref ref="TubeVol2"/>
+      <position name="pos2" unit="cm" x="0.0" y="0.0" z="87.66+0.0635/2.0"/>
+    </physvol>
+    
+     <physvol>
+      <volumeref ref="TubeVol3"/>
+      <position name="pos3" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635/2.0"/>
+    </physvol>
+    
+    <physvol>
+      <volumeref ref="TubeVol4"/>
+      <position name="pos4" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27/2.0"/>
+    </physvol>
+    
+    <physvol>
+      <volumeref ref="TubeVol5"/>
+      <position name="pos5" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0"/>
+    </physvol>	    
 	    
    
     </volume>
