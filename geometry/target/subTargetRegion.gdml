@@ -164,21 +164,21 @@
   <!--target chamber geometry-->
   <tube name="Tube_target_chamber_1" rmin="1661.1/2.0" rmax="1750.0/2.0" z="2387.60" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>   
   <tube name="Tube_target_chamber_2" rmin="0.0" rmax="1750.0/2.0" z="73.7" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
-  <tube name="Tube_target_chamber_3" rmin="0.0" rmax="200.0/2.0" z="(1750.0/2.0)-(1661.10/2.0)" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/>  
+  <tube name="Tube_target_chamber_3" rmin="0.0" rmax="200.0/2.0" z="(1750.0/2.0)-(1661.10/2.0)-10.4" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/>  
   <tube name="Tube_target_chamber_4" rmin="0.0" rmax="266.7/2.0" z="10.4" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/>  
     
    <subtraction name="target_exit_window_subtraction">
             <first ref="Tube_target_chamber_1"/>
             <second ref="Tube_target_chamber_3"/>
             <rotation name="rot_1" unit="deg" x="90" y="0" z="0"/>                        
-            <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(166.11/2.0+4.445/2.0)*10.0" z="0.0"/>
+            <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(166.11/2.0+4.445/2.0-10.4/2.0)*10.0" z="0.0"/>
    </subtraction>
         
   <subtraction name="target_exit_window_subtraction_1">
             <first ref="target_exit_window_subtraction"/>
             <second ref="Tube_target_chamber_4"/>
             <rotation name="rot_2" unit="deg" x="90" y="0" z="0"/>                      
-            <position name="pos_targ_exit_2" unit="mm" x="0.0" y="-(175.0/2.0-1.04/2.0+0.1)*10.0" z="0.0"/>
+            <position name="pos_targ_exit_2" unit="mm" x="0.0" y="-(175.0/2.0-1.04/2.0)*10.0" z="0.0"/>
   </subtraction>  
 
 	  
