@@ -4,16 +4,42 @@
     xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
+  <constant name="SAM_ring1_Z" value="26171.585"/><!--Z location of SAM upstream ring (SAM1, SAM3, SAM5, and SAM7) from hall center-->
+  <constant name="SAM_ring2_Z" value="26235.085"/><!--Z location of SAM downstream ring (SAM2, SAM4, SAM6, and SAM8) from hall center-->
+  <constant name="SAM_sphere_centerR" value="43"/><!--radial position of the center of spherical cap for SAM vacuum cans-->
+  <constant name="SAM_can_length" value="151.82"/><!--length of SAM vacuum cans from SAM pipe inner surface to center of spherical cap-->
+  <constant name="SAM_quartz_Rin" value="50"/><!--radial position of the inner face of SAM quartz-->
+  <constant name="SAM_quartz_length" value="16"/><!--radial length of SAM quartz including bevel-->
 </define>
 
 <materials>
 </materials>
 
   <solids>
-    <box name = "SAM_Detectors" x="20" y="13" z="6" unit="mm"/>
-    <tube name = "SAM_cans" rmin="17.4625" rmax="19.05" z="142" deltaphi="360" startphi="0" aunit="deg" lunit= "mm"/>
-    <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="90" lunit="mm" name="sam_can_spherical_cap"
-            rmin="18.796"
+<!--    <box name = "SAM_quartz" x="20" y="13" z="6" unit="mm"/> -->
+    <xtru name="SAM_quartz" lunit="mm">
+      <twoDimVertex x="-8" y="-3"/>
+      <twoDimVertex x="-8" y="3"/>
+      <twoDimVertex x="8" y="3"/>
+      <twoDimVertex x="2" y="-3"/>
+      <section zOrder="1" zPosition="-10" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="10" xOffset="0" yOffset="0" scalingFactor="1"/>
+    </xtru>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAM_flanges_placeholder">
+      <zplane rmin="28.575" rmax="38.575" z="0"/>
+      <zplane rmin="28.575" rmax="38.575" z="37.78"/>
+      <zplane rmin="19.05" rmax="57.15" z="37.78"/>
+      <zplane rmin="19.05" rmax="57.15" z="116.11"/>
+    </polycone>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAM_cans">
+      <zplane rmin="17.399" rmax="19.05" z="0"/>
+      <zplane rmin="17.399" rmax="19.05" z="113.72"/>
+      <zplane rmin="18.7452" rmax="19.05" z="126.42"/>
+      <zplane rmin="18.7452" rmax="19.05" z="151.82"/>
+    </polycone>
+
+    <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="90" lunit="mm" name="SAM_can_spherical_cap"
+            rmin="18.7452"
             rmax="19.05"/>
     
     <polycone name="solid_DSbeampipe_vacuum"
@@ -113,21 +139,27 @@
 
   <structure>
 
-    <volume name="logic_SAM_Detectors">
+    <volume name="logic_SAM_quartz">
       <materialref ref="G4_SILICON_DIOXIDE"/>
-      <solidref ref="SAM_Detectors"/>
+      <solidref ref="SAM_quartz"/>
+      <auxiliary auxtype="SensDet" auxvalue="SAMquartzDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="1760"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
 
     <volume name="SAM_cans_logic">
       <materialref ref="G4_Al"/>
       <solidref ref="SAM_cans"/>
+      <auxiliary auxtype="SensDet" auxvalue="SAMcanDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="1765"/>
       <auxiliary auxtype="Color" auxvalue="Red"/>
     </volume>
 
     <volume name="SAM_can_spherical_logic">
       <materialref ref="G4_Al"/>
-      <solidref ref="sam_can_spherical_cap"/>
+      <solidref ref="SAM_can_spherical_cap"/>
+      <auxiliary auxtype="SensDet" auxvalue="SAMcapDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="1766"/>
       <auxiliary auxtype="Color" auxvalue="Red"/>
     </volume>
 
@@ -185,6 +217,13 @@
       <auxiliary auxtype="DetNo" auxvalue="805"/>
       <auxiliary auxtype="Color" auxvalue="Blue"/>
     </volume>
+    <volume name="logic_SAM_flanges_placeholder">
+      <materialref ref="G4_Al"/>
+      <solidref ref="SAM_flanges_placeholder"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="807"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+    </volume>
 
     <volume name="logic_SAMpipeWithFlange">
       <materialref ref="G4_Al"/>
@@ -222,152 +261,198 @@
 	<volumeref ref="logic_Neckdown_bellows_flange_2"/>
       </physvol>
 
-      <physvol name="SAM_support_placeholder">
-	<volumeref ref="logic_SAM_support_placeholder"/>
+      <physvol name="SAM_flanges_placeholder_1">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_1" unit="deg" x="-90" y="-180"/>
+        <position name="flanges_position_1" x="0" y="203.2" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="Sam_can_1">
-	<volumeref ref="SAM_cans_logic"/>
-	<rotation name="can_rotation1" x="90" y="45" unit="deg"/>
-	<position name="can_position1" x="77.425+10.035" y="-77.425-10.035" z="26235.085"/>
-      </physvol>
-
-      <physvol name="SAM_Detectors_1">
-        <volumeref ref="logic_SAM_Detectors"/>
-        <rotation name="quartz_rotation1"  z="-45" unit="deg"/>
-        <position name="quartz_position1" x="16.425+25.55" y="-16.425-25.55" z="26235.085"/>
-      </physvol>
-
-      <physvol name="Sam_sphere_1">
-        <volumeref ref="SAM_can_spherical_logic"/>
-        <rotation name="sphere_rotation1" x="90" y="45" unit="deg"/>
-        <position name="sphere_position1" x="44-12+5.15" y="-44+12-5.15" z="26235.085"/>
-      </physvol>
-     
-      <physvol name="SAM_Detectors_2">
-        <volumeref ref="logic_SAM_Detectors"/>
-        <position name="quartz_position2" x="0" y="-51.425-6.75" z="26171.585"/>
-      </physvol>
-
-      <physvol name="Sam_can_2">
+      <physvol name="SAM_can_1">
         <volumeref ref="SAM_cans_logic"/>
-        <rotation name="can_rotation2" unit="deg" x="90"/>
-        <position name="can_position2" x="0" y="-77.425-45" z="26171.585"/>
+        <rotation name="can_rotation1" unit="deg" x="-90"/>
+        <position name="can_position1" x="0" y="(SAM_can_length+SAM_sphere_centerR)" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="Sam_sphere_2">
+      <physvol name="SAM_quartz_1">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation1" unit="deg" x="-90" y="-90"/>
+        <position name="quartz_position1" x="0" y="(SAM_quartz_Rin+SAM_quartz_length/2)" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_1">
         <volumeref ref="SAM_can_spherical_logic"/>
-        <rotation name="sphere_rotation2" unit="deg" x="90"/>
-        <position name="sphere_position2" x="0" y="-45.25-6" z="26171.585"/>
+        <rotation name="sphere_rotation1" unit="deg" x="-90"/>
+        <position name="sphere_position1" x="0" y="SAM_sphere_centerR" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="Sam_can_3">
+      <physvol name="SAM_flanges_placeholder_2">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_2" unit="deg" x="-90" y="-225"/>
+        <position name="flanges_position_2" x="203.2*cos(5*pi/4)" y="-203.2*sin(5*pi/4)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_2">
         <volumeref ref="SAM_cans_logic"/>
-        <rotation name="can_rotation3" unit="deg" x="90" y="-45"/>
-        <position name="can_position3" x="77.425+10.035" y="77.425+10.035" z="26235.085"/>
+        <rotation name="can_rotation2" unit="deg" x="-90" y="-45"/>
+        <position name="can_position2" x="-(SAM_can_length+SAM_sphere_centerR)*sin(2*pi/8)" y="(SAM_can_length+SAM_sphere_centerR)*cos(2*pi/8)" z="SAM_ring2_Z"/>
       </physvol>
 
-      <physvol name="SAM_Detectors_3">
-        <volumeref ref="logic_SAM_Detectors"/>
-        <rotation name="quartz_rotation3"  z="45" unit="deg"/>
-        <position name="quartz_position3" x="16.425+25.55" y="16.425+25.55" z="26235.085"/>
+      <physvol name="SAM_quartz_2">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation2"  unit="deg" x="-90" y="-135"/>
+        <position name="quartz_position2" x="-(SAM_quartz_Rin+SAM_quartz_length/2)*sin(2*pi/8)" y="(SAM_quartz_Rin+SAM_quartz_length/2)*cos(2*pi/8)" z="SAM_ring2_Z"/>
       </physvol>
 
-      <physvol name="Sam_sphere_3">
+      <physvol name="SAM_sphere_2">
         <volumeref ref="SAM_can_spherical_logic"/>
-        <rotation name="sphere_rotation3" unit="deg" x="-90" y="45"/>
-        <position name="sphere_position3" x="44-12+5.15" y="44-12+5.15" z="26235.085"/>
+        <rotation name="sphere_rotation2" unit="deg" x="-90" y="-45"/>
+        <position name="sphere_position2" x="-SAM_sphere_centerR*sin(2*pi/8)" y="SAM_sphere_centerR*cos(2*pi/8)" z="SAM_ring2_Z"/>
       </physvol>
 
-      <physvol name="Sam_can_4">
+      <physvol name="SAM_flanges_placeholder_3">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_3" unit="deg" x="-90" y="-270"/>
+        <position name="flanges_position_3" x="-203.2" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_3">
         <volumeref ref="SAM_cans_logic"/>
-        <rotation name="can_rotation4" unit="deg" y="90"/>
-        <position name="can_position4" x="-77.425-45" y="0" z="26171.585"/>
+        <rotation name="can_rotation3" unit="deg" y="-90"/>
+        <position name="can_position3" x="-(SAM_can_length+SAM_sphere_centerR)" y="0" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="SAM_Detectors_4">
-        <volumeref ref="logic_SAM_Detectors"/>
-        <rotation name="can_rotation4" unit="deg" z="90"/> 
-        <position name="quartz_position4" x="-51.425-6.75" y="0" z="26171.585"/>
+      <physvol name="SAM_quartz_3">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation3" unit="deg" x="-90" y="-180"/>
+        <position name="quartz_position3" x="-(SAM_quartz_Rin+SAM_quartz_length/2)" y="0" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="Sam_sphere_4">
+      <physvol name="SAM_sphere_3">
         <volumeref ref="SAM_can_spherical_logic"/>
-        <rotation name="sphere_rotation4" unit="deg" y="-90"/>
-        <position name="sphere_position4" x="-45.25-6" y="0" z="26171.585"/>
+        <rotation name="sphere_rotation3" unit="deg" y="-90"/>
+        <position name="sphere_position3" x="-SAM_sphere_centerR" y="0" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="sam_can_5">
+      <physvol name="SAM_flanges_placeholder_4">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_4" unit="deg" x="-90" y="-315"/>
+        <position name="flanges_position_4" x="203.2*cos(5*pi/4)" y="203.2*sin(5*pi/4)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_4">
         <volumeref ref="SAM_cans_logic"/>
-        <rotation name="can_rotation5" unit="deg" x="90" y="45"/>
-        <position name="can_position5" x="-77.425-10.035" y="77.425+10.035" z="26235.085"/>
+        <rotation name="can_rotation4" unit="deg" x="90" y="-45"/>
+        <position name="can_position4" x="-(SAM_can_length+SAM_sphere_centerR)*sin(2*pi/8)" y="-(SAM_can_length+SAM_sphere_centerR)*cos(2*pi/8)" z="SAM_ring2_Z"/>
       </physvol>
 
-      <physvol name="SAM_Detectors_5">
-        <volumeref ref="logic_SAM_Detectors"/>
-        <rotation name="quartz_rotation5"  z="-45" unit="deg"/>
-        <position name="quartz_position5" x="-16.425-25.55" y="16.425+25.55" z="26235.085"/>
+      <physvol name="SAM_quartz_4">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation4" unit="deg" x="-90" y="135"/>
+        <position name="quartz_position4" x="-(SAM_quartz_Rin+SAM_quartz_length/2)*sin(2*pi/8)" y="-(SAM_quartz_Rin+SAM_quartz_length/2)*cos(2*pi/8)" z="SAM_ring2_Z"/>
       </physvol>
 
-      <physvol name="sam_sphere_5">
+      <physvol name="SAM_sphere_4">
         <volumeref ref="SAM_can_spherical_logic"/>
-        <rotation name="sphere_rotation5" unit="deg" x="-90" y="-45"/>
-        <position name="sphere_position5" x="-44+12-5.15" y="44-12+5.15" z="26235.085"/>
+        <rotation name="sphere_rotation4" unit="deg" x="90" y="-45"/>
+        <position name="sphere_position4" x="-SAM_sphere_centerR*sin(2*pi/8)" y="-SAM_sphere_centerR*cos(2*pi/8)" z="SAM_ring2_Z"/>
       </physvol>
 
-      <physvol name="Sam_can_6">
+      <physvol name="SAM_flanges_placeholder_5">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_5" unit="deg" x="-90" y="0"/>
+        <position name="flanges_position_5" x="0" y="-203.2" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_5">
         <volumeref ref="SAM_cans_logic"/>
-        <rotation name="can_rotation6" unit="deg" x="-90"/>
-        <position name="can_position6" x="0" y="77.425+45" z="26171.585"/>
+        <rotation name="can_rotation5" unit="deg" x="90"/>
+        <position name="can_position5" x="0" y="-(SAM_can_length+SAM_sphere_centerR)" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="SAM_Detectors_6">
-        <volumeref ref="logic_SAM_Detectors"/>
-        <position name="quartz_position6" x="0" y="51.425+6.75" z="26171.585"/>
+      <physvol name="SAM_quartz_5">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation5" unit="deg" x="-90" y="90"/>
+        <position name="quartz_position5" x="0" y="-(SAM_quartz_Rin+SAM_quartz_length/2)" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="Sam_sphere_6">
+      <physvol name="SAM_sphere_5">
         <volumeref ref="SAM_can_spherical_logic"/>
-        <rotation name="sphere_rotation6" unit="deg" x="-90"/>
-        <position name="sphere_position6" x="0" y="45.25+6" z="26171.585"/>
+        <rotation name="sphere_rotation5" unit="deg" x="90"/>
+        <position name="sphere_position5" x="0" y="-SAM_sphere_centerR" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="Sam_can_7">
+      <physvol name="SAM_flanges_placeholder_6">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_6" unit="deg" x="-90" y="-45"/>
+        <position name="flanges_position_6" x="203.2*cos(pi/4)" y="-203.2*sin(pi/4)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_6">
         <volumeref ref="SAM_cans_logic"/>
-        <rotation name="can_rotation7" unit="deg" x="90" y="-45"/>
-        <position name="can_position7" x="-77.425-10.035" y="-77.425-10.035" z="26235.085"/>
+        <rotation name="can_rotation6" unit="deg" x="90" y="45"/>
+        <position name="can_position6" x="(SAM_can_length+SAM_sphere_centerR)*sin(2*pi/8)" y="-(SAM_can_length+SAM_sphere_centerR)*cos(2*pi/8)" z="SAM_ring2_Z"/>
       </physvol>
 
-      <physvol name="SAM_Detectors_7">
-        <volumeref ref="logic_SAM_Detectors"/>
-        <rotation name="quartz_rotation7"  z="45" unit="deg"/>
-        <position name="quartz_position7" x="-16.425-25.55" y="-16.425-25.55" z="26235.085"/>
+      <physvol name="SAM_quartz_6">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation6" unit="deg" x="-90" y="45"/>
+        <position name="quartz_position6" x="(SAM_quartz_Rin+SAM_quartz_length/2)*sin(2*pi/8)" y="-(SAM_quartz_Rin+SAM_quartz_length/2)*cos(2*pi/8)" z="SAM_ring2_Z"/>
       </physvol>
 
-      <physvol name="Sam_sphere_7">
+      <physvol name="SAM_sphere_6">
         <volumeref ref="SAM_can_spherical_logic"/>
-        <rotation name="sphere_rotation7" unit="deg" x="90" y="-45"/>
-        <position name="sphere_position7" x="-44+12-5.15" y="-44+12-5.15" z="26235.085"/>
+        <rotation name="sphere_rotation6" unit="deg" x="90" y="45"/>
+        <position name="sphere_position6" x="SAM_sphere_centerR*sin(2*pi/8)" y="-SAM_sphere_centerR*cos(2*pi/8)" z="SAM_ring2_Z"/>
       </physvol>
 
-      <physvol name="Sam_can_8">
+      <physvol name="SAM_flanges_placeholder_7">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_7" unit="deg" x="-90" y="-90"/>
+        <position name="flanges_position_7" x="203.2" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_7">
         <volumeref ref="SAM_cans_logic"/>
-        <rotation name="can_rotation8" unit="deg" y="-90"/>
-        <position name="can_position8" x="77.425+45" y="0" z="26171.585"/>
+        <rotation name="can_rotation7" unit="deg" y="90"/>
+        <position name="can_position7" x="(SAM_can_length+SAM_sphere_centerR)" y="0" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="SAM_Detectors_8">
-        <volumeref ref="logic_SAM_Detectors"/>
-        <rotation name="can_rotation8" unit="deg" z="90"/> 
-        <position name="quartz_position8" x="51.425+6.75" y="0" z="26171.585"/>
+      <physvol name="SAM_quartz_7">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation7" unit="deg" x="-90" y="0"/>
+        <position name="quartz_position7" x="SAM_quartz_Rin+SAM_quartz_length/2" y="0" z="SAM_ring1_Z"/>
       </physvol>
 
-      <physvol name="Sam_sphere_8">
+      <physvol name="SAM_sphere_7">
         <volumeref ref="SAM_can_spherical_logic"/>
-        <rotation name="sphere_rotation8" unit="deg" y="90"/>
-        <position name="sphere_position8" x="45.25+6" y="0" z="26171.585"/>
+        <rotation name="sphere_rotation7" unit="deg" y="90"/>
+        <position name="sphere_position7" x="SAM_sphere_centerR" y="0" z="SAM_ring1_Z"/>
       </physvol>
-    
+
+      <physvol name="SAM_flanges_placeholder_8">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_8" unit="deg" x="-90" y="-135"/>
+        <position name="flanges_position_8" x="-203.2*cos(3*pi/4)" y="203.2*sin(3*pi/4)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_8">
+        <volumeref ref="SAM_cans_logic"/>
+        <rotation name="can_rotation8" unit="deg" x="-90" y="45"/>
+        <position name="can_position8" x="(SAM_can_length+SAM_sphere_centerR)*sin(2*pi/8)" y="(SAM_can_length+SAM_sphere_centerR)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_quartz_8">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation8" unit="deg" x="-90" y="-45"/>
+        <position name="quartz_position8" x="(SAM_quartz_Rin+SAM_quartz_length/2)*sin(2*pi/8)" y="(SAM_quartz_Rin+SAM_quartz_length/2)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_8">
+        <volumeref ref="SAM_can_spherical_logic"/>
+        <rotation name="sphere_rotation8" unit="deg" x="-90" y="45"/>
+        <position name="sphere_position8" x="SAM_sphere_centerR*sin(2*pi/8)" y="SAM_sphere_centerR*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
       <physvol name="SAMpipeWithFlange">
 	<volumeref ref="logic_SAMpipeWithFlange"/>
       </physvol>
