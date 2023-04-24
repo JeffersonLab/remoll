@@ -364,7 +364,7 @@
     <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
   </volume> 
   <volume name="TubeVol6">
-    <materialref ref="Al"/>
+    <materialref ref="G4_Al"/>
     <solidref ref="Tube_6"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           
   </volume> 	  
