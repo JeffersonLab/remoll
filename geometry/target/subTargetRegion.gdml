@@ -161,12 +161,36 @@
 		z="0.2"/>
     </union>
 
-    <!--target exit window-->
+  <!--target chamber geometry-->
+  <tube name="Tube_target_chamber_1" rmin="1661.1/2.0" rmax="1750.0/2.0" z="2387.60" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>   
+  <tube name="Tube_target_chamber_2" rmin="0.0" rmax="1750.0/2.0" z="73.7" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
+  <tube name="Tube_target_chamber_3" rmin="0.0" rmax="200.0/2.0" z="(1750.0/2.0)-(1661.10/2.0)+30.0" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/>  
+  <tube name="Tube_target_chamber_4" rmin="0.0" rmax="266.7/2.0" z="10.4" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/>  
+    
+   <subtraction name="target_exit_window_subtraction">
+            <first ref="Tube_target_chamber_1"/>
+            <second ref="Tube_target_chamber_3"/>
+            <rotation name="rot_check" unit="deg" x="90" y="0" z="0"/>                        
+            <position name="pos_targ_exit" unit="mm" x="0.0" y="-(166.11/2.0+4.445/2.0)*10.0" z="0.0"/>
+   </subtraction>
+        
+  <subtraction name="target_exit_window_subtraction_1">
+            <first ref="target_exit_window_subtraction"/>
+            <second ref="Tube_target_chamber_4"/>
+            <rotation name="rot_check" unit="deg" x="90" y="0" z="0"/>                      
+            <position name="pos_targ_exit" unit="mm" x="0.0" y="-(175.0/2.0-1.04/2.0+0.1)*10.0" z="0.0"/>
+  </subtraction>  
+
+	  
+	  
+  <!--target exit window-->
   <tube name="Tube_1" rmin="0.0" rmax="1.50114/2.0" z="0.02032" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>
   <tube name="Tube_2" rmin="1.50114/2.0" rmax="7.62/2.0" z="0.0635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
   <tube name="Tube_3" rmin="7.62/2.0" rmax="10.16/2.0" z="0.635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>   
   <tube name="Tube_4" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.27" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/> 
   <tube name="Tube_5" rmin="21.717/2.0" rmax="25.3238/2.0" z="0.1524" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>   
+	  
+	  
  	  
     <!-- Target upstream beampipe -->
     <polycone name="targetUSBeamPipeOuter_solid"
@@ -288,6 +312,26 @@
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     </volume>
+  
+       <!-- target chamber>
+
+    <volume name="target_chamber_vol1">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Tube_target_chamber_1"/>
+    </volume> 
+   <volume name="target_chamber_vol2">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Tube_target_chamber_2"/>
+    </volume>  
+   <volume name="target_chamber_vol3">
+    <materialref ref="G4_Al"/>
+    <solidref ref="target_exit_window_subtraction_1"/>
+   </volume>   
+	  
+	  
+	  
+	  
+	  
     <!--target exit window-->
 
   <volume name="TubeVol1">
@@ -391,6 +435,32 @@
 	<volumeref ref="tgt2US_pipe2_DSflange_logic"/>
       </physvol>
 
+	    
+	 <~-- target chamber -->
+    <physvol>
+      <volumeref ref="target_chamber_vol1"/>
+      <position name="pos6" unit="mm" x="0.0" y="0.0" z="0"/>
+      <rotation name="rot0" unit="deg" x="90" y="0" z="0"/>      
+    </physvol>
+    
+    <physvol>
+      <volumeref ref="target_chamber_vol2"/>
+      <position name="pos7" unit="mm" x="0.0" y="(238.76/2.0+7.37/2)*10.0" z="0.0"/>
+      <rotation name="rot1" unit="deg" x="90" y="0" z="0"/>            
+    </physvol>  
+    
+    <physvol>
+      <volumeref ref="target_chamber_vol2"/>
+      <position name="pos8" unit="mm" x="0.0" y="(-238.76/2.0-7.37/2)*10.0" z="0.0"/>
+      <rotation name="rot2" unit="deg" x="90" y="0" z="0"/>            
+    </physvol>     
+    
+    <physvol>
+      <volumeref ref="target_chamber_vol3"/>
+      <position name="pos9" unit="mm" x="0.0" y="0.0" z="0.0"/>
+      <rotation name="rot3" unit="deg" x="90" y="0" z="0"/>            
+    </physvol> 
+	    
       <!--target exit window-->
   <physvol>
       <volumeref ref="TubeVol1"/>
