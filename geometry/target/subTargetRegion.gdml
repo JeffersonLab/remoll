@@ -327,11 +327,7 @@
    <volume name="target_chamber_vol3">
     <materialref ref="G4_Al"/>
     <solidref ref="target_exit_window_subtraction"/>
-   </volume>   
-   <volume name="target_chamber_vol4">
-    <materialref ref="G4_Al"/>
-    <solidref ref="Tube_target_chamber_4"/>
-    </volume> 	  
+   </volume>   	  
    <volume name="target_chamber_vol5">
     <materialref ref="G4_Al"/>
     <solidref ref="Tube_target_chamber_3"/>
