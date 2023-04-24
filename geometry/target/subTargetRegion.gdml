@@ -192,7 +192,7 @@
   <tube name="Tube_5" rmin="21.717/2.0" rmax="25.3238/2.0" z="0.1524" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
   <tube name="Tube_6" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.04" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>      
  
-	  <!-- target exit window to US beam pipe-->  
+	  <!-- target exit window to US beam pipe -->  
 	  
  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="connecting_pipe_1"> 
       <zplane rmin="19.68/2.0" rmax="20.32/2.0" z="0"/> 
@@ -346,13 +346,14 @@
 	  
 	  
 	  
-    <!--target exit window to US beam pipe-->
+    <!-- target exit window to US beam pipe -->
 	  
   <volume name="connecting_pipe_volume_1">
     <materialref ref="G4_Al"/>
     <solidref ref="connecting_pipe_1"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>   	 
   </volume> 
+	  
   <volume name="flange_vol_1">
     <materialref ref="G4_Al"/>
     <solidref ref="flange_1"/>
@@ -389,7 +390,7 @@
     <solidref ref="Tube_6"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           
   </volume> 	  
-<!-- target exit window >
+<!-- target exit window -->
  
     <volume name="targetRegion">
       <materialref ref="VacuumTarg"/>
