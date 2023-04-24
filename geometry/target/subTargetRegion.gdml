@@ -166,7 +166,14 @@
   <tube name="Tube_target_chamber_2" rmin="0.0" rmax="1750.0/2.0" z="73.7" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
   <tube name="Tube_target_chamber_3" rmin="0.0" rmax="200.0/2.0" z="44.45+2.0" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
   <tube name="Tube_target_chamber_4" rmin="0.0" rmax="266.7/2.0" z="3.9" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>    	  
-	  
+
+  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Tube_target_chamber_3"> 
+      <zplane rmin="0.0" rmax="200.0/2.0" z="0"/> 
+      <zplane rmin="0.0" rmax="200.0/2.0" z="44.45"/>
+      <zplane rmin="0.0" rmax="266.7/2.0" z="44.45"/> 
+      <zplane rmin="0.0" rmax="266.7/2.0" z="44.45+3.90"/>	  
+  </polycone>
+
     
    <subtraction name="target_exit_window_subtraction">
             <first ref="Tube_target_chamber_1"/>
@@ -175,13 +182,7 @@
             <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(1750.0/2.0-44.45)" z="0.0"/>
    </subtraction>
         
-   
-   <subtraction name="target_exit_window_subtraction_1">
-            <first ref="target_exit_window_subtraction"/>
-            <second ref="Tube_target_chamber_4"/>
-            <rotation name="rot_2" unit="deg" x="90" y="0" z="0"/>                        
-            <position name="pos_targ_exit_2" unit="mm" x="0.0" y="-(1750.0/2.0-3.9/2.0)" z="0.0"/>
-   </subtraction>
+ 
 
 	  
 	  
@@ -327,7 +328,7 @@
     </volume>    
    <volume name="target_chamber_vol3">
     <materialref ref="G4_Al"/>
-    <solidref ref="target_exit_window_subtraction_1"/>
+    <solidref ref="target_exit_window_subtraction"/>
    </volume>   
    <volume name="target_chamber_vol4">
     <materialref ref="G4_Al"/>
