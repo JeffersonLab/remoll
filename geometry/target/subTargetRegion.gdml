@@ -313,7 +313,7 @@
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     </volume>
   
-       <!-- target chamber>
+       <!-- target chamber-->
 
     <volume name="target_chamber_vol1">
     <materialref ref="G4_Al"/>
