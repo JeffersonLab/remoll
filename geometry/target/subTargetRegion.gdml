@@ -173,12 +173,12 @@
       <zplane rmin="0.0" rmax="200.00/2.0" z="0"/>       
    </polycone> 	  
     
-   <subtraction name="target_exit_window_subtraction">
+   <union name="target_exit_window_subtraction">
             <first ref="Tube_target_chamber_1"/>
             <second ref="Tube_target_chamber_3"/>
             <rotation name="rot_1" unit="deg" x="90" y="0" z="0"/>                        
             <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(166.11/2.0+3.91/2.0)*10.0" z="0.0"/>
-   </subtraction>
+   </union>
         
 
 
