@@ -461,33 +461,7 @@
       <rotation name="rot3" unit="deg" x="90" y="0" z="0"/>            
     </physvol> 
 	    
-      <!--target exit window-->
-  <physvol>
-      <volumeref ref="TubeVol1"/>
-      <position name="pos1" unit="cm" x="0.0" y="0.0" z="0.0+0.02032/2.0+150./2.0+7.47"/>
-    </physvol>
    
-    <physvol>
-      <volumeref ref="TubeVol2"/>
-      <position name="pos2" unit="cm" x="0.0" y="0.0" z="0.0-0.0635/2.0+150./2.0+7.47"/>
-    </physvol>
-    
-     <physvol>
-      <volumeref ref="TubeVol3"/>
-      <position name="pos3" unit="cm" x="0.0" y="0.0" z="0.0-0.0635-0.635/2.0+150./2.0+7.47"/>
-    </physvol>
-    
-    <physvol>
-      <volumeref ref="TubeVol4"/>
-      <position name="pos4" unit="cm" x="0.0" y="0.0" z="0.0-0.0635-0.635-1.27/2.0+150./2.0+7.47"/>
-    </physvol>
-    
-    <physvol>
-      <volumeref ref="TubeVol5"/>
-      <position name="pos5" unit="cm" x="0.0" y="0.0" z="0.0-0.0635-0.635-1.27-0.1524/2.0+150./2.0+7.47"/>
-    </physvol>
-    	  
-
     </volume>
 
   </structure>
