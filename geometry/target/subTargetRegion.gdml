@@ -169,7 +169,7 @@
       <zplane rmin="0.0" rmax="200.0/2.0" z="0"/> 
       <zplane rmin="0.0" rmax="200.0/2.0" z="44.45"/>
       <zplane rmin="0.0" rmax="266.7/2.0" z="44.45"/> 
-      <zplane rmin="0.0" rmax="266.7/2.0" z="44.45+30.90"/>	  
+      <zplane rmin="0.0" rmax="266.7/2.0" z="44.45+3.90"/>	  
   </polycone>
 
     
