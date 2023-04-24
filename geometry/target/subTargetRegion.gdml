@@ -191,8 +191,18 @@
   <tube name="Tube_4" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.27" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/> 
   <tube name="Tube_5" rmin="21.717/2.0" rmax="25.3238/2.0" z="0.1524" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
   <tube name="Tube_6" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.04" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>      
+ 
+	  <!-- target exit window to US beam pipe-->  
 	  
-	  
+ <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="connecting_pipe_1"> 
+      <zplane rmin="19.68/2.0" rmax="20.32/2.0" z="0"/> 
+      <zplane rmin="19.68/2.0" rmax="20.32/2.0" z="0-13.44"/> 
+ </polycone>
+ <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="flange_1"> 
+      <zplane rmin="19.05/2.0" rmax="36.83/2.0" z="0"/> 
+      <zplane rmin="19.05/2.0" rmax="36.83/2.0" z="0-2.84"/> 
+  </polycone>
+    	  
  	  
     <!-- Target upstream beampipe -->
     <polycone name="targetUSBeamPipeOuter_solid"
@@ -336,7 +346,18 @@
 	  
 	  
 	  
-    <!--target exit window-->
+    <!--target exit window to US beam pipe-->
+	  
+  <volume name="connecting_pipe_volume_1">
+    <materialref ref="G4_Al"/>
+    <solidref ref="connecting_pipe_1"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>   	 
+  </volume> 
+  <volume name="flange_vol_1">
+    <materialref ref="G4_Al"/>
+    <solidref ref="flange_1"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>   	 	  
+  </volume>   	  
 
   <volume name="TubeVol1">
     <materialref ref="G4_Be"/>
@@ -368,7 +389,7 @@
     <solidref ref="Tube_6"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           
   </volume> 	  
-
+<!-- target exit window >
  
     <volume name="targetRegion">
       <materialref ref="VacuumTarg"/>
@@ -503,7 +524,16 @@
       <volumeref ref="TubeVol5"/>
       <position name="pos5" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0"/>
     </physvol>	    
-	    
+
+    <physvol>
+      <volumeref ref="connecting_pipe_volume_1"/>
+      <position name="pipe_pos_1" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0+13.44"/>
+    </physvol> 
+    
+    <physvol>
+      <volumeref ref="flange_vol_1"/>
+      <position name="flange_pos_1" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0+13.44+2.84"/>
+    </physvol>	  
    
     </volume>
 
