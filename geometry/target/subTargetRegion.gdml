@@ -386,11 +386,6 @@
       <solidref ref="targetRegion_solid"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
 
-      <physvol>
-	<volumeref ref="TargWindow_logic"/>
-	<position name="targ_vac_window" unit="mm" x="0" y="0" z="1500"/>
-      </physvol>
-
       <physvol name="targetLadder">
 	<file name="target/targetLadder.gdml"/>
       </physvol>
