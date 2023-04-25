@@ -475,38 +475,38 @@
 	 <!-- target exit window placement-->	    
  <physvol>
       <volumeref ref="TubeVol6"/>
-      <position name="pos6_a" unit="cm" x="0.0" y="0.0" z="87.66-0.02032/2.0-1.04/2.0"/>
+      <position name="pos6_a" unit="cm" x="0.0" y="0.0" z="877.01-0.2032/2.0-10.4/2.0"/>
  </physvol>
  <physvol>
       <volumeref ref="TubeVol1"/>
-      <position name="pos1" unit="cm" x="0.0" y="0.0" z="87.66-0.02032/2.0"/>
+      <position name="pos1" unit="mm" x="0.0" y="0.0" z="877.01-0.2032/2.0"/>
   </physvol>   
   <physvol>
       <volumeref ref="TubeVol2"/>
-      <position name="pos2" unit="cm" x="0.0" y="0.0" z="87.66+0.0635/2.0"/>
+      <position name="pos2" unit="cm" x="0.0" y="0.0" z="877.01+0.635/2.0"/>
    </physvol> 
    <physvol>
       <volumeref ref="TubeVol3"/>
-      <position name="pos3" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635/2.0"/>
+      <position name="pos3" unit="cm" x="0.0" y="0.0" z="877.01+0.635+6.35/2.0"/>
     </physvol> 
     <physvol>
       <volumeref ref="TubeVol4"/>
-      <position name="pos4" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27/2.0"/>
+      <position name="pos4" unit="cm" x="0.0" y="0.0" z="877.01+0.635+6.35+12.7/2.0"/>
     </physvol>
     <physvol>
       <volumeref ref="TubeVol5"/>
-      <position name="pos5" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0"/>
+      <position name="pos5" unit="cm" x="0.0" y="0.0" z="877.01+0.635+6.35+12.7+1.524/2.0"/>
     </physvol>	    
 
 	    	 <!-- target exit window to beam pipe connection placement-->	    
     <physvol>
       <volumeref ref="connecting_pipe_volume_1"/>
-      <position name="pipe_pos_1" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0+13.442"/>
+      <position name="pipe_pos_1" unit="cm" x="0.0" y="0.0" z="877.01+0.635+6.35+12.7+1.524+134.42"/>
     </physvol> 
     
     <physvol>
       <volumeref ref="flange_vol_1"/>
-      <position name="flange_pos_1" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0+13.44+2.845"/>
+      <position name="flange_pos_1" unit="cm" x="0.0" y="0.0" z="877.01+0.635+6.35+12.7+1.524+134.42+28.45"/>
     </physvol>	  
    
     </volume>
