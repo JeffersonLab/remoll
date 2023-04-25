@@ -168,7 +168,7 @@
       <zplane rmin="0.0" rmax="200.02/2.0" z="0"/> 
       <zplane rmin="0.0" rmax="200.02/2.0" z="39.06"/>
       <zplane rmin="0.0" rmax="266.7/2.0" z="39.06"/> 
-      <zplane rmin="0.0" rmax="266.7/2.0" z="39.06+6.45">	  
+      <zplane rmin="0.0" rmax="266.7/2.0" z="39.06+6.45"/>	  
   </polycone>
     
    <subtraction name="target_exit_window_subtraction">
