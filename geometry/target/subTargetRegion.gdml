@@ -161,17 +161,15 @@
 		z="0.2"/>
     </union>
 
-  <!--target chamber geometry-->
+ 						 <!--target chamber geometry-->
   <tube name="Tube_target_chamber_1" rmin="1661.1/2.0" rmax="1750.0/2.0" z="2387.60" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>   
   <tube name="Tube_target_chamber_2" rmin="0.0" rmax="1750.0/2.0" z="73.7" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
-
   <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Tube_target_chamber_3"> 
       <zplane rmin="0.0" rmax="200.0/2.0" z="0"/> 
       <zplane rmin="0.0" rmax="200.0/2.0" z="54.45"/>
       <zplane rmin="0.0" rmax="266.7/2.0" z="54.45"/> 
       <zplane rmin="0.0" rmax="266.7/2.0" z="54.45+10.4"/>	  
   </polycone>
-
     
    <subtraction name="target_exit_window_subtraction">
             <first ref="Tube_target_chamber_1"/>
@@ -179,21 +177,16 @@
             <rotation name="rot_1" unit="deg" x="90" y="0" z="0"/>                        
             <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(1750.0/2.0-54.45-10.40)" z="0.0"/>
    </subtraction>
-        
+        	  
+  						<!--target exit window-->
+  <tube name="Target_exit_window_Tube_1" rmin="0.0" rmax="1.50114/2.0" z="0.02032" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>
+  <tube name="Target_exit_window_Tube_2" rmin="1.50114/2.0" rmax="25.3238/2.0" z="0.0635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
+  <tube name="Target_exit_window_Tube_3" rmin="7.62/2.0" rmax="25.3238/2.0" z="0.635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>   
+  <tube name="Target_exit_window_Tube_4" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.27" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/> 
+  <tube name="Target_exit_window_Tube_5" rmin="21.717/2.0" rmax="25.3238/2.0" z="0.1524" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
+  <tube name="Target_exit_window_Tube_6" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.04" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>      
  
-
-	  
-	  
-  <!--target exit window-->
- <tube name="Tube_1" rmin="0.0" rmax="1.50114/2.0" z="0.02032" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>
-  <tube name="Tube_2" rmin="1.50114/2.0" rmax="25.3238/2.0" z="0.0635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
-  <tube name="Tube_3" rmin="7.62/2.0" rmax="25.3238/2.0" z="0.635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>   
-  <tube name="Tube_4" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.27" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/> 
-  <tube name="Tube_5" rmin="21.717/2.0" rmax="25.3238/2.0" z="0.1524" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
-  <tube name="Tube_6" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.04" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>      
- 
-	  <!-- target exit window to US beam pipe -->  
-	  
+	             <!-- target exit window to beam pipe -->  
  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="connecting_pipe_1"> 
       <zplane rmin="19.68/2.0" rmax="20.32/2.0" z="0"/> 
       <zplane rmin="19.68/2.0" rmax="20.32/2.0" z="0-13.44"/> 
@@ -326,15 +319,14 @@
     </volume>
   
        <!-- target chamber-->
-
-    <volume name="target_chamber_vol1">
+   <volume name="target_chamber_vol1">
     <materialref ref="G4_Al"/>
     <solidref ref="Tube_target_chamber_1"/>
-    </volume> 
+   </volume> 
    <volume name="target_chamber_vol2">
     <materialref ref="G4_Al"/>
     <solidref ref="Tube_target_chamber_2"/>
-    </volume>    
+   </volume>    
    <volume name="target_chamber_vol3">
     <materialref ref="G4_Al"/>
     <solidref ref="target_exit_window_subtraction"/>
@@ -342,47 +334,32 @@
    <volume name="target_chamber_vol5">
     <materialref ref="G4_Al"/>
     <solidref ref="Tube_target_chamber_3"/>
-    </volume> 		  
-	  
-	  
-	  
-    <!-- target exit window to US beam pipe -->
-	  
-  <volume name="connecting_pipe_volume_1">
-    <materialref ref="G4_Al"/>
-    <solidref ref="connecting_pipe_1"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>   	 
-  </volume> 
-	  
-  <volume name="flange_vol_1">
-    <materialref ref="G4_Al"/>
-    <solidref ref="flange_1"/>
-    <auxiliary auxtype="Color" auxvalue="blue"/>   	 	  
-  </volume>   	  
+   </volume> 		  
 
+     <!-- target exit window -->  
   <volume name="TubeVol1">
     <materialref ref="G4_Be"/>
-    <solidref ref="Tube_1"/>
+    <solidref ref="Target_exit_window_Tube_1"/>
     <auxiliary auxtype="Color" auxvalue="blue"/>   
   </volume>     
   <volume name="TubeVol2">
     <materialref ref="G4_Al"/>
-    <solidref ref="Tube_2"/>
+    <solidref ref="Target_exit_window_Tube_2"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
   </volume>    
   <volume name="TubeVol3">
     <materialref ref="G4_Al"/>
-    <solidref ref="Tube_3"/>
+    <solidref ref="Target_exit_window_Tube_3"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
   </volume>    
   <volume name="TubeVol4">
     <materialref ref="G4_Al"/>
-    <solidref ref="Tube_4"/>
+    <solidref ref="Target_exit_window_Tube_4"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
   </volume>    
   <volume name="TubeVol5">
     <materialref ref="G4_Al"/>
-    <solidref ref="Tube_5"/>
+    <solidref ref="Target_exit_window_Tube_5"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
   </volume> 
   <volume name="TubeVol6">
@@ -390,8 +367,20 @@
     <solidref ref="Tube_6"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           
   </volume> 	  
-<!-- target exit window -->
- 
+	  
+	  
+    <!-- target exit window to beam pipe -->
+  <volume name="connecting_pipe_volume_1">
+    <materialref ref="G4_Al"/>
+    <solidref ref="connecting_pipe_1"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>   	 
+  </volume> 	  
+  <volume name="flange_vol_1">
+    <materialref ref="G4_Al"/>
+    <solidref ref="flange_1"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>   	 	  
+  </volume>   	  
+	 
     <volume name="targetRegion">
       <materialref ref="VacuumTarg"/>
       <solidref ref="targetRegion_solid"/>
@@ -471,56 +460,50 @@
       </physvol>
 
 	    
-	 <!-- target chamber -->
-  
+	 <!-- target chamber placement-->
     <physvol>
       <volumeref ref="target_chamber_vol2"/>
       <position name="pos7" unit="mm" x="0.0" y="(238.76/2.0+7.37/2)*10.0" z="0.0"/>
       <rotation name="rot1" unit="deg" x="90" y="0" z="0"/>            
     </physvol>  
-    
     <physvol>
       <volumeref ref="target_chamber_vol2"/>
       <position name="pos8" unit="mm" x="0.0" y="(-238.76/2.0-7.37/2)*10.0" z="0.0"/>
       <rotation name="rot2" unit="deg" x="90" y="0" z="0"/>            
     </physvol>     
-    
     <physvol>
       <volumeref ref="target_chamber_vol3"/>
       <position name="pos9" unit="mm" x="0.0" y="0.0" z="0.0"/>
       <rotation name="rot3" unit="deg" x="90" y="0" z="0"/>            
     </physvol> 
-	    
+	
+	 <!-- target exit window placement-->	    
  <physvol>
       <volumeref ref="TubeVol6"/>
       <position name="pos6_a" unit="cm" x="0.0" y="0.0" z="87.66-0.02032/2.0-1.04/2.0"/>
-    </physvol>
-    
-   <physvol>
+ </physvol>
+ <physvol>
       <volumeref ref="TubeVol1"/>
       <position name="pos1" unit="cm" x="0.0" y="0.0" z="87.66-0.02032/2.0"/>
-    </physvol>
-   
-    <physvol>
+  </physvol>   
+  <physvol>
       <volumeref ref="TubeVol2"/>
       <position name="pos2" unit="cm" x="0.0" y="0.0" z="87.66+0.0635/2.0"/>
-    </physvol>
-    
-     <physvol>
+   </physvol> 
+   <physvol>
       <volumeref ref="TubeVol3"/>
       <position name="pos3" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635/2.0"/>
-    </physvol>
-    
+    </physvol> 
     <physvol>
       <volumeref ref="TubeVol4"/>
       <position name="pos4" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27/2.0"/>
     </physvol>
-    
     <physvol>
       <volumeref ref="TubeVol5"/>
       <position name="pos5" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0"/>
     </physvol>	    
 
+	    	 <!-- target exit window to beam pipe connection placement-->	    
     <physvol>
       <volumeref ref="connecting_pipe_volume_1"/>
       <position name="pipe_pos_1" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0+13.44"/>
