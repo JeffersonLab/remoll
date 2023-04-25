@@ -179,21 +179,21 @@
    </subtraction>
         	  
   						<!--target exit window-->
-  <tube name="Target_exit_window_Tube_1" rmin="0.0" rmax="1.50114/2.0" z="0.02032" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>
-  <tube name="Target_exit_window_Tube_2" rmin="1.50114/2.0" rmax="25.3238/2.0" z="0.0635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
-  <tube name="Target_exit_window_Tube_3" rmin="7.62/2.0" rmax="25.3238/2.0" z="0.635" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>   
-  <tube name="Target_exit_window_Tube_4" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.27" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/> 
-  <tube name="Target_exit_window_Tube_5" rmin="21.717/2.0" rmax="25.3238/2.0" z="0.1524" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>  
-  <tube name="Target_exit_window_Tube_6" rmin="10.16/2.0" rmax="25.3238/2.0" z="1.04" deltaphi="TWOPI" startphi="0" aunit="rad" lunit="cm"/>      
+  <tube name="Target_exit_window_Tube_1" rmin="0.0" rmax="15.0114/2.0" z="0.2032" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>
+  <tube name="Target_exit_window_Tube_2" rmin="15.0114/2.0" rmax="253.238/2.0" z="0.635" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>  
+  <tube name="Target_exit_window_Tube_3" rmin="76.2/2.0" rmax="253.238/2.0" z="6.35" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>   
+  <tube name="Target_exit_window_Tube_4" rmin="101.6/2.0" rmax="253.238/2.0" z="12.7" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/> 
+  <tube name="Target_exit_window_Tube_5" rmin="217.17/2.0" rmax="253.238/2.0" z="1.524" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>  
+  <tube name="Target_exit_window_Tube_6" rmin="101.6/2.0" rmax="253.238/2.0" z="10.4" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>      
  
 	             <!-- target exit window to beam pipe -->  
- <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="connecting_pipe_1"> 
-      <zplane rmin="19.68/2.0" rmax="20.32/2.0" z="0"/> 
-      <zplane rmin="19.68/2.0" rmax="20.32/2.0" z="0-13.44"/> 
+ <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="connecting_pipe_1"> 
+      <zplane rmin="196.85/2.0" rmax="203.20/2.0" z="0"/> 
+      <zplane rmin="196.85/2.0" rmax="203.20/2.0" z="0-134.42"/> 
  </polycone>
- <polycone aunit="deg" startphi="0" deltaphi="360" lunit="cm" name="flange_1"> 
-      <zplane rmin="19.05/2.0" rmax="36.83/2.0" z="0"/> 
-      <zplane rmin="19.05/2.0" rmax="36.83/2.0" z="0-2.84"/> 
+ <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="flange_1"> 
+      <zplane rmin="190.50/2.0" rmax="368.30/2.0" z="0"/> 
+      <zplane rmin="190.50/2.0" rmax="368.30/2.0" z="0-28.45"/> 
   </polycone>
     	  
  	  
@@ -458,12 +458,12 @@
 	 <!-- target chamber placement-->
     <physvol>
       <volumeref ref="target_chamber_vol2"/>
-      <position name="pos7" unit="mm" x="0.0" y="(238.76/2.0+7.37/2)*10.0" z="0.0"/>
+      <position name="pos7" unit="mm" x="0.0" y="(2387.60/2.0+73.66/2)" z="0.0"/>
       <rotation name="rot1" unit="deg" x="90" y="0" z="0"/>            
     </physvol>  
     <physvol>
       <volumeref ref="target_chamber_vol2"/>
-      <position name="pos8" unit="mm" x="0.0" y="(-238.76/2.0-7.37/2)*10.0" z="0.0"/>
+      <position name="pos8" unit="mm" x="0.0" y="(-2387.60/2.0-73.66/2)" z="0.0"/>
       <rotation name="rot2" unit="deg" x="90" y="0" z="0"/>            
     </physvol>     
     <physvol>
@@ -501,12 +501,12 @@
 	    	 <!-- target exit window to beam pipe connection placement-->	    
     <physvol>
       <volumeref ref="connecting_pipe_volume_1"/>
-      <position name="pipe_pos_1" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0+13.44"/>
+      <position name="pipe_pos_1" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0+13.442"/>
     </physvol> 
     
     <physvol>
       <volumeref ref="flange_vol_1"/>
-      <position name="flange_pos_1" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0+13.44+2.84"/>
+      <position name="flange_pos_1" unit="cm" x="0.0" y="0.0" z="87.66+0.0635+0.635+1.27+0.1524/2.0+13.44+2.845"/>
     </physvol>	  
    
     </volume>
