@@ -472,12 +472,7 @@
 
 	    
 	 <!-- target chamber -->
-    <physvol>
-      <volumeref ref="target_chamber_vol1"/>
-      <position name="pos6" unit="mm" x="0.0" y="0.0" z="0"/>
-      <rotation name="rot0" unit="deg" x="90" y="0" z="0"/>      
-    </physvol>
-    
+  
     <physvol>
       <volumeref ref="target_chamber_vol2"/>
       <position name="pos7" unit="mm" x="0.0" y="(238.76/2.0+7.37/2)*10.0" z="0.0"/>
