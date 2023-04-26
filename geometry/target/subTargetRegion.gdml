@@ -186,7 +186,7 @@
   <tube name="Target_exit_window_Tube_5" rmin="217.17/2.0" rmax="253.238/2.0" z="1.524" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>  
   <tube name="Target_exit_window_Tube_6" rmin="101.6/2.0" rmax="253.238/2.0" z="10.4" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>      
  
-	             <!-- target exit window to beam pipe -->  
+	             <!-- pipe from target exit window to bellow1 -->  
  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="connecting_pipe_1"> 
       <zplane rmin="196.85/2.0" rmax="203.20/2.0" z="0"/> 
       <zplane rmin="196.85/2.0" rmax="203.20/2.0" z="0-134.42"/> 
@@ -369,7 +369,7 @@
   </volume> 	  
 	  
 	  
-    <!-- target exit window to beam pipe -->
+       <!-- pipe from target exit window to bellow1 -->  
   <volume name="connecting_pipe_volume_1">
     <materialref ref="G4_Al"/>
     <solidref ref="connecting_pipe_1"/>
