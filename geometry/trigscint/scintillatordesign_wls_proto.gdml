@@ -14,6 +14,7 @@
   <constant name="SCALE" value="0.1"/>
   <constant name="SCALE_UP" value="1.0+SCALE"/>
   <constant name="SCALE_DOWN" value="1.0-SCALE"/>
+  <constant name="scint_fudicial_acceptance" value="0.999"/>
 
 <!--
     Common thicknesses of aluminized mylar foils are:
@@ -21,7 +22,7 @@
       2 mil = 0.05 mm.
   -->
 <quantity name="mylar_thickness" type="length" value="0.05" unit="mm"/>
-
+<quantity name="air_gap" type="length" value="0.025" unit="mm"/>
 <quantity name="groove_thickness" type="length" value="1.5" unit="mm"/>
 <quantity name="groove_separation" type="length" value="100" unit="mm"/>
 <quantity name="groove_depth" type="length" value="1.5" unit="mm"/>
@@ -61,6 +62,7 @@
     
     <!--Create the scintillator -->
     <trd name = "scint_sol"  x1="scint_width" x2="scint_width" y1="scint_thickness" y2="scint_thickness" z="scint_height" lunit= "mm"/>
+    <trd name = "scint_front_sens_sol"  x1="scint_width*scint_fudicial_acceptance" x2="scint_width*scint_fudicial_acceptance" y1="0.01" y2="0.01" z="scint_height*scint_fudicial_acceptance" lunit= "mm"/>
 
     <box name = "scint_groove_sol" x= "groove_thickness" y= "groove_depth" z= "600" lunit= "mm"/>
 
@@ -83,17 +85,19 @@
 
 
     <!-- To create a wrapping for the scintillator with  mylar_thickness we first create a solid-->
-    <trd name = "scint_sol_mylar_1"  x1="scint_width + mylar_thickness" x2="scint_width+mylar_thickness" y1="scint_thickness+mylar_thickness" y2="scint_thickness+mylar_thickness" z="scint_height+mylar_thickness" lunit= "mm"/>
+    <trd name = "scint_sol_mylar_1"  x1="scint_width + mylar_thickness" x2="scint_width+mylar_thickness" y1="scint_thickness+mylar_thickness + air_gap" y2="scint_thickness+mylar_thickness + air_gap" z="scint_height+mylar_thickness + air_gap" lunit= "mm"/>
+    <trd name = "scint_sol_mylar_1_1"  x1="scint_width" x2="scint_width" y1="scint_thickness+mylar_thickness" y2="scint_thickness+mylar_thickness" z="scint_height + 2*mylar_thickness + air_gap" lunit= "mm"/>
 
-    <trd name = "scaled_scint_sol_mylar_1"  x1="SCALE_UP*(scint_width + mylar_thickness)" x2="SCALE_UP*(scint_width+mylar_thickness)" y1="SCALE_UP*(scint_thickness+mylar_thickness)" y2="SCALE_UP*(scint_thickness+mylar_thickness)" z="SCALE_UP*(scint_height+mylar_thickness)" lunit= "mm"/>
+
+    <trd name = "scaled_scint_sol_mylar_1"  x1="SCALE_UP*(scint_width + mylar_thickness + air_gap)" x2="SCALE_UP*(scint_width+mylar_thickness + air_gap)" y1="SCALE_UP*(scint_thickness+mylar_thickness + air_gap)" y2="SCALE_UP*(scint_thickness+mylar_thickness + air_gap)" z="SCALE_UP*(scint_height+mylar_thickness + air_gap)" lunit= "mm"/>
    
 
        
     <!-- This subtraction creates a hollow space for the scintillator by subtracting the scintillator solid -->
-     <trd name = "scint_sol_to_sub"  x1="scint_width" x2="scint_width" y1="scint_thickness" y2="scint_thickness" z="scint_height+mylar_thickness*3" lunit= "mm"/>
+    <!--  <trd name = "scint_sol_to_sub"  x1="scint_width" x2="scint_width" y1="scint_thickness" y2="scint_thickness" z="scint_height+mylar_thickness*3" lunit= "mm"/>-->
     <subtraction name="scint_sol_mylar_2">
     <first ref="scint_sol_mylar_1"/>
-    <second ref="scint_sol_to_sub"/>
+    <second ref="scint_sol_mylar_1_1"/>
     <position name="scint_sol_mylar_solid_subtraction_position1"
 	      x="0.0"
 	      y="0.0"
@@ -110,7 +114,7 @@
     <position name="scint_sol_mylar_solid_subtraction_position2"
 	      x="0.0"
 	      y="0.0"
-	      z="scint_height/2 + mylar_thickness"/>
+	      z="scint_height/2 + mylar_thickness + air_gap"/>
     </subtraction>
 
 <!-- WLS: The Fiber-->
@@ -149,10 +153,30 @@
             
      </union>
 
+
     <opticalsurface
 	name="Mylar_surface"
 	model="glisur" finish="groundteflonair" type="dielectric_metal" value="1.0">
       <property name="REFLECTIVITY" ref="REFLECTIVITY_MYLAR"/>
+    </opticalsurface>
+<!--
+   <opticalsurface
+       name="EJ200_surface"
+        model="glisur" finish="polished" type="dielectric_dielectric"  value="1.0">
+        <property name="RINDEX" ref="RINDEX_EJ200_surf"/>
+        <property name="REFLECTIVITY" ref="REFLECTIVITY_EJ200"/>
+   </opticalsurface>
+-->
+
+    <opticalsurface
+	name="EJ200_surface"
+        model="unified" finish="ground" type="dielectric_dielectric"  value="1.0"> <!-- glisur unified ground polished  -->
+        <!-- <property name="RINDEX" ref="RINDEX_EJ200_surf"/> -->
+	<property name="REFLECTIVITY" ref="REFLECTIVITY_EJ200"/>
+
+        <property name="SPECULARLOBECONSTANT"  ref="SPECLOBE_EJ200"/>
+        <property name="SPECULARSPIKECONSTANT" ref="SPECSPIKE_EJ200"/>
+        <property name="BACKSCATTERCONSTANT"   ref="BACKSCATTER_EJ200"/>
     </opticalsurface>
 
     <opticalsurface
@@ -162,13 +186,6 @@
       <property name="SPECULARLOBECONSTANT"  ref="SPECLOBE_LUCITE"/>
       <property name="SPECULARSPIKECONSTANT" ref="SPECSPIKE_LUCITE"/>
       <property name="BACKSCATTERCONSTANT"   ref="BACKSCATTER_LUCITE"/>
-    </opticalsurface>
-
-    <opticalsurface
-	name="EJ200_surface"
-	model="glisur" finish="polished" type="dielectric_dielectric"  value="1.0">
-        <property name="RINDEX" ref="RINDEX_EJ200_surf"/>
-        <property name="REFLECTIVITY" ref="REFLECTIVITY_EJ200"/>
     </opticalsurface>
 
    <opticalsurface
@@ -291,6 +308,15 @@
       <volumeref ref="scint_mylar_log"/>
     </skinsurface>
 
+   <volume name="scint_front_sens_log">
+      <materialref ref="Air"/>
+      <solidref ref="scint_front_sens_sol"/> 
+      <auxiliary auxtype="Color" auxvalue="cyan"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="DetNo" auxvalue="10000"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>      
+   </volume>
+
     
    <volume name="pmt_log">
       <materialref ref="CsPhotocathode"/>
@@ -322,6 +348,12 @@
         <position name="front_pos" unit="mm" y= "0" z="0"/>
         <!-- <rotation name ="front_rot" unit="deg" x ="180"/> -->
       </physvol>
+
+      <physvol name="scint_front_sens_phys">
+        <volumeref ref="scint_front_sens_log"/>
+	<position name="scint_front_sens_pos" unit="mm" y= "-5.2" z="0"/>
+      </physvol>
+
 
 <!--Place WLS housing wls_clad2_log use (WLS_length_extend+18) or WLS_length_extend+3 to keep the WLS bottom within the scintillator -->
      <physvol name="wls_clad2_phys1">
@@ -356,12 +388,12 @@
 
 <!--Need to check optical properties of the mylar wrap as this is absorbing too much optical photons   -->
 
-<!--
+
       <physvol name="scint_mylar_phys">
 	<volumeref ref="scint_mylar_log"/>
         <position name="front_pos" unit="mm" y= "0" z="0"/>        
       </physvol>
--->
+
 
     
       

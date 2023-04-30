@@ -24,6 +24,7 @@
 
     <physvol>
       <file name="scintillatordesign_wls_oneside.gdml"/>
+      <!-- <file name="scintillatordesign_wls_proto.gdml"/> -->
       <positionref ref="ScintDetectorCenter"/>
       <rotation x="90*deg"/>
     </physvol>

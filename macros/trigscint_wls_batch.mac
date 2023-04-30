@@ -3,109 +3,77 @@
 #/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
 #/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
 #/remoll/geometry/setfile geometry/trigscint/ScintDetector_world.gdml
+#My most recent model
 /remoll/geometry/setfile geometry/trigscint/ScintDetector_world.gdml
+###Afeez's geometry
+####/remoll/geometry/setfile geometry/trigscint/Afeez_WLS/ScintDetector_WLS_world.gdml
 #/remoll/physlist/register QGSP_BERT_HP
 /run/initialize
 
 /remoll/SD/disable_all
 
 /remoll/SD/enable 1001
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1001
 
 /remoll/SD/enable 1002
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1002
 
 /remoll/SD/enable 1003
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1003
 
 /remoll/SD/enable 1004
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1004
 
 /remoll/SD/enable 1005
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1005
 
 /remoll/SD/enable 1006
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1006
 
 /remoll/SD/enable 1007
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1007
 
 /remoll/SD/enable 1008
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1008
+
 
 /remoll/SD/enable 1009
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1009
 
 /remoll/SD/enable 1010
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
-
+/remoll/SD/detect opticalphoton 1010
 
 /remoll/SD/enable 1011
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1011
 
 /remoll/SD/enable 1012
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1012
 
 /remoll/SD/enable 1013
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1013
 
 /remoll/SD/enable 1014
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+/remoll/SD/detect opticalphoton 1014
 
+
+/remoll/SD/enable 10000
+/remoll/SD/detect boundaryhits 10000
 
 /remoll/evgen/set external
 #/remoll/evgen/copyRate 1
 /remoll/evgen/external/startEvent 0
 
-/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_fullactivearea_24838.root 
+##/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_fullactivearea_24838.root 
 ##o_remollSkimTree_inner_24838.root
 ##/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_edges_24838.root
+##straight tracks with Moller electrons
+##/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree__fullactivearea_straightTracks_24838.root
+##straight tracks with Moller electrons and incident on active area bigger than the scintillator
+/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_largearea_straightTracks_24838.root
 /remoll/evgen/external/detid 28
 #/remoll/evgen/external/zOffset -21900
-/remoll/filename o_trigscint_ground_onesided_mylar_airgap_test6_moller_wls_3k_fullactivearea_pe_1.root
-#/remoll/filename o_trigscint_test_3.root
+#/remoll/filename o_trigscint_Afeez_mylar_wls_3k.root
+/remoll/filename /volatile/halla/moller12gev/rakithab/trigscint/rootfiles/o_trigscint_wrapped_straightTracks_largearea_1000_1.root
 
 #/run/beamOn 24838
-/run/beamOn 3000
+/run/beamOn 1000

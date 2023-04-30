@@ -186,6 +186,19 @@
     5.90424*eV 0.99
     8.90424*eV 0.99"/>
 
+  <matrix coldim="2" name="REFLECTIVITY_LESS_MYLAR" values="                                                                   
+    1.54986*eV 0.90                      
+    1.77127*eV 0.90                                                                                                        
+    2.06648*eV 0.90                                                                                                        
+    2.47978*eV 0.90                                                                                                         
+    3.09973*eV 0.90                                                                                                         
+    4.13297*eV 0.90                                                                                                         
+    4.95956*eV 0.90                                                                                                          
+    5.51063*eV 0.90                                                                                                          
+    5.90424*eV 0.90                                                                                                          
+    8.90424*eV 0.90"/>
+
+
   <matrix coldim="2" name="EFFICIENCY_MYLAR" values="
       1.54986*eV 0.080
       5.90424*eV 0.080"/>

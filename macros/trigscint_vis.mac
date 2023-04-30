@@ -2,14 +2,19 @@
 /vis/open OGL 600x600-0+0  
 
 # This is the current working geometry
-#/remoll/setgeofile geometry/detector/tid.gdml
-#/remoll/setgeofile geometry/detector/scintillatordesign.gdml
-#/remoll/setgeofile geometry/trigscint/scintillatordesign_only.gdml
-/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
-#/remoll/geometry/setfile geometry/trigscint/ScintDetector_world.gdml
+#/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
+####current complete model 
+/remoll/geometry/setfile geometry/trigscint/ScintDetector_world.gdml
 #/remoll/geometry/setfile geometry/trigscint/original/ScintDetector_world.gdml
+
+###Afeez latest light guide design 
+###/remoll/geometry/setfile  geometry/trigscint/Afeez_Lightguide/ScintDetector_lightguide.gdml
+###Afeez latest WLS design
+###/remoll/geometry/setfile  geometry/trigscint/Afeez_WLS/ScintDetector_WLS_world.gdml
+
+
 /remoll/geometry/overlapcheck true
-#/remoll/setgeofile geometry/pion/Lucite/pionDetectorLucite.gdml
+
 
 
 #/remoll/setphysicslist QGSP_BERT_EMV
@@ -23,11 +28,55 @@
 
 /remoll/SD/disable_all
 
-/remoll/SD/enable 10
-/remoll/SD/detect opticalphoton 1
-/remoll/SD/detect lowenergyneutral 1
-/remoll/SD/detect secondaries 1
-/remoll/SD/detect boundaryhits 1
+
+/remoll/SD/enable 1001
+/remoll/SD/detect opticalphoton 1001
+
+/remoll/SD/enable 1002
+/remoll/SD/detect opticalphoton 1002
+
+/remoll/SD/enable 1003
+/remoll/SD/detect opticalphoton 1003
+
+/remoll/SD/enable 1004
+/remoll/SD/detect opticalphoton 1004
+
+/remoll/SD/enable 1005
+/remoll/SD/detect opticalphoton 1005
+
+/remoll/SD/enable 1006
+/remoll/SD/detect opticalphoton 1006
+
+/remoll/SD/enable 1007
+/remoll/SD/detect opticalphoton 1007
+
+/remoll/SD/enable 1008
+/remoll/SD/detect opticalphoton 1008
+
+
+/remoll/SD/enable 1009
+/remoll/SD/detect opticalphoton 1009
+
+/remoll/SD/enable 1010
+/remoll/SD/detect opticalphoton 1010
+
+/remoll/SD/enable 1011
+/remoll/SD/detect opticalphoton 1011
+
+/remoll/SD/enable 1012
+/remoll/SD/detect opticalphoton 1012
+
+/remoll/SD/enable 1013
+/remoll/SD/detect opticalphoton 1013
+
+/remoll/SD/enable 1014
+/remoll/SD/detect opticalphoton 1014
+
+
+/remoll/SD/enable 10000
+/remoll/SD/detect boundaryhits 10000
+
+
 
 
 ##testing external generator
@@ -37,10 +86,18 @@
 /remoll/evgen/external/startEvent 0
 
 #/remoll/evgen/external/file analysis/o_remollSkimTree.root ##425 events all at x,y at 0.0
-/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_fullactivearea_24838.root ## events 24838 x,y uniformly distributed +/-100 mm
+##/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_fullactivearea_24838.root ## events 24838 x,y uniformly distributed +/-100 mm
+#/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_inner_24838.root
+##same size as scint.
+##/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree__fullactivearea_straightTracks_24838.root
+##most recent event gen file
+/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_largearea_straightTracks_24838.root
+### bigger cross section for incident hits then use the scint sens detector select hits on the scintillator
+###/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_largearea_straightTracks_24838.root
 /remoll/evgen/external/detid 28
 #/remoll/evgen/external/zOffset -21900
-/remoll/filename o_tid_28_moller.root
+/remoll/filename o_tid_28_moller_proto.root
+###/remoll/filename o_tid_28_moller.root
 
 /control/execute vis/vis.mac
 
