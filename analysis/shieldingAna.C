@@ -89,7 +89,7 @@ void process(){
 }
 
 void initHisto(){
-  string foutNm = Form("%s_shldAnaV7.root",fin.substr(0,fin.find(".")).c_str());
+  string foutNm = Form("%s_shldAnaV8.root",fin.substr(0,fin.find(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -267,7 +267,7 @@ long processOne(string fnm){
 
   long nEntries = t->GetEntries();
   cout<<"\tTotal events: "<<nEntries<<endl;
-  float currentProc=1,procStep=30;
+  float currentProc=1,procStep=60;
   vector<int> procID;
   int sector(-1);
   double pi = acos(-1);
@@ -555,25 +555,47 @@ int findDetector(int &sector, double phi, double r){
   // this will jsut pick up the first hit and ignore the rest
   const int nRings = 7;
   const int nSec = 3;
-  // segmented from Sakib 200131
+
+  // segmented from Sakib 210501
   const double rMin[nRings][nSec]={
-				   { 640.0,  640.0,  640.0},
-				   { 680.0,  680.0,  680.0},
-				   { 750.0,  750.0,  750.0},
-				   { 855.0,  847.5,  825.0},
-				   { 935.0,  920.0,  875.0},
-				   {1075.0, 1080.0, 1090.0},
-				   {1200.0, 1200.0, 1200.0}
+  				   { 650.0,  650.0,  650.0},
+  				   { 690.0,  690.0,  690.0},
+  				   { 735.0,  735.0,  735.0},
+  				   { 790.0,  790.0,  790.0},
+  				   { 900.0,  900.0,  900.0},
+  				   {1060.0, 1060.0, 1060.0},
+  				   {1200.0, 1200.0, 1200.0}
   };
   const double rMax[nRings][nSec]={
-				   { 680.0,  680.0,  680.0},
-				   { 750.0,  750.0,  750.0},
-				   { 855.0,  847.5,  825.0},
-				   { 935.0,  920.0,  875.0},
-				   {1075.0, 1060.0, 1055.0},
-				   {1190.0, 1190.0, 1190.0},
-				   {1500.0, 1500.0, 1500.0}
+  				   { 690.0,  690.0,  690.0},
+  				   { 735.0,  735.0,  735.0},
+  				   { 790.0,  790.0,  790.0},
+  				   { 900.0,  900.0,  900.0},
+  				   {1060.0, 1060.0, 1060.0},
+  				   {1160.0, 1160.0, 1160.0},
+  				   {1500.0, 1500.0, 1500.0}
   };
+
+
+  // // segmented from Sakib 200131
+  // const double rMin[nRings][nSec]={
+  // 				   { 640.0,  640.0,  640.0},
+  // 				   { 680.0,  680.0,  680.0},
+  // 				   { 750.0,  750.0,  750.0},
+  // 				   { 855.0,  847.5,  825.0},
+  // 				   { 935.0,  920.0,  875.0},
+  // 				   {1075.0, 1080.0, 1090.0},
+  // 				   {1200.0, 1200.0, 1200.0}
+  // };
+  // const double rMax[nRings][nSec]={
+  // 				   { 680.0,  680.0,  680.0},
+  // 				   { 750.0,  750.0,  750.0},
+  // 				   { 855.0,  847.5,  825.0},
+  // 				   { 935.0,  920.0,  875.0},
+  // 				   {1075.0, 1060.0, 1055.0},
+  // 				   {1190.0, 1190.0, 1190.0},
+  // 				   {1500.0, 1500.0, 1500.0}
+  // };
 
   // hybrid rDef 200202
   // const double rMin[nRings][nSec]={

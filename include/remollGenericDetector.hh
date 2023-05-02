@@ -5,6 +5,7 @@
 #include "G4TwoVector.hh"
 #include "G4Threading.hh"
 #include "G4AutoLock.hh"
+#include "G4Version.hh"
 
 // Included to avoid forward declaration of collection typedef
 #include "remollGenericDetectorHit.hh"
@@ -161,24 +162,31 @@ class remollGenericDetector : public G4VSensitiveDetector {
       void BuildStaticMessenger();
 
       virtual void SetDetectorType(G4String det_type) {
-        if (det_type.compareTo("charged", G4String::ignoreCase) == 0) {
+        auto icompare = [](const G4String& lhs, const G4String& rhs) {
+          #if G4VERSION_NUMBER < 1100
+            return lhs.compareTo(rhs, G4String::ignoreCase);
+          #else
+            return G4StrUtil::icompare(lhs, rhs);
+          #endif
+        };
+        if (icompare(det_type, "charge") == 0) {
           fDetectOpticalPhotons = false;
           fDetectLowEnergyNeutrals = false;
         }
-        if (det_type.compareTo("all", G4String::ignoreCase) == 0) {
+        if (icompare(det_type, "all") == 0) {
           fDetectSecondaries = true;
           fDetectLowEnergyNeutrals = true;
         }
-        if (det_type.compareTo("lowenergyneutral", G4String::ignoreCase) == 0) {
+        if (icompare(det_type, "lowenergyneutral") == 0) {
           fDetectLowEnergyNeutrals = true;
         }
-        if (det_type.compareTo("opticalphoton", G4String::ignoreCase) == 0) {
+        if (icompare(det_type, "opticalphoton") == 0) {
           fDetectOpticalPhotons = true;
         }
-        if (det_type.compareTo("boundaryhits", G4String::ignoreCase) == 0) {
+        if (icompare(det_type, "boundaryhits") == 0) {
           fDetectBoundaryHits = true;
         }
-        if (det_type.compareTo("secondaries", G4String::ignoreCase) == 0) {
+        if (icompare(det_type, "secondaries") == 0) {
           fDetectSecondaries = true;
         }
       }

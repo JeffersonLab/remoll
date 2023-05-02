@@ -11,7 +11,9 @@
 TFile *fout;
 vector<vector<TH1D*>> hAsym;
 TH1D *hScatAngP1,*hScatAngP2;
-TH1D *hRate,*rRate, *rRateAsym,*r,*sourceZ,*eRateAsym;
+TH1D *hRate,*rRate, *rRateAsym,*r,*eRateAsym;
+TH1D *sourceZ,*sourceZAll;
+TH2D *srcZXa, *srcZRa,*srcZRaEwght, *srcZmdRa;
 TH2D *hXY,*hXYrate, *hXYrateAsym;
 TH2D *hVtxAngR, *hAfterColl2AngR;
 TH2D *hVtxAngRrate, *hAfterColl2AngRrate;
@@ -126,7 +128,14 @@ void initHisto(){
   hXY = new TH2D("hXY","2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
   hXYrate = new TH2D("hXYrate","rate weighted 2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
   hXYrateAsym = new TH2D("hXYrateAsym","rate*asym weighted 2D hit ditribution;x [m];y [m]",200,-2100,2100,200,-2100,2100);
-  sourceZ = new TH1D("sourceZ","initial vertex for hit ;z position [m]",5000,-5500,-3500);
+  sourceZ = new TH1D("sourceZ","initial vertex for hit ;z position [m]",2000,-5600,-3400);
+  sourceZAll = new TH1D("sourceZAll","initial vertex for hit (all particles) ;z position [m]",5000,-5600,34000);
+
+  srcZXa = new TH2D("srcZXa","all particles ;src z position [m];src x position [mm]",5000,-5600,34000,200,-3000,3000);
+  srcZRa = new TH2D("srcZRa","all particles ;src z position [m];src r position [mm]",5000,-5600,34000,200,0,3000);
+  srcZmdRa = new TH2D("srcZmdRa","all particles ;src z position [m];r position on MD [mm]",5000,-5600,34000,200,600,1200);
+  srcZRaEwght = new TH2D("srcZRaEwght","all particles *E ;src z position [m];src r position [mm]",5000,-5600,34000,200,0,3000);
+
   beamRaster = new TH2D("beamRaster","sampling for ring 5 ;x raster [mm]; y raster [mm]",200,-8,8,200,-8,8);
   rBeamRaster = new TH2D("rBeamRaster","rate weighted ;x raster [mm]; y raster [mm]",200,-8,8,200,-8,8);
 
@@ -164,8 +173,8 @@ long processOne(string fnm){
   //t->SetBranchAddress("sum", &sum);
   
   long nEntries = t->GetEntries();
-  cout<<"\tTotal events: "<<nEntries<<endl;
-  float currentProc=1,procStep=30;
+  //cout<<"\tTotal events: "<<nEntries<<endl;
+  float currentProc=1,procStep=60;
   vector<int> procID;
   int sector(-1);
   double pi = acos(-1);
@@ -219,11 +228,6 @@ long processOne(string fnm){
 
       if(hit->at(j).z <= 21999 || hit->at(j).z>22001) continue;
 
-      if(rate>1e10) continue;//this cut is not understandable ... there is some difference between YZ output and mine where rates >1e7 screw up the results
-
-      //select only e- and pi-
-      if(hit->at(j).pid!=11 && hit->at(j).pid!=-211) continue;
-
       //make sure this is the detector you want
       if(hit->at(j).det != 28) continue;
 
@@ -237,7 +241,18 @@ long processOne(string fnm){
 
       if(std::isnan(rate) || std::isinf(rate)) continue;
       
-      if(rr < 500) continue;
+      if(rr < 600 || rr>1200) continue;
+
+      sourceZAll->Fill(hit->at(j).vz);
+
+      srcZXa->Fill(hit->at(j).vz,hit->at(j).vx);
+      const double vrr = sqrt(hit->at(j).vx*hit->at(j).vx + hit->at(j).vy*hit->at(j).vy);
+      srcZRa->Fill(hit->at(j).vz,vrr);
+      srcZRaEwght->Fill(hit->at(j).vz,vrr,hit->at(j).k);
+      srcZmdRa->Fill(hit->at(j).vz,rr);
+
+      //select only e- and pi-
+      if(hit->at(j).pid!=11 && hit->at(j).pid!=-211) continue;
 
       double phi = atan2(yy, xx);
       if(phi<0) phi+=2*pi;
@@ -390,6 +405,12 @@ void writeOutput(){
   hXYrateAsym->Write();
 
   sourceZ->Write();
+  sourceZAll->Write();
+  srcZXa->Write();
+  srcZRa->Write();
+  srcZRaEwght->Write();
+  srcZmdRa->Write();
+
 
   beamRaster->Write();
 

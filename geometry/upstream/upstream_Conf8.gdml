@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY matrices SYSTEM "../matrices.xml">
+<!ENTITY materials SYSTEM "../materials.xml">
+]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define>
+    &matrices;
+    <!-- Shielding collimators dimensions -->
+    <constant name="USBoxmother_extensionUS" value="120"/>
+
+    <constant name="USBoxmother_width" value="4500 + 4000 - 400"/>
+    <constant name="USBoxmother_height" value="5964 + 2000"/>
+    <constant name="USBoxmother_length" value="6500+USBoxmother_extensionUS"/>
+
+    <constant name="USBoxmothersubtract_length" value="2225+(USBoxmother_extensionUS)/2"/>
+    <position name="boxConcreteShielding_center" unit="mm" x="0" y="0" z="USBoxmother_length/2 - USBoxmothersubtract_length/2 + 1110/2 + 585.5/2 -26/2"/>
+
+    <constant name="intocm" value="2.54"/>
+    <position unit="cm" name="wedge_bottomtrans" x="0" y="-46.849*intocm" z="0"/>
+    <rotation name="identity"/>
+    <position unit="cm" name="slant_trans" x="0" y="67.11133821*intocm" z="273.4409994*intocm"/>    
+    <position unit="cm" name="leftwedge_center" x="(48.123+160+15-0.8)*intocm" y="(39.03+43.698/2-1.387)*intocm" z="(-79.0422)*intocm"/>
+    <position unit="cm" name="rightwedge_center" x="(-222.323+50-3+12)*intocm" y="(39.03+43.698/2-1.387)*intocm" z="(-79.0422-100-17.8)*intocm"/>
+    <rotation name="scRot_15" unit="deg" x="0" y="-90" z="0"/>
+    <rotation name="scRot_16" unit="deg" x="0" y="90+34.13+6.5" z="0"/>
+
+    
+  </define>
+  &materials;
+
+  <solids>
+    
+    <box lunit="mm" name="boxConcreteShielding_1" x="USBoxmother_width" y="USBoxmother_height" z="USBoxmother_length"/>
+    <box lunit="mm" name="boxConcreteShielding_2" x="USBoxmother_width + 1" y="USBoxmother_height + 1" z="USBoxmothersubtract_length - 1110 - 585.5 + 26"/>
+    <subtraction name="boxConcreteShielding"> <!-- originally was _4"> -->
+      <first ref="boxConcreteShielding_1"/>
+      <second ref="boxConcreteShielding_2"/>
+      <positionref ref="boxConcreteShielding_center" />
+    </subtraction>
+
+   <!--shielding concrete-->
+   <box lunit="mm" name="DSbottomconcrete" x="838.2*7" y="1463.977" z="1109.98"/>
+
+   <box lunit="mm" name="DSbarite_1" x="2743.4+270*2" y="3327.27" z="586.6"/>
+   <box lunit="mm" name="DSbarite_2" x="1067" y="1003.27" z="586.6+1"/>
+
+    <subtraction name="DSbarite_sub">
+      <first ref = "DSbarite_1"/>
+      <second ref = "DSbarite_2"/>
+      <position name ="DSbarite_sub_pos" lunit="mm" x="0" y="-3327.27/2 + 1016.2 + 1003.27/2" z="0" />
+    </subtraction>
+       
+    <box lunit="mm" name="coll1SideShielding_solid"
+	 x="812.2"
+	 y="2504.313"
+	 z="USBoxmother_length - USBoxmothersubtract_length + 956.784"/>
+
+    <box lunit="mm" name="coll1TopShielding_solid_1"
+	 x="4166"
+	 y="1400"
+     z="USBoxmother_length - USBoxmothersubtract_length + 956.784"/>
+
+    <box lunit="mm" name="coll1TopShielding_sub"
+     x="4166+1"
+     y="485.6"
+     z="2671.4+1"/>
+
+    <subtraction name="coll1TopShielding_solid">
+      <first ref = "coll1TopShielding_solid_1"/>
+      <second ref = "coll1TopShielding_sub"/>
+      <position name ="coll1TopShielding_pos" lunit="mm" x="0" y="1400/2-485.6/2" z="-(USBoxmother_length - USBoxmothersubtract_length + 956.784)/2+2671.4/2" />
+    </subtraction>
+      
+    <box lunit="mm" name="pivotIron_solid"
+	 x="4166"
+	 y="50"
+	 z="(USBoxmother_length - USBoxmothersubtract_length + 956.784)- 524.38"/>
+    
+    <trd lunit="cm" name="wedge_main" x1="13*intocm" x2="96.73*intocm" y1="48*intocm" y2="137.396*intocm" z="366.68*intocm"/>
+    <box lunit="cm" name="wedge_bottomsub" x="97.73*intocm" y="45.698*intocm" z="366.68*intocm"/>
+    <box lunit="cm" name="wedge_backsub" x="196.73*intocm" y="170*intocm" z="325*intocm"/>
+
+    <subtraction name="wedge_trapezoid">
+      <first ref="wedge_main"/>
+      <second ref="wedge_bottomsub"/>
+      <positionref ref="wedge_bottomtrans"/>
+      <rotationref ref="identity"/>
+    </subtraction>
+
+    <subtraction name="leftwedge_trapezoid_cut">
+      <first ref="wedge_trapezoid"/>
+      <second ref="wedge_backsub"/>
+      <position unit="cm" name="leftwedge_trapezoid_pos" x="0" y="0" z="240"/>
+    </subtraction>
+
+    <subtraction name="rightwedge_trapezoid_cut">
+      <first ref="wedge_trapezoid"/>
+      <second ref="wedge_backsub"/>
+      <position unit="cm" name="rightwedge_trapezoid_pos" x="0" y="0" z="110"/>
+    </subtraction>
+	  	      
+  </solids>
+
+  <structure>
+
+    <!--Concrete Shielding-->
+    <volume name="coll1TopShield_logic">
+      <materialref ref="barite"/>
+      <!-- <materialref ref="Concrete"/> -->
+      <solidref ref="coll1TopShielding_solid"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+    </volume>
+
+    <volume name="coll1SideShield_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="coll1SideShielding_solid"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="pivotIron_logic">
+      <materialref ref="G4_Fe"/>
+      <solidref ref="pivotIron_solid"/>
+      <auxiliary auxtype="Color" auxvalue="gray"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.8"/>
+    </volume>
+    
+    <volume name="DSbottomconcreteShielding">
+      <materialref ref="Concrete"/>
+      <solidref ref="DSbottomconcrete"/>
+      <auxiliary auxtype="Color" auxvalue="Green"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+    
+    <volume name="DSbarite_logic">
+      <materialref ref="barite"/>
+      <solidref ref="DSbarite_sub"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+    </volume>
+
+    <!-- HRS WEDGE-->
+    <volume name="leftwedge_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="leftwedge_trapezoid_cut"/>
+    </volume>
+   
+    <volume name="rightwedge_logic">
+      <materialref ref="Concrete"/>
+      <solidref ref="rightwedge_trapezoid_cut"/>
+    </volume>
+	     
+    <volume name="upstream">
+      <materialref ref="G4_AIR"/>  
+      <solidref ref="boxConcreteShielding"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      
+      <!--shielding placement-->
+      <physvol name="coll1TopShielding">
+        <volumeref ref="coll1TopShield_logic"/>
+        <position name="coll1TopShield_pos" unit="mm" x="0" y="986.79 + 1400./2. + 0.02 - 2000./2" z="-852.122+386.028/2"/>
+      </physvol>
+     
+      <physvol name="coll1LeftShielding">
+        <volumeref ref="coll1SideShield_logic"/>
+        <position name="coll1LeftShield_pos" unit="mm" x="1676" y="2504.313/2 - 1517.523 - 2000./2" z="-852.122+386.028/2"/>
+      </physvol>
+      
+      <physvol name="coll1RightShielding">
+        <volumeref ref="coll1SideShield_logic"/>
+        <position name="coll1RightShield_pos" unit="mm" x="-1676" y="2504.313/2 - 1517.523 - 2000./2" z="-852.122+386.028/2"/>
+      </physvol> <!--Needs to be revisited -->
+
+      <physvol name="pivotIron">
+        <volumeref ref="pivotIron_logic"/>
+        <position name="pivotIron_pos" unit="mm" x="0" y="-1700-2000./2" z="4768.404/2 - 2000 - 1305"/>
+      </physvol>
+    
+      <physvol>
+        <volumeref ref="DSbottomconcreteShielding"/>
+        <position name="DSbottomconcreteShielding_pos" unit="mm" x="0" y="1463.977/2 - 2981.5 - 2000./2 - 0.1" z=" 4574.384 - 1109.98/2 - 2000 + 1"/>
+      </physvol>
+      
+      <physvol name="DSbarite_phys">
+        <volumeref ref="DSbarite_logic"/>
+        <position name="DSbarite_pos" unit="mm" x="0" y="131*25.4/2 - 1517.523 - 2000./2 +1" z="3986.784 + 586.6/2 - 2000 + 1"/>
+      </physvol>
+      
+      <!-- HRS Wedges -->
+     <physvol name="leftwedge">
+	   <volumeref ref="leftwedge_logic"/>
+	   <positionref ref="leftwedge_center"/>
+	   <rotationref ref="scRot_15"/>
+     </physvol>
+
+     <physvol name="rightwedge">
+       <volumeref ref="rightwedge_logic"/>
+       <positionref ref="rightwedge_center"/>
+       <rotationref ref="scRot_16"/>
+     </physvol>
+
+      <physvol>
+	  <file name="upstream/upstreamTorusRegion.gdml"/>
+      <position name="torus_pos" unit="mm" y="0-1000"/>
+      </physvol>
+
+
+    </volume>
+
+  </structure>
+
+  <setup name="ConcreteShielding" version="1.0">
+    <world ref="upstream"/>
+  </setup>
+
+</gdml>

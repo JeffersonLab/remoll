@@ -64,7 +64,7 @@
   </volume>
 
   <volume name="pionDetectorCalorimeterSingleBlockPMT_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorCalorimeterSingleBlockPMT_solid"/>
     <physvol>
       <volumeref ref="pionDetectorCalorimeterSingleBlock_logical"/>
@@ -92,7 +92,7 @@
   </volume>
 
   <volume name="pionDetectorCalorimeterAllBlocksPMT_logical">
-    <materialref ref="G4_Galactic"/>
+    <materialref ref="G4_AIR"/>
     <solidref ref="pionDetectorCalorimeterAllBlocksPMT_solid"/>
     <replicavol number="4">
       <volumeref ref="pionDetectorCalorimeterRowOfBlocksPMT_logical"/>

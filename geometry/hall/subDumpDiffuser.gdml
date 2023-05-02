@@ -2,7 +2,7 @@
 
 <gdml xmlns:gdml="http://cern.ch/2001/Schemas/GDML"
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="./schema/gdml.xsd">
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
   <define>
   </define>
@@ -137,7 +137,7 @@
       <auxiliary auxtype="Color" auxvalue="Red"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="51"/>
+	    <!--<auxiliary auxtype="DetNo" auxvalue="51"/>-->
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     </volume>
@@ -145,7 +145,6 @@
     <volume name="diffuserRegion">
       <materialref ref="G4_AIR"/>
       <solidref ref="diffuserPlate_world"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
 
       <physvol name="diffuser">
 	<volumeref ref="diffuserPlate_logic"/>
@@ -156,6 +155,8 @@
 	<volumeref ref="diffuserPlateBackDet_logic"/>
 	<position name="diffuserBackDet_position" z="20"/>
       </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
     </volume>
 
   </structure>

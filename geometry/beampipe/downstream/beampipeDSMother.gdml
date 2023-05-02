@@ -1,115 +1,468 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <gdml 
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
 <define>
+  <constant name="SAM_ring1_Z" value="26171.585"/><!--Z location of SAM upstream ring (SAM1, SAM3, SAM5, and SAM7) from hall center-->
+  <constant name="SAM_ring2_Z" value="26235.085"/><!--Z location of SAM downstream ring (SAM2, SAM4, SAM6, and SAM8) from hall center-->
+  <constant name="SAM_sphere_centerR" value="43"/><!--radial position of the center of spherical cap for SAM vacuum cans-->
+  <constant name="SAM_can_length" value="151.82"/><!--length of SAM vacuum cans from SAM pipe inner surface to center of spherical cap-->
+  <constant name="SAM_quartz_Rin" value="50"/><!--radial position of the inner face of SAM quartz-->
+  <constant name="SAM_quartz_length" value="16"/><!--radial length of SAM quartz including bevel-->
 </define>
 
-<solids>
-  <polycone name="solid_DSbeampipe_vacuum"
-            aunit="deg" startphi="0" deltaphi="360"
-            lunit="mm">
-    <zplane rmin="0" rmax="950" z="19000.0"/>
-    <zplane rmin="0" rmax="600" z="19000.0"/>
-    <zplane rmin="0" rmax="770" z="26500"/>
-  </polycone>
+<materials>
+</materials>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_2">
-      <zplane rmin="504.775" rmax="509.5375" z="19000.0"/>
-      <zplane rmin="528.33" rmax="533.0925" z="19000.0+630.4-36"/>
+  <solids>
+<!--    <box name = "SAM_quartz" x="20" y="13" z="6" unit="mm"/> -->
+    <xtru name="SAM_quartz" lunit="mm">
+      <twoDimVertex x="-8" y="-3"/>
+      <twoDimVertex x="-8" y="3"/>
+      <twoDimVertex x="8" y="3"/>
+      <twoDimVertex x="2" y="-3"/>
+      <section zOrder="1" zPosition="-10" xOffset="0" yOffset="0" scalingFactor="1"/>
+      <section zOrder="2" zPosition="10" xOffset="0" yOffset="0" scalingFactor="1"/>
+    </xtru>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAM_flanges_placeholder">
+      <zplane rmin="28.575" rmax="38.575" z="0"/>
+      <zplane rmin="28.575" rmax="38.575" z="37.78"/>
+      <zplane rmin="19.05" rmax="57.15" z="37.78"/>
+      <zplane rmin="19.05" rmax="57.15" z="116.11"/>
+    </polycone>
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAM_cans">
+      <zplane rmin="17.399" rmax="19.05" z="0"/>
+      <zplane rmin="17.399" rmax="19.05" z="113.72"/>
+      <zplane rmin="18.7452" rmax="19.05" z="126.42"/>
+      <zplane rmin="18.7452" rmax="19.05" z="151.82"/>
     </polycone>
 
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_DSplate">
-      <zplane rmin="523.5" rmax="528.15" z="19589.0"/>
-      <zplane rmin="523.67" rmax="528.15" z="19589.0+5"/>
-      <zplane rmin="523.67" rmax="533.05" z="19589.0+5"/>
-      <zplane rmin="523.942" rmax="533.05" z="19589.0+5+8"/>
-      <zplane rmin="523.942" rmax="553.325" z="19589.0+5+8"/>
-      <zplane rmin="524.35" rmax="553.325" z="19589.0+5+8+12"/>
-    </polycone>
-
-    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe2_bellow">
-      <zplane rmin="524.335" rmax="553.335" z="19614.0"/>
-      <zplane rmin="524.4556" rmax="553.335" z="19614.0+6.35"/>
-      <zplane rmin="524.4556" rmax="524.4556+6.35" z="19614.0+6.35"/>
-      <zplane rmin="524.9744" rmax="524.4556+6.35" z="19614.0+6.35+27.3"/>
-      <zplane rmin="524.9744" rmax="553.335" z="19614.0+6.35+27.3"/>
-      <zplane rmin="525.095" rmax="553.335" z="19614.0+6.35+27.3+6.35"/>
-      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35"/>
-      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100"/>
-      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100"/>
-      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100+4.8"/>
-      <zplane rmin="525.0" rmax="525.0+4.8" z="19614.0+6.35+27.3+6.35+100+4.8"/>
-      <zplane rmin="525.0" rmax="525.0+4.8" z="19614.0+6.35+27.3+6.35+100+4.8+30.4"/>
-      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100+4.8+30.4"/>
-      <zplane rmin="525.0" rmax="553.6" z="19614.0+6.35+27.3+6.35+100+4.8+30.4+4.8"/>
+    <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="90" lunit="mm" name="SAM_can_spherical_cap"
+            rmin="18.7452"
+            rmax="19.05"/>
+    
+    <polycone name="solid_DSbeampipe_vacuum"
+              aunit="deg" startphi="0" deltaphi="360"
+              lunit="mm">
+	    <!--<zplane rmin="0" rmax="950" z="19000.0"/>
+      <zplane rmin="0" rmax="600" z="19000.0"/>-->
+      <zplane rmin="0" rmax="1019" z="19332.69+0.02"/>
+      <zplane rmin="0" rmax="600" z="19332.69+0.02"/>
+      <zplane rmin="0" rmax="750" z="26720.141"/>
     </polycone>
 
     <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_DSpipe3">
-      <zplane rmin="525.0" rmax="553.6" z="19794.0"/>
-      <zplane rmin="526.6" rmax="553.6" z="19794.0+12.7"/>
-      <zplane rmin="526.6" rmax="532.95" z="19794.0+12.7"/>
-      <zplane rmin="550.0" rmax="556.35" z="19794.0+12.7+187.3"/>
-      <zplane rmin="550.0" rmax="569.05" z="19794.0+12.7+187.3"/>
-      <zplane rmin="746.471" rmax="765.521" z="19794.0+12.7+187.3+6506"/>
+      <zplane rmin="521.7" rmax="528.052" z="19415.451 "/>
+      <zplane rmin="542.341" rmax="548.693" z="20238.112"/>
+      <zplane rmin="542.341" rmax="574.093" z="20238.112 "/>
+      <zplane rmin="542.341" rmax="574.093" z="20263.512"/>
+      <zplane rmin="542.341" rmax="548.693" z="20263.512"/>
+      <zplane rmin="562.7" rmax="569.0525" z="21099.991"/>
+      <zplane rmin="562.7" rmax="608.5" z="21099.991"/>
+      <zplane rmin="562.7" rmax="608.5" z="21125.391"/>
+      <zplane rmin="576.745" rmax="595.8" z="21125.391"/>
+      <zplane rmin="676.445" rmax="695.5" z="25472.105"/>
+    </polycone>
+    
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_mother">
+      <zplane rmin="0" rmax="206.375" z="25200.710"/>
+      <zplane rmin="0" rmax="701.127" z="25486.355"/>
+    </polycone>
+	  
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_sub">
+      <zplane rmin="0" rmax="206.952" z="25200.710-1"/>
+      <zplane rmin="0" rmax="203.2" z="25206.210"/>
+      <zplane rmin="0" rmax="690.1576" z="25486.355+1"/>
+    </polycone>
+  
+    <subtraction name="Neckdown">
+      <first  ref="Neckdown_mother"/>
+      <second ref="Neckdown_sub"/>
+    </subtraction>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_DSpipe">
+      <zplane rmin="200.025" rmax="203.2" z="25188.010"/>
+      <zplane rmin="200.025" rmax="203.2" z="25315.010"/>
+      <zplane rmin="200.025" rmax="203.2" z="25315.010"/>
+      <zplane rmin="200.025" rmax="203.2" z="25346.682"/>
+      <zplane rmin="200.025" rmax="234.95" z="25346.682"/>
+      <zplane rmin="200.025" rmax="234.95" z="25375.130"/>	    
+    </polycone>
+	
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_flange_1">
+      <zplane rmin="200.025" rmax="234.95" z="25375.130"/>      
+      <zplane rmin="200.025" rmax="234.95" z="25390.878"/>
+      <zplane rmin="203.581" rmax="234.95" z="25390.878"/>
+      <zplane rmin="203.581" rmax="234.95" z="25403.578"/>	    
+    </polycone>	  
+    
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows">
+      <zplane rmin="200.025" rmax="203.073" z="25392.912"/>
+      <zplane rmin="200.025" rmax="203.073" z="25467.509"/>
+      <zplane rmin="200.025" rmax="226.4155" z="25467.509"/>
+      <zplane rmin="200.025" rmax="226.4155" z="25470.557"/>
+      <zplane rmin="203.2" rmax="226.4155" z="25470.557"/>
+      <zplane rmin="203.2" rmax="226.4155" z="25838.504"/>
+      <zplane rmin="200.025" rmax="226.4155" z="25838.504"/>
+      <zplane rmin="200.025" rmax="226.4155" z="25841.552"/>
+      <zplane rmin="200.025" rmax="203.073" z="25841.552"/>
+      <zplane rmin="200.025" rmax="203.073" z="25916.149"/>
     </polycone>
 
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Neckdown_bellows_flange_2">
+      <zplane rmin="203.581" rmax="234.95" z="25905.482"/>
+      <zplane rmin="203.581" rmax="234.95" z="25918.182"/>
+      <zplane rmin="200.025" rmax="234.95" z="25918.182"/>
+      <zplane rmin="200.025" rmax="234.95" z="25933.930"/>
+    </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAM_support_placeholder">
+      <zplane rmin="203.2" rmax="260.03" z="26114.816"/>
+      <zplane rmin="203.2" rmax="260.03" z="26291.854"/>
+    </polycone>
+
+    <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="SAMpipeWithFlange">
+      <zplane rmin="200.025" rmax="234.95" z="25933.930"/>
+      <zplane rmin="200.025" rmax="234.95" z="25962.378"/>
+      <zplane rmin="200.025" rmax="203.2" z="25962.378"/>
+      <zplane rmin="200.025" rmax="203.2" z="25991.766"/>
+      <zplane rmin="196.85" rmax="203.2" z="25991.766"/>
+      <zplane rmin="196.85" rmax="203.2" z="26694.741"/>
+      <zplane rmin="196.85" rmax="584.2" z="26694.741"/>
+      <zplane rmin="196.85" rmax="584.2" z="26704.266"/>
+      <zplane rmin="190.5" rmax="584.2" z="26704.266"/>
+      <zplane rmin="190.5" rmax="584.2" z="26720.141"/>
+    </polycone>
+
+  </solids>
+
+  <structure>
+
+    <volume name="logic_SAM_quartz">
+      <materialref ref="G4_SILICON_DIOXIDE"/>
+      <solidref ref="SAM_quartz"/>
+      <auxiliary auxtype="SensDet" auxvalue="SAMquartzDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="1760"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+
+    <volume name="SAM_cans_logic">
+      <materialref ref="G4_Al"/>
+      <solidref ref="SAM_cans"/>
+      <auxiliary auxtype="SensDet" auxvalue="SAMcanDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="1765"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+    </volume>
+
+    <volume name="SAM_can_spherical_logic">
+      <materialref ref="G4_Al"/>
+      <solidref ref="SAM_can_spherical_cap"/>
+      <auxiliary auxtype="SensDet" auxvalue="SAMcapDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="1766"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+    </volume>
+
+    <volume name="logic_DSpipe3">
+      <materialref ref="G4_Al"/>
+      <solidref ref="solid_DSpipe3"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+
+    <volume name="logic_Neckdown">
+      <materialref ref="G4_Al"/>
+      <solidref ref="Neckdown"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="800"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+
+    <volume name="logic_Neckdown_DSpipe">
+      <materialref ref="G4_Al"/>
+      <solidref ref="Neckdown_DSpipe"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="801"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+
+    
+    <volume name="logic_Neckdown_bellows_flange_1">
+      <materialref ref="Inconel625"/>
+      <solidref ref="Neckdown_bellows_flange_1"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="802"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
+    </volume> 
+
+    <volume name="logic_Neckdown_bellows">
+      <materialref ref="Inconel625_Air"/>
+      <solidref ref="Neckdown_bellows"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="803"/>
+      <auxiliary auxtype="Color" auxvalue="Brown"/>
+    </volume>
+
+    <volume name="logic_Neckdown_bellows_flange_2">
+      <materialref ref="Inconel625"/>
+      <solidref ref="Neckdown_bellows_flange_2"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="804"/>
+      <auxiliary auxtype="Color" auxvalue="Yellow"/>
+    </volume>
+
+    <volume name="logic_SAM_support_placeholder">
+      <materialref ref="G4_Al"/>
+      <solidref ref="SAM_support_placeholder"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="805"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+    <volume name="logic_SAM_flanges_placeholder">
+      <materialref ref="G4_Al"/>
+      <solidref ref="SAM_flanges_placeholder"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="807"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
+    </volume>
+
+    <volume name="logic_SAMpipeWithFlange">
+      <materialref ref="G4_Al"/>
+      <solidref ref="SAMpipeWithFlange"/>
+      <auxiliary auxtype="SensDet" auxvalue="coilDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="806"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+    </volume>
+
+    <volume name="DSbeampipeMother">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="solid_DSbeampipe_vacuum"/>
+
+      <physvol name="DSpipe3_DSpipe">
+	<volumeref ref="logic_DSpipe3"/>
+      </physvol>
+
+      <physvol name="Neckdown">
+	<volumeref ref="logic_Neckdown"/>
+      </physvol>
+
+      <physvol name="Neckdown_DSpipe">
+	<volumeref ref="logic_Neckdown_DSpipe"/>
+      </physvol>
+
+      <physvol name="Neckdown_bellows_flange_1">
+	<volumeref ref="logic_Neckdown_bellows_flange_1"/>
+      </physvol>
+
+      <physvol name="Neckdown_bellows">
+	<volumeref ref="logic_Neckdown_bellows"/>
+      </physvol>
+
+      <physvol name="Neckdown_bellows_flange_2">
+	<volumeref ref="logic_Neckdown_bellows_flange_2"/>
+      </physvol>
+
+      <physvol name="SAM_flanges_placeholder_1">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_1" unit="deg" x="-90" y="-180"/>
+        <position name="flanges_position_1" x="0" y="203.2" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_1">
+        <volumeref ref="SAM_cans_logic"/>
+        <rotation name="can_rotation1" unit="deg" x="-90"/>
+        <position name="can_position1" x="0" y="(SAM_can_length+SAM_sphere_centerR)" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_quartz_1">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation1" unit="deg" x="-90" y="-90"/>
+        <position name="quartz_position1" x="0" y="(SAM_quartz_Rin+SAM_quartz_length/2)" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_1">
+        <volumeref ref="SAM_can_spherical_logic"/>
+        <rotation name="sphere_rotation1" unit="deg" x="-90"/>
+        <position name="sphere_position1" x="0" y="SAM_sphere_centerR" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_flanges_placeholder_2">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_2" unit="deg" x="-90" y="-225"/>
+        <position name="flanges_position_2" x="203.2*cos(5*pi/4)" y="-203.2*sin(5*pi/4)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_2">
+        <volumeref ref="SAM_cans_logic"/>
+        <rotation name="can_rotation2" unit="deg" x="-90" y="-45"/>
+        <position name="can_position2" x="-(SAM_can_length+SAM_sphere_centerR)*sin(2*pi/8)" y="(SAM_can_length+SAM_sphere_centerR)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_quartz_2">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation2"  unit="deg" x="-90" y="-135"/>
+        <position name="quartz_position2" x="-(SAM_quartz_Rin+SAM_quartz_length/2)*sin(2*pi/8)" y="(SAM_quartz_Rin+SAM_quartz_length/2)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_2">
+        <volumeref ref="SAM_can_spherical_logic"/>
+        <rotation name="sphere_rotation2" unit="deg" x="-90" y="-45"/>
+        <position name="sphere_position2" x="-SAM_sphere_centerR*sin(2*pi/8)" y="SAM_sphere_centerR*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_flanges_placeholder_3">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_3" unit="deg" x="-90" y="-270"/>
+        <position name="flanges_position_3" x="-203.2" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_3">
+        <volumeref ref="SAM_cans_logic"/>
+        <rotation name="can_rotation3" unit="deg" y="-90"/>
+        <position name="can_position3" x="-(SAM_can_length+SAM_sphere_centerR)" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_quartz_3">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation3" unit="deg" x="-90" y="-180"/>
+        <position name="quartz_position3" x="-(SAM_quartz_Rin+SAM_quartz_length/2)" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_3">
+        <volumeref ref="SAM_can_spherical_logic"/>
+        <rotation name="sphere_rotation3" unit="deg" y="-90"/>
+        <position name="sphere_position3" x="-SAM_sphere_centerR" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_flanges_placeholder_4">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_4" unit="deg" x="-90" y="-315"/>
+        <position name="flanges_position_4" x="203.2*cos(5*pi/4)" y="203.2*sin(5*pi/4)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_4">
+        <volumeref ref="SAM_cans_logic"/>
+        <rotation name="can_rotation4" unit="deg" x="90" y="-45"/>
+        <position name="can_position4" x="-(SAM_can_length+SAM_sphere_centerR)*sin(2*pi/8)" y="-(SAM_can_length+SAM_sphere_centerR)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_quartz_4">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation4" unit="deg" x="-90" y="135"/>
+        <position name="quartz_position4" x="-(SAM_quartz_Rin+SAM_quartz_length/2)*sin(2*pi/8)" y="-(SAM_quartz_Rin+SAM_quartz_length/2)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_4">
+        <volumeref ref="SAM_can_spherical_logic"/>
+        <rotation name="sphere_rotation4" unit="deg" x="90" y="-45"/>
+        <position name="sphere_position4" x="-SAM_sphere_centerR*sin(2*pi/8)" y="-SAM_sphere_centerR*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_flanges_placeholder_5">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_5" unit="deg" x="-90" y="0"/>
+        <position name="flanges_position_5" x="0" y="-203.2" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_5">
+        <volumeref ref="SAM_cans_logic"/>
+        <rotation name="can_rotation5" unit="deg" x="90"/>
+        <position name="can_position5" x="0" y="-(SAM_can_length+SAM_sphere_centerR)" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_quartz_5">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation5" unit="deg" x="-90" y="90"/>
+        <position name="quartz_position5" x="0" y="-(SAM_quartz_Rin+SAM_quartz_length/2)" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_5">
+        <volumeref ref="SAM_can_spherical_logic"/>
+        <rotation name="sphere_rotation5" unit="deg" x="90"/>
+        <position name="sphere_position5" x="0" y="-SAM_sphere_centerR" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_flanges_placeholder_6">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_6" unit="deg" x="-90" y="-45"/>
+        <position name="flanges_position_6" x="203.2*cos(pi/4)" y="-203.2*sin(pi/4)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_6">
+        <volumeref ref="SAM_cans_logic"/>
+        <rotation name="can_rotation6" unit="deg" x="90" y="45"/>
+        <position name="can_position6" x="(SAM_can_length+SAM_sphere_centerR)*sin(2*pi/8)" y="-(SAM_can_length+SAM_sphere_centerR)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_quartz_6">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation6" unit="deg" x="-90" y="45"/>
+        <position name="quartz_position6" x="(SAM_quartz_Rin+SAM_quartz_length/2)*sin(2*pi/8)" y="-(SAM_quartz_Rin+SAM_quartz_length/2)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_6">
+        <volumeref ref="SAM_can_spherical_logic"/>
+        <rotation name="sphere_rotation6" unit="deg" x="90" y="45"/>
+        <position name="sphere_position6" x="SAM_sphere_centerR*sin(2*pi/8)" y="-SAM_sphere_centerR*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_flanges_placeholder_7">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_7" unit="deg" x="-90" y="-90"/>
+        <position name="flanges_position_7" x="203.2" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_7">
+        <volumeref ref="SAM_cans_logic"/>
+        <rotation name="can_rotation7" unit="deg" y="90"/>
+        <position name="can_position7" x="(SAM_can_length+SAM_sphere_centerR)" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_quartz_7">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation7" unit="deg" x="-90" y="0"/>
+        <position name="quartz_position7" x="SAM_quartz_Rin+SAM_quartz_length/2" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_7">
+        <volumeref ref="SAM_can_spherical_logic"/>
+        <rotation name="sphere_rotation7" unit="deg" y="90"/>
+        <position name="sphere_position7" x="SAM_sphere_centerR" y="0" z="SAM_ring1_Z"/>
+      </physvol>
+
+      <physvol name="SAM_flanges_placeholder_8">
+        <volumeref ref="logic_SAM_flanges_placeholder"/>
+        <rotation name="flanges_rotation_8" unit="deg" x="-90" y="-135"/>
+        <position name="flanges_position_8" x="-203.2*cos(3*pi/4)" y="203.2*sin(3*pi/4)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_can_8">
+        <volumeref ref="SAM_cans_logic"/>
+        <rotation name="can_rotation8" unit="deg" x="-90" y="45"/>
+        <position name="can_position8" x="(SAM_can_length+SAM_sphere_centerR)*sin(2*pi/8)" y="(SAM_can_length+SAM_sphere_centerR)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_quartz_8">
+        <volumeref ref="logic_SAM_quartz"/>
+        <rotation name="quartz_rotation8" unit="deg" x="-90" y="-45"/>
+        <position name="quartz_position8" x="(SAM_quartz_Rin+SAM_quartz_length/2)*sin(2*pi/8)" y="(SAM_quartz_Rin+SAM_quartz_length/2)*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAM_sphere_8">
+        <volumeref ref="SAM_can_spherical_logic"/>
+        <rotation name="sphere_rotation8" unit="deg" x="-90" y="45"/>
+        <position name="sphere_position8" x="SAM_sphere_centerR*sin(2*pi/8)" y="SAM_sphere_centerR*cos(2*pi/8)" z="SAM_ring2_Z"/>
+      </physvol>
+
+      <physvol name="SAMpipeWithFlange">
+	<volumeref ref="logic_SAMpipeWithFlange"/>
+      </physvol>
   
-</solids>
+    </volume>
 
-<structure>
-  <volume name="logic_DSpipe2_2">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe2_2"/>
-    <auxiliary auxtype="Color" auxvalue="Blue"/>
-  </volume>
+  </structure>
 
-  <volume name="logic_DSpipe2_DSplate">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe2_DSplate"/>
-    <auxiliary auxtype="Color" auxvalue="Blue"/>
-  </volume>
-
-  <volume name="logic_DSpipe2_bellow">
-    <materialref ref="G4_STAINLESS-STEEL"/>
-    <solidref ref="solid_DSpipe2_bellow"/>
-    <auxiliary auxtype="Color" auxvalue="Brown"/>
-  </volume>
-
-  <volume name="logic_DSpipe3">
-    <materialref ref="G4_Al"/>
-    <solidref ref="solid_DSpipe3"/>
-    <auxiliary auxtype="Color" auxvalue="Blue"/>
-  </volume>
-
-  <volume name="DSbeampipeMother">
-    <materialref ref="G4_Galactic"/>
-    <solidref ref="solid_DSbeampipe_vacuum"/>
-
-    <physvol name="DSpipe2_DSpipe2_2">
-      <volumeref ref="logic_DSpipe2_2"/>
-    </physvol>
-
-    <physvol name="DSpipe2_DSplate">
-      <volumeref ref="logic_DSpipe2_DSplate"/>
-    </physvol>
-
-    <physvol name="DSpipe2_bellow">
-      <volumeref ref="logic_DSpipe2_bellow"/>
-    </physvol>
-
-    <physvol name="DSpipe3_DSpipe">
-      <volumeref ref="logic_DSpipe3"/>
-    </physvol>
-
-
-  </volume>
-
-</structure>
-
-<setup name="beamPipeDShybrid" version="1.0">
-  <world ref="DSbeampipeMother"/>
-</setup>
+  <setup name="beamPipeDShybrid" version="1.0">
+    <world ref="DSbeampipeMother"/>
+  </setup>
 
 </gdml>

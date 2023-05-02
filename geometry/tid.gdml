@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define> 
+  </define>
+
+  <materials>
+  </materials>
+
+  <solids>
+
+    <box lunit="mm" name="world_solid"
+	 x="5000"
+	 y="5000"
+	 z="40"/>
+
+    <box lunit="mm" name="frontBack_solid"
+	 x="4000"
+	 y="4000"
+	 z="1"/>
+
+    <box lunit="mm" name="middle_solid"
+	 x="4000"
+	 y="4000"
+	 z="10"/>
+
+  </solids>
+
+  <structure>
+
+    <volume name="front_logic">
+      <materialref ref="G4_Al"/>
+      <!-- <materialref ref="G4_SILICON_DIOXIDE"/> -->
+      <solidref ref="middle_solid"/>
+      <!-- <solidref ref="frontBack_solid"/> -->
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/> -->
+      <!-- <auxiliary auxtype="DetNo" auxvalue="1"/> -->
+      <!-- <auxiliary auxtype="DetType" auxvalue="secondaries"/> -->
+      <!-- <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> -->
+    </volume>
+
+    <volume name="back_logic">
+      <materialref ref="G4_Al"/>
+      <!-- <materialref ref="G4_SILICON_DIOXIDE"/> -->
+      <solidref ref="middle_solid"/>
+      <!-- <solidref ref="frontBack_solid"/> -->
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+      <!-- <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/> -->
+      <!-- <auxiliary auxtype="DetNo" auxvalue="3"/> -->
+      <!-- <auxiliary auxtype="DetType" auxvalue="secondaries"/> -->
+      <!-- <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/> -->
+    </volume>
+
+    <volume name="middle_logic">
+      <materialref ref="G4_VITON"/>
+      <!-- <materialref ref="G4_SILICON_DIOXIDE"/> -->
+      <solidref ref="middle_solid"/>
+      <auxiliary auxtype="Color" auxvalue="red"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="2"/>
+      <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+      <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    </volume>
+
+
+
+    <volume name="logicTID">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="world_solid"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+
+      <physvol name="front">
+      	<volumeref ref="front_logic"/>
+      	<position name="front_pos" unit="mm" z="-11"/>
+      </physvol>
+
+      <physvol name="back">
+      	<volumeref ref="back_logic"/>
+      	<position name="back_pos" unit="mm" z="11"/>
+      </physvol>
+
+      <physvol name="middle">
+	<volumeref ref="middle_logic"/>
+      </physvol>
+            
+    </volume>
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="logicTID"/>
+  </setup>
+  
+</gdml> 

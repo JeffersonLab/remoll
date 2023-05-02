@@ -4,7 +4,7 @@
 #include "G4ParticleGun.hh"
 #include "G4ParticleTable.hh"
 #include "G4ParticleDefinition.hh"
-#include "G4GenericMessenger.hh"
+#include "G4Version.hh"
 
 #include "remollHEPEvtInterface.hh"
 #ifdef G4LIB_USE_HEPMC
@@ -27,16 +27,17 @@
 #include "remollGenpInelastic.hh"
 #include "remollGenPion.hh"
 #include "remollGenBeam.hh"
-#include "remollGenTF1.hh"
-#include "remollGen12CElastic.hh"
+#include "remollGenC12.hh"
 #include "remollGenFlat.hh"
 #include "remollGenExternal.hh"
 #include "remollGenAl.hh"
 #include "remollGenLUND.hh"
 #include "remollGenHyperon.hh"
 
+#include <memory>
+
 remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
-: fEventGen(0),fPriGen(0),fParticleGun(0),fBeamTarg(0),fEvent(0),fMessenger(0),fEffCrossSection(0)
+  : fEventGen(0),fPriGen(0),fParticleGun(0),fEvent(0),fRateCopy(0),fEffCrossSection(0)
 {
     static bool has_been_warned = false;
     if (! has_been_warned) {
@@ -47,52 +48,44 @@ remollPrimaryGeneratorAction::remollPrimaryGeneratorAction()
     }
 
     // Populate map with all possible event generators
-    fEvGenMap["moller"] = new remollGenMoller();
-    fEvGenMap["elastic"] = new remollGenpElastic();
-    fEvGenMap["inelastic"] = new remollGenpInelastic();
-    fEvGenMap["pion"] = new remollGenPion();
-    fEvGenMap["beam"] = new remollGenBeam();
-    fEvGenMap["flat"] = new remollGenFlat();
-    fEvGenMap["TF1"] = new remollGenTF1();
-    fEvGenMap["elasticAl"] = new remollGenAl(0);
-    fEvGenMap["quasielasticAl"] = new remollGenAl(1);
-    fEvGenMap["inelasticAl"] = new remollGenAl(2);
-    fEvGenMap["external"] = new remollGenExternal();
-    fEvGenMap["pion_LUND"] = new remollGenLUND();
-    fEvGenMap["carbon"] = new remollGen12CElastic();
-    fEvGenMap["hyperon"] = new remollGenHyperon();
+    fEvGenMap["moller"] = std::make_shared<remollGenMoller>();
+    fEvGenMap["elastic"] = std::make_shared<remollGenpElastic>();
+    fEvGenMap["inelastic"] = std::make_shared<remollGenpInelastic>();
+    fEvGenMap["pion"] = std::make_shared<remollGenPion>();
+    fEvGenMap["beam"] = std::make_shared<remollGenBeam>();
+    fEvGenMap["flat"] = std::make_shared<remollGenFlat>();
+    fEvGenMap["elasticAl"] = std::make_shared<remollGenAl>(0);
+    fEvGenMap["quasielasticAl"] = std::make_shared<remollGenAl>(1);
+    fEvGenMap["inelasticAl"] = std::make_shared<remollGenAl>(2);
+    fEvGenMap["external"] = std::make_shared<remollGenExternal>();
+    fEvGenMap["pion_LUND"] = std::make_shared<remollGenLUND>();
+    fEvGenMap["elasticC12"] = std::make_shared<remollGenC12>(0);
+    fEvGenMap["quasielasticC12"] = std::make_shared<remollGenC12>(1);
+    fEvGenMap["inelasticC12"] = std::make_shared<remollGenC12>(2);
+    fEvGenMap["hyperon"] = std::make_shared<remollGenHyperon>();
 
     // Populate map with all possible primary generators
-    fPriGenMap["particlegun"] = new G4ParticleGun();
-    fPriGenMap["HEPEvt"] = new remollHEPEvtInterface();
+    fPriGenMap["particlegun"] = std::make_shared<G4ParticleGun>();
+    fPriGenMap["HEPEvt"] = std::make_shared<remollHEPEvtInterface>();
     #ifdef G4LIB_USE_HEPMC
-    fPriGenMap["hepmcAscii"] = new HepMCG4AsciiInterface();
+    fPriGenMap["hepmcAscii"] = std::make_shared<HepMCG4AsciiInterface>();
     #ifdef G4LIB_USE_PYTHIA
-    fPriGenMap["hepmcPythia"] = new HepMCG4PythiaInterface()
+    fPriGenMap["hepmcPythia"] = std::make_shared<HepMCG4PythiaInterface>();
     #endif
     #endif
-
-    // Create beam target
-    fBeamTarg = new remollBeamTarget();
 
     // Default generator
     G4String default_generator = "moller";
     SetGenerator(default_generator);
 
     // Create event generator messenger
-    fEvGenMessenger = new G4GenericMessenger(this,"/remoll/evgen/","Remoll event generator properties");
-    fEvGenMessenger->DeclareMethod("set",&remollPrimaryGeneratorAction::SetGenerator,"Select physics generator");
-    fEvGenMessenger->DeclarePropertyWithUnit("sigma","picobarn",fEffCrossSection,"Set effective cross section");
+    fEvGenMessenger.DeclareMethod("set",&remollPrimaryGeneratorAction::SetGenerator,"Select physics generator");
+    fEvGenMessenger.DeclarePropertyWithUnit("sigma","picobarn",fEffCrossSection,"Set effective cross section");
+    fEvGenMessenger.DeclareProperty("copyRate",fRateCopy,"ExtGen: copy rate from previous sim");
 }
 
 remollPrimaryGeneratorAction::~remollPrimaryGeneratorAction()
 {
-    fEvGenMap.clear();
-    fPriGenMap.clear();
-    if (fEvGenMessenger) delete fEvGenMessenger;
-    if (fMessenger) delete fMessenger;
-    if (fBeamTarg)  delete fBeamTarg;
-    if (fEventGen)  delete fEventGen;
 }
 
 void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
@@ -102,7 +95,7 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
     fPriGen = 0;
 
     // Find event generator
-    std::map<G4String,remollVEventGen*>::iterator evgen = fEvGenMap.find(genname);
+    auto evgen = fEvGenMap.find(genname);
     if (evgen != fEvGenMap.end()) {
       G4cout << "Setting generator to " << genname << G4endl;
       fPriGen = 0;
@@ -113,7 +106,7 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
     }
 
     // Find primary generator
-    std::map<G4String,G4VPrimaryGenerator*>::iterator prigen = fPriGenMap.find(genname);
+    auto prigen = fPriGenMap.find(genname);
     if (prigen != fPriGenMap.end()) {
       G4cout << "Setting generator to " << genname << G4endl;
       fPriGen = prigen->second;
@@ -131,10 +124,8 @@ void remollPrimaryGeneratorAction::SetGenerator(G4String& genname)
 
     // Set the beam target
     if (fEventGen) {
-      fEventGen->SetBeamTarget(fBeamTarg);
+      fEventGen->SetBeamTarget(&fBeamTarg);
     }
-
-    remollRun::GetRunData()->SetGenName(genname.data());
 }
 
 void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
@@ -145,7 +136,7 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     }
 
     // Delete old primary event
-    if (fEvent) {
+    if (fEvent != nullptr) {
       delete fEvent;
       fEvent = 0;
     }
@@ -160,38 +151,47 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     // 2. Using event generator interface
     if (fEventGen && !fPriGen) {
 
+      // Helper function
+      auto contains = [](const G4String& lhs, const G4String& rhs) {
+        #if G4VERSION_NUMBER < 1100
+          return lhs.contains(rhs);
+        #else
+          return G4StrUtil::contains(lhs, rhs);
+        #endif
+      };
+
       // Set beam polarization
       const G4String fBeamPol = fEventGen->GetBeamPolarization();
       G4ThreeVector cross(0,0,2);
       if (fBeamPol == "0") cross = G4ThreeVector(0,0,0);
       else {
-        if (fBeamPol.contains('V')) cross = G4ThreeVector(1,0,0);
-        else if(fBeamPol.contains('H')) cross = G4ThreeVector(0,1,0);
-        if (fBeamPol.contains('-')) cross *= -1;
+        if     (contains(fBeamPol, "V")) cross = G4ThreeVector(1,0,0);
+        else if(contains(fBeamPol, "H")) cross = G4ThreeVector(0,1,0);
+        if (contains(fBeamPol, "-")) cross *= -1;
       }
 
       // Create new primary event
       fEvent = fEventGen->GenerateEvent();
       for (unsigned int pidx = 0; pidx < fEvent->fPartType.size(); pidx++) {
 
-        double p = fEvent->fPartMom[pidx].mag();
+        double p = fEvent->fPartRealMom[pidx].mag();
         double m = fEvent->fPartType[pidx]->GetPDGMass();
         double kinE = sqrt(p*p + m*m) - m;
 
         fParticleGun->SetParticleDefinition(fEvent->fPartType[pidx]);
         fParticleGun->SetParticleEnergy(kinE);
         fParticleGun->SetParticlePosition(fEvent->fPartPos[pidx]);
-        fParticleGun->SetParticleMomentumDirection(fEvent->fPartMom[pidx].unit());
+        fParticleGun->SetParticleMomentumDirection(fEvent->fPartRealMom[pidx].unit());
 
         G4ThreeVector pol(0,0,0);
         if (pidx == 0) {
           if (cross.mag() !=0) {
             if (cross.mag() == 1) //transverse polarization
-              pol = G4ThreeVector( (fEvent->fPartMom[0].unit()).cross(cross));
-            else if (fBeamPol.contains("+") ) //positive helicity
-              pol = fEvent->fPartMom[0].unit();
+              pol = G4ThreeVector( (fEvent->fPartRealMom[0].unit()).cross(cross));
+            else if (contains(fBeamPol, "+") ) //positive helicity
+              pol = fEvent->fPartRealMom[0].unit();
             else //negative helicity
-              pol = - fEvent->fPartMom[0].unit();
+              pol = - fEvent->fPartRealMom[0].unit();
           }
         }
         fParticleGun->SetParticlePolarization(pol);
@@ -205,12 +205,14 @@ void remollPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
     // Get number of thrown events
     G4double nthrown = remollRun::GetRunData()->GetNthrown();
 
-    // Calculate rate
-    if (fEvent->fRate == 0) { // If the rate is set to 0 then calculate it using the cross section
-        fEvent->fRate  = fEvent->fEffXs * fBeamTarg->GetEffLumin() / nthrown;
 
-    } else { // For LUND - calculate rate and cross section
-        fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg->GetEffLumin();
+    // Calculate rate
+    SamplingType_t sampling_type = fEventGen->GetSamplingType();
+    if (fEvent->fRate == 0) { // If the rate is set to 0 then calculate it using the cross section
+        fEvent->fRate  = fEvent->fEffXs * fBeamTarg.GetEffLumin(sampling_type) / nthrown;
+
+    } else if(!fRateCopy){ // For LUND - calculate rate and cross section
+        fEvent->fEffXs = fEvent->fRate * nthrown / fBeamTarg.GetEffLumin(sampling_type);
         fEvent->fRate  = fEvent->fRate / nthrown;
     }
 

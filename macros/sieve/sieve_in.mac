@@ -1,0 +1,2 @@
+# Move the sieve 200 mm to beam axis
+/remoll/geometry/relative_position USsieve (-200,0,0)

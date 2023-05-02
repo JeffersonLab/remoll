@@ -4,8 +4,9 @@
 /remoll/physlist/optical/enable
 
 # This is the current working geometry
-/remoll/setgeofile geometry/mollerMother_merged.gdml
+/remoll/setgeofile geometry/mollerMother.gdml
 /remoll/parallel/setfile geometry/mollerParallel.gdml 
+
 
 #/remoll/likekryptonite  true
 
@@ -52,6 +53,8 @@
 #/remoll/evgen/external/startEvent 0
 #/remoll/evgen/external/zOffset -28550.0
 #/remoll/filename remollout_r5o_external_default.root
+<<<<<<< HEAD:macros/vis.mac
 
 
-##/run/beamOn 1
+=======
+>>>>>>> 3da5324b7701fd1940e5ea676a7249aebea7092a:macros/runexample_vis.mac

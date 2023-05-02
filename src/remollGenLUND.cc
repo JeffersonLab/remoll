@@ -2,7 +2,6 @@
 
 // Geant4 includes
 #include "G4Material.hh"
-#include "G4GenericMessenger.hh"
 
 // remoll includes
 #include "remollBeamTarget.hh"
@@ -36,7 +35,7 @@ remollGenLUND::remollGenLUND()
   LUNDfile_linecount = 0;
 
   // Add to generic messenger
-  fThisGenMessenger->DeclareMethod("LUND_filename",&remollGenLUND::SetLUNDFile,"LUND Input filename");
+  fThisGenMessenger.DeclareMethod("LUND_filename",&remollGenLUND::SetLUNDFile,"LUND Input filename");
 }
 
 remollGenLUND::~remollGenLUND()

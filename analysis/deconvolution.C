@@ -1,6 +1,6 @@
 // this does 3W region analysis for epInelastic
 // [process][ring][sector]
-const int nMatrix=6;
+const int nMatrix=5;
 const int nProcDef=10;
 const int nProc=9;
 double A[nProcDef][6][3],rate[nProc][6][3];
@@ -38,25 +38,33 @@ void deconvolution(){
 
   /// optimal positioning
   string fnms[nProcDef]={
-		      // "../ee_Segmented_shldAnaV6.root",
-		      // "../epElastic_Segmented_shldAnaV6.root",
-		      // "../epInelastic_Segmented_shldAnaV7.root",
-		      // "../epInelastic_Segmented_shldAnaV7.root",
-		      // "../epInelastic_Segmented_shldAnaV7.root",
-		      // "../ee_SegmentedV1_shldAnaV7.root",
-		      // "../epElastic_SegmentedV1_shldAnaV7.root",
-		      // "../epInelastic_SegmentedV1_shldAnaV7.root",
-		      // "../epInelastic_SegmentedV1_shldAnaV7.root",
-		      // "../epInelastic_SegmentedV1_shldAnaV7.root",
-		      "../ee_UpdatedHybrid_shldAnaV6.root",
-		      "../epElastic_UpdatedHybrid_shldAnaV6.root",
-		      "../epInelastic_UpdatedHybrid_shldAnaV7.root",
-		      "../epInelastic_UpdatedHybrid_shldAnaV7.root",
-		      "../epInelastic_UpdatedHybrid_shldAnaV7.root",
-		      "o_eAl-elastic_8395000_bkgAna.root",
-		      "o_eAl-quasielastic_2e7_bkgAna.root",
-		      "o_eAl-inelastic_18635000_bkgAna.root",
-		      "o_piMinus_259e4_bkgAna.root",
+		      "deconv_210724_NoDetWin_ee_tileConf22_procDeconvV1.root",
+		      "deconv_210724_NoDetWin_epE_tileConf22_procDeconvV1.root",
+		      "deconv_210724_NoDetWin_epI_tileConf22_procDeconvV1.root",
+		      "deconv_210724_NoDetWin_epI_tileConf22_procDeconvV1.root",
+		      "deconv_210724_NoDetWin_epI_tileConf22_procDeconvV1.root",
+		      "deconv_210724_NoDetWin_eAlE_tileConf22_procDeconvV1.root",
+		      "deconv_210724_NoDetWin_eAlQ_tileConf22_procDeconvV1.root",
+		      "deconv_210724_NoDetWin_eAlI_tileConf22_procDeconvV1.root",
+		      "deconv_210724_NoDetWin_pi_tileConf22_procDeconvV1.root",
+		      // "deconv_210428_ee_tileConf26_procDeconvV1.root",
+		      // "deconv_210428_epE_tileConf26_procDeconvV1.root",
+		      // "deconv_210428_epI_tileConf26_procDeconvV1.root",
+		      // "deconv_210428_epI_tileConf26_procDeconvV1.root",
+		      // "deconv_210428_epI_tileConf26_procDeconvV1.root",
+		      // "deconv_210428_eAlE_tileConf26_procDeconvV1.root",
+		      // "deconv_210428_eAlQ_tileConf26_procDeconvV1.root",
+		      // "deconv_210428_eAlI_tileConf26_procDeconvV1.root",
+		      // "deconv_210428_pi_tileConf26_procDeconvV1.root",
+		      // "deconv_210428_ee_shldAnaV8.root",
+		      // "deconv_210428_epE_shldAnaV8.root",
+		      // "deconv_210428_epI_shldAnaV8.root",
+		      // "deconv_210428_epI_shldAnaV8.root",
+		      // "deconv_210428_epI_shldAnaV8.root",
+		      // "deconv_210428_eAlE_shldAnaV8.root",
+		      // "deconv_210428_eAlQ_shldAnaV8.root",
+		      // "deconv_210428_eAlI_shldAnaV8.root",
+		      // "deconv_210428_pi_shldAnaV8.root",
 		      "byHand"
   };
 
@@ -130,7 +138,7 @@ void analyzeOne(int ring, int sect){
     cout<<"\n\t";
   }
   F.Invert();
-  cout<<"\nBefore Inverstion\n\tDet: "<<F.Determinant()<<endl;
+  cout<<"\nAfter Inverstion\n\tDet: "<<F.Determinant()<<endl;
   cout<<"\tF matrix\n\t";
   for(int i=0;i<nMatrix;i++){
     for(int j=0;j<nMatrix;j++)
@@ -186,6 +194,10 @@ void printAll(){
   const double beamDays = 235 + 95 + 14;
   const double days2seconds = 24*60*60;
 
+  cout<<"R S";
+  for(int k=0;k<nProc;k++)
+    cout<<" A"<<procNm[k]<<" f"<<procNm[k];
+  cout<<" Am[ppb] d(Am)[ppb] rTot[Hz]"<<endl;
   for(int i=0;i<6;i++)
     for(int j=0;j<3;j++){
       double rateTot(0);
@@ -222,27 +234,26 @@ void readSim(string fnm,int proc, int addBkgnd){
   if(verbose) cout<<"reading "<<fnm<<"\t"<<proc<<endl;
   TFile *fin=TFile::Open(fnm.c_str(),"READ");
   string hName="hRate";
-  if(proc<2)
-    hName = "det28/hRate_eP1";
-  else if(proc>=2 && proc<5)
-    hName = Form("deconvolution/hRateW%d_eP1",proc-1);
+  if(proc>=2 && proc<5)
+    hName = Form("deconvolution/hRateW%d_e1",proc-1);
+  else
+    hName = "det28/hRate_e1";
 
   TH1D *hRate=(TH1D*)fin->Get(hName.c_str());
 
   const double rateFactor = 65./85;
   double gfFactor = 1;
-  if(proc >=5 && proc <= 6)
-    gfFactor = 1e6;
+  //if(proc >=5 && proc <= 6)
+  //  gfFactor = 1e6;
   if(proc<5)
     gfFactor *= -1;
   //double minRate(1e9);
   for(int i=0;i<6;i++)
     for(int j=0;j<3;j++){
-      hName=Form("hAsym_R%d_S%d",i+1,j);
-      if(proc<2)
-	hName=Form("deconvolution/hAsym_eP1_R%d_S%d",i+1,j);
-      else if(proc>=2 && proc <5) 
-	hName=Form("deconvolution/hAsym_W%d_eP1_R%d_S%d",proc-1,i+1,j);
+      if(proc>=2 && proc <5) 
+	hName=Form("deconvolution/hAsym_W%d_e1_R%d_S%d",proc-1,i+1,j);
+      else
+	hName=Form("deconvolution/hAsym_e1_R%d_S%d",i+1,j);
 
       if(verbose)
 	cout<<"\tR/S\t"<<i<<"\t"<<j<<"\t"<<hName<<endl;

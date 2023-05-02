@@ -31,7 +31,7 @@
 #
 # Declare that trajectories and hits should be added to the scene
 #
-/vis/scene/add/trajectories
+/vis/scene/add/trajectories rich
 /vis/scene/add/hits
 
 #
@@ -74,6 +74,23 @@
 /vis/modeling/trajectories/MollerStyle/set proton magenta
 #
 /vis/modeling/trajectories/select MollerStyle
+
+#
+# Create filters
+#
+/vis/filtering/trajectories/create/particleFilter HideAllGammas
+/vis/filtering/trajectories/HideAllGammas/add gamma
+/vis/filtering/trajectories/HideAllGammas/invert true
+/vis/filtering/trajectories/HideAllGammas/active 0
+
+/vis/filtering/trajectories/create/chargeFilter ShowOnlyCharged
+/vis/filtering/trajectories/ShowOnlyCharged/add 0
+/vis/filtering/trajectories/ShowOnlyCharged/invert true
+/vis/filtering/trajectories/ShowOnlyCharged/active 0
+
+/vis/filtering/trajectories/create/encounteredVolumeFilter ShowOnlyPionDetectorHits
+/vis/filtering/trajectories/ShowOnlyPionDetectorHits/add pionDetectorLuciteAllPlanesWedgeGlue_physical
+/vis/filtering/trajectories/ShowOnlyPionDetectorHits/active 0
 
 #
 # Event action

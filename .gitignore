@@ -7,6 +7,8 @@ G4Worker?_run*evt*.rndm
 run*evt*.rndm
 currentEvent.rndm
 currentRun.rndm
+*.state
+*.rndm
 
 # output from createHTML
 _remoll_*.html
@@ -50,6 +52,7 @@ build*
 bldXcode
 map_directory
 output
+.vscode
 
 #ignore rad_dose radiation analysis work (another repository on sbujlab github)
 rad_analysis

@@ -126,9 +126,7 @@ long processOne(string fnm){
   vector<int> procID;
   int sector(-1);
 
-  auto cmp = [](auto lhs, auto rhs) { return lhs.tID < rhs.tID; };
   std::vector<hitx> hits5614;
-  hits5614.clear();
   hitx bHit;
   for (Long64_t event = 0; event < nEntries; t->GetEntry(event++)) {
     currentEvNr++;
@@ -137,6 +135,7 @@ long processOne(string fnm){
       currentProc+=procStep;
     }
    
+    hits5614.clear();
 
     for(int j=0;j<hit->size();j++){
 
@@ -166,30 +165,42 @@ long processOne(string fnm){
       //beam perp: 5620, 5543
       //side det: 5600, 5610, 5601, 5611, 
       //top/bot det: 5603,5613, 5614
+      //magnetPShutFrontFace: 5710
+      //hybridIronVirtualPlane: 5714
       double localXX = xx;
       double localYY = yy;
       double localRR = rr;
       double localPZ = pz;
       if( det == 5600 || det == 5610 ){
-	localXX = (zz - 857.5);
+	localXX = (zz - 1200.5); //857.5 for config5
 	localYY = yy;
 	localRR = sqrt(localXX*localXX + localYY*localYY);
 	localPZ = -hit->at(j).px;
       }else if( det == 5601 || det == 5611 ){
-	localXX = (zz - 857.5);
+	localXX = (zz - 1200.5); //857.5 for config5
 	localYY = yy;
 	localRR = sqrt(localXX*localXX + localYY*localYY);
 	localPZ = hit->at(j).px;
       }else if( det == 5603 || det == 5613 ){
-	localXX = (zz - 857.5);
+	localXX = (zz - 1200.5); //857.5 for config5
 	localYY = xx;
 	localRR = sqrt(localXX*localXX + localYY*localYY);
 	localPZ = hit->at(j).py;
       }else if( det==5614){
-	localXX = (zz - 857.5);
+	localXX = (zz - 1200.5); //857.5 for config5
 	localYY = xx;
 	localRR = sqrt(localXX*localXX + localYY*localYY);
 	localPZ = -hit->at(j).py;
+      }else if( det==5714){ 
+	localXX = (zz - 12000); // y="-1670" z="12000" in mollerparallel.gdml
+	localYY = xx;
+	localRR = sqrt(localXX*localXX + localYY*localYY);
+	localPZ = -hit->at(j).py;
+      }
+      else if( det==5710){ 
+	localXX = (zz - 8000); //x="5740" y="-1000" z="8000" in mollerparallel.gdml
+	localYY = (yy + 1000);
+	localRR = sqrt(localXX*localXX + localYY*localYY);
       }
 
       if ( det==5614 && hit->at(j).pid==11) {
@@ -208,8 +219,8 @@ long processOne(string fnm){
       beamLine.fillHisto(det, sp, rdDmg, localPZ, localXX, localYY, 
 			 kinE, localRR,vx0,vy0,vz0,0);
         
-      if ( det==5620 && rr > 265) beamLineHole.fillHisto(det, sp, rdDmg, localPZ, localXX, localYY,
-							 kinE, localRR,vx0,vy0,vz0,0);
+      if((det==5620 || det==5619 ) && rr > 265) beamLineHole.fillHisto(det, sp, rdDmg, localPZ, localXX, localYY,
+								       kinE, localRR,vx0,vy0,vz0,0);
 
       if(det==5614 && hit->at(j).trid==1 && hit->at(j).pid==11) beamLineem.fillHisto_det5614(det, rdDmg, localPZ, localXX, localYY,
                                                                                              kinE, localRR,vx0,vy0,vz0,0);
@@ -225,6 +236,7 @@ long processOne(string fnm){
     for(int j=0;j<hit->size();j++){
       if(std::isnan(rate) || std::isinf(rate)) continue;
       rate=1; //this is for beam simulations only (right now)
+      if ( hit->at(j).det != 28) continue;
 
       double kinE = hit->at(j).k;
       double rdDmg[2] = {rate,rate*kinE};
@@ -234,21 +246,18 @@ long processOne(string fnm){
       int det = hit->at(j).det;
       double pz = hit->at(j).pz;
         
-      if ( hit->at(j).det == 28){
-	for (auto &k : hits5614){
-              
-	  double _kinE = k.energy;
-	  double _rr = sqrt(k.posx*k.posx + k.posy*k.posy);
-	  double _rdDmg[2] = {rate,rate*_kinE};
-      double _xx =k.posx;
-	  double _yy =k.posy;
-	  int _det = k.dID;
-	  double _pz = k.pZ;
-              
-	  if (hit->at(j).trid  == k.tID ){
-	    xDet.fillHisto_detX(_det, _rdDmg, _pz, _xx, _yy,_kinE, _rr);
-	    if(hit->at(j).pid == 11)   xDet.fillHisto_detX(det, rdDmg, pz, xx, yy,kinE, rr);
-	  }
+      for (auto &k : hits5614){
+	double _kinE = k.energy;
+	double _rr = sqrt(k.posx*k.posx + k.posy*k.posy);
+	double _rdDmg[2] = {rate,rate*_kinE};
+	double _xx =k.posx;
+	double _yy =k.posy;
+	int _det = k.dID;
+	double _pz = k.pZ;
+
+	if (hit->at(j).trid  == k.tID ){
+	  xDet.fillHisto_detX(_det, _rdDmg, _pz, _xx, _yy,_kinE, _rr);
+	  if(hit->at(j).pid == 11)   xDet.fillHisto_detX(det, rdDmg, pz, xx, yy,kinE, rr);
 	}
 
       }
@@ -262,7 +271,7 @@ long processOne(string fnm){
 
 
 void initHisto(){
-  string foutNm = Form("%s_c1CollAnaV0.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
+  string foutNm = Form("%s_c1CollAnaV1.root",fileNm.substr(0,fileNm.find_last_of(".")).c_str());
 
   fout = new TFile(foutNm.c_str(),"RECREATE");
 
@@ -271,20 +280,24 @@ void initHisto(){
   // 				  const float vyRgMin , const float vyRgMax, 
   // 				  const float vzRgMin , const float vzRgMax,
   // 				  const string postfix = "", const float range=2000, const int subDet=0)
-  beamLine.initHisto(fout,5620,"After C4PbWall"    ,-2500,2500,-2500,2500,-5600,6000,"",2500);
-  beamLine.initHisto(fout,5543,"After Tgt bunker"  ,-2500,2500,-2500,2500,-5600,6000,"",2500);
+  beamLine.initHisto(fout,5620,"After C4PbWall"    ,-3500,3500,-3500,3500,-5600,6000,"",3500);
+  beamLine.initHisto(fout,5619,"Before C4PbWall"   ,-3500,3500,-3500,3500,-5600,6000,"",3500);
+  beamLine.initHisto(fout,5543,"After Tgt bunker"  ,-3500,3500,-3500,3500,-5600,6000,"",3500);
 
-  beamLine.initHisto(fout,5600,"c1 In  Beam Right" ,-2500,2500,-2500,2500,-5600,6000,"",2500);
-  beamLine.initHisto(fout,5610,"c1 Out Beam Right" ,-2500,2500,-2500,2500,-5600,6000,"",2500);
-  beamLine.initHisto(fout,5601,"c1 In  Beam Left"  ,-2500,2500,-2500,2500,-5600,6000,"",2500);
-  beamLine.initHisto(fout,5611,"c1 Out Beam Left"  ,-2500,2500,-2500,2500,-5600,6000,"",2500);
+  beamLine.initHisto(fout,5600,"c1 In  Beam Right" ,-3500,3500,-3500,3500,-5600,6000,"",3500);
+  beamLine.initHisto(fout,5610,"c1 Out Beam Right" ,-3500,3500,-3500,3500,-5600,6000,"",3500);
+  beamLine.initHisto(fout,5601,"c1 In  Beam Left"  ,-3500,3500,-3500,3500,-5600,6000,"",3500);
+  beamLine.initHisto(fout,5611,"c1 Out Beam Left"  ,-3500,3500,-3500,3500,-5600,6000,"",3500);
 
-  beamLine.initHisto(fout,5613,"c1 Out Top"        ,-2500,2500,-2500,2500,-5600,6000,"",2500);
-  beamLine.initHisto(fout,5603,"c1 In  Top"        ,-2500,2500,-2500,2500,-5600,6000,"",2500);
-  beamLine.initHisto(fout,5614,"c1 Out Bottom"     ,-2500,2500,-2500,2500,-5600,6000,"",2500);
-    
-  beamLineHole.initHisto(fout,5620,"After C4PbWall with Hole"     ,-2500,2500,-2500,2500,-5600,6000,"hole",2500);
-  beamLineem.initHisto_det5614(fout,5614,"c1 Out Bottom trackid==1","tr",2500);
+  beamLine.initHisto(fout,5613,"c1 Out Top"        ,-3500,3500,-3500,3500,-5600,6000,"",3500);
+  beamLine.initHisto(fout,5603,"c1 In  Top"        ,-3500,3500,-3500,3500,-5600,6000,"",3500);
+  beamLine.initHisto(fout,5614,"c1 Out Bottom"     ,-3500,3500,-3500,3500,-5600,6000,"",3500);
+  beamLine.initHisto(fout,5714,"c1 hybrid Bottom"  ,-3500,3500,-3500,3500,-5600,25000,"",8000);
+  beamLine.initHisto(fout,5710,"c1 magnetPShut Front Face" ,-4000,4000,-4000,4000,-5600,15000,"",6000);
+
+  beamLineHole.initHisto(fout,5620,"After C4PbWall with Hole" ,-3500,3500,-3500,3500,-5600,6000,"hole",3500);
+  beamLineHole.initHisto(fout,5619,"Before C4PbWall with Hole" ,-3500,3500,-3500,3500,-5600,6000,"hole",3500);
+  beamLineem.initHisto_det5614(fout,5614,"c1 Out Bottom trackid==1","tr",3500);
 
   xDet.initHisto_detX(fout,28,"Main detector for only electrons");
   xDet.initHisto_detX(fout,5614,"c1 Out Bottom detector for only electrons");
@@ -299,6 +312,7 @@ void writeOutput(){
 
   beamLine.writeOutput(fout,5543,scaleFactor);
   beamLine.writeOutput(fout,5620,scaleFactor);
+  beamLine.writeOutput(fout,5619,scaleFactor);
   beamLine.writeOutput(fout,5600,scaleFactor);
   beamLine.writeOutput(fout,5601,scaleFactor);
   beamLine.writeOutput(fout,5603,scaleFactor);
@@ -306,10 +320,13 @@ void writeOutput(){
   beamLine.writeOutput(fout,5611,scaleFactor);
   beamLine.writeOutput(fout,5613,scaleFactor);
   beamLine.writeOutput(fout,5614,scaleFactor);
+  beamLine.writeOutput(fout,5714,scaleFactor);
+  beamLine.writeOutput(fout,5710,scaleFactor);
     
+  beamLineHole.writeOutput(fout,5619,scaleFactor);
   beamLineHole.writeOutput(fout,5620,scaleFactor);
   beamLineem.writeOutput_det5614(fout,5614,scaleFactor);
- 
+
   xDet.writeOutput_detX(fout,28,scaleFactor);
   xDet.writeOutput_detX(fout,5614,scaleFactor);
 

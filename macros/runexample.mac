@@ -4,14 +4,14 @@
 #/tracking/storeTrajectory 1
 
 # This must be called before initialize
-/remoll/geometry/setfile geometry/mollerMother_merged.gdml
+/remoll/geometry/setfile geometry/mollerMother.gdml
 # Parallel world geometry is optional - detector 28 (the primary detector array's idealize vacuum detector) is included in this parallel world now.
 /remoll/parallel/setfile geometry/mollerParallel.gdml 
 
 #/remoll/physlist/register QGSP_BERT_HP
-/remoll/physlist/parallel/enable 
 # if optical physics is turned on it will only work if parallel physics is not turned on.
 #/remoll/physlist/optical/enable 
+
 
 # This must be explicitly called
 /run/initialize
@@ -71,8 +71,13 @@
 
 
 /remoll/beamene 11 GeV
+/remoll/beamcurr 65 microampere
 
-/remoll/beamcurr 85 microampere
+/remoll/SD/disable_all
+/remoll/SD/enable 28
+/remoll/SD/detect lowenergyneutral 28
+/remoll/SD/detect secondaries 28
+/remoll/SD/detect boundaryhits 28
 
 # Make interactions with W, Cu, and Pb
 # realistic rather than pure absorbers
@@ -81,10 +86,13 @@
 /process/list
 
 # Specify random number seed
-/remoll/seed 123456
+#/remoll/seed 123456
 
 /remoll/filename remollout_moller_det28.root
 
 #/tracking/verbose 2
-/remoll/printtargetinfo
-/run/beamOn 100000
+
+#/remoll/printtargetinfo
+/run/beamOn 100
+
+

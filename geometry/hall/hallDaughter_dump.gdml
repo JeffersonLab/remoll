@@ -12,9 +12,9 @@
   &matrices;
 
   <constant name="i2cm" value="2.54"/>
-  <constant name="width_mother" value="190000."/>
-  <constant name="height_mother" value="190000."/>
-  <constant name="length_mother" value="190000."/>
+  <constant name="width_mother" value="75000."/>
+  <constant name="height_mother" value="50000."/>
+  <constant name="length_mother" value="125000."/>
 
   <constant name="radius_of_cylwall" value="26517.6"/><!--25460."/>-->
   <constant name="hall_cylwall_radius" value="radius_of_cylwall/10"/>
@@ -31,7 +31,7 @@
   <constant name="center_cylwall" value="1*(height_cylwall/2+bottom_cylwall)"/>
   <constant name="trans_topwall" value="radius_topwall_out-(-center_topwall+bottom_cylwall+height_cylwall)"/> 
 
-  <constant name="radius_max_cylHallDet" value="radius_of_cylwall - 100"/>
+  <constant name="radius_max_cylHallDet" value="radius_of_cylwall - 10"/>
   <constant name="height_cylHallDet" value="height_cylwall - thick_cylwall - 1"/>
 
   <position name="cylHallDet_center" unit="mm" x="0" y="0" z="0"/>
@@ -215,17 +215,27 @@
     <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallMother_1" rmax="radius_of_cylwall - 110." rmin="0" startphi="0" z="height_cylwall - thick_cylwall*2"/>
     <box lunit="mm" name="boxHallMother_out" x="width_mother" y="height_mother" z="length_mother"/>
     <box lunit="mm" name="boxHallMother_in" x="width_mother - 2500." y="height_mother - 2500." z="length_mother - 2000."/>
+    <box lunit="mm" name="subDumpholeMother"  x="10*dumpUSSub_width" y="2*780" z="(26720.141-radius_of_cylwall+110)"/>
 
-    <subtraction name ="boxHallMother">
+    <subtraction name="boxHallMother_2">
       <first ref="boxHallMother_out"/>
+      <second ref="subDumpholeMother"/>
+      <position name="pos_subDumpholeMother" x="0" y="0" z="radius_of_cylwall-110+(26720.141-radius_of_cylwall+110)/2.0" unit="mm"/>
+    </subtraction>
+
+    <subtraction name ="boxHallMother_1">
+      <first ref="boxHallMother_2"/>
       <second ref="cylHallMother_1"/>
       <positionref ref="cylwall_center" />
       <rotationref ref="scRot_1"/>
-  </subtraction> 
+    </subtraction>
 
-
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_1" rmax="radius_max_cylHallDet" rmin="radius_max_cylHallDet - 0.1" startphi="0" z="height_cylHallDet"/>
-    <tube aunit="deg" deltaphi="360" lunit="mm" name="cylHallDet_2" rmax="radius_max_cylHallDet" rmin="0" startphi="0" z="0.1"/>
+    <tube aunit="deg" deltaphi="360" lunit="mm" name="tubeBeamPipeDS" rmax="770" rmin="0" startphi="0" z="1000"/>
+    <subtraction name ="boxHallMother">
+      <first ref="boxHallMother_1"/>
+      <second ref="tubeBeamPipeDS"/>
+      <position z="26000."/>
+    </subtraction>
 
     <!--Hall A top wall -->
   <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="hall_top_shell"  
@@ -242,7 +252,7 @@
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="out_cylwall" rmin="0.0" rmax="radius_of_cylwall+1.*thick_cylwall" z="height_cylwall" />
   <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="in_cylwall" rmin="0.0" rmax="radius_of_cylwall" z="1*height_cylwall-1*thick_cylwall" />
 
-  <box lunit="cm" name="hall_dumphole" x="dump_width" z="1.1*dump_height" y="3*hall_cylwall_thickness"/>
+  <box lunit="cm" name="hall_dumphole" x="dump_width+0.25" z="1.1*dump_height" y="3*hall_cylwall_thickness"/>
 
   <subtraction name ="cylwall_full">
       <first ref="out_cylwall"/>
@@ -256,23 +266,16 @@
       <!-- <rotationref ref="scRot_1"/> -->
   </subtraction>
 
-  <!--Hall A top wall detector -->
-  <sphere aunit="deg" startphi="0" deltaphi="360" starttheta="0" deltatheta="180" lunit="mm" name="halldet_top_shell"  rmin="radius_topwall_out+10" rmax="radius_topwall_out+10+1"/>
-  <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="halldet_top_sub" rmin="0.0" rmax="radius_topwall_out+11" z="2*(radius_topwall_out+10+1)" />
- 
-  <subtraction name ="topwalldet_solid">
-      <first ref="halldet_top_shell"/>
-      <second ref="halldet_top_sub"/>
-      <positionref ref="topwallTrans_1"/>
-  </subtraction>
-
   <!-- Dump Enclosure -->
 
     <box lunit="cm" name="boxDumpBulk" x="dump_width" y="dump_height" z="dump_length"/>
     <box lunit="cm" name="boxDumpUSSub" x="dumpUSSub_width" y="dumpUSSub_height" z="dumpUSSub_length*1.005"/>
     <box lunit="cm" name="boxDumpDSSub1" x="dumpDSSub_width1" y="dumpDSSub_height1" z="dumpDSSub_length1"/>
     <box lunit="cm" name="boxDumpDSSub2" x="dumpDSSub_width2" y="dumpDSSub_height2" z="dumpDSSub_length2"/>
-
+    <box lunit="cm" name="krypto1" x="dump_width" y="0.1" z="dump_length"/>
+    <box lunit="cm" name="krypto2" x="0.1" y="dump_height+16" z="dump_length"/>
+    <box lunit="cm" name="krypto3" x="dump_width" y="dump_height+18" z="0.1"/>
+    
     <subtraction name="dumpSub_A">
       <first ref="boxDumpBulk"/>
       <second ref="boxDumpUSSub"/>
@@ -410,7 +413,7 @@
     
     <!-- Water Tank Dump (should have rounded tank ends, but using cylinder for now) -->
 
-    <tube name="tubeDumpWaterTank" 
+    <tube name="tubeDumpWaterTank_outer_solid" 
           aunit="deg" startphi="0" deltaphi="360" 
           lunit="cm" rmin="dumpWaterTank_r" rmax="dumpWaterTank_r + dumpWaterTank_thickness"
           z="dumpWaterTank_length + 2*dumpWaterTank_thickness"/>
@@ -421,7 +424,7 @@
           z="dumpWaterTank_length"/>
         
     <subtraction name="tubeDumpWaterTank_solid">
-      <first ref="tubeDumpWaterTank"/>
+      <first ref="tubeDumpWaterTank_outer_solid"/>
       <second ref="waterDumpWaterTank_solid"/>
       <positionref ref="tubeDumpWaterTank_trans"/>
       <rotationref ref="identity"/>
@@ -430,31 +433,6 @@
   </solids>
 
 <structure>
-
-    <volume name="hallVerticalWallDet_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="cylHallDet_1"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="99"/>
-    </volume>
-
-    <volume name="hallFlatLidDet_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="cylHallDet_2"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="101"/>
-    </volume>
-
-    <volume name="topWallOuterDet_logic">
-      <materialref ref="Vacuum"/>
-      <solidref ref="topwalldet_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="DetNo" auxvalue="107"/>
-    </volume>
-
 
     <volume name="topwall_logic">
       <materialref ref="Concrete"/>
@@ -475,6 +453,41 @@
       <solidref ref="dump_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+    <volume name="krytpoBottom_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto1"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+    <volume name="krytpoTop_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto1"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="krytpoRight_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto2"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+    
+    <volume name="krytpoLeft_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto2"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+    <volume name="krytpoEndDS_log">
+     <materialref ref="Kryptonite"/>
+     <solidref ref="krypto3"/>
+     <auxiliary auxtype="Color" auxvalue="Red"/>
+     <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
     
     <volume name="dumpTempShield_left_logic">
@@ -531,7 +544,7 @@
       <solidref ref="ndDonut_outer_solid"/>
       <auxiliary auxtype="Color" auxvalue="white"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-   </volume>
+    </volume>
     
     <volume name="ndPipeDS_logic">
       <materialref ref="Aluminum"/>
@@ -592,28 +605,9 @@
     <volume name="logicHall">
       <materialref ref="Vacuum"/>  <!-- air ??? -->
       <solidref ref="boxHallMother"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-
-      <physvol name="hallVerticalWallDet">
-        <volumeref ref="hallVerticalWallDet_logic"/>
-        <positionref ref="cylHallDet_1_center"/>
-	<rotationref ref="scRot_1"/>
-      </physvol>
-
-      <physvol name="hallFlatLidDet">
-        <volumeref ref="hallFlatLidDet_logic"/> <!-- this should be removed once we fix the hall lid CG -->
-        <positionref ref="cylHallDet_2_center"/>
-	<rotationref ref="scRot_1"/>
-      </physvol>
 
       <physvol name="topWall">
         <volumeref ref="topwall_logic"/>
-        <positionref ref="topwall_center"/>
-        <rotationref ref="scRot_1"/>
-      </physvol>
-
-      <physvol name="topWallOuterDet">
-        <volumeref ref="topWallOuterDet_logic"/>
         <positionref ref="topwall_center"/>
         <rotationref ref="scRot_1"/>
       </physvol>
@@ -629,7 +623,32 @@
         <volumeref ref="dump_logic"/>
         <positionref ref="dump_center"/>
       </physvol>
+      
+     <!-- <physvol name="krytpoTop_phys">
+       <volumeref ref="krytpoTop_log"/>
+       <position name="kryptoTop_pos" unit="cm" x="0" y="60.05*i2cm" z="dump_center_z"/>
+      </physvol>
 
+      <physvol name="krytpoBottom_phys">
+       <volumeref ref="krytpoBottom_log"/>
+       <position name="kryptoBottom_pos" unit="cm" x="0" y="-91*i2cm+2" z="dump_center_z"/>
+      </physvol>
+
+      <physvol name="krytpoLeft_phys">
+       <volumeref ref="krytpoLeft_log"/>
+       <position name="kryptoLeft_pos" unit="cm" x="54*i2cm+0.1-0.04" y="-15*i2cm-0.3" z="dump_center_z"/>
+      </physvol>
+
+      <physvol name="krytpoRight_phys">
+       <volumeref ref="krytpoRight_log"/>
+       <position name="kryptoRight_pos" unit="cm" x="-54*i2cm-0.1+0.04" y="-15*i2cm-0.3" z="dump_center_z"/>
+      </physvol>
+
+      <physvol name="krytpoEndDS_phys">
+       <volumeref ref="krytpoEndDS_log"/>
+       <position name="kryptoEndDS_pos" unit="cm" x="0" y="-15.5*i2cm" z="2256.5*i2cm"/>
+      </physvol>-->
+     
       <physvol name="dumpTempShield_left">
         <volumeref ref="dumpTempShield_left_logic"/>
         <positionref ref="dumpTempShield_left_center"/>
@@ -715,8 +734,7 @@
         <position name="diffuserPlate_pos" unit="cm" z="nitrogenAtmWall_center_z + 15" />
       </physvol>
 
-
-
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
     </volume>
 
 </structure>

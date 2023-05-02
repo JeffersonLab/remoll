@@ -7,11 +7,11 @@
 */
 
 #include "G4MagneticField.hh"
+#include "G4GenericMessenger.hh"
 #include "G4ThreeVector.hh"
 
 #include <vector>
 
-class G4GenericMessenger;
 class G4EquationOfMotion;
 class G4MagIntegratorStepper;
 class G4ChordFinder;
@@ -27,6 +27,7 @@ class remollGlobalField : public G4MagneticField {
 
         void AddNewField(G4String& name);
 
+        void SetInterpolationType(const G4String& name, const G4String& type);
         void SetZOffset(const G4String& name, G4double offset);
         void SetFieldScale(const G4String& name, G4double scale);
         void SetMagnetCurrent(const G4String& name, G4double current);
@@ -103,8 +104,16 @@ class remollGlobalField : public G4MagneticField {
 
         remollMagneticField* GetFieldByName(const G4String& name) const;
 
-        G4GenericMessenger* fMessenger;
-        G4GenericMessenger* fGlobalFieldMessenger;
+        G4GenericMessenger fMessenger{
+            this,
+            "/remoll/",
+            "Remoll properties"
+        };
+        G4GenericMessenger fGlobalFieldMessenger{
+            this,
+            "/remoll/field/",
+            "Remoll global field properties"
+        };
 
         G4int fVerboseLevel;
 

@@ -1,8 +1,24 @@
 #----------------------------------------------------------------------------
 # Setup the project
 #
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 project(remoll VERSION 0.1 LANGUAGES CXX C)
+
+set(CMAKE_CXX_STANDARD 14)
+# Export compile commands as json for run-clang-tidy
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+# Also use clang-tidy integration in CMake
+option(ENABLE_CLANG_TIDY "Enable clang-tidy integration in cmake" OFF)
+if(ENABLE_CLANG_TIDY)
+  find_program(CLANG_TIDY_EXE NAMES "clang-tidy")
+  if (CLANG_TIDY_EXE)
+    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+    set(CMAKE_CXX_CLANG_TIDY "${CLANG_TIDY_EXE}" CACHE STRING "" FORCE)
+  else()
+    set(CMAKE_CXX_CLANG_TIDY "" CACHE STRING "" FORCE)
+  endif()
+endif()
 
 # Disallow in-source builds
 if(${CMAKE_SOURCE_DIR} STREQUAL ${CMAKE_BINARY_DIR})
@@ -84,7 +100,7 @@ list(APPEND sources ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Dict.cxx)
 #----------------------------------------------------------------------------
 # Boost
 #
-find_package(Boost QUIET COMPONENTS iostreams filesystem)
+find_package(Boost QUIET OPTIONAL_COMPONENTS iostreams filesystem)
 if(Boost_FOUND)
   message(STATUS "Boost found --> building with boost enabled.")
   include_directories(${Boost_INCLUDE_DIRS})
@@ -102,6 +118,42 @@ else()
   message(STATUS "Boost not found.")
 endif()
 
+#----------------------------------------------------------------------------
+# Find CADMesh libraries
+set(cadmesh_LIBRARIES "")
+find_package(cadmesh QUIET)
+if(cadmesh_FOUND)
+    # Pretty sure at some point cadmesh will update to use lowercase
+    include_directories(${CADMESH_INCLUDE_DIRS})
+    include_directories(${cadmesh_INCLUDE_DIRS})
+    link_directories(${cadmesh_LIBRARY_DIR})
+    ADD_DEFINITIONS(-D__USE_CADMESH)
+
+    find_path(TETGEN_INCLUDE_DIRS tetgen.h
+        PATHS
+        $ENV{TETGEN_PATH}
+        $ENV{TETGEN_PATH}/tetgen
+        /usr/local/include
+        /usr/include)
+    find_library(TETGEN_LIBRARIES NAMES tetgen tet
+        PATHS
+        $ENV{TETGEN_PATH}
+        $ENV{TETGEN_PATH}/tetgen
+        /usr/local/lib
+        /usr/lib)
+    if(TETGEN_INCLUDE_DIRS)
+        if(TETGEN_LIBRARIES)
+            include_directories(${TETGEN_INCLUDE_DIRS})
+            ADD_DEFINITIONS(-D__USE_CADMESH_TETGEN)
+        endif()
+    endif()
+
+    find_package(assimp QUIET)
+    if(assimp_FOUND)
+        include_directories(${ASSIMP_INCLUDE_DIRS})
+        ADD_DEFINITIONS(-D__USE_CADMESH_ASSIMP)
+    endif()
+endif()
 
 #----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
@@ -200,6 +252,7 @@ target_link_libraries(lib${PROJECT_NAME}
     ${Boost_LIBRARIES}
     ${HEPMC_LIBRARIES}
     ${PYTHIA6_LIBRARIES}
+    ${cadmesh_LIBRARIES}
   )
 
 install(TARGETS lib${PROJECT_NAME}
@@ -320,9 +373,12 @@ endif()
 # for i in *.txt ; do echo `md5sum $i|awk '{print$1}'`:`md5sum $i.gz|awk '{print$1}'`:$i ; done
 set(REMOLL_MAPS
 b8b30b803bae42f69135323ff40fe7db:99bf3fae83677c6c2f3e09a871682b2e:V2U.1a.50cm.parallel.txt
-d5f568675ca29e295c1013617a2dc092:b3e031ce9d97fa5331ec39e8903817e6:V2DSg.9.75cm.parallel.txt
+e4a96c2f3136d0eb020d90e74a532a6d:246d48001dd71174b62e16ecf07adc4d:V2U.1a.50cm.parallel.real_asymmetric.txt
+3ca8b6da4186d5de2a25bd89ef067a54:6a5fad69edd8cba457d85948bc42596b:subcoil_2_3_3mm_full.txt
+e6ab87da79a1dab8e759fcae6356e6f8:81b24e52bffbca83b3b7ca37b056f404:subcoil_2_3_3mm_real_asymmetric.txt
 )
 set(REMOLL_MAPS_EXTRA
+d5f568675ca29e295c1013617a2dc092:b3e031ce9d97fa5331ec39e8903817e6:V2DSg.9.75cm.parallel.txt
 1c79bc83e4da5e9d5e44338e28ce6ebe:c7591d167ca56e871e8e5eeecab2872c:V2DSg.9.75cm.txt
 f768447f761b9bf01af7c57e249d1d8a:94ec0017b21fc56d9d8084d68e479fd5:V2U.1a.50cm.txt
 b1b8f2845dc5cd420c6ff49ae7760a60:6002f6f5f092346cb2bdedac046d1905:V1U.2a.txt
