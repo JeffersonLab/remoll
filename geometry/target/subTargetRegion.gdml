@@ -170,6 +170,13 @@
       <zplane rmin="0.0" rmax="266.7/2.0" z="48.45"/> 
       <zplane rmin="0.0" rmax="266.7/2.0" z="48.45+10.43"/>	  
   </polycone>
+
+  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Tube_target_chamber_4"> 
+      <zplane rmin="0.0" rmax="34.92/2.0" z="0"/> 
+      <zplane rmin="0.0" rmax="34.92/2.0" z="23.47"/>
+      <zplane rmin="0.0" rmax="200.02/2.0" z="23.47"/> 
+      <zplane rmin="0.0" rmax="200.02/2.0" z="23.47+39.06"/>	  
+   </polycone>	  
     
    <subtraction name="target_exit_window_subtraction">
             <first ref="Tube_target_chamber_1"/>
@@ -177,6 +184,13 @@
             <rotation name="rot_1" unit="deg" x="90" y="0" z="0"/>                        
             <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(1750.01/2.0-48.45-10.43+1.935)" z="0.0"/>
    </subtraction>
+      <!--Beam entrance hole in the target chamber -->
+  <subtraction name="target_entry_window_subtraction">
+            <first ref="target_exit_window_subtraction"/>
+            <second ref="Tube_target_chamber_4"/>
+            <rotation name="rot_1" unit="deg" x="90" y="0" z="0"/>                        
+            <position name="pos_targ_exit_1" unit="mm" x="0.0" y="(1750.01/2.0)" z="0.0"/>
+   </subtraction>  	  
         	  
   						<!--target exit window-->
   <tube name="Target_exit_window_Tube_1" rmin="0.0" rmax="15.0114/2.0" z="0.2032" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>
@@ -329,7 +343,7 @@
    </volume>    
    <volume name="target_chamber_vol3">
     <materialref ref="G4_Al"/>
-    <solidref ref="target_exit_window_subtraction"/>
+    <solidref ref="target_entry_window_subtraction"/>
    </volume>   	  
    <volume name="target_chamber_vol5">
     <materialref ref="G4_Al"/>
