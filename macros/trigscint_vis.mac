@@ -5,6 +5,7 @@
 #/remoll/geometry/setfile geometry/trigscint/scintillatordesign_only.gdml
 ####current complete model 
 /remoll/geometry/setfile geometry/trigscint/ScintDetector_world.gdml
+/remoll/parallel/setfile
 #/remoll/geometry/setfile geometry/trigscint/original/ScintDetector_world.gdml
 
 ###Afeez latest light guide design 
