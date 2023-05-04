@@ -4,7 +4,10 @@
 cmake_minimum_required(VERSION 3.8)
 project(remoll VERSION 0.1 LANGUAGES CXX C)
 
-set(CMAKE_CXX_STANDARD 14)
+### use cmake -D CMAKE_CXX_STANDARD=17 if you want different C++ standard
+## cmake -U CMAKE_CXX_STANDARD binary_dir should revert back to the default
+set(CMAKE_CXX_STANDARD 14 CACHE STRING "the C++ standard to use for this project")
+###
 # Export compile commands as json for run-clang-tidy
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
