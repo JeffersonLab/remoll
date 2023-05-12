@@ -189,7 +189,7 @@
         </subtraction>
         
         <!--collar solids -->
-        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="613" rmax1="755.8659" rmin2="613+10" rmax2="755.8659" z="100+50"/>
+        <cone name="solidCollar1" lunit="mm" aunit="rad" startphi="0" deltaphi="2*pi" rmin1="550" rmax1="755.8659" rmin2="550+13.1233" rmax2="755.8659" z="100+50"/>
         
         <!-- drift pipe -->
         <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Driftpipe">
