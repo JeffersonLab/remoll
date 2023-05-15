@@ -519,16 +519,16 @@
         
         <!--    Solid for Collimator 6A -->
         <xtru name="Coll6A_solid1" lunit="mm">
-            <twoDimVertex x="49.836" y="-7.792"/>
-            <twoDimVertex x="49.836" y="-24.000"/>
-            <twoDimVertex x="95.250" y="-45.870"/>
-            <twoDimVertex x="95.250" y="-35.113"/>
-            <twoDimVertex x="91.821" y="-35.113"/>
-            <twoDimVertex x="91.821" y="-26.985"/>
-            <twoDimVertex x="95.250" y="-26.985"/>
-            <twoDimVertex x="95.250" y="-25.080"/>
+            <twoDimVertex x="30.000" y="2.000"/>
+            <twoDimVertex x="30.000" y="-14.447"/>
+            <twoDimVertex x="88.900" y="-42.812"/>
+            <twoDimVertex x="88.900" y="-35.113"/>
+            <twoDimVertex x="85.471" y="-35.113"/>
+            <twoDimVertex x="85.471" y="-26.985"/>
+            <twoDimVertex x="88.900" y="-26.985"/>
+            <twoDimVertex x="88.900" y="-25.080"/>
             <twoDimVertex x="70.787" y="-25.080"/>
-            <twoDimVertex x="70.787" y="-7.792"/>
+            <twoDimVertex x="70.787" y="2.000"/>
             <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
             <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
@@ -540,17 +540,17 @@
         </subtraction>
         
         <xtru name="Coll6A_solid2" lunit="mm">
-            <twoDimVertex x="50.277" y="29.851"/>
-            <twoDimVertex x="50.277" y="7.792"/>
-            <twoDimVertex x="70.787" y="7.792"/>
+            <twoDimVertex x="30.000" y="20.086"/>
+            <twoDimVertex x="30.000" y="-2.000"/>
+            <twoDimVertex x="70.787" y="-2.000"/>
             <twoDimVertex x="70.787" y="25.080"/>
-            <twoDimVertex x="95.250" y="25.080"/>
-            <twoDimVertex x="95.250" y="26.985"/>
-            <twoDimVertex x="91.821" y="26.985"/>
-            <twoDimVertex x="91.821" y="35.113"/>
-            <twoDimVertex x="95.250" y="35.113"/>
-            <twoDimVertex x="95.250" y="45.870"/>
-            <twoDimVertex x="93.046" y="50.447"/>
+            <twoDimVertex x="88.900" y="25.080"/>
+            <twoDimVertex x="88.900" y="26.985"/>
+            <twoDimVertex x="85.471" y="26.985"/>
+            <twoDimVertex x="85.471" y="35.113"/>
+            <twoDimVertex x="88.900" y="35.113"/>
+            <twoDimVertex x="88.900" y="42.812"/>
+            <twoDimVertex x="86.696" y="47.389"/>
             <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
             <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
