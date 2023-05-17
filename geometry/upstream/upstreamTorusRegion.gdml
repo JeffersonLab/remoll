@@ -78,8 +78,8 @@
 
 
 <!-- Dimensions for Collimator 4   -->    
-    <constant name="PCOLL2_R1_U" value ="40"/>
-    <constant name="PCOLL2_R1_D" value ="40"/>
+    <constant name="PCOLL2_R1_U" value ="26"/>
+    <constant name="PCOLL2_R1_D" value ="26"/>
     <constant name="PCOLL2_R4_U" value ="250"/>
     <constant name="PCOLL2_R4_D" value ="250"/>
 
