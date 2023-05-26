@@ -20,7 +20,7 @@
   <tube  
     name="hallVerticalWallDet_solid" 
     startphi="0" deltaphi="360" aunit="deg" 
-    rmax="26517.6-10" rmin="26517.6-10-0.1" z="17770.-1487." lunit="mm"/>
+    rmax="26517.6-20" rmin="26517.6-10-0.1" z="17770.-1487." lunit="mm"/>
 
   <tube 
     name="hallFlatLidDet_solid"
