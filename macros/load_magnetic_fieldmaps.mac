@@ -5,4 +5,4 @@
 #   /control/execute macros/load_magnetic_fieldmaps.mac
 
 /remoll/addfield map_directory/V2U.1a.50cm.parallel.txt
-/remoll/addfield map_directory/V2DSg.9.75cm.parallel.txt
+/remoll/addfield map_directory/subcoil_2_3_3mm_full.txt
