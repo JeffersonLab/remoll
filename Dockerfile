@@ -21,7 +21,6 @@
 FROM jeffersonlab/remoll-builder:main
 
 # XrootD
-RUN yum --enablerepo=extras -y install epel-release
 RUN yum -y install python3-pip \
     xrootd-client
 
