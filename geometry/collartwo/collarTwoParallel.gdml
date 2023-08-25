@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<!DOCTYPE gdml [
+<!ENTITY world SYSTEM "../solids/world.xml">
+<!ENTITY solids SYSTEM "solids.xml"> ]>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<solids>
+  &world;
+  &solids;
+</solids>
+
+<structure>
+  <volume name="left_tube_1_log_par">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="left_tube_1"/>
+    <auxiliary auxtype="Color" auxvalue="Gray"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="822"/>
+  </volume>
+
+  <volume name="left_tube_2_log_par">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="left_tube_2"/>
+    <auxiliary auxtype="Color" auxvalue="Gray"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="822"/>
+  </volume>
+
+  <volume name="right_tube_1_log_par">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="right_tube_1"/>
+    <auxiliary auxtype="Color" auxvalue="Gray"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="822"/>
+  </volume>
+
+  <volume name="right_tube_2_log_par">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="right_tube_2"/>
+    <auxiliary auxtype="Color" auxvalue="Gray"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="822"/>
+  </volume>
+
+  <volume name="collar2_assembly_par">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="collar_two_assembly"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.02"/>
+
+    <physvol name="left_tube_1_phys_par">
+      <volumeref ref="left_tube_1_log_par"/>
+      <rotation name="left_tube_1_rot" unit="deg" x="90"/>
+      <position name="left_tube_1_pos" unit="mm" x="610.24" y="1608.33" z="140.00"/>
+    </physvol>
+
+    <physvol name="left_tube_2_phys_par">
+      <volumeref ref="left_tube_2_log_par"/>
+      <rotation name="left_tube_2_rot" unit="deg" x="90"/>
+      <position name="left_tube_2_pos" unit="mm" x="808.35" y="1534.92" z="140.00"/>
+    </physvol>
+
+    <physvol name="right_tube_1_phys_par">
+      <volumeref ref="right_tube_1_log_par"/>
+      <rotation name="right_tube_1_rot" unit="deg" x="90"/>
+      <position name="right_tube_1_pos" unit="mm" x="-378.97" y="1650.24" z="140.00"/>
+    </physvol>
+
+    <physvol name="right_tube_2_phys_par">
+      <volumeref ref="right_tube_2_log_par"/>
+      <rotation name="right_tube_2_rot" unit="deg" x="90"/>
+      <position name="right_tube_2_pos" unit="mm" x="-1001.27" y="1430.78" z="140.00"/>
+    </physvol>
+    </volume>
+</structure>
+<setup name="collar2_assembly_mv" version="1.0">
+  <world ref="collar2_assembly_par"/>
+</setup> 
+</gdml>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+<!ENTITY allsolids SYSTEM "solids.xml"> 
+]>
+
+<gdml
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<materials>
+</materials>
+
+<solids>
+    &allsolids;
+  <!-- Solids -->
+  <!--box lunit="mm" name="barite_solid" x="4602.48" y="4749.80" z="400.05"/-->  
+</solids>
+
+
+<structure>
+
+  <volume name="barite_collar2_log">
+    <materialref ref="barite"/>
+    <solidref ref="barite_right_2_dif"/>
+    <!--solidref ref="barite_cut"/-->
+    <auxiliary auxtype="Color" auxvalue="Brown"/>
+    <auxiliary auxtype="Alpha" auxvalue="1.0"/>
+  </volume>
+
+  <volume name="left_tube_1_log">
+    <materialref ref="G4_STAINLESS-STEEL"/>
+    <solidref ref="left_tube_1"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="821"/>  
+  </volume>
+
+  <volume name="left_tube_2_log">
+    <materialref ref="G4_STAINLESS-STEEL"/>
+    <solidref ref="left_tube_2"/>
+    <auxiliary auxtype="Color" auxvalue="Green"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="821"/>  
+  </volume>
+
+  <volume name="right_tube_1_log">
+    <materialref ref="G4_STAINLESS-STEEL"/>
+    <solidref ref="right_tube_1"/>
+    <auxiliary auxtype="Color" auxvalue="Blue"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="821"/>  
+  </volume>
+
+  <volume name="right_tube_2_log">
+    <materialref ref="G4_STAINLESS-STEEL"/>
+    <solidref ref="right_tube_2"/>
+    <auxiliary auxtype="Color" auxvalue="Green"/>
+    <auxiliary auxtype="SensDet" auxvalue="collDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="821"/>  
+  </volume>
+  <volume name="logicCollar2_InnerRing">
+     <materialref ref="G4_Pb"/>
+     <solidref ref="solidCollar2_InnerRing"/>
+  </volume>
+
+  <volume name="logicCollar2_OuterRing">
+    <materialref ref="G4_Pb"/>
+    <solidref ref="solidCollar2_OuterRing"/>
+  </volume>  
+
+  <volume name="collar_two_assembly_mv">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="collar_two_assembly"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.2" />
+    <position name="barite_mother" unit="mm" x="0" y="0.00" z="0.00"/>
+
+
+    <physvol name="barite_collar2_phys">
+      <volumeref ref="barite_collar2_log"/>
+      <position name="barite_collar2_pos" unit="mm" x="0.00" y="0.00" z="0.00"/>
+    </physvol>
+
+    <physvol name="left_tube_1_phys">
+      <volumeref ref="left_tube_1_log"/>
+      <rotation name="left_tube_1_rot" unit="deg" x="90"/>
+      <position name="left_tube_1_pos" unit="mm" x="610.24" y="1608.33" z="140.00"/>
+    </physvol>
+
+    <physvol name="left_tube_2_phys">
+      <volumeref ref="left_tube_2_log"/>
+      <rotation name="left_tube_2_rot" unit="deg" x="90"/>
+      <position name="left_tube_2_pos" unit="mm" x="808.35" y="1534.92" z="140.00"/>
+    </physvol>
+
+    <physvol name="right_tube_1_phys">
+      <volumeref ref="right_tube_1_log"/>
+      <rotation name="right_tube_1_rot" unit="deg" x="90"/>
+      <position name="right_tube_1_pos" unit="mm" x="-378.97" y="1650.24" z="140.00"/>
+    </physvol>
+
+    <physvol name="right_tube_2_phys">
+      <volumeref ref="right_tube_2_log"/>
+      <rotation name="right_tube_2_rot" unit="deg" x="90"/>
+      <position name="right_tube_2_pos" unit="mm" x="-1001.27" y="1430.78" z="140.00"/>
+    </physvol>
+    
+     <physvol name="collar2_InnerRing">
+        <volumeref ref="logicCollar2_InnerRing"/>
+        <position unit="mm" name="collar2_InnerRing_pos" x="0" y="0" z="75.00"/>
+        <rotation aunit="rad" name="collar2_InnerRing_rot" x="0" y="0" z="0"/>
+     </physvol>
+
+     <physvol name="collar2_OuterRing">
+        <volumeref ref="logicCollar2_OuterRing"/>
+        <position unit="mm" name="collar2_OuterRing_pos" x="0" y="0" z="-128.00"/>
+        <rotation aunit="rad" name="collar2_OuterRing_rot" x="0" y="0" z="0"/>
+     </physvol> 
+
+  </volume>
+
+</structure>
+
+<setup name="collar_two_world" version="1.0">
+  <world ref="collar_two_assembly_mv"/>
+</setup>
+</gdml> 

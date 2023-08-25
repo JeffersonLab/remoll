@@ -1358,6 +1358,11 @@
       <position name="collar2Exit_pos" unit="mm" x="0" y="0" z="19132.69+150+0.6"/>
     </physvol>
 
+    <physvol>
+      <file name="collartwo/collarTwoParallel.gdml"/>
+      <position name="bariteWallpos" x="0" y="0" z="19132.69" />
+    </physvol>
+
     <!-- Tracking planes -->
     <physvol name="trackingDetectorVirtualPlaneFront1_phys">
       <volumeref ref="gemVirtualPlane1_log"/>
