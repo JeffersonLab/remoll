@@ -423,8 +423,8 @@
             <twoDimVertex x="141.478" y="-25.133"/>
             <twoDimVertex x="99.169" y="-25.133"/>
             <twoDimVertex x="99.169" y="-14.211"/>
-            <twoDimVertex x="39.377" y="-14.211"/>
-            <twoDimVertex x="39.377" y="-21.782"/>
+            <twoDimVertex x="46.0" y="-14.211"/>
+            <twoDimVertex x="46.0" y="-24.971"/>
             <twoDimVertex x="88.995" y="-45.677"/>
             <twoDimVertex x="94.132" y="-35.009"/>
             <twoDimVertex x="103.195" y="-33.936"/>
@@ -448,8 +448,8 @@
             <twoDimVertex x="141.478" y="25.133"/>
             <twoDimVertex x="99.169" y="25.133"/>
             <twoDimVertex x="99.169" y="14.211"/>
-            <twoDimVertex x="40.283" y="14.211"/>
-            <twoDimVertex x="40.283" y="22.218"/>
+            <twoDimVertex x="46.90" y="14.211"/>
+            <twoDimVertex x="46.90" y="25.405"/>
             <twoDimVertex x="91.337" y="46.805"/>
             <twoDimVertex x="96.127" y="36.885"/>
             <twoDimVertex x="105.181" y="35.114"/>
