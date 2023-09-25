@@ -1,0 +1,44 @@
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+/remoll/physlist/parallel/enable 
+
+# Enable optical physics
+/remoll/physlist/optical/enable
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/printgeometry true
+
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+
+#/remoll/evgen/set moller
+#/remoll/evgen/set elastic 
+#/remoll/evgen/set inelastic 
+/remoll/evgen/set pion
+#/remoll/piontype pi+
+#/remoll/evgen/set pion_LUND
+#/remoll/evgen/set inelasticAl
+#/remoll/evgen/set quasielasticAl
+#/remoll/evgen/set elasticAl
+#/remoll/evgen/set external
+
+/remoll/beamene 11 GeV
+/remoll/beamcurr 65 microampere
+
+/control/execute macros/blocker/blocker_in.mac
+
+/remoll/SD/disable_all
+/remoll/SD/enable 29 #DS pion det
+/remoll/SD/enable 1006 #sieve (secondaries)
+/remoll/SD/enable 1007 #blocker
+
+/process/list
+
+/run/beamOn 100
