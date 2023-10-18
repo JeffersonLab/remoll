@@ -15,6 +15,7 @@
     <constant name="targetChamber_thickness" value="13."/>
     <constant name="targetChamberLid_thickness" value="76."/>
     <constant name="targetChamberHat_L" value="1000."/>
+    <constant name="TWOPI" value="2.*pi"/>	
 
 
     <!--constant for shieldings - dimension from Alan design -->
@@ -160,6 +161,56 @@
 		z="0.2"/>
     </union>
 
+ 						 <!--target chamber geometry-->
+  <tube name="Tube_target_chamber_1" rmin="1661.11/2.0" rmax="1750.01/2.0" z="2387.60" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>   
+  <tube name="Tube_target_chamber_2" rmin="0.0" rmax="1750.01/2.0" z="73.66" deltaphi="360" startphi="0.0" aunit="deg" lunit="mm"/> 
+  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Tube_target_chamber_3"> 
+      <zplane rmin="0.0" rmax="200.02/2.0" z="0"/> 
+      <zplane rmin="0.0" rmax="200.02/2.0" z="48.45"/>
+      <zplane rmin="0.0" rmax="266.7/2.0" z="48.45"/> 
+      <zplane rmin="0.0" rmax="266.7/2.0" z="48.45+10.43"/>	  
+  </polycone>
+
+  <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Tube_target_chamber_4"> 
+      <zplane rmin="0.0" rmax="34.92/2.0" z="0"/> 
+      <zplane rmin="0.0" rmax="34.92/2.0" z="23.47"/>
+      <zplane rmin="0.0" rmax="200.02/2.0" z="23.47"/> 
+      <zplane rmin="0.0" rmax="200.02/2.0" z="23.47+39.06"/>	  
+   </polycone>	  
+    
+   <subtraction name="target_exit_window_subtraction">
+            <first ref="Tube_target_chamber_1"/>
+            <second ref="Tube_target_chamber_3"/>
+            <rotation name="rot_1" unit="deg" x="90" y="0" z="0"/>                        
+            <position name="pos_targ_exit_1" unit="mm" x="0.0" y="-(1750.01/2.0-48.45-10.43+1.935)" z="0.0"/>
+   </subtraction>
+      <!--Beam entrance hole in the target chamber -->
+  <subtraction name="target_entry_window_subtraction">
+            <first ref="target_exit_window_subtraction"/>
+            <second ref="Tube_target_chamber_4"/>
+            <rotation name="rot_1" unit="deg" x="90" y="0" z="0"/>                        
+            <position name="pos_targ_exit_1" unit="mm" x="0.0" y="(1750.01/2.0)" z="0.0"/>
+   </subtraction>  	  
+        	  
+  						<!--target exit window-->
+  <tube name="Target_exit_window_Tube_1" rmin="0.0" rmax="15.0114/2.0" z="0.2032" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>
+  <tube name="Target_exit_window_Tube_2" rmin="15.0114/2.0" rmax="253.238/2.0" z="0.635" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>  
+  <tube name="Target_exit_window_Tube_3" rmin="76.2/2.0" rmax="253.238/2.0" z="6.35" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>   
+  <tube name="Target_exit_window_Tube_4" rmin="101.6/2.0" rmax="253.238/2.0" z="12.7" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/> 
+  <tube name="Target_exit_window_Tube_5" rmin="217.17/2.0" rmax="253.238/2.0" z="1.524" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>  
+  <tube name="Target_exit_window_Tube_6" rmin="101.6/2.0" rmax="253.238/2.0" z="10.4" deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>      
+ 
+	             <!-- pipe from target exit window to bellow1 -->  
+ <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="connecting_pipe_1"> 
+      <zplane rmin="196.85/2.0" rmax="203.20/2.0" z="0"/> 
+      <zplane rmin="196.85/2.0" rmax="203.20/2.0" z="0-134.42"/> 
+ </polycone>
+ <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="flange_1"> 
+      <zplane rmin="190.50/2.0" rmax="368.30/2.0" z="0"/> 
+      <zplane rmin="190.50/2.0" rmax="368.30/2.0" z="0-28.45"/> 
+  </polycone>
+    	  
+ 	  
     <!-- Target upstream beampipe -->
     <polycone name="targetUSBeamPipeOuter_solid"
               aunit="deg" startphi="0" deltaphi="360"
@@ -280,16 +331,74 @@
       <auxiliary auxtype="DetType" auxvalue="secondaries"/>
       <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
     </volume>
+  
+       <!-- target chamber-->
+   <volume name="target_chamber_vol1">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Tube_target_chamber_1"/>
+   </volume> 
+   <volume name="target_chamber_vol2">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Tube_target_chamber_2"/>
+   </volume>    
+   <volume name="target_chamber_vol3">
+    <materialref ref="G4_Al"/>
+    <solidref ref="target_entry_window_subtraction"/>
+   </volume>   	  
+   <volume name="target_chamber_vol5">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Tube_target_chamber_3"/>
+   </volume> 		  
 
+     <!-- target exit window -->  
+  <volume name="TubeVol1">
+    <materialref ref="G4_Be"/>
+    <solidref ref="Target_exit_window_Tube_1"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>   
+  </volume>     
+  <volume name="TubeVol2">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Target_exit_window_Tube_2"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
+  </volume>    
+  <volume name="TubeVol3">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Target_exit_window_Tube_3"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
+  </volume>    
+  <volume name="TubeVol4">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Target_exit_window_Tube_4"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
+  </volume>    
+  <volume name="TubeVol5">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Target_exit_window_Tube_5"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
+  </volume> 
+  <volume name="TubeVol6">
+    <materialref ref="G4_Al"/>
+    <solidref ref="Target_exit_window_Tube_6"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>           
+  </volume> 	  
+	  
+	  
+       <!-- pipe from target exit window to bellow1 -->  
+  <volume name="connecting_pipe_volume_1">
+    <materialref ref="G4_Al"/>
+    <solidref ref="connecting_pipe_1"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>   	 
+  </volume> 	  
+  <volume name="flange_vol_1">
+    <materialref ref="G4_Al"/>
+    <solidref ref="flange_1"/>
+    <auxiliary auxtype="Color" auxvalue="blue"/>   	 	  
+  </volume>   	  
+	 
     <volume name="targetRegion">
       <materialref ref="VacuumTarg"/>
       <solidref ref="targetRegion_solid"/>
       <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-
-      <physvol>
-	<volumeref ref="TargWindow_logic"/>
-	<position name="targ_vac_window" unit="mm" x="0" y="0" z="1500"/>
-      </physvol>
 
       <physvol name="targetLadder">
 	<file name="target/targetLadder.gdml"/>
@@ -359,6 +468,61 @@
 	<volumeref ref="tgt2US_pipe2_DSflange_logic"/>
       </physvol>
 
+	    
+	 <!-- target chamber placement-->
+    <physvol>
+      <volumeref ref="target_chamber_vol2"/>
+      <position name="pos7" unit="mm" x="0.0" y="(2387.60/2.0+73.66/2)" z="0.0"/>
+      <rotation name="rot1" unit="deg" x="90" y="0" z="0"/>            
+    </physvol>  
+    <physvol>
+      <volumeref ref="target_chamber_vol2"/>
+      <position name="pos8" unit="mm" x="0.0" y="(-2387.60/2.0-73.66/2)" z="0.0"/>
+      <rotation name="rot2" unit="deg" x="90" y="0" z="0"/>            
+    </physvol>     
+    <physvol>
+      <volumeref ref="target_chamber_vol3"/>
+      <position name="pos9" unit="mm" x="0.0" y="0.0" z="0.0"/>
+      <rotation name="rot3" unit="deg" x="90" y="0" z="0"/>            
+    </physvol> 
+	
+	 <!-- target exit window placement-->	    
+ <physvol>
+      <volumeref ref="TubeVol6"/>
+      <position name="pos6_a" unit="mm" x="0.0" y="0.0" z="877.01-0.2032/2.0-10.4/2.0"/>
+ </physvol>
+ <physvol>
+      <volumeref ref="TubeVol1"/>
+      <position name="pos1" unit="mm" x="0.0" y="0.0" z="877.01-0.2032/2.0"/>
+  </physvol>   
+  <physvol>
+      <volumeref ref="TubeVol2"/>
+      <position name="pos2" unit="mm" x="0.0" y="0.0" z="877.01+0.635/2.0"/>
+   </physvol> 
+   <physvol>
+      <volumeref ref="TubeVol3"/>
+      <position name="pos3" unit="mm" x="0.0" y="0.0" z="877.01+0.635+6.35/2.0"/>
+    </physvol> 
+    <physvol>
+      <volumeref ref="TubeVol4"/>
+      <position name="pos4" unit="mm" x="0.0" y="0.0" z="877.01+0.635+6.35+12.7/2.0"/>
+    </physvol>
+    <physvol>
+      <volumeref ref="TubeVol5"/>
+      <position name="pos5" unit="mm" x="0.0" y="0.0" z="877.01+0.635+6.35+12.7+1.524/2.0"/>
+    </physvol>	    
+
+	    	 <!-- target exit window to beam pipe connection placement-->	    
+    <physvol>
+      <volumeref ref="connecting_pipe_volume_1"/>
+      <position name="pipe_pos_1" unit="mm" x="0.0" y="0.0" z="877.01+0.635+6.35+12.7+1.524+134.42"/>
+    </physvol> 
+    
+    <physvol>
+      <volumeref ref="flange_vol_1"/>
+      <position name="flange_pos_1" unit="mm" x="0.0" y="0.0" z="877.01+0.635+6.35+12.7+1.524+134.42+28.45"/>
+    </physvol>	  
+   
     </volume>
 
   </structure>
