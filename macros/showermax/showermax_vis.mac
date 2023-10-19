@@ -8,3 +8,4 @@
 /control/execute vis/vis.mac
 /vis/viewer/clearCutawayPlanes
 /vis/viewer/set/viewpointThetaPhi 180 0 deg
+/vis/viewer/set/background white

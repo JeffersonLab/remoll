@@ -103,7 +103,7 @@
 
 
 
-
+  <box name="Showermax_stack_VirtualPlane_solid" lunit="mm" x="155" y="260" z="0.5"/>
 
 </solids>
 
@@ -537,6 +537,27 @@
     <solidref ref="largeVirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
     <auxiliary auxtype="DetNo" auxvalue="66"/>
+  </volume>
+
+<volume name="showerMaxStackVirtualPlaneOpen_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="70030"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlaneClosed_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="71430"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlaneTrans_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="72130"/>
   </volume>
 
   <volume name="LintelExit_log">
@@ -1385,6 +1406,22 @@
     <physvol name="Ring1Front_phys">
       <volumeref ref="Ring1Front_log"/>
       <position name="Ring1Front_pos" unit="mm" z="22198.00 + 1070.8 + 21"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlaneOpen_phys">
+      <volumeref ref="showerMaxStackVirtualPlaneOpen_log"/>
+      <positionref ref="showerMaxStackVirtualPlaneOpen_pos"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlaneClosed_phys">
+      <volumeref ref="showerMaxStackVirtualPlaneClosed_log"/>
+      <positionref ref="showerMaxStackVirtualPlaneClosed_pos"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlaneTrans_phys">
+      <volumeref ref="showerMaxStackVirtualPlaneTrans_log"/>
+      <positionref ref="showerMaxStackVirtualPlaneTrans_pos"/>
+      <rotation name="showerMaxStackVirtualPlaneTrans_rot" unit="deg" z="90"/>
     </physvol>
     
     <physvol name="Ring1Back_phys">

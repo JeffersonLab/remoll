@@ -1,394 +1,640 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE gdml [
-  <!ENTITY materials SYSTEM "showerMaxMaterials.xml">
-  <!ENTITY matrices SYSTEM "showerMaxMatrices.xml">
+	<!ENTITY matrices SYSTEM "showerMaxMatrices.xml">
+	<!ENTITY materials SYSTEM "showerMaxMaterials.xml">
 ]>
 
-<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+<gdml
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
-  <define>
-    <quantity name="ShowerMaxDetectorQuartzAngle" type="angle" value="-26.565051177078" unit="deg"/>
-    <quantity name="ShowerMaxDetectorQuartzWidth" type="length" value="246" unit="mm"/>
-    <quantity name="ShowerMaxDetectorQuartzThickness" type="length" value="10" unit="mm"/>
-    <quantity name="ShowerMaxDetectorQuartzHeightShort" type="length" value="105" unit="mm"/>
-    <quantity name="ShowerMaxDetectorQuartzHeightDiff"  type="length" value="ShowerMaxDetectorQuartzThickness"/> <!-- 45 deg angle -->
-    <quantity name="ShowerMaxDetectorQuartzHeightLong"  type="length" value="ShowerMaxDetectorQuartzHeightShort+ShowerMaxDetectorQuartzHeightDiff"/>
+<define>
+	&matrices;
+</define>
 
-    <quantity name="ShowerMaxDetectorTungstenThickness" type="length" value="8" unit="mm"/>
-    <quantity name="ShowerMaxDetectorTungstenHeight"    type="length" value="ShowerMaxDetectorQuartzWidth"/>
-    <quantity name="ShowerMaxDetectorTungstenWidth"     type="length" value="ShowerMaxDetectorQuartzHeightShort"/>
+&materials;
 
-    <quantity name="ShowerMaxDetectorMirrorThickness" type="length" value="0.5" unit="mm"/>
+<solids>
+	<xtru name="solid_quartz" lunit="mm">
+		<twoDimVertex x="-80.0" y="3.0"/>
+		<twoDimVertex x="-80.0" y="-3.0"/>
+		<twoDimVertex x="86.0" y="-3.0"/>
+		<twoDimVertex x="80.0" y="3.0"/>
+		<section zOrder="1" zPosition="-132.5" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="132.5" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<box name="solid_tungsten" lunit="mm" x="160.0" y="265.0" z="8.0"/>
+	<box name="solid_spacer" lunit="mm" x="160.0" y="265.0" z="0.85"/>
+	<box name="solid_suitcase_tungstenquartz_1" lunit="mm" x="160.5" y="266.0" z="64.976"/>
+	<box name="solid_suitcase_tungstenquartz_2" lunit="mm" x="161.0" y="265.0" z="63.976"/>
+	<subtraction name="solid_suitcase_tungstenquartz">
+		<first ref="solid_suitcase_tungstenquartz_1"/>
+		<second ref="solid_suitcase_tungstenquartz_2"/>
+		<position name="pos_subtract_suitcase_tungstenquartz_12" x="0.5" y="0" z="0"/>
+		<rotation name="rot_subtract_suitcase_tungstenquartz_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<box name="solid_front_back_plate" lunit="mm" x="181.698" y="313.8" z="6.35"/>
+	<box name="solid_front_plate_hole" lunit="mm" x="81.28" y="213.35999999999999" z="7.35"/>
+	<subtraction name="solid_front_plate">
+		<first ref="solid_front_back_plate"/>
+		<second ref="solid_front_plate_hole"/>
+		<position name="pos_subtract_front_plate" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_front_plate" x="0" y="0" z="0"/>
+	</subtraction>
+	<box name="solid_uBracket_1" lunit="mm" x="15.88" y="23.88" z="50.8"/>
+	<box name="solid_uBracket_legSpace" lunit="mm" x="16.880000000000003" y="17.73" z="38.1"/>
+	<subtraction name="solid_uBracket_2">
+		<first ref="solid_uBracket_1"/>
+		<second ref="solid_uBracket_legSpace"/>
+		<position name="pos_subtract_uBracket" x="0" y="-3.174999999999999" z="0"/>
+		<rotation name="rot_subtract_uBracket" x="0" y="0" z="0"/>
+	</subtraction>
+	<box name="solid_ledge" lunit="mm" x="21.698000000000008" y="6.35" z="63.5"/>
+	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="56.976"  x2="86.868" y1="266.0"  y2="266.0" z="67.462"/>
+	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="55.976"  x2="85.868" y1="265.0"  y2="265.0" z="68.462"/>
+	<subtraction name="solid_mirror_box_bot">
+		<first ref="solid_mirror_box_bot_1"/>
+		<second ref="solid_mirror_box_bot_2"/>
+		<position name="pos_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<trd name="solid_mirror_box_top_1" lunit="mm" x1="86.868"  x2="70.866" y1="266.0"  y2="70.866" z="183.058"/>
+	<trd name="solid_mirror_box_top_2" lunit="mm" x1="85.868"  x2="69.866" y1="265.0"  y2="69.866" z="184.058"/>
+	<subtraction name="solid_mirror_box_top">
+		<first ref="solid_mirror_box_top_1"/>
+		<second ref="solid_mirror_box_top_2"/>
+		<position name="pos_subtract_mirror_box_top_12" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_mirror_box_top_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<box name="solid_web_plate_1" lunit="mm" x="432.19" y="15.875" z="63.5"/>
+	<cone name="solid_web_plate_hole_small" rmin1="0"  rmax1="15.875" rmin2="0" rmax2="15.875"  z="16.875" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<cone name="solid_web_plate_hole_big" rmin1="0"  rmax1="25.53" rmin2="0" rmax2="25.53"  z="16.875" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<box name="solid_web_plate_leg_gap" lunit="mm" x="190.39" y="16.875" z="51.06"/>
+	<subtraction name="solid_web_plate_2">
+		<first ref="solid_web_plate_1"/>
+		<second ref="solid_web_plate_hole_small"/>
+		<position name="pos_subtract_web_plate_hole_small" x="177.92000000000002" y="0" z="0"/>
+		<rotation name="rot_subtract_web_plate_hole_small" x="pi/2" y="0" z="0"/>
+	</subtraction>
+	<subtraction name="solid_web_plate_3">
+		<first ref="solid_web_plate_2"/>
+		<second ref="solid_web_plate_hole_small"/>
+		<position name="pos_subtract_web_plate_hole_small" x="127.12000000000002" y="0" z="0"/>
+		<rotation name="rot_subtract_web_plate_hole_small" x="pi/2" y="0" z="0"/>
+	</subtraction>
+	<subtraction name="solid_web_plate_4">
+		<first ref="solid_web_plate_3"/>
+		<second ref="solid_web_plate_hole_small"/>
+		<position name="pos_subtract_web_plate_hole_small" x="76.32000000000002" y="0" z="0"/>
+		<rotation name="rot_subtract_web_plate_hole_small" x="pi/2" y="0" z="0"/>
+	</subtraction>
+	<subtraction name="solid_web_plate_5">
+		<first ref="solid_web_plate_4"/>
+		<second ref="solid_web_plate_hole_small"/>
+		<position name="pos_subtract_web_plate_hole_small" x="25.52000000000004" y="0" z="0"/>
+		<rotation name="rot_subtract_web_plate_hole_small" x="pi/2" y="0" z="0"/>
+	</subtraction>
+	<subtraction name="solid_web_plate_6">
+		<first ref="solid_web_plate_5"/>
+		<second ref="solid_web_plate_hole_big"/>
+		<position name="pos_subtract_web_plate_hole_big" x="-28.454999999999963" y="0" z="0"/>
+		<rotation name="rot_subtract_web_plate_hole_big" x="pi/2" y="0" z="0"/>
+	</subtraction>
+	<subtraction name="solid_web_plate_7">
+		<first ref="solid_web_plate_6"/>
+		<second ref="solid_web_plate_leg_gap"/>
+		<position name="pos_subtract_web_plate_leg" x="-121.0" y="0" z="0"/>
+		<rotation name="rot_subtract_web_plate_leg" x="0" y="0" z="0"/>
+	</subtraction>
+	<box name="solid_top_support_1" lunit="mm" x="6.35" y="370.878" z="114.3"/>
+	<cone name="solid_top_support_hole" rmin1="0"  rmax1="42" rmin2="0" rmax2="42"  z="7.35" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<box name="solid_top_support_corner_cut" lunit="mm" x="7.35" y="48.0" z="20.0"/>
+	<subtraction name="solid_top_support_2">
+		<first ref="solid_top_support_1"/>
+		<second ref="solid_top_support_hole"/>
+		<position name="pos_subtract_top_support" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_top_support" x="0" y="pi/2" z="0"/>
+	</subtraction>
+	<subtraction name="solid_top_support_3">
+		<first ref="solid_top_support_2"/>
+		<second ref="solid_top_support_corner_cut"/>
+		<position name="pos_subtract_top_support" x="0" y="161.63899999999998" z="47.35"/>
+		<rotation name="rot_subtract_top_support" x="0" y="0" z="0"/>
+	</subtraction>
+	<subtraction name="solid_top_support_4">
+		<first ref="solid_top_support_3"/>
+		<second ref="solid_top_support_corner_cut"/>
+		<position name="pos_subtract_top_support" x="0" y="-161.63899999999998" z="47.35"/>
+		<rotation name="rot_subtract_top_support" x="0" y="0" z="0"/>
+	</subtraction>
+	<subtraction name="solid_top_support_5">
+		<first ref="solid_top_support_4"/>
+		<second ref="solid_top_support_corner_cut"/>
+		<position name="pos_subtract_top_support" x="0" y="-161.63899999999998" z="-47.35"/>
+		<rotation name="rot_subtract_top_support" x="0" y="0" z="0"/>
+	</subtraction>
+	<subtraction name="solid_top_support_6">
+		<first ref="solid_top_support_5"/>
+		<second ref="solid_top_support_corner_cut"/>
+		<position name="pos_subtract_top_support" x="0" y="161.63899999999998" z="-47.35"/>
+		<rotation name="rot_subtract_top_support" x="0" y="0" z="0"/>
+	</subtraction>
+	<tube name="solid_pmt_filter" rmin="0" rmax="38.099999999999994" z="5.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_window" rmin="0" rmax="38.099999999999994" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_cathode" rmin="0" rmax="38.099999999999994" z="3e-06" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt" rmin="0" rmax="38.099999999999994" z="150" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_base" rmin="0" rmax="38.099999999999994" z="50" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<box name="solid_si_chip" lunit="mm" x="0.5" y="50" z="50"/>
+	<cone name="solid_pmt_housing" rmin1="42"  rmax1="45.0" rmin2="42" rmax2="45.0"  z="213.0" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<cone name="solid_pmt_housing_lid" rmin1="0"  rmax1="48.0" rmin2="0" rmax2="48.0"  z="3.0" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<box name="solid_strut" lunit="mm" x="381.0" y="63.5" z="36.83"/>
+	<box name="solid_stack_region" lunit="mm" x="181.698" y="314.8" z="78.676"/>
+	<trd name="solid_mirror_box_bot_region" lunit="mm" x1="57.976"  x2="87.868" y1="267.0"  y2="267.0" z="68.462"/>
+	<trd name="solid_mirror_box_top_region" lunit="mm" x1="87.868"  x2="71.866" y1="267.0"  y2="71.866" z="184.058"/>
+	<union name="solid_singledet_1">
+		<first ref="solid_stack_region"/>
+		<second ref="solid_mirror_box_bot_region"/>
+			<position name="pos_mirror_box_bot" x="124.58000000000001" y="0" z="4.0"/>
+			<rotation name="rot_mirror_box_bot" x="0" y="pi/2" z="0"/>
+	</union>
+	<union name="solid_singledet_2">
+		<first ref="solid_singledet_1"/>
+		<second ref="solid_mirror_box_top_region"/>
+			<position name="pos_mirror_box_top" x="249.84" y="0" z="4.0"/>
+			<rotation name="rot_mirror_box_top" x="0" y="pi/2" z="0"/>
+	</union>
+	<union name="solid_singledet_3">
+		<first ref="solid_singledet_2"/>
+		<second ref="solid_top_support_6"/>
+			<position name="pos_top_support" x="344.54400000000004" y="0" z="4.0"/>
+			<rotation name="rot_top_support" x="0" y="0" z="0"/>
+	</union>
+	<cone name="solid_pmt_region" rmin1="0"  rmax1="50.0" rmin2="0" rmax2="50.0"  z="218.0" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<union name="solid_singledet_4">
+		<first ref="solid_singledet_3"/>
+		<second ref="solid_pmt_region"/>
+			<position name="pos_pmt_region" x="456.71900000000005" y="0" z="4.0"/>
+			<rotation name="rot_pmt_region" x="0" y="pi/2" z="0"/>
+	</union>
+	<box name="solid_webplate_region" lunit="mm" x="432.19" y="313.8" z="63.5"/>
+	<union name="solid_singledet_5">
+		<first ref="solid_singledet_4"/>
+		<second ref="solid_webplate_region"/>
+			<position name="pos_webplate_region" x="216.095" y="0" z="0"/>
+			<rotation name="rot_webplate_region" x="0" y="0" z="0"/>
+	</union>
+	<box name="solid_strut_region" lunit="mm" x="381.0" y="370.878" z="36.83"/>
+	<union name="solid_singledet_6">
+		<first ref="solid_singledet_5"/>
+		<second ref="solid_strut_region"/>
+			<position name="pos_strut_region" x="538.219" y="0" z="4.0"/>
+			<rotation name="rot_strut_region" x="0" y="0" z="0"/>
+	</union>
+	<cone name="solid_support_ring" rmin1="1727.1999999999998"  rmax1="1981.1999999999998" rmin2="1727.1999999999998" rmax2="1981.1999999999998"  z="44.449999999999996" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
+	<cone name="solid_showerMaxMother" rmin1="0"  rmax1="1000" rmin2="0" rmax2="1000"  z="258.736" startphi="0" deltaphi="360" aunit="deg" lunit="mm"/>
 
-    <quantity name="ShowerMaxDetectorPMTRadius"    type="length" value="38.1" unit="mm"/>
-    <quantity name="ShowerMaxDetectorPMTThickness" type="length" value="3.0"  unit="mm"/>
-    <quantity name="ShowerMaxDetectorPMTPosition"  type="length" value="311.5"  unit="mm"/> <!-- should be calculable -->
-    <quantity name="ShowerMaxDetectorCathodeThickness" type="length" value="0.2" unit="mm"/>
-    <quantity name="ShowerMaxDetectorCathodePosition"  type="length" value="ShowerMaxDetectorPMTPosition+0.5*(ShowerMaxDetectorPMTThickness+ShowerMaxDetectorCathodeThickness)"/>
+	<opticalsurface name="quartz_surface" model="glisur" finish="ground" type="dielectric_dielectric" value="0.98" >
+		<property name="REFLECTIVITY" ref="Quartz_REFLECTIVITY" />
+	</opticalsurface>
+	<opticalsurface name="Al_mirror_surface" model="glisur" finish="ground" type="dielectric_metal" value="0.98" >
+		<property name="REFLECTIVITY" ref="MiroSilver_REFLECTIVITY_30DEG" />
+	</opticalsurface>
+	<opticalsurface name="Cathode_surface" model="glisur" finish="polished" type="dielectric_metal" value="1.0">
+		<property name="REFLECTIVITY" ref="CathodeSurf_REFLECTIVITY" />
+		<property name="EFFICIENCY" ref="Cathode_EFFICIENCY" />
+	</opticalsurface>
+</solids>
 
-    <!-- alternating orientation for prisms -->
-    <rotation name="ShowerMaxDetectorQuartz_0_rot" x="+90" unit="deg"/>
-    <rotation name="ShowerMaxDetectorQuartz_1_rot" x="-90" unit="deg"/>
-    <rotation name="ShowerMaxDetectorQuartz_2_rot" x="+90" unit="deg"/>
-    <rotation name="ShowerMaxDetectorQuartz_3_rot" x="-90" unit="deg"/>
 
-    <!-- shift in zero of coordinate system -->
-    <quantity name="x0" type="length" value="-0.3*(ShowerMaxDetectorCathodePosition+0.5*ShowerMaxDetectorQuartzHeightLong)"/>
-    <quantity name="z0" type="length" value="1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+<structure>
+	<volume name="logic_support_ring">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_support_ring"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+	<volume name="logic_quartz_0_0">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxQuartz" />
+		<auxiliary auxtype="DetNo" auxvalue="7008"/>
+	</volume>
+	<volume name="logic_tungsten_0_0">
+		<materialref ref="Tungsten_material"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_0_1">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxQuartz" />
+		<auxiliary auxtype="DetNo" auxvalue="7006"/>
+	</volume>
+	<volume name="logic_tungsten_0_1">
+		<materialref ref="Tungsten_material"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_0_2">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxQuartz" />
+		<auxiliary auxtype="DetNo" auxvalue="7004"/>
+	</volume>
+	<volume name="logic_tungsten_0_2">
+		<materialref ref="Tungsten_material"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_quartz_0_3">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_quartz"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxQuartz" />
+		<auxiliary auxtype="DetNo" auxvalue="7002"/>
+	</volume>
+	<volume name="logic_tungsten_0_3">
+		<materialref ref="Tungsten_material"/>
+		<solidref ref="solid_tungsten"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxTungsten" />
+		<auxiliary auxtype="DetNo" auxvalue="7001"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+	</volume>
+	<volume name="logic_spacer_0_0">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70020"/>
+	</volume>
+	<volume name="logic_spacer_0_1">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70021"/>
+	</volume>
+	<volume name="logic_spacer_0_2">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70022"/>
+	</volume>
+	<volume name="logic_spacer_0_3">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70023"/>
+	</volume>
+	<volume name="logic_spacer_0_4">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70024"/>
+	</volume>
+	<volume name="logic_spacer_0_5">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70025"/>
+	</volume>
+	<volume name="logic_spacer_0_6">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70026"/>
+	</volume>
+	<volume name="logic_spacer_0_7">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_spacer"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxSpacer" />
+		<auxiliary auxtype="DetNo" auxvalue="70027"/>
+	</volume>
+	<volume name="logic_suitcase_tungstenquartz_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_suitcase_tungstenquartz"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_front_back_plate_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_front_back_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_front_plate_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_front_plate"/>
+		<auxiliary auxtype="Color" auxvalue="orange"/>
+	</volume>
+	<volume name="logic_web_plate_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_web_plate_7"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+	<volume name="logic_uBracket_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_uBracket_2"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+	<volume name="logic_ledge_left_0">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeLeft" />
+		<auxiliary auxtype="DetNo" auxvalue="70028"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_ledge_right_0">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_ledge"/>
+		<auxiliary auxtype="SensDet" auxvalue="ledgeRight" />
+		<auxiliary auxtype="DetNo" auxvalue="70029"/>
+		<auxiliary auxtype="Color" auxvalue="brown"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_mirror_box_top_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_filter_0">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTFilter" />
+		<auxiliary auxtype="DetNo" auxvalue="70010"/>
+		<auxiliary auxtype="Color" auxvalue="magenta"/>
+	</volume>
+	<volume name="logic_pmt_window_0">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTwindow" />
+		<auxiliary auxtype="DetNo" auxvalue="70011"/>
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+	</volume>
+	<volume name="logic_pmt_cathode_0">
+		<materialref ref="Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTcathode" />
+		<auxiliary auxtype="DetType" auxvalue="opticalphoton" />
+		<auxiliary auxtype="DetNo" auxvalue="70016"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+	</volume>
+	<volume name="logic_pmt_0">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt"/>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMT" />
+		<auxiliary auxtype="DetNo" auxvalue="70012"/>
+		<auxiliary auxtype="Color" auxvalue="yellow"/>
+	</volume>
+	<volume name="logic_si_chip_1_0">
+		<materialref ref="G4_Si"/>
+		<solidref ref="solid_si_chip"/>
+		<auxiliary auxtype="SensDet" auxvalue="pmtBaseSiChip" />
+		<auxiliary auxtype="DetNo" auxvalue="70014"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+	</volume>
+	<volume name="logic_si_chip_2_0">
+		<materialref ref="G4_Si"/>
+		<solidref ref="solid_si_chip"/>
+		<auxiliary auxtype="SensDet" auxvalue="pmtBaseSiChip" />
+		<auxiliary auxtype="DetNo" auxvalue="70015"/>
+		<auxiliary auxtype="Color" auxvalue="black"/>
+	</volume>
+	<volume name="logic_pmt_base_0">
+		<materialref ref="G4_Galactic"/>
+		<solidref ref="solid_pmt_base"/>
+		<physvol name="pmt_si_chip_1_0">
+			<volumeref ref="logic_si_chip_1_0"/>
+			<position name="pos_logic_si_chip_1_0" x="0" y="0" z="-8.333333333333334"/>
+			<rotation name="rot_logic_si_chip_1_0" x="0" y="pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_si_chip_2_0">
+			<volumeref ref="logic_si_chip_2_0"/>
+			<position name="pos_logic_si_chip_2_0" x="0" y="0" z="8.333333333333334"/>
+			<rotation name="rot_logic_si_chip_2_0" x="0" y="pi/2" z="0"/>
+		</physvol>
+		<auxiliary auxtype="SensDet" auxvalue="showerMaxPMTbase" />
+		<auxiliary auxtype="DetNo" auxvalue="70013"/>
+		<auxiliary auxtype="Color" auxvalue="red"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+	</volume>
+	<volume name="logic_top_support_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_top_support_6"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+	<volume name="logic_pmt_housing_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_pmt_housing"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+		<auxiliary auxtype="Alpha" auxvalue="0.5"/>
+	</volume>
+	<volume name="logic_pmt_housing_lid_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_pmt_housing_lid"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+	<volume name="logic_strut_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_strut"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
+	</volume>
+	<volume name="logic_singledet_00">
+		<materialref ref="Air"/>
+		<solidref ref="solid_singledet_6"/>
+		<physvol name="suitcase_tungstenquartz_0">
+			<volumeref ref="logic_suitcase_tungstenquartz_0"/>
+			<position name="pos_logic_suitcase_tungstenquartz_0" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_suitcase_tungstenquartz_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_0">
+			<volumeref ref="logic_mirror_box_bot_0"/>
+			<position name="pos_logic_mirror_box_bot_0" x="124.58000000000001" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_0">
+			<volumeref ref="logic_mirror_box_top_0"/>
+			<position name="pos_logic_mirror_box_top_0" x="249.84" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="top_support_0">
+			<volumeref ref="logic_top_support_0"/>
+			<position name="pos_top_support_0" x="344.54400000000004" y="0" z="4.0"/>
+			<rotation name="rot_top_support_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_0">
+			<volumeref ref="logic_pmt_window_0"/>
+			<position name="pos_logic_pmt_window_0" x="349.21900000000005" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_0">
+			<volumeref ref="logic_pmt_cathode_0"/>
+			<position name="pos_logic_pmt_cathode_0" x="350.71900150000005" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_0">
+			<volumeref ref="logic_pmt_0"/>
+			<position name="pos_logic_pmt_0" x="425.71900300000004" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_base_0">
+			<volumeref ref="logic_pmt_base_0"/>
+			<position name="pos_logic_pmt_base_0" x="525.719003" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_base_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_housing_0">
+			<volumeref ref="logic_pmt_housing_0"/>
+			<position name="pos_logic_pmt_housing_0" x="454.21900000000005" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_housing_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_housing_lid_0">
+			<volumeref ref="logic_pmt_housing_lid_0"/>
+			<position name="pos_logic_pmt_housing_lid_0" x="562.219" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_housing_lid_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="strut_right_0">
+			<volumeref ref="logic_strut_0"/>
+			<position name="pos_strut_0" x="538.219" y="153.689" z="4.0"/>
+			<rotation name="rot_strut_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="strut_left_0">
+			<volumeref ref="logic_strut_0"/>
+			<position name="pos_strut_0" x="538.219" y="-153.689" z="4.0"/>
+			<rotation name="rot_strut_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="front_plate_0">
+			<volumeref ref="logic_front_plate_0"/>
+			<position name="pos_logic_front_plate_0" x="0" y="0" z="-35.663"/>
+			<rotation name="rot_logic_front_plate_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="back_plate_0">
+			<volumeref ref="logic_front_back_plate_0"/>
+			<position name="pos_logic_back_plate_0" x="0" y="0" z="35.663"/>
+			<rotation name="rot_logic_back_plate_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="web_plate_right_0">
+			<volumeref ref="logic_web_plate_0"/>
+			<position name="pos_web_plate_0" x="125.246" y="148.9625" z="0"/>
+			<rotation name="rot_web_plate_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="web_plate_left_0">
+			<volumeref ref="logic_web_plate_0"/>
+			<position name="pos_web_plate_0" x="125.246" y="-148.9625" z="0"/>
+			<rotation name="rot_web_plate_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="ledge_right_0">
+			<volumeref ref="logic_ledge_right_0"/>
+			<position name="pos_ledge_right_0" x="80.0" y="136.375" z="0"/>
+			<rotation name="rot_ledge_right_0" x="3.141592653589793" y="0" z="0"/>
+		</physvol>
+		<physvol name="ledge_left_0">
+			<volumeref ref="logic_ledge_left_0"/>
+			<position name="pos_ledge_left_0" x="80.0" y="-136.375" z="0"/>
+			<rotation name="rot_ledge_left_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="uBracket_bottom_left_0">
+			<volumeref ref="logic_uBracket_0"/>
+			<position name="pos_uBracket_bottom_left_0" x="-72.06" y="-145.46" z="0"/>
+			<rotation name="rot_uBracket_bottom_left_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="uBracket_bottom_right_0">
+			<volumeref ref="logic_uBracket_0"/>
+			<position name="pos_uBracket_bottom_right_0" x="-72.06" y="145.46" z="0"/>
+			<rotation name="rot_uBracket_bottom_right_0" x="0" y="0" z="pi"/>
+		</physvol>
+		<physvol name="uBracket_top_left_0">
+			<volumeref ref="logic_uBracket_0"/>
+			<position name="pos_uBracket_top_left_0" x="68.06" y="-149.46" z="0"/>
+			<rotation name="rot_uBracket_top_left_0" x="0" y="0" z="pi/2"/>
+		</physvol>
+		<physvol name="uBracket_top_right_0">
+			<volumeref ref="logic_uBracket_0"/>
+			<position name="pos_uBracket_top_right_0" x="68.06" y="149.46" z="0"/>
+			<rotation name="rot_uBracket_top_right_0" x="0" y="0" z="pi/2"/>
+		</physvol>
+		<physvol name="quartz_0_0">
+			<volumeref ref="logic_quartz_0_0"/>
+			<position name="pos_logic_quartz_0_0" x="0" y="0" z="28.118"/>
+			<rotation name="rot_logic_quartz_0_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_0">
+			<volumeref ref="logic_tungsten_0_0"/>
+			<position name="pos_logic_tungsten_0_0" x="0" y="0" z="20.248"/>
+			<rotation name="rot_logic_tungsten_0_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_1">
+			<volumeref ref="logic_quartz_0_1"/>
+			<position name="pos_logic_quartz_0_1" x="0" y="0" z="12.378"/>
+			<rotation name="rot_logic_quartz_0_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_1">
+			<volumeref ref="logic_tungsten_0_1"/>
+			<position name="pos_logic_tungsten_0_1" x="0" y="0" z="4.507999999999999"/>
+			<rotation name="rot_logic_tungsten_0_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_2">
+			<volumeref ref="logic_quartz_0_2"/>
+			<position name="pos_logic_quartz_0_2" x="0" y="0" z="-3.362"/>
+			<rotation name="rot_logic_quartz_0_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_2">
+			<volumeref ref="logic_tungsten_0_2"/>
+			<position name="pos_logic_tungsten_0_2" x="0" y="0" z="-11.232"/>
+			<rotation name="rot_logic_tungsten_0_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_3">
+			<volumeref ref="logic_quartz_0_3"/>
+			<position name="pos_logic_quartz_0_3" x="0" y="0" z="-19.102"/>
+			<rotation name="rot_logic_quartz_0_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_3">
+			<volumeref ref="logic_tungsten_0_3"/>
+			<position name="pos_logic_tungsten_0_3" x="0" y="0" z="-26.972"/>
+			<rotation name="rot_logic_tungsten_0_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="showerMaxMother">
+		<materialref ref="Air"/>
+		<solidref ref="solid_showerMaxMother"/>
+		<physvol name="singledet_00">
+			<volumeref ref="logic_singledet_00"/>
+			<position name="pos_singledet_0" x="0" y="0" z="0"/>
+			<rotation name="rot_singledet_0" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
 
-    <!-- layers from back to front: zero z defined as center of last quartz plane, zero x defined as center of quartz plane -->
-    <position name="ShowerMaxDetectorMirrorBack_pos"  x="x0+2.5" z="z0+0.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorMirrorThickness)"/>
-    <position name="ShowerMaxDetectorQuartz_0_pos"    x="x0"     z="z0-0.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="ShowerMaxDetectorTungsten_1_pos"  x="x0-2.5" z="z0-0.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="ShowerMaxDetectorQuartz_1_pos"    x="x0"     z="z0-1.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="ShowerMaxDetectorTungsten_2_pos"  x="x0-2.5" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="ShowerMaxDetectorQuartz_2_pos"    x="x0"     z="z0-2.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="ShowerMaxDetectorTungsten_3_pos"  x="x0-2.5" z="z0-2.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="ShowerMaxDetectorQuartz_3_pos"    x="x0"     z="z0-3.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="ShowerMaxDetectorMirrorFront_pos" x="x0+2.5" z="z0-3.0*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)
-                                                                    -0.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorMirrorThickness)"/> 
-    <position name="ShowerMaxDetectorTungsten_4_pos"  x="x0-2.5" z="z0-3.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)
-                                                                    -1.0*ShowerMaxDetectorMirrorThickness"/>
-    <!-- side mirrors along stack -->
-    <position name="ShowerMaxDetectorMirrorSide_1_pos" unit="mm" x="x0+2.5" y="+0.5*(ShowerMaxDetectorQuartzWidth+ShowerMaxDetectorMirrorThickness)" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="ShowerMaxDetectorMirrorSide_2_pos" unit="mm" x="x0+2.5" y="-0.5*(ShowerMaxDetectorQuartzWidth+ShowerMaxDetectorMirrorThickness)" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
+	<skinsurface name="quartz_skin_surface" surfaceproperty="quartz_surface" >
+		<volumeref ref="logic_pmt_window_0"/>
+		<volumeref ref="logic_pmt_filter_0"/>
+	</skinsurface>
+	<skinsurface name="suitcase_skin_surface" surfaceproperty="Al_mirror_surface" >
+		<volumeref ref="logic_suitcase_tungstenquartz_0"/>
+	</skinsurface>
+	<skinsurface name="mirror_box_top_skin_surface" surfaceproperty="Al_mirror_surface" >
+		<volumeref ref="logic_mirror_box_top_0"/>
+	</skinsurface>
+	<skinsurface name="mirror_box_bottom_skin_surface" surfaceproperty="Al_mirror_surface" >
+		<volumeref ref="logic_mirror_box_bot_0"/>
+	</skinsurface>
+	<skinsurface name="cathode_surface" surfaceproperty="Cathode_surface" >
+		<volumeref ref="logic_pmt_cathode_0"/>
+	</skinsurface>
 
-    <position name="Mirror_box_1_0_pos" unit="mm" x="x0+104.29" y="+0.5*ShowerMaxDetectorQuartzWidth" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="Mirror_box_1_1_pos" unit="mm" x="x0+104.29" y="-0.5*ShowerMaxDetectorQuartzWidth" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="Mirror_box_2_0_pos" unit="mm" x="x0+229.29" y="+78.5" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <position name="Mirror_box_2_1_pos" unit="mm" x="x0+229.29" y="-78.5" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-
-    <rotation name="Mirror_box_1_0_rot" unit="deg" y="90"/>
-    <rotation name="Mirror_box_1_1_rot" unit="deg" y="90"/>
-    <rotation name="Mirror_box_2_0_rot" unit="deg" x="+90" y="61.13" z="+90"/>
-    <rotation name="Mirror_box_2_1_rot" unit="deg" x="-90" y="61.13" z="-90"/>
-
-    <position name="Mirror_box_4_0_pos" unit="mm" x="x0+104.29" y="0" z="z0+17.29"/>
-    <position name="Mirror_box_4_1_pos" unit="mm" x="x0+104.29" y="0" z="z0-71.29"/>
-    <position name="Mirror_box_6_0_pos" unit="mm" x="x0+229.29" y="0" z="z0+18.79"/>
-    <position name="Mirror_box_6_1_pos" unit="mm" x="x0+229.29" y="0" z="z0-72.79"/>
-
-    <rotation name="Mirror_box_4_0_rot" unit="deg" x="-180" y="74.49" z="-90"/>
-    <rotation name="Mirror_box_4_1_rot" unit="deg" x="0"    y="74.49" z="+90"/>
-    <rotation name="Mirror_box_6_0_rot" unit="deg" x="0"    y="82.38" z="+90"/>
-    <rotation name="Mirror_box_6_1_rot" unit="deg" x="-180" y="82.38" z="-90"/>
-
-    <position name="ShowerMaxDetectorPMT_pos" x="x0+ShowerMaxDetectorPMTPosition" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <rotation name="ShowerMaxDetectorPMT_rot" y="90" unit="deg"/>
-
-    <position name="ShowerMaxDetectorCathode_pos" x="x0+ShowerMaxDetectorCathodePosition" z="z0-1.5*(ShowerMaxDetectorQuartzThickness+ShowerMaxDetectorTungstenThickness)"/>
-    <rotation name="ShowerMaxDetectorCathode_rot" y="90" unit="deg"/>
-
-    &matrices;
-  </define>
-
-  &materials;
-
-  <solids>
-    <box name="ShowerMaxDetectorSector_solid"
-      x="420" y="250" z="120" lunit="mm"/>
-
-    <trap name="ShowerMaxDetectorQuartz_solid"
-      alpha1="ShowerMaxDetectorQuartzAngle" alpha2="ShowerMaxDetectorQuartzAngle" phi="0" theta="0"
-      x1="ShowerMaxDetectorQuartzHeightLong" x2="ShowerMaxDetectorQuartzHeightShort"
-      x3="ShowerMaxDetectorQuartzHeightLong" x4="ShowerMaxDetectorQuartzHeightShort"
-      y1="ShowerMaxDetectorQuartzThickness" y2="ShowerMaxDetectorQuartzThickness"
-      z="ShowerMaxDetectorQuartzWidth"/>
-
-    <opticalsurface finish="3" model="0" name="QuartzSurface" type="1" value="0.975">
-      <property name="RINDEX" ref="RINDEX_QUARTZ_OS"/>
-      <property name="GROUPVEL" ref="GROUPVEL_QUARTZ_OS"/>
-      <property name="SPECULARLOBECONSTANT" ref="SPECULARLOBECONSTANT_QUARTZ_OS"/>
-      <property name="SPECULARSPIKECONSTANT" ref="SPECULARSPIKECONSTANT_QUARTZ_OS"/>
-      <property name="BACKSCATTERCONSTANT" ref="BACKSCATTERCONSTANT_QUARTZ_OS"/>
-    </opticalsurface>
-
-    <box name="ShowerMaxDetectorTungsten_box"
-      x="ShowerMaxDetectorQuartzHeightShort"
-      y="ShowerMaxDetectorQuartzWidth"
-      z="ShowerMaxDetectorTungstenThickness"/>
-
-    <trap name="Mirror_box_1_solid"
-      alpha1="0" alpha2="0" phi="0" theta="0" aunit="deg"
-      x1="113.17" x2="113.17"
-      x3="64" x4="64"
-      y1="ShowerMaxDetectorMirrorThickness" y2="ShowerMaxDetectorMirrorThickness"
-      z="88.58"
-      lunit="mm"/>
-    <trap
-      name="Mirror_box_2_solid"
-      alpha1="0" alpha2="0" phi="0" theta="0" aunit="deg"
-      lunit="mm"
-      x1="70" x2="70"
-      x3="113.17" x4="113.17"
-      y1="ShowerMaxDetectorMirrorThickness" y2="ShowerMaxDetectorMirrorThickness"
-      z="184.33"/>
-    <trap
-      name="Mirror_box_4_solid"
-      alpha1="0" alpha2="0" phi="0" theta="0" aunit="deg"
-      lunit="mm"
-      x1="ShowerMaxDetectorQuartzWidth" x2="ShowerMaxDetectorQuartzWidth"
-      x3="ShowerMaxDetectorQuartzWidth" x4="ShowerMaxDetectorQuartzWidth"
-      y1="ShowerMaxDetectorMirrorThickness" y2="ShowerMaxDetectorMirrorThickness"
-      z="91.93"/>
-    <trap
-      name="Mirror_box_6_solid"
-      alpha1="0" alpha2="0" phi="0" theta="0" aunit="deg"
-      lunit="mm"
-      x1="68" x2="68"
-      x3="ShowerMaxDetectorQuartzWidth" x4="ShowerMaxDetectorQuartzWidth"
-      y1="ShowerMaxDetectorMirrorThickness" y2="ShowerMaxDetectorMirrorThickness"
-      z="162.85"/>
-    <box
-      name="ShowerMaxDetectorMirrorSide_solid"
-      x="ShowerMaxDetectorQuartzHeightLong"
-      y="ShowerMaxDetectorMirrorThickness"
-      z="66"/>
-    <box
-      name="ShowerMaxDetectorMirrorBack_solid"
-      x="ShowerMaxDetectorQuartzHeightLong"
-      y="ShowerMaxDetectorQuartzWidth"
-      z="ShowerMaxDetectorMirrorThickness"/>
-    <box
-      name="Mirror_box_6_solid"
-      x="ShowerMaxDetectorMirrorThickness"
-      y="ShowerMaxDetectorQuartzWidth"
-      z="64"/>
-
-    <opticalsurface finish="6" model="0" name="MirrorOpSurface" type="0" value="1">
-      <property name="REFLECTIVITY" ref="REFLECTIVITY_MIRROR"/>
-    </opticalsurface>
-
-    <tube 
-      name="ShowerMaxDetectorPMT_solid"
-      aunit="deg" startphi="0" deltaphi="360"
-      rmin="0" rmax="ShowerMaxDetectorPMTRadius"
-      z="ShowerMaxDetectorPMTThickness"/>
-    <tube 
-      aunit="deg" startphi="0" deltaphi="360" 
-      name="ShowerMaxDetectorCathode_solid"
-      rmin="0" rmax="ShowerMaxDetectorPMTRadius"
-      z="ShowerMaxDetectorCathodeThickness"/>
-    <opticalsurface finish="6" model="0" name="CathodeOpSurface" type="0" value="1">
-      <property name="REFLECTIVITY" ref="REFLECTIVITY_CATH_OS"/>
-      <property name="EFFICIENCY" ref="EFFICIENCY_CATH_OS"/>
-    </opticalsurface>
-
-  </solids>
-
-  <structure>
-    <volume name="ShowerMaxDetectorQuartz_log">
-      <materialref ref="Quartz_mat"/>
-      <solidref ref="ShowerMaxDetectorQuartz_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="ShowerMaxDetectorQuartz"/>
-      <auxiliary auxtype="DetNo" auxvalue="7001"/>
-      <auxiliary auxtype="Color" auxvalue="Blue"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.25"/>
-    </volume>
-    <volume name="ShowerMaxDetectorTungsten_log">
-      <materialref ref="G4_W"/>
-      <solidref ref="ShowerMaxDetectorTungsten_box"/>
-      <auxiliary auxtype="SensDet" auxvalue="ShowerMaxDetectorTungsten"/>
-      <auxiliary auxtype="DetNo" auxvalue="7002"/>
-      <auxiliary auxtype="Color" auxvalue="Gray"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.50"/>
-    </volume>
-    <volume name="Mirror_box_1_log">
-      <materialref ref="Mirror_mat"/>
-      <solidref ref="Mirror_box_1_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    </volume>
-    <volume name="Mirror_box_2_log">
-      <materialref ref="Mirror_mat"/>
-      <solidref ref="Mirror_box_2_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    </volume>
-    <volume name="Mirror_box_4_log">
-      <materialref ref="Mirror_mat"/>
-      <solidref ref="Mirror_box_4_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    </volume>
-    <volume name="Mirror_box_6_log">
-      <materialref ref="Mirror_mat"/>
-      <solidref ref="Mirror_box_6_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    </volume>
-    <volume name="ShowerMaxDetectorMirrorSide_log">
-      <materialref ref="Mirror_mat"/>
-      <solidref ref="ShowerMaxDetectorMirrorSide_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    </volume>
-    <volume name="ShowerMaxDetectorMirrorBack_log">
-      <materialref ref="Mirror_mat"/>
-      <solidref ref="ShowerMaxDetectorMirrorBack_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    </volume>
-    <volume name="ShowerMaxDetectorPMT_log">
-      <materialref ref="Air"/>
-      <solidref ref="ShowerMaxDetectorPMT_solid"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    </volume>
-    <volume name="ShowerMaxDetectorCathode_log">
-      <materialref ref="CATH_mat"/>
-      <solidref ref="ShowerMaxDetectorCathode_solid"/>
-      <auxiliary auxtype="SensDet" auxvalue="ShowerMaxDetectorCathode"/>
-      <auxiliary auxtype="DetNo" auxvalue="7000"/>
-      <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
-      <auxiliary auxtype="Color" auxvalue="White"/>
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    </volume>
-    <volume name="ShowerMaxDetectorSector_log">
-      <materialref ref="Air"/>
-      <solidref ref="ShowerMaxDetectorSector_solid"/>
-
-      <!-- 0 = center of last downstream quartz plane
-           x = dispersive, radial outward
-           y = azimuthal, counter-clockwise
-           z = downstream along beamline -->
-
-      <physvol name="ShowerMaxDetectorQuartz_0_phys">
-        <volumeref ref="ShowerMaxDetectorQuartz_log"/>
-        <positionref ref="ShowerMaxDetectorQuartz_0_pos"/>
-        <rotationref ref="ShowerMaxDetectorQuartz_0_rot"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorTungsten_1_phys">
-        <volumeref ref="ShowerMaxDetectorTungsten_log"/>
-        <positionref ref="ShowerMaxDetectorTungsten_1_pos"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorQuartz_1_phys">
-        <volumeref ref="ShowerMaxDetectorQuartz_log"/>
-        <positionref ref="ShowerMaxDetectorQuartz_1_pos"/>
-        <rotationref ref="ShowerMaxDetectorQuartz_1_rot"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorTungsten_2_phys">
-        <volumeref ref="ShowerMaxDetectorTungsten_log"/>
-        <positionref ref="ShowerMaxDetectorTungsten_2_pos"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorQuartz_2_phys">
-        <volumeref ref="ShowerMaxDetectorQuartz_log"/>
-        <positionref ref="ShowerMaxDetectorQuartz_2_pos"/>
-        <rotationref ref="ShowerMaxDetectorQuartz_2_rot"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorTungsten_3_phys">
-        <volumeref ref="ShowerMaxDetectorTungsten_log"/>
-        <positionref ref="ShowerMaxDetectorTungsten_3_pos"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorQuartz_3_phys">
-        <volumeref ref="ShowerMaxDetectorQuartz_log"/>
-        <positionref ref="ShowerMaxDetectorQuartz_3_pos"/>
-        <rotationref ref="ShowerMaxDetectorQuartz_3_rot"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorTungsten_4_phys">
-        <volumeref ref="ShowerMaxDetectorTungsten_log"/>
-        <positionref ref="ShowerMaxDetectorTungsten_4_pos"/>
-      </physvol>
-
-      <physvol name="ShowerMaxDetectorMirrorSide_1">
-        <volumeref ref="ShowerMaxDetectorMirrorSide_log"/>
-        <positionref ref="ShowerMaxDetectorMirrorSide_1_pos"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorMirrorSide_2">
-        <volumeref ref="ShowerMaxDetectorMirrorSide_log"/>
-        <positionref ref="ShowerMaxDetectorMirrorSide_2_pos"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorMirrorBack_phys">
-        <volumeref ref="ShowerMaxDetectorMirrorBack_log"/>
-        <positionref ref="ShowerMaxDetectorMirrorBack_pos"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorMirrorFront_phys">
-        <volumeref ref="ShowerMaxDetectorMirrorBack_log"/>
-        <positionref ref="ShowerMaxDetectorMirrorFront_pos"/>
-      </physvol>
-
-      <physvol name="Mirror_box_1_0_phys">
-        <volumeref ref="Mirror_box_1_log"/>
-        <positionref ref="Mirror_box_1_0_pos"/>
-        <rotationref ref="Mirror_box_1_0_rot"/>
-      </physvol>
-      <physvol name="Mirror_box_1_1_phys">
-        <volumeref ref="Mirror_box_1_log"/>
-        <positionref ref="Mirror_box_1_1_pos"/>
-        <rotationref ref="Mirror_box_1_1_rot"/>
-      </physvol>
-      <physvol name="Mirror_box_2_0_phys">
-        <volumeref ref="Mirror_box_2_log"/>
-        <positionref ref="Mirror_box_2_0_pos"/>
-        <rotationref ref="Mirror_box_2_0_rot"/>
-      </physvol>
-      <physvol name="Mirror_box_2_1_phys">
-        <volumeref ref="Mirror_box_2_log"/>
-        <positionref ref="Mirror_box_2_1_pos"/>
-        <rotationref ref="Mirror_box_2_1_rot"/>
-      </physvol>
-
-      <physvol name="Mirror_box_4_0_phys">
-        <volumeref ref="Mirror_box_4_log"/>
-        <positionref ref="Mirror_box_4_0_pos"/>
-        <rotationref ref="Mirror_box_4_0_rot"/>
-      </physvol>
-      <physvol name="Mirror_box_4_1_phys">
-        <volumeref ref="Mirror_box_4_log"/>
-        <positionref ref="Mirror_box_4_1_pos"/>
-        <rotationref ref="Mirror_box_4_1_rot"/>
-      </physvol>
-      <physvol name="Mirror_box_6_0_phys">
-        <volumeref ref="Mirror_box_6_log"/>
-        <positionref ref="Mirror_box_6_0_pos"/>
-        <rotationref ref="Mirror_box_6_0_rot"/>
-      </physvol>
-      <physvol name="Mirror_box_6_1_phys">
-        <volumeref ref="Mirror_box_6_log"/>
-        <positionref ref="Mirror_box_6_1_pos"/>
-        <rotationref ref="Mirror_box_6_1_rot"/>
-      </physvol>
-
-      <physvol name="ShowerMaxDetectorPMT_phys">
-        <volumeref ref="ShowerMaxDetectorPMT_log"/>
-        <positionref ref="ShowerMaxDetectorPMT_pos"/>
-        <rotationref ref="ShowerMaxDetectorPMT_rot"/>
-      </physvol>
-      <physvol name="ShowerMaxDetectorCathode_phys">
-        <volumeref ref="ShowerMaxDetectorCathode_log"/>
-        <positionref ref="ShowerMaxDetectorCathode_pos"/>
-        <rotationref ref="ShowerMaxDetectorCathode_rot"/>
-      </physvol>
-
-      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
-    </volume>
-
-    <skinsurface name="MirrorOpS_1" surfaceproperty="MirrorOpSurface">
-      <volumeref ref="Mirror_box_1_log"/>
-    </skinsurface>
-    <skinsurface name="MirrorOpS_2" surfaceproperty="MirrorOpSurface">
-      <volumeref ref="Mirror_box_2_log"/>
-    </skinsurface>
-    <skinsurface name="MirrorOpS_4" surfaceproperty="MirrorOpSurface">
-      <volumeref ref="Mirror_box_4_log"/>
-    </skinsurface>
-    <skinsurface name="MirrorOpS_6" surfaceproperty="MirrorOpSurface">
-      <volumeref ref="Mirror_box_6_log"/>
-    </skinsurface>
-    <skinsurface name="MirrorOpS_7" surfaceproperty="MirrorOpSurface">
-      <volumeref ref="ShowerMaxDetectorMirrorSide_log"/>
-    </skinsurface>
-    <skinsurface name="MirrorOpS_8" surfaceproperty="MirrorOpSurface">
-      <volumeref ref="ShowerMaxDetectorMirrorBack_log"/>
-    </skinsurface>
-    <skinsurface name="CathOpS1" surfaceproperty="CathodeOpSurface">
-      <volumeref ref="ShowerMaxDetectorCathode_log"/>
-    </skinsurface>
-
-<!--
-    <bordersurface name="QuartzSurface" surfaceproperty="QuartzSurface">
-      <physvolref ref="ShowerMaxDetectorQuartz_phys"/>
-      <physvolref ref="ShowerMaxDetectorSector_phys"/>
-    </bordersurface>
--->
-  </structure>
-
-  <setup name="Default" version="1.0">
-    <world ref="ShowerMaxDetectorSector_log"/>
-  </setup>
-
+</structure>
+<setup name="showerMaxWorld" version="1.0">
+	<world ref="showerMaxMother"/>
+</setup>
 </gdml>

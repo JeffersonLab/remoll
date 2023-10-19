@@ -26,7 +26,7 @@
 /gui/addButton geom "MOLLER Experiment"           "/remoll/geometry/setfile geometry/mollerMother.gdml"
 /gui/addButton geom "MOLLER Experiment (w. dets)" "/remoll/geometry/setfile geometry/mollerMother_parametrized.gdml"
 /gui/addButton geom "Only pion system"            "/remoll/geometry/setfile geometry/pion/Lucite/pionDetectorLucite_world.gdml"
-/gui/addButton geom "Only showermax"              "/remoll/geometry/setfile geometry/showermax/showerMaxGen.gdml"
+/gui/addButton geom "Only showermax system"       "/remoll/geometry/setfile geometry/showermax/showerMaxDetectorSystem.gdml"
 /gui/addButton geom "No parallel"                 "/remoll/parallel/setfile "
 #
 # Initialize menu :
@@ -71,7 +71,7 @@
 /gui/addButton view "Back view (-Z)"         "/vis/viewer/set/viewpointThetaPhi 0 0 deg"
 /gui/addButton view "Side 1 view (+X)"       "/vis/viewer/set/viewpointThetaPhi 90 180 deg"
 /gui/addButton view "Side 2 view (-X)"       "/vis/viewer/set/viewpointThetaPhi -90 180 deg"
-/gui/addButton view "Top view (-Y)"          "/vis/viewer/set/viewpointThetaPhi 90 90 deg"
+/gui/addButton view "Top view (-Y)"          "/vis/viewer/set/viewpointThetaPhi 90 90.000000001 deg"
 /gui/addButton view "Mag fields"             "/vis/scene/add/magneticField 50"
 /gui/addButton view "Refresh viewer (retraverse graphical data)"  "/vis/viewer/refresh"
 /gui/addButton view "Update viewer (interaction or end-of-file)"  "/vis/viewer/update"
