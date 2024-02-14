@@ -11,7 +11,7 @@
 
 <solids>
   <box name="TargetLadder1_solid" x="200" y="200" z="1300" lunit="mm"/>
-  <box name="TargetLadder2_solid" x="200" y="600" z="1300" lunit="mm"/>
+  <box name="TargetLadder2_solid" x="200" y="700" z="1300" lunit="mm"/>
   <union name="TargetLadder_solid">
     <first ref="TargetLadder1_solid"/>
     <second ref="TargetLadder2_solid"/>
@@ -38,7 +38,7 @@
     <second ref="TargetAlHole_solid"/>
   </subtraction>
 
-  <box name="TargetCFoil_solid" x="25*mm" y="25*mm" z="1*mm"/>
+  <box name="TargetCFoil_solid" x="25*mm" y="25*mm" z="0.254*mm"/>
 
 </solids>
 
@@ -199,7 +199,7 @@
 
     <physvol>
       <volumeref ref="TargetCFoilDS_logical"/>
-      <position z="+60*cm"/>
+      <position z="-62.45*cm"/>
     </physvol>
 
     <auxiliary auxtype="TargetSystem" auxvalue="Optics1"/>
@@ -217,7 +217,7 @@
   
     <physvol>
       <volumeref ref="TargetCFoilDS_logical"/>
-      <position z="-60*cm"/>
+      <position z="+62.45*cm"/>
     </physvol>
 
     <auxiliary auxtype="TargetSystem" auxvalue="Optics2"/>
@@ -234,7 +234,7 @@
   
     <physvol>
       <volumeref ref="TargetCFoilDS_logical"/>
-      <position z="0*cm"/>
+      <position z="+0.0127*cm"/>
     </physvol>
 
     <auxiliary auxtype="TargetSystem" auxvalue="Optics3"/>
