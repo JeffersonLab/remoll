@@ -1,33 +1,98 @@
 #pragma once
 
+#include "G4UnitsTable.hh"
 #include "G4LogicalVolume.hh"
 #include "G4VPhysicalVolume.hh"
-#include "G4PVPlacement.hh"
-#include "G4LogicalVolumeStore.hh"
-#include "G4PhysicalVolumeStore.hh"
 #include "G4AssemblyVolume.hh"
 #include "G4ReflectionFactory.hh"
-#include "G4PVDivisionFactory.hh"
-#include "G4LogicalBorderSurface.hh"
-#include "G4LogicalSkinSurface.hh"
 #include "G4GDMLReadStructure.hh"
 
+void rotatex(G4RotationMatrix& rot,G4ThreeVector anglevec){
+    rot.rotateX(anglevec.x());
+}
+void rotatey(G4RotationMatrix& rot,G4ThreeVector anglevec){
+    rot.rotateY(anglevec.y());
+}
+
+void rotatez(G4RotationMatrix& rot,G4ThreeVector anglevec){
+    rot.rotateZ(anglevec.z());
+}
+
+std::map<std::string,std::vector<std::function<void(G4RotationMatrix&,G4ThreeVector)>>> rotation_map{
+    {"xyz", {rotatex,rotatey,rotatez}},
+    {"xzy", {rotatex,rotatez,rotatey}},
+    {"yxz", {rotatey,rotatex,rotatez}},
+    {"yzx", {rotatey,rotatez,rotatex}},
+    {"zxy", {rotatez,rotatex,rotatey}},
+    {"zyx", {rotatez,rotatey,rotatex}},
+};
 
 class remollGDMLReadStructure : public G4GDMLReadStructure {
     public:
     remollGDMLReadStructure():G4GDMLReadStructure(){ }
 
-    G4LogicalVolume* FileReads(const xercesc::DOMElement* const fileElement)
+    void RotationRead(const xercesc::DOMElement* const vectorElement, G4RotationMatrix& rot){
+        G4double unit = 1.0;
+        G4ThreeVector vec;
+        std::string order = "xyz";
+
+        const xercesc::DOMNamedNodeMap* const attributes = vectorElement->getAttributes();
+        XMLSize_t attributeCount = attributes->getLength();
+
+        for(XMLSize_t attribute_index = 0; attribute_index < attributeCount; ++attribute_index)
+        {
+            xercesc::DOMNode* attribute_node = attributes->item(attribute_index);
+
+            if(attribute_node->getNodeType() != xercesc::DOMNode::ATTRIBUTE_NODE)
+            {
+                continue;
+            }
+
+            const xercesc::DOMAttr* const attribute = dynamic_cast<xercesc::DOMAttr*>(attribute_node);
+            if(attribute == nullptr)
+            {
+                G4Exception("G4GDMLRead::VectorRead()", "InvalidRead", FatalException, "No attribute found!");
+                return;
+            }
+            const G4String attName  = Transcode(attribute->getName());
+            const G4String attValue = Transcode(attribute->getValue());
+
+            if(attName == "unit")
+            {
+                unit = G4UnitDefinition::GetValueOf(attValue);
+            }
+            else if(attName == "x")
+            {
+                vec.setX(eval.Evaluate(attValue));
+            }
+            else if(attName == "y")
+            {
+                vec.setY(eval.Evaluate(attValue));
+            }
+            else if(attName == "z")
+            {
+                vec.setZ(eval.Evaluate(attValue));
+            }
+            else if (attName == "order" ){
+                order = attValue;
+            }
+        }
+
+        vec *= unit;
+
+        for(auto rotate : rotation_map[order]) rotate(rot,vec);
+
+    }
+
+    G4LogicalVolume* FileRead(const xercesc::DOMElement* const fileElement)
     {
         G4String name;
         G4String volname;
 
-        const xercesc::DOMNamedNodeMap* const attributes =
-            fileElement->getAttributes();
+        const xercesc::DOMNamedNodeMap* const attributes = fileElement->getAttributes();
         XMLSize_t attributeCount = attributes->getLength();
 
-        for(XMLSize_t attribute_index = 0; attribute_index < attributeCount;
-                ++attribute_index)
+        for(XMLSize_t attribute_index = 0; attribute_index < attributeCount; ++attribute_index)
         {
             xercesc::DOMNode* attribute_node = attributes->item(attribute_index);
 
@@ -87,24 +152,22 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
     }
 
 
-    void PhysvolReads( const xercesc::DOMElement* const physvolElement, G4AssemblyVolume* pAssembly=0)
+    void PhysvolRead( const xercesc::DOMElement* const physvolElement, G4AssemblyVolume* pAssembly=0)
     {
         G4String name;
         G4LogicalVolume* logvol    = nullptr;
         G4AssemblyVolume* assembly = nullptr;
         G4ThreeVector position(0.0, 0.0, 0.0);
         G4ThreeVector rotation(0.0, 0.0, 0.0);
-        G4ThreeVector rotationzyx(0.0, 0.0, 0.0);
-        bool zyx_requested = false;
+        G4RotationMatrix orotm;
+        bool orotation_requested = false;
         G4ThreeVector scale(1.0, 1.0, 1.0);
         G4int copynumber = 0;
 
-        const xercesc::DOMNamedNodeMap* const attributes =
-            physvolElement->getAttributes();
+        const xercesc::DOMNamedNodeMap* const attributes = physvolElement->getAttributes();
         XMLSize_t attributeCount = attributes->getLength();
 
-        for(XMLSize_t attribute_index = 0; attribute_index < attributeCount;
-                ++attribute_index)
+        for(XMLSize_t attribute_index = 0; attribute_index < attributeCount; ++attribute_index)
         {
             xercesc::DOMNode* attribute_node = attributes->item(attribute_index);
 
@@ -134,28 +197,24 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
             }
         }
 
-        for(xercesc::DOMNode* iter = physvolElement->getFirstChild(); iter != nullptr;
-                iter                   = iter->getNextSibling())
+        for(xercesc::DOMNode* iter = physvolElement->getFirstChild(); iter != nullptr; iter = iter->getNextSibling())
         {
             if(iter->getNodeType() != xercesc::DOMNode::ELEMENT_NODE)
             {
                 continue;
             }
 
-            const xercesc::DOMElement* const child =
-                dynamic_cast<xercesc::DOMElement*>(iter);
+            const xercesc::DOMElement* const child = dynamic_cast<xercesc::DOMElement*>(iter);
             if(child == nullptr)
             {
-                G4Exception("G4GDMLReadStructure::PhysvolRead()", "InvalidRead",
-                        FatalException, "No child found!");
+                G4Exception("G4GDMLReadStructure::PhysvolRead()", "InvalidRead", FatalException, "No child found!");
                 return;
             }
             const G4String tag = Transcode(child->getTagName());
 
             if(tag == "volumeref")
             {
-                const G4String& child_name = GenerateName(RefRead(child));
-                assembly                   = GetAssembly(child_name);
+                const G4String& child_name = GenerateName(RefRead(child)); assembly = GetAssembly(child_name);
                 if(assembly == nullptr)
                 {
                     logvol = GetVolume(child_name);
@@ -163,7 +222,7 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
             }
             else if(tag == "file")
             {
-                logvol = FileReads(child);
+                logvol = FileRead(child);
             }
             else if(tag == "position")
             {
@@ -173,10 +232,10 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
             {
                 VectorRead(child, rotation);
             }
-            else if(tag == "rotationzyx")
+            else if(tag == "orotation")
             {
-                VectorRead(child, rotationzyx);
-                zyx_requested = true;
+                RotationRead(child, orotm);
+                orotation_requested = true;
             }
             else if(tag == "scale")
             {
@@ -204,17 +263,10 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
         }
 
         G4Transform3D transform;
-        if(!zyx_requested){
+        if(!orotation_requested){
             transform = G4Transform3D(GetRotationMatrix(rotation).inverse(), position);
         } else {
-            G4RotationMatrix rot;
-
-            rot.rotateY(rotationzyx.y());
-            rot.rotateZ(rotationzyx.z());
-            rot.rotateX(rotationzyx.x());
-            rot.rectify();  // Rectify matrix from possible roundoff errors
-
-            transform = G4Transform3D(rot.inverse(),position);
+            transform = G4Transform3D(orotm.inverse(),position);
         }
 
         transform = transform * G4Scale3D(scale.x(), scale.y(), scale.z());
@@ -244,8 +296,7 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
                     return;
                 }
                 G4String pv_name           = logvol->GetName() + "_PV";
-                G4PhysicalVolumesPair pair = G4ReflectionFactory::Instance()->Place(
-                        transform, pv_name, logvol, pMotherLogical, false, copynumber, check);
+                G4PhysicalVolumesPair pair = G4ReflectionFactory::Instance()->Place(transform, pv_name, logvol, pMotherLogical, false, copynumber, check);
 
                 if(pair.first != nullptr)
                 {
@@ -259,18 +310,17 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
         }
     }
 
-    void ParametersRead(const xercesc::DOMElement* const element) {
-
+    void ParametersRead(const xercesc::DOMElement* const element)
+    {
         G4ThreeVector rotation(0.0, 0.0, 0.0);
-        G4ThreeVector rotationzyx(0.0, 0.0, 0.0);
         G4ThreeVector position(0.0, 0.0, 0.0);
-        bool zyx_requested = false;
+        bool orotation_requested = false;
+        G4RotationMatrix orotm;
 
         G4GDMLParameterisation::PARAMETER parameter;
         parameter.pRot = new G4RotationMatrix();
 
-        for(xercesc::DOMNode* iter = element->getFirstChild(); iter != nullptr;
-                iter                   = iter->getNextSibling())
+        for(xercesc::DOMNode* iter = element->getFirstChild(); iter != nullptr; iter = iter->getNextSibling())
         {
             if(iter->getNodeType() != xercesc::DOMNode::ELEMENT_NODE)
             {
@@ -290,10 +340,10 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
             {
                 VectorRead(child, rotation);
             }
-            else if(tag == "rotationzyx")
+            else if(tag == "orotation")
             {
-                VectorRead(child, rotationzyx);
-                zyx_requested = true;
+                RotationRead(child,orotm);
+                orotation_requested = true;
             }
             else if(tag == "position")
             {
@@ -368,15 +418,12 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
         }
 
 
-
-        if(!zyx_requested){
+        if(orotation_requested){
+            parameter.pRot = std::move(&orotm);
+        } else {
             parameter.pRot->rotateX(rotation.x());
             parameter.pRot->rotateY(rotation.y());
             parameter.pRot->rotateZ(rotation.z());
-        } else {
-            parameter.pRot->rotateY(rotationzyx.y());
-            parameter.pRot->rotateZ(rotationzyx.z());
-            parameter.pRot->rotateX(rotationzyx.x());
         }
 
 
@@ -388,8 +435,7 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
 
     void Volume_contentRead( const xercesc::DOMElement* const volumeElement) override
     {
-        for(xercesc::DOMNode* iter = volumeElement->getFirstChild(); iter != nullptr;
-                iter                   = iter->getNextSibling())
+        for(xercesc::DOMNode* iter = volumeElement->getFirstChild(); iter != nullptr; iter = iter->getNextSibling())
         {
             if(iter->getNodeType() != xercesc::DOMNode::ELEMENT_NODE)
             {
@@ -416,15 +462,14 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
             }
             else if(tag == "physvol")
             {
-                PhysvolReads(child);
+                PhysvolRead(child);
             }
             else if(tag == "replicavol")
             {
                 G4int number = 1;
                 const xercesc::DOMNamedNodeMap* const attributes = child->getAttributes();
                 XMLSize_t attributeCount = attributes->getLength();
-                for(XMLSize_t attribute_index = 0; attribute_index < attributeCount;
-                        ++attribute_index)
+                for(XMLSize_t attribute_index = 0; attribute_index < attributeCount; ++attribute_index)
                 {
                     xercesc::DOMNode* attribute_node = attributes->item(attribute_index);
                     if(attribute_node->getNodeType() != xercesc::DOMNode::ATTRIBUTE_NODE)
@@ -458,62 +503,9 @@ class remollGDMLReadStructure : public G4GDMLReadStructure {
             }
             else
             {
-                G4cout << "Treating unknown GDML tag in volume '" << tag
-                    << "' as GDML extension..." << G4endl;
+                G4cout << "Treating unknown GDML tag in volume '" << tag << "' as GDML extension..." << G4endl;
             }
         }
     }
-
-    void StructureRead( const xercesc::DOMElement* const structureElement)  override
-    {
-        G4cout << "G4GDML: Reading structure..." << G4endl;
-
-        for(xercesc::DOMNode* iter = structureElement->getFirstChild();
-                iter != nullptr; iter = iter->getNextSibling())
-        {
-            if(iter->getNodeType() != xercesc::DOMNode::ELEMENT_NODE)
-            {
-                continue;
-            }
-
-            const xercesc::DOMElement* const child =
-                dynamic_cast<xercesc::DOMElement*>(iter);
-            if(child == nullptr)
-            {
-                G4Exception("G4GDMLReadStructure::StructureRead()", "InvalidRead",
-                        FatalException, "No child found!");
-                return;
-            }
-            const G4String tag = Transcode(child->getTagName());
-
-            if(tag == "bordersurface")
-            {
-                BorderSurfaceRead(child);
-            }
-            else if(tag == "skinsurface")
-            {
-                SkinSurfaceRead(child);
-            }
-            else if(tag == "volume")
-            {
-                VolumeRead(child);
-            }
-            else if(tag == "assembly")
-            {
-                AssemblyRead(child);
-            }
-            else if(tag == "loop")
-            {
-                LoopRead(child, &G4GDMLRead::StructureRead);
-            }
-            else
-            {
-                G4String error_msg = "Unknown tag in structure: " + tag;
-                G4Exception("G4GDMLReadStructure::StructureRead()", "ReadError",
-                        FatalException, error_msg);
-            }
-        }
-    }
-
 
 };
