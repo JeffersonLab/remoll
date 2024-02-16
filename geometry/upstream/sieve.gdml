@@ -116,7 +116,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="sieve_hole_solid"/>
     <auxiliary auxtype="Color" auxvalue="magenta"/>
-    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.8"/>
     <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
     <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
@@ -124,13 +124,14 @@
   </volume>
   
   <volume name="sieve_system_logic">
-    <materialref ref="CW90"/>
+    <materialref ref="G4_W"/>
     <solidref ref="sieve_system_solid"/>
     <auxiliary auxtype="Alpha" auxvalue="0.8"/>
     <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
     <auxiliary auxtype="DetType" auxvalue="secondaries"/>
     <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
     <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetNo" auxvalue="1008"/>
 
     <physvol name="sieve_hole71_physical">
       <volumeref ref="sieve_hole_logic"/>

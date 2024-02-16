@@ -5,9 +5,9 @@
 
 <define>
   <!-- Full blocker system dimensions -->
-  <quantity name="blocker_system_inner_radius" type="length" value="1.043" unit="in"/>
-  <quantity name="blocker_system_outer_radius" type="length" value="3.858" unit="in"/>
-  <quantity name="blocker_system_thickness" type="length" value="3.937" unit="in"/>
+  <quantity name="blocker_system_inner_radius" type="length" value="26.5" unit="mm"/>
+  <quantity name="blocker_system_outer_radius" type="length" value="98" unit="mm"/>
+  <quantity name="blocker_system_thickness" type="length" value="100" unit="mm"/>
 
 </define>
 
