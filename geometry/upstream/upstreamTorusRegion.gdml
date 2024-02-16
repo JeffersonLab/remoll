@@ -1644,6 +1644,11 @@
         <positionref ref="sieveActualCenter_pos"/>
       </physvol>
 
+      <physvol name="USblocker">
+        <file name= "upstream/blocker.gdml"/>
+        <positionref ref="blockerActualCenter_pos"/>
+      </physvol>
+
       <physvol name="UScoil">
         <file name= "upstream/upstreamToroid.gdml"/>
       </physvol>
