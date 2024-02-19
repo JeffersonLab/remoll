@@ -94,16 +94,6 @@
         startphi="0" deltaphi="360" aunit="deg"
         rmin="723.9" rmax="730.25" z="118.5672" lunit="mm"/>
 
-       <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Driftpipeend_Virtualsolid">
-        <zplane rmin="730.25" rmax="730.25" z="0"/>
-        <zplane rmin="730.25" rmax="730.25+25.4" z="25.4"/>
-        <zplane rmin="1270-25.4" rmax="1270" z="423.9-76.2"/>
-        <zplane rmin="1270-25.4" rmax="1270" z="423.9"/>
-        </polycone>
-
-
-
-
 
 </solids>
 
@@ -446,10 +436,9 @@
       <auxiliary auxtype="DetNo" auxvalue="448"/>
    </volume>
 
-
-  <volume name="Driftpipeend_Virtuallog">
-      <materialref ref="G4_Galactic"/>
-     <solidref ref="Driftpipeend_Virtualsolid"/>
+   <volume name="Driftpipeend_Virtuallog">
+     <materialref ref="G4_Galactic"/>
+     <solidref ref="largeVirtualPlane_solid"/>
      <auxiliary auxtype="SensDet" auxvlaue="planeDet"/>
      <auxiliary auxtype="DetNo" auxvalue="449"/>
    </volume>

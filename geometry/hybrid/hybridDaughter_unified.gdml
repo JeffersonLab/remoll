@@ -142,13 +142,7 @@
         startphi="0" deltaphi="360" aunit="deg"
         rmin="723.9" rmax="730.25" z="118.5672" lunit="mm"/>     
 
-        <!-- RR adding Drift Pipe End -->
-        <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Driftpipe_end">
-        <zplane rmin="730.25" rmax="730.25" z="0"/>
-        <zplane rmin="730.25" rmax="730.25+25.4" z="25.4"/>
-        <zplane rmin="1270-25.4" rmax="1270" z="423.9-76.2"/> 
-        <zplane rmin="1270-25.4" rmax="1270" z="423.9"/>
-        </polycone>
+        <tube aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Driftpipe_end" rmin="730.25" rmax="1270" z="3*25.4"/>
 
 
         <!--add bellows -->
@@ -193,7 +187,7 @@
         
         <!-- drift pipe -->
         <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="solid_Driftpipe">
-            <zplane rmin="1247.775" rmax="1270" z="0.0"/>
+            <zplane rmin="1247.775" rmax="1270" z="-423.9+3*25.4"/>
             <zplane rmin="1247.775" rmax="1270" z="22.098"/>
             <zplane rmin="1247.775" rmax="1270" z="22.098"/>
             <zplane rmin="1247.775" rmax="1270" z="5672.9-12.7"/>   
@@ -3046,7 +3040,7 @@
       
            <physvol name="Driftpipe_endphys">
                <volumeref ref="logicDriftpipe_end"/>
-               <position unit="mm" name="Driftpipeend_pos" x="0" y="0.01" z="(501.453*25.4)-11287.5"/>
+               <position unit="mm" name="Driftpipeend_pos" x="0" y="0.01" z="(501.453*25.4)-11287.5+(3*25.4)/2"/>
            </physvol>
 
  
