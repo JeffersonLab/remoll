@@ -224,6 +224,17 @@
       <zplane rmin="0" rmax="68" z="-3190.0"/>
       <zplane rmin="0" rmax="68" z="-1000.0"/>
     </polycone>
+
+
+    <tube name="refuseLowR_solid" rmin="0.0" rmax="3.85" z="1" 
+	  deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>
+
+    <tube name="refuseHighR_solid" rmin="14.35" rmax="200" z="1" 
+	  deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>
+
+    <tube name="acceptance_solid" rmin="0" rmax="200" z="1" 
+	  deltaphi="360" startphi="0" aunit="deg" lunit="mm"/>
+
   </solids>
 
   <structure>
@@ -334,16 +345,22 @@
   
        <!-- target chamber-->
    <volume name="target_chamber_vol1">
-    <materialref ref="G4_Al"/>
+    <!-- <materialref ref="G4_Al"/> -->
+    <materialref ref="Kryptonite"/>
     <solidref ref="Tube_target_chamber_1"/>
+    <auxiliary auxtype="Color" auxvalue="red"/>           	  
    </volume> 
    <volume name="target_chamber_vol2">
-    <materialref ref="G4_Al"/>
+    <!-- <materialref ref="G4_Al"/> -->
+    <materialref ref="Kryptonite"/>
     <solidref ref="Tube_target_chamber_2"/>
+    <auxiliary auxtype="Color" auxvalue="red"/>           	  
    </volume>    
    <volume name="target_chamber_vol3">
-    <materialref ref="G4_Al"/>
+    <!-- <materialref ref="G4_Al"/> -->
+    <materialref ref="Kryptonite"/>
     <solidref ref="target_entry_window_subtraction"/>
+    <auxiliary auxtype="Color" auxvalue="red"/>           	  
    </volume>   	  
    <volume name="target_chamber_vol5">
     <materialref ref="G4_Al"/>
@@ -375,14 +392,33 @@
     <materialref ref="G4_Al"/>
     <solidref ref="Target_exit_window_Tube_5"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           	  
-  </volume> 
+  </volume> 	
   <volume name="TubeVol6">
     <materialref ref="G4_Al"/>
     <solidref ref="Target_exit_window_Tube_6"/>
     <auxiliary auxtype="Color" auxvalue="cyan"/>           
   </volume> 	  
-	  
-	  
+
+  <volume name="acceptance_logic">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="acceptance_solid"/>
+    <auxiliary auxtype="Color" auxvalue="green"/>           
+  </volume> 	  
+
+  <volume name="refuseLowR_logic">
+    <materialref ref="Kryptonite"/>
+    <solidref ref="refuseLowR_solid"/>
+    <auxiliary auxtype="Color" auxvalue="red"/>           
+  </volume> 	  
+
+  <volume name="refuseHighR_logic">
+    <materialref ref="Kryptonite"/>
+    <solidref ref="refuseHighR_solid"/>
+    <auxiliary auxtype="Color" auxvalue="red"/>           
+  </volume> 	  
+  
+  
+  
        <!-- pipe from target exit window to bellow1 -->  
   <volume name="connecting_pipe_volume_1">
     <materialref ref="G4_Al"/>
@@ -521,6 +557,21 @@
     <physvol>
       <volumeref ref="flange_vol_1"/>
       <position name="flange_pos_1" unit="mm" x="0.0" y="0.0" z="877.01+0.635+6.35+12.7+1.524+134.42+28.45"/>
+    </physvol>	  
+
+    <physvol    name="acceptance">
+      <volumeref ref="acceptance_logic"/>
+      <position name="acceptance_pos" unit="mm" z="660"/>
+    </physvol>	  
+
+    <physvol name="refuseLowR">
+      <volumeref ref="refuseLowR_logic"/>
+      <position name="refuseLowR_pos" unit="mm" z="700"/>
+    </physvol>	  
+
+    <physvol name="refuseHighR">
+      <volumeref ref="refuseHighR_logic"/>
+      <position name="refuseHighR_pos" unit="mm" z="700"/>
     </physvol>	  
    
     </volume>

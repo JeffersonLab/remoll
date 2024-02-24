@@ -1,0 +1,52 @@
+#  Example file
+
+# This must be called before initialize
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml 
+
+# This must be explicitly called
+/run/initialize
+
+# Set target ladder position
+/remoll/geometry/absolute_position targetLadder (0,490,0)
+/remoll/target/mother AlDummy2DS
+/remoll/target/volume HighZ
+
+# Load magnetic fields
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 0.1 mm
+/remoll/rasy 0.1 mm
+/remoll/evgen/set beam
+/remoll/beamcurr 65 microampere
+/remoll/beamene 11 GeV
+
+/remoll/kryptonite/enable
+/remoll/kryptonite/add Kryptonite
+/remoll/kryptonite/list
+
+/remoll/SD/disable_all
+
+/remoll/SD/enable 28
+/remoll/SD/detect secondaries 28
+/remoll/SD/detect boundaryhits 28
+
+##coll2 exit
+/remoll/SD/enable 39
+/remoll/SD/detect boundaryhits 39
+
+###coll4 exit
+# /remoll/SD/enable 45
+# /remoll/SD/detect boundaryhits 45
+
+/remoll/tracking/set 0
+
+/remoll/seed 123456
+
+/remoll/filename o_Ta_1e7.root
+
+/remoll/target/print
+/run/beamOn 10000000
+

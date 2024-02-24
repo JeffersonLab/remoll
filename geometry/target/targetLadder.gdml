@@ -40,6 +40,10 @@
 
   <box name="TargetCFoil_solid" x="25*mm" y="25*mm" z="1*mm"/>
 
+  <tube name="Target_HighZTarget_solid"
+        aunit="deg" lunit="mm" deltaphi="360"
+        rmax="20" rmin="0" z="0.3175"/>
+
 </solids>
 
 <structure>
@@ -124,9 +128,10 @@
     <auxiliary auxtype="TargetSamplingVolume" auxvalue="USAl"/>
   </volume>
   <volume name="TargetAlDummy2pctDS_logical">
-    <materialref ref="G4_Al"/>
-    <solidref ref="TargetAlDummy2pct_solid"/>
-    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
+    <materialref ref="G4_Ta"/>
+    <solidref ref="Target_HighZTarget_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="HighZ"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
   </volume>
   <volume name="TargetAlDummy2pctUS_logical">
     <materialref ref="G4_Al"/>
@@ -165,7 +170,7 @@
     <solidref ref="TargetPosition_solid"/>
     <physvol>
       <volumeref ref="TargetAlDummy2pctDS_logical"/>
-      <position z="+125/2*cm"/>
+      <position z="0"/>
     </physvol>
     <auxiliary auxtype="TargetSystem" auxvalue="AlDummy2DS"/>
   </volume>

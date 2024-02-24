@@ -32,7 +32,7 @@ remollGenBeam::remollGenBeam()
   fIsotropicThetaMax(2.0*pi),
   fCorrelation(0.0653*mrad/mm,0.0653*mrad/mm,0.0),
   fPolarization(0.0,0.0,0.0),
-  fRaster(5*mm,5*mm,0.0),
+  fRaster(0.1*mm,0.1*mm,0.0),
   fRasterRefZ(-4.5*m),
   fParticleName("e-")
 {

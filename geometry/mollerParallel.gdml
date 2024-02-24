@@ -186,6 +186,26 @@
     <auxiliary auxtype="DetNo" auxvalue="5556"/>
   </volume>
   
+  <volume name="tgtEntVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="smallVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5687"/>
+  </volume>
+
+  <volume name="tgtExitVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="smallVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="5688"/>
+  </volume>
+
   <volume name="collar0EntVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="smallVirtualPlane_solid"/>
@@ -984,6 +1004,16 @@
     <physvol    name="collar0USVirtualPlane_phys">
       <volumeref ref="collar0EntVirtualPlane_log"/>
       <position name="collar0USVirtualPlane_pos" unit="mm" z="-1210"/>
+    </physvol>
+
+    <physvol    name="tgtEntVirtualPlane_phys">
+      <volumeref ref="tgtEntVirtualPlane_log"/>
+      <position name="tgtEntVirtualPlane_pos" unit="mm" z="-5300"/>
+    </physvol>
+
+    <physvol    name="tgtExitVirtualPlane_phys">
+      <volumeref ref="tgtExitVirtualPlane_log"/>
+      <position name="tgtExitVirtualPlane_pos" unit="mm" z="-3790"/>
     </physvol>
 
     <physvol    name="collar0DSVirtualPlane_phys">
