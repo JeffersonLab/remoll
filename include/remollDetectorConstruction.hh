@@ -7,6 +7,7 @@
 #include "G4GenericMessenger.hh"
 #include "G4Types.hh"
 #include "G4Version.hh"
+#include "remollGDMLReadStructure.hh"
 
 #include <vector>
 #include <set>
@@ -25,7 +26,7 @@ class remollDetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
 
-    remollDetectorConstruction(const G4String& name, const G4String& gdmlfile);
+    remollDetectorConstruction(const G4String& name, const G4String& gdmlfile, remollGDMLReadStructure* rs=nullptr);
     virtual ~remollDetectorConstruction();
 
   private:
