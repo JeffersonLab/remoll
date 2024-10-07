@@ -11,7 +11,7 @@
 
 <solids>
   <box name="TargetLadder1_solid" x="200" y="200" z="1300" lunit="mm"/>
-  <box name="TargetLadder2_solid" x="200" y="600" z="1300" lunit="mm"/>
+  <box name="TargetLadder2_solid" x="200" y="700" z="1300" lunit="mm"/>
   <union name="TargetLadder_solid">
     <first ref="TargetLadder1_solid"/>
     <second ref="TargetLadder2_solid"/>
@@ -38,7 +38,7 @@
     <second ref="TargetAlHole_solid"/>
   </subtraction>
 
-  <box name="TargetCFoil_solid" x="25*mm" y="25*mm" z="1*mm"/>
+  <box name="TargetCFoil_solid" x="25*mm" y="25*mm" z="0.254*mm"/>
 
 </solids>
 
@@ -121,7 +121,7 @@
   <volume name="TargetAlDummy4pctUS_logical">
     <materialref ref="G4_Al"/>
     <solidref ref="TargetAlDummy4pct_solid"/>
-    <auxiliary auxtype="TargetSamplingVolume" auxvalue="USAl"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSAl"/>
   </volume>
   <volume name="TargetAlDummy2pctDS_logical">
     <materialref ref="G4_Al"/>
@@ -175,36 +175,69 @@
     <solidref ref="TargetCFoil_solid"/>
     <auxiliary auxtype="TargetSamplingVolume" auxvalue="USC"/>
   </volume>
+
+  <volume name="TargetCFoilMS_logical">
+    <materialref ref="G4_C"/>
+    <solidref ref="TargetCFoil_solid"/>
+    <auxiliary auxtype="TargetSamplingVolume" auxvalue="MSC"/>
+  </volume>
+
   <volume name="TargetCFoilDS_logical">
     <materialref ref="G4_C"/>
     <solidref ref="TargetCFoil_solid"/>
     <auxiliary auxtype="TargetSamplingVolume" auxvalue="DSC"/>
   </volume>
+
+
   <volume name="TargetPositionOptics1_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="TargetPosition_solid"/>
-    <physvol>
+    <!--<physvol>
       <volumeref ref="TargetCFoilUS_logical"/>
       <position z="-30*cm"/>
-    </physvol>
+    </physvol>-->
+
     <physvol>
       <volumeref ref="TargetCFoilDS_logical"/>
-      <position z="+60*cm"/>
+      <position z="-62.45*cm"/>
     </physvol>
+
     <auxiliary auxtype="TargetSystem" auxvalue="Optics1"/>
   </volume>
+
+
   <volume name="TargetPositionOptics2_logical">
     <materialref ref="G4_Galactic"/>
     <solidref ref="TargetPosition_solid"/>
-    <physvol>
+
+    <!--<physvol>
       <volumeref ref="TargetCFoilUS_logical"/>
       <position z="-60*cm"/>
-    </physvol>
+    </physvol>-->
+  
     <physvol>
       <volumeref ref="TargetCFoilDS_logical"/>
-      <position z="+30*cm"/>
+      <position z="+62.45*cm"/>
     </physvol>
+
     <auxiliary auxtype="TargetSystem" auxvalue="Optics2"/>
+  </volume>
+
+  <volume name="TargetPositionOptics3_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="TargetPosition_solid"/>
+
+    <!--<physvol>
+      <volumeref ref="TargetCFoilUS_logical"/>
+      <position z="-60*cm"/>
+    </physvol>-->
+  
+    <physvol>
+      <volumeref ref="TargetCFoilDS_logical"/>
+      <position z="+0.0127*cm"/>
+    </physvol>
+
+    <auxiliary auxtype="TargetSystem" auxvalue="Optics3"/>
   </volume>
 
   <volume name="TargetLadder_logical">
@@ -253,6 +286,11 @@
     <physvol>
       <volumeref ref="TargetPositionOptics2_logical"/>
       <position y="-63*cm"/>
+    </physvol>
+
+    <physvol>
+      <volumeref ref="TargetPositionOptics3_logical"/>
+      <position y="-70*cm"/>
     </physvol>
 
     <auxiliary auxtype="TargetLadder" auxvalue=""/>

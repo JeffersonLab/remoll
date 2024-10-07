@@ -993,7 +993,7 @@
         
     <physvol name="sieveVirtualPlane_phys">
       <volumeref ref="sieveVirtualPlane_log"/>
-      <position ref="sieveVirtualPlane_pos" unit="mm" z="105"/>
+      <position ref="sieveVirtualPlane_pos" unit="mm" z="250"/>
     </physvol>
 
     <physvol name="Col2Ent_phys">
