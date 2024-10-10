@@ -104,7 +104,7 @@
   <tube name="sieve_hole_solid"
     rmin="0."
     rmax="sieve_hole_diameter/2"
-    z="sieve_system_thickness+2"
+    z="sieve_system_thickness"
     startphi="0" deltaphi="360.0" aunit="deg"
     />
 
