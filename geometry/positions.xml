@@ -74,4 +74,7 @@
 
 <!-- Showermax virtual plane detector position -->
 <position name="showerMaxVirtualPlane_pos" z="23920.00-90.00" unit="mm"/>
+<position name="showerMaxStackVirtualPlaneOpen_pos" x="-1100.00" z="23838.00" unit="mm"/>
+<position name="showerMaxStackVirtualPlaneClosed_pos" x="1100.00" z="23838.00" unit="mm"/>
+<position name="showerMaxStackVirtualPlaneTrans_pos" y="1104.00" z="23920.00" unit="mm"/>
 
