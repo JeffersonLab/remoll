@@ -28,6 +28,7 @@
 
 // GDML export
 #include "G4GDMLParser.hh"
+#include "remollGDMLReadStructure.hh"
 
 //CADMesh
 #ifdef __USE_CADMESH
@@ -53,8 +54,9 @@ G4ThreadLocal remollGlobalField* remollDetectorConstruction::fGlobalField = 0;
 
 G4UserLimits* remollDetectorConstruction::fKryptoniteUserLimits = new G4UserLimits(0,0,0,DBL_MAX,DBL_MAX);
 
-remollDetectorConstruction::remollDetectorConstruction(const G4String& name, const G4String& gdmlfile)
+remollDetectorConstruction::remollDetectorConstruction(const G4String& name, const G4String& gdmlfile, remollGDMLReadStructure* read)
 : fVerboseLevel(0),
+  fGDMLParser(read),
   fGDMLValidate(false),
   fGDMLOverlapCheck(true),
   fGDMLPath(""),

@@ -28,6 +28,7 @@ typedef G4RunManager RunManager;
 #include "remollActionInitialization.hh"
 #include "remollDetectorConstruction.hh"
 #include "remollParallelConstruction.hh"
+#include "remollGDMLReadStructure.hh"
 
 #include "remollSearchPath.hh"
 
@@ -155,8 +156,9 @@ int main(int argc, char** argv) {
       remollIO::GetInstance();
 
     // Detector geometry
+    remollGDMLReadStructure* rs = new remollGDMLReadStructure();
     G4String material_name = "material";
-    remollDetectorConstruction* detector = new remollDetectorConstruction(material_name, geometry_gdmlfile);
+    remollDetectorConstruction* detector = new remollDetectorConstruction(material_name, geometry_gdmlfile,rs);
     // Parallel world geometry
     G4String parallel_name = "parallel"; // Note: name must correspond with name of G4ParallelWorldPhysics
     remollParallelConstruction* parallel = new remollParallelConstruction(parallel_name, parallel_gdmlfile);
