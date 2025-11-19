@@ -1,0 +1,42 @@
+/vis/open OGL 600x600-0+0
+
+#/vis/viewer/set/style surface
+#/vis/scene/add/volume
+#/vis/viewer/zoom 1.5
+#/vis/viewer/update
+
+
+remoll/setgeofile geometry/mollerMother.gdml
+/remoll/geometry/overlapcheck true 
+
+/remoll/physlist/optical/enable 
+
+/run/initialize
+
+/vis/scene/create
+/vis/scene/add/volume
+/vis/drawVolume
+
+#/vis/scene/add/trajectories
+
+/remoll/SD/disable_all
+
+/remoll/SD/enable 10000
+/remoll/SD/detect boundaryhits 10000
+
+/remoll/SD/enable 10
+/remoll/SD/detect opticalphoton 10
+
+/remoll/SD/enable 11
+/remoll/SD/detect opticalphoton 11
+
+/remoll/evgen/set external
+
+/remoll/evgen/external/startEvent 0
+ 
+/remoll/evgen/external/file analysis/trigscint/o_remollSkimTree_largearea_straightTracks_24838.root
+/remoll/evgen/external/detid 28
+
+/remoll/filename trigScint_lgdesign_GroundScint_RightSDfront_2run.root
+#/remoll/filename vis_test.mac
+#/run/beamOn 10
