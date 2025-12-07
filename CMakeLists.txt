@@ -193,7 +193,7 @@ endif()
 #----------------------------------------------------------------------------
 # Pythia6 (optional)
 #
-find_package(Pythia6 QUIET)
+#find_package(Pythia6 QUIET)
 if(PYTHIA6_FOUND)
   message(STATUS "Pythia6 found --> building with Pythia6 enabled.")
   add_definitions(-DG4LIB_USE_PYTHIA)
@@ -365,7 +365,8 @@ if(EXISTS ${REMOLL_LOCATION})
   message(STATUS "Fieldmaps will be copied from directory...")
   set(REMOLL_DOWNLOADS file://${REMOLL_LOCATION})
 else()
-  message(STATUS "Fieldmaps will be downloaded from web...")
+ # message(STATUS "Fieldmaps will be downloaded from web...")
+   set(REMOLL_DOWNLOADS "")
 endif()
 if(Boost_IOSTREAMS_FOUND)
   message(STATUS "Gzipped fieldmaps will be made available...")
@@ -390,6 +391,9 @@ else()
 endif()
 # setting User-agent HTTP header
 set(_HTTP_HDR "User-Agent: Mozilla/5.0")
+#hard-disable downloading on this marchine
+
+if(FALSE)
 foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
   set(REGEX "^(.*):(.*):(.*)$")
   # Hash 1: txt file, Hash 2: txt.gz file
@@ -419,6 +423,9 @@ foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
       DESTINATION ${CMAKE_INSTALL_DATADIR}/remoll/map_directory)
   #endif()
 endforeach()
+else()
+  message(STATUS "Skipping ALL fieldmap downloads (offline build).")
+endif()
 
 
 #----------------------------------------------------------------------------

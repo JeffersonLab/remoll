@@ -1,0 +1,728 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Yusuff Afeez (YA) insertion -->
+<!DOCTYPE gdml [
+  <!ENTITY materials SYSTEM "trigscintMaterials.xml">
+  <!ENTITY matrices SYSTEM "trigscintMatrices.xml">
+]>
+
+     
+
+
+<gdml 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+    <!--Starts at 19.509 ends at 20.9662 -->
+    <position name="GEM_trackingPlane_pos_0" z="0.0" unit="m"/>
+    <position name="TRIGSCINT_trackingPlane_pos_0" z="0.0 + 0.005" unit="m"/>
+    <position name="GEM_trackingPlane_pos_1" z="0.450" unit="m"/>
+    <position name="GEM_trackingPlane_pos_2" z="0.450 + 0.5633" unit="m"/>
+    <position name="GEM_trackingPlane_pos_3" z="2*0.450 + 0.5633" unit="m"/>
+    <position name="TRIGSCINT_trackingPlane_pos_3" z="2*0.450 + 0.5633 - 0.005" unit="m"/>
+    <quantity name="GEM_rotation" value="360./7" unit="deg"/>
+    <!-- One could change this to do half rotation of gems-->
+    <quantity name="GEM_rotation_offset" value="0*(360./21)" unit="deg"/>
+    <variable name="j" value="0"/>
+    <variable name="k" value="0"/>
+    
+    <!-- Insertion of defined quantities by Yusuff Afeez -->
+    <!--For enclosing volumes we merely scale up the actual volume by a small factor.-->
+  <constant name="SCALE" value="0.1"/>
+  <constant name="SCALE_UP" value="1.0+SCALE"/>
+  <constant name="SCALE_DOWN" value="1.0-SCALE"/>
+  <!--Use this factor to control the area of the scint plane det size -->
+  <constant name="scint_fudicial_acceptance" value="0.999"/>
+
+    <!--
+    Common thicknesses of aluminized mylar foils are:
+      5 mil = 0.125 mm,
+      2 mil = 0.05 mm.
+    -->
+<quantity name="mylar_thickness" type="length" value="0.05" unit="mm"/>
+<quantity name="air_gap" type="length" value="0.025" unit="mm"/> 
+<quantity name="groove_thickness" type="length" value="3" unit="mm"/>
+<quantity name="groove_separation" type="length" value="50" unit="mm"/>
+<quantity name="groove_depth" type="length" value="3" unit="mm"/>
+<quantity name="scint_height" type="length" value="550" unit="mm"/>
+<quantity name="scint_thickness" type="length" value="10" unit="mm"/>
+<quantity name="scint_frontSD_thickness" type="length" value="0.01" unit="mm"/>
+<quantity name="scint_bottom_width" type="length" value="284.82" unit="mm"/>
+<quantity name="scint_top_width" type="length" value="574.63" unit="mm"/>
+<quantity name="scint_curvature" type="length" value="635" unit="mm"/>
+<quantity name="lg_height" type="length" value="149.7" unit="mm"/> <!-- 700 -->
+<quantity name="lg_top_width" type="length" value="50.8" unit="mm"/>
+<quantity name="lg_bottom_width" type="length" value="287.315" unit="mm"/>
+<quantity name="lg_pmt_height" type="length" value="10" unit="mm"/>
+<quantity name="lg_pmt_width" type="length" value="50.8" unit="mm"/>
+<quantity name="lg_sideangle" type="angle" value="39.3" unit="degree"/>
+<quantity name="location_curved_disk_from_scint_bottom" value="614.512" unit="mm"/> 
+<quantity name="WLS_length_extend" type="length" value="10" unit="mm"/>
+<quantity name="WLS_length" type="length" value="scint_height + WLS_length_extend" unit="mm"/>
+<quantity name="Fiber_rmin" type="length" value="0.0" unit="mm"/>
+<quantity name="Fiber_rmax" type="length" value="1.0" unit="mm"/>
+<quantity name="Clad1_rmin" type="length" value="0.0" unit="mm"/>
+<quantity name="Clad1_rmax" type="length" value="(Fiber_rmax + 0.015*Fiber_rmax)" unit="mm"/>
+<quantity name="Clad2_rmin" type="length" value="0.0" unit="mm"/>
+<quantity name="Clad2_rmax" type="length" value="(Clad1_rmax + 0.015*Fiber_rmax)" unit="mm"/>
+
+<quantity name="WLS_det_thickness" type="length" value="0.1" unit="mm"/>
+
+
+&matrices;
+
+</define>
+
+<materials>
+ <material name="ArCO2" state="gas">
+        <T unit="K" value="293.15"/>
+        <D unit="g/cm3" value="0.0018"/>
+        <fraction n="0.75" ref="G4_Ar"/>
+        <fraction n="0.25" ref="G4_CARBON_DIOXIDE"/>
+    </material>
+
+</materials>
+    
+&materials;  <!-- YA insertion -->
+
+
+
+<solids>
+   
+    
+    <!--Create the scintillator -->
+    <trd name = "scint_sol"  x1="scint_bottom_width" x2="scint_top_width" y1="scint_thickness" y2="scint_thickness" z="scint_height" lunit= "mm"/>
+
+    <!--Create the scintillator front sens det -->
+    <trd name = "scint_front_sens_sol"  x1="scint_bottom_width*scint_fudicial_acceptance" x2="scint_top_width*scint_fudicial_acceptance" y1="scint_frontSD_thickness" y2="scint_frontSD_thickness" z="scint_height*scint_fudicial_acceptance" lunit= "mm"/>
+ 
+    <!--Create the scintillator front sens det that covers half part -->
+    <box name = "scint_front_sens_half_sol"  x="(scint_top_width/2)*scint_fudicial_acceptance" y="scint_frontSD_thickness"  z="scint_height*scint_fudicial_acceptance" lunit= "mm"/>
+
+    <tube name = "scint_bottom_curve" rmin="0" rmax="scint_curvature" z="20" deltaphi="6.28318530718" startphi="0" aunit="rad" lunit= "mm"/>
+
+   <!-- This subtraction creates a curved bottom for the scintillator by subtracting the disk shape from the scintillator solid -->
+    <subtraction name="scint_sol_bottom_curved">
+    <first ref="scint_sol"/>
+    <second ref="scint_bottom_curve"/>
+    <position name="scint_sol_bottom_curved_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="-scint_height/2 - 614.512"/><!-- 614.512 distance to radius of curvature -->
+    <rotation name ="scint_sol_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
+    </subtraction>
+
+   
+
+    <!-- This subtraction creates a curved bottom for the scintillator front sens det by subtracting the disk shape from the scintillator solid -->
+    <subtraction name="scint_front_sens_sol_bottom_curved">
+    <first ref="scint_front_sens_sol"/>
+    <second ref="scint_bottom_curve"/>
+    <position name="scint_front_sens_sol_bottom_curved_solid_subtraction_position1"
+              x="0.0"
+              y="0.0"
+              z="-scint_height/2 - 614.512"/><!-- 614.512 distance to radius of curvature -->
+    <rotation name ="scint_sol_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
+    </subtraction>
+<!-- To create a wrapping for the scintillator with  mylar_thickness we first create a solid-->
+    <trd name = "scint_sol_mylar_1"  x1="scint_bottom_width + mylar_thickness" x2="scint_top_width + mylar_thickness" y1="scint_thickness + mylar_thickness + air_gap" y2="scint_thickness + mylar_thickness + air_gap" z="scint_height + mylar_thickness + air_gap" lunit= "mm"/>
+<!-- actual scint.  <trd name = "scint_sol"  x1="scint_bottom_width" x2="scint_top_width" y1="scint_thickness" y2="scint_thickness" z="scint_height" lunit= "mm"/> -->
+    <trd name = "scint_sol_mylar_1_1"  x1="scint_bottom_width" x2="scint_top_width" y1="scint_thickness + air_gap" y2="scint_thickness + air_gap" z="scint_height + air_gap + 2*mylar_thickness" lunit= "mm"/>
+
+    <trd name = "scaled_scint_sol_mylar_1"  x1="SCALE_UP*(scint_bottom_width + mylar_thickness + air_gap)" x2="SCALE_UP*(scint_top_width+mylar_thickness + air_gap)" y1="SCALE_UP*(scint_thickness + mylar_thickness + air_gap)" y2="SCALE_UP*(scint_thickness + mylar_thickness + air_gap)" z="SCALE_UP*(scint_height + mylar_thickness + air_gap)" lunit= "mm"/>
+    <tube name = "scaled_scint_bottom_curve" rmin="0" rmax="SCALE_DOWN*635" z="20" deltaphi="6.28318530718" startphi="0" aunit="rad" lunit= "mm"/>
+
+    <!-- This subtraction creates a curved bottom for the scintillator wrapping by subtracting	 the disk shape from the scintillator solid -->
+    <subtraction name="scint_sol_mylar_1_bottom_curved">
+    <first ref="scint_sol_mylar_1"/>
+    <second ref="scint_bottom_curve"/>
+    <position name="scint_sol_mylar_bottom_curved_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="-scint_height/2 - 614.512 - mylar_thickness - air_gap"/>
+    <rotation name ="scint_sol_mylar_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
+    </subtraction>
+   
+   <!-- Create a scaled scint_sol_mylar_1_bottom_curved -->
+    <subtraction name="scaled_scint_sol_mylar_1_bottom_curved">
+    <first ref="scaled_scint_sol_mylar_1"/>
+    <second ref="scaled_scint_bottom_curve"/>
+    <position name="scaled_scint_sol_mylar_bottom_curved_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="-scint_height/2 - 614.512 - mylar_thickness - air_gap"/>
+    <rotation name ="scaled_scint_sol_mylar_bottom_curved_solid_subtraction_rot1" unit="deg" x="90"/>
+    </subtraction>
+    
+    <!-- This subtraction creates a hollow space for the scintillator by subtracting the scintillator solid + air_gap -->
+    <subtraction name="scint_sol_mylar_2">
+    <first ref="scint_sol_mylar_1_bottom_curved"/>
+    <!-- <second ref="scint_sol_bottom_curved"/> -->
+    <second ref="scint_sol_mylar_1_1"/>
+    <position name="scint_sol_mylar_solid_subtraction_position1"
+	      x="0.0"
+	      y="0.0"
+	      z="0.0"/>
+    </subtraction>	
+
+  <!-- We need to clear to top of the wrapping where light guide is glues to the scintillator. So to subtract this top of the wrap we use this box with exact size as the top of the wrap solid scint_sol_mylar_1 -->
+    <box name = "scint_top_sub_sol" x= "574.63 + mylar_thickness + mylar_thickness" y= "10 + mylar_thickness + mylar_thickness" z= "mylar_thickness + mylar_thickness" lunit= "mm"/>
+
+    <!-- This subtraction creates the hollow space for the scintillator with top of the wrap now removed. If we don't do this light guide will overlap with the mylar wrapping   -->
+    <subtraction name="scint_sol_mylar_solid">
+    <first ref="scint_sol_mylar_2"/>
+    <second ref="scint_top_sub_sol"/>
+    <position name="scint_sol_mylar_solid_subtraction_position2"
+	      x="0.0"
+	      y="0.0"
+	      z="scint_height/2 + mylar_thickness + air_gap"/>
+    </subtraction>
+   
+   
+   <!-- Old light guide design --> 
+    <trd name = "lguide_sol" x1="574.63" x2="574.63" y1="10" y2="10" z="lg_height" lunit= "mm"/>
+    <trd name = "scaled_lguide_sol" x1="SCALE_UP*574.63" x2="SCALE_UP*574.63" y1="SCALE_UP*10" y2="SCALE_UP*10" z="SCALE_UP*lg_height" lunit= "mm"/>
+   
+    <!-- Creation of new light guide solids -->
+    <trd name="lightguide1_sol" x1="lg_bottom_width" x2="lg_top_width" y1="10.0" y2="10.0" z="lg_height" lunit="mm"/>
+
+    <trd name="lightguide2_sol" x1="lg_bottom_width" x2="lg_top_width" y1="10.0" y2="10.0" z="lg_height" lunit="mm"/>
+      
+       <!-- Creation of 2 PMT solids -->
+    <box name="pmt_sol" x="lg_pmt_width" y="scint_thickness" z="lg_pmt_height" lunit="mm"/>
+
+<!--Create the PMT surface for WLS fiber-->
+   <tube name = "wls_pmt_disk_sol" rmin="Clad2_rmin" rmax="Clad2_rmax" z="WLS_det_thickness" deltaphi="360.0" startphi="0.0" aunit="deg" lunit= "mm"/>
+   <!--Create the sens det for WLS fiber-->
+   <tube name = "sens_det_sol" rmin="Clad2_rmin" rmax="Clad2_rmax" z="WLS_det_thickness" deltaphi="360.0" startphi="0.0" aunit="deg" lunit= "mm"/>
+
+<!-- Create union of scaled scint_sol_mylar_1_bottom_curved and scaled lguide_sol_mylar_1 This will house the scint+lguide+pmt -->
+
+     <union name="scaled_scint_lguide_sol" >
+            <first ref="scaled_scint_sol_mylar_1_bottom_curved"/>
+            <second ref="scaled_lguide_sol"/>
+            <rotation name ="scaled_scint_lguide_sol_union_rot1" unit="deg" x="180"/>
+            <position name="scaled_scint_lguide_sol_union_pos" x="0" y="0" z="SCALE_UP*(550/2+lg_height/2)"/>
+     </union>
+     <!-- Solid insertion made by Yusuff Afeez (YA) ends here-->
+
+
+       <xtru name="GEM_detector_solid" lunit="mm">
+        <twoDimVertex x="-207" y="1120"/>
+        <twoDimVertex x="-223" y="1117"/>
+        <twoDimVertex x="-237" y="1109"/>
+        <twoDimVertex x="-247" y="1096"/>
+        <twoDimVertex x="-252" y="1081"/>
+        <twoDimVertex x="-160" y="680"/>
+        <twoDimVertex x="-154" y="664"/>
+        <twoDimVertex x="-145" y="651"/>
+        <twoDimVertex x="-132" y="641"/>
+        <twoDimVertex x="-117" y="635"/>
+        <twoDimVertex x="-60" y="637"/>
+        <twoDimVertex x="-20" y="640"/>
+        <twoDimVertex x="20" y="640"/>
+        <twoDimVertex x="60" y="637"/>
+        <twoDimVertex x="117" y="635"/>
+        <twoDimVertex x="132" y="641"/>
+        <twoDimVertex x="145" y="651"/>
+        <twoDimVertex x="154" y="664"/>
+        <twoDimVertex x="251" y="1065"/>
+        <twoDimVertex x="252" y="1081"/>
+        <twoDimVertex x="247" y="1096"/>
+        <twoDimVertex x="237" y="1109"/>
+        <twoDimVertex x="223" y="1117"/>
+        <twoDimVertex x="207" y="1120"/>
+        <section zOrder="0" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+        <section zOrder="1" zPosition="3" xOffset="0" yOffset="0" scalingFactor="1"/>
+    </xtru>
+    <polycone name="GEM_world_solid"
+                        aunit="deg" startphi="0" deltaphi="360"
+                        lunit="mm">
+        <zplane rmin="635" rmax="1150.0" z="0.0"/>
+        <zplane rmin="635" rmax="1150.0" z="1467.0"/>
+    </polycone>
+</solids>
+
+
+<structure>  
+
+   <!-- YA insertion of TrigScint structure part begins here -->
+   
+<!-- creating the logical volumes for the respective two light guides -->
+  <volume name="lightguide_left_log">
+  <materialref ref="Lucite"/>
+  <solidref ref="lightguide1_sol"/>
+  <auxiliary auxtype="Color" auxvalue="yellow"/>
+  <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  </volume>
+
+<volume name="lightguide_right_log">
+  <materialref ref="Lucite"/>
+  <solidref ref="lightguide2_sol"/>
+  <auxiliary auxtype="Color" auxvalue="green"/>
+  <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+</volume>
+
+
+    <volume name="scint_log">
+      <materialref ref="PLASTIC_SC_VINYLTOLUENE"/>
+      <solidref ref="scint_sol_bottom_curved"/> <!-- no groove scint_sol_bottom_curved -->
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+  
+  <!-- CREATION OF NEW PMT LOGICAL VOLUMES -->
+    <volume name="pmt_leftlg_log">
+  <materialref ref="CsPhotocathode"/>
+  <solidref ref="pmt_sol"/>
+  <auxiliary auxtype="Color" auxvalue="red"/>
+  <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  <auxiliary auxtype="DetNo" auxvalue="60002"/>
+  <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>
+  </volume>
+
+
+ <volume name="pmt_rightlg_log">
+  <materialref ref="CsPhotocathode"/>
+  <solidref ref="pmt_sol"/>
+  <auxiliary auxtype="Color" auxvalue="red"/>
+  <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+  <auxiliary auxtype="DetNo" auxvalue="60001"/>
+  <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>
+</volume>
+
+
+<!--
+    <volume name="scint_front_sens_log">
+      <materialref ref="Air"/>
+      <solidref ref="scint_front_sens_sol_bottom_curved"/>
+      <auxiliary auxtype="Color" auxvalue="cyan"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.5"/>
+      <auxiliary auxtype="DetNo" auxvalue="60000"/>
+      <auxiliary auxtype="SensDet" auxvalue="PlaneDet"/>
+    </volume>
+-->    
+   
+
+     <volume name="trig_scint_log">
+      <materialref ref="Air"/> <!-- G4_Galactic -->
+      <solidref ref="scaled_scint_lguide_sol"/>   <!-- world_solid -->
+      
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+      
+      <!-- Full scintillator without grooves -->
+      <physvol name="scint_phys">
+	    <volumeref ref="scint_log"/>
+        <position name="front_pos" unit="mm" y= "0" z="0"/>
+      </physvol>
+
+
+   <!--
+      <physvol name="scint_front_sens_phys">
+        <volumeref ref="scint_front_sens_log"/>
+	<position name="scint_front_sens_pos" unit="mm" y= "0" z="0"/>
+	#<rotation name ="front_rot" unit="deg" x ="180"/>#
+      </physvol>
+  -->
+
+
+       <!-- Left light guide -->
+      <physvol name="lightguide_phys_left">
+       <volumeref ref="lightguide_left_log"/>
+       <position name="lightguide_pos_left" unit="mm"
+       x="-lg_bottom_width/2" y="0" z="scint_height/2 + lg_height/2"/>
+       </physvol>
+
+       <!-- Right light guide -->
+       <physvol name="lightguide_phys_right">
+       <volumeref ref="lightguide_right_log"/>
+       <position name="lightguide_pos_right" unit="mm"
+       x="+lg_bottom_width/2" y="0" z="scint_height/2 + lg_height/2"/>
+      </physvol>
+
+   <!-- PMT on Left Light Guide -->
+    <physvol name="pmt_left_phys">
+     <volumeref ref="pmt_leftlg_log"/>
+      <position name="pmt_left_pos" unit="mm"
+            x="-lg_bottom_width/2"
+            y="0"
+            z="scint_height/2 + lg_height + lg_pmt_height/2"/>
+      </physvol>
+
+    <!-- PMT on Right Light Guide -->
+    <physvol name="pmt_right_phys">
+    <volumeref ref="pmt_rightlg_log"/>
+      <position name="pmt_right_pos" unit="mm"
+            x="lg_bottom_width/2"
+            y="0"
+            z="scint_height/2 + lg_height + lg_pmt_height/2"/>
+      </physvol>
+      
+    </volume>
+
+
+<!-- Creation of a wrapper -->
+
+      <!-- wrapper that makes the trig scint look like a GEM-sector object -->
+  <volume name="trig_scint_sector_log">
+    <materialref ref="G4_AIR"/>
+    <!-- use the same wedge-ish envelope as the GEMs so it fits nicely -->
+    <solidref ref="GEM_detector_solid"/>
+
+    <!-- put our trig scint *inside* this envelope, rotated so that
+         its local z (radial in your design) becomes +y (radial in GEM) -->
+    <physvol name="trig_scint_in_sector">
+      <volumeref ref="trig_scint_log"/>
+      <!-- rotate scint so its radial axis (z) becomes GEM radial (y) -->
+      <rotation name="trig_scint_align_rot" x="-90" y="180" unit="deg"/>
+
+      <!-- now push it out from the beam line to somewhere in the GEM ring.
+           the GEM polycone is 635..1150 mm, so put it roughly in the middle -->
+      <position name="trig_scint_align_pos"
+                x="0"
+                y="(635 + 1150)/2"
+                z="0"
+                unit="mm"/>
+    </physvol>
+  </volume>
+
+
+
+
+     
+ <!-- YA insertion ends here -->
+
+
+    <!--
+        The relevant detector numbers should be 19221 to 19248, but I might have to add a "+1"
+    -->
+    <!-- <loop for="i" from="0" to="27" step="1">
+        <volume name="GEM_detector_log_[i+1]">
+            <materialref ref="ArCO2"/>
+            <solidref ref="GEM_detector_solid"/>
+            <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+            <auxiliary auxtype="DetNo" auxvalue="detector_numbers[i+1]"/>
+            <auxiliary auxtype="Color" auxvalue="green"/>
+        </volume>
+    </loop> -->
+
+    <volume name="GEM_detector_log_0">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="300"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_1">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="301"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_2">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="302"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_3">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="303"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_4">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="304"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_5">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="305"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_6">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="306"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_7">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="307"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_8">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="308"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_9">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="309"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_10">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="310"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_11">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="311"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_12">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="312"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_13">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="313"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_14">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="314"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_15">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="315"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_16">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="316"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_17">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="317"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_18">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="318"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_19">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="319"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_20">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="320"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_21">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="321"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_22">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="322"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_23">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="323"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_24">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="324"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_25">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="325"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_26">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="326"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+    <volume name="GEM_detector_log_27">
+        <materialref ref="ArCO2"/>
+        <solidref ref="GEM_detector_solid"/>
+        <auxiliary auxtype="SensDet" auxvalue="GEMSD" />
+        <auxiliary auxtype="DetNo" auxvalue="327"/>
+        <auxiliary auxtype="Color" auxvalue="green"/>
+    </volume>
+
+
+
+    <volume name="GEM_world_log">
+        <materialref ref="G4_AIR"/>
+        <solidref ref="GEM_world_solid"/>
+        
+         <!--Insertion by YA -->
+
+    <!-- plane 0: KEEP original GEMs 1..7 -->
+    <loop for="j" from="0" to="6" step="1">
+      <physvol name="GEM_plane0_[j+1]">
+        <!-- GEMs 1..7 -->
+        <volumeref ref="GEM_detector_log[j + 1]"/>
+        <rotation z="(-j)*360./7 + 90" unit="deg"/>
+        <positionref ref="GEM_trackingPlane_pos_0" unit="m"/>
+      </physvol>
+    </loop>
+
+    
+     <!-- plane 0: Add TrigScint to original GEMs 1..7 -->
+    <loop for="j" from="0" to="6" step="1">
+      <physvol name="TRIG_plane0_[j+1]">
+        <volumeref ref="trig_scint_sector_log"/>
+        <rotation z="(-j)*360./7 + 90" unit="deg"/>
+        <positionref ref="TRIGSCINT_trackingPlane_pos_0" unit="m"/>
+      </physvol>
+    </loop>
+    
+    <!-- plane 1: Keep Original GEMS 8 .. 14 -->
+    <loop for="j" from="0" to="6" step="1">
+      <physvol name="GEM_plane1_[j+1]">
+        <volumeref ref="GEM_detector_log[7 + j + 1]"/>
+        <rotation z="(-j)*360./7 + 90" unit="deg"/>
+        <positionref ref="GEM_trackingPlane_pos_1" unit="m"/>
+      </physvol>
+    </loop>
+    
+    <!-- plane 2: Keep Original GEMS 15 .. 21 -->
+    <loop for="j" from="0" to="6" step="1">
+      <physvol name="GEM_plane1_[j+1]">
+        <volumeref ref="GEM_detector_log[14 + j + 1]"/>
+        <rotation z="(-j)*360./7 + 90" unit="deg"/>
+        <positionref ref="GEM_trackingPlane_pos_2" unit="m"/>
+      </physvol>
+    </loop>
+
+
+
+    <!-- plane 3: KEEP original GEMs 22-28 -->
+    <loop for="j" from="0" to="6" step="1">
+      <physvol name="GEM_plane3_[j+1]">
+        <!-- GEMs 22 .. 28 -->
+        <volumeref ref="GEM_detector_log[21 + j + 1]"/>
+        <rotation z="(-j)*360./7 + 90" unit="deg"/>
+        <positionref ref="GEM_trackingPlane_pos_3" unit="m"/>
+      </physvol>
+    </loop>
+    
+    
+     <!-- plane 3: ALSO ADD TrigScint (wrapped)  before GEMS in this plane-->
+    <loop for="j" from="0" to="6" step="1">
+      <physvol name="TRIG_plane3_[j+1]">
+        <volumeref ref="trig_scint_sector_log"/>
+        <rotation z="(-j)*360./7 + 90" unit="deg"/>
+        <positionref ref="TRIGSCINT_trackingPlane_pos_3" unit="m"/>
+      </physvol>
+    </loop>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.0"/>
+
+  </volume>
+
+         
+        
+      <!-- 
+       <loop for="k" from="0" to="3" step="1">
+            <loop for="j" from="0" to="6" step="1">
+                <physvol name="GEM_detector_sector_phys[k+1][j+1]">
+                    <volumeref ref="GEM_detector_log[k*7 + j + 1]"/>
+                    <rotation z="(-j)*360./7 + 90" unit="deg"/>
+                    <positionref ref="GEM_trackingPlane_pos[k+1]" unit="m"/>
+                </physvol>
+            </loop>
+        </loop>
+       --> 
+  
+
+ </structure>
+
+
+<setup name="Default" version="1.0">
+    <world ref="GEM_world_log"/>
+</setup>
+
+</gdml>
