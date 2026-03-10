@@ -18,8 +18,8 @@
     <position name="GEM_trackingPlane_pos_3" z="1000.3" unit="mm"/>
 
     <!-- Trigger scint planes: 5 mm offset from GEM planes 0 and 3 -->
-    <position name="TRIGSCINT_trackingPlane_pos_0" z="0.0 + 50.0"      unit="mm"/>
-    <position name="TRIGSCINT_trackingPlane_pos_3" z="1000.3 - 50.0"   unit="mm"/>
+    <position name="TRIGSCINT_trackingPlane_pos_0" z="80.0"      unit="mm"/>
+    <position name="TRIGSCINT_trackingPlane_pos_3" z="920.3"   unit="mm"/>
 
     <quantity name="GEM_rotation" value="360./7" unit="deg"/>
     <variable name="j" value="0"/>
@@ -30,6 +30,10 @@
     <constant name="SCALE_UP"  value="1.0+SCALE"/>
     <constant name="SCALE_DOWN" value="1.0-SCALE"/>
     <constant name="scint_fudicial_acceptance" value="0.999"/>
+    
+    <constant name="TRIG_TOP_EXT" value="290"/>
+    <constant name="TRIG_TOP_WID" value="100"/>
+    <constant name="TRIG_BOT_EXT" value="30"/>
 
     <quantity name="mylar_thickness"          type="length" value="0.05"   unit="mm"/>
     <quantity name="air_gap"                  type="length" value="0.025"  unit="mm"/>
@@ -76,65 +80,94 @@
     </material>
   </materials>
 
-  &materials;  <!-- YA: trig scint / optical materials -->
+  &materials; 
+  <!-- YA: trig scint / optical materials -->
 
   <solids>
-    <!-- NEW: GEM shapes (plane 1–2 vs plane 3–4) -->
-    <xtru name="GEM_detector_solid_plane12" lunit="mm">
-      <twoDimVertex x="-207" y="1065"/>
-      <twoDimVertex x="-226" y="1061"/>
-      <twoDimVertex x="-242" y="1048"/>
-      <twoDimVertex x="-251" y="1030"/>
-      <twoDimVertex x="-160" y="625"/>
-      <twoDimVertex x="-152" y="605"/>
-      <twoDimVertex x="-139" y="591"/>
-      <twoDimVertex x="-121" y="581"/>
-      <twoDimVertex x="-50"  y="583"/>
-      <twoDimVertex x="0"    y="585"/>
-      <twoDimVertex x="50"   y="583"/>
-      <twoDimVertex x="121"  y="581"/>
-      <twoDimVertex x="139"  y="591"/>
-      <twoDimVertex x="152"  y="605"/>
-      <twoDimVertex x="251"  y="1010"/>
-      <twoDimVertex x="251"  y="1030"/>
-      <twoDimVertex x="242"  y="1048"/>
-      <twoDimVertex x="226"  y="1061"/>
-      <twoDimVertex x="207"  y="1065"/>
-      <section zOrder="0" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
-      <section zOrder="1" zPosition="20" xOffset="0" yOffset="0" scalingFactor="1"/>
+   <xtru name="GEM_detector_solid_plane12" lunit="mm">
+        <twoDimVertex x="-207" y="1065"/>
+        <twoDimVertex x="-226" y="1061"/>
+        <twoDimVertex x="-242" y="1048"/>
+        <twoDimVertex x="-251" y="1030"/>
+        <twoDimVertex x="-160" y="625"/>
+        <twoDimVertex x="-152" y="605"/>
+        <twoDimVertex x="-139" y="591"/>
+        <twoDimVertex x="-121" y="581"/>
+        <twoDimVertex x="-50" y="583"/>
+        <twoDimVertex x="0" y="585"/>
+        <twoDimVertex x="50" y="583"/>
+        <twoDimVertex x="121" y="581"/>
+        <twoDimVertex x="139" y="591"/>
+        <twoDimVertex x="152" y="605"/>
+        <twoDimVertex x="251" y="1010"/>
+        <twoDimVertex x="251" y="1030"/>
+        <twoDimVertex x="242" y="1048"/>
+        <twoDimVertex x="226" y="1061"/>
+        <twoDimVertex x="207" y="1065"/>
+        <section zOrder="0" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+        <section zOrder="1" zPosition="3" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
-
     <xtru name="GEM_detector_solid_plane34" lunit="mm">
-      <twoDimVertex x="-207" y="1096"/>
-      <twoDimVertex x="-226" y="1092"/>
-      <twoDimVertex x="-242" y="1079"/>
-      <twoDimVertex x="-251" y="1061"/>
-      <twoDimVertex x="-160" y="656"/>
-      <twoDimVertex x="-152" y="637"/>
-      <twoDimVertex x="-139" y="622"/>
-      <twoDimVertex x="-121" y="612"/>
-      <twoDimVertex x="-50"  y="615"/>
-      <twoDimVertex x="0"    y="616"/>
-      <twoDimVertex x="50"   y="615"/>
-      <twoDimVertex x="121"  y="612"/>
-      <twoDimVertex x="139"  y="622"/>
-      <twoDimVertex x="152"  y="637"/>
-      <twoDimVertex x="251"  y="1042"/>
-      <twoDimVertex x="251"  y="1061"/>
-      <twoDimVertex x="242"  y="1079"/>
-      <twoDimVertex x="226"  y="1092"/>
-      <twoDimVertex x="207"  y="1096"/>
-      <section zOrder="0" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
-      <section zOrder="1" zPosition="50" xOffset="0" yOffset="0" scalingFactor="1"/>
+        <twoDimVertex x="-207" y="1096"/>
+        <twoDimVertex x="-226" y="1092"/>
+        <twoDimVertex x="-242" y="1079"/>
+        <twoDimVertex x="-251" y="1061"/>
+        <twoDimVertex x="-160" y="656"/>
+        <twoDimVertex x="-152" y="637"/>
+        <twoDimVertex x="-139" y="622"/>
+        <twoDimVertex x="-121" y="612"/>
+        <twoDimVertex x="-50" y="615"/>
+        <twoDimVertex x="0" y="616"/>
+        <twoDimVertex x="50" y="615"/>
+        <twoDimVertex x="121" y="612"/>
+        <twoDimVertex x="139" y="622"/>
+        <twoDimVertex x="152" y="637"/>
+        <twoDimVertex x="251" y="1042"/>
+        <twoDimVertex x="251" y="1061"/>
+        <twoDimVertex x="242" y="1079"/>
+        <twoDimVertex x="226" y="1092"/>
+        <twoDimVertex x="207" y="1096"/>
+        <section zOrder="0" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+        <section zOrder="1" zPosition="3" xOffset="0" yOffset="0" scalingFactor="1"/>
     </xtru>
+ 
+    <xtru name="Trig_container_solid_plane34" lunit="mm">
+  <!-- upper-left side -->
+  <twoDimVertex x="-207-TRIG_TOP_WID" y="1096+TRIG_TOP_EXT"/>
+  <twoDimVertex x="-226-TRIG_TOP_WID" y="1092+TRIG_TOP_EXT"/>
+  <twoDimVertex x="-242-TRIG_TOP_WID" y="1079+TRIG_TOP_EXT"/>
+  <twoDimVertex x="-251-TRIG_TOP_WID" y="1061+TRIG_TOP_EXT"/>
 
+  <!-- lower/front side: stretch by 30 from original -->
+  <twoDimVertex x="-160" y="656-TRIG_BOT_EXT"/>
+  <twoDimVertex x="-152" y="637-TRIG_BOT_EXT"/>
+  <twoDimVertex x="-139" y="622-TRIG_BOT_EXT"/>
+  <twoDimVertex x="-121" y="612-TRIG_BOT_EXT"/>
+  <twoDimVertex x="-50"  y="615-TRIG_BOT_EXT"/>
+  <twoDimVertex x="0"    y="616-TRIG_BOT_EXT"/>
+  <twoDimVertex x="50"   y="615-TRIG_BOT_EXT"/>
+  <twoDimVertex x="121"  y="612-TRIG_BOT_EXT"/>
+  <twoDimVertex x="139"  y="622-TRIG_BOT_EXT"/>
+  <twoDimVertex x="152"  y="637-TRIG_BOT_EXT"/>
+
+  <!-- upper-right side -->
+  <twoDimVertex x="251+TRIG_TOP_WID" y="1042+TRIG_TOP_EXT"/>
+  <twoDimVertex x="251+TRIG_TOP_WID" y="1061+TRIG_TOP_EXT"/>
+  <twoDimVertex x="242+TRIG_TOP_WID" y="1079+TRIG_TOP_EXT"/>
+  <twoDimVertex x="226+TRIG_TOP_WID" y="1092+TRIG_TOP_EXT"/>
+  <twoDimVertex x="207+TRIG_TOP_WID" y="1096+TRIG_TOP_EXT"/>
+
+  <section zOrder="0" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
+  <section zOrder="1" zPosition="50"  xOffset="0" yOffset="0" scalingFactor="1"/>
+</xtru>
+  
     <polycone name="GEM_world_solid"
               aunit="deg" startphi="0" deltaphi="360"
               lunit="mm">
-      <zplane rmin="584" rmax="1130.0" z="0.0"/>
-      <zplane rmin="584" rmax="1130.0" z="399.3"/>
-      <zplane rmin="611" rmax="1130.0" z="400.0"/>
-      <zplane rmin="611" rmax="1130.0" z="1010"/>
+      <zplane rmin="584" rmax="1450.0" z="0.0"/>
+      <zplane rmin="584" rmax="1450.0" z="399.3"/>
+      <zplane rmin="590" rmax="1450.0" z="400.0"/>
+      <zplane rmin="590" rmax="1450.0" z="1010"/>
     </polycone>
 
     <!-- YA: scintillator + light guides + wrapper (unchanged shapes) -->
@@ -367,13 +400,13 @@
     <volume name="trig_scint_sector_log">
       <materialref ref="G4_AIR"/>
       <!-- choose the larger wedge so the scint fits comfortably -->
-      <solidref ref="GEM_detector_solid_plane34"/>
-
+      <solidref ref="Trig_container_solid_plane34"/>
+      
       <physvol name="trig_scint_in_sector">
         <volumeref ref="trig_scint_log"/>
-        <!-- rotate scint so its local z (radial) becomes GEM radial (y), plus flip -->
+        <!-- rotate scint so its local z (radial) becomes GEM radial (y), plus -->
         <rotation name="trig_scint_align_rot" x="-90" y="180" unit="deg"/>
-        <!-- place it roughly mid-way in the GEM radial band -->
+        <!--  place it roughly mid-way in the GEM radial band -->
         <position name="trig_scint_align_pos"
                   x="0"
                   y="(584 + 1130)/2 +50"
