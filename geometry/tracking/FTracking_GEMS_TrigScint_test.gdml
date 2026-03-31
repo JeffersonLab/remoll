@@ -401,6 +401,9 @@
       <materialref ref="G4_AIR"/>
       <!-- choose the larger wedge so the scint fits comfortably -->
       <solidref ref="Trig_container_solid_plane34"/>
+      <!-- Visualization -->
+      <auxiliary auxtype="Color" auxvalue="white"/>
+      <auxiliary auxtype="Alpha" auxvalue="0.15"/>     
       
       <physvol name="trig_scint_in_sector">
         <volumeref ref="trig_scint_log"/>
