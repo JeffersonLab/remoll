@@ -1,0 +1,3 @@
+/remoll/geometry/absolute_position targetLadder (0,250,0)
+/remoll/target/mother C_40mm_DS
+/remoll/target/volume C40mm

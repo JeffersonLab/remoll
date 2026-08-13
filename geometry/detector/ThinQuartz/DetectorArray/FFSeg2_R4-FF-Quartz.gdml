@@ -12,8 +12,8 @@
 			<solidref ref="FFSeg2_R4-FF-Quartz_solid"/>
 			<auxiliary auxtype="Color" auxvalue="magenta"/>
 			<auxiliary auxtype="SensDet" auxvalue="mainDetectorSD" />
-			<!--<auxiliary auxtype="DetNo" auxvalue="150240"/>-->
-            <auxiliary auxtype="DetNo" auxvalue="1040201"/>
+			<auxiliary auxtype="DetNo" auxvalue="150240"/>
+            <!--<auxiliary auxtype="DetNo" auxvalue="1040201"/>-->
 		</volume>
 	</structure>
  

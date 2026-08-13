@@ -18,7 +18,6 @@
         <constant name="SEPTANT" value ="360./7"/>
         <position name="CENTER" unit="mm" x="0" y="0" z="0"/>
         <position name="boxDownstream_center" unit="mm" x="0" y="0" z="-7435-150/2-400/2+560/2"/>
-        
         <constant name="DELTAT" value ="1.0"/>
         
         <!-- main collimator number 4, adjust this -->
@@ -513,20 +512,20 @@
         
         <!--    Solid for Collimator 6A -->
         <xtru name="Coll6A_solid1" lunit="mm">
-            <twoDimVertex x="30.000" y="2.000"/>
-            <twoDimVertex x="30.000" y="-14.447"/>
-            <twoDimVertex x="88.900" y="-42.812"/>
-            <twoDimVertex x="88.900" y="-35.113"/>
-            <twoDimVertex x="85.471" y="-35.113"/>
-            <twoDimVertex x="85.471" y="-26.985"/>
-            <twoDimVertex x="88.900" y="-26.985"/>
-            <twoDimVertex x="88.900" y="-25.080"/>
-            <twoDimVertex x="70.787" y="-25.080"/>
-            <twoDimVertex x="70.787" y="2.000"/>
+            <twoDimVertex x="33.000" y="2.000"/>
+            <twoDimVertex x="33.000" y="-14.447"/>
+            <twoDimVertex x="91.900" y="-42.812"/>
+            <twoDimVertex x="91.900" y="-35.113"/>
+            <twoDimVertex x="88.471" y="-35.113"/>
+            <twoDimVertex x="88.471" y="-26.985"/>
+            <twoDimVertex x="91.900" y="-26.985"/>
+            <twoDimVertex x="91.900" y="-25.080"/>
+            <twoDimVertex x="73.787" y="-25.080"/>
+            <twoDimVertex x="73.787" y="2.000"/>
             <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
             <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6A_Cylinder_solid1" rmax1="55.31" rmax2="56.29" rmin1="0" rmin2="0" startphi="0" z="70"/>
+        <cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6A_Cylinder_solid1" rmax1="58.31" rmax2="59.29" rmin1="0" rmin2="0" startphi="0" z="70"/>
         <subtraction name="Coll6A_solid_1">
             <first ref="Coll6A_solid1"/>
             <second ref="Coll6A_Cylinder_solid1"/>
@@ -534,21 +533,21 @@
         </subtraction>
         
         <xtru name="Coll6A_solid2" lunit="mm">
-            <twoDimVertex x="30.000" y="20.086"/>
-            <twoDimVertex x="30.000" y="-2.000"/>
-            <twoDimVertex x="70.787" y="-2.000"/>
-            <twoDimVertex x="70.787" y="25.080"/>
-            <twoDimVertex x="88.900" y="25.080"/>
-            <twoDimVertex x="88.900" y="26.985"/>
-            <twoDimVertex x="85.471" y="26.985"/>
-            <twoDimVertex x="85.471" y="35.113"/>
-            <twoDimVertex x="88.900" y="35.113"/>
-            <twoDimVertex x="88.900" y="42.812"/>
-            <twoDimVertex x="86.696" y="47.389"/>
+            <twoDimVertex x="33.000" y="20.086"/>
+            <twoDimVertex x="33.000" y="-2.000"/>
+            <twoDimVertex x="73.787" y="-2.000"/>
+            <twoDimVertex x="73.787" y="25.080"/>
+            <twoDimVertex x="91.900" y="25.080"/>
+            <twoDimVertex x="91.900" y="26.985"/>
+            <twoDimVertex x="88.471" y="26.985"/>
+            <twoDimVertex x="88.471" y="35.113"/>
+            <twoDimVertex x="91.900" y="35.113"/>
+            <twoDimVertex x="91.900" y="42.812"/>
+            <twoDimVertex x="89.696" y="47.389"/>
             <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
             <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6A_Cylinder_solid2" rmax1="56.46" rmax2="57.44" rmin1="0" rmin2="0" startphi="0" z="70"/>
+        <cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6A_Cylinder_solid2" rmax1="59.46" rmax2="60.44" rmin1="0" rmin2="0" startphi="0" z="70"/>
         <subtraction name="Coll6A_solid_2">
             <first ref="Coll6A_solid2"/>
             <second ref="Coll6A_Cylinder_solid2"/>
@@ -557,22 +556,22 @@
         
         <!--    Solid for Collimator 6B -->
         <xtru name="Coll6B_solid1" lunit="mm">
-            <twoDimVertex x="53.978" y="-25.995"/>
-            <twoDimVertex x="108.116" y="-52.066"/>
-            <twoDimVertex x="115.027" y="-37.716"/>
-            <twoDimVertex x="113.030" y="-37.716"/>
-            <twoDimVertex x="113.030" y="-35.113"/>
-            <twoDimVertex x="109.601" y="-35.113"/>
-            <twoDimVertex x="109.601" y="-26.985"/>
-            <twoDimVertex x="113.030" y="-26.985"/>
-            <twoDimVertex x="113.030" y="-24.381"/>
-            <twoDimVertex x="120.000" y="-24.381"/>
-            <twoDimVertex x="120.000" y="0.000"/>
-            <twoDimVertex x="53.978" y="0.000"/>               
+            <twoDimVertex x="56.978" y="-25.995"/>
+            <twoDimVertex x="111.116" y="-52.066"/>
+            <twoDimVertex x="118.027" y="-37.716"/>
+            <twoDimVertex x="116.030" y="-37.716"/>
+            <twoDimVertex x="116.030" y="-35.113"/>
+            <twoDimVertex x="112.601" y="-35.113"/>
+            <twoDimVertex x="112.601" y="-26.985"/>
+            <twoDimVertex x="116.030" y="-26.985"/>
+            <twoDimVertex x="116.030" y="-24.381"/>
+            <twoDimVertex x="123.000" y="-24.381"/>
+            <twoDimVertex x="123.000" y="0.000"/>
+            <twoDimVertex x="56.978" y="0.000"/>               
             <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
             <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6B_Cylinder_solid1" rmax1="80.00" rmax2="81.47" rmin1="0" rmin2="0" startphi="0" z="70"/>
+        <cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6B_Cylinder_solid1" rmax1="83.00" rmax2="84.47" rmin1="0" rmin2="0" startphi="0" z="70"/>
         <subtraction name="Coll6B_solid_1">
             <first ref="Coll6B_solid1"/>
             <second ref="Coll6B_Cylinder_solid1"/>
@@ -580,22 +579,22 @@
         </subtraction>
         
         <xtru name="Coll6B_solid2" lunit="mm">
-            <twoDimVertex x="57.455" y="-5.080"/>
-            <twoDimVertex x="120.000" y="-5.080"/>
-            <twoDimVertex x="120.000" y="24.381"/>
-            <twoDimVertex x="113.030" y="24.381"/>
-            <twoDimVertex x="113.030" y="26.985"/>
-            <twoDimVertex x="109.601" y="26.985"/>
-            <twoDimVertex x="109.601" y="35.113"/>
-            <twoDimVertex x="113.030" y="35.113"/>
-            <twoDimVertex x="113.030" y="37.716"/>
-            <twoDimVertex x="115.027" y="37.716"/>
-            <twoDimVertex x="105.912" y="56.643"/>
-            <twoDimVertex x="57.455" y="33.307"/>
+            <twoDimVertex x="60.455" y="-5.080"/>
+            <twoDimVertex x="123.000" y="-5.080"/>
+            <twoDimVertex x="123.000" y="24.381"/>
+            <twoDimVertex x="116.030" y="24.381"/>
+            <twoDimVertex x="116.030" y="26.985"/>
+            <twoDimVertex x="112.601" y="26.985"/>
+            <twoDimVertex x="112.601" y="35.113"/>
+            <twoDimVertex x="116.030" y="35.113"/>
+            <twoDimVertex x="116.030" y="37.716"/>
+            <twoDimVertex x="118.027" y="37.716"/>
+            <twoDimVertex x="108.912" y="56.643"/>
+            <twoDimVertex x="60.455" y="33.307"/>
             <section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
             <section zOrder="2" zPosition="69.850" xOffset="0" yOffset="0" scalingFactor="1"/>
         </xtru>
-        <cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6B_Cylinder_solid2" rmax1="81.73" rmax2="83.20" rmin1="0" rmin2="0" startphi="0" z="70"/>
+        <cone aunit="deg" deltaphi="360" lunit="mm" name="Coll6B_Cylinder_solid2" rmax1="84.73" rmax2="86.20" rmin1="0" rmin2="0" startphi="0" z="70"/>
         <subtraction name="Coll6B_solid_2">
             <first ref="Coll6B_solid2"/>
             <second ref="Coll6B_Cylinder_solid2"/>
@@ -637,10 +636,10 @@
         </xtru>
 
         <xtru name="solid_epoxy_protector_5"  lunit="mm">
-                <twoDimVertex x="52.808" y="-24.7" />
                 <twoDimVertex x="55.808" y="-24.7" />
+                <twoDimVertex x="58.808" y="-24.7" />
+                <twoDimVertex x="58.808" y="24.7" />
                 <twoDimVertex x="55.808" y="24.7" />
-                <twoDimVertex x="52.808" y="24.7" />
                 <section zOrder="1" zPosition="0.0" xOffset="0.0" yOffset="0" scalingFactor="1"/>
                 <section zOrder="2" zPosition="1666.0330000000013" xOffset="21.844" yOffset="0" scalingFactor="1"/>
         </xtru>
@@ -867,160 +866,160 @@
 	
 	<!-- SubCoil4 support -->
 	<xtru name="solid_clamp_7"  lunit="mm">
-		<twoDimVertex x="628.015" y="101.6" />
-		<twoDimVertex x="602.615" y="101.6" />
-		<twoDimVertex x="602.615" y="92.075" />
-		<twoDimVertex x="583.565" y="92.075" />
-		<twoDimVertex x="583.565" y="53.975" />
-		<twoDimVertex x="577.985" y="40.505" />
-		<twoDimVertex x="564.515" y="34.925" />
-		<twoDimVertex x="507.365" y="34.925" />
-		<twoDimVertex x="507.365" y="24.699" />
-		<twoDimVertex x="504.19" y="24.699" />
-		<twoDimVertex x="504.19" y="34.224" />
-		<twoDimVertex x="221.615" y="34.224" />
-		<twoDimVertex x="213.215" y="31.049" />
-		<twoDimVertex x="191.915" y="31.049" />
-		<twoDimVertex x="183.515" y="34.224" />
-		<twoDimVertex x="127.0" y="34.224" />
-		<twoDimVertex x="101.6" y="26.604" />
-		<twoDimVertex x="101.6" y="24.7" />
-		<twoDimVertex x="457.352" y="24.7" />
-		<twoDimVertex x="457.352" y="-24.7" />
-		<twoDimVertex x="101.6" y="-24.7" />
-		<twoDimVertex x="101.6" y="-26.604" />
-		<twoDimVertex x="127.0" y="-34.224" />
-		<twoDimVertex x="183.515" y="-34.224" />
-		<twoDimVertex x="191.915" y="-31.049" />
-		<twoDimVertex x="213.215" y="-31.049" />
-		<twoDimVertex x="221.615" y="-34.224" />
-		<twoDimVertex x="504.19" y="-34.224" />
-		<twoDimVertex x="504.19" y="-24.699" />
-		<twoDimVertex x="507.365" y="-24.699" />
-		<twoDimVertex x="507.365" y="-34.925" />
-		<twoDimVertex x="564.515" y="-34.925" />
-		<twoDimVertex x="577.985" y="-40.505" />
-		<twoDimVertex x="583.565" y="-53.975" />
-		<twoDimVertex x="583.565" y="-92.075" />
-		<twoDimVertex x="602.615" y="-92.075" />
-		<twoDimVertex x="602.615" y="-101.6" />
-		<twoDimVertex x="628.015" y="-101.6" />
+		<twoDimVertex x="631.015" y="101.6" />
+		<twoDimVertex x="605.615" y="101.6" />
+		<twoDimVertex x="605.615" y="92.075" />
+		<twoDimVertex x="586.565" y="92.075" />
+		<twoDimVertex x="586.565" y="53.975" />
+		<twoDimVertex x="580.985" y="40.505" />
+		<twoDimVertex x="567.515" y="34.925" />
+		<twoDimVertex x="510.365" y="34.925" />
+		<twoDimVertex x="510.365" y="24.699" />
+		<twoDimVertex x="507.190" y="24.699" />
+		<twoDimVertex x="507.190" y="34.224" />
+		<twoDimVertex x="224.615" y="34.224" />
+		<twoDimVertex x="216.215" y="31.049" />
+		<twoDimVertex x="194.915" y="31.049" />
+		<twoDimVertex x="186.515" y="34.224" />
+		<twoDimVertex x="130.000" y="34.224" />
+		<twoDimVertex x="104.600" y="26.604" />
+		<twoDimVertex x="104.600" y="24.7" />
+		<twoDimVertex x="460.352" y="24.7" />
+		<twoDimVertex x="460.352" y="-24.7" />
+		<twoDimVertex x="104.600" y="-24.7" />
+		<twoDimVertex x="104.600" y="-26.604" />
+		<twoDimVertex x="130.000" y="-34.224" />
+		<twoDimVertex x="186.515" y="-34.224" />
+		<twoDimVertex x="194.915" y="-31.049" />
+		<twoDimVertex x="216.215" y="-31.049" />
+		<twoDimVertex x="224.615" y="-34.224" />
+		<twoDimVertex x="507.190" y="-34.224" />
+		<twoDimVertex x="507.190" y="-24.699" />
+		<twoDimVertex x="510.365" y="-24.699" />
+		<twoDimVertex x="510.365" y="-34.925" />
+		<twoDimVertex x="567.515" y="-34.925" />
+		<twoDimVertex x="580.985" y="-40.505" />
+		<twoDimVertex x="586.565" y="-53.975" />
+		<twoDimVertex x="586.565" y="-92.075" />
+		<twoDimVertex x="605.615" y="-92.075" />
+		<twoDimVertex x="605.615" y="-101.6" />
+		<twoDimVertex x="631.015" y="-101.6" />
 		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
 		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<xtru name="solid_clamp_8"  lunit="mm">
-		<twoDimVertex x="628.015" y="101.6" />
-		<twoDimVertex x="602.615" y="101.6" />
-		<twoDimVertex x="602.615" y="92.075" />
-		<twoDimVertex x="583.565" y="92.075" />
-		<twoDimVertex x="583.565" y="53.975" />
-		<twoDimVertex x="577.985" y="40.505" />
-		<twoDimVertex x="564.515" y="34.925" />
-		<twoDimVertex x="475.615" y="34.925" />
-		<twoDimVertex x="475.615" y="15.875" />
-		<twoDimVertex x="472.44" y="15.875" />
-		<twoDimVertex x="472.44" y="34.224" />
-		<twoDimVertex x="373.021" y="34.224" />
-		<twoDimVertex x="365.813" y="30.447" />
-		<twoDimVertex x="357.781" y="29.144" />
-		<twoDimVertex x="324.209" y="29.144" />
-		<twoDimVertex x="313.97" y="31.299" />
-		<twoDimVertex x="305.469" y="37.399" />
-		<twoDimVertex x="139.7" y="37.399" />
-		<twoDimVertex x="139.7" y="34.224" />
-		<twoDimVertex x="104.775" y="34.224" />
-		<twoDimVertex x="101.6" y="37.399" />
-		<twoDimVertex x="95.25" y="37.399" />
-		<twoDimVertex x="95.25" y="35.049" />
-		<twoDimVertex x="92.075" y="35.049" />
-		<twoDimVertex x="91.821" y="26.985" />
-		<twoDimVertex x="95.25" y="26.985" />
-		<twoDimVertex x="95.25" y="24.7" />
-		<twoDimVertex x="409.575" y="24.7" />
-		<twoDimVertex x="409.575" y="-24.7" />
-		<twoDimVertex x="95.25" y="-24.7" />
-		<twoDimVertex x="95.25" y="-26.985" />
-		<twoDimVertex x="91.821" y="-26.985" />
-		<twoDimVertex x="92.075" y="-35.049" />
-		<twoDimVertex x="95.25" y="-35.049" />
-		<twoDimVertex x="95.25" y="-37.399" />
-		<twoDimVertex x="101.6" y="-37.399" />
-		<twoDimVertex x="104.775" y="-34.224" />
-		<twoDimVertex x="139.7" y="-34.224" />
-		<twoDimVertex x="139.7" y="-37.399" />
-		<twoDimVertex x="305.469" y="-37.399" />
-		<twoDimVertex x="313.97" y="-31.299" />
-		<twoDimVertex x="324.209" y="-29.144" />
-		<twoDimVertex x="357.781" y="-29.144" />
-		<twoDimVertex x="365.813" y="-30.447" />
-		<twoDimVertex x="373.021" y="-34.224" />
-		<twoDimVertex x="472.44" y="-34.224" />
-		<twoDimVertex x="472.44" y="-15.875" />
-		<twoDimVertex x="475.615" y="-15.875" />
-		<twoDimVertex x="475.615" y="-34.925" />
-		<twoDimVertex x="564.515" y="-34.925" />
-		<twoDimVertex x="577.985" y="-40.505" />
-		<twoDimVertex x="583.565" y="-53.975" />
-		<twoDimVertex x="583.565" y="-92.075" />
-		<twoDimVertex x="602.615" y="-92.075" />
-		<twoDimVertex x="602.615" y="-101.6" />
-		<twoDimVertex x="628.015" y="-101.6" />
+		<twoDimVertex x="631.015" y="101.6" />
+		<twoDimVertex x="605.615" y="101.6" />
+		<twoDimVertex x="605.615" y="92.075" />
+		<twoDimVertex x="586.565" y="92.075" />
+		<twoDimVertex x="586.565" y="53.975" />
+		<twoDimVertex x="580.985" y="40.505" />
+		<twoDimVertex x="567.515" y="34.925" />
+		<twoDimVertex x="478.615" y="34.925" />
+		<twoDimVertex x="478.615" y="15.875" />
+		<twoDimVertex x="475.440" y="15.875" />
+		<twoDimVertex x="475.440" y="34.224" />
+		<twoDimVertex x="376.021" y="34.224" />
+		<twoDimVertex x="368.813" y="30.447" />
+		<twoDimVertex x="360.781" y="29.144" />
+		<twoDimVertex x="327.209" y="29.144" />
+		<twoDimVertex x="316.970" y="31.299" />
+		<twoDimVertex x="308.469" y="37.399" />
+		<twoDimVertex x="142.700" y="37.399" />
+		<twoDimVertex x="142.700" y="34.224" />
+		<twoDimVertex x="107.775" y="34.224" />
+		<twoDimVertex x="104.600" y="37.399" />
+		<twoDimVertex x="98.250" y="37.399" />
+		<twoDimVertex x="98.250" y="35.049" />
+		<twoDimVertex x="95.075" y="35.049" />
+		<twoDimVertex x="94.821" y="26.985" />
+		<twoDimVertex x="98.250" y="26.985" />
+		<twoDimVertex x="98.250" y="24.7" />
+		<twoDimVertex x="412.575" y="24.7" />
+		<twoDimVertex x="412.575" y="-24.7" />
+		<twoDimVertex x="98.250" y="-24.7" />
+		<twoDimVertex x="98.250" y="-26.985" />
+		<twoDimVertex x="94.821" y="-26.985" />
+		<twoDimVertex x="95.075" y="-35.049" />
+		<twoDimVertex x="98.250" y="-35.049" />
+		<twoDimVertex x="98.250" y="-37.399" />
+		<twoDimVertex x="104.600" y="-37.399" />
+		<twoDimVertex x="107.775" y="-34.224" />
+		<twoDimVertex x="142.700" y="-34.224" />
+		<twoDimVertex x="142.700" y="-37.399" />
+		<twoDimVertex x="308.469" y="-37.399" />
+		<twoDimVertex x="316.970" y="-31.299" />
+		<twoDimVertex x="327.209" y="-29.144" />
+		<twoDimVertex x="360.781" y="-29.144" />
+		<twoDimVertex x="368.813" y="-30.447" />
+		<twoDimVertex x="376.021" y="-34.224" />
+		<twoDimVertex x="475.440" y="-34.224" />
+		<twoDimVertex x="475.440" y="-15.875" />
+		<twoDimVertex x="478.615" y="-15.875" />
+		<twoDimVertex x="478.615" y="-34.925" />
+		<twoDimVertex x="567.515" y="-34.925" />
+		<twoDimVertex x="580.985" y="-40.505" />
+		<twoDimVertex x="586.565" y="-53.975" />
+		<twoDimVertex x="586.565" y="-92.075" />
+		<twoDimVertex x="605.615" y="-92.075" />
+		<twoDimVertex x="605.615" y="-101.6" />
+		<twoDimVertex x="631.015" y="-101.6" />
 		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
 		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>
 	<xtru name="solid_clamp_9"  lunit="mm">
-		<twoDimVertex x="628.015" y="101.6" />
-		<twoDimVertex x="602.615" y="101.6" />
-		<twoDimVertex x="602.615" y="92.075" />
-		<twoDimVertex x="583.565" y="92.075" />
-		<twoDimVertex x="583.565" y="53.975" />
-		<twoDimVertex x="577.985" y="40.505" />
-		<twoDimVertex x="564.515" y="34.925" />
-		<twoDimVertex x="475.615" y="34.925" />
-		<twoDimVertex x="475.615" y="15.875" />
-		<twoDimVertex x="445.135" y="15.875" />
-		<twoDimVertex x="440.72" y="12.365" />
-		<twoDimVertex x="435.221" y="11.113" />
-		<twoDimVertex x="415.518" y="11.113" />
-		<twoDimVertex x="412.231" y="11.545" />
-		<twoDimVertex x="409.168" y="12.814" />
-		<twoDimVertex x="377.584" y="31.049" />
-		<twoDimVertex x="327.025" y="37.399" />
-		<twoDimVertex x="113.03" y="37.399" />
-		<twoDimVertex x="113.03" y="35.05" />
-		<twoDimVertex x="109.855" y="35.05" />
-		<twoDimVertex x="109.855" y="27.049" />
-		<twoDimVertex x="113.03" y="27.049" />
-		<twoDimVertex x="113.03" y="24.7" />
-		<twoDimVertex x="380.211" y="24.7" />
-		<twoDimVertex x="382.01" y="23.956" />
-		<twoDimVertex x="382.757" y="22.159" />
-		<twoDimVertex x="382.757" y="-22.159" />
-		<twoDimVertex x="382.01" y="-23.956" />
-		<twoDimVertex x="380.211" y="-24.7" />
-		<twoDimVertex x="113.03" y="-24.7" />
-		<twoDimVertex x="113.03" y="-27.049" />
-		<twoDimVertex x="109.855" y="-27.049" />
-		<twoDimVertex x="109.855" y="-35.05" />
-		<twoDimVertex x="113.03" y="-35.05" />
-		<twoDimVertex x="113.03" y="-37.399" />
-		<twoDimVertex x="327.025" y="-37.399" />
-		<twoDimVertex x="377.584" y="-31.049" />
-		<twoDimVertex x="409.168" y="-12.814" />
-		<twoDimVertex x="412.231" y="-11.545" />
-		<twoDimVertex x="415.518" y="-11.113" />
-		<twoDimVertex x="435.221" y="-11.113" />
-		<twoDimVertex x="440.72" y="-12.365" />
-		<twoDimVertex x="445.135" y="-15.875" />
-		<twoDimVertex x="475.615" y="-15.875" />
-		<twoDimVertex x="475.615" y="-34.925" />
-		<twoDimVertex x="564.515" y="-34.925" />
-		<twoDimVertex x="577.985" y="-40.505" />
-		<twoDimVertex x="583.565" y="-53.975" />
-		<twoDimVertex x="583.565" y="-92.075" />
-		<twoDimVertex x="602.615" y="-92.075" />
-		<twoDimVertex x="602.615" y="-101.6" />
-		<twoDimVertex x="628.015" y="-101.6" />
+		<twoDimVertex x="631.015" y="101.6" />
+		<twoDimVertex x="605.615" y="101.6" />
+		<twoDimVertex x="605.615" y="92.075" />
+		<twoDimVertex x="586.565" y="92.075" />
+		<twoDimVertex x="586.565" y="53.975" />
+		<twoDimVertex x="580.985" y="40.505" />
+		<twoDimVertex x="567.515" y="34.925" />
+		<twoDimVertex x="478.615" y="34.925" />
+		<twoDimVertex x="478.615" y="15.875" />
+		<twoDimVertex x="448.135" y="15.875" />
+		<twoDimVertex x="443.720" y="12.365" />
+		<twoDimVertex x="438.221" y="11.113" />
+		<twoDimVertex x="418.518" y="11.113" />
+		<twoDimVertex x="415.231" y="11.545" />
+		<twoDimVertex x="412.168" y="12.814" />
+		<twoDimVertex x="380.584" y="31.049" />
+		<twoDimVertex x="330.025" y="37.399" />
+		<twoDimVertex x="116.030" y="37.399" />
+		<twoDimVertex x="116.030" y="35.05" />
+		<twoDimVertex x="112.855" y="35.05" />
+		<twoDimVertex x="112.855" y="27.049" />
+		<twoDimVertex x="116.030" y="27.049" />
+		<twoDimVertex x="116.030" y="24.7" />
+		<twoDimVertex x="383.211" y="24.7" />
+		<twoDimVertex x="385.010" y="23.956" />
+		<twoDimVertex x="385.757" y="22.159" />
+		<twoDimVertex x="385.757" y="-22.159" />
+		<twoDimVertex x="385.010" y="-23.956" />
+		<twoDimVertex x="383.211" y="-24.7" />
+		<twoDimVertex x="116.030" y="-24.7" />
+		<twoDimVertex x="116.030" y="-27.049" />
+		<twoDimVertex x="112.855" y="-27.049" />
+		<twoDimVertex x="112.855" y="-35.05" />
+		<twoDimVertex x="116.030" y="-35.05" />
+		<twoDimVertex x="116.030" y="-37.399" />
+		<twoDimVertex x="330.025" y="-37.399" />
+		<twoDimVertex x="380.584" y="-31.049" />
+		<twoDimVertex x="412.168" y="-12.814" />
+		<twoDimVertex x="415.231" y="-11.545" />
+		<twoDimVertex x="418.518" y="-11.113" />
+		<twoDimVertex x="438.221" y="-11.113" />
+		<twoDimVertex x="443.720" y="-12.365" />
+		<twoDimVertex x="448.135" y="-15.875" />
+		<twoDimVertex x="478.615" y="-15.875" />
+		<twoDimVertex x="478.615" y="-34.925" />
+		<twoDimVertex x="567.515" y="-34.925" />
+		<twoDimVertex x="580.985" y="-40.505" />
+		<twoDimVertex x="586.565" y="-53.975" />
+		<twoDimVertex x="586.565" y="-92.075" />
+		<twoDimVertex x="605.615" y="-92.075" />
+		<twoDimVertex x="605.615" y="-101.6" />
+		<twoDimVertex x="631.015" y="-101.6" />
 		<section zOrder="1" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
 		<section zOrder="2" zPosition="152.4" xOffset="0" yOffset="0" scalingFactor="1"/>
 	</xtru>    
@@ -3534,7 +3533,7 @@
 
 		<physvol name="dcoil4_1">
 			<volumeref ref="logic_outer_E4_1"/>
-			<position name="pos_dcoil4_1" x="188.6295" y="0.0" z="-235.74900000000252-2864.764-90"/>
+			<position name="pos_dcoil4_1" x="191.630" y="0.000" z="-235.74900000000252-2864.764-90"/>
 			<rotation name="rot_dcoil4_1" x="pi/2" y="0.0" z="0"/>
 		</physvol>
 
@@ -3558,7 +3557,7 @@
 
 		<physvol name="dcoil4_2">
 			<volumeref ref="logic_outer_E4_2"/>
-			<position name="pos_dcoil4_2" x="117.608569579712" y="147.47648162220324" z="-235.74900000000252-2864.764-90"/>
+			<position name="pos_dcoil4_2" x="119.479" y="149.822" z="-235.74900000000252-2864.764-90"/>
 			<rotation name="rot_dcoil4_2" x="pi/2" y="0.8975979010256552" z="0"/>
 		</physvol>
 
@@ -3582,7 +3581,7 @@
 
 		<physvol name="dcoil4_3">
 			<volumeref ref="logic_outer_E4_3"/>
-			<position name="pos_dcoil4_3" x="-41.974012511712594" y="183.9001646109013" z="-235.74900000000252-2864.764-90"/>
+			<position name="pos_dcoil4_3" x="-42.642" y="186.825" z="-235.74900000000252-2864.764-90"/>
 			<rotation name="rot_dcoil4_3" x="pi/2" y="1.7951958020513104" z="0"/>
 		</physvol>
 
@@ -3606,7 +3605,7 @@
 
 		<physvol name="dcoil4_4">
 			<volumeref ref="logic_outer_E4_4"/>
-			<position name="pos_dcoil4_4" x="-169.94930706799937" y="81.84327276787545" z="-235.74900000000252-2864.764-90"/>
+			<position name="pos_dcoil4_4" x="-172.652" y="83.145" z="-235.74900000000252-2864.764-90"/>
 			<rotation name="rot_dcoil4_4" x="pi/2" y="2.6927937030769655" z="0"/>
 		</physvol>
 
@@ -3630,7 +3629,7 @@
 
 		<physvol name="dcoil4_5">
 			<volumeref ref="logic_outer_E4_5"/>
-			<position name="pos_dcoil4_5" x="-169.94930706799937" y="-81.8432727678754" z="-235.74900000000252-2864.764-90"/>
+			<position name="pos_dcoil4_5" x="-172.652" y="-83.145" z="-235.74900000000252-2864.764-90"/>
 			<rotation name="rot_dcoil4_5" x="pi/2" y="3.5903916041026207" z="0"/>
 		</physvol>
 
@@ -3654,7 +3653,7 @@
 
 		<physvol name="dcoil4_6">
 			<volumeref ref="logic_outer_E4_6"/>
-			<position name="pos_dcoil4_6" x="-41.974012511712644" y="-183.9001646109013" z="-235.74900000000252-2864.764-90"/>
+			<position name="pos_dcoil4_6" x="-42.642" y="-186.825" z="-235.74900000000252-2864.764-90"/>
 			<rotation name="rot_dcoil4_6" x="pi/2" y="4.487989505128276" z="0"/>
 		</physvol>
 
@@ -3678,7 +3677,7 @@
 
 		<physvol name="dcoil4_7">
 			<volumeref ref="logic_outer_E4_7"/>
-			<position name="pos_dcoil4_7" x="117.60856957971195" y="-147.47648162220327" z="-235.74900000000252-2864.764-90"/>
+			<position name="pos_dcoil4_7" x="119.479" y="-149.822" z="-235.74900000000252-2864.764-90"/>
 			<rotation name="rot_dcoil4_7" x="pi/2" y="5.385587406153931" z="0"/>
 		</physvol>
 		

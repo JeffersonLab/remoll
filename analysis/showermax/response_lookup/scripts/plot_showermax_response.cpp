@@ -5,6 +5,7 @@
 // Purpose: Read the remoll rootfile and use shower-max lookup table to plot the PE response.
 // -----------------------------------------------------------------------------------
 
+#include "RtypesCore.h"
 #include "TChain.h"
 #include "TH1.h"
 #include "TROOT.h"
@@ -17,6 +18,11 @@
 #include "./remollToQsim.hh"
 #include "./shower-max_resposne_lookup.hh"
 
+#ifdef __REMOLLTYPES__ // for clangd LSP support
+  #include "../include/remolltypes.hh"
+#endif // __REMOLLTYPES__
+
+
 // Namespace list to use
 using std::cout, std::cerr, std::endl;
 using std::vector, std::string;
@@ -24,37 +30,17 @@ using std::ifstream, std::ofstream;
 using std::pair, std::map;
 
 // Main function
-void plot_showermax_response(){
-    // Genetate random values for x, y, theta, phi
+void plot_showermax_response(TString rootFile = "~/moller/softwares/remoll-zone/rootfiles/sm_stack/stack_v27/sm_tqStack_3sector_moller_50k_1001.root") {
 
-    // Get the fit parameters
-    vector<vector<Double_t>> fit_data_electron = retrieve_fit_data("e-");
-    vector<vector<Double_t>> fit_data_gamma = retrieve_fit_data("gamma");
-    vector<vector<Double_t>> fit_data_mu = retrieve_fit_data("mu-");
-    vector<vector<Double_t>> fit_data_pi = retrieve_fit_data("pi-");
-    vector<vector<Double_t>> fit_data_neutron = retrieve_fit_data("neutron");
-
-    // Make a map of pid and fit_data
-    map<int, vector<vector<Double_t>>> map_fit_data;
-    map_fit_data[11] = fit_data_electron;
-    map_fit_data[-11] = fit_data_electron;
-    map_fit_data[22] = fit_data_gamma;
-    map_fit_data[13] = fit_data_mu;
-    map_fit_data[-13] = fit_data_mu;
-    map_fit_data[211] = fit_data_pi;
-    map_fit_data[-211] = fit_data_pi;
-    map_fit_data[2112] = fit_data_neutron;
-
-    // Test pe response
-    // cout << "PE: " << get_PE_response(map_fit_data[11], 1234, 0, 0) << endl;
+    // Testing shower-max response 
+    ShowermaxLookup::getPeResponse(73015, 11, 1000, 0.0, 1080.0);
 
     // Remoll file path goes here
     int goodFileCount = 1; // Number of good (non-corrupted) files
-    TString rootFile= "~/moller/softwares/remoll-zone/rootfiles/smStack_v23/sm_tqStack_3sector_moller_50k_1001.root";
      
     // Define histograms
     TH1D* h_hitRate = new TH1D("hitRate", "Rate weighted hit; hit.r [mm]; rate[GHz/65uA]", 100, 1000, 1200);
-    TH1D* h_hitRateSmPE = new TH1D("hitRateSmPE", "Rate weighted hit; hit.r [mm]; rate [GHz/65uA/PE]", 100, 1000, 1200); 
+    TH1D* h_hitRateSmPE = new TH1D("hitRateSmPE", "PE*Rate weighted hit; hit.r [mm]; rate [PE*GHz/65uA]", 100, 1000, 1200); 
 
     // Declare TChain
     TChain* T = new TChain("T");
@@ -74,7 +60,7 @@ void plot_showermax_response(){
 	T->SetBranchAddress("rate", &fRate);
 	// T->SetBranchAddress("ev", &fEv);
 
-	//This loop goes over all the events in the root files
+	// This loop goes over all the events in the root files
 	for (Long64_t iEvent = 0; iEvent < nEntries; iEvent++){
 		if (iEvent % (nEntries/10) == 0)
 			cout << "Analyzed " << iEvent << " events."  << endl;
@@ -92,15 +78,16 @@ void plot_showermax_response(){
 			rate = fRate/1.0e9/goodFileCount; // convert to GHz/uA
 
 			//Fill histograms with proper cuts
-			bool all_cuts = (det == 30 && 											    		//det number 30 is SM plane
+			bool all_cuts = (det >= 73001 && det <= 73028 &&											    		//det number 30 is SM plane
                             hitr>1020 && hitr<1180)&&
                             (pid==11 || pid==-11 || pid==22 || pid==13 || pid==-13 || pid==211 || pid==-211 || pid==2112) &&    //particle selection
-							energy>2 &&  										//energy cut
+							energy>10 &&  										//energy cut
                             hitpz>0;															//particle coming from upstream (pz>0)
 			
 			if (all_cuts) {
-                std::pair<double, double> qsimxy = ConvertRemollToQsim(hitx, hity);
-                pe = get_PE_response(map_fit_data[pid], energy, qsimxy.first, qsimxy.second);
+                // Double_t pe = ShowermaxLookup::getPeResponseWithoutLP(pid, energy, hitx, hity);
+                Double_t pe = ShowermaxLookup::getPeResponse(det, pid, energy, hitx, hity);
+                std::cout << "pid: " << pid << ", energy: " << energy << ", pe: " << pe << std::endl;
 
                 h_hitRate->Fill(hitr, rate);
                 h_hitRateSmPE->Fill(hitr,rate*pe);
@@ -109,18 +96,19 @@ void plot_showermax_response(){
     }
 
     // Print the rate in shower-max for script validation
-    double rateTotal = h_hitRate->Integral(); // in GHz
+    double rateTotal = h_hitRate->Integral(); // in GH
     cout << "Accepted rate: " << rateTotal << " GHz" << endl;
 
     double cathCurrent = h_hitRateSmPE->Integral()*1e9*1.6e-19*1e9; // in nA
-    cout << "Cathode current: " << cathCurrent << " nA" << endl;
+    cout << "Total cathode current: " << cathCurrent << " nA" << endl;
     
     // Plot the histograms
-    TCanvas* c1 = new TCanvas("c1", "c1", 1300, 500);
-    c1->Divide(2, 1);
-    c1->cd(1);
-    h_hitRate->Draw("hist E");
-    c1->cd(2);
-    h_hitRateSmPE->Draw("hist E");
+    // TCanvas* c1 = new TCanvas("c1", "c1", 1300, 500);
+    // c1->Divide(2, 1);
+    // c1->cd(1);
+    // h_hitRate->Draw("hist E");
+    // c1->cd(2);
+    // h_hitRateSmPE->Draw("hist E");
 
 }
+

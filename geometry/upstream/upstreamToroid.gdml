@@ -1347,7 +1347,7 @@
 	<volume name="logic_support_front_plate">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_support_front_plate"/>
-		<auxiliary auxtype="Color" auxvalue="G4_Al"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
 		<auxiliary auxtype="SensDet" auxvalue="enclosureDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="92"/>
 	</volume>
@@ -1355,7 +1355,7 @@
 	<volume name="logic_support_end_plate">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_support_end_plate"/>
-		<auxiliary auxtype="Color" auxvalue="G4_Al"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
 		<auxiliary auxtype="SensDet" auxvalue="enclosureDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="93"/>
 	</volume>
@@ -1363,7 +1363,7 @@
 	<volume name="logic_support_bar">
 		<materialref ref="G4_Al"/>
 		<solidref ref="solid_support_bar"/>
-		<auxiliary auxtype="Color" auxvalue="G4_Al"/>
+		<auxiliary auxtype="Color" auxvalue="grey"/>
 		<auxiliary auxtype="SensDet" auxvalue="enclosureDet"/>
 		<auxiliary auxtype="DetNo" auxvalue="94"/>
 	</volume>

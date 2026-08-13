@@ -1,0 +1,100 @@
+<materials>
+<define>
+	<quantity type="density" name="universe_mean_density" value="1.e-25" unit="g/cm3" />
+</define>
+<element Z="1" formula="H" name="Hydrogen" >
+	<atom value="1.008" />
+</element>
+<element Z="6" formula="C" name="Carbon" >
+	<atom value="12.011" />
+</element>
+<element Z="8" formula="O" name="Oxygen" >
+	<atom value="16" />
+</element>
+<element Z="7" formula="N" name="Nitrogen" >
+	<atom value="14.01" />
+</element>
+<element Z="14" formula="Si" name="Silicon" >
+	<atom value="28.085" />
+</element>
+<element Z="13" formula="Al" name="Aluminum" >
+	<atom value="26.982" />
+</element>
+<element Z="16" formula="S" name="Sulfur" >
+	<atom value="32.065" />
+</element>
+<element Z="51" formula="Sb" name="Antimony" >
+	<atom value="121.760" />
+</element>
+<element Z="55" formula="Cs" name="Caesium" >
+	<atom value="132.90545" />
+</element>
+<element Z="19" formula="K" name="Potassium" >
+	<atom value="39.0983" />
+</element>
+<element Z="74" formula="W" name="Tungsten" >
+	<atom value="183.85" />
+</element>
+
+<material formula="noFormula" name="Air" >
+	<property name="RINDEX" ref="Air_RINDEX"/>
+	<property name="ABSLENGTH" ref="Air_ABSLENGTH"/>
+	<D value="0.00129" />
+	<fraction n="0.3" ref="Oxygen" />
+	<fraction n="0.7" ref="Nitrogen" />
+</material>
+<material Z="1" name="vacuum" >
+	<property name="RINDEX" ref="Vacuum_RINDEX"/>
+	<T value="2.73" />
+	<P value=" 3.0E-18" unit="pascal" />
+	<Dref ref="universe_mean_density" />
+	<atom value="1.01" />
+</material>
+<material formula="SiO2" name="Quartz" >
+	<property name="RINDEX" ref="Quartz_RINDEX"/>
+	<property name="ABSLENGTH" ref="Quartz_ABSLENGTH_DATA"/>
+	<property name="REFLECTIVITY" ref="Quartz_REFLECTIVITY"/>
+	<D value="2.203" />
+	<composite n="1" ref="Silicon" />
+	<composite n="2" ref="Oxygen" />
+</material>
+<material formula="K2CsSb" name="Cathode" >
+	<D value="3.46" />
+	<composite n="2" ref="Potassium" />
+	<composite n="1" ref="Caesium" />
+	<composite n="1" ref="Antimony" />
+	</material>
+<material formula="Al" name="Aluminum_material" >
+	<D value="2.6982" />
+	<composite n="1" ref="Aluminum" />
+</material>
+<material formula="W" name="Tungsten_material" >
+	<D value="19.3" />
+	<composite n="1" ref="Tungsten" />
+</material>
+<material formula="C12H22N2O2" name="Nylon" >
+	<D value="1.14" />
+	<composite n="12" ref="Carbon" />
+	<composite n="22" ref="Hydrogen" />
+	<composite n="2" ref="Nitrogen" />
+	<composite n="2" ref="Oxygen" />
+</material>
+<material formula="C14H20O2S" name="PETG" >
+	<D value="1.23" />
+	<composite n="14" ref="Carbon" />
+	<composite n="20" ref="Hydrogen" />
+	<composite n="2" ref="Oxygen" />
+	<composite n="1" ref="Sulfur" />
+</material>
+<material formula="K2CsSb" name="Bialkali" >
+	<D value="3.46" />
+	<composite n="2" ref="Potassium" />
+	<composite n="1" ref="Caesium" />
+	<composite n="1" ref="Antimony" />
+</material>
+<material formula="petgw" name="PETGW" >
+	<D value="4.0"/>
+	<fraction n="0.75" ref="Tungsten"/>
+	<fraction n="0.25" ref="PETG"/>
+</material>
+</materials>

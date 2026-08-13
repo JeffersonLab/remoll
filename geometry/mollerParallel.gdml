@@ -56,16 +56,16 @@
        x="1" y="3429+2571" z="9512.3+9541.7"/>
        
   <box lunit="mm" name="PSbunkerOuterSideVP_solid"
-       x="11742.42" y="3429" z="1"/>
+       x="14551.94534" y="3429" z="1"/>
    
   <box lunit="mm" name="PSbunkerInnerFrontVP_solid"
      x="1" y="3429" z="10071.3"/>
   
   <box lunit="mm" name="PSbunkerInnerSideVP_solid"
-       x="10218.42" y="3429" z="1"/>
+       x="12927.94534+100" y="3429" z="1"/>
  
- <box lunit="mm" name="PSbunkerTopVP_solid"
-      x="11742.42" y="1" z="9512.3+9541.7"/>
+  <box lunit="mm" name="PSbunkerTopVP_solid"
+      x="14551.94534" y="1" z="9512.3+9541.7"/>
 
 
  <!-- RR bellows 4 and its flanges -->
@@ -94,7 +94,16 @@
         startphi="0" deltaphi="360" aunit="deg"
         rmin="723.9" rmax="730.25" z="118.5672" lunit="mm"/>
 
-  <box name="Showermax_stack_VirtualPlane_solid" lunit="mm" x="155" y="260" z="0.5"/>
+       <polycone aunit="deg" startphi="0" deltaphi="360" lunit="mm" name="Driftpipeend_Virtualsolid">
+        <zplane rmin="730.25" rmax="730.25" z="0"/>
+        <zplane rmin="730.25" rmax="730.25+25.4" z="25.4"/>
+        <zplane rmin="1270-25.4" rmax="1270" z="423.9-76.2"/>
+        <zplane rmin="1270-25.4" rmax="1270" z="423.9"/>
+        </polycone>
+
+
+
+  <box name="Showermax_stack_VirtualPlane_solid" lunit="mm" x="160" y="265" z="0.5"/>
 
 </solids>
 
@@ -529,25 +538,200 @@
     <auxiliary auxtype="DetNo" auxvalue="66"/>
   </volume>
 
-<volume name="showerMaxStackVirtualPlaneOpen_log">
+  <volume name="showerMaxStackVirtualPlane_01_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="Showermax_stack_VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="70030"/>
+    <auxiliary auxtype="DetNo" auxvalue="73001"/>
   </volume>
 
-  <volume name="showerMaxStackVirtualPlaneClosed_log">
+  <volume name="showerMaxStackVirtualPlane_02_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="Showermax_stack_VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="71430"/>
+    <auxiliary auxtype="DetNo" auxvalue="73002"/>
   </volume>
 
-  <volume name="showerMaxStackVirtualPlaneTrans_log">
+  <volume name="showerMaxStackVirtualPlane_03_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="Showermax_stack_VirtualPlane_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-    <auxiliary auxtype="DetNo" auxvalue="72130"/>
+    <auxiliary auxtype="DetNo" auxvalue="73003"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_04_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73004"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_05_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73005"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_06_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73006"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_07_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73007"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_08_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73008"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_09_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73009"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_10_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73010"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_11_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73011"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_12_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73012"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_13_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73013"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_14_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73014"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_15_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73015"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_16_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73016"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_17_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73017"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_18_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73018"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_19_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73019"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_20_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73020"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_21_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73021"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_22_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73022"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_23_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73023"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_24_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73024"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_25_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73025"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_26_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73026"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_27_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73027"/>
+  </volume>
+
+  <volume name="showerMaxStackVirtualPlane_28_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="Showermax_stack_VirtualPlane_solid"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="73028"/>
   </volume>
 
   <volume name="LintelExit_log">
@@ -1398,22 +1582,175 @@
       <position name="Ring1Front_pos" unit="mm" z="22198.00 + 1070.8 + 21"/>
     </physvol>
 
-    <physvol name="showerMaxStackVirtualPlaneOpen_phys">
-      <volumeref ref="showerMaxStackVirtualPlaneOpen_log"/>
-      <positionref ref="showerMaxStackVirtualPlaneOpen_pos"/>
+    <!--Showermax stack virtual plane-->
+    <physvol name="showerMaxStackVirtualPlane_01_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_01_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_01_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_01_rot"/>
     </physvol>
 
-    <physvol name="showerMaxStackVirtualPlaneClosed_phys">
-      <volumeref ref="showerMaxStackVirtualPlaneClosed_log"/>
-      <positionref ref="showerMaxStackVirtualPlaneClosed_pos"/>
+    <physvol name="showerMaxStackVirtualPlane_02_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_02_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_02_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_02_rot"/>
     </physvol>
 
-    <physvol name="showerMaxStackVirtualPlaneTrans_phys">
-      <volumeref ref="showerMaxStackVirtualPlaneTrans_log"/>
-      <positionref ref="showerMaxStackVirtualPlaneTrans_pos"/>
-      <rotation name="showerMaxStackVirtualPlaneTrans_rot" unit="deg" z="90"/>
+    <physvol name="showerMaxStackVirtualPlane_03_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_03_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_03_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_03_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_04_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_04_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_04_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_04_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_05_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_05_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_05_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_05_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_06_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_06_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_06_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_06_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_07_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_07_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_07_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_07_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_08_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_08_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_08_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_08_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_09_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_09_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_09_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_09_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_10_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_10_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_10_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_10_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_11_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_11_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_11_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_11_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_12_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_12_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_12_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_12_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_13_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_13_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_13_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_13_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_14_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_14_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_14_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_14_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_15_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_15_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_15_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_15_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_16_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_16_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_16_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_16_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_17_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_17_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_17_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_17_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_18_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_18_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_18_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_18_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_19_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_19_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_19_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_19_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_20_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_20_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_20_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_20_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_21_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_21_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_21_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_21_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_22_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_22_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_22_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_22_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_23_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_23_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_23_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_23_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_24_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_24_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_24_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_24_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_25_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_25_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_25_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_25_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_26_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_26_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_26_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_26_rot"/>
+    </physvol>
+
+    <physvol name="showerMaxStackVirtualPlane_27_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_27_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_27_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_27_rot"/>
     </physvol>
     
+    <physvol name="showerMaxStackVirtualPlane_28_phys">
+      <volumeref ref="showerMaxStackVirtualPlane_28_log"/>
+      <positionref ref="showerMaxStackVirtualPlane_28_pos"/>
+      <rotationref ref="showerMaxStackVirtualPlane_28_rot"/>
+    </physvol>
+
     <physvol name="Ring1Back_phys">
       <volumeref ref="Ring1Back_log"/>
       <position name="Ring1Back_pos" unit="mm" z="22198.00 + 1204.94 + 21"/>
@@ -1488,37 +1825,37 @@
 
     <physvol name="PSbunkerOuterFrontVP_phys">
       <volumeref ref="PSbunkerOuterFrontVP_log"/>
-      <position name="PSbunkerOuterFrontVP_pos" unit="mm" x="4123.944-1" y="-948.86+75+2571/2-786/2" z="279.5+19054/2"/>
+      <position name="PSbunkerOuterFrontVP_pos" unit="mm" x="4123.944+4" y="-948.86+75+2571/2-786/2" z="279.5+19054/2"/>
     </physvol>
     
     <physvol name="PSbunkerOuterSideLeftVP_phys">
       <volumeref ref="PSbunkerOuterSideLeftVP_log"/>
-      <position name="PSbunkerOuterSideLeftVP_pos" unit="mm" x="4123.944+5871.21" y="-948.86+75-786/2" z="10447.957+13119.354/2-1869.44/2+1524/2+50-1524-10071.354-5-1524-4"/>
+      <position name="PSbunkerOuterSideLeftVP_pos" unit="mm" x="4123.944+4+14551.94534/2" y="-948.86+75-786/2" z="10447.957+13119.354/2-1869.44/2+1524/2+50-1524-10071.354-5-1524-4"/>
     </physvol>
     
     <physvol name="PSbunkerOuterSideRightVP_phys">
       <volumeref ref="PSbunkerOuterSideRightVP_log"/>
-      <position name="PSbunkerOuterSideRightVP_pos" unit="mm" x="4123.944+5871.21" y="-948.86+75-786/2" z="10447.957+13119.354/2-1869.44/2+1524/2+50"/>
+      <position name="PSbunkerOuterSideRightVP_pos" unit="mm" x="4123.944+4+14551.94534/2" y="-948.86+75-786/2" z="10447.957+13119.354/2-1869.44/2+1524/2+50"/>
     </physvol>
     
     <physvol name="PSbunkerInnerFrontVP_phys">
       <volumeref ref="PSbunkerInnerFrontVP_log"/>
-      <position name="PSbunkerInnerFrontVP_pos" unit="mm" x="4123.944+1524+1" y="-948.86+75-786/2" z="10447.957-2000+3659.35/2"/>
+      <position name="PSbunkerInnerFrontVP_pos" unit="mm" x="4123.944+1524+5" y="-948.86+75-786/2" z="10447.957-2000+3659.35/2"/>
     </physvol>
     
     <physvol name="PSbunkerInnerSideLeftVP_phys">
       <volumeref ref="PSbunkerInnerSideLeftVP_log"/>
-      <position name="PSbunkerInnerSideLeftVP_pos" unit="mm" x="4123.944+5109.21+2+1524" y="-948.86+75-786/2" z="10447.957+13119.354/2-1869.44/2+1524/2+50-1524-10071.354-6"/>
+      <position name="PSbunkerInnerSideLeftVP_pos" unit="mm" x="4123.944+4+1524+12927.94534/2+100/2" y="-948.86+75-786/2" z="10447.957+13119.354/2-1869.44/2+1524/2+50-1524-10071.354-6"/>
     </physvol>
     
     <physvol name="PSbunkerInnerSideRightVP_phys">
       <volumeref ref="PSbunkerInnerSideRightVP_log"/>
-      <position name="PSbunkerInnerSideRightVP_pos" unit="mm" x="4123.944+5109.21+2+1524" y="-948.86+75-786/2" z="10447.957+13119.354/2-1869.44/2+1524/2+50-1524-11"/>
+      <position name="PSbunkerInnerSideRightVP_pos" unit="mm" x="4123.944+4+1524+12927.94534/2+100/2" y="-948.86+75-786/2" z="10447.957+13119.354/2-1869.44/2+1524/2+50-1524-11"/>
     </physvol>
     
     <physvol name="PSbunkerTopVP_phys">
       <volumeref ref="PSbunkerTopVP_log"/>
-      <position name="PSbunkerTopVP_pos" unit="mm" x="4123.944+5871.21+1" y="-948.86+75+3429/2+1-786/2" z="279.5+19054/2"/>
+      <position name="PSbunkerTopVP_pos" unit="mm" x="4123.944+4+14551.94534/2" y="-948.86+75+3429/2+10-786/2" z="279.5+19054/2"/>
     </physvol>
     
     <auxiliary auxtype="Alpha" auxvalue="0.1"/>

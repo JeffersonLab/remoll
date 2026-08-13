@@ -359,7 +359,7 @@ endforeach()
 # Download field maps subdirectory
 #
 set(REMOLL_LOCATION /group/halla/www/hallaweb/html/12GeV/Moller/downloads/remoll/)
-set(REMOLL_DOWNLOADS http://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/)
+set(REMOLL_DOWNLOADS https://hallaweb.jlab.org/12GeV/Moller/downloads/remoll/)
 set(REMOLL_MAP_DIR ${PROJECT_SOURCE_DIR}/map_directory)
 if(EXISTS ${REMOLL_LOCATION})
   message(STATUS "Fieldmaps will be copied from directory...")
@@ -373,34 +373,14 @@ endif()
 # for i in *.txt ; do echo `md5sum $i|awk '{print$1}'`:`md5sum $i.gz|awk '{print$1}'`:$i ; done
 set(REMOLL_MAPS
 b8b30b803bae42f69135323ff40fe7db:99bf3fae83677c6c2f3e09a871682b2e:V2U.1a.50cm.parallel.txt
-e4a96c2f3136d0eb020d90e74a532a6d:246d48001dd71174b62e16ecf07adc4d:V2U.1a.50cm.parallel.real_asymmetric.txt
-3ca8b6da4186d5de2a25bd89ef067a54:6a5fad69edd8cba457d85948bc42596b:subcoil_2_3_3mm_full.txt
-e6ab87da79a1dab8e759fcae6356e6f8:81b24e52bffbca83b3b7ca37b056f404:subcoil_2_3_3mm_real_asymmetric.txt
+9f97ba09601fc26676c1fd6ebd44731d:070b004ffd281ebceee0b6eaaa847edf:DS_TM1-4_CoilA-G_ll_TM2-4_out3mm.txt
 )
 set(REMOLL_MAPS_EXTRA
-d5f568675ca29e295c1013617a2dc092:b3e031ce9d97fa5331ec39e8903817e6:V2DSg.9.75cm.parallel.txt
-1c79bc83e4da5e9d5e44338e28ce6ebe:c7591d167ca56e871e8e5eeecab2872c:V2DSg.9.75cm.txt
-f768447f761b9bf01af7c57e249d1d8a:94ec0017b21fc56d9d8084d68e479fd5:V2U.1a.50cm.txt
-b1b8f2845dc5cd420c6ff49ae7760a60:6002f6f5f092346cb2bdedac046d1905:V1U.2a.txt
-70e2bbed1831816957e953bba48f01d5:2fd1cd2785db92f9c880b675890460b5:V2U.1a.txt
-e55ffd8aba96cbf24962155d3c7f75e4:0172016c988867b0928258d79cd1c865:V2U.1b.txt
-eb802b9d8569669b5aa674fc56c52a24:df7f4dd87c894c5eef878b248ef14c3e:V1DSg.3.txt
-c71758450b063ab83e95a7ba8c590885:a5ba5c81c0c6590d43fac1cbd3f2d7a0:V2DSg.1a.txt
-c2ac33287df1bf20bfedcb4d4a96c8d5:3a31416eb7659248f7a2ba582d43a6fe:V2DSg.1b.txt
-ca69d4a4397ae3a944f603b91dfbe586:36e2aa90d39e4ad9be4f747a522baa69:V1DHy.3.txt
-259459226a5cacc1d62ba295534645e2:95c6193ea30c03316068e3d67d3ec32b:V2DHy.1.txt
-b4bfef8f362e0df66f166b4e76a6847e:57a7719eb877572751f4c4b481d6a788:blockyHybrid_rm_3.0.txt
-7df29e47413c8dd69fd179298f11b717:9120bc05099a144916467b6ea17e39f8:blockyUpstream_rm_1.1_noscale.txt
-3e2338e1ba74b03da37545e98931f5f3:75dfcd912e74f42543892fed8271fa7c:blockyUpstream_rm_1.1.txt
-c2da18fd7ab80cc4abe7eafc487963dc:112a466bf5dc2ef4dd24b935767a0540:hybridJLAB.txt
-4a0d1abc9b80cf5f2c3dd495a1133e26:a8f5875a4ef0c27c63f31cf7395b13f0:hybridJLAB_v2.txt
-0f6e9a3a8392d01c63f1609afc4e4c09:996a6581de9d3c331398bb85ef955a15:hybridSymmetric_sensR_0.0.txt
-78fad2ffa5b5ae129df11bdf0ce25333:f21fb19507197baba3658885315c9a6e:hybridSymmetric_sensR_0.1.txt
-2a21b540f6496e3f554302f369646bbb:fb95664f9bdba1c22ad28eb21bd1c9fb:segmentedJLAB_v2.txt
-af06ed35516c17640e89ba3aa0f5b200:b8009dc61a17eea1d884f0c746f6922c:upstreamJLAB_1.25.txt
-bed73f2ea44135c52222bc8e767e1954:f50ce73289174ada019977f2dec87cb6:upstreamJLAB_v2.txt
-4ca3d968cadd85a89b86148411eda678:ce0a41b96a5937978aa9f30155fab610:upstreamSymmetric_sensR_0.0.txt
-849d9dc5abab0842fc13fef7f4918648:4a8c457385f179a036fffca4ae8e2cb0:upstreamSymmetric_sensR_0.1.txt
+e4a96c2f3136d0eb020d90e74a532a6d:246d48001dd71174b62e16ecf07adc4d:V2U.1a.50cm.parallel.real_asymmetric.txt
+90b2096b971970abfeb70f896e7fa7c0:7a57aede9c2b98bba047d424edf38eb4:US_Asym_CP2B_pm_1_3.txt
+c062261310e041ddfddd692faba1a5d7:5a7a9ca389d29b12d61dfd7f9b67a3d8:DS_TM1-4_CoilA-G_ll_TM2-4_out3mm_asym_case_I.txt
+99196c749da1f2516772639df01c0c62:d5a890bddc8b6b6b1a3c4708cf0298d5:DS_TM1-4_CoilA-G_ll_TM2-4_out3mm_asym_case_II.txt
+03d70a984b51194b6b1d049862f6e56e:d550945c74c23a4515dfa0ee03d7d5d7:DS_Asym_CP2B_pm_1_3.txt
 )
 if(ADDITIONAL_FIELDS)
   message(STATUS "Ensuring additional fields are available.")
@@ -408,6 +388,8 @@ else()
   message(STATUS "Download additional fields with '-DADDITIONAL_FIELDS=ON'.")
   set(REMOLL_MAPS_EXTRA "")
 endif()
+# setting User-agent HTTP header
+set(_HTTP_HDR "User-Agent: Mozilla/5.0")
 foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
   set(REGEX "^(.*):(.*):(.*)$")
   # Hash 1: txt file, Hash 2: txt.gz file
@@ -419,6 +401,7 @@ foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
       ${REMOLL_DOWNLOADS}/${FILE}.gz
       ${REMOLL_MAP_DIR}/${FILE}.gz
       EXPECTED_MD5 ${HASH2}
+      HTTPHEADER ${_HTTP_HDR}
       )
     install(FILES
       ${REMOLL_MAP_DIR}/${FILE}.gz
@@ -429,6 +412,7 @@ foreach(MAP IN LISTS REMOLL_MAPS REMOLL_MAPS_EXTRA)
       ${REMOLL_DOWNLOADS}/${FILE}
       ${REMOLL_MAP_DIR}/${FILE}
       EXPECTED_MD5 ${HASH1}
+      HTTPHEADER ${_HTTP_HDR}
       )
     install(FILES
       ${REMOLL_MAP_DIR}/${FILE}

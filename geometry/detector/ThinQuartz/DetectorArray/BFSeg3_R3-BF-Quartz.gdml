@@ -12,8 +12,8 @@
 			<solidref ref="BFSeg3_R3-BF-Quartz_solid"/>
 			<auxiliary auxtype="Color" auxvalue="magenta"/>
 			<auxiliary auxtype="SensDet" auxvalue="mainDetectorSD" />
-			<!--<auxiliary auxtype="DetNo" auxvalue="110330"/>-->
-            <auxiliary auxtype="DetNo" auxvalue="1030101"/>
+			<auxiliary auxtype="DetNo" auxvalue="110330"/>
+            <!--<auxiliary auxtype="DetNo" auxvalue="1030101"/>-->
 		</volume>
 	</structure>
  

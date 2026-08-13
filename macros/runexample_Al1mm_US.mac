@@ -8,10 +8,10 @@
 /run/initialize
 
 # Set target ladder position
-/control/execute macros/target/AlDummy1US.mac
-#/control/execute macros/target/AlDummy1DS.mac
-#/control/execute macros/target/AlDummy2US.mac
-#/control/execute macros/target/AlDummy2DS.mac
+/control/execute macros/target/Al1mmUS.mac
+#/control/execute macros/target/Al2mmUS.mac
+#/control/execute macros/target/Al6mmDS.mac
+#/control/execute macros/target/Al12_5mmDS.mac
 
 # Load magnetic fields
 /control/execute macros/load_magnetic_fieldmaps.mac

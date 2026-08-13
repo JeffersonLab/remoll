@@ -59,20 +59,43 @@
 	 y="2504.313"
 	 z="USBoxmother_length - USBoxmothersubtract_length + 956.784"/>
 
+    <tube aunit="deg" lunit="mm" deltaphi="360" name="coll1SideShielding_tube"
+     rmin="0" rmax="101.6/2"
+      z="812.2+2.0"/>
+            
+    <subtraction name="coll1SideShielding_sub">
+        <first ref = "coll1SideShielding_solid"/>
+        <second ref = "coll1SideShielding_tube"/>
+        <position name = "coll1SideShielding_sub_pos" lunit="mm" x="0" y="-565.3665" z="-1287.722"/>
+        <rotation name = "coll1SideShielding_sub_rot" aunit="rad" x="0" y="pi/2.0" z="0"/>
+    </subtraction>
+      
+
     <box lunit="mm" name="coll1TopShielding_solid_1"
 	 x="4166"
 	 y="1400"
      z="USBoxmother_length - USBoxmothersubtract_length + 956.784"/>
 
-    <box lunit="mm" name="coll1TopShielding_sub"
-     x="4166+1"
+    <box lunit="mm" name="coll1TopShielding_sub_1"
+     x="1274.1+1"
      y="485.6"
-     z="2671.4+1"/>
+     z="1671.4+1"/>
 
-    <subtraction name="coll1TopShielding_solid">
+     <box lunit="mm" name="coll1TopShielding_sub_2"
+      x="1664.6+1"
+      y="485.6+1"
+      z="1671.4+1"/>
+      
+    <subtraction name="coll1TopShielding_sub_solid">
       <first ref = "coll1TopShielding_solid_1"/>
-      <second ref = "coll1TopShielding_sub"/>
-      <position name ="coll1TopShielding_pos" lunit="mm" x="0" y="1400/2-485.6/2" z="-(USBoxmother_length - USBoxmothersubtract_length + 956.784)/2+2671.4/2" />
+      <second ref = "coll1TopShielding_sub_1"/>
+      <position name ="coll1TopShielding_sub_pos" lunit="mm" x="808.9+1274.1/2" y="1400/2-485.6/2" z="-(USBoxmother_length - USBoxmothersubtract_length + 956.784)/2+1671.4/2" />
+    </subtraction>
+    
+    <subtraction name="coll1TopShielding_solid">
+      <first ref = "coll1TopShielding_sub_solid"/>
+      <second ref = "coll1TopShielding_sub_2"/>
+      <position name ="coll1TopShielding_sub_pos_2" lunit="mm" x="-418.4-1664.6/2" y="1400/2-485.6/2" z="-(USBoxmother_length - USBoxmothersubtract_length + 956.784)/2+1671.4/2" />
     </subtraction>
       
     <box lunit="mm" name="pivotIron_solid"
@@ -109,15 +132,14 @@
 
     <!--Concrete Shielding-->
     <volume name="coll1TopShield_logic">
-      <materialref ref="barite"/>
-      <!-- <materialref ref="Concrete"/> -->
+      <materialref ref="Concrete"/>
       <solidref ref="coll1TopShielding_solid"/>
-      <auxiliary auxtype="Color" auxvalue="Brown"/>
+      <auxiliary auxtype="Color" auxvalue="green"/>
     </volume>
 
     <volume name="coll1SideShield_logic">
       <materialref ref="Concrete"/>
-      <solidref ref="coll1SideShielding_solid"/>
+      <solidref ref="coll1SideShielding_sub"/>
       <auxiliary auxtype="Color" auxvalue="green"/>
     </volume>
 
@@ -136,7 +158,7 @@
     </volume>
     
     <volume name="DSbarite_logic">
-      <materialref ref="barite"/>
+      <materialref ref="BariteHematiteConcrete"/>
       <solidref ref="DSbarite_sub"/>
       <auxiliary auxtype="Color" auxvalue="Brown"/>
       <auxiliary auxtype="Alpha" auxvalue="1.0"/>

@@ -227,6 +227,9 @@
     <fraction ref="N15" n="0.0037" />
   </element>
 
+ <element name="Hydrogen" Z="1">
+     <atom unit="g/mole" value="1.00794"/>
+   </element>
 
 <!--add bellows custom material less dense G4_STAINLESS-STEEL like example here -->
   <material name="SSbellows" state="solid">
@@ -240,10 +243,17 @@
     <D unit="g/cm3" value="1e-25"/>
     <atom unit="g/mole" value="1.01"/>
   </material>
-  <material Z="1" name="LiquidHydrogen" state="liquid">
+  <!-- <material Z="1" name="LiquidHydrogen" state="liquid">
     <T unit="K" value="20.27"/>
     <D unit="g/cm3" value="0.0708"/>
     <atom unit="g/mole" value="1.00794"/>
+  </material>-->
+
+  <material name="LiquidHydrogen" state="liquid">
+    <T unit="K" value="20.00"/>
+    <P unit="bar" value="2.41317"/>
+    <D unit="g/cm3" value="0.071463"/>
+    <composite n="2" ref="Hydrogen"/>
   </material>
 
    <material Z="74" name="Tungsten" state="solid">
@@ -581,11 +591,26 @@
     <fraction n="0.00180" ref="NiO"/>
   </material>
 
-  <material name="BariteConcrete" state="solid">
+  <!--<material name="BariteConcrete" state="solid">
     <D value="3.36" unit="g/cm3"/>
     <fraction n="0.0829" ref="cement"/>
     <fraction n="0.0593" ref="G4_WATER"/>
     <fraction n="0.8578" ref="barite"/>
+  </material>-->
+
+  <material name="BariteConcrete" state="solid"> <!-- 100% Barite aggregates, coarse and fine, portland cement & water.  air dry density = 220.0 pounds per cubic foot.  Based on report from NSS. -->
+    <D value="3.52406" unit="g/cm3"/>
+    <fraction n="0.0829" ref="cement"/>
+    <fraction n="0.0593" ref="G4_WATER"/>
+    <fraction n="0.8578" ref="barite"/>
+  </material>
+  
+  <material name="BariteHematiteConcrete" state="solid"> <!-- Barite coarse aggregate, Hemetite fine aggregate, portland cement & water. air dry density = 221.0 pounds per cubic foot. Based on report from NSS. -->
+    <D value="3.54008" unit="g/cm3"/>
+    <fraction n="0.0829"  ref="cement"/>
+    <fraction n="0.0593"  ref="G4_WATER"/>
+    <fraction n="0.51468" ref="barite"/>
+    <fraction n="0.34312" ref="G4_FERRIC_OXIDE"/>
   </material>
 
   <material name="Marble" state="solid">

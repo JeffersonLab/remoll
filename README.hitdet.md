@@ -32,3 +32,15 @@ T->Draw("hit.y:hit.x","hit.pid == dets.sd.pionLuciteDet")
 In the first case (`dets.lv`) the logical volume name is used. In the second
 case (`dets.sd`) the sensitive detector name is used.
 
+### Quartz tile numbering scheme in remoll/develop branch
+```
+detector type front flush = 0xFF = decimal 15 x 10000
+detector type back flush = 0xBF = decimal 11 x 10000
+then segment number x 100
+then ring number x 10
+and then for ring 5: 1 = left, 2 = center, 3 = right as you look in beam direction.
+For example;
+151152 is FF, segment 11, ring 5, center
+110430 is BF, segment 4, ring 3 (the last 0 means there is no left, right, or center)
+```
+
