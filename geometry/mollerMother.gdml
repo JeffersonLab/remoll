@@ -295,7 +295,7 @@
       
     <!-- Front Tracking Detectors -->
     <physvol>
-      <file name="tracking/GEMDetectors.gdml"/>
+      <file name="tracking/GEMTSDetectors.gdml"/>
       <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
     </physvol>
 

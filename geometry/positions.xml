@@ -138,3 +138,7 @@
 <rotation name="showerMaxStackVirtualPlane_26_rot" z="-321.43" unit="deg" />
 <rotation name="showerMaxStackVirtualPlane_27_rot" z="-334.29" unit="deg" />
 <rotation name="showerMaxStackVirtualPlane_28_rot" z="-347.14" unit="deg" />
+
+<!-- trigger scintillator virtual detector position -->
+<position name="TRIGSCINT_virtualPlane_pos_0" unit="mm" x="0" y="0" z="19724+80.0"/>
+<position name="TRIGSCINT_virtualPlane_pos_3" unit="mm" x="0" y="0" z="19724+920.3"/>

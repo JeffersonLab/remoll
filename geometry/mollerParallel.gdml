@@ -9,6 +9,13 @@
 
 <define>
   &positions;
+  <!-- GEM rotor positions -->
+  <constant name="n_rots_01" value="0"/>
+  <constant name="n_rots_23" value="0"/>
+  <!-- Trigger scintillator volume pacement indices -->
+  <variable name="j" value="0"/>
+  <variable name="k" value="0"/>
+
 </define>
 
 <materials>
@@ -104,6 +111,57 @@
 
 
   <box name="Showermax_stack_VirtualPlane_solid" lunit="mm" x="160" y="265" z="0.5"/>
+
+  <!-- Trigger scintillator virtual detector cross sections US=12 DS=34 -->
+
+  <xtru name="trigScintVirtual_solid_plane12" lunit="mm">
+    <twoDimVertex x="-207" y="1065"/>
+    <twoDimVertex x="-226" y="1061"/>
+    <twoDimVertex x="-242" y="1048"/>
+    <twoDimVertex x="-251" y="1030"/>
+    <twoDimVertex x="-160" y="625"/>
+    <twoDimVertex x="-152" y="605"/>
+    <twoDimVertex x="-139" y="591"/>
+    <twoDimVertex x="-121" y="581"/>
+    <twoDimVertex x="-50" y="583"/>
+    <twoDimVertex x="0" y="585"/>
+    <twoDimVertex x="50" y="583"/>
+    <twoDimVertex x="121" y="581"/>
+    <twoDimVertex x="139" y="591"/>
+    <twoDimVertex x="152" y="605"/>
+    <twoDimVertex x="251" y="1010"/>
+    <twoDimVertex x="251" y="1030"/>
+    <twoDimVertex x="242" y="1048"/>
+    <twoDimVertex x="226" y="1061"/>
+    <twoDimVertex x="207" y="1065"/>
+    <section zOrder="0" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+    <section zOrder="1" zPosition="3" xOffset="0" yOffset="0" scalingFactor="1"/>
+  </xtru>
+
+  <xtru name="trigScintVirtual_solid_plane34" lunit="mm">
+    <twoDimVertex x="-207" y="1096"/>
+    <twoDimVertex x="-226" y="1092"/>
+    <twoDimVertex x="-242" y="1079"/>
+    <twoDimVertex x="-251" y="1061"/>
+    <twoDimVertex x="-160" y="656"/>
+    <twoDimVertex x="-152" y="637"/>
+    <twoDimVertex x="-139" y="622"/>
+    <twoDimVertex x="-121" y="612"/>
+    <twoDimVertex x="-50" y="615"/>
+    <twoDimVertex x="0" y="616"/>
+    <twoDimVertex x="50" y="615"/>
+    <twoDimVertex x="121" y="612"/>
+    <twoDimVertex x="139" y="622"/>
+    <twoDimVertex x="152" y="637"/>
+    <twoDimVertex x="251" y="1042"/>
+    <twoDimVertex x="251" y="1061"/>
+    <twoDimVertex x="242" y="1079"/>
+    <twoDimVertex x="226" y="1092"/>
+    <twoDimVertex x="207" y="1096"/>
+    <section zOrder="0" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
+    <section zOrder="1" zPosition="3" xOffset="0" yOffset="0" scalingFactor="1"/>
+  </xtru>
+
 
 </solids>
 
@@ -947,6 +1005,122 @@
     <auxiliary auxtype="DetNo" auxvalue="35"/>
   </volume>
 
+  <!-- US Plane trigger scintillator virtual detector logs: DetNo 400-406 -->
+
+  <volume name="trigScintVirtual_log_0">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane12"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="400"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_1">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane12"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="401"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_2">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane12"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="402"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+ <volume name="trigScintVirtual_log_3">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane12"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="403"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_4">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane12"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="404"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_5">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane12"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="405"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_6">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane12"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="406"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+
+  <!-- DS Plane trigger scintillator virtual detector logs: DetNo 407-413 -->
+  <volume name="trigScintVirtual_log_7">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane34"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="407"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_8">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane34"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="408"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_9">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane34"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="409"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_10">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane34"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="410"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_11">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane34"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="411"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_12">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane34"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="412"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+  <volume name="trigScintVirtual_log_13">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="trigScintVirtual_solid_plane34"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="413"/>
+    <auxiliary auxtype="Color" auxvalue="cyan"/>
+  </volume>
+
+
   <volume name="mainDetectorVirtualPlane_log">
     <materialref ref="G4_Galactic"/>
     <solidref ref="midVirtualPlane_solid"/>
@@ -1570,7 +1744,30 @@
       <volumeref ref="gemVirtualPlane4_log"/>
       <positionref ref="trackingDetectorVirtualPlaneBack2_pos"/>
     </physvol>
+
+   <!-- US Plane  trigger scintillator virtual detectors: DetNo 400-406 -->
+   <loop for="j" from="0" to="6" step="1">
+     <physvol name="TRIG_virtual_plane0_[j+1]">
+       <volumeref ref="trigScintVirtual_log[j+1]"/>
+       <rotation name="TRIG_virtual_plane0_rot_[j+1]"
+              z="(-j)*360./7 - 90 + n_rots_01*360./28"
+              unit="deg"/>
+       <positionref ref="TRIGSCINT_virtualPlane_pos_0"/>
+     </physvol>
+   </loop>
+
+   <!-- DS Plane  trigger scintillator virtual detectors: DetNo 407-413 -->
+   <loop for="j" from="0" to="6" step="1">
+     <physvol name="TRIG_virtual_plane3_[j+1]">
+       <volumeref ref="trigScintVirtual_log[7+j+1]"/>
+       <rotation name="TRIG_virtual_plane3_rot_[j+1]"
+              z="(-j)*360./7 - 90 + n_rots_23*360./28"
+              unit="deg"/>
+       <positionref ref="TRIGSCINT_virtualPlane_pos_3"/>
+     </physvol>
+   </loop>
     
+
     <!-- Main detector plane -->
     <physvol name="mainDetectorVirtualPlane_phys">
       <volumeref ref="mainDetectorVirtualPlane_log"/>
