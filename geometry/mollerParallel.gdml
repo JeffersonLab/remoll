@@ -446,10 +446,9 @@
       <auxiliary auxtype="DetNo" auxvalue="448"/>
    </volume>
 
-
-  <volume name="Driftpipeend_Virtuallog">
-      <materialref ref="G4_Galactic"/>
-     <solidref ref="Driftpipeend_Virtualsolid"/>
+   <volume name="Driftpipeend_Virtuallog">
+     <materialref ref="G4_Galactic"/>
+     <solidref ref="largeVirtualPlane_solid"/>
      <auxiliary auxtype="SensDet" auxvlaue="planeDet"/>
      <auxiliary auxtype="DetNo" auxvalue="449"/>
    </volume>
