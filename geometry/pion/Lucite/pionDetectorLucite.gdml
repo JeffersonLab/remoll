@@ -342,6 +342,7 @@
     <solidref ref="pionDetectorLucitePMTWindowDisk_solid"/>
     <auxiliary auxtype="SensDet" auxvalue="pionLucitePMTWindow"/>
     <auxiliary auxtype="DetNo" auxvalue="8000"/>
+    <auxiliary auxtype="CopyDepth" auxvalue="4"/>
     <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
     <auxiliary auxtype="Color" auxvalue="White"/>
     <auxiliary auxtype="Alpha" auxvalue="0.5"/>
