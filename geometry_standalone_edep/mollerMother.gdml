@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+  <define> 
+    <constant name="thickness" value="4000"/>
+  </define>
+
+  <materials>
+    <material name="Epoxy" state="solid">
+      <D value="1.3" unit="g/cm3"/>
+      <fraction n="0.5354" ref="C"/>
+      <fraction n="0.1318" ref="H"/>
+      <fraction n="0.3328" ref="O"/>
+    </material>
+    <material name="G10" state="solid">
+      <D value="1.3" unit="g/cm3"/>
+      <fraction n="0.773" ref="G4_SILICON_DIOXIDE"/>
+      <fraction n="0.147" ref="Epoxy"/>
+      <fraction n="0.080" ref="G4_Cl"/>
+    </material>  
+  </materials>
+
+  <solids>
+    <box lunit="mm" name="world_solid" x="1000" y="1000" z="9000"/>
+
+    <box lunit="mm" name="testMaterial" x="1000" y="1000" z="thickness"/>
+
+  </solids>
+
+  <structure>
+
+      <volume name="layer1_log">
+	<materialref ref="G4_Bi"/>
+	<solidref ref="testMaterial"/>
+	<auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+	<auxiliary auxtype="Color" auxvalue="Red"/>
+	<auxiliary auxtype="DetNo" auxvalue="10"/>
+      </volume>
+
+      <volume name="logicMother">
+      <materialref ref="G4_AIR"/>
+      <solidref ref="world_solid"/>
+
+      <physvol    name="layer1_phys">
+	<volumeref ref="layer1_log"/>
+	<position name="layer1_pos" unit="mm" z="thickness/2."/>
+      </physvol>
+
+      <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    </volume>
+
+  </structure>
+
+  <setup name="Default" version="1.0">
+    <world ref="logicMother"/>
+  </setup>
+  
+</gdml> 
