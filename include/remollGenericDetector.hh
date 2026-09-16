@@ -161,6 +161,10 @@ class remollGenericDetector : public G4VSensitiveDetector {
 
       void BuildStaticMessenger();
 
+      virtual void SetCopyDepth(G4int copy_depth) {
+        fCopyDepth = copy_depth;
+      }
+
       virtual void SetDetectorType(G4String det_type) {
         auto icompare = [](const G4String& lhs, const G4String& rhs) {
           #if G4VERSION_NUMBER < 1100
@@ -253,6 +257,7 @@ class remollGenericDetector : public G4VSensitiveDetector {
       G4bool fDetectBoundaryHits;
 
       G4int fDetNo;
+      G4int fCopyDepth;
 
       G4bool fEnabled;
 
