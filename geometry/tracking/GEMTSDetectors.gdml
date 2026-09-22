@@ -26,8 +26,8 @@
     <variable name="k" value="0"/>
 
     <!-- Rotation Parameters for GEM and Trigger scint planes -->
-      <constant name="n_rots_01"	value="0"/>
-      <constant name="n_rots_23"	value="0"/>
+    <constant name="n_rots_01"	value="0"/>
+    <constant name="n_rots_23"	value="0"/>
 
     <!-- YA: trig scint constants -->
     <constant name="SCALE"     value="0.1"/>
@@ -143,16 +143,16 @@
   <twoDimVertex x="-251-TRIG_TOP_WID" y="1061+TRIG_TOP_EXT"/>
 
   <!-- lower/front side: stretch by 30 from original -->
-  <twoDimVertex x="-175" y="656-TRIG_BOT_EXT"/>
-  <twoDimVertex x="-167" y="637-TRIG_BOT_EXT"/>
-  <twoDimVertex x="-139" y="622-TRIG_BOT_EXT"/>
-  <twoDimVertex x="-121" y="612-TRIG_BOT_EXT"/>
-  <twoDimVertex x="-50"  y="615-TRIG_BOT_EXT"/>
-  <twoDimVertex x="0"    y="616-TRIG_BOT_EXT"/>
-  <twoDimVertex x="50"   y="615-TRIG_BOT_EXT"/>
-  <twoDimVertex x="121"  y="612-TRIG_BOT_EXT"/>
-  <twoDimVertex x="154"  y="622-TRIG_BOT_EXT"/>
-  <twoDimVertex x="167"  y="637-TRIG_BOT_EXT"/>
+  <twoDimVertex x="-175" y="602"/>
+  <twoDimVertex x="-167" y="602"/>
+  <twoDimVertex x="-139" y="602"/>
+  <twoDimVertex x="-121" y="602"/>
+  <twoDimVertex x="-50"  y="602"/>
+  <twoDimVertex x="0"    y="602"/>
+  <twoDimVertex x="50"   y="602"/>
+  <twoDimVertex x="121"  y="602"/>
+  <twoDimVertex x="154"  y="602"/>
+  <twoDimVertex x="167"  y="602"/>
 
   <!-- upper-right side -->
   <twoDimVertex x="251+TRIG_TOP_WID" y="1042+TRIG_TOP_EXT"/>
@@ -170,8 +170,8 @@
               lunit="mm">
       <zplane rmin="584" rmax="1450.0" z="0.0"/>
       <zplane rmin="584" rmax="1450.0" z="399.3"/>
-      <zplane rmin="590" rmax="1450.0" z="400.0"/>
-      <zplane rmin="590" rmax="1450.0" z="1010"/>
+      <zplane rmin="584" rmax="1450.0" z="400.0"/>
+      <zplane rmin="601" rmax="1450.0" z="1010"/>
     </polycone>
 
     <!-- YA: scintillator + light guides + wrapper (unchanged shapes) -->
@@ -716,4 +716,3 @@
   </setup>
 
 </gdml>
-
