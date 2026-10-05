@@ -35,7 +35,7 @@ struct tableEntry {
     double meanPE;
     double langauPE;
     double RMS, Resolution;
-    double p0, p1, p2; // fit parameters
+    double p0, p1, p2, p3, p4; // fit parameters
 };
 // Structure to hold energy-based lookup table entries
 struct tableEntry_energy {
@@ -64,6 +64,8 @@ std::vector<tableEntry> LoadLookupTable_electron_position(const std::string& fil
         std::getline(ss, tmp, ','); e.p0 = atof(tmp.c_str());
         std::getline(ss, tmp, ','); e.p1 = atof(tmp.c_str());
         std::getline(ss, tmp, ','); e.p2 = atof(tmp.c_str());
+        std::getline(ss, tmp, ','); e.p3 = atof(tmp.c_str());
+        std::getline(ss, tmp, ','); e.p4 = atof(tmp.c_str());
         lookupTable.push_back(e);
     }
     std::cout << "Loaded " << lookupTable.size() << " New table entries.\n";
@@ -103,7 +105,7 @@ double cal_PE(double h, double v,double theta,double phi,vector<tableEntry>& loo
             double theta1 = theta;
             double phi1 = TMath::DegToRad() * phi;
             double px = e.p0;
-            double py = e.p0+e.p1*theta1+e.p2*theta1*theta1;
+            double py = e.p0+e.p1*theta1+e.p2*theta1*theta1+e.p3*theta1*theta1*theta1+e.p4*theta1*theta1*theta1*theta1;
             if(py == 0){
                 return 0;
             }
