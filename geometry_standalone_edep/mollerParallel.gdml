@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+</define>
+
+<materials>
+</materials>
+
+<solids>
+ 
+<!-- Parallel world must be smaller than the physical world,
+     private communcation with Makoto Asai -->
+<box lunit="mm" name="parallel_solid" x="999" y="999" z="8999"/>
+
+  
+  <box
+    name="vertVirtualPlane_solid"
+    x="999" y="999" z="1" lunit="mm"/>
+
+  <box
+    name="horizVirtualPlane_solid"
+    x="999" y="1" z="8999" lunit="mm"/>
+
+
+</solids>
+
+<structure>
+  
+  <volume name="detVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="vertVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="100"/>
+  </volume>
+
+  <volume name="floorVirtualPlane_log">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="horizVirtualPlane_solid"/>
+    <auxiliary auxtype="Visibility" auxvalue="true"/>
+    <auxiliary auxtype="Color" auxvalue="yellow"/>
+    <auxiliary auxtype="Alpha" auxvalue="1"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="100"/>
+  </volume>
+
+
+  <volume name="ParallelWorld_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="parallel_solid"/>
+
+    <physvol    name="detVirtualPlane_phys">
+      <volumeref ref="detVirtualPlane_log"/>
+      <position name="detVirtualPlane_pos" unit="mm" z="4498"/>
+    </physvol>
+
+    <physvol    name="floorVirtualPlane_phys">
+      <volumeref ref="floorVirtualPlane_log"/>
+      <position name="floorVirtualPlane_pos" unit="mm" x="0" y="-498" z="0"/>
+    </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+  
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="ParallelWorld_logical"/>
+</setup>
+
+</gdml>
