@@ -21,9 +21,24 @@
   <!-- The active phi region converage: 26.5 Degree -->
   <constant name="GEMFrameActivePhi" value="26.5*pi/180" unit="radian"/> 
 
+  <!--
   <constant name="OPERATION" value="3*PHI/4" unit="radian" />
   <constant name="OPERATIONPlus" value="OPERATION + GEMFrameActivePhi/2 + 2.04*pi/180" unit="radian"/>
   <constant name="OPERATIONMinus" value="OPERATION - GEMFrameActivePhi/2 - 2.04*pi/180" unit="radian"/>
+  -->
+
+  <!--
+  A: Operation angle
+  -->
+
+  <constant name="AngleA" value="3*PHI/4" unit="radian" />                 
+  <constant name="AngleB" value="AngleA + GEMFrameActivePhi/2 + 2.04*pi/180" unit="radian"/>
+  <constant name="AngleC" value="AngleA - GEMFrameActivePhi/2 - 2.04*pi/180" unit="radian"/>
+  <constant name="AngleD" value="AngleA + 2*pi/7" unit="radian"/>
+
+  <!--
+  <constant name="AngleC" value="AngleD - GEMFrameActivePhi/2 - 2.04*pi/180" unit="radian"/>
+  -->
 
   <!--
   <constant name="GEMFrameActivePhi"  type="angle" value="26.5" unit="deg"/>
@@ -37,7 +52,7 @@
   <constant name="ROTATE" value="0"/>
   -->
 
-  <constant name="ROTATE" value="OPERATION"/>
+  <constant name="ROTATE" value="AngleD"/>
 
   <variable name="i" value="0"/>
 
@@ -375,29 +390,29 @@
       <physvol name="GEMDetector_sector_phys1[i+1]">
        <volumeref ref="logic_GEMFrame_module"/> 
         <position name="GEMDetector_sector_pos1[i+1]" 
-                  x="(GEMPositionRadius+30)*cos((i+2.75)*PHI+ROTATE)" 
-                  y="(GEMPositionRadius+30)*sin((i+2.75)*PHI+ROTATE)"
+                  x="(GEMPositionRadius+30)*cos((i-1.25)*PHI+ROTATE)" 
+                  y="(GEMPositionRadius+30)*sin((i-1.25)*PHI+ROTATE)"
                   z="-220"/>
-        <rotation name="GEMDetector_sector_rot1[i+1]" z="-(i+2.75)*PHI-ROTATE+2*pi/4" />
+        <rotation name="GEMDetector_sector_rot1[i+1]" z="-(i-1.25)*PHI-ROTATE+2*pi/4" />
       </physvol>	
 
       <physvol name="TrigDetector_sector_phys[i+1]">
         <volumeref ref="logic_Trig_Plane"/>
 
         <position name="TrigDetector_sector_pos[i+1]" 
-                  x="(GEMPositionRadius+40)*cos((i+2.75)*PHI+ROTATE)" 
-                  y="(GEMPositionRadius+40)*sin((i+2.75)*PHI+ROTATE)"
+                  x="(GEMPositionRadius+40)*cos((i-1.25)*PHI+ROTATE)" 
+                  y="(GEMPositionRadius+40)*sin((i-1.25)*PHI+ROTATE)"
                   z="100"/>
-        <rotation name="Trigetector_sector_rot[i+1]" z="-(i+2.75)*PHI-ROTATE+2*pi/4" />
+        <rotation name="Trigetector_sector_rot[i+1]" z="-(i-1.25)*PHI-ROTATE+2*pi/4" />
       </physvol>	
 
       <physvol name="GEMDetector_sector_phys2[i+1]">
        <volumeref ref="logic_GEMFrame_module"/> 
         <position name="GEMDetector_sector_pos2[i+1]" 
-                  x="(GEMPositionRadius+50)*cos((i+2.75)*PHI+ROTATE)" 
-                  y="(GEMPositionRadius+50)*sin((i+2.75)*PHI+ROTATE)"
+                  x="(GEMPositionRadius+50)*cos((i-1.25)*PHI+ROTATE)" 
+                  y="(GEMPositionRadius+50)*sin((i-1.25)*PHI+ROTATE)"
                   z="220"/>
-        <rotation name="GEMDetector_sector_rot2[i+1]" z="-(i+2.75)*PHI-ROTATE+2*pi/4" />
+        <rotation name="GEMDetector_sector_rot2[i+1]" z="-(i-1.25)*PHI-ROTATE+2*pi/4" />
       </physvol>	
 
     </loop>

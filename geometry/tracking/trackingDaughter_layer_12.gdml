@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml 
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <constant name="PHI" value="2*pi/7"/>
+<!--  <constant name="OPERATION" value="PHI/4"/> -->
+  <constant name="OPERATION" value="-PHI/4"/>
+
+
+  <constant name="ROTATE" value="OPERATION"/>
+  <variable name="i" value="0"/>
+
+  <quantity name="GEMThickness"   type="length" value="30" unit="mm"/>
+
+  <quantity name="GEMFrameThickness"   type="length" value="10" unit="mm"/>
+  <quantity name="GEMFrameInnerLength" type="length" value="300" unit="mm"/>
+  <quantity name="GEMFrameInnerWidth"  type="length" value="300" unit="mm"/>
+  <quantity name="GEMFrameOuterLength" type="length" value="350" unit="mm"/>
+  <quantity name="GEMFrameOuterWidth"  type="length" value="350" unit="mm"/>
+
+  <quantity name="GEMKaptonCathodeThickness" type="length" value="0.050" unit="mm"/>
+  <quantity name="GEMKaptonMiddleThickness"  type="length" value="0.050" unit="mm"/>
+  <quantity name="GEMKaptonAnodeThickness"   type="length" value="0.050" unit="mm"/>
+  <quantity name="GEMFR4AnodeThickness"      type="length" value="0.300" unit="mm"/>
+  <quantity name="GEMCopperLayerThickness"   type="length" value="0.005" unit="mm"/>
+
+  <quantity name="GEMPositionOffset" type="length" value="610" unit="mm"/>
+  <quantity name="GEMPositionRadius1" type="length" value="610-GEMPositionOffset" unit="mm"/>
+  <quantity name="GEMPositionRadius2" type="length" value="630-GEMPositionOffset" unit="mm"/>
+
+  <position name="GEMTrackingPlane1_pos" z="0.0" unit="m"/>
+  <position name="GEMTrackingPlane2_pos" z="0.5" unit="m"/>
+</define>
+
+<materials>
+  <material name="ArCO2" state="gas">
+    <T unit="K" value="293.15"/>
+    <D unit="g/cm3" value="0.0018"/>
+    <fraction n="0.8" ref="G4_Ar"/>
+    <fraction n="0.2" ref="G4_CARBON_DIOXIDE"/>
+  </material>
+
+  <material name="Epoxy" state="solid">
+    <T unit="K" value="293.15"/>
+    <D unit="g/cm3" value="1.2"/>
+    <fraction n="0.15" ref="G4_H"/>
+    <fraction n="0.85" ref="G4_C"/>
+  </material>
+
+  <material name="FR4" state="solid">
+    <T unit="K" value="293.15"/>
+    <D unit="g/cm3" value="1.86"/>
+    <fraction n="0.6" ref="G4_SILICON_DIOXIDE"/>
+    <fraction n="0.4" ref="Epoxy"/>
+  </material>
+
+  <material Z="13" name="Al" state="solid">
+    <T unit="K" value="293.15"/>
+    <MEE unit="eV" value="166"/>
+    <D unit="g/cm3" value="2.699"/>
+    <atom unit="g/mole" value="26.9815"/>
+  </material>
+</materials>
+
+<solids>
+
+<!--
+  <polycone name="GEMTrackingWorld_solid"
+            aunit="deg" startphi="0" deltaphi="360"
+            lunit="mm">
+    <zplane rmin="650" rmax="2000.0" z="    0-100.0"/>
+    <zplane rmin="650" rmax="2000.0" z="500.0+100.0"/>
+  </polycone>
+-->
+
+<tube
+	name="GEMTrackingWorld_solid"
+	startphi="0" deltaphi="360" aunit="deg"
+    rmin="610" rmax="2000" z="450" lunit="mm"/>
+
+<!--
+  <box name="GEMTrackingWorld_solid"
+    x="20" y="50" z="20" lunit="mm"/>
+-->
+
+  <tube name="GEMTrackingPlane_sol"
+    startphi="0" deltaphi="360" aunit="deg"
+    rmin="650" rmax="1900" z="100" lunit="mm"/>
+
+  <box name="GEMDetector_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="10.0*cm"/>
+
+  <box name="GEMFrameInner_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMFrameThickness"/>
+  <box name="GEMFrameOuter_sol" x="GEMFrameOuterLength" y="GEMFrameOuterWidth" z="GEMFrameThickness"/>
+  <subtraction name="GEMFrame_sol">
+    <first ref="GEMFrameOuter_sol"/>
+    <second ref="GEMFrameInner_sol"/>
+  </subtraction>
+
+  <tube aunit="deg" deltaphi="30" lunit="mm" name="frame0x5572e94dd5a0" rmax="1280.63" rmin="625" startphi="75" z="8"/>
+  <box lunit="mm" name="Shape110x5572e99848b0" x="565" y="574.18" z="40"/>
+  <intersection name="Frame_Boc_add0x5572e9984930">
+    <first ref="frame0x5572e94dd5a0"/>
+    <second ref="Shape110x5572e99848b0"/>
+    <position name="Frame_Boc_add0x5572e9984930_pos" unit="mm" x="0" y="900" z="0"/>
+  </intersection>
+  <tube aunit="deg" deltaphi="26.5" lunit="mm" name="Shape_framesub0x5572e996c910" rmax="1150.63" rmin="635" startphi="76.75" z="16"/>
+  <box lunit="mm" name="Shape110x5572e9983c40" x="520" y="494.18" z="40"/>
+  <intersection name="Box_add0x5572e9992d80">
+    <first ref="Shape_framesub0x5572e996c910"/>
+    <second ref="Shape110x5572e9983c40"/>
+    <position name="Box_add0x5572e9992d80_pos" unit="mm" x="0" y="872" z="0"/>
+  </intersection>
+
+  <subtraction name="logic_AlMountFrame">
+    <first ref="Frame_Boc_add0x5572e9984930"/>
+    <second ref="Box_add0x5572e9992d80"/>
+  </subtraction>
+
+<!--
+  <box name="logic_AlMountFrame" x="100" y="100" z="10" lunit="mm"/>
+-->
+
+
+  <box name="GEMKaptonCathodeFoil_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMKaptonCathodeThickness"/>
+  <box name="GEMKaptonMiddleFoil_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMKaptonMiddleThickness"/>
+  <box name="GEMKaptonAnodeFoil_sol" x="GEMFrameInnerLength" y="GEMFrameInnerWidth" z="GEMKaptonAnodeThickness"/>
+</solids>
+
+<structure>
+
+  <volume name="logic_GEMFrame">
+    <materialref ref="Al"/>
+    <solidref ref="logic_AlMountFrame"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMFrame"/>
+    <auxiliary auxtype="DetNo" auxvalue="520"/>
+  </volume>
+
+  <volume name="logic_GEMKaptonCathodeFoil">
+    <materialref ref="G4_KAPTON"/>
+    <solidref ref="GEMKaptonCathodeFoil_sol"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMKaptonCathodeFoil"/>
+    <auxiliary auxtype="DetNo"   auxvalue="511"/>
+  </volume>
+
+  <volume name="logic_GEMKaptonMiddleFoil">
+    <materialref ref="G4_KAPTON"/>
+    <solidref ref="GEMKaptonMiddleFoil_sol"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMKaptonMiddleFoil"/>
+    <auxiliary auxtype="DetNo"   auxvalue="512"/>
+  </volume>
+
+  <volume name="logic_GEMKaptonAnodeFoil">
+    <materialref ref="G4_KAPTON"/>
+    <solidref ref="GEMKaptonAnodeFoil_sol"/>
+    <auxiliary auxtype="SensDet" auxvalue="GEMKaptonAnodeFoil"/>
+    <auxiliary auxtype="DetNo"   auxvalue="513"/>
+  </volume>
+
+  <volume name="logic_GEMDetector">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="logic_AlMountFrame"/>
+
+    <physvol name="GEMFrame_phys">
+      <volumeref ref="logic_GEMFrame"/>
+      <position name="GEMFrame_pos" y="0"  z="0.0" unit="mm"/>
+    </physvol>	
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+
+<!--
+  <volume name="logic_GEMTrackingPlane">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="GEMTrackingPlane_sol"/>
+
+    <loop for="i" from="1" to="7" step="1">
+      <physvol name="GEMDetector_sector_phys[i+1]">
+        <volumeref ref="logic_GEMDetector"/>
+        <position name="GEMDetector_sector_pos[i+1]" 
+                  x="GEMPositionRadius*cos((i+2.75)*PHI+ROTATE)" 
+                  y="GEMPositionRadius*sin((i+2.75)*PHI+ROTATE)"/>
+        <rotation name="GEMDetector_sector_rot[i+1]" z="-(i+2.75)*PHI-ROTATE+2*pi/4" />
+      </physvol>	
+    </loop>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+-->
+
+
+
+
+
+
+
+  <volume name="logic_GEMTrackingWorld">
+    <materialref ref="G4_AIR"/>
+    <solidref ref="GEMTrackingWorld_solid"/>
+
+<!--
+	<physvol name="singledet_00">
+		<volumeref ref="logic_GEMDetector"/>
+		<position name="pos_singledet_0" x="500" y="500" z="0" lunit="mm"/>
+	</physvol>
+
+    <solidref ref="GEMTrackingPlane_sol"/>
+    <solidref ref="GEMTrackingWorld_solid"/>
+-->
+
+    <loop for="i" from="1" to="7" step="1">
+      <physvol name="GEMDetector_sector_phys_1_[i+1]">
+        <volumeref ref="logic_GEMDetector"/>
+        <position name="GEMDetector_sector_pos[i+1]" 
+                  x="GEMPositionRadius1*cos((i+2.75)*PHI+ROTATE)" 
+                  y="GEMPositionRadius1*sin((i+2.75)*PHI+ROTATE)"
+                  z="-222"/>
+        <rotation name="GEMDetector_sector_rot[i+1]" z="-(i+2.75)*PHI-ROTATE+2*pi/4" />
+      </physvol>	
+    </loop>
+
+
+    <loop for="i" from="1" to="7" step="1">
+      <physvol name="GEMDetector_sector_phys_2_[i+1]">
+        <volumeref ref="logic_GEMDetector"/>
+        <position name="GEMDetector_sector_pos[i+1]" 
+                  x="GEMPositionRadius2*cos((i+2.75)*PHI+ROTATE)" 
+                  y="GEMPositionRadius2*sin((i+2.75)*PHI+ROTATE)"
+                  z="222"/>
+        <rotation name="GEMDetector_sector_rot[i+1]" z="-(i+2.75)*PHI-ROTATE+2*pi/4" />
+      </physvol>	
+    </loop>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.0"/>
+
+
+<!--
+    <physvol name="GEMTrackingPlane1_phys">
+      <volumeref ref="logic_GEMTrackingPlane"/>
+      <positionref ref="GEMTrackingPlane1_pos"/>
+    </physvol>	
+-->
+
+<!--
+    <physvol name="GEMTrackingPlane2_phys">
+      <volumeref ref="logic_GEMTrackingPlane"/>
+      <positionref ref="GEMTrackingPlane2_pos"/>
+    </physvol>	   
+-->
+  </volume>
+
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="logic_GEMTrackingWorld"/>
+</setup>
+
+</gdml>
