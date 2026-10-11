@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE gdml [
+  <!ENTITY matrices SYSTEM "showerMaxMatrices.xml">
+	<!ENTITY materials SYSTEM "showerMaxMaterials.xml">
+]>
+
+<gdml 
+
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+ <define>
+
+  &matrices;
+ </define>
+
+&materials;
+
+ <solids>
+  <box lunit="mm" name="solid_WorldBox" x="1000" y="1000" z="1000"/>
+  <box lunit="mm" name="solid_DetBox" x="500" y="500" z="200"/>
+
+  <box lunit="mm" name="solid_radiator_quartz" x="100" y="76" z="10"/>
+  <tube name="solid_tube" rmin="115" rmax="116" z="100" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+
+
+  <tube name="solid_pmt_window" rmin="0" rmax="38.1" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+  <tube name="solid_pmt_cathode" rmin="0" rmax="38.1" z="3e-06" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+
+  <!--Optical Properties-->
+  <opticalsurface name="quartz_surface" model="glisur" finish="ground" type="dielectric_dielectric" value="0.98">
+    </opticalsurface>
+
+  <opticalsurface name="cathode_surface" model="glisur" finish="polished" type="dielectric_metal" value="1.0">
+    <property name="REFLECTIVITY" ref="CathodeSurf_REFLECTIVITY" />
+    <property name="EFFICIENCY" ref="Cathode_EFFICIENCY_with_grease" />
+    </opticalsurface>
+
+ </solids>
+
+
+
+
+
+ <structure>
+
+  <volume name="logic_radiator_quartz" >
+    <materialref ref="Quartz" />
+    <solidref ref="solid_radiator_quartz" />
+    </volume>
+
+  <volume name="logic_pmt_window" >
+    <materialref ref="Quartz" />
+    <solidref ref="solid_pmt_window" />
+    </volume>
+
+  <volume name="logic_pmt_cathode" >
+    <materialref ref="Cathode" />
+    <solidref ref="solid_pmt_cathode" />
+    <auxiliary auxtype="SensDet" auxvalue="PhotoCathode"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton" />
+    <auxiliary auxtype="DetNo" auxvalue="7001"/>
+    </volume>
+
+  <volume name="logic_tube" >
+    <materialref ref="Nylon" />
+    <solidref ref="solid_tube" />
+    </volume>
+
+  <volume name="logic_DetBox" >
+    <materialref ref="Air" />
+    <solidref ref="solid_DetBox" />
+
+    <physvol name="phys_radiator_quartz">
+      <volumeref ref="logic_radiator_quartz" />
+      <position name="radiator_quartz_pos" unit="mm" x="0" y="0" z="0" />
+      <rotation name="radiator_quartz_rot" unit="deg" x="0" y="0" z="0" />
+      </physvol>
+
+    <physvol name="phys_tube">
+      <volumeref ref="logic_tube" />
+      <position name="pmt_tube" unit="mm" x="0" y="0" z="0" />
+      <rotation name="pmt_tube" unit="deg" x="0" y="0" z="0" />
+      </physvol>
+
+    <physvol name="phys_pmt_window">
+      <volumeref ref="logic_pmt_window" />
+      <position name="pmt_window_pos" unit="mm" x="100/2 + 3.0/2.0" y="0" z="0" />
+      <rotation name="pmt_window_rot" unit="deg" x="0" y="90" z="0" />
+      </physvol>
+
+    <physvol name="phys_pmt_cathode">
+      <volumeref ref="logic_pmt_cathode" />
+      <position name="pmt_cathode_pos" unit="mm" x="100/2 + 3.0 + 3e-06/2.0" y="0" z="0" />
+      <rotation name="pmt_cathode_rot" unit="deg" x="0" y="90" z="0" />
+      </physvol>
+
+  </volume>
+
+
+  <volume name="World" >
+    <materialref ref="Air" />
+    <solidref ref="solid_WorldBox" />
+
+    <physvol name="phys_DetBox" >
+      <volumeref ref="logic_DetBox" />
+      <position name="DetBox_pos" unit="mm" x="0" y="0" z="0" />
+      <rotation name="DetBox_rot" unit="deg" x="0" y="0" z="0" />
+      </physvol>
+
+  </volume>
+
+
+  <skinsurface name="ratiator_skin_surface" surfaceproperty="quartz_surface" >
+		<volumeref ref="logic_radiator_quartz"/>
+	  </skinsurface>
+
+    <!--PMT Surfaces-->
+  <skinsurface name="quartz_skin_surface" surfaceproperty="quartz_surface" >
+    <volumeref ref="logic_pmt_window"/>
+    </skinsurface>
+
+  <bordersurface name="cathode_border_surface" surfaceproperty="cathode_surface" >
+    <physvolref ref="phys_pmt_window"/>
+    <physvolref ref="phys_pmt_cathode"/>
+    </bordersurface>
+    
+</structure>
+<setup name="Default" version="1.0" >
+  <world ref="World" />
+  </setup>
+</gdml>                                                                            1,1           Top

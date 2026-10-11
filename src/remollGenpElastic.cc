@@ -44,7 +44,7 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
 
     auto it = targVols.begin();
     if( targVols.size() > 0 ){
-	while( (*it).first->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" 
+	while( (*it).first->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2"
 		&& it != targVols.end() ){ it++; }
 
 	if( (*it).first->GetLogicalVolume()->GetMaterial()->GetName() != "G4_lH2" ){

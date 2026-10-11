@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE gdml [
+	<!ENTITY matrices SYSTEM "showerMaxMatrices.xml">
+]>
+
+<gdml
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+	&matrices;
+</define>
+
+<materials>
+<define>
+	<quantity type="density" name="universe_mean_density" value="1.e-25" unit="g/cm3" />
+</define>
+<element Z="1" formula="H" name="Hydrogen" >
+	<atom value="1.008" />
+</element>
+<element Z="6" formula="C" name="Carbon" >
+	<atom value="12.011" />
+</element>
+<element Z="8" formula="O" name="Oxygen" >
+	<atom value="16" />
+</element>
+<element Z="7" formula="N" name="Nitrogen" >
+	<atom value="14.01" />
+</element>
+<element Z="14" formula="Si" name="Silicon" >
+	<atom value="28.085" />
+</element>
+<element Z="13" formula="Al" name="Aluminum" >
+	<atom value="26.982" />
+</element>
+<element Z="51" formula="Sb" name="Antimony" >
+	<atom value="121.760" />
+</element>
+<element Z="55" formula="Cs" name="Caesium" >
+	<atom value="132.90545" />
+</element>
+<element Z="19" formula="K" name="Potassium" >
+	<atom value="39.0983" />
+</element>
+<element Z="74" formula="W" name="Tungsten" >
+	<atom value="183.85" />
+</element>
+
+<material formula="noFormula" name="Air" >
+	<property name="RINDEX" ref="Air_RINDEX"/>
+	<D value="0.00129" />
+	<fraction n="0.3" ref="Oxygen" />
+	<fraction n="0.7" ref="Nitrogen" />
+</material>
+<material formula="SiO2" name="Quartz" >
+	<property name="RINDEX" ref="Quartz_RINDEX"/>
+	<property name="ABSLENGTH" ref="Quartz_ABSLENGTH_DATA"/>
+	<property name="REFLECTIVITY" ref="Quartz_REFLECTIVITY"/>
+	<D value="2.203" />
+	<composite n="1" ref="Silicon" />
+	<composite n="2" ref="Oxygen" />
+</material>
+<material formula="K2CsSb" name="Cathode" >
+	<D value="3.46" />
+	<composite n="2" ref="Potassium" />
+	<composite n="1" ref="Caesium" />
+	<composite n="1" ref="Antimony" />
+	</material>
+<material formula="Al" name="Aluminum_material" >
+	<D value="2.6982" />
+	<composite n="1" ref="Aluminum" />
+</material>
+<material formula="W" name="Tungsten_material" >
+	<D value="19.3" />
+	<composite n="1" ref="Tungsten" />
+</material>
+<material formula="C12H22N2O2" name="Nylon" >
+	<D value="1.14" />
+	<composite n="12" ref="Carbon" />
+	<composite n="22" ref="Hydrogen" />
+	<composite n="2" ref="Nitrogen" />
+	<composite n="2" ref="Oxygen" />
+</material>
+</materials>
+
+
+<solids>
+	<xtru name="solid_quartz" lunit="mm">
+		<twoDimVertex x="-52.5" y="3.0"/>
+		<twoDimVertex x="-52.5" y="-3.0"/>
+		<twoDimVertex x="58.5" y="-3.0"/>
+		<twoDimVertex x="52.5" y="3.0"/>
+		<section zOrder="1" zPosition="-123.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+		<section zOrder="2" zPosition="123.0" xOffset="0" yOffset="0" scalingFactor="1"/>
+	</xtru>
+	<box name="solid_tungsten" lunit="mm" x="105.0" y="246.0" z="8.0"/>
+	<box name="solid_suitcase_tungstenquartz_1" lunit="mm" x="160.5" y="266.0" z="64.976"/>
+	<box name="solid_suitcase_tungstenquartz_2" lunit="mm" x="161.0" y="265" z="63.976"/>
+	<subtraction name="solid_suitcase_tungstenquartz">
+		<first ref="solid_suitcase_tungstenquartz_1"/>
+		<second ref="solid_suitcase_tungstenquartz_2"/>
+		<position name="pos_subtract_suitcase_tungstenquartz_12" x="0.5" y="0" z="0"/>
+		<rotation name="rot_subtract_suitcase_tungstenquartz_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<box name="solid_spacer_suitcase_1" lunit="mm" x="160.0" y="265" z="63.976"/>
+	<box name="solid_spacer_suitcase_2" lunit="mm" x="106.0" y="247.0" z="64.976"/>
+	<subtraction name="solid_spacer_suitcase">
+		<first ref="solid_spacer_suitcase_1"/>
+		<second ref="solid_spacer_suitcase_2"/>
+		<position name="pos_subtract_spacer_suitcase_12" x="27.5" y="0" z="0"/>
+		<rotation name="rot_subtract_spacer_suitcase_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<trd name="solid_mirror_box_bot_1" lunit="mm" x1="50.529999999999994"  x2="87.868" y1="266.0"  y2="266.0" z="67.4624"/>
+	<trd name="solid_mirror_box_bot_2" lunit="mm" x1="49.529999999999994"  x2="86.868" y1="265"  y2="265" z="68.4624"/>
+	<subtraction name="solid_mirror_box_bot">
+		<first ref="solid_mirror_box_bot_1"/>
+		<second ref="solid_mirror_box_bot_2"/>
+		<position name="pos_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_mirror_box_bot_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<trd name="solid_mirror_box_top_1" lunit="mm" x1="87.868"  x2="71.866" y1="266.0"  y2="69.83399999999999" z="183.0578"/>
+	<trd name="solid_mirror_box_top_2" lunit="mm" x1="86.868"  x2="70.866" y1="265"  y2="68.83399999999999" z="184.0578"/>
+	<subtraction name="solid_mirror_box_top">
+		<first ref="solid_mirror_box_top_1"/>
+		<second ref="solid_mirror_box_top_2"/>
+		<position name="pos_subtract_mirror_box_top_12" x="0" y="0" z="0"/>
+		<rotation name="rot_subtract_mirror_box_top_12" x="0" y="0" z="0"/>
+	</subtraction>
+	<tube name="solid_pmt_filter" rmin="0" rmax="38.099999999999994" z="5.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_window" rmin="0" rmax="38.099999999999994" z="3.0" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<tube name="solid_pmt_cathode" rmin="0" rmax="38.099999999999994" z="3e-06" deltaphi="2*pi" startphi="0" aunit="rad" lunit="mm"/>
+	<box name="solid_singledet" lunit="mm" x="800" y="300" z="200"/>
+	<box name="solid_showerMaxMother" lunit="mm" x="1000" y="500" z="300"/>
+
+	<opticalsurface name="quartz_surface" model="glisur" finish="ground" type="dielectric_dielectric" value="0.98" >
+	</opticalsurface>
+	<opticalsurface name="Al_mirror_surface" model="glisur" finish="ground" type="dielectric_metal" value="0.98" >
+		<property name="REFLECTIVITY" ref="MiroSilver_REFLECTIVITY_30DEG" />
+		<property name="EFFICIENCY" ref="AluminumSurf_EFFICIENCY" />
+	</opticalsurface>
+	<opticalsurface name="Cathode_surface" model="glisur" finish="polished" type="dielectric_metal" value="1.0">
+		<property name="REFLECTIVITY" ref="CathodeSurf_REFLECTIVITY" />
+		<property name="EFFICIENCY" ref="Cathode_EFFICIENCY" />
+	</opticalsurface>
+</solids>
+
+
+<structure>
+	<volume name="logic_quartz_0_0">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_quartz"/>
+	</volume>
+	<volume name="logic_tungsten_0_0">
+		<materialref ref="Tungsten_material"/>
+		<solidref ref="solid_tungsten"/>
+	</volume>
+	<volume name="logic_quartz_0_1">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_quartz"/>
+	</volume>
+	<volume name="logic_tungsten_0_1">
+		<materialref ref="Tungsten_material"/>
+		<solidref ref="solid_tungsten"/>
+	</volume>
+	<volume name="logic_quartz_0_2">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_quartz"/>
+	</volume>
+	<volume name="logic_tungsten_0_2">
+		<materialref ref="Tungsten_material"/>
+		<solidref ref="solid_tungsten"/>
+	</volume>
+	<volume name="logic_quartz_0_3">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_quartz"/>
+	</volume>
+	<volume name="logic_tungsten_0_3">
+		<materialref ref="Tungsten_material"/>
+		<solidref ref="solid_tungsten"/>
+	</volume>
+	<volume name="logic_spacer_suitcase_0">
+		<materialref ref="Nylon"/>
+		<solidref ref="solid_spacer_suitcase"/>
+	</volume>
+	<volume name="logic_suitcase_tungstenquartz_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_suitcase_tungstenquartz"/>
+	</volume>
+	<volume name="logic_mirror_box_bot_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_mirror_box_bot"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="SensDet" auxvalue="mirror_box_bot_0"/>
+		<auxiliary auxtype="DetNo" auxvalue="70031"/>
+		<auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+	</volume>
+	<volume name="logic_mirror_box_top_0">
+		<materialref ref="Aluminum_material"/>
+		<solidref ref="solid_mirror_box_top"/>
+		<auxiliary auxtype="Color" auxvalue="green"/>
+		<auxiliary auxtype="SensDet" auxvalue="mirror_box_top_0"/>
+		<auxiliary auxtype="DetNo" auxvalue="70032"/>
+		<auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+	</volume>
+	<volume name="logic_pmt_filter_0">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_pmt_filter"/>
+	</volume>
+	<volume name="logic_pmt_window_0">
+		<materialref ref="Quartz"/>
+		<solidref ref="solid_pmt_window"/>
+	</volume>
+	<volume name="logic_pmt_cathode_0">
+		<materialref ref="Cathode"/>
+		<solidref ref="solid_pmt_cathode"/>
+		<auxiliary auxtype="SensDet" auxvalue="PhotoCathode" />
+		<auxiliary auxtype="Color" auxvalue="blue"/>
+		<auxiliary auxtype="DetNum" auxvalue="70016"/>
+		<auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+	</volume>
+	<volume name="logic_singledet_00">
+		<materialref ref="Air"/>
+		<solidref ref="solid_singledet"/>
+		<physvol name="suitcase_tungstenquartz_0">
+			<volumeref ref="logic_suitcase_tungstenquartz_0"/>
+			<position name="pos_logic_suitcase_tungstenquartz_0" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_suitcase_tungstenquartz_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="spacer_suitcase_0">
+			<volumeref ref="logic_spacer_suitcase_0"/>
+			<position name="pos_logic_spacer_suitcase_0" x="0" y="0" z="0"/>
+			<rotation name="rot_logic_spacer_suitcase_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_bot_0">
+			<volumeref ref="logic_mirror_box_bot_0"/>
+			<position name="pos_logic_mirror_box_bot_0" x="124.5802" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_bot_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="mirror_box_top_0">
+			<volumeref ref="logic_mirror_box_top_0"/>
+			<position name="pos_logic_mirror_box_top_0" x="249.84029999999998" y="0" z="4.0"/>
+			<rotation name="rot_logic_mirror_box_top_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_window_0">
+			<volumeref ref="logic_pmt_window_0"/>
+			<position name="pos_logic_pmt_window_0" x="349.2192" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_window_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="pmt_cathode_0">
+			<volumeref ref="logic_pmt_cathode_0"/>
+			<position name="pos_logic_pmt_cathode_0" x="350.7192015" y="0" z="4.0"/>
+			<rotation name="rot_logic_pmt_cathode_0" x="0" y="-pi/2" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_0">
+			<volumeref ref="logic_quartz_0_0"/>
+			<position name="pos_logic_quartz_0_0" x="27.5" y="0" z="28.118"/>
+			<rotation name="rot_logic_quartz_0_0" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_0">
+			<volumeref ref="logic_tungsten_0_0"/>
+			<position name="pos_logic_tungsten_0_0" x="27.5" y="0" z="20.248"/>
+			<rotation name="rot_logic_tungsten_0_0" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_1">
+			<volumeref ref="logic_quartz_0_1"/>
+			<position name="pos_logic_quartz_0_1" x="27.5" y="0" z="12.378"/>
+			<rotation name="rot_logic_quartz_0_1" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_1">
+			<volumeref ref="logic_tungsten_0_1"/>
+			<position name="pos_logic_tungsten_0_1" x="27.5" y="0" z="4.507999999999999"/>
+			<rotation name="rot_logic_tungsten_0_1" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_2">
+			<volumeref ref="logic_quartz_0_2"/>
+			<position name="pos_logic_quartz_0_2" x="27.5" y="0" z="-3.362"/>
+			<rotation name="rot_logic_quartz_0_2" x="pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_2">
+			<volumeref ref="logic_tungsten_0_2"/>
+			<position name="pos_logic_tungsten_0_2" x="27.5" y="0" z="-11.232"/>
+			<rotation name="rot_logic_tungsten_0_2" x="0" y="0" z="0"/>
+		</physvol>
+		<physvol name="quartz_0_3">
+			<volumeref ref="logic_quartz_0_3"/>
+			<position name="pos_logic_quartz_0_3" x="27.5" y="0" z="-19.102"/>
+			<rotation name="rot_logic_quartz_0_3" x="-pi/2" y="0" z="0"/>
+		</physvol>
+		<physvol name="tungsten_0_3">
+			<volumeref ref="logic_tungsten_0_3"/>
+			<position name="pos_logic_tungsten_0_3" x="27.5" y="0" z="-26.972"/>
+			<rotation name="rot_logic_tungsten_0_3" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+	<volume name="showerMaxMother">
+		<materialref ref="Air"/>
+		<solidref ref="solid_showerMaxMother"/>
+		<physvol name="singledet_00">
+			<volumeref ref="logic_singledet_00"/>
+			<position name="pos_singledet_0" x="0" y="0" z="0"/>
+			<rotation name="rot_singledet_0" x="0" y="0" z="0"/>
+		</physvol>
+		<auxiliary auxtype="Alpha" auxvalue="0.0"/>
+	</volume>
+
+	<skinsurface name="quartz_skin_surface" surfaceproperty="quartz_surface" >
+		<volumeref ref="logic_quartz_0_0"/>
+		<volumeref ref="logic_quartz_0_1"/>
+		<volumeref ref="logic_quartz_0_2"/>
+		<volumeref ref="logic_quartz_0_3"/>
+	</skinsurface>
+	<skinsurface name="suitcase_skin_surface" surfaceproperty="Al_mirror_surface" >
+		<volumeref ref="logic_suitcase_tungstenquartz_0"/>
+	</skinsurface>
+	<skinsurface name="mirror_box_top_skin_surface" surfaceproperty="Al_mirror_surface" >
+		<volumeref ref="logic_mirror_box_top_0"/>
+	</skinsurface>
+	<skinsurface name="mirror_box_bottom_skin_surface" surfaceproperty="Al_mirror_surface" >
+		<volumeref ref="logic_mirror_box_bot_0"/>
+	</skinsurface>
+	<skinsurface name="pmt_cathode_skin_surface" surfaceproperty="Cathode_surface" >
+		<volumeref ref="logic_pmt_cathode_0"/>
+	</skinsurface>
+
+</structure>
+<setup name="showerMaxWorld" version="1.0">
+	<world ref="showerMaxMother"/>
+</setup>
+</gdml>

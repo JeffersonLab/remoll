@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<materials>
+</materials>
+
+<solids>
+  <box
+    name="parallel_solid"
+    x="999" y="499" z="299" 
+    lunit="mm"/>
+    <!-- making 1 mm smaller then the sm world-->
+  <box
+    name="solid_virtualPlane"
+    x=".1" y="350" z="150"
+    lunit="mm"/>
+</solids>
+
+<structure>
+  <volume name="log_virtual_plane_1">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="11"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="log_virtual_plane_2">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="12"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="log_virtual_plane_3">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="13"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="log_virtual_plane_4">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="14"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="log_virtual_plane_5">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="15"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="log_virtual_plane_6">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="16"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="log_virtual_plane_7">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="17"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="log_virtual_plane_8">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="18"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="log_virtual_plane_9">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="19"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="log_virtual_plane_10">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="solid_virtualPlane"/>
+    <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+    <auxiliary auxtype="DetNo" auxvalue="20"/>
+    <auxiliary auxtype="DetType" auxvalue="opticalphoton"/>
+  </volume>
+  <volume name="ParallelWorld_logical">
+    <materialref ref="G4_Galactic"/>
+    <solidref ref="parallel_solid"/>
+	  
+    <physvol name="phys_virtual_plane_1">
+      <volumeref ref="log_virtual_plane_1"/>
+      <position name="pos_virtual_plane_1" unit="mm" x="88" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="phys_virtual_plane_2">
+      <volumeref ref="log_virtual_plane_2"/>
+      <position name="pos_virtual_plane_2" unit="mm" x="118" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="phys_virtual_plane_3">
+      <volumeref ref="log_virtual_plane_3"/>
+      <position name="pos_virtual_plane_3" unit="mm" x="148" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="phys_virtual_plane_4">
+      <volumeref ref="log_virtual_plane_4"/>
+      <position name="pos_virtual_plane_4" unit="mm" x="178" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="phys_virtual_plane_5">
+      <volumeref ref="log_virtual_plane_5"/>
+      <position name="pos_virtual_plane_5" unit="mm" x="208" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="phys_virtual_plane_6">
+      <volumeref ref="log_virtual_plane_6"/>
+      <position name="pos_virtual_plane_6" unit="mm" x="238" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="phys_virtual_plane_7">
+      <volumeref ref="log_virtual_plane_7"/>
+      <position name="pos_virtual_plane_7" unit="mm" x="268" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="phys_virtual_plane_8">
+      <volumeref ref="log_virtual_plane_8"/>
+      <position name="pos_virtual_plane_8" unit="mm" x="298" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="phys_virtual_plane_9">
+      <volumeref ref="log_virtual_plane_9"/>
+      <position name="pos_virtual_plane_9" unit="mm" x="328" y="0" z="0"/>
+    </physvol>
+
+    <physvol name="phys_virtual_plane_10">
+      <volumeref ref="log_virtual_plane_10"/>
+      <position name="pos_virtual_plane_10" unit="mm" x="358" y="0" z="0"/>
+    </physvol>
+
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+  </volume>
+</structure>
+
+<setup name="Default" version="1.0">
+  <world ref="ParallelWorld_logical"/>
+</setup>
+
+</gdml>

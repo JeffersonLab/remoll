@@ -19,7 +19,7 @@
   <solids>
 
     <box lunit="mm" name="psBunkerRegion_solid"
-         x="13600+10" y="3430+10" z="17390"/>
+         x="13600+10+1770" y="3430+10" z="17390"/>
 
     <box lunit="mm" name="psBunkerRegion_s1"
          x="6781.8" y="3429" z="13119.354"/>
@@ -35,12 +35,15 @@
       
     <box lunit="mm" name="LargepsBox1"
         x="3048" y="2197" z="1600"/>
-        
-    <box lunit="mm" name="LargepsBox2"
+
+    <box lunit="mm" name="Transformerbox"
+        x="1600" y="2197" z="2000"/>
+            
+    <!--<box lunit="mm" name="LargepsBox2"
         x="2288" y="2197" z="1603"/>
          
     <box lunit="mm" name="LargepsBox3"
-        x="1600" y="2197" z="1600"/>
+        x="1600" y="2197" z="1600"/>-->
             
     <box lunit="mm" name="SmallpsBox"
         x="609.6" y="2235" z="914.4"/>
@@ -77,7 +80,7 @@
     
     <volume name="Lbox2_log">
       <materialref ref="G4_Galactic"/>
-      <solidref ref="LargepsBox2"/>
+      <solidref ref="LargepsBox1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="Color" auxvalue="Red"/>
       <auxiliary auxtype="DetNo" auxvalue="5861"/>
@@ -85,9 +88,9 @@
     
     <volume name="Lbox3_log">
       <materialref ref="G4_Galactic"/>
-      <solidref ref="LargepsBox3"/>
+      <solidref ref="LargepsBox1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
-      <auxiliary auxtype="Color" auxvalue="Orange"/>
+      <auxiliary auxtype="Color" auxvalue="Red"/>
       <auxiliary auxtype="DetNo" auxvalue="5862"/>
     </volume>
     
@@ -101,12 +104,20 @@
     
     <volume name="Lbox5_log">
       <materialref ref="G4_Galactic"/>
-      <solidref ref="LargepsBox2"/>
+      <solidref ref="LargepsBox1"/>
       <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
       <auxiliary auxtype="Color" auxvalue="Red"/>
       <auxiliary auxtype="DetNo" auxvalue="5864"/>
     </volume>
     
+    <volume name="Transformerbox_log">
+      <materialref ref="G4_Galactic"/>
+      <solidref ref="Transformerbox"/>
+      <auxiliary auxtype="SensDet" auxvalue="planeDet"/>
+      <auxiliary auxtype="Color" auxvalue="Blue"/>
+      <auxiliary auxtype="DetNo" auxvalue="5867"/>
+    </volume>
+
     <volume name="Sbox1_log">
       <materialref ref="G4_Galactic"/>
       <solidref ref="SmallpsBox"/>
@@ -138,42 +149,47 @@
 
       <physvol name="psBunkerWall_phys">
         <volumeref ref="psBunkerWall_log"/>
-         <position name="psBunkerWall_pos" lunit="mm" x="-6818.2/2" y="0" z="1869.44" />
+         <position name="psBunkerWall_pos" lunit="mm" x="-6818.2/2-1770/2" y="0" z="1869.44" />
       </physvol>
       
       <physvol name="Lbox1_phys">
         <volumeref ref="Lbox1_log"/>
-        <position name="Lbox1_pos" unit="mm" x="-2837" y="-614.48" z="-1375.237"/>
+        <position name="Lbox1_pos" unit="mm" x="-2837+1600-1770/2" y="-614.48" z="-1375.237"/>
       </physvol>
     
       <physvol name="Lbox2_phys">
         <volumeref ref="Lbox2_log"/>
-        <position name="Lbox2_pos" unit="mm" x="518" y="-614.48" z="-1372.237"/>
+        <position name="Lbox2_pos" unit="mm" x="518+1600+760/2-331.85466-1770/2" y="-614.48" z="-1375.237"/>
       </physvol>
     
       <physvol name="Lbox3_phys">
         <volumeref ref="Lbox3_log"/>
-        <position name="Lbox3_pos" unit="mm" x="2917" y="-614.48" z="-1352.55"/>
+        <position name="Lbox3_pos" unit="mm" x="6128.54534-1770/2" y="-614.48" z="-1375.237"/>
       </physvol>
     
       <physvol name="Lbox4_phys">
         <volumeref ref="Lbox4_log"/>
-        <position name="Lbox4_pos" unit="mm" x="-2837" y="-614.48" z="1367.763"/>
+        <position name="Lbox4_pos" unit="mm" x="-2837+701.04-1770/2" y="-614.48" z="1367.763"/>
+      </physvol>
+
+      <physvol name="Transformerbox_phys">
+        <volumeref ref="Transformerbox_log"/>
+        <position name="Transformerbox_pos" unit="mm" x="-2837-1448/2-1770/2" y="-614.48" z="-1375.237"/>
       </physvol>
     
       <physvol name="Lbox5_phys">
         <volumeref ref="Lbox5_log"/>
-        <position name="Lbox5_pos" unit="mm" x="518" y="-614.48" z="1370.763"/>
+        <position name="Lbox5_pos" unit="mm" x="-259.154+3048/2-1770/2" y="-614.48" z="1367.763"/>
       </physvol>
     
       <physvol name="Sbox1_phys">
         <volumeref ref="Sbox1_log"/>
-        <position name="Sbox1_pos" unit="mm" x="2424" y="-614.48+38" z="1026.463"/>
+        <position name="Sbox1_pos" unit="mm" x="3141.652+609.6/2-1770/2" y="-614.48+38" z="1026.463"/>
       </physvol>
     
       <physvol name="Sbox2_phys">
         <volumeref ref="Sbox2_log"/>
-        <position name="Sbox2_pos" unit="mm" x="3338" y="-614.48+38" z="1026.463"/>
+        <position name="Sbox2_pos" unit="mm" x="3141.652+609.6/2+914-1770/2" y="-614.48+38" z="1026.463"/>
       </physvol>
     
     </volume>

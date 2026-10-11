@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gdml
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+
+<define>
+  <!-- Full blocker system dimensions -->
+  <quantity name="blocker_system_inner_radius" type="length" value="26.5" unit="mm"/>
+  <quantity name="blocker_system_outer_radius" type="length" value="98" unit="mm"/>
+  <quantity name="blocker_system_thickness" type="length" value="100" unit="mm"/>
+
+</define>
+
+<materials>
+</materials>
+
+
+<solids>
+  <!-- Blocker system solid -->
+  <tube name="blocker_system_solid"
+    rmin="blocker_system_inner_radius"
+    rmax="blocker_system_outer_radius"
+    z="blocker_system_thickness"
+    startphi="0" deltaphi="360.0" aunit="deg"
+    />
+</solids>
+
+<structure>
+  <volume name="blocker_system_logic">
+    <materialref ref="G4_W"/>
+    <solidref ref="blocker_system_solid"/>
+    <auxiliary auxtype="Alpha" auxvalue="0.1"/>
+    <auxiliary auxtype="SensDet" auxvalue="sieveDet"/>
+    <auxiliary auxtype="DetType" auxvalue="secondaries"/>
+    <auxiliary auxtype="DetType" auxvalue="boundaryhits"/>
+    <auxiliary auxtype="DetType" auxvalue="lowenergyneutral"/>
+    <auxiliary auxtype="DetNo" auxvalue="1007"/>
+  </volume>
+</structure>
+
+<setup name="blocker_system_world" version="1.0">
+  <world ref="blocker_system_logic"/>
+</setup>
+
+</gdml>
+
+
+
+

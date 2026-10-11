@@ -1,0 +1,3 @@
+/remoll/geometry/absolute_position targetLadder (0,100,0)
+/remoll/target/mother Al_Hole_DS
+/remoll/target/volume AlHole
