@@ -27,10 +27,6 @@
 <position name="trackingDetectorVirtualPlaneBack1_pos"  z="19724.7 + 605.0" unit="mm"/>
 <position name="trackingDetectorVirtualPlaneBack2_pos"  z="19724.7 + 1000.3" unit="mm"/>
 
-<!-- Centers of the custom two-plane GEM modules; preserve the local geometry positions. -->
-<position name="trackingDetectorVirtualPlaneFront12_pos" z="19.5029+0.450/2" unit="m"/>
-<position name="trackingDetectorVirtualPlaneBack12_pos" z="20.5162+0.450/2" unit="m"/>
-
 <!-- Physical main detector array position -->
 <position name="detectorCenter" x="0.0" y="0.0" z="22000.00" unit="mm"/>
 <position name="mainDetectorRing5MidPlane_pos" z="22198.00" unit="mm"/>

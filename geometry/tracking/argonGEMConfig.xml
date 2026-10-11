@@ -1,0 +1,55 @@
+<!-- Argon GEM placement configuration.
+     Z: absolute distance along the hall beam axis, in mm.
+     Radius: radial translation of each sector module, in mm (not the gas radius).
+     Phi: azimuth of the first sector, in degrees; all seven sectors move together.
+     Module orientation follows Phi, keeping each module facing radially.
+     Keep each trigger between the GEM layers in its pair.
+-->
+<quantity name="ArgonGEMSectorStep" type="angle" value="360/7" unit="deg"/>
+
+<!-- GEM layer 1 -->
+<quantity name="ArgonGEMLayer1Z" type="length" value="19507.9" unit="mm"/>
+<quantity name="ArgonGEMLayer1Radius" type="length" value="0" unit="mm"/>
+<quantity name="ArgonGEMLayer1Phi" type="angle" value="540/7" unit="deg"/>
+
+<!-- GEM layer 2 -->
+<quantity name="ArgonGEMLayer2Z" type="length" value="19947.9" unit="mm"/>
+<quantity name="ArgonGEMLayer2Radius" type="length" value="20" unit="mm"/>
+<quantity name="ArgonGEMLayer2Phi" type="angle" value="540/7" unit="deg"/>
+
+<!-- GEM layer 3 -->
+<quantity name="ArgonGEMLayer3Z" type="length" value="20521.2" unit="mm"/>
+<quantity name="ArgonGEMLayer3Radius" type="length" value="30" unit="mm"/>
+<quantity name="ArgonGEMLayer3Phi" type="angle" value="540/7" unit="deg"/>
+
+<!-- GEM layer 4 -->
+<quantity name="ArgonGEMLayer4Z" type="length" value="20961.2" unit="mm"/>
+<quantity name="ArgonGEMLayer4Radius" type="length" value="50" unit="mm"/>
+<quantity name="ArgonGEMLayer4Phi" type="angle" value="540/7" unit="deg"/>
+
+<!-- Front trigger plane: configured independently of the GEM layers. -->
+<quantity name="ArgonGEMFrontTriggerZ" type="length" value="19827.9" unit="mm"/>
+<quantity name="ArgonGEMFrontTriggerRadius" type="length" value="10" unit="mm"/>
+<quantity name="ArgonGEMFrontTriggerPhi" type="angle" value="540/7" unit="deg"/>
+
+<!-- Back trigger plane: configured independently of the GEM layers. -->
+<quantity name="ArgonGEMBackTriggerZ" type="length" value="20841.2" unit="mm"/>
+<quantity name="ArgonGEMBackTriggerRadius" type="length" value="40" unit="mm"/>
+<quantity name="ArgonGEMBackTriggerPhi" type="angle" value="540/7" unit="deg"/>
+
+<!-- Shared active module dimensions, in mm. Gas and trigger thicknesses are independent. -->
+<quantity name="ArgonGEMGasThickness" type="length" value="16" unit="mm"/>
+<quantity name="ArgonGEMTriggerThickness" type="length" value="16" unit="mm"/>
+<quantity name="ArgonGEMFrameThickness" type="length" value="8" unit="mm"/>
+<quantity name="ArgonGEMModuleThickness" type="length" value="50" unit="mm"/>
+<quantity name="ArgonGEMFrameZOffset" type="length" value="-20" unit="mm"/>
+<quantity name="ArgonGEMFrontModuleOffset" type="length" value="60" unit="mm"/>
+<quantity name="ArgonGEMBackModuleOffset" type="length" value="40" unit="mm"/>
+<quantity name="ArgonGEMRibOffset" type="length" value="878" unit="mm"/>
+
+<!-- Derived pair centers and air-envelope clearance. Do not edit centers directly. -->
+<quantity name="ArgonGEMFrontCenterZ" type="length" value="(ArgonGEMLayer1Z+ArgonGEMLayer2Z)/2" unit="mm"/>
+<quantity name="ArgonGEMBackCenterZ" type="length" value="(ArgonGEMLayer3Z+ArgonGEMLayer4Z)/2" unit="mm"/>
+<quantity name="ArgonGEMEnvelopeMargin" type="length" value="30" unit="mm"/>
+<position name="ArgonGEMFront_pos" z="ArgonGEMFrontCenterZ" unit="mm"/>
+<position name="ArgonGEMBack_pos" z="ArgonGEMBackCenterZ" unit="mm"/>

@@ -5,12 +5,14 @@
 <!ENTITY matrices SYSTEM "matrices.xml">
 <!ENTITY materials SYSTEM "materials.xml">
 <!ENTITY positions SYSTEM "positions.xml">
+<!ENTITY argonGEMConfig SYSTEM "tracking/argonGEMConfig.xml">
 ]>
 
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
   <define> 
     &positions;
+    &argonGEMConfig;
     &matrices;
   </define>
 
@@ -293,50 +295,15 @@
 	<file name="beampipe/downstream/beampipeDSMother.gdml"/>
       </physvol>
       
-    <!-- Front Tracking Detectors -->
-    <!--
-    <physvol  name="GEM_Frame_1">
-      <file name="tracking/trackingDaughter_layer_12.gdml"/>
-      <positionref ref="trackingDetectorVirtualPlaneFront12_pos"/>
-    </physvol>
-    -->
-
-    <!-- Back Tracking Detectors -->
-    <!--
-    <physvol name="GEM_Frame_2">
-      <file name="tracking/trackingDaughter_layer_34.gdml"/>
-      <positionref ref="trackingDetectorVirtualPlaneBack12_pos"/>
-    </physvol>
-    -->
-
-    <!-- Tracking Detectors -->
-    <!--   <physvol>
-      <file name="tracking/trackingDaughter.gdml"/>
-      <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
-    </physvol>-->
-
-    <!-- Tracking Detectors -->
-
-    <!--   <physvol>
-    <physvol>
-      <file name="tracking/trackingDaughter_argon.gdml"/>
-      <positionref ref="trackingDetectorVirtualPlaneBack1_pos"/>
-    </physvol>
-    -->
-    <!-- Front Tracking Detectors 
-    -->
-
-    <physvol>
+    <!-- Argon GEM layers: edit tracking/argonGEMConfig.xml for placements. -->
+    <physvol name="ArgonGEMFrontPair_phys">
       <file name="tracking/trackingDaughter_argon12.gdml"/>
-      <positionref ref="trackingDetectorVirtualPlaneFront12_pos"/>
+      <positionref ref="ArgonGEMFront_pos"/>
     </physvol>
-
-
-    <physvol>
+    <physvol name="ArgonGEMBackPair_phys">
       <file name="tracking/trackingDaughter_argon34.gdml"/>
-      <positionref ref="trackingDetectorVirtualPlaneBack12_pos"/>
+      <positionref ref="ArgonGEMBack_pos"/>
     </physvol>
-
 
     <!-- GEM Rotator -->
     <physvol name="GemRotatorSupport1_phys">
