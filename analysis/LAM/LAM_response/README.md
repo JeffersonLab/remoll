@@ -12,17 +12,17 @@ The output rootfile does not follow the same structure as the original. Rather, 
 >   |-> x  
 >   |-> y  
 >   |-> p  
->   |-> px
->   |-> py
->   |-> pz
->   |-> energy
->   |-> det
->   |-> pid
->   |-> trid
->   |-> rate
->   |-> A
->   |-> Am
->   |-> PE
+>   |-> px  
+>   |-> py  
+>   |-> pz  
+>   |-> energy  
+>   |-> det  
+>   |-> pid  
+>   |-> trid  
+>   |-> rate  
+>   |-> A  
+>   |-> Am  
+>   |-> PE  
 
 Other branches can be added by editing 'skim_and_add_PE.C'. The output also collapses the azimuth to a single septant (beam left) to increase statistics and simplify the response map. Becasue the detector information is preserved, the original location of hits could be recovered by doing the inverse transform, but I believe it is easier to work with these particular data in the collapsed coorinates.
 
