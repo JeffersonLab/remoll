@@ -9,8 +9,11 @@ Previous versions of these scripts were used to create inputs for optical simula
 Edit lines listed at the top of 'skim_and_add_PE.C' as necessary before running the above command.
 The output rootfile does not follow the same structure as the original. Rather, it is as follows:
 >   T
+>
 >   |-> x
+>
 >   |-> y
+>
 >   |-> p
 >   |-> px
 >   |-> py
