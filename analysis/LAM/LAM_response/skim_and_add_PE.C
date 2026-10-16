@@ -15,27 +15,27 @@
 #include "TRandom3.h"
 
 
-'''
-Macro to skim remoll outputs with active LAM detectors, 
-then create a new rootfile which contains only LAM events
-adds a branch for the response of a single LAM PMT.
 
-Author: Daniel Valmassei, dvalmassei@vt.edu
-Date: 10-2-2026
+#Macro to skim remoll outputs with active LAM detectors, 
+#then create a new rootfile which contains only LAM events
+#adds a branch for the response of a single LAM PMT.
 
-Usage: 
-    Lines to edit:
-        282: list of good rootfiles
-        283: location of rootfiles
-        284: output location
-        322: output file name
-        354: name of electron lookup table
-        355: name of gamma lookup table
+#Author: Daniel Valmassei, dvalmassei@vt.edu
+#Date: 10-2-2026
 
-    Location of files:
-        Electron and gamma lookup tables should be loacted
-        in the same directory as this macro.
-'''
+#Usage: 
+#    Lines to edit:
+#        282: list of good rootfiles
+#        283: location of rootfiles
+#        284: output location
+#        322: output file name
+#        354: name of electron lookup table
+#        355: name of gamma lookup table
+#
+#    Location of files:
+#        Electron and gamma lookup tables should be loacted
+#        in the same directory as this macro.
+
 
 using namespace std;
 const double pi = std::atan(1.0) * 4.0;
