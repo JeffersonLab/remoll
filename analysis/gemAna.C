@@ -55,7 +55,7 @@ void gemAna(const string& finName = "./remollout.root", int beamGenerator=1){
 
   initHisto();
   process();
-  writeOutput();
+//  writeOutput();
 }
 
 
