@@ -247,7 +247,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="TargetPosition_solid"/>
     <physvol>
-      <volumeref ref="TargetCFoilDS_logical"/>
+      <volumeref ref="TargetCFoilUS_logical"/>
       <position z="-62.45*cm"/>
     </physvol>
 
@@ -271,7 +271,7 @@
     <materialref ref="G4_Galactic"/>
     <solidref ref="TargetPosition_solid"/>
     <physvol>
-      <volumeref ref="TargetCFoilDS_logical"/>
+      <volumeref ref="TargetCFoilMS_logical"/>
       <position z="+0.0127*cm"/>
     </physvol>
 
