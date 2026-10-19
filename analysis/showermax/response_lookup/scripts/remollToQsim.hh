@@ -30,7 +30,7 @@ inline std::pair<double, double> ConvertRemollToQsim(double x_remoll, double y_r
     // Adjust 
 
     // Adjust phi_remoll to be in the range [0, 2pi)
-    if (phi_remoll < 0) { phi_remoll += 2 * TMath::Pi(); }
+    if (phi_remoll < 0) phi_remoll += 2 * TMath::Pi();
 
     // Calculate qsim plane angles
     std::vector<double> qsimAngles = CalculateQsimPlaneAngles();
@@ -67,3 +67,4 @@ inline std::pair<double, double> ConvertRemollToQsim(double x_remoll, double y_r
 }
 
 #endif // REMOLL_TO_QSIM_HH
+

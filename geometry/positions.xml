@@ -80,6 +80,65 @@
 
 <!-- Showermax virtual plane detector position -->
 <position name="showerMaxVirtualPlane_pos" z="23920.00-90.00" unit="mm"/>
-<position name="showerMaxStackVirtualPlaneOpen_pos" x="-1100.00" z="23838.00" unit="mm"/>
-<position name="showerMaxStackVirtualPlaneClosed_pos" x="1100.00" z="23838.00" unit="mm"/>
-<position name="showerMaxStackVirtualPlaneTrans_pos" y="1104.00" z="23920.00" unit="mm"/>
+
+<position name="showerMaxStackVirtualPlane_01_pos" x="1100.00" y="0.00" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_02_pos" x="1072.42" y="244.77" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_03_pos" x="991.07" y="477.27" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_04_pos" x="860.01" y="685.84" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_05_pos" x="685.84" y="860.01" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_06_pos" x="477.27" y="991.07" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_07_pos" x="244.77" y="1072.42" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_08_pos" x="0.00" y="1100.00" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_09_pos" x="-244.77" y="1072.42" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_10_pos" x="-477.27" y="991.07" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_11_pos" x="-685.84" y="860.01" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_12_pos" x="-860.01" y="685.84" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_13_pos" x="-991.07" y="477.27" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_14_pos" x="-1072.42" y="244.77" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_15_pos" x="-1100.00" y="0.00" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_16_pos" x="-1072.42" y="-244.77" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_17_pos" x="-991.07" y="-477.27" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_18_pos" x="-860.01" y="-685.84" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_19_pos" x="-685.84" y="-860.01" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_20_pos" x="-477.27" y="-991.07" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_21_pos" x="-244.77" y="-1072.42" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_22_pos" x="-0.00" y="-1100.00" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_23_pos" x="244.77" y="-1072.42" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_24_pos" x="477.27" y="-991.07" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_25_pos" x="685.84" y="-860.01" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_26_pos" x="860.01" y="-685.84" z="23920.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_27_pos" x="991.07" y="-477.27" z="23838.00" unit="mm" />
+<position name="showerMaxStackVirtualPlane_28_pos" x="1072.42" y="-244.77" z="23920.00" unit="mm" />
+
+<rotation name="showerMaxStackVirtualPlane_01_rot" z="-0.00" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_02_rot" z="-12.86" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_03_rot" z="-25.71" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_04_rot" z="-38.57" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_05_rot" z="-51.43" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_06_rot" z="-64.29" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_07_rot" z="-77.14" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_08_rot" z="-90.00" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_09_rot" z="-102.86" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_10_rot" z="-115.71" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_11_rot" z="-128.57" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_12_rot" z="-141.43" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_13_rot" z="-154.29" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_14_rot" z="-167.14" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_15_rot" z="-180.00" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_16_rot" z="-192.86" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_17_rot" z="-205.71" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_18_rot" z="-218.57" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_19_rot" z="-231.43" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_20_rot" z="-244.29" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_21_rot" z="-257.14" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_22_rot" z="-270.00" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_23_rot" z="-282.86" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_24_rot" z="-295.71" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_25_rot" z="-308.57" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_26_rot" z="-321.43" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_27_rot" z="-334.29" unit="deg" />
+<rotation name="showerMaxStackVirtualPlane_28_rot" z="-347.14" unit="deg" />
+
+<!-- trigger scintillator virtual detector position -->
+<position name="TRIGSCINT_virtualPlane_pos_0" unit="mm" x="0" y="0" z="19724+80.0"/>
+<position name="TRIGSCINT_virtualPlane_pos_3" unit="mm" x="0" y="0" z="19724+920.3"/>
