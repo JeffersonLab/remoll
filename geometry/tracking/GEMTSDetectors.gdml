@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Combined front tracking geometry: GEMS + Trigger Scintillator (YA) -->
+<!-- RADIAL POSITION SWITCH: edit RADIAL_SHIFT on line 42 (value="IN" or value="OUT"). -->
 <!DOCTYPE gdml [
   <!ENTITY materials SYSTEM "trigscintMaterials.xml">
   <!ENTITY matrices  SYSTEM "trigscintMatrices.xml">
@@ -28,6 +29,16 @@
     <!-- Rotation Parameters for GEM and Trigger scint planes -->
     <constant name="n_rots_01"	value="0"/>
     <constant name="n_rots_23"	value="0"/>
+
+    <!-- ================================================================ -->
+    <!-- RADIAL POSITION SWITCH: GEMs and trigger scintillators             -->
+    <!-- IN:  normal detector positions (0 mm outward shift).              -->
+    <!-- OUT: move all detectors 2 m outward (2000 mm).                  -->
+    <!-- Set RADIAL_SHIFT to IN or OUT, then reload and check geometry.   -->
+    <!-- ================================================================ -->
+    <constant name="IN" value="0"/>
+    <constant name="OUT" value="711.6579"/>
+    <constant name="RADIAL_SHIFT" value="OUT"/>
 
     <!-- YA: trig scint constants -->
     <constant name="SCALE"     value="0.1"/>
@@ -108,8 +119,8 @@
         <twoDimVertex x="242" y="1048"/>
         <twoDimVertex x="226" y="1061"/>
         <twoDimVertex x="207" y="1065"/>
-        <section zOrder="0" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
-        <section zOrder="1" zPosition="3" xOffset="0" yOffset="0" scalingFactor="1"/>
+        <section zOrder="0" zPosition="0" xOffset="0" yOffset="RADIAL_SHIFT" scalingFactor="1"/>
+        <section zOrder="1" zPosition="3" xOffset="0" yOffset="RADIAL_SHIFT" scalingFactor="1"/>
     </xtru>
     <xtru name="GEM_detector_solid_plane34" lunit="mm">
         <twoDimVertex x="-207" y="1096"/>
@@ -131,8 +142,8 @@
         <twoDimVertex x="242" y="1079"/>
         <twoDimVertex x="226" y="1092"/>
         <twoDimVertex x="207" y="1096"/>
-        <section zOrder="0" zPosition="0" xOffset="0" yOffset="0" scalingFactor="1"/>
-        <section zOrder="1" zPosition="3" xOffset="0" yOffset="0" scalingFactor="1"/>
+        <section zOrder="0" zPosition="0" xOffset="0" yOffset="RADIAL_SHIFT" scalingFactor="1"/>
+        <section zOrder="1" zPosition="3" xOffset="0" yOffset="RADIAL_SHIFT" scalingFactor="1"/>
     </xtru>
  
     <xtru name="Trig_container_solid_plane34" lunit="mm">
@@ -161,17 +172,17 @@
   <twoDimVertex x="226+TRIG_TOP_WID" y="1092+TRIG_TOP_EXT"/>
   <twoDimVertex x="207+TRIG_TOP_WID" y="1096+TRIG_TOP_EXT"/>
 
-  <section zOrder="0" zPosition="-50" xOffset="0" yOffset="0" scalingFactor="1"/>
-  <section zOrder="1" zPosition="50"  xOffset="0" yOffset="0" scalingFactor="1"/>
+  <section zOrder="0" zPosition="-50" xOffset="0" yOffset="RADIAL_SHIFT" scalingFactor="1"/>
+  <section zOrder="1" zPosition="50"  xOffset="0" yOffset="RADIAL_SHIFT" scalingFactor="1"/>
 </xtru>
   
     <polycone name="GEM_world_solid"
               aunit="deg" startphi="0" deltaphi="360"
               lunit="mm">
-      <zplane rmin="584" rmax="1450.0" z="0.0"/>
-      <zplane rmin="584" rmax="1450.0" z="399.3"/>
-      <zplane rmin="584" rmax="1450.0" z="400.0"/>
-      <zplane rmin="601" rmax="1450.0" z="1010"/>
+      <zplane rmin="584" rmax="1450.0 + RADIAL_SHIFT" z="0.0"/>
+      <zplane rmin="584" rmax="1450.0 + RADIAL_SHIFT" z="399.3"/>
+      <zplane rmin="584" rmax="1450.0 + RADIAL_SHIFT" z="400.0"/>
+      <zplane rmin="601" rmax="1450.0 + RADIAL_SHIFT" z="1010"/>
     </polycone>
 
     <!-- YA: scintillator + light guides + wrapper (unchanged shapes) -->
@@ -416,7 +427,7 @@
         <!--  place it roughly mid-way in the GEM radial band -->
         <position name="trig_scint_align_pos"
                   x="0"
-                  y="(584 + 1130)/2 + 50"
+                  y="(584 + 1130)/2 + 50 + RADIAL_SHIFT"
                   z="0"
                   unit="mm"/>
       </physvol>
