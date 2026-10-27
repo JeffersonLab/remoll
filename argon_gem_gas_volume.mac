@@ -1,0 +1,82 @@
+/remoll/geometry/setfile geometry/mollerMother.gdml
+/remoll/parallel/setfile geometry/mollerParallel.gdml
+
+/remoll/physlist/parallel/enable
+
+# This must be explicitly called
+/run/initialize
+
+/remoll/printgeometry true
+
+/control/execute macros/load_magnetic_fieldmaps.mac
+
+# Raster and initial angle stuff
+/remoll/oldras true
+/remoll/rasx 5 mm
+/remoll/rasy 5 mm
+#/remoll/beam_x0 0 mm
+#/remoll/beam_y0 0 mm
+# initial angle
+#/remoll/beam_th0 0 mrad
+#/remoll/beam_ph0 0 mrad
+# gaussian spread widths
+#/remoll/beam_dth 0 mrad
+#/remoll/beam_dph 0 mrad
+
+#/remoll/evgen/set beam
+
+/remoll/evgen/set moller
+/remoll/evgen/thcommin 30.0 deg
+/remoll/evgen/thcommax 150.0 deg
+#/remoll/evgen/set elastic
+#/remoll/evgen/thmin 0.1 deg
+#/remoll/evgen/thmax 2.0 deg
+#/remoll/evgen/emin 80.0 MeV
+#/remoll/evgen/set inelastic
+#/remoll/evgen/set pion
+#/remoll/piontype pi+
+#/remoll/evgen/set pion_LUND
+#/remoll/evgen/set inelasticAl
+#/remoll/evgen/set quasielasticAl
+#/remoll/evgen/set elasticAl
+#/remoll/evgen/set external
+#/remoll/externalfile remollout.root
+#/remoll/externaldetid 4051
+
+/remoll/beamene 11 GeV
+/remoll/beamcurr 85 microampere
+
+#/remoll/SD/disable_all
+/remoll/SD/enable_all
+/remoll/SD/enable 28 #main det
+/remoll/SD/enable 30 #showermax
+
+/remoll/SD/enable 32 #GEM1
+/remoll/SD/detect lowenergyneutral 32
+/remoll/SD/detect secondaries 32
+/remoll/SD/detect boundaryhits 32
+
+/remoll/SD/enable 33 #GEM2
+/remoll/SD/detect lowenergyneutral 33
+/remoll/SD/detect secondaries 33
+/remoll/SD/detect boundaryhits 33
+
+/remoll/SD/enable 34 #GEM3
+/remoll/SD/detect lowenergyneutral 34
+/remoll/SD/detect secondaries 34
+/remoll/SD/detect boundaryhits 34
+
+/remoll/SD/enable 35 #GEM4
+/remoll/SD/detect lowenergyneutral 35
+/remoll/SD/detect secondaries 35
+/remoll/SD/detect boundaryhits 35
+
+/remoll/SD/enable 577 #Argon gas volume in Moller tracker
+/remoll/SD/detect lowenergyneutral 577
+/remoll/SD/detect secondaries 577
+/remoll/SD/detect boundaryhits 577
+
+/process/list
+
+/run/beamOn 1000
+

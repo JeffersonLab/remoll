@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE gdml [
+<!ENTITY argonGEMConfig SYSTEM "argonGEMConfig.xml">
+]>
+<gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
+  <define>
+    &argonGEMConfig;
+    <variable name="i" value="0"/>
+  </define>
+  <materials>
+    <material name="ArCO2" state="gas">
+      <T unit="K" value="293.15"/>
+      <D unit="g/cm3" value="0.0018"/>
+      <fraction n="0.8" ref="G4_Ar"/>
+      <fraction n="0.2" ref="G4_CARBON_DIOXIDE"/>
+    </material>
+    <material name="Scintillator" formula="C9H10" state="solid">
+      <fraction n="0.4737" ref="C"/>
+      <fraction n="0.5263" ref="H"/>
+      <D unit="g/cm3" value="1.032"/>
+    </material>
+  </materials>
+  <solids>
+    <polycone name="GEMTrackingWorld_solid" aunit="deg" startphi="0" deltaphi="360" lunit="mm">
+      <zplane rmin="630" rmax="1400" z="ArgonGEMLayer1Z-ArgonGEMFrontCenterZ-ArgonGEMEnvelopeMargin"/>
+      <zplane rmin="640" rmax="1410" z="ArgonGEMLayer2Z-ArgonGEMFrontCenterZ+ArgonGEMEnvelopeMargin"/>
+    </polycone>
+    <tube name="GEMTrackingPlane_sol" startphi="72" deltaphi="35" aunit="deg" rmin="635" rmax="1350" z="ArgonGEMModuleThickness" lunit="mm"/>
+    <tube aunit="deg" deltaphi="30" lunit="mm" name="GEMFrameOuterArc_solid" rmax="1280.63" rmin="625" startphi="75" z="ArgonGEMFrameThickness"/>
+    <box lunit="mm" name="GEMFrameOuterClip_solid" x="565" y="574.18" z="40"/>
+    <intersection name="GEMFrameOuter_solid">
+      <first ref="GEMFrameOuterArc_solid"/>
+      <second ref="GEMFrameOuterClip_solid"/>
+      <position name="GEMFrameOuter_solid_pos" unit="mm" x="0" y="900" z="0"/>
+    </intersection>
+    <tube aunit="deg" deltaphi="26.5" lunit="mm" name="GEMActiveArc_solid" rmax="1150.63" rmin="635" startphi="76.75" z="ArgonGEMGasThickness"/>
+    <tube aunit="deg" deltaphi="26.5" lunit="mm" name="GEMTriggerArc_solid" rmax="1150.63" rmin="635" startphi="76.75" z="ArgonGEMTriggerThickness"/>
+    <box lunit="mm" name="GEMActiveClip_solid" x="520" y="494.18" z="40"/>
+    <intersection name="GEMActiveArea_solid">
+      <first ref="GEMActiveArc_solid"/>
+      <second ref="GEMActiveClip_solid"/>
+      <position name="GEMActiveArea_solid_pos" unit="mm" x="0" y="872" z="0"/>
+    </intersection>
+    <intersection name="GEMTrigger_solid">
+      <first ref="GEMTriggerArc_solid"/>
+      <second ref="GEMActiveClip_solid"/>
+      <position name="GEMTrigger_solid_pos" unit="mm" x="0" y="872" z="0"/>
+    </intersection>
+    <subtraction name="GEMFrame_solid">
+      <first ref="GEMFrameOuter_solid"/>
+      <second ref="GEMActiveArea_solid"/>
+    </subtraction>
+    <box lunit="mm" name="GEMRibVertical_solid" x="1" y="484" z="1"/>
+    <box lunit="mm" name="GEMRibCrossbar1_solid" x="380" y="1" z="1"/>
+    <union name="GEMRibPartial_solid">
+      <first ref="GEMRibVertical_solid"/>
+      <second ref="GEMRibCrossbar1_solid"/>
+      <position name="GEMRibPartial_solid_pos" unit="mm" x="0" y="-75" z="0"/>
+    </union>
+    <box lunit="mm" name="GEMRibCrossbar2_solid" x="440" y="1" z="1"/>
+    <union name="GEMRibs_solid">
+      <first ref="GEMRibPartial_solid"/>
+      <second ref="GEMRibCrossbar2_solid"/>
+      <position name="GEMRibs_solid_pos" unit="mm" x="0" y="75" z="0"/>
+    </union>
+  </solids>
+  <structure>
+    <volume name="logic_GEM_Argon">
+      <materialref ref="ArCO2"/>
+      <solidref ref="GEMActiveArea_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="GEMArgonDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="577"/>
+    </volume>
+    <volume name="logic_Trig_Plane">
+      <materialref ref="Scintillator"/>
+      <solidref ref="GEMTrigger_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="GEMTrigDet"/>
+      <auxiliary auxtype="DetNo" auxvalue="578"/>
+      <auxiliary auxtype="Color" auxvalue="blue"/>
+    </volume>
+    <volume name="logic_Rib">
+      <materialref ref="G10"/>
+      <solidref ref="GEMRibs_solid"/>
+      <auxiliary auxtype="Color" auxvalue="yellow"/>
+    </volume>
+    <volume name="logic_GEMFrame">
+      <materialref ref="G10"/>
+      <solidref ref="GEMFrame_solid"/>
+      <auxiliary auxtype="SensDet" auxvalue="GEMFrame"/>
+      <auxiliary auxtype="DetNo" auxvalue="520"/>
+      <auxiliary auxtype="Color" auxvalue="yellow"/>
+    </volume>
+    <volume name="logic_GEMFrame_module">
+      <materialref ref="G10"/>
+      <solidref ref="GEMTrackingPlane_sol"/>
+      <physvol name="Frame">
+        <volumeref ref="logic_GEMFrame"/>
+        <position name="frame_position" x="0" y="ArgonGEMFrontModuleOffset" z="ArgonGEMFrameZOffset" unit="mm"/>
+      </physvol>
+      <physvol name="argonCO2Volume">
+        <volumeref ref="logic_GEM_Argon"/>
+        <position name="gas_position" x="0" y="ArgonGEMFrontModuleOffset" z="0" unit="mm"/>
+      </physvol>
+      <physvol name="rib">
+        <volumeref ref="logic_Rib"/>
+        <position name="rib_position" x="0" y="ArgonGEMFrontModuleOffset+ArgonGEMRibOffset" z="ArgonGEMFrameZOffset" unit="mm"/>
+      </physvol>
+      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
+    </volume>
+    <volume name="logic_GEMTrackingWorld">
+      <materialref ref="G4_AIR"/>
+      <solidref ref="GEMTrackingWorld_solid"/>
+      <!-- Layer1: all sector placements use one configuration block. -->
+      <loop for="i" from="1" to="7" step="1">
+        <physvol name="GEMDetector_sector_phys1[i+1]">
+          <volumeref ref="logic_GEMFrame_module"/>
+          <position name="GEMDetector_sector_pos1[i+1]" x="ArgonGEMLayer1Radius*cos((i-1)*ArgonGEMSectorStep+ArgonGEMLayer1Phi)" y="ArgonGEMLayer1Radius*sin((i-1)*ArgonGEMSectorStep+ArgonGEMLayer1Phi)" z="ArgonGEMLayer1Z-ArgonGEMFrontCenterZ" unit="mm"/>
+          <rotation name="GEMDetector_sector_rot1[i+1]" z="pi/2-((i-1)*ArgonGEMSectorStep+ArgonGEMLayer1Phi)" unit="rad"/>
+        </physvol>
+      </loop>
+      <!-- Layer2: all sector placements use one configuration block. -->
+      <loop for="i" from="1" to="7" step="1">
+        <physvol name="GEMDetector_sector_phys2[i+1]">
+          <volumeref ref="logic_GEMFrame_module"/>
+          <position name="GEMDetector_sector_pos2[i+1]" x="ArgonGEMLayer2Radius*cos((i-1)*ArgonGEMSectorStep+ArgonGEMLayer2Phi)" y="ArgonGEMLayer2Radius*sin((i-1)*ArgonGEMSectorStep+ArgonGEMLayer2Phi)" z="ArgonGEMLayer2Z-ArgonGEMFrontCenterZ" unit="mm"/>
+          <rotation name="GEMDetector_sector_rot2[i+1]" z="pi/2-((i-1)*ArgonGEMSectorStep+ArgonGEMLayer2Phi)" unit="rad"/>
+        </physvol>
+      </loop>
+      <!-- FrontTrigger: all sector placements use one configuration block. -->
+      <loop for="i" from="1" to="7" step="1">
+        <physvol name="TrigDetector_sector_phys[i+1]">
+          <volumeref ref="logic_Trig_Plane"/>
+          <position name="TrigDetector_sector_pos[i+1]" x="ArgonGEMFrontTriggerRadius*cos((i-1)*ArgonGEMSectorStep+ArgonGEMFrontTriggerPhi)" y="ArgonGEMFrontTriggerRadius*sin((i-1)*ArgonGEMSectorStep+ArgonGEMFrontTriggerPhi)" z="ArgonGEMFrontTriggerZ-ArgonGEMFrontCenterZ" unit="mm"/>
+          <rotation name="Trigetector_sector_rot[i+1]" z="pi/2-((i-1)*ArgonGEMSectorStep+ArgonGEMFrontTriggerPhi)" unit="rad"/>
+        </physvol>
+      </loop>
+      <auxiliary auxtype="Alpha" auxvalue="0.0"/>
+    </volume>
+  </structure>
+  <setup name="Default" version="1.0">
+    <world ref="logic_GEMTrackingWorld"/>
+  </setup>
+</gdml>
