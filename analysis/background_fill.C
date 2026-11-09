@@ -62,7 +62,7 @@ void background_fill(TString infile = "rootfiles.txt",
     cout<<"target cut OFF: keeping every track"<<endl;
 
   //cuts
-  const double EMIN = 1.0; // keep hits with total energy above this [MeV]
+  const double EMIN = 1.0; // keep hits with kinetic energy above this [MeV]
 
   //the components
   // One box per component: {z_begin, z_end, r_min, r_max} in mm, world
@@ -166,7 +166,7 @@ void background_fill(TString infile = "rootfiles.txt",
 	if(h.det != MD ) continue;
 
 	// cut 2: energy
-	if(h.e <= EMIN) continue;
+	if(h.k <= EMIN) continue;
 
 	// cut 3: keep electrons/positrons(+-11) and photons (22)
 	int sp = (abs(h.pid)==11) ? 0 : (h.pid==22 ? 1 : -1);
