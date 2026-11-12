@@ -18,8 +18,9 @@ remollEvent::remollEvent()
   fVertexPos(0,0,0),
   fBeamE(0),fRate(0),fEffXs(0),
   fAsym(0),fmAsym(0),
+  fAsymTV(0),fAsymTH(0),
   fQ2(0),fW2(0),fXbj(0),
-  fThCoM(0)
+  fThCoM(0),fPhCoM(0)
 {
     Reset();
 }
@@ -102,9 +103,12 @@ remollEvent_t remollEvent::GetEventIO() const {
   ev.xs = fEffXs/microbarn;
   ev.A  = fAsym/ppb;
   ev.Am = fmAsym/ppb;
+  ev.ATV = fAsymTV/ppb;
+  ev.ATH = fAsymTH/ppb;
   ev.Q2 = fQ2;
   ev.W2 = fW2;
   ev.thcom = fThCoM;
+  ev.phcom = fPhCoM;
   ev.beamp = fBeamMomentum.mag();
   return ev;
 }
@@ -150,12 +154,15 @@ void remollEvent::Reset(){
     fRate  = 0.0/s;
     fEffXs = -1e9*nanobarn;
     fAsym  = -1e9;
+    fAsymTV = 0.0;  // 0 = no transverse asymmetry calculated by this generator
+    fAsymTH = 0.0;  // 0 = no transverse asymmetry calculated by this generator
 
     fQ2    = -1e9*GeV*GeV;
 
     // Only care about for certain processes
     fW2    = -1e9*GeV*GeV;
     fThCoM = -1e9;
+    fPhCoM = -1e9;
 }
 
 void remollEvent::UndoLastParticle(){

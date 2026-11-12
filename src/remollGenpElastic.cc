@@ -172,6 +172,8 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     if( beamE < electron_mass_c2 ){ 
 	evt->SetEffCrossSection(0.0);
 	evt->SetAsymmetry(0.0);
+	evt->SetAsymmetryTransverseVertical(0.0);
+	evt->SetAsymmetryTransverseHorizontal(0.0);
 	return; 
     }
 
@@ -257,6 +259,55 @@ void remollGenpElastic::SamplePhysics(remollVertex *vert, remollEvent *evt){
     G4double APV = APV_base*(QWp - apvffnum/apvffden);
 
     evt->SetAsymmetry(APV);
+
+    // Beam-normal single-spin asymmetry (transverse asymmetry)
+    // Afanasev & Merenkov, Phys. Lett. B 599 (2004) 48 [hep-ph/0407167]
+    // Used master formula Eq. 24, the paper then applies a separate exponential suppression (exp(-B Q2 / 2)), see section IV: Numerical results and conclusion.
+    // so, the final implementation is
+    // A_n = A_n^(Eq24) * exp(-B Q2 / 2)
+    // B = 8 GeV^-2 is hardcoded, as the paper suggest that gives a good description of the nucleon
+    // Compton cross section from the optical point to -t ~ 0.8 GeV^2.
+    // Total photoproduction cross section on the proton is set as 0.1mb, see section III Master Formula.
+
+    G4double sigma_gp = 0.1*millibarn;
+    const G4bool   useComptonFF = true;
+    const G4double B_compton    = 8.0/(GeV*GeV);
+    
+    // Dirac and Pauli form factors from the Sachs form factors
+    G4double F1p = (gep + tau*gmp)/(1.0 + tau);
+    G4double F2p = (gmp - gep)/(1.0 + tau);
+
+    G4double An_ff  = (F1p - tau*F2p)/(F1p*F1p + tau*F2p*F2p);
+    G4double An_log = -log( q2/(electron_mass_c2*electron_mass_c2) ) + 2.0;
+
+    // equation 24, [hep-ph/0407167]
+    G4double A_n = electron_mass_c2*sqrt(q2)*sigma_gp
+                 / (8.0*pi*pi*hbarc*hbarc)
+                 * An_ff * An_log;
+    
+    // to calculate exponential suppression
+    if( useComptonFF ) A_n *= exp(-B_compton*q2/2.0);
+
+    // vertical/horizontal phase convention is implemented from Moller AT implementation.
+    // so that two generators share one convention and can be compared.
+    G4double A_TV = A_n*sin(ph);
+    G4double A_TH = A_n*sin(ph - CLHEP::pi/2);
+
+    evt->SetAsymmetryTransverseVertical( A_TV );
+    evt->SetAsymmetryTransverseHorizontal( A_TH );
+
+    // ep elastic generator treats "th" as a lab angle and uses it directly. 
+    // here, it is converted to the center-of-mass scattering angle of the electron 
+    // (electron mass neglected)
+    // s = M^2 + 2 M E,  p* = M E / sqrt(s),  sin(thcom/2) = sqrt(Q2) / (2 p*)
+    // where E is the beam energy at the vertex
+
+    G4double s_cm  = proton_mass_c2*proton_mass_c2 + 2.0*proton_mass_c2*beamE;
+    G4double pstar = proton_mass_c2*beamE/sqrt(s_cm);
+    G4double thcom = 2.0*asin( sqrt(q2)/(2.0*pstar) );
+
+    evt->SetThCoM( thcom );
+    evt->SetPhCoM( ph );
 
     evt->SetQ2( q2 );
     evt->SetW2( proton_mass_c2*proton_mass_c2 );
