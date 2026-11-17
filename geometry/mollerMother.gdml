@@ -5,12 +5,14 @@
 <!ENTITY matrices SYSTEM "matrices.xml">
 <!ENTITY materials SYSTEM "materials.xml">
 <!ENTITY positions SYSTEM "positions.xml">
+<!ENTITY argonGEMConfig SYSTEM "tracking/argonGEMConfig.xml">
 ]>
 
 <gdml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://service-spi.web.cern.ch/service-spi/app/releases/GDML/schema/gdml.xsd">
 
   <define> 
     &positions;
+    &argonGEMConfig;
     &matrices;
   </define>
 
@@ -293,15 +295,18 @@
 	<file name="beampipe/downstream/beampipeDSMother.gdml"/>
       </physvol>
       
-    <!-- Front Tracking Detectors -->
-    <physvol>
-      <file name="tracking/GEMTSDetectors.gdml"/>
-      <positionref ref="trackingDetectorVirtualPlaneFront1_pos"/>
+    <!-- Argon GEM layers: edit tracking/argonGEMConfig.xml for placements. -->
+    <physvol name="ArgonGEMFrontPair_phys">
+      <file name="tracking/trackingDaughter_argon12.gdml"/>
+      <positionref ref="ArgonGEMFront_pos"/>
+    </physvol>
+    <physvol name="ArgonGEMBackPair_phys">
+      <file name="tracking/trackingDaughter_argon34.gdml"/>
+      <positionref ref="ArgonGEMBack_pos"/>
     </physvol>
 
-
-      <!-- GEM Rotator -->
-      <physvol name="GemRotatorSupport1_phys">
+    <!-- GEM Rotator -->
+    <physvol name="GemRotatorSupport1_phys">
 	<volumeref ref="GemRotatorSupport1_log"/>
 	<position name="GemRotatorSupport1_pos" unit="mm" x="-248.33*2-248.33/2" y="-2980+1415.481/2" z="19132.69+400/2+1000/2"/>
       </physvol>

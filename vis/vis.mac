@@ -57,7 +57,7 @@
 /vis/viewer/set/lightsThetaPhi 40 50
 #New cutaway plane setting
 #/vis/viewer/set/cutawayMode intersection
-/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 1.0 0.0 0.0
+#/vis/viewer/addCutawayPlane 0.0 0.0 0.0 m 1.0 0.0 0.0
 #old value
 #/vis/viewer/set/lightsMove with-camera
 #

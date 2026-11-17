@@ -31,7 +31,8 @@ remollPhysicsList::remollPhysicsList()
   SetVerboseLevel(0);
 
   // Set and print default reference physics list
-  RegisterReferencePhysList("QGSP_BERT");
+  RegisterReferencePhysList("QGSP_BERT_LIV");
+//  RegisterReferencePhysList("QGSP_BERT");
   G4cout << "remoll: loaded reference physics list " << fReferencePhysListName << G4endl;
 
   // Set and print default status of other physics

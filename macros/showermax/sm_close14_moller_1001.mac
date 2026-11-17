@@ -26,29 +26,5 @@
 /remoll/SD/detect secondaries 70
 /remoll/SD/detect boundaryhits 70
 
-/remoll/SD/enable 7141
-/remoll/SD/detect lowenergyneutral 7141
-/remoll/SD/detect secondaries 7141
-/remoll/SD/detect boundaryhits 7141
-
-/remoll/SD/enable 7142
-/remoll/SD/detect lowenergyneutral 7142
-/remoll/SD/detect secondaries 7142
-/remoll/SD/detect boundaryhits 7142
-
-/remoll/SD/enable 7144
-/remoll/SD/detect lowenergyneutral 7144
-/remoll/SD/detect secondaries 7144
-/remoll/SD/detect boundaryhits 7144
-
-/remoll/SD/enable 7146
-/remoll/SD/detect lowenergyneutral 7146
-/remoll/SD/detect secondaries 7146
-/remoll/SD/detect boundaryhits 7146
-
-/remoll/SD/enable 7148
-/remoll/SD/detect lowenergyneutral 7148
-/remoll/SD/detect secondaries 7148
-/remoll/SD/detect boundaryhits 7148
 
 /run/beamOn 50000

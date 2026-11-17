@@ -881,6 +881,9 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
           det_name_ss << "remoll/det_" << det_no;
           std::string det_name = det_name_ss.str();
 
+//          G4cerr << "--------------------------------------"  << G4endl;
+//          G4cerr << "AAAA remoll: Detector number " << det_no << " (" << sens_det  << ") " << myvol->GetName()  << G4endl;
+
           // Check for duplication when not a shared detector number
           if (detnomap.count(det_no) != 0 && detnomap[det_no].first != sens_det) {
             std::string sens_det2 = detnomap[det_no].first;
@@ -939,6 +942,11 @@ void remollDetectorConstruction::ParseAuxiliarySensDetInfo()
       }
 
   } // end of loop over volumes
+
+  /// Testing Purpose
+  ///
+  // exit(0);
+
 
   if (fVerboseLevel > 0)
     G4cout << "Completed sensitive detector assignment" << G4endl;
