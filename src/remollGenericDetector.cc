@@ -24,6 +24,7 @@ remollGenericDetector::remollGenericDetector( G4String name, G4int detnum )
 {
   assert(detnum > 0);
   SetDetNo(detnum);
+  SetCopyDepth(0);
 
   fDetectSecondaries = false;
   fDetectOpticalPhotons = false;
@@ -150,9 +151,8 @@ G4bool remollGenericDetector::ProcessHits(G4Step* step, G4TouchableHistory*)
     // Get copy ID from touchable history
     G4TouchableHistory* hist
       = (G4TouchableHistory*) (prepoint->GetTouchable());
-    G4VPhysicalVolume* volume = hist->GetVolume();
-    G4int copyID = volume->GetCopyNo();
-
+    G4VPhysicalVolume* volume = hist->GetVolume(fCopyDepth);
+    G4int copyID = (volume != nullptr? volume->GetCopyNo(): 0);
 
     // Add energy deposit to detector sum
     G4int pid = particle->GetPDGEncoding();
